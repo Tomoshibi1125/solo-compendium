@@ -243,92 +243,97 @@ const CampaignDetail = () => {
 						onValueChange={setActiveTab}
 						className="space-y-6"
 					>
-						<TabsList className="flex flex-wrap h-auto gap-1 p-1 bg-muted/20 border border-border">
-							<TabsTrigger
-								value="overview"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<Users className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Overview</span>
-								<span className="sm:hidden">Overview</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="vtt"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<Layers className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">VTT</span>
-								<span className="sm:hidden">VTT</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="wiki"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Wiki</span>
-								<span className="sm:hidden">Wiki</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="sessions"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<CalendarClock className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Sessions</span>
-								<span className="sm:hidden">Sessions</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="chat"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Chat</span>
-								<span className="sm:hidden">Chat</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="notes"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Notes</span>
-								<span className="sm:hidden">Notes</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="handouts"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Handouts</span>
-								<span className="sm:hidden">Handouts</span>
-							</TabsTrigger>
-							<TabsTrigger
-								value="characters"
-								className="gap-2 text-xs sm:text-sm min-h-[44px]"
-							>
-								<Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
-								<span className="hidden sm:inline">Characters</span>
-								<span className="sm:hidden">Characters</span>
-							</TabsTrigger>
-							{hasWardenAccess && (
+						<div
+							className="overflow-x-auto -mx-1 px-1"
+							style={{ scrollbarWidth: "none" }}
+						>
+							<TabsList className="inline-flex w-auto min-w-full gap-1">
 								<TabsTrigger
-									value="settings"
+									value="overview"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
-									<Settings className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Settings</span>
-									<span className="sm:hidden">Settings</span>
+									<Users className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Overview</span>
+									<span className="sm:hidden">Overview</span>
 								</TabsTrigger>
-							)}
-							{hasWardenAccess && (
 								<TabsTrigger
-									value="oversight"
+									value="vtt"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
-									<Crown className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Regent Oversight</span>
-									<span className="sm:hidden">Oversight</span>
+									<Layers className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">VTT</span>
+									<span className="sm:hidden">VTT</span>
 								</TabsTrigger>
-							)}
-						</TabsList>
+								<TabsTrigger
+									value="wiki"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
+									<BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Wiki</span>
+									<span className="sm:hidden">Wiki</span>
+								</TabsTrigger>
+								<TabsTrigger
+									value="sessions"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
+									<CalendarClock className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Sessions</span>
+									<span className="sm:hidden">Sessions</span>
+								</TabsTrigger>
+								<TabsTrigger
+									value="chat"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
+									<MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Chat</span>
+									<span className="sm:hidden">Chat</span>
+								</TabsTrigger>
+								<TabsTrigger
+									value="notes"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
+									<FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Notes</span>
+									<span className="sm:hidden">Notes</span>
+								</TabsTrigger>
+								<TabsTrigger
+									value="handouts"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
+									<FileText className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Handouts</span>
+									<span className="sm:hidden">Handouts</span>
+								</TabsTrigger>
+								<TabsTrigger
+									value="characters"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
+									<Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
+									<span className="hidden sm:inline">Characters</span>
+									<span className="sm:hidden">Characters</span>
+								</TabsTrigger>
+								{hasWardenAccess && (
+									<TabsTrigger
+										value="settings"
+										className="gap-2 text-xs sm:text-sm min-h-[44px]"
+									>
+										<Settings className="w-3 h-3 sm:w-4 sm:h-4" />
+										<span className="hidden sm:inline">Settings</span>
+										<span className="sm:hidden">Settings</span>
+									</TabsTrigger>
+								)}
+								{hasWardenAccess && (
+									<TabsTrigger
+										value="oversight"
+										className="gap-2 text-xs sm:text-sm min-h-[44px]"
+									>
+										<Crown className="w-3 h-3 sm:w-4 sm:h-4" />
+										<span className="hidden sm:inline">Regent Oversight</span>
+										<span className="sm:hidden">Oversight</span>
+									</TabsTrigger>
+								)}
+							</TabsList>
+						</div>
 
 						<TabsContent value="vtt">
 							<AscendantWindow title="VIRTUAL TABLETOP" variant="quest">

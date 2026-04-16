@@ -54,11 +54,11 @@ const TOKEN_CATEGORIES = [
 	{ value: "effect", label: "Effects", icon: ImageIcon },
 ];
 
-export const TokenLibrary = ({
-	isEmbedded = false,
-}: {
+export interface TokenLibraryProps {
 	isEmbedded?: boolean;
-}) => {
+}
+
+const TokenLibrary = ({ isEmbedded = false }: TokenLibraryProps) => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
 	const [isCreating, setIsCreating] = useState(false);
@@ -351,25 +351,26 @@ export const TokenLibrary = ({
 	};
 
 	if (isHydrating) {
-		return (
-			<Layout>
-				<div className="container mx-auto px-4 py-8 max-w-7xl">
-					<AscendantWindow title="LOADING TOKEN LIBRARY">
-						<AscendantText className="block text-sm text-muted-foreground">
-							Loading tokens and settings...
-						</AscendantText>
-					</AscendantWindow>
-				</div>
-			</Layout>
+		const loadingContent = (
+			<div
+				className={cn(
+					"px-4 py-8 max-w-7xl",
+					!isEmbedded && "container mx-auto",
+				)}
+			>
+				<AscendantWindow title="LOADING TOKEN LIBRARY">
+					<AscendantText className="block text-sm text-muted-foreground">
+						Loading tokens and settings...
+					</AscendantText>
+				</AscendantWindow>
+			</div>
 		);
+		return isEmbedded ? loadingContent : <Layout>{loadingContent}</Layout>;
 	}
 
-	const Content = (
+	const content = (
 		<div
-			className={cn(
-				"container mx-auto px-4 py-8 max-w-7xl",
-				isEmbedded && "p-0 max-w-none",
-			)}
+			className={cn("px-4 py-8 max-w-7xl", !isEmbedded && "container mx-auto")}
 		>
 			{!isEmbedded && (
 				<div className="mb-6">
@@ -397,15 +398,8 @@ export const TokenLibrary = ({
 				</div>
 			)}
 
-			<div
-				className={cn(
-					"grid gap-6",
-					isEmbedded ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-4",
-				)}
-			>
-				<div
-					className={cn("space-y-6", isEmbedded ? "order-2" : "lg:col-span-1")}
-				>
+			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+				<div className="lg:col-span-1 space-y-6">
 					<AscendantWindow title="SEARCH & FILTER">
 						<div className="space-y-4">
 							<div>
@@ -425,9 +419,7 @@ export const TokenLibrary = ({
 					</AscendantWindow>
 				</div>
 
-				<div
-					className={cn("space-y-6", isEmbedded ? "order-1" : "lg:col-span-2")}
-				>
+				<div className="lg:col-span-2 space-y-6">
 					{isCreating ? (
 						<AscendantWindow title="CREATE TOKEN" id="token-create-window">
 							<div className="space-y-4">
@@ -764,45 +756,41 @@ export const TokenLibrary = ({
 					)}
 				</div>
 
-				{!isEmbedded && (
-					<div className="lg:col-span-1 space-y-6">
-						<AscendantWindow title="LIBRARY ACTIONS" variant="quest">
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-								<Button
-									onClick={handleExport}
-									variant="outline"
-									size="sm"
-									className="w-full"
-								>
-									<Download className="w-4 h-4 mr-2" />
-									Export Library
-								</Button>
-								<label
-									className="w-full flex items-center justify-center p-0 cursor-pointer"
-									aria-label="Import token library"
-								>
-									<div className="w-full h-9 flex items-center justify-center border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium rounded-md">
-										<Plus className="w-4 h-4 mr-2" />
-										Import JSON
-									</div>
-									<input
-										type="file"
-										accept=".json"
-										onChange={handleImport}
-										className="hidden"
-									/>
-								</label>
-							</div>
-						</AscendantWindow>
-					</div>
-				)}
+				<div className="lg:col-span-1 space-y-6">
+					<AscendantWindow title="LIBRARY ACTIONS" variant="quest">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+							<Button
+								onClick={handleExport}
+								variant="outline"
+								size="sm"
+								className="w-full"
+							>
+								<Download className="w-4 h-4 mr-2" />
+								Export Library
+							</Button>
+							<label
+								className="w-full flex items-center justify-center p-0 cursor-pointer"
+								aria-label="Import token library"
+							>
+								<div className="w-full h-9 flex items-center justify-center border border-input bg-background hover:bg-accent hover:text-accent-foreground text-sm font-medium rounded-md">
+									<Plus className="w-4 h-4 mr-2" />
+									Import JSON
+								</div>
+								<input
+									type="file"
+									accept=".json"
+									onChange={handleImport}
+									className="hidden"
+								/>
+							</label>
+						</div>
+					</AscendantWindow>
+				</div>
 			</div>
 		</div>
 	);
 
-	if (isEmbedded) return Content;
-
-	return <Layout>{Content}</Layout>;
+	return isEmbedded ? content : <Layout>{content}</Layout>;
 };
 
 export default TokenLibrary;

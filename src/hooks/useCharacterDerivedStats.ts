@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { type ACBreakdown, calculateAC } from "@/hooks/useArmorClass";
+import type { CharacterFeature } from "@/hooks/useCharacterFeatures";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { EquipmentRow } from "@/hooks/useEquipment";
 import type { CharacterSigilInscriptionRow, SigilRow } from "@/hooks/useSigils";
@@ -25,6 +26,7 @@ import {
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
 import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
+import { aggregateFeatAndStyleEffects } from "@/lib/featEffectParser";
 import {
 	applySigilBonuses,
 	type SigilBonusResult,
@@ -94,17 +96,83 @@ export type DerivedStats = {
 	protocolEncumbranceDetail: ReturnType<typeof calculateEncumbrance>;
 	protocolConcentration: boolean;
 	armorClassDetail: ACBreakdown;
+	savingThrowsBreakdown: Record<
+		AbilityScore,
+		{ source: string; value: number }[]
+	>;
+	skillsBreakdown: Record<string, { source: string; value: number }[]>;
 };
 
 export function useCharacterDerivedStats(
 	character: CharacterWithAbilities | null | undefined,
 	equipment: EquipmentRow[],
-
 	activeSigils: CharacterSigilInscriptionRow[],
 	customModifiers: CustomModifier[],
+	features: CharacterFeature[] = [],
 ) {
 	return useMemo(() => {
 		if (!character) return null;
+
+		const virtualCustomModifiers: CustomModifier[] = [...customModifiers];
+		const featNames = features
+			.filter((f) => f.source === "feat")
+			.map((f) => f.name);
+		const fightingStyles = features
+			.filter((f) => f.name.toLowerCase().includes("fighting style"))
+			.map((f) => f.name.replace(/fighting style:\s*/i, "").trim());
+
+		const featEffects = aggregateFeatAndStyleEffects(
+			featNames,
+			fightingStyles,
+			character.level,
+		);
+
+		featEffects.forEach((fe, idx) => {
+			let type: CustomModifier["type"] = "bonus";
+			let target: string | null = fe.target.toLowerCase();
+			if (fe.type === "advantage") type = "advantage";
+			if (fe.type === "disadvantage") type = "disadvantage";
+
+			if (target === "initiative") {
+				type = "initiative_bonus";
+				target = null;
+			} else if (target === "speed") {
+				type = "speed_bonus";
+				target = null;
+			} else if (target === "ac") {
+				type = "ac_bonus";
+				target = null;
+			} else if (target === "saving_throws") {
+				type = "save_bonus";
+				target = "all";
+			} else if (target === "hp_max") {
+				type = "hp_max";
+				target = null;
+			} else if (
+				ABILITY_KEYS.map((k) => k.toLowerCase()).includes(
+					target as AbilityScore | string,
+				)
+			) {
+				type = "ability_bonus";
+				target = target.toUpperCase();
+			}
+
+			virtualCustomModifiers.push({
+				id: `feat-${idx}`,
+				type,
+				target,
+				value: fe.value,
+				source: fe.source,
+				enabled: true,
+			});
+		});
+
+		const hasHalfProficiency = features.some(
+			(f) =>
+				f.name.toLowerCase().includes("jack of all trades") ||
+				f.name.toLowerCase().includes("half-proficiency") ||
+				f.name.toLowerCase().includes("half proficiency"),
+		);
 
 		const baseStats = calculateCharacterStats({
 			level: character.level,
@@ -114,6 +182,7 @@ export function useCharacterDerivedStats(
 			skillExpertise: character.skill_expertise || [],
 			armorClass: character.armor_class,
 			speed: character.speed,
+			hasHalfProficiency,
 		});
 
 		const equippedArmor = (equipment || []).some((item) => {
@@ -208,9 +277,13 @@ export function useCharacterDerivedStats(
 		});
 
 		const customAbilityBonuses = ABILITY_KEYS.reduce((acc, ability) => {
-			const bonus = sumCustomModifiers(customModifiers, "ability", ability);
+			const bonus = sumCustomModifiers(
+				virtualCustomModifiers,
+				"ability",
+				ability,
+			);
 			const featureBonus = sumCustomModifiers(
-				customModifiers,
+				virtualCustomModifiers,
 				"ability_bonus",
 				ability,
 			);
@@ -219,25 +292,28 @@ export function useCharacterDerivedStats(
 
 		ABILITY_KEYS.forEach((ability) => {
 			const bonus =
-				sumCustomModifiers(customModifiers, "ability", ability) +
-				sumCustomModifiers(customModifiers, "ability_bonus", ability);
+				sumCustomModifiers(virtualCustomModifiers, "ability", ability) +
+				sumCustomModifiers(virtualCustomModifiers, "ability_bonus", ability);
 			if (bonus !== 0) {
 				finalAbilities[ability] = (finalAbilities[ability] || 0) + bonus;
 			}
 		});
 
 		const initiativeAdvantage = resolveAdvantageFromCustomModifiers(
-			customModifiers,
+			virtualCustomModifiers,
 			["initiative", "initiative_advantage"],
 		);
 		const initiativeBonus =
-			sumCustomModifiers(customModifiers, "initiative_bonus") +
-			sumCustomModifiers(customModifiers, "initiative");
+			sumCustomModifiers(virtualCustomModifiers, "initiative_bonus") +
+			sumCustomModifiers(virtualCustomModifiers, "initiative");
 		const finalInitiative =
 			getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
 
-		const featureACBonus = sumCustomModifiers(customModifiers, "ac_bonus");
-		const baseACValue = sumCustomModifiers(customModifiers, "ac_base");
+		const featureACBonus = sumCustomModifiers(
+			virtualCustomModifiers,
+			"ac_bonus",
+		);
+		const baseACValue = sumCustomModifiers(virtualCustomModifiers, "ac_base");
 		let finalAC = baseStats.armorClass + featureACBonus;
 		if (baseACValue > 0) {
 			finalAC = Math.max(
@@ -248,50 +324,51 @@ export function useCharacterDerivedStats(
 
 		const customSaveBonuses = ABILITY_KEYS.reduce(
 			(acc, ability) => {
-				acc[ability] = sumCustomModifiers(customModifiers, "save", ability);
+				acc[ability] =
+					sumCustomModifiers(virtualCustomModifiers, "save", ability) +
+					sumCustomModifiers(virtualCustomModifiers, "save_bonus", ability);
 				return acc;
 			},
 			{} as Record<AbilityScore, number>,
 		);
 
-		const finalSavingThrows: Record<AbilityScore, number> = {
-			STR:
-				getAbilityModifier(finalAbilities.STR) +
-				(character.saving_throw_proficiencies?.includes("STR")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.STR,
-			AGI:
-				getAbilityModifier(finalAbilities.AGI) +
-				(character.saving_throw_proficiencies?.includes("AGI")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.AGI,
-			VIT:
-				getAbilityModifier(finalAbilities.VIT) +
-				(character.saving_throw_proficiencies?.includes("VIT")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.VIT,
-			INT:
-				getAbilityModifier(finalAbilities.INT) +
-				(character.saving_throw_proficiencies?.includes("INT")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.INT,
-			SENSE:
-				getAbilityModifier(finalAbilities.SENSE) +
-				(character.saving_throw_proficiencies?.includes("SENSE")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.SENSE,
-			PRE:
-				getAbilityModifier(finalAbilities.PRE) +
-				(character.saving_throw_proficiencies?.includes("PRE")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.PRE,
-		};
+		const savingThrowsBreakdown: Record<
+			AbilityScore,
+			{ source: string; value: number }[]
+		> = {} as Record<AbilityScore, { source: string; value: number }[]>;
+		const finalSavingThrows: Record<AbilityScore, number> = {} as Record<
+			AbilityScore,
+			number
+		>;
+
+		ABILITY_KEYS.forEach((k) => {
+			savingThrowsBreakdown[k] = [];
+			finalSavingThrows[k] = 0;
+		});
+
+		ABILITY_KEYS.forEach((ability) => {
+			const mod = getAbilityModifier(finalAbilities[ability]);
+			const isProf = character.saving_throw_proficiencies?.includes(ability);
+			const customBonus = customSaveBonuses[ability];
+
+			const breakdown = [{ source: `${ability} Mod`, value: mod }];
+			let total = mod;
+
+			if (isProf) {
+				breakdown.push({
+					source: "Proficiency",
+					value: baseStats.proficiencyBonus,
+				});
+				total += baseStats.proficiencyBonus;
+			}
+			if (customBonus !== 0) {
+				breakdown.push({ source: "Custom Modifiers", value: customBonus });
+				total += customBonus;
+			}
+
+			savingThrowsBreakdown[ability] = breakdown;
+			finalSavingThrows[ability] = total;
+		});
 
 		const totalWeight = calculateTotalWeight(equipment);
 		const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
@@ -445,6 +522,8 @@ export function useCharacterDerivedStats(
 			encumbranceMax,
 		);
 
+		const skillsBreakdown: Record<string, { source: string; value: number }[]> =
+			{};
 		const allSkills: SkillDefinition[] = getAllSkills();
 		const skills = allSkills.reduce<
 			Record<
@@ -458,12 +537,21 @@ export function useCharacterDerivedStats(
 				}
 			>
 		>((acc, skill) => {
+			const abilityMod = getAbilityModifier(finalAbilities[skill.ability]);
+			const isProficient = (character.skill_proficiencies || []).includes(
+				skill.name,
+			);
+			const hasExpertise = (character.skill_expertise || []).includes(
+				skill.name,
+			);
+
 			const baseModifier = calculateSkillModifier(
 				skill.name,
 				finalAbilities,
 				character.skill_proficiencies || [],
 				character.skill_expertise || [],
 				calculatedStats.proficiencyBonus,
+				hasHalfProficiency,
 			);
 			const equipmentSkillBonus =
 				(equipmentMods.skillBonuses?.[skill.name] || 0) +
@@ -473,13 +561,43 @@ export function useCharacterDerivedStats(
 				"skill",
 				skill.name,
 			);
+
+			const breakdown = [{ source: `${skill.ability} Mod`, value: abilityMod }];
+			if (isProficient) {
+				breakdown.push({
+					source: "Proficiency",
+					value: calculatedStats.proficiencyBonus,
+				});
+			} else if (hasHalfProficiency) {
+				breakdown.push({
+					source: "Half-Proficiency",
+					value: Math.floor(calculatedStats.proficiencyBonus / 2),
+				});
+			}
+			if (hasExpertise) {
+				breakdown.push({
+					source: "Expertise",
+					value: calculatedStats.proficiencyBonus,
+				});
+			}
+			if (equipmentSkillBonus !== 0) {
+				breakdown.push({
+					source: "Relic / Equipment",
+					value: equipmentSkillBonus,
+				});
+			}
+			if (customSkillBonus !== 0) {
+				breakdown.push({ source: "Custom Modifiers", value: customSkillBonus });
+			}
+			skillsBreakdown[skill.name] = breakdown;
+
 			const modifier = baseModifier + equipmentSkillBonus + customSkillBonus;
 			acc[skill.name] = {
 				modifier,
 				passive: 10 + modifier,
 				ability: skill.ability,
-				proficient: (character.skill_proficiencies || []).includes(skill.name),
-				expertise: (character.skill_expertise || []).includes(skill.name),
+				proficient: isProficient,
+				expertise: hasExpertise,
 			};
 			return acc;
 		}, {});
@@ -565,6 +683,8 @@ export function useCharacterDerivedStats(
 			protocolEncumbranceDetail,
 			protocolConcentration,
 			armorClassDetail,
+			savingThrowsBreakdown,
+			skillsBreakdown,
 		};
-	}, [character, equipment, activeSigils, customModifiers]);
+	}, [character, equipment, activeSigils, customModifiers, features]);
 }

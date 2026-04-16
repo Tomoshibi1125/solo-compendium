@@ -286,9 +286,9 @@ export function useCharacterPageModel() {
 	const memoizedStats = useCharacterDerivedStats(
 		character as CharacterWithAbilities | null,
 		equipment,
-
 		activeSigilInscriptions,
 		customModifiers,
+		charFeatures,
 	);
 
 	const applyRestResourceUpdates = useCallback(

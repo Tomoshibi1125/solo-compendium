@@ -12,7 +12,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useCampaignGold } from "@/hooks/useCampaignGold";
+import { useCampaignCurrency } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
@@ -43,24 +43,23 @@ export default function PartyStash() {
 	const { inventory, isLoading, addItem, removeItem, updateItem } =
 		useCampaignInventory(campaignId, myCharacter || undefined);
 	const {
-		partyGold,
+		partyCurrency,
 		isLoading: isGoldLoading,
-		updateGold,
-	} = useCampaignGold(campaignId);
+		updateCurrency,
+	} = useCampaignCurrency(campaignId);
 
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemQuantity, setNewItemQuantity] = useState(1);
 
-	// State for local gold edits before saving
-	const [goldEdits, setGoldEdits] = useState(partyGold);
+	// State for local currency edits before saving
+	const [goldEdits, setGoldEdits] = useState(partyCurrency);
 	const [isEditingGold, setIsEditingGold] = useState(false);
 
-	// Sync local edits when remote data changes (if not currently editing)
 	React.useEffect(() => {
 		if (!isEditingGold) {
-			setGoldEdits(partyGold);
+			setGoldEdits(partyCurrency);
 		}
-	}, [partyGold, isEditingGold]);
+	}, [partyCurrency, isEditingGold]);
 
 	if (!campaignId) {
 		return (
@@ -91,7 +90,7 @@ export default function PartyStash() {
 	};
 
 	const handleSaveGold = async () => {
-		await updateGold(goldEdits);
+		await updateCurrency(goldEdits);
 		setIsEditingGold(false);
 	};
 
@@ -152,39 +151,43 @@ export default function PartyStash() {
 						</AscendantText>
 					) : (
 						<div className="space-y-4">
-							<div className="grid grid-cols-5 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
-								{(["pp", "gp", "ep", "sp", "cp"] as const).map((coin) => (
-									<div key={coin} className="flex flex-col items-center gap-2">
+							<div className="grid grid-cols-4 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
+								{(["cores", "shards", "credits", "bits"] as const).map(
+									(coin) => (
 										<div
-											className={`w-10 h-10 rounded-[2px] flex items-center justify-center font-heading font-bold tracking-widest text-xs border bg-black/80 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]
-                                            ${coin === "pp" ? "text-slate-300 border-slate-500 shadow-[0_0_8px_rgba(203,213,225,0.3)]" : ""}
-                                            ${coin === "gp" ? "text-yellow-400 border-yellow-600 shadow-[0_0_8px_rgba(250,204,21,0.3)]" : ""}
-                                            ${coin === "ep" ? "text-blue-300 border-blue-500 shadow-[0_0_8px_rgba(147,197,253,0.3)]" : ""}
-                                            ${coin === "sp" ? "text-gray-300 border-gray-500 shadow-[0_0_8px_rgba(209,213,219,0.3)]" : ""}
-                                            ${coin === "cp" ? "text-amber-500 border-amber-700 shadow-[0_0_8px_rgba(245,158,11,0.3)]" : ""}
-                                        `}
+											key={coin}
+											className="flex flex-col items-center gap-2"
 										>
-											{coin.toUpperCase()}
+											<div
+												className={`w-14 h-10 rounded-[2px] flex items-center justify-center font-heading font-bold tracking-widest text-xs border bg-black/80 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)] uppercase
+                                            ${coin === "cores" ? "text-slate-300 border-slate-500 shadow-[0_0_8px_rgba(203,213,225,0.3)]" : ""}
+                                            ${coin === "shards" ? "text-yellow-400 border-yellow-600 shadow-[0_0_8px_rgba(250,204,21,0.3)]" : ""}
+                                            ${coin === "credits" ? "text-gray-300 border-gray-500 shadow-[0_0_8px_rgba(209,213,219,0.3)]" : ""}
+                                            ${coin === "bits" ? "text-amber-500 border-amber-700 shadow-[0_0_8px_rgba(245,158,11,0.3)]" : ""}
+                                        `}
+											>
+												{coin}
+											</div>
+											{isEditingGold ? (
+												<Input
+													type="number"
+													value={goldEdits[coin]}
+													onChange={(e) =>
+														setGoldEdits((prev) => ({
+															...prev,
+															[coin]: parseInt(e.target.value, 10) || 0,
+														}))
+													}
+													className="w-full text-center font-mono mt-2"
+												/>
+											) : (
+												<span className="text-xl font-heading font-bold drop-shadow-[0_0_5px_currentColor] mt-2 block w-full text-center">
+													{partyCurrency[coin]}
+												</span>
+											)}
 										</div>
-										{isEditingGold ? (
-											<Input
-												type="number"
-												value={goldEdits[coin]}
-												onChange={(e) =>
-													setGoldEdits((prev) => ({
-														...prev,
-														[coin]: parseInt(e.target.value, 10) || 0,
-													}))
-												}
-												className="w-full text-center font-mono mt-2"
-											/>
-										) : (
-											<span className="text-xl font-heading font-bold drop-shadow-[0_0_5px_currentColor] mt-2 block w-full text-center">
-												{partyGold[coin]}
-											</span>
-										)}
-									</div>
-								))}
+									),
+								)}
 							</div>
 
 							<div className="flex justify-end gap-2">
@@ -193,7 +196,7 @@ export default function PartyStash() {
 										<Button
 											variant="outline"
 											onClick={() => {
-												setGoldEdits(partyGold);
+												setGoldEdits(partyCurrency);
 												setIsEditingGold(false);
 											}}
 										>

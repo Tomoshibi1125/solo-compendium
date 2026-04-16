@@ -81,15 +81,13 @@ type VttPixiStageProps = {
 	weather?: "none" | "rain" | "snow" | "embers" | "gas";
 	/** Called when the PixiJS stage is ready, exposing the app and effects container for particle effects */
 	onStageReady?: (app: Application, effectsContainer: Container) => void;
-	pings?: import("@/lib/vtt/mapPing").MapPing[];
-	gridSnap?: boolean;
 };
 
-const SIZE_MULTIPLIERS: Record<PlacedToken["size"], number> = {
-	small: 0.8,
-	medium: 1,
-	large: 2,
-	huge: 3,
+const SIZE_VALUES: Record<PlacedToken["size"], number> = {
+	small: 32,
+	medium: 48,
+	large: 64,
+	huge: 96,
 };
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
@@ -117,9 +115,7 @@ export function VttPixiStage({
 	onWallCreated,
 	weather = "none",
 	onStageReady,
-	pings = [],
-	gridSnap = true,
-}: VttPixiStageProps & { pings?: import("@/lib/vtt/mapPing").MapPing[] }) {
+}: VttPixiStageProps) {
 	const canvasHostRef = useRef<HTMLDivElement | null>(null);
 	const appRef = useRef<Application | null>(null);
 	const { dpr, fx } = usePerformanceProfile();
@@ -260,9 +256,6 @@ export function VttPixiStage({
 		root.addChild(drawings);
 		root.addChild(tokenLayer);
 		root.addChild(fog);
-
-		const pingsLayer = new Container();
-		root.addChild(pingsLayer);
 
 		// Expose the app + effects container so parent components can trigger particle presets
 		onStageReady?.(app, effectsLayer);
@@ -505,7 +498,7 @@ export function VttPixiStage({
 			if (!showGrid) return;
 
 			const g = new Graphics();
-			g.alpha = 1.0;
+			g.alpha = 0.2;
 			const color = 0xffffff;
 			const step = gridSize * zoom;
 			const width = (scene?.width ?? 0) * step;
@@ -718,8 +711,7 @@ export function VttPixiStage({
 			});
 
 			for (const token of visible) {
-				const sizeMultiplier = SIZE_MULTIPLIERS[token.size] || 1;
-				const size = gridSize * sizeMultiplier * zoom;
+				const size = SIZE_VALUES[token.size] * zoom;
 				const isOverlayToken =
 					token.render?.mode === "overlay" ||
 					token.tokenType === "effect" ||
@@ -802,13 +794,6 @@ export function VttPixiStage({
 					text.anchor.set(0.5);
 					container.addChild(text);
 					tokenLayer.addChild(container);
-				}
-
-				// --- Automatic Token Center Adjustment ---
-				// Center tokens within their grid squares for clean alignment
-				if (gridSnap && !isOverlayToken) {
-					container.x = Math.floor(token.x) * gridSize * zoom;
-					container.y = Math.floor(token.y) * gridSize * zoom;
 				}
 
 				// Draw HP Bar if data exists and is not an overlay
@@ -899,43 +884,6 @@ export function VttPixiStage({
 			tokenLayer.sortableChildren = true;
 		};
 
-		const renderPings = () => {
-			pingsLayer.removeChildren();
-			if (!pings || pings.length === 0) return;
-
-			for (const ping of pings) {
-				const pg = new Graphics();
-				const cx = ping.x * gridSize * zoom;
-				const cy = ping.y * gridSize * zoom;
-
-				// Core ripple animation handled by ticker logic below or simple static for now
-				pg.circle(cx, cy, 10 * zoom);
-				pg.fill({ color: Number(ping.color.replace("#", "0x")), alpha: 0.8 });
-				pg.stroke({
-					width: 2,
-					color: Number(ping.color.replace("#", "0x")),
-					alpha: 1,
-				});
-
-				// Text label
-				const label = new Text({
-					text: ping.createdByName,
-					style: {
-						fill: 0xffffff,
-						fontSize: 12,
-						fontWeight: "bold",
-						stroke: { color: 0x000000, width: 3 },
-					},
-				});
-				label.x = cx;
-				label.y = cy - 25 * zoom;
-				label.anchor.set(0.5);
-
-				pingsLayer.addChild(pg);
-				pingsLayer.addChild(label);
-			}
-		};
-
 		void renderBackground();
 		renderWeather();
 		renderGrid();
@@ -943,24 +891,12 @@ export function VttPixiStage({
 		renderFog();
 		void renderLighting();
 		void renderTokens();
-		renderPings();
 
 		const tickerObj = new Ticker();
 		tickerObj.add((tick) => {
 			// Emitter expects seconds (DeltaMS / 1000)
 			if (weatherEmitterRef.current) {
 				weatherEmitterRef.current.update(tick.deltaMS * 0.001);
-			}
-
-			// Simple ping ripple pulse
-			if (pingsLayer.children.length > 0) {
-				const time = Date.now() / 1000;
-				for (const child of pingsLayer.children) {
-					if (child instanceof Graphics) {
-						const pulse = 1 + Math.sin(time * 10) * 0.2;
-						child.scale.set(pulse);
-					}
-				}
 			}
 		});
 		tickerObj.start();
@@ -988,13 +924,11 @@ export function VttPixiStage({
 		lightSources,
 		weather,
 		gridConfig?.type,
-		pings,
 		onStageReady,
 		onTokenDragStart,
 		updateToken,
 		zoom,
 		fx.particleCount,
-		gridSnap,
 	]);
 
 	// Optimized Zoom Effect: Scale the root container instead of rebuilding the stage
@@ -1336,5 +1270,11 @@ export function VttPixiStage({
 		};
 	}, []);
 
-	return <div ref={canvasHostRef} className="w-full h-full relative" />;
+	return (
+		<div
+			ref={canvasHostRef}
+			className="w-full h-full relative min-h-[400px]"
+			style={{ touchAction: "none" }}
+		/>
+	);
 }

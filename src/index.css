@@ -216,40 +216,19 @@
 /* ============================================================
    Global Optimizations for Mobile & PC
    ============================================================ */
-html,
-body {
+html {
 	min-height: 100dvh;
 	overflow-x: hidden;
+	overflow-y: auto;
 	font-size: clamp(14px, 1.2vw + 12px, 18px); /* Fluid typography */
-	touch-action: manipulation;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* Skip link accessibility — hidden until focused */
-.skip-link {
-	position: absolute;
-	left: -9999px;
-	top: auto;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	z-index: 999;
-}
-
-.skip-link:focus {
-	position: fixed;
-	top: 1rem;
-	left: 1rem;
-	width: auto;
-	height: auto;
-	padding: 0.75rem 1.5rem;
-	background: hsl(var(--primary));
-	color: hsl(var(--primary-foreground));
-	border-radius: var(--radius);
-	font-weight: bold;
-	box-shadow: 0 0 20px hsl(var(--primary) / 0.5);
-	outline: none;
+body {
+	min-height: 100dvh;
+	overflow-x: hidden;
+	touch-action: manipulation;
 }
 
 /* Safe area inset wrapper for iPhone notches & bottom bars */

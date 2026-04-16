@@ -10,7 +10,7 @@ import {
 	updateLocalFeature,
 } from "@/lib/guestStore";
 
-type Feature = Database["public"]["Tables"]["character_features"]["Row"];
+export type Feature = Database["public"]["Tables"]["character_features"]["Row"];
 type FeatureUpdate =
 	Database["public"]["Tables"]["character_features"]["Update"];
 

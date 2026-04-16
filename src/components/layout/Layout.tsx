@@ -82,7 +82,7 @@ export function Layout({ children, className }: LayoutProps) {
 
 	// Responsive layout classes
 	const layoutClasses = cn(
-		"min-h-full bg-background",
+		"min-h-screen flex flex-col bg-background",
 		isMobile && "mobile-layout",
 		isTablet && "tablet-layout",
 		isDesktop && "desktop-layout",

@@ -19,6 +19,7 @@ export interface CharacterFeature {
 	is_active: boolean;
 	modifiers: FeatureModifier[] | null;
 	homebrew_id: string | null;
+	display_order?: number | null;
 	created_at: string;
 }
 
@@ -261,11 +262,11 @@ export function featureModifiersToCustomModifiers(
 		if (!feature.is_active || !feature.modifiers) continue;
 		for (const mod of feature.modifiers) {
 			result.push({
-				id: `${feature.id}-${mod.type}-${mod.target || "all"}`,
+				id: `${feature.id}-${mod.type}-${mod.target || "all"}-${crypto.randomUUID().slice(0, 8)}`,
 				type: mod.type,
 				target: mod.target || null,
 				value: mod.value,
-				source: mod.source || feature.name,
+				source: feature.name,
 				condition: null,
 				enabled: true,
 			});

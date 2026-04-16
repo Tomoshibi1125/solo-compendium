@@ -737,7 +737,9 @@ export default function CharacterSheetV2() {
 					<aside className="sticky top-16 pt-4 space-y-4 h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
 						<ProficiencySidebar
 							saves={stats.calculatedStats.savingThrows}
+							savesBreakdown={stats.savingThrowsBreakdown}
 							skills={stats.skills}
+							skillsBreakdown={stats.skillsBreakdown}
 							allSkills={stats.allSkills}
 							savingThrowProficiences={
 								character.saving_throw_proficiencies || []
@@ -955,7 +957,9 @@ export default function CharacterSheetV2() {
 								/>
 								<ProficiencySidebar
 									saves={stats.calculatedStats.savingThrows}
+									savesBreakdown={stats.savingThrowsBreakdown}
 									skills={stats.skills}
+									skillsBreakdown={stats.skillsBreakdown}
 									allSkills={stats.allSkills}
 									savingThrowProficiences={
 										character.saving_throw_proficiencies || []

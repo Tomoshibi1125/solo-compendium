@@ -20,6 +20,7 @@ export interface CharacterStats {
 	skillExpertise: string[];
 	armorClass?: number;
 	speed?: number;
+	hasHalfProficiency?: boolean;
 }
 
 export interface CalculatedStats {
@@ -46,6 +47,7 @@ export function calculateCharacterStats(
 		savingThrowProficiencies,
 		skillProficiencies,
 		skillExpertise,
+		hasHalfProficiency,
 	} = stats;
 
 	const proficiencyBonus = getProficiencyBonus(level);
@@ -115,14 +117,21 @@ export function calculateCharacterStats(
 		const hasExpertise = skillExpertise.includes(skill);
 
 		let bonus = abilityMod;
-		if (isProficient) bonus += proficiencyBonus;
-		if (hasExpertise) bonus += proficiencyBonus; // Expertise adds proficiency bonus again
+		if (isProficient) {
+			bonus += proficiencyBonus;
+			if (hasExpertise) bonus += proficiencyBonus;
+		} else if (hasHalfProficiency) {
+			bonus += Math.floor(proficiencyBonus / 2);
+		}
 
 		skills[skill] = bonus;
 	});
 
 	// Calculate initiative (AGI modifier, equivalent to 5e AGI)
-	const initiative = abilityModifiers.AGI;
+	let initiative = abilityModifiers.AGI;
+	if (hasHalfProficiency) {
+		initiative += Math.floor(proficiencyBonus / 2);
+	}
 
 	// AC calculation (base 10 + AGI, can be modified by armor)
 	const baseAC = 10 + abilityModifiers.AGI;

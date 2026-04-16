@@ -261,6 +261,7 @@ class VTTAudioManager {
 
 	async playTrack(track: VTTAudioTrack): Promise<void> {
 		const audio = new Audio(track.url);
+		audio.preload = "auto";
 		audio.loop = track.loop;
 		audio.volume = track.volume * (this.settings?.master_volume || 1);
 		audio.dataset.type = track.type;
@@ -270,11 +271,18 @@ class VTTAudioManager {
 
 		try {
 			await audio.play();
-			// Update track status
 			await this.updateTrackStatus(track.id, true);
 		} catch (error: unknown) {
-			logError("Failed to play audio track:", error);
-			throw error;
+			// Handle browser autoplay policy gracefully — don't crash the caller
+			if (error instanceof DOMException && error.name === "NotAllowedError") {
+				log(
+					`Audio playback blocked by browser autoplay policy for track ${track.id}. User interaction required.`,
+				);
+			} else if (error instanceof DOMException && error.name === "AbortError") {
+				log(`Audio playback aborted for track ${track.id} (rapid play/pause).`);
+			} else {
+				logError("Failed to play audio track:", error);
+			}
 		}
 	}
 
@@ -299,8 +307,19 @@ class VTTAudioManager {
 	async resumeTrack(trackId: string): Promise<void> {
 		const audio = this.audioElements.get(trackId);
 		if (audio) {
-			await audio.play();
-			await this.updateTrackStatus(trackId, true);
+			try {
+				await audio.play();
+				await this.updateTrackStatus(trackId, true);
+			} catch (error: unknown) {
+				if (
+					error instanceof DOMException &&
+					(error.name === "NotAllowedError" || error.name === "AbortError")
+				) {
+					log(`Audio resume blocked for track ${trackId}: ${error.name}`);
+				} else {
+					logError("Failed to resume audio track:", error);
+				}
+			}
 		}
 	}
 

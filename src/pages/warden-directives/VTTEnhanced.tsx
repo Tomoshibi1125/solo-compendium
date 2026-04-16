@@ -107,6 +107,7 @@ import {
 	EyeOff,
 	FileText,
 	Image as ImageIcon,
+	MapPin,
 	Maximize2,
 	MessageSquare,
 	Minus,
@@ -298,8 +299,7 @@ type CharacterSummary = {
 	armor_class?: number;
 	portrait_url?: string | null;
 	level?: number;
-	job?: string | null;
-	hit_dice_size?: number;
+	job?: string;
 };
 
 /** Shape returned by useCampaignMembers – member row + joined character summary */
@@ -349,13 +349,10 @@ const _toRgba = (hex: string, alpha: number) => {
 
 const toSafeClassName = (value: string) => value.replace(/[^a-z0-9_-]/gi, "_");
 
-const isCharacterSummary = (value: unknown): value is CharacterSummary =>
-	typeof value === "object" &&
-	value !== null &&
-	"id" in value &&
-	"name" in value &&
-	typeof (value as { id: unknown }).id === "string" &&
-	typeof (value as { name: unknown }).name === "string";
+const isCharacterSummary = (
+	value: Record<string, unknown>,
+): value is CharacterSummary =>
+	typeof value.id === "string" && typeof value.name === "string";
 
 const normalizeScene = (scene: VTTScene): VTTScene => ({
 	...scene,
@@ -645,7 +642,7 @@ const VTTEnhanced = () => {
 				.map((member) => member.characters)
 				.filter((entry): entry is CharacterSummary => {
 					if (!entry || typeof entry !== "object") return false;
-					return isCharacterSummary(entry);
+					return isCharacterSummary(entry as Record<string, unknown>);
 				}),
 		[members],
 	);
@@ -663,7 +660,7 @@ const VTTEnhanced = () => {
 
 			if (!membersData) return [];
 			return membersData
-				.map((m: { characters: CharacterSummary | null }) => m.characters)
+				.map((m: { characters: unknown | null }) => m.characters)
 				.filter((entry): entry is CharacterSummary => {
 					if (!entry || typeof entry !== "object") return false;
 					return isCharacterSummary(entry as Record<string, unknown>);
@@ -1180,7 +1177,7 @@ const VTTEnhanced = () => {
 						campaignId || "global",
 						file,
 						"map",
-					)) as import("@/types/vtt").VTTAsset | null;
+					)) as Record<string, unknown> | null;
 					if (asset && typeof asset.imageUrl === "string") {
 						publicUrl = asset.imageUrl;
 					} else {
@@ -1725,12 +1722,7 @@ const VTTEnhanced = () => {
 			);
 
 			if (combatant) {
-				// Use a refined type for combatant stats
-				const stats = combatant.stats as {
-					hp?: number;
-					maxHp?: number;
-					ac?: number;
-				};
+				const stats = combatant.stats as Record<string, unknown>;
 				if (typeof stats?.hp === "number") hp = stats.hp;
 				if (typeof stats?.maxHp === "number") maxHp = stats.maxHp;
 				if (Array.isArray(combatant.conditions)) {
@@ -3363,14 +3355,22 @@ const VTTEnhanced = () => {
 									className="min-h-[60vh] md:h-full flex flex-col"
 									contentClassName="flex-1 flex flex-col"
 									actions={
-										<Button
-											variant="outline"
-											size="sm"
-											onClick={() => setIsMapExpanded((prev) => !prev)}
-										>
-											<Maximize2 className="w-3 h-3 mr-2" />
-											{isMapExpanded ? "Exit Focus" : "Focus"}
-										</Button>
+										<div className="flex items-center gap-1 sm:gap-2">
+											<Button
+												variant="outline"
+												size="sm"
+												className="h-7 text-[10px] px-2 border-primary/30 hover:bg-primary/10"
+												onClick={() => setIsMapExpanded((prev) => !prev)}
+											>
+												<Maximize2 className="w-3 h-3 mr-1" />
+												<span className="hidden sm:inline">
+													{isMapExpanded ? "Exit Focus" : "Focus"}
+												</span>
+												<span className="sm:hidden">
+													{isMapExpanded ? "Exit" : "Focus"}
+												</span>
+											</Button>
+										</div>
 									}
 								>
 									<div
@@ -3525,26 +3525,44 @@ const VTTEnhanced = () => {
 									>
 										<div className={cn("vtt-scene-container", sceneClass)}>
 											<style>{overlayStyles}</style>
-											<MemoizedVttPixiStage
-												containerRef={mapRef}
-												scene={currentScene}
-												tokens={visibleTokens}
-												walls={currentScene?.walls ?? EMPTY_ARRAY}
-												lightSources={currentScene?.lights ?? EMPTY_ARRAY}
-												gridConfig={memoizedGridConfig}
-												gridSize={gridSize}
-												zoom={zoom}
-												showGrid={showGrid}
-												isWarden={isWarden}
-												effectiveVisibleLayers={effectiveVisibleLayers}
-												activeTokenId={activeTokenId}
-												activeInitiativeTokenId={activeInitiativeTokenId}
-												setActiveTokenId={setActiveTokenId}
-												updateToken={updateToken}
-												onRequestZoom={handleRequestZoom}
-												onTokenDragStart={handlePixiTokenDragStart}
-												onTokenDragEnd={handlePixiTokenDragEnd}
-											/>
+											{!currentScene ? (
+												<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-void-black/80 backdrop-blur-sm z-50">
+													<MapPin className="w-12 h-12 text-primary/40 mb-4 animate-pulse" />
+													<AscendantText
+														variant="sovereign"
+														size="lg"
+														className="mb-2"
+													>
+														No Active Lattice Detected
+													</AscendantText>
+													<AscendantText className="text-sm text-muted-foreground max-w-md">
+														Select a scene from the Warden direct-link or drop a
+														map asset here to initialize the dimensional
+														projection.
+													</AscendantText>
+												</div>
+											) : (
+												<MemoizedVttPixiStage
+													containerRef={mapRef}
+													scene={currentScene}
+													tokens={visibleTokens}
+													walls={currentScene?.walls ?? EMPTY_ARRAY}
+													lightSources={currentScene?.lights ?? EMPTY_ARRAY}
+													gridConfig={memoizedGridConfig}
+													gridSize={gridSize}
+													zoom={zoom}
+													showGrid={showGrid}
+													isWarden={isWarden}
+													effectiveVisibleLayers={effectiveVisibleLayers}
+													activeTokenId={activeTokenId}
+													activeInitiativeTokenId={activeInitiativeTokenId}
+													setActiveTokenId={setActiveTokenId}
+													updateToken={updateToken}
+													onRequestZoom={handleRequestZoom}
+													onTokenDragStart={handlePixiTokenDragStart}
+													onTokenDragEnd={handlePixiTokenDragEnd}
+												/>
+											)}
 
 											{/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}
 											{/* Terrain overlay */}

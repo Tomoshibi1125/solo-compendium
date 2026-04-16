@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
 import {
 	Crown,
 	Heart,
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
 	Select,
@@ -51,13 +53,24 @@ import {
 	type CharacterLevelUpEvent,
 	DomainEventBus,
 } from "@/lib/domainEvents";
+import {
+	type ChoiceOptionExecutionPayload,
+	executeFeatureChoiceGrants,
+} from "@/lib/featureChoicesExecution";
 import { isASILevel } from "@/lib/levelGating";
 import { logger } from "@/lib/logger";
 import { getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type { CompendiumFeat, JobFeature } from "@/types/compendium";
+import type {
+	CompendiumFeat,
+	CompendiumPower,
+	CompendiumSpell,
+	JobFeature,
+} from "@/types/compendium";
+import { WizardChoiceEngine } from "./level-up/WizardChoiceEngine";
+import { WizardSpellEngine } from "./level-up/WizardSpellEngine";
 
 // Rift Ascendant XP Thresholds (cumulative XP needed to reach each level)
 const XP_THRESHOLDS = [
@@ -98,6 +111,23 @@ export const LevelUpWizardModal = ({
 	const [selectedPath, setSelectedPath] = useState<string>("");
 	const [asiChoices, setAsiChoices] = useState<Record<string, number>>({});
 	const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
+	const [featureChoicesReady, setFeatureChoicesReady] = useState(true);
+	const [selectedFeatureOptions, setSelectedFeatureOptions] = useState<
+		Record<
+			string,
+			{
+				option: Database["public"]["Tables"]["compendium_feature_choice_options"]["Row"];
+				featureId: string;
+				choiceKey: string;
+			}
+		>
+	>({});
+	const [spellChoicesReady, setSpellChoicesReady] = useState(true);
+	const [selectedSpellsPayload, setSelectedSpellsPayload] = useState<{
+		powers: CompendiumPower[];
+		spells: CompendiumSpell[];
+	}>({ powers: [], spells: [] });
+	const [currentStepIndex, setCurrentStepIndex] = useState(0);
 	const { data: staticJobs, isLoading: jobsLoading } = useStaticJobs();
 
 	// Calculate available choices at the new level (including job awakening features and traits)
@@ -107,6 +137,7 @@ export const LevelUpWizardModal = ({
 				feats: 0,
 				skills: 0,
 				powers: 0,
+				spells: 0,
 				techniques: 0,
 				runes: 0,
 				items: 0,
@@ -121,6 +152,7 @@ export const LevelUpWizardModal = ({
 				feats: 0,
 				skills: 0,
 				powers: 0,
+				spells: 0,
 				techniques: 0,
 				runes: 0,
 				items: 0,
@@ -344,6 +376,68 @@ export const LevelUpWizardModal = ({
 			setNewLevel(character.level + 1);
 		}
 	}, [character]);
+
+	// Sequence configuration for the Wizard Flow - MOVED TO TOP LEVEL TO COMPLY WITH RULES OF HOOKS
+	const steps = useMemo(() => {
+		const s = [];
+		s.push({ id: "vitality", label: "Vitality & Core" });
+		if (showPathSelection) s.push({ id: "path", label: "Combat Doctrine" });
+		if (showASISection) s.push({ id: "asi", label: "Ability Improvement" });
+		if (
+			newFeatures.length > 0 ||
+			(primaryRegentUnlock && newRegentFeatures.length > 0)
+		) {
+			s.push({ id: "features", label: "Class Features" });
+		}
+		if (availableChoices.powers > 0 || availableChoices.spells > 0) {
+			s.push({ id: "discovery", label: "Magical Discovery" });
+		}
+		s.push({ id: "review", label: "Assimilation Review" });
+		return s;
+	}, [
+		showPathSelection,
+		showASISection,
+		newFeatures.length,
+		primaryRegentUnlock,
+		newRegentFeatures.length,
+		availableChoices,
+	]);
+
+	const activeStep = steps[currentStepIndex] || steps[0];
+
+	const isStepValid = useMemo(() => {
+		if (!activeStep || !character) return false;
+		if (activeStep.id === "vitality") return hpIncrease !== null;
+		if (activeStep.id === "path") return selectedPath !== "";
+		if (activeStep.id === "asi") {
+			const spentInfo = ["STR", "AGI", "VIT", "INT", "SENSE", "PRE"].reduce(
+				(acc, ability) => {
+					const currentScore =
+						(character.abilities as Record<string, number>)[ability] ?? 10;
+					if (currentScore < 20) acc.canSpend += Math.min(2, 20 - currentScore);
+					return acc;
+				},
+				{ canSpend: 0 },
+			);
+			const requiredASI = Math.min(2, spentInfo.canSpend);
+			const spent = Object.values(asiChoices).reduce((s, v) => s + v, 0);
+			const featsSatisfied = selectedFeats.length === availableChoices.feats;
+			return spent === requiredASI && featsSatisfied;
+		}
+		if (activeStep.id === "features") return featureChoicesReady;
+		if (activeStep.id === "discovery") return spellChoicesReady;
+		return true;
+	}, [
+		activeStep,
+		hpIncrease,
+		selectedPath,
+		asiChoices,
+		character,
+		selectedFeats.length,
+		availableChoices.feats,
+		featureChoicesReady,
+		spellChoicesReady,
+	]);
 
 	if (isLoading || jobsLoading || !character || !staticJobs) {
 		return (
@@ -581,46 +675,95 @@ export const LevelUpWizardModal = ({
 				});
 			}
 
-			// If any newly-unlocked features require selections, prompt the player to complete them.
-			try {
-				const featureIds = newFeatures.map((f) => f.id).filter(Boolean);
-				if (featureIds.length > 0) {
-					const { data: groups } = await supabase
-						.from("compendium_feature_choice_groups" as never)
-						.select("id")
-						.in("feature_id", featureIds);
+			// If any newly-unlocked features require selections, handle them synchronously
+			if (Object.keys(selectedFeatureOptions).length > 0) {
+				const payloads: ChoiceOptionExecutionPayload[] = [];
+				for (const [groupId, data] of Object.entries(selectedFeatureOptions)) {
+					payloads.push({
+						characterId: character.id,
+						groupId,
+						featureId: data.featureId,
+						option: data.option,
+						levelChosen: newLevel,
+						choiceKey: data.choiceKey,
+					});
+				}
 
-					const groupIds = ((groups || []) as Array<{ id: string }>).map(
-						(g) => g.id,
-					);
-					if (groupIds.length > 0) {
-						const { data: chosen } = await supabase
-							.from("character_feature_choices" as never)
-							.select("group_id")
-							.eq("character_id", character.id)
-							.in("group_id", groupIds);
-
-						const chosenSet = new Set(
-							((chosen || []) as Array<{ group_id: string }>).map(
-								(c) => c.group_id,
-							),
-						);
-						const pendingCount = groupIds.filter(
-							(id) => !chosenSet.has(id),
-						).length;
-						if (pendingCount > 0) {
-							toast({
-								title: "Selection Protocol Required",
-								description: `The Rift detected ${pendingCount} pending selection${pendingCount === 1 ? "" : "s"}. Open your Ascendant sheet to bind them.`,
-							});
-						}
+				if (payloads.length > 0) {
+					try {
+						await executeFeatureChoiceGrants({ payloads, ascendantTools });
+						toast({
+							title: "Selection Protocol Complete",
+							description:
+								"Your abilities and features were dynamically bound.",
+						});
+					} catch (e) {
+						logger.error("Failed to execute feature choice grants inline", e);
 					}
 				}
-			} catch {
-				// Best-effort only; do not block level up if metadata is missing.
 			}
 
-			// Grant job awakening benefits (awakening features + job traits) at this level
+			// Bind magical discovery choices
+			const spellsPayload: Database["public"]["Tables"]["character_powers"]["Insert"][] =
+				[];
+
+			const formatSpellMetadata = (val: unknown): string | null => {
+				if (!val) return null;
+				if (typeof val === "string") return val;
+				if (typeof val === "object" && !Array.isArray(val) && val !== null) {
+					const obj = val as Record<string, unknown>;
+					if (obj.range) return String(obj.range);
+					if (obj.duration) return String(obj.duration);
+					if (obj.value && obj.unit) return `${obj.value} ${obj.unit}`;
+					return JSON.stringify(val);
+				}
+				return String(val);
+			};
+			for (const power of selectedSpellsPayload.powers || []) {
+				spellsPayload.push({
+					character_id: character.id,
+					name: power.name,
+					power_level: power.power_level || 0,
+					source: `Level ${newLevel} Discovery`,
+					casting_time: power.casting_time || null,
+					range: formatSpellMetadata(power.range || null),
+					duration: formatSpellMetadata(power.duration || null),
+					concentration: power.concentration || false,
+					is_prepared: true,
+					is_known: true,
+					description: power.description || null,
+					higher_levels: power.higher_levels || null,
+				});
+			}
+			for (const spell of selectedSpellsPayload.spells || []) {
+				spellsPayload.push({
+					character_id: character.id,
+					name: spell.name,
+					power_level: spell.spell_level || 0,
+					source: `Level ${newLevel} Discovery`,
+					casting_time: spell.casting_time || null,
+					range: formatSpellMetadata(spell.range || null),
+					duration: formatSpellMetadata(spell.duration || null),
+					concentration: spell.concentration || false,
+					is_prepared: true,
+					is_known: true,
+					description: spell.description || null,
+					higher_levels:
+						(spell.atHigherLevels as string) || spell.higher_levels || null,
+				});
+			}
+
+			if (spellsPayload.length > 0) {
+				try {
+					await supabase.from("character_powers").insert(spellsPayload);
+					toast({
+						title: "Magical Discovery Complete",
+						description: "New powers and incantations inscribed to matrix.",
+					});
+				} catch (e) {
+					logger.error("Failed to commit spells and powers", e);
+				}
+			}
 			try {
 				await addJobAwakeningBenefitsForLevel(
 					character.id,
@@ -720,6 +863,14 @@ export const LevelUpWizardModal = ({
 
 	const rankInfo = getNewRank();
 
+	const handleNext = () => {
+		if (currentStepIndex < steps.length - 1 && isStepValid)
+			setCurrentStepIndex((prev) => prev + 1);
+	};
+	const handlePrev = () => {
+		if (currentStepIndex > 0) setCurrentStepIndex((prev) => prev - 1);
+	};
+
 	return (
 		<Dialog open={isOpen} onOpenChange={onClose}>
 			<DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0 bg-background border-resurge/20">
@@ -760,570 +911,686 @@ export const LevelUpWizardModal = ({
 							</div>
 						</div>
 
+						<div className="mb-8">
+							<Progress
+								value={((currentStepIndex + 1) / steps.length) * 100}
+								className="h-2 bg-resurge/10"
+							/>
+							<div className="flex justify-between mt-2 text-xs text-resurge/50 font-heading">
+								<span>
+									Step {currentStepIndex + 1} of {steps.length}
+								</span>
+								<span>{activeStep.label}</span>
+							</div>
+						</div>
+
 						<AscendantWindow
-							title="SYSTEM ENHANCEMENT"
+							title={`STEP ${currentStepIndex + 1}: ${activeStep.label.toUpperCase()}`}
 							className="border-resurge/50 mb-6"
 						>
-							<div className="space-y-6">
-								{/* Level Selection */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/10 to-transparent border border-resurge/20">
-									<Label className="font-resurge text-resurge tracking-wide flex items-center gap-2">
-										<Star className="w-4 h-4" />
-										TARGET LEVEL
-									</Label>
-									<div className="flex items-center gap-4 mt-3">
-										<span className="text-lg text-muted-foreground font-heading">
-											Current: {character.level}
-										</span>
-										<span className="text-2xl font-resurge text-resurge">
-											{"->"}
-										</span>
-										<Input
-											type="number"
-											min={character.level + 1}
-											max={20}
-											value={newLevel}
-											onChange={(e) =>
-												setNewLevel(
-													Math.min(
-														20,
-														Math.max(
-															character.level + 1,
-															parseInt(e.target.value, 10) ||
-																character.level + 1,
-														),
-													),
-												)
-											}
-											className="w-24 text-center font-resurge text-xl border-resurge/30 focus:border-resurge"
-										/>
-									</div>
-								</div>
-
-								{!isMilestone && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
-										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2">
-											<Star className="w-4 h-4" />
-											EXPERIENCE REQUIREMENT
-										</Label>
-										<div className="flex items-center justify-between mt-3 text-sm font-heading">
-											<span className="text-muted-foreground">Current XP</span>
-											<span className="font-resurge text-blue-400">
-												{currentExperience}
-											</span>
-										</div>
-										<div className="flex items-center justify-between mt-2 text-sm font-heading">
-											<span className="text-muted-foreground">
-												Needed for Next Level
-											</span>
-											<span className="font-resurge text-blue-400">
-												{experienceNeeded}
-											</span>
-										</div>
-									</div>
-								)}
-
-								{/* HP Increase */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
-									<Label className="font-resurge text-red-400 tracking-wide flex items-center gap-2">
-										<Heart className="w-4 h-4" />
-										VITALITY INCREASE
-									</Label>
-									<div className="flex items-center gap-4 mt-3">
-										<div className="flex-1">
-											<div className="relative">
-												<Input
-													type="number"
-													min={1}
-													max={maxHP}
-													value={hpIncrease || ""}
-													onChange={(e) =>
-														setHpIncrease(parseInt(e.target.value, 10) || null)
-													}
-													placeholder={`Average: ${averageHP}`}
-													className={cn(
-														"text-center font-resurge text-xl border-red-500/30 focus:border-red-500",
-														isRolling && "animate-pulse text-red-400",
-													)}
-												/>
-												{hpIncrease && (
-													<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-400 font-heading">
-														HP
-													</span>
-												)}
-											</div>
-											<p className="text-xs text-muted-foreground mt-2 font-heading">
-												Roll d{hitDieSize} {vitModifier >= 0 ? "+" : ""}
-												{vitModifier} (VIT) | Range:{" "}
-												{Math.max(1, 1 + vitModifier)} - {maxHP}
-											</p>
-										</div>
-										<Button
-											variant="outline"
-											onClick={rollHP}
-											disabled={isRolling}
-											className={cn(
-												"gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge",
-												isRolling && "animate-pulse",
-											)}
-										>
-											<Zap
-												className={cn("w-4 h-4", isRolling && "animate-spin")}
-											/>
-											{isRolling ? "Rolling..." : "Roll"}
-										</Button>
-										<Button
-											variant="outline"
-											onClick={() => setHpIncrease(averageHP)}
-											className="gap-2 border-red-500/30 hover:bg-red-500/10 hover:border-red-500"
-										>
-											<Heart className="w-4 h-4" />
-											Average ({averageHP})
-										</Button>
-									</div>
-								</div>
-
-								{/* Path Selection (shown when character has no path and paths are available at this level) */}
-								{showPathSelection && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
-										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
-											<Swords className="w-4 h-4" />
-											PATH SPECIALIZATION UNLOCKED
-										</Label>
-										<p className="text-sm text-muted-foreground mb-3 font-heading">
-											Choose your specialization path. This permanently defines
-											your combat doctrine.
-										</p>
-										<Select
-											value={selectedPath}
-											onValueChange={setSelectedPath}
-										>
-											<SelectTrigger className="border-purple-500/30 focus:border-purple-500">
-												<SelectValue placeholder="Choose a path..." />
-											</SelectTrigger>
-											<SelectContent>
-												{availablePaths.map((path) => (
-													<SelectItem key={path.id} value={path.id}>
-														{formatRegentVernacular(
-															(path as { display_name?: string | null })
-																.display_name || path.name,
-														)}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-										{selectedPath && (
-											<div className="mt-3 p-3 rounded-lg bg-muted/30 border border-purple-500/10">
-												<h4 className="font-heading font-semibold text-purple-400 mb-1">
-													{formatRegentVernacular(
-														(
-															availablePaths.find(
-																(p) => p.id === selectedPath,
-															) as { display_name?: string | null } | undefined
-														)?.display_name ||
-															availablePaths.find((p) => p.id === selectedPath)
-																?.name ||
-															"",
-													)}
-												</h4>
-												<p className="text-sm text-muted-foreground">
-													{formatRegentVernacular(
-														availablePaths.find((p) => p.id === selectedPath)
-															?.description || "",
-													)}
-												</p>
-											</div>
-										)}
-									</div>
-								)}
-
-								{/* ASI / Feat Selection (shown at ASI levels: 4, 8, 12, 16, 19) */}
-								{showASISection && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
-										<Label className="font-resurge text-green-400 tracking-wide flex items-center gap-2 mb-4">
-											<Shield className="w-4 h-4" />
-											ABILITY SCORE IMPROVEMENT
-										</Label>
-										<p className="text-sm text-muted-foreground mb-3 font-heading">
-											Distribute 2 points among your ability scores (max +2 to
-											one, or +1 to two).
-										</p>
-										<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-											{(
-												["STR", "AGI", "VIT", "INT", "SENSE", "PRE"] as const
-											).map((ability) => {
-												const currentScore =
-													(character.abilities as Record<string, number>)[
-														ability
-													] ?? 10;
-												const bonus = asiChoices[ability] || 0;
-												const totalSpent = Object.values(asiChoices).reduce(
-													(s, v) => s + v,
-													0,
-												);
-												const canIncrease =
-													totalSpent < 2 &&
-													bonus < 2 &&
-													currentScore + bonus < 20;
-												const canDecrease = bonus > 0;
-												return (
-													<div
-														key={ability}
-														className="flex items-center justify-between p-2 rounded-lg bg-background/50 border border-green-500/10"
-													>
-														<div>
-															<span className="font-resurge text-sm text-green-400">
-																{ability}
-															</span>
-															<span className="text-xs text-muted-foreground ml-2 font-heading">
-																{currentScore}
-															</span>
-														</div>
-														<div className="flex items-center gap-1">
-															<Button
-																variant="ghost"
-																size="sm"
-																className="h-6 w-6 p-0 text-red-400"
-																disabled={!canDecrease}
-																onClick={() =>
-																	setAsiChoices((prev) => ({
-																		...prev,
-																		[ability]: Math.max(
-																			0,
-																			(prev[ability] || 0) - 1,
+							<div className="min-h-[400px]">
+								<AnimatePresence mode="wait">
+									<motion.div
+										key={activeStep.id}
+										initial={{ opacity: 0, x: 20 }}
+										animate={{ opacity: 1, x: 0 }}
+										exit={{ opacity: 0, x: -20 }}
+										transition={{ duration: 0.3, ease: "easeInOut" }}
+										className="space-y-6"
+									>
+										{/* STEP 1: VITALITY & CORE */}
+										{activeStep.id === "vitality" && (
+											<>
+												{/* Level Selection */}
+												<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/10 to-transparent border border-resurge/20">
+													<Label className="font-resurge text-resurge tracking-wide flex items-center gap-2">
+														<Star className="w-4 h-4" />
+														TARGET LEVEL
+													</Label>
+													<div className="flex items-center gap-4 mt-3">
+														<span className="text-lg text-muted-foreground font-heading">
+															Current: {character.level}
+														</span>
+														<span className="text-2xl font-resurge text-resurge">
+															{"->"}
+														</span>
+														<Input
+															type="number"
+															min={character.level + 1}
+															max={20}
+															value={newLevel}
+															onChange={(e) =>
+																setNewLevel(
+																	Math.min(
+																		20,
+																		Math.max(
+																			character.level + 1,
+																			parseInt(e.target.value, 10) ||
+																				character.level + 1,
 																		),
-																	}))
-																}
-															>
-																-
-															</Button>
-															<span
-																className={cn(
-																	"font-resurge text-sm w-6 text-center",
-																	bonus > 0
-																		? "text-green-400"
-																		: "text-muted-foreground",
-																)}
-															>
-																{bonus > 0 ? `+${bonus}` : "0"}
-															</span>
-															<Button
-																variant="ghost"
-																size="sm"
-																className="h-6 w-6 p-0 text-green-400"
-																disabled={!canIncrease}
-																onClick={() =>
-																	setAsiChoices((prev) => ({
-																		...prev,
-																		[ability]: Math.min(
-																			2,
-																			(prev[ability] || 0) + 1,
-																		),
-																	}))
-																}
-															>
-																+
-															</Button>
-														</div>
-													</div>
-												);
-											})}
-										</div>
-										<p className="text-xs text-muted-foreground mt-2 font-heading">
-											Points remaining:{" "}
-											{2 - Object.values(asiChoices).reduce((s, v) => s + v, 0)}
-										</p>
-									</div>
-								)}
-
-								{/* Feat Selection (shown when feats are available from awakening features) */}
-								{showFeatSelection && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
-										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
-											<Star className="w-4 h-4" />
-											FEAT SELECTION
-										</Label>
-										<p className="text-sm text-muted-foreground mb-3 font-heading">
-											Choose {availableChoices.feats} feat
-											{availableChoices.feats > 1 ? "s" : ""} from awakening
-											features.
-										</p>
-										<div className="space-y-2 max-h-48 overflow-y-auto">
-											{availableFeats.map((_feat: CompendiumFeat) => {
-												const feat = _feat;
-												const isSelected = selectedFeats.includes(feat.id);
-												return (
-													<div
-														key={feat.id}
-														className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10"
-													>
-														<input
-															type="checkbox"
-															id={`feat-${feat.id}`}
-															checked={isSelected}
-															onChange={(e) => {
-																if (e.target.checked) {
-																	if (
-																		selectedFeats.length <
-																		availableChoices.feats
-																	) {
-																		setSelectedFeats([
-																			...selectedFeats,
-																			feat.id,
-																		]);
-																	}
-																} else {
-																	setSelectedFeats(
-																		selectedFeats.filter(
-																			(id) => id !== feat.id,
-																		),
-																	);
-																}
-															}}
-															disabled={
-																!isSelected &&
-																selectedFeats.length >= availableChoices.feats
+																	),
+																)
 															}
-															className="rounded border-purple-500/30"
+															className="w-24 text-center font-resurge text-xl border-resurge/30 focus:border-resurge"
 														/>
-														<label
-															htmlFor={`feat-${feat.id}`}
-															className="flex-1 cursor-pointer"
-														>
-															<div>
-																<span className="font-resurge text-sm text-purple-400">
-																	{formatRegentVernacular(feat.name)}
-																</span>
-																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-																	{formatRegentVernacular(
-																		feat.description || "",
-																	)}
-																</p>
-															</div>
-														</label>
 													</div>
-												);
-											})}
-										</div>
-										<p className="text-xs text-muted-foreground mt-2 font-heading">
-											Selected: {selectedFeats.length}/{availableChoices.feats}
-										</p>
-									</div>
-								)}
+												</div>
 
-								{/* New Features */}
-								{newFeatures.length > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
-										<Label className="font-resurge text-amber-400 tracking-wide flex items-center gap-2 mb-4">
-											<Sparkles className="w-4 h-4" />
-											NEW ABILITIES UNLOCKED
-										</Label>
-										<div className="space-y-3">
-											{newFeatures.map((feature: JobFeature) => {
-												return (
-													<div
-														key={feature.id}
-														className={cn(
-															"p-4 rounded-lg border transition-all duration-300",
-															"border-border bg-muted/30",
-														)}
-													>
-														<div className="flex items-start gap-3">
-															<div className="flex-1">
-																<div className="flex items-center gap-2 mb-1 flex-wrap">
-																	<Label
-																		htmlFor={`feature-${feature.id}`}
-																		className="font-resurge font-semibold cursor-pointer text-amber-400 tracking-wide"
-																	>
-																		{formatRegentVernacular(feature.name)}
-																	</Label>
-																	{feature.action_type && (
-																		<Badge
-																			variant="secondary"
-																			className="text-xs font-heading"
-																		>
-																			{formatRegentVernacular(
-																				feature.action_type,
-																			)}
-																		</Badge>
-																	)}
-																	{feature.uses_formula && (
-																		<Badge
-																			variant="outline"
-																			className="text-xs font-heading border-amber-500/30 text-amber-400"
-																		>
-																			{formatRegentVernacular(
-																				feature.uses_formula,
-																			)}
-																		</Badge>
-																	)}
-																</div>
-																<p className="text-sm text-muted-foreground font-heading">
-																	{formatRegentVernacular(
-																		feature.description || "",
-																	)}
-																</p>
-																{feature.prerequisites && (
-																	<p className="text-xs text-muted-foreground mt-1 italic">
-																		Prerequisites:{" "}
-																		{formatRegentVernacular(
-																			feature.prerequisites,
-																		)}
-																	</p>
-																)}
-															</div>
+												{!isMilestone && (
+													<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
+														<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2">
+															<Star className="w-4 h-4" />
+															EXPERIENCE REQUIREMENT
+														</Label>
+														<div className="flex items-center justify-between mt-3 text-sm font-heading">
+															<span className="text-muted-foreground">
+																Current XP
+															</span>
+															<span className="font-resurge text-blue-400">
+																{currentExperience}
+															</span>
+														</div>
+														<div className="flex items-center justify-between mt-2 text-sm font-heading">
+															<span className="text-muted-foreground">
+																Needed for Next Level
+															</span>
+															<span className="font-resurge text-blue-400">
+																{experienceNeeded}
+															</span>
 														</div>
 													</div>
-												);
-											})}
-										</div>
-									</div>
-								)}
+												)}
 
-								{/* Regent Features Unlocked at This Level */}
-								{primaryRegentUnlock && newRegentFeatures.length > 0 && (
-									<div className="p-4 rounded-lg bg-gradient-to-r from-regent-gold/10 to-shadow-purple/10 border border-regent-gold/20">
-										<Label className="font-resurge text-regent-gold tracking-wide flex items-center gap-2 mb-4">
-											<Crown className="w-4 h-4" />
-											{formatRegentVernacular(regentData?.name ?? "")} — NEW
-											ABILITIES
-										</Label>
-										<div className="space-y-3">
-											{newRegentFeatures.map(
-												(feature: JobFeature, idx: number) => {
-													return (
-														<div
-															key={
-																feature.id ||
-																`regent-feature-${idx}-${feature.name}`
-															}
-															className="p-4 rounded-lg border border-regent-gold/10 bg-muted/30"
-														>
-															<div className="flex items-center gap-2 mb-1 flex-wrap">
-																<span className="font-resurge font-semibold text-regent-gold tracking-wide">
-																	{formatRegentVernacular(feature.name)}
-																</span>
-																{feature.type && (
-																	<Badge
-																		variant="secondary"
-																		className="text-xs font-heading"
-																	>
-																		{feature.type}
-																	</Badge>
-																)}
-																{feature.frequency && (
-																	<Badge
-																		variant="outline"
-																		className="text-xs font-heading border-regent-gold/30 text-regent-gold"
-																	>
-																		{feature.frequency}
-																	</Badge>
+												{/* HP Increase */}
+												<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
+													<Label className="font-resurge text-red-400 tracking-wide flex items-center gap-2">
+														<Heart className="w-4 h-4" />
+														VITALITY INCREASE
+													</Label>
+													<div className="flex items-center gap-4 mt-3">
+														<div className="flex-1">
+															<div className="relative">
+																<Input
+																	type="number"
+																	min={1}
+																	max={maxHP}
+																	value={hpIncrease || ""}
+																	onChange={(e) =>
+																		setHpIncrease(
+																			parseInt(e.target.value, 10) || null,
+																		)
+																	}
+																	placeholder={`Average: ${averageHP}`}
+																	className={cn(
+																		"text-center font-resurge text-xl border-red-500/30 focus:border-red-500",
+																		isRolling && "animate-pulse text-red-400",
+																	)}
+																/>
+																{hpIncrease && (
+																	<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-400 font-heading">
+																		HP
+																	</span>
 																)}
 															</div>
-															<p className="text-sm text-muted-foreground font-heading">
-																{formatRegentVernacular(
-																	feature.description || "",
-																)}
+															<p className="text-xs text-muted-foreground mt-2 font-heading">
+																Roll d{hitDieSize} {vitModifier >= 0 ? "+" : ""}
+																{vitModifier} (VIT) | Range:{" "}
+																{Math.max(1, 1 + vitModifier)} - {maxHP}
 															</p>
 														</div>
-													);
-												},
-											)}
-										</div>
-									</div>
-								)}
+														<Button
+															variant="outline"
+															onClick={rollHP}
+															disabled={isRolling}
+															className={cn(
+																"gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge",
+																isRolling && "animate-pulse",
+															)}
+														>
+															<Zap
+																className={cn(
+																	"w-4 h-4",
+																	isRolling && "animate-spin",
+																)}
+															/>
+															{isRolling ? "Rolling..." : "Roll"}
+														</Button>
+														<Button
+															variant="outline"
+															onClick={() => setHpIncrease(averageHP)}
+															className="gap-2 border-red-500/30 hover:bg-red-500/10 hover:border-red-500"
+														>
+															<Heart className="w-4 h-4" />
+															Average ({averageHP})
+														</Button>
+													</div>
+												</div>
+											</>
+										)}
 
-								{/* Stat Changes Preview */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/5 to-shadow-purple/5 border border-resurge/20">
-									<h4 className="font-resurge font-semibold mb-4 text-resurge tracking-wide flex items-center gap-2">
-										<TrendingUp className="w-4 h-4" />
-										STAT MODIFICATIONS
-									</h4>
-									<div className="grid grid-cols-2 gap-4 text-sm">
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Proficiency Bonus
-											</span>
-											<span className="font-resurge text-lg">
-												+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
-												<span className="text-resurge">
-													+{Math.ceil(newLevel / 4) + 1}
-												</span>
-											</span>
-										</div>
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Rift Favor Die
-											</span>
-											<span className="font-resurge text-lg">
-												d{character.rift_favor_die} {"->"}{" "}
-												<span className="text-resurge">
-													d
-													{newLevel <= 4
-														? 4
-														: newLevel <= 10
-															? 6
-															: newLevel <= 16
-																? 8
-																: 10}
-												</span>
-											</span>
-										</div>
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Max HP
-											</span>
-											<span className="font-resurge text-lg">
-												{character.hp_max} {"->"}{" "}
-												<span className="text-red-400">
-													{character.hp_max + (hpIncrease || 0)}
-												</span>
-											</span>
-										</div>
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Hit Dice
-											</span>
-											<span className="font-resurge text-lg">
-												{character.hit_dice_max} {"->"}{" "}
-												<span className="text-resurge">{newLevel}</span>
-											</span>
-										</div>
-									</div>
-								</div>
+										{/* STEP 2: PATH SELECTION (If applicable) */}
+										{activeStep.id === "path" && showPathSelection && (
+											<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
+												<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+													<Swords className="w-4 h-4" />
+													PATH SPECIALIZATION UNLOCKED
+												</Label>
+												<p className="text-sm text-muted-foreground mb-3 font-heading">
+													Choose your specialization path. This permanently
+													defines your combat doctrine.
+												</p>
+												<Select
+													value={selectedPath}
+													onValueChange={setSelectedPath}
+												>
+													<SelectTrigger className="border-purple-500/30 focus:border-purple-500">
+														<SelectValue placeholder="Choose a path..." />
+													</SelectTrigger>
+													<SelectContent>
+														{availablePaths.map((path) => (
+															<SelectItem key={path.id} value={path.id}>
+																{formatRegentVernacular(
+																	(path as { display_name?: string | null })
+																		.display_name || path.name,
+																)}
+															</SelectItem>
+														))}
+													</SelectContent>
+												</Select>
+												{selectedPath && (
+													<div className="mt-3 p-3 rounded-lg bg-muted/30 border border-purple-500/10">
+														<h4 className="font-heading font-semibold text-purple-400 mb-1">
+															{formatRegentVernacular(
+																(
+																	availablePaths.find(
+																		(p) => p.id === selectedPath,
+																	) as
+																		| { display_name?: string | null }
+																		| undefined
+																)?.display_name ||
+																	availablePaths.find(
+																		(p) => p.id === selectedPath,
+																	)?.name ||
+																	"",
+															)}
+														</h4>
+														<p className="text-sm text-muted-foreground">
+															{formatRegentVernacular(
+																availablePaths.find(
+																	(p) => p.id === selectedPath,
+																)?.description || "",
+															)}
+														</p>
+													</div>
+												)}
+											</div>
+										)}
+
+										{/* STEP 3: ASI & FEAT SELECTION */}
+										{activeStep.id === "asi" && (
+											<>
+												{showASISection && (
+													<div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
+														<Label className="font-resurge text-green-400 tracking-wide flex items-center gap-2 mb-4">
+															<Shield className="w-4 h-4" />
+															ABILITY SCORE IMPROVEMENT
+														</Label>
+														<p className="text-sm text-muted-foreground mb-3 font-heading">
+															Distribute 2 points among your ability scores (max
+															+2 to one, or +1 to two).
+														</p>
+														<div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+															{(
+																[
+																	"STR",
+																	"AGI",
+																	"VIT",
+																	"INT",
+																	"SENSE",
+																	"PRE",
+																] as const
+															).map((ability) => {
+																const currentScore =
+																	(
+																		character.abilities as Record<
+																			string,
+																			number
+																		>
+																	)[ability] ?? 10;
+																const bonus = asiChoices[ability] || 0;
+																const totalSpent = Object.values(
+																	asiChoices,
+																).reduce((s, v) => s + v, 0);
+																const canIncrease =
+																	totalSpent < 2 &&
+																	bonus < 2 &&
+																	currentScore + bonus < 20;
+																const canDecrease = bonus > 0;
+																return (
+																	<div
+																		key={ability}
+																		className="flex items-center justify-between p-2 rounded-lg bg-background/50 border border-green-500/10"
+																	>
+																		<div>
+																			<span className="font-resurge text-sm text-green-400">
+																				{ability}
+																			</span>
+																			<span className="text-xs text-muted-foreground ml-2 font-heading">
+																				{currentScore}
+																			</span>
+																		</div>
+																		<div className="flex items-center gap-1">
+																			<Button
+																				variant="ghost"
+																				size="sm"
+																				className="h-6 w-6 p-0 text-red-400"
+																				disabled={!canDecrease}
+																				onClick={() =>
+																					setAsiChoices((prev) => ({
+																						...prev,
+																						[ability]: Math.max(
+																							0,
+																							(prev[ability] || 0) - 1,
+																						),
+																					}))
+																				}
+																			>
+																				-
+																			</Button>
+																			<span
+																				className={cn(
+																					"font-resurge text-sm w-6 text-center",
+																					bonus > 0
+																						? "text-green-400"
+																						: "text-muted-foreground",
+																				)}
+																			>
+																				{bonus > 0 ? `+${bonus}` : "0"}
+																			</span>
+																			<Button
+																				variant="ghost"
+																				size="sm"
+																				className="h-6 w-6 p-0 text-green-400"
+																				disabled={!canIncrease}
+																				onClick={() =>
+																					setAsiChoices((prev) => ({
+																						...prev,
+																						[ability]: Math.min(
+																							2,
+																							(prev[ability] || 0) + 1,
+																						),
+																					}))
+																				}
+																			>
+																				+
+																			</Button>
+																		</div>
+																	</div>
+																);
+															})}
+														</div>
+														<p className="text-xs text-muted-foreground mt-2 font-heading">
+															Points remaining:{" "}
+															{2 -
+																Object.values(asiChoices).reduce(
+																	(s, v) => s + v,
+																	0,
+																)}
+														</p>
+													</div>
+												)}
+
+												{/* Feat Selection (shown when feats are available from awakening features) */}
+												{showFeatSelection && (
+													<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
+														<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
+															<Star className="w-4 h-4" />
+															FEAT SELECTION
+														</Label>
+														<p className="text-sm text-muted-foreground mb-3 font-heading">
+															Choose {availableChoices.feats} feat
+															{availableChoices.feats > 1 ? "s" : ""} from
+															awakening features.
+														</p>
+														<div className="space-y-2 max-h-48 overflow-y-auto">
+															{availableFeats.map((_feat: CompendiumFeat) => {
+																const feat = _feat;
+																const isSelected = selectedFeats.includes(
+																	feat.id,
+																);
+																return (
+																	<div
+																		key={feat.id}
+																		className="flex items-center gap-3 p-2 rounded-lg bg-background/50 border border-purple-500/10"
+																	>
+																		<input
+																			type="checkbox"
+																			id={`feat-${feat.id}`}
+																			checked={isSelected}
+																			onChange={(e) => {
+																				if (e.target.checked) {
+																					if (
+																						selectedFeats.length <
+																						availableChoices.feats
+																					) {
+																						setSelectedFeats([
+																							...selectedFeats,
+																							feat.id,
+																						]);
+																					}
+																				} else {
+																					setSelectedFeats(
+																						selectedFeats.filter(
+																							(id) => id !== feat.id,
+																						),
+																					);
+																				}
+																			}}
+																			disabled={
+																				!isSelected &&
+																				selectedFeats.length >=
+																					availableChoices.feats
+																			}
+																			className="rounded border-purple-500/30"
+																		/>
+																		<label
+																			htmlFor={`feat-${feat.id}`}
+																			className="flex-1 cursor-pointer"
+																		>
+																			<div>
+																				<span className="font-resurge text-sm text-purple-400">
+																					{formatRegentVernacular(feat.name)}
+																				</span>
+																				<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																					{formatRegentVernacular(
+																						feat.description || "",
+																					)}
+																				</p>
+																			</div>
+																		</label>
+																	</div>
+																);
+															})}
+														</div>
+														<p className="text-xs text-muted-foreground mt-2 font-heading">
+															Selected: {selectedFeats.length}/
+															{availableChoices.feats}
+														</p>
+													</div>
+												)}
+											</>
+										)}
+
+										{/* STEP 4: CLASS FEATURES & ENHANCEMENTS */}
+										{activeStep.id === "features" && (
+											<>
+												{/* New Features */}
+												{newFeatures.length > 0 && (
+													<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
+														<Label className="font-resurge text-amber-400 tracking-wide flex items-center gap-2 mb-4">
+															<Sparkles className="w-4 h-4" />
+															NEW ABILITIES UNLOCKED
+														</Label>
+														<div className="space-y-3">
+															{newFeatures.map((feature: JobFeature) => {
+																return (
+																	<div
+																		key={feature.id}
+																		className={cn(
+																			"p-4 rounded-lg border transition-all duration-300",
+																			"border-border bg-muted/30",
+																		)}
+																	>
+																		<div className="flex items-start gap-3">
+																			<div className="flex-1">
+																				<div className="flex items-center gap-2 mb-1 flex-wrap">
+																					<Label
+																						htmlFor={`feature-${feature.id}`}
+																						className="font-resurge font-semibold cursor-pointer text-amber-400 tracking-wide"
+																					>
+																						{formatRegentVernacular(
+																							feature.name,
+																						)}
+																					</Label>
+																					{feature.action_type && (
+																						<Badge
+																							variant="secondary"
+																							className="text-xs font-heading"
+																						>
+																							{formatRegentVernacular(
+																								feature.action_type,
+																							)}
+																						</Badge>
+																					)}
+																					{feature.uses_formula && (
+																						<Badge
+																							variant="outline"
+																							className="text-xs font-heading border-amber-500/30 text-amber-400"
+																						>
+																							{formatRegentVernacular(
+																								feature.uses_formula,
+																							)}
+																						</Badge>
+																					)}
+																				</div>
+																				<p className="text-sm text-muted-foreground font-heading">
+																					{formatRegentVernacular(
+																						feature.description || "",
+																					)}
+																				</p>
+																				{feature.prerequisites && (
+																					<p className="text-xs text-muted-foreground mt-1 italic">
+																						Prerequisites:{" "}
+																						{formatRegentVernacular(
+																							feature.prerequisites,
+																						)}
+																					</p>
+																				)}
+																			</div>
+																		</div>
+																	</div>
+																);
+															})}
+														</div>
+													</div>
+												)}
+
+												{/* Regent Features Unlocked at This Level */}
+												{primaryRegentUnlock &&
+													newRegentFeatures.length > 0 && (
+														<div className="p-4 rounded-lg bg-gradient-to-r from-regent-gold/10 to-shadow-purple/10 border border-regent-gold/20">
+															<Label className="font-resurge text-regent-gold tracking-wide flex items-center gap-2 mb-4">
+																<Crown className="w-4 h-4" />
+																{formatRegentVernacular(regentData?.name ?? "")}{" "}
+																— NEW ABILITIES
+															</Label>
+															<div className="space-y-3">
+																{newRegentFeatures.map(
+																	(feature: JobFeature, idx: number) => {
+																		return (
+																			<div
+																				key={
+																					feature.id ||
+																					`regent-feature-${idx}-${feature.name}`
+																				}
+																				className="p-4 rounded-lg border border-regent-gold/10 bg-muted/30"
+																			>
+																				<div className="flex items-center gap-2 mb-1 flex-wrap">
+																					<span className="font-resurge font-semibold text-regent-gold tracking-wide">
+																						{formatRegentVernacular(
+																							feature.name,
+																						)}
+																					</span>
+																					{feature.type && (
+																						<Badge
+																							variant="secondary"
+																							className="text-xs font-heading"
+																						>
+																							{feature.type}
+																						</Badge>
+																					)}
+																					{feature.frequency && (
+																						<Badge
+																							variant="outline"
+																							className="text-xs font-heading border-regent-gold/30 text-regent-gold"
+																						>
+																							{feature.frequency}
+																						</Badge>
+																					)}
+																				</div>
+																				<p className="text-sm text-muted-foreground font-heading">
+																					{formatRegentVernacular(
+																						feature.description || "",
+																					)}
+																				</p>
+																			</div>
+																		);
+																	},
+																)}
+															</div>
+														</div>
+													)}
+
+												{newFeatures.length > 0 && (
+													<WizardChoiceEngine
+														newFeatures={newFeatures as JobFeature[]}
+														onChoicesUpdate={(ready, choices) => {
+															setFeatureChoicesReady(ready);
+															setSelectedFeatureOptions(choices);
+														}}
+													/>
+												)}
+											</>
+										)}
+
+										{/* STEP 4.5: MAGICAL DISCOVERY */}
+										{activeStep.id === "discovery" && (
+											<WizardSpellEngine
+												characterId={character.id}
+												characterJob={character.job || ""}
+												characterPath={character.path || ""}
+												newLevel={newLevel}
+												availableChoices={availableChoices}
+												onSelectionsUpdate={(ready, powers, spells) => {
+													setSpellChoicesReady(ready);
+													setSelectedSpellsPayload({ powers, spells });
+												}}
+											/>
+										)}
+
+										{/* STEP FINAL: REVIEW & STAT IMPLICATION */}
+										{activeStep.id === "review" && (
+											<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/5 to-shadow-purple/5 border border-resurge/20">
+												<h4 className="font-resurge font-semibold mb-4 text-resurge tracking-wide flex items-center gap-2">
+													<TrendingUp className="w-4 h-4" />
+													STAT MODIFICATIONS
+												</h4>
+												<div className="grid grid-cols-2 gap-4 text-sm">
+													<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+														<span className="text-muted-foreground font-heading">
+															Proficiency Bonus
+														</span>
+														<span className="font-resurge text-lg">
+															+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
+															<span className="text-resurge">
+																+{Math.ceil(newLevel / 4) + 1}
+															</span>
+														</span>
+													</div>
+													<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+														<span className="text-muted-foreground font-heading">
+															Rift Favor Die
+														</span>
+														<span className="font-resurge text-lg">
+															d{character.rift_favor_die} {"->"}{" "}
+															<span className="text-resurge">
+																d
+																{newLevel <= 4
+																	? 4
+																	: newLevel <= 10
+																		? 6
+																		: newLevel <= 16
+																			? 8
+																			: 10}
+															</span>
+														</span>
+													</div>
+													<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+														<span className="text-muted-foreground font-heading">
+															Max HP
+														</span>
+														<span className="font-resurge text-lg">
+															{character.hp_max} {"->"}{" "}
+															<span className="text-red-400">
+																{character.hp_max + (hpIncrease || 0)}
+															</span>
+														</span>
+													</div>
+													<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+														<span className="text-muted-foreground font-heading">
+															Hit Dice
+														</span>
+														<span className="font-resurge text-lg">
+															{character.hit_dice_max} {"->"}{" "}
+															<span className="text-resurge">{newLevel}</span>
+														</span>
+													</div>
+												</div>
+											</div>
+										)}
+									</motion.div>
+								</AnimatePresence>
 							</div>
 						</AscendantWindow>
 
-						<div className="flex justify-end gap-4 mt-6">
+						<div className="flex justify-between gap-4 mt-6 border-t border-resurge/20 pt-6 font-heading">
 							<Button
-								variant="outline"
+								variant="ghost"
 								onClick={onClose}
-								className="font-heading"
+								className="text-muted-foreground hover:text-white"
 							>
-								Cancel
+								Cancel Sequence
 							</Button>
-							<Button
-								onClick={handleLevelUp}
-								disabled={
-									loading ||
-									hpIncrease === null ||
-									newLevel <= character.level ||
-									(!isMilestone && !canLevelUp)
-								}
-								className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
-							>
-								{loading ? (
-									<>
-										<Loader2 className="w-4 h-4 animate-spin" />
-										Processing...
-									</>
+
+							<div className="flex gap-3">
+								<Button
+									variant="outline"
+									onClick={handlePrev}
+									disabled={currentStepIndex === 0}
+									className="border-resurge/30 hover:border-resurge"
+								>
+									Back
+								</Button>
+
+								{currentStepIndex < steps.length - 1 ? (
+									<Button
+										onClick={handleNext}
+										disabled={!isStepValid}
+										className="bg-resurge/20 hover:bg-resurge/30 text-resurge min-w-[120px]"
+									>
+										Continue
+									</Button>
 								) : (
-									<>
-										<TrendingUp className="w-4 h-4" />
-										Complete Level Up
-									</>
+									<Button
+										onClick={handleLevelUp}
+										disabled={
+											loading ||
+											!isStepValid ||
+											hpIncrease === null ||
+											newLevel <= character.level ||
+											(!isMilestone && !canLevelUp)
+										}
+										className="gap-2 bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
+									>
+										{loading ? (
+											<Loader2 className="w-4 h-4 animate-spin" />
+										) : (
+											<TrendingUp className="w-4 h-4" />
+										)}
+										Complete Integration
+									</Button>
 								)}
-							</Button>
+							</div>
 						</div>
 					</div>
 				</ScrollArea>

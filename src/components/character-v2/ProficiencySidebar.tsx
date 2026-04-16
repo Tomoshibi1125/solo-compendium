@@ -5,6 +5,7 @@ import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
 
 interface ProficiencySidebarProps {
 	saves: Record<AbilityScore, number>;
+	savesBreakdown: Record<AbilityScore, { source: string; value: number }[]>;
 	skills: Record<
 		string,
 		{
@@ -15,6 +16,7 @@ interface ProficiencySidebarProps {
 			passive: number;
 		}
 	>;
+	skillsBreakdown: Record<string, { source: string; value: number }[]>;
 	allSkills: { name: string; ability: AbilityScore }[];
 	savingThrowProficiences: AbilityScore[];
 	onRollSave: (ability: AbilityScore) => void;
@@ -33,9 +35,13 @@ interface ProficiencySidebarProps {
 	};
 }
 
+import { StatBreakdown } from "@/components/ui/StatBreakdown";
+
 export function ProficiencySidebar({
 	saves,
+	savesBreakdown,
 	skills,
+	skillsBreakdown,
 	allSkills,
 	savingThrowProficiences,
 	onRollSave,
@@ -55,37 +61,53 @@ export function ProficiencySidebar({
 						const mod = saves[ability];
 						const isProficient = savingThrowProficiences.includes(ability);
 
+						const breakdown = savesBreakdown[ability] || [];
+
 						return (
-							<button
+							<StatBreakdown
 								key={ability}
-								type="button"
-								onClick={() => onRollSave(ability)}
-								className="group flex items-center justify-between p-2 rounded-[2px] bg-black/40 border border-primary/5 hover:border-primary/30 hover:bg-primary/5 transition-all text-left"
+								label={`${ability} Save`}
+								total={mod}
+								breakdown={breakdown}
 							>
-								<div className="flex items-center gap-3">
-									<div
-										className={cn(
-											"w-2 h-2 rounded-full border border-primary/30",
-											isProficient &&
-												"bg-primary shadow-[0_0_8px_hsl(var(--primary))]",
-										)}
-									/>
-									<span className="text-xs font-mono font-bold text-white/90 group-hover:text-primary transition-colors">
-										{ability}
-									</span>
-								</div>
-								<div className="flex items-center gap-2">
-									<span
-										className={cn(
-											"text-sm font-display font-bold",
-											mod >= 0 ? "text-primary" : "text-red-400",
-										)}
-									>
-										{formatModifier(mod)}
-									</span>
-									<Dice6 className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity" />
-								</div>
-							</button>
+								<button
+									type="button"
+									onClick={(_e) => {
+										onRollSave(ability);
+									}}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" || e.key === " ") {
+											e.preventDefault();
+											onRollSave(ability);
+										}
+									}}
+									className="group flex items-center justify-between p-2 rounded-[2px] bg-black/40 border border-primary/5 hover:border-primary/30 hover:bg-primary/5 transition-all text-left w-full cursor-pointer"
+								>
+									<div className="flex items-center gap-3">
+										<div
+											className={cn(
+												"w-2 h-2 rounded-full border border-primary/30",
+												isProficient &&
+													"bg-primary shadow-[0_0_8px_hsl(var(--primary))]",
+											)}
+										/>
+										<span className="text-xs font-mono font-bold text-white/90 group-hover:text-primary transition-colors">
+											{ability}
+										</span>
+									</div>
+									<div className="flex items-center gap-2">
+										<span
+											className={cn(
+												"text-sm font-display font-bold",
+												mod >= 0 ? "text-primary" : "text-red-400",
+											)}
+										>
+											{formatModifier(mod)}
+										</span>
+										<Dice6 className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity" />
+									</div>
+								</button>
+							</StatBreakdown>
 						);
 					})}
 				</div>
@@ -244,42 +266,56 @@ export function ProficiencySidebar({
 						const s = skills[skill.name];
 						if (!s) return null;
 
+						const breakdown = skillsBreakdown[skill.name] || [];
+
 						return (
-							<button
+							<StatBreakdown
 								key={skill.name}
-								type="button"
-								onClick={() => onRollSkill(skill.name)}
-								className="group flex items-center justify-between px-2 py-1.5 rounded-[2px] bg-black/20 border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all text-left"
+								label={`${skill.name} Check`}
+								total={s.modifier}
+								breakdown={breakdown}
 							>
-								<div className="flex items-center gap-2 min-w-0">
-									<div
-										className={cn(
-											"w-1.5 h-1.5 rounded-full border border-primary/20",
-											s.expertise
-												? "bg-primary shadow-[0_0_8px_hsl(var(--primary))]"
-												: s.proficient
-													? "bg-primary/40"
-													: "bg-transparent",
-										)}
-									/>
-									<span className="text-xs font-heading font-medium truncate text-white/80 group-hover:text-white transition-colors">
-										{skill.name}
-									</span>
-									<span className="text-[9px] font-mono text-primary/40 uppercase">
-										{skill.ability.substring(0, 3)}
-									</span>
-								</div>
-								<div className="flex items-center gap-2">
-									<span
-										className={cn(
-											"text-xs font-display font-bold",
-											s.modifier >= 0 ? "text-white/90" : "text-red-400",
-										)}
-									>
-										{formatModifier(s.modifier)}
-									</span>
-								</div>
-							</button>
+								<button
+									type="button"
+									onClick={() => onRollSkill(skill.name)}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" || e.key === " ") {
+											e.preventDefault();
+											onRollSkill(skill.name);
+										}
+									}}
+									className="group flex items-center justify-between px-2 py-1.5 rounded-[2px] bg-black/20 border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all text-left w-full cursor-pointer"
+								>
+									<div className="flex items-center gap-2 min-w-0">
+										<div
+											className={cn(
+												"w-1.5 h-1.5 rounded-full border border-primary/20",
+												s.expertise
+													? "bg-primary shadow-[0_0_8px_hsl(var(--primary))]"
+													: s.proficient
+														? "bg-primary/40"
+														: "bg-transparent",
+											)}
+										/>
+										<span className="text-xs font-heading font-medium truncate text-white/80 group-hover:text-white transition-colors">
+											{skill.name}
+										</span>
+										<span className="text-[9px] font-mono text-primary/40 uppercase">
+											{skill.ability.substring(0, 3)}
+										</span>
+									</div>
+									<div className="flex items-center gap-2">
+										<span
+											className={cn(
+												"text-xs font-display font-bold",
+												s.modifier >= 0 ? "text-white/90" : "text-red-400",
+											)}
+										>
+											{formatModifier(s.modifier)}
+										</span>
+									</div>
+								</button>
+							</StatBreakdown>
 						);
 					})}
 				</div>
