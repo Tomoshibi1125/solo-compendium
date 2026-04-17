@@ -29,17 +29,20 @@ const TabsTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<TabsPrimitive.Trigger
 		ref={ref}
+		style={{ color: "red", backgroundColor: "green", opacity: 1 }}
 		className={cn(
 			"inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-xs font-mono tracking-widest uppercase transition-all duration-300 relative group",
-			"data-[state=active]:bg-amethyst-purple/20 data-[state=active]:text-amethyst-purple data-[state=active]:shadow-[0_0_15px_rgba(155,109,255,0.3)]",
-			"data-[state=inactive]:text-foreground/70 hover:text-amethyst-purple hover:bg-amethyst-purple/10",
+			"hover:text-white hover:bg-amethyst-purple/10",
+			"data-[state=active]:!text-amethyst-purple data-[state=active]:bg-amethyst-purple/20 data-[state=active]:shadow-[0_0_15px_rgba(155,109,255,0.3)]",
 			"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amethyst-purple/50",
 			"disabled:pointer-events-none disabled:opacity-50",
 			className,
 		)}
 		{...props}
 	>
-		<span className="relative z-10">{props.children}</span>
+		<span className="relative z-10 flex items-center justify-center gap-2 w-full h-full pointer-events-none">
+			{props.children}
+		</span>
 		<div className="absolute bottom-0 left-0 right-0 h-[2px] bg-amethyst-purple scale-x-0 group-data-[state=active]:scale-x-100 transition-transform duration-500 origin-center shadow-[0_0_10px_rgba(155,109,255,0.8)]" />
 	</TabsPrimitive.Trigger>
 ));

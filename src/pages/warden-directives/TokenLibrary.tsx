@@ -9,6 +9,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	AscendantText,
 	ManaFlowText,
@@ -57,6 +58,7 @@ const TOKEN_CATEGORIES = [
 const TokenLibrary = () => {
 	const navigate = useNavigate();
 	const { toast } = useToast();
+	const embedded = useEmbedded();
 	const [isCreating, setIsCreating] = useState(false);
 	const [_imagePreview, setImagePreview] = useState<string | null>(null);
 	const nameInputRef = useRef<HTMLInputElement>(null);
@@ -349,7 +351,7 @@ const TokenLibrary = () => {
 	if (isHydrating) {
 		return (
 			<Layout>
-				<div className="container mx-auto px-4 py-8 max-w-7xl">
+				<div className={cn("w-full", !embedded && "container mx-auto px-4 py-8 max-w-7xl")}>
 					<AscendantWindow title="LOADING TOKEN LIBRARY">
 						<AscendantText className="block text-sm text-muted-foreground">
 							Loading tokens and settings...
@@ -362,30 +364,32 @@ const TokenLibrary = () => {
 
 	return (
 		<Layout>
-			<div className="container mx-auto px-4 py-8 max-w-7xl">
-				<div className="mb-6">
-					<Button
-						variant="ghost"
-						onClick={() => navigate("/warden-directives")}
-						className="mb-4"
-					>
-						<ArrowLeft className="w-4 h-4 mr-2" />
-						Back to Warden Tools
-					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Entity Manifestation
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Manage physical representations for dimensional anomalies and allied
-						entities within localized fields. Create custom manifestations,
-						categorize parameters, and sync local records.
-					</ManaFlowText>
-				</div>
+			<div className={cn("w-full", !embedded && "container mx-auto px-4 py-8 max-w-7xl")}>
+				{!embedded && (
+					<div className="mb-6">
+						<Button
+							variant="ghost"
+							onClick={() => navigate("/warden-directives")}
+							className="mb-4"
+						>
+							<ArrowLeft className="w-4 h-4 mr-2" />
+							Back to Warden Tools
+						</Button>
+						<RiftHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="mb-2"
+						>
+							Entity Manifestation
+						</RiftHeading>
+						<ManaFlowText variant="rift" speed="slow" className="font-heading">
+							Manage physical representations for dimensional anomalies and allied
+							entities within localized fields. Create custom manifestations,
+							categorize parameters, and sync local records.
+						</ManaFlowText>
+					</div>
+				)}
 
 				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 					<div className="lg:col-span-1 space-y-6">

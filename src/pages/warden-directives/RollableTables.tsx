@@ -2,8 +2,10 @@ import { ArrowLeft, Dice6, Loader2, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -178,6 +180,7 @@ type RollableTablesState = {
 
 const RollableTables = () => {
 	const navigate = useNavigate();
+	const embedded = useEmbedded();
 	const {
 		state: storedState,
 		isLoading,
@@ -289,29 +292,31 @@ For EACH result, provide:
 
 	return (
 		<Layout>
-			<div className="container mx-auto px-4 py-8">
-				<div className="mb-6">
-					<Button
-						variant="ghost"
-						onClick={() => navigate("/warden-directives")}
-						className="mb-4"
-					>
-						<ArrowLeft className="w-4 h-4 mr-2" />
-						Back to System Tools
-					</Button>
-					<RiftHeading
-						level={1}
-						variant="sovereign"
-						dimensional
-						className="mb-2"
-					>
-						Warden Tables
-					</RiftHeading>
-					<ManaFlowText variant="rift" speed="slow" className="font-heading">
-						Rollable tables from the Warden's Guide, adapted for the post-reset
-						world.
-					</ManaFlowText>
-				</div>
+			<div className={cn("w-full", !embedded && "container mx-auto px-4 py-8")}>
+				{!embedded && (
+					<div className="mb-6">
+						<Button
+							variant="ghost"
+							onClick={() => navigate("/warden-directives")}
+							className="mb-4"
+						>
+							<ArrowLeft className="w-4 h-4 mr-2" />
+							Back to System Tools
+						</Button>
+						<RiftHeading
+							level={1}
+							variant="sovereign"
+							dimensional
+							className="mb-2"
+						>
+							Warden Tables
+						</RiftHeading>
+						<ManaFlowText variant="rift" speed="slow" className="font-heading">
+							Rollable tables from the Warden's Guide, adapted for the post-reset
+							world.
+						</ManaFlowText>
+					</div>
+				)}
 
 				<Tabs
 					value={activeTab}

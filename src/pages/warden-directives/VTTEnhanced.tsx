@@ -2105,7 +2105,7 @@ const VTTEnhanced = () => {
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 xl:col-span-2 flex flex-col gap-4 xl:overflow-y-auto order-2 xl:order-1",
+									"col-span-1 xl:col-span-3 flex flex-col gap-4 xl:overflow-y-auto order-2 xl:order-1",
 									"min-h-0", // Prevent CSS grid blowout
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
@@ -2887,305 +2887,7 @@ const VTTEnhanced = () => {
 									</>
 								)}
 
-								{/* Embedded Initiative Tracker */}
-								{isWarden && (
-									<AscendantWindow title="INITIATIVE TRACKER">
-										<VTTInitiativePanel
-											campaignId={campaignId || ""}
-											sessionId={sessionId}
-											isWarden={isWarden}
-											onHighlightToken={(characterId) => {
-												// Find token with matching characterId and highlight it
-												const token = currentScene?.tokens.find(
-													(t) => t.characterId === characterId,
-												);
-												if (token) setActiveTokenId(token.id);
-											}}
-										/>
-									</AscendantWindow>
-								)}
-
-								{/* Audio Manager */}
-								{isWarden && sessionId && (
-									<AscendantWindow title="AUDIO TRACKS">
-										<div className="space-y-4">
-											{audioTracks.length === 0 ? (
-												<AscendantText className="block text-xs text-foreground/70 text-center py-2">
-													No tracks uploaded for this session yet.
-												</AscendantText>
-											) : (
-												<div className="space-y-2 max-h-48 overflow-y-auto">
-													{audioTracks.map((track) => (
-														<div
-															key={track.id}
-															className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20"
-														>
-															<span className="truncate flex-1 font-medium">
-																{track.name}
-															</span>
-															<div className="flex items-center gap-1">
-																<Button
-																	variant="ghost"
-																	size="sm"
-																	className="h-6 w-6 p-0"
-																	onClick={() => {
-																		if (track.is_playing) {
-																			vttAudioManager.stopTrack(track.id);
-																			updateTrack({
-																				track_id: track.id,
-																				session_id: sessionId,
-																				is_playing: false,
-																			});
-																		} else {
-																			vttAudioManager.playTrack(track);
-																			updateTrack({
-																				track_id: track.id,
-																				session_id: sessionId,
-																				is_playing: true,
-																			});
-																		}
-																	}}
-																>
-																	{track.is_playing ? "⏹" : "▶"}
-																</Button>
-																<Button
-																	variant="ghost"
-																	size="sm"
-																	className="h-6 w-6 p-0 text-destructive"
-																	onClick={() =>
-																		deleteTrack({
-																			trackId: track.id,
-																			sessionId,
-																		})
-																	}
-																>
-																	×
-																</Button>
-															</div>
-														</div>
-													))}
-												</div>
-											)}
-											<Button
-												variant="outline"
-												size="sm"
-												className="w-full text-xs"
-												onClick={() => {
-													const url = window.prompt(
-														"Enter valid audio URL (mp3/wav/ogg):",
-													);
-													const name = window.prompt("Enter track name:");
-													if (url && name) {
-														createTrack({
-															session_id: sessionId,
-															name,
-															url,
-															type: "music",
-															volume: 0.5,
-															loop: true,
-															is_playing: false,
-															created_by: user?.id || "",
-														});
-													}
-												}}
-											>
-												+ Add Audio Track URL
-											</Button>
-										</div>
-									</AscendantWindow>
-								)}
-
-								{/* Comprehensive Warden Tools Panel */}
-								{isWarden && (
-									<ProtocolWardenTools
-										campaignId={campaignId || ""}
-										onRoll={vttRealtime.rollAndBroadcast}
-										onChangeMap={(url) => {
-											if (currentScene) {
-												const nextScene = {
-													...currentScene,
-													backgroundUrl: url,
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertScene(scenes, nextScene),
-													currentScene.id,
-												);
-											}
-										}}
-										onAddToken={(t: VTTTokenPayload) => {
-											if (currentScene) {
-												const newToken = {
-													...t,
-													id: t.id || `token-${Date.now()}`,
-												} as PlacedToken;
-												updateScene({
-													tokens: [...(currentScene.tokens || []), newToken],
-												});
-												vttRealtime.broadcastTokenAdd(newToken);
-											}
-										}}
-										onAddEffect={(e: VTTEffectPayload) => {
-											if (!currentScene) return;
-											const cx = Math.floor((currentScene.width || 20) / 2);
-											const cy = Math.floor((currentScene.height || 20) / 2);
-
-											if (e.type === "magic" || e.type === "image") {
-												const newToken = {
-													id: e.id || `effect-${Date.now()}`,
-													name: e.name || "Effect",
-													tokenType: "effect",
-													imageUrl: e.imageUrl,
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-													size: "large",
-													color: e.color || "#ffffff",
-													rotation: 0,
-													layer: 2,
-													locked: false,
-													visible: true,
-													render: {
-														mode: "overlay",
-														blendMode: "screen",
-														opacity: 0.8,
-													},
-												} as PlacedToken;
-												updateScene({
-													tokens: [...(currentScene.tokens || []), newToken],
-												});
-												vttRealtime.broadcastTokenAdd(newToken);
-											} else if (e.type === "light" || e.type === "dark") {
-												const lightRadius = e.radius || 10;
-												const newLight: LightSource = {
-													id: e.id || `light-${Date.now()}`,
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-													brightRadius: Math.floor(lightRadius * 0.6),
-													dimRadius: lightRadius,
-													color: e.color || "#ffffff",
-													intensity: e.type === "dark" ? 0 : 0.8,
-													type: e.type === "dark" ? "ambient" : "torch",
-												};
-												const nextScene = {
-													...currentScene,
-													lights: [...(currentScene.lights || []), newLight],
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertScene(scenes, nextScene),
-													currentScene.id,
-												);
-											} else if (e.type === "terrain") {
-												const terrainCenter = {
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-												};
-												const terrainRadius = e.radius || 8;
-												const newTerrain: TerrainZone = {
-													id: e.id || `terrain-${Date.now()}`,
-													type: "difficult",
-													vertices: [
-														{
-															x: terrainCenter.x - terrainRadius,
-															y: terrainCenter.y - terrainRadius,
-														},
-														{
-															x: terrainCenter.x + terrainRadius,
-															y: terrainCenter.y - terrainRadius,
-														},
-														{
-															x: terrainCenter.x + terrainRadius,
-															y: terrainCenter.y + terrainRadius,
-														},
-														{
-															x: terrainCenter.x - terrainRadius,
-															y: terrainCenter.y + terrainRadius,
-														},
-													],
-													movementCost: 2,
-													fillColor: e.color || "rgba(139,90,43,0.25)",
-													label: e.name || "Difficult Terrain",
-													visible: true,
-												};
-												const nextScene = {
-													...currentScene,
-													terrain: [
-														...(currentScene.terrain || []),
-														newTerrain,
-													],
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertScene(scenes, nextScene),
-													nextScene.id,
-												);
-											} else if (e.type === "ambient") {
-												const newAmbient: AmbientSoundZone = {
-													id: e.id || `ambient-${Date.now()}`,
-													label: e.name || "Ambient",
-													audioUrl:
-														"library:" +
-														(e.name || "").toLowerCase().replace(/\s/g, "-"),
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-													shape: "circle",
-													radius: e.radius || 10,
-													volume: 0.8,
-													loop: true,
-													enabled: true,
-													gmOnly: true,
-													walledOcclusion: false,
-													falloff: "linear",
-													category: "ambient",
-												};
-												const nextScene = {
-													...currentScene,
-													ambientSounds: [
-														...(currentScene.ambientSounds || []),
-														newAmbient,
-													],
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertScene(scenes, nextScene),
-													nextScene.id,
-												);
-											}
-										}}
-										onShareHandout={(url: string, name?: string) => {
-											vttRealtime.rollAndBroadcast(
-												`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
-												"wardenroll",
-											);
-										}}
-										onPlaySound={(soundId) => {
-											vttRealtime.broadcastAudioSync("play_sound", soundId);
-											toast({
-												title: "Sound Played",
-												description: `Playing ${soundId} sound effect`,
-											});
-										}}
-										onMusicChange={(musicId) => {
-											if (!musicEngineRef.current) {
-												musicEngineRef.current = new VttMusicEngine();
-											}
-											if (musicId === "stop") {
-												musicEngineRef.current.stop();
-												vttRealtime.broadcastAudioSync("music_stop", "stop");
-												toast({ title: "Music Stopped" });
-											} else {
-												musicEngineRef.current.play(musicId as MusicMood);
-												vttRealtime.broadcastAudioSync("music_change", musicId);
-												toast({
-													title: "Music Changed",
-													description: `Playing ${musicId} ambient music`,
-												});
-											}
-										}}
-									/>
-								)}
-
-								<AscendantWindow title="TOKENS">
+<AscendantWindow title="TOKENS">
 									<Tabs defaultValue="characters" className="w-full">
 										<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 											<TabsTrigger
@@ -3345,7 +3047,7 @@ const VTTEnhanced = () => {
 									"order-1 xl:order-2 min-h-0", // min-h-0 ensures map shrinks to fit grid area
 									isMapExpanded
 										? "col-span-1 xl:col-span-12"
-										: "col-span-1 xl:col-span-7",
+										: "col-span-1 xl:col-span-6",
 								)}
 							>
 								<AscendantWindow
@@ -3514,7 +3216,7 @@ const VTTEnhanced = () => {
 										role="application"
 										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										className={cn(
-											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-[500px]",
+											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
 												(selectedCharacterId || selectedLibraryTokenId) &&
@@ -3913,7 +3615,306 @@ const VTTEnhanced = () => {
 									isMobile && "hidden",
 								)}
 							>
-								{activeToken && (
+
+								{/* Embedded Initiative Tracker */}
+								{isWarden && (
+									<AscendantWindow title="INITIATIVE TRACKER">
+										<VTTInitiativePanel
+											campaignId={campaignId || ""}
+											sessionId={sessionId}
+											isWarden={isWarden}
+											onHighlightToken={(characterId) => {
+												// Find token with matching characterId and highlight it
+												const token = currentScene?.tokens.find(
+													(t) => t.characterId === characterId,
+												);
+												if (token) setActiveTokenId(token.id);
+											}}
+										/>
+									</AscendantWindow>
+								)}
+
+								{/* Audio Manager */}
+								{isWarden && sessionId && (
+									<AscendantWindow title="AUDIO TRACKS">
+										<div className="space-y-4">
+											{audioTracks.length === 0 ? (
+												<AscendantText className="block text-xs text-foreground/70 text-center py-2">
+													No tracks uploaded for this session yet.
+												</AscendantText>
+											) : (
+												<div className="space-y-2 max-h-48 overflow-y-auto">
+													{audioTracks.map((track) => (
+														<div
+															key={track.id}
+															className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20"
+														>
+															<span className="truncate flex-1 font-medium">
+																{track.name}
+															</span>
+															<div className="flex items-center gap-1">
+																<Button
+																	variant="ghost"
+																	size="sm"
+																	className="h-6 w-6 p-0"
+																	onClick={() => {
+																		if (track.is_playing) {
+																			vttAudioManager.stopTrack(track.id);
+																			updateTrack({
+																				track_id: track.id,
+																				session_id: sessionId,
+																				is_playing: false,
+																			});
+																		} else {
+																			vttAudioManager.playTrack(track);
+																			updateTrack({
+																				track_id: track.id,
+																				session_id: sessionId,
+																				is_playing: true,
+																			});
+																		}
+																	}}
+																>
+																	{track.is_playing ? "⏹" : "▶"}
+																</Button>
+																<Button
+																	variant="ghost"
+																	size="sm"
+																	className="h-6 w-6 p-0 text-destructive"
+																	onClick={() =>
+																		deleteTrack({
+																			trackId: track.id,
+																			sessionId,
+																		})
+																	}
+																>
+																	×
+																</Button>
+															</div>
+														</div>
+													))}
+												</div>
+											)}
+											<Button
+												variant="outline"
+												size="sm"
+												className="w-full text-xs"
+												onClick={() => {
+													const url = window.prompt(
+														"Enter valid audio URL (mp3/wav/ogg):",
+													);
+													const name = window.prompt("Enter track name:");
+													if (url && name) {
+														createTrack({
+															session_id: sessionId,
+															name,
+															url,
+															type: "music",
+															volume: 0.5,
+															loop: true,
+															is_playing: false,
+															created_by: user?.id || "",
+														});
+													}
+												}}
+											>
+												+ Add Audio Track URL
+											</Button>
+										</div>
+									</AscendantWindow>
+								)}
+
+								{/* Comprehensive Warden Tools Panel */}
+								{isWarden && (
+									<ProtocolWardenTools
+										campaignId={campaignId || ""}
+										onRoll={vttRealtime.rollAndBroadcast}
+										onChangeMap={(url) => {
+											if (currentScene) {
+												const nextScene = {
+													...currentScene,
+													backgroundUrl: url,
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													currentScene.id,
+												);
+											}
+										}}
+										onAddToken={(t: VTTTokenPayload) => {
+											if (currentScene) {
+												const newToken = {
+													...t,
+													id: t.id || `token-${Date.now()}`,
+												} as PlacedToken;
+												updateScene({
+													tokens: [...(currentScene.tokens || []), newToken],
+												});
+												vttRealtime.broadcastTokenAdd(newToken);
+											}
+										}}
+										onAddEffect={(e: VTTEffectPayload) => {
+											if (!currentScene) return;
+											const cx = Math.floor((currentScene.width || 20) / 2);
+											const cy = Math.floor((currentScene.height || 20) / 2);
+
+											if (e.type === "magic" || e.type === "image") {
+												const newToken = {
+													id: e.id || `effect-${Date.now()}`,
+													name: e.name || "Effect",
+													tokenType: "effect",
+													imageUrl: e.imageUrl,
+													x: e.x ?? cx,
+													y: e.y ?? cy,
+													size: "large",
+													color: e.color || "#ffffff",
+													rotation: 0,
+													layer: 2,
+													locked: false,
+													visible: true,
+													render: {
+														mode: "overlay",
+														blendMode: "screen",
+														opacity: 0.8,
+													},
+												} as PlacedToken;
+												updateScene({
+													tokens: [...(currentScene.tokens || []), newToken],
+												});
+												vttRealtime.broadcastTokenAdd(newToken);
+											} else if (e.type === "light" || e.type === "dark") {
+												const lightRadius = e.radius || 10;
+												const newLight: LightSource = {
+													id: e.id || `light-${Date.now()}`,
+													x: e.x ?? cx,
+													y: e.y ?? cy,
+													brightRadius: Math.floor(lightRadius * 0.6),
+													dimRadius: lightRadius,
+													color: e.color || "#ffffff",
+													intensity: e.type === "dark" ? 0 : 0.8,
+													type: e.type === "dark" ? "ambient" : "torch",
+												};
+												const nextScene = {
+													...currentScene,
+													lights: [...(currentScene.lights || []), newLight],
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													currentScene.id,
+												);
+											} else if (e.type === "terrain") {
+												const terrainCenter = {
+													x: e.x ?? cx,
+													y: e.y ?? cy,
+												};
+												const terrainRadius = e.radius || 8;
+												const newTerrain: TerrainZone = {
+													id: e.id || `terrain-${Date.now()}`,
+													type: "difficult",
+													vertices: [
+														{
+															x: terrainCenter.x - terrainRadius,
+															y: terrainCenter.y - terrainRadius,
+														},
+														{
+															x: terrainCenter.x + terrainRadius,
+															y: terrainCenter.y - terrainRadius,
+														},
+														{
+															x: terrainCenter.x + terrainRadius,
+															y: terrainCenter.y + terrainRadius,
+														},
+														{
+															x: terrainCenter.x - terrainRadius,
+															y: terrainCenter.y + terrainRadius,
+														},
+													],
+													movementCost: 2,
+													fillColor: e.color || "rgba(139,90,43,0.25)",
+													label: e.name || "Difficult Terrain",
+													visible: true,
+												};
+												const nextScene = {
+													...currentScene,
+													terrain: [
+														...(currentScene.terrain || []),
+														newTerrain,
+													],
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													nextScene.id,
+												);
+											} else if (e.type === "ambient") {
+												const newAmbient: AmbientSoundZone = {
+													id: e.id || `ambient-${Date.now()}`,
+													label: e.name || "Ambient",
+													audioUrl:
+														"library:" +
+														(e.name || "").toLowerCase().replace(/\s/g, "-"),
+													x: e.x ?? cx,
+													y: e.y ?? cy,
+													shape: "circle",
+													radius: e.radius || 10,
+													volume: 0.8,
+													loop: true,
+													enabled: true,
+													gmOnly: true,
+													walledOcclusion: false,
+													falloff: "linear",
+													category: "ambient",
+												};
+												const nextScene = {
+													...currentScene,
+													ambientSounds: [
+														...(currentScene.ambientSounds || []),
+														newAmbient,
+													],
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertScene(scenes, nextScene),
+													nextScene.id,
+												);
+											}
+										}}
+										onShareHandout={(url: string, name?: string) => {
+											vttRealtime.rollAndBroadcast(
+												`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
+												"wardenroll",
+											);
+										}}
+										onPlaySound={(soundId) => {
+											vttRealtime.broadcastAudioSync("play_sound", soundId);
+											toast({
+												title: "Sound Played",
+												description: `Playing ${soundId} sound effect`,
+											});
+										}}
+										onMusicChange={(musicId) => {
+											if (!musicEngineRef.current) {
+												musicEngineRef.current = new VttMusicEngine();
+											}
+											if (musicId === "stop") {
+												musicEngineRef.current.stop();
+												vttRealtime.broadcastAudioSync("music_stop", "stop");
+												toast({ title: "Music Stopped" });
+											} else {
+												musicEngineRef.current.play(musicId as MusicMood);
+												vttRealtime.broadcastAudioSync("music_change", musicId);
+												toast({
+													title: "Music Changed",
+													description: `Playing ${musicId} ambient music`,
+												});
+											}
+										}}
+									/>
+								)}
+
+																{activeToken && (
 									<AscendantWindow title="ACTIVE TOKEN">
 										<div className="space-y-3 text-xs">
 											<div>

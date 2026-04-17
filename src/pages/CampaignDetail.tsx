@@ -244,10 +244,10 @@ const CampaignDetail = () => {
 						className="space-y-6"
 					>
 						<div
-							className="overflow-x-auto -mx-1 px-1"
+							className="overflow-x-auto -mx-1 px-1 pb-2"
 							style={{ scrollbarWidth: "none" }}
 						>
-							<TabsList className="inline-flex w-auto min-w-full gap-1">
+							<TabsList className="inline-flex w-max min-w-full justify-start gap-1 h-auto p-1">
 								<TabsTrigger
 									value="overview"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
