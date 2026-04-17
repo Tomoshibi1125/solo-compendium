@@ -180,6 +180,10 @@ export function VttPixiStage({
 	const tokenLayerRef = useRef<Container | null>(null);
 	const fogLayerRef = useRef<Container | null>(null);
 
+	// ── Caching refs to avoid unnecessary layer rebuilds ──
+	const currentBgUrlRef = useRef<string | null>(null);
+	const renderIdRef = useRef<number>(0);
+
 	// ── Callback refs: hold latest callback without triggering effects ──
 	const setActiveTokenIdRef = useRef(setActiveTokenId);
 	setActiveTokenIdRef.current = setActiveTokenId;
@@ -320,11 +324,31 @@ export function VttPixiStage({
 		if (!bg || !weatherLayer || !grid || !wallsLayer || !tokenLayer || !fog) return;
 
 		const renderBackground = async () => {
-			bg.removeChildren();
-			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
+			const currentRenderId = ++renderIdRef.current;
+
+			if (!effectiveVisibleLayers[0] || !scene?.backgroundImage) {
+				bg.visible = false;
+				return;
+			}
+			bg.visible = true;
+
+			// If the image hasn't changed, just update transforms
+			if (currentBgUrlRef.current === scene.backgroundImage && bg.children.length > 0) {
+				const sprite = bg.children[0] as Sprite;
+				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
+				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
+				const scale = scene.backgroundScale ?? 1;
+				sprite.scale.set(scale);
+				sprite.width = (scene.width ?? 0) * gridSize * zoom * scale;
+				sprite.height = (scene.height ?? 0) * gridSize * zoom * scale;
+				return;
+			}
 
 			try {
+				// Await the texture load BEFORE clearing the old background
 				const texture = await Assets.load(scene.backgroundImage);
+				if (currentRenderId !== renderIdRef.current) return; // Abort if superseded
+
 				const sprite = Sprite.from(texture as never);
 				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
 				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
@@ -333,9 +357,14 @@ export function VttPixiStage({
 				sprite.width = (scene.width ?? 0) * gridSize * zoom * scale;
 				sprite.height = (scene.height ?? 0) * gridSize * zoom * scale;
 				sprite.alpha = 0.95;
+
+				bg.removeChildren();
 				bg.addChild(sprite);
+				currentBgUrlRef.current = scene.backgroundImage;
 			} catch {
-				// ignore
+				// If load fails, clear the background
+				bg.removeChildren();
+				currentBgUrlRef.current = null;
 			}
 		};
 
@@ -643,7 +672,7 @@ export function VttPixiStage({
 				// Collect tokens that grant vision (owned tokens or all characters if none selected)
 				const visionSources = activeTokenId
 					? tokens.filter((t) => t.id === activeTokenId)
-					: tokens.filter((t) => t.tokenType === "character");
+					: tokens.filter((t) => t.tokenType === "character" && (!t.ownerId || t.ownerId === user?.id));
 
 				if (visionSources.length > 0) {
 					const losMask = new Graphics();
@@ -754,12 +783,29 @@ export function VttPixiStage({
 		};
 
 		const renderTokens = async () => {
-			tokenLayer.removeChildren();
+			const currentRenderId = ++renderIdRef.current;
 
 			const visible = tokens.filter((token) => {
 				if (!effectiveVisibleLayers[token.layer]) return false;
 				return isWarden ? true : token.visible;
 			});
+
+			// Pre-load all textures first so we don't yield during construction
+			const textures: Record<string, any> = {};
+			for (const token of visible) {
+				if (token.imageUrl) {
+					try {
+						textures[token.id] = await Assets.load(token.imageUrl);
+					} catch {
+						// ignore
+					}
+				}
+			}
+
+			if (currentRenderId !== renderIdRef.current) return; // Abort if a newer render started
+
+			// Now synchronously rebuild the token layer
+			tokenLayer.removeChildren();
 
 			for (const token of visible) {
 				const size = SIZE_VALUES[token.size] * zoom;
@@ -807,34 +853,21 @@ export function VttPixiStage({
 				}
 				container.addChild(tokenBg);
 
-				if (token.imageUrl) {
-					try {
-						const texture = await Assets.load(token.imageUrl);
-						const sprite = Sprite.from(texture as never);
-						sprite.width = size;
-						sprite.height = size;
-						sprite.anchor.set(0);
-						sprite.alpha = token.render?.opacity ?? 1;
-						sprite.blendMode = blendModeToPixi(
-							token.render?.blendMode,
-						) as Sprite["blendMode"];
-						if (!isOverlayToken) {
-							sprite.mask = tokenBg;
-						}
-						sprite.scale.set(1);
-						tokenLayer.addChild(container);
-						container.addChild(sprite);
-					} catch {
-						const text = new Text({
-							text: token.emoji || "@",
-							style: { fill: 0xffffff, fontSize: size * 0.4 },
-						});
-						text.x = size / 2;
-						text.y = size / 2;
-						text.anchor.set(0.5);
-						container.addChild(text);
-						tokenLayer.addChild(container);
+				if (token.imageUrl && textures[token.id]) {
+					const sprite = Sprite.from(textures[token.id] as never);
+					sprite.width = size;
+					sprite.height = size;
+					sprite.anchor.set(0);
+					sprite.alpha = token.render?.opacity ?? 1;
+					sprite.blendMode = blendModeToPixi(
+						token.render?.blendMode,
+					) as Sprite["blendMode"];
+					if (!isOverlayToken) {
+						sprite.mask = tokenBg;
 					}
+					sprite.scale.set(1);
+					tokenLayer.addChild(container);
+					container.addChild(sprite);
 				} else {
 					const text = new Text({
 						text: token.emoji || "@",
