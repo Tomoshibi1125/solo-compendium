@@ -744,7 +744,7 @@ const VTTEnhanced = () => {
 
 	const createNewScene = useCallback(() => {
 		const scene: VTTScene = {
-			id: `scene-${Date.now()}`,
+			id: `scene-${crypto.randomUUID()}`,
 			name: `Scene ${scenes.length + 1}`,
 			width: 20,
 			height: 20,
@@ -781,9 +781,16 @@ const VTTEnhanced = () => {
 		const storedScenes = Array.isArray(storedState.scenes)
 			? storedState.scenes
 			: [];
-		const nextScenes = (
+		const rawScenes = (
 			storedScenes.length > 0 ? storedScenes : legacyScenes
 		).map(normalizeScene);
+		// Deduplicate scenes by id to prevent duplicate React keys
+		const seenIds = new Set<string>();
+		const nextScenes = rawScenes.filter((s) => {
+			if (seenIds.has(s.id)) return false;
+			seenIds.add(s.id);
+			return true;
+		});
 		const nextCurrentId = storedState.currentSceneId ?? legacyCurrentId;
 
 		if (nextScenes.length > 0) {
@@ -2113,7 +2120,7 @@ const VTTEnhanced = () => {
 							>
 								{isWarden && (
 									<>
-										<AscendantWindow title="SCENES">
+										<AscendantWindow title="SCENES" className="shrink-0">
 											<div className="space-y-1 max-h-48 overflow-y-auto">
 												{scenes.map((scene) => (
 													<div
@@ -2230,7 +2237,7 @@ const VTTEnhanced = () => {
 											</div>
 										</AscendantWindow>
 
-										<AscendantWindow title="TOOLS">
+										<AscendantWindow title="TOOLS" className="shrink-0">
 											<div className="grid grid-cols-2 gap-2">
 												{(
 													[
@@ -2311,7 +2318,7 @@ const VTTEnhanced = () => {
 											)}
 										</AscendantWindow>
 
-										<AscendantWindow title="CONTROLS">
+										<AscendantWindow title="CONTROLS" className="shrink-0">
 											<div className="space-y-3">
 												<div>
 													<Label className="text-xs mb-1 block">Zoom</Label>
@@ -2556,7 +2563,7 @@ const VTTEnhanced = () => {
 												)}
 											</div>
 										</AscendantWindow>
-										<AscendantWindow title="LAYERS">
+										<AscendantWindow title="LAYERS" className="shrink-0">
 											<div className="space-y-2">
 												<Label className="text-xs">Active Layer</Label>
 												<Select
@@ -2628,7 +2635,7 @@ const VTTEnhanced = () => {
 												</div>
 											</div>
 										</AscendantWindow>
-										<AscendantWindow title="MAP SETTINGS">
+										<AscendantWindow title="MAP SETTINGS" className="shrink-0">
 											<div className="space-y-3">
 												<input
 													ref={mapInputRef}
@@ -2846,7 +2853,7 @@ const VTTEnhanced = () => {
 											</div>
 										</AscendantWindow>
 										{PREMADE_MAPS.length > 0 && (
-											<AscendantWindow title="PREMADE MAPS">
+											<AscendantWindow title="PREMADE MAPS" className="shrink-0">
 												<div className="grid grid-cols-2 gap-2">
 													{PREMADE_MAPS.map((map) => (
 														<button
@@ -3044,7 +3051,7 @@ const VTTEnhanced = () => {
 							{/* Main Map Area */}
 							<div
 								className={cn(
-									"order-1 xl:order-2 min-h-0", // min-h-0 ensures map shrinks to fit grid area
+									"order-1 xl:order-2 min-h-0 overflow-hidden", // min-h-0 + overflow-hidden ensures map doesn't blow out grid
 									isMapExpanded
 										? "col-span-1 xl:col-span-12"
 										: "col-span-1 xl:col-span-6",
@@ -3052,8 +3059,8 @@ const VTTEnhanced = () => {
 							>
 								<AscendantWindow
 									title="MAP"
-									className="min-h-[60vh] md:h-full flex flex-col"
-									contentClassName="flex-1 flex flex-col"
+									className="h-full flex flex-col overflow-hidden"
+									contentClassName="flex-1 flex flex-col min-h-0 overflow-hidden"
 									actions={
 										<div className="flex items-center gap-1 sm:gap-2">
 											<Button
@@ -3216,14 +3223,14 @@ const VTTEnhanced = () => {
 										role="application"
 										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										className={cn(
-											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
+											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-hidden min-h-0",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
 												(selectedCharacterId || selectedLibraryTokenId) &&
 												"cursor-crosshair",
 										)}
 									>
-										<div className={cn("vtt-scene-container", sceneClass)}>
+										<div className={cn("vtt-scene-container min-h-0 overflow-hidden relative", sceneClass)}>
 											<style>{overlayStyles}</style>
 											{!currentScene ? (
 												<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-void-black/80 backdrop-blur-sm z-50">
