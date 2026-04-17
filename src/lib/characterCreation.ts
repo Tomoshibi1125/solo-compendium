@@ -734,7 +734,7 @@ export function getJobTraitModifiers(
 
 	// 14. IDOL
 	if (job === "idol") {
-		if (trait === "system versatility") {
+		if (trait === "rift versatility") {
 			return [
 				{
 					type: "jack_of_all_trades",

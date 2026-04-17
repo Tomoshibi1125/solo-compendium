@@ -10,11 +10,25 @@
  *   - VTTEnhanced (Warden clicks a token with characterId)
  */
 
-import { Dice6, ExternalLink, Heart, Shield, Swords, Zap } from "lucide-react";
+import {
+	Dice6,
+	ExternalLink,
+	Heart,
+	Shield,
+	Sparkles,
+	Swords,
+	Zap,
+} from "lucide-react";
 // VTTCharacterPanel inherently uses `ddbEnhancements.roll` on line 115 and handles proper campaign syncing via `useCharacterSheetEnhancements(characterId)`.
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -22,6 +36,12 @@ import {
 	calculateCharacterStats,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
+import {
+	getAffordableOptions,
+	getAvailableFavorOptions,
+	type RiftFavorState,
+	spendRiftFavor,
+} from "@/lib/riftFavor";
 import { calculateSkillModifier, getAllSkills } from "@/lib/skills";
 import { cn } from "@/lib/utils";
 import {
@@ -199,7 +219,7 @@ export function VTTCharacterPanel({
 	if (isLoading) {
 		return (
 			<AscendantWindow title="CHARACTER" compact>
-				<div className="text-xs text-muted-foreground text-center py-4">
+				<div className="text-xs text-foreground/70 text-center py-4">
 					Loading character...
 				</div>
 			</AscendantWindow>
@@ -209,7 +229,7 @@ export function VTTCharacterPanel({
 	if (!character || !calculatedStats) {
 		return (
 			<AscendantWindow title="CHARACTER" compact>
-				<div className="text-xs text-muted-foreground text-center py-4">
+				<div className="text-xs text-foreground/70 text-center py-4">
 					Character not found.
 				</div>
 			</AscendantWindow>
@@ -219,6 +239,31 @@ export function VTTCharacterPanel({
 	const ac = calculatedStats.armorClass;
 	const profBonus = calculatedStats.proficiencyBonus;
 	const initMod = calculatedStats.initiative;
+
+	const riftFavorState: RiftFavorState = {
+		current: character.rift_favor_current ?? 0,
+		max: character.rift_favor_max ?? 3,
+		dieSize: character.rift_favor_die ?? 4,
+		level: character.level || 1,
+		deathDefianceUsed: false,
+		criticalSurgeUsed: false,
+	};
+
+	const availableFavorOptions = getAvailableFavorOptions(character.level || 1);
+	const affordableFavorOptions = getAffordableOptions(riftFavorState);
+
+	const handleSpendFavor = (optionId: string) => {
+		const result = spendRiftFavor(riftFavorState, optionId);
+		if (result.success) {
+			onChat(result.message, "rift");
+			// You would typically update the character's favor in the DB here
+		} else {
+			onChat(
+				`Attempted to use ${optionId} but failed: ${result.message}`,
+				"wardenroll",
+			);
+		}
+	};
 
 	return (
 		<div className="space-y-3">
@@ -237,7 +282,7 @@ export function VTTCharacterPanel({
 						/>
 					)}
 					<div className="flex-1 min-w-0">
-						<div className="text-xs text-muted-foreground truncate">
+						<div className="text-xs text-foreground/70 truncate">
 							Lv {character.level} {character.job || "Unknown"}
 							{character.path ? ` / ${character.path}` : ""}
 						</div>
@@ -275,6 +320,55 @@ export function VTTCharacterPanel({
 											: "bg-red-500",
 								)}
 							/>
+						</div>
+
+						{/* Rift Favor Bar */}
+						<div className="flex items-center gap-2 mt-1.5">
+							<div className="h-1.5 flex-1 rounded-full bg-black/40 overflow-hidden relative">
+								<div
+									className="h-full rounded-full transition-all bg-amber-500"
+									style={{
+										width: `${Math.max(0, Math.min(100, (riftFavorState.current / riftFavorState.max) * 100))}%`,
+									}}
+								/>
+							</div>
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button
+										variant="outline"
+										size="sm"
+										className="h-5 px-2 text-[9px] border-amber-500/50 text-amber-400 hover:bg-amber-500/20"
+									>
+										<Sparkles className="w-2.5 h-2.5 mr-1" />
+										Spend Favor
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent align="end" className="w-56">
+									{availableFavorOptions.map((opt) => {
+										const canAfford = affordableFavorOptions.some(
+											(a) => a.id === opt.id,
+										);
+										return (
+											<DropdownMenuItem
+												key={opt.id}
+												disabled={!canAfford}
+												onClick={() => handleSpendFavor(opt.id)}
+												className="flex flex-col items-start gap-1 p-2 cursor-pointer"
+											>
+												<div className="flex justify-between w-full">
+													<span className="font-bold text-amber-400">
+														{opt.name}
+													</span>
+													<span className="text-xs">Cost: {opt.cost}</span>
+												</div>
+												<span className="text-[10px] text-foreground/70 whitespace-normal">
+													{opt.description}
+												</span>
+											</DropdownMenuItem>
+										);
+									})}
+								</DropdownMenuContent>
+							</DropdownMenu>
 						</div>
 					</div>
 				</div>
@@ -332,7 +426,7 @@ export function VTTCharacterPanel({
 								className="p-1.5 rounded border border-border/60 bg-muted/20 hover:bg-amber-500/10 hover:border-amber-500/40 transition-all text-center group cursor-pointer"
 								title={`Roll ${ABILITY_NAMES[ability]} check (1d20${formatMod(mod)})`}
 							>
-								<div className="text-[9px] text-muted-foreground uppercase tracking-wide">
+								<div className="text-[9px] text-foreground/70 uppercase tracking-wide">
 									{ability}
 								</div>
 								<div className="font-display text-sm font-bold">{score}</div>
@@ -417,12 +511,10 @@ export function VTTCharacterPanel({
 									) : skill.proficient ? (
 										<span className="text-[8px] text-green-400">●</span>
 									) : (
-										<span className="text-[8px] text-muted-foreground/30">
-											○
-										</span>
+										<span className="text-[8px] text-foreground/70/30">○</span>
 									)}
 									<span className="truncate">{name}</span>
-									<span className="text-[9px] text-muted-foreground">
+									<span className="text-[9px] text-foreground/70">
 										({skill.ability})
 									</span>
 								</div>
@@ -521,7 +613,7 @@ export function VTTCharacterPanel({
 										</Button>
 									</div>
 								)}
-								<p className="text-[9px] text-muted-foreground text-center">
+								<p className="text-[9px] text-foreground/70 text-center">
 									Click any weapon on full sheet to roll damage
 								</p>
 							</div>
@@ -534,21 +626,19 @@ export function VTTCharacterPanel({
 				<AscendantWindow title="PASSIVES" compact>
 					<div className="grid grid-cols-3 gap-1.5 text-center">
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
-							<div className="text-[9px] text-muted-foreground">Perception</div>
+							<div className="text-[9px] text-foreground/70">Perception</div>
 							<div className="font-bold text-sm text-foreground">
 								{10 + (skills.Perception?.modifier ?? 0)}
 							</div>
 						</div>
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
-							<div className="text-[9px] text-muted-foreground">
-								Investigation
-							</div>
+							<div className="text-[9px] text-foreground/70">Investigation</div>
 							<div className="font-bold text-sm text-foreground">
 								{10 + (skills.Investigation?.modifier ?? 0)}
 							</div>
 						</div>
 						<div className="p-1.5 rounded border border-border/50 bg-muted/20">
-							<div className="text-[9px] text-muted-foreground">Insight</div>
+							<div className="text-[9px] text-foreground/70">Insight</div>
 							<div className="font-bold text-sm text-foreground">
 								{10 + (skills.Insight?.modifier ?? 0)}
 							</div>

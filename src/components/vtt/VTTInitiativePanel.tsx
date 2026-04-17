@@ -339,7 +339,7 @@ export function VTTInitiativePanel({
 									}
 								}}
 							>
-								<span className="w-5 text-center font-mono text-muted-foreground">
+								<span className="w-5 text-center font-mono text-foreground/70">
 									{entry.initiative}
 								</span>
 								<span
@@ -365,14 +365,14 @@ export function VTTInitiativePanel({
 									</span>
 								)}
 								{entry.ac != null && (
-									<span className="text-[10px] text-muted-foreground">
+									<span className="text-[10px] text-foreground/70">
 										AC{entry.ac}
 									</span>
 								)}
 								{isExpanded ? (
-									<ChevronUp className="h-3 w-3 text-muted-foreground shrink-0" />
+									<ChevronUp className="h-3 w-3 text-foreground/70 shrink-0" />
 								) : (
-									<ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
+									<ChevronDown className="h-3 w-3 text-foreground/70 shrink-0" />
 								)}
 							</button>
 
@@ -399,7 +399,7 @@ export function VTTInitiativePanel({
 								<div className="mt-2 pt-2 border-t border-border/50 space-y-2">
 									{/* HP adjustment */}
 									<div className="flex items-center gap-1">
-										<span className="text-[10px] text-muted-foreground w-6">
+										<span className="text-[10px] text-foreground/70 w-6">
 											HP
 										</span>
 										<Button
@@ -434,7 +434,7 @@ export function VTTInitiativePanel({
 													"text-[9px] px-1 py-0.5 rounded border transition-colors",
 													entry.conditions.some((ec) => ec.name === c)
 														? "bg-destructive/30 border-destructive/50 text-destructive-foreground"
-														: "border-border/50 text-muted-foreground hover:bg-muted/30",
+														: "border-border/50 text-foreground/70 hover:bg-muted/30",
 												)}
 											>
 												{c}
@@ -483,7 +483,7 @@ export function VTTInitiativePanel({
 				})}
 
 				{sorted.length === 0 && (
-					<p className="text-[10px] text-muted-foreground text-center py-2">
+					<p className="text-[10px] text-foreground/70 text-center py-2">
 						No combatants. Add one below.
 					</p>
 				)}

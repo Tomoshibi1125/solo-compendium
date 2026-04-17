@@ -142,6 +142,19 @@ export {
 	type ParticleCategory,
 	type ParticlePreset,
 } from "./particlePresets";
+// Party dashboard
+export {
+	calculatePartySummary,
+	generateAlerts,
+	generateDashboard,
+	getEncounterMultiplier,
+	getEncounterThresholds,
+	getUrgencyOrder,
+	type PartyAlert,
+	type PartyDashboardData,
+	type PartyMember,
+	type PartySummary,
+} from "./partyDashboard";
 // Roll macros
 export {
 	createDefaultMacroBar,
@@ -169,6 +182,21 @@ export {
 	type WeatherEffect,
 	type WeatherType,
 } from "./terrainWeatherEngine";
+// Token-character deep linking
+export {
+	applyTokenBarChange,
+	type CharacterSyncData,
+	createTokenLink,
+	getDefaultBarConfig,
+	type LinkedStat,
+	markerToCondition,
+	syncCharacterToToken,
+	type TokenBarChange,
+	type TokenBarConfig,
+	type TokenBarState,
+	type TokenLink,
+	type TokenSyncResult,
+} from "./tokenCharacterLink";
 // Token status markers (Roll20 parity)
 export {
 	BUILT_IN_MARKERS,

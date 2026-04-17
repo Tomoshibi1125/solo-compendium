@@ -20,7 +20,11 @@ export interface CharacterStats {
 	skillExpertise: string[];
 	armorClass?: number;
 	speed?: number;
+	job?: string | { name: string } | null;
+	/** Jack of All Trades: add half PB to non-proficient ability checks */
 	hasHalfProficiency?: boolean;
+	/** Override which ability drives a skill, e.g. { "intimidation": "STR" } */
+	skillAbilityOverrides?: Record<string, AbilityScore>;
 }
 
 export interface CalculatedStats {
@@ -35,6 +39,8 @@ export interface CalculatedStats {
 	speed: number;
 	passivePerception: number;
 	carryingCapacity: number;
+	spellSaveDC: number | null;
+	spellAttackBonus: number | null;
 }
 
 // Calculate all derived stats using standard 5e formulas
@@ -47,7 +53,6 @@ export function calculateCharacterStats(
 		savingThrowProficiencies,
 		skillProficiencies,
 		skillExpertise,
-		hasHalfProficiency,
 	} = stats;
 
 	const proficiencyBonus = getProficiencyBonus(level);
@@ -111,7 +116,9 @@ export function calculateCharacterStats(
 		persuasion: "PRE",
 	};
 
-	Object.entries(skillAbilities).forEach(([skill, ability]) => {
+	Object.entries(skillAbilities).forEach(([skill, defaultAbility]) => {
+		// Allow per-skill ability override (e.g., Intimidation with STR instead of PRE)
+		const ability = stats.skillAbilityOverrides?.[skill] ?? defaultAbility;
 		const abilityMod = abilityModifiers[ability];
 		const isProficient = skillProficiencies.includes(skill);
 		const hasExpertise = skillExpertise.includes(skill);
@@ -119,19 +126,17 @@ export function calculateCharacterStats(
 		let bonus = abilityMod;
 		if (isProficient) {
 			bonus += proficiencyBonus;
-			if (hasExpertise) bonus += proficiencyBonus;
-		} else if (hasHalfProficiency) {
+		} else if (stats.hasHalfProficiency) {
+			// Jack of All Trades / Idol Rift Versatility: add floor(PB/2) to non-proficient skills
 			bonus += Math.floor(proficiencyBonus / 2);
 		}
+		if (hasExpertise) bonus += proficiencyBonus; // Expertise adds proficiency bonus again
 
 		skills[skill] = bonus;
 	});
 
 	// Calculate initiative (AGI modifier, equivalent to 5e AGI)
-	let initiative = abilityModifiers.AGI;
-	if (hasHalfProficiency) {
-		initiative += Math.floor(proficiencyBonus / 2);
-	}
+	const initiative = abilityModifiers.AGI;
 
 	// AC calculation (base 10 + AGI, can be modified by armor)
 	const baseAC = 10 + abilityModifiers.AGI;
@@ -146,6 +151,14 @@ export function calculateCharacterStats(
 	// Carrying capacity (standard 5e: STR score × 15)
 	const carryingCapacity = abilities.STR * 15;
 
+	// Spell Save DC and Spell Attack Bonus (standard 5e)
+	const spellSaveDC = calculateSpellSaveDC(level, stats.job ?? null, abilities);
+	const spellAttackBonus = calculateSpellAttackBonus(
+		level,
+		stats.job ?? null,
+		abilities,
+	);
+
 	return {
 		proficiencyBonus,
 		riftFavorDie,
@@ -158,6 +171,8 @@ export function calculateCharacterStats(
 		speed,
 		passivePerception,
 		carryingCapacity,
+		spellSaveDC,
+		spellAttackBonus,
 	};
 }
 
@@ -176,6 +191,32 @@ export function calculateHPMax(
 	const subsequentHP = subsequentLevels * averagePerLevel;
 
 	return firstLevelHP + subsequentHP;
+}
+
+// Calculate Spell Save DC (standard 5e: 8 + PB + spellcasting ability modifier)
+export function calculateSpellSaveDC(
+	level: number,
+	job: string | { name: string } | null | undefined,
+	abilities: Record<AbilityScore, number>,
+): number | null {
+	const ability = getSpellcastingAbility(job);
+	if (!ability) return null;
+	const mod = getAbilityModifier(abilities[ability]);
+	const pb = getProficiencyBonus(level);
+	return 8 + pb + mod;
+}
+
+// Calculate Spell Attack Bonus (standard 5e: PB + spellcasting ability modifier)
+export function calculateSpellAttackBonus(
+	level: number,
+	job: string | { name: string } | null | undefined,
+	abilities: Record<AbilityScore, number>,
+): number | null {
+	const ability = getSpellcastingAbility(job);
+	if (!ability) return null;
+	const mod = getAbilityModifier(abilities[ability]);
+	const pb = getProficiencyBonus(level);
+	return pb + mod;
 }
 
 // Standard 5e spell slot calculations

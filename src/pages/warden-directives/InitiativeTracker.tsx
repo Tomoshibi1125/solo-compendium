@@ -64,7 +64,6 @@ interface Combatant {
 	initiative: number;
 	hp?: number;
 	maxHp?: number;
-	tempHp?: number;
 	ac?: number;
 	conditions: string[];
 	condition_timers?: Record<string, number>;
@@ -73,19 +72,6 @@ interface Combatant {
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
 	advancedConditions: ConditionEntry[];
-	actions_used?: {
-		action: boolean;
-		bonus: boolean;
-		reaction: boolean;
-	};
-	legendary_actions?: {
-		max: number;
-		used: number;
-	};
-	legendary_resistances?: {
-		max: number;
-		used: number;
-	};
 }
 
 type CampaignWithRole = {
@@ -172,7 +158,6 @@ const mapCampaignCombatantToTracker = (
 		initiative: combatant.initiative,
 		hp: toNumber(stats.hp),
 		maxHp: toNumber(stats.max_hp ?? stats.maxHp),
-		tempHp: toNumber(stats.temp_hp ?? stats.tempHp),
 		ac: toNumber(stats.ac),
 		conditions: toConditionArray(combatant.conditions),
 		condition_timers: toConditionTimers(
@@ -194,21 +179,6 @@ const mapCampaignCombatantToTracker = (
 		advancedConditions: Array.isArray(stats.advancedConditions)
 			? (stats.advancedConditions as ConditionEntry[])
 			: migrateLegacyConditions(rawLegacyConditions),
-		actions_used: (stats.actions_used as Combatant["actions_used"]) ?? {
-			action: false,
-			bonus: false,
-			reaction: false,
-		},
-		legendary_actions:
-			(stats.legendary_actions as Combatant["legendary_actions"]) ?? {
-				max: 3,
-				used: 0,
-			},
-		legendary_resistances:
-			(stats.legendary_resistances as Combatant["legendary_resistances"]) ?? {
-				max: 3,
-				used: 0,
-			},
 	};
 };
 
@@ -265,14 +235,9 @@ const InitiativeTracker = () => {
 		initiative: 0,
 		hp: 0,
 		maxHp: 0,
-		tempHp: 0,
 		ac: 0,
 		isHunter: true,
 	});
-	const [manualAmounts, setManualAmounts] = useState<Record<string, string>>(
-		{},
-	);
-	const [manualTypes, setManualTypes] = useState<Record<string, string>>({});
 
 	// DDB Parity Integration
 	const ascendantTools = useAscendantTools();
@@ -455,7 +420,6 @@ const InitiativeTracker = () => {
 					stats: {
 						hp: combatant.hp ?? null,
 						max_hp: combatant.maxHp ?? null,
-						temp_hp: combatant.tempHp ?? null,
 						ac: combatant.ac ?? null,
 						damage_resistances: combatant.damage_resistances ?? null,
 						damage_immunities: combatant.damage_immunities ?? null,
@@ -539,14 +503,10 @@ const InitiativeTracker = () => {
 				initiative: newCombatant.initiative,
 				hp: newCombatant.hp || undefined,
 				maxHp: newCombatant.maxHp || undefined,
-				tempHp: newCombatant.tempHp || undefined,
 				ac: newCombatant.ac || undefined,
 				conditions: [],
 				isHunter: newCombatant.isHunter,
 				advancedConditions: [],
-				actions_used: { action: false, bonus: false, reaction: false },
-				legendary_actions: { max: 3, used: 0 },
-				legendary_resistances: { max: 3, used: 0 },
 			},
 		]);
 
@@ -555,7 +515,6 @@ const InitiativeTracker = () => {
 			initiative: 0,
 			hp: 0,
 			maxHp: 0,
-			tempHp: 0,
 			ac: 0,
 			isHunter: true,
 		});
@@ -624,111 +583,28 @@ const InitiativeTracker = () => {
 		);
 	};
 
-	const adjustHP = (id: string, delta: number, _isTypedDamage = false) => {
-		setCombatants((prev) =>
-			prev.map((c) => {
+	const adjustHP = (id: string, delta: number) => {
+		setCombatants(
+			combatants.map((c) => {
 				if (c.id !== id) return c;
-
-				let finalDelta = delta;
-				let currentTemp = typeof c.tempHp === "number" ? c.tempHp : 0;
-				let currentHp = typeof c.hp === "number" ? c.hp : 0;
-
-				// Damage (negative delta)
-				if (finalDelta < 0) {
-					let damageToTake = Math.abs(finalDelta);
-					if (currentTemp > 0) {
-						if (damageToTake >= currentTemp) {
-							damageToTake -= currentTemp;
-							currentTemp = 0;
-						} else {
-							currentTemp -= damageToTake;
-							damageToTake = 0;
-						}
-					}
-					// Only track true HP damage
-					finalDelta = -damageToTake;
-					currentHp = Math.max(0, currentHp + finalDelta);
-				} else {
-					// Healing
-					const maxHp =
-						typeof c.maxHp === "number" && c.maxHp > 0 ? c.maxHp : undefined;
-					currentHp =
-						maxHp !== undefined
-							? Math.min(Math.max(0, currentHp + finalDelta), maxHp)
-							: Math.max(0, currentHp + finalDelta);
-				}
+				const base = typeof c.hp === "number" ? c.hp : 0;
+				const maxHp =
+					typeof c.maxHp === "number" && c.maxHp > 0 ? c.maxHp : undefined;
+				const nextHp =
+					maxHp !== undefined
+						? Math.min(Math.max(0, base + delta), maxHp)
+						: Math.max(0, base + delta);
 
 				// DDB Parity: Broadcast HP change
 				ascendantTools
 					.trackHealthChange(
 						c.id || c.name,
-						Math.abs(delta), // We broadcast the full attempted hit/heal payload
+						Math.abs(delta),
 						delta < 0 ? "damage" : "healing",
 					)
-					.then(() => {
-						// Concentration Automator Feature
-						if (finalDelta < 0) {
-							const damageTakenAmount = Math.abs(finalDelta);
-							const dc = Math.max(10, Math.floor(damageTakenAmount / 2));
-							ascendantTools
-								.trackCustomFeatureUsage(
-									c.id || c.name,
-									`Concentration Check! DC ${dc} VIT Save`,
-									"requested",
-									"SA",
-									{ skipBroadcast: false },
-								)
-								.catch(console.error);
-						}
-					})
 					.catch(console.error);
 
-				return { ...c, hp: currentHp, tempHp: currentTemp };
-			}),
-		);
-	};
-
-	const applyManualDamage = (id: string) => {
-		const amtStr = manualAmounts[id];
-		if (!amtStr) return;
-		const amt = parseInt(amtStr, 10);
-		if (Number.isNaN(amt) || amt <= 0) return;
-		const dt = manualTypes[id] || "physical";
-
-		const target = combatants.find((c) => c.id === id);
-		if (!target) return;
-
-		const mitigated = applyDamageMitigation(amt, dt, target);
-		if (mitigated === 0) {
-			toast({
-				title: "Immune",
-				description: `${target.name} is immune to ${dt} damage.`,
-			});
-		} else if (mitigated !== amt) {
-			toast({
-				title: "Mitigated",
-				description: `Damage adjusted from ${amt} to ${mitigated} due to resistance/vulnerability.`,
-			});
-		}
-
-		adjustHP(id, -mitigated, true);
-		setManualAmounts({ ...manualAmounts, [id]: "" });
-	};
-
-	const applyManualHealing = (id: string) => {
-		const amtStr = manualAmounts[id];
-		if (!amtStr) return;
-		const amt = parseInt(amtStr, 10);
-		if (Number.isNaN(amt) || amt <= 0) return;
-		adjustHP(id, amt);
-		setManualAmounts({ ...manualAmounts, [id]: "" });
-	};
-
-	const updateTempHP = (id: string, tempHp: number) => {
-		setCombatants((prev) =>
-			prev.map((c) => {
-				if (c.id !== id) return c;
-				return { ...c, tempHp: Math.max(0, tempHp) };
+				return { ...c, hp: nextHp };
 			}),
 		);
 	};
@@ -850,29 +726,6 @@ const InitiativeTracker = () => {
 					.catch(console.error);
 			}
 
-			// Clear all combatant action trackers for the current and next turn to maintain economy
-			// Also replenish legendary actions at the start of their turn
-			setCombatants((compList) =>
-				compList.map((c) => {
-					if (c.id === sortedCombatants[prev]?.id) {
-						return {
-							...c,
-							actions_used: { action: false, bonus: false, reaction: false },
-						};
-					}
-					if (c.id === activeCombatant?.id) {
-						return {
-							...c,
-							actions_used: { action: false, bonus: false, reaction: false },
-							legendary_actions: c.legendary_actions
-								? { ...c.legendary_actions, used: 0 }
-								: undefined,
-						};
-					}
-					return c;
-				}),
-			);
-
 			return next;
 		});
 	}, [sortedCombatants, round, cleanupExpiredConditions, ascendantTools]);
@@ -880,96 +733,13 @@ const InitiativeTracker = () => {
 	const previousTurn = useCallback(() => {
 		if (sortedCombatants.length === 0) return;
 		setCurrentTurn((prev) => {
-			let previousIndex = prev - 1;
 			if (prev === 0) {
 				setRound(Math.max(1, round - 1));
-				previousIndex = sortedCombatants.length - 1;
+				return sortedCombatants.length - 1;
 			}
-
-			const activeCombatant = sortedCombatants[previousIndex];
-			setCombatants((compList) =>
-				compList.map((c) => {
-					if (c.id === sortedCombatants[prev]?.id) {
-						return {
-							...c,
-							actions_used: { action: false, bonus: false, reaction: false },
-						};
-					}
-					if (c.id === activeCombatant?.id) {
-						return {
-							...c,
-							actions_used: { action: false, bonus: false, reaction: false },
-							legendary_actions: c.legendary_actions
-								? { ...c.legendary_actions, used: 0 }
-								: undefined,
-						};
-					}
-					return c;
-				}),
-			);
-
-			return previousIndex;
+			return prev - 1;
 		});
 	}, [sortedCombatants, round]);
-
-	const toggleActionState = (
-		id: string,
-		type: "action" | "bonus" | "reaction",
-	) => {
-		setCombatants((prev) =>
-			prev.map((c) => {
-				if (c.id !== id) return c;
-				const au = c.actions_used || {
-					action: false,
-					bonus: false,
-					reaction: false,
-				};
-				return { ...c, actions_used: { ...au, [type]: !au[type] } };
-			}),
-		);
-	};
-
-	const adjustLegendaryResource = (
-		id: string,
-		type: "actions" | "resistances",
-		amount: number,
-	) => {
-		setCombatants((prev) =>
-			prev.map((c) => {
-				if (c.id !== id) return c;
-				if (type === "actions" && c.legendary_actions) {
-					const nextUsed = Math.max(
-						0,
-						Math.min(
-							c.legendary_actions.used + amount,
-							c.legendary_actions.max,
-						),
-					);
-					return {
-						...c,
-						legendary_actions: { ...c.legendary_actions, used: nextUsed },
-					};
-				}
-				if (type === "resistances" && c.legendary_resistances) {
-					const nextUsed = Math.max(
-						0,
-						Math.min(
-							c.legendary_resistances.used + amount,
-							c.legendary_resistances.max,
-						),
-					);
-					return {
-						...c,
-						legendary_resistances: {
-							...c.legendary_resistances,
-							used: nextUsed,
-						},
-					};
-				}
-				return c;
-			}),
-		);
-	};
 
 	const resetCombat = () => {
 		setCombatants([]);
@@ -1442,9 +1212,6 @@ const InitiativeTracker = () => {
 															{combatant.hp !== undefined &&
 																combatant.maxHp !== undefined &&
 																` | HP: ${combatant.hp}/${combatant.maxHp}`}
-															{combatant.tempHp !== undefined &&
-																combatant.tempHp > 0 &&
-																` | THP: ${combatant.tempHp}`}
 														</div>
 													</div>
 												</div>
@@ -1501,236 +1268,8 @@ const InitiativeTracker = () => {
 														aria-label={`Max HP for ${combatant.name}`}
 													/>
 												</div>
-												<div>
-													<Label
-														htmlFor={`combatant-${combatant.id}-temp-hp`}
-														className="text-xs text-muted-foreground"
-													>
-														Temp HP
-													</Label>
-													<Input
-														id={`combatant-${combatant.id}-temp-hp`}
-														type="number"
-														min={0}
-														value={combatant.tempHp ?? 0}
-														onChange={(e) =>
-															updateTempHP(
-																combatant.id,
-																parseInt(e.target.value, 10) || 0,
-															)
-														}
-														aria-label={`Temp HP for ${combatant.name}`}
-													/>
-												</div>
 											</div>
-
-											<div className="flex flex-wrap items-center gap-2 mt-2 bg-black/20 p-2 rounded">
-												<Input
-													type="number"
-													className="w-16 h-8 text-xs font-mono"
-													placeholder="Amt"
-													min={1}
-													value={manualAmounts[combatant.id] || ""}
-													onChange={(e) =>
-														setManualAmounts({
-															...manualAmounts,
-															[combatant.id]: e.target.value,
-														})
-													}
-												/>
-												<Select
-													value={manualTypes[combatant.id] || "physical"}
-													onValueChange={(v) =>
-														setManualTypes({
-															...manualTypes,
-															[combatant.id]: v,
-														})
-													}
-												>
-													<SelectTrigger className="h-8 w-28 text-xs">
-														<SelectValue />
-													</SelectTrigger>
-													<SelectContent>
-														{[
-															"physical",
-															"slashing",
-															"piercing",
-															"bludgeoning",
-															"fire",
-															"cold",
-															"lightning",
-															"acid",
-															"poison",
-															"thunder",
-															"force",
-															"radiant",
-															"necrotic",
-															"psychic",
-														].map((dt) => (
-															<SelectItem
-																key={dt}
-																value={dt}
-																className="text-xs capitalize"
-															>
-																{dt}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
-												<Button
-													size="sm"
-													variant="destructive"
-													className="h-8 text-xs"
-													onClick={() => applyManualDamage(combatant.id)}
-												>
-													Damage
-												</Button>
-												<Button
-													size="sm"
-													variant="default"
-													className="h-8 text-xs"
-													onClick={() => applyManualHealing(combatant.id)}
-												>
-													Heal
-												</Button>
-											</div>
-
-											<div className="flex flex-wrap items-center gap-2 mt-2 bg-black/20 p-2 rounded">
-												<span className="text-xs text-muted-foreground mr-1">
-													Turn Actions:
-												</span>
-												<Button
-													size="sm"
-													variant={
-														combatant.actions_used?.action ? "ghost" : "default"
-													}
-													className={cn(
-														"h-6 text-[10px] px-2",
-														combatant.actions_used?.action &&
-															"opacity-50 line-through grayscale",
-													)}
-													onClick={() =>
-														toggleActionState(combatant.id, "action")
-													}
-												>
-													Action
-												</Button>
-												<Button
-													size="sm"
-													variant={
-														combatant.actions_used?.bonus
-															? "ghost"
-															: "secondary"
-													}
-													className={cn(
-														"h-6 text-[10px] px-2",
-														combatant.actions_used?.bonus &&
-															"opacity-50 line-through grayscale",
-													)}
-													onClick={() =>
-														toggleActionState(combatant.id, "bonus")
-													}
-												>
-													Bonus
-												</Button>
-												<Button
-													size="sm"
-													variant={
-														combatant.actions_used?.reaction
-															? "ghost"
-															: "outline"
-													}
-													className={cn(
-														"h-6 text-[10px] px-2",
-														combatant.actions_used?.reaction &&
-															"opacity-50 line-through grayscale",
-													)}
-													onClick={() =>
-														toggleActionState(combatant.id, "reaction")
-													}
-												>
-													Reaction
-												</Button>
-											</div>
-
-											{/* Anomaly Legendary Tracker */}
-											{!combatant.isHunter && (
-												<div className="flex flex-wrap gap-4 mt-2 p-2 bg-amber-500/10 border border-amber-500/20 rounded">
-													<div className="flex items-center gap-2">
-														<span className="text-xs font-heading text-amber-500">
-															Legendary Acts:
-														</span>
-														<div className="flex gap-1">
-															{Array.from({
-																length: combatant.legendary_actions?.max || 3,
-															}).map((_, i) => {
-																const isUsed =
-																	i < (combatant.legendary_actions?.used || 0);
-																return (
-																	<Button
-																		key={`la-${i}`}
-																		size="icon"
-																		variant="outline"
-																		className={cn(
-																			"w-5 h-5 rounded-full border-amber-500/50",
-																			isUsed
-																				? "bg-amber-500/50"
-																				: "bg-transparent",
-																		)}
-																		onClick={() =>
-																			adjustLegendaryResource(
-																				combatant.id,
-																				"actions",
-																				isUsed ? -1 : 1,
-																			)
-																		}
-																	/>
-																);
-															})}
-														</div>
-													</div>
-													<div className="flex items-center gap-2">
-														<span className="text-xs font-heading text-amber-500">
-															Resistances:
-														</span>
-														<div className="flex gap-1">
-															{Array.from({
-																length:
-																	combatant.legendary_resistances?.max || 3,
-															}).map((_, i) => {
-																const isUsed =
-																	i <
-																	(combatant.legendary_resistances?.used || 0);
-																return (
-																	<Button
-																		key={`lr-${i}`}
-																		size="icon"
-																		variant="outline"
-																		className={cn(
-																			"w-5 h-5 rounded border-amber-500/50",
-																			isUsed
-																				? "bg-amber-500/50"
-																				: "bg-transparent",
-																		)}
-																		onClick={() =>
-																			adjustLegendaryResource(
-																				combatant.id,
-																				"resistances",
-																				isUsed ? -1 : 1,
-																			)
-																		}
-																	/>
-																);
-															})}
-														</div>
-													</div>
-												</div>
-											)}
-
-											<div className="flex flex-wrap items-center gap-2 mt-2">
-												<span className="text-xs text-muted-foreground mr-1">
-													Quick:
-												</span>
+											<div className="flex flex-wrap gap-2 mt-2">
 												<Button
 													size="sm"
 													variant="outline"
@@ -1955,26 +1494,6 @@ const InitiativeTracker = () => {
 										/>
 									</div>
 									<div>
-										<Label
-											htmlFor="combatant-temp-hp"
-											className="text-xs font-display text-muted-foreground mb-1 block"
-										>
-											TEMP HP
-										</Label>
-										<Input
-											id="combatant-temp-hp"
-											type="number"
-											value={newCombatant.tempHp ?? 0}
-											onChange={(e) =>
-												setNewCombatant({
-													...newCombatant,
-													tempHp: parseInt(e.target.value, 10) || 0,
-												})
-											}
-											className="font-display"
-										/>
-									</div>
-									<div className="col-span-2">
 										<Label
 											htmlFor="combatant-max-hp"
 											className="text-xs font-display text-muted-foreground mb-1 block"

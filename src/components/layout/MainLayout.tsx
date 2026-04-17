@@ -16,28 +16,28 @@ export function MainLayout({ children, className }: MainLayoutProps) {
 	const isCharacterSheet = location.pathname.startsWith("/characters/");
 
 	return (
-		<div className="min-h-screen min-h-[100dvh] w-full flex bg-background selection:bg-primary/30 relative">
+		<div className="min-h-[100dvh] w-full flex bg-background selection:bg-primary/30 relative">
 			{/* Global System Visual Effects */}
 			<RiftOverlay />
 
 			{/* Unified Sidebar (Rail/Drawer) */}
 			<AppSidebar />
 
-			<div className="flex-1 flex flex-col min-w-0 relative min-h-full">
+			<div className="flex-1 flex flex-col min-w-0 relative h-[100dvh]">
 				{/* The Header (NavBar) will be sticky at the top of this flex container */}
 				<NavBar />
 
 				{/* Global Character HUD (Sticky below NavBar) - Hidden on character sheets */}
 				{!isCharacterSheet && <GlobalCharacterHUD />}
 
-				{/* Main Content Area - Scrollable */}
+				{/* Main Content Area - Scrollable (h-0 forces flex-1 to constrain, enabling overflow scroll) */}
 				<main
 					className={cn(
-						"flex-1 overflow-y-auto overflow-x-hidden px-4 py-6 md:py-8 transition-all duration-500 scroll-smooth",
+						"flex-1 h-0 overflow-y-auto overflow-x-hidden px-4 py-6 md:py-8 transition-all duration-500 scroll-smooth",
 						className,
 					)}
 				>
-					<div className="container mx-auto max-w-7xl min-h-full flex flex-col">
+					<div className="container mx-auto max-w-7xl flex flex-col">
 						{children}
 					</div>
 				</main>

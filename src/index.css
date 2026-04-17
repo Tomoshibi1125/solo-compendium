@@ -100,8 +100,8 @@
 	--secondary-foreground: 265 15% 82%;
 
 	--muted: 265 22% 15%;
-	/* Faint purple haze */
-	--muted-foreground: 265 12% 52%;
+	/* Faint purple haze - Brightened for better contrast */
+	--muted-foreground: 265 15% 70%;
 
 	--accent: 195 90% 65%;
 	/* Stellar Cyan / Blue Giant */
@@ -228,6 +228,7 @@ html {
 body {
 	min-height: 100dvh;
 	overflow-x: hidden;
+	overflow-y: auto;
 	touch-action: manipulation;
 }
 
@@ -279,7 +280,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(
 		[type="color"]
 	):not([type="file"])::placeholder,
 textarea::placeholder {
-	color: hsl(var(--muted-foreground));
+	color: hsl(var(--foreground) / 0.5);
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(

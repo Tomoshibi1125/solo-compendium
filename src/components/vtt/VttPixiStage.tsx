@@ -37,7 +37,11 @@ type PlacedToken = {
 	locked: boolean;
 	visible: boolean;
 	hp?: number;
+	hp_current?: number;
 	maxHp?: number;
+	hp_max?: number;
+	ac?: number;
+	armor_class?: number;
 	conditions?: string[];
 	render?: {
 		mode?: "token" | "overlay";
@@ -537,7 +541,7 @@ export function VttPixiStage({
 				}
 			}
 
-			g.stroke({ width: 1, color, alpha: 0.25 });
+			g.stroke({ width: 1, color, alpha: 0.4 });
 
 			grid.addChild(g);
 		};
@@ -796,34 +800,66 @@ export function VttPixiStage({
 					tokenLayer.addChild(container);
 				}
 
-				// Draw HP Bar if data exists and is not an overlay
-				if (
-					!isOverlayToken &&
-					typeof token.hp === "number" &&
-					typeof token.maxHp === "number" &&
-					token.maxHp > 0
-				) {
-					const barWidth = size * 0.8;
-					const barHeight = 6;
-					const hpPercent = Math.max(0, Math.min(1, token.hp / token.maxHp));
+				// Draw Status Bars (HP, AC, etc)
+				if (!isOverlayToken) {
+					const isSelected =
+						activeTokenId === token.id || activeInitiativeTokenId === token.id;
+					// Only show bars if token is selected/hovered (or always if Warden config dictates, but for now selected)
+					if (isSelected || isWarden) {
+						let barOffset = 0;
+						const drawBar = (current: number, max: number, color: number) => {
+							const barWidth = size * 0.8;
+							const barHeight = 4;
+							const percent =
+								max > 0 ? Math.max(0, Math.min(1, current / max)) : 0;
 
-					const hpBg = new Graphics();
-					hpBg.rect(size / 2 - barWidth / 2, size - 8, barWidth, barHeight);
-					hpBg.fill({ color: 0x000000, alpha: 0.7 });
+							const bg = new Graphics();
+							bg.rect(
+								size / 2 - barWidth / 2,
+								size + 2 + barOffset,
+								barWidth,
+								barHeight,
+							);
+							bg.fill({ color: 0x000000, alpha: 0.7 });
 
-					const hpFill = new Graphics();
-					hpFill.rect(
-						size / 2 - barWidth / 2,
-						size - 8,
-						barWidth * hpPercent,
-						barHeight,
-					);
-					const barColor =
-						hpPercent > 0.5 ? 0x22c55e : hpPercent > 0.2 ? 0xeab308 : 0xef4444;
-					hpFill.fill({ color: barColor });
+							const fill = new Graphics();
+							fill.rect(
+								size / 2 - barWidth / 2,
+								size + 2 + barOffset,
+								barWidth * percent,
+								barHeight,
+							);
+							fill.fill({ color });
 
-					container.addChild(hpBg);
-					container.addChild(hpFill);
+							container.addChild(bg);
+							container.addChild(fill);
+							barOffset += barHeight + 2;
+						};
+
+						// HP Bar
+						const hp = token.hp ?? token.hp_current;
+						const maxHp = token.maxHp ?? token.hp_max;
+						if (
+							typeof hp === "number" &&
+							typeof maxHp === "number" &&
+							maxHp > 0
+						) {
+							const hpPercent = hp / maxHp;
+							const barColor =
+								hpPercent > 0.5
+									? 0x22c55e
+									: hpPercent > 0.2
+										? 0xeab308
+										: 0xef4444;
+							drawBar(hp, maxHp, barColor);
+						}
+
+						// AC Bar (using arbitrary max of 30 for visualization)
+						const ac = token.ac ?? token.armor_class;
+						if (typeof ac === "number") {
+							drawBar(ac, 30, 0x3b82f6); // Blue AC bar
+						}
+					}
 				}
 
 				// Draw Conditions if they exist
@@ -832,22 +868,18 @@ export function VttPixiStage({
 					token.conditions &&
 					token.conditions.length > 0
 				) {
-					const conditionText = new Text({
-						text: token.conditions
-							.map((c) => c.substring(0, 2).toUpperCase())
-							.join(" "),
-						style: {
-							fill: 0xffffff,
-							fontSize: 10,
-							fontWeight: "bold",
-							stroke: { color: 0x000000, width: 2 },
-							dropShadow: { alpha: 0.5, blur: 2, distance: 1 },
-						},
-					});
-					conditionText.x = size / 2;
-					conditionText.y = 8;
-					conditionText.anchor.set(0.5);
-					container.addChild(conditionText);
+					// Draw small colored dots for conditions at the top right
+					const dotRadius = 4;
+					let dotOffsetX = size - dotRadius;
+
+					for (const _condition of token.conditions) {
+						const dot = new Graphics();
+						dot.circle(dotOffsetX, dotRadius, dotRadius);
+						dot.fill({ color: 0xeab308 }); // Amber for conditions
+						dot.stroke({ color: 0x000000, width: 1 });
+						container.addChild(dot);
+						dotOffsetX -= dotRadius * 2 + 2;
+					}
 				}
 
 				container.on("pointerdown", (e) => {

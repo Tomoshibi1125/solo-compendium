@@ -128,7 +128,7 @@ export function VTTSandbox() {
 			</CardHeader>
 			<CardContent>
 				<div className="space-y-4">
-					<div className="text-[10px] text-muted-foreground font-mono bg-black/40 p-2 rounded max-h-[200px] overflow-auto whitespace-pre">
+					<div className="text-[10px] text-foreground/70 font-mono bg-black/40 p-2 rounded max-h-[200px] overflow-auto whitespace-pre">
 						{diag}
 					</div>
 					<div className="flex gap-2">

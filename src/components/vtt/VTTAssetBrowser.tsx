@@ -257,7 +257,7 @@ export function VTTAssetBrowser({
 		<div className="space-y-2">
 			{/* Search */}
 			<div className="relative">
-				<Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+				<Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/70" />
 				<Input
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
@@ -268,7 +268,7 @@ export function VTTAssetBrowser({
 					<button
 						type="button"
 						onClick={() => setSearch("")}
-						className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+						className="absolute right-2 top-1/2 -translate-y-1/2 text-foreground/70 hover:text-foreground"
 						aria-label="Clear search"
 					>
 						<X className="w-3 h-3" />
@@ -285,7 +285,7 @@ export function VTTAssetBrowser({
 						"px-2 py-0.5 rounded-full text-[10px] border transition-all",
 						!activeCategory
 							? "bg-amber-500/20 border-amber-500/50 text-amber-200"
-							: "border-border/50 text-muted-foreground hover:bg-muted/30",
+							: "border-border/50 text-foreground/70 hover:bg-muted/30",
 					)}
 				>
 					All ({getVTTAssetLibrary().length})
@@ -301,7 +301,7 @@ export function VTTAssetBrowser({
 							"px-2 py-0.5 rounded-full text-[10px] border transition-all flex items-center gap-1",
 							activeCategory === cat.id
 								? "bg-amber-500/20 border-amber-500/50 text-amber-200"
-								: "border-border/50 text-muted-foreground hover:bg-muted/30",
+								: "border-border/50 text-foreground/70 hover:bg-muted/30",
 						)}
 					>
 						{CATEGORY_ICONS[cat.id]}
@@ -316,7 +316,7 @@ export function VTTAssetBrowser({
 					<button
 						type="button"
 						onClick={() => setShowRecent(!showRecent)}
-						className="flex items-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors w-full"
+						className="flex items-center gap-1 text-[10px] text-foreground/70 hover:text-foreground transition-colors w-full"
 					>
 						<Clock className="w-3 h-3" />
 						Recent ({recentAssets.length})
@@ -406,7 +406,7 @@ export function VTTAssetBrowser({
 			)}
 
 			{/* Results count */}
-			<div className="text-[10px] text-muted-foreground px-1">
+			<div className="text-[10px] text-foreground/70 px-1">
 				{allResults.length} asset{allResults.length !== 1 ? "s" : ""} found
 				{activeCategory &&
 					` in ${getVTTAssetCategories().find((c) => c.id === activeCategory)?.label}`}
@@ -461,7 +461,7 @@ export function VTTAssetBrowser({
 					</button>
 				))}
 				{results.length === 0 && (
-					<div className="col-span-3 py-8 text-center text-xs text-muted-foreground">
+					<div className="col-span-3 py-8 text-center text-xs text-foreground/70">
 						No assets match your search.
 					</div>
 				)}
@@ -472,7 +472,7 @@ export function VTTAssetBrowser({
 				<Button
 					variant="ghost"
 					size="sm"
-					className="w-full text-[10px] h-7 text-muted-foreground"
+					className="w-full text-[10px] h-7 text-foreground/70"
 					onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
 				>
 					<ChevronDown className="w-3 h-3 mr-1" />
@@ -493,7 +493,7 @@ export function VTTAssetBrowser({
 							/>
 						</div>
 						{previewAsset.description && (
-							<p className="text-[10px] text-muted-foreground line-clamp-2">
+							<p className="text-[10px] text-foreground/70 line-clamp-2">
 								{previewAsset.description}
 							</p>
 						)}
@@ -501,7 +501,7 @@ export function VTTAssetBrowser({
 							{previewAsset.tags.map((tag) => (
 								<span
 									key={tag}
-									className="text-[8px] px-1.5 py-0.5 rounded-full bg-muted/30 border border-border/30 text-muted-foreground"
+									className="text-[8px] px-1.5 py-0.5 rounded-full bg-muted/30 border border-border/30 text-foreground/70"
 								>
 									{tag}
 								</span>

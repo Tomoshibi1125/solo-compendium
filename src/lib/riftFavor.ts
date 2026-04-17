@@ -12,11 +12,11 @@ export interface RiftFavorOption {
 	minLevel: number;
 }
 
-const SYSTEM_FAVOR_OPTIONS: RiftFavorOption[] = [
+const RIFT_FAVOR_OPTIONS: RiftFavorOption[] = [
 	// ── Core (D&D Inspiration equivalent) ──
 	{
 		id: "favor-inspiration",
-		name: "System Boost",
+		name: "Rift Boost",
 		cost: 1,
 		description:
 			"The Rift augments your action. Add your Rift Favor die to one ability check, attack roll, or saving throw.",
@@ -27,7 +27,7 @@ const SYSTEM_FAVOR_OPTIONS: RiftFavorOption[] = [
 	// ── Thematic extras ──
 	{
 		id: "favor-reroll",
-		name: "System Override",
+		name: "Rift Override",
 		cost: 1,
 		description:
 			"The Rift intervenes — reroll a failed d20 and take either result.",
@@ -37,7 +37,7 @@ const SYSTEM_FAVOR_OPTIONS: RiftFavorOption[] = [
 	},
 	{
 		id: "favor-status-recovery",
-		name: "System Recovery",
+		name: "Rift Recovery",
 		cost: 1,
 		description: "The Rift purges a harmful effect from your body.",
 		rulesText:
@@ -56,7 +56,7 @@ const SYSTEM_FAVOR_OPTIONS: RiftFavorOption[] = [
 	},
 	{
 		id: "favor-system-insight",
-		name: "System Insight",
+		name: "Rift Insight",
 		cost: 1,
 		description:
 			"The Rift reveals hidden information about a creature or object.",
@@ -94,7 +94,7 @@ const SYSTEM_FAVOR_OPTIONS: RiftFavorOption[] = [
 ];
 
 export function getAvailableFavorOptions(level: number): RiftFavorOption[] {
-	return SYSTEM_FAVOR_OPTIONS.filter((opt) => level >= opt.minLevel);
+	return RIFT_FAVOR_OPTIONS.filter((opt) => level >= opt.minLevel);
 }
 
 // Aligned with unified engine: 3/4/5/6 by tier (Rift Ascendant canonical formula)
@@ -110,4 +110,167 @@ export function getRiftFavorDie(level: number): number {
 	if (level <= 10) return 6;
 	if (level <= 16) return 8;
 	return 10;
+}
+
+// ── VTT State Management ──────────────────────────────────────────────
+
+export interface RiftFavorState {
+	/** Current Rift Favor points */
+	current: number;
+	/** Maximum Rift Favor points (derived from level) */
+	max: number;
+	/** Die size (4/6/8/10, derived from level) */
+	dieSize: number;
+	/** Character level (for unlock checks) */
+	level: number;
+	/** Whether Death Defiance has been used this rest */
+	deathDefianceUsed: boolean;
+	/** Whether Critical Surge has been used this rest */
+	criticalSurgeUsed: boolean;
+}
+
+export interface SpendResult {
+	success: boolean;
+	updatedState: RiftFavorState;
+	message: string;
+	option?: RiftFavorOption;
+	error?: string;
+}
+
+/** Initialize Rift Favor state from character level */
+export function initializeRiftFavor(level: number): RiftFavorState {
+	return {
+		current: getRiftFavorMax(level),
+		max: getRiftFavorMax(level),
+		dieSize: getRiftFavorDie(level),
+		level,
+		deathDefianceUsed: false,
+		criticalSurgeUsed: false,
+	};
+}
+
+/** Get options the character can currently afford */
+export function getAffordableOptions(state: RiftFavorState): RiftFavorOption[] {
+	return RIFT_FAVOR_OPTIONS.filter(
+		(opt) =>
+			state.level >= opt.minLevel &&
+			state.current >= opt.cost &&
+			!(opt.id === "favor-death-defiance" && state.deathDefianceUsed) &&
+			!(opt.id === "favor-critical-surge" && state.criticalSurgeUsed),
+	);
+}
+
+/** Spend Rift Favor on an option */
+export function spendRiftFavor(
+	state: RiftFavorState,
+	optionId: string,
+): SpendResult {
+	const option = RIFT_FAVOR_OPTIONS.find((o) => o.id === optionId);
+
+	if (!option) {
+		return {
+			success: false,
+			updatedState: state,
+			message: "Unknown Rift Favor option.",
+			error: "invalid_option",
+		};
+	}
+
+	if (state.level < option.minLevel) {
+		return {
+			success: false,
+			updatedState: state,
+			message: `${option.name} requires level ${option.minLevel} (current: ${state.level}).`,
+			error: "level_requirement",
+		};
+	}
+
+	if (option.id === "favor-death-defiance" && state.deathDefianceUsed) {
+		return {
+			success: false,
+			updatedState: state,
+			message: "Death Defiance has already been used this rest.",
+			error: "already_used",
+		};
+	}
+
+	if (option.id === "favor-critical-surge" && state.criticalSurgeUsed) {
+		return {
+			success: false,
+			updatedState: state,
+			message: "Critical Surge has already been used this rest.",
+			error: "already_used",
+		};
+	}
+
+	if (state.current < option.cost) {
+		return {
+			success: false,
+			updatedState: state,
+			message: `Not enough Rift Favor: need ${option.cost}, have ${state.current}.`,
+			error: "insufficient_favor",
+		};
+	}
+
+	const updatedState: RiftFavorState = {
+		...state,
+		current: state.current - option.cost,
+		deathDefianceUsed:
+			option.id === "favor-death-defiance" ? true : state.deathDefianceUsed,
+		criticalSurgeUsed:
+			option.id === "favor-critical-surge" ? true : state.criticalSurgeUsed,
+	};
+
+	return {
+		success: true,
+		updatedState,
+		message: `⚡ ${option.name}! ${option.description} (${updatedState.current}/${state.max} Rift Favor remaining)`,
+		option,
+	};
+}
+
+/** Gain Rift Favor (Warden award, roleplay bonus) */
+export function gainRiftFavor(
+	state: RiftFavorState,
+	amount: number,
+	reason?: string,
+): { updatedState: RiftFavorState; message: string } {
+	const newCurrent = Math.min(state.current + amount, state.max);
+	const actualGain = newCurrent - state.current;
+
+	return {
+		updatedState: { ...state, current: newCurrent },
+		message:
+			actualGain > 0
+				? `⚡ Gained ${actualGain} Rift Favor${reason ? ` (${reason})` : ""}. (${newCurrent}/${state.max})`
+				: `Rift Favor is already at maximum (${state.max}).`,
+	};
+}
+
+/** Reset Rift Favor on long rest (full pool + clear once-per-rest flags) */
+export function resetOnLongRest(state: RiftFavorState): RiftFavorState {
+	return {
+		...state,
+		current: state.max,
+		deathDefianceUsed: false,
+		criticalSurgeUsed: false,
+	};
+}
+
+/** Update Rift Favor state when character levels up */
+export function updateForLevel(
+	state: RiftFavorState,
+	newLevel: number,
+): RiftFavorState {
+	const newMax = getRiftFavorMax(newLevel);
+	const newDie = getRiftFavorDie(newLevel);
+	const bonusFavor = Math.max(0, newMax - state.max);
+
+	return {
+		...state,
+		level: newLevel,
+		max: newMax,
+		dieSize: newDie,
+		current: Math.min(state.current + bonusFavor, newMax),
+	};
 }

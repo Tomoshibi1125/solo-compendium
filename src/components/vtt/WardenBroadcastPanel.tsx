@@ -116,7 +116,7 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 
 				{/* Message Input */}
 				<div className="space-y-2">
-					<Label className="text-[0.65rem] uppercase text-muted-foreground font-black tracking-widest">
+					<Label className="text-[0.65rem] uppercase text-foreground/70 font-black tracking-widest">
 						Transmission Content
 					</Label>
 					<textarea
@@ -130,7 +130,7 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 				{/* Target Selection */}
 				<div className="space-y-3">
 					<div className="flex items-center justify-between">
-						<Label className="text-[0.65rem] uppercase text-muted-foreground font-black tracking-widest flex items-center gap-2">
+						<Label className="text-[0.65rem] uppercase text-foreground/70 font-black tracking-widest flex items-center gap-2">
 							<Users className="w-3 h-3" /> Target Entities
 						</Label>
 						<Button
@@ -146,7 +146,7 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 
 					<div className="grid grid-cols-1 gap-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
 						{playersOnly.length === 0 ? (
-							<p className="text-[0.6rem] text-muted-foreground italic text-center p-4">
+							<p className="text-[0.6rem] text-foreground/70 italic text-center p-4">
 								No active player entities detected in campaign.
 							</p>
 						) : (

@@ -160,7 +160,7 @@ const CampaignDetail = () => {
 						<ManaFlowText
 							variant="rift"
 							speed="fast"
-							className="text-muted-foreground font-heading animate-pulse"
+							className="text-foreground/70 font-heading animate-pulse"
 						>
 							Syncing Campaign Archives...
 						</ManaFlowText>
@@ -382,7 +382,7 @@ const CampaignDetail = () => {
 											<h3 className="font-heading font-semibold mb-2">
 												Token Management
 											</h3>
-											<AscendantText className="block text-xs text-muted-foreground">
+											<AscendantText className="block text-xs text-foreground/70">
 												Place character tokens, Anomalies, and NPCs. Drag,
 												rotate, and manage HP directly on tokens.
 											</AscendantText>
@@ -391,7 +391,7 @@ const CampaignDetail = () => {
 											<h3 className="font-heading font-semibold mb-2">
 												Initiative Tracking
 											</h3>
-											<AscendantText className="block text-xs text-muted-foreground">
+											<AscendantText className="block text-xs text-foreground/70">
 												Track combat initiative with automatic sorting. Manage
 												turn order and combat flow.
 											</AscendantText>
@@ -400,7 +400,7 @@ const CampaignDetail = () => {
 											<h3 className="font-heading font-semibold mb-2">
 												Dice & Chat
 											</h3>
-											<AscendantText className="block text-xs text-muted-foreground">
+											<AscendantText className="block text-xs text-foreground/70">
 												Roll dice with full notation support. Chat with party
 												members in real-time.
 											</AscendantText>
@@ -423,7 +423,7 @@ const CampaignDetail = () => {
 														<p className="font-heading font-semibold text-lg">
 															Recruit Ascendants
 														</p>
-														<AscendantText className="block text-xs text-muted-foreground max-w-[250px] mx-auto">
+														<AscendantText className="block text-xs text-foreground/70 max-w-[250px] mx-auto">
 															Manage share codes, single-use tokens, and
 															invitations for this campaign.
 														</AscendantText>
@@ -439,11 +439,11 @@ const CampaignDetail = () => {
 											</div>
 										) : (
 											<div className="text-center py-6">
-												<AscendantText className="block text-sm text-muted-foreground font-heading mb-2">
+												<AscendantText className="block text-sm text-foreground/70 font-heading mb-2">
 													Share code and invite links are only visible to the
 													Warden.
 												</AscendantText>
-												<AscendantText className="block text-xs text-muted-foreground">
+												<AscendantText className="block text-xs text-foreground/70">
 													Ask your Warden for the share code to invite others.
 												</AscendantText>
 											</div>
@@ -461,7 +461,7 @@ const CampaignDetail = () => {
 											<Loader2 className="w-6 h-6 animate-spin text-primary" />
 										</div>
 									) : members.length === 0 ? (
-										<AscendantText className="block text-muted-foreground text-center py-8">
+										<AscendantText className="block text-foreground/70 text-center py-8">
 											No members yet
 										</AscendantText>
 									) : (
@@ -488,7 +488,7 @@ const CampaignDetail = () => {
 																		"No Ascendant linked"}
 																</p>
 																{member.characters && (
-																	<AscendantText className="block text-xs text-muted-foreground">
+																	<AscendantText className="block text-xs text-foreground/70">
 																		Level {member.characters.level}{" "}
 																		{formatRegentVernacular(
 																			member.characters.job || "Unknown",
@@ -534,7 +534,7 @@ const CampaignDetail = () => {
 															</Select>
 														)}
 														{!hasWardenAccess || isWarden ? (
-															<span className="text-xs font-display text-muted-foreground">
+															<span className="text-xs font-display text-foreground/70">
 																{isWarden || member.role === "warden"
 																	? "Warden"
 																	: member.role === "co-warden"

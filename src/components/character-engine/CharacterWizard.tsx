@@ -103,10 +103,10 @@ export const CharacterWizard: React.FC<CharacterWizardProps> = ({
 			{/* Sticky/Floating Navigation Controls */}
 			<div className="flex justify-between items-center pt-8 border-t border-primary/5">
 				<Button
-					variant="ghost"
+					variant="outline"
 					onClick={onBack}
 					disabled={currentStepIndex === 0 || isSubmitting}
-					className="gap-2 h-11 px-6 hover:bg-primary/5 hover:text-primary transition-colors disabled:opacity-30"
+					className="gap-2 h-11 px-6 border-primary/20 text-foreground/80 hover:bg-primary/10 hover:text-primary transition-colors disabled:opacity-30"
 				>
 					<ChevronLeft className="w-4 h-4" />
 					<span className="uppercase tracking-widest text-[10px] font-bold">

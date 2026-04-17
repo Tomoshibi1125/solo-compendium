@@ -146,7 +146,7 @@ export const RiftNotificationOverlay: React.FC<
 
 							<div className="h-[2px] w-48 bg-gradient-to-r from-transparent via-[#9d4edd] to-transparent opacity-50 mb-4" />
 
-							<p className="text-[0.7rem] italic text-muted-foreground opacity-70">
+							<p className="text-[0.7rem] italic text-foreground/70 opacity-70">
 								Transmission secured from:{" "}
 								{activeNote.sender_name || "Ascendant Intelligence"}
 							</p>

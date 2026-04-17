@@ -350,6 +350,7 @@ export function useCharacterSheetState(characterId: string) {
 			id: string,
 			queryClient: QueryClient,
 			applyRestResourceUpdates: (type: "short" | "long") => Promise<void>,
+			ascendantTools: ReturnType<typeof useAscendantTools>,
 			toast: ReturnType<typeof useToast>["toast"],
 		) => {
 			const { executeShortRest } = await import("@/lib/restSystem");
@@ -357,9 +358,14 @@ export function useCharacterSheetState(characterId: string) {
 			queryClient.invalidateQueries({ queryKey: ["character", id] });
 			queryClient.invalidateQueries({ queryKey: ["features", id] });
 			await applyRestResourceUpdates("short");
+
+			ascendantTools
+				.trackCustomFeatureUsage(id, "Short Rest", "completed", "SA")
+				.catch(console.error);
+
 			toast({
 				title: "Short rest completed",
-				description: "Hit dice restored. Short-rest features recharged.",
+				description: "Short-rest features recharged.",
 			});
 		},
 		[],
@@ -391,6 +397,13 @@ export function useCharacterSheetState(characterId: string) {
 				ascendantTools
 					.trackConditionChange(id, "Exhaustion", "remove")
 					.catch(console.error);
+
+			ascendantTools
+				.trackCustomFeatureUsage(id, "Hit Dice", "restored", "SA")
+				.catch(console.error);
+			ascendantTools
+				.trackCustomFeatureUsage(id, "Rift Favor", "restored", "SA")
+				.catch(console.error);
 
 			toast({
 				title: "Long rest completed",

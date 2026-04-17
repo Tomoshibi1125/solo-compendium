@@ -20,7 +20,6 @@ import { useRecordRoll } from "@/hooks/useRollHistory";
 import type { useSpellCasting } from "@/hooks/useSpellCasting";
 import type { Database } from "@/integrations/supabase/types";
 import type { DetailData } from "@/types/character";
-import { SpellCastDialog } from "./SpellCastDialog";
 
 export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
@@ -93,7 +92,6 @@ export function PowersList({
 	const { rollInCampaign } = ascendantTools;
 
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
-	const [castDialogPower, setCastDialogPower] = useState<Power | null>(null);
 	const [filterLevel, setFilterLevel] = useState<string>("all");
 	const [filterPrepared, setFilterPrepared] = useState<string>("all");
 
@@ -140,10 +138,8 @@ export function PowersList({
 	const cantripCount = powers.filter(
 		(p: Power) => (p.power_level ?? 0) === 0,
 	).length;
-
-	const isPreparedCaster = spellsPreparedLimit !== null;
 	const isOverPreparedLimit =
-		isPreparedCaster && preparedCount > spellsPreparedLimit;
+		spellsPreparedLimit !== null && preparedCount > spellsPreparedLimit;
 	const isOverKnownLimit =
 		spellsKnownLimit !== null && knownCount > spellsKnownLimit;
 	const isOverCantripLimit =
@@ -196,20 +192,7 @@ export function PowersList({
 		}
 	};
 
-	const handleCastButtonClick = (power: Power) => {
-		if (spellCasting && power.power_level > 0) {
-			setCastDialogPower(power);
-			return;
-		}
-		// If it's a cantrip or spellCasting system is unavailable, fast path:
-		handleConfirmCast(power, power.power_level, false);
-	};
-
-	const handleConfirmCast = async (
-		power: Power,
-		castAtLevel: number,
-		asRitual: boolean,
-	) => {
+	const handleCastSpell = async (power: Power) => {
 		const displayName = formatRegentVernacular(power.name);
 
 		if (spellCasting) {
@@ -226,8 +209,6 @@ export function PowersList({
 					description: power.description,
 					higherLevels: null,
 				},
-				castAtLevel,
-				asRitual,
 				characterId,
 				characterName: character?.name || "Character",
 				jobName: character?.job || null,
@@ -551,13 +532,11 @@ export function PowersList({
 																Level {power.power_level}
 															</Badge>
 														)}
-														{isPreparedCaster &&
-															power.power_level > 0 &&
-															power.is_prepared && (
-																<Badge variant="default" className="text-xs">
-																	Prepared
-																</Badge>
-															)}
+														{power.is_prepared && (
+															<Badge variant="default" className="text-xs">
+																Prepared
+															</Badge>
+														)}
 														{power.concentration && (
 															<Badge variant="destructive" className="text-xs">
 																Concentration
@@ -585,44 +564,34 @@ export function PowersList({
 													</div>
 												</div>
 												<div className="flex items-center gap-2">
-													{isPreparedCaster && power.power_level > 0 && (
-														<div className="flex items-center gap-2">
-															<Checkbox
-																id={`prepared-${power.id}`}
-																checked={power.is_prepared ?? false}
-																onCheckedChange={() =>
-																	handleTogglePrepared(power)
-																}
-																disabled={
-																	!power.is_prepared && isOverPreparedLimit
-																}
-															/>
-															<label
-																htmlFor={`prepared-${power.id}`}
-																className="text-xs cursor-pointer"
-															>
-																Prep
-															</label>
-														</div>
-													)}
-													{(!isPreparedCaster ||
-														power.is_prepared ||
-														power.power_level === 0) && (
+													<div className="flex items-center gap-2">
+														<Checkbox
+															id={`prepared-${power.id}`}
+															checked={power.is_prepared ?? false}
+															onCheckedChange={() =>
+																handleTogglePrepared(power)
+															}
+															disabled={
+																!power.is_prepared && isOverPreparedLimit
+															}
+														/>
+														<label
+															htmlFor={`prepared-${power.id}`}
+															className="text-xs cursor-pointer"
+														>
+															Prep
+														</label>
+													</div>
+													{power.is_prepared && (
 														<Button
 															variant="outline"
 															size="sm"
-															onClick={() => handleCastButtonClick(power)}
+															onClick={() => handleCastSpell(power)}
 															disabled={
 																power.power_level > 0 &&
-																!power.casting_time
-																	?.toLowerCase()
-																	.includes("ritual") &&
-																!(power as any).power?.tags?.includes(
-																	"Ritual",
-																) &&
 																!spellSlots.find(
 																	(s) =>
-																		s.level >= power.power_level &&
+																		s.level === power.power_level &&
 																		s.current > 0,
 																)
 															}
@@ -655,16 +624,6 @@ export function PowersList({
 				open={addDialogOpen}
 				onOpenChange={setAddDialogOpen}
 				characterId={characterId}
-			/>
-			<SpellCastDialog
-				isOpen={!!castDialogPower}
-				onClose={() => setCastDialogPower(null)}
-				power={castDialogPower}
-				availableSlots={spellSlots}
-				onConfirm={(castAtLevel, asRitual) => {
-					if (castDialogPower)
-						handleConfirmCast(castDialogPower, castAtLevel, asRitual);
-				}}
 			/>
 		</AscendantWindow>
 	);

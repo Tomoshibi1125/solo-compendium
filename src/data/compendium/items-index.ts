@@ -10,16 +10,20 @@ import { items_part7 as itemsPart7 } from "./items-part7";
 import { items_part8 as itemsPart8 } from "./items-part8";
 import { items_part9 as itemsPart9 } from "./items-part9";
 
-export const allItems = [
-	...itemsPart1,
-	...itemsPart2,
-	...itemsPart3,
-	...itemsPart4,
-	...itemsPart5,
-	...itemsPart6,
-	...itemsPart7,
-	...itemsPart8,
-	...itemsPart9,
-	...baseEquipment,
-	...artifactItems,
-];
+export const allItems = Array.from(
+	new Map(
+		[
+			...baseEquipment,
+			...itemsPart1,
+			...itemsPart2,
+			...itemsPart3,
+			...itemsPart4,
+			...itemsPart5,
+			...itemsPart6,
+			...itemsPart7,
+			...itemsPart8,
+			...itemsPart9,
+			...artifactItems,
+		].map((item) => [item.name.toLowerCase().trim(), item]),
+	).values(),
+);

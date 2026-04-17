@@ -4,28 +4,30 @@ import { supabase } from "@/integrations/supabase/client";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 
 // D&D 5e standard coin denominations
-export interface PartyCurrency {
-	bits: number; // CP
-	credits: number; // SP
-	shards: number; // GP
-	cores: number; // PP
+interface PartyGold {
+	gp: number;
+	sp: number;
+	cp: number;
+	pp: number;
+	ep: number;
 }
 
-const DEFAULT_PARTY_CURRENCY: PartyCurrency = {
-	bits: 0,
-	credits: 0,
-	shards: 0,
-	cores: 0,
+const DEFAULT_PARTY_GOLD: PartyGold = {
+	gp: 0,
+	sp: 0,
+	cp: 0,
+	pp: 0,
+	ep: 0,
 };
 
-export const useCampaignCurrency = (campaignId: string | null) => {
+export const useCampaignGold = (campaignId: string | null) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
-	const { data: partyCurrency = DEFAULT_PARTY_CURRENCY, isLoading } = useQuery({
+	const { data: partyGold = DEFAULT_PARTY_GOLD, isLoading } = useQuery({
 		queryKey: ["campaign_gold", campaignId],
 		queryFn: async () => {
-			if (!campaignId) return DEFAULT_PARTY_CURRENCY;
+			if (!campaignId) return DEFAULT_PARTY_GOLD;
 
 			const { data, error } = await supabase
 				.from("campaigns")
@@ -34,42 +36,37 @@ export const useCampaignCurrency = (campaignId: string | null) => {
 				.single();
 
 			if (error) {
-				logErrorWithContext(error, "useCampaignCurrency.query");
+				logErrorWithContext(error, "useCampaignGold.query");
 				throw error;
 			}
 
 			// Fallback to default if null or empty
-			if (!data?.party_gold) return DEFAULT_PARTY_CURRENCY;
+			if (!data?.party_gold) return DEFAULT_PARTY_GOLD;
 
 			const parsed = JSON.parse(
 				JSON.stringify(data.party_gold || {}),
-			) as Record<string, number>;
+			) as Partial<PartyGold>;
 
 			return {
-				shards: parsed.gp || 0,
-				credits: parsed.sp || 0,
-				bits: parsed.cp || 0,
-				cores: parsed.pp || 0,
+				gp: parsed.gp || 0,
+				sp: parsed.sp || 0,
+				cp: parsed.cp || 0,
+				pp: parsed.pp || 0,
+				ep: parsed.ep || 0,
 			};
 		},
 		enabled: !!campaignId,
 	});
 
-	const updateCurrency = useMutation({
-		mutationFn: async (newCurrency: PartyCurrency) => {
+	const updateGold = useMutation({
+		mutationFn: async (newGold: PartyGold) => {
 			if (!campaignId) throw new Error("No active campaign");
 
 			const { data, error } = await supabase
 				.from("campaigns")
 				.update({
 					party_gold: JSON.parse(
-						JSON.stringify({
-							gp: newCurrency.shards,
-							sp: newCurrency.credits,
-							cp: newCurrency.bits,
-							pp: newCurrency.cores,
-							ep: 0,
-						}),
+						JSON.stringify(newGold),
 					) as import("@/integrations/supabase/types").Json,
 				})
 				.eq("id", campaignId)
@@ -77,7 +74,7 @@ export const useCampaignCurrency = (campaignId: string | null) => {
 				.single();
 
 			if (error) {
-				logErrorWithContext(error, "useCampaignCurrency.update");
+				logErrorWithContext(error, "useCampaignGold.update");
 				throw error;
 			}
 
@@ -90,9 +87,9 @@ export const useCampaignCurrency = (campaignId: string | null) => {
 			toast({ title: "Party wealth updated" });
 		},
 		onError: (error) => {
-			logErrorWithContext(error, "useCampaignCurrency.update");
+			logErrorWithContext(error, "useCampaignGold.update");
 			toast({
-				title: "Failed to update currency",
+				title: "Failed to update gold",
 				description: getErrorMessage(error),
 				variant: "destructive",
 			});
@@ -100,8 +97,8 @@ export const useCampaignCurrency = (campaignId: string | null) => {
 	});
 
 	return {
-		partyCurrency,
+		partyGold,
 		isLoading,
-		updateCurrency: updateCurrency.mutateAsync,
+		updateGold: updateGold.mutateAsync,
 	};
 };

@@ -339,7 +339,7 @@ export default function Login() {
 								<button
 									type="button"
 									onClick={handleContinueAsGuest}
-									className="w-full border border-primary/30 text-foreground font-heading font-semibold py-3 px-4 rounded-[2px] hover:border-primary/50 hover:bg-primary/10 transition-all duration-200 tracking-wider uppercase sa-btn-glow"
+									className="w-full bg-primary/10 border border-primary/50 text-primary font-heading font-bold py-3 px-4 rounded-[2px] hover:border-primary hover:bg-primary/20 transition-all duration-200 tracking-wider uppercase sa-btn-glow"
 								>
 									Continue as Guest (
 									{role === "warden" ? "Warden" : "Ascendant"})

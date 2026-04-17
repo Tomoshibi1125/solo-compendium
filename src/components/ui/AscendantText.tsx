@@ -245,7 +245,7 @@ export const ManaFlowText = ({
 				textShadow: dimensionalShadows[variant] || "",
 			}}
 		>
-			export {children}
+			{children}
 		</span>
 	);
 };

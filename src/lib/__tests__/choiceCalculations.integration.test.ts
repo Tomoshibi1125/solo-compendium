@@ -43,7 +43,7 @@ const mockStaticJob = {
 	],
 	job_traits: [
 		{
-			name: "System Versatility",
+			name: "Rift Versatility",
 			description: "Add half prof bonus to unproficient checks.",
 			type: "passive",
 		},

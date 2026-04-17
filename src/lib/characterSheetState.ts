@@ -14,6 +14,7 @@ export interface CharacterSheetState {
 			export: boolean;
 			levelUp: boolean;
 			defenses: boolean;
+			health: boolean;
 		};
 		activeTab?: string;
 	};
@@ -30,6 +31,7 @@ export function createDefaultCharacterSheetState(): CharacterSheetState {
 				export: false,
 				levelUp: false,
 				defenses: false,
+				health: false,
 			},
 			activeTab: "actions",
 		},

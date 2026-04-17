@@ -227,8 +227,6 @@ export const RiftStatusIndicator = ({
 					</div>
 				</div>
 			)}
-			{/* Stability Warning */}
-			export{" "}
 			{stability < 50 && (
 				<div className="mt-3 p-2 bg-red-900/20 border border-red-500/30 rounded">
 					<div className="flex items-center space-x-2">

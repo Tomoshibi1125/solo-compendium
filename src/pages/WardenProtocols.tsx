@@ -697,7 +697,7 @@ const WardenToolCard = ({
 							</RiftHeading>
 							<ManaFlowText
 								variant="rift"
-								className="warden-tool-description-list text-[10px] font-mono tracking-wider text-muted-foreground uppercase"
+								className="warden-tool-description-list text-[10px] font-mono tracking-wider text-foreground/80 uppercase"
 							>
 								{tool.description}
 							</ManaFlowText>
@@ -771,7 +771,7 @@ const WardenToolCard = ({
 				</RiftHeading>
 				<ManaFlowText
 					variant="rift"
-					className="warden-tool-description text-xs font-mono tracking-wider text-muted-foreground mb-6 uppercase leading-relaxed"
+					className="warden-tool-description text-xs font-mono tracking-wider text-foreground/80 mb-6 uppercase leading-relaxed"
 				>
 					{tool.description}
 				</ManaFlowText>

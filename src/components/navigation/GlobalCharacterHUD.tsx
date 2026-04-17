@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
-import { useCharacterFeatures } from "@/hooks/useCharacterFeatures";
 import {
 	useCharacterResources,
 	useCharacterSheetState,
 } from "@/hooks/useCharacterSheetState";
 import { useEquipment } from "@/hooks/useEquipment";
+
 import { useSigils } from "@/hooks/useSigils";
 import { formatModifier } from "@/lib/characterCalculations";
 
@@ -19,16 +19,16 @@ export function GlobalCharacterHUD() {
 	const charId = character?.id || "";
 
 	const { equipment } = useEquipment(charId);
+
 	const { data: sigils } = useSigils(charId);
 	const { state: sheetState } = useCharacterSheetState(charId);
-	const { data: features } = useCharacterFeatures(charId);
 
 	const derivedStats = useCharacterDerivedStats(
 		character,
 		equipment || [],
+
 		sigils || [],
 		sheetState?.customModifiers || [],
-		features || [],
 	);
 
 	const [characterResources] = useCharacterResources(charId);

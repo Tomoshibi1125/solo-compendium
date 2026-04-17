@@ -83,12 +83,22 @@ export default function AcousticResonanceManager() {
 			await loadTrack(track);
 			await play();
 		} catch (error) {
-			toast({
-				title: "Playback failed",
-				description:
-					error instanceof Error ? error.message : "Unable to play track.",
-				variant: "destructive",
-			});
+			const isDOMException = error instanceof DOMException;
+			if (isDOMException && error.name === "NotAllowedError") {
+				toast({
+					title: "Audio Blocked",
+					description:
+						"Click anywhere on the page first, then try again. Browsers require a user interaction before audio can play.",
+					variant: "destructive",
+				});
+			} else {
+				toast({
+					title: "Playback failed",
+					description:
+						error instanceof Error ? error.message : "Unable to play track.",
+					variant: "destructive",
+				});
+			}
 		}
 	};
 

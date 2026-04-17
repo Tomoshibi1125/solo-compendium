@@ -1938,7 +1938,7 @@ const VTTEnhanced = () => {
 							className={
 								simulatePlayerView
 									? "border-primary text-primary"
-									: "text-muted-foreground"
+									: "text-foreground/70"
 							}
 						>
 							{simulatePlayerView ? "Exit Player View" : "Simulate Player View"}
@@ -1984,7 +1984,7 @@ const VTTEnhanced = () => {
 										{vttRealtime.isConnected ? "● LIVE" : "○ OFFLINE"}
 									</Badge>
 									{vttRealtime.activeUsers.length > 0 && (
-										<span className="text-xs text-muted-foreground">
+										<span className="text-xs text-foreground/70">
 											{vttRealtime.activeUsers.length + 1} connected
 										</span>
 									)}
@@ -2033,7 +2033,7 @@ const VTTEnhanced = () => {
 											<Button
 												variant="ghost"
 												size="sm"
-												className="px-2 text-muted-foreground min-h-[44px]"
+												className="px-2 text-foreground/70 hover:text-foreground min-h-[44px]"
 												asChild
 											>
 												<DialogTrigger>?</DialogTrigger>
@@ -2046,47 +2046,45 @@ const VTTEnhanced = () => {
 													</DialogDescription>
 												</DialogHeader>
 												<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
-													<span className="text-muted-foreground">Escape</span>
+													<span className="text-foreground/70">Escape</span>
 													<span>Deselect token</span>
-													<span className="text-muted-foreground">
+													<span className="text-foreground/70">
 														Delete / Backspace
 													</span>
 													<span>Remove selected token</span>
-													<span className="text-muted-foreground">
-														Arrow keys
-													</span>
+													<span className="text-foreground/70">Arrow keys</span>
 													<span>Nudge token 1 square</span>
-													<span className="text-muted-foreground">L</span>
+													<span className="text-foreground/70">L</span>
 													<span>Lock / unlock token</span>
-													<span className="text-muted-foreground">O</span>
+													<span className="text-foreground/70">O</span>
 													<span>Open character sheet</span>
-													<span className="text-muted-foreground font-semibold mt-2">
+													<span className="text-foreground/70 font-semibold mt-2">
 														Tool Hotkeys
 													</span>
 													<span className="mt-2" />
-													<span className="text-muted-foreground">S</span>
+													<span className="text-foreground/70">S</span>
 													<span>Select tool</span>
-													<span className="text-muted-foreground">F</span>
+													<span className="text-foreground/70">F</span>
 													<span>Fog tool</span>
-													<span className="text-muted-foreground">D</span>
+													<span className="text-foreground/70">D</span>
 													<span>Draw tool</span>
-													<span className="text-muted-foreground">E</span>
+													<span className="text-foreground/70">E</span>
 													<span>Effect tool</span>
-													<span className="text-muted-foreground">N</span>
+													<span className="text-foreground/70">N</span>
 													<span>Note tool</span>
-													<span className="text-muted-foreground">M</span>
+													<span className="text-foreground/70">M</span>
 													<span>Measure tool</span>
-													<span className="text-muted-foreground font-semibold mt-2">
+													<span className="text-foreground/70 font-semibold mt-2">
 														Asset Browser
 													</span>
 													<span className="mt-2" />
-													<span className="text-muted-foreground">
+													<span className="text-foreground/70">
 														Drag &amp; Drop
 													</span>
 													<span>Drag asset onto map</span>
 												</div>
 												<DialogFooter>
-													<AscendantText className="block text-xs text-muted-foreground">
+													<AscendantText className="block text-xs text-foreground/70">
 														Click the map first to enable keyboard shortcuts.
 													</AscendantText>
 												</DialogFooter>
@@ -2151,7 +2149,7 @@ const VTTEnhanced = () => {
 																	"px-2 py-0.5 text-[9px] rounded font-bold uppercase mr-1",
 																	liveSceneId === scene.id
 																		? "bg-amber-500 text-black"
-																		: "bg-muted text-muted-foreground hover:bg-muted/80",
+																		: "bg-muted text-foreground/70 hover:bg-muted/80",
 																)}
 															>
 																{liveSceneId === scene.id
@@ -2279,7 +2277,7 @@ const VTTEnhanced = () => {
 																	"p-1.5 rounded border text-sm transition-all",
 																	measureShape === shape.key
 																		? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300"
-																		: "border-border/50 text-muted-foreground hover:bg-muted/30",
+																		: "border-border/50 text-foreground/70 hover:bg-muted/30",
 																)}
 																title={
 																	shape.key.charAt(0).toUpperCase() +
@@ -2460,7 +2458,7 @@ const VTTEnhanced = () => {
 																aria-label="Fog brush size"
 																className="w-full"
 															/>
-															<div className="text-[10px] text-muted-foreground">
+															<div className="text-[10px] text-foreground/70">
 																Size: {fogBrushSize}
 															</div>
 														</div>
@@ -2877,7 +2875,7 @@ const VTTEnhanced = () => {
 																	{map.theme}
 																</Badge>
 															</div>
-															<div className="text-[10px] text-muted-foreground">
+															<div className="text-[10px] text-foreground/70">
 																{map.grid.width}x{map.grid.height} -{" "}
 																{map.grid.size}px grid
 															</div>
@@ -2912,7 +2910,7 @@ const VTTEnhanced = () => {
 									<AscendantWindow title="AUDIO TRACKS">
 										<div className="space-y-4">
 											{audioTracks.length === 0 ? (
-												<AscendantText className="block text-xs text-muted-foreground text-center py-2">
+												<AscendantText className="block text-xs text-foreground/70 text-center py-2">
 													No tracks uploaded for this session yet.
 												</AscendantText>
 											) : (
@@ -3210,7 +3208,7 @@ const VTTEnhanced = () => {
 										<TabsContent value="characters" className="mt-3">
 											<div className="space-y-2 max-h-60 overflow-y-auto">
 												{resolvedCharacters.length === 0 && (
-													<AscendantText className="block text-xs text-muted-foreground text-center py-4">
+													<AscendantText className="block text-xs text-foreground/70 text-center py-4">
 														No characters yet.
 													</AscendantText>
 												)}
@@ -3247,7 +3245,7 @@ const VTTEnhanced = () => {
 																<div className="font-semibold truncate">
 																	{char.name}
 																</div>
-																<div className="text-muted-foreground">
+																<div className="text-foreground/70">
 																	{char.hp_current || 0}/{char.hp_max || 0} HP |
 																	AC {char.armor_class || 10}
 																</div>
@@ -3267,7 +3265,7 @@ const VTTEnhanced = () => {
 												/>
 												<div className="space-y-2 max-h-60 overflow-y-auto">
 													{filteredLibraryTokens.length === 0 && (
-														<AscendantText className="block text-xs text-muted-foreground text-center py-4">
+														<AscendantText className="block text-xs text-foreground/70 text-center py-4">
 															No tokens match.
 														</AscendantText>
 													)}
@@ -3327,7 +3325,7 @@ const VTTEnhanced = () => {
 																	<div className="font-semibold truncate">
 																		{token.name}
 																	</div>
-																	<div className="text-muted-foreground capitalize">
+																	<div className="text-foreground/70 capitalize">
 																		{token.category} | {token.size}
 																	</div>
 																</div>
@@ -3516,7 +3514,7 @@ const VTTEnhanced = () => {
 										role="application"
 										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										className={cn(
-											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto",
+											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-[500px]",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
 												(selectedCharacterId || selectedLibraryTokenId) &&
@@ -3535,7 +3533,7 @@ const VTTEnhanced = () => {
 													>
 														No Active Lattice Detected
 													</AscendantText>
-													<AscendantText className="text-sm text-muted-foreground max-w-md">
+													<AscendantText className="text-sm text-foreground/70 max-w-md">
 														Select a scene from the Warden direct-link or drop a
 														map asset here to initialize the dimensional
 														projection.
@@ -4110,7 +4108,7 @@ const VTTEnhanced = () => {
 																		"text-[9px] px-1.5 py-0.5 rounded-full border transition-all",
 																		active
 																			? "bg-amber-500/30 border-amber-500 text-amber-300"
-																			: "border-border/50 text-muted-foreground hover:bg-muted/50",
+																			: "border-border/50 text-foreground/70 hover:bg-muted/50",
 																	)}
 																>
 																	{cond}
@@ -4564,7 +4562,7 @@ const VTTEnhanced = () => {
 													);
 												})}
 												{tokensInInitiative.length === 0 && (
-													<AscendantText className="block text-xs text-muted-foreground text-center py-4">
+													<AscendantText className="block text-xs text-foreground/70 text-center py-4">
 														No tokens in initiative.{" "}
 														{isWarden && "Set initiative values on tokens."}
 													</AscendantText>
@@ -4594,7 +4592,7 @@ const VTTEnhanced = () => {
 															</DynamicStyle>
 														))}
 													</div>
-													<span className="text-[10px] text-muted-foreground ml-1">
+													<span className="text-[10px] text-foreground/70 ml-1">
 														{vttRealtime.activeUsers.length + 1} online
 													</span>
 												</div>
@@ -4632,7 +4630,7 @@ const VTTEnhanced = () => {
 																			Warden
 																		</Badge>
 																	)}
-																	<span className="text-muted-foreground text-[10px]">
+																	<span className="text-foreground/70 text-[10px]">
 																		{new Date(
 																			msg.timestamp,
 																		).toLocaleTimeString()}
@@ -4678,7 +4676,7 @@ const VTTEnhanced = () => {
 													</div>
 												))}
 											</div>
-											<div className="text-[9px] text-muted-foreground mb-1 px-1">
+											<div className="text-[9px] text-foreground/70 mb-1 px-1">
 												/roll /wardenroll /w &quot;name&quot; /em /desc • adv
 												dis 4d6kh3
 											</div>
@@ -4811,7 +4809,7 @@ const VTTEnhanced = () => {
 																			onClick={() =>
 																				vttRealtime.removeMacro(macro.id)
 																			}
-																			className="h-6 px-1 border border-l-0 border-border rounded-r text-[10px] hover:bg-destructive/20 text-muted-foreground"
+																			className="h-6 px-1 border border-l-0 border-border rounded-r text-[10px] hover:bg-destructive/20 text-foreground/70"
 																		>
 																			×
 																		</button>
@@ -4885,7 +4883,7 @@ const VTTEnhanced = () => {
 																	</span>
 																</div>
 																{roll.diceDisplayText && (
-																	<div className="text-[10px] text-muted-foreground mt-0.5">
+																	<div className="text-[10px] text-foreground/70 mt-0.5">
 																		<DiceDisplayText
 																			text={roll.diceDisplayText}
 																		/>
@@ -4999,7 +4997,7 @@ const VTTEnhanced = () => {
 											className="h-[400px] flex flex-col"
 										>
 											<div className="flex-1 overflow-y-auto space-y-2 mb-2">
-												<AscendantText className="block text-xs text-muted-foreground text-center py-4">
+												<AscendantText className="block text-xs text-foreground/70 text-center py-4">
 													Quick access to journal entries. Full journal editor
 													available separately.
 												</AscendantText>
@@ -5079,7 +5077,7 @@ const VTTEnhanced = () => {
 							>
 								−
 							</button>
-							<span className="text-[10px] text-muted-foreground min-w-[32px] text-center">
+							<span className="text-[10px] text-foreground/70 min-w-[32px] text-center">
 								{Math.round(zoom * 100)}%
 							</span>
 							<button
@@ -5095,7 +5093,7 @@ const VTTEnhanced = () => {
 							<div className="vtt-bottom-sheet-content">
 								{mobilePanel === "tools" && (
 									<div className="space-y-3">
-										<h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+										<h3 className="text-xs font-bold uppercase tracking-wider text-foreground/70">
 											Controls
 										</h3>
 										<div className="flex items-center gap-2">
@@ -5122,7 +5120,7 @@ const VTTEnhanced = () => {
 										</div>
 										{selectedTool === "measure" && (
 											<div className="space-y-2">
-												<h4 className="text-xs font-semibold text-muted-foreground">
+												<h4 className="text-xs font-semibold text-foreground/70">
 													AoE Shape
 												</h4>
 												<div className="grid grid-cols-4 gap-2">
@@ -5147,7 +5145,7 @@ const VTTEnhanced = () => {
 											</div>
 										)}
 										<div className="space-y-1">
-											<h4 className="text-xs font-semibold text-muted-foreground">
+											<h4 className="text-xs font-semibold text-foreground/70">
 												Scenes
 											</h4>
 											{scenes.map((scene) => (
@@ -5477,7 +5475,7 @@ const VTTEnhanced = () => {
 								<button
 									type="button"
 									onClick={vttRealtime.dismissHandout}
-									className="text-muted-foreground hover:text-foreground text-lg"
+									className="text-foreground/70 hover:text-foreground text-lg"
 								>
 									&times;
 								</button>
@@ -5493,11 +5491,11 @@ const VTTEnhanced = () => {
 								</div>
 							)}
 							{vttRealtime.sharedHandout.content && (
-								<div className="text-sm text-muted-foreground whitespace-pre-wrap max-h-48 overflow-y-auto">
+								<div className="text-sm text-foreground/70 whitespace-pre-wrap max-h-48 overflow-y-auto">
 									{vttRealtime.sharedHandout.content}
 								</div>
 							)}
-							<div className="mt-3 text-xs text-muted-foreground text-right">
+							<div className="mt-3 text-xs text-foreground/70 text-right">
 								Shared by {vttRealtime.sharedHandout.sharedBy}
 							</div>
 						</div>

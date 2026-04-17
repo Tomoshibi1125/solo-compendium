@@ -120,13 +120,19 @@ export function Layout({ children, className }: LayoutProps) {
 				/>
 			</div>
 
-			<a href="#main-content" className="skip-link">
+			<a
+				href="#main-content"
+				className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:p-4 focus:bg-background focus:text-foreground top-0 left-0"
+			>
 				Skip to content
 			</a>
 			<main
 				id="main-content"
 				tabIndex={-1}
-				className={cn("flex-1", isMobile ? "px-4 py-6" : "px-8 py-8")}
+				className={cn(
+					"flex-1",
+					isMobile ? "px-4 pt-6 pb-32" : "px-8 pt-8 pb-32",
+				)}
 			>
 				{children || <Outlet />}
 			</main>

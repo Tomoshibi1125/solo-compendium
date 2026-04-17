@@ -144,13 +144,13 @@ const CampaignSessionPlay = () => {
 
 				<AscendantWindow title="LIVE COMBAT SESSION">
 					{isLoading ? (
-						<AscendantText className="block text-sm text-muted-foreground">
+						<AscendantText className="block text-sm text-foreground/70">
 							Loading session...
 						</AscendantText>
 					) : error ? (
 						<p className="text-sm text-destructive">Failed to load session.</p>
 					) : !session ? (
-						<AscendantText className="block text-sm text-muted-foreground">
+						<AscendantText className="block text-sm text-foreground/70">
 							No active session found.
 						</AscendantText>
 					) : (
@@ -169,7 +169,7 @@ const CampaignSessionPlay = () => {
 							{/* Combatant Initiative List */}
 							<div className="space-y-2" data-testid="session-initiative-list">
 								{sorted.length === 0 ? (
-									<AscendantText className="block text-sm text-muted-foreground">
+									<AscendantText className="block text-sm text-foreground/70">
 										No combatants yet.
 									</AscendantText>
 								) : (
@@ -201,7 +201,7 @@ const CampaignSessionPlay = () => {
 														)}
 														{c.name}
 													</div>
-													<div className="text-xs text-muted-foreground">
+													<div className="text-xs text-foreground/70">
 														HP {hp + adj} / {maxHp > 0 ? maxHp : "—"}
 														{adj !== 0 && (
 															<span
@@ -241,7 +241,7 @@ const CampaignSessionPlay = () => {
 															{adj !== 0 && (
 																<button
 																	type="button"
-																	className="text-xs text-muted-foreground w-5 text-center hover:text-foreground"
+																	className="text-xs text-foreground/70 w-5 text-center hover:text-foreground"
 																	onClick={() =>
 																		setAdjustments((prev) => {
 																			const n = { ...prev };
@@ -277,7 +277,7 @@ const CampaignSessionPlay = () => {
 								)}
 							</div>
 
-							<div className="pt-2 text-xs text-muted-foreground border-t border-border">
+							<div className="pt-2 text-xs text-foreground/70 border-t border-border">
 								This view updates live while the Warden advances turns in
 								Initiative Tracker.
 							</div>
@@ -335,7 +335,7 @@ const CampaignSessionPlay = () => {
 												<span className="font-heading text-sm">
 													Manage Engagement
 												</span>
-												<span className="text-[10px] text-muted-foreground">
+												<span className="text-[10px] text-foreground/70">
 													Add/Remove Entities
 												</span>
 											</Link>
@@ -352,7 +352,7 @@ const CampaignSessionPlay = () => {
 											<span className="font-heading text-sm">
 												Award Rewards
 											</span>
-											<span className="text-[10px] text-muted-foreground">
+											<span className="text-[10px] text-foreground/70">
 												Distribute XP & Loot
 											</span>
 										</Button>

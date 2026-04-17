@@ -179,7 +179,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 									className="p-4 rounded-lg bg-black/40 border border-primary/5 hover:border-primary/20 transition-all space-y-3"
 								>
 									<div className="flex justify-between items-end">
-										<Label className="text-[10px] uppercase tracking-widest text-primary/60">
+										<Label className="text-xs uppercase font-bold tracking-widest text-primary/90">
 											{ABILITY_NAMES[ability]}
 										</Label>
 										<div className="text-lg font-heading font-bold text-primary">
@@ -221,9 +221,9 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 										className="h-10 text-center font-heading text-lg bg-black/60 border-primary/10"
 									/>
 
-									<div className="text-[9px] text-muted-foreground uppercase flex justify-between">
+									<div className="text-[10px] text-foreground/70 uppercase flex justify-between font-medium">
 										<span>Base: {abilities[ability]}</span>
-										<span className="text-primary/40">
+										<span className="text-primary/70">
 											Effective: {effectiveAbilities[ability]}
 										</span>
 									</div>

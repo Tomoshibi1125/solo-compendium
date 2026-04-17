@@ -32,7 +32,6 @@ export function calculateSkillModifier(
 	proficiencies: string[],
 	expertise: string[],
 	proficiencyBonus: number,
-	hasHalfProficiency: boolean = false,
 ): number {
 	const skill = SKILLS[skillName];
 	if (!skill) return 0;
@@ -44,8 +43,6 @@ export function calculateSkillModifier(
 		modifier += proficiencyBonus * 2;
 	} else if (proficiencies.includes(skillName)) {
 		modifier += proficiencyBonus;
-	} else if (hasHalfProficiency) {
-		modifier += Math.floor(proficiencyBonus / 2);
 	}
 
 	return modifier;
@@ -64,7 +61,6 @@ export function calculatePassiveSkill(
 		proficiencies,
 		expertise,
 		proficiencyBonus,
-		false, // We don't bubble half-proficiency to passive skills inherently, unless specified
 	);
 	return 10 + modifier;
 }

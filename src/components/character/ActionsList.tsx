@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCombatActions } from "@/hooks/useCombatActions";
 import { useEquipment } from "@/hooks/useEquipment";
+import { useTrackedResources } from "@/hooks/useTrackedResources";
 import type { DetailData } from "@/types/character";
 import { ActionCard } from "./ActionCard";
 import { AddTechniqueDialog } from "./AddTechniqueDialog";
+import { TrackedResourcesList } from "./TrackedResourcesList";
 
 export function ActionsList({
 	characterId,
@@ -20,6 +22,7 @@ export function ActionsList({
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 	const { actions, isLoading } = useCombatActions(characterId);
 	const { updateEquipment } = useEquipment(characterId);
+	const { resources, setResources } = useTrackedResources(characterId);
 
 	const handleUseAction = async (actionId: string, equipmentId?: string) => {
 		if (!equipmentId) return;
@@ -69,7 +72,9 @@ export function ActionsList({
 
 	return (
 		<div className="space-y-4">
-			<div className="flex items-center justify-between gap-4">
+			<TrackedResourcesList resources={resources} onChange={setResources} />
+
+			<div className="flex items-center justify-between gap-4 mt-8 pt-4 border-t border-primary/10">
 				<TabsList className="grid flex-1 grid-cols-5 h-10">
 					<TabsTrigger value="all" className="text-xs">
 						All

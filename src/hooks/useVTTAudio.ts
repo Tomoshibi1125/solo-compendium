@@ -269,6 +269,30 @@ class VTTAudioManager {
 
 		this.audioElements.set(track.id, audio);
 
+		// Wait for audio to buffer enough data before attempting playback
+		if (audio.readyState < 3) {
+			await new Promise<void>((resolve, reject) => {
+				const onReady = () => {
+					audio.removeEventListener("canplaythrough", onReady);
+					audio.removeEventListener("error", onError);
+					resolve();
+				};
+				const onError = () => {
+					audio.removeEventListener("canplaythrough", onReady);
+					audio.removeEventListener("error", onError);
+					reject(new Error("Audio failed to load"));
+				};
+				audio.addEventListener("canplaythrough", onReady, { once: true });
+				audio.addEventListener("error", onError, { once: true });
+				// If already buffered, resolve immediately
+				if (audio.readyState >= 3) {
+					audio.removeEventListener("canplaythrough", onReady);
+					audio.removeEventListener("error", onError);
+					resolve();
+				}
+			});
+		}
+
 		try {
 			await audio.play();
 			await this.updateTrackStatus(track.id, true);

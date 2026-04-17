@@ -286,9 +286,9 @@ export function useCharacterPageModel() {
 	const memoizedStats = useCharacterDerivedStats(
 		character as CharacterWithAbilities | null,
 		equipment,
+
 		activeSigilInscriptions,
 		customModifiers,
-		charFeatures,
 	);
 
 	const applyRestResourceUpdates = useCallback(
@@ -308,6 +308,7 @@ export function useCharacterPageModel() {
 			character.id,
 			queryClient,
 			applyRestResourceUpdates,
+			ascendantTools,
 			toast,
 		);
 
@@ -339,6 +340,7 @@ export function useCharacterPageModel() {
 		recordRoll,
 		toast,
 		sheetController,
+		ascendantTools,
 	]);
 
 	const handleLongRest = async () => {

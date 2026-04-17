@@ -214,7 +214,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 		<div className={cn("space-y-4", className)}>
 			{/* Quick Actions Bar */}
 			<AscendantWindow title="QUICK ACTIONS" compact>
-				<div className="grid grid-cols-2 gap-2">
+				<div className="grid grid-cols-1 gap-3">
 					{/* Quick Dice Roll */}
 					<div className="space-y-2">
 						<Label className="text-xs">Quick Roll</Label>
@@ -296,22 +296,34 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 					onValueChange={setActiveTool}
 					className="w-full"
 				>
-					<TabsList className="grid w-full grid-cols-4 h-auto">
-						<TabsTrigger value="actions" className="flex-col gap-1 p-2">
+					<TabsList className="flex flex-wrap w-full gap-1 h-auto p-1">
+						<TabsTrigger
+							value="actions"
+							className="flex-1 flex-col gap-1 p-2 min-w-[50px]"
+						>
 							<Sword className="w-4 h-4" />
-							<span className="text-xs">Actions</span>
+							<span className="text-[10px]">Actions</span>
 						</TabsTrigger>
-						<TabsTrigger value="spells" className="flex-col gap-1 p-2">
+						<TabsTrigger
+							value="spells"
+							className="flex-1 flex-col gap-1 p-2 min-w-[50px]"
+						>
 							<Zap className="w-4 h-4" />
-							<span className="text-xs">Spells</span>
+							<span className="text-[10px]">Spells</span>
 						</TabsTrigger>
-						<TabsTrigger value="abilities" className="flex-col gap-1 p-2">
+						<TabsTrigger
+							value="abilities"
+							className="flex-1 flex-col gap-1 p-2 min-w-[50px]"
+						>
 							<Shield className="w-4 h-4" />
-							<span className="text-xs">Saves</span>
+							<span className="text-[10px]">Saves</span>
 						</TabsTrigger>
-						<TabsTrigger value="chat" className="flex-col gap-1 p-2">
+						<TabsTrigger
+							value="chat"
+							className="flex-1 flex-col gap-1 p-2 min-w-[50px]"
+						>
 							<MessageSquare className="w-4 h-4" />
-							<span className="text-xs">Chat</span>
+							<span className="text-[10px]">Chat</span>
 						</TabsTrigger>
 					</TabsList>
 
@@ -340,10 +352,10 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: action.description,
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
-										<div className="text-lg">{action.icon}</div>
-										<div>{action.name}</div>
+										<div className="text-lg leading-none">{action.icon}</div>
+										<div className="leading-none">{action.name}</div>
 									</Button>
 								))}
 							</div>
@@ -362,7 +374,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: "Moving to new position",
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
 										<Footprints className="w-4 h-4" />
 										Move
@@ -377,7 +389,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: "Taking dash action for extra movement",
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
 										<Target className="w-4 h-4" />
 										Dash
@@ -394,7 +406,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: "Disengaging from combat",
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
 										<EyeOff className="w-4 h-4" />
 										Disengage
@@ -409,7 +421,7 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: "Preparing a ready action",
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
 										<Eye className="w-4 h-4" />
 										Ready
@@ -444,11 +456,11 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: `${spell.name} cast successfully`,
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
-										<div className="text-lg">{spell.icon}</div>
-										<div>{spell.name}</div>
-										<Badge variant="outline" className="text-xs">
+										<div className="text-lg leading-none">{spell.icon}</div>
+										<div className="leading-none">{spell.name}</div>
+										<Badge variant="outline" className="text-[10px] h-4">
 											Level {spell.level}
 										</Badge>
 									</Button>
@@ -556,10 +568,10 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 												description: `${ability.name} roll initiated`,
 											});
 										}}
-										className="h-12 flex-col gap-1 text-xs"
+										className="h-auto py-2 flex-col gap-1 text-xs"
 									>
-										<div className="text-lg">{ability.icon}</div>
-										<div>{ability.name}</div>
+										<div className="text-lg leading-none">{ability.icon}</div>
+										<div className="leading-none">{ability.name}</div>
 									</Button>
 								))}
 							</div>

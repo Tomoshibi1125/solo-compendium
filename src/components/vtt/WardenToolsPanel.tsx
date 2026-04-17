@@ -31,7 +31,6 @@ import {
 	useState,
 } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -42,13 +41,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
@@ -65,6 +57,7 @@ import {
 	type RollMacro,
 	saveMacrosToLocal,
 } from "@/lib/vtt/rollMacros";
+import { PartyDashboardPanel } from "./PartyDashboardPanel";
 import { VTTAssetBrowser } from "./VTTAssetBrowser";
 
 const EncounterBuilder = lazy(
@@ -178,7 +171,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 	// Live Party Status from campaign members
 	const { data: members = [] } = useCampaignMembers(campaignId || "");
-	const partyStats = useMemo(() => {
+	const _partyStats = useMemo(() => {
 		const players = members.filter((m) => m.role === "ascendant");
 		const levels = players
 			.map((m) => (m as Record<string, unknown>).characters)
@@ -366,7 +359,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 					{/* Quick Music (Procedural Ambient — Zero Copyright) */}
 					<div className="space-y-2 pt-2 border-t border-border/50">
 						<Label className="text-xs">Ambient Music (Procedural)</Label>
-						<div className="grid grid-cols-4 gap-1 max-h-32 overflow-y-auto">
+						<div className="grid grid-cols-3 gap-1 max-h-32 overflow-y-auto">
 							{quickMusic.map((music) => (
 								<Button
 									key={music.id}
@@ -376,7 +369,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										onMusicChange?.(music.id);
 										logWardenMacro("Music Change", music.name);
 									}}
-									className="h-7 text-[10px] px-1"
+									className="h-7 text-[10px] px-1 truncate"
 								>
 									{music.name}
 								</Button>
@@ -391,7 +384,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 						fallback={
 							<div className="p-8 flex justify-center w-full min-h-[300px] items-center">
 								<Sparkles className="w-6 h-6 animate-spin opacity-50 mr-2" />{" "}
-								<span className="text-sm text-muted-foreground animate-pulse">
+								<span className="text-sm text-foreground/70 animate-pulse">
 									Initializing Protocol...
 								</span>
 							</div>
@@ -402,26 +395,41 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							onValueChange={setActiveTool}
 							className="w-full"
 						>
-							<TabsList className="grid w-full grid-cols-5 h-auto">
-								<TabsTrigger value="encounter" className="flex-col gap-1 p-2">
+							<TabsList className="flex flex-wrap w-full gap-1 h-auto p-1">
+								<TabsTrigger
+									value="encounter"
+									className="flex-1 flex-col gap-1 p-2 min-w-[60px]"
+								>
 									<Sword className="w-4 h-4" />
-									<span className="text-xs">Encounter</span>
+									<span className="text-[10px]">Encounter</span>
 								</TabsTrigger>
-								<TabsTrigger value="generators" className="flex-col gap-1 p-2">
+								<TabsTrigger
+									value="generators"
+									className="flex-1 flex-col gap-1 p-2 min-w-[60px]"
+								>
 									<Sparkles className="w-4 h-4" />
-									<span className="text-xs">Generators</span>
+									<span className="text-[10px]">Generators</span>
 								</TabsTrigger>
-								<TabsTrigger value="assets" className="flex-col gap-1 p-2">
+								<TabsTrigger
+									value="assets"
+									className="flex-1 flex-col gap-1 p-2 min-w-[60px]"
+								>
 									<BookOpen className="w-4 h-4" />
-									<span className="text-xs">Assets</span>
+									<span className="text-[10px]">Assets</span>
 								</TabsTrigger>
-								<TabsTrigger value="tables" className="flex-col gap-1 p-2">
+								<TabsTrigger
+									value="tables"
+									className="flex-1 flex-col gap-1 p-2 min-w-[60px]"
+								>
 									<Coins className="w-4 h-4" />
-									<span className="text-xs">Tables</span>
+									<span className="text-[10px]">Tables</span>
 								</TabsTrigger>
-								<TabsTrigger value="tools" className="flex-col gap-1 p-2">
+								<TabsTrigger
+									value="tools"
+									className="flex-1 flex-col gap-1 p-2 min-w-[60px]"
+								>
 									<Settings className="w-4 h-4" />
-									<span className="text-xs">Tools</span>
+									<span className="text-[10px]">Tools</span>
 								</TabsTrigger>
 							</TabsList>
 
@@ -464,7 +472,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										/>
 									</TabsContent>
 									<TabsContent value="tokens" className="pt-2">
-										<TokenLibrary isEmbedded={true} />
+										<TokenLibrary />
 									</TabsContent>
 								</Tabs>
 							</TabsContent>
@@ -473,7 +481,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								<div className="grid grid-cols-2 gap-4">
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<Users className="w-4 h-4" />
 												<span className="text-xs">NPC</span>
 											</Button>
@@ -488,7 +499,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<DoorOpen className="w-4 h-4" />
 												<span className="text-xs">Rift</span>
 											</Button>
@@ -503,7 +517,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<Coins className="w-4 h-4" />
 												<span className="text-xs">Treasure</span>
 											</Button>
@@ -518,7 +535,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<Skull className="w-4 h-4" />
 												<span className="text-xs">Random</span>
 											</Button>
@@ -535,7 +555,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								<div className="grid grid-cols-2 gap-4">
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<Heart className="w-4 h-4" />
 												<span className="text-xs">Relic</span>
 											</Button>
@@ -552,7 +575,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-12 flex-col gap-1 border-fuchsia-500/30"
+												className="h-auto py-2 flex-col gap-1 border-fuchsia-500/30"
 											>
 												<MapIcon className="w-4 h-4 text-fuchsia-400" />
 												<span className="text-xs text-fuchsia-400">
@@ -572,7 +595,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-12 flex-col gap-1 border-blue-500/30"
+												className="h-auto py-2 flex-col gap-1 border-blue-500/30"
 											>
 												<Image className="w-4 h-4 text-blue-400" />
 												<span className="text-xs text-blue-400">Art AI</span>
@@ -590,7 +613,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<BookOpen className="w-4 h-4" />
 												<span className="text-xs">Directives</span>
 											</Button>
@@ -605,7 +631,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="outline" className="h-12 flex-col gap-1">
+											<Button
+												variant="outline"
+												className="h-auto py-2 flex-col gap-1"
+											>
 												<Sparkles className="w-4 h-4" />
 												<span className="text-xs">Effect</span>
 											</Button>
@@ -693,35 +722,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									</AscendantWindow>
 
 									<AscendantWindow title="PARTY STATUS" compact>
-										<div className="space-y-2">
-											<div className="flex justify-between items-center">
-												<span className="text-xs">Party Level</span>
-												<Badge variant="outline" className="text-xs">
-													{partyStats.levelRange}
-												</Badge>
-											</div>
-											<div className="flex justify-between items-center">
-												<span className="text-xs">Party Size</span>
-												<Badge variant="outline" className="text-xs">
-													{partyStats.count || "—"}
-												</Badge>
-											</div>
-											<div className="flex justify-between items-center border-b border-border/50 pb-2 mb-2">
-												<span className="text-xs">Difficulty</span>
-												<Select defaultValue="medium">
-													<SelectTrigger className="h-8 text-xs">
-														<SelectValue />
-													</SelectTrigger>
-													<SelectContent>
-														<SelectItem value="easy">Easy</SelectItem>
-														<SelectItem value="medium">Medium</SelectItem>
-														<SelectItem value="hard">Hard</SelectItem>
-														<SelectItem value="deadly">Deadly</SelectItem>
-													</SelectContent>
-												</Select>
-											</div>
+										<PartyDashboardPanel rawMembers={members} />
 
-											{/* Module Book Link */}
+										{/* Module Book Link */}
+										<div className="mt-4 pt-4 border-t border-border/50">
 											<Button
 												variant="secondary"
 												className="w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10"
@@ -872,7 +876,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										</div>
 
 										<div className="pt-2 border-t border-border/50">
-											<Label className="text-xs text-muted-foreground pb-2 block">
+											<Label className="text-xs text-foreground/70 pb-2 block">
 												Terrain Effects
 											</Label>
 											<div className="flex flex-wrap gap-1">
@@ -900,7 +904,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										</div>
 
 										<div className="pt-2 border-t border-border/50">
-											<Label className="text-xs text-muted-foreground pb-2 block">
+											<Label className="text-xs text-foreground/70 pb-2 block">
 												Ambient Audio Zones
 											</Label>
 											<div className="flex flex-wrap gap-1">

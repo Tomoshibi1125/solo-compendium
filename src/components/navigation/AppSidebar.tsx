@@ -55,7 +55,7 @@ export function AppSidebar() {
 											collapsed ? "px-2 justify-center" : "px-4",
 											isActive
 												? "bg-primary/10 text-primary border-r-2 border-primary"
-												: "text-muted-foreground hover:text-foreground hover:bg-primary/5",
+												: "text-foreground/70 hover:text-foreground hover:bg-primary/5",
 										)}
 										title={collapsed ? item.title : undefined}
 									>
@@ -194,7 +194,7 @@ export function AppSidebar() {
 					<Button
 						variant="ghost"
 						className={cn(
-							"w-full justify-start gap-4 text-primary/40 hover:text-destructive hover:bg-destructive/10 transition-colors",
+							"w-full justify-start gap-4 text-foreground/70 hover:text-destructive hover:bg-destructive/10 transition-colors",
 							sidebarCollapsed && "px-0 justify-center",
 						)}
 						onClick={() => signOut()}

@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
+import { HealthDialog } from "@/components/CharacterSheet/HealthDialog";
 import { ShortRestDialog } from "@/components/CharacterSheet/ShortRestDialog";
 import { ActionsList } from "@/components/character/ActionsList";
 import { CharacterBackupPanel } from "@/components/character/CharacterBackupPanel";
@@ -295,7 +296,7 @@ export default function CharacterSheetV2() {
 			modifier: getAbilityModifier(stats.finalAbilities.VIT),
 		});
 
-	const onHPClick = () => {};
+	const onHPClick = () => sheetController.setModal("health", true);
 	const onACClick = () => sheetController.setModal("defenses", true);
 	const onShortRest = () => handleShortRest();
 	const onLongRest = () => handleLongRest();
@@ -304,6 +305,55 @@ export default function CharacterSheetV2() {
 		field: "hit_dice_current" | "rift_favor_current",
 		delta: number,
 	) => handleResourceAdjust(field, delta);
+
+	const handleTakeDamage = (amount: number) => {
+		const newHp = Math.max(0, character.hp_current - amount);
+		updateCharacter.mutate({
+			id: character.id,
+			data: { hp_current: newHp },
+		});
+
+		ascendantTools
+			.trackHealthChange(character.id, amount, "damage")
+			.catch(console.error);
+
+		// Process concentration check
+		const result = concentration.takeDamage(amount);
+		if (result?.concentrationLost) {
+			// Actually drop the condition
+			onRemoveCondition(
+				characterConditions.find((c) => c.conditionName === "Concentration")
+					?.id || "",
+			);
+			// We can trigger a toast to notify
+			import("@/hooks/use-toast").then(({ toast }) => {
+				toast({
+					title: "Concentration Lost!",
+					description: `Failed VIT save (${result.total} vs DC ${result.dc}). ${result.spellName} dropped.`,
+					variant: "destructive",
+				});
+			});
+		} else if (result && !result.concentrationLost) {
+			import("@/hooks/use-toast").then(({ toast }) => {
+				toast({
+					title: "Concentration Maintained",
+					description: `Succeeded VIT save (${result.total} vs DC ${result.dc}).`,
+				});
+			});
+		}
+	};
+
+	const handleHeal = (amount: number) => {
+		const newHp = Math.min(character.hp_max, character.hp_current + amount);
+		updateCharacter.mutate({
+			id: character.id,
+			data: { hp_current: newHp },
+		});
+
+		ascendantTools
+			.trackHealthChange(character.id, amount, "healing")
+			.catch(console.error);
+	};
 
 	function isConditionEntryArray(val: Json): val is ConditionEntry[] {
 		if (!Array.isArray(val)) return false;
@@ -631,6 +681,15 @@ export default function CharacterSheetV2() {
 				{/* Quick Actions Panel */}
 				{!isReadOnly && (
 					<div className="p-4 flex items-center gap-3 bg-primary/5 min-w-[200px]">
+						<HealthDialog
+							isOpen={persistentModals.health}
+							onOpenChange={(open) => sheetController.setModal("health", open)}
+							hpCurrent={character.hp_current}
+							hpMax={character.hp_max}
+							tempHp={calculateTotalTempHP(characterResources)}
+							onTakeDamage={handleTakeDamage}
+							onHeal={handleHeal}
+						/>
 						<ShortRestDialog
 							hitDiceAvailable={character.hit_dice_current}
 							hitDiceMax={character.hit_dice_max}
@@ -737,9 +796,7 @@ export default function CharacterSheetV2() {
 					<aside className="sticky top-16 pt-4 space-y-4 h-[calc(100vh-120px)] overflow-y-auto pr-2 scrollbar-none hover:scrollbar-thin scrollbar-thumb-primary/20">
 						<ProficiencySidebar
 							saves={stats.calculatedStats.savingThrows}
-							savesBreakdown={stats.savingThrowsBreakdown}
 							skills={stats.skills}
-							skillsBreakdown={stats.skillsBreakdown}
 							allSkills={stats.allSkills}
 							savingThrowProficiences={
 								character.saving_throw_proficiencies || []
@@ -761,8 +818,11 @@ export default function CharacterSheetV2() {
 								temp: calculateTotalTempHP(characterResources),
 							}}
 							ac={stats.calculatedStats.armorClass}
+							acBreakdown={stats.armorClassDetail.formula}
 							initiative={stats.finalInitiative}
+							initiativeBreakdown={`Base Mod: ${getAbilityModifier(stats.finalAbilities.AGI)} | Custom/Sigils: ${stats.finalInitiative - getAbilityModifier(stats.finalAbilities.AGI)}`}
 							speed={stats.finalSpeed}
+							speedBreakdown={`Base Speed: ${stats.baseStats.speed} | Custom/Sigils/Encumbrance: ${stats.finalSpeed - stats.baseStats.speed}`}
 							hitDice={{
 								current: character.hit_dice_current,
 								max: character.hit_dice_max,
@@ -772,7 +832,9 @@ export default function CharacterSheetV2() {
 								current: character.rift_favor_current,
 								max: character.rift_favor_max,
 								die: character.rift_favor_die,
+								level: character.level || 1,
 							}}
+							campaignId={campaignId ?? undefined}
 							onRollInitiative={onRollInitiative}
 							onRollHitDice={onRollHitDice}
 							onHPClick={onHPClick}
@@ -885,6 +947,7 @@ export default function CharacterSheetV2() {
 							current: character.rift_favor_current,
 							max: character.rift_favor_max,
 							die: character.rift_favor_die,
+							level: character.level || 1,
 						}}
 						onRollInitiative={onRollInitiative}
 						onRollHitDice={onRollHitDice}
@@ -957,9 +1020,7 @@ export default function CharacterSheetV2() {
 								/>
 								<ProficiencySidebar
 									saves={stats.calculatedStats.savingThrows}
-									savesBreakdown={stats.savingThrowsBreakdown}
 									skills={stats.skills}
-									skillsBreakdown={stats.skillsBreakdown}
 									allSkills={stats.allSkills}
 									savingThrowProficiences={
 										character.saving_throw_proficiencies || []

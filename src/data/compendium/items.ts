@@ -137,11 +137,15 @@ import { items_part4 as itemsPart4 } from "./items-part4";
 import { items_part5 as itemsPart5 } from "./items-part5";
 
 // Combined items array for backward compatibility
-export const items = [
-	...baseEquipment,
-	...itemsPart1,
-	...itemsPart2,
-	...itemsPart3,
-	...itemsPart4,
-	...itemsPart5,
-];
+export const items = Array.from(
+	new Map(
+		[
+			...baseEquipment,
+			...itemsPart1,
+			...itemsPart2,
+			...itemsPart3,
+			...itemsPart4,
+			...itemsPart5,
+		].map((item) => [item.name.toLowerCase().trim(), item]),
+	).values(),
+);

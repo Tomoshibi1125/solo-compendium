@@ -68,7 +68,7 @@ export const RiftManifestation = ({
 				x: Math.random() * 100,
 				y: Math.random() * 100,
 				speed: 0.5 + Math.random() * 1.5,
-				opacity: 0.3 + Math.random() * 0.4,
+				opacity: 0.05 + Math.random() * 0.1, // Reduced opacity for readability
 				length: text.length,
 			});
 		}
