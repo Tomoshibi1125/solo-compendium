@@ -2101,17 +2101,17 @@ const VTTEnhanced = () => {
 						>
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
-								className={cn(
-									"col-span-1 xl:col-span-3 flex flex-col gap-4 xl:overflow-y-auto order-2 xl:order-1",
-									"min-h-0", // Prevent CSS grid blowout
-									isMapExpanded && "hidden",
-									isMobile && "hidden",
-								)}
+							className={cn(
+							"col-span-1 xl:col-span-3 flex flex-col gap-3 xl:overflow-y-auto xl:h-full order-2 xl:order-1",
+							"min-h-0", // Prevent CSS grid blowout
+							isMapExpanded && "hidden",
+							isMobile && "hidden",
+							)}
 							>
 								{isWarden && (
 									<>
-										<AscendantWindow title="SCENES">
-											<div className="space-y-1 max-h-48 overflow-y-auto">
+										<AscendantWindow title="SCENES" compact>
+										<div className="space-y-1 max-h-40 overflow-y-auto">
 												{scenes.map((scene) => (
 													<div
 														key={scene.id}

@@ -381,6 +381,7 @@ async function syncJobs() {
 			image_url: m.image_url || m.image || null,
 			awakening_features: castToJson(m.awakening_features),
 			job_traits: castToJson(m.job_traits),
+			racial_traits: castToJson(m.racialTraits),
 			ability_score_improvements: castToJson(m.ability_score_improvements),
 			size: m.size || "Medium",
 			speed: m.speed_walk

@@ -110,7 +110,7 @@ export function AscendantWindow({
 		<Component
 			id={id}
 			className={cn(
-				"relative bg-gradient-to-br border rounded-lg backdrop-blur-2xl overflow-hidden transition-all duration-300 w-full max-w-full",
+				"relative bg-gradient-to-br border rounded-lg backdrop-blur-2xl transition-all duration-300 w-full max-w-full",
 				"sa-panel ascendant-panel hologram-flicker sw-root hover:border-open/50",
 				variantStyles[variant],
 				animated && "animate-shadow-pulse",

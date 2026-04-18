@@ -250,7 +250,7 @@ const CampaignDetail = () => {
 						WebkitOverflowScrolling: "touch",
 						} as React.CSSProperties}
 						>
-						<TabsList className="flex w-max gap-1 h-auto p-1">
+						<TabsList className="flex w-max gap-1 h-auto p-1 items-center">
 						<TabsTrigger
 						value="overview"
 						 className="gap-2 text-xs sm:text-sm min-h-[44px]"

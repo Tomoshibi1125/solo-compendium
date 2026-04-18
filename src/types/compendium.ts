@@ -513,6 +513,13 @@ export interface CompendiumJob extends BaseCompendiumItem {
 	weapon_proficiencies: string[];
 	skill_choices: string[];
 	type: string;
+	racial_traits?: Array<{
+		name: string;
+		description: string;
+		type: string;
+		equivalent_to?: string;
+		represents?: string;
+	}>;
 	awakening_features: Array<{
 		name: string;
 		description: string;
