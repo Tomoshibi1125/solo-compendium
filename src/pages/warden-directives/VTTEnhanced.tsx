@@ -2160,15 +2160,37 @@ const VTTEnhanced = () => {
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 xl:col-span-3 flex flex-col gap-3 xl:overflow-y-auto xl:h-full order-2 xl:order-1",
-									"min-h-0", // Prevent CSS grid blowout
+									"col-span-1 xl:col-span-3 flex flex-col min-h-0 xl:h-full order-2 xl:order-1 overflow-hidden",
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
 								)}
 							>
-								{isWarden && (
-									<>
-										<AscendantWindow title="SCENES" compact>
+								{isWarden ? (
+									<Tabs defaultValue="scene" className="flex flex-col min-h-0 h-full">
+										<TabsList className="grid w-full grid-cols-3 h-auto p-1 mb-2 shrink-0 bg-card border border-border rounded-lg shadow-sm">
+											<TabsTrigger
+												value="scene"
+												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+											>
+												Scene
+											</TabsTrigger>
+											<TabsTrigger
+												value="toolbox"
+												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+											>
+												Toolbox
+											</TabsTrigger>
+											<TabsTrigger
+												value="assets"
+												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+											>
+												Assets
+											</TabsTrigger>
+										</TabsList>
+
+										{/* Scene tab: Scenes list, Map Settings, Premade Maps */}
+										<TabsContent value="scene" className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0">
+											<AscendantWindow title="SCENES" compact>
 											<div className="space-y-1 max-h-40 overflow-y-auto">
 												{scenes.map((scene) => (
 													<div
@@ -2284,6 +2306,8 @@ const VTTEnhanced = () => {
 												))}
 											</div>
 										</AscendantWindow>
+										</TabsContent>
+										<TabsContent value="toolbox" className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0">
 
 										<AscendantWindow title="TOOLS">
 											<div className="grid grid-cols-2 gap-2">
@@ -2683,6 +2707,8 @@ const VTTEnhanced = () => {
 												</div>
 											</div>
 										</AscendantWindow>
+										</TabsContent>
+										<TabsContent value="map" className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0">
 										<AscendantWindow title="MAP SETTINGS">
 											<div className="space-y-3">
 												<input
@@ -2939,8 +2965,9 @@ const VTTEnhanced = () => {
 												</div>
 											</AscendantWindow>
 										)}
-									</>
-								)}
+										</TabsContent>
+									</Tabs>
+								) : null}
 
 								<AscendantWindow title="TOKENS">
 									<Tabs defaultValue="characters" className="w-full">
@@ -3111,6 +3138,7 @@ const VTTEnhanced = () => {
 									contentClassName="flex-1 flex flex-col min-h-0 overflow-hidden"
 									actions={
 										<div className="flex items-center gap-1 sm:gap-2">
+											<span className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full border border-primary/40 bg-primary/10 text-primary/90 select-none">Layer {currentLayer} Active</span>
 											<Button
 												variant="outline"
 												size="sm"

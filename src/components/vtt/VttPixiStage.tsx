@@ -8,7 +8,7 @@ import {
 	Text,
 	Ticker,
 } from "pixi.js";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { computeVisibilityPolygon, createHexGrid } from "@/lib/vtt";
 
@@ -123,6 +123,9 @@ export function VttPixiStage({
 	const canvasHostRef = useRef<HTMLDivElement | null>(null);
 	const appRef = useRef<Application | null>(null);
 	const { dpr, fx } = usePerformanceProfile();
+	// Tracks whether the Pixi Application has finished its async init.
+	// The render effect depends on this so it re-fires once the app is ready.
+	const [appReady, setAppReady] = useState(false);
 
 	const longPressRef = useRef<{
 		tokenId: string;
@@ -208,7 +211,9 @@ export function VttPixiStage({
 			app.canvas.style.touchAction = "none";
 
 			canvasHostRef.current?.appendChild(app.canvas);
-		})();
+			 // Signal that the app is ready so the render effect can run.
+				setAppReady(true);
+			})();
 
 		return () => {
 			destroyed = true;
@@ -220,6 +225,7 @@ export function VttPixiStage({
 				}
 				appRef.current = null;
 			}
+			setAppReady(false);
 		};
 	}, [worldSize.h, worldSize.w, dpr[1]]);
 
@@ -945,6 +951,7 @@ export function VttPixiStage({
 	}, [
 		activeTokenId,
 		activeInitiativeTokenId,
+		appReady,
 		effectiveVisibleLayers,
 		gridSize,
 		isWarden,
