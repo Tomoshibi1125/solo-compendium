@@ -12,7 +12,7 @@ const TabsList = React.forwardRef<
 	<TabsPrimitive.List
 		ref={ref}
 		className={cn(
-			"inline-flex h-12 items-center justify-center rounded-lg bg-obsidian-charcoal/40 p-1 text-muted-foreground border border-amethyst-purple/20 backdrop-blur-md hud-brackets relative overflow-hidden",
+			"inline-flex h-12 items-center justify-center rounded-lg bg-obsidian-charcoal/40 p-1 text-muted-foreground border border-amethyst-purple/20 backdrop-blur-md hud-brackets relative",
 			className,
 		)}
 		{...props}
@@ -29,11 +29,10 @@ const TabsTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<TabsPrimitive.Trigger
 		ref={ref}
-		style={{ color: "red", backgroundColor: "green", opacity: 1 }}
 		className={cn(
-			"inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-xs font-mono tracking-widest uppercase transition-all duration-300 relative group",
-			"hover:text-white hover:bg-amethyst-purple/10",
-			"data-[state=active]:!text-amethyst-purple data-[state=active]:bg-amethyst-purple/20 data-[state=active]:shadow-[0_0_15px_rgba(155,109,255,0.3)]",
+			"inline-flex items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-xs font-mono tracking-widest uppercase transition-all duration-300 relative group shrink-0",
+			"text-slate-400 hover:text-white hover:bg-amethyst-purple/10",
+			"data-[state=active]:text-amethyst-purple data-[state=active]:bg-amethyst-purple/20 data-[state=active]:shadow-[0_0_15px_rgba(155,109,255,0.3)]",
 			"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amethyst-purple/50",
 			"disabled:pointer-events-none disabled:opacity-50",
 			className,

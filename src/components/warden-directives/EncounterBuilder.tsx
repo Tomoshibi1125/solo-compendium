@@ -161,11 +161,14 @@ const buildFallbackAnomalies = (searchQuery: string) => {
 export interface EncounterBuilderProps {
 	campaignId?: string | null;
 	className?: string;
+	/** When true, renders in a stacked single-column layout suitable for narrow VTT sidebars */
+	embedded?: boolean;
 }
 
 export function EncounterBuilder({
 	campaignId,
 	className,
+	embedded = false,
 }: EncounterBuilderProps) {
 	const navigate = useNavigate();
 	const { toast } = useToast();
@@ -370,10 +373,10 @@ export function EncounterBuilder({
 	};
 
 	return (
-		<div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-6", className)}>
+		<div className={cn(embedded ? "flex flex-col gap-4" : "grid grid-cols-1 lg:grid-cols-12 gap-6", className)}>
 			{/* Left Column: Build & Anomalys */}
-			<div className="lg:col-span-8 space-y-6">
-				<AscendantWindow title="MODEL SYNTHESIS: CONSTRUCTS">
+			<div className={embedded ? "w-full" : "lg:col-span-8 space-y-6"}>
+				<AscendantWindow title={embedded ? "CONSTRUCTS" : "MODEL SYNTHESIS: CONSTRUCTS"}>
 					<div className="space-y-4">
 						<div className="relative">
 							<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40" />
@@ -385,7 +388,7 @@ export function EncounterBuilder({
 							/>
 						</div>
 
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+						<div className={cn("grid gap-3 pr-2 custom-scrollbar", embedded ? "grid-cols-1 max-h-[300px] overflow-y-auto" : "grid-cols-1 md:grid-cols-2 max-h-[600px] overflow-y-auto")}>
 							{isLoading ? (
 								<div className="col-span-2 py-20 text-center">
 									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/40" />
@@ -428,7 +431,7 @@ export function EncounterBuilder({
 			</div>
 
 			{/* Right Column: Calculations & Controls */}
-			<div className="lg:col-span-4 space-y-6">
+			<div className={embedded ? "w-full" : "lg:col-span-4 space-y-6"}>
 				<AscendantWindow title="THREAT VECTOR ANALYSIS">
 					<div className="space-y-6">
 						<div className="grid grid-cols-2 gap-4">

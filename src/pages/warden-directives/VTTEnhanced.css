@@ -48,3 +48,18 @@
 .vtt-dynamic-bg {
 	background-color: var(--vtt-dynamic-bg-value);
 }
+
+/* Prevent content-visibility: auto from flashing the PixiJS canvas and map container */
+.vtt-scene-container,
+.vtt-scene-container canvas {
+	content-visibility: visible !important;
+	contain: layout style;
+}
+
+/* Ensure the PixiJS canvas fills its container without pushing layout */
+.vtt-scene-container canvas {
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}

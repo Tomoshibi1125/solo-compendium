@@ -145,6 +145,7 @@ export function useCharacterSheetState(characterId: string) {
 			const payload: Database["public"]["Tables"]["character_sheet_state"]["Insert"] =
 				{
 					character_id: characterId,
+					user_id: user?.id ?? "",
 					resources: JSON.parse(JSON.stringify(state.resources)),
 					custom_modifiers: JSON.parse(JSON.stringify(state.customModifiers)),
 				};

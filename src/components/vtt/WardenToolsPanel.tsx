@@ -436,7 +436,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							</TabsList>
 
 							<TabsContent value="encounter" className="space-y-4">
-								<EncounterBuilder />
+								<EncounterBuilder embedded />
 							</TabsContent>
 
 							<TabsContent value="assets" className="space-y-4">

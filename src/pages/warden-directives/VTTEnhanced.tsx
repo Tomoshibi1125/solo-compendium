@@ -131,7 +131,6 @@ import {
 	useParams,
 	useSearchParams,
 } from "react-router-dom";
-import { getBestImageFormat } from "@/lib/imageOptimization";
 import type {
 	VTTDrawing,
 	VTTScene,
@@ -383,6 +382,9 @@ const upsertScene = (scenes: VTTScene[], nextScene: VTTScene): VTTScene[] => {
 
 const EMPTY_ARRAY: never[] = [];
 
+/** Stable memo wrapper — MUST live outside the component to avoid remount on every render */
+const MemoizedVttPixiStage = React.memo(VttPixiStage);
+
 const VTTEnhanced = () => {
 	const { campaignId } = useParams<{ campaignId: string }>();
 	const navigate = useNavigate();
@@ -508,13 +510,14 @@ const VTTEnhanced = () => {
 		: "vtt-scenes";
 	// ── Role determination (must come before savePayload memo) ──
 	const isStandalone = !campaignId;
+	const guestRole = searchParams.get("role")?.toLowerCase();
 	const { data: members } = useCampaignMembers(campaignId || "") as {
 		data?: CampaignMemberWithCharacter[];
 	};
 	const { data: role } = useCampaignRole(campaignId || "");
 	const [simulatePlayerView, setSimulatePlayerView] = useState(false);
 	const isActualWarden =
-		isStandalone || role === "warden" || role === "co-warden";
+		isStandalone || role === "warden" || role === "co-warden" || guestRole === "warden";
 	const isWarden = isActualWarden && !simulatePlayerView;
 
 	const {
@@ -558,7 +561,6 @@ const VTTEnhanced = () => {
 		currentScene?.backgroundOffsetX ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetX;
 	const backgroundOffsetY =
 		currentScene?.backgroundOffsetY ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetY;
-	const mapImageFormat = useMemo(() => getBestImageFormat(), []);
 	const sceneWidth = currentScene?.width ?? 20;
 	const sceneHeight = currentScene?.height ?? 20;
 	const sceneClass = useMemo(
@@ -744,7 +746,7 @@ const VTTEnhanced = () => {
 
 	const createNewScene = useCallback(() => {
 		const scene: VTTScene = {
-			id: `scene-${crypto.randomUUID()}`,
+			id: `scene-${Date.now()}`,
 			name: `Scene ${scenes.length + 1}`,
 			width: 20,
 			height: 20,
@@ -781,16 +783,9 @@ const VTTEnhanced = () => {
 		const storedScenes = Array.isArray(storedState.scenes)
 			? storedState.scenes
 			: [];
-		const rawScenes = (
+		const nextScenes = (
 			storedScenes.length > 0 ? storedScenes : legacyScenes
 		).map(normalizeScene);
-		// Deduplicate scenes by id to prevent duplicate React keys
-		const seenIds = new Set<string>();
-		const nextScenes = rawScenes.filter((s) => {
-			if (seenIds.has(s.id)) return false;
-			seenIds.add(s.id);
-			return true;
-		});
 		const nextCurrentId = storedState.currentSceneId ?? legacyCurrentId;
 
 		if (nextScenes.length > 0) {
@@ -827,6 +822,15 @@ const VTTEnhanced = () => {
 		storedState.currentSceneId,
 		storedState.scenes,
 	]);
+
+	useEffect(() => {
+		if (isStateLoading || currentScene) return;
+		if (scenes.length > 0) {
+			setCurrentScene(scenes[0]);
+			return;
+		}
+		createNewScene();
+	}, [createNewScene, currentScene, isStateLoading, scenes]);
 
 	useEffect(() => {
 		if (!campaignId || !isHydrated || !isWarden) return;
@@ -1237,10 +1241,6 @@ const VTTEnhanced = () => {
 	const applyPremadeMap = useCallback(
 		(map: PremadeMap) => {
 			if (!currentScene) return;
-			const resolvedPath =
-				mapImageFormat === "avif" && map.path.toLowerCase().endsWith(".webp")
-					? map.path.replace(/\.webp$/i, ".avif")
-					: map.path;
 			if (
 				currentScene.width !== map.grid.width ||
 				currentScene.height !== map.grid.height
@@ -1248,14 +1248,14 @@ const VTTEnhanced = () => {
 				resizeScene(map.grid.width, map.grid.height);
 			}
 			updateScene({
-				backgroundImage: resolvedPath,
+				backgroundImage: map.path,
 				backgroundScale: 1,
 				backgroundOffsetX: 0,
 				backgroundOffsetY: 0,
 				gridSize: map.grid.size,
 			});
 		},
-		[currentScene, mapImageFormat, resizeScene, updateScene],
+		[currentScene, resizeScene, updateScene],
 	);
 
 	const handleMapGridAction = useCallback(
@@ -1761,7 +1761,6 @@ const VTTEnhanced = () => {
 		[currentScene?.gridType, gridSize],
 	);
 
-	const MemoizedVttPixiStage = React.memo(VttPixiStage);
 
 	const drawingsToRender = useMemo(() => {
 		const base = currentScene?.drawings ?? [];
@@ -2111,7 +2110,7 @@ const VTTEnhanced = () => {
 							>
 								{isWarden && (
 									<>
-										<AscendantWindow title="SCENES" className="shrink-0">
+										<AscendantWindow title="SCENES">
 											<div className="space-y-1 max-h-48 overflow-y-auto">
 												{scenes.map((scene) => (
 													<div
@@ -2155,7 +2154,7 @@ const VTTEnhanced = () => {
 																	: "Make Live"}
 															</button>
 														)}
-														{true && (
+														{currentScene?.id === scene.id && (
 															<div className="flex gap-0.5 pr-1">
 																<button
 																	type="button"
@@ -2165,12 +2164,7 @@ const VTTEnhanced = () => {
 																			scene.name,
 																		);
 																		if (newName && newName !== scene.name) {
-																			const nextScenes = scenes.map((s) => s.id === scene.id ? { ...s, name: newName } : s);
-																			setScenes(nextScenes);
-																			persistSceneState(nextScenes, currentScene?.id ?? null);
-																			if (currentScene?.id === scene.id) {
-																				setCurrentScene({ ...currentScene, name: newName } as never);
-																			}
+																			updateScene({ name: newName } as never);
 																		}
 																	}}
 																	className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"
@@ -2192,10 +2186,8 @@ const VTTEnhanced = () => {
 																				}),
 																			),
 																		};
-																		const nextScenes = [...scenes, dup];
-																		setScenes(nextScenes);
+																		setScenes((prev) => [...prev, dup]);
 																		setCurrentScene(dup);
-																		persistSceneState(nextScenes, dup.id);
 																	}}
 																	className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"
 																	title="Duplicate"
@@ -2216,11 +2208,10 @@ const VTTEnhanced = () => {
 																				(s) => s.id !== scene.id,
 																			);
 																			setScenes(next);
-																			const nextCurrent = currentScene?.id === scene.id ? next[0] : currentScene;
-																			setCurrentScene(nextCurrent || null);
+																			setCurrentScene(next[0] || null);
 																			persistSceneState(
 																				next,
-																				nextCurrent?.id ?? null,
+																				next[0]?.id ?? null,
 																			);
 																		}}
 																		className="text-[9px] px-1 py-0.5 rounded hover:bg-destructive/20 text-destructive"
@@ -2236,7 +2227,7 @@ const VTTEnhanced = () => {
 											</div>
 										</AscendantWindow>
 
-										<AscendantWindow title="TOOLS" className="shrink-0">
+										<AscendantWindow title="TOOLS">
 											<div className="grid grid-cols-2 gap-2">
 												{(
 													[
@@ -2317,7 +2308,7 @@ const VTTEnhanced = () => {
 											)}
 										</AscendantWindow>
 
-										<AscendantWindow title="CONTROLS" className="shrink-0">
+										<AscendantWindow title="CONTROLS">
 											<div className="space-y-3">
 												<div>
 													<Label className="text-xs mb-1 block">Zoom</Label>
@@ -2562,7 +2553,7 @@ const VTTEnhanced = () => {
 												)}
 											</div>
 										</AscendantWindow>
-										<AscendantWindow title="LAYERS" className="shrink-0">
+										<AscendantWindow title="LAYERS">
 											<div className="space-y-2">
 												<Label className="text-xs">Active Layer</Label>
 												<Select
@@ -2634,7 +2625,7 @@ const VTTEnhanced = () => {
 												</div>
 											</div>
 										</AscendantWindow>
-										<AscendantWindow title="MAP SETTINGS" className="shrink-0">
+										<AscendantWindow title="MAP SETTINGS">
 											<div className="space-y-3">
 												<input
 													ref={mapInputRef}
@@ -2852,7 +2843,7 @@ const VTTEnhanced = () => {
 											</div>
 										</AscendantWindow>
 										{PREMADE_MAPS.length > 0 && (
-											<AscendantWindow title="PREMADE MAPS" className="shrink-0">
+											<AscendantWindow title="PREMADE MAPS">
 												<div className="grid grid-cols-2 gap-2">
 													{PREMADE_MAPS.map((map) => (
 														<button
@@ -3222,14 +3213,14 @@ const VTTEnhanced = () => {
 										role="application"
 										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										className={cn(
-											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-hidden min-h-0",
+											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
 												(selectedCharacterId || selectedLibraryTokenId) &&
 												"cursor-crosshair",
 										)}
 									>
-										<div className={cn("vtt-scene-container min-h-0 overflow-hidden relative", sceneClass)}>
+										<div className={cn("vtt-scene-container min-h-0 overflow-auto", sceneClass)}>
 											<style>{overlayStyles}</style>
 											{!currentScene ? (
 												<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-void-black/80 backdrop-blur-sm z-50">
@@ -3920,7 +3911,7 @@ const VTTEnhanced = () => {
 									/>
 								)}
 
-																{activeToken && (
+								{activeToken && (
 									<AscendantWindow title="ACTIVE TOKEN">
 										<div className="space-y-3 text-xs">
 											<div>
@@ -4361,7 +4352,7 @@ const VTTEnhanced = () => {
 								</Dialog>
 
 								<Tabs defaultValue="initiative" className="w-full">
-									<TabsList className="grid grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-1 w-full h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+									<TabsList className="flex flex-wrap gap-1 w-full h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 										<TabsTrigger
 											value="initiative"
 											className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"

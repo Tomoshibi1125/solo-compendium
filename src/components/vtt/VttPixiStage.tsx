@@ -170,35 +170,10 @@ export function VttPixiStage({
 	const weatherEmitterRef = useRef<Emitter | null>(null);
 	const rootContainerRef = useRef<Container | null>(null);
 
-	// ── Persistent layer refs (Foundry VTT pattern: create once, update in-place) ──
-	const bgLayerRef = useRef<Container | null>(null);
-	const weatherLayerRef = useRef<Container | null>(null);
-	const effectsLayerRef = useRef<Container | null>(null);
-	const gridLayerRef = useRef<Container | null>(null);
-	const wallsLayerRef = useRef<Container | null>(null);
-	const drawingsLayerRef = useRef<Container | null>(null);
-	const tokenLayerRef = useRef<Container | null>(null);
-	const fogLayerRef = useRef<Container | null>(null);
-
-	// ── Caching refs to avoid unnecessary layer rebuilds ──
-	const currentBgUrlRef = useRef<string | null>(null);
-	const renderIdRef = useRef<number>(0);
-
-	// ── Callback refs: hold latest callback without triggering effects ──
-	const setActiveTokenIdRef = useRef(setActiveTokenId);
-	setActiveTokenIdRef.current = setActiveTokenId;
-	const updateTokenRef = useRef(updateToken);
-	updateTokenRef.current = updateToken;
-	const onTokenDragStartRef = useRef(onTokenDragStart);
-	onTokenDragStartRef.current = onTokenDragStart;
-	const onStageReadyRef = useRef(onStageReady);
-	onStageReadyRef.current = onStageReady;
-
 	useEffect(() => {
 		if (!canvasHostRef.current) return;
 		if (appRef.current) return;
 
-		let isMounted = true;
 		const app = new Application();
 		appRef.current = app;
 
@@ -211,23 +186,16 @@ export function VttPixiStage({
 					antialias: true,
 					resolution: Math.min(window.devicePixelRatio || 1, dpr[1]),
 					autoDensity: true,
-					resizeTo: canvasHostRef.current ?? undefined,
+					width: Math.max(1, Math.floor(worldSize.w)),
+					height: Math.max(1, Math.floor(worldSize.h)),
 				});
 			} catch {
-				return;
-			}
-			if (!isMounted || !canvasHostRef.current) {
-				try {
-					app.destroy(true, { children: true, texture: true });
-				} catch {
-					// ignore
-				}
 				return;
 			}
 
 			if (destroyed) {
 				try {
-					app.destroy(true, { children: true, texture: true });
+					app.destroy();
 				} catch {
 					// ignore
 				}
@@ -235,13 +203,14 @@ export function VttPixiStage({
 			}
 
 			app.canvas.style.display = "block";
+			app.canvas.style.width = "100%";
+			app.canvas.style.height = "100%";
 			app.canvas.style.touchAction = "none";
 
 			canvasHostRef.current?.appendChild(app.canvas);
 		})();
 
 		return () => {
-			isMounted = false;
 			destroyed = true;
 			if (appRef.current) {
 				try {
@@ -252,113 +221,63 @@ export function VttPixiStage({
 				appRef.current = null;
 			}
 		};
-	}, [dpr[1]]);
+	}, [worldSize.h, worldSize.w, dpr[1]]);
 
-	// Scale the stage to fit the world within the container
 	useEffect(() => {
 		const app = appRef.current;
-		if (!app?.renderer || !app.stage) return;
-		if (worldSize.w <= 0 || worldSize.h <= 0) return;
-
-		const screenW = app.screen.width;
-		const screenH = app.screen.height;
-		const scale = Math.min(screenW / worldSize.w, screenH / worldSize.h, 1);
-
-		app.stage.scale.set(scale);
-		// Center the world within the viewport
-		app.stage.x = (screenW - worldSize.w * scale) / 2;
-		app.stage.y = (screenH - worldSize.h * scale) / 2;
-	}, [worldSize.w, worldSize.h]);
+		if (!app?.renderer) return;
+		app.renderer.resize(
+			Math.max(1, Math.floor(worldSize.w)),
+			Math.max(1, Math.floor(worldSize.h)),
+		);
+	}, [worldSize.h, worldSize.w]);
 
 	useEffect(() => {
 		const app = appRef.current;
 		if (!app) return;
 
 		const stage = app.stage;
+		stage.removeChildren();
 
-		// Only create layer containers if they don't exist yet (Foundry VTT pattern)
-		let bg = bgLayerRef.current;
-		let weatherLayer = weatherLayerRef.current;
-		let effectsLayer = effectsLayerRef.current;
-		let grid = gridLayerRef.current;
-		let wallsLayer = wallsLayerRef.current;
-		let drawings = drawingsLayerRef.current;
-		let tokenLayer = tokenLayerRef.current;
-		let fog = fogLayerRef.current;
+		const root = new Container();
+		rootContainerRef.current = root;
+		stage.addChild(root);
 
-		if (!rootContainerRef.current) {
-			stage.removeChildren();
-			const root = new Container();
-			rootContainerRef.current = root;
-			stage.addChild(root);
+		const bg = new Container();
+		const weatherLayer = new Container();
+		const effectsLayer = new Container(); // Spell/combat particle effects
+		const grid = new Container();
+		const wallsLayer = new Container();
+		const drawings = new Container();
+		const tokenLayer = new Container();
+		const fog = new Container();
 
-			bg = new Container();
-			weatherLayer = new Container();
-			effectsLayer = new Container();
-			grid = new Container();
-			wallsLayer = new Container();
-			drawings = new Container();
-			tokenLayer = new Container();
-			fog = new Container();
+		root.addChild(bg);
+		root.addChild(weatherLayer);
+		root.addChild(effectsLayer);
+		root.addChild(grid);
+		root.addChild(wallsLayer);
+		root.addChild(drawings);
+		root.addChild(tokenLayer);
+		root.addChild(fog);
 
-			bgLayerRef.current = bg;
-			weatherLayerRef.current = weatherLayer;
-			effectsLayerRef.current = effectsLayer;
-			gridLayerRef.current = grid;
-			wallsLayerRef.current = wallsLayer;
-			drawingsLayerRef.current = drawings;
-			tokenLayerRef.current = tokenLayer;
-			fogLayerRef.current = fog;
+		// Expose the app + effects container so parent components can trigger particle presets
+		onStageReady?.(app, effectsLayer);
 
-			root.addChild(bg);
-			root.addChild(weatherLayer);
-			root.addChild(effectsLayer);
-			root.addChild(grid);
-			root.addChild(wallsLayer);
-			root.addChild(drawings);
-			root.addChild(tokenLayer);
-			root.addChild(fog);
-
-			// Expose the app + effects container
-			onStageReadyRef.current?.(app, effectsLayer);
-
-			// Persist drawing graphics instance
-			if (!drawingGraphicsRef.current) {
-				drawingGraphicsRef.current = new Graphics();
-			}
-			const drawOverlay = drawingGraphicsRef.current;
-			drawOverlay.zIndex = 1000;
-			root.addChild(drawOverlay);
+		// Persist drawing graphics instance outside of render loops
+		if (!drawingGraphicsRef.current) {
+			drawingGraphicsRef.current = new Graphics();
 		}
-
-		if (!bg || !weatherLayer || !grid || !wallsLayer || !tokenLayer || !fog) return;
+		const drawOverlay = drawingGraphicsRef.current;
+		drawOverlay.zIndex = 1000;
+		root.addChild(drawOverlay);
 
 		const renderBackground = async () => {
-			const currentRenderId = ++renderIdRef.current;
-
-			if (!effectiveVisibleLayers[0] || !scene?.backgroundImage) {
-				bg.visible = false;
-				return;
-			}
-			bg.visible = true;
-
-			// If the image hasn't changed, just update transforms
-			if (currentBgUrlRef.current === scene.backgroundImage && bg.children.length > 0) {
-				const sprite = bg.children[0] as Sprite;
-				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
-				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
-				const scale = scene.backgroundScale ?? 1;
-				sprite.scale.set(scale);
-				sprite.width = (scene.width ?? 0) * gridSize * zoom * scale;
-				sprite.height = (scene.height ?? 0) * gridSize * zoom * scale;
-				return;
-			}
+			bg.removeChildren();
+			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
 
 			try {
-				// Await the texture load BEFORE clearing the old background
 				const texture = await Assets.load(scene.backgroundImage);
-				if (currentRenderId !== renderIdRef.current) return; // Abort if superseded
-
 				const sprite = Sprite.from(texture as never);
 				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
 				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
@@ -367,14 +286,9 @@ export function VttPixiStage({
 				sprite.width = (scene.width ?? 0) * gridSize * zoom * scale;
 				sprite.height = (scene.height ?? 0) * gridSize * zoom * scale;
 				sprite.alpha = 0.95;
-
-				bg.removeChildren();
 				bg.addChild(sprite);
-				currentBgUrlRef.current = scene.backgroundImage;
 			} catch {
-				// If load fails, clear the background
-				bg.removeChildren();
-				currentBgUrlRef.current = null;
+				// ignore
 			}
 		};
 
@@ -682,7 +596,7 @@ export function VttPixiStage({
 				// Collect tokens that grant vision (owned tokens or all characters if none selected)
 				const visionSources = activeTokenId
 					? tokens.filter((t) => t.id === activeTokenId)
-					: tokens.filter((t) => t.tokenType === "character" && (!t.ownerId || t.ownerId === user?.id));
+					: tokens.filter((t) => t.tokenType === "character");
 
 				if (visionSources.length > 0) {
 					const losMask = new Graphics();
@@ -793,29 +707,12 @@ export function VttPixiStage({
 		};
 
 		const renderTokens = async () => {
-			const currentRenderId = ++renderIdRef.current;
+			tokenLayer.removeChildren();
 
 			const visible = tokens.filter((token) => {
 				if (!effectiveVisibleLayers[token.layer]) return false;
 				return isWarden ? true : token.visible;
 			});
-
-			// Pre-load all textures first so we don't yield during construction
-			const textures: Record<string, any> = {};
-			for (const token of visible) {
-				if (token.imageUrl) {
-					try {
-						textures[token.id] = await Assets.load(token.imageUrl);
-					} catch {
-						// ignore
-					}
-				}
-			}
-
-			if (currentRenderId !== renderIdRef.current) return; // Abort if a newer render started
-
-			// Now synchronously rebuild the token layer
-			tokenLayer.removeChildren();
 
 			for (const token of visible) {
 				const size = SIZE_VALUES[token.size] * zoom;
@@ -863,21 +760,34 @@ export function VttPixiStage({
 				}
 				container.addChild(tokenBg);
 
-				if (token.imageUrl && textures[token.id]) {
-					const sprite = Sprite.from(textures[token.id] as never);
-					sprite.width = size;
-					sprite.height = size;
-					sprite.anchor.set(0);
-					sprite.alpha = token.render?.opacity ?? 1;
-					sprite.blendMode = blendModeToPixi(
-						token.render?.blendMode,
-					) as Sprite["blendMode"];
-					if (!isOverlayToken) {
-						sprite.mask = tokenBg;
+				if (token.imageUrl) {
+					try {
+						const texture = await Assets.load(token.imageUrl);
+						const sprite = Sprite.from(texture as never);
+						sprite.width = size;
+						sprite.height = size;
+						sprite.anchor.set(0);
+						sprite.alpha = token.render?.opacity ?? 1;
+						sprite.blendMode = blendModeToPixi(
+							token.render?.blendMode,
+						) as Sprite["blendMode"];
+						if (!isOverlayToken) {
+							sprite.mask = tokenBg;
+						}
+						sprite.scale.set(1);
+						tokenLayer.addChild(container);
+						container.addChild(sprite);
+					} catch {
+						const text = new Text({
+							text: token.emoji || "@",
+							style: { fill: 0xffffff, fontSize: size * 0.4 },
+						});
+						text.x = size / 2;
+						text.y = size / 2;
+						text.anchor.set(0.5);
+						container.addChild(text);
+						tokenLayer.addChild(container);
 					}
-					sprite.scale.set(1);
-					tokenLayer.addChild(container);
-					container.addChild(sprite);
 				} else {
 					const text = new Text({
 						text: token.emoji || "@",
@@ -974,7 +884,7 @@ export function VttPixiStage({
 
 				container.on("pointerdown", (e) => {
 					e.stopPropagation();
-					setActiveTokenIdRef.current(token.id);
+					setActiveTokenId(token.id);
 					window.dispatchEvent(
 						new CustomEvent("vtt:token-pointerdown", {
 							detail: { tokenId: token.id, pointerType: e.pointerType },
@@ -988,7 +898,7 @@ export function VttPixiStage({
 							longPressRef.current = null;
 						}
 						const timer = window.setTimeout(() => {
-							updateTokenRef.current(token.id, { rotation: (token.rotation + 90) % 360 });
+							updateToken(token.id, { rotation: (token.rotation + 90) % 360 });
 							longPressRef.current = null;
 						}, 550);
 						longPressRef.current = {
@@ -999,7 +909,7 @@ export function VttPixiStage({
 					}
 
 					dragStateRef.current = { tokenId: token.id, pointerId: e.pointerId };
-					onTokenDragStartRef.current?.(token.id);
+					onTokenDragStart?.(token.id);
 				});
 			}
 
@@ -1028,9 +938,9 @@ export function VttPixiStage({
 			tickerObj.destroy();
 			if (weatherEmitterRef.current) {
 				weatherEmitterRef.current.destroy();
-				weatherEmitterRef.current = null;
 			}
-			// Don't destroy layer containers — they persist across re-renders
+			stage.removeChildren();
+			rootContainerRef.current = null;
 		};
 	}, [
 		activeTokenId,
@@ -1039,22 +949,19 @@ export function VttPixiStage({
 		gridSize,
 		isWarden,
 		scene,
+		setActiveTokenId,
 		showGrid,
 		tokens,
 		walls,
 		lightSources,
 		weather,
 		gridConfig?.type,
+		onStageReady,
+		onTokenDragStart,
+		updateToken,
 		zoom,
 		fx.particleCount,
 	]);
-
-	// Optimized Zoom Effect: Scale the root container instead of rebuilding the stage
-	useEffect(() => {
-		if (rootContainerRef.current) {
-			rootContainerRef.current.scale.set(zoom);
-		}
-	}, [zoom]);
 
 	useEffect(() => {
 		const host = canvasHostRef.current;
@@ -1202,7 +1109,7 @@ export function VttPixiStage({
 				const y = e.clientY - rect.top;
 				const gx = Math.floor(x / (gridSize * zoom));
 				const gy = Math.floor(y / (gridSize * zoom));
-				updateTokenRef.current(dragState.tokenId, { x: gx, y: gy });
+				updateToken(dragState.tokenId, { x: gx, y: gy });
 				return;
 			}
 
@@ -1344,6 +1251,8 @@ export function VttPixiStage({
 		containerRef,
 		gridSize,
 		onRequestZoom,
+		onTokenDragEnd,
+		updateToken,
 		zoom,
 		drawMode,
 		onWallCreated,
@@ -1389,7 +1298,8 @@ export function VttPixiStage({
 	return (
 		<div
 			ref={canvasHostRef}
-			className="w-full h-full relative touch-none"
+			className="w-full h-full relative min-h-[400px]"
+			style={{ touchAction: "none" }}
 		/>
 	);
 }

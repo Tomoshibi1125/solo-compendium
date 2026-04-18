@@ -244,73 +244,68 @@ const CampaignDetail = () => {
 						className="space-y-6"
 					>
 						<div
-							className="overflow-x-auto -mx-1 px-1 pb-2"
-							style={{ scrollbarWidth: "none" }}
+						className="overflow-x-auto pb-2"
+						style={{
+						scrollbarWidth: "none",
+						WebkitOverflowScrolling: "touch",
+						} as React.CSSProperties}
 						>
-							<TabsList className="inline-flex w-max min-w-full justify-start gap-1 h-auto p-1">
-								<TabsTrigger
-									value="overview"
-									className="gap-2 text-xs sm:text-sm min-h-[44px]"
-								>
+						<TabsList className="flex w-max gap-1 h-auto p-1">
+						<TabsTrigger
+						value="overview"
+						 className="gap-2 text-xs sm:text-sm min-h-[44px]"
+						>
 									<Users className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Overview</span>
-									<span className="sm:hidden">Overview</span>
+									<span>Overview</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="vtt"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<Layers className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">VTT</span>
-									<span className="sm:hidden">VTT</span>
+									<span>VTT</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="wiki"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<BookOpen className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Wiki</span>
-									<span className="sm:hidden">Wiki</span>
+									<span>Wiki</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="sessions"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<CalendarClock className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Sessions</span>
-									<span className="sm:hidden">Sessions</span>
+									<span>Sessions</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="chat"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Chat</span>
-									<span className="sm:hidden">Chat</span>
+									<span>Chat</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="notes"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Notes</span>
-									<span className="sm:hidden">Notes</span>
+									<span>Notes</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="handouts"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<FileText className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Handouts</span>
-									<span className="sm:hidden">Handouts</span>
+									<span>Handouts</span>
 								</TabsTrigger>
 								<TabsTrigger
 									value="characters"
 									className="gap-2 text-xs sm:text-sm min-h-[44px]"
 								>
 									<Share2 className="w-3 h-3 sm:w-4 sm:h-4" />
-									<span className="hidden sm:inline">Characters</span>
-									<span className="sm:hidden">Characters</span>
+									<span>Characters</span>
 								</TabsTrigger>
 								{hasWardenAccess && (
 									<TabsTrigger
@@ -318,8 +313,7 @@ const CampaignDetail = () => {
 										className="gap-2 text-xs sm:text-sm min-h-[44px]"
 									>
 										<Settings className="w-3 h-3 sm:w-4 sm:h-4" />
-										<span className="hidden sm:inline">Settings</span>
-										<span className="sm:hidden">Settings</span>
+										<span>Settings</span>
 									</TabsTrigger>
 								)}
 								{hasWardenAccess && (
