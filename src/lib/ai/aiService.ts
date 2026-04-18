@@ -3,7 +3,6 @@
  * Handles AI integrations for audio and art enhancement
  */
 
-import { GoogleGenAI } from "@google/genai";
 import { AppError } from "@/lib/appError";
 import { logger } from "@/lib/logger";
 import type {
@@ -27,6 +26,8 @@ const CUSTOM_AI_FALLBACK_ENDPOINT = "https://api.openai.com/v1";
 const CUSTOM_AI_FALLBACK_MODEL = "gpt-4o-mini";
 const REQUEST_TIMEOUT_MS = 25000;
 const OLLAMA_TAGS_TIMEOUT_MS = 2500;
+// Server-side proxy endpoint — keeps the API key off the client
+const AI_PROXY_ENDPOINT = "/api/ai";
 const OLLAMA_MODEL_PRIORITY = [
 	"qwen2.5:14b-instruct",
 	"qwen2.5:7b-instruct",
@@ -898,53 +899,76 @@ export class AIServiceManager {
 		request: AIRequest,
 	): Promise<AIResponse> {
 		try {
-			const apiKey =
-				service.apiKey ||
-				import.meta.env.VITE_GEMINI_API_KEY ||
-				import.meta.env.VITE_GOOGLE_AI_API_KEY;
-
-			if (!apiKey) {
-				return {
-					success: false,
-					error: "Gemini API key is missing for native integration",
-				};
-			}
-
-			const ai = new GoogleGenAI({ apiKey });
+			// ── Route through the server-side proxy (/api/ai) so the API key
+			// never appears in client-side bundles or network requests.
 			const systemPrompt = this.getSystemPrompt(request.type);
 			const prompt = this.formatInput(request);
 
-			const result = await ai.models.generateContent({
-				model: service.model || "gemini-2.0-flash",
-				contents: `${systemPrompt}\n\n${prompt}`,
-				config: {
-					temperature: service.temperature,
-					maxOutputTokens: service.maxTokens,
+			const proxyResponse = await this.fetchWithTimeout(
+				AI_PROXY_ENDPOINT,
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						prompt,
+						systemPrompt,
+						maxTokens: service.maxTokens ?? 4096,
+					}),
 				},
-			});
+				REQUEST_TIMEOUT_MS,
+			);
 
-			const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "";
-
-			if (!text.trim()) {
+			if (!proxyResponse.ok) {
+				// Proxy reported Gemini unavailable — fall back gracefully
+				if (proxyResponse.status === 503) {
+					return {
+						success: false,
+						error: "AI service not configured on server",
+					};
+				}
+				const errData = await proxyResponse.json().catch(() => ({}));
 				return {
 					success: false,
-					error: "Gemini Native returned empty response",
+					error:
+						(errData as { error?: string }).error ??
+						`Proxy error ${proxyResponse.status}`,
+				};
+			}
+
+			const data = (await proxyResponse.json()) as {
+				success: boolean;
+				text?: string;
+				model?: string;
+				usage?: {
+					promptTokens?: number;
+					completionTokens?: number;
+					totalTokens?: number;
+				};
+				error?: string;
+			};
+
+			if (!data.success || !data.text?.trim()) {
+				return {
+					success: false,
+					error: data.error ?? "Proxy returned empty response",
 				};
 			}
 
 			return {
 				success: true,
-				data: text,
-				metadata: { model: service.model || "gemini-2.0-flash" },
+				data: data.text,
+				metadata: { model: data.model ?? service.model ?? "gemini-2.0-flash" },
 				usage: {
-					totalTokens: result.usageMetadata?.totalTokenCount,
+					promptTokens: data.usage?.promptTokens,
+					completionTokens: data.usage?.completionTokens,
+					totalTokens: data.usage?.totalTokens,
 				},
 			};
 		} catch (error) {
-			logger.error("Gemini Native error:", error);
+			logger.error("Gemini Proxy error:", error);
 			return {
 				success: false,
-				error: error instanceof Error ? error.message : "Gemini Native error",
+				error: error instanceof Error ? error.message : "Gemini proxy error",
 			};
 		}
 	}

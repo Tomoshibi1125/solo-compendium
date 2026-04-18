@@ -2,13 +2,12 @@ import { ArrowLeft, Dice6, Loader2, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { useEmbedded } from "@/contexts/EmbeddedContext";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
-import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -16,6 +15,7 @@ import { usePreferredCampaignSelection } from "@/hooks/usePreferredCampaignSelec
 import { useUserToolState } from "@/hooks/useToolState";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 // Rift Ascendant themed reference tables
@@ -312,8 +312,8 @@ For EACH result, provide:
 							Warden Tables
 						</RiftHeading>
 						<ManaFlowText variant="rift" speed="slow" className="font-heading">
-							Rollable tables from the Warden's Guide, adapted for the post-reset
-							world.
+							Rollable tables from the Warden's Guide, adapted for the
+							post-reset world.
 						</ManaFlowText>
 					</div>
 				)}

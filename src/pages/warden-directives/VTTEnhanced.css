@@ -52,7 +52,7 @@
 /* Prevent content-visibility: auto from flashing the PixiJS canvas and map container */
 .vtt-scene-container,
 .vtt-scene-container canvas {
-	content-visibility: visible !important;
+	content-visibility: visible;
 	contain: layout style;
 }
 

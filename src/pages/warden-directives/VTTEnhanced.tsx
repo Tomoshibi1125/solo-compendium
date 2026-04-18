@@ -517,7 +517,10 @@ const VTTEnhanced = () => {
 	const { data: role } = useCampaignRole(campaignId || "");
 	const [simulatePlayerView, setSimulatePlayerView] = useState(false);
 	const isActualWarden =
-		isStandalone || role === "warden" || role === "co-warden" || guestRole === "warden";
+		isStandalone ||
+		role === "warden" ||
+		role === "co-warden" ||
+		guestRole === "warden";
 	const isWarden = isActualWarden && !simulatePlayerView;
 
 	const {
@@ -839,6 +842,62 @@ const VTTEnhanced = () => {
 			savedAt: new Date().toISOString(),
 		});
 	}, [campaignId, debouncedState, isWarden, isHydrated, saveNow]);
+
+	// ── Campaign Book → VTT import ────────────────────────────────────────────
+	// CampaignBookView writes a payload to sessionStorage under "vtt-book-import".
+	// When the VTT opens (or after hydration) we pick it up, create a pinned
+	// annotation on the current scene so the Warden can see the section content,
+	// and clear the key so it isn't re-imported on refresh.
+	useEffect(() => {
+		if (!isHydrated || !isWarden) return;
+		try {
+			const raw = sessionStorage.getItem("vtt-book-import");
+			if (!raw) return;
+			sessionStorage.removeItem("vtt-book-import");
+			const payload = JSON.parse(raw) as {
+				type: string;
+				title: string;
+				content: string;
+				timestamp: number;
+				campaignId?: string;
+			};
+			if (payload.type !== "campaign-book-import") return;
+			// Build a concise annotation text (cap at 800 chars so it fits in the note bubble)
+			const snippet =
+				payload.content.length > 800
+					? `${payload.content.slice(0, 800)}…`
+					: payload.content;
+			const noteBody = snippet
+				? `📖 ${payload.title}\n\n${snippet}`
+				: `📖 ${payload.title}`;
+			// Place the annotation in the top-left of the current scene grid
+			setCurrentScene((prev) => {
+				if (!prev) return prev;
+				const next = {
+					...prev,
+					annotations: [
+						...(prev.annotations ?? []),
+						{
+							id: `book-note-${Date.now()}`,
+							text: noteBody,
+							x: 1,
+							y: 1,
+							layer: 3, // Warden layer
+						},
+					],
+				};
+				setScenes((prevScenes) => upsertScene(prevScenes, next));
+				return next;
+			});
+			toast({
+				title: "Campaign Book Section Imported",
+				description: `"${payload.title}" has been pinned as a Warden note on the current scene.`,
+			});
+		} catch {
+			// Silently ignore malformed sessionStorage data
+		}
+	}, [isHydrated, isWarden, toast]);
+	// ─────────────────────────────────────────────────────────────────────────
 
 	useEffect(() => {
 		if (!campaignId || !isAuthed) return;
@@ -1761,7 +1820,6 @@ const VTTEnhanced = () => {
 		[currentScene?.gridType, gridSize],
 	);
 
-
 	const drawingsToRender = useMemo(() => {
 		const base = currentScene?.drawings ?? [];
 		return activeDrawing ? [...base, activeDrawing] : base;
@@ -2101,17 +2159,17 @@ const VTTEnhanced = () => {
 						>
 							{/* Left Sidebar — hidden on mobile, shown via bottom sheet */}
 							<div
-							className={cn(
-							"col-span-1 xl:col-span-3 flex flex-col gap-3 xl:overflow-y-auto xl:h-full order-2 xl:order-1",
-							"min-h-0", // Prevent CSS grid blowout
-							isMapExpanded && "hidden",
-							isMobile && "hidden",
-							)}
+								className={cn(
+									"col-span-1 xl:col-span-3 flex flex-col gap-3 xl:overflow-y-auto xl:h-full order-2 xl:order-1",
+									"min-h-0", // Prevent CSS grid blowout
+									isMapExpanded && "hidden",
+									isMobile && "hidden",
+								)}
 							>
 								{isWarden && (
 									<>
 										<AscendantWindow title="SCENES" compact>
-										<div className="space-y-1 max-h-40 overflow-y-auto">
+											<div className="space-y-1 max-h-40 overflow-y-auto">
 												{scenes.map((scene) => (
 													<div
 														key={scene.id}
@@ -2884,7 +2942,7 @@ const VTTEnhanced = () => {
 									</>
 								)}
 
-<AscendantWindow title="TOKENS">
+								<AscendantWindow title="TOKENS">
 									<Tabs defaultValue="characters" className="w-full">
 										<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 											<TabsTrigger
@@ -3220,7 +3278,12 @@ const VTTEnhanced = () => {
 												"cursor-crosshair",
 										)}
 									>
-										<div className={cn("vtt-scene-container min-h-0 overflow-auto", sceneClass)}>
+										<div
+											className={cn(
+												"vtt-scene-container min-h-0 overflow-auto",
+												sceneClass,
+											)}
+										>
 											<style>{overlayStyles}</style>
 											{!currentScene ? (
 												<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-void-black/80 backdrop-blur-sm z-50">
@@ -3612,7 +3675,6 @@ const VTTEnhanced = () => {
 									isMobile && "hidden",
 								)}
 							>
-
 								{/* Embedded Initiative Tracker */}
 								{isWarden && (
 									<AscendantWindow title="INITIATIVE TRACKER">

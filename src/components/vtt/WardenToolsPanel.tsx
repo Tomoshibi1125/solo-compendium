@@ -385,13 +385,13 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 					<Suspense
 						fallback={
 							<div className="p-8 flex justify-center w-full min-h-[300px] items-center">
-									<Sparkles className="w-6 h-6 animate-spin opacity-50 mr-2" />{" "}
-									<span className="text-sm text-foreground/70 animate-pulse">
-										Initializing Protocol...
-									</span>
-								</div>
-							}
-						>
+								<Sparkles className="w-6 h-6 animate-spin opacity-50 mr-2" />{" "}
+								<span className="text-sm text-foreground/70 animate-pulse">
+									Initializing Protocol...
+								</span>
+							</div>
+						}
+					>
 						<Tabs
 							value={activeTool}
 							onValueChange={setActiveTool}

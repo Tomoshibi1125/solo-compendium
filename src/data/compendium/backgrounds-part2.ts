@@ -56,9 +56,9 @@ export const expandedBackgrounds = [
 		source: "Rift Ascendant Canon",
 		lore: {
 			origin:
-				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
+				"You grew up knowing how to hold a wound closed, how to call for help, and when no help was coming. Emergency medicine was a calling long before the gates opened.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"Since the First Awakening, paramedics have become some of the most respected and overworked professionals in any city with active gate activity. Many eventually Awaken themselves.",
 			curse: "",
 			personality: "",
 			current_owner: "",

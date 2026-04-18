@@ -9,7 +9,6 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	AscendantText,
 	ManaFlowText,
@@ -29,6 +28,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	DEFAULT_TOKENS,
 	type LibraryToken,
@@ -351,7 +351,12 @@ const TokenLibrary = () => {
 	if (isHydrating) {
 		return (
 			<Layout>
-				<div className={cn("w-full", !embedded && "container mx-auto px-4 py-8 max-w-7xl")}>
+				<div
+					className={cn(
+						"w-full",
+						!embedded && "container mx-auto px-4 py-8 max-w-7xl",
+					)}
+				>
 					<AscendantWindow title="LOADING TOKEN LIBRARY">
 						<AscendantText className="block text-sm text-muted-foreground">
 							Loading tokens and settings...
@@ -364,7 +369,12 @@ const TokenLibrary = () => {
 
 	return (
 		<Layout>
-			<div className={cn("w-full", !embedded && "container mx-auto px-4 py-8 max-w-7xl")}>
+			<div
+				className={cn(
+					"w-full",
+					!embedded && "container mx-auto px-4 py-8 max-w-7xl",
+				)}
+			>
 				{!embedded && (
 					<div className="mb-6">
 						<Button
@@ -384,9 +394,9 @@ const TokenLibrary = () => {
 							Entity Manifestation
 						</RiftHeading>
 						<ManaFlowText variant="rift" speed="slow" className="font-heading">
-							Manage physical representations for dimensional anomalies and allied
-							entities within localized fields. Create custom manifestations,
-							categorize parameters, and sync local records.
+							Manage physical representations for dimensional anomalies and
+							allied entities within localized fields. Create custom
+							manifestations, categorize parameters, and sync local records.
 						</ManaFlowText>
 					</div>
 				)}

@@ -37,7 +37,11 @@ import {
 } from "@/lib/characterCreation";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
-import { getStaticBackgrounds, getStaticJobs } from "@/lib/ProtocolDataManager";
+import {
+	getStaticBackgroundsAll,
+	getStaticJobs,
+	getStaticPaths,
+} from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import type {
 	Background,
@@ -238,6 +242,26 @@ const CharacterNew = () => {
 		queryKey: ["paths", selectedJob],
 		queryFn: async () => {
 			if (!selectedJob) return [];
+
+			// Build static fallback from local paths.ts, filtered to the selected job
+			const jobName = jobs.find((j) => j.id === selectedJob)?.name ?? "";
+			const staticPaths = getStaticPaths()
+				.filter(
+					(p) =>
+						p.job_id === selectedJob ||
+						(p as unknown as { jobId?: string }).jobId === selectedJob ||
+						(p as unknown as { jobName?: string }).jobName === jobName,
+				)
+				.map((p) => ({
+					...p,
+					display_name: p.name,
+					job_id: selectedJob,
+					path_level: (p as unknown as { level?: number }).level ?? 3,
+					source_book:
+						(p as unknown as { source?: string }).source ??
+						"Rift Ascendant Canon",
+				})) as Path[];
+
 			try {
 				const { data, error } = await supabase
 					.from("compendium_job_paths")
@@ -252,9 +276,11 @@ const CharacterNew = () => {
 					);
 				}
 			} catch {
-				/* ignored */
+				/* fall through to static */
 			}
-			return [];
+
+			// Fallback: use static paths.ts data
+			return staticPaths;
 		},
 		enabled: !!selectedJob,
 	});
@@ -278,6 +304,15 @@ const CharacterNew = () => {
 	const { data: backgrounds = [] } = useQuery({
 		queryKey: ["backgrounds"],
 		queryFn: async () => {
+			// Build static fallback from backgrounds-index.ts
+			const staticBgs = getStaticBackgroundsAll().map((b) => ({
+				...b,
+				display_name: b.name,
+				source_book:
+					(b as unknown as { source?: string }).source ??
+					"Rift Ascendant Canon",
+			})) as Background[];
+
 			try {
 				const { data, error } = await supabase
 					.from("compendium_backgrounds")
@@ -290,9 +325,11 @@ const CharacterNew = () => {
 					);
 				}
 			} catch {
-				/* ignored */
+				/* fall through to static */
 			}
-			return [];
+
+			// Fallback: use static backgrounds data
+			return staticBgs;
 		},
 	});
 

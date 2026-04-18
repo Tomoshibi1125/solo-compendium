@@ -373,10 +373,19 @@ export function EncounterBuilder({
 	};
 
 	return (
-		<div className={cn(embedded ? "flex flex-col gap-4" : "grid grid-cols-1 lg:grid-cols-12 gap-6", className)}>
+		<div
+			className={cn(
+				embedded
+					? "flex flex-col gap-4"
+					: "grid grid-cols-1 lg:grid-cols-12 gap-6",
+				className,
+			)}
+		>
 			{/* Left Column: Build & Anomalys */}
 			<div className={embedded ? "w-full" : "lg:col-span-8 space-y-6"}>
-				<AscendantWindow title={embedded ? "CONSTRUCTS" : "MODEL SYNTHESIS: CONSTRUCTS"}>
+				<AscendantWindow
+					title={embedded ? "CONSTRUCTS" : "MODEL SYNTHESIS: CONSTRUCTS"}
+				>
 					<div className="space-y-4">
 						<div className="relative">
 							<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary/40" />
@@ -388,7 +397,14 @@ export function EncounterBuilder({
 							/>
 						</div>
 
-						<div className={cn("grid gap-3 pr-2 custom-scrollbar", embedded ? "grid-cols-1 max-h-[300px] overflow-y-auto" : "grid-cols-1 md:grid-cols-2 max-h-[600px] overflow-y-auto")}>
+						<div
+							className={cn(
+								"grid gap-3 pr-2 custom-scrollbar",
+								embedded
+									? "grid-cols-1 max-h-[300px] overflow-y-auto"
+									: "grid-cols-1 md:grid-cols-2 max-h-[600px] overflow-y-auto",
+							)}
+						>
 							{isLoading ? (
 								<div className="col-span-2 py-20 text-center">
 									<Loader2 className="w-8 h-8 animate-spin mx-auto text-primary/40" />

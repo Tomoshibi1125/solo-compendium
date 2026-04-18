@@ -8,7 +8,7 @@ export const items_part1: Item[] = [
 			"A fire-resistant, high-visibility uniform worn by emergency medical technicians. Features reflective strips, reinforced elbows, and multiple utility pockets. Surprisingly durable against minor aetheric burns.",
 		rarity: "common",
 		type: "wondrous",
-		image: "/generated/items/shadow-blade.webp",
+		image: "/generated/compendium/backgrounds/paramedic.webp",
 		weight: 4,
 		value: 15,
 		item_type: "misc",
@@ -18,18 +18,17 @@ export const items_part1: Item[] = [
 		},
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Standard Bureau-issued emergency response gear, distributed to medical personnel attached to gate-clearing teams.",
 			history:
-				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
+				"Paramedic uniforms became standard Hunter Association gear after the First Gate Surge. Every team needs a medic.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor:
-			"Purges the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
+		flavor: "Run toward the chaos. That's the job.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
+			"Available from Hunter Association medical supply depots. Unglamorous but essential.",
 		tags: ["equipment", "area", "offensive", "single-target", "debuff"],
 		theme_tags: ["black-market", "experimental", "elite-tier"],
 	},
@@ -40,7 +39,7 @@ export const items_part1: Item[] = [
 			"A professional-grade trauma kit containing tourniquets, chest seals, hemostatic gauze, airway management tools, and aetheric stabilization crystals added post-awakening. Functions as a Healer's Kit with 15 uses.",
 		rarity: "common",
 		type: "wondrous",
-		image: "/generated/items/shadow-ring.webp",
+		image: "/generated/items/health-potion.webp",
 		weight: 5,
 		value: 25,
 		item_type: "tool",
@@ -50,18 +49,17 @@ export const items_part1: Item[] = [
 		},
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Professional-grade trauma gear standard-issued to Hunter Association medical teams after the First Gate Surge.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Upgraded with aetheric stabilization crystals after it was discovered that standard hemostatic agents are less effective on wounds from anomaly attacks.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor:
-			"Fractures the remnants of a dead world. A reminder that the Order has no mercy.",
+		flavor: "15 uses. Make them count.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+			"Available at Hunter Association supply depots. Required kit for any certified medic on a gate team.",
 		tags: ["equipment", "stealth", "control", "support"],
 		theme_tags: ["mana-overflow", "guild-ops", "ancient-power"],
 	},

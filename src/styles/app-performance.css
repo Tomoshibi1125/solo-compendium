@@ -38,7 +38,6 @@ body {
 
 /* Cards / list items that are off-screen: skip rendering until visible */
 .glass-card,
-.AscendantWindow,
 .campaign-card,
 .compendium-card,
 .encounter-builder-Anomaly-card,
@@ -50,7 +49,7 @@ body {
 }
 
 /* Sections that may be off-screen (tabs, accordion content) */
-[data-state="inactive"],
+[role="tabpanel"][data-state="inactive"],
 [hidden],
 .collapse-content:not(.open) {
 	content-visibility: hidden;

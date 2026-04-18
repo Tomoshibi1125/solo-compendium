@@ -367,7 +367,12 @@ async function syncJobs() {
 			display_name: m.display_name || m.name,
 			description: m.description || "",
 			flavor_text: m.flavor || m.flavor_text || null,
-			hit_die: m.hit_die || 8,
+			hit_die: m.hit_die || (m as unknown as { hitDie?: string }).hitDie
+				? Number.parseInt(
+						((m as unknown as { hitDie?: string }).hitDie || "").replace(/\D/g, "").slice(-2) || String(m.hit_die || 8),
+						10,
+				  ) || 8
+				: 8,
 			primary_abilities: (m.primary_abilities || []).map(mapAbility),
 			saving_throw_proficiencies: (m.saving_throw_proficiencies || []).map(
 				mapAbility,
@@ -381,7 +386,7 @@ async function syncJobs() {
 			image_url: m.image_url || m.image || null,
 			awakening_features: castToJson(m.awakening_features),
 			job_traits: castToJson(m.job_traits),
-			racial_traits: castToJson(m.racialTraits),
+			racial_traits: castToJson((m as unknown as { racialTraits?: unknown }).racialTraits),
 			ability_score_improvements: castToJson(m.ability_score_improvements),
 			size: m.size || "Medium",
 			speed: m.speed_walk
@@ -397,6 +402,7 @@ async function syncJobs() {
 			stats: castToJson(m.stats),
 			abilities: castToStringArray(m.abilities),
 			type: m.type || "Combat",
+			source_book: (m as unknown as { source?: string }).source || "Rift Ascendant Canon",
 		});
 	}
 
@@ -430,11 +436,16 @@ async function syncJobPaths() {
 	for (const m of data) {
 		if (seen.has(m.name)) continue;
 		seen.add(m.name);
-		const jobId =
-			JOB_NAME_TO_ID[m.job_name || ""] || JOB_NAME_TO_ID[m.job_id || ""];
-		if (!jobId) {
+		// Try all lookup strategies: job_name field, jobName field, job_id field, jobId field
+		const jobLookup =
+			JOB_NAME_TO_ID[(m as unknown as { jobName?: string }).jobName || ""] ||
+			JOB_NAME_TO_ID[m.job_name || ""] ||
+			JOB_NAME_TO_ID[(m as unknown as { jobId?: string }).jobId || ""] ||
+			m.job_id ||
+			(m as unknown as { jobId?: string }).jobId;
+		if (!jobLookup) {
 			log(
-				`  [JobPaths] Error: Missing Job ID for path ${m.name} (Job: ${m.job_name})`,
+				`  [JobPaths] Warning: No Job ID for path "${m.name}" (jobName: "${(m as unknown as { jobName?: string }).jobName || m.job_name}") — skipping`,
 			);
 			continue;
 		}
@@ -443,8 +454,9 @@ async function syncJobPaths() {
 			display_name: m.display_name || m.name,
 			description: m.description || "",
 			flavor_text: m.flavor || m.flavor_text || null,
-			path_level: m.path_level || 1,
-			job_id: jobId,
+			path_level: m.path_level ?? (m as unknown as { level?: number }).level ?? 3,
+			job_id: jobLookup,
+			source_book: (m as unknown as { source?: string }).source || "Rift Ascendant Canon",
 		});
 	}
 
@@ -728,11 +740,17 @@ async function syncBackgrounds() {
 			starting_credits: m.starting_credits || 0,
 			feature_name: m.feature_name || null,
 			feature_description: m.feature_description || null,
-			personality_traits: castToStringArray(m.personality_traits),
+			personality_traits: castToStringArray(
+				m.personality_traits ||
+					(m as unknown as { personalityTraits?: string[] }).personalityTraits,
+			),
 			ideals: castToStringArray(m.ideals),
 			bonds: castToStringArray(m.bonds),
 			flaws: castToStringArray(m.flaws),
-			source_book: m.source_book || "System Ascendant Canon",
+			source_book:
+				(m as unknown as { source?: string }).source ||
+				m.source_book ||
+				"Rift Ascendant Canon",
 			suggested_characteristics: castToJson(m.suggested_characteristics),
 			dangers: castToStringArray(m.dangers),
 			abilities: castToStringArray(m.abilities),

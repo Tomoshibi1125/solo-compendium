@@ -15,23 +15,24 @@ export const baseEquipment: Item[] = [
 		weight: 8,
 		value: 5,
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			passive: [
+				"Provides AC 11 + AGI modifier. Stealth checks made with disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Recovered from a collapsed Guild Vault.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Standard-issue field armor distributed by Hunter Bureaus worldwide after the First Awakening.",
+			history:
+				"Cheap, available, and passable for low-rank gates. Most hunters upgrade quickly, but some keep a set around.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "A masterpiece of destructive intent.",
-		discovery_lore:
-			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
+		flavor: "Not glamorous. Still alive.",
+		discovery_lore: "Standard Bureau procurement. Nothing exotic.",
 		tags: ["equipment", "offensive", "ice", "defensive", "debuff"],
 		theme_tags: ["dimensional-bleed", "monarch-era"],
 	},
@@ -48,23 +49,22 @@ export const baseEquipment: Item[] = [
 		weight: 10,
 		value: 10,
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			passive: ["Provides AC 11 + AGI modifier."],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Forged by the Bureau's most elite artificers.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Forged by Bureau-contracted artificers from ascendant-grade hides sourced inside cleared gates.",
+			history:
+				"A reliable entry-tier armor that new Hunters save up for before their first real gate.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
-		discovery_lore:
-			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+		discovery_lore: "Available at any licensed Hunter Association outfitter.",
 		tags: ["equipment", "fire", "shadow"],
 		theme_tags: ["ancient-power", "survival", "monarch-era"],
 	},
@@ -81,23 +81,24 @@ export const baseEquipment: Item[] = [
 		weight: 13,
 		value: 45,
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			passive: ["Provides AC 12 + AGI modifier."],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Tough leather reinforced with gate-forged steel rivets, designed for mobile combat in urban gate zones.",
+			history:
+				"Favored by Strikers and Assassins who need protection without sacrificing speed.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Some items tell stories. This one ends them.",
+		flavor:
+			"Some items tell stories. This one keeps you alive long enough to make one.",
 		discovery_lore:
-			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
+			"Standard stock at Hunter Association armories across Neo-Seoul, Tokyo, and Chicago.",
 		tags: ["equipment", "utility", "perception"],
 		theme_tags: ["urban-combat", "black-market"],
 	},
@@ -115,23 +116,22 @@ export const baseEquipment: Item[] = [
 		weight: 12,
 		value: 10,
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: ["Provides AC 12 + AGI modifier (max 2)."],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "An ancient artifact of the First Awakenings.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Stitched together from the thick hides of gate beasts by hunters who couldn't afford proper armor.",
+			history: "Crude but effective. The smell never fully goes away.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "Tread carefully. The beast that wore this skin didn't.",
 		discovery_lore:
-			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
+			"Crafted by hunters in the field. Sometimes the gate gives you what you need.",
 		tags: ["equipment", "perception", "healing", "debuff", "single-target"],
 		theme_tags: ["post-awakening", "modern-warfare", "monarch-era"],
 	},
@@ -149,23 +149,26 @@ export const baseEquipment: Item[] = [
 		weight: 20,
 		value: 50,
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			passive: [
+				"Provides AC 13 + AGI modifier (max 2). Does not impose stealth disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "An ancient artifact of the First Awakenings.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Interlocking rings of mana-tempered steel, designed to be worn discreetly under civilian clothing.",
+			history:
+				"A Bureau favorite for undercover assignments in city gate zones where visible armor draws attention.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor:
+			"You'd never know they were wearing it. Until they didn't need to hide it anymore.",
 		discovery_lore:
-			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
+			"Issued to Bureau plainclothes operatives. Not for public sale.",
 		tags: ["equipment", "defensive", "mobility", "utility"],
 		theme_tags: ["dungeon-core", "shadow-domain", "experimental"],
 	},
@@ -183,21 +186,23 @@ export const baseEquipment: Item[] = [
 		weight: 45,
 		value: 50,
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: [
+				"Provides AC 14 + AGI modifier (max 2). Stealth checks made with disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Recovered from a collapsed Guild Vault.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Overlapping metal scales mounted on a leather backing. Standard Bureau field-agent deployment armor.",
+			history:
+				"Noisy but reliable. Bureau veterans joke that the clanking keeps anomalies from sneaking up on you.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "A masterpiece of destructive intent.",
+		flavor: "It rattles. The anomalies still die.",
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "buff", "void"],
@@ -216,21 +221,21 @@ export const baseEquipment: Item[] = [
 		weight: 20,
 		value: 400,
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: ["Provides AC 14 + AGI modifier (max 2)."],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"A fitted metal chest plate backed by flexible mana-threaded leather. Preferred by mid-rank field leaders.",
+			history:
+				"The breastplate became the de facto armor standard for B-rank Hunter teams after the Second Gate Surge.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "A masterpiece of destructive intent.",
+		flavor: "It won't stop an S-rank. Nothing will. But it buys you a second.",
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "buff", "lightning"],
@@ -251,21 +256,23 @@ export const baseEquipment: Item[] = [
 		weight: 40,
 		value: 750,
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: [
+				"Provides AC 15 + AGI modifier (max 2). Stealth checks made with disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Shaped metal plates covering most of the body. Issued to heavy-strike teams in high-density gate zones.",
+			history:
+				"Loud and heavy, but the protection is undeniable. Not for scouts.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "Tread carefully. You can't exactly sprint in this.",
 		discovery_lore:
 			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
 		tags: ["equipment", "buff", "stealth"],
@@ -285,21 +292,21 @@ export const baseEquipment: Item[] = [
 		weight: 40,
 		value: 30,
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: ["Provides AC 14. Stealth checks made with disadvantage."],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Leather armor with heavy rings sewn into it. A budget heavy option for hunters who can't yet afford proper plate.",
+			history:
+				"Ring mail fell out of favor after gate-forged chain mail became more accessible, but budget hunters still use it.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Power lies not in the object, but the will of its master.",
+		flavor: "It jingles. The anomalies know you're coming. So what.",
 		discovery_lore:
 			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		tags: ["equipment", "control", "area", "radiant"],
@@ -321,19 +328,21 @@ export const baseEquipment: Item[] = [
 		weight: 55,
 		value: 75,
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: [
+				"Provides AC 16. Requires STR 13+. Stealth checks made with disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Full suit of interlocking mana-tempered steel rings. Standard Ascendant Bureau heavy-strike field issue.",
+			history:
+				"Distributed to A-rank and above field teams during major gate incursions. Each suit is registered to a hunter.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		flavor: "Power lies not in the object, but the will of its master.",
 		discovery_lore:
@@ -357,21 +366,23 @@ export const baseEquipment: Item[] = [
 		weight: 60,
 		value: 200,
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: [
+				"Provides AC 17. Requires STR 15+. Stealth checks made with disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "Recovered from a collapsed Guild Vault.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Vertical strips of gate-forged metal riveted to reinforced leather. Heavy-duty gate armor for front-line anchors.",
+			history:
+				"The preferred armor of Destroyer-class hunters who don't mind the weight and need the protection.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "A masterpiece of destructive intent.",
+		flavor: "A masterpiece of defensive intent.",
 		discovery_lore:
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "single-target", "offensive", "fire"],
@@ -393,21 +404,23 @@ export const baseEquipment: Item[] = [
 		weight: 65,
 		value: 1500,
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			passive: [
+				"Provides AC 18. Requires STR 15+. Stealth checks made with disadvantage.",
+			],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "An ancient artifact of the First Awakenings.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"Full articulated plate from head to toe. The pinnacle of pre-relic Ascendant Bureau deployment gear.",
+			history:
+				"Rare outside of national-level hunter teams. Each set is individually fitted and blessed by Bureau artificers.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "A masterpiece of destructive intent.",
+		flavor: "You don't wear plate armor. Plate armor wears you.",
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		tags: ["equipment", "damage", "control"],
@@ -426,21 +439,21 @@ export const baseEquipment: Item[] = [
 		weight: 6,
 		value: 10,
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			passive: ["+2 AC when wielded."],
 		},
 		sigil_slots_base: 0,
 		properties: {},
 		lore: {
-			origin: "An ancient artifact of the First Awakenings.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"A wooden or mana-reinforced metal shield, strapped to the forearm. Simple and highly effective.",
+			history:
+				"Shields went back into fashion after hunters discovered that gate anomalies don't care about coolness.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "Tread carefully; the enemies hit harder than they look.",
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		tags: ["equipment", "area", "utility", "stealth", "single-target"],
@@ -462,9 +475,7 @@ export const baseEquipment: Item[] = [
 		weight: 2,
 		value: 0.1,
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			passive: ["Simple melee weapon. Light property."],
 		},
 		sigil_slots_base: 0,
 		properties: {
@@ -475,14 +486,15 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		lore: {
-			origin: "Smuggled out of the Shadow Legion's armory.",
-			history: "Its true history remains a protected Guild secret.",
+			origin: "Heavy stick. Even Awakened ascendants sometimes start simple.",
+			history:
+				"Every Hunter Bureau has a rack of these in the training yard. Nobody brags about using one. Nobody stops using one either.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor: "It is what it is.",
 		discovery_lore:
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "shadow", "void", "debuff", "fire"],
@@ -505,9 +517,7 @@ export const baseEquipment: Item[] = [
 		weight: 1,
 		value: 2,
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			passive: ["Simple melee weapon. Finesse, Light, Thrown (20/60)."],
 		},
 		sigil_slots_base: 0,
 		properties: {
@@ -519,14 +529,17 @@ export const baseEquipment: Item[] = [
 			},
 		},
 		lore: {
-			origin: "Found sealed in a hidden cache inside an S-Rank Rift.",
-			history: "Its true history remains a protected Guild secret.",
+			origin:
+				"A small blade favored by Assassins for its versatility and concealability.",
+			history:
+				"Every hunter carries one even after they've unlocked abilities. It fits anywhere and never runs out of uses.",
 			curse: "",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
-		flavor: "Tread carefully; magic like this has a cost.",
+		flavor:
+			"Tread carefully; the gap between alive and dead is 1d4 piercing damage.",
 		discovery_lore:
 			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		tags: ["equipment", "single-target", "defensive"],

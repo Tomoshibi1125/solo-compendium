@@ -244,17 +244,19 @@ const CampaignDetail = () => {
 						className="space-y-6"
 					>
 						<div
-						className="overflow-x-auto pb-2"
-						style={{
-						scrollbarWidth: "none",
-						WebkitOverflowScrolling: "touch",
-						} as React.CSSProperties}
+							className="overflow-x-auto pb-2"
+							style={
+								{
+									scrollbarWidth: "none",
+									WebkitOverflowScrolling: "touch",
+								} as React.CSSProperties
+							}
 						>
-						<TabsList className="flex w-max gap-1 h-auto p-1 items-center">
-						<TabsTrigger
-						value="overview"
-						 className="gap-2 text-xs sm:text-sm min-h-[44px]"
-						>
+							<TabsList className="flex w-max gap-1 h-auto p-1 items-center">
+								<TabsTrigger
+									value="overview"
+									className="gap-2 text-xs sm:text-sm min-h-[44px]"
+								>
 									<Users className="w-3 h-3 sm:w-4 sm:h-4" />
 									<span>Overview</span>
 								</TabsTrigger>

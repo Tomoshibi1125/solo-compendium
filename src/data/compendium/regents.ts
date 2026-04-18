@@ -19,7 +19,7 @@ export const regents: Regent[] = [
 			"shadow-soldier-command",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
-		source_book: "Ascendant Ascendant Canon",
+		source_book: "Rift Ascendant Canon",
 		hit_dice: "1d12",
 		primary_ability: ["Presence", "Sense"],
 		saving_throws: ["Sense", "Presence"],
