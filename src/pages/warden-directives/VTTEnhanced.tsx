@@ -829,15 +829,6 @@ const VTTEnhanced = () => {
 	]);
 
 	useEffect(() => {
-		if (isStateLoading || currentScene) return;
-		if (scenes.length > 0) {
-			setCurrentScene(scenes[0]);
-			return;
-		}
-		createNewScene();
-	}, [createNewScene, currentScene, isStateLoading, scenes]);
-
-	useEffect(() => {
 		if (!campaignId || !isHydrated || !isWarden) return;
 		void saveNow({
 			...debouncedState,
@@ -2164,7 +2155,7 @@ const VTTEnhanced = () => {
 																	: "Make Live"}
 															</button>
 														)}
-														{currentScene?.id === scene.id && (
+														{true && (
 															<div className="flex gap-0.5 pr-1">
 																<button
 																	type="button"
@@ -2174,7 +2165,12 @@ const VTTEnhanced = () => {
 																			scene.name,
 																		);
 																		if (newName && newName !== scene.name) {
-																			updateScene({ name: newName } as never);
+																			const nextScenes = scenes.map((s) => s.id === scene.id ? { ...s, name: newName } : s);
+																			setScenes(nextScenes);
+																			persistSceneState(nextScenes, currentScene?.id ?? null);
+																			if (currentScene?.id === scene.id) {
+																				setCurrentScene({ ...currentScene, name: newName } as never);
+																			}
 																		}
 																	}}
 																	className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"
@@ -2196,8 +2192,10 @@ const VTTEnhanced = () => {
 																				}),
 																			),
 																		};
-																		setScenes((prev) => [...prev, dup]);
+																		const nextScenes = [...scenes, dup];
+																		setScenes(nextScenes);
 																		setCurrentScene(dup);
+																		persistSceneState(nextScenes, dup.id);
 																	}}
 																	className="text-[9px] px-1 py-0.5 rounded hover:bg-muted"
 																	title="Duplicate"
@@ -2218,10 +2216,11 @@ const VTTEnhanced = () => {
 																				(s) => s.id !== scene.id,
 																			);
 																			setScenes(next);
-																			setCurrentScene(next[0] || null);
+																			const nextCurrent = currentScene?.id === scene.id ? next[0] : currentScene;
+																			setCurrentScene(nextCurrent || null);
 																			persistSceneState(
 																				next,
-																				next[0]?.id ?? null,
+																				nextCurrent?.id ?? null,
 																			);
 																		}}
 																		className="text-[9px] px-1 py-0.5 rounded hover:bg-destructive/20 text-destructive"

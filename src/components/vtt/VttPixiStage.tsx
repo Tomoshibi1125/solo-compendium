@@ -198,6 +198,7 @@ export function VttPixiStage({
 		if (!canvasHostRef.current) return;
 		if (appRef.current) return;
 
+		let isMounted = true;
 		const app = new Application();
 		appRef.current = app;
 
@@ -215,10 +216,18 @@ export function VttPixiStage({
 			} catch {
 				return;
 			}
+			if (!isMounted || !canvasHostRef.current) {
+				try {
+					app.destroy(true, { children: true, texture: true });
+				} catch {
+					// ignore
+				}
+				return;
+			}
 
 			if (destroyed) {
 				try {
-					app.destroy();
+					app.destroy(true, { children: true, texture: true });
 				} catch {
 					// ignore
 				}
@@ -232,6 +241,7 @@ export function VttPixiStage({
 		})();
 
 		return () => {
+			isMounted = false;
 			destroyed = true;
 			if (appRef.current) {
 				try {
