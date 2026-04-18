@@ -23,18 +23,21 @@ CREATE INDEX IF NOT EXISTS idx_character_backups_character_id
 ALTER TABLE public.character_backups ENABLE ROW LEVEL SECURITY;
 
 -- Users can only see their own backups
+DROP POLICY IF EXISTS "Users can view own backups" ON public.character_backups;
 CREATE POLICY "Users can view own backups"
   ON public.character_backups
   FOR SELECT
   USING (user_id = auth.uid());
 
 -- Users can only insert backups they own (user_id must match)
+DROP POLICY IF EXISTS "Users can insert own backups" ON public.character_backups;
 CREATE POLICY "Users can insert own backups"
   ON public.character_backups
   FOR INSERT
   WITH CHECK (user_id = auth.uid());
 
 -- Users can only delete their own backups
+DROP POLICY IF EXISTS "Users can delete own backups" ON public.character_backups;
 CREATE POLICY "Users can delete own backups"
   ON public.character_backups
   FOR DELETE
