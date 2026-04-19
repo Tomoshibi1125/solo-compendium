@@ -132,7 +132,7 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 		speed_walk: null,
 		tags: [Anomaly.type, Anomaly.rank].filter(Boolean) as string[],
 		theme_tags: null,
-	};
+	} as unknown as Anomaly;
 };
 
 const buildFallbackAnomalies = (searchQuery: string) => {

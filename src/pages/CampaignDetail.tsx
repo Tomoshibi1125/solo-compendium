@@ -244,81 +244,81 @@ const CampaignDetail = () => {
 						className="space-y-6"
 					>
 						<TabsList className="flex w-full flex-wrap gap-1 h-auto p-1.5 rounded-xl border border-border/60 bg-card/80">
-						<TabsTrigger
-						 value="overview"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<Users className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Overview</span>
-						</TabsTrigger>
-						 <TabsTrigger
-						 value="vtt"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<Layers className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>VTT</span>
-						</TabsTrigger>
-						<TabsTrigger
-						value="wiki"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<BookOpen className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Wiki</span>
-						</TabsTrigger>
-						<TabsTrigger
-						value="sessions"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<CalendarClock className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Sessions</span>
-						</TabsTrigger>
-						<TabsTrigger
-						value="chat"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Chat</span>
-						</TabsTrigger>
-						<TabsTrigger
-						value="notes"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<FileText className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Notes</span>
-						</TabsTrigger>
-						<TabsTrigger
-						value="handouts"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<FileText className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Handouts</span>
-						</TabsTrigger>
-						<TabsTrigger
-						value="characters"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<Share2 className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Characters</span>
-						</TabsTrigger>
-						{hasWardenAccess && (
-						<TabsTrigger
-						 value="settings"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						 <Settings className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span>Settings</span>
-						</TabsTrigger>
-						)}
-						{hasWardenAccess && (
-						<TabsTrigger
-						value="oversight"
-						className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
-						>
-						<Crown className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
-						<span className="hidden sm:inline">Regent Oversight</span>
-						<span className="sm:hidden">Oversight</span>
-						</TabsTrigger>
-						)}
+							<TabsTrigger
+								value="overview"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<Users className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Overview</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="vtt"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<Layers className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>VTT</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="wiki"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<BookOpen className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Wiki</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="sessions"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<CalendarClock className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Sessions</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="chat"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Chat</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="notes"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<FileText className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Notes</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="handouts"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<FileText className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Handouts</span>
+							</TabsTrigger>
+							<TabsTrigger
+								value="characters"
+								className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+							>
+								<Share2 className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+								<span>Characters</span>
+							</TabsTrigger>
+							{hasWardenAccess && (
+								<TabsTrigger
+									value="settings"
+									className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+								>
+									<Settings className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+									<span>Settings</span>
+								</TabsTrigger>
+							)}
+							{hasWardenAccess && (
+								<TabsTrigger
+									value="oversight"
+									className="flex-1 gap-1.5 text-xs sm:text-sm min-h-[44px] px-2"
+								>
+									<Crown className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
+									<span className="hidden sm:inline">Regent Oversight</span>
+									<span className="sm:hidden">Oversight</span>
+								</TabsTrigger>
+							)}
 						</TabsList>
 
 						<TabsContent value="vtt">

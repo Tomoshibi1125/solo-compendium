@@ -425,7 +425,7 @@ export const useCampaignByShareCode = (shareCode: string) => {
 			const campaign = Array.isArray(rpcResult.data)
 				? rpcResult.data[0]
 				: rpcResult.data;
-			return (campaign || null) as Campaign | null;
+			return (campaign || null) as unknown as Campaign | null;
 		},
 		enabled: !!shareCode && shareCode.length === 6,
 	});

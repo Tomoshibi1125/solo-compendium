@@ -171,7 +171,7 @@ export function RegentUnlocksPanel({
 
 			// Static fallback
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 			const staticRegents = await staticDataProvider.getRegents("");
 			return staticRegents.map((r) => ({

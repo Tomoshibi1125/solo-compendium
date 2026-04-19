@@ -359,64 +359,136 @@
 /* ── Token context menu ──────────────────────────────────────────────── */
 .vtt-context-menu {
 	position: fixed;
-	z-index: 100;
-	min-width: 160px;
-	background: rgba(10, 6, 18, 0.96);
-	border: 1px solid rgba(155, 109, 255, 0.3);
-	border-radius: 8px;
-	padding: 4px 0;
-	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-	animation: vtt-ctx-in 0.12s ease-out;
+	/* CRITICAL: CSS vars injected by DynamicStyle for accurate cursor positioning */
+	left: var(--vtt-menu-x, 0px);
+	top: var(--vtt-menu-y, 0px);
+	transform-origin: top left;
+	z-index: 9100;
+	min-width: 182px;
+	max-width: 240px;
+	background: rgba(8, 4, 16, 0.97);
+	border: 1px solid rgba(157, 78, 221, 0.35);
+	border-radius: 10px;
+	padding: 6px 0;
+	box-shadow:
+		0 12px 40px rgba(0, 0, 0, 0.72),
+		0 0 0 1px rgba(157, 78, 221, 0.08) inset,
+		0 1px 0 rgba(255, 255, 255, 0.04) inset;
+	animation: vtt-ctx-in 0.1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@supports (-webkit-backdrop-filter: blur(12px)) or
-	(backdrop-filter: blur(12px)) {
+.vtt-context-menu .ctx-header {
+	padding: 4px 14px 3px;
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: rgba(157, 78, 221, 0.65);
+	pointer-events: none;
+	user-select: none;
+}
+
+@supports (-webkit-backdrop-filter: blur(16px)) or
+	(backdrop-filter: blur(16px)) {
 	.vtt-context-menu {
-		-webkit-backdrop-filter: blur(12px);
-		backdrop-filter: blur(12px);
+		background: rgba(8, 4, 16, 0.88);
+		-webkit-backdrop-filter: blur(16px) saturate(160%);
+		backdrop-filter: blur(16px) saturate(160%);
 	}
 }
 
 @keyframes vtt-ctx-in {
 	from {
 		opacity: 0;
-		transform: scale(0.95);
+		transform: scale(0.92) translateY(-4px);
 	}
 	to {
 		opacity: 1;
-		transform: scale(1);
+		transform: scale(1) translateY(0);
 	}
 }
 
 .vtt-context-menu button {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 9px;
 	width: 100%;
-	padding: 8px 14px;
+	padding: 7px 14px;
 	font-size: 12px;
-	color: rgba(255, 255, 255, 0.85);
+	font-weight: 500;
+	color: rgba(240, 230, 255, 0.88);
 	background: transparent;
 	border: none;
 	cursor: pointer;
 	text-align: left;
-	transition: background 0.1s;
+	transition:
+		background 0.08s,
+		color 0.08s;
+	white-space: nowrap;
+}
+
+.vtt-context-menu button svg {
+	width: 13px;
+	height: 13px;
+	opacity: 0.65;
+	flex-shrink: 0;
 }
 
 .vtt-context-menu button:hover {
-	background: rgba(155, 109, 255, 0.15);
-	color: white;
+	background: rgba(157, 78, 221, 0.18);
+	color: #e2d4ff;
+}
+
+.vtt-context-menu button:hover svg {
+	opacity: 1;
+}
+
+.vtt-context-menu button:active {
+	background: rgba(157, 78, 221, 0.28);
+}
+
+.vtt-context-menu .ctx-danger {
+	color: rgba(252, 165, 165, 0.8);
 }
 
 .vtt-context-menu .ctx-danger:hover {
-	background: rgba(239, 68, 68, 0.15);
+	background: rgba(239, 68, 68, 0.18);
 	color: #fca5a5;
 }
 
 .vtt-context-menu .ctx-separator {
 	height: 1px;
-	margin: 4px 8px;
-	background: rgba(155, 109, 255, 0.15);
+	margin: 5px 10px;
+	background: rgba(157, 78, 221, 0.14);
+}
+
+/* ── Turn notification banner ────────────────────────────────────────── */
+@keyframes vtt-turn-in {
+	0% {
+		opacity: 0;
+		transform: translateY(-20px) scale(0.88);
+		filter: blur(8px);
+	}
+	18% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		filter: blur(0);
+	}
+	72% {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+		filter: blur(0);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(12px) scale(0.94);
+		filter: blur(5px);
+	}
+}
+
+.vtt-turn-banner {
+	animation: vtt-turn-in 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+	pointer-events: none;
 }
 
 /* ── Status indicators ───────────────────────────────────────────────── */

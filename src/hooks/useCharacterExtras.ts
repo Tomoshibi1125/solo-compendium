@@ -8,7 +8,7 @@ type CharacterExtra = Database["public"]["Tables"]["character_extras"]["Row"];
 type CharacterExtraWithAnomaly = CharacterExtra & {
 	Anomaly?:
 		| (Database["public"]["Tables"]["compendium_Anomalies"]["Row"] & {
-				actions?: Database["public"]["Tables"]["compendium_Anomaly_actions"]["Row"][];
+				actions?: Database["public"]["Tables"]["compendium_monster_actions"]["Row"][];
 		  })
 		| null;
 };
@@ -26,7 +26,7 @@ export function useCharacterExtras(characterId: string) {
           *,
           Anomaly:compendium_Anomalies(
             *,
-            actions:compendium_Anomaly_actions(*)
+            actions:compendium_monster_actions(*)
           )
         `)
 				.eq("character_id", characterId)

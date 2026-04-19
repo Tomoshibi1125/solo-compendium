@@ -82,7 +82,7 @@ export function GlobalSearch({ className }: { className?: string }) {
 				},
 				{
 					table: "compendium_Anomalies",
-					type: "Anomalies",
+					type: "anomalies",
 					hasSourceBook: true,
 				},
 				{ table: "compendium_regents", type: "regents", hasSourceBook: true },
@@ -108,6 +108,26 @@ export function GlobalSearch({ className }: { className?: string }) {
 				},
 				{ table: "compendium_feats", type: "feats", hasSourceBook: true },
 				{ table: "compendium_skills", type: "skills", hasSourceBook: true },
+				{ table: "compendium_spells", type: "spells", hasSourceBook: true },
+				{
+					table: "compendium_techniques",
+					type: "techniques",
+					hasSourceBook: true,
+				},
+				{
+					table: "compendium_artifacts",
+					type: "artifacts",
+					hasSourceBook: true,
+				},
+				{
+					table: "compendium_locations",
+					type: "locations",
+					hasSourceBook: true,
+				},
+				{ table: "compendium_sigils", type: "sigils", hasSourceBook: true },
+				{ table: "compendium_tattoos", type: "tattoos", hasSourceBook: true },
+				{ table: "compendium_pantheon", type: "pantheon", hasSourceBook: true },
+				{ table: "compendium_items", type: "items", hasSourceBook: true },
 			] as const satisfies ReadonlyArray<{
 				table: keyof Database["public"]["Tables"];
 				type: string;

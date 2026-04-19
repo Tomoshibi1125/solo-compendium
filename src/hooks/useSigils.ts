@@ -38,7 +38,7 @@ export function useCompendiumSigils(characterId?: string) {
 			}
 
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 			const staticSigilsRaw = await staticDataProvider.getSigils("");
 			return staticSigilsRaw.map((raw) => {

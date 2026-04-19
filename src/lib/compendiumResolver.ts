@@ -1,4 +1,4 @@
-import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
@@ -50,6 +50,7 @@ export const entryTypes = [
 	"sigils",
 	"tattoos",
 	"deities",
+	"pantheon",
 	"npcs",
 ] as const;
 
@@ -121,13 +122,14 @@ export type StaticDataProvider = {
 	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 };
 
 let staticProviderPromise: Promise<StaticDataProvider> | null = null;
 
 const loadStaticProvider = (): Promise<StaticDataProvider> => {
 	if (!staticProviderPromise) {
-		staticProviderPromise = import("@/data/compendium/staticDataProvider").then(
+		staticProviderPromise = import("@/data/compendium/providers").then(
 			(module) => module.staticDataProvider as StaticDataProvider,
 		);
 	}
@@ -198,6 +200,13 @@ const getStaticEntries = async (
 		case "tattoos":
 			entries = await provider.getTattoos(search);
 			break;
+		case "pantheon":
+		case "deities":
+			entries = await provider.getPantheon(search);
+			break;
+		case "equipment":
+			entries = await provider.getItems(search);
+			break;
 		default:
 			entries = null;
 			break;
@@ -231,6 +240,34 @@ export async function resolveRef(
 
 	if (isSupabaseConfigured && tableName) {
 		try {
+			// Handle marketplace items specifically
+			if (id.startsWith("marketplace:")) {
+				const realId = id.replace("marketplace:", "");
+				const { data, error } = await supabase
+					.from("marketplace_items")
+					.select("id, title, description, content")
+					.eq("id", realId)
+					.maybeSingle();
+
+				if (error) {
+					logger.warn(`Error resolving marketplace item ${id}:`, error);
+					return null;
+				}
+
+				if (data && data.content && typeof data.content === "object") {
+					const content = data.content as Record<string, unknown>;
+					return {
+						...content,
+						id: `marketplace:${data.id}`,
+						name: data.title || content.name || "Unknown Item",
+						description: data.description || content.description || null,
+						type,
+					} as unknown as CompendiumEntity;
+				}
+				return null;
+			}
+
+			// Standard compendium entity resolution
 			const { data, error } = await supabase
 				.from(tableName as never)
 				.select("*")

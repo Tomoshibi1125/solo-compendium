@@ -38,8 +38,8 @@ describe("sourcebookAccess helpers", () => {
 		expect(candidates).toEqual(
 			expect.arrayContaining([
 				"Rift Ascendant Canon",
-				"system ascendant canon",
-				"system-ascendant-canon",
+				"rift ascendant canon",
+				"rift-ascendant-canon",
 			]),
 		);
 	});
@@ -54,7 +54,7 @@ describe("sourcebookAccess helpers", () => {
 		const filtered = filterRowsByAccessibleSourcebooks(
 			rows,
 			(row) => row.source_book,
-			new Set(["system-ascendant-canon"]),
+			new Set(["rift-ascendant-canon"]),
 		);
 
 		expect(filtered.map((row) => row.id)).toEqual(["free", "canon"]);

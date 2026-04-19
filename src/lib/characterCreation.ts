@@ -14,6 +14,7 @@ import {
 	listLocalFeatures,
 	updateLocalFeature,
 } from "@/lib/guestStore";
+import { getStaticPathUnlockLevel } from "@/lib/levelGating";
 import {
 	getStaticBackgrounds,
 	getStaticItems,
@@ -2419,6 +2420,116 @@ export function getRegentFeatureModifiers(
 }
 
 /**
+ * Apply a job's innate "awakening traits" to the character row.
+ *
+ * In Rift Ascendant, Jobs function as both race and class — so the racial-equivalent
+ * data (senses, damage resistances, damage/condition immunities, vulnerabilities,
+ * languages) lives on the Job and must be merged onto the character at creation.
+ * Without this step, a Revenant never gains Darkvision 120 ft and an Oracle never
+ * gets Radiant resistance on its sheet even though the Job explicitly grants them.
+ *
+ * Merges (de-dupes) with anything already on the character row so that background
+ * grants, regent grants, and later level-ups never clobber prior values.
+ */
+export async function applyJobAwakeningTraitsToCharacter(
+	characterId: string,
+	job: JobReference,
+	selectedLanguages: string[] = [],
+): Promise<void> {
+	if (!isStaticJob(job)) return;
+
+	const dedupe = (...lists: (string[] | null | undefined)[]): string[] => {
+		const out: string[] = [];
+		const seen = new Set<string>();
+		for (const list of lists) {
+			if (!list) continue;
+			for (const raw of list) {
+				if (typeof raw !== "string") continue;
+				const value = raw.trim();
+				if (!value) continue;
+				const key = value.toLowerCase();
+				if (seen.has(key)) continue;
+				seen.add(key);
+				out.push(value);
+			}
+		}
+		return out;
+	};
+
+	// Build senses: compose Darkvision + any listed specialSenses into the
+	// string[] shape that characters.senses expects (e.g. "Darkvision 60 ft.").
+	const jobSenses: string[] = [];
+	if (typeof job.darkvision === "number" && job.darkvision > 0) {
+		jobSenses.push(`Darkvision ${job.darkvision} ft.`);
+	}
+	if (job.specialSenses && job.specialSenses.length > 0) {
+		jobSenses.push(...job.specialSenses);
+	}
+
+	const jobResistances = dedupe(job.damage_resistances, job.damageResistances);
+	const jobImmunities = dedupe(job.damage_immunities, job.damageImmunities);
+	const jobConditionImmunities = dedupe(
+		job.condition_immunities,
+		job.conditionImmunities,
+	);
+
+	// Languages are not persisted on characters today (no column). We still
+	// pass-through via job traits / awakening features for display; the
+	// selectedLanguages argument is retained so callers can forward the
+	// player's chosen language once a languages column or table is added.
+	void selectedLanguages;
+
+	// Load existing arrays so we merge instead of overwrite. For guest/local
+	// characters this goes through updateLocalCharacter; for Supabase we read
+	// the current row and write back a merged update.
+	if (isLocalCharacterId(characterId)) {
+		const { getLocalCharacterWithAbilities, updateLocalCharacter } =
+			await import("@/lib/guestStore");
+		const existing = getLocalCharacterWithAbilities(characterId);
+		if (!existing) return;
+		updateLocalCharacter(characterId, {
+			senses: dedupe(existing.senses, jobSenses),
+			resistances: dedupe(existing.resistances, jobResistances),
+			immunities: dedupe(existing.immunities, jobImmunities),
+			condition_immunities: dedupe(
+				existing.condition_immunities,
+				jobConditionImmunities,
+			),
+		});
+		return;
+	}
+
+	const { data: existing, error: readErr } = await supabase
+		.from("characters")
+		.select(
+			"senses, resistances, immunities, condition_immunities, vulnerabilities",
+		)
+		.eq("id", characterId)
+		.single();
+	if (readErr || !existing) return;
+
+	const { error: writeErr } = await supabase
+		.from("characters")
+		.update({
+			senses: dedupe(existing.senses, jobSenses),
+			resistances: dedupe(existing.resistances, jobResistances),
+			immunities: dedupe(existing.immunities, jobImmunities),
+			condition_immunities: dedupe(
+				existing.condition_immunities,
+				jobConditionImmunities,
+			),
+			// Vulnerabilities intentionally not job-granted today; preserved as-is.
+		})
+		.eq("id", characterId);
+	if (writeErr) {
+		console.warn(
+			"applyJobAwakeningTraitsToCharacter: failed to persist job traits",
+			writeErr,
+		);
+	}
+}
+
+/**
  * Grant job awakening benefits (awakening features + job traits) at a specific level.
  */
 export async function addJobAwakeningBenefitsForLevel(
@@ -2493,19 +2604,12 @@ export async function addJobAwakeningBenefitsForLevel(
 		.eq("id", characterId)
 		.single();
 	if (character?.path) {
-		const { data: pathRow } = await supabase
-			.from("compendium_job_paths")
-			.select("path_level")
-			.eq("id", character.path)
-			.maybeSingle();
-
-		if (!pathRow || pathRow.path_level !== 1) {
-			return;
-		}
-
 		const staticPaths = getStaticPaths();
 		const pathData = staticPaths.find((p) => p.name === character.path);
-		if (pathData) {
+		const pathUnlockLevel = pathData
+			? getStaticPathUnlockLevel(pathData)
+			: null;
+		if (pathData && pathUnlockLevel === 1) {
 			const pathFeaturesAtLevel = (pathData.features ?? []).filter(
 				(f: { level: number }) => f.level === level,
 			);

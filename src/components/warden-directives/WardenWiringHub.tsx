@@ -584,7 +584,7 @@ export const WardenWiringSeal = {
 		supabase: Constants,
 		data: {
 			getBackgrounds: () => import("@/data/compendium/backgrounds-index"),
-			getFallback: () => import("@/data/compendium/staticDataProvider"),
+			getFallback: () => import("@/data/compendium/providers"),
 		},
 		rapier: { initRapier, getRapier },
 		lattice: {

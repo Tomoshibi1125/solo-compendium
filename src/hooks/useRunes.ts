@@ -76,7 +76,7 @@ export function useCompendiumRunes(characterId?: string) {
 
 			// Static fallback: load runes from compendium data
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 			const staticRunes = await staticDataProvider.getRunes("");
 			return staticRunes.map((r) => ({

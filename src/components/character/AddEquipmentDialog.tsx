@@ -86,7 +86,7 @@ export function AddEquipmentDialog({
 		queryKey: ["compendium-equipment", characterId, searchQuery],
 		queryFn: async () => {
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 			// Try Supabase first
 			let query = supabase.from("compendium_equipment").select("*").limit(20);

@@ -225,8 +225,11 @@ const CompendiumDetail = () => {
 			);
 		} else if (type === "shadow-soldiers") {
 			items.push(
-				{ id: "soldier-description", title: "Overview", level: 2 },
-				{ id: "soldier-role", title: "Combat Role", level: 2 },
+				{ id: "soldier-stats", title: "Core Stats", level: 2 },
+				{ id: "soldier-abilities", title: "Ability Scores", level: 2 },
+				{ id: "soldier-traits", title: "Traits", level: 2 },
+				{ id: "soldier-actions", title: "Actions", level: 2 },
+				{ id: "soldier-lore", title: "Lore", level: 2 },
 				{ id: "soldier-tags", title: "Tags", level: 2 },
 			);
 		} else if (type === "spells") {
@@ -367,6 +370,7 @@ const CompendiumDetail = () => {
 				const e = entry as CompendiumSovereign;
 				return <SovereignDetail data={e} />;
 			}
+			case "pantheon":
 			case "deities": {
 				const e = entry as CompendiumDeity;
 				return <DeityDetail data={e} />;
@@ -486,7 +490,7 @@ const CompendiumDetail = () => {
 		runes: "Runestones",
 		sigils: "Sigils",
 		relics: "Relics",
-		Anomalies: "Anomalies",
+		anomalies: "Anomalies",
 		backgrounds: "Backgrounds",
 		conditions: "Conditions",
 		regents: REGENT_LABEL_PLURAL,
@@ -501,6 +505,8 @@ const CompendiumDetail = () => {
 		sovereigns: "Sovereigns",
 		"shadow-soldiers": "Umbral Legion",
 		tattoos: "Magical Tattoos",
+		pantheon: "Pantheon",
+		deities: "Pantheon",
 	};
 
 	return (

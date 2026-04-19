@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { logger } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -29,6 +29,8 @@ export interface CompendiumEntry {
 		| "artifacts"
 		| "locations"
 		| "sigils"
+		| "tattoos"
+		| "pantheon"
 		| "sovereigns";
 	rarity?:
 		| "common"
@@ -93,6 +95,8 @@ const STARTUP_CATEGORIES = [
 	"artifacts",
 	"locations",
 	"sigils",
+	"tattoos",
+	"pantheon",
 	"sovereigns",
 ] as const;
 
@@ -141,7 +145,7 @@ export const useStartupData = () => {
 			const totalCounts: Record<string, number> = {};
 
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 
 			if (!isSupabaseConfigured) {
@@ -208,6 +212,12 @@ export const useStartupData = () => {
 							break;
 						case "sigils":
 							data = await staticDataProvider.getSigils("");
+							break;
+						case "tattoos":
+							data = await staticDataProvider.getTattoos("");
+							break;
+						case "pantheon":
+							data = await staticDataProvider.getPantheon("");
 							break;
 						case "sovereigns":
 							// Sovereigns are AI-generated via Gemini protocol;

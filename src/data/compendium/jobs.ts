@@ -99,7 +99,6 @@ const PACT_CASTER_SLOTS: Record<string, number[]> = {
 };
 
 export const jobs: Job[] = [
-	// 1. DESTROYER â€” Gate Breach Specialist / Living Siege Engine
 	{
 		id: "destroyer",
 		name: "Destroyer",
@@ -170,7 +169,10 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { strength: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			strength: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -311,8 +313,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Strength", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 2. BERSERKER â€” Mana Overload Tank / Unstable Resonance
 	{
 		id: "berserker",
 		name: "Berserker",
@@ -387,7 +387,10 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { strength: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			strength: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -552,8 +555,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Strength", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 3. ASSASSIN â€” Dimensional Phase Operative / Umbral Walker
 	{
 		id: "assassin",
 		name: "Assassin",
@@ -633,7 +634,10 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { agility: 2, intelligence: 1 },
+		abilityScoreImprovements: {
+			agility: 2,
+			intelligence: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Umbral Cant"],
@@ -799,8 +803,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Agility", "Intelligence"],
 		source: "Ascendant Compendium",
 	},
-
-	// 4. STRIKER â€” Neural Overdrive Combatant / Impulse Channeler
 	{
 		id: "striker",
 		name: "Striker",
@@ -875,7 +877,10 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { agility: 2, sense: 1 },
+		abilityScoreImprovements: {
+			agility: 2,
+			sense: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1055,8 +1060,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Agility", "Sense"],
 		source: "Ascendant Compendium",
 	},
-
-	// 5. MAGE â€” Arcane Custodian / Aetheric Scholar
 	{
 		id: "mage",
 		name: "Mage",
@@ -1131,7 +1134,10 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, sense: 1 },
+		abilityScoreImprovements: {
+			intelligence: 2,
+			sense: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1152,7 +1158,17 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
-			spellSlots: { ...FULL_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+			},
 		},
 		classFeatures: [
 			{
@@ -1263,8 +1279,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Intelligence", "Sense"],
 		source: "Ascendant Compendium",
 	},
-
-	// 6. ESPER â€” Reality Distorter / Unfiltered Vessel
 	{
 		id: "esper",
 		name: "Esper",
@@ -1339,7 +1353,10 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { presence: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			presence: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1365,7 +1382,17 @@ export const jobs: Job[] = [
 			spellsKnown: [
 				2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15,
 			],
-			spellSlots: { ...FULL_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+			},
 		},
 		classFeatures: [
 			{
@@ -1476,8 +1503,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Presence", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 7. REVENANT â€” Mandated of Marthos / Void-Breath Reaper
 	{
 		id: "revenant",
 		name: "Revenant",
@@ -1552,7 +1577,10 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			intelligence: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -1574,7 +1602,17 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
-			spellSlots: { ...FULL_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+			},
 		},
 		classFeatures: [
 			{
@@ -1691,8 +1729,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Intelligence", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 8. SUMMONER â€” Scion of the Hive / Gate Ecologist
 	{
 		id: "summoner",
 		name: "Summoner",
@@ -1774,7 +1810,10 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: { sense: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			sense: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Gate Speak"],
@@ -1796,7 +1835,17 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
 			],
-			spellSlots: { ...FULL_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+			},
 		},
 		classFeatures: [
 			{
@@ -1919,8 +1968,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Sense", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 9. HERALD â€” Divine Radiance / Order Decree Conduit
 	{
 		id: "herald",
 		name: "Herald",
@@ -1982,7 +2029,10 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: { sense: 2, presence: 1 },
+		abilityScoreImprovements: {
+			sense: 2,
+			presence: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -2006,7 +2056,17 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
-			spellSlots: { ...FULL_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+			},
 		},
 		classFeatures: [
 			{
@@ -2123,8 +2183,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Sense", "Presence"],
 		source: "Ascendant Compendium",
 	},
-
-	// 10. CONTRACTOR â€” Entity Broker / Gate Pact Negotiator
 	{
 		id: "contractor",
 		name: "Contractor",
@@ -2194,7 +2252,10 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: { presence: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			presence: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -2221,7 +2282,13 @@ export const jobs: Job[] = [
 			spellsKnown: [
 				2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15,
 			],
-			spellSlots: { ...PACT_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				"2nd": [0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				"3rd": [0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				"4th": [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4],
+			},
 		},
 		classFeatures: [
 			{
@@ -2338,8 +2405,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Presence", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 11. STALKER â€” Rift Tracker / Dimensional Predator
 	{
 		id: "stalker",
 		name: "Stalker",
@@ -2417,7 +2482,10 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: { agility: 2, sense: 1 },
+		abilityScoreImprovements: {
+			agility: 2,
+			sense: 1,
+		},
 		size: "medium",
 		speed: 35,
 		languages: ["English"],
@@ -2440,7 +2508,13 @@ export const jobs: Job[] = [
 			spellsKnown: [
 				0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
 			],
-			spellSlots: { ...HALF_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2],
+			},
 		},
 		classFeatures: [
 			{
@@ -2582,8 +2656,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Agility", "Sense"],
 		source: "Ascendant Compendium",
 	},
-
-	// 12. HOLY KNIGHT â€” Oath-Bound Enforcer / Order Covenant Warrior
 	{
 		id: "holy-knight",
 		name: "Holy Knight",
@@ -2652,7 +2724,10 @@ export const jobs: Job[] = [
 				type: "immunity",
 			},
 		],
-		abilityScoreImprovements: { strength: 2, presence: 1 },
+		abilityScoreImprovements: {
+			strength: 2,
+			presence: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Ancient Hebrew Strings"],
@@ -2676,7 +2751,13 @@ export const jobs: Job[] = [
 		spellcasting: {
 			ability: "Presence",
 			focus: "Absolute focus",
-			spellSlots: { ...HALF_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2],
+			},
 		},
 		classFeatures: [
 			{
@@ -2819,8 +2900,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Strength", "Presence"],
 		source: "Ascendant Compendium",
 	},
-
-	// 13. TECHNOMANCER â€” Absolute Architect / Aetheric Design Engineer
 	{
 		id: "technomancer",
 		name: "Technomancer",
@@ -2901,7 +2980,10 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: { intelligence: 2, vitality: 1 },
+		abilityScoreImprovements: {
+			intelligence: 2,
+			vitality: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English"],
@@ -2926,7 +3008,13 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4,
 			],
-			spellSlots: { ...HALF_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2],
+			},
 		},
 		classFeatures: [
 			{
@@ -3079,8 +3167,6 @@ export const jobs: Job[] = [
 		primary_abilities: ["Intelligence", "Vitality"],
 		source: "Ascendant Compendium",
 	},
-
-	// 14. IDOL â€” Frequency Manipulator / Resonance Caster
 	{
 		id: "idol",
 		name: "Idol",
@@ -3173,7 +3259,10 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { presence: 2, agility: 1 },
+		abilityScoreImprovements: {
+			presence: 2,
+			agility: 1,
+		},
 		size: "medium",
 		speed: 30,
 		languages: ["English", "One additional Earth language"],
@@ -3198,7 +3287,17 @@ export const jobs: Job[] = [
 				4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22,
 				22,
 			],
-			spellSlots: { ...FULL_CASTER_SLOTS },
+			spellSlots: {
+				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
+				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
+				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
+				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+			},
 		},
 		classFeatures: [
 			{

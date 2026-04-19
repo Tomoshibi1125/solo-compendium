@@ -57,6 +57,7 @@ import {
 	type RollMacro,
 	saveMacrosToLocal,
 } from "@/lib/vtt/rollMacros";
+import { createVttTokenInstanceId } from "@/lib/vtt/sceneState";
 import { PartyDashboardPanel } from "./PartyDashboardPanel";
 import { VTTAssetBrowser } from "./VTTAssetBrowser";
 
@@ -458,7 +459,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 											}}
 											onUseAsEffect={(url, name) => {
 												onAddEffect?.({
-													id: `effect-${Date.now()}`,
+													id: createVttTokenInstanceId(),
 													name: name,
 													type: "image",
 													x: 5,
@@ -659,7 +660,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 															key={effect}
 															onClick={() => {
 																onAddEffect?.({
-																	id: `effect-${Date.now()}`,
+																	id: createVttTokenInstanceId(),
 																	name: effect,
 																	type: "magic",
 																	x: Math.random() * 10,

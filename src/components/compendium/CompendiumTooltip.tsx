@@ -30,7 +30,7 @@ export function CompendiumTooltip({
 		queryKey: ["compendium-preview", type, id],
 		queryFn: async () => {
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 			// Many categories are available, but we'll try to find the specific one
 			// For simplicity in preview, we can use the universal transformation or specific getters
@@ -138,6 +138,173 @@ export function CompendiumTooltip({
 								name: t.name,
 								description: t.description,
 								level: t.level,
+							};
+						}
+						break;
+					}
+					case "relics": {
+						const relics = await staticDataProvider.getRelics("");
+						const r = relics.find((item) => item.id === id);
+						if (r) {
+							data = {
+								id: r.id,
+								name: r.name,
+								description: r.description,
+								rarity: r.rarity,
+								image_url: r.image_url,
+							};
+						}
+						break;
+					}
+					case "artifacts": {
+						const artifacts = await staticDataProvider.getArtifacts("");
+						const a = artifacts.find((item) => item.id === id);
+						if (a) {
+							data = {
+								id: a.id,
+								name: a.name,
+								description: a.description,
+								rarity: a.rarity,
+							};
+						}
+						break;
+					}
+					case "jobs": {
+						const jobs = await staticDataProvider.getJobs("");
+						const j = jobs.find((item) => item.id === id);
+						if (j) {
+							data = {
+								id: j.id,
+								name: j.name,
+								description: j.description,
+								source_book: j.source_book,
+							};
+						}
+						break;
+					}
+					case "paths": {
+						const paths = await staticDataProvider.getPaths("");
+						const p = paths.find((item) => item.id === id);
+						if (p) {
+							data = {
+								id: p.id,
+								name: p.name,
+								description: p.description,
+								source_book: p.source_book,
+							};
+						}
+						break;
+					}
+					case "backgrounds": {
+						const backgrounds = await staticDataProvider.getBackgrounds("");
+						const b = backgrounds.find((item) => item.id === id);
+						if (b) {
+							data = {
+								id: b.id,
+								name: b.name,
+								description: b.description,
+								source_book: b.source_book,
+							};
+						}
+						break;
+					}
+					case "conditions": {
+						const conditions = await staticDataProvider.getConditions("");
+						const c = conditions.find((item) => item.id === id);
+						if (c) {
+							data = {
+								id: c.id,
+								name: c.name,
+								description: c.description,
+							};
+						}
+						break;
+					}
+					case "shadow-soldiers": {
+						const soldiers = await staticDataProvider.getShadowSoldiers("");
+						const s = soldiers.find((item) => item.id === id);
+						if (s) {
+							data = {
+								id: s.id,
+								name: s.name,
+								description: s.description,
+								rarity: s.rarity,
+							};
+						}
+						break;
+					}
+					case "tattoos": {
+						const tattoos = await staticDataProvider.getTattoos("");
+						const t = tattoos.find((item) => item.id === id);
+						if (t) {
+							data = {
+								id: t.id,
+								name: t.name,
+								description: t.description,
+								rarity: t.rarity,
+							};
+						}
+						break;
+					}
+					case "pantheon":
+					case "deities": {
+						const deities = await staticDataProvider.getPantheon("");
+						const d = deities.find((item) => item.id === id);
+						if (d) {
+							data = {
+								id: d.id,
+								name: d.name,
+								description: d.description,
+							};
+						}
+						break;
+					}
+					case "feats": {
+						const feats = await staticDataProvider.getFeats("");
+						const f = feats.find((item) => item.id === id);
+						if (f) {
+							data = {
+								id: f.id,
+								name: f.name,
+								description: f.description,
+								level: f.level,
+							};
+						}
+						break;
+					}
+					case "skills": {
+						const skills = await staticDataProvider.getSkills("");
+						const s = skills.find((item) => item.id === id);
+						if (s) {
+							data = {
+								id: s.id,
+								name: s.name,
+								description: s.description,
+							};
+						}
+						break;
+					}
+					case "regents": {
+						const regents = await staticDataProvider.getRegents("");
+						const r = regents.find((item) => item.id === id);
+						if (r) {
+							data = {
+								id: r.id,
+								name: r.name,
+								description: r.description,
+								image_url: r.image_url,
+							};
+						}
+						break;
+					}
+					case "locations": {
+						const locations = await staticDataProvider.getLocations("");
+						const l = locations.find((item) => item.id === id);
+						if (l) {
+							data = {
+								id: l.id,
+								name: l.name,
+								description: l.description,
 							};
 						}
 						break;

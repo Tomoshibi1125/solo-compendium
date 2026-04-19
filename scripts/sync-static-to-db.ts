@@ -12,7 +12,7 @@ import { fileURLToPath } from "node:url";
 import { createClient } from "@supabase/supabase-js";
 import { config } from "dotenv";
 
-import { staticDataProvider } from "../src/data/compendium/staticDataProvider";
+import { staticDataProvider } from "../src/data/compendium/providers";
 import type { Database, Json } from "../src/integrations/supabase/types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -227,7 +227,7 @@ async function syncSpells() {
 				m.at_higher_levels || m.atHigherLevels || m.higher_levels || null,
 			classes: castToStringArray(m.classes),
 			saving_throw_ability:
-				m.saving_throw_ability || castToString(m.saving_throw?.ability),
+				(m.saving_throw_ability || castToString(m.saving_throw?.ability)) ?? undefined,
 			has_attack_roll: m.has_attack_roll || !!m.spell_attack,
 			area_of_effect: castToJson(m.area_of_effect || m.area),
 		});
@@ -385,8 +385,8 @@ async function syncJobs() {
 			rank: m.rank || null,
 			image_url: m.image_url || m.image || null,
 			awakening_features: castToJson(m.awakening_features),
-			job_traits: castToJson(m.job_traits),
-			racial_traits: castToJson((m as unknown as { racialTraits?: unknown }).racialTraits),
+			job_traits: castToJson(m.job_traits) || [],
+			racial_traits: castToJson((m as unknown as { racialTraits?: unknown }).racialTraits) || [],
 			ability_score_improvements: castToJson(m.ability_score_improvements),
 			size: m.size || "Medium",
 			speed: m.speed_walk

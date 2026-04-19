@@ -24,6 +24,7 @@ import {
 	getMaxPowerLevelForJobAtLevel,
 	type JobReference,
 } from "@/lib/characterCreation";
+import { getStaticPaths } from "@/lib/ProtocolDataManager";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -66,6 +67,61 @@ const JOB_ASI_OVERRIDES: Record<string, number[]> = {
 	Striker: [4, 8, 12, 16, 19],
 	Assassin: [4, 8, 10, 12, 16, 19],
 };
+
+// ---------------------------------------------------------------------------
+// Static path helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Extract the unlock level from any static-shaped path object.
+ * CompendiumPath (from ProtocolDataManager / dataLoaders) exposes `level`
+ * directly because loadPaths maps requirements.level → level.
+ * Raw paths.ts objects expose it under `requirements.level`.
+ * This helper handles both shapes so callers never need to know.
+ */
+export function getStaticPathUnlockLevel(path: {
+	level?: number | null;
+	requirements?: { level?: number | null } | null;
+}): number {
+	// CompendiumPath (most common in runtime code)
+	if (typeof path.level === "number") return path.level;
+	// Raw paths.ts shape (used in tests / direct imports)
+	if (typeof path.requirements?.level === "number")
+		return path.requirements.level;
+	// Default to standard 5e path level
+	return 3;
+}
+
+/**
+ * Get the minimum path-unlock level for a given job name from static data.
+ * Returns null when no paths exist for the job.
+ * Handles both slug-style job_ids ("holy-knight") and display names ("Holy Knight").
+ */
+export function getMinPathUnlockLevelForJob(jobName: string): number | null {
+	// Normalize: lowercase + strip all hyphens and spaces so
+	// "Holy Knight" === "holy-knight" === "holyknight".
+	const slugify = (s: string) =>
+		s
+			.trim()
+			.toLowerCase()
+			.replace(/[-\s]+/g, "");
+	const norm = slugify(jobName);
+
+	const all = getStaticPaths();
+	const jobPaths = all.filter((p) => {
+		// CompendiumPath (runtime) exposes job_id (e.g. "holy-knight")
+		if (slugify(p.job_id) === norm) return true;
+		// Raw paths.ts shape exposes jobName (e.g. "Holy Knight") and jobId
+		const raw = p as unknown as { jobName?: string; jobId?: string };
+		if (raw.jobName && slugify(raw.jobName) === norm) return true;
+		if (raw.jobId && slugify(raw.jobId) === norm) return true;
+		return false;
+	});
+
+	if (jobPaths.length === 0) return null;
+	const levels = jobPaths.map((p) => getStaticPathUnlockLevel(p));
+	return Math.min(...levels);
+}
 
 // ---------------------------------------------------------------------------
 // Path unlock gating

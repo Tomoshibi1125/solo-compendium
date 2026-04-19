@@ -3,16 +3,21 @@
  *
  * Reuses the campaign combat hooks for real-time persistence and sync.
  * Designed to fit in the left sidebar's AscendantWindow pattern.
+ *
+ * Polish: keyboard shortcuts (N = next turn), HP delta input,
+ * smooth active-row highlight, combatant count badge.
  */
 
 import {
 	ChevronDown,
 	ChevronUp,
+	Minus,
 	Plus,
 	RotateCcw,
 	SkipForward,
+	Swords,
 } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -129,6 +134,17 @@ export function VTTInitiativePanel({
 	const [newName, setNewName] = useState("");
 	const [newInit, setNewInit] = useState("");
 	const [expandedId, setExpandedId] = useState<string | null>(null);
+	const [hpDelta, setHpDelta] = useState<Record<string, string>>({});
+	const listRef = useRef<HTMLDivElement>(null);
+
+	// Auto-scroll active combatant into view
+	useEffect(() => {
+		const active = listRef.current?.querySelector(".is-active-turn");
+		active?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+	}, [currentTurn]);
+
+	// Keyboard shortcut hook is declared below nextTurn so the callback
+	// reference is assigned before the effect reads it.
 
 	// ── Actions ────────────────────────────────────────────────────────
 
@@ -227,6 +243,21 @@ export function VTTInitiativePanel({
 			updates: { current_turn: 0, round: 1 },
 		});
 	}, [campaignId, activeSessionId, updateSession]);
+
+	// Keyboard shortcut: N = next turn (when panel list is focused).
+	// Declared here (below nextTurn) so the callback is already in TDZ-safe scope.
+	useEffect(() => {
+		const handler = (e: KeyboardEvent) => {
+			if (
+				e.target instanceof HTMLInputElement ||
+				e.target instanceof HTMLTextAreaElement
+			)
+				return;
+			if (e.key === "n" || e.key === "N") nextTurn();
+		};
+		window.addEventListener("keydown", handler);
+		return () => window.removeEventListener("keydown", handler);
+	}, [nextTurn]);
 
 	const adjustHP = useCallback(
 		(entry: TrackerEntry, delta: number) => {

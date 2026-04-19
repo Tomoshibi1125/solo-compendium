@@ -24,10 +24,17 @@ export class SharedPage {
 	async createCampaign(name: string, description: string) {
 		await this.page.goto("/campaigns");
 		await this.dismissAnalyticsBanner();
-		await this.page.getByRole("button", { name: /Create Guild/i }).click();
+		await this.page
+			.getByRole("button", {
+				name: /^(Create Campaign|Establish Your Campaign)$/i,
+			})
+			.first()
+			.click();
 		await this.page.fill("#campaign-name", name);
 		await this.page.fill("#campaign-description", description);
-		await this.page.getByRole("button", { name: /Establish Guild/i }).click();
+		await this.page
+			.getByRole("button", { name: /^Establish Campaign$/i })
+			.click();
 		await this.page.waitForURL(/\/campaigns\/[a-z0-9-]+/i, { timeout: 20_000 });
 		const url = new URL(this.page.url());
 		return url.pathname.split("/").pop() ?? "";

@@ -222,7 +222,7 @@ export function AddPowerDialog({
 				ritual: false,
 				save_ability: null,
 				target: null,
-			})) as NonNullable<typeof data>;
+			})) as unknown as NonNullable<typeof data>;
 		},
 		enabled: open && !!character?.job,
 	});

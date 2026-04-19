@@ -206,13 +206,13 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 
 			const [actionsRes, traitsRes] = await Promise.all([
 				supabase
-					.from("compendium_Anomaly_actions")
+					.from("compendium_monster_actions")
 					.select("*")
-					.eq("Anomaly_id", data.id),
+					.eq("monster_id", data.id),
 				supabase
-					.from("compendium_Anomaly_traits")
+					.from("compendium_monster_traits")
 					.select("*")
-					.eq("Anomaly_id", data.id),
+					.eq("monster_id", data.id),
 			]);
 
 			const remoteActions = actionsRes.data || [];

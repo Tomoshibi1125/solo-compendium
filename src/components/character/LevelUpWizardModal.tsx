@@ -42,6 +42,7 @@ import type { Database } from "@/integrations/supabase/types";
 import { getLevelingMode } from "@/lib/campaignSettings";
 import {
 	addJobAwakeningBenefitsForLevel,
+	applyJobAwakeningTraitsToCharacter,
 	autoUpdateFeatureUses,
 } from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
@@ -51,9 +52,9 @@ import {
 	type CharacterLevelUpEvent,
 	DomainEventBus,
 } from "@/lib/domainEvents";
-import { isASILevel } from "@/lib/levelGating";
+import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
 import { logger } from "@/lib/logger";
-import { getStaticRegents } from "@/lib/ProtocolDataManager";
+import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -64,6 +65,57 @@ const XP_THRESHOLDS = [
 	0, 0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
 	120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
 ];
+
+type StaticPathSource = {
+	id: string;
+	name: string;
+	description: string;
+	job_id?: string;
+	jobId?: string;
+	jobName?: string;
+	display_name?: string | null;
+	level?: number | null;
+	path_level?: number | null;
+	source?: string;
+	source_book?: string | null;
+	prerequisites?: string | null;
+	features?: Array<{
+		name: string;
+		description: string;
+		level: number;
+	}>;
+	requirements?: {
+		level?: number | null;
+	};
+};
+
+type LevelUpPathOption = {
+	id: string;
+	name: string;
+	description?: string | null;
+	display_name?: string | null;
+	path_level: number;
+	source_book?: string | null;
+};
+
+type LevelUpFeatureRow = {
+	id: string;
+	name: string;
+	description?: string | null;
+	level: number;
+	is_path_feature: boolean;
+	action_type?: string | null;
+	uses_formula?: string | null;
+	prerequisites?: string | null;
+	recharge?: string | null;
+	source_name?: string | null;
+};
+
+const normalizeCompendiumKey = (value?: string | null) =>
+	value
+		?.trim()
+		.toLowerCase()
+		.replace(/[-\s]+/g, "") ?? "";
 
 function getExperienceForNextLevel(currentLevel: number): number {
 	return XP_THRESHOLDS[Math.min(currentLevel + 1, 20)] ?? Infinity;
@@ -149,35 +201,118 @@ export const LevelUpWizardModal = ({
 
 	// Path selection: fetch available paths if character has no path and this is a path unlock level
 	const needsPathSelection = !!character && !character.path;
-	const { data: availablePaths = [] } = useQuery({
+	const { data: availablePaths = [] } = useQuery<LevelUpPathOption[]>({
 		queryKey: ["level-up-paths", character?.job, newLevel, campaignId],
 		queryFn: async () => {
 			if (!character?.job) return [];
-			const { data: job } = await supabase
-				.from("compendium_jobs")
-				.select("id")
-				.eq("name", character.job)
-				.maybeSingle();
-			if (!job) return [];
-			const { data, error } = await supabase
-				.from("compendium_job_paths")
-				.select("*")
-				.eq("job_id", job.id)
-				.order("name");
-			if (error) throw error;
-			const accessible = await filterRowsBySourcebookAccess(
-				data || [],
-				(path) => path.source_book,
-				{ campaignId },
-			);
-			// Only return paths whose path_level <= newLevel
-			return accessible.filter((p) => {
-				const pathLevel = (p as { path_level?: number | null }).path_level;
-				return typeof pathLevel === "number" && pathLevel <= newLevel;
-			});
+			const characterJobName = character.job;
+
+			const protocolStaticPaths =
+				getStaticPaths() as unknown as StaticPathSource[];
+			const staticPathCatalog =
+				protocolStaticPaths.length > 0
+					? protocolStaticPaths
+					: ((await import("@/data/compendium/paths"))
+							.paths as unknown as StaticPathSource[]);
+			const jobNameKey = normalizeCompendiumKey(characterJobName);
+			const staticCandidates: LevelUpPathOption[] = staticPathCatalog
+				.filter((path) => {
+					const matchesJob = [path.job_id, path.jobId, path.jobName]
+						.map((value) => normalizeCompendiumKey(value))
+						.filter(Boolean)
+						.includes(jobNameKey);
+					const unlockLevel = path.path_level ?? getStaticPathUnlockLevel(path);
+					return matchesJob && unlockLevel <= newLevel;
+				})
+				.map((path) => ({
+					id: path.id,
+					name: path.name,
+					description: path.description,
+					display_name: path.display_name || path.name,
+					path_level: path.path_level ?? getStaticPathUnlockLevel(path),
+					source_book:
+						path.source_book ?? path.source ?? "Rift Ascendant Canon",
+				}));
+
+			try {
+				const { data: job } = await supabase
+					.from("compendium_jobs")
+					.select("id")
+					.eq("name", characterJobName)
+					.maybeSingle();
+
+				if (job) {
+					const { data, error } = await supabase
+						.from("compendium_job_paths")
+						.select("*")
+						.eq("job_id", job.id)
+						.order("name");
+
+					if (!error && data && data.length > 0) {
+						const accessible = await filterRowsBySourcebookAccess(
+							data || [],
+							(path) => path.source_book,
+							{ campaignId },
+						);
+						const dbByName = new Map(
+							accessible.map((d) => [d.name.trim().toLowerCase(), d]),
+						);
+						const staticPathNames = new Set(
+							staticCandidates.map((path) =>
+								normalizeCompendiumKey(
+									String((path as { name?: string }).name ?? ""),
+								),
+							),
+						);
+						return [
+							...staticCandidates.map((staticPath) => {
+								const dbMatch = dbByName.get(
+									staticPath.name.trim().toLowerCase(),
+								);
+								if (!dbMatch) return staticPath;
+								return {
+									...staticPath,
+									id: dbMatch.id || staticPath.id,
+									display_name:
+										dbMatch.display_name ||
+										staticPath.display_name ||
+										staticPath.name,
+									description: dbMatch.description || staticPath.description,
+									source_book: dbMatch.source_book || staticPath.source_book,
+								};
+							}),
+							...accessible
+								.filter((path) => {
+									const unlockLevel = path.path_level ?? 3;
+									return (
+										unlockLevel <= newLevel &&
+										!staticPathNames.has(normalizeCompendiumKey(path.name))
+									);
+								})
+								.map((path) => ({
+									id: path.id,
+									name: path.name,
+									description: path.description,
+									display_name: path.display_name || path.name,
+									path_level: path.path_level ?? 3,
+									source_book: path.source_book,
+								})),
+						];
+					}
+				}
+			} catch {
+				return staticCandidates;
+			}
+
+			return staticCandidates;
 		},
 		enabled: needsPathSelection && !!newLevel,
 	});
+	const selectedPathRow = useMemo(
+		() => availablePaths.find((path) => path.id === selectedPath) ?? null,
+		[availablePaths, selectedPath],
+	);
+	const effectivePathName = character?.path ?? selectedPathRow?.name ?? null;
 
 	// Fetch available feats for selection at ASI levels
 	const { data: availableFeats = [] } = useQuery({
@@ -247,94 +382,201 @@ export const LevelUpWizardModal = ({
 			})) ?? [];
 
 	// Fetch features for the new level (DB first, static fallback)
-	const { data: newFeatures = [] } = useQuery({
+	const { data: newFeatures = [] } = useQuery<LevelUpFeatureRow[]>({
 		queryKey: [
 			"job-features",
 			character?.job,
+			effectivePathName,
 			newLevel,
 			campaignId,
 			staticJobs?.length,
 		],
 		queryFn: async () => {
 			if (!character?.job) return [];
+			const characterJobName = character.job;
 
-			// Get job ID
-			const { data: job } = await supabase
-				.from("compendium_jobs")
-				.select("id")
-				.eq("name", character.job)
-				.maybeSingle();
+			const staticJob = staticJobs?.find(
+				(job) => job.name === characterJobName,
+			);
+			const staticJobFeatures: LevelUpFeatureRow[] = (
+				staticJob?.classFeatures ?? []
+			)
+				.filter((feature) => feature.level === newLevel)
+				.map((feature, index) => ({
+					id: `static-job-${characterJobName.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
+					name: feature.name,
+					description: feature.description,
+					level: feature.level,
+					is_path_feature: false,
+					action_type: null,
+					uses_formula: null,
+					prerequisites: null,
+					recharge: null,
+					source_name: null,
+				}));
 
-			if (!job) return [];
+			const protocolStaticPaths =
+				getStaticPaths() as unknown as StaticPathSource[];
+			const staticPathCatalog =
+				protocolStaticPaths.length > 0
+					? protocolStaticPaths
+					: ((await import("@/data/compendium/paths"))
+							.paths as unknown as StaticPathSource[]);
+			const jobNameKey = normalizeCompendiumKey(character.job);
+			const pathNameKey = normalizeCompendiumKey(effectivePathName);
+			const staticPathFeatures: LevelUpFeatureRow[] = effectivePathName
+				? staticPathCatalog
+						.filter((path) => {
+							const matchesJob = [path.job_id, path.jobId, path.jobName]
+								.map((value) => normalizeCompendiumKey(value))
+								.filter(Boolean)
+								.includes(jobNameKey);
+							return (
+								matchesJob && normalizeCompendiumKey(path.name) === pathNameKey
+							);
+						})
+						.flatMap((path) =>
+							(path.features ?? [])
+								.filter((feature) => feature.level === newLevel)
+								.map((feature, index) => ({
+									id: `static-path-${path.name.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
+									name: feature.name,
+									description: feature.description,
+									level: feature.level,
+									is_path_feature: true,
+									action_type: null,
+									uses_formula: null,
+									prerequisites: path.prerequisites ?? null,
+									recharge: null,
+									source_name: null,
+								})),
+						)
+				: [];
 
-			// Get features for this level
-			const { data: features, error } = await supabase
-				.from("compendium_job_features")
-				.select("*")
-				.eq("job_id", job.id)
-				.eq("level", newLevel)
-				.eq("is_path_feature", false);
-
-			if (error) throw error;
-
-			const accessibleJobFeatures = await filterRowsBySourcebookAccess(
-				features || [],
-				(feature) => (feature as { source_name?: string | null }).source_name,
-				{ campaignId },
+			const staticFeatureBase = [
+				...staticJobFeatures,
+				...staticPathFeatures,
+			].filter(
+				(feature, index, allFeatures) =>
+					allFeatures.findIndex(
+						(candidate) =>
+							normalizeCompendiumKey(candidate.name) ===
+							normalizeCompendiumKey(feature.name),
+					) === index,
 			);
 
-			// If character has a path, get path features too
-			if (character.path) {
-				const { data: path } = await supabase
-					.from("compendium_job_paths")
+			let accessibleDbFeatures: LevelUpFeatureRow[] = [];
+
+			try {
+				const { data: job } = await supabase
+					.from("compendium_jobs")
 					.select("id")
-					.eq("name", character.path)
+					.eq("name", character.job)
 					.maybeSingle();
 
-				if (path) {
-					const { data: pathFeatures, error: pathError } = await supabase
+				if (job?.id) {
+					const { data: jobFeatures, error: jobFeaturesError } = await supabase
 						.from("compendium_job_features")
 						.select("*")
-						.eq("path_id", path.id)
+						.eq("job_id", job.id)
 						.eq("level", newLevel)
-						.eq("is_path_feature", true);
+						.eq("is_path_feature", false);
 
-					if (!pathError && pathFeatures) {
-						const accessiblePathFeatures = await filterRowsBySourcebookAccess(
-							pathFeatures,
+					if (!jobFeaturesError && jobFeatures) {
+						accessibleDbFeatures = (await filterRowsBySourcebookAccess(
+							jobFeatures,
 							(feature) =>
 								(feature as { source_name?: string | null }).source_name,
 							{ campaignId },
-						);
+						)) as unknown as LevelUpFeatureRow[];
+					}
 
-						return [...accessibleJobFeatures, ...accessiblePathFeatures];
+					if (effectivePathName) {
+						const { data: path } = await supabase
+							.from("compendium_job_paths")
+							.select("id")
+							.eq("job_id", job.id)
+							.eq("name", effectivePathName)
+							.maybeSingle();
+
+						if (path?.id) {
+							const { data: pathFeatures, error: pathFeaturesError } =
+								await supabase
+									.from("compendium_job_features")
+									.select("*")
+									.eq("path_id", path.id)
+									.eq("level", newLevel)
+									.eq("is_path_feature", true);
+
+							if (!pathFeaturesError && pathFeatures) {
+								const accessiblePathFeatures =
+									(await filterRowsBySourcebookAccess(
+										pathFeatures,
+										(feature) =>
+											(feature as { source_name?: string | null }).source_name,
+										{ campaignId },
+									)) as unknown as LevelUpFeatureRow[];
+								accessibleDbFeatures = [
+									...accessibleDbFeatures,
+									...accessiblePathFeatures,
+								];
+							}
+						}
 					}
 				}
+			} catch {
+				accessibleDbFeatures = [];
 			}
 
-			// Static fallback: if DB returned nothing, use static classFeatures
-			if (accessibleJobFeatures.length === 0 && staticJobs) {
-				const staticJob = staticJobs.find((j) => j.name === character.job);
-				if (staticJob?.classFeatures) {
-					const levelFeatures = staticJob.classFeatures.filter(
-						(cf) => cf.level === newLevel,
+			const dbFeaturesByName = new Map(
+				accessibleDbFeatures.map((feature) => [
+					normalizeCompendiumKey(String(feature.name ?? "")),
+					feature,
+				]),
+			);
+			const staticFeatureNames = new Set(
+				staticFeatureBase.map((feature) =>
+					normalizeCompendiumKey(feature.name),
+				),
+			);
+
+			return [
+				...staticFeatureBase.map((staticFeature) => {
+					const dbFeature = dbFeaturesByName.get(
+						normalizeCompendiumKey(staticFeature.name),
 					);
-					return levelFeatures.map((cf, idx) => ({
-						id: `static-${cf.name.toLowerCase().replace(/\s+/g, "-")}-${idx}`,
-						name: cf.name,
-						description: cf.description,
-						level: cf.level,
-						is_path_feature: false,
-						action_type: null,
-						uses_formula: null,
-						prerequisites: null,
-						recharge: null,
-						source_name: null,
-					}));
-				}
-			}
+					if (!dbFeature) return staticFeature;
 
-			return accessibleJobFeatures;
+					return {
+						...staticFeature,
+						id: String(dbFeature.id ?? staticFeature.id),
+						description: String(
+							dbFeature.description ?? staticFeature.description ?? "",
+						),
+						action_type:
+							(dbFeature.action_type as string | null | undefined) ??
+							staticFeature.action_type,
+						uses_formula:
+							(dbFeature.uses_formula as string | null | undefined) ??
+							staticFeature.uses_formula,
+						prerequisites:
+							(dbFeature.prerequisites as string | null | undefined) ??
+							staticFeature.prerequisites,
+						recharge:
+							(dbFeature.recharge as string | null | undefined) ??
+							staticFeature.recharge,
+						source_name:
+							(dbFeature.source_name as string | null | undefined) ??
+							staticFeature.source_name,
+					};
+				}),
+				...accessibleDbFeatures.filter(
+					(feature) =>
+						!staticFeatureNames.has(
+							normalizeCompendiumKey(String(feature.name ?? "")),
+						),
+				),
+			];
 		},
 		enabled: !!character && !!newLevel && !!staticJobs,
 	});
@@ -425,6 +667,15 @@ export const LevelUpWizardModal = ({
 			return;
 		}
 
+		if (showPathSelection && !selectedPathRow) {
+			toast({
+				title: "Path selection required",
+				description: "Choose a path before completing this level up.",
+				variant: "destructive",
+			});
+			return;
+		}
+
 		setLoading(true);
 		try {
 			// Calculate new stats
@@ -450,11 +701,8 @@ export const LevelUpWizardModal = ({
 				};
 
 			// Apply path selection if chosen during this level-up
-			if (showPathSelection && selectedPath) {
-				const chosenPath = availablePaths.find((p) => p.id === selectedPath);
-				if (chosenPath) {
-					characterUpdates.path = chosenPath.name;
-				}
+			if (showPathSelection && selectedPathRow) {
+				characterUpdates.path = selectedPathRow.name;
 			}
 
 			// Apply ASI ability score changes if this is an ASI level
@@ -569,7 +817,7 @@ export const LevelUpWizardModal = ({
 					character_id: character.id,
 					name: feature.name || "Unknown Feature",
 					source: feature.is_path_feature
-						? `Path: ${character.path || "Unknown"}`
+						? `Path: ${characterUpdates.path || effectivePathName || "Unknown"}`
 						: `Job: ${character.job}`,
 					level_acquired: newLevel,
 					description: feature.description || "",
@@ -631,6 +879,19 @@ export const LevelUpWizardModal = ({
 				logger.error("Failed to grant job awakening benefits:", error);
 			}
 
+			// Self-heal awakening traits (senses / resistances / immunities) every level-up.
+			// applyJobAwakeningTraitsToCharacter is idempotent: it de-dupes on merge,
+			// so it is safe to call unconditionally and will pick up any edits to jobs.ts.
+			try {
+				await applyJobAwakeningTraitsToCharacter(
+					character.id,
+					jobObj || character.job,
+					[],
+				);
+			} catch (error) {
+				logger.error("Failed to sync awakening traits on level-up:", error);
+			}
+
 			// Auto-update existing feature uses (proficiency-based features scale with level)
 			try {
 				await autoUpdateFeatureUses(character.id);
@@ -648,7 +909,7 @@ export const LevelUpWizardModal = ({
 						characterId: character.id,
 						characterName: character.name,
 						className: character.job,
-						pathName: character.path,
+						pathName: characterUpdates.path || effectivePathName,
 						level: newLevel,
 						campaignId,
 					}),
@@ -1119,63 +1380,65 @@ export const LevelUpWizardModal = ({
 											NEW ABILITIES UNLOCKED
 										</Label>
 										<div className="space-y-3">
-											{newFeatures.map((feature: JobFeature) => {
-												return (
-													<div
-														key={feature.id}
-														className={cn(
-															"p-4 rounded-lg border transition-all duration-300",
-															"border-border bg-muted/30",
-														)}
-													>
-														<div className="flex items-start gap-3">
-															<div className="flex-1">
-																<div className="flex items-center gap-2 mb-1 flex-wrap">
-																	<Label
-																		htmlFor={`feature-${feature.id}`}
-																		className="font-resurge font-semibold cursor-pointer text-amber-400 tracking-wide"
-																	>
-																		{formatRegentVernacular(feature.name)}
-																	</Label>
-																	{feature.action_type && (
-																		<Badge
-																			variant="secondary"
-																			className="text-xs font-heading"
+											{(newFeatures as unknown as JobFeature[]).map(
+												(feature) => {
+													return (
+														<div
+															key={feature.id}
+															className={cn(
+																"p-4 rounded-lg border transition-all duration-300",
+																"border-border bg-muted/30",
+															)}
+														>
+															<div className="flex items-start gap-3">
+																<div className="flex-1">
+																	<div className="flex items-center gap-2 mb-1 flex-wrap">
+																		<Label
+																			htmlFor={`feature-${feature.id}`}
+																			className="font-resurge font-semibold cursor-pointer text-amber-400 tracking-wide"
 																		>
-																			{formatRegentVernacular(
-																				feature.action_type,
-																			)}
-																		</Badge>
-																	)}
-																	{feature.uses_formula && (
-																		<Badge
-																			variant="outline"
-																			className="text-xs font-heading border-amber-500/30 text-amber-400"
-																		>
-																			{formatRegentVernacular(
-																				feature.uses_formula,
-																			)}
-																		</Badge>
-																	)}
-																</div>
-																<p className="text-sm text-muted-foreground font-heading">
-																	{formatRegentVernacular(
-																		feature.description || "",
-																	)}
-																</p>
-																{feature.prerequisites && (
-																	<p className="text-xs text-muted-foreground mt-1 italic">
-																		Prerequisites:{" "}
+																			{formatRegentVernacular(feature.name)}
+																		</Label>
+																		{feature.action_type && (
+																			<Badge
+																				variant="secondary"
+																				className="text-xs font-heading"
+																			>
+																				{formatRegentVernacular(
+																					feature.action_type,
+																				)}
+																			</Badge>
+																		)}
+																		{feature.uses_formula && (
+																			<Badge
+																				variant="outline"
+																				className="text-xs font-heading border-amber-500/30 text-amber-400"
+																			>
+																				{formatRegentVernacular(
+																					feature.uses_formula,
+																				)}
+																			</Badge>
+																		)}
+																	</div>
+																	<p className="text-sm text-muted-foreground font-heading">
 																		{formatRegentVernacular(
-																			feature.prerequisites,
+																			feature.description || "",
 																		)}
 																	</p>
-																)}
+																	{feature.prerequisites && (
+																		<p className="text-xs text-muted-foreground mt-1 italic">
+																			Prerequisites:{" "}
+																			{formatRegentVernacular(
+																				feature.prerequisites,
+																			)}
+																		</p>
+																	)}
+																</div>
 															</div>
 														</div>
-													</div>
-												);
-											})}
+													);
+												},
+											)}
 										</div>
 									</div>
 								)}
@@ -1308,7 +1571,8 @@ export const LevelUpWizardModal = ({
 									loading ||
 									hpIncrease === null ||
 									newLevel <= character.level ||
-									(!isMilestone && !canLevelUp)
+									(!isMilestone && !canLevelUp) ||
+									(showPathSelection && !selectedPathRow)
 								}
 								className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
 							>

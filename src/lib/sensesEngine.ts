@@ -5,6 +5,8 @@
  * Uses "best-of" stacking: multiple sources of darkvision use the highest range.
  */
 
+import { jobs as STATIC_JOBS } from "@/data/compendium/jobs";
+
 // ─── Types ──────────────────────────────────────────────────
 export interface CharacterSenses {
 	darkvision: number; // range in feet, 0 = no darkvision
@@ -26,25 +28,56 @@ interface SenseSource {
 	range: number;
 }
 
-// ─── Job Darkvision Table ───────────────────────────────────
-// SA Jobs that grant darkvision or other senses
-const JOB_SENSES: Record<string, SenseSource[]> = {
-	assassin: [{ type: "job", name: "Assassin", sense: "darkvision", range: 60 }],
-	stalker: [{ type: "job", name: "Stalker", sense: "darkvision", range: 60 }],
-	revenant: [{ type: "job", name: "Revenant", sense: "darkvision", range: 60 }],
-	shadow: [
-		{
+// ─── Job Senses (derived from compendium) ───────────────────
+// Build the Job→senses lookup from the authoritative static jobs.ts so that
+// darkvision ranges and specialSenses (e.g. "Keen Hearing and Smell") stay in
+// sync with the compendium without requiring a duplicated hardcoded table.
+const SPECIAL_SENSE_PATTERNS: Array<{
+	pattern: RegExp;
+	sense: SenseSource["sense"];
+}> = [
+	{ pattern: /\btruesight\b/i, sense: "truesight" },
+	{ pattern: /\bblindsight\b/i, sense: "blindsight" },
+	{ pattern: /\btremorsense\b/i, sense: "tremorsense" },
+	{ pattern: /\bdarkvision\b/i, sense: "darkvision" },
+];
+
+function parseSpecialSense(jobName: string, text: string): SenseSource | null {
+	for (const { pattern, sense } of SPECIAL_SENSE_PATTERNS) {
+		if (!pattern.test(text)) continue;
+		const range = /(\d+)\s*(?:ft|feet)/i.exec(text);
+		return {
 			type: "job",
-			name: "Shadow Regent (Regent)",
-			sense: "darkvision",
-			range: 120,
-		},
-	],
-	summoner: [{ type: "job", name: "Summoner", sense: "darkvision", range: 60 }],
-	technomancer: [
-		{ type: "job", name: "Technomancer", sense: "tremorsense", range: 30 },
-	],
-};
+			name: jobName,
+			sense,
+			range: range ? Number.parseInt(range[1], 10) : 30,
+		};
+	}
+	return null;
+}
+
+const JOB_SENSES: Record<string, SenseSource[]> = (() => {
+	const out: Record<string, SenseSource[]> = {};
+	for (const job of STATIC_JOBS) {
+		const sources: SenseSource[] = [];
+		if (typeof job.darkvision === "number" && job.darkvision > 0) {
+			sources.push({
+				type: "job",
+				name: job.name,
+				sense: "darkvision",
+				range: job.darkvision,
+			});
+		}
+		for (const special of job.specialSenses ?? []) {
+			const parsed = parseSpecialSense(job.name, special);
+			if (parsed) sources.push(parsed);
+		}
+		if (sources.length > 0) {
+			out[job.name.toLowerCase().trim()] = sources;
+		}
+	}
+	return out;
+})();
 
 // ─── Compute Functions ──────────────────────────────────────
 

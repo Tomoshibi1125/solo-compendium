@@ -105,8 +105,8 @@ export function VttPixiStage({
 	showGrid,
 	isWarden,
 	effectiveVisibleLayers,
-	activeTokenId,
-	activeInitiativeTokenId,
+	activeTokenId = null,
+	activeInitiativeTokenId = null,
 	setActiveTokenId,
 	updateToken,
 	walls = [],
@@ -172,6 +172,10 @@ export function VttPixiStage({
 	// Weather state
 	const weatherEmitterRef = useRef<Emitter | null>(null);
 	const rootContainerRef = useRef<Container | null>(null);
+	// Snap-to-grid ghost overlay shown while dragging a token. Populated by
+	// the stage-init effect and consumed by pointer handlers in a separate
+	// effect, so we share it via a ref rather than nested closure scope.
+	const snapGhostLayerRef = useRef<Container | null>(null);
 
 	useEffect(() => {
 		if (!canvasHostRef.current) return;
@@ -211,9 +215,9 @@ export function VttPixiStage({
 			app.canvas.style.touchAction = "none";
 
 			canvasHostRef.current?.appendChild(app.canvas);
-			 // Signal that the app is ready so the render effect can run.
-				setAppReady(true);
-			})();
+			// Signal that the app is ready so the render effect can run.
+			setAppReady(true);
+		})();
 
 		return () => {
 			destroyed = true;
@@ -256,6 +260,9 @@ export function VttPixiStage({
 		const wallsLayer = new Container();
 		const drawings = new Container();
 		const tokenLayer = new Container();
+		const nameplateLayer = new Container(); // Always-visible token nameplates (Foundry parity)
+		const snapGhostLayer = new Container(); // Snap-to-grid ghost cell during drag
+		snapGhostLayerRef.current = snapGhostLayer;
 		const fog = new Container();
 
 		root.addChild(bg);
@@ -265,6 +272,8 @@ export function VttPixiStage({
 		root.addChild(wallsLayer);
 		root.addChild(drawings);
 		root.addChild(tokenLayer);
+		root.addChild(snapGhostLayer);
+		root.addChild(nameplateLayer);
 		root.addChild(fog);
 
 		// Expose the app + effects container so parent components can trigger particle presets
@@ -712,8 +721,23 @@ export function VttPixiStage({
 			fog.addChild(lightLayer);
 		};
 
+		const renderSnapGhost = (gx: number, gy: number) => {
+			snapGhostLayer.removeChildren();
+			const step = gridSize * zoom;
+			const g = new Graphics();
+			g.rect(gx * step, gy * step, step, step);
+			g.fill({ color: 0xfbbf24, alpha: 0.18 });
+			g.stroke({ width: 2, color: 0xfbbf24, alpha: 0.7 });
+			snapGhostLayer.addChild(g);
+		};
+
+		const clearSnapGhost = () => {
+			snapGhostLayer.removeChildren();
+		};
+
 		const renderTokens = async () => {
 			tokenLayer.removeChildren();
+			nameplateLayer.removeChildren();
 
 			const visible = tokens.filter((token) => {
 				if (!effectiveVisibleLayers[token.layer]) return false;
@@ -886,6 +910,37 @@ export function VttPixiStage({
 						container.addChild(dot);
 						dotOffsetX -= dotRadius * 2 + 2;
 					}
+				}
+
+				// ── Nameplate (always-visible token label, Foundry parity) ──────────────
+				if (!isOverlayToken) {
+					const label = new Text({
+						text: token.name,
+						style: {
+							fill: 0xf0e6ff,
+							fontSize: Math.max(10, Math.round(size * 0.22)),
+							fontWeight: "bold",
+							stroke: { color: 0x000000, width: 3 },
+							dropShadow: {
+								color: 0x000000,
+								blur: 4,
+								alpha: 0.8,
+								distance: 1,
+							},
+						},
+					});
+					label.anchor.set(0.5, 0);
+					// Position nameplate below the token
+					label.x = token.x * gridSize * zoom + size / 2;
+					label.y = token.y * gridSize * zoom + size + 2;
+					label.zIndex = token.layer * 10 + 11;
+					// Highlight nameplate if token is active initiative token
+					if (activeInitiativeTokenId === token.id) {
+						label.style.fill = 0x10b981;
+					} else if (activeTokenId === token.id) {
+						label.style.fill = 0xfbbf24;
+					}
+					nameplateLayer.addChild(label);
 				}
 
 				container.on("pointerdown", (e) => {
@@ -1111,11 +1166,23 @@ export function VttPixiStage({
 				) {
 					scrollDragRef.current = null;
 				}
-				const rect = host.getBoundingClientRect();
-				const x = e.clientX - rect.left;
-				const y = e.clientY - rect.top;
-				const gx = Math.floor(x / (gridSize * zoom));
-				const gy = Math.floor(y / (gridSize * zoom));
+				const rr = host.getBoundingClientRect();
+				const px = e.clientX - rr.left;
+				const py = e.clientY - rr.top;
+				const gx = Math.floor(px / (gridSize * zoom));
+				const gy = Math.floor(py / (gridSize * zoom));
+				// Show snap-to-grid ghost cell via the shared layer ref so both
+				// the stage-init effect and these pointer handlers agree on target.
+				const ghostLayer = snapGhostLayerRef.current;
+				if (ghostLayer) {
+					ghostLayer.removeChildren();
+					const step = gridSize * zoom;
+					const ghost = new Graphics();
+					ghost.rect(gx * step, gy * step, step, step);
+					ghost.fill({ color: 0xfbbf24, alpha: 0.18 });
+					ghost.stroke({ width: 2, color: 0xfbbf24, alpha: 0.7 });
+					ghostLayer.addChild(ghost);
+				}
 				updateToken(dragState.tokenId, { x: gx, y: gy });
 				return;
 			}
@@ -1164,6 +1231,7 @@ export function VttPixiStage({
 			const dragState = dragStateRef.current;
 			if (dragState && dragState.pointerId === e.pointerId) {
 				dragStateRef.current = null;
+				snapGhostLayerRef.current?.removeChildren();
 				onTokenDragEnd?.(dragState.tokenId);
 			}
 

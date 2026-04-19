@@ -38,21 +38,25 @@ export class AuthPage {
 
 		// Select role (this sets the role state in Login.tsx)
 		if (role === "dm") {
-			await this.page.getByRole("button", { name: /Warden/i }).click();
+			await this.page
+				.getByRole("button", { name: /Select Warden role/i })
+				.click();
 		} else {
 			await this.page
-				.getByRole("button", { name: /Player/i })
-				.first()
+				.getByRole("button", { name: /Select Ascendant role/i })
 				.click();
 		}
 
 		// Click the specific guest button
-		const buttonText = `Continue as Guest (${role === "dm" ? "Warden" : "Player"})`;
+		const buttonText = `Continue as Guest (${role === "dm" ? "Warden" : "Ascendant"})`;
 		await this.page
 			.getByRole("button", { name: buttonText, exact: true })
 			.click();
 
-		const expectedUrl = role === "dm" ? /\/dm-tools/ : /\/player-tools/;
+		const expectedUrl =
+			role === "dm"
+				? /\/warden-(protocols|directives)/
+				: /\/player-tools/;
 		await this.page.waitForURL(expectedUrl, { timeout: 15_000 });
 	}
 }

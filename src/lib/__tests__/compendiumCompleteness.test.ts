@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { staticDataProvider } from "@/data/compendium/staticDataProvider";
+import { staticDataProvider } from "@/data/compendium/providers";
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
 	!!value && typeof value === "object" && !Array.isArray(value);

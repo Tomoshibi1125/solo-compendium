@@ -57,7 +57,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { StaticCompendiumEntry } from "@/data/compendium/staticDataProvider";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers";
 import { useToast } from "@/hooks/use-toast";
 import { useJoinedCampaigns, useMyCampaigns } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
@@ -124,6 +124,7 @@ const rarityColors: Record<string, string> = {
 	uncommon: "text-accent border-accent/40",
 	rare: "text-shadow-blue border-shadow-blue/40",
 	very_rare: "text-shadow-purple border-shadow-purple/40",
+	epic: "text-shadow-purple border-shadow-purple/40 shadow-[0_0_6px_hsl(var(--shadow-purple)/0.3)]",
 	legendary:
 		"text-solar-glow border-solar-glow/40 shadow-[0_0_8px_hsl(var(--solar-glow)/0.3)]",
 };
@@ -144,7 +145,8 @@ const rarityOrder: Record<string, number> = {
 	uncommon: 2,
 	rare: 3,
 	very_rare: 4,
-	legendary: 5,
+	epic: 5,
+	legendary: 6,
 };
 
 const gateRanks = ["E", "D", "C", "B", "A", "S", "SS"];
@@ -230,7 +232,7 @@ const Compendium = () => {
 			const allEntries: CompendiumEntry[] = [];
 
 			const { staticDataProvider } = await import(
-				"@/data/compendium/staticDataProvider"
+				"@/data/compendium/providers"
 			);
 
 			// Always use static data provider for comprehensive loading

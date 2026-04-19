@@ -38,6 +38,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	sigils: "Sigils",
 	tattoos: "Tattoos",
 	deities: "Eternals",
+	pantheon: "Pantheon",
 	npcs: "NPCs",
 };
 

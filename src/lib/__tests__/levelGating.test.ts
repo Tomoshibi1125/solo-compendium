@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import {
 	buildLevelUpGatingSummary,
 	canAccessPower,
@@ -13,11 +13,18 @@ import {
 	getCantripLimit,
 	getFeaturesUnlockedAtLevel,
 	getMaxAccessiblePowerLevel,
+	getMinPathUnlockLevelForJob,
+	getStaticPathUnlockLevel,
 	isASILevel,
 	isPathUnlockLevel,
 	type PathUnlockMeta,
 	type PowerGateMeta,
 } from "@/lib/levelGating";
+import { initializeProtocolData } from "@/lib/ProtocolDataManager";
+
+beforeAll(async () => {
+	await initializeProtocolData();
+});
 
 // ---------------------------------------------------------------------------
 // Path unlock gating
@@ -383,5 +390,99 @@ describe("buildLevelUpGatingSummary", () => {
 	it("tracks max power level", () => {
 		const summary = buildLevelUpGatingSummary(5, "Mage", null, [], []);
 		expect(summary.maxPowerLevel).toBe(3);
+	});
+});
+
+// ---------------------------------------------------------------------------
+// Static path unlock helpers
+// ---------------------------------------------------------------------------
+
+describe("getStaticPathUnlockLevel", () => {
+	it("reads CompendiumPath.level (numeric)", () => {
+		// CompendiumPath shape (post-dataLoaders mapping)
+		expect(getStaticPathUnlockLevel({ level: 1 })).toBe(1);
+		expect(getStaticPathUnlockLevel({ level: 2 })).toBe(2);
+		expect(getStaticPathUnlockLevel({ level: 3 })).toBe(3);
+	});
+
+	it("reads raw paths.ts requirements.level when top-level level is absent", () => {
+		expect(getStaticPathUnlockLevel({ requirements: { level: 1 } })).toBe(1);
+		expect(getStaticPathUnlockLevel({ requirements: { level: 3 } })).toBe(3);
+	});
+
+	it("defaults to 3 when both shapes are absent", () => {
+		expect(getStaticPathUnlockLevel({})).toBe(3);
+		expect(getStaticPathUnlockLevel({ level: null })).toBe(3);
+		expect(getStaticPathUnlockLevel({ requirements: { level: null } })).toBe(3);
+	});
+
+	it("prefers top-level level over requirements.level", () => {
+		// CompendiumPath is the runtime shape — it should win
+		expect(
+			getStaticPathUnlockLevel({ level: 1, requirements: { level: 3 } }),
+		).toBe(1);
+	});
+});
+
+// ---------------------------------------------------------------------------
+// Per-job path unlock level correctness (5e-standard mapping)
+// ---------------------------------------------------------------------------
+
+describe("job path unlock levels from static data", () => {
+	// Level-1 path jobs: choose at character creation
+	const level1Jobs = ["Esper", "Herald", "Contractor"];
+	// Level-2 path jobs: choose at first level-up
+	// NOTE: Revenant is level-2 in paths.ts (early subclass timing for undead mechanics).
+	const level2Jobs = ["Mage", "Summoner", "Revenant"];
+	// Level-3 path jobs: standard 5e subclass timing
+	const level3Jobs = [
+		"Destroyer",
+		"Berserker",
+		"Assassin",
+		"Striker",
+		"Stalker",
+		"Holy Knight",
+		"Idol",
+		"Technomancer",
+	];
+
+	for (const jobName of level1Jobs) {
+		it(`${jobName} has minimum path unlock level of 1`, () => {
+			const minLevel = getMinPathUnlockLevelForJob(jobName);
+			expect(minLevel).toBe(1);
+		});
+	}
+
+	for (const jobName of level2Jobs) {
+		it(`${jobName} has minimum path unlock level of 2`, () => {
+			const minLevel = getMinPathUnlockLevelForJob(jobName);
+			expect(minLevel).toBe(2);
+		});
+	}
+
+	for (const jobName of level3Jobs) {
+		it(`${jobName} has minimum path unlock level of 3`, () => {
+			const minLevel = getMinPathUnlockLevelForJob(jobName);
+			expect(minLevel).toBe(3);
+		});
+	}
+
+	it("every job in the 14-job catalog has at least 1 path in static data", () => {
+		const allJobs = [...level1Jobs, ...level2Jobs, ...level3Jobs];
+		for (const jobName of allJobs) {
+			const minLevel = getMinPathUnlockLevelForJob(jobName);
+			expect(
+				minLevel,
+				`Expected ${jobName} to have at least one path in static data`,
+			).not.toBeNull();
+		}
+	});
+
+	it("spot-checks: Destroyer=3, Berserker=3, Herald=1, Contractor=1, Revenant=2", () => {
+		expect(getMinPathUnlockLevelForJob("Destroyer")).toBe(3);
+		expect(getMinPathUnlockLevelForJob("Berserker")).toBe(3);
+		expect(getMinPathUnlockLevelForJob("Herald")).toBe(1);
+		expect(getMinPathUnlockLevelForJob("Contractor")).toBe(1);
+		expect(getMinPathUnlockLevelForJob("Revenant")).toBe(2);
 	});
 });

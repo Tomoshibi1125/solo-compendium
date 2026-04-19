@@ -24,6 +24,7 @@ import {
 } from "@/hooks/useCharacterTemplates";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
+import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
@@ -33,15 +34,13 @@ import {
 	addLevel1Features,
 	addStartingEquipment,
 	addStartingPowers,
+	applyJobAwakeningTraitsToCharacter,
 	getJobASI,
 } from "@/lib/characterCreation";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
-import {
-	getStaticBackgroundsAll,
-	getStaticJobs,
-	getStaticPaths,
-} from "@/lib/ProtocolDataManager";
+import { getStaticPathUnlockLevel } from "@/lib/levelGating";
+import { getStaticBackgroundsAll } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import type {
 	Background,
@@ -53,6 +52,18 @@ import type {
 import type { AbilityScore } from "@/types/core-rules";
 
 type DbAbilityScore = Database["public"]["Enums"]["ability_score"];
+
+type StaticPathSource = {
+	id: string;
+	name: string;
+	description: string;
+	jobId?: string;
+	jobName?: string;
+	requirements?: {
+		level?: number | null;
+	};
+	source?: string;
+};
 
 type Step =
 	| "concept"
@@ -76,6 +87,12 @@ const ABILITY_COSTS: Record<number, number> = {
 
 const POINT_BUY_TOTAL = 27;
 
+const normalizeCompendiumKey = (value?: string | null) =>
+	value
+		?.trim()
+		.toLowerCase()
+		.replace(/[-\s]+/g, "") ?? "";
+
 const CharacterNew = () => {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -85,6 +102,7 @@ const CharacterNew = () => {
 	const createCharacterMutation = useCreateCharacter();
 
 	const { data: templates } = useCharacterTemplates();
+	const { data: staticJobCatalog = [] } = useStaticJobs();
 	const ascendantTools = useAscendantTools();
 
 	const [currentStep, setCurrentStep] = useState<Step>("concept");
@@ -137,11 +155,14 @@ const CharacterNew = () => {
 	};
 
 	const { data: jobs = [] } = useQuery({
-		queryKey: ["jobs"],
+		queryKey: ["jobs", staticJobCatalog.length],
 		queryFn: async () => {
-			const staticJobsData: Job[] = (
-				getStaticJobs() as unknown as StaticJob[]
-			).map((job) => ({
+			const staticJobSource =
+				staticJobCatalog.length > 0
+					? staticJobCatalog
+					: ((await import("@/data/compendium/jobs"))
+							.jobs as unknown as StaticJob[]);
+			const staticJobsData = staticJobSource.map((job) => ({
 				id: job.id,
 				name: job.name,
 				display_name: job.name,
@@ -182,7 +203,7 @@ const CharacterNew = () => {
 				theme_tags: [],
 				created_at: new Date().toISOString(),
 				updated_at: new Date().toISOString(),
-			}));
+			})) as unknown as Job[];
 
 			try {
 				const { data: dbJobs, error } = await supabase
@@ -190,11 +211,54 @@ const CharacterNew = () => {
 					.select("*")
 					.order("name");
 
-				if (!error && dbJobs && dbJobs.length > 0) {
-					return await filterRowsBySourcebookAccess(
+				if (!error && dbJobs) {
+					const accessibleDbJobs = await filterRowsBySourcebookAccess(
 						dbJobs as Job[],
 						(job) => job.source_book,
 					);
+					const staticJobNames = new Set(
+						staticJobsData.map((job) => normalizeCompendiumKey(job.name)),
+					);
+					const dbJobsByName = new Map(
+						accessibleDbJobs.map((job) => [
+							normalizeCompendiumKey(job.name),
+							job,
+						]),
+					);
+
+					return [
+						...staticJobsData.map((staticJob) => {
+							const dbJob = dbJobsByName.get(
+								normalizeCompendiumKey(staticJob.name),
+							);
+							if (!dbJob) return staticJob;
+
+							return {
+								...staticJob,
+								id: dbJob.id || staticJob.id,
+								display_name:
+									dbJob.display_name ||
+									staticJob.display_name ||
+									staticJob.name,
+								description: dbJob.description || staticJob.description,
+								source_book: dbJob.source_book || staticJob.source_book,
+								aliases: dbJob.aliases ?? staticJob.aliases,
+								flavor_text: dbJob.flavor_text ?? staticJob.flavor_text,
+								generated_reason:
+									dbJob.generated_reason ?? staticJob.generated_reason,
+								image_url: dbJob.image_url ?? staticJob.image_url,
+								tags: dbJob.tags ?? staticJob.tags,
+								license_note: dbJob.license_note ?? staticJob.license_note,
+								source_kind: dbJob.source_kind ?? staticJob.source_kind,
+								source_name: dbJob.source_name ?? staticJob.source_name,
+								created_at: dbJob.created_at ?? staticJob.created_at,
+								updated_at: dbJob.updated_at ?? staticJob.updated_at,
+							};
+						}),
+						...accessibleDbJobs.filter(
+							(job) => !staticJobNames.has(normalizeCompendiumKey(job.name)),
+						),
+					];
 				}
 			} catch (err) {
 				console.warn("Database jobs unavailable, using static:", err);
@@ -223,10 +287,8 @@ const CharacterNew = () => {
 		if (!selectedJob) return undefined;
 		const jobName = jobs.find((j) => j.id === selectedJob)?.name;
 		if (!jobName) return undefined;
-		return (getStaticJobs() as unknown as StaticJob[]).find(
-			(j) => j.name === jobName,
-		);
-	}, [selectedJob, jobs]);
+		return staticJobCatalog.find((j) => j.name === jobName);
+	}, [selectedJob, jobs, staticJobCatalog]);
 
 	const jobAwakeningAtCreation = useMemo(() => {
 		if (!staticJobData?.awakeningFeatures) return [];
@@ -243,63 +305,102 @@ const CharacterNew = () => {
 		queryFn: async () => {
 			if (!selectedJob) return [];
 
-			// Build static fallback from local paths.ts, filtered to the selected job
-			const jobName = jobs.find((j) => j.id === selectedJob)?.name ?? "";
-			const staticPaths = getStaticPaths()
-				.filter(
-					(p) =>
-						p.job_id === selectedJob ||
-						(p as unknown as { jobId?: string }).jobId === selectedJob ||
-						(p as unknown as { jobName?: string }).jobName === jobName,
-				)
-				.map((p) => ({
-					...p,
-					display_name: p.name,
-					job_id: selectedJob,
-					path_level: (p as unknown as { level?: number }).level ?? 3,
-					source_book:
-						(p as unknown as { source?: string }).source ??
-						"Rift Ascendant Canon",
-				})) as Path[];
+			const jobName = jobs.find((job) => job.id === selectedJob)?.name ?? "";
+			const selectedJobKey = normalizeCompendiumKey(jobName);
+			const staticPathSource = ((await import("@/data/compendium/paths"))
+				.paths ?? []) as unknown as StaticPathSource[];
+			const staticPaths = staticPathSource
+				.filter((path) => {
+					const pathKeys = [path.jobId, path.jobName]
+						.map((value) => normalizeCompendiumKey(value))
+						.filter(Boolean);
+					return pathKeys.includes(selectedJobKey);
+				})
+				.map((path) => ({
+					...(path as unknown as Path),
+					display_name: path.name,
+					job_id: path.jobId ?? selectedJob,
+					path_level: getStaticPathUnlockLevel(path),
+					source_book: path.source ?? "Rift Ascendant Canon",
+				})) as unknown as Path[];
 
 			try {
-				const { data, error } = await supabase
-					.from("compendium_job_paths")
-					.select("*")
-					.eq("job_id", selectedJob)
-					.order("name");
+				const { data: dbJob } = await supabase
+					.from("compendium_jobs")
+					.select("id")
+					.eq("name", jobName)
+					.maybeSingle();
 
-				if (!error && data && data.length > 0) {
-					return filterRowsBySourcebookAccess(
-						data as Path[],
-						(path) => path.source_book,
-					);
+				if (dbJob?.id) {
+					const { data, error } = await supabase
+						.from("compendium_job_paths")
+						.select("*")
+						.eq("job_id", dbJob.id)
+						.order("name");
+
+					if (!error && data) {
+						const accessibleDbPaths = await filterRowsBySourcebookAccess(
+							data as Path[],
+							(path) => path.source_book,
+						);
+						const staticPathNames = new Set(
+							staticPaths.map((path) => normalizeCompendiumKey(path.name)),
+						);
+						const dbPathsByName = new Map(
+							accessibleDbPaths.map((path) => [
+								normalizeCompendiumKey(path.name),
+								path,
+							]),
+						);
+
+						return [
+							...staticPaths.map((staticPath) => {
+								const dbPath = dbPathsByName.get(
+									normalizeCompendiumKey(staticPath.name),
+								);
+								if (!dbPath) return staticPath;
+
+								return {
+									...staticPath,
+									id: dbPath.id || staticPath.id,
+									display_name:
+										dbPath.display_name ||
+										staticPath.display_name ||
+										staticPath.name,
+									description: dbPath.description || staticPath.description,
+									source_book: dbPath.source_book || staticPath.source_book,
+								};
+							}),
+							...accessibleDbPaths.filter(
+								(path) =>
+									!staticPathNames.has(normalizeCompendiumKey(path.name)),
+							),
+						];
+					}
 				}
 			} catch {
-				/* fall through to static */
+				return staticPaths;
 			}
 
-			// Fallback: use static paths.ts data
 			return staticPaths;
 		},
 		enabled: !!selectedJob,
 	});
 
-	const pathUnlockLevel = useMemo(() => {
-		const levels = paths
-			.map((p) => (p as { path_level?: number }).path_level ?? null)
-			.filter((l): l is number => l !== null);
-		if (levels.length === 0) return null;
-		return Math.min(...levels);
+	const pathsAvailableAtCreation = useMemo(() => {
+		return paths.filter(
+			(path) =>
+				((path as { path_level?: number | null }).path_level ??
+					getStaticPathUnlockLevel(
+						path as unknown as {
+							level?: number | null;
+							requirements?: { level?: number | null } | null;
+						},
+					)) === 1,
+		);
 	}, [paths]);
 
-	const pathsAvailableAtCreation = useMemo(() => {
-		if (pathUnlockLevel !== 1) return [];
-		return paths;
-	}, [paths, pathUnlockLevel]);
-
-	const isPathRequiredAtCreation =
-		pathUnlockLevel === 1 && pathsAvailableAtCreation.length > 0;
+	const isPathRequiredAtCreation = pathsAvailableAtCreation.length > 0;
 
 	const { data: backgrounds = [] } = useQuery({
 		queryKey: ["backgrounds"],
@@ -311,14 +412,14 @@ const CharacterNew = () => {
 				source_book:
 					(b as unknown as { source?: string }).source ??
 					"Rift Ascendant Canon",
-			})) as Background[];
+			})) as unknown as Background[];
 
 			try {
 				const { data, error } = await supabase
 					.from("compendium_backgrounds")
 					.select("*")
 					.order("name");
-				if (!error && data && data.length > 0) {
+				if (!error && data) {
 					return filterRowsBySourcebookAccess(
 						data as Background[],
 						(background) => background.source_book,
@@ -375,7 +476,7 @@ const CharacterNew = () => {
 					source_name: "User Created",
 					tags: hb.tags || [],
 					theme_tags: [],
-				}) as Job,
+				}) as unknown as Job,
 		),
 	];
 
@@ -396,7 +497,7 @@ const CharacterNew = () => {
 						display_name: hb.name,
 						description: hb.description,
 						source_book: hb.source_book,
-					}) as Background,
+					}) as unknown as Background,
 			),
 	];
 
@@ -409,7 +510,12 @@ const CharacterNew = () => {
 				: null;
 		const combinedJobData =
 			jobData || staticJobData ? { ...jobData, ...staticJobData } : null;
-		return calculateTotalChoices(combinedJobData, selectedPathRow, [], 1);
+		return calculateTotalChoices(
+			combinedJobData as Parameters<typeof calculateTotalChoices>[0],
+			selectedPathRow,
+			[],
+			1,
+		);
 	}, [jobData, staticJobData, selectedPath, pathsAvailableAtCreation]);
 
 	const handleApplyTemplate = (
@@ -522,11 +628,14 @@ const CharacterNew = () => {
 			if (!dbJob || !dbBg) throw new Error("Job or Background missing");
 
 			// Ensure we use the enriched static data for mapping
-			const job = (getStaticJobs() as unknown as StaticJob[]).find(
-				(j: StaticJob) => j.name === dbJob.name,
-			);
+			const staticJobSource =
+				staticJobCatalog.length > 0
+					? staticJobCatalog
+					: ((await import("@/data/compendium/jobs"))
+							.jobs as unknown as StaticJob[]);
+			const job = staticJobSource.find((j: StaticJob) => j.name === dbJob.name);
 			const bgData = (
-				getStaticBackgrounds() as unknown as StaticBackground[]
+				getStaticBackgroundsAll() as unknown as StaticBackground[]
 			).find((b: StaticBackground) => b.name === dbBg.name);
 
 			if (!job || !bgData) throw new Error("Enhanced data missing");
@@ -605,6 +714,13 @@ const CharacterNew = () => {
 			);
 			await addStartingPowers(character.id, job);
 			await addJobAwakeningBenefitsForLevel(character.id, job, 1);
+			// Rift Ascendant: Jobs serve as both race and class, so their innate senses,
+			// resistances, and immunities must flow onto the character row at creation.
+			await applyJobAwakeningTraitsToCharacter(
+				character.id,
+				job,
+				selectedLanguages,
+			);
 
 			ascendantTools
 				.trackCustomFeatureUsage(
