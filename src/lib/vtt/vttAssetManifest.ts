@@ -1202,6 +1202,25 @@ export const MUSIC_ASSETS: VTTAsset[] = [
 		format: "ogg",
 		attribution: "yd / CC0",
 	},
+	// ── Tracks present in /public/audio/music/ that were previously unregistered ──
+	{
+		id: "music-epic-combat",
+		name: "Epic Combat",
+		category: "music",
+		path: "/audio/music/epic-combat.ogg",
+		tags: ["combat", "battle", "epic", "action"],
+		format: "ogg",
+		attribution: "CC0",
+	},
+	{
+		id: "music-tavern-ambience",
+		name: "Tavern Ambience",
+		category: "music",
+		path: "/audio/music/tavern-ambience.ogg",
+		tags: ["tavern", "social", "ambient", "crowd"],
+		format: "ogg",
+		attribution: "CC0",
+	},
 
 	// ── Shadow of the Regent Campaign Audio (CC0 / SoundHelix) ──
 	{
