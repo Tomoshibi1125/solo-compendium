@@ -2924,12 +2924,14 @@ export async function addStartingEquipment(
 		}
 	}
 
+	const backgroundEquipment =
+		background?.starting_equipment && background.starting_equipment.length > 0
+			? background.starting_equipment
+			: background?.equipment;
+
 	// Add background starting equipment (DB field)
-	if (
-		background?.starting_equipment &&
-		background.starting_equipment.length > 0
-	) {
-		const equipmentItems = background.starting_equipment;
+	if (backgroundEquipment && backgroundEquipment.length > 0) {
+		const equipmentItems = backgroundEquipment;
 
 		for (const itemName of equipmentItems) {
 			const { data: equipment } = await supabase

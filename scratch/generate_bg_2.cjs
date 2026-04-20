@@ -1,36 +1,20 @@
-import type { StaticBackground } from "@/types/character";
+const fs = require('fs');
 
-export const expandedBackgrounds: StaticBackground[] = [
+const backgrounds = [
   {
-    "id": "b-31",
-    "name": "Paramedic",
-    "type": "background",
-    "rank": "C",
-    "description": "You were a first responder, used to rushing into danger to save lives. When the gates opened, the casualties skyrocketed. Your awakening allowed you to heal wounds that modern medicine couldn't touch.",
-    "skill_proficiencies": [
-      "Medicine",
-      "Athletics"
-    ],
-    "tool_proficiencies": [
-      "Vehicles (Land)",
-      "Herbalism Kit"
-    ],
-    "languages": [],
-    "equipment": [
-      "A fully stocked trauma kit",
-      "A high-visibility jacket",
-      "A radio scanner",
-      "A flashlight",
-      "A set of scrubs"
-    ],
-    "starting_credits": 600,
-    "feature_name": "Triage Veteran",
-    "feature_description": "You can instantly assess the severity of any creature's wounds (current HP percentage) and the exact nature of any disease or poison afflicting them. Medical personnel and hospitals will often grant you free lodging and basic supplies.",
-    "features": [{
-      "name": "Triage Veteran",
-      "description": "You can instantly assess the severity of any creature's wounds (current HP percentage) and the exact nature of any disease or poison afflicting them. Medical personnel and hospitals will often grant you free lodging and basic supplies."
-    }],
-    "personality_traits": [
+    id: "b-31",
+    name: "Paramedic",
+    type: "background",
+    rank: "C",
+    description: "You were a first responder, used to rushing into danger to save lives. When the gates opened, the casualties skyrocketed. Your awakening allowed you to heal wounds that modern medicine couldn't touch.",
+    skill_proficiencies: ["Medicine", "Athletics"],
+    tool_proficiencies: ["Vehicles (Land)", "Herbalism Kit"],
+    languages: [],
+    equipment: ["A fully stocked trauma kit", "A high-visibility jacket", "A radio scanner", "A flashlight", "A set of scrubs"],
+    starting_credits: 600,
+    feature_name: "Triage Veteran",
+    feature_description: "You can instantly assess the severity of any creature's wounds (current HP percentage) and the exact nature of any disease or poison afflicting them. Medical personnel and hospitals will often grant you free lodging and basic supplies.",
+    personality_traits: [
       "I am completely desensitized to blood and gore.",
       "I speak in a calm, soothing voice during emergencies.",
       "I drink copious amounts of black coffee.",
@@ -38,7 +22,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am incredibly organized and methodical under pressure.",
       "I scold people for taking unnecessary risks."
     ],
-    "ideals": [
+    ideals: [
       "Life. Every life is worth saving, no matter the cost. (Good)",
       "Duty. I swore an oath to help the injured. (Lawful)",
       "Adrenaline. I am addicted to the rush of saving a life on the brink. (Chaotic)",
@@ -46,7 +30,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Profit. Healing magic is expensive, and I expect to be paid. (Evil)",
       "Compassion. The world is cruel; I will be kind. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I lost a patient I should have been able to save; it haunts me.",
       "I am fiercely protective of my former ambulance partner.",
       "I owe my awakening to a Sovereign who saved me from a dying patient.",
@@ -54,7 +38,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I carry the stethoscope of my mentor.",
       "I am deeply loyal to the city hospital where I worked."
     ],
-    "flaws": [
+    flaws: [
       "I suffer from severe burnout and compassion fatigue.",
       "I will risk the entire raid to save one injured teammate.",
       "I am arrogant about my medical knowledge.",
@@ -62,40 +46,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I have a dangerous addiction to medical stimulants.",
       "I am deeply cynical about 'heroic' Hunters who cause collateral damage."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-32",
-    "name": "Office Worker",
-    "type": "background",
-    "rank": "D",
-    "description": "You were a corporate drone, living a life of spreadsheets, endless meetings, and lukewarm coffee. Your awakening was the most exciting thing to ever happen to you—or the most terrifying interruption to your routine.",
-    "skill_proficiencies": [
-      "History",
-      "Persuasion"
-    ],
-    "tool_proficiencies": [
-      "Calligrapher's Supplies",
-      "Forgery Kit"
-    ],
-    "languages": [
-      "One additional language"
-    ],
-    "equipment": [
-      "A slightly crumpled business suit",
-      "A briefcase",
-      "A company ID badge",
-      "A thermos of lukewarm coffee",
-      "A stress ball"
-    ],
-    "starting_credits": 800,
-    "feature_name": "Corporate Invisible",
-    "feature_description": "You blend in perfectly in any office, bureaucratic, or corporate setting. You can easily pass as an employee to gain access to restricted areas, and you excel at finding specific files or information in massive archives.",
-    "features": [{
-      "name": "Corporate Invisible",
-      "description": "You blend in perfectly in any office, bureaucratic, or corporate setting. You can easily pass as an employee to gain access to restricted areas, and you excel at finding specific files or information in massive archives."
-    }],
-    "personality_traits": [
+    id: "b-32",
+    name: "Office Worker",
+    type: "background",
+    rank: "D",
+    description: "You were a corporate drone, living a life of spreadsheets, endless meetings, and lukewarm coffee. Your awakening was the most exciting thing to ever happen to you—or the most terrifying interruption to your routine.",
+    skill_proficiencies: ["History", "Persuasion"],
+    tool_proficiencies: ["Calligrapher's Supplies", "Forgery Kit"],
+    languages: ["One additional language"],
+    equipment: ["A slightly crumpled business suit", "A briefcase", "A company ID badge", "A thermos of lukewarm coffee", "A stress ball"],
+    starting_credits: 800,
+    feature_name: "Corporate Invisible",
+    feature_description: "You blend in perfectly in any office, bureaucratic, or corporate setting. You can easily pass as an employee to gain access to restricted areas, and you excel at finding specific files or information in massive archives.",
+    personality_traits: [
       "I speak in corporate buzzwords (synergy, bandwidth).",
       "I am obsessively punctual.",
       "I panic if my inbox has unread messages.",
@@ -103,7 +69,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I find comfort in spreadsheets and organization.",
       "I am perpetually exhausted."
     ],
-    "ideals": [
+    ideals: [
       "Stability. A steady paycheck and a quiet life is all I want. (Lawful)",
       "Escape. I will never go back to a cubicle again. (Chaotic)",
       "Climbing. I will use the rifts to become the CEO. (Evil)",
@@ -111,7 +77,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Pragmatism. Work is work, whether it's filing taxes or killing goblins. (Neutral)",
       "Ambition. I will be the best at whatever job I have. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am deeply loyal to my former coworkers who survived a gate break.",
       "I am trying to pay off my massive student loans.",
       "I owe everything to the manager who fired me, forcing me to awaken.",
@@ -119,7 +85,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am secretly embezzling from the mega-guild I work for.",
       "I want to protect the mundane world from the chaos of the rifts."
     ],
-    "flaws": [
+    flaws: [
       "I am a severe coward in the face of physical violence.",
       "I am a stickler for rules and hate improvising.",
       "I will throw my teammates under the bus to avoid blame.",
@@ -127,38 +93,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am easily intimidated by authority figures.",
       "I complain constantly about the working conditions in the dungeon."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-33",
-    "name": "Construction Worker",
-    "type": "background",
-    "rank": "C",
-    "description": "You built the cities, and when the gates destroyed them, you rebuilt them. You are used to hard manual labor, dangerous heights, and heavy machinery. Your awakening just made you hit harder.",
-    "skill_proficiencies": [
-      "Athletics",
-      "Perception"
-    ],
-    "tool_proficiencies": [
-      "Mason's Tools",
-      "Carpenter's Tools"
-    ],
-    "languages": [],
-    "equipment": [
-      "A hard hat",
-      "Steel-toed boots",
-      "A heavy sledgehammer or wrench",
-      "A high-visibility vest",
-      "A lunchbox"
-    ],
-    "starting_credits": 500,
-    "feature_name": "Structural Analysis",
-    "feature_description": "You can instantly identify the weak points in any physical structure (buildings, bridges, dungeon walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.",
-    "features": [{
-      "name": "Structural Analysis",
-      "description": "You can instantly identify the weak points in any physical structure (buildings, bridges, dungeon walls). You have advantage on checks made to break objects or navigate collapsing ruins safely."
-    }],
-    "personality_traits": [
+    id: "b-33",
+    name: "Construction Worker",
+    type: "background",
+    rank: "C",
+    description: "You built the cities, and when the gates destroyed them, you rebuilt them. You are used to hard manual labor, dangerous heights, and heavy machinery. Your awakening just made you hit harder.",
+    skill_proficiencies: ["Athletics", "Perception"],
+    tool_proficiencies: ["Mason's Tools", "Carpenter's Tools"],
+    languages: [],
+    equipment: ["A hard hat", "Steel-toed boots", "A heavy sledgehammer or wrench", "A high-visibility vest", "A lunchbox"],
+    starting_credits: 500,
+    feature_name: "Structural Analysis",
+    feature_description: "You can instantly identify the weak points in any physical structure (buildings, bridges, dungeon walls). You have advantage on checks made to break objects or navigate collapsing ruins safely.",
+    personality_traits: [
       "I speak loudly, used to talking over heavy machinery.",
       "I am blunt and straightforward.",
       "I constantly assess the structural integrity of rooms I enter.",
@@ -166,7 +116,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am protective of my tools and equipment.",
       "I distrust people who have soft hands."
     ],
-    "ideals": [
+    ideals: [
       "Hard Work. The only thing that matters is the sweat on your brow. (Neutral)",
       "Solidarity. The union protects its own; Hunters should too. (Lawful)",
       "Rebuilding. I will restore the cities the monsters destroyed. (Good)",
@@ -174,7 +124,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Profit. Hazard pay is hazard pay. (Evil)",
       "Foundation. A strong team needs a strong foundation. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am fiercely loyal to my old construction crew.",
       "I am trying to rebuild my family home that was destroyed by a gate.",
       "I carry a tool that belonged to my late father.",
@@ -182,7 +132,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am angry at the mega-guild that refused to pay my crew for a job.",
       "I want to build an impenetrable fortress to protect my loved ones."
     ],
-    "flaws": [
+    flaws: [
       "I am incredibly stubborn and refuse to back down from an argument.",
       "I struggle with complex academic or magical concepts.",
       "I am prone to settling disputes with my fists.",
@@ -190,40 +140,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am reckless and ignore safety protocols if it slows me down.",
       "I drink heavily to deal with the physical pain of my life."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-34",
-    "name": "Journalist",
-    "type": "background",
-    "rank": "D",
-    "description": "You are an investigative reporter, a blogger, or a war correspondent. You risk your life to get the truth about the Hunter Association, the mega-guilds, and the origin of the gates.",
-    "skill_proficiencies": [
-      "Investigation",
-      "Insight"
-    ],
-    "tool_proficiencies": [
-      "Calligrapher's Supplies",
-      "Forgery Kit"
-    ],
-    "languages": [
-      "One additional language"
-    ],
-    "equipment": [
-      "A digital voice recorder",
-      "A high-end camera",
-      "A press pass",
-      "A notebook filled with shorthand",
-      "A cup of black coffee"
-    ],
-    "starting_credits": 700,
-    "feature_name": "Press Credentials",
-    "feature_description": "You can leverage your press pass to gain entry to restricted Association press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.",
-    "features": [{
-      "name": "Press Credentials",
-      "description": "You can leverage your press pass to gain entry to restricted Association press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR."
-    }],
-    "personality_traits": [
+    id: "b-34",
+    name: "Journalist",
+    type: "background",
+    rank: "D",
+    description: "You are an investigative reporter, a blogger, or a war correspondent. You risk your life to get the truth about the Hunter Association, the mega-guilds, and the origin of the gates.",
+    skill_proficiencies: ["Investigation", "Insight"],
+    tool_proficiencies: ["Calligrapher's Supplies", "Forgery Kit"],
+    languages: ["One additional language"],
+    equipment: ["A digital voice recorder", "A high-end camera", "A press pass", "A notebook filled with shorthand", "A cup of black coffee"],
+    starting_credits: 700,
+    feature_name: "Press Credentials",
+    feature_description: "You can leverage your press pass to gain entry to restricted Association press conferences, guild headquarters lobbies, and crime scenes. People are more likely to answer your questions if they think it will get them good PR.",
+    personality_traits: [
       "I ask probing, uncomfortable questions.",
       "I am deeply skeptical of any official statement.",
       "I document everything.",
@@ -231,7 +163,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I speak in headlines and soundbites.",
       "I am highly observant of minor inconsistencies."
     ],
-    "ideals": [
+    ideals: [
       "Truth. The public has a right to know the dark secrets of the gates. (Good)",
       "Exposure. I will tear down the corrupt guilds with my pen. (Chaotic)",
       "Fame. I want to win a Pulitzer for my reporting. (Neutral)",
@@ -239,7 +171,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Integrity. I will never compromise my sources or my reporting. (Lawful)",
       "Curiosity. I simply must know why the rifts opened. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am protecting a whistleblower from a major mega-guild.",
       "I am trying to solve the disappearance of a fellow journalist.",
       "I owe my career to a grizzled editor who believed in me.",
@@ -247,7 +179,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am deeply loyal to my publication.",
       "I want to clear the name of an innocent Hunter framed by the Association."
     ],
-    "flaws": [
+    flaws: [
       "I will endanger my team to get a good story.",
       "I am incredibly nosy and violate people's privacy.",
       "I am arrogant and believe I am smarter than the people I interview.",
@@ -255,40 +187,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I will betray a confidence if the story is big enough.",
       "I am physically cowardly in actual combat."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-35",
-    "name": "Street Vendor",
-    "type": "background",
-    "rank": "D",
-    "description": "You ran a food stall, a convenience store, or sold cheap trinkets near a popular gate site. You know the local Hunters, the guild rivalries, and the ebb and flow of the awakened economy better than anyone.",
-    "skill_proficiencies": [
-      "Persuasion",
-      "Insight"
-    ],
-    "tool_proficiencies": [
-      "Cook's Utensils",
-      "Brewer's Supplies"
-    ],
-    "languages": [
-      "One additional language"
-    ],
-    "equipment": [
-      "A portable cooking set",
-      "A fanny pack of loose change",
-      "Comfortable walking shoes",
-      "A stash of cheap snacks",
-      "A token from a famous Hunter"
-    ],
-    "starting_credits": 300,
-    "feature_name": "Street Gossip",
-    "feature_description": "You know the word on the street. By spending an hour in a local market or near a gate entrance, you can discover local guild rivalries, the general rank of nearby monsters, and the location of black-market fences.",
-    "features": [{
-      "name": "Street Gossip",
-      "description": "You know the word on the street. By spending an hour in a local market or near a gate entrance, you can discover local guild rivalries, the general rank of nearby monsters, and the location of black-market fences."
-    }],
-    "personality_traits": [
+    id: "b-35",
+    name: "Street Vendor",
+    type: "background",
+    rank: "D",
+    description: "You ran a food stall, a convenience store, or sold cheap trinkets near a popular gate site. You know the local Hunters, the guild rivalries, and the ebb and flow of the awakened economy better than anyone.",
+    skill_proficiencies: ["Persuasion", "Insight"],
+    tool_proficiencies: ["Cook's Utensils", "Brewer's Supplies"],
+    languages: ["One additional language"],
+    equipment: ["A portable cooking set", "A fanny pack of loose change", "Comfortable walking shoes", "A stash of cheap snacks", "A token from a famous Hunter"],
+    starting_credits: 300,
+    feature_name: "Street Gossip",
+    feature_description: "You know the word on the street. By spending an hour in a local market or near a gate entrance, you can discover local guild rivalries, the general rank of nearby monsters, and the location of black-market fences.",
+    personality_traits: [
       "I try to sell something to everyone I meet.",
       "I am incredibly friendly and approachable.",
       "I haggle over everything, even non-monetary things.",
@@ -296,7 +210,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am highly observant of people's wealth and status.",
       "I am pragmatic and deeply grounded in reality."
     ],
-    "ideals": [
+    ideals: [
       "Community. I feed the neighborhood, and the neighborhood feeds me. (Good)",
       "Profit. A coin is a coin, no matter whose pocket it comes from. (Neutral)",
       "Survival. Keep your head down and your prices fair. (Lawful)",
@@ -304,7 +218,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Freedom. I am my own boss, answering to no mega-guild. (Chaotic)",
       "Hard Work. Success comes to those who hustle. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am fiercely protective of my small neighborhood.",
       "I owe a debt to a Hunter who protected my stall from thugs.",
       "I am saving up to buy a real restaurant in the safe zone.",
@@ -312,7 +226,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am hiding from a local gang that demanded protection money.",
       "I want to provide for my extended family who rely on me."
     ],
-    "flaws": [
+    flaws: [
       "I am incredibly cheap and refuse to spend money.",
       "I am a gossip who cannot keep a secret.",
       "I will scam naive or wealthy people without hesitation.",
@@ -320,38 +234,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am overly deferential to high-ranking Hunters.",
       "I judge people entirely by how much they tip."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-36",
-    "name": "Security Guard",
-    "type": "background",
-    "rank": "D",
-    "description": "You were a mall cop, a night watchman, or corporate security. You are used to boredom punctuated by moments of sheer terror. Your awakening gave you the power to actually fight back.",
-    "skill_proficiencies": [
-      "Perception",
-      "Investigation"
-    ],
-    "tool_proficiencies": [
-      "Vehicles (Land)",
-      "Thieves' Tools"
-    ],
-    "languages": [],
-    "equipment": [
-      "A heavy flashlight",
-      "A walkie-talkie",
-      "A security uniform",
-      "A keyring",
-      "A thermos"
-    ],
-    "starting_credits": 400,
-    "feature_name": "Watchman's Eye",
-    "feature_description": "You have an instinct for security layouts. You can instantly locate cameras, alarm systems, and guard patrol routes in any modern building. You also excel at staying awake during long watches.",
-    "features": [{
-      "name": "Watchman's Eye",
-      "description": "You have an instinct for security layouts. You can instantly locate cameras, alarm systems, and guard patrol routes in any modern building. You also excel at staying awake during long watches."
-    }],
-    "personality_traits": [
+    id: "b-36",
+    name: "Security Guard",
+    type: "background",
+    rank: "D",
+    description: "You were a mall cop, a night watchman, or corporate security. You are used to boredom punctuated by moments of sheer terror. Your awakening gave you the power to actually fight back.",
+    skill_proficiencies: ["Perception", "Investigation"],
+    tool_proficiencies: ["Vehicles (Land)", "Thieves' Tools"],
+    languages: [],
+    equipment: ["A heavy flashlight", "A walkie-talkie", "A security uniform", "A keyring", "A thermos"],
+    starting_credits: 400,
+    feature_name: "Watchman's Eye",
+    feature_description: "You have an instinct for security layouts. You can instantly locate cameras, alarm systems, and guard patrol routes in any modern building. You also excel at staying awake during long watches.",
+    personality_traits: [
       "I am highly observant of exits and blind spots.",
       "I am cynical and expect people to cause trouble.",
       "I drink copious amounts of coffee to stay awake.",
@@ -359,7 +257,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am highly protective of the property I am guarding.",
       "I am deeply bored most of the time."
     ],
-    "ideals": [
+    ideals: [
       "Duty. I am paid to watch, so I watch. (Lawful)",
       "Protection. I keep the bad guys out so the good guys can sleep. (Good)",
       "Apathy. I do the bare minimum to not get fired. (Neutral)",
@@ -367,7 +265,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Vigilance. The threat is always there, waiting for you to blink. (Any)",
       "Rebellion. Rules are meant to be broken when no one is watching. (Chaotic)"
     ],
-    "bonds": [
+    bonds: [
       "I failed to stop a break-in that cost lives; I seek redemption.",
       "I am fiercely loyal to the small business owner I guard.",
       "I am trying to provide for my family on a meager salary.",
@@ -375,7 +273,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I carry the badge of my father, who was a real cop.",
       "I am secretly investigating the corporation I work for."
     ],
-    "flaws": [
+    flaws: [
       "I am incredibly lazy and try to avoid actual work.",
       "I am easily bribed to look the other way.",
       "I freeze when faced with overwhelming danger.",
@@ -383,38 +281,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I suffer from severe insomnia.",
       "I harbor a deep resentment for people with actual authority."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-37",
-    "name": "Delivery Driver",
-    "type": "background",
-    "rank": "D",
-    "description": "You delivered packages, food, or illicit goods across the city. You know every shortcut, every back alley, and how to avoid traffic—and now, how to avoid roaming monsters.",
-    "skill_proficiencies": [
-      "Survival",
-      "Acrobatics"
-    ],
-    "tool_proficiencies": [
-      "Vehicles (Land)",
-      "Navigators Tools"
-    ],
-    "languages": [],
-    "equipment": [
-      "A sturdy courier bag",
-      "A high-end GPS smartphone",
-      "A helmet or cap",
-      "Comfortable running shoes",
-      "A receipt book"
-    ],
-    "starting_credits": 400,
-    "feature_name": "Urban Navigator",
-    "feature_description": "You know the layout of your home city perfectly. You can navigate through back alleys, rooftops, and subway tunnels to travel twice as fast through urban environments, bypassing traffic and blockades.",
-    "features": [{
-      "name": "Urban Navigator",
-      "description": "You know the layout of your home city perfectly. You can navigate through back alleys, rooftops, and subway tunnels to travel twice as fast through urban environments, bypassing traffic and blockades."
-    }],
-    "personality_traits": [
+    id: "b-37",
+    name: "Delivery Driver",
+    type: "background",
+    rank: "D",
+    description: "You delivered packages, food, or illicit goods across the city. You know every shortcut, every back alley, and how to avoid traffic—and now, how to avoid roaming monsters.",
+    skill_proficiencies: ["Survival", "Acrobatics"],
+    tool_proficiencies: ["Vehicles (Land)", "Navigators Tools"],
+    languages: [],
+    equipment: ["A sturdy courier bag", "A high-end GPS smartphone", "A helmet or cap", "Comfortable running shoes", "A receipt book"],
+    starting_credits: 400,
+    feature_name: "Urban Navigator",
+    feature_description: "You know the layout of your home city perfectly. You can navigate through back alleys, rooftops, and subway tunnels to travel twice as fast through urban environments, bypassing traffic and blockades.",
+    personality_traits: [
       "I am always in a hurry and walk incredibly fast.",
       "I complain about traffic and bad drivers constantly.",
       "I know the best food spots in every neighborhood.",
@@ -422,7 +304,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am intensely protective of my vehicle/bike.",
       "I am pragmatic and focused on completing the 'delivery'."
     ],
-    "ideals": [
+    ideals: [
       "Speed. The faster I go, the more money I make. (Chaotic)",
       "Reliability. A package accepted is a package delivered. (Lawful)",
       "Survival. Keep your head down and peddle faster. (Neutral)",
@@ -430,7 +312,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Profit. I'll deliver anything if the price is right. (Evil)",
       "Freedom. The open road is the only place I feel alive. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am trying to pay off the debt on my expensive vehicle.",
       "I owe my life to a customer who warned me about a gate break.",
       "I am fiercely loyal to my dispatcher/boss.",
@@ -438,7 +320,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am secretly couriering illegal goods for the black market.",
       "I am saving up to leave the city and start a quiet life."
     ],
-    "flaws": [
+    flaws: [
       "I am incredibly reckless and ignore safety rules.",
       "I am impatient and hate waiting for anything.",
       "I will abandon my team if my 'vehicle' is threatened.",
@@ -446,39 +328,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am deeply cynical and expect everyone to stiff me.",
       "I lack formal combat training and panic in drawn-out fights."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-38",
-    "name": "Teacher",
-    "type": "background",
-    "rank": "D",
-    "description": "You were an educator, shaping the minds of the next generation. When the gates opened, you found yourself protecting your students. Your awakening gave you the power to ensure they had a future.",
-    "skill_proficiencies": [
-      "History",
-      "Insight"
-    ],
-    "tool_proficiencies": [
-      "Calligrapher's Supplies"
-    ],
-    "languages": [
-      "Two additional languages"
-    ],
-    "equipment": [
-      "A satchel full of graded papers",
-      "A sturdy ruler or pointer",
-      "A thermos of tea or coffee",
-      "Comfortable clothes",
-      "A pair of reading glasses"
-    ],
-    "starting_credits": 500,
-    "feature_name": "Pedagogue's Authority",
-    "feature_description": "You have a commanding 'Teacher Voice.' You can easily gain the attention of a panicking crowd and direct civilians to safety. Furthermore, people tend to assume you are an authority figure in mundane situations.",
-    "features": [{
-      "name": "Pedagogue's Authority",
-      "description": "You have a commanding 'Teacher Voice.' You can easily gain the attention of a panicking crowd and direct civilians to safety. Furthermore, people tend to assume you are an authority figure in mundane situations."
-    }],
-    "personality_traits": [
+    id: "b-38",
+    name: "Teacher",
+    type: "background",
+    rank: "D",
+    description: "You were an educator, shaping the minds of the next generation. When the gates opened, you found yourself protecting your students. Your awakening gave you the power to ensure they had a future.",
+    skill_proficiencies: ["History", "Insight"],
+    tool_proficiencies: ["Calligrapher's Supplies"],
+    languages: ["Two additional languages"],
+    equipment: ["A satchel full of graded papers", "A sturdy ruler or pointer", "A thermos of tea or coffee", "Comfortable clothes", "A pair of reading glasses"],
+    starting_credits: 500,
+    feature_name: "Pedagogue's Authority",
+    feature_description: "You have a commanding 'Teacher Voice.' You can easily gain the attention of a panicking crowd and direct civilians to safety. Furthermore, people tend to assume you are an authority figure in mundane situations.",
+    personality_traits: [
       "I correct people's grammar and facts reflexively.",
       "I speak loudly and clearly, projecting my voice.",
       "I am incredibly patient, even with foolish people.",
@@ -486,7 +351,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I always carry a red pen.",
       "I am deeply passionate about my chosen subject."
     ],
-    "ideals": [
+    ideals: [
       "Education. Knowledge is the only weapon against the darkness. (Lawful)",
       "Protection. The children are the future; they must be saved. (Good)",
       "Truth. Ignorance is the root of all evil. (Neutral)",
@@ -494,7 +359,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Rebellion. I teach my students to question authority. (Chaotic)",
       "Control. I know what is best for everyone. (Evil)"
     ],
-    "bonds": [
+    bonds: [
       "I am fiercely protective of a specific student who awakened.",
       "I owe my life to a former student who became a high-ranking Hunter.",
       "I am trying to rebuild my destroyed school.",
@@ -502,7 +367,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am deeply loyal to my fellow educators.",
       "I am secretly researching the gates to teach humanity how to close them."
     ],
-    "flaws": [
+    flaws: [
       "I am incredibly condescending and treat everyone like children.",
       "I struggle to adapt to situations that aren't in a textbook.",
       "I will risk everything to save a child, even if it dooms the mission.",
@@ -510,38 +375,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am easily overwhelmed by chaotic, unstructured environments.",
       "I am deeply naive about the cruelty of the Hunter world."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-39",
-    "name": "Mechanic",
-    "type": "background",
-    "rank": "C",
-    "description": "You fixed cars, heavy machinery, or HVAC systems. You know how things work, and more importantly, how to take them apart. The transition from fixing engines to dismantling golem cores was surprisingly easy.",
-    "skill_proficiencies": [
-      "Investigation",
-      "Athletics"
-    ],
-    "tool_proficiencies": [
-      "Tinker's Tools",
-      "Smith's Tools"
-    ],
-    "languages": [],
-    "equipment": [
-      "A set of grease-stained coveralls",
-      "A heavy wrench",
-      "A rag",
-      "A multi-tool",
-      "A pair of safety glasses"
-    ],
-    "starting_credits": 600,
-    "feature_name": "Jury-Rigger",
-    "feature_description": "You can temporarily repair any broken mundane mechanical device (vehicles, generators, locks) using scavenged parts. The repair lasts for exactly as long as you need it to before breaking down again.",
-    "features": [{
-      "name": "Jury-Rigger",
-      "description": "You can temporarily repair any broken mundane mechanical device (vehicles, generators, locks) using scavenged parts. The repair lasts for exactly as long as you need it to before breaking down again."
-    }],
-    "personality_traits": [
+    id: "b-39",
+    name: "Mechanic",
+    type: "background",
+    rank: "C",
+    description: "You fixed cars, heavy machinery, or HVAC systems. You know how things work, and more importantly, how to take them apart. The transition from fixing engines to dismantling golem cores was surprisingly easy.",
+    skill_proficiencies: ["Investigation", "Athletics"],
+    tool_proficiencies: ["Tinker's Tools", "Smith's Tools"],
+    languages: [],
+    equipment: ["A set of grease-stained coveralls", "A heavy wrench", "A rag", "A multi-tool", "A pair of safety glasses"],
+    starting_credits: 600,
+    feature_name: "Jury-Rigger",
+    feature_description: "You can temporarily repair any broken mundane mechanical device (vehicles, generators, locks) using scavenged parts. The repair lasts for exactly as long as you need it to before breaking down again.",
+    personality_traits: [
       "I wipe my hands on a rag constantly.",
       "I view complex magic as just another type of engine.",
       "I speak in mechanical metaphors.",
@@ -549,7 +398,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am pragmatic and prefer simple, robust solutions.",
       "I curse creatively when things don't work."
     ],
-    "ideals": [
+    ideals: [
       "Function. If it works, it's good. If it's broken, fix it. (Neutral)",
       "Reliability. People depend on the things I build. (Lawful)",
       "Innovation. I want to build a machine that runs on mana. (Chaotic)",
@@ -557,7 +406,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Community. I keep the neighborhood running. (Good)",
       "Perfection. I want to build the ultimate, flawless machine. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am trying to repair a massive, mysterious piece of alien tech.",
       "I owe a debt to the garage owner who taught me my trade.",
       "I am fiercely loyal to my customized, junk-built vehicle.",
@@ -565,7 +414,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am trying to earn enough to open my own high-end shop.",
       "I want to reverse-engineer Hunter gear to sell on the black market."
     ],
-    "flaws": [
+    flaws: [
       "I am socially awkward and prefer machines to people.",
       "I am incredibly stubborn and refuse to ask for help.",
       "I will ignore my team to investigate an interesting piece of tech.",
@@ -573,38 +422,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am deeply cynical and expect everything to break eventually.",
       "I lack formal education and struggle with abstract magical theory."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-40",
-    "name": "Firefighter",
-    "type": "background",
-    "rank": "C",
-    "description": "You ran into burning buildings while everyone else ran out. When the gates opened, the fires just got hotter and the buildings fell faster. You are an expert in search and rescue and hazardous environments.",
-    "skill_proficiencies": [
-      "Athletics",
-      "Survival"
-    ],
-    "tool_proficiencies": [
-      "Vehicles (Land)",
-      "Carpenter's Tools"
-    ],
-    "languages": [],
-    "equipment": [
-      "A heavy turnout coat",
-      "A fire axe",
-      "A respirator mask",
-      "A heavy flashlight",
-      "A sturdy helmet"
-    ],
-    "starting_credits": 600,
-    "feature_name": "Breach and Clear",
-    "feature_description": "You excel at navigating hazardous terrain (fires, toxic gas, collapsing structures). You can force open jammed doors and clear rubble twice as fast as normal, and you automatically know the safest structural path through a ruin.",
-    "features": [{
-      "name": "Breach and Clear",
-      "description": "You excel at navigating hazardous terrain (fires, toxic gas, collapsing structures). You can force open jammed doors and clear rubble twice as fast as normal, and you automatically know the safest structural path through a ruin."
-    }],
-    "personality_traits": [
+    id: "b-40",
+    name: "Firefighter",
+    type: "background",
+    rank: "C",
+    description: "You ran into burning buildings while everyone else ran out. When the gates opened, the fires just got hotter and the buildings fell faster. You are an expert in search and rescue and hazardous environments.",
+    skill_proficiencies: ["Athletics", "Survival"],
+    tool_proficiencies: ["Vehicles (Land)", "Carpenter's Tools"],
+    languages: [],
+    equipment: ["A heavy turnout coat", "A fire axe", "A respirator mask", "A heavy flashlight", "A sturdy helmet"],
+    starting_credits: 600,
+    feature_name: "Breach and Clear",
+    feature_description: "You excel at navigating hazardous terrain (fires, toxic gas, collapsing structures). You can force open jammed doors and clear rubble twice as fast as normal, and you automatically know the safest structural path through a ruin.",
+    personality_traits: [
       "I am incredibly brave, bordering on reckless.",
       "I speak loudly and clearly, used to communicating over sirens.",
       "I am fiercely protective of my 'crew'.",
@@ -612,7 +445,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am physically imposing and use it to comfort people.",
       "I enjoy the adrenaline rush of a crisis."
     ],
-    "ideals": [
+    ideals: [
       "Bravery. Someone has to run into the fire. (Good)",
       "Duty. I swore to protect the city. (Lawful)",
       "Camaraderie. I never leave a brother or sister behind. (Any)",
@@ -620,7 +453,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Survival. Get in, save who you can, get out. (Neutral)",
       "Glory. I want to be the hero everyone cheers for. (Evil)"
     ],
-    "bonds": [
+    bonds: [
       "I lost my entire crew in a gate break; I am the only survivor.",
       "I am fiercely loyal to the firehouse that raised me.",
       "I owe my life to a Hunter who pulled me from a collapsing building.",
@@ -628,7 +461,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am trying to support the families of my fallen comrades.",
       "I am obsessed with killing a specific fire-elemental boss."
     ],
-    "flaws": [
+    flaws: [
       "I suffer from a hero complex and take unnecessary risks.",
       "I am deeply traumatized by the people I couldn't save.",
       "I struggle to follow orders from people who haven't 'been in the fire'.",
@@ -636,39 +469,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am overly aggressive toward arsonists or fire-magic users.",
       "I lack subtlety and solve problems by smashing them."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-41",
-    "name": "Social Worker",
-    "type": "background",
-    "rank": "D",
-    "description": "You navigated the broken system of the modern world, trying to help those who fell through the cracks. After the gates appeared, the cracks became chasms. You use your awakening to protect the vulnerable.",
-    "skill_proficiencies": [
-      "Insight",
-      "Persuasion"
-    ],
-    "tool_proficiencies": [
-      "Calligrapher's Supplies"
-    ],
-    "languages": [
-      "One additional language"
-    ],
-    "equipment": [
-      "A thick binder of case files",
-      "A comfortable cardigan",
-      "A reliable pen",
-      "A smartphone",
-      "A thermos of tea"
-    ],
-    "starting_credits": 500,
-    "feature_name": "System Navigator",
-    "feature_description": "You know how to access social services, homeless shelters, and charity networks. You can easily find safe harbor, free food, or local information among the displaced and impoverished populations of any city.",
-    "features": [{
-      "name": "System Navigator",
-      "description": "You know how to access social services, homeless shelters, and charity networks. You can easily find safe harbor, free food, or local information among the displaced and impoverished populations of any city."
-    }],
-    "personality_traits": [
+    id: "b-41",
+    name: "Social Worker",
+    type: "background",
+    rank: "D",
+    description: "You navigated the broken system of the modern world, trying to help those who fell through the cracks. After the gates appeared, the cracks became chasms. You use your awakening to protect the vulnerable.",
+    skill_proficiencies: ["Insight", "Persuasion"],
+    tool_proficiencies: ["Calligrapher's Supplies"],
+    languages: ["One additional language"],
+    equipment: ["A thick binder of case files", "A comfortable cardigan", "A reliable pen", "A smartphone", "A thermos of tea"],
+    starting_credits: 500,
+    feature_name: "System Navigator",
+    feature_description: "You know how to access social services, homeless shelters, and charity networks. You can easily find safe harbor, free food, or local information among the displaced and impoverished populations of any city.",
+    personality_traits: [
       "I am incredibly empathetic and an excellent listener.",
       "I speak in a calm, de-escalating tone.",
       "I am deeply cynical about the government and mega-guilds.",
@@ -676,7 +492,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am exhausted but refuse to stop working.",
       "I look past people's aggressive fronts to see their pain."
     ],
-    "ideals": [
+    ideals: [
       "Compassion. Everyone deserves dignity and help. (Good)",
       "Justice. The system is broken; we must fix it or break it further. (Chaotic)",
       "Duty. I must protect those who cannot protect themselves. (Lawful)",
@@ -684,7 +500,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Power. I will climb the ladder to change the system from the top. (Evil)",
       "Equality. The rich Hunters shouldn't abandon the poor civilians. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am fiercely protective of an orphanage in the safe zone.",
       "I owe my career to a mentor who burned out.",
       "I am trying to find a specific child who went missing during a break.",
@@ -692,7 +508,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am secretly funding a charity with my dungeon loot.",
       "I am fighting a legal battle against a mega-guild that destroyed a neighborhood."
     ],
-    "flaws": [
+    flaws: [
       "I suffer from severe compassion fatigue and depression.",
       "I am deeply naive about the true evil of some people.",
       "I will put myself in extreme danger to negotiate instead of fighting.",
@@ -700,37 +516,22 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I harbor a deep, quiet rage against the wealthy.",
       "I prioritize strangers over my own well-being."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   },
   {
-    "id": "b-42",
-    "name": "Police Officer",
-    "type": "background",
-    "rank": "C",
-    "description": "You walked the beat in a city that was rapidly changing. Before the gates, you dealt with gangs and thieves. After the gates, you dealt with Awakened criminals and monsters. You are a street-level enforcer of the law.",
-    "skill_proficiencies": [
-      "Investigation",
-      "Intimidation"
-    ],
-    "tool_proficiencies": [
-      "Vehicles (Land)"
-    ],
-    "languages": [],
-    "equipment": [
-      "A police badge",
-      "A sturdy pair of handcuffs",
-      "A tactical flashlight",
-      "A dark blue uniform",
-      "A radio"
-    ],
-    "starting_credits": 700,
-    "feature_name": "The Badge",
-    "feature_description": "You can flash your badge to gain access to crime scenes, command the cooperation of mundane civilians, and request backup or information from local law enforcement precincts.",
-    "features": [{
-      "name": "The Badge",
-      "description": "You can flash your badge to gain access to crime scenes, command the cooperation of mundane civilians, and request backup or information from local law enforcement precincts."
-    }],
-    "personality_traits": [
+    id: "b-42",
+    name: "Police Officer",
+    type: "background",
+    rank: "C",
+    description: "You walked the beat in a city that was rapidly changing. Before the gates, you dealt with gangs and thieves. After the gates, you dealt with Awakened criminals and monsters. You are a street-level enforcer of the law.",
+    skill_proficiencies: ["Investigation", "Intimidation"],
+    tool_proficiencies: ["Vehicles (Land)"],
+    languages: [],
+    equipment: ["A police badge", "A sturdy pair of handcuffs", "A tactical flashlight", "A dark blue uniform", "A radio"],
+    starting_credits: 700,
+    feature_name: "The Badge",
+    feature_description: "You can flash your badge to gain access to crime scenes, command the cooperation of mundane civilians, and request backup or information from local law enforcement precincts.",
+    personality_traits: [
       "I am deeply cynical and expect people to lie.",
       "I always sit facing the door.",
       "I speak in police codes and jargon.",
@@ -738,7 +539,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I eat fast, expecting to be interrupted.",
       "I am highly observant of people's hands and body language."
     ],
-    "ideals": [
+    ideals: [
       "Law. The rules are the only thing keeping us from chaos. (Lawful)",
       "Protection. I serve and protect the innocent. (Good)",
       "Authority. I demand respect and compliance. (Evil)",
@@ -746,7 +547,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "Survival. Make it to the end of the shift. (Neutral)",
       "Camaraderie. The thin blue line protects its own. (Any)"
     ],
-    "bonds": [
+    bonds: [
       "I am trying to solve the murder of my former partner.",
       "I am fiercely loyal to my precinct and my captain.",
       "I owe my life to a Hunter who saved me during a shootout.",
@@ -754,7 +555,7 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am trying to protect my family from the criminals I put away.",
       "I am secretly investigating corruption within my own department."
     ],
-    "flaws": [
+    flaws: [
       "I am overly aggressive and quick to resort to violence.",
       "I am deeply prejudiced against Awakened criminals.",
       "I will cover up the mistakes of my fellow officers.",
@@ -762,6 +563,14 @@ export const expandedBackgrounds: StaticBackground[] = [
       "I am an alcoholic.",
       "I struggle to show emotion or vulnerability."
     ],
-    "source": "Rift Compendium"
+    source_name: "Rift Compendium"
   }
 ];
+
+const content = `import type { StaticBackground } from "@/types/character";
+
+export const expandedBackgrounds: StaticBackground[] = ${JSON.stringify(backgrounds, null, 2)};
+`;
+
+fs.writeFileSync('src/data/compendium/backgrounds-part2.ts', content);
+console.log('backgrounds-part2.ts written');

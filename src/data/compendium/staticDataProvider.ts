@@ -571,8 +571,8 @@ function deriveRitual(spell: StaticSpellSource): boolean {
 }
 
 const CLASS_MAP: Record<string, string[]> = {
-	Attack: ["Destroyer", "Mage", "Esper", "Invoker", "Assassin", "Berserker"],
-	Defense: ["Mage", "Herald", "Holy Knight", "Technomancer", "Contractor"],
+	Attack: ["Destroyer", "Berserker", "Assassin", "Striker", "Mage", "Esper", "Revenant"],
+	Defense: ["Mage", "Revenant", "Herald", "Holy Knight", "Technomancer", "Contractor"],
 	Healing: ["Herald", "Holy Knight", "Summoner", "Idol"],
 	Utility: [
 		"Mage",

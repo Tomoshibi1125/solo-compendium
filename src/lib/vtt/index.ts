@@ -225,6 +225,8 @@ export {
 	MUSIC_ASSETS,
 	PROP_ASSETS,
 	searchAssets,
+	SFX_ASSET_MAP,
+	type SfxEntry,
 	TOKEN_ASSETS,
 	type VTTAsset,
 } from "./vttAssetManifest";

@@ -2139,86 +2139,88 @@ const VTTEnhanced = () => {
 																{scene.name}
 															</button>
 															{isWarden && (
-																<button
-																	type="button"
-																	title="Make Live for Players"
-																	onClick={() => {
-																		setLiveSceneId(scene.id);
-																		vttRealtime.broadcastSceneChange(scene.id);
-																	}}
-																	className={cn(
-																		"px-2 py-0.5 text-[9px] rounded font-bold uppercase mr-1",
-																		liveSceneId === scene.id
-																			? "bg-amber-500 text-black"
-																			: "bg-muted text-foreground/70 hover:bg-muted/80",
-																	)}
-																>
-																	{liveSceneId === scene.id
-																		? "Live"
-																		: "Make Live"}
-																</button>
+															<button
+															type="button"
+															title={liveSceneId === scene.id ? "Live" : "Make Live for Players"}
+															aria-label={liveSceneId === scene.id ? "Live" : "Make Live for Players"}
+															onClick={() => {
+															setLiveSceneId(scene.id);
+															 vttRealtime.broadcastSceneChange(scene.id);
+															}}
+															className={cn(
+															"p-1 rounded inline-flex items-center gap-1 text-[9px] font-bold uppercase mr-1",
+															liveSceneId === scene.id
+															? "bg-amber-500 text-black"
+															  : "bg-muted text-foreground/70 hover:bg-muted/80",
+															 )}
+															>
+															{liveSceneId === scene.id ? (
+															<><Eye className="w-3 h-3" />Live</>
+															 ) : (
+															   <><Play className="w-3 h-3" />Go</>  
+															  )}
+															</button>
 															)}
-															{currentScene?.id === scene.id && (
-																<div className="flex gap-0.5 pr-1">
-																	<button
-																		type="button"
-																		onClick={() => {
-																			const newName = window.prompt(
-																				"Scene name:",
-																				scene.name,
-																			);
-																			if (newName && newName !== scene.name) {
-																				updateScene({ name: newName } as never);
-																			}
-																		}}
-																		className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
-																		title="Rename scene"
-																		aria-label="Rename scene"
-																	>
-																		<Pencil className="w-3 h-3" />
-																	</button>
-																	<button
-																		type="button"
-																		onClick={() => {
-																			const dup = duplicateVttScene(scene);
-																			setScenes((prev) => [...prev, dup]);
-																			setCurrentScene(dup);
-																		}}
-																		className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
-																		title="Duplicate scene"
-																		aria-label="Duplicate scene"
-																	>
-																		<Copy className="w-3 h-3" />
-																	</button>
-																	{scenes.length > 1 && (
-																		<button
-																			type="button"
-																			onClick={() => {
-																				if (
-																					!window.confirm(
-																						`Delete "${scene.name}"?`,
-																					)
-																				)
-																					return;
-																				const next = scenes.filter(
-																					(s) => s.id !== scene.id,
-																				);
-																				setScenes(next);
-																				setCurrentScene(next[0] || null);
-																				persistSceneState(
-																					next,
-																					next[0]?.id ?? null,
-																				);
-																			}}
-																			className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
-																			title="Delete scene"
-																			aria-label="Delete scene"
-																		>
-																			<X className="w-3 h-3" />
-																		</button>
-																	)}
-																</div>
-															)}
+															<div className="flex gap-0.5 pr-1">
+															<button
+															type="button"
+															onClick={() => {
+															setCurrentScene(scene);
+															const newName = window.prompt(
+															"Scene name:",
+															scene.name,
+															);
+															if (newName && newName !== scene.name) {
+															 updateScene({ name: newName } as never);
+															}
+															}}
+															className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
+															title="Rename scene"
+															aria-label="Rename scene"
+															>
+															<Pencil className="w-3 h-3" />
+															</button>
+															<button
+															type="button"
+															onClick={() => {
+															const dup = duplicateVttScene(scene);
+															setScenes((prev) => [...prev, dup]);
+															setCurrentScene(dup);
+															}}
+															className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
+															title="Duplicate scene"
+															aria-label="Duplicate scene"
+															>
+															<Copy className="w-3 h-3" />
+															</button>
+															{scenes.length > 1 && (
+															<button
+															type="button"
+															onClick={() => {
+															if (
+															!window.confirm(
+															`Delete "${scene.name}"?`,
+															)
+															)
+															return;
+															const next = scenes.filter(
+															(s) => s.id !== scene.id,
+															);
+															setScenes(next);
+															setCurrentScene(next[0] || null);
+															persistSceneState(
+															 next,
+															 next[0]?.id ?? null,
+															);
+															}}
+															className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
+															title="Delete scene"
+															aria-label="Delete scene"
+															>
+															  <X className="w-3 h-3" />
+															  </button>
+												)}
+											</div>
 														</div>
 													))}
 												</div>
@@ -2226,7 +2228,7 @@ const VTTEnhanced = () => {
 										</TabsContent>
 										<TabsContent
 											value="toolbox"
-											className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0"
+											className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0 max-h-[calc(100vh-280px)]"
 										>
 											<AscendantWindow title="TOOLS">
 												<div className="grid grid-cols-2 gap-2">
@@ -2330,7 +2332,7 @@ const VTTEnhanced = () => {
 											</AscendantWindow>
 
 											<AscendantWindow title="CONTROLS">
-												<div className="space-y-3">
+												<div className="space-y-3 overflow-y-auto max-h-[35vh]">
 													<div>
 														<Label className="text-xs mb-1 block">Zoom</Label>
 														<div className="flex items-center gap-1">
@@ -2589,7 +2591,7 @@ const VTTEnhanced = () => {
 												</div>
 											</AscendantWindow>
 											<AscendantWindow title="LAYERS">
-												<div className="space-y-2">
+												<div className="space-y-2 overflow-hidden">
 													<Label className="text-xs">Active Layer</Label>
 													<Select
 														value={String(currentLayer)}

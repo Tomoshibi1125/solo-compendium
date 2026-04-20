@@ -48,6 +48,7 @@ import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useWardenAudio } from "@/hooks/useWardenAudio";
 import { validateDiceString } from "@/lib/advancedDiceEngine";
 import { MOOD_TAGS, SOUND_CATEGORIES } from "@/lib/audio/types";
 import { cn } from "@/lib/utils";
@@ -144,6 +145,12 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 }) => {
 	const { toast } = useToast();
 	const ascendantTools = useAscendantTools();
+
+	// Internal audio engine — provides live playback whenever parent doesn't
+	// supply onPlaySound / onMusicChange callbacks.
+	const wardenAudio = useWardenAudio();
+	const resolvedPlaySound = onPlaySound ?? wardenAudio.onPlaySound;
+	const resolvedMusicChange = onMusicChange ?? wardenAudio.onMusicChange;
 	const [activeTool, setActiveTool] = useState<string>("encounter");
 	const [quickRollValue, setQuickRollValue] = useState("1d20");
 	const [quickRollResult, setQuickRollResult] = useState<number | null>(null);
@@ -332,8 +339,8 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										size="sm"
 										variant="outline"
 										onClick={() => {
-											onPlaySound?.(sound.id);
-											logWardenMacro("Sound Effect", sound.name);
+										resolvedPlaySound(sound.id);
+										logWardenMacro("Sound Effect", sound.name);
 										}}
 										className="h-8 text-xs p-1"
 										title={sound.name}
@@ -407,8 +414,8 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										size="sm"
 										variant={music.id === "stop" ? "destructive" : "outline"}
 										onClick={() => {
-											onMusicChange?.(music.id);
-											logWardenMacro("Music Change", music.name);
+										resolvedMusicChange(music.id);
+										logWardenMacro("Music Change", music.name);
 										}}
 										className="h-7 text-[10px] px-1 truncate"
 									>
@@ -885,7 +892,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								size="sm"
 								variant="outline"
 								onClick={() => {
-								  onPlaySound?.("rain");
+								  resolvedPlaySound("rain");
 								 logWardenMacro("Weather", "Rain");
 								 }}
 								>
@@ -895,7 +902,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								size="sm"
 								variant="outline"
 								onClick={() => {
-								  onPlaySound?.("thunder");
+								  resolvedPlaySound("thunder");
 								 logWardenMacro("Weather", "Thunder");
 								 }}
 								>
@@ -905,7 +912,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								size="sm"
 								variant="outline"
 								onClick={() => {
-								  onPlaySound?.("wind");
+								  resolvedPlaySound("wind");
 								 logWardenMacro("Weather", "Wind");
 								 }}
 								 >

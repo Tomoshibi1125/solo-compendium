@@ -134,10 +134,10 @@ export function VttPixiStage({
 	} | null>(null);
 
 	const worldSize = useMemo(() => {
-		const w = (scene?.width ?? 0) * gridSize;
-		const h = (scene?.height ?? 0) * gridSize;
+		const w = (scene?.width ?? 0) * gridSize * zoom;
+		const h = (scene?.height ?? 0) * gridSize * zoom;
 		return { w, h };
-	}, [gridSize, scene?.height, scene?.width]);
+	}, [gridSize, zoom, scene?.height, scene?.width]);
 
 	const dragStateRef = useRef<{ tokenId: string; pointerId: number } | null>(
 		null,

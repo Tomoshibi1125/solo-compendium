@@ -992,156 +992,191 @@ export const EFFECT_ASSETS: VTTAsset[] = [
 ];
 
 // ─── Free Audio Streams (no download needed) ────────────────
-// These reference free external streams from Tabletop Audio (CC BY-NC 4.0)
-// and can be played directly via the Howler.js audio system.
+// Audio entries use vtt-engine:// (VttMusicEngine procedural synthesis) or
+// local /audio/music/* paths (Howler.js via audioService). No external URLs.
 
 export const AUDIO_ASSETS: VTTAsset[] = [
-	// Tabletop Audio free ambient tracks (streaming)
+	// Environment -- VttMusicEngine procedural synthesis
 	{
 		id: "audio-campfire",
 		name: "Campfire",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/campfire.mp3",
+		path: "vtt-engine://dungeon-exploration",
 		tags: ["campfire", "fire", "rest", "camp"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
 	{
 		id: "audio-rain",
 		name: "Gentle Rain",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/rain.mp3",
+		path: "vtt-engine://rainfall",
 		tags: ["rain", "weather", "outdoor", "calm"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
 	{
 		id: "audio-thunderstorm",
 		name: "Thunderstorm",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/stormycrossing.mp3",
+		path: "vtt-engine://horror-dread",
 		tags: ["thunder", "storm", "rain", "weather"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
 	{
 		id: "audio-wind",
 		name: "Wind",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/wind.mp3",
+		path: "vtt-engine://ocean-ambient",
 		tags: ["wind", "weather", "outdoor"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
+	// Social -- local file
 	{
 		id: "audio-tavern",
 		name: "Busy Tavern",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/busytavern.mp3",
+		path: "/audio/music/tavern-ambience.ogg",
 		tags: ["tavern", "crowd", "social", "inn"],
-		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		format: "ogg",
+		attribution: "CC0",
 	},
+	// Dungeon -- local file
 	{
 		id: "audio-dungeon",
 		name: "Dungeon Depths",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/dungeon.mp3",
+		path: "/audio/music/dungeon-ambience.ogg",
 		tags: ["dungeon", "underground", "dark", "drip"],
-		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		format: "ogg",
+		attribution: "yd / CC0",
 	},
+	// Outdoor -- VttMusicEngine
 	{
 		id: "audio-forest",
 		name: "Dark Forest",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/darkforest.mp3",
+		path: "vtt-engine://forest-peaceful",
 		tags: ["forest", "nature", "outdoor", "birds"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
+	// Cave -- local file
 	{
 		id: "audio-cave",
 		name: "Underground Cave",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/cavernoftheundead.mp3",
+		path: "/audio/music/dark-cavern-ambient-1.ogg",
 		tags: ["cave", "underground", "drip", "echo"],
-		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		format: "ogg",
+		attribution: "Paul Wortmann / CC0",
 	},
+	// Combat -- local file
 	{
 		id: "audio-combat",
 		name: "Combat Music",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/battlewizard.mp3",
+		path: "/audio/music/epic-combat.ogg",
 		tags: ["combat", "battle", "fighting", "intense"],
-		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		format: "ogg",
+		attribution: "CC0",
 	},
+	// Boss -- VttMusicEngine
 	{
 		id: "audio-boss-fight",
 		name: "Boss Fight",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/thefinalconfrontation.mp3",
+		path: "vtt-engine://boss-epic",
 		tags: ["boss", "fight", "epic", "final"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
+	// Urban -- VttMusicEngine
 	{
 		id: "audio-city",
 		name: "City Streets",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/citystreet.mp3",
+		path: "vtt-engine://city-bustle",
 		tags: ["city", "urban", "traffic", "modern"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
 	{
 		id: "audio-marketplace",
 		name: "Marketplace",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/bazaar.mp3",
+		path: "vtt-engine://city-bustle",
 		tags: ["market", "bazaar", "trading", "social"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
+	// Ocean -- VttMusicEngine
 	{
 		id: "audio-ocean",
 		name: "Ocean Waves",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/ocean.mp3",
+		path: "vtt-engine://ocean-ambient",
 		tags: ["ocean", "waves", "water", "coast"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
+	// Horror / Swamp -- local file
 	{
 		id: "audio-swamp",
 		name: "Haunted Swamp",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/swamp.mp3",
+		path: "/audio/music/cold-silence.ogg",
 		tags: ["swamp", "marsh", "creepy", "outdoor"],
-		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		format: "ogg",
+		attribution: "Eponasoft / CC0",
 	},
+	// Crypt -- local file
 	{
 		id: "audio-crypt",
 		name: "Dark Crypt",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/crypt.mp3",
+		path: "/audio/music/dark-cavern-ambient-2.ogg",
 		tags: ["crypt", "undead", "dark", "dungeon"],
-		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		format: "ogg",
+		attribution: "Paul Wortmann / CC0",
 	},
+	// Library -- VttMusicEngine
 	{
 		id: "audio-library",
 		name: "Ancient Library",
 		category: "audio",
-		path: "https://sounds.tabletopaudio.com/library.mp3",
+		path: "vtt-engine://stealth-suspense",
 		tags: ["library", "study", "quiet", "arcane"],
 		format: "stream",
-		attribution: "Tabletop Audio / CC BY-NC 4.0",
+		attribution: "VttMusicEngine (procedural, CC0)",
 	},
 ];
+
+// SFX Asset Map
+// Maps Warden quick-sound button IDs (WardenToolsPanel) and weather/atmosphere
+// IDs to either a local file or a VttMusicEngine procedural mood.
+// useWardenAudio reads this map to route onPlaySound() calls correctly.
+
+export type SfxEntry =
+	| { type: "file"; path: string; mimeType: string }
+	| { type: "mood"; mood: string };
+
+export const SFX_ASSET_MAP: Record<string, SfxEntry> = {
+	// Quick-sound panel (WardenToolsPanel quick sounds)
+	"door-creak":   { type: "mood", mood: "dungeon-exploration" },
+	"sword-clash":  { type: "mood", mood: "combat-tension" },
+	fireball:       { type: "mood", mood: "boss-epic" },
+	thunder:        { type: "mood", mood: "horror-dread" },
+	heal:           { type: "mood", mood: "mystical-wonder" },
+	"Anomaly-roar": { type: "mood", mood: "shadow-realm" },
+	// Atmosphere panel weather buttons
+	rain:           { type: "mood", mood: "rainfall" },
+	wind:           { type: "mood", mood: "ocean-ambient" },
+	// Local SFX file
+	"magic-spell":  { type: "file", path: "/audio/sfx/magic-spell.mp3", mimeType: "audio/mpeg" },
+};
 
 // ─── Downloaded CC0 Music Tracks (local, no external dependency) ────
 // All tracks are CC0 / Public Domain from OpenGameArt.org.

@@ -23,7 +23,7 @@ import {
 	useCharacterTemplates,
 } from "@/hooks/useCharacterTemplates";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
+
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
@@ -285,72 +285,9 @@ const CharacterNew = () => {
 		},
 	});
 
-	const { data: homebrewJobs = [] } = usePublishedHomebrew("job");
-	const { data: homebrewBackgrounds = [] } = usePublishedHomebrew("item");
+	const allJobs: Job[] = [...jobs];
 
-	const allJobs: Job[] = [
-		...jobs,
-		...homebrewJobs.map(
-			(hb) =>
-				({
-					id: `homebrew:${hb.id}`,
-					name: hb.name,
-					description: hb.description,
-					hit_die: (hb.data?.hit_die as number) || 8,
-					primary_abilities:
-						(hb.data?.primary_abilities as AbilityScore[]) || [],
-					skill_choices: (hb.data?.skill_choices as string[]) || [],
-					skill_choice_count: (hb.data?.skill_choice_count as number) || 2,
-					source_book: hb.source_book,
-					saving_throw_proficiencies:
-						(hb.data?.saving_throw_proficiencies as AbilityScore[]) || [],
-					armor_proficiencies: (hb.data?.armor_proficiencies as string[]) || [],
-					weapon_proficiencies:
-						(hb.data?.weapon_proficiencies as string[]) || [],
-					tool_proficiencies: (hb.data?.tool_proficiencies as string[]) || [],
-					class_features: (hb.data?.class_features || null) as Json,
-					spellcasting: (hb.data?.spellcasting || null) as Json,
-					starting_equipment: (hb.data?.starting_equipment || null) as Json,
-					aliases: [],
-					created_at: hb.created_at || new Date().toISOString(),
-					updated_at: hb.updated_at || new Date().toISOString(),
-					display_name: hb.name,
-					flavor_text: hb.description,
-					generated_reason: "Homebrew",
-					hit_points_at_first_level: null,
-					hit_points_at_higher_levels: null,
-					image_url: null,
-					license_note: null,
-					regent_prerequisites: null,
-					secondary_abilities: [],
-					source_kind: "homebrew",
-					source_name: "User Created",
-					tags: hb.tags || [],
-					theme_tags: [],
-				}) as unknown as Job,
-		),
-	];
-
-	const allBackgrounds: Background[] = [
-		...backgrounds,
-		...homebrewBackgrounds
-			.filter(
-				(hb) =>
-					hb.content_type === "item" &&
-					(hb.data?.sub_type === "background" ||
-						hb.tags?.includes("background")),
-			)
-			.map(
-				(hb) =>
-					({
-						id: `homebrew:${hb.id}`,
-						name: hb.name,
-						display_name: hb.name,
-						description: hb.description,
-						source_book: hb.source_book,
-					}) as unknown as Background,
-			),
-	];
+	const allBackgrounds: Background[] = [...backgrounds];
 
 	const jobData = allJobs.find((j) => j.id === selectedJob);
 
@@ -499,6 +436,8 @@ const CharacterNew = () => {
 				name: name.trim(),
 				level: 1,
 				job: dbJob.name,
+				base_class: dbJob.name,
+				portrait_url: job.image || (dbJob as any).image_url || null,
 				path: paths.find((p) => p.id === selectedPath)?.name || null,
 				background: dbBg.name,
 				appearance: appearance.trim() || null,
