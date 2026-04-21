@@ -77,7 +77,7 @@ The following side quests are available from various NPCs and faction boards thr
 **Details**: Strike Team Seven entered the Frozen Citadel Gate and never returned. One member — **Ghost** — escaped but has amnesia. The others are either dead or frozen inside.
 **Steps**:
 1. Find Ghost in the Outer Slums area (DC 12 Investigation or ask Mama Chen)
-2. Help Ghost recover memories (Dr. Voss can assist with a mana resonance scan — requires 1 C-Rank core)
+2. Help Ghost recover memories (Dr. Hayashi can assist with a mana resonance scan — requires 1 C-Rank core)
 3. Enter the Frozen Citadel Gate and locate Strike Team Seven's remains (Floor: Frozen Barracks)
 **Rewards**: +1 Bureau reputation, 2,000 Credits, Ghost joins as NPC ally (Level 8, unknown Job — revealed as Stalker when memories return)
 
@@ -101,13 +101,13 @@ The following side quests are available from various NPCs and faction boards thr
 **Giver**: Whisper / The Prophet (inside the Sunken Tunnels Gate)
 **Trigger**: Encounter Whisper during the Sunken Tunnels exploration
 **Objective**: Escort Whisper safely out of the Sunken Tunnels and to Bureau HQ.
-**Details**: Whisper knows Nyx's plan to trigger simultaneous Gate Breaks. The Bureau needs this intelligence.
+**Details**: Whisper knows The Hollow Mother's plan to trigger simultaneous Gate Breaks. The Bureau needs this intelligence.
 **Steps**:
 1. Locate Whisper in the Awoko Forward Base (Sunken Tunnels)
 2. Convince Whisper to defect (DC 14 Persuasion, or automatic if party has Bureau Trusted+)
 3. Escort Whisper through the Gate without the other Cult members noticing (DC 14 group Stealth or combat)
 4. Deliver to Commander Park
-**Rewards**: +1 Bureau reputation, +1 Vermillion reputation (Orin respects the intel), Nyx's plan revealed (10 day deadline)
+**Rewards**: +1 Bureau reputation, +1 Vermillion reputation (Orin respects the intel), The Hollow Mother's plan revealed (10 day deadline)
 
 ---
 
@@ -125,16 +125,16 @@ The following side quests are available from various NPCs and faction boards thr
 
 ---
 
-### Quest 5: The Architect's Device
-**Giver**: The Architect (Inside the Sunken Tunnels Gate)
-**Trigger**: Discover the Architect's Workshop
-**Objective**: Help the Architect complete the Gate Suppression Device.
+### Quest 5: The Millwright's Device
+**Giver**: The Millwright (Inside the Sunken Tunnels Gate)
+**Trigger**: Discover the Millwright's Workshop
+**Objective**: Help the Millwright complete the Gate Suppression Device.
 **Details**: A mana-tech device that can prevent ONE Gate Break during the campaign.
 **Steps**:
 1. Deliver a B-Rank Anomaly core (from any B-Rank Gate boss)
-2. Obtain schematics from Dr. Voss (requires 1 C-Rank tissue sample trade)
+2. Obtain schematics from Dr. Hayashi (requires 1 C-Rank tissue sample trade)
 3. Fund raw materials (5,000 Credits)
-**Rewards**: Gate Suppression Device (single use — prevents one Gate Break), The Architect joins as NPC ally
+**Rewards**: Gate Suppression Device (single use — prevents one Gate Break), The Millwright joins as NPC ally
 
 ---
 
@@ -155,7 +155,7 @@ The following side quests are available from various NPCs and faction boards thr
 **Giver**: Iron Belle (Vermillion Guild Hall — Fight Ring)
 **Trigger**: Visit the Fight Ring
 **Objective**: Defeat Iron Belle in single combat.
-**Rules**: 1v1 unarmed combat. No abilities, no Runes, no weapons. Pure Athletics and Constitution.
+**Rules**: 1v1 unarmed combat. No abilities, no Runes, no weapons. Pure Athletics and Vitality.
 - Best of 3 rounds: Each round is opposed Athletics check. Loser takes 1d8 bludgeoning. First to 0 HP or 3 losses is out.
 **Rewards**: 1,000 Credits betting pool, +1 Vermillion reputation, Iron Belle's respect (will provide information about the district's underground fighting circuit, which the Cult uses for recruitment)
 
@@ -181,11 +181,11 @@ The following side quests are available from various NPCs and faction boards thr
 **Objective**: Rescue Acolyte Mara from Blood Zealot Karn's custody.
 **Details**: Mara tried to leave the Cult and was imprisoned. Karn plans to sacrifice her in the next ritual.
 **Steps**:
-1. Identify Sister Veil as a potential ally (DC 16 Insight or show her Dr. Voss's research)
+1. Identify Sister Veil as a potential ally (DC 16 Insight or show her Dr. Hayashi's research)
 2. Locate Mara's cell (Floor 12 of the Ashen Vault)
 3. Free Mara (DC 12 Thieves' Tools or defeat the 2 Cult guards)
 4. Escape the Ashen Vault with both NPCs
-**Rewards**: +1 Bureau reputation (intelligence on Cult operations), Sister Veil + Acolyte Mara recruitable as NPC allies, Cult ritual disrupted (buys 2 extra days before Nyx's plan triggers)
+**Rewards**: +1 Bureau reputation (intelligence on Cult operations), Sister Veil + Acolyte Mara recruitable as NPC allies, Cult ritual disrupted (buys 2 extra days before The Hollow Mother's plan triggers)
 
 ---
 
@@ -195,7 +195,7 @@ The following side quests are available from various NPCs and faction boards thr
 **Objective**: Help Ghost recover their full identity.
 **Details**: Ghost is an A-Rank Ascendant with amnesia. Their memories were suppressed by a Regent Relic's influence.
 **Steps**:
-1. Take Ghost to Dr. Voss for mana resonance therapy (3 sessions over 3 days)
+1. Take Ghost to Dr. Hayashi for mana resonance therapy (3 sessions over 3 days)
 2. Enter the Gate where Ghost was last stationed (Frozen Citadel) and find their equipment
 3. Trigger memory restoration by returning Ghost's Bureau ID and weapon
 **Rewards**: Ghost restored to full A-Rank power (Level 8 Stalker with A-Rank abilities), reveals classified intelligence about the Regent.
@@ -239,10 +239,10 @@ All 40+ NPCs in this module are detailed in the companion file **sandbox-npcs.ts
 
 | NPC | Level | Job | Rank | Recruitment Condition |
 |-----|-------|-----|------|----------------------|
-| Commander Park Jae-won | 8 | Vanguard | B | Complete 3 eradication quests + Bureau Trusted |
-| Quartermaster Lin Mei-hua | 4 | Artificer | D | Vermillion Bazaar destroyed or conquered |
+| Commander Park Jae-won | 8 | Destroyer | B | Complete 3 eradication quests + Bureau Trusted |
+| Quartermaster Lin Mei-hua | 4 | Technomancer | D | Vermillion Bazaar destroyed or conquered |
 | Sergeant Yoon Hye-jin | 5 | Stalker | C | Find missing Strike Team Seven |
-| Dr. Elara Voss | 6 | Sage | C | Bring 3 C-Rank+ tissue samples |
+| Dr. Serin Hayashi | 6 | Herald | C | Bring 3 C-Rank+ tissue samples |
 | Agent Kira Blackwood | 7 | Stalker | B | Bureau Trusted + complete her personal quest |
 | Corporal Deng Wei | 4 | Destroyer | D | Show kindness after nightmare episode |
 | Relay Officer Reyes | 3 | Herald | D | Help establish secondary mana relay |
@@ -253,10 +253,10 @@ All 40+ NPCs in this module are detailed in the companion file **sandbox-npcs.ts
 | NPC | Level | Job | Rank | Recruitment Condition |
 |-----|-------|-----|------|----------------------|
 | Rat-King Ji | 6 | Contractor | C | Vermillion Trusted + retrieve stashed funds |
-| Vex "Quicksilver" | 7 | Assassin | B | Help eliminate High Priestess Nyx |
-| Mother Rust | 5 | Alchemist | C | Bring living mana from Botanical Gate |
+| Vex "Quicksilver" | 7 | Assassin | B | Help eliminate The Hollow Mother |
+| Mother Rust | 5 | Technomancer | C | Bring living mana from Botanical Gate |
 | Torch | 6 | Mage | C | 5,000 Credits or help send letter to family |
-| Old Man Crane | 10 | Sage | S | Only joins for final Regent confrontation |
+| Old Man Crane | 10 | Esper | S | Only joins for final Regent confrontation |
 | Ash & Ember | 3 | Striker | D | Promise to find their brother |
 | Guildmaster Orin | 9 | Contractor | A | Unite Bureau and Vermillion factions |
 
@@ -265,7 +265,7 @@ All 40+ NPCs in this module are detailed in the companion file **sandbox-npcs.ts
 | NPC | Level | Job | Rank | Recruitment Condition |
 |-----|-------|-----|------|----------------------|
 | Whisper (The Prophet) | 5 | Esper | C | DC 14 Persuasion in Sunken Tunnels |
-| Sister Veil | 6 | Holy Knight | C | Show Dr. Voss's research, DC 16 Persuasion |
+| Sister Veil | 6 | Holy Knight | C | Show Dr. Hayashi's research, DC 16 Persuasion |
 | Acolyte Mara | 2 | Revenant | E | Rescue from Ashen Vault |
 
 ### Independents & Anomaly-Adjacent
@@ -273,20 +273,20 @@ All 40+ NPCs in this module are detailed in the companion file **sandbox-npcs.ts
 | NPC | Level | Job | Rank | Location |
 |-----|-------|-----|------|----------|
 | Doc Tanaka | 4 | Herald | D | Outer Slums — underground clinic |
-| Zara the Scrapper | 3 | Artificer | D | Outer Slums — junk workshop |
+| Zara the Scrapper | 3 | Technomancer | D | Outer Slums — junk workshop |
 | Father Gregor | 5 | Holy Knight | C | Outer Slums — makeshift chapel |
 | Mika the Kid | 1 | — (Civilian) | E | Roaming — prophetic child |
-| Professor Lun | 6 | Sage | C | Outer Slums — academic |
+| Professor Lun | 6 | Mage | C | Outer Slums — academic |
 | Ghost | 8 | Stalker | A | Outer Slums — amnesiac |
-| Mama Chen | 3 | Vanguard | D | Outer Slums — civilian shelter |
+| Mama Chen | 3 | Destroyer | D | Outer Slums — civilian shelter |
 | Jax the Runner | 2 | Striker | E | Bazaar — courier |
 | Iron Belle | 7 | Destroyer | B | Bazaar — fight ring champion |
-| The Architect | 7 | Artificer | B | Sunken Tunnels Gate — workshop |
+| The Millwright | 7 | Technomancer | B | Sunken Tunnels Gate — workshop |
 | Echo-7 | 5 | Summoner | C | Verdant Overgrowth Gate |
 | The Watcher | 8 | Esper | A | Obsidian Spire Gate — Floor 9 |
 | Specimen X | 6 | Revenant | C | Drowned Ward Gate — basement |
-| Lyra | 7 | Esper | B | Verdant Overgrowth Gate — canopy |
-| The Archivist | 4 | Sage | D | Drowned Ward Gate — 3rd floor |
+| Echo-Nine | 7 | Esper | B | Verdant Overgrowth Gate — canopy |
+| The Catalog | 4 | Esper | D | Drowned Ward Gate — 3rd floor |
 | Rex | 3 | — (Beast) | D | Hollow Subway Gate |
 
 > **Note for Wardens**: NPCs recruited to the party should be run as simplified allies — they act on their own initiative, focus on supporting the party, and use 2-3 signature abilities rather than full character sheets. This keeps combat manageable while preserving the narrative weight of recruitment.`,
@@ -316,7 +316,7 @@ These artifacts are fragments of the Regent's own power, hidden within the Gates
 |----------|--------|
 | **Passive** | +2 to all saving throws. Wielder hears the Regent's thoughts (cryptic, unsettling). |
 | **Active** (1/day) | Dominate an Anomaly of C-Rank or lower for 1 hour (no save) |
-| **Curse** | Every long rest, DC 14 Wisdom save or the Regent speaks through the wielder in their sleep (reveals party plans to the Cult if Nyx is alive and has a Seer) |
+| **Curse** | Every long rest, DC 14 Sense save or the Regent speaks through the wielder in their sleep (reveals party plans to the Cult if The Hollow Mother is alive and has a Seer) |
 | **Final Battle** | Negates the Regent's Shadow Step ability |
 
 ### Relic of Blood
@@ -326,7 +326,7 @@ These artifacts are fragments of the Regent's own power, hidden within the Gates
 |----------|--------|
 | **Passive** | +2 weapon, deals 2d6 necrotic. Wielder heals for half necrotic damage dealt. |
 | **Active** (1/day) | *Blood Nova*: 30 ft. radius, 6d6 necrotic (DC 16 Con half), wielder heals for total damage dealt |
-| **Curse** | Wielder loses 1 HP per round while holding it (cannot be mitigated). Must make DC 12 Wis save to voluntarily put it down. |
+| **Curse** | Wielder loses 1 HP per round while holding it (cannot be mitigated). Must make DC 12 Sense save to voluntarily put it down. |
 | **Final Battle** | Negates the Regent's Consume Shadow ability |
 
 ---
@@ -377,7 +377,7 @@ Roll 1d20 when traveling between locations:
 |-----|-----------|---------|
 | 1 | **The Executioner** | See Chapter 17. Full pursuit encounter. |
 | 2-3 | **Gate Micro-Break** | A tiny Gate opens briefly. 1d4 E-Rank Shadow Crawlers spill out. Close automatically after 1 round. |
-| 4 | **Mana Storm** | Violent mana fluctuation. DC 12 Con save or 2d6 force damage. Lasts 1d4 rounds. |
+| 4 | **Mana Storm** | Violent mana fluctuation. DC 12 Vitality save or 2d6 force damage. Lasts 1d4 rounds. |
 | 5 | **Cult Ambush** | 4 Awoko Cult Acolytes + 1 Cult Enforcer attack from rooftops. Flee if 3+ are killed. |
 | 6 | **Bureau Checkpoint** | Bureau patrol demands identification. If carrying contraband Runes: DC 14 Deception or confiscation + Bureau −1. |
 | 7 | **Vermillion Smugglers** | 3 Guild runners moving Anomaly cores. Will sell 2 cores at market rate. May offer a side job. |
@@ -388,7 +388,7 @@ Roll 1d20 when traveling between locations:
 | 17 | **NPC Encounter** | A random NPC from the roster is spotted. Social encounter opportunity. |
 | 18 | **Gate Echo** | The party briefly sees through a Gate — a flash of the dimension inside. Warden describes a scene from an unvisited Gate. |
 | 19 | **Equipment Cache** | A Bureau supply drop missed during evacuation. 2d4 mana rations + 1 random C-Rank item. |
-| 20 | **Regent Whisper** | Every Ascendant hears the Regent's voice. DC 14 Wis save or gain a brief vision (Warden provides a plot hint). Failure also deals 1d4 psychic. |
+| 20 | **Regent Whisper** | Every Ascendant hears the Regent's voice. DC 14 Sense save or gain a brief vision (Warden provides a plot hint). Failure also deals 1d4 psychic. |
 
 ---
 
@@ -398,7 +398,7 @@ Roll 1d20 when traveling between locations:
 |-----|-----------|
 | 1-3 | 1d4 **Shadow Crawlers** (E-Rank, HP 12, AC 11, +3, 1d6+1 slashing) |
 | 4-5 | 1d4 **Void Leeches** (E-Rank, HP 8, AC 10, +2, 1d4 necrotic + attach) |
-| 6-7 | **Trap** — Pressure plate, trip wire, or mana glyph. DC 12 Perception, DC 12 Dex save, 2d6 damage. |
+| 6-7 | **Trap** — Pressure plate, trip wire, or mana glyph. DC 12 Perception, DC 12 Agility save, 2d6 damage. |
 | 8-9 | **Environmental Hazard** — Unstable floor, toxic gas, flooding. DC 11 relevant save. |
 | 10-11 | **Empty** — Signs of past combat. A corpse with 1d4 × 10 Credits. |
 | 12 | **Treasure** — Hidden alcove with a minor Rune or 200 Credits. DC 13 Investigation. |
@@ -410,7 +410,7 @@ Roll 1d20 when traveling between locations:
 | 1-2 | 1d6 **D-Rank Anomalies** (HP 18, AC 12, +4, 1d8+2 varied) |
 | 3-4 | 1 **C-Rank Anomaly** (HP 35, AC 14, +5, 2d6+3 varied + special ability) |
 | 5 | **Wandering NPC** — An NPC from the roster trapped inside the Gate. Rescue opportunity. |
-| 6-7 | **Trap** — DC 13 Perception, DC 13 Dex/Con save, 3d6 damage. |
+| 6-7 | **Trap** — DC 13 Perception, DC 13 Agility/Vitality save, 3d6 damage. |
 | 8-9 | **Puzzle** — Mana lock, sigil sequence, or environmental puzzle. DC 13 Arcana/Investigation. |
 | 10-11 | **Loot Room** — 2d4 × 50 Credits, 1 D-Rank Anomaly core, minor item. |
 | 12 | **Rare Spawn** — 1 C-Rank elite with extra HP and a guaranteed C-Rank Rune drop. |
@@ -422,7 +422,7 @@ Roll 1d20 when traveling between locations:
 | 1-2 | 2d4 **C-Rank Anomalies** |
 | 3 | 1 **B-Rank Anomaly** (HP 55+, tough fight) |
 | 4-5 | **Cult Activity** — 1d4+2 Awoko Cult members performing a ritual. Combat or disruption. |
-| 6 | **Environmental Catastrophe** — Collapsing ceiling, lava flow, flash flood. DC 14 Dex save, 4d6 on fail. |
+| 6 | **Environmental Catastrophe** — Collapsing ceiling, lava flow, flash flood. DC 14 Agility save, 4d6 on fail. |
 | 7-8 | **Trap + Ambush** — Trap triggers, then Anomalies attack from concealment. |
 | 9-10 | **Loot Chamber** — 2d6 × 100 Credits, 1 C-Rank core, 1 uncommon Rune. |
 | 11 | **Safe Room** — An inexplicable pocket of calm. Short rest possible. |
@@ -438,7 +438,7 @@ Roll 1d20 when traveling between locations:
 | 6 | **Trap Gauntlet** — 3 sequential traps, DC 15 each, 4d6 damage per trap |
 | 7 | **Cult Stronghold** — Blood Zealot + 6 Acolytes. Major combat encounter. |
 | 8-9 | **Treasure Hoard** — 2d8 × 200 Credits, 2 B-Rank cores, 1 rare Rune, 1 uncommon Relic. |
-| 10 | **Regent Manifestation** — The Regent's shadow appears briefly. All creatures DC 15 Wis save or frightened for 1 minute. It speaks: a warning or taunt. |
+| 10 | **Regent Manifestation** — The Regent's shadow appears briefly. All creatures DC 15 Sense save or frightened for 1 minute. It speaks: a warning or taunt. |
 
 ## Inside A-Rank Gates
 
@@ -446,8 +446,8 @@ Roll 1d20 when traveling between locations:
 |----|-----------|
 | 1-2 | 1d4 **A-Rank Anomalies** (major combat) |
 | 3 | **Mini-Boss** — Named A-Rank Anomaly with unique abilities. Drops rare Relic. |
-| 4-5 | **Reality Distortion** — Gravity shifts, time dilates, or dimensions fold. DC 16 Wis save or disoriented. |
-| 6 | **Mana Overload** — Extreme mana density. DC 15 Con save or all mana abilities cost double for 1 hour. |
+| 4-5 | **Reality Distortion** — Gravity shifts, time dilates, or dimensions fold. DC 16 Sense save or disoriented. |
+| 6 | **Mana Overload** — Extreme mana density. DC 15 Vitality save or all mana abilities cost double for 1 hour. |
 | 7 | **Ancient Loot** — Very rare Relic, 4d6 × 500 Credits in pure Anomaly cores. |
 | 8 | **Regent's Herald** — An Anomaly that speaks with the Regent's voice. Offers surrender. Refusing triggers combat with a B-Rank elite. |`,
 	},
@@ -598,7 +598,7 @@ At certain reputation thresholds, faction tensions boil over:
 
 ### Cult Escalation
 **Trigger**: Day 7, or party disrupts 2+ Cult operations.
-**Effect**: High Priestess Nyx accelerates her plan. The 10-day deadline for simultaneous Gate Breaks becomes a 7-day deadline (or 5-day if 3+ disruptions). Cult ambushes become more frequent (+2 to encounter rolls).
+**Effect**: The Hollow Mother accelerates her plan. The 10-day deadline for simultaneous Gate Breaks becomes a 7-day deadline (or 5-day if 3+ disruptions). Cult ambushes become more frequent (+2 to encounter rolls).
 
 ### The Alliance
 **Trigger**: Party reaches Allied with BOTH Bureau and Vermillion.

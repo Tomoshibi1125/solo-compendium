@@ -16,13 +16,11 @@ import {
 	useUserToolState,
 	writeLocalToolState,
 } from "@/hooks/useToolState";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { calculateDifficulty, calculateXP } from "@/lib/encounterMath";
 import { getCRXP } from "@/lib/experience";
-import { getStaticAnomalies } from "@/lib/ProtocolDataManager";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 import type { CompendiumAnomaly } from "@/types/compendium";
@@ -135,25 +133,16 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 	} as unknown as Anomaly;
 };
 
-const buildFallbackAnomalies = (searchQuery: string) => {
+const loadCanonicalAnomalies = async (
+	searchQuery: string,
+	campaignId?: string | null,
+): Promise<Anomaly[]> => {
 	const query = normalizeRegentSearch(searchQuery.trim().toLowerCase());
-	const staticList = getStaticAnomalies();
-	const filtered = query
-		? staticList.filter((Anomaly) => {
-				const description = Anomaly.description || "";
-				return (
-					normalizeRegentSearch(Anomaly.name.toLowerCase()).includes(query) ||
-					normalizeRegentSearch((Anomaly.type || "").toLowerCase()).includes(
-						query,
-					) ||
-					normalizeRegentSearch((Anomaly.rank || "").toLowerCase()).includes(
-						query,
-					) ||
-					normalizeRegentSearch(description.toLowerCase()).includes(query)
-				);
-			})
-		: staticList;
-	return filtered.slice(0, 50).map(mapStaticAnomaly);
+	const entries = await listCanonicalEntries("anomalies", query || undefined, {
+		campaignId,
+	});
+	const asAnomalies = entries as unknown as CompendiumAnomaly[];
+	return asAnomalies.slice(0, 50).map(mapStaticAnomaly);
 };
 
 // --- Component ---
@@ -255,27 +244,7 @@ export function EncounterBuilder({
 
 	const { data: anomalies = [], isLoading } = useQuery({
 		queryKey: ["anomalies", campaignId ?? "none", searchQuery],
-		queryFn: async () => {
-			const fallbackAnomalies = buildFallbackAnomalies(searchQuery);
-			if (!isSupabaseConfigured) return fallbackAnomalies;
-
-			const canonicalQuery = normalizeRegentSearch(searchQuery);
-			let query = supabase.from("compendium_Anomalies").select("*").limit(50);
-			if (canonicalQuery) query = query.ilike("name", `%${canonicalQuery}%`);
-
-			try {
-				const { data, error } = await query;
-				if (error || !data || data.length === 0) return fallbackAnomalies;
-				const filtered = await filterRowsBySourcebookAccess(
-					data as Anomaly[],
-					(m) => m.source_book,
-					{ campaignId: campaignId ?? null },
-				);
-				return filtered.length > 0 ? filtered : fallbackAnomalies;
-			} catch {
-				return fallbackAnomalies;
-			}
-		},
+		queryFn: () => loadCanonicalAnomalies(searchQuery, campaignId ?? null),
 	});
 
 	const totalXP = encounterAnomalies.reduce(

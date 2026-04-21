@@ -196,6 +196,17 @@ export interface StaticJob {
 		name: string;
 		description: string;
 	}>;
+	racialTraits?: Array<{
+		name: string;
+		description: string;
+		type?:
+			| "lineage"
+			| "physiology"
+			| "sense"
+			| "social"
+			| "innate-magic"
+			| string;
+	}>;
 	jobTraits?: Array<{
 		name: string;
 		description: string;

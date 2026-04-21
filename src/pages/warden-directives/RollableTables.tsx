@@ -8,6 +8,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
+import {
+	GATE_BIOMES,
+	GATE_COMPLICATIONS,
+	GATE_HAZARDS,
+	GATE_REWARDS,
+	GATE_THEMES,
+	NPC_MOTIVATIONS,
+	NPC_SECRETS,
+	TREASURE_TIERS,
+} from "@/data/wardenGeneratorContent";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -18,158 +28,7 @@ import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-// Rift Ascendant themed reference tables
-const GATE_COMPLICATIONS = [
-	"Mana surge causes random power effects",
-	"Rift structure shifts, changing layout",
-	"Anomaly reinforcements arrive",
-	"Environmental hazard activates (fire, ice, poison)",
-	"Time distortion slows/speeds ascendant team",
-	"Shadow corruption spreads",
-	"Rift boss awakens early",
-	"Core instability causes tremors",
-	"Mana depletion reduces power effectiveness",
-	"Illusionary duplicates confuse ascendants",
-	"Rift rank increases mid-encounter",
-	"Anomaly evolution triggers",
-];
-
-const GATE_REWARDS = [
-	"Standard core yield",
-	"Enhanced core (double value)",
-	"Rare material drop",
-	"Relic fragment",
-	"System favor bonus",
-	"Experience multiplier",
-	"Unique Anomaly part",
-	"Rift completion bonus",
-	"Hidden treasure cache",
-	"Regent blessing",
-	"Skill point bonus",
-	"Legendary core shard",
-];
-
-const GATE_HAZARDS = [
-	"Mana vortex (random teleportation)",
-	"Shadow trap (damage + condition)",
-	"Collapsing structure",
-	"Poisonous miasma",
-	"Extreme temperature zone",
-	"Gravity distortion",
-	"Time dilation field",
-	"Mana drain zone",
-	"Anomaly spawning point",
-	"Core radiation",
-	"Dimensional rift",
-	"System interference",
-];
-
-const NPC_MOTIVATIONS = [
-	"Seeking power through Rifts",
-	"Protecting loved ones",
-	"Revenge against Anomalies",
-	"Researching Rift phenomena",
-	"Building an ascendant organization",
-	"Seeking the Umbral Regent",
-	"Escaping past trauma",
-	"Proving their worth",
-	"Accumulating wealth",
-	"Uncovering secrets",
-	"Protecting humanity",
-	"Achieving immortality",
-];
-
-const NPC_SECRETS = [
-	"Former S-Rank ascendant (lost power)",
-	"Working for a Regent",
-	"Has a cursed relic",
-	"Knows about the reset",
-	"Is actually a Anomaly",
-	"Has System favor debt",
-	"Betrayed their Ascendant team",
-	"Seeking forbidden knowledge",
-	"Has a hidden Rift",
-	"Is being hunted",
-	"Knows the The Absolute personally",
-	"Has a duplicate identity",
-];
-
-const GATE_THEMES = [
-	"Abyssal Realm (undead focus)",
-	"Elemental Chaos (elemental focus)",
-	"Beast Domain (animal focus)",
-	"Construct Forge (construct focus)",
-	"Abyssal Depths (fiend focus)",
-	"Celestial Spire (celestial focus)",
-	"The Absolute's Domain (shadow focus)",
-	"Necromantic Lab (undead + construct)",
-	"Mana Nexus (elemental + aberration)",
-	"Umbral Regent's Memory",
-	"System Testing Ground",
-	"Post-Reset Fragment",
-];
-
-const GATE_BIOMES = [
-	"Urban ruins",
-	"Dark forest",
-	"Underground caverns",
-	"Floating platforms",
-	"Crystal caves",
-	"Shadow wasteland",
-	"Mana-infused jungle",
-	"Frozen tundra",
-	"Volcanic depths",
-	"Sky fortress",
-	"Underwater ruins",
-	"Dimensional pocket",
-];
-
-const TREASURE_TIERS = {
-	"E-Rank": [
-		"Common relic (dormant)",
-		"Basic materials",
-		"Standard credits",
-		"Minor consumables",
-		"Low-tier equipment",
-	],
-	"D-Rank": [
-		"Uncommon relic (dormant)",
-		"Quality materials",
-		"Enhanced credits",
-		"Useful consumables",
-		"Mid-tier equipment",
-	],
-	"C-Rank": [
-		"Rare relic (dormant/awakened)",
-		"Rare materials",
-		"Significant credits",
-		"Powerful consumables",
-		"High-tier equipment",
-	],
-	"B-Rank": [
-		"Very rare relic (awakened)",
-		"Exotic materials",
-		"Large credit sum",
-		"Legendary consumables",
-		"Masterwork equipment",
-	],
-	"A-Rank": [
-		"Legendary relic (awakened/resonant)",
-		"Legendary materials",
-		"Massive credit sum",
-		"Unique consumables",
-		"Artifact equipment",
-	],
-	"S-Rank": [
-		"Regent relic (resonant)",
-		"Regent materials",
-		"Incredible credit sum",
-		"Rift-granted consumables",
-		"Regent equipment",
-	],
-};
-
-function rollTable<T>(table: T[]): T {
+function rollTable<T>(table: readonly T[]): T {
 	return table[Math.floor(Math.random() * table.length)];
 }
 
@@ -249,7 +108,7 @@ For EACH result, provide:
 		await enhance("table-results", seed);
 	};
 
-	const roll = (key: string, table: string[]) => {
+	const roll = (key: string, table: readonly string[]) => {
 		const result = formatRegentVernacular(rollTable(table));
 		setResults((prev) => {
 			const next = { ...prev, [key]: result };

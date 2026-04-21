@@ -1,19 +1,26 @@
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
+import {
+	GATE_RANKS,
+	type GateRank,
+	TREASURE_ITEM_RARITIES,
+	TREASURE_MATERIALS,
+	TREASURE_RARITY_CHANCES,
+	TREASURE_RELIC_RARITIES,
+	TREASURE_TABLES,
+	type TreasureRarity,
+} from "@/data/compendium/wardenToolConfig";
+import { listCanonicalEntriesBatch } from "@/lib/canonicalCompendium";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-// Rarity system for treasure
-const RARITY_CHANCES = {
-	common: 0.6,
-	uncommon: 0.25,
-	rare: 0.1,
-	very_rare: 0.04,
-	legendary: 0.01,
-};
+export { GATE_RANKS, TREASURE_TABLES };
 
-export function generateRarity(): string {
+export function generateRarity(): TreasureRarity {
 	const roll = Math.random();
 	let cumulative = 0;
 
-	for (const [rarity, chance] of Object.entries(RARITY_CHANCES)) {
+	for (const [rarity, chance] of Object.entries(
+		TREASURE_RARITY_CHANCES,
+	) as Array<[TreasureRarity, number]>) {
 		cumulative += chance;
 		if (roll <= cumulative) {
 			return rarity;
@@ -22,8 +29,6 @@ export function generateRarity(): string {
 
 	return "common";
 }
-
-export const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
 
 export interface TreasureResult {
 	rank: string;
@@ -38,182 +43,72 @@ export interface TreasureResult {
 	description: string;
 }
 
-export const TREASURE_TABLES: Record<
-	string,
-	{
-		tenRange: [number, number];
-		hundredChance: number;
-		fiveChance: number;
-		oneChance: number;
-		dimeChance: number;
-		itemChance: number;
-		materialChance: number;
-		relicChance: number;
-		items: string[];
-		materials: string[];
-		relics: string[];
-	}
-> = {
-	E: {
-		tenRange: [10, 50],
-		hundredChance: 0,
-		fiveChance: 0.1,
-		oneChance: 0.4,
-		dimeChance: 0.7,
-		itemChance: 0.3,
-		materialChance: 0.2,
-		relicChance: 0,
-		items: [
-			"Vitreous Healing Draught",
-			"Low-Grade Mana Sliver",
-			"Ashen Dagger",
-			"Basic Hemostatic Wrap",
-			"Phosphorescent Flare",
-			"Reinforced Binding Cable",
-		],
-		materials: ["Common Echo-Core", "Raw Obsidian Ore", "Weak Mana Residue"],
-		relics: [],
-	},
-	D: {
-		tenRange: [50, 200],
-		hundredChance: 0.05,
-		fiveChance: 0.2,
-		oneChance: 0.5,
-		dimeChance: 0.6,
-		itemChance: 0.5,
-		materialChance: 0.4,
-		relicChance: 0.1,
-		items: [
-			"Coalesced Vitality Potion",
-			"Scintillating Mana Draught",
-			"Tempered Ferrum Blade",
-			"Laminated Hide Harness",
-			"Flickering Relic-Shard",
-			"Aether-Woven Cable",
-		],
-		materials: [
-			"Resonant Echo-Core",
-			"Refined Ferrum Ore",
-			"Crystallized Mana Fragment",
-			"Raw Umbral-Thin",
-		],
-		relics: ["Fractured Echo-Relic"],
-	},
-	C: {
-		tenRange: [200, 500],
-		hundredChance: 0.1,
-		fiveChance: 0.3,
-		oneChance: 0.6,
-		dimeChance: 0.4,
-		itemChance: 0.6,
-		materialChance: 0.5,
-		relicChance: 0.15,
-		items: [
-			"Greater Vitality Catalyst",
-			"Greater Prismatic Mana Phial",
-			"Cold-Forged Steel Arming",
-			"Reinforced Brigandine",
-			"Stable Relic-Shard",
-			"Rift-Touched Trinket",
-		],
-		materials: [
-			"Potent Echo-Core",
-			"Cold-Forged Steel Ingot",
-			"Refined Prismatic Crystal",
-			"Purified Umbral-Thin",
-			"Isolated Rift-Fleck",
-		],
-		relics: ["Pristine Echo-Shard", "Dormant Relic-Core"],
-	},
-	B: {
-		tenRange: [500, 1500],
-		hundredChance: 0.2,
-		fiveChance: 0.4,
-		oneChance: 0.5,
-		dimeChance: 0.2,
-		itemChance: 0.7,
-		materialChance: 0.6,
-		relicChance: 0.25,
-		items: [
-			"Sovereign Restoration Serum",
-			"Apex Mana Tincture",
-			"Vanguard's Masterwork Blade",
-			"Aether-Infused Plate",
-			"Resonating Relic-Component",
-			"High-Frequency Arcane Lens",
-		],
-		materials: [
-			"Elite Echo-Core",
-			"Mithril-Fused Ingot",
-			"Pure Aether-Crystal",
-			"Hyper-Condensed Umbral-Thin",
-			"Stable Rift-Shard",
-		],
-		relics: ["Integrated Relic-Lattice", "Pulsing Relic-Heart"],
-	},
-	A: {
-		tenRange: [1500, 5000],
-		hundredChance: 0.4,
-		fiveChance: 0.5,
-		oneChance: 0.3,
-		dimeChance: 0.1,
-		itemChance: 0.8,
-		materialChance: 0.7,
-		relicChance: 0.4,
-		items: [
-			"Architect's Vitality Catalyst",
-			"Architect's Mana Infusion",
-			"Singularity Blade Schematic",
-			"Null-Field Armor Schematic",
-			"Pristine Relic-Assembly",
-			"Umbral Null-Relic",
-		],
-		materials: [
-			"Eternal-Grade Echo-Core",
-			"Adamantine-Fused Ingot",
-			"Perfect Aether-Crystal",
-			"Singularity-Grade Umbral-Thin",
-			"Massive Rift-Core",
-			"The Absolute's Blessing Fragment",
-		],
-		relics: ["Near-Synchronized Relic", "Radiant Relic-Soul"],
-	},
-	S: {
-		tenRange: [5000, 20000],
-		hundredChance: 0.8,
-		fiveChance: 0.6,
-		oneChance: 0.4,
-		dimeChance: 0.2,
-		itemChance: 1.0,
-		materialChance: 0.9,
-		relicChance: 0.6,
-		items: [
-			"Ascendant's Divine Elixir",
-			"Eternal's Mana Singularity",
-			"Ethereal Artifact Schematic",
-			"Void-Reaper Armor Schematic",
-			"Omni-Relic Synthesizer",
-			"Sovereign Artifact Cluster",
-		],
-		materials: [
-			"God-Tier Eternal Core",
-			"Divine Aether-Metal",
-			"Infinite Mana Singularity",
-			"Void-Grade Umbral-Thin",
-			"Rift-Genesis Core",
-			"The Absolute's Total Blessing",
-		],
-		relics: [
-			"Sovereign Omni-Relic",
-			"Eternal's Fragmented Soul-Core",
-			"Umbral Regent Protocol",
-		],
-	},
-};
+function isGateRank(rank: string): rank is GateRank {
+	return GATE_RANKS.includes(rank as GateRank);
+}
 
-export function generateTreasure(rank: string): TreasureResult {
-	const table = TREASURE_TABLES[rank];
-	if (!table) {
+function normalizeTreasureRarity(rarity?: string | null): TreasureRarity {
+	const normalized = (rarity || "common").toLowerCase().replace(/_/g, "-");
+	if (
+		normalized === "common" ||
+		normalized === "uncommon" ||
+		normalized === "rare" ||
+		normalized === "very-rare" ||
+		normalized === "legendary"
+	) {
+		return normalized;
+	}
+	return "common";
+}
+
+function filterEntriesByRarity(
+	entries: StaticCompendiumEntry[],
+	allowedRarities: readonly TreasureRarity[],
+): StaticCompendiumEntry[] {
+	return entries.filter((entry) =>
+		allowedRarities.includes(normalizeTreasureRarity(entry.rarity)),
+	);
+}
+
+function pickUniqueNames(
+	entries: StaticCompendiumEntry[],
+	count: number,
+): string[] {
+	const pool = [...entries];
+	const selected: string[] = [];
+
+	while (pool.length > 0 && selected.length < count) {
+		const index = Math.floor(Math.random() * pool.length);
+		const [entry] = pool.splice(index, 1);
+		const name = entry.display_name || entry.name;
+		if (!selected.includes(name)) {
+			selected.push(name);
+		}
+	}
+
+	return selected;
+}
+
+function pickUniqueStrings(
+	entries: readonly string[],
+	count: number,
+): string[] {
+	const pool = [...entries];
+	const selected: string[] = [];
+
+	while (pool.length > 0 && selected.length < count) {
+		const index = Math.floor(Math.random() * pool.length);
+		const [entry] = pool.splice(index, 1);
+		if (!selected.includes(entry)) {
+			selected.push(entry);
+		}
+	}
+
+	return selected;
+}
+
+export async function generateTreasure(rank: string): Promise<TreasureResult> {
+	if (!isGateRank(rank)) {
 		return {
 			rank,
 			hundreds: 0,
@@ -227,6 +122,16 @@ export function generateTreasure(rank: string): TreasureResult {
 			description: `Invalid rank: ${rank}`,
 		};
 	}
+
+	const table = TREASURE_TABLES[rank];
+	const pools = await listCanonicalEntriesBatch([
+		"equipment",
+		"items",
+		"tattoos",
+		"sigils",
+		"relics",
+		"artifacts",
+	]);
 
 	const tens = Math.floor(
 		Math.random() * (table.tenRange[1] - table.tenRange[0] + 1) +
@@ -242,41 +147,63 @@ export function generateTreasure(rank: string): TreasureResult {
 	const dimes =
 		Math.random() < table.dimeChance ? Math.floor(Math.random() * 50) + 10 : 0;
 
-	const items: string[] = [];
+	const itemCandidates = filterEntriesByRarity(
+		[
+			...(pools.get("equipment") || []),
+			...(pools.get("items") || []),
+			...(pools.get("tattoos") || []),
+			...(pools.get("sigils") || []),
+		],
+		TREASURE_ITEM_RARITIES[rank],
+	);
+	const fallbackItemCandidates = [
+		...(pools.get("equipment") || []),
+		...(pools.get("items") || []),
+		...(pools.get("tattoos") || []),
+		...(pools.get("sigils") || []),
+	];
+
 	const numItems =
 		Math.random() < table.itemChance
 			? rank === "S"
 				? 2 + Math.floor(Math.random() * 3)
 				: 1 + Math.floor(Math.random() * 2)
 			: 0;
-	for (let i = 0; i < numItems; i += 1) {
-		const item = table.items[Math.floor(Math.random() * table.items.length)];
-		if (!items.includes(item)) {
-			items.push(item);
-		}
-	}
+	const items =
+		numItems > 0
+			? pickUniqueNames(
+					itemCandidates.length > 0 ? itemCandidates : fallbackItemCandidates,
+					numItems,
+				)
+			: [];
 
-	const materials: string[] = [];
 	const numMaterials =
 		Math.random() < table.materialChance
 			? 1 + Math.floor(Math.random() * 2)
 			: 0;
-	for (let i = 0; i < numMaterials; i += 1) {
-		const material =
-			table.materials[Math.floor(Math.random() * table.materials.length)];
-		if (!materials.includes(material)) {
-			materials.push(material);
-		}
-	}
+	const materials =
+		numMaterials > 0
+			? pickUniqueStrings(TREASURE_MATERIALS[rank], numMaterials)
+			: [];
 
-	const relics: string[] = [];
+	const relicCandidates = filterEntriesByRarity(
+		[...(pools.get("relics") || []), ...(pools.get("artifacts") || [])],
+		TREASURE_RELIC_RARITIES[rank],
+	);
+	const fallbackRelicCandidates = [
+		...(pools.get("relics") || []),
+		...(pools.get("artifacts") || []),
+	];
 	const numRelics = Math.random() < table.relicChance ? 1 : 0;
-	for (let i = 0; i < numRelics; i += 1) {
-		const relic = table.relics[Math.floor(Math.random() * table.relics.length)];
-		if (!relics.includes(relic)) {
-			relics.push(relic);
-		}
-	}
+	const relics =
+		numRelics > 0
+			? pickUniqueNames(
+					relicCandidates.length > 0
+						? relicCandidates
+						: fallbackRelicCandidates,
+					numRelics,
+				)
+			: [];
 
 	const descriptions: string[] = [];
 	const displayItems = items.map(formatRegentVernacular);

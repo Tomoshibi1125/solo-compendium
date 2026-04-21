@@ -2,6 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import {
+	findCanonicalEntryByName,
+	listCanonicalEntries,
+} from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalEquipment,
@@ -91,34 +95,27 @@ export const useEquipment = (characterId: string) => {
 				return equipment;
 			}
 
-			const uniqueNames = Array.from(
-				new Set(equipment.map((item) => item.name).filter(Boolean)),
+			const uniqueNames = new Set(
+				equipment.map((item) => item.name).filter(Boolean),
 			);
-			if (uniqueNames.length === 0) {
+			if (uniqueNames.size === 0) {
 				return equipment;
 			}
 
-			const { data: compendiumEquipmentRow, error: compendiumError } =
-				await supabase
-					.from("compendium_equipment")
-					.select("name, source_book")
-					.in("name", uniqueNames);
-
-			if (compendiumError) {
-				logErrorWithContext(
-					compendiumError,
-					"useEquipment (compendium source lookup)",
-				);
-				if (cacheKey) {
-					writeCachedEquipment(cacheKey, equipment);
-				}
-				return equipment;
-			}
+			const campaignId = await getCharacterCampaignId(characterId);
+			const allCanonicalEquipment = await listCanonicalEntries("equipment");
+			const accessibleCanonicalEquipment = await filterRowsBySourcebookAccess(
+				allCanonicalEquipment,
+				(entry) => entry.source_book,
+				{ campaignId },
+			);
 
 			const sourceBookByName = new Map<string, string | null>();
-			(compendiumEquipmentRow || []).forEach((entry) => {
-				sourceBookByName.set(entry.name, entry.source_book ?? null);
-			});
+			for (const entry of allCanonicalEquipment) {
+				if (uniqueNames.has(entry.name)) {
+					sourceBookByName.set(entry.name, entry.source_book ?? null);
+				}
+			}
 
 			if (sourceBookByName.size === 0) {
 				if (cacheKey) {
@@ -127,18 +124,8 @@ export const useEquipment = (characterId: string) => {
 				return equipment;
 			}
 
-			const campaignId = await getCharacterCampaignId(characterId);
-			const accessibleCompendiumEquipmentRow =
-				await filterRowsBySourcebookAccess(
-					(compendiumEquipmentRow || []) as Array<{
-						name: string;
-						source_book: string | null;
-					}>,
-					(entry) => entry.source_book,
-					{ campaignId },
-				);
 			const accessibleNames = new Set(
-				accessibleCompendiumEquipmentRow.map((entry) => entry.name),
+				accessibleCanonicalEquipment.map((entry) => entry.name),
 			);
 
 			const filtered = equipment.filter((item) => {
@@ -211,24 +198,14 @@ export const useEquipment = (characterId: string) => {
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const { data: compendiumEquipmentRow, error: compendiumError } =
-				await supabase
-					.from("compendium_equipment")
-					.select("source_book")
-					.eq("name", item.name)
-					.limit(1)
-					.maybeSingle();
-
-			if (compendiumError) {
-				logErrorWithContext(
-					compendiumError,
-					"useEquipment.addEquipment (compendium source lookup)",
-				);
-			}
+			const canonicalEntry = await findCanonicalEntryByName(
+				"equipment",
+				item.name,
+			);
 
 			if (
-				compendiumEquipmentRow &&
-				!(await isSourcebookAccessible(compendiumEquipmentRow.source_book, {
+				canonicalEntry &&
+				!(await isSourcebookAccessible(canonicalEntry.source_book, {
 					campaignId,
 				}))
 			) {

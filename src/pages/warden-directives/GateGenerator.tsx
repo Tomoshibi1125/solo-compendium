@@ -13,64 +13,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { DungeonMapGenerator } from "@/components/warden-directives/DungeonMapGenerator";
+import {
+	RIFT_BIOMES,
+	RIFT_BOSS_TYPES,
+	RIFT_COMPLICATIONS,
+	RIFT_THEMES,
+	WARDEN_RANKS,
+} from "@/data/wardenGeneratorContent";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
-
-const RIFT_RANKS = ["E", "D", "C", "B", "A", "S"];
-const RIFT_THEMES = [
-	"Abyssal Realm",
-	"Elemental Chaos",
-	"Beast Domain",
-	"Construct Forge",
-	"Abyssal Depths",
-	"Celestial Spire",
-	"The Absolute's Domain",
-	"Necromantic Lab",
-	"Mana Nexus",
-	"Umbral Regent's Memory",
-	"System Testing Ground",
-	"Post-Reset Fragment",
-];
-const RIFT_BIOMES = [
-	"Urban ruins",
-	"Dark forest",
-	"Underground caverns",
-	"Floating platforms",
-	"Crystal caves",
-	"Shadow wasteland",
-	"Mana-infused jungle",
-	"Frozen tundra",
-	"Volcanic depths",
-	"Sky fortress",
-	"Underwater ruins",
-	"Dimensional pocket",
-];
-const BOSS_TYPES = [
-	"Umbral Regent Fragment",
-	"System Guardian",
-	"Corrupted Ascendant",
-	"Ancient Rift Beast",
-	"Regent's Shadow",
-	"Rift Core Manifestation",
-	"Time-Lost Entity",
-	"Dimensional Breach",
-];
-const COMPLICATIONS = [
-	"Mana surge causes random effects",
-	"Rift structure shifts",
-	"Anomaly reinforcements",
-	"Environmental hazard activates",
-	"Time distortion",
-	"Shadow corruption spreads",
-	"Boss awakens early",
-	"Core instability",
-	"Mana depletion",
-	"Illusionary duplicates",
-];
 
 interface GeneratedRift {
 	rank: string;
@@ -83,20 +38,23 @@ interface GeneratedRift {
 
 function generateRift(rank?: string): GeneratedRift {
 	const selectedRank =
-		rank || RIFT_RANKS[Math.floor(Math.random() * RIFT_RANKS.length)];
+		rank || WARDEN_RANKS[Math.floor(Math.random() * WARDEN_RANKS.length)];
 	const theme = formatRegentVernacular(
 		RIFT_THEMES[Math.floor(Math.random() * RIFT_THEMES.length)],
 	);
 	const biome = RIFT_BIOMES[Math.floor(Math.random() * RIFT_BIOMES.length)];
 	const boss = formatRegentVernacular(
-		BOSS_TYPES[Math.floor(Math.random() * BOSS_TYPES.length)],
+		RIFT_BOSS_TYPES[Math.floor(Math.random() * RIFT_BOSS_TYPES.length)],
 	);
 	const numComplications = Math.floor(Math.random() * 3) + 1;
 	const complications = [
 		...new Set(
 			Array.from(
 				{ length: numComplications },
-				() => COMPLICATIONS[Math.floor(Math.random() * COMPLICATIONS.length)],
+				() =>
+					RIFT_COMPLICATIONS[
+						Math.floor(Math.random() * RIFT_COMPLICATIONS.length)
+					],
 			),
 		),
 	].map(formatRegentVernacular);
@@ -336,7 +294,7 @@ READ-ALOUD ENTRY:
 										RIFT RANK (Optional)
 									</Label>
 									<div className="flex flex-wrap gap-2">
-										{RIFT_RANKS.map((rank) => (
+										{WARDEN_RANKS.map((rank) => (
 											<Button
 												key={rank}
 												size="sm"

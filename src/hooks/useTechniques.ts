@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	addLocalTechnique,
 	isLocalCharacterId,
@@ -17,6 +18,20 @@ export interface CharacterTechnique extends TechniqueRow {
 	technique?: CompendiumTechnique;
 }
 
+async function hydrateTechniquesById(
+	ids: string[],
+): Promise<Map<string, CompendiumTechnique>> {
+	if (ids.length === 0) return new Map();
+	const entries = await listCanonicalEntries("techniques");
+	const byId = new Map<string, CompendiumTechnique>();
+	for (const entry of entries) {
+		if (ids.includes(entry.id)) {
+			byId.set(entry.id, entry as unknown as CompendiumTechnique);
+		}
+	}
+	return byId;
+}
+
 /**
  * Hook to manage character techniques
  */
@@ -28,34 +43,27 @@ export const useTechniques = (characterId: string) => {
 		queryFn: async (): Promise<CharacterTechnique[]> => {
 			if (isLocalCharacterId(characterId)) {
 				const localTechs = listLocalTechniques(characterId);
-
-				// Fetch compendium info for local techs
-				const { data: compendiumData, error: compError } = await supabase
-					.from("compendium_techniques")
-					.select("*")
-					.in(
-						"id",
-						localTechs.map((t) => t.technique_id),
-					);
-
-				if (compError) throw compError;
-
+				const byId = await hydrateTechniquesById(
+					localTechs.map((t) => t.technique_id),
+				);
 				return localTechs.map((t) => ({
 					...t,
-					technique: compendiumData?.find((ct) => ct.id === t.technique_id),
+					technique: byId.get(t.technique_id),
 				}));
 			}
 
 			const { data, error } = await supabase
 				.from("character_techniques")
-				.select(`
-					*,
-					technique:compendium_techniques(*)
-				`)
+				.select("*")
 				.eq("character_id", characterId);
 
 			if (error) throw error;
-			return data as CharacterTechnique[];
+			const rows = (data || []) as TechniqueRow[];
+			const byId = await hydrateTechniquesById(rows.map((r) => r.technique_id));
+			return rows.map((row) => ({
+				...row,
+				technique: byId.get(row.technique_id),
+			}));
 		},
 		enabled: !!characterId,
 	});
@@ -120,16 +128,12 @@ export const useCompendiumTechniques = () => {
 	return useQuery({
 		queryKey: ["compendium-techniques"],
 		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("compendium_techniques")
-				.select("*")
-				.order("name", { ascending: true });
-
-			if (error) {
-				console.error("Error fetching compendium techniques:", error);
-				throw error;
-			}
-			return data as CompendiumTechnique[];
+			const entries = await listCanonicalEntries("techniques");
+			return entries
+				.slice()
+				.sort((a, b) =>
+					a.name.localeCompare(b.name),
+				) as unknown as CompendiumTechnique[];
 		},
 	});
 };

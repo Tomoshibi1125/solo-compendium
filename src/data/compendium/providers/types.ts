@@ -19,6 +19,8 @@ export interface StaticCompendiumEntry {
 	fusion_theme?: string | null;
 	equipment_type?: string | null;
 	ability?: string | null;
+	properties?: string[] | Record<string, Json> | null;
+	weight?: number | null;
 	rune_type?: string | null;
 	rune_category?: string | null;
 	rune_level?: number | null;
@@ -167,6 +169,20 @@ export interface StaticCompendiumEntry {
 	body_part?: string | null;
 	attunement?: boolean | null;
 	effects?: Record<string, Json> | null;
+	// Regent/generic title alias
+	title?: string | null;
+	// Shadow soldier runtime fields
+	shadow_type?: string | null;
+	summon_requirements?: string | null;
+	hit_points?: number | null;
+	// Sigil/rune runtime fields
+	effect_description?: string | null;
+	active_feature?: Record<string, Json> | null;
+	passive_bonuses?: Record<string, Json> | null;
+	can_inscribe_on?: string[] | null;
+	inscription_difficulty?: number | null;
+	// Supabase-shape aliases for techniques
+	level_requirement?: number | null;
 }
 
 export interface StaticDataProvider {

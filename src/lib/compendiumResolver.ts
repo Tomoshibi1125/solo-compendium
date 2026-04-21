@@ -1,12 +1,16 @@
-import type { StaticCompendiumEntry } from "@/data/compendium/providers";
+import type {
+	StaticCompendiumEntry,
+	StaticDataProvider,
+} from "@/data/compendium/providers/types";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
-import { logger } from "@/lib/logger";
 import {
-	filterRowsBySourcebookAccess,
-	isSourcebookAccessible,
-} from "@/lib/sourcebookAccess";
+	isStaticCanonicalEntryType,
+	listCanonicalEntries,
+} from "@/lib/canonicalCompendium";
+import { logger } from "@/lib/logger";
+import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import type {
 	CompendiumAnomaly,
 	CompendiumBackground,
@@ -75,6 +79,8 @@ export type CompendiumEntity =
 	| CompendiumSovereign
 	| CompendiumDeity;
 
+export type { StaticDataProvider };
+
 const supabaseTableMap: Partial<
 	Record<EntryType, keyof Database["public"]["Tables"]>
 > = {
@@ -102,121 +108,15 @@ const legacyIdMap: Partial<Record<EntryType, Record<string, string>>> = {
 	},
 };
 
-export type StaticDataProvider = {
-	getJobs: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getPaths: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getPowers: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRunes: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRelics: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getAnomalies: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getBackgrounds: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getConditions: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getRegents: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getFeats: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getSkills: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getItems: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getSpells: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getTechniques: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getLocations: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
-	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
-};
-
-let staticProviderPromise: Promise<StaticDataProvider> | null = null;
-
-const loadStaticProvider = (): Promise<StaticDataProvider> => {
-	if (!staticProviderPromise) {
-		staticProviderPromise = import("@/data/compendium/providers").then(
-			(module) => module.staticDataProvider as StaticDataProvider,
-		);
-	}
-	return staticProviderPromise;
-};
-
 const getStaticEntries = async (
 	type: EntryType,
 	search?: string,
 ): Promise<StaticCompendiumEntry[] | null> => {
-	const provider = await loadStaticProvider();
-	let entries: StaticCompendiumEntry[] | null;
-	switch (type) {
-		case "jobs":
-			entries = await provider.getJobs(search);
-			break;
-		case "paths":
-			entries = await provider.getPaths(search);
-			break;
-		case "powers":
-			entries = await provider.getPowers(search);
-			break;
-		case "runes":
-			entries = await provider.getRunes(search);
-			break;
-		case "relics":
-			entries = await provider.getRelics(search);
-			break;
-		case "anomalies":
-			entries = await provider.getAnomalies(search);
-			break;
-		case "backgrounds":
-			entries = await provider.getBackgrounds(search);
-			break;
-		case "conditions":
-			entries = await provider.getConditions(search);
-			break;
-		case "regents":
-			entries = await provider.getRegents(search);
-			break;
-		case "feats":
-			entries = await provider.getFeats(search);
-			break;
-		case "sigils":
-			entries = await provider.getSigils(search);
-			break;
-		case "skills":
-			entries = await provider.getSkills(search);
-			break;
-		case "shadow-soldiers":
-			entries = await provider.getShadowSoldiers(search);
-			break;
-		case "items":
-			entries = await provider.getItems(search);
-			break;
-		case "spells":
-			entries = await provider.getSpells(search);
-			break;
-		case "techniques":
-			entries = await provider.getTechniques(search);
-			break;
-		case "artifacts":
-			entries = await provider.getArtifacts(search);
-			break;
-		case "locations":
-			entries = await provider.getLocations(search);
-			break;
-		case "tattoos":
-			entries = await provider.getTattoos(search);
-			break;
-		case "pantheon":
-		case "deities":
-			entries = await provider.getPantheon(search);
-			break;
-		case "equipment":
-			entries = await provider.getItems(search);
-			break;
-		default:
-			entries = null;
-			break;
-	}
-
-	if (!entries) {
+	if (!isStaticCanonicalEntryType(type)) {
 		return null;
 	}
 
-	return filterRowsBySourcebookAccess(entries, (entry) => entry.source_book);
+	return listCanonicalEntries(type, search);
 };
 
 export async function listStaticEntries(
@@ -236,42 +136,63 @@ export async function resolveRef(
 	type: EntryType,
 	id: string,
 ): Promise<CompendiumEntity | null> {
+	if (id.startsWith("marketplace:") && isSupabaseConfigured) {
+		try {
+			const realId = id.replace("marketplace:", "");
+			const { data, error } = await supabase
+				.from("marketplace_items")
+				.select("id, title, description, content")
+				.eq("id", realId)
+				.maybeSingle();
+
+			if (error) {
+				logger.warn(`Error resolving marketplace item ${id}:`, error);
+				return null;
+			}
+
+			if (data?.content && typeof data.content === "object") {
+				const content = data.content as Record<string, unknown>;
+				return {
+					...content,
+					id: `marketplace:${data.id}`,
+					name: data.title || content.name || "Unknown Item",
+					description: data.description || content.description || null,
+					type,
+				} as unknown as CompendiumEntity;
+			}
+			return null;
+		} catch (error) {
+			logger.warn(`Exception resolving marketplace item ${id}:`, error);
+			return null;
+		}
+	}
+
+	const resolvedId = legacyIdMap[type]?.[id] ?? id;
+	const staticEntries = await listStaticEntries(type);
+	if (staticEntries) {
+		const entry = staticEntries.find((item) => item.id === resolvedId);
+		if (entry) {
+			const resolvedName = entry.display_name || entry.name;
+			return {
+				...entry,
+				id: entry.id,
+				name: resolvedName,
+				type,
+				description:
+					typeof entry.description === "string" ? entry.description : null,
+			} as unknown as CompendiumEntity;
+		}
+	}
+
 	const tableName = supabaseTableMap[type];
 
 	if (isSupabaseConfigured && tableName) {
 		try {
-			// Handle marketplace items specifically
-			if (id.startsWith("marketplace:")) {
-				const realId = id.replace("marketplace:", "");
-				const { data, error } = await supabase
-					.from("marketplace_items")
-					.select("id, title, description, content")
-					.eq("id", realId)
-					.maybeSingle();
-
-				if (error) {
-					logger.warn(`Error resolving marketplace item ${id}:`, error);
-					return null;
-				}
-
-				if (data && data.content && typeof data.content === "object") {
-					const content = data.content as Record<string, unknown>;
-					return {
-						...content,
-						id: `marketplace:${data.id}`,
-						name: data.title || content.name || "Unknown Item",
-						description: data.description || content.description || null,
-						type,
-					} as unknown as CompendiumEntity;
-				}
-				return null;
-			}
-
 			// Standard compendium entity resolution
 			const { data, error } = await supabase
 				.from(tableName as never)
 				.select("*")
-				.eq("id", id)
+				.eq("id", resolvedId)
 				.maybeSingle();
 
 			if (error) {
@@ -330,26 +251,7 @@ export async function resolveRef(
 		}
 	}
 
-	const staticEntries = await listStaticEntries(type);
-	if (!staticEntries) {
-		return null;
-	}
-
-	const resolvedId = legacyIdMap[type]?.[id] ?? id;
-	const entry = staticEntries.find((item) => item.id === resolvedId);
-	if (!entry) {
-		return null;
-	}
-
-	const resolvedName = entry.display_name || entry.name;
-	return {
-		...entry,
-		id: entry.id,
-		name: resolvedName,
-		type,
-		description:
-			typeof entry.description === "string" ? entry.description : null,
-	} as unknown as CompendiumEntity;
+	return null;
 }
 
 /**

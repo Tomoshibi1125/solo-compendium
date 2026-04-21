@@ -122,10 +122,19 @@ export function VTTAssetBrowser({
 	);
 	const [previewAsset, setPreviewAsset] = useState<VTTAsset | null>(null);
 	const [isUploading, setIsUploading] = useState(false);
+	const [recentAssetIds, setRecentAssetIds] = useState<string[]>(() =>
+		getRecentAssetIds(),
+	);
 	const [showRecent, setShowRecent] = useState(false);
 	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 	const uploadRef = useRef<HTMLInputElement>(null);
 	const gridRef = useRef<HTMLDivElement>(null);
+	const assetLibrary = useMemo(() => getVTTAssetLibrary(), []);
+	const assetCategories = useMemo(() => getVTTAssetCategories(), []);
+	const assetLookup = useMemo(
+		() => new Map(assetLibrary.map((asset) => [asset.id, asset])),
+		[assetLibrary],
+	);
 
 	// Debounce search for performance with 400+ assets
 	useEffect(() => {
@@ -136,7 +145,7 @@ export function VTTAssetBrowser({
 	// Reset pagination when filters change
 	useEffect(() => {
 		setVisibleCount(PAGE_SIZE);
-	}, []);
+	}, [activeCategory, debouncedSearch]);
 
 	const allResults = useMemo(
 		() => searchAssets(debouncedSearch, activeCategory ?? undefined),
@@ -148,11 +157,18 @@ export function VTTAssetBrowser({
 		[allResults, visibleCount],
 	);
 	const hasMore = visibleCount < allResults.length;
+	const activeCategoryLabel = useMemo(
+		() => assetCategories.find((category) => category.id === activeCategory)?.label,
+		[activeCategory, assetCategories],
+	);
 
-	const ids = getRecentAssetIds();
-	const recentAssets = ids
-		.map((id) => getVTTAssetLibrary().find((a) => a.id === id))
-		.filter(Boolean) as VTTAsset[];
+	const recentAssets = useMemo(
+		() =>
+			recentAssetIds
+				.map((id) => assetLookup.get(id))
+				.filter(Boolean) as VTTAsset[],
+		[assetLookup, recentAssetIds],
+	);
 	const trackAndPreview = useCallback((asset: VTTAsset) => {
 		setPreviewAsset((prev) => (prev?.id === asset.id ? null : asset));
 	}, []);
@@ -160,6 +176,7 @@ export function VTTAssetBrowser({
 	const handleUseAsset = useCallback(
 		(asset: VTTAsset, action: "map" | "token" | "effect" | "handout") => {
 			addRecentAssetId(asset.id);
+			setRecentAssetIds(getRecentAssetIds());
 			setShowRecent(false);
 			if (action === "map") onUseAsMap?.(asset.imageUrl, asset.name);
 			else if (action === "token") onUseAsToken?.(asset.imageUrl, asset.name);
@@ -261,7 +278,7 @@ export function VTTAssetBrowser({
 				<Input
 					value={search}
 					onChange={(e) => setSearch(e.target.value)}
-					placeholder={`Search ${getVTTAssetLibrary().length} assets...`}
+					placeholder={`Search ${assetLibrary.length} assets...`}
 					className="pl-8 text-xs h-8"
 				/>
 				{search && (
@@ -288,9 +305,9 @@ export function VTTAssetBrowser({
 							: "border-border/50 text-foreground/70 hover:bg-muted/30",
 					)}
 				>
-					All ({getVTTAssetLibrary().length})
+					All ({assetLibrary.length})
 				</button>
-				{getVTTAssetCategories().map((cat) => (
+				{assetCategories.map((cat) => (
 					<button
 						type="button"
 						key={cat.id}
@@ -408,8 +425,7 @@ export function VTTAssetBrowser({
 			{/* Results count */}
 			<div className="text-[10px] text-foreground/70 px-1">
 				{allResults.length} asset{allResults.length !== 1 ? "s" : ""} found
-				{activeCategory &&
-					` in ${getVTTAssetCategories().find((c) => c.id === activeCategory)?.label}`}
+				{activeCategory && activeCategoryLabel && ` in ${activeCategoryLabel}`}
 				{hasMore && ` (showing ${results.length})`}
 			</div>
 

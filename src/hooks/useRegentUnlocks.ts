@@ -245,18 +245,26 @@ export function useAvailableRegents(characterId: string) {
 				.select("regent_id")
 				.eq("character_id", characterId);
 
-			const unlockedRegentIds = currentUnlocks?.map((u) => u.regent_id) || [];
+			const unlockedRegentIds = new Set(
+				currentUnlocks?.map((u) => u.regent_id) || [],
+			);
 
-			// Get all regents that aren't already unlocked
-			const { data, error } = await supabase
-				.from("compendium_regents")
-				.select("*")
-				.not("id", "in", `(${unlockedRegentIds.join(",")})`)
-				.order("rank", { ascending: false })
-				.order("name", { ascending: true });
-
-			if (error) throw error;
-			return data;
+			// Get all regents from canonical static, filter out already-unlocked.
+			const { listCanonicalEntries } = await import(
+				"@/lib/canonicalCompendium"
+			);
+			const entries = await listCanonicalEntries("regents");
+			return entries
+				.filter((regent) => !unlockedRegentIds.has(regent.id))
+				.sort((a, b) => {
+					const rankOrder = ["S", "A", "B", "C", "D", "E"];
+					const aRankIdx = rankOrder.indexOf(a.rank || "");
+					const bRankIdx = rankOrder.indexOf(b.rank || "");
+					const aRank = aRankIdx === -1 ? rankOrder.length : aRankIdx;
+					const bRank = bRankIdx === -1 ? rankOrder.length : bRankIdx;
+					if (aRank !== bRank) return aRank - bRank;
+					return a.name.localeCompare(b.name);
+				});
 		},
 		enabled: !!characterId,
 	});

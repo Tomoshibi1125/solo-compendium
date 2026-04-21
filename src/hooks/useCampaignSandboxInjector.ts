@@ -2,7 +2,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { massiveSandboxModule } from "@/data/compendium/ascendant-sandbox-module";
 import { useToast } from "@/hooks/use-toast";
-import { saveCampaignToolState } from "@/hooks/useToolState";
+import {
+	saveCampaignToolState,
+	writeLocalToolState,
+} from "@/hooks/useToolState";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import {
@@ -193,14 +196,36 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				}));
 
 				if (scenes.length > 0) {
-					await saveCampaignToolState<{
-						scenes: VTTScene[];
-						currentSceneId: string | null;
-					}>(targetId, user?.id || "guest", "vtt-scenes", {
+					const scenesPayload = {
 						scenes,
 						currentSceneId: scenes[0].id,
-					});
-					sceneCount = scenes.length;
+					};
+					// Canonical tool key — MUST match what VTTEnhanced.tsx and PlayerMapView.tsx
+					// read via useCampaignToolState. Using "vtt-scenes" (hyphen) would be a silent
+					// no-op; the consumer reads "vtt_scenes" (underscore) without any session id.
+					const VTT_SCENES_TOOL_KEY = "vtt_scenes";
+					// Legacy localStorage key pattern used by the VTT pages for offline fallback
+					// (see VTTEnhanced.tsx legacyStorageKey + useCampaignToolState storageKey).
+					const legacyStorageKey = `vtt-scenes-${targetId}`;
+
+					if (isLocalMode()) {
+						// Guest / offline mode: write directly to localStorage so the VTT
+						// legacy-fallback layer picks scenes up on next mount.
+						writeLocalToolState(legacyStorageKey, scenesPayload);
+						sceneCount = scenes.length;
+					} else {
+						// Cloud mode: persist to Supabase campaign_tool_states via the
+						// canonical tool key. Also mirror into localStorage so VTT hydration
+						// has a zero-latency fallback if the remote query hasn't resolved yet.
+						await saveCampaignToolState<typeof scenesPayload>(
+							targetId,
+							user?.id || "guest",
+							VTT_SCENES_TOOL_KEY,
+							scenesPayload,
+						);
+						writeLocalToolState(legacyStorageKey, scenesPayload);
+						sceneCount = scenes.length;
+					}
 				}
 			} catch (sceneErr) {
 				console.error("[SandboxInjector] VTT scene section error:", sceneErr);

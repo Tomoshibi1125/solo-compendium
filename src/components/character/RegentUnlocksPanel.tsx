@@ -30,8 +30,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
-import { supabase } from "@/integrations/supabase/client";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
@@ -151,36 +150,23 @@ export function RegentUnlocksPanel({
 	const { toast } = useToast();
 	const ascendantTools = useAscendantTools();
 
-	// Fetch all regents
+	// Fetch all regents from canonical static with entitlement filtering.
 	const { data: allRegents = [] } = useQuery({
 		queryKey: ["all-regents", characterId, campaignId],
 		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("compendium_regents" as never)
-				.select("id, name, title, theme, source_book")
-				.order("name");
-
-			if (!error && data && data.length > 0) {
-				return filterRowsBySourcebookAccess(
-					data,
-					(regent) =>
-						(regent as Record<string, unknown>).source_book as string | null,
-					{ campaignId },
-				);
-			}
-
-			// Static fallback
-			const { staticDataProvider } = await import(
-				"@/data/compendium/providers"
-			);
-			const staticRegents = await staticDataProvider.getRegents("");
-			return staticRegents.map((r) => ({
-				id: r.id,
-				name: r.name,
-				title: r.title ?? null,
-				theme: r.theme ?? null,
-				source_book: r.source_book ?? "Rift Ascendant Canon",
-			}));
+			const entries = await listCanonicalEntries("regents", undefined, {
+				campaignId,
+			});
+			return entries
+				.slice()
+				.sort((a, b) => a.name.localeCompare(b.name))
+				.map((r) => ({
+					id: r.id,
+					name: r.name,
+					title: r.title ?? null,
+					theme: r.theme ?? null,
+					source_book: r.source_book ?? "Rift Ascendant Canon",
+				}));
 		},
 	});
 

@@ -32,6 +32,16 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import {
+	RELIC_BALANCE_GUIDELINES,
+	RELIC_PROPERTY_TYPES,
+	RELIC_RANKS,
+	RELIC_RARITY_LEVELS,
+	RELIC_TYPES,
+	type RelicPropertyType,
+	type RelicRarity,
+	type RelicType,
+} from "@/data/compendium/wardenToolConfig";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -42,56 +52,19 @@ interface RelicProperty {
 	id: string;
 	name: string;
 	description: string;
-	type: "passive" | "active" | "bonus";
+	type: RelicPropertyType;
 }
 
 export interface Relic {
 	id: string;
 	name: string;
-	type: "weapon" | "armor" | "accessory" | "tool";
+	type: RelicType;
 	rank: string;
 	description: string;
 	properties: RelicProperty[];
 	attunement: boolean;
-	rarity: "common" | "uncommon" | "rare" | "very-rare" | "legendary";
+	rarity: RelicRarity;
 }
-
-const RELIC_RANKS = ["E", "D", "C", "B", "A", "S"];
-const RELIC_TYPES = ["weapon", "armor", "accessory", "tool"];
-const RARITY_LEVELS = ["common", "uncommon", "rare", "very-rare", "legendary"];
-
-const BALANCE_GUIDELINES = {
-	common: {
-		properties: 1,
-		maxBonus: 1,
-		description:
-			"Basic relics with simple benefits. +1 to attacks or AC, minor utility.",
-	},
-	uncommon: {
-		properties: 1 - 2,
-		maxBonus: 2,
-		description:
-			"Improved relics. +1 to attacks and damage, or +2 AC, minor active abilities.",
-	},
-	rare: {
-		properties: 2 - 3,
-		maxBonus: 3,
-		description:
-			"Powerful relics. +2 bonuses, significant active abilities, or unique effects.",
-	},
-	"very-rare": {
-		properties: 3 - 4,
-		maxBonus: 4,
-		description:
-			"Exceptional relics. +3 bonuses, powerful active abilities, multiple effects.",
-	},
-	legendary: {
-		properties: 4 - 5,
-		maxBonus: 5,
-		description:
-			"Artifact-level relics. +4 or higher bonuses, game-changing abilities.",
-	},
-};
 
 const RelicWorkshop = () => {
 	const navigate = useNavigate();
@@ -343,7 +316,7 @@ READ-ALOUD DISCOVERY:
 		void saveNow(debouncedRelics);
 	}, [debouncedRelics, saveNow]);
 
-	const guideline = BALANCE_GUIDELINES[currentRelic.rarity];
+	const guideline = RELIC_BALANCE_GUIDELINES[currentRelic.rarity];
 
 	return (
 		<Layout>
@@ -445,7 +418,7 @@ READ-ALOUD DISCOVERY:
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												{RARITY_LEVELS.map((rarity) => (
+												{RELIC_RARITY_LEVELS.map((rarity) => (
 													<SelectItem key={rarity} value={rarity}>
 														{rarity.charAt(0).toUpperCase() +
 															rarity.slice(1).replace("-", " ")}
@@ -519,9 +492,11 @@ READ-ALOUD DISCOVERY:
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="passive">Passive</SelectItem>
-												<SelectItem value="active">Active</SelectItem>
-												<SelectItem value="bonus">Bonus</SelectItem>
+												{RELIC_PROPERTY_TYPES.map((type) => (
+													<SelectItem key={type} value={type}>
+														{type.charAt(0).toUpperCase() + type.slice(1)}
+													</SelectItem>
+												))}
 											</SelectContent>
 										</Select>
 									</div>

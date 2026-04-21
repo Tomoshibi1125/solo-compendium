@@ -160,8 +160,9 @@ const CharacterNew = () => {
 			const staticJobSource =
 				staticJobCatalog.length > 0
 					? staticJobCatalog
-					: ((await import("@/data/compendium/jobs")).jobs as unknown as StaticJob[]);
-			
+					: ((await import("@/data/compendium/jobs"))
+							.jobs as unknown as StaticJob[]);
+
 			return staticJobSource.map((job) => ({
 				...job,
 				id: job.id,
@@ -169,11 +170,20 @@ const CharacterNew = () => {
 				display_name: job.name,
 				description: job.description,
 				hit_die: Number.parseInt(job.hitDie?.replace("1d", "") || "8", 10),
-				primary_abilities: (job.primary_abilities || (job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
-				saving_throw_proficiencies: (job.saving_throw_proficiencies || job.savingThrows || []) as AbilityScore[],
-				armor_proficiencies: (job.armor_proficiencies || job.armorProficiencies || []) as string[],
-				weapon_proficiencies: (job.weapon_proficiencies || job.weaponProficiencies || []) as string[],
-				tool_proficiencies: (job.tool_proficiencies || job.toolProficiencies || []) as string[],
+				primary_abilities: (job.primary_abilities ||
+					(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
+				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
+					job.savingThrows ||
+					[]) as AbilityScore[],
+				armor_proficiencies: (job.armor_proficiencies ||
+					job.armorProficiencies ||
+					[]) as string[],
+				weapon_proficiencies: (job.weapon_proficiencies ||
+					job.weaponProficiencies ||
+					[]) as string[],
+				tool_proficiencies: (job.tool_proficiencies ||
+					job.toolProficiencies ||
+					[]) as string[],
 				skill_choices: (job.skillChoices || []) as string[],
 				skill_choice_count: 2,
 				source_book: job.source || "Rift Ascendant Canon",
@@ -239,9 +249,10 @@ const CharacterNew = () => {
 
 			const jobName = jobs.find((job) => job.id === selectedJob)?.name ?? "";
 			const selectedJobKey = normalizeCompendiumKey(jobName);
-			const staticPathSource = ((await import("@/data/compendium/paths")).paths ?? []) as unknown as StaticPathSource[];
-			
-			return staticPathSource
+			const staticPathSource = ((await import("@/data/compendium/paths"))
+				.paths ?? []) as unknown as StaticPathSource[];
+
+			const mapped = staticPathSource
 				.filter((path) => {
 					const pathKeys = [path.jobId, path.jobName]
 						.map((value) => normalizeCompendiumKey(value))
@@ -255,6 +266,13 @@ const CharacterNew = () => {
 					path_level: getStaticPathUnlockLevel(path),
 					source_book: path.source ?? "Rift Ascendant Canon",
 				})) as unknown as Path[];
+
+			// Respect sourcebook entitlements (returns all rows when the user has
+			// no accessible set configured — i.e. they see canon content).
+			return filterRowsBySourcebookAccess(
+				mapped,
+				(row) => (row as { source_book?: string | null }).source_book,
+			);
 		},
 		enabled: !!selectedJob,
 	});
@@ -277,11 +295,17 @@ const CharacterNew = () => {
 	const { data: backgrounds = [] } = useQuery({
 		queryKey: ["backgrounds"],
 		queryFn: async () => {
-			return getStaticBackgroundsAll().map((b) => ({
+			const mapped = getStaticBackgroundsAll().map((b) => ({
 				...b,
 				display_name: b.name,
-				source_book: (b as unknown as { source?: string }).source ?? "Rift Ascendant Canon",
+				source_book:
+					(b as unknown as { source?: string }).source ??
+					"Rift Ascendant Canon",
 			})) as unknown as Background[];
+			return filterRowsBySourcebookAccess(
+				mapped,
+				(row) => (row as { source_book?: string | null }).source_book,
+			);
 		},
 	});
 
@@ -437,7 +461,7 @@ const CharacterNew = () => {
 				level: 1,
 				job: dbJob.name,
 				base_class: dbJob.name,
-				portrait_url: job.image || (dbJob as any).image_url || null,
+				portrait_url: job.image || dbJob.image_url || null,
 				path: paths.find((p) => p.id === selectedPath)?.name || null,
 				background: dbBg.name,
 				appearance: appearance.trim() || null,

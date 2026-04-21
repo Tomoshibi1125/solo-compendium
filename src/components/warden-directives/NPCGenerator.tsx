@@ -4,6 +4,15 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	NPC_MOTIVATIONS,
+	NPC_NAMES,
+	NPC_PERSONALITIES,
+	NPC_QUIRKS,
+	NPC_ROLES,
+	NPC_SECRETS,
+	WARDEN_RANKS,
+} from "@/data/wardenGeneratorContent";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -16,101 +25,6 @@ import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 // --- Constants ---
-
-const ASCENDANT_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
-
-const NPC_ROLES = [
-	"Awakened Council Official",
-	"Rift Researcher",
-	"Relic Merchant",
-	"Information Broker",
-	"Former S-Rank Ascendant",
-	"Regent Cultist",
-	"System Analyst",
-	"Rift Survivor",
-	"Beast Slayer",
-	"Core Collector",
-	"Umbral Network Agent",
-	"Independent Contractor",
-] as const;
-
-const PERSONALITIES = [
-	"Cautious and methodical",
-	"Bold and reckless",
-	"Mysterious and secretive",
-	"Friendly and helpful",
-	"Paranoid and suspicious",
-	"Confident and arrogant",
-	"Humble and wise",
-	"Greedy and opportunistic",
-	"Loyal and protective",
-	"Neutral and detached",
-	"Passionate and driven",
-	"Cynical and jaded",
-] as const;
-
-const MOTIVATIONS = [
-	"Seeking power through Rifts",
-	"Protecting loved ones",
-	"Revenge against Anomalies",
-	"Researching Rift phenomena",
-	"Building an ascendant organization",
-	"Seeking the Umbral Regent",
-	"Escaping past trauma",
-	"Proving their worth",
-	"Accumulating wealth",
-	"Uncovering secrets",
-	"Protecting humanity",
-	"Achieving immortality",
-] as const;
-
-const SECRETS = [
-	"Former S-Rank ascendant (lost power)",
-	"Working for a Regent",
-	"Has a cursed relic",
-	"Knows about the reset",
-	"Is actually a Anomaly",
-	"Has System favor debt",
-	"Betrayed their ascendant team",
-	"Seeking forbidden knowledge",
-	"Has a hidden Rift",
-	"Is being hunted",
-	"Knows the The Absolute personally",
-	"Has a duplicate identity",
-] as const;
-
-const QUIRKS = [
-	"Always checks for traps",
-	"Collects Anomaly cores obsessively",
-	"Speaks in riddles",
-	"Has a telltale scar",
-	"Never removes their mask",
-	"Quotes the Rift",
-	"Tracks Rift statistics",
-	"Has a pet umbral",
-	"Wears outdated equipment",
-	"Mentions the reset frequently",
-	"Avoids eye contact",
-	"Always has a backup plan",
-] as const;
-
-const NAMES = [
-	"Kim Min-Su",
-	"Park Ji-Hoon",
-	"Lee Soo-Jin",
-	"Choi Hae-Won",
-	"Jung Tae-Hyun",
-	"Yoon Seo-Yeon",
-	"Kang Min-Jae",
-	"Han So-Ra",
-	"Shin Dong-Hyun",
-	"Oh Yeon-Ju",
-	"Baek Ji-Woo",
-	"Lim Hyun-Seok",
-	"Song Mi-Rae",
-	"Kwon Joon-Ho",
-	"Moon Ji-Ah",
-] as const;
 
 // --- Types ---
 
@@ -138,13 +52,13 @@ function generateNPCBase(): GeneratedNPC {
 	const selectRandom = <T,>(arr: readonly T[]): T =>
 		arr[Math.floor(Math.random() * arr.length)];
 
-	const name = selectRandom(NAMES);
-	const rank = selectRandom(ASCENDANT_RANKS);
+	const name = selectRandom(NPC_NAMES);
+	const rank = selectRandom(WARDEN_RANKS);
 	const role = formatRegentVernacular(selectRandom(NPC_ROLES));
-	const personality = selectRandom(PERSONALITIES);
-	const motivation = formatRegentVernacular(selectRandom(MOTIVATIONS));
-	const secret = formatRegentVernacular(selectRandom(SECRETS));
-	const quirk = selectRandom(QUIRKS);
+	const personality = selectRandom(NPC_PERSONALITIES);
+	const motivation = formatRegentVernacular(selectRandom(NPC_MOTIVATIONS));
+	const secret = formatRegentVernacular(selectRandom(NPC_SECRETS));
+	const quirk = selectRandom(NPC_QUIRKS);
 
 	const description = `${name} is a ${rank}-Rank ${role}. They are ${personality} and are motivated by ${motivation.toLowerCase()}. Their secret: ${secret.toLowerCase()}. They have a quirk: ${quirk.toLowerCase()}.`;
 

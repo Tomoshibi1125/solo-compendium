@@ -24,11 +24,17 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+} from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
-import { VTTInitiativePanel } from "@/components/vtt/VTTInitiativePanel";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import {
@@ -70,6 +76,7 @@ import "./VTTEnhanced.css";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import {
 	type AmbientSoundZone,
@@ -127,6 +134,10 @@ import {
 	MessageSquare,
 	Minus,
 	MousePointer2,
+	PanelLeftClose,
+	PanelLeftOpen,
+	PanelRightClose,
+	PanelRightOpen,
 	Pause,
 	Pencil,
 	Play,
@@ -141,6 +152,7 @@ import {
 	Users,
 	Wifi,
 	WifiOff,
+	Wrench,
 	X,
 } from "lucide-react";
 import React, {
@@ -348,6 +360,7 @@ const isCharacterSummary = (
 	typeof value.id === "string" && typeof value.name === "string";
 
 const EMPTY_ARRAY: never[] = [];
+const MOBILE_BREAKPOINT_QUERY = "(max-width: 767px)";
 
 /** Stable memo wrapper – MUST live outside the component to avoid remount on every render */
 const MemoizedVttPixiStage = React.memo(VttPixiStage);
@@ -365,6 +378,16 @@ const VTTEnhanced = () => {
 	const pixiDraggingTokenIdRef = useRef<string | null>(null);
 	const currentSceneRef = useRef<VTTScene | null>(null);
 	const musicEngineRef = useRef<VttMusicEngine | null>(null);
+	const lastFogCellRef = useRef<string | null>(null);
+	const lastMeasureCellRef = useRef<string | null>(null);
+	const lastCursorCellRef = useRef<string | null>(null);
+	const viewportPanActiveRef = useRef(false);
+	const suppressViewportPanClickRef = useRef(false);
+	const pendingDrawingPointRef = useRef<{ x: number; y: number } | null>(null);
+	const drawingFrameRef = useRef<number | null>(null);
+	const pendingTouchZoomRef = useRef<number | null>(null);
+	const touchZoomFrameRef = useRef<number | null>(null);
+	const { fx } = usePerformanceProfile();
 	const [zoom, setZoom] = useState(1);
 	const [showGrid, setShowGrid] = useState(true);
 	const [fogOfWar, setFogOfWar] = useState(false);
@@ -435,6 +458,53 @@ const VTTEnhanced = () => {
 	const [tokenSearch, setTokenSearch] = useState("");
 	const [isMapExpanded, setIsMapExpanded] = useState(false);
 	const [isUploadingMap, setIsUploadingMap] = useState(false);
+	// --- Sidebar collapse state (DDB/Roll20/Foundry parity) ------------------
+	// Persisted per-campaign so Warden choice survives reloads. Default both
+	// sidebars open on wide displays. Icon rail is shown when a side is closed.
+	const sidebarPrefKey = campaignId
+		? `vtt-sidebar-prefs-${campaignId}`
+		: "vtt-sidebar-prefs";
+	const [leftSidebarOpen, setLeftSidebarOpen] = useState<boolean>(() => {
+		if (typeof window === "undefined") return true;
+		try {
+			const raw = window.localStorage.getItem(sidebarPrefKey);
+			if (!raw) return true;
+			const parsed = JSON.parse(raw) as { left?: boolean };
+			return parsed.left !== false;
+		} catch {
+			return true;
+		}
+	});
+	const [rightSidebarOpen, setRightSidebarOpen] = useState<boolean>(() => {
+		if (typeof window === "undefined") return true;
+		try {
+			const raw = window.localStorage.getItem(sidebarPrefKey);
+			if (!raw) return true;
+			const parsed = JSON.parse(raw) as { right?: boolean };
+			return parsed.right !== false;
+		} catch {
+			return true;
+		}
+	});
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		try {
+			window.localStorage.setItem(
+				sidebarPrefKey,
+				JSON.stringify({ left: leftSidebarOpen, right: rightSidebarOpen }),
+			);
+		} catch {
+			// ignore quota/SSR issues
+		}
+	}, [leftSidebarOpen, rightSidebarOpen, sidebarPrefKey]);
+	// Warden Tools drawer (macros, music, atmosphere, map-gen, encounters)
+	// now lives in a right-side Sheet so the right sidebar stays focused on
+	// token/initiative/chat. Toggled from the header via a Wrench button.
+	const [wardenToolsOpen, setWardenToolsOpen] = useState(false);
+	// Left-sidebar sections currently render unconditionally; the collapsed
+	// category header buttons below just ensure the sidebar itself is opened.
+	// If per-section collapse is re-introduced, route it through a setter
+	// instead of reintroducing the dead per-key state.
 	const [newMessage, setNewMessage] = useState("");
 	const [measurementStart, setMeasurementStart] = useState<{
 		x: number;
@@ -458,6 +528,9 @@ const VTTEnhanced = () => {
 		null,
 	);
 	const [isMobile, setIsMobile] = useState(false);
+	const [isViewportPanModifierActive, setIsViewportPanModifierActive] =
+		useState(false);
+	const [isViewportPanning, setIsViewportPanning] = useState(false);
 	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
 	);
@@ -465,11 +538,50 @@ const VTTEnhanced = () => {
 
 	// Mobile detection
 	useEffect(() => {
-		const check = () => setIsMobile(window.innerWidth < 768);
-		check();
-		window.addEventListener("resize", check);
-		return () => window.removeEventListener("resize", check);
+		if (typeof window === "undefined") return;
+		const mediaQuery = window.matchMedia(MOBILE_BREAKPOINT_QUERY);
+		const updateMobileState = (event?: MediaQueryListEvent) => {
+			setIsMobile(event?.matches ?? mediaQuery.matches);
+		};
+		updateMobileState();
+		if (typeof mediaQuery.addEventListener === "function") {
+			mediaQuery.addEventListener("change", updateMobileState);
+			return () => mediaQuery.removeEventListener("change", updateMobileState);
+		}
+		mediaQuery.addListener(updateMobileState);
+		return () => mediaQuery.removeListener(updateMobileState);
 	}, []);
+	const clearViewportPan = useCallback(() => {
+		viewportPanActiveRef.current = false;
+		setIsViewportPanning(false);
+		if (!suppressViewportPanClickRef.current) return;
+		if (typeof window === "undefined") {
+			suppressViewportPanClickRef.current = false;
+			return;
+		}
+		window.setTimeout(() => {
+			suppressViewportPanClickRef.current = false;
+		}, 0);
+	}, []);
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const handleWindowMouseUp = () => {
+			if (!viewportPanActiveRef.current) return;
+			clearViewportPan();
+		};
+		const handleWindowBlur = () => {
+			setIsViewportPanModifierActive(false);
+			touchRef.current = null;
+			if (!viewportPanActiveRef.current) return;
+			clearViewportPan();
+		};
+		window.addEventListener("mouseup", handleWindowMouseUp);
+		window.addEventListener("blur", handleWindowBlur);
+		return () => {
+			window.removeEventListener("mouseup", handleWindowMouseUp);
+			window.removeEventListener("blur", handleWindowBlur);
+		};
+	}, [clearViewportPan]);
 	const [isHydrated, setIsHydrated] = useState(false);
 	const toolKey = sessionId ? `vtt_scenes:${sessionId}` : "vtt_scenes";
 	const legacyStorageKey = campaignId
@@ -711,7 +823,7 @@ const VTTEnhanced = () => {
 			setDamageDialogOpen(false);
 			setDamageAmount("");
 		}
-	}, [activeTokenId, currentScene?.id, currentScene?.tokens, damageDialogOpen]);
+	}, [activeTokenId, currentScene?.tokens, damageDialogOpen]);
 
 	useEffect(() => {
 		const handler = () => {
@@ -996,9 +1108,16 @@ const VTTEnhanced = () => {
 		(tokenId: string, updates: Partial<VTTTokenInstance>) => {
 			setCurrentScene((prev) => {
 				if (!prev) return prev;
-				const nextTokens = prev.tokens.map((token) =>
-					token.id === tokenId ? { ...token, ...updates } : token,
+				const tokenIndex = prev.tokens.findIndex((token) => token.id === tokenId);
+				if (tokenIndex === -1) return prev;
+				const currentToken = prev.tokens[tokenIndex];
+				const hasChanges = Object.entries(updates).some(
+					([key, value]) =>
+						currentToken[key as keyof VTTTokenInstance] !== value,
 				);
+				if (!hasChanges) return prev;
+				const nextTokens = [...prev.tokens];
+				nextTokens[tokenIndex] = { ...currentToken, ...updates };
 				const next = { ...prev, tokens: nextTokens };
 				setScenes((prevScenes) => {
 					const nextScenes = upsertVttScene(prevScenes, next);
@@ -1145,9 +1264,11 @@ const VTTEnhanced = () => {
 		(gridX: number, gridY: number) => {
 			if (!currentScene || !fogOfWar) return;
 			const radius = Math.max(0, Math.min(4, fogBrushSize));
+			const nextRevealed = fogMode === "reveal";
 			const fogData = currentScene.fogData
 				? currentScene.fogData.map((row) => [...row])
 				: buildFogData(currentScene, false);
+			let didChange = false;
 			for (let dy = -radius; dy <= radius; dy += 1) {
 				for (let dx = -radius; dx <= radius; dx += 1) {
 					const fx = gridX + dx;
@@ -1158,14 +1279,90 @@ const VTTEnhanced = () => {
 						fy >= 0 &&
 						fy < currentScene.height
 					) {
-						fogData[fy][fx] = fogMode === "reveal";
+						if (fogData[fy][fx] !== nextRevealed) {
+							fogData[fy][fx] = nextRevealed;
+							didChange = true;
+						}
 					}
 				}
 			}
+			if (!didChange) return;
 			updateScene({ fogData });
 		},
 		[buildFogData, currentScene, fogBrushSize, fogMode, fogOfWar, updateScene],
 	);
+
+	const applyPendingPointToDrawing = useCallback(
+		(
+			drawing: VTTDrawing | null,
+			point: { x: number; y: number } | null,
+		): VTTDrawing | null => {
+			if (!drawing || !point) return drawing;
+			if (drawing.type === "freehand") {
+				const lastPoint = drawing.points[drawing.points.length - 1];
+				if (lastPoint?.x === point.x && lastPoint?.y === point.y) {
+					return drawing;
+				}
+				return {
+					...drawing,
+					points: [...drawing.points, point],
+				};
+			}
+			const currentEnd = drawing.points[1];
+			if (currentEnd?.x === point.x && currentEnd?.y === point.y) {
+				return drawing;
+			}
+			return {
+				...drawing,
+				points: [drawing.points[0], point],
+			};
+		},
+		[],
+	);
+
+	const flushPendingTouchZoom = useCallback(() => {
+		const nextZoom = pendingTouchZoomRef.current;
+		if (typeof nextZoom !== "number") return;
+		pendingTouchZoomRef.current = null;
+		setZoom((prev) => (Math.abs(prev - nextZoom) < 0.01 ? prev : nextZoom));
+	}, []);
+
+	const scheduleTouchZoom = useCallback(
+		(nextZoom: number) => {
+			pendingTouchZoomRef.current = nextZoom;
+			if (touchZoomFrameRef.current !== null) return;
+			touchZoomFrameRef.current = window.requestAnimationFrame(() => {
+				touchZoomFrameRef.current = null;
+				flushPendingTouchZoom();
+			});
+		},
+		[flushPendingTouchZoom],
+	);
+
+	const scheduleDrawingPoint = useCallback(
+		(point: { x: number; y: number }) => {
+			pendingDrawingPointRef.current = point;
+			if (drawingFrameRef.current !== null) return;
+			drawingFrameRef.current = window.requestAnimationFrame(() => {
+				drawingFrameRef.current = null;
+				const pendingPoint = pendingDrawingPointRef.current;
+				pendingDrawingPointRef.current = null;
+				setActiveDrawing((prev) => applyPendingPointToDrawing(prev, pendingPoint));
+			});
+		},
+		[applyPendingPointToDrawing],
+	);
+
+	useEffect(() => {
+		return () => {
+			if (drawingFrameRef.current !== null) {
+				window.cancelAnimationFrame(drawingFrameRef.current);
+			}
+			if (touchZoomFrameRef.current !== null) {
+				window.cancelAnimationFrame(touchZoomFrameRef.current);
+			}
+		};
+	}, []);
 
 	const handleMapUpload = useCallback(
 		async (file: File) => {
@@ -1315,6 +1512,7 @@ const VTTEnhanced = () => {
 
 			if (selectedTool === "measure") {
 				if (!measurementStart) {
+					lastMeasureCellRef.current = `${grid.gridX},${grid.gridY}`;
 					setMeasurementStart({ x: grid.gridX, y: grid.gridY });
 					setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
 				} else {
@@ -1325,6 +1523,7 @@ const VTTEnhanced = () => {
 						title: "Distance",
 						description: `${distance.toFixed(1)} grid units (${(distance * 5).toFixed(0)} ft)`,
 					});
+					lastMeasureCellRef.current = null;
 					setMeasurementStart(null);
 					setMeasurementEnd(null);
 				}
@@ -1433,7 +1632,10 @@ const VTTEnhanced = () => {
 
 	const handleMapClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
-			if (suppressNextMapActionRef.current) {
+			if (
+				suppressNextMapActionRef.current ||
+				suppressViewportPanClickRef.current
+			) {
 				e.stopPropagation();
 				return;
 			}
@@ -1449,17 +1651,31 @@ const VTTEnhanced = () => {
 			e.stopPropagation();
 			return;
 		}
+		mapRef.current?.focus();
+		if (e.button === 1 || (e.button === 0 && isViewportPanModifierActive)) {
+			e.preventDefault();
+			suppressViewportPanClickRef.current = true;
+			viewportPanActiveRef.current = true;
+			setIsViewportPanning(true);
+			return;
+		}
 		if (!currentScene) return;
 		const grid = getGridPosition(e);
 		if (!grid) return;
 
 		if (selectedTool === "fog" && fogOfWar && isWarden) {
+			lastFogCellRef.current = `${grid.gridX},${grid.gridY}`;
 			setIsFogPainting(true);
 			applyFogAt(grid.gridX, grid.gridY);
 			return;
 		}
 
 		if (selectedTool === "draw" && isWarden) {
+			pendingDrawingPointRef.current = null;
+			if (drawingFrameRef.current !== null) {
+				window.cancelAnimationFrame(drawingFrameRef.current);
+				drawingFrameRef.current = null;
+			}
 			const drawing = createDrawing(
 				drawingMode,
 				[{ x: grid.x, y: grid.y }],
@@ -1478,6 +1694,13 @@ const VTTEnhanced = () => {
 
 	const handleMapKeyDown = useCallback(
 		(e: React.KeyboardEvent<HTMLDivElement>) => {
+			if (e.code === "Space") {
+				if (!isViewportPanModifierActive) {
+					setIsViewportPanModifierActive(true);
+				}
+				e.preventDefault();
+				return;
+			}
 			// Escape: deselect everything
 			if (e.key === "Escape") {
 				e.preventDefault();
@@ -1530,8 +1753,8 @@ const VTTEnhanced = () => {
 					return;
 				}
 			}
-			// Enter/Space: generic grid action
-			if (e.key === "Enter" || e.key === " ") {
+			// Enter: generic grid action
+			if (e.key === "Enter") {
 				e.preventDefault();
 				if (!mapRef.current) return;
 				const rect = mapRef.current.getBoundingClientRect();
@@ -1553,6 +1776,23 @@ const VTTEnhanced = () => {
 			updateToken,
 		],
 	);
+
+	const handleMapKeyUp = useCallback(
+		(e: React.KeyboardEvent<HTMLDivElement>) => {
+			if (e.code !== "Space") return;
+			setIsViewportPanModifierActive(false);
+			e.preventDefault();
+		},
+		[],
+	);
+
+	const handleMapBlur = useCallback(() => {
+		setIsViewportPanModifierActive(false);
+		touchRef.current = null;
+		if (viewportPanActiveRef.current) {
+			clearViewportPan();
+		}
+	}, [clearViewportPan]);
 
 	const removeAnnotation = useCallback(
 		(noteId: string) => {
@@ -1579,45 +1819,66 @@ const VTTEnhanced = () => {
 	);
 
 	const lastDmCursorBroadcast = useRef(0);
-	const handleMapMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-		const grid = getGridPosition(e);
-		if (!grid) return;
+	const handleMapMouseMove = useCallback(
+		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (viewportPanActiveRef.current) return;
+			const grid = getGridPosition(e);
+			if (!grid) return;
 
-		if (draggedToken) {
-			updateToken(draggedToken.id, { x: grid.gridX, y: grid.gridY });
-		}
+			if (draggedToken && (draggedToken.x !== grid.gridX || draggedToken.y !== grid.gridY)) {
+				updateToken(draggedToken.id, { x: grid.gridX, y: grid.gridY });
+			}
 
-		if (selectedTool === "fog" && isFogPainting && fogOfWar && isWarden) {
-			applyFogAt(grid.gridX, grid.gridY);
-		}
-
-		if (selectedTool === "measure" && measurementStart) {
-			setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
-		}
-
-		if (activeDrawing && selectedTool === "draw" && isWarden) {
-			setActiveDrawing((prev) => {
-				if (!prev) return prev;
-				if (prev.type === "freehand") {
-					return {
-						...prev,
-						points: [...prev.points, { x: grid.x, y: grid.y }],
-					};
-				} else {
-					// for rect/circle/line, points[0] is start, points[1] is end
-					const nextPoints = [prev.points[0], { x: grid.x, y: grid.y }];
-					return { ...prev, points: nextPoints };
+			if (selectedTool === "fog" && isFogPainting && fogOfWar && isWarden) {
+				const fogCellKey = `${grid.gridX},${grid.gridY}`;
+				if (lastFogCellRef.current !== fogCellKey) {
+					lastFogCellRef.current = fogCellKey;
+					applyFogAt(grid.gridX, grid.gridY);
 				}
-			});
-		}
+			}
 
-		// Broadcast Warden cursor position (throttled)
-		const now = Date.now();
-		if (now - lastDmCursorBroadcast.current > 100) {
-			lastDmCursorBroadcast.current = now;
-			vttRealtime.updateCursor({ x: grid.gridX, y: grid.gridY });
-		}
-	};
+			if (selectedTool === "measure" && measurementStart) {
+				const measureCellKey = `${grid.gridX},${grid.gridY}`;
+				if (lastMeasureCellRef.current !== measureCellKey) {
+					lastMeasureCellRef.current = measureCellKey;
+					setMeasurementEnd((prev) =>
+						prev?.x === grid.gridX && prev?.y === grid.gridY
+							? prev
+							: { x: grid.gridX, y: grid.gridY },
+					);
+				}
+			}
+
+			if (activeDrawing && selectedTool === "draw" && isWarden) {
+				scheduleDrawingPoint({ x: grid.x, y: grid.y });
+			}
+
+			const now = Date.now();
+			const cursorCellKey = `${grid.gridX},${grid.gridY}`;
+			if (
+				cursorCellKey !== lastCursorCellRef.current &&
+				now - lastDmCursorBroadcast.current > 100
+			) {
+				lastDmCursorBroadcast.current = now;
+				lastCursorCellRef.current = cursorCellKey;
+				vttRealtime.updateCursor({ x: grid.gridX, y: grid.gridY });
+			}
+		},
+		[
+			activeDrawing,
+			applyFogAt,
+			draggedToken,
+			fogOfWar,
+			getGridPosition,
+			isFogPainting,
+			isWarden,
+			measurementStart,
+			scheduleDrawingPoint,
+			selectedTool,
+			updateToken,
+			vttRealtime,
+		],
+	);
 
 	const handleMapDoubleClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
@@ -1629,20 +1890,35 @@ const VTTEnhanced = () => {
 		[getGridPosition, vttRealtime],
 	);
 
-	const handleMapMouseUp = () => {
+	const handleMapMouseUp = useCallback(() => {
+		if (viewportPanActiveRef.current) {
+			clearViewportPan();
+			return;
+		}
+		if (drawingFrameRef.current !== null) {
+			window.cancelAnimationFrame(drawingFrameRef.current);
+			drawingFrameRef.current = null;
+		}
+		const finalizedDrawing = applyPendingPointToDrawing(
+			activeDrawing,
+			pendingDrawingPointRef.current,
+		);
+		pendingDrawingPointRef.current = null;
 		if (draggedToken) {
 			setDraggedToken(null);
 		}
 		if (isFogPainting) {
 			setIsFogPainting(false);
+			lastFogCellRef.current = null;
 		}
-		if (activeDrawing && currentScene) {
+		lastMeasureCellRef.current = null;
+		if (finalizedDrawing && currentScene) {
 			updateScene({
-				drawings: [...(currentScene.drawings ?? []), activeDrawing],
+				drawings: [...(currentScene.drawings ?? []), finalizedDrawing],
 			});
 			setActiveDrawing(null);
 		}
-	};
+	}, [activeDrawing, applyPendingPointToDrawing, clearViewportPan, currentScene, draggedToken, isFogPainting, updateScene]);
 
 	// Sync HP back to character in Supabase when a linked token's HP changes
 	const syncCharacterHP = useCallback(
@@ -1734,6 +2010,26 @@ const VTTEnhanced = () => {
 		() => currentScene?.annotations ?? [],
 		[currentScene?.annotations],
 	);
+	const weatherPreset = useMemo(() => {
+		const weather = currentScene?.weather;
+		if (!weather || weather === "clear") return null;
+		return WEATHER_PRESETS[weather as keyof typeof WEATHER_PRESETS] ?? null;
+	}, [currentScene?.weather]);
+	const weatherParticles = useMemo(() => {
+		if (!weatherPreset || !currentScene?.weather) return [];
+		const particleCount = Math.min(
+			weatherPreset.particleCount,
+			Math.max(24, fx.particleCount * 4),
+		);
+		return Array.from({ length: particleCount }, (_, index) => ({
+			id: `${currentScene.id}-${currentScene.weather}-${index}`,
+			size: Math.random() * 4 + 2,
+			left: Math.random() * 100,
+			top: Math.random() * 100,
+			animationDuration: Math.random() * 2 + 1,
+			delay: Math.random() * -2,
+		}));
+	}, [currentScene?.id, currentScene?.weather, fx.particleCount, weatherPreset]);
 
 	const overlayStyles = useMemo(() => {
 		const parts: string[] = [];
@@ -1874,18 +2170,19 @@ const VTTEnhanced = () => {
 		<Layout>
 			{/* Test detection element */}
 			<div data-testid="vtt-interface" aria-hidden="true">
-				{/* Absolute Reification: Monitoring 431 sub-engines in the token loop */}
-				<React.Suspense fallback={null}>
-					<WardenDirectiveMatrix />
-				</React.Suspense>
-
-				{/* VTT Sub-Engine Processor (Resolves Knip Warnings and natively wires mechanics to tokens) */}
-				{currentScene && (
-					<VTTSubEngineProcessor
-						scene={currentScene as VTTScene}
-						tokens={currentScene.tokens}
-						activeTokenId={activeTokenId}
-					/>
+				{import.meta.env.DEV && (
+					<>
+						<React.Suspense fallback={null}>
+							<WardenDirectiveMatrix />
+						</React.Suspense>
+						{currentScene && (
+							<VTTSubEngineProcessor
+								scene={currentScene as VTTScene}
+								tokens={currentScene.tokens}
+								activeTokenId={activeTokenId}
+							/>
+						)}
+					</>
 				)}
 			</div>
 
@@ -2002,6 +2299,17 @@ const VTTEnhanced = () => {
 											<span className="hidden sm:inline">New</span>
 											<span className="sm:hidden">+</span>
 										</Button>
+										<Button
+											data-testid="vtt-warden-tools-trigger"
+											onClick={() => setWardenToolsOpen(true)}
+											variant="outline"
+											size="sm"
+											className="min-h-[44px] border-primary/40 text-primary hover:bg-primary/10"
+										>
+											<Wrench className="w-4 h-4 mr-1 sm:mr-2" />
+											<span className="hidden sm:inline">Warden Tools</span>
+											<span className="sm:hidden">Tools</span>
+										</Button>
 										<Dialog>
 											<Button
 												variant="ghost"
@@ -2070,17 +2378,66 @@ const VTTEnhanced = () => {
 
 						<div
 							className={cn(
-								"grid grid-cols-1 xl:grid-cols-12 gap-3 sm:gap-4",
+								"flex flex-col xl:flex-row gap-4 xl:gap-5",
 								!isMobile && "xl:h-[calc(100dvh-180px)]",
 								isMobile && "h-[calc(100dvh-120px)]",
 							)}
 						>
+							{/* Left icon-rail shown when the Warden has collapsed the left
+							    sidebar — click to expand back to the last-open section. */}
+							{isWarden && !isMobile && !isMapExpanded && !leftSidebarOpen && (
+								<div className="hidden xl:flex flex-col items-center gap-2 w-10 shrink-0 py-2 border border-border/40 rounded-lg bg-card/60">
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setLeftSidebarOpen(true)}
+										title="Expand toolbox"
+										aria-label="Expand toolbox"
+									>
+										<PanelLeftOpen className="w-4 h-4" aria-hidden />
+									</Button>
+									<div className="w-6 h-px bg-border/40" />
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setLeftSidebarOpen(true)}
+										title="Scenes"
+										aria-label="Open scenes"
+									>
+										<Copy className="w-4 h-4" aria-hidden />
+									</Button>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setLeftSidebarOpen(true)}
+										title="Tools"
+										aria-label="Open tools"
+									>
+										<MousePointer2 className="w-4 h-4" aria-hidden />
+									</Button>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setLeftSidebarOpen(true)}
+										title="Map settings"
+										aria-label="Open map settings"
+									>
+										<MapPin className="w-4 h-4" aria-hidden />
+									</Button>
+								</div>
+							)}
 							{/* Left Sidebar: hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 xl:col-span-3 flex flex-col min-h-0 xl:h-full order-2 xl:order-1 overflow-hidden",
+									"flex flex-col min-h-0 xl:h-full order-2 xl:order-1 overflow-hidden",
+									"xl:w-[320px] xl:shrink-0",
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
+									!leftSidebarOpen && "xl:hidden",
 								)}
 							>
 								{isWarden ? (
@@ -2112,9 +2469,9 @@ const VTTEnhanced = () => {
 										{/* Scene tab: Scenes list */}
 										<TabsContent
 											value="scene"
-											className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0"
+											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
 										>
-											<AscendantWindow title="SCENES" compact>
+											<AscendantWindow title="SCENES" compact density="compact">
 												<div className="space-y-1 max-h-40 overflow-y-auto">
 													{scenes.map((scene) => (
 														<div
@@ -2139,88 +2496,102 @@ const VTTEnhanced = () => {
 																{scene.name}
 															</button>
 															{isWarden && (
-															<button
-															type="button"
-															title={liveSceneId === scene.id ? "Live" : "Make Live for Players"}
-															aria-label={liveSceneId === scene.id ? "Live" : "Make Live for Players"}
-															onClick={() => {
-															setLiveSceneId(scene.id);
-															 vttRealtime.broadcastSceneChange(scene.id);
-															}}
-															className={cn(
-															"p-1 rounded inline-flex items-center gap-1 text-[9px] font-bold uppercase mr-1",
-															liveSceneId === scene.id
-															? "bg-amber-500 text-black"
-															  : "bg-muted text-foreground/70 hover:bg-muted/80",
-															 )}
-															>
-															{liveSceneId === scene.id ? (
-															<><Eye className="w-3 h-3" />Live</>
-															 ) : (
-															   <><Play className="w-3 h-3" />Go</>  
-															  )}
-															</button>
+																<button
+																	type="button"
+																	title={
+																		liveSceneId === scene.id
+																			? "Live"
+																			: "Make Live for Players"
+																	}
+																	aria-label={
+																		liveSceneId === scene.id
+																			? "Live"
+																			: "Make Live for Players"
+																	}
+																	onClick={() => {
+																		setLiveSceneId(scene.id);
+																		vttRealtime.broadcastSceneChange(scene.id);
+																	}}
+																	className={cn(
+																		"p-1 rounded inline-flex items-center gap-1 text-[9px] font-bold uppercase mr-1",
+																		liveSceneId === scene.id
+																			? "bg-amber-500 text-black"
+																			: "bg-muted text-foreground/70 hover:bg-muted/80",
+																	)}
+																>
+																	{liveSceneId === scene.id ? (
+																		<>
+																			<Eye className="w-3 h-3" />
+																			Live
+																		</>
+																	) : (
+																		<>
+																			<Play className="w-3 h-3" />
+																			Go
+																		</>
+																	)}
+																</button>
 															)}
 															<div className="flex gap-0.5 pr-1">
-															<button
-															type="button"
-															onClick={() => {
-															setCurrentScene(scene);
-															const newName = window.prompt(
-															"Scene name:",
-															scene.name,
-															);
-															if (newName && newName !== scene.name) {
-															 updateScene({ name: newName } as never);
-															}
-															}}
-															className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
-															title="Rename scene"
-															aria-label="Rename scene"
-															>
-															<Pencil className="w-3 h-3" />
-															</button>
-															<button
-															type="button"
-															onClick={() => {
-															const dup = duplicateVttScene(scene);
-															setScenes((prev) => [...prev, dup]);
-															setCurrentScene(dup);
-															}}
-															className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
-															title="Duplicate scene"
-															aria-label="Duplicate scene"
-															>
-															<Copy className="w-3 h-3" />
-															</button>
-															{scenes.length > 1 && (
-															<button
-															type="button"
-															onClick={() => {
-															if (
-															!window.confirm(
-															`Delete "${scene.name}"?`,
-															)
-															)
-															return;
-															const next = scenes.filter(
-															(s) => s.id !== scene.id,
-															);
-															setScenes(next);
-															setCurrentScene(next[0] || null);
-															persistSceneState(
-															 next,
-															 next[0]?.id ?? null,
-															);
-															}}
-															className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
-															title="Delete scene"
-															aria-label="Delete scene"
-															>
-															  <X className="w-3 h-3" />
-															  </button>
-												)}
-											</div>
+																<button
+																	type="button"
+																	onClick={() => {
+																		setCurrentScene(scene);
+																		const newName = window.prompt(
+																			"Scene name:",
+																			scene.name,
+																		);
+																		if (newName && newName !== scene.name) {
+																			updateScene({ name: newName } as never);
+																		}
+																	}}
+																	className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
+																	title="Rename scene"
+																	aria-label="Rename scene"
+																>
+																	<Pencil className="w-3 h-3" />
+																</button>
+																<button
+																	type="button"
+																	onClick={() => {
+																		const dup = duplicateVttScene(scene);
+																		setScenes((prev) => [...prev, dup]);
+																		setCurrentScene(dup);
+																	}}
+																	className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
+																	title="Duplicate scene"
+																	aria-label="Duplicate scene"
+																>
+																	<Copy className="w-3 h-3" />
+																</button>
+																{scenes.length > 1 && (
+																	<button
+																		type="button"
+																		onClick={() => {
+																			if (
+																				!window.confirm(
+																					`Delete "${scene.name}"?`,
+																				)
+																			)
+																				return;
+																			const next = scenes.filter(
+																				(s) => s.id !== scene.id,
+																			);
+																			setScenes(next);
+																			setCurrentScene(next[0] || null);
+																			persistSceneState(
+																				next,
+																				next[0]?.id ?? null,
+																			);
+																		}}
+																		className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
+																		title="Delete scene"
+																		aria-label="Delete scene"
+																	>
+																		<X className="w-3 h-3" />
+																	</button>
+																)}
+															</div>
 														</div>
 													))}
 												</div>
@@ -2228,9 +2599,9 @@ const VTTEnhanced = () => {
 										</TabsContent>
 										<TabsContent
 											value="toolbox"
-											className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0 max-h-[calc(100vh-280px)]"
+											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0 max-h-[calc(100vh-280px)]"
 										>
-											<AscendantWindow title="TOOLS">
+											<AscendantWindow title="TOOLS" density="compact">
 												<div className="grid grid-cols-2 gap-2">
 													{(
 														[
@@ -2249,24 +2620,39 @@ const VTTEnhanced = () => {
 															{ key: "note", label: "Note", Icon: FileText },
 															{ key: "measure", label: "Measure", Icon: Ruler },
 														] as const
-													).map((tool) => (
-														<button
-															type="button"
-															key={tool.key}
-															onClick={() => setSelectedTool(tool.key)}
-															className={cn(
-																"w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5",
-																selectedTool === tool.key
-																	? "bg-primary/20 border-primary"
-																	: "border-border hover:bg-muted/50",
-															)}
-															aria-label={`${tool.label} tool`}
-															aria-pressed={selectedTool === tool.key}
-														>
-															<tool.Icon className="w-3.5 h-3.5" aria-hidden />
-															<span>{tool.label}</span>
-														</button>
-													))}
+													).map((tool) =>
+														selectedTool === tool.key ? (
+															<button
+																type="button"
+																key={tool.key}
+																onClick={() => setSelectedTool(tool.key)}
+																className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 bg-primary/20 border-primary"
+																aria-label={`${tool.label} tool`}
+																aria-pressed="true"
+															>
+																<tool.Icon
+																	className="w-3.5 h-3.5 flex-shrink-0"
+																	aria-hidden
+																/>
+																<span className="flex-1">{tool.label}</span>
+															</button>
+														) : (
+															<button
+																type="button"
+																key={tool.key}
+																onClick={() => setSelectedTool(tool.key)}
+																className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 border-border hover:bg-muted/50"
+																aria-label={`${tool.label} tool`}
+																aria-pressed="false"
+															>
+																<tool.Icon
+																	className="w-3.5 h-3.5 flex-shrink-0"
+																	aria-hidden
+																/>
+																<span className="flex-1">{tool.label}</span>
+															</button>
+														),
+													)}
 												</div>
 												{selectedTool === "measure" && (
 													<div className="mt-3 pt-3 border-t border-border/50 space-y-2">
@@ -2331,7 +2717,7 @@ const VTTEnhanced = () => {
 												)}
 											</AscendantWindow>
 
-											<AscendantWindow title="CONTROLS">
+											<AscendantWindow title="CONTROLS" density="compact">
 												<div className="space-y-3 overflow-y-auto max-h-[35vh]">
 													<div>
 														<Label className="text-xs mb-1 block">Zoom</Label>
@@ -2339,9 +2725,7 @@ const VTTEnhanced = () => {
 															<Button
 																variant="outline"
 																size="sm"
-																onClick={() =>
-																	setZoom(Math.max(0.5, zoom - 0.1))
-																}
+																onClick={() => handleRequestZoom(zoom - 0.1)}
 															>
 																<Minus className="w-3 h-3" />
 															</Button>
@@ -2351,7 +2735,7 @@ const VTTEnhanced = () => {
 															<Button
 																variant="outline"
 																size="sm"
-																onClick={() => setZoom(Math.min(2, zoom + 0.1))}
+																onClick={() => handleRequestZoom(zoom + 0.1)}
 															>
 																<Plus className="w-3 h-3" />
 															</Button>
@@ -2373,12 +2757,7 @@ const VTTEnhanced = () => {
 																		rect.height / sh,
 																		2,
 																	);
-																	setZoom(
-																		Math.max(
-																			0.5,
-																			Math.round(fitZoom * 20) / 20,
-																		),
-																	);
+																	handleRequestZoom(Math.round(fitZoom * 20) / 20);
 																}}
 															>
 																<Maximize2 className="w-3 h-3" />
@@ -2590,7 +2969,7 @@ const VTTEnhanced = () => {
 													)}
 												</div>
 											</AscendantWindow>
-											<AscendantWindow title="LAYERS">
+											<AscendantWindow title="LAYERS" density="compact">
 												<div className="space-y-2 overflow-hidden">
 													<Label className="text-xs">Active Layer</Label>
 													<Select
@@ -2665,9 +3044,9 @@ const VTTEnhanced = () => {
 										</TabsContent>
 										<TabsContent
 											value="map"
-											className="flex flex-col gap-3 overflow-y-auto min-h-0 flex-1 mt-0"
+											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
 										>
-											<AscendantWindow title="MAP SETTINGS">
+											<AscendantWindow title="MAP SETTINGS" density="compact">
 												<div className="space-y-3">
 													<input
 														ref={mapInputRef}
@@ -2885,7 +3264,7 @@ const VTTEnhanced = () => {
 												</div>
 											</AscendantWindow>
 											{PREMADE_MAPS.length > 0 && (
-												<AscendantWindow title="PREMADE MAPS">
+												<AscendantWindow title="PREMADE MAPS" density="compact">
 													<div className="grid grid-cols-2 gap-2">
 														{PREMADE_MAPS.map((map) => (
 															<button
@@ -2927,7 +3306,7 @@ const VTTEnhanced = () => {
 									</Tabs>
 								) : null}
 
-								<AscendantWindow title="TOKENS">
+								<AscendantWindow title="TOKENS" density="compact">
 									<Tabs defaultValue="characters" className="w-full">
 										<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 											<TabsTrigger
@@ -3083,13 +3462,11 @@ const VTTEnhanced = () => {
 								</AscendantWindow>
 							</div>
 
-							{/* Main Map Area */}
+							{/* Main Map Area — takes whatever space the collapsed sidebars free up */}
 							<div
 								className={cn(
-									"order-1 xl:order-2 min-h-0 overflow-hidden", // min-h-0 + overflow-hidden ensures map doesn't blow out grid
-									isMapExpanded
-										? "col-span-1 xl:col-span-12"
-										: "col-span-1 xl:col-span-6",
+									"order-1 xl:order-2 min-h-0 overflow-hidden xl:flex-1 xl:min-w-0",
+									// min-h-0 + overflow-hidden ensures map doesn't blow out grid
 								)}
 							>
 								<AscendantWindow
@@ -3101,6 +3478,58 @@ const VTTEnhanced = () => {
 											<span className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full border border-primary/40 bg-primary/10 text-primary/90 select-none">
 												Layer {currentLayer} Active
 											</span>
+											{isWarden && !isMobile && !isMapExpanded && (
+												<>
+													<Button
+														variant="ghost"
+														size="sm"
+														className="hidden xl:inline-flex h-7 w-7 p-0 text-foreground/70 hover:text-foreground"
+														onClick={() => setLeftSidebarOpen((prev) => !prev)}
+														title={
+															leftSidebarOpen ? "Hide toolbox" : "Show toolbox"
+														}
+														aria-label={
+															leftSidebarOpen ? "Hide toolbox" : "Show toolbox"
+														}
+													>
+														{leftSidebarOpen ? (
+															<PanelLeftClose
+																className="w-3.5 h-3.5"
+																aria-hidden
+															/>
+														) : (
+															<PanelLeftOpen
+																className="w-3.5 h-3.5"
+																aria-hidden
+															/>
+														)}
+													</Button>
+													<Button
+														variant="ghost"
+														size="sm"
+														className="hidden xl:inline-flex h-7 w-7 p-0 text-foreground/70 hover:text-foreground"
+														onClick={() => setRightSidebarOpen((prev) => !prev)}
+														title={
+															rightSidebarOpen ? "Hide panels" : "Show panels"
+														}
+														aria-label={
+															rightSidebarOpen ? "Hide panels" : "Show panels"
+														}
+													>
+														{rightSidebarOpen ? (
+															<PanelRightClose
+																className="w-3.5 h-3.5"
+																aria-hidden
+															/>
+														) : (
+															<PanelRightOpen
+																className="w-3.5 h-3.5"
+																aria-hidden
+															/>
+														)}
+													</Button>
+												</>
+											)}
 											<Button
 												variant="outline"
 												size="sm"
@@ -3119,9 +3548,10 @@ const VTTEnhanced = () => {
 									}
 								>
 									<div
+										role="application"
+										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										data-testid="vtt-map"
 										ref={mapRef}
-										tabIndex={0}
 										onClick={handleMapClick}
 										onDoubleClick={handleMapDoubleClick}
 										onMouseDown={handleMapMouseDown}
@@ -3129,6 +3559,9 @@ const VTTEnhanced = () => {
 										onMouseUp={handleMapMouseUp}
 										onMouseLeave={handleMapMouseUp}
 										onKeyDown={handleMapKeyDown}
+										onKeyUp={handleMapKeyUp}
+										onBlur={handleMapBlur}
+										tabIndex={0}
 										onContextMenu={(e) => {
 											e.preventDefault();
 											// Find token at click position for right-click/long-press context menu
@@ -3149,147 +3582,16 @@ const VTTEnhanced = () => {
 												});
 											}
 										}}
-										onTouchStart={(e) => {
-											if (e.touches.length === 2) {
-												const dx = e.touches[0].clientX - e.touches[1].clientX;
-												const dy = e.touches[0].clientY - e.touches[1].clientY;
-												touchRef.current = {
-													startDist: Math.hypot(dx, dy),
-													startZoom: zoom,
-												};
-											}
-										}}
-										onTouchMove={(e) => {
-											if (e.touches.length === 2 && touchRef.current) {
-												const dx = e.touches[0].clientX - e.touches[1].clientX;
-												const dy = e.touches[0].clientY - e.touches[1].clientY;
-												const dist = Math.hypot(dx, dy);
-												const scale = dist / touchRef.current.startDist;
-												setZoom(
-													Math.max(
-														0.5,
-														Math.min(2, touchRef.current.startZoom * scale),
-													),
-												);
-											}
-										}}
-										onTouchEnd={() => {
-											touchRef.current = null;
-										}}
-										onDragOver={(e) => {
-											e.preventDefault();
-											e.dataTransfer.dropEffect = "copy";
-										}}
-										onDrop={(e) => {
-											e.preventDefault();
-											const raw = e.dataTransfer.getData(
-												"application/vtt-asset",
-											);
-											if (!raw || !currentScene) return;
-											try {
-												const asset = JSON.parse(raw) as {
-													imageUrl: string;
-													name: string;
-													category: string;
-												};
-												// Scroll-aware grid computation via shared helper
-												const gridPos = getGridPositionFromPoint(
-													e.clientX,
-													e.clientY,
-												);
-												const gx = Math.max(
-													0,
-													Math.min(
-														gridPos?.gridX ?? 0,
-														(currentScene.width ?? 20) - 1,
-													),
-												);
-												const gy = Math.max(
-													0,
-													Math.min(
-														gridPos?.gridY ?? 0,
-														(currentScene.height ?? 20) - 1,
-													),
-												);
-												// Maps (including live Anomaly maps) become scene backgrounds
-												const MAP_CATEGORIES = new Set([
-													"map",
-													"location",
-													"Anomaly",
-												]);
-												// Handouts broadcast to all players
-												const HANDOUT_CATEGORIES = new Set(["handout"]);
-												// Visual overlays rendered on the effects layer
-												const EFFECT_CATEGORIES = new Set([
-													"effect",
-													"condition",
-													"technique",
-													"spell",
-												]);
-
-												if (MAP_CATEGORIES.has(asset.category)) {
-													updateScene({
-														backgroundImage: asset.imageUrl,
-														name: asset.name || currentScene.name,
-													});
-													toast({
-														title: "Map Set",
-														description: `"${asset.name}" applied as scene background.`,
-													});
-												} else if (HANDOUT_CATEGORIES.has(asset.category)) {
-													vttRealtime.shareHandout(
-														asset.name || "Handout",
-														asset.imageUrl,
-														"",
-													);
-													toast({
-														title: "Handout Shared",
-														description: `"${asset.name}" shared with all players.`,
-													});
-												} else {
-													const isEffect = EFFECT_CATEGORIES.has(
-														asset.category,
-													);
-													const placed: import("@/types/vtt").VTTTokenInstance =
-														{
-															id: createVttTokenInstanceId(),
-															name: asset.name || "Token",
-															imageUrl: asset.imageUrl,
-															size: isEffect ? "large" : "medium",
-															tokenType: isEffect ? "effect" : undefined,
-															render: isEffect
-																? {
-																		mode: "overlay",
-																		blendMode: "screen",
-																		opacity: 0.9,
-																	}
-																: undefined,
-															x: gx,
-															y: gy,
-															rotation: 0,
-															layer: isEffect ? 2 : 1,
-															locked: false,
-															visible: true,
-														};
-													appendToken(placed);
-													setActiveTokenId(placed.id);
-													toast({
-														title: isEffect ? "Effect Placed" : "Token Placed",
-														description: `"${asset.name}" placed at (${gx}, ${gy}).`,
-													});
-												}
-											} catch {
-												/* ignore invalid drop data */
-											}
-										}}
-										role="application"
-										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										className={cn(
 											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
 											selectedTool !== "select" && "cursor-crosshair",
 											selectedTool === "select" &&
 												(selectedCharacterId || selectedLibraryTokenId) &&
 												"cursor-crosshair",
+											isViewportPanning && "cursor-grabbing select-none",
+											!isViewportPanning &&
+												isViewportPanModifierActive &&
+												"cursor-grab",
 										)}
 									>
 										<div
@@ -3333,6 +3635,7 @@ const VTTEnhanced = () => {
 													setActiveTokenId={setActiveTokenId}
 													updateToken={updateToken}
 													onRequestZoom={handleRequestZoom}
+													viewportPanModifierActive={isViewportPanModifierActive}
 													onTokenDragStart={handlePixiTokenDragStart}
 													onTokenDragEnd={handlePixiTokenDragEnd}
 												/>
@@ -3592,48 +3895,26 @@ const VTTEnhanced = () => {
 
 											{/* Weather overlay */}
 											{currentScene?.weather &&
-												currentScene.weather !== "clear" &&
-												WEATHER_PRESETS[
-													currentScene.weather as keyof typeof WEATHER_PRESETS
-												] && (
+												weatherPreset && weatherParticles.length > 0 && (
 													<div
 														className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80"
 														data-testid="vtt-weather-overlay"
 													>
 														<style>
-															{getWeatherCSSAnimation(
-																WEATHER_PRESETS[
-																	currentScene.weather as keyof typeof WEATHER_PRESETS
-																],
-															)}
+															{getWeatherCSSAnimation(weatherPreset)}
 														</style>
-														{Array.from({
-															length: Math.min(
-																WEATHER_PRESETS[
-																	currentScene.weather as keyof typeof WEATHER_PRESETS
-																].particleCount,
-																200,
-															),
-														}).map((_) => {
-															const size = Math.random() * 4 + 2;
-															const left = Math.random() * 100;
-															const top = Math.random() * 100;
-															const animDuration = Math.random() * 2 + 1;
-															const delay = Math.random() * -2;
+														{weatherParticles.map((particle) => {
 															return (
 																<DynamicStyle
-																	key={`vtt-wp-${currentScene?.weather}-${size}-${left}-${top}`}
+																	key={particle.id}
 																	className="absolute rounded-full vtt-weather-particle"
 																	vars={{
-																		"--vtt-particle-size": `${size}px`,
-																		"--vtt-particle-left": `${left}%`,
-																		"--vtt-particle-top": `${top}%`,
-																		"--vtt-particle-color":
-																			WEATHER_PRESETS[
-																				currentScene?.weather as keyof typeof WEATHER_PRESETS
-																			].particleColor,
-																		"--vtt-particle-animation": `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
-																		"--vtt-particle-delay": `${delay}s`,
+																		"--vtt-particle-size": `${particle.size}px`,
+																		"--vtt-particle-left": `${particle.left}%`,
+																		"--vtt-particle-top": `${particle.top}%`,
+																		"--vtt-particle-color": weatherPreset.particleColor,
+																		"--vtt-particle-animation": `weather-particle-${currentScene?.weather} ${particle.animationDuration}s linear infinite`,
+																		"--vtt-particle-delay": `${particle.delay}s`,
 																	}}
 																/>
 															);
@@ -3680,328 +3961,443 @@ const VTTEnhanced = () => {
 								</AscendantWindow>
 							</div>
 
+							{/* Right icon-rail when collapsed — click to expand. */}
+							{isWarden && !isMobile && !isMapExpanded && !rightSidebarOpen && (
+								<div className="hidden xl:flex flex-col items-center gap-2 w-10 shrink-0 py-2 border border-border/40 rounded-lg bg-card/60 order-3">
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setRightSidebarOpen(true)}
+										title="Expand panels"
+										aria-label="Expand panels"
+									>
+										<PanelRightOpen className="w-4 h-4" aria-hidden />
+									</Button>
+									<div className="w-6 h-px bg-border/40" />
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setRightSidebarOpen(true)}
+										title="Initiative"
+										aria-label="Open initiative"
+									>
+										<Clock className="w-4 h-4" aria-hidden />
+									</Button>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setRightSidebarOpen(true)}
+										title="Chat"
+										aria-label="Open chat"
+									>
+										<MessageSquare className="w-4 h-4" aria-hidden />
+									</Button>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setRightSidebarOpen(true)}
+										title="Dice"
+										aria-label="Open dice"
+									>
+										<Dice6 className="w-4 h-4" aria-hidden />
+									</Button>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="h-8 w-8 p-0"
+										onClick={() => setRightSidebarOpen(true)}
+										title="Assets"
+										aria-label="Open assets"
+									>
+										<ImageIcon className="w-4 h-4" aria-hidden />
+									</Button>
+								</div>
+							)}
 							{/* Right Sidebar: hidden on mobile, shown via bottom sheet */}
 							<div
 								className={cn(
-									"col-span-1 xl:col-span-3 flex flex-col gap-3 xl:h-full xl:overflow-y-auto order-3",
-									"min-h-0 pb-2", // Prevent CSS grid blowout; pb-2 keeps last panel's bottom glow visible past the scroll edge
+									"flex flex-col gap-4 xl:h-full xl:overflow-y-auto order-3",
+									"xl:w-[320px] xl:shrink-0 min-h-0 pb-2",
+									// gap-4 + pb-2 keep corner-bracketed panels from touching and
+									// preserve the last panel's bottom glow past the scroll edge.
 									isMapExpanded && "hidden",
 									isMobile && "hidden",
+									!rightSidebarOpen && "xl:hidden",
 								)}
 							>
-								{/* Embedded Initiative Tracker (campaign combat session) */}
-								{isWarden && (
-									<AscendantWindow title="COMBAT TRACKER">
-										<VTTInitiativePanel
-											campaignId={campaignId || ""}
-											sessionId={sessionId}
-											isWarden={isWarden}
-											onHighlightToken={(characterId) => {
-												// Find token with matching characterId and highlight it
-												const token = currentScene?.tokens.find(
-													(t) => t.characterId === characterId,
-												);
-												if (token) setActiveTokenId(token.id);
-											}}
-										/>
-									</AscendantWindow>
-								)}
+								{/*
+								  NOTE: The old in-sidebar COMBAT TRACKER was redundant with the
+								  Initiative tab below — removed to stop vertical scroll churn.
+								  The old AUDIO TRACKS and big ProtocolWardenTools accordion are
+								  now rendered inside a right-side Sheet (`wardenToolsOpen`),
+								  triggered from the header. This keeps the right sidebar focused
+								  on: selected-token + tabs (Init/Chat/Dice/Assets/AI/Broadcast/Journal).
+								  The Sheet render lives below the sidebar, next to the handout
+								  popup, so it overlays the entire viewport regardless of which
+								  sidebar is collapsed.
+								*/}
 
-								{/* Audio Manager */}
-								{isWarden && sessionId && (
-									<AscendantWindow title="AUDIO TRACKS">
-										<div className="space-y-4">
-											{audioTracks.length === 0 ? (
-												<AscendantText className="block text-xs text-foreground/70 text-center py-2">
-													No tracks uploaded for this session yet.
-												</AscendantText>
-											) : (
-												<div className="space-y-2 max-h-48 overflow-y-auto">
-													{audioTracks.map((track) => (
-														<div
-															key={track.id}
-															className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20"
+								{/* Warden Tools drawer — macros, music, atmosphere, terrain, ambient, map-gen, encounters. */}
+								{isWarden && (
+									<Sheet
+										open={wardenToolsOpen}
+										onOpenChange={setWardenToolsOpen}
+									>
+										<SheetContent
+											side="right"
+											className="w-[min(560px,95vw)] sm:max-w-[600px] p-0 flex flex-col bg-card border-l border-primary/30"
+										>
+											<SheetHeader className="px-4 py-3 border-b border-border/60 shrink-0">
+												<SheetTitle className="text-sm font-heading tracking-[0.2em] uppercase text-primary inline-flex items-center gap-2">
+													<Wrench className="w-4 h-4" aria-hidden />
+													Warden Tools
+												</SheetTitle>
+												<SheetDescription className="text-xs text-foreground/70">
+													Macros, music, atmosphere, terrain, ambient sound, map
+													generator, encounters, and session audio.
+												</SheetDescription>
+											</SheetHeader>
+											{/* Session audio tracks — folded into the drawer so it is not
+											    visually stacked behind the main sidebar. */}
+											{sessionId && (
+												<div className="px-4 pt-3 pb-1 border-b border-border/40 shrink-0">
+													<div className="flex items-center justify-between mb-2">
+														<span className="text-[11px] font-heading tracking-[0.2em] uppercase text-foreground/70">
+															Session Audio
+														</span>
+														<Button
+															variant="outline"
+															size="sm"
+															className="h-7 text-[11px]"
+															onClick={() => {
+																const url = window.prompt(
+																	"Enter valid audio URL (mp3/wav/ogg):",
+																);
+																const name = window.prompt("Enter track name:");
+																if (url && name) {
+																	createTrack({
+																		session_id: sessionId,
+																		name,
+																		url,
+																		type: "music",
+																		volume: 0.5,
+																		loop: true,
+																		is_playing: false,
+																		created_by: user?.id || "",
+																	});
+																}
+															}}
 														>
-															<span className="truncate flex-1 font-medium">
-																{track.name}
-															</span>
-															<div className="flex items-center gap-1">
-																<Button
-																	variant="ghost"
-																	size="sm"
-																	className="h-6 w-6 p-0"
-																	onClick={() => {
-																		if (track.is_playing) {
-																			vttAudioManager.stopTrack(track.id);
-																			updateTrack({
-																				track_id: track.id,
-																				session_id: sessionId,
-																				is_playing: false,
-																			});
-																		} else {
-																			vttAudioManager.playTrack(track);
-																			updateTrack({
-																				track_id: track.id,
-																				session_id: sessionId,
-																				is_playing: true,
-																			});
-																		}
-																	}}
+															+ Track
+														</Button>
+													</div>
+													{audioTracks.length === 0 ? (
+														<AscendantText className="block text-xs text-foreground/70 py-1">
+															No tracks uploaded for this session yet.
+														</AscendantText>
+													) : (
+														<div className="space-y-1 max-h-40 overflow-y-auto pr-1">
+															{audioTracks.map((track) => (
+																<div
+																	key={track.id}
+																	className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20"
 																>
-																	{track.is_playing ? (
-																		<Pause
-																			className="w-3.5 h-3.5"
-																			aria-label="Pause track"
-																		/>
-																	) : (
-																		<Play
-																			className="w-3.5 h-3.5"
-																			aria-label="Play track"
-																		/>
-																	)}
-																</Button>
-																<Button
-																	variant="ghost"
-																	size="sm"
-																	className="h-6 w-6 p-0 text-destructive"
-																	onClick={() =>
-																		deleteTrack({
-																			trackId: track.id,
-																			sessionId,
-																		})
-																	}
-																>
-																	<X
-																		className="w-3.5 h-3.5"
-																		aria-label="Delete"
-																	/>
-																</Button>
-															</div>
+																	<span className="truncate flex-1 font-medium">
+																		{track.name}
+																	</span>
+																	<div className="flex items-center gap-1">
+																		<Button
+																			variant="ghost"
+																			size="sm"
+																			className="h-6 w-6 p-0"
+																			onClick={() => {
+																				if (track.is_playing) {
+																					vttAudioManager.stopTrack(track.id);
+																					updateTrack({
+																						track_id: track.id,
+																						session_id: sessionId,
+																						is_playing: false,
+																					});
+																				} else {
+																					vttAudioManager.playTrack(track);
+																					updateTrack({
+																						track_id: track.id,
+																						session_id: sessionId,
+																						is_playing: true,
+																					});
+																				}
+																			}}
+																		>
+																			{track.is_playing ? (
+																				<Pause
+																					className="w-3.5 h-3.5"
+																					aria-label="Pause track"
+																				/>
+																			) : (
+																				<Play
+																					className="w-3.5 h-3.5"
+																					aria-label="Play track"
+																				/>
+																			)}
+																		</Button>
+																		<Button
+																			variant="ghost"
+																			size="sm"
+																			className="h-6 w-6 p-0 text-destructive"
+																			onClick={() =>
+																				deleteTrack({
+																					trackId: track.id,
+																					sessionId,
+																				})
+																			}
+																		>
+																			<X
+																				className="w-3.5 h-3.5"
+																				aria-label="Delete"
+																			/>
+																		</Button>
+																	</div>
+																</div>
+															))}
 														</div>
-													))}
+													)}
 												</div>
 											)}
-											<Button
-												variant="outline"
-												size="sm"
-												className="w-full text-xs"
-												onClick={() => {
-													const url = window.prompt(
-														"Enter valid audio URL (mp3/wav/ogg):",
-													);
-													const name = window.prompt("Enter track name:");
-													if (url && name) {
-														createTrack({
-															session_id: sessionId,
-															name,
-															url,
-															type: "music",
-															volume: 0.5,
-															loop: true,
-															is_playing: false,
-															created_by: user?.id || "",
+											<div className="flex-1 overflow-y-auto px-4 py-3">
+												<ProtocolWardenTools
+													campaignId={campaignId || ""}
+													onRoll={vttRealtime.rollAndBroadcast}
+													onChangeMap={(url, name) => {
+														if (currentScene) {
+															// Use the same field name the scene type + Pixi renderer read
+															// (VTTScene.backgroundImage). Reset scale/offset so the new
+															// map renders centered and unscaled, matching the upload path.
+															const nextScene: VTTScene = {
+																...currentScene,
+																backgroundImage: url,
+																backgroundScale:
+																	DEFAULT_SCENE_SETTINGS.backgroundScale,
+																backgroundOffsetX:
+																	DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
+																backgroundOffsetY:
+																	DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
+																name: name || currentScene.name,
+															};
+															updateScene(nextScene);
+															vttRealtime.broadcastSceneSync(
+																upsertVttScene(scenes, nextScene),
+																currentScene.id,
+															);
+														}
+													}}
+													onAddToken={(t: VTTTokenPayload) => {
+														if (currentScene) {
+															const newToken = {
+																...t,
+																id: t.id || createVttTokenInstanceId(),
+															} as PlacedToken;
+															updateScene({
+																tokens: [
+																	...(currentScene.tokens || []),
+																	newToken,
+																],
+															});
+															vttRealtime.broadcastTokenAdd(newToken);
+														}
+													}}
+													onAddEffect={(e: VTTEffectPayload) => {
+														if (!currentScene) return;
+														const cx = Math.floor(
+															(currentScene.width || 20) / 2,
+														);
+														const cy = Math.floor(
+															(currentScene.height || 20) / 2,
+														);
+
+														if (e.type === "magic" || e.type === "image") {
+															const newToken = {
+																id: e.id || createVttTokenInstanceId(),
+																name: e.name || "Effect",
+																tokenType: "effect",
+																imageUrl: e.imageUrl,
+																x: e.x ?? cx,
+																y: e.y ?? cy,
+																size: "large",
+																color: e.color || "#ffffff",
+																rotation: 0,
+																layer: 2,
+																locked: false,
+																visible: true,
+																render: {
+																	mode: "overlay",
+																	blendMode: "screen",
+																	opacity: 0.8,
+																},
+															} as PlacedToken;
+															updateScene({
+																tokens: [
+																	...(currentScene.tokens || []),
+																	newToken,
+																],
+															});
+															vttRealtime.broadcastTokenAdd(newToken);
+														} else if (
+															e.type === "light" ||
+															e.type === "dark"
+														) {
+															const lightRadius = e.radius || 10;
+															const newLight: LightSource = {
+																id: e.id || `light-${Date.now()}`,
+																x: e.x ?? cx,
+																y: e.y ?? cy,
+																brightRadius: Math.floor(lightRadius * 0.6),
+																dimRadius: lightRadius,
+																color: e.color || "#ffffff",
+																intensity: e.type === "dark" ? 0 : 0.8,
+																type: e.type === "dark" ? "ambient" : "torch",
+															};
+															const nextScene = {
+																...currentScene,
+																lights: [
+																	...(currentScene.lights || []),
+																	newLight,
+																],
+															};
+															updateScene(nextScene);
+															vttRealtime.broadcastSceneSync(
+																upsertVttScene(scenes, nextScene),
+																currentScene.id,
+															);
+														} else if (e.type === "terrain") {
+															const terrainCenter = {
+																x: e.x ?? cx,
+																y: e.y ?? cy,
+															};
+															const terrainRadius = e.radius || 8;
+															const newTerrain: TerrainZone = {
+																id: e.id || `terrain-${Date.now()}`,
+																type: "difficult",
+																vertices: [
+																	{
+																		x: terrainCenter.x - terrainRadius,
+																		y: terrainCenter.y - terrainRadius,
+																	},
+																	{
+																		x: terrainCenter.x + terrainRadius,
+																		y: terrainCenter.y - terrainRadius,
+																	},
+																	{
+																		x: terrainCenter.x + terrainRadius,
+																		y: terrainCenter.y + terrainRadius,
+																	},
+																	{
+																		x: terrainCenter.x - terrainRadius,
+																		y: terrainCenter.y + terrainRadius,
+																	},
+																],
+																movementCost: 2,
+																fillColor: e.color || "rgba(139,90,43,0.25)",
+																label: e.name || "Difficult Terrain",
+																visible: true,
+															};
+															const nextScene = {
+																...currentScene,
+																terrain: [
+																	...(currentScene.terrain || []),
+																	newTerrain,
+																],
+															};
+															updateScene(nextScene);
+															vttRealtime.broadcastSceneSync(
+																upsertVttScene(scenes, nextScene),
+																nextScene.id,
+															);
+														} else if (e.type === "ambient") {
+															const newAmbient: AmbientSoundZone = {
+																id: e.id || `ambient-${Date.now()}`,
+																label: e.name || "Ambient",
+																audioUrl:
+																	"library:" +
+																	(e.name || "")
+																		.toLowerCase()
+																		.replace(/\s/g, "-"),
+																x: e.x ?? cx,
+																y: e.y ?? cy,
+																shape: "circle",
+																radius: e.radius || 10,
+																volume: 0.8,
+																loop: true,
+																enabled: true,
+																gmOnly: true,
+																walledOcclusion: false,
+																falloff: "linear",
+																category: "ambient",
+															};
+															const nextScene = {
+																...currentScene,
+																ambientSounds: [
+																	...(currentScene.ambientSounds || []),
+																	newAmbient,
+																],
+															};
+															updateScene(nextScene);
+															vttRealtime.broadcastSceneSync(
+																upsertVttScene(scenes, nextScene),
+																nextScene.id,
+															);
+														}
+													}}
+													onShareHandout={(url: string, name?: string) => {
+														vttRealtime.rollAndBroadcast(
+															`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
+															"wardenroll",
+														);
+													}}
+													onPlaySound={(soundId) => {
+														vttRealtime.broadcastAudioSync(
+															"play_sound",
+															soundId,
+														);
+														toast({
+															title: "Sound Played",
+															description: `Playing ${soundId} sound effect`,
 														});
-													}
-												}}
-											>
-												+ Add Audio Track URL
-											</Button>
-										</div>
-									</AscendantWindow>
-								)}
-
-								{/* Comprehensive Warden Tools Panel */}
-								{isWarden && (
-									<ProtocolWardenTools
-										campaignId={campaignId || ""}
-										onRoll={vttRealtime.rollAndBroadcast}
-										onChangeMap={(url) => {
-											if (currentScene) {
-												const nextScene = {
-													...currentScene,
-													backgroundUrl: url,
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertVttScene(scenes, nextScene),
-													currentScene.id,
-												);
-											}
-										}}
-										onAddToken={(t: VTTTokenPayload) => {
-											if (currentScene) {
-												const newToken = {
-													...t,
-													id: t.id || createVttTokenInstanceId(),
-												} as PlacedToken;
-												updateScene({
-													tokens: [...(currentScene.tokens || []), newToken],
-												});
-												vttRealtime.broadcastTokenAdd(newToken);
-											}
-										}}
-										onAddEffect={(e: VTTEffectPayload) => {
-											if (!currentScene) return;
-											const cx = Math.floor((currentScene.width || 20) / 2);
-											const cy = Math.floor((currentScene.height || 20) / 2);
-
-											if (e.type === "magic" || e.type === "image") {
-												const newToken = {
-													id: e.id || createVttTokenInstanceId(),
-													name: e.name || "Effect",
-													tokenType: "effect",
-													imageUrl: e.imageUrl,
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-													size: "large",
-													color: e.color || "#ffffff",
-													rotation: 0,
-													layer: 2,
-													locked: false,
-													visible: true,
-													render: {
-														mode: "overlay",
-														blendMode: "screen",
-														opacity: 0.8,
-													},
-												} as PlacedToken;
-												updateScene({
-													tokens: [...(currentScene.tokens || []), newToken],
-												});
-												vttRealtime.broadcastTokenAdd(newToken);
-											} else if (e.type === "light" || e.type === "dark") {
-												const lightRadius = e.radius || 10;
-												const newLight: LightSource = {
-													id: e.id || `light-${Date.now()}`,
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-													brightRadius: Math.floor(lightRadius * 0.6),
-													dimRadius: lightRadius,
-													color: e.color || "#ffffff",
-													intensity: e.type === "dark" ? 0 : 0.8,
-													type: e.type === "dark" ? "ambient" : "torch",
-												};
-												const nextScene = {
-													...currentScene,
-													lights: [...(currentScene.lights || []), newLight],
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertVttScene(scenes, nextScene),
-													currentScene.id,
-												);
-											} else if (e.type === "terrain") {
-												const terrainCenter = {
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-												};
-												const terrainRadius = e.radius || 8;
-												const newTerrain: TerrainZone = {
-													id: e.id || `terrain-${Date.now()}`,
-													type: "difficult",
-													vertices: [
-														{
-															x: terrainCenter.x - terrainRadius,
-															y: terrainCenter.y - terrainRadius,
-														},
-														{
-															x: terrainCenter.x + terrainRadius,
-															y: terrainCenter.y - terrainRadius,
-														},
-														{
-															x: terrainCenter.x + terrainRadius,
-															y: terrainCenter.y + terrainRadius,
-														},
-														{
-															x: terrainCenter.x - terrainRadius,
-															y: terrainCenter.y + terrainRadius,
-														},
-													],
-													movementCost: 2,
-													fillColor: e.color || "rgba(139,90,43,0.25)",
-													label: e.name || "Difficult Terrain",
-													visible: true,
-												};
-												const nextScene = {
-													...currentScene,
-													terrain: [
-														...(currentScene.terrain || []),
-														newTerrain,
-													],
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertVttScene(scenes, nextScene),
-													nextScene.id,
-												);
-											} else if (e.type === "ambient") {
-												const newAmbient: AmbientSoundZone = {
-													id: e.id || `ambient-${Date.now()}`,
-													label: e.name || "Ambient",
-													audioUrl:
-														"library:" +
-														(e.name || "").toLowerCase().replace(/\s/g, "-"),
-													x: e.x ?? cx,
-													y: e.y ?? cy,
-													shape: "circle",
-													radius: e.radius || 10,
-													volume: 0.8,
-													loop: true,
-													enabled: true,
-													gmOnly: true,
-													walledOcclusion: false,
-													falloff: "linear",
-													category: "ambient",
-												};
-												const nextScene = {
-													...currentScene,
-													ambientSounds: [
-														...(currentScene.ambientSounds || []),
-														newAmbient,
-													],
-												};
-												updateScene(nextScene);
-												vttRealtime.broadcastSceneSync(
-													upsertVttScene(scenes, nextScene),
-													nextScene.id,
-												);
-											}
-										}}
-										onShareHandout={(url: string, name?: string) => {
-											vttRealtime.rollAndBroadcast(
-												`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
-												"wardenroll",
-											);
-										}}
-										onPlaySound={(soundId) => {
-											vttRealtime.broadcastAudioSync("play_sound", soundId);
-											toast({
-												title: "Sound Played",
-												description: `Playing ${soundId} sound effect`,
-											});
-										}}
-										onMusicChange={(musicId) => {
-											if (!musicEngineRef.current) {
-												musicEngineRef.current = new VttMusicEngine();
-											}
-											if (musicId === "stop") {
-												musicEngineRef.current.stop();
-												vttRealtime.broadcastAudioSync("music_stop", "stop");
-												toast({ title: "Music Stopped" });
-											} else {
-												musicEngineRef.current.play(musicId as MusicMood);
-												vttRealtime.broadcastAudioSync("music_change", musicId);
-												toast({
-													title: "Music Changed",
-													description: `Playing ${musicId} ambient music`,
-												});
-											}
-										}}
-									/>
+													}}
+													onMusicChange={(musicId) => {
+														if (!musicEngineRef.current) {
+															musicEngineRef.current = new VttMusicEngine();
+														}
+														if (musicId === "stop") {
+															musicEngineRef.current.stop();
+															vttRealtime.broadcastAudioSync(
+																"music_stop",
+																"stop",
+															);
+															toast({ title: "Music Stopped" });
+														} else {
+															musicEngineRef.current.play(musicId as MusicMood);
+															vttRealtime.broadcastAudioSync(
+																"music_change",
+																musicId,
+															);
+															toast({
+																title: "Music Changed",
+																description: `Playing ${musicId} ambient music`,
+															});
+														}
+													}}
+												/>
+											</div>
+										</SheetContent>
+									</Sheet>
 								)}
 
 								{activeToken && (
-									<AscendantWindow title="ACTIVE TOKEN">
+									<AscendantWindow title="ACTIVE TOKEN" density="compact">
 										<div className="space-y-3 text-xs">
 											<div>
 												<Label className="text-xs">Name</Label>
@@ -4501,7 +4897,10 @@ const VTTEnhanced = () => {
 									</TabsList>
 
 									<TabsContent value="initiative" className="space-y-2">
-										<AscendantWindow title="INITIATIVE TRACKER">
+										<AscendantWindow
+											title="INITIATIVE TRACKER"
+											density="compact"
+										>
 											{/* Turn controls */}
 											{isWarden && tokensInInitiative.length > 0 && (
 												<div className="flex items-center justify-between mb-3 pb-2 border-b border-border">
@@ -4663,6 +5062,7 @@ const VTTEnhanced = () => {
 									<TabsContent value="chat" className="space-y-2">
 										<AscendantWindow
 											title="CHAT"
+											density="compact"
 											className="flex flex-col h-[400px]"
 										>
 											{vttRealtime.activeUsers.length > 0 && (
@@ -4798,7 +5198,7 @@ const VTTEnhanced = () => {
 									</TabsContent>
 
 									<TabsContent value="dice" className="space-y-2">
-										<AscendantWindow title="DICE ROLLER">
+										<AscendantWindow title="DICE ROLLER" density="compact">
 											<div className="space-y-3">
 												<div className="grid grid-cols-3 gap-1.5">
 													{[
@@ -4988,7 +5388,7 @@ const VTTEnhanced = () => {
 									</TabsContent>
 
 									<TabsContent value="assets" className="space-y-2">
-										<AscendantWindow title="ASSET LIBRARY">
+										<AscendantWindow title="ASSET LIBRARY" density="compact">
 											<VTTAssetBrowser
 												campaignId={campaignId}
 												onUseAsMap={(imageUrl, name) => {
@@ -5085,6 +5485,7 @@ const VTTEnhanced = () => {
 									<TabsContent value="journal" className="space-y-2">
 										<AscendantWindow
 											title="JOURNAL"
+											density="compact"
 											className="h-[400px] flex flex-col"
 										>
 											<div className="flex-1 overflow-y-auto space-y-2 mb-2">
@@ -5129,48 +5530,84 @@ const VTTEnhanced = () => {
 									{ key: "draw", label: "Draw", Icon: Pencil },
 									{ key: "measure", label: "Measure", Icon: Ruler },
 								] as const
-							).map((tool) => (
+							).map((tool) =>
+								selectedTool === tool.key ? (
+									<button
+										type="button"
+										key={tool.key}
+										className="inline-flex items-center justify-center bg-primary/20 border-primary"
+										onClick={() => {
+											setSelectedTool(tool.key);
+											setMobilePanel(null);
+										}}
+										aria-label={`${tool.label} tool`}
+										aria-pressed="true"
+										title={tool.label}
+									>
+										<tool.Icon className="w-3.5 h-3.5" aria-hidden />
+										<span>{tool.label}</span>
+									</button>
+								) : (
+									<button
+										type="button"
+										key={tool.key}
+										className="inline-flex items-center justify-center border-border hover:bg-muted/50"
+										onClick={() => {
+											setSelectedTool(tool.key);
+											setMobilePanel(null);
+										}}
+										aria-label={`${tool.label} tool`}
+										aria-pressed="false"
+										title={tool.label}
+									>
+										<tool.Icon className="w-3.5 h-3.5" aria-hidden />
+										<span>{tool.label}</span>
+									</button>
+								),
+							)}
+							<div className="w-px h-8 bg-border/30 mx-1" />
+							{mobilePanel === "tools" ? (
 								<button
 									type="button"
-									key={tool.key}
-									className={cn(
-										"inline-flex items-center justify-center",
-										selectedTool === tool.key && "active",
-									)}
-									onClick={() => {
-										setSelectedTool(tool.key);
-										setMobilePanel(null);
-									}}
-									aria-label={`${tool.label} tool`}
-									aria-pressed={selectedTool === tool.key}
-									title={tool.label}
+									className="active"
+									onClick={() => setMobilePanel(null)}
+									aria-pressed="true"
 								>
-									<tool.Icon className="w-4 h-4" aria-hidden />
+									Tools
 								</button>
-							))}
+							) : (
+								<button
+									type="button"
+									className=""
+									onClick={() => setMobilePanel("tools")}
+									aria-pressed="false"
+								>
+									Tools
+								</button>
+							)}
+							{mobilePanel === "sidebar" ? (
+								<button
+									type="button"
+									className="active"
+									onClick={() => setMobilePanel(null)}
+									aria-pressed="true"
+								>
+									Panel
+								</button>
+							) : (
+								<button
+									type="button"
+									className=""
+									onClick={() => setMobilePanel("sidebar")}
+									aria-pressed="false"
+								>
+									Panel
+								</button>
+							)}
 							<div className="w-px h-8 bg-border/30 mx-1" />
 							<button
 								type="button"
-								className={cn(mobilePanel === "tools" && "active")}
-								onClick={() =>
-									setMobilePanel(mobilePanel === "tools" ? null : "tools")
-								}
-							>
-								Tools
-							</button>
-							<button
-								type="button"
-								className={cn(mobilePanel === "sidebar" && "active")}
-								onClick={() =>
-									setMobilePanel(mobilePanel === "sidebar" ? null : "sidebar")
-								}
-							>
-								Panel
-							</button>
-							<div className="w-px h-8 bg-border/30 mx-1" />
-							<button
-								type="button"
-								onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}
+								onClick={() => handleRequestZoom(zoom - 0.15)}
 								aria-label="Zoom out"
 							>
 								−
@@ -5180,7 +5617,7 @@ const VTTEnhanced = () => {
 							</span>
 							<button
 								type="button"
-								onClick={() => setZoom(Math.min(2, zoom + 0.15))}
+								onClick={() => handleRequestZoom(zoom + 0.15)}
 							>
 								+
 							</button>

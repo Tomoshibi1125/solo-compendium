@@ -137,9 +137,13 @@ export function VTTInitiativePanel({
 	const [hpDelta, setHpDelta] = useState<Record<string, string>>({});
 	const listRef = useRef<HTMLDivElement>(null);
 
-	// Auto-scroll active combatant into view
+	// Auto-scroll active combatant into view when the turn advances.
 	useEffect(() => {
-		const active = listRef.current?.querySelector(".is-active-turn");
+		const list = listRef.current;
+		if (!list || currentTurn < 0) return;
+		const active = list.querySelectorAll<HTMLElement>("[data-combatant-row]")[
+			currentTurn
+		];
 		active?.scrollIntoView({ block: "nearest", behavior: "smooth" });
 	}, [currentTurn]);
 
@@ -315,7 +319,8 @@ export function VTTInitiativePanel({
 		<div className="space-y-2">
 			{/* Round indicator + controls */}
 			<div className="flex items-center justify-between">
-				<span className="text-xs font-semibold text-primary">
+				<span className="flex items-center gap-1.5 text-xs font-semibold text-primary">
+					<Swords className="h-3.5 w-3.5" aria-hidden="true" />
 					Round {round}
 				</span>
 				<div className="flex gap-1">
@@ -352,6 +357,7 @@ export function VTTInitiativePanel({
 					return (
 						<div
 							key={entry.id}
+							data-combatant-row={entry.id}
 							className={cn(
 								"rounded border p-1.5 text-xs transition-all",
 								isActive
@@ -438,8 +444,9 @@ export function VTTInitiativePanel({
 											size="icon"
 											className="h-7 w-7"
 											onClick={() => adjustHP(entry, -1)}
+											aria-label="Decrease HP by 1"
 										>
-											-
+											<Minus className="h-3 w-3" />
 										</Button>
 										<span className="text-xs font-mono w-10 text-center">
 											{entry.hp ?? "?"}
@@ -449,9 +456,35 @@ export function VTTInitiativePanel({
 											size="icon"
 											className="h-7 w-7"
 											onClick={() => adjustHP(entry, 1)}
+											aria-label="Increase HP by 1"
 										>
-											+
+											<Plus className="h-3 w-3" />
 										</Button>
+										<Input
+											type="number"
+											placeholder="±n"
+											aria-label="Apply custom HP delta"
+											className="h-7 w-16 text-[10px]"
+											value={hpDelta[entry.id] ?? ""}
+											onChange={(e) =>
+												setHpDelta((prev) => ({
+													...prev,
+													[entry.id]: e.target.value,
+												}))
+											}
+											onKeyDown={(e) => {
+												if (e.key !== "Enter") return;
+												const raw = hpDelta[entry.id];
+												const parsed = raw ? parseInt(raw, 10) : 0;
+												if (Number.isFinite(parsed) && parsed !== 0) {
+													adjustHP(entry, parsed);
+												}
+												setHpDelta((prev) => ({
+													...prev,
+													[entry.id]: "",
+												}));
+											}}
+										/>
 									</div>
 
 									{/* Quick conditions */}

@@ -304,7 +304,12 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 	return (
 		<EmbeddedProvider>
-			<div className={cn("flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-4rem)] pr-0.5", className)}>
+			<div
+				className={cn(
+					"flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-4rem)] pr-0.5",
+					className,
+				)}
+			>
 				{/* Quick Actions Bar */}
 				<AscendantWindow title="QUICK ACTIONS" compact>
 					<div className="grid grid-cols-2 gap-2">
@@ -339,8 +344,8 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										size="sm"
 										variant="outline"
 										onClick={() => {
-										resolvedPlaySound(sound.id);
-										logWardenMacro("Sound Effect", sound.name);
+											resolvedPlaySound(sound.id);
+											logWardenMacro("Sound Effect", sound.name);
 										}}
 										className="h-8 text-xs p-1"
 										title={sound.name}
@@ -354,42 +359,44 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 
 					{/* Custom Macros Bar */}
 					{macros.length > 0 && (
-					<div className="pt-2 border-t border-border/50">
-					<button
-					 type="button"
-					className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
-					onClick={() => toggleSection("macros")}
-					>
-					<Label className="text-xs cursor-pointer">Saved Macros ({macros.length})</Label>
-					<ChevronDown
-					className={cn(
-					"w-3 h-3 transition-transform",
-					openSections.macros && "rotate-180",
+						<div className="pt-2 border-t border-border/50">
+							<button
+								type="button"
+								className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+								onClick={() => toggleSection("macros")}
+							>
+								<Label className="text-xs cursor-pointer">
+									Saved Macros ({macros.length})
+								</Label>
+								<ChevronDown
+									className={cn(
+										"w-3 h-3 transition-transform",
+										openSections.macros && "rotate-180",
+									)}
+								/>
+							</button>
+							{openSections.macros && (
+								<div className="flex gap-1 overflow-x-auto pb-1 pt-1">
+									{macros.map((macro) => (
+										<Button
+											key={macro.id}
+											size="sm"
+											variant="secondary"
+											onClick={() => {
+												onRoll?.(macro.formula, "dice");
+												logWardenMacro("Custom Macro", macro.name);
+											}}
+											className="h-8 text-[10px] px-2 shrink-0"
+											style={{ borderColor: macro.color }}
+											title={`${macro.name}: ${macro.formula}`}
+										>
+											{macro.name.slice(0, 8)}
+										</Button>
+									))}
+								</div>
+							)}
+						</div>
 					)}
-					/>
-					</button>
-					{openSections.macros && (
-					<div className="flex gap-1 overflow-x-auto pb-1 pt-1">
-					{macros.map((macro) => (
-					 <Button
-					   key={macro.id}
-					    size="sm"
-					     variant="secondary"
-					      onClick={() => {
-											onRoll?.(macro.formula, "dice");
-											logWardenMacro("Custom Macro", macro.name);
-										}}
-										className="h-8 text-[10px] px-2 shrink-0"
-										style={{ borderColor: macro.color }}
-										title={`${macro.name}: ${macro.formula}`}
-									>
-										{macro.name.slice(0, 8)}
-									</Button>
-								))}
-							</div>
-						)}
-					</div>
-				)}
 
 					{/* Quick Music (Procedural Ambient — Zero Copyright) */}
 					<div className="pt-2 border-t border-border/50">
@@ -398,7 +405,9 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
 							onClick={() => toggleSection("music")}
 						>
-							<Label className="text-xs cursor-pointer">Ambient Music (Procedural)</Label>
+							<Label className="text-xs cursor-pointer">
+								Ambient Music (Procedural)
+							</Label>
 							<ChevronDown
 								className={cn(
 									"w-3 h-3 transition-transform",
@@ -414,8 +423,8 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										size="sm"
 										variant={music.id === "stop" ? "destructive" : "outline"}
 										onClick={() => {
-										resolvedMusicChange(music.id);
-										logWardenMacro("Music Change", music.name);
+											resolvedMusicChange(music.id);
+											logWardenMacro("Music Change", music.name);
 										}}
 										className="h-7 text-[10px] px-1 truncate"
 									>
@@ -440,49 +449,49 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 						}
 					>
 						<Tabs
-						value={activeTool}
-						onValueChange={setActiveTool}
-						className="w-full"
+							value={activeTool}
+							onValueChange={setActiveTool}
+							className="w-full"
 						>
-						<div className="overflow-x-auto pb-0.5">
-						<TabsList className="flex flex-nowrap w-max min-w-full gap-1 h-auto p-1">
-						<TabsTrigger
-						 value="encounter"
-						  className="flex-col gap-1 p-2 min-w-[56px]"
-						>
-						 <Sword className="w-4 h-4" />
-						  <span className="text-[10px]">Encounter</span>
-						 </TabsTrigger>
-						<TabsTrigger
-						 value="generators"
-						  className="flex-col gap-1 p-2 min-w-[56px]"
-						>
-						 <Sparkles className="w-4 h-4" />
-						  <span className="text-[10px]">Generate</span>
-						 </TabsTrigger>
-						<TabsTrigger
-						 value="assets"
-						  className="flex-col gap-1 p-2 min-w-[56px]"
-						>
-						 <BookOpen className="w-4 h-4" />
-						  <span className="text-[10px]">Assets</span>
-						 </TabsTrigger>
-						<TabsTrigger
-						 value="tables"
-						  className="flex-col gap-1 p-2 min-w-[56px]"
-						>
-						 <Coins className="w-4 h-4" />
-						  <span className="text-[10px]">Tables</span>
-						 </TabsTrigger>
-						<TabsTrigger
-						 value="tools"
-						  className="flex-col gap-1 p-2 min-w-[56px]"
-						>
-						 <Settings className="w-4 h-4" />
-						  <span className="text-[10px]">Tools</span>
-						  </TabsTrigger>
-							</TabsList>
-						</div>
+							<div className="overflow-x-auto pb-0.5">
+								<TabsList className="flex flex-nowrap w-max min-w-full gap-1 h-auto p-1">
+									<TabsTrigger
+										value="encounter"
+										className="flex-col gap-1 p-2 min-w-[56px]"
+									>
+										<Sword className="w-4 h-4" />
+										<span className="text-[10px]">Encounter</span>
+									</TabsTrigger>
+									<TabsTrigger
+										value="generators"
+										className="flex-col gap-1 p-2 min-w-[56px]"
+									>
+										<Sparkles className="w-4 h-4" />
+										<span className="text-[10px]">Generate</span>
+									</TabsTrigger>
+									<TabsTrigger
+										value="assets"
+										className="flex-col gap-1 p-2 min-w-[56px]"
+									>
+										<BookOpen className="w-4 h-4" />
+										<span className="text-[10px]">Assets</span>
+									</TabsTrigger>
+									<TabsTrigger
+										value="tables"
+										className="flex-col gap-1 p-2 min-w-[56px]"
+									>
+										<Coins className="w-4 h-4" />
+										<span className="text-[10px]">Tables</span>
+									</TabsTrigger>
+									<TabsTrigger
+										value="tools"
+										className="flex-col gap-1 p-2 min-w-[56px]"
+									>
+										<Settings className="w-4 h-4" />
+										<span className="text-[10px]">Tools</span>
+									</TabsTrigger>
+								</TabsList>
+							</div>
 
 							<TabsContent value="encounter" className="space-y-4">
 								<EncounterBuilder embedded />
@@ -529,210 +538,212 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							</TabsContent>
 
 							<TabsContent value="generators" className="mt-3">
-							<div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-0.5">
-							<Dialog>
-							<DialogTrigger asChild>
-							<Button
-							variant="outline"
-							className="h-auto py-3 flex-col gap-1.5"
-							>
-							<Users className="w-4 h-4" />
-							<span className="text-xs">NPC</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							<DialogTitle>NPC Generator</DialogTitle>
-							</DialogHeader>
-							<NPCGenerator />
-							</DialogContent>
-							</Dialog>
+								<div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto pr-0.5">
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<Users className="w-4 h-4" />
+												<span className="text-xs">NPC</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>NPC Generator</DialogTitle>
+											</DialogHeader>
+											<NPCGenerator />
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-							<DialogTrigger asChild>
-							<Button
-							variant="outline"
-							className="h-auto py-3 flex-col gap-1.5"
-							>
-							<DoorOpen className="w-4 h-4" />
-							<span className="text-xs">Rift</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							<DialogTitle>Rift Generator</DialogTitle>
-							</DialogHeader>
-							<GateGenerator />
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<DoorOpen className="w-4 h-4" />
+												<span className="text-xs">Rift</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Rift Generator</DialogTitle>
+											</DialogHeader>
+											<GateGenerator />
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-							<DialogTrigger asChild>
-							<Button
-							variant="outline"
-							className="h-auto py-3 flex-col gap-1.5"
-							>
-							<Coins className="w-4 h-4" />
-							<span className="text-xs">Treasure</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							<DialogTitle>Treasure Generator</DialogTitle>
-							</DialogHeader>
-							<TreasureGenerator />
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<Coins className="w-4 h-4" />
+												<span className="text-xs">Treasure</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Treasure Generator</DialogTitle>
+											</DialogHeader>
+											<TreasureGenerator />
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-							<DialogTrigger asChild>
-							<Button
-							variant="outline"
-							className="h-auto py-3 flex-col gap-1.5"
-							>
-							<Skull className="w-4 h-4" />
-							<span className="text-xs">Random</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							<DialogTitle>Random Event Generator</DialogTitle>
-							</DialogHeader>
-							<RandomEventGenerator />
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<Skull className="w-4 h-4" />
+												<span className="text-xs">Random</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Random Event Generator</DialogTitle>
+											</DialogHeader>
+											<RandomEventGenerator />
+										</DialogContent>
+									</Dialog>
 
-								<Dialog>
-							  <DialogTrigger asChild>
-							  <Button
-							  variant="outline"
-							 className="h-auto py-3 flex-col gap-1.5"
-							>
-							<Heart className="w-4 h-4" />
-							 <span className="text-xs">Relic</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							 <DialogHeader>
-							  <DialogTitle>Relic Workshop</DialogTitle>
-							</DialogHeader>
-							<RelicWorkshop />
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<Heart className="w-4 h-4" />
+												<span className="text-xs">Relic</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Relic Workshop</DialogTitle>
+											</DialogHeader>
+											<RelicWorkshop />
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-									<DialogTrigger asChild>
-							  <Button
-							  variant="outline"
-							 className="h-auto py-3 flex-col gap-1.5 border-fuchsia-500/30"
-							>
-							<MapIcon className="w-4 h-4 text-fuchsia-400" />
-							 <span className="text-xs text-fuchsia-400">Map Gen</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							 <DialogTitle>Dungeon Topology Synthesizer</DialogTitle>
-							 </DialogHeader>
-							 <DungeonMapGenerator className="min-h-[500px]" />
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5 border-fuchsia-500/30"
+											>
+												<MapIcon className="w-4 h-4 text-fuchsia-400" />
+												<span className="text-xs text-fuchsia-400">
+													Map Gen
+												</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Dungeon Topology Synthesizer</DialogTitle>
+											</DialogHeader>
+											<DungeonMapGenerator className="min-h-[500px]" />
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-							<DialogTrigger asChild>
-							  <Button
-											variant="outline"
-							   className="h-auto py-3 flex-col gap-1.5 border-blue-500/30"
-							 >
-							 <Image className="w-4 h-4 text-blue-400" />
-							<span className="text-xs text-blue-400">Art AI</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							 <DialogTitle>AI Enhanced Art Generator</DialogTitle>
-							 </DialogHeader>
-							 <div className="bg-card/30 backdrop-blur-sm border border-primary/10 rounded-xl p-4">
-							 <AIEnhancedArtGenerator entityType="Anomaly" />
-							</div>
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5 border-blue-500/30"
+											>
+												<Image className="w-4 h-4 text-blue-400" />
+												<span className="text-xs text-blue-400">Art AI</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>AI Enhanced Art Generator</DialogTitle>
+											</DialogHeader>
+											<div className="bg-card/30 backdrop-blur-sm border border-primary/10 rounded-xl p-4">
+												<AIEnhancedArtGenerator entityType="Anomaly" />
+											</div>
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-							<DialogTrigger asChild>
-							  <Button
-											variant="outline"
-							   className="h-auto py-3 flex-col gap-1.5"
-							 >
-							 <BookOpen className="w-4 h-4" />
-							<span className="text-xs">Directives</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-							<DialogHeader>
-							 <DialogTitle>Directive Lattice</DialogTitle>
-							 </DialogHeader>
-							 <DirectiveLattice />
-							</DialogContent>
-							</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<BookOpen className="w-4 h-4" />
+												<span className="text-xs">Directives</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+											<DialogHeader>
+												<DialogTitle>Directive Lattice</DialogTitle>
+											</DialogHeader>
+											<DirectiveLattice />
+										</DialogContent>
+									</Dialog>
 
-							<Dialog>
-							<DialogTrigger asChild>
-							  <Button
-											variant="outline"
-							   className="h-auto py-3 flex-col gap-1.5"
-							 >
-							 <Sparkles className="w-4 h-4" />
-							<span className="text-xs">Effect</span>
-							</Button>
-							</DialogTrigger>
-							<DialogContent className="max-w-lg">
-							<DialogHeader>
-							 <DialogTitle>Quick Effect</DialogTitle>
-							 </DialogHeader>
-							 <div className="space-y-4">
-							 <div className="grid grid-cols-2 gap-2">
-							 {[
-							   "Fireball",
-							   "Healing",
-							  "Lightning",
-							 "Shield",
-							"Poison",
-							"Teleport",
-							].map((effect) => (
-							<Button
-							 key={effect}
-							 onClick={() => {
-							   onAddEffect?.({
-							   id: createVttTokenInstanceId(),
-							  name: effect,
-							  type: "magic",
-							 x: Math.random() * 10,
-							y: Math.random() * 10,
-							radius: 2,
-							color:
-							 effect === "Fireball"
-							  ? "#ff6b6b"
-							  : effect === "Healing"
-							   ? "#51cf66"
-							  : "#339af0",
-							});
-							logWardenMacro("Visual Effect", effect);
-							toast({
-							title: "Effect Added",
-							 description: `${effect} effect placed on map`,
-							});
-							}}
-							className="h-10 text-xs"
-							>
-							{effect}
-							</Button>
-							))}
-							</div>
-							</div>
-							</DialogContent>
-							</Dialog>
-							</div>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button
+												variant="outline"
+												className="h-auto py-3 flex-col gap-1.5"
+											>
+												<Sparkles className="w-4 h-4" />
+												<span className="text-xs">Effect</span>
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="max-w-lg">
+											<DialogHeader>
+												<DialogTitle>Quick Effect</DialogTitle>
+											</DialogHeader>
+											<div className="space-y-4">
+												<div className="grid grid-cols-2 gap-2">
+													{[
+														"Fireball",
+														"Healing",
+														"Lightning",
+														"Shield",
+														"Poison",
+														"Teleport",
+													].map((effect) => (
+														<Button
+															key={effect}
+															onClick={() => {
+																onAddEffect?.({
+																	id: createVttTokenInstanceId(),
+																	name: effect,
+																	type: "magic",
+																	x: Math.random() * 10,
+																	y: Math.random() * 10,
+																	radius: 2,
+																	color:
+																		effect === "Fireball"
+																			? "#ff6b6b"
+																			: effect === "Healing"
+																				? "#51cf66"
+																				: "#339af0",
+																});
+																logWardenMacro("Visual Effect", effect);
+																toast({
+																	title: "Effect Added",
+																	description: `${effect} effect placed on map`,
+																});
+															}}
+															className="h-10 text-xs"
+														>
+															{effect}
+														</Button>
+													))}
+												</div>
+											</div>
+										</DialogContent>
+									</Dialog>
+								</div>
 							</TabsContent>
 
 							<TabsContent value="tables" className="space-y-4">
@@ -740,48 +751,48 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							</TabsContent>
 
 							<TabsContent value="tools" className="space-y-4 mt-3">
-							<AscendantWindow title="SESSION NOTES" compact>
-							<textarea
-							className="w-full h-32 p-2 text-xs bg-background border border-border rounded resize-none"
-							placeholder="Jot down key moments, NPC reactions, player decisions..."
-							value={sessionNotes}
-							onChange={(e) => setSessionNotes(e.target.value)}
-							/>
-							<div className="flex gap-2 mt-2">
-							<Button
-							size="sm"
-							className="flex-1"
-							onClick={handleSaveNotes}
-							disabled={!sessionNotes.trim()}
-							>
-							Save
-							</Button>
-							<Button
-							size="sm"
-							variant="outline"
-							onClick={handleClearNotes}
-							disabled={!sessionNotes}
-							>
-							Clear
-							</Button>
-							</div>
-							</AscendantWindow>
+								<AscendantWindow title="SESSION NOTES" compact>
+									<textarea
+										className="w-full h-32 p-2 text-xs bg-background border border-border rounded resize-none"
+										placeholder="Jot down key moments, NPC reactions, player decisions..."
+										value={sessionNotes}
+										onChange={(e) => setSessionNotes(e.target.value)}
+									/>
+									<div className="flex gap-2 mt-2">
+										<Button
+											size="sm"
+											className="flex-1"
+											onClick={handleSaveNotes}
+											disabled={!sessionNotes.trim()}
+										>
+											Save
+										</Button>
+										<Button
+											size="sm"
+											variant="outline"
+											onClick={handleClearNotes}
+											disabled={!sessionNotes}
+										>
+											Clear
+										</Button>
+									</div>
+								</AscendantWindow>
 
-							<AscendantWindow title="PARTY STATUS" compact>
-							<PartyDashboardPanel rawMembers={members} />
-							<div className="mt-4 pt-4 border-t border-border/50">
-									<Button
-							 variant="secondary"
-							 className="w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10"
-							onClick={() =>
-							window.open("/source-book/module", "_blank")
-							}
-							>
-							<BookOpen className="w-4 h-4" />
-							Read Module Book
-							</Button>
-							</div>
-							</AscendantWindow>
+								<AscendantWindow title="PARTY STATUS" compact>
+									<PartyDashboardPanel rawMembers={members} />
+									<div className="mt-4 pt-4 border-t border-border/50">
+										<Button
+											variant="secondary"
+											className="w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10"
+											onClick={() =>
+												window.open("/source-book/module", "_blank")
+											}
+										>
+											<BookOpen className="w-4 h-4" />
+											Read Module Book
+										</Button>
+									</div>
+								</AscendantWindow>
 
 								<AscendantWindow title="EXTERNAL SYSTEMS" compact>
 									<div className="space-y-2">
@@ -828,182 +839,188 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								</AscendantWindow>
 
 								<AscendantWindow title="ATMOSPHERE" compact>
-								<div className="space-y-3">
-								{/* Lighting — always visible, just 3 buttons */}
-								<div>
-								<Label className="text-xs">Lighting</Label>
-								<div className="flex gap-2 mt-1">
-								<Button
-								size="sm"
-								variant="outline"
-								onClick={() => {
-								onAddEffect?.({
-								id: "bright",
-								name: "Bright Light",
-								type: "light",
-								radius: 10,
-								 color: "#fff59d",
-								});
-								 logWardenMacro("Lighting", "Bright Light");
-								 }}
-								>
-								 <Eye className="w-3 h-3" />
-								</Button>
-								<Button
-								size="sm"
-								variant="outline"
-								onClick={() => {
-								onAddEffect?.({
-								id: "dim",
-								name: "Dim Light",
-								type: "light",
-								radius: 5,
-								 color: "#ffecb3",
-								});
-								 logWardenMacro("Lighting", "Dim Light");
-								 }}
-								>
-								 <EyeOff className="w-3 h-3" />
-								</Button>
-								<Button
-								size="sm"
-								variant="outline"
-								onClick={() => {
-								onAddEffect?.({
-								id: "darkness",
-								name: "Darkness",
-								type: "dark",
-								radius: 8,
-								 color: "#000000",
-								});
-								 logWardenMacro("Lighting", "Darkness");
-								 }}
-								>
-								 <Minus className="w-3 h-3" />
-								 </Button>
-								 </div>
-								</div>
-
-								{/* Weather — always visible, just 3 buttons */}
-								<div>
-								<Label className="text-xs">Weather</Label>
-								<div className="flex gap-2 mt-1">
-								<Button
-								size="sm"
-								variant="outline"
-								onClick={() => {
-								  resolvedPlaySound("rain");
-								 logWardenMacro("Weather", "Rain");
-								 }}
-								>
-								🌧️
-								</Button>
-								<Button
-								size="sm"
-								variant="outline"
-								onClick={() => {
-								  resolvedPlaySound("thunder");
-								 logWardenMacro("Weather", "Thunder");
-								 }}
-								>
-								⛈️
-								</Button>
-								<Button
-								size="sm"
-								variant="outline"
-								onClick={() => {
-								  resolvedPlaySound("wind");
-								 logWardenMacro("Weather", "Wind");
-								 }}
-								 >
-								   💨
-											</Button>
-								 </div>
-								</div>
-
-								{/* Terrain Effects — collapsible + scrollable */}
-								<div className="pt-2 border-t border-border/50">
-								<button
-								type="button"
-								className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
-								onClick={() => toggleSection("atmosphereTerrain")}
-								>
-								<Label className="text-xs cursor-pointer">Terrain Effects</Label>
-								<ChevronDown
-								className={cn(
-								"w-3 h-3 transition-transform",
-								openSections.atmosphereTerrain && "rotate-180",
-								)}
-								/>
-								</button>
-								{openSections.atmosphereTerrain && (
-								<div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1">
-								{Object.entries(TERRAIN_PRESETS).map(([id, t]) => (
-								 <Button
-								 key={id}
-								  size="sm"
-								   variant="outline"
-								    className="text-[10px] h-7 px-2 border-primary/20 hover:border-primary/50"
-								     onClick={() => {
-															onAddEffect?.({
-								       id: `terrain-${Date.now()}`,
-								      name: t.label || id,
-								     type: "terrain",
-								      radius: 8,
-								      color: t.fillColor,
-								    });
-								   logWardenMacro("Terrain", t.label || id);
-								 }}
-								>
-								{t.label || id}
-								</Button>
-								))}
-								</div>
-								)}
-								</div>
-
-								{/* Ambient Audio Zones — collapsible + scrollable */}
-								<div className="pt-2 border-t border-border/50">
-								<button
-								type="button"
-								className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
-								onClick={() => toggleSection("atmosphereAmbient")}
-								>
-								<Label className="text-xs cursor-pointer">Ambient Audio Zones</Label>
-								<ChevronDown
-								className={cn(
-								  "w-3 h-3 transition-transform",
-								   openSections.atmosphereAmbient && "rotate-180",
-								   )}
-								   />
-								   </button>
-										{openSections.atmosphereAmbient && (
-											<div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1">
-												{Object.entries(AMBIENT_SOUND_PRESETS).map(([id, s]) => (
-													<Button
-														key={id}
-														size="sm"
-														variant="outline"
-														className="text-[10px] h-7 px-2 border-indigo-500/30 text-indigo-300 hover:border-indigo-400"
-														onClick={() => {
-															onAddEffect?.({
-																id: `ambient-${Date.now()}`,
-																name: s.label || id,
-																type: "ambient",
-																radius: Math.floor((s.radius || 10) / 5),
-																color: "#6366f1",
-															});
-															logWardenMacro("Ambient Zone", s.label || id);
-														}}
-													>
-														{s.label || id}
-													</Button>
-												))}
+									<div className="space-y-3">
+										{/* Lighting — always visible, just 3 buttons */}
+										<div>
+											<Label className="text-xs">Lighting</Label>
+											<div className="flex gap-2 mt-1">
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														onAddEffect?.({
+															id: "bright",
+															name: "Bright Light",
+															type: "light",
+															radius: 10,
+															color: "#fff59d",
+														});
+														logWardenMacro("Lighting", "Bright Light");
+													}}
+												>
+													<Eye className="w-3 h-3" />
+												</Button>
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														onAddEffect?.({
+															id: "dim",
+															name: "Dim Light",
+															type: "light",
+															radius: 5,
+															color: "#ffecb3",
+														});
+														logWardenMacro("Lighting", "Dim Light");
+													}}
+												>
+													<EyeOff className="w-3 h-3" />
+												</Button>
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														onAddEffect?.({
+															id: "darkness",
+															name: "Darkness",
+															type: "dark",
+															radius: 8,
+															color: "#000000",
+														});
+														logWardenMacro("Lighting", "Darkness");
+													}}
+												>
+													<Minus className="w-3 h-3" />
+												</Button>
 											</div>
-										)}
+										</div>
+
+										{/* Weather — always visible, just 3 buttons */}
+										<div>
+											<Label className="text-xs">Weather</Label>
+											<div className="flex gap-2 mt-1">
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														resolvedPlaySound("rain");
+														logWardenMacro("Weather", "Rain");
+													}}
+												>
+													🌧️
+												</Button>
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														resolvedPlaySound("thunder");
+														logWardenMacro("Weather", "Thunder");
+													}}
+												>
+													⛈️
+												</Button>
+												<Button
+													size="sm"
+													variant="outline"
+													onClick={() => {
+														resolvedPlaySound("wind");
+														logWardenMacro("Weather", "Wind");
+													}}
+												>
+													💨
+												</Button>
+											</div>
+										</div>
+
+										{/* Terrain Effects — collapsible + scrollable */}
+										<div className="pt-2 border-t border-border/50">
+											<button
+												type="button"
+												className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+												onClick={() => toggleSection("atmosphereTerrain")}
+											>
+												<Label className="text-xs cursor-pointer">
+													Terrain Effects
+												</Label>
+												<ChevronDown
+													className={cn(
+														"w-3 h-3 transition-transform",
+														openSections.atmosphereTerrain && "rotate-180",
+													)}
+												/>
+											</button>
+											{openSections.atmosphereTerrain && (
+												<div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1">
+													{Object.entries(TERRAIN_PRESETS).map(([id, t]) => (
+														<Button
+															key={id}
+															size="sm"
+															variant="outline"
+															className="text-[10px] h-7 px-2 border-primary/20 hover:border-primary/50"
+															onClick={() => {
+																onAddEffect?.({
+																	id: `terrain-${Date.now()}`,
+																	name: t.label || id,
+																	type: "terrain",
+																	radius: 8,
+																	color: t.fillColor,
+																});
+																logWardenMacro("Terrain", t.label || id);
+															}}
+														>
+															{t.label || id}
+														</Button>
+													))}
+												</div>
+											)}
+										</div>
+
+										{/* Ambient Audio Zones — collapsible + scrollable */}
+										<div className="pt-2 border-t border-border/50">
+											<button
+												type="button"
+												className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+												onClick={() => toggleSection("atmosphereAmbient")}
+											>
+												<Label className="text-xs cursor-pointer">
+													Ambient Audio Zones
+												</Label>
+												<ChevronDown
+													className={cn(
+														"w-3 h-3 transition-transform",
+														openSections.atmosphereAmbient && "rotate-180",
+													)}
+												/>
+											</button>
+											{openSections.atmosphereAmbient && (
+												<div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1">
+													{Object.entries(AMBIENT_SOUND_PRESETS).map(
+														([id, s]) => (
+															<Button
+																key={id}
+																size="sm"
+																variant="outline"
+																className="text-[10px] h-7 px-2 border-indigo-500/30 text-indigo-300 hover:border-indigo-400"
+																onClick={() => {
+																	onAddEffect?.({
+																		id: `ambient-${Date.now()}`,
+																		name: s.label || id,
+																		type: "ambient",
+																		radius: Math.floor((s.radius || 10) / 5),
+																		color: "#6366f1",
+																	});
+																	logWardenMacro("Ambient Zone", s.label || id);
+																}}
+															>
+																{s.label || id}
+															</Button>
+														),
+													)}
+												</div>
+											)}
+										</div>
 									</div>
-								</div>
-							</AscendantWindow>
+								</AscendantWindow>
 							</TabsContent>
 						</Tabs>
 					</Suspense>

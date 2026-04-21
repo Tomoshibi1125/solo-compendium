@@ -571,8 +571,23 @@ function deriveRitual(spell: StaticSpellSource): boolean {
 }
 
 const CLASS_MAP: Record<string, string[]> = {
-	Attack: ["Destroyer", "Berserker", "Assassin", "Striker", "Mage", "Esper", "Revenant"],
-	Defense: ["Mage", "Revenant", "Herald", "Holy Knight", "Technomancer", "Contractor"],
+	Attack: [
+		"Destroyer",
+		"Berserker",
+		"Assassin",
+		"Striker",
+		"Mage",
+		"Esper",
+		"Revenant",
+	],
+	Defense: [
+		"Mage",
+		"Revenant",
+		"Herald",
+		"Holy Knight",
+		"Technomancer",
+		"Contractor",
+	],
 	Healing: ["Herald", "Holy Knight", "Summoner", "Idol"],
 	Utility: [
 		"Mage",
@@ -1762,6 +1777,7 @@ export const staticDataProvider: StaticDataProvider = {
 			source_book: technique.source,
 			image_url: technique.image,
 			type: technique.type,
+			technique_type: technique.type,
 			style: technique.style,
 			element: technique.element || null,
 			prerequisites: technique.prerequisites || null,
@@ -1790,6 +1806,7 @@ export const staticDataProvider: StaticDataProvider = {
 						? "rare"
 						: "uncommon",
 			level: technique.prerequisites?.level,
+			level_requirement: technique.prerequisites?.level ?? null,
 			saving_throw:
 				(technique.mechanics?.saving_throw as Record<string, Json>) || null,
 			attack: (technique.mechanics?.attack as Record<string, Json>) || null,
@@ -1866,7 +1883,7 @@ export const staticDataProvider: StaticDataProvider = {
 			"description",
 			"role",
 		]);
-		return filtered.map((soldier: any) => ({
+		return filtered.map((soldier) => ({
 			id: soldier.id,
 			name: soldier.name,
 			display_name: soldier.display_name,
@@ -1875,12 +1892,17 @@ export const staticDataProvider: StaticDataProvider = {
 			tags: soldier.tags,
 			source_book: soldier.source_book,
 			role: soldier.role,
+			title: soldier.title ?? null,
+			shadow_type: soldier.shadow_type ?? soldier.role ?? null,
+			summon_requirements: soldier.summon_requirements ?? null,
 			gate_rank: soldier.rank,
+			rank: soldier.rank,
 			rarity: soldier.rarity,
 			flavor: soldier.flavor,
 			lore: soldier.lore as unknown as Record<string, Json>,
 			// Stat block fields surfaced for detail views
 			hit_points_average: soldier.hp,
+			hit_points: soldier.hp,
 			armor_class: soldier.ac,
 			speed_walk: soldier.speed,
 			str: soldier.stats.strength,
@@ -1909,17 +1931,26 @@ export const staticDataProvider: StaticDataProvider = {
 	getSigils: async (search?: string) => {
 		const { sigils } = await import("../sigils");
 		const filtered = filterBySearch(sigils, search, ["name", "description"]);
-		return filtered.map((sigil: any) => ({
+		return filtered.map((sigil) => ({
 			id: sigil.id,
 			name: sigil.name,
 			display_name: sigil.name,
 			description: sigil.description,
+			effect_description: sigil.effect_description ?? sigil.description ?? null,
 			created_at: new Date().toISOString(),
-			tags: sigil.tags || [],
+			tags: sigil.tags || null,
 			source_book: sigil.source_book || "Rift Ascendant Canon",
+			image_url: sigil.image ?? null,
 			rarity: sigil.rarity || "rare",
+			rune_type: sigil.rune_type ?? "utility",
+			rune_category: sigil.rune_category ?? "General",
+			rune_level: sigil.rune_level ?? 1,
+			effect_type: sigil.effect_type ?? "passive",
+			requires_level: sigil.requires_level ?? null,
 			passive_bonuses: sigil.passive_bonuses || null,
 			can_inscribe_on: sigil.can_inscribe_on || null,
+			inscription_difficulty: sigil.inscription_difficulty ?? null,
+			active_feature: sigil.active_feature ?? null,
 		}));
 	},
 	getTattoos: async (search?: string) => {

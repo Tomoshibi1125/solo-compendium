@@ -250,16 +250,11 @@ export const useCompendiumFeats = () => {
 	return useQuery({
 		queryKey: ["compendium-feats"],
 		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("compendium_feats")
-				.select("*")
-				.order("name", { ascending: true });
-
-			if (error) {
-				console.error("Error fetching compendium feats:", error);
-				throw error;
-			}
-			return data;
+			const { listCanonicalEntries } = await import(
+				"@/lib/canonicalCompendium"
+			);
+			const entries = await listCanonicalEntries("feats");
+			return entries.slice().sort((a, b) => a.name.localeCompare(b.name));
 		},
 	});
 };

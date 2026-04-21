@@ -2,6 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import {
+	findCanonicalEntryByName,
+	listCanonicalEntries,
+} from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalPower,
@@ -103,26 +107,26 @@ export const usePowers = (characterId: string) => {
 				return powers;
 			}
 
-			const { data: compendiumPowers, error: compendiumError } = await supabase
-				.from("compendium_powers")
-				.select("name, source_book")
-				.in("name", uniqueNames);
-
-			if (compendiumError) {
-				logErrorWithContext(
-					compendiumError,
-					"usePowers (compendium source lookup)",
-				);
-				if (cacheKey) {
-					writeCachedPowers(cacheKey, powers);
-				}
-				return powers;
-			}
+			const uniqueNameSet = new Set(uniqueNames);
+			const campaignId = await getCharacterCampaignId(characterId);
+			const allCanonicalPowers = await listCanonicalEntries("powers");
+			const accessibleCanonicalPowers = await filterRowsBySourcebookAccess(
+				allCanonicalPowers,
+				(entry) => entry.source_book,
+				{ campaignId },
+			);
 
 			const sourceBookByName = new Map<string, string | null>();
-			(compendiumPowers || []).forEach((power) => {
-				sourceBookByName.set(power.name, power.source_book ?? null);
-			});
+			const compendiumByName = new Map<
+				string,
+				(typeof allCanonicalPowers)[number]
+			>();
+			for (const entry of allCanonicalPowers) {
+				if (uniqueNameSet.has(entry.name)) {
+					sourceBookByName.set(entry.name, entry.source_book ?? null);
+					compendiumByName.set(entry.name, entry);
+				}
+			}
 
 			if (sourceBookByName.size === 0) {
 				if (cacheKey) {
@@ -131,17 +135,8 @@ export const usePowers = (characterId: string) => {
 				return powers;
 			}
 
-			const campaignId = await getCharacterCampaignId(characterId);
-			const accessibleCompendiumPowers = await filterRowsBySourcebookAccess(
-				(compendiumPowers || []) as Array<{
-					name: string;
-					source_book: string | null;
-				}>,
-				(power) => power.source_book,
-				{ campaignId },
-			);
 			const accessibleNames = new Set(
-				accessibleCompendiumPowers.map((power) => power.name),
+				accessibleCanonicalPowers.map((entry) => entry.name),
 			);
 
 			const filtered = powers
@@ -154,7 +149,9 @@ export const usePowers = (characterId: string) => {
 				})
 				.map((power) => ({
 					...power,
-					power: compendiumPowers?.find((cp) => cp.name === power.name),
+					power: compendiumByName.get(power.name) as
+						| CompendiumPower
+						| undefined,
 				}));
 
 			if (cacheKey) {
@@ -208,23 +205,14 @@ export const usePowers = (characterId: string) => {
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const { data: compendiumPower, error: compendiumError } = await supabase
-				.from("compendium_powers")
-				.select("source_book")
-				.eq("name", power.name)
-				.limit(1)
-				.maybeSingle();
-
-			if (compendiumError) {
-				logErrorWithContext(
-					compendiumError,
-					"usePowers.addPower (compendium source lookup)",
-				);
-			}
+			const canonicalEntry = await findCanonicalEntryByName(
+				"powers",
+				power.name,
+			);
 
 			if (
-				compendiumPower &&
-				!(await isSourcebookAccessible(compendiumPower.source_book, {
+				canonicalEntry &&
+				!(await isSourcebookAccessible(canonicalEntry.source_book, {
 					campaignId,
 				}))
 			) {
@@ -301,24 +289,14 @@ export const usePowers = (characterId: string) => {
 				}
 
 				if (existingPower?.name) {
-					const { data: compendiumPower, error: compendiumError } =
-						await supabase
-							.from("compendium_powers")
-							.select("source_book")
-							.eq("name", existingPower.name)
-							.limit(1)
-							.maybeSingle();
-
-					if (compendiumError) {
-						logErrorWithContext(
-							compendiumError,
-							"usePowers.updatePower (compendium source lookup)",
-						);
-					}
+					const canonicalEntry = await findCanonicalEntryByName(
+						"powers",
+						existingPower.name,
+					);
 
 					if (
-						compendiumPower &&
-						!(await isSourcebookAccessible(compendiumPower.source_book, {
+						canonicalEntry &&
+						!(await isSourcebookAccessible(canonicalEntry.source_book, {
 							campaignId,
 						}))
 					) {

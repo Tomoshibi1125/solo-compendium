@@ -1,3 +1,7 @@
+// NOTE: contentImporter is an admin-only import tool that mirrors homebrew JSON
+// bundles into the Supabase compendium_* tables. Runtime app code reads built-in
+// content from the canonical static compendium (src/data/compendium/*), so these
+// writes are intentionally DB-only and do not serve the runtime canonical path.
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";

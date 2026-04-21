@@ -27,16 +27,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {
+	GATE_RANKS,
+	TREASURE_TABLES,
+} from "@/data/compendium/wardenToolConfig";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import {
-	GATE_RANKS,
-	generateTreasure,
-	TREASURE_TABLES,
-	type TreasureResult,
-} from "@/lib/treasureGenerator";
+import { generateTreasure, type TreasureResult } from "@/lib/treasureGenerator";
 import { cn } from "@/lib/utils";
 
 const TreasureGenerator = () => {
@@ -59,6 +58,7 @@ const TreasureGenerator = () => {
 
 	const [selectedRank, setSelectedRank] = useState<string>("C");
 	const [treasure, setTreasure] = useState<TreasureResult | null>(null);
+	const [isGenerating, setIsGenerating] = useState(false);
 
 	const hydrated = useMemo(() => {
 		return {
@@ -90,12 +90,17 @@ const TreasureGenerator = () => {
 
 	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		clearEnhanced();
-		const result = generateTreasure(selectedRank);
-		setTreasure(result);
-		if (!isLoading) {
-			void saveNow({ selectedRank, treasure: result });
+		setIsGenerating(true);
+		try {
+			const result = await generateTreasure(selectedRank);
+			setTreasure(result);
+			if (!isLoading) {
+				void saveNow({ selectedRank, treasure: result });
+			}
+		} finally {
+			setIsGenerating(false);
 		}
 	};
 
@@ -302,9 +307,14 @@ READ-ALOUD DISCOVERY:
 							onClick={handleGenerate}
 							className="w-full btn-umbral"
 							size="lg"
+							disabled={isGenerating}
 						>
-							<Sparkles className="w-4 h-4 mr-2" />
-							Generate Treasure
+							{isGenerating ? (
+								<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+							) : (
+								<Sparkles className="w-4 h-4 mr-2" />
+							)}
+							{isGenerating ? "Generating..." : "Generate Treasure"}
 						</Button>
 						{treasure && (
 							<Button
@@ -312,7 +322,7 @@ READ-ALOUD DISCOVERY:
 								className="w-full gap-2 mt-2"
 								variant="outline"
 								size="lg"
-								disabled={isEnhancing}
+								disabled={isEnhancing || isGenerating}
 							>
 								{isEnhancing ? (
 									<Loader2 className="w-4 h-4 animate-spin" />
@@ -438,6 +448,7 @@ READ-ALOUD DISCOVERY:
 									onClick={handleGenerate}
 									variant="outline"
 									className="flex-1"
+									disabled={isGenerating}
 								>
 									<RefreshCw className="w-4 h-4 mr-2" />
 									Regenerate

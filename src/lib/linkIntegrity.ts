@@ -6,6 +6,7 @@
  */
 
 import { supabase } from "@/integrations/supabase/client";
+import { findCanonicalEntryByName } from "./canonicalCompendium";
 import { resolveRef } from "./compendiumResolver";
 
 interface BrokenLink {
@@ -48,13 +49,9 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 		];
 	}
 
-	// Check job reference (name-based)
+	// Check job reference (name-based) via canonical static
 	if (character.job) {
-		const { data: job } = await supabase
-			.from("compendium_jobs")
-			.select("id, name")
-			.eq("name", character.job)
-			.maybeSingle();
+		const job = await findCanonicalEntryByName("jobs", character.job);
 
 		if (!job) {
 			brokenLinks.push({
@@ -69,13 +66,9 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 		}
 	}
 
-	// Check path reference (name-based)
+	// Check path reference (name-based) via canonical static
 	if (character.path) {
-		const { data: path } = await supabase
-			.from("compendium_job_paths")
-			.select("id, name")
-			.eq("name", character.path)
-			.maybeSingle();
+		const path = await findCanonicalEntryByName("paths", character.path);
 
 		if (!path) {
 			brokenLinks.push({
@@ -90,13 +83,12 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 		}
 	}
 
-	// Check background reference (name-based)
+	// Check background reference (name-based) via canonical static
 	if (character.background) {
-		const { data: background } = await supabase
-			.from("compendium_backgrounds")
-			.select("id, name")
-			.eq("name", character.background)
-			.maybeSingle();
+		const background = await findCanonicalEntryByName(
+			"backgrounds",
+			character.background,
+		);
 
 		if (!background) {
 			brokenLinks.push({
@@ -177,55 +169,41 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 
 			// 1. Check if it explicitly declares its type (e.g., "spell:fireball" or "job:berserker")
 			if (sourceText.startsWith("spell:")) {
-				const { data } = await supabase
-					.from("compendium_spells")
-					.select("id")
-					.eq("name", feature.source.split(":")[1]?.trim())
-					.maybeSingle();
-				isFound = !!data;
+				const name = feature.source.split(":")[1]?.trim() ?? "";
+				const match = await findCanonicalEntryByName("spells", name);
+				isFound = !!match;
 				resolvedType = "spell";
 			} else if (sourceText.startsWith("power:")) {
-				const { data } = await supabase
-					.from("compendium_powers")
-					.select("id")
-					.eq("name", feature.source.split(":")[1]?.trim())
-					.maybeSingle();
-				isFound = !!data;
+				const name = feature.source.split(":")[1]?.trim() ?? "";
+				const match = await findCanonicalEntryByName("powers", name);
+				isFound = !!match;
 				resolvedType = "power";
 			} else if (sourceText.startsWith("job:")) {
-				const { data } = await supabase
-					.from("compendium_jobs")
-					.select("id")
-					.eq("name", feature.source.split(":")[1]?.trim())
-					.maybeSingle();
-				isFound = !!data;
+				const name = feature.source.split(":")[1]?.trim() ?? "";
+				const match = await findCanonicalEntryByName("jobs", name);
+				isFound = !!match;
 				resolvedType = "job";
 			} else if (sourceText.startsWith("path:")) {
-				const { data } = await supabase
-					.from("compendium_job_paths")
-					.select("id")
-					.eq("name", feature.source.split(":")[1]?.trim())
-					.maybeSingle();
-				isFound = !!data;
+				const name = feature.source.split(":")[1]?.trim() ?? "";
+				const match = await findCanonicalEntryByName("paths", name);
+				isFound = !!match;
 				resolvedType = "path";
 			} else {
 				// 2. Best-effort heuristic fallback for generic strings
 				// If it matches exactly to a feat, it's valid
-				const { data: featMatch } = await supabase
-					.from("compendium_feats")
-					.select("id")
-					.eq("name", feature.source)
-					.maybeSingle();
+				const featMatch = await findCanonicalEntryByName(
+					"feats",
+					feature.source,
+				);
 				if (featMatch) {
 					isFound = true;
 					resolvedType = "feat";
 				} else {
 					// Check powers
-					const { data: powerMatch } = await supabase
-						.from("compendium_powers")
-						.select("id")
-						.eq("name", feature.source)
-						.maybeSingle();
+					const powerMatch = await findCanonicalEntryByName(
+						"powers",
+						feature.source,
+					);
 					if (powerMatch) {
 						isFound = true;
 						resolvedType = "power";

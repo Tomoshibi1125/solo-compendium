@@ -40,46 +40,46 @@ import { type MusicMood, VttMusicEngine } from "@/lib/vtt/vttMusicEngine";
 // ---------------------------------------------------------------------------
 const MOOD_TO_ENGINE: Record<string, MusicMood> = {
 	// MOOD_TAGS
-	epic:          "boss-epic",
-	tense:         "combat-tension",
-	mysterious:    "mystical-wonder",
-	peaceful:      "forest-peaceful",
-	dramatic:      "combat-tension",
-	dark:          "horror-dread",
-	heroic:        "victory-triumph",
-	magical:       "mystical-wonder",
-	ancient:       "dungeon-exploration",
-	industrial:    "city-bustle",
-	nature:        "forest-peaceful",
-	urban:         "city-bustle",
-	battle:        "combat-tension",
-	stealth:       "stealth-suspense",
+	epic: "boss-epic",
+	tense: "combat-tension",
+	mysterious: "mystical-wonder",
+	peaceful: "forest-peaceful",
+	dramatic: "combat-tension",
+	dark: "horror-dread",
+	heroic: "victory-triumph",
+	magical: "mystical-wonder",
+	ancient: "dungeon-exploration",
+	industrial: "city-bustle",
+	nature: "forest-peaceful",
+	urban: "city-bustle",
+	battle: "combat-tension",
+	stealth: "stealth-suspense",
 	investigation: "stealth-suspense",
-	celebration:   "victory-triumph",
-	somber:        "sadness-loss",
+	celebration: "victory-triumph",
+	somber: "sadness-loss",
 	// WardenToolsPanel quickMusic ids (come from MOOD_TAGS at runtime)
 	"dungeon-exploration": "dungeon-exploration",
-	"tavern-calm":         "tavern-calm",
-	"combat-tension":      "combat-tension",
-	"boss-epic":           "boss-epic",
-	"forest-peaceful":     "forest-peaceful",
-	"ocean-ambient":       "ocean-ambient",
-	"city-bustle":         "city-bustle",
-	"cave-drip":           "cave-drip",
-	"mystical-wonder":     "mystical-wonder",
-	"horror-dread":        "horror-dread",
-	"victory-triumph":     "victory-triumph",
-	"sadness-loss":        "sadness-loss",
-	"stealth-suspense":    "stealth-suspense",
-	"desert-heat":         "desert-heat",
-	"arctic-cold":         "arctic-cold",
-	rainfall:              "rainfall",
-	"gate-resonance":      "gate-resonance",
-	"regent-presence":     "regent-presence",
-	"shadow-realm":        "shadow-realm",
-	"system-awakening":    "system-awakening",
+	"tavern-calm": "tavern-calm",
+	"combat-tension": "combat-tension",
+	"boss-epic": "boss-epic",
+	"forest-peaceful": "forest-peaceful",
+	"ocean-ambient": "ocean-ambient",
+	"city-bustle": "city-bustle",
+	"cave-drip": "cave-drip",
+	"mystical-wonder": "mystical-wonder",
+	"horror-dread": "horror-dread",
+	"victory-triumph": "victory-triumph",
+	"sadness-loss": "sadness-loss",
+	"stealth-suspense": "stealth-suspense",
+	"desert-heat": "desert-heat",
+	"arctic-cold": "arctic-cold",
+	rainfall: "rainfall",
+	"gate-resonance": "gate-resonance",
+	"regent-presence": "regent-presence",
+	"shadow-realm": "shadow-realm",
+	"system-awakening": "system-awakening",
 	// calm maps to tavern (most neutral)
-	calm:                  "tavern-calm",
+	calm: "tavern-calm",
 };
 
 // ---------------------------------------------------------------------------
@@ -131,16 +131,22 @@ export interface WardenAudioControls {
 
 export function useWardenAudio(initialVolume = 0.35): WardenAudioControls {
 	const engineRef = useRef<VttMusicEngine | null>(null);
+	// Capture the initial volume in a ref so the init effect remains stable
+	// (it must run exactly once — re-initialising on volume changes would
+	// destroy audio state). Later volume adjustments flow through
+	// setMusicVolume, not this effect.
+	const initialVolumeRef = useRef(initialVolume);
 
 	// Initialise engine once
 	useEffect(() => {
-		engineRef.current = new VttMusicEngine();
-		engineRef.current.setVolume(initialVolume);
+		const engine = new VttMusicEngine();
+		engine.setVolume(initialVolumeRef.current);
+		engineRef.current = engine;
 		return () => {
-			engineRef.current?.dispose();
+			engine.dispose();
 			engineRef.current = null;
 		};
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, []);
 
 	// -------------------------------------------------------------------------
 	// onPlaySound — one-shot SFX routing
@@ -155,12 +161,7 @@ export function useWardenAudio(initialVolume = 0.35): WardenAudioControls {
 
 		if (entry.type === "file") {
 			// Play via audioService (Howler), non-looping
-			const track = makeLocalTrack(
-				`sfx-${id}`,
-				id,
-				entry.path,
-				false,
-			);
+			const track = makeLocalTrack(`sfx-${id}`, id, entry.path, false);
 			audioService.loadTrack(track).then(() => {
 				audioService.play();
 			});
@@ -200,10 +201,17 @@ export function useWardenAudio(initialVolume = 0.35): WardenAudioControls {
 		}
 
 		// 2. MUSIC_ASSETS — local file via audioService
-		const musicAsset = MUSIC_ASSETS.find((a) => a.id === id || a.path.includes(id));
+		const musicAsset = MUSIC_ASSETS.find(
+			(a) => a.id === id || a.path.includes(id),
+		);
 		if (musicAsset) {
 			engine?.stop();
-			const track = makeLocalTrack(musicAsset.id, musicAsset.name, musicAsset.path, true);
+			const track = makeLocalTrack(
+				musicAsset.id,
+				musicAsset.name,
+				musicAsset.path,
+				true,
+			);
 			audioService.loadTrack(track).then(() => {
 				audioService.play();
 			});
@@ -219,7 +227,12 @@ export function useWardenAudio(initialVolume = 0.35): WardenAudioControls {
 				engine?.play(mood);
 			} else {
 				engine?.stop();
-				const track = makeLocalTrack(audioAsset.id, audioAsset.name, audioAsset.path, true);
+				const track = makeLocalTrack(
+					audioAsset.id,
+					audioAsset.name,
+					audioAsset.path,
+					true,
+				);
 				audioService.loadTrack(track).then(() => {
 					audioService.play();
 				});

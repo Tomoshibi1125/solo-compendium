@@ -18,6 +18,10 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Database, Json } from "@/integrations/supabase/types";
+import {
+	findCanonicalEntryByName,
+	listCanonicalEntries,
+} from "@/lib/canonicalCompendium";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/core-rules";
@@ -153,49 +157,42 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 			let regentNames: string[] = [];
 			if (overlayIds.length > 0) {
-				const { data: regents, error: regentsError } = await supabase
-					.from("compendium_regents")
-					.select("name")
-					.in("id", overlayIds);
-				if (regentsError) throw regentsError;
-				regentNames = (regents || [])
-					.map((r: { name: string | null }) => r.name)
+				const regents = await listCanonicalEntries("regents");
+				const overlaySet = new Set(overlayIds);
+				regentNames = regents
+					.filter((r) => overlaySet.has(r.id))
+					.map((r) => r.name)
 					.filter((name): name is string => Boolean(name));
 			}
 
 			const eligiblePowerNames = new Set<string>();
 			{
-				const job = characterJob;
-				const path = characterPath || "";
 				const maxPowerLevel = getMaxPowerLevelForJobAtLevel(
 					characterJob,
 					characterLevel ?? 1,
 				);
+				const jobTag = characterJob.toLowerCase();
+				const pathTag = (characterPath || "").toLowerCase();
+				const regentTagsLower = regentNames.map((n) => n.toLowerCase());
 
-				const regentList = regentNames
-					.map((name) => `"${String(name).replace(/"/g, "")}"`)
-					.join(",");
-				const regentFilter = regentList
-					? `regent_names.ov.{${regentList}}`
-					: "";
-				const orParts = [
-					`job_names.cs.{"${String(job).replace(/"/g, "")}"}`,
-					path ? `path_names.cs.{"${String(path).replace(/"/g, "")}"}` : "",
-					regentFilter,
-				].filter(Boolean);
-
-				const { data: eligibleRows, error: eligibleError } = await supabase
-					.from("compendium_powers")
-					.select("name")
-					.or(orParts.join(","))
-					.lte("power_level", maxPowerLevel);
-
-				if (eligibleError) throw eligibleError;
-				for (const row of (eligibleRows || []) as Array<{ name: string }>) {
-					if (row?.name) eligiblePowerNames.add(row.name);
+				const powers = await listCanonicalEntries("powers");
+				for (const power of powers) {
+					if ((power.power_level ?? 0) > maxPowerLevel) continue;
+					const tags = (power.tags || []).map((t) => t.toLowerCase());
+					const matches =
+						tags.length === 0 ||
+						tags.includes(jobTag) ||
+						(pathTag && tags.includes(pathTag)) ||
+						regentTagsLower.some((r) => tags.includes(r));
+					if (matches && power.name) eligiblePowerNames.add(power.name);
 				}
 			}
 
+			// NOTE: compendium_jobs + compendium_job_features reads are retained
+			// because the feature-choice schema (compendium_feature_choice_groups/_options)
+			// uses compendium_job_features.id as a foreign key. Built-in job features
+			// at runtime are canonical-static; this lookup only resolves DB IDs for the
+			// choice schema join below.
 			const { data: jobRow } = await supabase
 				.from("compendium_jobs")
 				.select("id")
@@ -444,11 +441,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 						const featName = grant.name;
 
-						const { data: featRow } = await supabase
-							.from("compendium_feats")
-							.select("name, description, benefits")
-							.eq("name", featName)
-							.maybeSingle();
+						const featRow = await findCanonicalEntryByName("feats", featName);
 
 						const featDescription =
 							typeof grant.description === "string"
@@ -700,11 +693,10 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 					if (grant.type === "technique" && typeof grant.name === "string") {
 						const techName = grant.name;
-						const { data: techRow } = await supabase
-							.from("compendium_techniques")
-							.select("id")
-							.eq("name", techName)
-							.maybeSingle();
+						const techRow = await findCanonicalEntryByName(
+							"techniques",
+							techName,
+						);
 						const techId = techRow?.id;
 						if (!techId) continue;
 
@@ -752,14 +744,10 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const powerName = grant.name;
 						if (existingPowerNames.has(powerName)) continue;
 
-						const { data: powerRow } = await supabase
-							.from("compendium_powers")
-							.select(
-								"name, power_level, casting_time, range, duration, concentration, description, higher_levels",
-							)
-							.eq("name", powerName)
-							.maybeSingle();
-
+						const powerRow = await findCanonicalEntryByName(
+							"powers",
+							powerName,
+						);
 						if (!powerRow?.name) continue;
 
 						await supabase.from("character_powers").insert({
@@ -767,14 +755,25 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 							name: powerRow.name,
 							power_level: powerRow.power_level ?? 0,
 							source: `Choice: ${group.choice_key}`,
-							casting_time: powerRow.casting_time ?? null,
-							range: powerRow.range ?? null,
-							duration: powerRow.duration ?? null,
+							casting_time:
+								typeof powerRow.casting_time === "string"
+									? powerRow.casting_time
+									: null,
+							range: typeof powerRow.range === "string" ? powerRow.range : null,
+							duration:
+								typeof powerRow.duration === "string"
+									? powerRow.duration
+									: null,
 							concentration: powerRow.concentration ?? false,
 							is_prepared: true,
 							is_known: true,
 							description: powerRow.description ?? null,
-							higher_levels: powerRow.higher_levels ?? null,
+							higher_levels:
+								typeof (powerRow as { higher_levels?: string })
+									.higher_levels === "string"
+									? ((powerRow as { higher_levels?: string }).higher_levels ??
+										null)
+									: null,
 						});
 
 						existingPowerNames.add(powerName);
@@ -784,36 +783,29 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const itemName = grant.name;
 						if (existingEquipmentNames.has(itemName)) continue;
 
-						const { data: equipRow } = await supabase
-							.from("compendium_equipment")
-							.select(
-								"name, equipment_type, description, properties, weight, cost_credits, armor_class, damage, damage_type",
-							)
-							.eq("name", itemName)
-							.maybeSingle();
+						const equipRow = await findCanonicalEntryByName(
+							"equipment",
+							itemName,
+						);
 
 						if (equipRow?.name) {
 							await supabase.from("character_equipment").insert({
 								character_id: characterId,
 								name: equipRow.name,
-								item_type: (equipRow.equipment_type as never) || "gear",
+								item_type:
+									(equipRow.equipment_type as never) ||
+									(equipRow.item_type as never) ||
+									"gear",
 								quantity: 1,
 								description: equipRow.description ?? null,
 								properties: (equipRow.properties as never) ?? null,
 								weight: (equipRow.weight as never) ?? null,
-								value_credits: (equipRow.cost_credits as never) ?? null,
 							});
 							existingEquipmentNames.add(itemName);
 							continue;
 						}
 
-						const { data: relicRow } = await supabase
-							.from("compendium_relics")
-							.select(
-								"name, description, rarity, relic_tier, properties, value_credits, requires_attunement",
-							)
-							.eq("name", itemName)
-							.maybeSingle();
+						const relicRow = await findCanonicalEntryByName("relics", itemName);
 						if (!relicRow?.name) continue;
 
 						await supabase.from("character_equipment").insert({
@@ -821,24 +813,18 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 							name: relicRow.name,
 							item_type: "relic",
 							rarity: relicRow.rarity as never,
-							relic_tier: relicRow.relic_tier as never,
-							requires_attunement: relicRow.requires_attunement ?? false,
+							requires_attunement: relicRow.attunement ?? false,
 							is_attuned: false,
 							quantity: 1,
 							description: relicRow.description ?? null,
 							properties: (relicRow.properties as never) ?? null,
-							value_credits: (relicRow.value_credits as never) ?? null,
 						});
 
 						existingEquipmentNames.add(itemName);
 					}
 
 					if (grant.type === "rune" && typeof grant.name === "string") {
-						const { data: runeRow } = await supabase
-							.from("compendium_runes")
-							.select("id")
-							.eq("name", grant.name)
-							.maybeSingle();
+						const runeRow = await findCanonicalEntryByName("runes", grant.name);
 						if (!runeRow?.id) continue;
 
 						await supabase.from("character_rune_knowledge").upsert(

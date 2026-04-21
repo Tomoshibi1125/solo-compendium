@@ -82,30 +82,17 @@ export async function bulkAddEquipment(
 	let failed = 0;
 
 	const resolveEquipment = async (): Promise<CompendiumEquipment | null> => {
-		const { data: byId, error: byIdError } = await supabase
-			.from("compendium_equipment")
-			.select("*")
-			.eq("id", equipmentId)
-			.maybeSingle();
+		// Canonical static is the source of truth for built-in equipment.
+		const { listCanonicalEntries } = await import("@/lib/canonicalCompendium");
+		const entries = await listCanonicalEntries("equipment");
+		const byId = entries.find((entry) => entry.id === equipmentId);
+		if (byId) return byId as unknown as CompendiumEquipment;
 
-		if (byIdError) {
-			logError("Failed to resolve equipment by ID:", byIdError);
-		}
-
-		if (byId) return byId as CompendiumEquipment;
-
-		const { data: byName, error: byNameError } = await supabase
-			.from("compendium_equipment")
-			.select("*")
-			.ilike("name", equipmentId)
-			.limit(1)
-			.maybeSingle();
-
-		if (byNameError) {
-			logError("Failed to resolve equipment by name:", byNameError);
-		}
-
-		return (byName ?? null) as CompendiumEquipment | null;
+		const nameKey = equipmentId.trim().toLowerCase();
+		const byName = entries.find((entry) =>
+			entry.name.toLowerCase().includes(nameKey),
+		);
+		return (byName as unknown as CompendiumEquipment | undefined) ?? null;
 	};
 
 	const equipment = await resolveEquipment();
@@ -137,7 +124,9 @@ export async function bulkAddEquipment(
 					description: equipment?.description || null,
 					properties: equipment?.properties || [],
 					weight: equipment?.weight || null,
-					value_credits: equipment?.cost_credits || null,
+					value_credits:
+						(equipment as { cost_credits?: number | null } | null)
+							?.cost_credits ?? null,
 					quantity,
 					is_equipped: false,
 					is_attuned: false,

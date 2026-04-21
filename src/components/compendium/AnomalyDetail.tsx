@@ -16,11 +16,11 @@ import { StatBlock, StatSection } from "@/components/compendium/StatBlock";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { getAnomalyImageSrc } from "@/lib/anomalyImageResolver";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 
@@ -171,109 +171,34 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 	);
 
 	useEffect(() => {
-		const fetchRelatedData = async () => {
-			const staticActions = JSON.parse(actionHash) as
-				| Record<string, unknown>[]
-				| null;
-			const staticTraits = JSON.parse(traitHash) as
-				| Record<string, unknown>[]
-				| null;
+		const staticActions = JSON.parse(actionHash) as
+			| Record<string, unknown>[]
+			| null;
+		const staticTraits = JSON.parse(traitHash) as
+			| Record<string, unknown>[]
+			| null;
 
-			// If Supabase isn't configured, rely entirely on embedded static data.
-			if (!isSupabaseConfigured) {
-				if (staticActions && staticActions.length > 0) {
-					setActions(
-						staticActions
-							.map((a, idx) =>
-								mapStaticAction(a as Record<string, unknown>, idx),
-							)
-							.filter((a) => a.description.trim().length > 0),
-					);
-				}
+		// Canonical static actions/traits embedded on the anomaly entry.
+		if (staticActions && staticActions.length > 0) {
+			setActions(
+				staticActions
+					.map((a, idx) => mapStaticAction(a as Record<string, unknown>, idx))
+					.filter((a) => a.description.trim().length > 0),
+			);
+		} else {
+			setActions([]);
+		}
 
-				if (staticTraits && staticTraits.length > 0) {
-					setTraits(
-						staticTraits
-							.map((t, idx) =>
-								mapStaticTrait(t as Record<string, unknown>, idx),
-							)
-							.filter((t) => t.description.trim().length > 0),
-					);
-				}
-
-				return;
-			}
-
-			const [actionsRes, traitsRes] = await Promise.all([
-				supabase
-					.from("compendium_monster_actions")
-					.select("*")
-					.eq("monster_id", data.id),
-				supabase
-					.from("compendium_monster_traits")
-					.select("*")
-					.eq("monster_id", data.id),
-			]);
-
-			const remoteActions = actionsRes.data || [];
-			const remoteTraits = traitsRes.data || [];
-
-			if (remoteActions.length > 0) {
-				setActions(
-					remoteActions.map((action: Record<string, unknown>) => ({
-						id: String(action.id),
-						name: String(action.name),
-						description: String(action.description ?? ""),
-						attack_bonus:
-							typeof action.attack_bonus === "number"
-								? action.attack_bonus
-								: undefined,
-						damage:
-							typeof action.damage === "string" ? action.damage : undefined,
-						damage_type:
-							typeof action.damage_type === "string"
-								? action.damage_type
-								: undefined,
-						recharge:
-							typeof action.recharge === "string" ? action.recharge : undefined,
-						legendary_cost:
-							typeof action.legendary_cost === "number"
-								? action.legendary_cost
-								: undefined,
-						action_type:
-							typeof action.action_type === "string"
-								? action.action_type
-								: "action",
-					})) as AnomalyAction[],
-				);
-			} else if (staticActions && staticActions.length > 0) {
-				// Remote not present; fallback to static embedded data.
-				setActions(
-					staticActions
-						.map((a, idx) => mapStaticAction(a as Record<string, unknown>, idx))
-						.filter((a) => a.description.trim().length > 0),
-				);
-			}
-
-			if (remoteTraits.length > 0) {
-				setTraits(
-					remoteTraits.map((trait: Record<string, unknown>) => ({
-						id: String(trait.id),
-						name: String(trait.name),
-						description: String(trait.description ?? ""),
-					})),
-				);
-			} else if (staticTraits && staticTraits.length > 0) {
-				setTraits(
-					staticTraits
-						.map((t, idx) => mapStaticTrait(t as Record<string, unknown>, idx))
-						.filter((t) => t.description.trim().length > 0),
-				);
-			}
-		};
-
-		fetchRelatedData();
-	}, [data.id, actionHash, traitHash, mapStaticAction, mapStaticTrait]);
+		if (staticTraits && staticTraits.length > 0) {
+			setTraits(
+				staticTraits
+					.map((t, idx) => mapStaticTrait(t as Record<string, unknown>, idx))
+					.filter((t) => t.description.trim().length > 0),
+			);
+		} else {
+			setTraits([]);
+		}
+	}, [actionHash, traitHash, mapStaticAction, mapStaticTrait]);
 
 	const speeds = data.speed ? `${data.speed} ft.` : "30 ft.";
 
@@ -290,7 +215,17 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 	const hitPointsAverage = data.hp ?? 0;
 	const hitPointsFormula = "";
 	const cr = data.stats?.challenge_rating?.toString() || data.cr || "—";
-	const isBoss = false; // logic for boss removed in favor of explicit rank properties.
+	const isBoss = false; // logic for boss removed in favour of explicit rank properties.
+
+	// Resolve hero image: prefer explicit data.image, then data.image_url,
+	// then fall back to the keyword-based thematic resolver.
+	const heroImageSrc = getAnomalyImageSrc({
+		id: data.id,
+		name: data.name,
+		type: data.type,
+		image: data.image,
+		image_url: data.image_url,
+	});
 
 	const queueAnomalyActionResolution = (
 		action: AnomalyAction,
@@ -329,19 +264,17 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 
 	return (
 		<div className="space-y-6">
-			{/* Hero Image */}
-			{data.image_url && (
-				<div className="w-full">
-					<CompendiumImage
-						src={data.image_url}
-						alt={displayName}
-						size="hero"
-						aspectRatio="landscape"
-						className="w-full rounded-lg"
-						fallbackIcon={<Skull className="w-32 h-32 text-muted-foreground" />}
-					/>
-				</div>
-			)}
+			{/* Hero Image — always shown; uses data.image → data.image_url → thematic resolver */}
+			<div className="w-full">
+				<CompendiumImage
+					src={heroImageSrc}
+					alt={displayName}
+					size="hero"
+					aspectRatio="landscape"
+					className="w-full rounded-lg"
+					fallbackIcon={<Skull className="w-32 h-32 text-muted-foreground" />}
+				/>
+			</div>
 
 			{/* Header */}
 			<AscendantWindow

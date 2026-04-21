@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { resolveRuneAbsorption } from "@/lib/runeAutomation";
 import {
@@ -10,6 +11,26 @@ import {
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 import { getProficiencyBonus } from "@/types/core-rules";
+
+async function loadCanonicalRunes(campaignId?: string | null): Promise<Rune[]> {
+	const entries = await listCanonicalEntries("runes", undefined, {
+		campaignId,
+	});
+	return entries as unknown as Rune[];
+}
+
+async function hydrateRunesById(
+	ids: string[],
+	campaignId?: string | null,
+): Promise<Map<string, Rune>> {
+	if (ids.length === 0) return new Map();
+	const runes = await loadCanonicalRunes(campaignId);
+	const byId = new Map<string, Rune>();
+	for (const rune of runes) {
+		if (ids.includes(rune.id)) byId.set(rune.id, rune);
+	}
+	return byId;
+}
 
 type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 type _RuneInscription =
@@ -57,83 +78,16 @@ export function useCompendiumRunes(characterId?: string) {
 	return useQuery({
 		queryKey: ["compendium-runes", characterId ?? "global"],
 		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("compendium_runes")
-				.select("*")
-				.order("rune_level", { ascending: true })
-				.order("name", { ascending: true });
-
-			// If Supabase returned results, use them
-			if (!error && data && data.length > 0) {
-				const runes = data; // Supabase type-safety is sufficient here
-				const campaignId = characterId
-					? await getCharacterCampaignId(characterId)
-					: null;
-				return filterRowsBySourcebookAccess(runes, (rune) => rune.source_book, {
-					campaignId,
-				});
-			}
-
-			// Static fallback: load runes from compendium data
-			const { staticDataProvider } = await import(
-				"@/data/compendium/providers"
-			);
-			const staticRunes = await staticDataProvider.getRunes("");
-			return staticRunes.map((r) => ({
-				id: r.id,
-				name: r.name,
-				display_name: r.display_name || r.name,
-				description: r.description,
-				rune_level: r.rune_level ?? 1,
-				rune_type: r.rune_type ?? "enhancement",
-				rune_category: r.rune_category ?? "general",
-				rarity: (r.rarity as Database["public"]["Enums"]["rarity"]) ?? "common",
-				source_book: r.source_book ?? "Rift Ascendant Canon",
-				created_at: r.created_at,
-				tags: r.tags ?? null,
-				image: r.image ?? null,
-				image_url: r.image || null,
-				mechanics: null,
-				flavor: null,
-				generated_reason: null,
-				// Add missing schema fields for full type compliance
-				activation_action: "",
-				activation_cost: "",
-				activation_cost_amount: null,
-				aliases: null,
-				can_inscribe_on: null,
-				caster_penalty: "",
-				caster_requirement_multiplier: null,
-				discovery_lore: "",
-				duration: "",
-				effect_description: r.description,
-				effect_type: "",
-				element: "",
-				higher_levels: "",
-				inscription_difficulty: 10,
-				license_note: "",
-				lore: "",
-				martial_penalty: "",
-				martial_requirement_multiplier: null,
-				power: r.rune_level ?? 1,
-				range: "",
-				recharge: "",
-				requirement_agi: 0,
-				requirement_int: 0,
-				requirement_pre: 0,
-				requirement_sense: 0,
-				requirement_str: 0,
-				requirement_vit: 0,
-				requires_job: null,
-				requires_level: 1,
-				source_kind: "Canon",
-				source_name: "Rift Ascendant",
-				theme_tags: null,
-				uses_per_rest: "",
-				concentration: false,
-				passive_bonuses: null,
-				updated_at: r.created_at || new Date().toISOString(),
-			}));
+			const campaignId = characterId
+				? await getCharacterCampaignId(characterId)
+				: null;
+			const runes = await loadCanonicalRunes(campaignId);
+			return runes.slice().sort((a, b) => {
+				const aLvl = a.rune_level ?? 0;
+				const bLvl = b.rune_level ?? 0;
+				if (aLvl !== bLvl) return aLvl - bLvl;
+				return a.name.localeCompare(b.name);
+			});
 		},
 	});
 }
@@ -147,21 +101,10 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 			if (isLocalCharacterId(characterId)) {
 				const { listLocalRuneKnowledge } = await import("@/lib/guestStore");
 				const localEntries = listLocalRuneKnowledge(characterId);
-
-				// Fetch compendium info for local runes
-				const { data: compendiumData, error: compError } = await supabase
-					.from("compendium_runes")
-					.select("*")
-					.in(
-						"id",
-						localEntries.map((e) => e.rune_id),
-					);
-
-				if (compError) throw compError;
-
+				const byId = await hydrateRunesById(localEntries.map((e) => e.rune_id));
 				return localEntries.map((e) => ({
 					...e,
-					rune: compendiumData?.find((cr) => cr.id === e.rune_id),
+					rune: byId.get(e.rune_id),
 				}));
 			}
 
@@ -174,10 +117,7 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 
 			const { data, error } = await supabase
 				.from("character_rune_knowledge")
-				.select(`
-          *,
-          rune:compendium_runes(*)
-        `)
+				.select("*")
 				.eq("character_id", characterId);
 
 			if (error) {
@@ -188,12 +128,18 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 				}
 				throw error;
 			}
-			const knowledgeEntries = data.map((rk) => ({
-				...rk,
-				rune: rk.rune,
-			}));
 
 			const campaignId = await getCharacterCampaignId(characterId);
+			const rows = (data || []) as RuneKnowledge[];
+			const byId = await hydrateRunesById(
+				rows.map((r) => r.rune_id),
+				campaignId,
+			);
+			const knowledgeEntries = rows.map((rk) => ({
+				...rk,
+				rune: byId.get(rk.rune_id) as Rune,
+			}));
+
 			const filtered = await filterRowsBySourcebookAccess(
 				knowledgeEntries,
 				(entry) => entry.rune?.source_book,
@@ -293,16 +239,12 @@ export function useAbsorbRune() {
 			if (charError || !character)
 				throw new AppError("Character not found", "NOT_FOUND");
 
-			// Get rune
-			const { data: rune, error: runeError } = await supabase
-				.from("compendium_runes")
-				.select("*")
-				.eq("id", runeId)
-				.single();
-			if (runeError || !rune) throw new AppError("Rune not found", "NOT_FOUND");
-
-			// Sourcebook check
+			// Get rune from canonical static layer
 			const campaignId = await getCharacterCampaignId(characterId);
+			const runeMap = await hydrateRunesById([runeId], campaignId);
+			const rune = runeMap.get(runeId);
+			if (!rune) throw new AppError("Rune not found", "NOT_FOUND");
+
 			if (!(await isSourcebookAccessible(rune.source_book, { campaignId }))) {
 				throw new AppError(
 					"This rune requires sourcebook access.",

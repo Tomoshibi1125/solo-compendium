@@ -103,6 +103,61 @@ const mapConfigs = [
 		audio: "ambient_boss.mp3",
 		type: "boss" as const,
 	},
+	// ── Phase 3 Scenes (Memory-Care Wing, Bureau/Vermillion keyed, Awoko, Slums, Mana Veins, Megadungeon floors)
+	{
+		name: "Day Zero: Memory-Care Wing Exterior",
+		image: "hub_map.jpg",
+		audio: "ambient_explore.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Day Zero: The Diagnosed's Mirror (R5)",
+		image: "hospital_map.jpg",
+		audio: "ambient_combat.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Hub: Bureau HQ — Briefing Hall (Ch. 29 R3)",
+		image: "hub_map.jpg",
+		audio: "ambient_hub.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Hub: Vermillion — Tattoo & Sigil Parlour (Ch. 30 R4-5)",
+		image: "bazaar_map.jpg",
+		audio: "ambient_hub.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Outer Slums: Covered Market (Ch. 31 Location 2)",
+		image: "downtown_map.jpg",
+		audio: "ambient_hub.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Mana Vein Node 3: Hana Financial Tower SB-3 (Ch. 32)",
+		image: "sewer_map.jpg",
+		audio: "ambient_combat.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Awoko Sanctum: The Nave (Ch. 33 S-3)",
+		image: "citadel_map.jpg",
+		audio: "ambient_combat.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Megadungeon Floor −1: Outer Mausoleum (Ch. 28 Rooms 1-5)",
+		image: "citadel_map.jpg",
+		audio: "ambient_boss.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Megadungeon Floor −2: Archive of His Self (Ch. 28 Rooms 6-10)",
+		image: "throne_map.jpg",
+		audio: "ambient_boss.mp3",
+		type: "combat" as const,
+	},
 ];
 
 export type SandboxVTTScene = VTTScene & {

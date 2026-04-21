@@ -17,128 +17,17 @@ import {
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	EVENT_COMPLICATIONS,
+	NPC_ENCOUNTERS,
+	type WardenEventTableEntry,
+	WORLD_EVENTS,
+} from "@/data/wardenGeneratorContent";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { formatRegentVernacular } from "@/lib/vernacular";
-
-const WORLD_EVENTS: { description: string; impact: string }[] = [
-	{
-		description:
-			"Rift Surge: Multiple Type-II Rifts have manifested across the sector, causing localized reality thinning.",
-		impact:
-			"All Rift-related skill checks are made with DISADVANTAGE; Mana-recovery rates are increased by 50% for 24 hours.",
-	},
-	{
-		description:
-			"Awakened Council Lockdown: The Council has issued an 'Orange Protocol' alert, restricting all non-sanctioned travel.",
-		impact:
-			"Presence checks against official NPCs are DC 20; forged permits are required for sector transit.",
-	},
-	{
-		description:
-			"Umbral Regent Fragment: A high-density energy signature corresponding to an Umbral Regent has been detected in a nearby subway terminal.",
-		impact:
-			"A Level-appropriate Elite encounter is triggered; party gains 2500 bonus Exp if the fragment is contained within 3 rounds.",
-	},
-	{
-		description:
-			"Mana Storm: High-frequency atmospheric mana discharge is interfering with bio-electric signals.",
-		impact:
-			"All Long-Range communication is JAMMED; spellcasters must succeed on a DC 14 Sense save or lose 1 random spell slot.",
-	},
-	{
-		description:
-			"System Calibration: The Global System is undergoing a scheduled 'Integrity Sweep,' temporarily disabling auto-looting and map overlays.",
-		impact:
-			"Navigation checks are DC 18; Survival checks for tracking are required to avoid getting lost.",
-	},
-	{
-		description:
-			"Guild Proxy War: The Iron Legion and the Azure Wing are engaged in an open territory dispute in the commercial district.",
-		impact:
-			"Combat encounters may involve a third party; prices for all consumables are increased by 200% due to rationing.",
-	},
-	{
-		description:
-			"Shadow Corruption Leak: A ruptured Shadow Containment Unit is leaking concentrated miasma into the groundwater.",
-		impact:
-			"Vitality saves (DC 15) required every 4 hours or gain 1 level of Exhaustion; water-based healing is ineffective.",
-	},
-	{
-		description:
-			"The Absolute's Decree: A localized 'Safe Zone' has been established by the Rift's core logic.",
-		impact:
-			"Hostile entities cannot enter the 1-mile radius; all healing during Short Rests is doubled within the zone.",
-	},
-];
-
-const NPC_ENCOUNTERS: { description: string; impact: string }[] = [
-	{
-		description:
-			"The Information Broker 'Zero': A masked individual offering decrypted council logs for a steep price.",
-		impact:
-			"NPC can reveal 1 hidden plot point for 50,000 Credits or a Rare Relic; failing a Persuasion check reveals the party's location to enemies.",
-	},
-	{
-		description:
-			"A Wounded Sentinel: An elite Council enforcer found pinned under Rift debris, clutching a sealed data drive.",
-		impact:
-			"Rescue (DC 18 Medicine/Strength) awards a 'Council Favor' (Advantage on next Council interaction); leaving them results in a 'Bounty' mark.",
-	},
-	{
-		description:
-			"The Wandering Merchant 'Kyros': A neutral-aligned inter-dimensional entity trading Void-Data for soul-bound items.",
-		impact:
-			"Allows the party to trade 1 permanent stat point for a random Legendary Sigil; trade is irreversible.",
-	},
-	{
-		description:
-			"Rogue AI Fragment: A fragmented holographic entity appearing as a distorted version of the party's Warden.",
-		impact:
-			"Intelligence check (DC 16) to stabilize; success grants +2 to all Hack/System checks for the duration of the mission.",
-	},
-	{
-		description:
-			"S-Rank Deserter: A legendary walker who has 'disconnected' from the Rift, hiding in the slums.",
-		impact:
-			"Provides a 'Manual of the Hidden Path' (+1 to Sense) if convinced of the party's discretion; failing to hide encounter alerts the Council.",
-	},
-];
-
-const COMPLICATIONS: { description: string; impact: string }[] = [
-	{
-		description:
-			"Chronal Distortion: Time is flowing irregularly. Seconds stretch into minutes, then snap back violently.",
-		impact:
-			"All participants roll 1d20 for initiative at the start of EVERY round; -10ft to movement for all entities.",
-	},
-	{
-		description:
-			"Gravity Well: A localized rift anomaly has increased the gravitational constant by 4x.",
-		impact:
-			"Movement speed is HALVED; Jump distance is 0; falling damage is tripled; Heavy Carapace Armor users must save (DC 15 STR) or be restrained.",
-	},
-	{
-		description:
-			"System Static: Visual and auditory sensors are being flooded with meaningless binary data.",
-		impact:
-			"All creatures have 'Partial Concealment' (20% miss chance); Perception checks are made with DISADVANTAGE.",
-	},
-	{
-		description:
-			"Mana Osmosis: The environment is actively draining mana directly from biological hosts.",
-		impact:
-			"Lose 1 MP or 1 Spell Slot every 2 rounds of combat; non-casters lose 1d6 HP every turn as their life force is sapped.",
-	},
-	{
-		description:
-			"Reality Bleed: The barrier between Earth and the Void has vanished here. Conceptual horrors are visible.",
-		impact:
-			"Sanity check (DC 14 Sense Save) per round or become 'Frightened' for 1 minute; Psychic damage is doubled in this region.",
-	},
-];
 
 interface GeneratedEvent {
 	type: "world" | "encounter" | "complication";
@@ -150,7 +39,7 @@ interface GeneratedEvent {
 function generateEvent(
 	type: "world" | "encounter" | "complication",
 ): GeneratedEvent {
-	let selection: { description: string; impact: string };
+	let selection: WardenEventTableEntry;
 	let title = "";
 
 	if (type === "world") {
@@ -161,7 +50,10 @@ function generateEvent(
 			NPC_ENCOUNTERS[Math.floor(Math.random() * NPC_ENCOUNTERS.length)];
 		title = "Significant Entity Interaction";
 	} else {
-		selection = COMPLICATIONS[Math.floor(Math.random() * COMPLICATIONS.length)];
+		selection =
+			EVENT_COMPLICATIONS[
+				Math.floor(Math.random() * EVENT_COMPLICATIONS.length)
+			];
 		title = "Hazardous Environmental Anomaly";
 	}
 

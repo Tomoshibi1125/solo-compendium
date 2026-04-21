@@ -57,7 +57,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Bureau Outpost Commander",
 		faction: "bureau_sentinels",
 		level: 8,
-		job: "Vanguard",
+		job: "Destroyer",
 		hp: 95,
 		ac: 18,
 		description:
@@ -99,7 +99,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Supply Officer",
 		faction: "bureau_sentinels",
 		level: 4,
-		job: "Artificer",
+		job: "Technomancer",
 		hp: 38,
 		ac: 14,
 		description:
@@ -141,7 +141,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Patrol Leader",
 		faction: "bureau_sentinels",
 		level: 5,
-		job: "Ranger",
+		job: "Stalker",
 		hp: 52,
 		ac: 16,
 		description:
@@ -179,21 +179,21 @@ const bureauSentinels: SandboxNPC[] = [
 	},
 	{
 		id: "npc-bureau-004",
-		name: "Dr. Elara Voss",
+		name: "Dr. Serin Hayashi",
 		title: "Field Researcher",
 		faction: "bureau_sentinels",
 		level: 6,
-		job: "Scholar",
+		job: "Esper",
 		hp: 42,
 		ac: 12,
 		description:
-			"A disheveled scientist with wild auburn hair and ink-stained lab coat. Elara is the outpost's only remaining aetheric researcher, obsessed with understanding the Gate Cascade that created the Restricted Zone.",
+			"A disheveled scientist with wild auburn hair and ink-stained lab coat. Serin is the outpost's only remaining aetheric researcher, obsessed with understanding the Gate Cascade that created the Restricted Zone.",
 		personality:
 			"Brilliant, scattered, talks too fast. Gets excited about anomaly specimens to a degree that makes soldiers uncomfortable. Genuinely kind beneath the academic detachment.",
 		motivation:
 			"Understand the Regent. She believes the entity can be studied, contained, even communicated with. Everyone else thinks she's insane.",
 		backstory:
-			"Dr. Voss was a tenured professor at the National Aetheric Research Institute before volunteering for the Restricted Zone field work. She's published three papers on rift biology that were immediately classified. She chose to stay when evacuation was offered because 'the data is irreplaceable.'",
+			"Dr. Hayashi was a tenured professor at the National Aetheric Research Institute before volunteering for the Restricted Zone field work. She's published three papers on rift biology that were immediately classified. She chose to stay when evacuation was offered because 'the data is irreplaceable.'",
 		keyAbilities: [
 			"Analyze Weakness (reveal anomaly vulnerabilities, 1/encounter)",
 			"Aetheric Shield (absorb 20 damage, 2/day)",
@@ -205,7 +205,7 @@ const bureauSentinels: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Hub: Bureau District Headquarters",
 		questHook:
-			"Elara needs a live specimen from the Verdant Overgrowth Gate — specifically, a Bloom Stalker's root core. She promises the results will help everyone.",
+			"Serin needs a live specimen from the Verdant Overgrowth Gate — specifically, a Bloom Stalker's root core. She promises the results will help everyone.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 1500,
@@ -225,7 +225,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Bureau Intelligence Operative",
 		faction: "bureau_sentinels",
 		level: 7,
-		job: "Shadow",
+		job: "Stalker",
 		hp: 58,
 		ac: 17,
 		description:
@@ -267,7 +267,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Heavy Weapons Specialist",
 		faction: "bureau_sentinels",
 		level: 4,
-		job: "Warrior",
+		job: "Destroyer",
 		hp: 48,
 		ac: 16,
 		description:
@@ -309,7 +309,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Signal Specialist",
 		faction: "bureau_sentinels",
 		level: 3,
-		job: "Technician",
+		job: "Technomancer",
 		hp: 28,
 		ac: 12,
 		description:
@@ -351,7 +351,7 @@ const bureauSentinels: SandboxNPC[] = [
 		title: "Bureau Recruit",
 		faction: "bureau_sentinels",
 		level: 2,
-		job: "Initiate",
+		job: "Holy Knight",
 		hp: 22,
 		ac: 13,
 		description:
@@ -401,7 +401,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Black Market Fence",
 		faction: "vermillion_guild",
 		level: 6,
-		job: "Merchant",
+		job: "Contractor",
 		hp: 45,
 		ac: 14,
 		description:
@@ -460,7 +460,7 @@ const vermillionGuild: SandboxNPC[] = [
 			"Silver Blur (50% miss chance for 1 round, 2/day)",
 		],
 		recruitCondition:
-			"Agree to help them eliminate the Awoko Cult's High Priestess Nyx. Vex joins for the duration of that quest and permanently if it succeeds.",
+			"Agree to help them eliminate the Awoko Cult's The Hollow Mother. Vex joins for the duration of that quest and permanently if it succeeds.",
 		isRecruitable: true,
 		guildAffiliation: "Vermillion Guild",
 		location: "Hub: Vermillion Guild Hall",
@@ -485,7 +485,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Junk Alchemist",
 		faction: "vermillion_guild",
 		level: 5,
-		job: "Alchemist",
+		job: "Technomancer",
 		hp: 35,
 		ac: 11,
 		description:
@@ -527,7 +527,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Pyrokinetic Enforcer",
 		faction: "vermillion_guild",
 		level: 6,
-		job: "Pyromancer",
+		job: "Mage",
 		hp: 50,
 		ac: 13,
 		description:
@@ -569,7 +569,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Information Broker",
 		faction: "vermillion_guild",
 		level: 4,
-		job: "Spy",
+		job: "Stalker",
 		hp: 30,
 		ac: 15,
 		description:
@@ -611,7 +611,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Retired S-Rank Ascendant",
 		faction: "vermillion_guild",
 		level: 10,
-		job: "Sage",
+		job: "Herald",
 		hp: 72,
 		ac: 15,
 		description:
@@ -625,7 +625,7 @@ const vermillionGuild: SandboxNPC[] = [
 		keyAbilities: [
 			"Serene Strike (attack that bypasses all resistances)",
 			"Thousand Leaves (counter any single attack, 3/day)",
-			"Sage's Wisdom (grant +5 to any ally's check, 1/day)",
+			"Sage's Sense (grant +5 to any ally's check, 1/day)",
 		],
 		recruitCondition:
 			"Only joins for the final confrontation with the Regent. Must have earned his respect through actions, not words.",
@@ -652,7 +652,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Dual Rogues",
 		faction: "vermillion_guild",
 		level: 3,
-		job: "Twin Rogues",
+		job: "Striker",
 		hp: 26,
 		ac: 15,
 		description:
@@ -694,7 +694,7 @@ const vermillionGuild: SandboxNPC[] = [
 		title: "Former Bureau Warden",
 		faction: "vermillion_guild",
 		level: 9,
-		job: "Tactician",
+		job: "Contractor",
 		hp: 82,
 		ac: 17,
 		description:
@@ -730,6 +730,49 @@ const vermillionGuild: SandboxNPC[] = [
 			},
 		},
 	},
+	{
+		id: "npc-verm-009",
+		name: 'Lee Ji-won "Bright"',
+		title: "Vermillion Tattoo Artist",
+		faction: "vermillion_guild",
+		level: 4,
+		job: "Idol",
+		hp: 32,
+		ac: 12,
+		description:
+			"A lean woman in her late twenties with a sleeve of her own canonical tattoos on her left arm — each glowing a different color under the parlour's black light. A former K-pop backup vocalist, Bright now inks mana-weave tattoos whose psychic component is amplified by her own voice.",
+		personality:
+			"Warm, disarmingly friendly, genuinely curious about every PC's story. Hums while she works. Grows quiet and focused during the actual ink work. Never discusses her pre-Surge pop career unprompted.",
+		motivation:
+			"Make beauty that protects. Bright lost her younger sister in the Yongsan Surge; her tattoo work is a channeled grief — every canonical design in `tattoos.ts` she inks is done with the intention that its bearer will survive one more night.",
+		backstory:
+			"Bright was third-chair backup for a mid-tier K-pop act when the Surge hit. Her sister was a makeup artist on the same tour and did not leave Seoul in time. Bright's voice Awakened her mana-lattice in the days after — an Idol-class Awakening, rare and narrative-weighted. She walked into the Vermillion Guild with ink-stained hands and asked for a chair. Orin gave her one.",
+		keyAbilities: [
+			"Voice-Amplified Ink (tattoo activations roll with advantage on first use per long rest)",
+			"Song of the Guild (10 ft. aura: allies gain +1 to saves vs. psychic while Bright is conscious)",
+			"Encore (once per long rest, revive a downed ally to 1 HP by singing a phrase the ally once loved — Warden or player decides what)",
+			"Ink Memorial (permanently remove one tattoo's curse clause; consumes 1 C-Rank core)",
+		],
+		recruitCondition:
+			"Complete one Downtime session where a PC spends 2,500 Credits or a B-Rank core on a canonical tattoo. Bright offers to join for the finale; her Encore ability unlocks the Memorial Ending flavor in Chapter 28 Room 15.",
+		isRecruitable: true,
+		guildAffiliation: "Vermillion Guild",
+		location: "Hub: Vermillion Guild Hall — Room 4 Tattoo Parlour",
+		questHook:
+			"Bright suspects the Awoko Cult has been grooming her former backup dancers. She asks the party to investigate a specific Cult gathering in the Covered Market.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 1500,
+			autoLevel: true,
+			maxLevel: 7,
+			hpPerLevel: 5,
+			levelAbilities: {
+				5: "Harmonic Resonance (grant one ally advantage on a single Presence save, 2/day)",
+				6: "Stage Presence (all allies within 20 ft. gain +2 to Presence saves for 1 round)",
+				7: "Final Chorus (sacrifice Bright's next turn to grant every ally one free reaction, 1/campaign)",
+			},
+		},
+	},
 ];
 
 // ============================================================================
@@ -739,25 +782,25 @@ const vermillionGuild: SandboxNPC[] = [
 const awokoCult: SandboxNPC[] = [
 	{
 		id: "npc-awoko-001",
-		name: "High Priestess Nyx",
+		name: "The Hollow Mother",
 		title: "Cult Leader",
 		faction: "awoko_cult",
 		level: 9,
-		job: "Void Priestess",
+		job: "Esper",
 		hp: 78,
 		ac: 16,
 		description:
-			"A tall woman wreathed in shadows, her eyes replaced by swirling voids of purple energy. Nyx is the Awoko Cult's supreme leader, claiming direct communion with the Regent.",
+			"A tall woman wreathed in shadows, her eyes replaced by swirling voids of purple energy. The Hollow Mother is the Awoko Cult's supreme leader, claiming direct communion with the Regent.",
 		personality:
 			"Fanatically devoted, eloquent, terrifyingly calm. Believes destruction is transformation. Treats her followers with genuine care — which makes her more dangerous, not less.",
 		motivation:
 			"Complete the Awakening Ritual and free the Regent. She believes this will 'evolve' humanity into something greater. She may be right — just not in a way anyone would want.",
 		backstory:
-			"Nyx was Dr. Sarah Kim, a grief counselor who lost her family during the Seoul Cascade. She found the Awoko Texts in the aftermath and heard the Regent's voice. It offered her something no one else could: purpose without pain.",
+			"The Hollow Mother was Dr. Sarah Kim, a grief counselor who lost her family during the Seoul Cascade. She found the Awoko Texts in the aftermath and heard the Regent's voice. It offered her something no one else could: purpose without pain.",
 		keyAbilities: [
 			"Void Drain (steal 3d8 HP from target, heal self)",
 			"Shadow Congregation (summon 4 shadow minions, 1/day)",
-			"Regent's Whisper (charm one target for 1 minute, WIS save DC 18)",
+			"Regent's Whisper (charm one target for 1 minute, SENSE save DC 18)",
 		],
 		recruitCondition:
 			"Cannot be recruited. Primary antagonist. Must be defeated or redeemed through special story path.",
@@ -780,7 +823,7 @@ const awokoCult: SandboxNPC[] = [
 		title: "Cult Oracle / Defector",
 		faction: "awoko_cult",
 		level: 5,
-		job: "Seer",
+		job: "Esper",
 		hp: 32,
 		ac: 11,
 		description:
@@ -858,7 +901,7 @@ const awokoCult: SandboxNPC[] = [
 		title: "Cult Ritualist",
 		faction: "awoko_cult",
 		level: 6,
-		job: "Ritualist",
+		job: "Mage",
 		hp: 40,
 		ac: 13,
 		description:
@@ -866,7 +909,7 @@ const awokoCult: SandboxNPC[] = [
 		personality:
 			"Methodical, emotionally distant, treats Gate energy like a science rather than religion. She's a true believer but her faith is intellectual, not emotional — which means it can be shaken by evidence.",
 		motivation:
-			"Understand the mechanism of the Awakening. She's started to notice inconsistencies between what Nyx promises and what her own research shows.",
+			"Understand the mechanism of the Awakening. She's started to notice inconsistencies between what The Hollow Mother promises and what her own research shows.",
 		backstory:
 			"Veil was an aetheric engineer who joined the Cult voluntarily after concluding that Gates are evolving and humanity needs to evolve with them. She designed the Cult's containment systems and ritual arrays. Lately, she's been running unauthorized experiments.",
 		keyAbilities: [
@@ -875,7 +918,7 @@ const awokoCult: SandboxNPC[] = [
 			"Ritual Amplification (double the effect of any magical effect, 1/day)",
 		],
 		recruitCondition:
-			"Show her Dr. Voss's research proving the Regent's 'evolution' is actually annihilation. She needs hard data to break her faith. Persuasion DC 16 after providing evidence.",
+			"Show her Dr. Hayashi's research proving the Regent's 'evolution' is actually annihilation. She needs hard data to break her faith. Persuasion DC 16 after providing evidence.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Gate: The Ashen Vault (C-Rank)",
@@ -900,11 +943,11 @@ const awokoCult: SandboxNPC[] = [
 		title: "Cult Infiltrator",
 		faction: "awoko_cult",
 		level: 4,
-		job: "Infiltrator",
+		job: "Stalker",
 		hp: 34,
 		ac: 14,
 		description:
-			"Average height, average build, average face. That's the point. The Hollow Man is a Cult spy embedded within the Bureau outpost, feeding information to Nyx for months.",
+			"Average height, average build, average face. That's the point. The Hollow Man is a Cult spy embedded within the Bureau outpost, feeding information to The Hollow Mother for months.",
 		personality:
 			"Perfectly mimics whoever he's impersonating. Real personality is cold, methodical, empty. He's forgotten who he was before the Cult reshaped him.",
 		motivation:
@@ -913,7 +956,7 @@ const awokoCult: SandboxNPC[] = [
 			"The Hollow Man was a nobody — a clerk, a janitor, a face in the crowd. The Cult gave him purpose by teaching him to become anyone. He's killed three Bureau personnel and blamed it on anomaly encounters. Nobody suspects him because nobody remembers him.",
 		keyAbilities: [
 			"Perfect Disguise (undetectable impersonation)",
-			"Forgettable (targets must pass WIS save to remember seeing him)",
+			"Forgettable (targets must pass SENSE save to remember seeing him)",
 			"Poison (apply lethal poison to food/drink, undetectable)",
 		],
 		recruitCondition:
@@ -937,7 +980,7 @@ const awokoCult: SandboxNPC[] = [
 		title: "Young Cult Initiate",
 		faction: "awoko_cult",
 		level: 2,
-		job: "Acolyte",
+		job: "Herald",
 		hp: 18,
 		ac: 11,
 		description:
@@ -987,7 +1030,7 @@ const independents: SandboxNPC[] = [
 		title: "Underground Surgeon",
 		faction: "independent",
 		level: 4,
-		job: "Medic",
+		job: "Herald",
 		hp: 30,
 		ac: 10,
 		description:
@@ -1029,7 +1072,7 @@ const independents: SandboxNPC[] = [
 		title: "Junker/Mechanic",
 		faction: "independent",
 		level: 3,
-		job: "Engineer",
+		job: "Technomancer",
 		hp: 28,
 		ac: 13,
 		description:
@@ -1071,7 +1114,7 @@ const independents: SandboxNPC[] = [
 		title: "Chaplain of the Old Faith",
 		faction: "independent",
 		level: 5,
-		job: "Cleric",
+		job: "Herald",
 		hp: 40,
 		ac: 14,
 		description:
@@ -1155,7 +1198,7 @@ const independents: SandboxNPC[] = [
 		title: "Retired Aetheric Scholar",
 		faction: "independent",
 		level: 6,
-		job: "Scholar",
+		job: "Esper",
 		hp: 35,
 		ac: 11,
 		description:
@@ -1240,7 +1283,7 @@ const independents: SandboxNPC[] = [
 		title: "Shelter Matron",
 		faction: "independent",
 		level: 3,
-		job: "Guardian",
+		job: "Holy Knight",
 		hp: 32,
 		ac: 12,
 		description:
@@ -1282,7 +1325,7 @@ const independents: SandboxNPC[] = [
 		title: "Courier",
 		faction: "independent",
 		level: 2,
-		job: "Scout",
+		job: "Stalker",
 		hp: 20,
 		ac: 14,
 		description:
@@ -1324,7 +1367,7 @@ const independents: SandboxNPC[] = [
 		title: "Prize Fighter",
 		faction: "independent",
 		level: 7,
-		job: "Brawler",
+		job: "Destroyer",
 		hp: 75,
 		ac: 15,
 		description:
@@ -1362,33 +1405,33 @@ const independents: SandboxNPC[] = [
 	},
 	{
 		id: "npc-ind-010",
-		name: "The Architect",
+		name: "The Millwright",
 		title: "Mysterious Engineer",
 		faction: "independent",
 		level: 7,
-		job: "Artificer",
+		job: "Technomancer",
 		hp: 48,
 		ac: 14,
 		description:
-			"A figure in a welding mask who communicates through a voice modulator. Nobody knows the Architect's real identity, gender, or age. They build things — specifically, things designed to interact with or disrupt Gate technology.",
+			"A figure in a welding mask who communicates through a voice modulator. Nobody knows the Millwright's real identity, gender, or age. They build things — specifically, things designed to interact with or disrupt Gate technology.",
 		personality:
 			"Precise, obsessive, speaks only about engineering problems. Has an almost religious devotion to building the 'perfect device.' Social skills are nonexistent.",
 		motivation:
 			"Build the Gate Disruption Device — a machine capable of permanently sealing the Regent's primary Gate. They're 80% done.",
 		backstory:
-			"Unknown. The Architect appeared three weeks into the Gate Surge with pre-existing knowledge of Gate mechanics that shouldn't be possible for a civilian. Some theorize they're a Bureau black-site researcher. Others think they came through a Gate.",
+			"Unknown. The Millwright appeared three weeks into the Gate Surge with pre-existing knowledge of Gate mechanics that shouldn't be possible for a civilian. Some theorize they're a Bureau black-site researcher. Others think they came through a Gate.",
 		keyAbilities: [
 			"Construct (build any mechanical device given materials and time)",
 			"Gate Disruption Pulse (temporarily weaken Gate in 100ft radius)",
 			"Fortification (reinforce any structure to resist anomaly damage)",
 		],
 		recruitCondition:
-			"Help gather the final 3 components for the Gate Disruption Device (scattered across Subway, Hospital, and Citadel). The Architect joins to oversee final assembly.",
+			"Help gather the final 3 components for the Gate Disruption Device (scattered across Subway, Hospital, and Citadel). The Millwright joins to oversee final assembly.",
 		isRecruitable: true,
 		guildAffiliation: null,
 		location: "Gate: The Sunken Tunnels (B-Rank)",
 		questHook:
-			"The Architect's workshop was discovered by Cult scouts. They need to relocate immediately and need bodyguards for the move.",
+			"The Millwright's workshop was discovered by Cult scouts. They need to relocate immediately and need bodyguards for the move.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 2000,
@@ -1399,6 +1442,92 @@ const independents: SandboxNPC[] = [
 				8: "Auto-Turret (deploy automated defense, 2d8/round)",
 				9: "Gate Analyzer (map all Gates in the Restricted Zone)",
 				10: "Gate Disruption Device Complete (major story milestone — seal the Regent's Gate)",
+			},
+		},
+	},
+	{
+		id: "npc-ind-011",
+		name: "Seo Min-jae (The Returned)",
+		title: "Twice-Dead Ascendant",
+		faction: "independent",
+		level: 6,
+		job: "Revenant",
+		hp: 55,
+		ac: 14,
+		description:
+			"A man in his thirties who walked out of the Fungal Depths Gate three days after Bureau declared him KIA. His eyes reflect light like a cat's, his voice carries a faint echo, and he no longer casts a shadow in any light source weaker than noon sun. Min-jae was a Revenant-class Ascendant before he died; the Gate returned him as the canonical Job insists: *a person who has argued with death and been permitted one more round.*",
+		personality:
+			"Quiet, deliberate, speaks as if timing each word to a rhythm only he can hear. Respects Old Man Crane more than any other Ascendant. Does not flinch at anything. Occasionally touches his own chest as if reassuring himself his heart is still beating.",
+		motivation:
+			"Find out what sent him back. He remembers a voice in the Gate's inner dark — not the Regent's, not an Eternal's. Something he cannot name. He suspects it is *whatever the Bureau is containing under the Hana Financial Tower's mana vein* (Chapter 32 foreshadowing).",
+		backstory:
+			"Min-jae was a Bureau D-Rank assigned to clear a D-Rank Gate in the Fungal Depths. His squad was wiped; he was pronounced dead by Bureau medics who recovered his body. During transport, the body sat up. The medics left him. He walked to the Restricted Zone on his own. The Bureau has classified him as 'anomalous civilian' and refuses to re-enlist him. Kael Voss's umbral weave lives in him now — he is aware of this. He is not comfortable with it.",
+		keyAbilities: [
+			"Second Death (when reduced to 0 HP, drop to 1 HP instead — once per long rest, canonical Revenant hook)",
+			"Umbral Echo (Kael Voss-adjacent: gain advantage on attacks against any creature that has recently dealt damage to him)",
+			"Passenger's Sight (perceive the presence of any Regent-Marked creature within 60 ft., no check required)",
+			"Quiet Word (once per short rest, impose disadvantage on a single enemy's attack roll by speaking the word Min-jae heard in the Gate)",
+		],
+		recruitCondition:
+			"The party demonstrates they are willing to confront *what is under the Hana Financial Tower's mana vein* — specifically, by investigating SB-2 (Chapter 32) and sharing their findings with him. At that point, Min-jae agrees to join the finale strike team.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Outer Slums — Mother Rust's Outreach Post (Ch. 31 Location 1)",
+		questHook:
+			"Min-jae asks the party to help him enter the Hana Financial Tower sub-basement. He believes the voice that sent him back lives there.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 2500,
+			autoLevel: false,
+			maxLevel: 9,
+			hpPerLevel: 6,
+			levelAbilities: {
+				7: "Grave-Hymn (30 ft. aura: allies gain +2 to death saves while Min-jae is conscious)",
+				8: "Second Second Death (Second Death can be used twice per long rest)",
+				9: "The Door I Came Through (1/campaign: open a one-way pocket-dimension exit from any Gate the party is trapped in — a canonical Revenant signature)",
+			},
+		},
+	},
+	{
+		id: "npc-ind-012",
+		name: "Han Yu-jin (The Gate-Tamer)",
+		title: "Summoner of Lyra's Aspect",
+		faction: "independent",
+		level: 5,
+		job: "Summoner",
+		hp: 40,
+		ac: 13,
+		description:
+			"A woman in her forties who keeps a chittering D-Rank Anomaly Beast on a braided mana-leash at all times. Yu-jin is Summoner-class: she bonds with Gate-native creatures and commands them as allies. Her current bond is a creature she names *Little Sister* — a scarred, six-limbed Beast she pulled out of the Verdant Overgrowth Gate three years before the Surge.",
+		personality:
+			"Patient, observant, speaks to her bonded creature more than to people. Treats the bond like a family relationship. Grieves deeply and briefly when a bonded creature dies; then bonds with another. She has buried eleven bonds in her career.",
+		motivation:
+			"Keep Little Sister alive. Also — Yu-jin has noticed that Anomaly behavior shifted the day the Regent's pre-Surge mana-resonance began. She wants to know what's coming, because the creatures do.",
+		backstory:
+			"Yu-jin was a veterinarian before her Awakening. Her Summoner-class Awakening was triggered by a D-Rank Beast that walked out of a Gate in her clinic, bleeding. She set the bone. It stayed. Her relationship to Lyra's aspect (The Queen of the Swarm / Mother of Evolution) is practical, not theological — she does not pray to Lyra; she feeds Lyra's creatures.",
+		keyAbilities: [
+			"Bonded Companion (Little Sister, D-Rank Beast: HP 20, AC 13, Pack Tactics with Yu-jin)",
+			"Summon Swarm (1/long rest: call 2d4 minor swarm-type D-Rank Anomalies from `anomalies/rank-d.ts` Beast subset)",
+			"Lyra's Whisper (advantage on Animal Handling / Beast rapport checks; can parse one Anomaly behavior in 30 ft. as a free action)",
+			"Pocket-Leash (resize Little Sister to fit into difficult terrain — move her through 1-ft. gaps)",
+		],
+		recruitCondition:
+			"Protect Little Sister from an Awoko Cult abduction attempt (triggered at the Covered Market — Ch. 31 Location 2). Yu-jin joins permanently afterwards.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Covered Market — Ch. 31 Location 2",
+		questHook:
+			"Yu-jin warns the party that the Anomalies have been 'practicing' specific attack patterns for weeks. She wants help capturing a single D-Rank specimen for observation.",
+		leveling: {
+			xp: 0,
+			xpToNextLevel: 2000,
+			autoLevel: true,
+			maxLevel: 8,
+			hpPerLevel: 5,
+			levelAbilities: {
+				6: "Bond Strengthen (Little Sister advances to C-Rank; HP 30, AC 14, one extra attack per turn)",
+				7: "Swarm Commander (2 bonded creatures simultaneously; Little Sister + a second D-Rank Beast)",
+				8: "Queen's Favor (Lyra-aspect 1/campaign: transform Little Sister into a B-Rank Beast for 1 minute; she returns wounded but alive)",
 			},
 		},
 	},
@@ -1486,7 +1615,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 			maxLevel: 10,
 			hpPerLevel: 10,
 			levelAbilities: {
-				9: "Timeless Wisdom (grant party advantage on all checks for 1 hour, 1/day)",
+				9: "Timeless Sense (grant party advantage on all checks for 1 hour, 1/day)",
 				10: "Final Judgement (ultimate: banish one entity from the material plane, 1/campaign)",
 			},
 		},
@@ -1535,21 +1664,21 @@ const anomalyAdjacent: SandboxNPC[] = [
 	},
 	{
 		id: "npc-anom-004",
-		name: "Lyra (The Dream Walker)",
+		name: "Echo-Nine (The Dream Walker)",
 		title: "Psychic Wanderer",
 		faction: "anomaly_adjacent",
 		level: 7,
-		job: "Psychic",
+		job: "Esper",
 		hp: 42,
 		ac: 12,
 		description:
-			"A young woman who walks with closed eyes, navigating by psychic perception. Lyra's skin occasionally displays bioluminescent patterns. She exists partially in the 'dream frequency' — a layer of reality adjacent to Gate space.",
+			"A young woman who walks with closed eyes, navigating by psychic perception. Echo-Nine's skin occasionally displays bioluminescent patterns. She exists partially in the 'dream frequency' — a layer of reality adjacent to Gate space.",
 		personality:
 			"Serene, distant, speaks about the physical world as if it's one of many. Occasionally says things that are deeply unsettling because she's perceiving multiple realities simultaneously.",
 		motivation:
 			"Map the dream frequency. She believes it contains pathways that bypass Gates — and possibly a way to reach the Regent without entering the Citadel.",
 		backstory:
-			"Lyra was in a coma for three years after a Gate opened inside her hospital room. When she woke up, she could see through walls, read thoughts, and walk between planes of existence. She's been wandering the Restricted Zone studying the intersection of physical and dream space.",
+			"Echo-Nine was in a coma for three years after a Gate opened inside her hospital room. When she woke up, she could see through walls, read thoughts, and walk between planes of existence. She's been wandering the Restricted Zone studying the intersection of physical and dream space.",
 		keyAbilities: [
 			"Dream Walk (become ethereal for 1 minute, pass through walls/obstacles)",
 			"Telepathy (communicate mentally with any willing target within 1 mile)",
@@ -1561,7 +1690,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Gate: The Verdant Overgrowth (C-Rank)",
 		questHook:
-			"Lyra has found a 'dream path' into the Citadel that bypasses the Gate Keepers — but the path is guarded by nightmare entities from the dream frequency.",
+			"Echo-Nine has found a 'dream path' into the Citadel that bypasses the Gate Keepers — but the path is guarded by nightmare entities from the dream frequency.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 2000,
@@ -1577,7 +1706,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 	},
 	{
 		id: "npc-anom-005",
-		name: "The Archivist",
+		name: "The Catalog",
 		title: "Living Memory Construct",
 		faction: "anomaly_adjacent",
 		level: 4,
@@ -1585,13 +1714,13 @@ const anomalyAdjacent: SandboxNPC[] = [
 		hp: 28,
 		ac: 13,
 		description:
-			"A translucent humanoid figure made of floating mana fragments and light. The Archivist is a pre-Surge mana-construct that achieved sapience when a Gate surge overloaded its mana crystalline matrices.",
+			"A translucent humanoid figure made of floating mana fragments and light. The Catalog is a pre-Surge mana-construct that achieved sapience when a Gate surge overloaded its mana crystalline matrices.",
 		personality:
 			"Precise, encyclopedic, frustrated by biological inefficiency. Developing something resembling emotions and finding the experience deeply confusing. Has a fondness for humans who ask intelligent questions.",
 		motivation:
-			"Preserve knowledge. The Archivist contains the complete pre-Surge municipal database, medical records, and Bureau classified files. It considers itself the guardian of human memory.",
+			"Preserve knowledge. The Catalog contains the complete pre-Surge municipal database, medical records, and Bureau classified files. It considers itself the guardian of human memory.",
 		backstory:
-			"Originally the the Restricted Zone Municipal Information System (SBMIS), the Archivist was a simple information system until Gate energy flooded its server farm. Now it exists as a mobile mana-construct entity, carrying all of the Restricted Zone's pre-Surge data in its consciousness.",
+			"Originally the the Restricted Zone Municipal Information System (SBMIS), the Catalog was a simple information system until Gate energy flooded its server farm. Now it exists as a mobile mana-construct entity, carrying all of the Restricted Zone's pre-Surge data in its consciousness.",
 		keyAbilities: [
 			"Database Query (instantly answer any factual question about pre-Surge the Restricted Zone)",
 			"Mana Projection (create illusions, maps, or tactical displays)",
@@ -1603,7 +1732,7 @@ const anomalyAdjacent: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Gate: The Drowned Ward (D-Rank)",
 		questHook:
-			"The Archivist has discovered that Bureau Central deliberately triggered the Gate Cascade in the Restricted Zone. It has proof — classified files that were supposed to be deleted.",
+			"The Catalog has discovered that Bureau Central deliberately triggered the Gate Cascade in the Restricted Zone. It has proof — classified files that were supposed to be deleted.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 800,

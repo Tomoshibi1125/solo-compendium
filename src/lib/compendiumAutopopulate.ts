@@ -1,4 +1,5 @@
-import { supabase } from "@/integrations/supabase/client";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 
 /**
  * Maps RIFT Ranks to Challenge Rating ranges
@@ -27,66 +28,78 @@ export const RANK_TO_CR: Record<string, string[]> = {
 	],
 };
 
-export async function getRandomAnomaly(rank?: string) {
-	let query = supabase.from("compendium_Anomalies").select("*");
+const lowRankRarities = new Set(["common", "uncommon"]);
+const midRankRarities = new Set(["rare", "very_rare"]);
+const highRankRarities = new Set(["legendary", "very_rare"]);
 
-	if (rank && RANK_TO_CR[rank]) {
-		query = query.in("cr", RANK_TO_CR[rank]);
+function pickRandomEntry<T>(entries: T[]): T | null {
+	if (entries.length === 0) {
+		return null;
 	}
 
-	const { data, error } = await query;
+	const randomIndex = Math.floor(Math.random() * entries.length);
+	return entries[randomIndex];
+}
 
-	if (error || !data || data.length === 0) return null;
-	const randomIndex = Math.floor(Math.random() * data.length);
-	return data[randomIndex];
+function matchesRank(entry: StaticCompendiumEntry, rank: string): boolean {
+	if (!rank) {
+		return true;
+	}
+
+	const normalizedRank = rank.trim().toUpperCase();
+	if ((entry.gate_rank || entry.rank || "").toUpperCase() === normalizedRank) {
+		return true;
+	}
+
+	if (typeof entry.cr === "string" && RANK_TO_CR[normalizedRank]) {
+		return RANK_TO_CR[normalizedRank].includes(entry.cr);
+	}
+
+	return false;
+}
+
+function filterEquipmentByRank(
+	entries: StaticCompendiumEntry[],
+	rank?: string,
+): StaticCompendiumEntry[] {
+	if (!rank) {
+		return entries;
+	}
+
+	const normalizedRank = rank.trim().toUpperCase();
+	if (normalizedRank === "E" || normalizedRank === "D") {
+		return entries.filter((entry) => lowRankRarities.has(entry.rarity || ""));
+	}
+	if (normalizedRank === "C" || normalizedRank === "B") {
+		return entries.filter((entry) => midRankRarities.has(entry.rarity || ""));
+	}
+	if (normalizedRank === "A" || normalizedRank === "S") {
+		return entries.filter((entry) => highRankRarities.has(entry.rarity || ""));
+	}
+
+	return entries;
+}
+
+export async function getRandomAnomaly(rank?: string) {
+	const anomalies = await listCanonicalEntries("anomalies");
+	const filtered = rank
+		? anomalies.filter((entry) => matchesRank(entry, rank))
+		: anomalies;
+	return pickRandomEntry(filtered.length > 0 ? filtered : anomalies);
 }
 
 export async function getRandomEquipment(rank?: string) {
-	let query = supabase
-		.from("compendium_equipment")
-		.select("id, name, rarity, description");
-
-	// Filter by rarity based on rank
-	if (rank === "E" || rank === "D") {
-		query = query.in("rarity", ["common", "uncommon"]);
-	} else if (rank === "C" || rank === "B") {
-		query = query.in("rarity", ["rare", "very_rare"]);
-	} else if (rank === "A" || rank === "S") {
-		query = query.in("rarity", ["legendary", "very_rare"]);
-	}
-
-	const { data, error } = await query;
-
-	if (error || !data || data.length === 0) {
-		// Fallback to any equipment if specific rarity not found
-		const { data: fallbackData } = await supabase
-			.from("compendium_equipment")
-			.select("id, name, rarity, description")
-			.limit(50);
-		if (!fallbackData || fallbackData.length === 0) return null;
-		return fallbackData[Math.floor(Math.random() * fallbackData.length)];
-	}
-
-	const randomIndex = Math.floor(Math.random() * data.length);
-	return data[randomIndex];
+	const equipment = await listCanonicalEntries("equipment");
+	const filtered = filterEquipmentByRank(equipment, rank);
+	return pickRandomEntry(filtered.length > 0 ? filtered : equipment);
 }
 
 export async function getRandomFeat() {
-	const { data, error } = await supabase
-		.from("compendium_feats")
-		.select("id, name, description");
-
-	if (error || !data || data.length === 0) return null;
-	const randomIndex = Math.floor(Math.random() * data.length);
-	return data[randomIndex];
+	const feats = await listCanonicalEntries("feats");
+	return pickRandomEntry(feats);
 }
 
 export async function getRandomRune() {
-	const { data, error } = await supabase
-		.from("compendium_runes")
-		.select("id, name, description");
-
-	if (error || !data || data.length === 0) return null;
-	const randomIndex = Math.floor(Math.random() * data.length);
-	return data[randomIndex];
+	const runes = await listCanonicalEntries("runes");
+	return pickRandomEntry(runes);
 }

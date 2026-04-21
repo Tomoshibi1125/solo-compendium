@@ -21,16 +21,10 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
-import { supabase } from "@/integrations/supabase/client";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
-import {
-	filterRowsBySourcebookAccess,
-	getCharacterCampaignId,
-} from "@/lib/sourcebookAccess";
-import {
-	formatRegentVernacular,
-	normalizeRegentSearch,
-} from "@/lib/vernacular";
+import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import { AddCustomItemDialog } from "./AddCustomItemDialog";
 
 function mapCompendiumEquipmentTypeToInventoryType(
@@ -85,31 +79,12 @@ export function AddEquipmentDialog({
 	const { data: equipment = [], isLoading } = useQuery({
 		queryKey: ["compendium-equipment", characterId, searchQuery],
 		queryFn: async () => {
-			const { staticDataProvider } = await import(
-				"@/data/compendium/providers"
-			);
-			// Try Supabase first
-			let query = supabase.from("compendium_equipment").select("*").limit(20);
-
 			const trimmedQuery = searchQuery.trim();
-			if (trimmedQuery) {
-				const canonicalQuery = normalizeRegentSearch(trimmedQuery);
-				query = query.ilike("name", `%${canonicalQuery}%`);
-			}
-
-			const { data, error } = await query;
-
-			// If Supabase has results, filter by sourcebook access
-			if (!error && data && data.length > 0) {
-				const campaignId = await getCharacterCampaignId(characterId);
-				return filterRowsBySourcebookAccess(data, (item) => item.source_book, {
-					campaignId,
-				});
-			}
-
-			// Fall back to static compendium data
-			const staticItems = await staticDataProvider.getItems(
+			const campaignId = await getCharacterCampaignId(characterId);
+			const staticItems = await listCanonicalEntries(
+				"equipment",
 				trimmedQuery || undefined,
+				{ campaignId },
 			);
 			return staticItems
 				.filter((item) =>

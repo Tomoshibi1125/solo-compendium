@@ -9,17 +9,42 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import type { Database } from "@/integrations/supabase/types";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-type Path = Database["public"]["Tables"]["compendium_job_paths"]["Row"] & {
+interface PathFeature {
+	name: string;
+	level: number;
+	description?: string | null;
+}
+
+interface PathAbility {
+	name: string;
+	description?: string | null;
+	cost?: string | null;
+}
+
+interface PathStats {
+	primaryAttribute: string;
+	secondaryAttribute?: string | null;
+}
+
+// Accepts both DB Row shape and rich static data shape via optional fields.
+interface PathRow {
+	id: string;
+	name: string;
+	description?: string | null;
 	display_name?: string | null;
-};
+	path_level?: number | null;
+	requirements?: { level?: number | null } | null;
+	stats?: PathStats | null;
+	features?: PathFeature[] | null;
+	abilities?: PathAbility[] | null;
+}
 
 interface PathStepProps {
 	selectedPath: string;
 	onPathChange: (pathId: string) => void;
-	paths: any[]; // Using any to accommodate the rich static data mixed with Path
+	paths: PathRow[];
 }
 
 export const PathStep: React.FC<PathStepProps> = ({
@@ -69,7 +94,9 @@ export const PathStep: React.FC<PathStepProps> = ({
 											Unlock Level
 										</Label>
 										<div className="text-sm font-heading">
-											{selectedPathData.path_level || selectedPathData.requirements?.level || 3}
+											{selectedPathData.path_level ||
+												selectedPathData.requirements?.level ||
+												3}
 										</div>
 									</div>
 									<div className="space-y-1 text-right">
@@ -92,13 +119,21 @@ export const PathStep: React.FC<PathStepProps> = ({
 										</h4>
 										<div className="grid grid-cols-2 gap-2 text-xs">
 											<div>
-												<span className="text-muted-foreground">Primary Node:</span>{" "}
-												<span className="font-medium text-foreground">{selectedPathData.stats.primaryAttribute}</span>
+												<span className="text-muted-foreground">
+													Primary Node:
+												</span>{" "}
+												<span className="font-medium text-foreground">
+													{selectedPathData.stats.primaryAttribute}
+												</span>
 											</div>
 											{selectedPathData.stats.secondaryAttribute && (
 												<div>
-													<span className="text-muted-foreground">Secondary Node:</span>{" "}
-													<span className="font-medium text-foreground">{selectedPathData.stats.secondaryAttribute}</span>
+													<span className="text-muted-foreground">
+														Secondary Node:
+													</span>{" "}
+													<span className="font-medium text-foreground">
+														{selectedPathData.stats.secondaryAttribute}
+													</span>
 												</div>
 											)}
 										</div>
@@ -106,50 +141,72 @@ export const PathStep: React.FC<PathStepProps> = ({
 								)}
 
 								{/* Path Features */}
-								{selectedPathData.features && selectedPathData.features.length > 0 && (
-									<div className="space-y-3 pt-4 border-t border-primary/10">
-										<h4 className="text-[11px] font-heading font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
-											<span className="h-[1px] flex-grow bg-primary/20"></span>
-											Evolution Features
-											<span className="h-[1px] flex-grow bg-primary/20"></span>
-										</h4>
-										<div className="space-y-4">
-											{selectedPathData.features.sort((a: any, b: any) => a.level - b.level).map((f: any, i: number) => (
-												<div key={i} className="text-xs space-y-1 p-3 rounded bg-black/40 border border-primary/10">
-													<div className="flex justify-between items-center">
-														<span className="font-semibold text-primary">{f.name}</span>
-														<span className="text-[9px] uppercase text-muted-foreground bg-primary/5 px-2 py-0.5 rounded">Level {f.level}</span>
-													</div>
-													<AscendantText className="text-muted-foreground">{f.description}</AscendantText>
-												</div>
-											))}
+								{selectedPathData.features &&
+									selectedPathData.features.length > 0 && (
+										<div className="space-y-3 pt-4 border-t border-primary/10">
+											<h4 className="text-[11px] font-heading font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
+												<span className="h-[1px] flex-grow bg-primary/20"></span>
+												Evolution Features
+												<span className="h-[1px] flex-grow bg-primary/20"></span>
+											</h4>
+											<div className="space-y-4">
+												{[...selectedPathData.features]
+													.sort((a, b) => a.level - b.level)
+													.map((f) => (
+														<div
+															key={`${f.level}-${f.name}`}
+															className="text-xs space-y-1 p-3 rounded bg-black/40 border border-primary/10"
+														>
+															<div className="flex justify-between items-center">
+																<span className="font-semibold text-primary">
+																	{f.name}
+																</span>
+																<span className="text-[9px] uppercase text-muted-foreground bg-primary/5 px-2 py-0.5 rounded">
+																	Level {f.level}
+																</span>
+															</div>
+															<AscendantText className="text-muted-foreground">
+																{f.description}
+															</AscendantText>
+														</div>
+													))}
+											</div>
 										</div>
-									</div>
-								)}
+									)}
 
 								{/* Path Abilities */}
-								{selectedPathData.abilities && selectedPathData.abilities.length > 0 && (
-									<div className="space-y-3 pt-4 border-t border-primary/10">
-										<h4 className="text-[11px] font-heading font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
-											<span className="h-[1px] flex-grow bg-primary/20"></span>
-											Path Actives & Abilities
-											<span className="h-[1px] flex-grow bg-primary/20"></span>
-										</h4>
-										<div className="space-y-4">
-											{selectedPathData.abilities.map((a: any, i: number) => (
-												<div key={i} className="text-xs space-y-1 p-3 rounded bg-black/40 border border-primary/10">
-													<div className="flex justify-between items-center">
-														<span className="font-semibold text-foreground">{a.name}</span>
-														{a.cost && (
-															<span className="text-[9px] uppercase text-muted-foreground bg-primary/5 px-2 py-0.5 rounded">{a.cost}</span>
-														)}
+								{selectedPathData.abilities &&
+									selectedPathData.abilities.length > 0 && (
+										<div className="space-y-3 pt-4 border-t border-primary/10">
+											<h4 className="text-[11px] font-heading font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
+												<span className="h-[1px] flex-grow bg-primary/20"></span>
+												Path Actives & Abilities
+												<span className="h-[1px] flex-grow bg-primary/20"></span>
+											</h4>
+											<div className="space-y-4">
+												{selectedPathData.abilities.map((a) => (
+													<div
+														key={a.name}
+														className="text-xs space-y-1 p-3 rounded bg-black/40 border border-primary/10"
+													>
+														<div className="flex justify-between items-center">
+															<span className="font-semibold text-foreground">
+																{a.name}
+															</span>
+															{a.cost && (
+																<span className="text-[9px] uppercase text-muted-foreground bg-primary/5 px-2 py-0.5 rounded">
+																	{a.cost}
+																</span>
+															)}
+														</div>
+														<AscendantText className="text-muted-foreground block">
+															{a.description}
+														</AscendantText>
 													</div>
-													<AscendantText className="text-muted-foreground block">{a.description}</AscendantText>
-												</div>
-											))}
+												))}
+											</div>
 										</div>
-									</div>
-								)}
+									)}
 							</div>
 						</div>
 					)}

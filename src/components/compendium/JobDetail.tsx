@@ -5,8 +5,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
-import { supabase } from "@/integrations/supabase/client";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumJob } from "@/types/compendium";
 import { DetailHeader } from "./DetailHeader";
@@ -47,84 +46,67 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 
 	useEffect(() => {
 		const fetchRelatedData = async () => {
-			const [featuresRes, pathsRes, powersRes] = await Promise.all([
-				supabase
-					.from("compendium_job_features")
-					.select("*")
-					.eq("job_id", data.id)
-					.eq("is_path_feature", false)
-					.order("level"),
-				supabase
-					.from("compendium_job_paths")
-					.select("*")
-					.eq("job_id", data.id)
-					.order("name"),
-				supabase
-					.from("compendium_powers")
-					.select("id, name, display_name, power_level, source_book")
-					.contains("job_names", [data.name])
-					.limit(10),
-			]);
-
-			const featureRows = (featuresRes.data || []) as Array<
-				JobFeature & { source_name?: string | null }
-			>;
-			const pathRows = (pathsRes.data || []) as Array<
-				JobPath & { source_book?: string | null }
-			>;
-			const powerRows = (powersRes.data || []) as Array<{
-				id: string;
-				name: string;
-				display_name?: string | null;
-				power_level: number;
-				source_book?: string | null;
-			}>;
-
-			const [accessibleFeatures, accessiblePaths, accessiblePowers] =
-				await Promise.all([
-					filterRowsBySourcebookAccess(
-						featureRows,
-						(feature: JobFeature & { source_name?: string | null }) =>
-							feature.source_name,
-					),
-					filterRowsBySourcebookAccess(
-						pathRows,
-						(path: JobPath & { source_book?: string | null }) =>
-							path.source_book,
-					),
-					filterRowsBySourcebookAccess(
-						powerRows,
-						(power: { source_book?: string | null }) => power.source_book,
-					),
-				]);
-
-			setFeatures(
-				accessibleFeatures.map((feature: JobFeature) => ({
-					...feature,
-					action_type: feature.action_type ?? undefined,
-					display_name: feature.display_name ?? undefined,
-				})),
+			// Canonical static job class_features
+			const staticFeatures = (data.class_features || []).map(
+				(feature, idx) => ({
+					id: `${data.id}-feat-${idx}`,
+					name: feature.name,
+					description: feature.description,
+					level: feature.level,
+					is_path_feature: false,
+					action_type: undefined,
+				}),
 			);
-			setPaths(accessiblePaths);
-			setRelatedPowers(
-				accessiblePowers.map(
-					(power: {
-						id: string;
-						name: string;
-						display_name?: string | null;
-						power_level: number;
-					}) => ({
-						id: power.id,
-						name: power.name,
-						display_name: power.display_name ?? null,
-						power_level: power.power_level,
-					}),
-				),
-			);
+
+			// Canonical static paths linked to this job by jobId/job_id/jobName.
+			const allPaths = await listCanonicalEntries("paths");
+			const jobKey = (data.name || "").trim().toLowerCase();
+			const jobIdKey = (data.id || "").trim().toLowerCase();
+			const matchedPaths = allPaths
+				.filter((p) => {
+					const linkedJobName =
+						(p as { jobName?: string | null }).jobName ?? p.job_name ?? null;
+					const linkedJobId =
+						(p as { jobId?: string | null }).jobId ??
+						(p as { job_id?: string | null }).job_id ??
+						null;
+					return (
+						(typeof linkedJobName === "string" &&
+							linkedJobName.trim().toLowerCase() === jobKey) ||
+						(typeof linkedJobId === "string" &&
+							linkedJobId.trim().toLowerCase() === jobIdKey)
+					);
+				})
+				.map((p) => ({
+					id: p.id,
+					name: p.name,
+					display_name: p.display_name ?? null,
+					description: p.description ?? "",
+					path_level: p.path_level ?? p.level ?? 3,
+				}));
+
+			// Canonical static powers/spells tagged with this job name.
+			const powers = await listCanonicalEntries("powers");
+			const matchedPowers = powers
+				.filter((power) => {
+					const tags = (power.tags || []).map((t) => t.toLowerCase());
+					return tags.includes(jobKey);
+				})
+				.slice(0, 10)
+				.map((power) => ({
+					id: power.id,
+					name: power.name,
+					display_name: power.display_name ?? null,
+					power_level: power.power_level ?? power.level ?? 0,
+				}));
+
+			setFeatures(staticFeatures);
+			setPaths(matchedPaths);
+			setRelatedPowers(matchedPowers);
 		};
 
 		fetchRelatedData();
-	}, [data.id, data.name]);
+	}, [data.id, data.name, data.class_features]);
 
 	return (
 		<div className="space-y-6">

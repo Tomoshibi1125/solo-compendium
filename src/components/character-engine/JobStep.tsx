@@ -69,7 +69,10 @@ export const JobStep: React.FC<JobStepProps> = ({
 	const asiDisplay = useMemo(() => {
 		const parts = Object.entries(jobASI)
 			.filter(([, v]) => typeof v === "number" && v !== 0)
-			.map(([k, v]) => `${ABILITY_NAMES[k as AbilityScore]} ${v > 0 ? `+${v}` : v}`);
+			.map(
+				([k, v]) =>
+					`${ABILITY_NAMES[k as AbilityScore]} ${v > 0 ? `+${v}` : v}`,
+			);
 		return parts.length > 0 ? parts.join(", ") : "None";
 	}, [jobASI]);
 
@@ -161,21 +164,47 @@ export const JobStep: React.FC<JobStepProps> = ({
 											</h4>
 											<div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Armor</span>
-													<span className="text-muted-foreground">{staticJobData.armorProficiencies?.join(", ") || staticJobData.armor_proficiencies?.join(", ") || "None"}</span>
-												</div>
-												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Weapons</span>
-													<span className="text-muted-foreground">{staticJobData.weaponProficiencies?.join(", ") || staticJobData.weapon_proficiencies?.join(", ") || "None"}</span>
-												</div>
-												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Tools</span>
-													<span className="text-muted-foreground">{staticJobData.toolProficiencies?.join(", ") || staticJobData.tool_proficiencies?.join(", ") || "None"}</span>
-												</div>
-												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Saving Throws</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Armor
+													</span>
 													<span className="text-muted-foreground">
-														{staticJobData.savingThrows?.map(formatRegentVernacular).join(", ") || staticJobData.saving_throw_proficiencies?.map(formatRegentVernacular).join(", ") || "None"}
+														{staticJobData.armorProficiencies?.join(", ") ||
+															staticJobData.armor_proficiencies?.join(", ") ||
+															"None"}
+													</span>
+												</div>
+												<div className="flex flex-col gap-1">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Weapons
+													</span>
+													<span className="text-muted-foreground">
+														{staticJobData.weaponProficiencies?.join(", ") ||
+															staticJobData.weapon_proficiencies?.join(", ") ||
+															"None"}
+													</span>
+												</div>
+												<div className="flex flex-col gap-1">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Tools
+													</span>
+													<span className="text-muted-foreground">
+														{staticJobData.toolProficiencies?.join(", ") ||
+															staticJobData.tool_proficiencies?.join(", ") ||
+															"None"}
+													</span>
+												</div>
+												<div className="flex flex-col gap-1">
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Saving Throws
+													</span>
+													<span className="text-muted-foreground">
+														{staticJobData.savingThrows
+															?.map(formatRegentVernacular)
+															.join(", ") ||
+															staticJobData.saving_throw_proficiencies
+																?.map(formatRegentVernacular)
+																.join(", ") ||
+															"None"}
 													</span>
 												</div>
 											</div>
@@ -190,44 +219,80 @@ export const JobStep: React.FC<JobStepProps> = ({
 											</h4>
 											<div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-2 text-xs">
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Size</span>
-													<span className="text-muted-foreground capitalize">{staticJobData.size || "Medium"}</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Size
+													</span>
+													<span className="text-muted-foreground capitalize">
+														{staticJobData.size || "Medium"}
+													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Mobility Index (Speed)</span>
-													<span className="text-muted-foreground">{staticJobData.speed || 30} FT</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Mobility Index (Speed)
+													</span>
+													<span className="text-muted-foreground">
+														{staticJobData.speed || 30} FT
+													</span>
 												</div>
 												<div className="flex flex-col gap-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Senses</span>
-													<span className="text-muted-foreground">{staticJobData.darkvision ? `Darkvision ${staticJobData.darkvision} FT` : "Normal"}</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Senses
+													</span>
+													<span className="text-muted-foreground">
+														{staticJobData.darkvision
+															? `Darkvision ${staticJobData.darkvision} FT`
+															: "Normal"}
+													</span>
 												</div>
 												<div className="flex flex-col gap-1 md:col-span-1">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Ability Score Increase</span>
-													<span className="text-primary/90 font-medium">{asiDisplay}</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Ability Score Increase
+													</span>
+													<span className="text-primary/90 font-medium">
+														{asiDisplay}
+													</span>
 												</div>
 												<div className="flex flex-col gap-1 md:col-span-2">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Linguistic Bindings</span>
-													<span className="text-muted-foreground">{staticJobData.languages?.join(", ") || "None"}</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+														Linguistic Bindings
+													</span>
+													<span className="text-muted-foreground">
+														{staticJobData.languages?.join(", ") || "None"}
+													</span>
 												</div>
 											</div>
-											
+
 											{/* Racial Traits (Equivalent) */}
-											{(staticJobData as any).racialTraits?.length > 0 && (
-												<div className="mt-4 space-y-2">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">Innate Racial Traits</span>
-													<div className="space-y-3">
-														{(staticJobData as any).racialTraits.map((t: any, i: number) => (
-															<div key={i} className="text-xs p-2 rounded bg-primary/5 border border-primary/10">
-																<span className="font-semibold text-primary">{t.name}:</span> <span className="text-muted-foreground">{t.description}</span>
-															</div>
-														))}
+											{staticJobData.racialTraits &&
+												staticJobData.racialTraits.length > 0 && (
+													<div className="mt-4 space-y-2">
+														<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px]">
+															Innate Racial Traits
+														</span>
+														<div className="space-y-3">
+															{staticJobData.racialTraits.map((t) => (
+																<div
+																	key={t.name}
+																	className="text-xs p-2 rounded bg-primary/5 border border-primary/10"
+																>
+																	<span className="font-semibold text-primary">
+																		{t.name}:
+																	</span>{" "}
+																	<span className="text-muted-foreground">
+																		{t.description}
+																	</span>
+																</div>
+															))}
+														</div>
 													</div>
-												</div>
-											)}
+												)}
 										</div>
 
 										{/* Immediate Level 1 Payload */}
-										{((staticJobData.awakeningFeatures && staticJobData.awakeningFeatures.length > 0) || (staticJobData.jobTraits && staticJobData.jobTraits.length > 0)) && (
+										{((staticJobData.awakeningFeatures &&
+											staticJobData.awakeningFeatures.length > 0) ||
+											(staticJobData.jobTraits &&
+												staticJobData.jobTraits.length > 0)) && (
 											<div className="space-y-3 pt-4 border-t border-primary/10">
 												<h4 className="text-[11px] font-heading font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
 													<span className="h-[1px] flex-grow bg-primary/20"></span>
@@ -235,14 +300,26 @@ export const JobStep: React.FC<JobStepProps> = ({
 													<span className="h-[1px] flex-grow bg-primary/20"></span>
 												</h4>
 												<div className="space-y-3">
-													{staticJobData.awakeningFeatures?.filter(f => f.level === 1).map((f, i) => (
-														<div key={`aw-${i}`} className="text-xs">
-															<span className="font-semibold text-foreground">{f.name}:</span> <span className="text-muted-foreground block mt-1">{f.description}</span>
-														</div>
-													))}
-													{staticJobData.jobTraits?.map((t, i) => (
-														<div key={`jt-${i}`} className="text-xs">
-															<span className="font-semibold text-foreground">{t.name}:</span> <span className="text-muted-foreground block mt-1">{t.description}</span>
+													{staticJobData.awakeningFeatures
+														?.filter((f) => f.level === 1)
+														.map((f) => (
+															<div key={`aw-${f.name}`} className="text-xs">
+																<span className="font-semibold text-foreground">
+																	{f.name}:
+																</span>{" "}
+																<span className="text-muted-foreground block mt-1">
+																	{f.description}
+																</span>
+															</div>
+														))}
+													{staticJobData.jobTraits?.map((t) => (
+														<div key={`jt-${t.name}`} className="text-xs">
+															<span className="font-semibold text-foreground">
+																{t.name}:
+															</span>{" "}
+															<span className="text-muted-foreground block mt-1">
+																{t.description}
+															</span>
 														</div>
 													))}
 												</div>
@@ -258,8 +335,12 @@ export const JobStep: React.FC<JobStepProps> = ({
 													<span className="h-[1px] flex-grow bg-primary/20"></span>
 												</h4>
 												<div className="text-xs text-muted-foreground">
-													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px] block mb-1">Spellcasting Ability</span>
-													<span className="text-primary/90 font-medium">{staticJobData.spellcasting.ability}</span>
+													<span className="font-heading font-semibold text-foreground/80 uppercase tracking-tighter text-[9px] block mb-1">
+														Spellcasting Ability
+													</span>
+													<span className="text-primary/90 font-medium">
+														{staticJobData.spellcasting.ability}
+													</span>
 												</div>
 											</div>
 										)}
@@ -277,18 +358,27 @@ export const JobStep: React.FC<JobStepProps> = ({
 														{Object.entries(groupedFeatures)
 															.sort(([a], [b]) => Number(a) - Number(b))
 															.map(([level, features]) => (
-															<div key={level} className="space-y-2">
-																<div className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">Level {level}</div>
-																<div className="space-y-3 pl-2">
-																	{features.map((f, i) => (
-																		<div key={i} className="text-xs">
-																			<span className="font-semibold text-foreground block mb-1">{f.name}</span>
-																			<AscendantText className="text-muted-foreground">{f.description}</AscendantText>
-																		</div>
-																	))}
+																<div key={level} className="space-y-2">
+																	<div className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">
+																		Level {level}
+																	</div>
+																	<div className="space-y-3 pl-2">
+																		{features.map((f) => (
+																			<div
+																				key={`${level}-${f.name}`}
+																				className="text-xs"
+																			>
+																				<span className="font-semibold text-foreground block mb-1">
+																					{f.name}
+																				</span>
+																				<AscendantText className="text-muted-foreground">
+																					{f.description}
+																				</AscendantText>
+																			</div>
+																		))}
+																	</div>
 																</div>
-															</div>
-														))}
+															))}
 													</div>
 												</ScrollArea>
 											</div>

@@ -6,6 +6,9 @@ export interface ShadowSoldier {
 	display_name: string;
 	rank: "A" | "B" | "C";
 	role: string;
+	title?: string | null;
+	shadow_type?: string | null;
+	summon_requirements?: string | null;
 	description: string;
 	flavor: string;
 	lore: {

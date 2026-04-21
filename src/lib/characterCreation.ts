@@ -22,7 +22,6 @@ import {
 	getStaticPaths,
 } from "@/lib/ProtocolDataManager";
 import {
-	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
@@ -2561,20 +2560,8 @@ export async function addJobAwakeningBenefitsForLevel(
 		);
 	}
 
-	// Direct Job Features from DB first (Rift Ascendant authoritative)
-	const { data: jobFeatures } = await supabase
-		.from("compendium_job_features")
-		.select("*")
-		.eq("job_id", typeof job !== "string" && job ? job.id : "")
-		.eq("level", level)
-		.eq("is_path_feature", false);
-
-	// If no DB features, check static Job Awakening (new Zero-Legacy enrichment)
-	if (
-		(!jobFeatures || jobFeatures.length === 0) &&
-		isStaticJob(job) &&
-		job.awakeningFeatures
-	) {
+	// Canonical static awakening features at the target level.
+	if (isStaticJob(job) && job.awakeningFeatures) {
 		const awakeningAtLevel = job.awakeningFeatures.filter(
 			(f) => f.level === level,
 		);
@@ -2699,84 +2686,36 @@ export async function addLevel1Features(
 		console.warn("Cannot add level 1 features: job or background missing");
 		return;
 	}
-	const campaignId = await getCharacterCampaignId(characterId);
 
-	// Get level 1 job features
-	const { data: jobFeatures } = await supabase
-		.from("compendium_job_features")
-		.select("*")
-		.eq("job_id", typeof job !== "string" && job ? job.id : "")
-		.eq("level", 1)
-		.eq("is_path_feature", false);
-
-	const accessibleJobFeatures = await filterRowsBySourcebookAccess(
-		jobFeatures || [],
-		(feature) => feature.source_name,
-		{ campaignId },
-	);
-
-	if (accessibleJobFeatures.length > 0) {
-		for (const feature of accessibleJobFeatures) {
-			const usesMax = calculateFeatureUses(feature.uses_formula, 1, 2);
-
+	// Canonical static classFeatures at level 1.
+	if (isStaticJob(job) && job.classFeatures) {
+		const level1Features = job.classFeatures.filter((cf) => cf.level === 1);
+		for (const cf of level1Features) {
 			if (isLocalCharacterId(characterId)) {
 				addLocalFeature(characterId, {
-					name: feature.name,
+					name: cf.name,
 					source: "Job: Level 1",
 					level_acquired: 1,
-					description: feature.description,
-					action_type: feature.action_type || null,
-					uses_max: usesMax,
-					uses_current: usesMax,
-					recharge: feature.recharge || null,
+					description: cf.description,
+					action_type: null,
+					uses_max: null,
+					uses_current: null,
+					recharge: null,
 					is_active: true,
 				});
 			} else {
 				await supabase.from("character_features").insert({
 					character_id: characterId,
-					name: feature.name,
+					name: cf.name,
 					source: "Job: Level 1",
 					level_acquired: 1,
-					description: feature.description,
-					action_type: feature.action_type || null,
-					uses_max: usesMax,
-					uses_current: usesMax,
-					recharge: feature.recharge || null,
+					description: cf.description,
+					action_type: null,
+					uses_max: null,
+					uses_current: null,
+					recharge: null,
 					is_active: true,
 				});
-			}
-		}
-	} else {
-		// Static fallback: if DB had no features, use static classFeatures
-		if (isStaticJob(job) && job.classFeatures) {
-			const level1Features = job.classFeatures.filter((cf) => cf.level === 1);
-			for (const cf of level1Features) {
-				if (isLocalCharacterId(characterId)) {
-					addLocalFeature(characterId, {
-						name: cf.name,
-						source: "Job: Level 1",
-						level_acquired: 1,
-						description: cf.description,
-						action_type: null,
-						uses_max: null,
-						uses_current: null,
-						recharge: null,
-						is_active: true,
-					});
-				} else {
-					await supabase.from("character_features").insert({
-						character_id: characterId,
-						name: cf.name,
-						source: "Job: Level 1",
-						level_acquired: 1,
-						description: cf.description,
-						action_type: null,
-						uses_max: null,
-						uses_current: null,
-						recharge: null,
-						is_active: true,
-					});
-				}
 			}
 		}
 	}
@@ -2929,105 +2868,60 @@ export async function addStartingEquipment(
 			? background.starting_equipment
 			: background?.equipment;
 
-	// Add background starting equipment (DB field)
+	// Add background starting equipment from canonical static compendium.
 	if (backgroundEquipment && backgroundEquipment.length > 0) {
 		const equipmentItems = backgroundEquipment;
 
 		for (const itemName of equipmentItems) {
-			const { data: equipment } = await supabase
-				.from("compendium_equipment")
-				.select("*")
-				.ilike("name", `%${itemName}%`)
-				.limit(1)
-				.maybeSingle();
+			const item = findStaticItemByName(itemName);
+			if (!item) continue;
 
-			if (
-				equipment &&
-				(await isSourcebookAccessible(equipment.source_book, { campaignId }))
-			) {
-				if (isLocalCharacterId(characterId)) {
-					addLocalEquipment(characterId, {
-						name: equipment.name,
-						item_type: equipment.equipment_type || "gear",
-						description: equipment.description || null,
-						properties: equipment.properties || [],
-						weight: equipment.weight || null,
-						quantity: 1,
-						is_equipped: false,
-						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
-							item_type: equipment.equipment_type || "gear",
-							properties: equipment.properties || [],
-							name: equipment.name,
-							rarity: equipment.rarity ?? null,
-						}),
-					});
-				} else {
-					await supabase.from("character_equipment").insert({
-						character_id: characterId,
-						name: equipment.name,
-						item_type: equipment.equipment_type || "gear",
-						description: equipment.description || null,
-						properties: equipment.properties || [],
-						weight: equipment.weight || null,
-						quantity: 1,
-						is_equipped: false,
-						sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
-							item_type: equipment.equipment_type || "gear",
-							properties: equipment.properties || [],
-							name: equipment.name,
-							rarity: mapToDbRarity(equipment.rarity),
-						}),
-					});
-				}
+			// Respect sourcebook entitlements for the canonical item.
+			if (!(await isSourcebookAccessible(item.source_book, { campaignId }))) {
+				continue;
+			}
+
+			const normalizedItem = normalizeToStaticItem(item);
+			const itemProps = buildItemProperties(normalizedItem);
+			const itemType = deriveItemType(normalizedItem);
+			const weightValue =
+				typeof normalizedItem.weight === "string"
+					? parseFloat(normalizedItem.weight) || 0
+					: (normalizedItem.weight ?? null);
+
+			if (isLocalCharacterId(characterId)) {
+				addLocalEquipment(characterId, {
+					name: normalizedItem.name,
+					item_type: itemType,
+					description: normalizedItem.description || null,
+					properties: itemProps,
+					weight: weightValue,
+					quantity: 1,
+					is_equipped: false,
+					sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+						item_type: itemType,
+						properties: itemProps,
+						name: normalizedItem.name,
+						rarity: normalizedItem.rarity,
+					}),
+				});
 			} else {
-				const item = findStaticItemByName(itemName);
-				if (item) {
-					// Use formal normalization for the builder
-					const normalizedItem = normalizeToStaticItem(item);
-					const itemProps = buildItemProperties(normalizedItem);
-					const itemType = deriveItemType(normalizedItem);
-
-					if (isLocalCharacterId(characterId)) {
-						addLocalEquipment(characterId, {
-							name: item.name,
-							item_type: itemType,
-							description: item.description || null,
-							properties: itemProps,
-							weight:
-								typeof item.weight === "string"
-									? parseFloat(item.weight) || 0
-									: item.weight || null,
-							quantity: 1,
-							is_equipped: false,
-							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
-								item_type: itemType,
-								properties: itemProps,
-								name: item.name,
-								rarity: item.rarity,
-							}),
-						});
-					} else {
-						await supabase.from("character_equipment").insert({
-							character_id: characterId,
-							name: item.name,
-							item_type: itemType,
-							description: item.description || null,
-							properties: itemProps,
-							weight:
-								typeof item.weight === "string"
-									? parseFloat(item.weight) || 0
-									: item.weight || null,
-							quantity: 1,
-							is_equipped: false,
-							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
-								item_type: itemType,
-								properties: itemProps,
-								name: item.name,
-								rarity: item.rarity,
-							}),
-						});
-					}
-				}
+				await supabase.from("character_equipment").insert({
+					character_id: characterId,
+					name: normalizedItem.name,
+					item_type: itemType,
+					description: normalizedItem.description || null,
+					properties: itemProps,
+					weight: weightValue,
+					quantity: 1,
+					is_equipped: false,
+					sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+						item_type: itemType,
+						properties: itemProps,
+						name: normalizedItem.name,
+						rarity: mapToDbRarity(normalizedItem.rarity),
+					}),
+				});
 			}
 		}
 	}
@@ -3049,48 +2943,58 @@ export async function addStartingPowers(
 
 	const maxPowerLevel = getMaxPowerLevelForJobAtLevel(job, 1);
 
-	// Get powers available to this job at level 1
-	const { data: powers } = await supabase
-		.from("compendium_powers")
-		.select("*")
-		.contains("job_names", [jobName])
-		.lte("power_level", maxPowerLevel); // 5e-accurate max spell level (includes cantrips at 0)
-
-	const accessiblePowers = await filterRowsBySourcebookAccess(
-		powers || [],
-		(power) => power.source_book,
-		{ campaignId },
-	);
+	// Canonical static spells gated by job tag + max power level.
+	const { listCanonicalEntries } = await import("@/lib/canonicalCompendium");
+	const entries = await listCanonicalEntries("spells", undefined, {
+		campaignId,
+	});
+	const jobTag = (jobName ?? "").toLowerCase();
+	const accessiblePowers = entries.filter((power) => {
+		if ((power.power_level ?? power.level ?? 0) > maxPowerLevel) return false;
+		const tags = (power.tags || []).map((t) => t.toLowerCase());
+		return tags.length === 0 || tags.includes(jobTag);
+	});
 
 	if (accessiblePowers.length > 0) {
 		for (const power of accessiblePowers) {
+			const powerLevel = power.power_level ?? power.level ?? 0;
+			const castingTime =
+				typeof power.casting_time === "string" ? power.casting_time : null;
+			const range = typeof power.range === "string" ? power.range : null;
+			const duration =
+				typeof power.duration === "string" ? power.duration : null;
+			const higherLevels =
+				typeof (power as { higher_levels?: string }).higher_levels === "string"
+					? ((power as { higher_levels?: string }).higher_levels ?? null)
+					: null;
+
 			if (isLocalCharacterId(characterId)) {
 				addLocalPower(characterId, {
 					name: power.name,
-					power_level: power.power_level,
+					power_level: powerLevel,
 					source: `Job: ${jobName}`,
-					casting_time: power.casting_time || null,
-					range: power.range || null,
-					duration: power.duration || null,
-					concentration: power.concentration || false,
+					casting_time: castingTime,
+					range,
+					duration,
+					concentration: power.concentration ?? false,
 					description: power.description || null,
-					higher_levels: power.higher_levels || null,
-					is_prepared: power.power_level === 0, // Auto-prepare cantrips
+					higher_levels: higherLevels,
+					is_prepared: powerLevel === 0, // Auto-prepare cantrips
 					is_known: true,
 				});
 			} else {
 				await supabase.from("character_powers").insert({
 					character_id: characterId,
 					name: power.name,
-					power_level: power.power_level,
+					power_level: powerLevel,
 					source: `Job: ${jobName}`,
-					casting_time: power.casting_time || null,
-					range: power.range || null,
-					duration: power.duration || null,
-					concentration: power.concentration || false,
+					casting_time: castingTime,
+					range,
+					duration,
+					concentration: power.concentration ?? false,
 					description: power.description || null,
-					higher_levels: power.higher_levels || null,
-					is_prepared: power.power_level === 0,
+					higher_levels: higherLevels,
+					is_prepared: powerLevel === 0,
 					is_known: true,
 				});
 			}

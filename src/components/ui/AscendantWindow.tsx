@@ -28,6 +28,15 @@ interface AscendantWindowProps {
 	id?: string;
 	headerClassName?: string;
 	onHeaderClick?: () => void;
+	/**
+	 * Visual density of the panel chrome. `full` (default) keeps the complete
+	 * System-Ascendant theme (backdrop blur, scan lines, animated shadow pulse,
+	 * four large corner brackets). `compact` strips the heavy overlays and
+	 * uses a solid-ish background with only two small corner hints — intended
+	 * for nested stacked panels (VTT sidebars) where the full chrome hurts
+	 * legibility and causes corner brackets to overlap neighbours.
+	 */
+	density?: "full" | "compact";
 }
 
 export function AscendantWindow({
@@ -42,7 +51,9 @@ export function AscendantWindow({
 	id,
 	headerClassName,
 	onHeaderClick,
+	density = "full",
 }: AscendantWindowProps) {
+	const isCompactDensity = density === "compact";
 	const variantStyles = {
 		default:
 			"border-primary/40 from-primary/10 via-card/80 to-void-black/90 shadow-[0_8px_32px_rgba(0,0,0,0.6)]",
@@ -110,10 +121,12 @@ export function AscendantWindow({
 		<Component
 			id={id}
 			className={cn(
-				"relative bg-gradient-to-br border rounded-lg backdrop-blur-2xl transition-all duration-300 w-full max-w-full",
-				"sa-panel ascendant-panel hologram-flicker sw-root hover:border-open/50",
+				"relative border rounded-lg transition-all duration-300 w-full max-w-full",
+				isCompactDensity
+					? "bg-card/95 sw-root hover:border-open/50"
+					: "bg-gradient-to-br backdrop-blur-2xl sa-panel ascendant-panel hologram-flicker sw-root hover:border-open/50",
 				variantStyles[variant],
-				animated && "animate-shadow-pulse",
+				animated && !isCompactDensity && "animate-shadow-pulse",
 				id && "scroll-mt-4",
 				className,
 			)}
@@ -128,11 +141,18 @@ export function AscendantWindow({
 					}
 				: {})}
 		>
-			{/* Hex grid texture overlay */}
-			<div className="absolute inset-0 pointer-events-none hex-grid-overlay opacity-30" />
+			{/* Hex grid texture overlay (muted in compact density) */}
+			<div
+				className={cn(
+					"absolute inset-0 pointer-events-none hex-grid-overlay",
+					isCompactDensity ? "opacity-10" : "opacity-30",
+				)}
+			/>
 
-			{/* Holographic scan line effect */}
-			<div className="absolute inset-0 pointer-events-none overflow-hidden sw-scan-line" />
+			{/* Holographic scan line effect — hidden in compact density */}
+			{!isCompactDensity && (
+				<div className="absolute inset-0 pointer-events-none overflow-hidden sw-scan-line" />
+			)}
 
 			{/* Top glow line */}
 			<div className="absolute top-0 left-0 right-0 h-px sw-glow-top" />
@@ -144,8 +164,9 @@ export function AscendantWindow({
 			{title && (
 				<div
 					className={cn(
-						"px-4 py-2 border-b flex items-center gap-2 sw-title-bar w-full text-left",
-						"font-heading text-xs tracking-[0.2em] uppercase",
+						"border-b flex items-center gap-2 sw-title-bar w-full text-left",
+						"font-heading tracking-[0.2em] uppercase",
+						isCompactDensity ? "px-3 py-1.5 text-[11px]" : "px-4 py-2 text-xs",
 						headerClassName,
 					)}
 				>
@@ -155,12 +176,22 @@ export function AscendantWindow({
 							className="flex items-center gap-2 flex-1 text-left hover:text-primary transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-primary h-full -my-2 py-2"
 							onClick={onHeaderClick}
 						>
-							<span className="w-2 h-2 rotate-45 animate-pulse flex-shrink-0 sw-status-dot" />
+							<span
+								className={cn(
+									"w-2 h-2 rotate-45 flex-shrink-0 sw-status-dot",
+									!isCompactDensity && "animate-pulse",
+								)}
+							/>
 							<span className="truncate sw-title-text">{title}</span>
 						</button>
 					) : (
 						<>
-							<span className="w-2 h-2 rotate-45 animate-pulse flex-shrink-0 sw-status-dot" />
+							<span
+								className={cn(
+									"w-2 h-2 rotate-45 flex-shrink-0 sw-status-dot",
+									!isCompactDensity && "animate-pulse",
+								)}
+							/>
 							<span className="truncate sw-title-text flex-1">{title}</span>
 						</>
 					)}
@@ -172,7 +203,7 @@ export function AscendantWindow({
 			)}
 			<div
 				className={cn(
-					compact ? "p-3" : "p-4",
+					isCompactDensity ? "p-3" : compact ? "p-3" : "p-4",
 					"relative z-[1]",
 					contentClassName,
 				)}
@@ -180,11 +211,26 @@ export function AscendantWindow({
 				{children}
 			</div>
 
-			{/* Corner brackets — isekai HUD style */}
-			<CornerDecoration position="top-left" variant={variant} />
-			<CornerDecoration position="top-right" variant={variant} />
-			<CornerDecoration position="bottom-left" variant={variant} />
-			<CornerDecoration position="bottom-right" variant={variant} />
+			{/* Corner brackets — isekai HUD style.
+			    Compact density shows only two diagonal hints (smaller + lower
+			    opacity) so stacked panels don't bleed into neighbours. */}
+			{isCompactDensity ? (
+				<>
+					<CornerDecoration position="top-left" variant={variant} size="sm" />
+					<CornerDecoration
+						position="bottom-right"
+						variant={variant}
+						size="sm"
+					/>
+				</>
+			) : (
+				<>
+					<CornerDecoration position="top-left" variant={variant} />
+					<CornerDecoration position="top-right" variant={variant} />
+					<CornerDecoration position="bottom-left" variant={variant} />
+					<CornerDecoration position="bottom-right" variant={variant} />
+				</>
+			)}
 		</Component>
 	);
 }
@@ -206,9 +252,14 @@ interface CornerDecorationProps {
 		| "gate-s"
 		| "gate-ss"
 		| "gate-national";
+	size?: "sm" | "md";
 }
 
-function CornerDecoration({ position, variant }: CornerDecorationProps) {
+function CornerDecoration({
+	position,
+	variant,
+	size = "md",
+}: CornerDecorationProps) {
 	const positionClasses = {
 		"top-left": "top-0 left-0 border-l-2 border-t-2 rounded-tl",
 		"top-right": "top-0 right-0 border-r-2 border-t-2 rounded-tr",
@@ -239,7 +290,8 @@ function CornerDecoration({ position, variant }: CornerDecorationProps) {
 	return (
 		<div
 			className={cn(
-				"absolute w-4 h-4",
+				"absolute",
+				size === "sm" ? "w-2.5 h-2.5 opacity-60" : "w-4 h-4",
 				positionClasses[position],
 				variantClasses[variant],
 			)}

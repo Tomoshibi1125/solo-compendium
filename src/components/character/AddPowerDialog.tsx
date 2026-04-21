@@ -13,20 +13,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
-import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	getCantripsKnownLimit,
 	getSpellsKnownLimit,
 } from "@/lib/characterCalculations";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { getStaticSpells } from "@/lib/ProtocolDataManager";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
@@ -50,8 +48,6 @@ export function AddPowerDialog({
 	} = usePowers(characterId);
 	const { toast } = useToast();
 	const { data: character } = useCharacter(characterId);
-	const { data: characterCampaign } = useCampaignByCharacterId(characterId);
-	const campaignId = characterCampaign?.id ?? null;
 	const ascendantTools = useAscendantTools();
 	const { data: staticJobs } = useStaticJobs();
 	const jobObj = useMemo(
@@ -90,94 +86,56 @@ export function AddPowerDialog({
 				(character as CharacterExtended).regent_overlays,
 			)
 				? ((character as CharacterExtended).regent_overlays as string[])
-				: Array.isArray((character as CharacterExtended).regent_overlays)
-					? ((character as CharacterExtended).regent_overlays as string[])
-					: [];
+				: [];
 			let regentNames: string[] = [];
 			if (regentOverlayIds.length > 0) {
-				const canonicalResult = await supabase
-					.from("compendium_regents")
-					.select("name")
-					.in("id", regentOverlayIds);
-
-				let regentRows = canonicalResult.data as Array<{
-					name?: string | null;
-				}> | null;
-				if (canonicalResult.error) {
-					const fallbackResult = await supabase
-						.from("compendium_regents")
-						.select("name")
-						.in("id", regentOverlayIds);
-					if (fallbackResult.error) throw fallbackResult.error;
-					regentRows = fallbackResult.data as Array<{
-						name?: string | null;
-					}> | null;
-				}
-
-				regentNames = (regentRows || [])
-					.map((row) => row?.name)
+				const regents = await listCanonicalEntries("regents");
+				const overlaySet = new Set(regentOverlayIds);
+				regentNames = regents
+					.filter((r) => overlaySet.has(r.id))
+					.map((r) => r.name)
 					.filter(
 						(name): name is string =>
 							typeof name === "string" && name.length > 0,
 					);
 			}
 
-			const orParts: string[] = [];
-			const escapeValue = (value: string) => value.replaceAll('"', '\\"');
-
-			if (character.job) {
-				orParts.push(`job_names.cs.{"${escapeValue(character.job)}"}`);
-			}
-			if (character.path) {
-				orParts.push(`path_names.cs.{"${escapeValue(character.path)}"}`);
-			}
-			for (const regentName of regentNames) {
-				orParts.push(`regent_names.cs.{"${escapeValue(regentName)}"}`);
-			}
-
-			let query = supabase
-				.from("compendium_powers")
-				.select("*")
-				.or(orParts.join(","))
-				.lte("power_level", maxPowerLevel)
-				.limit(200);
-
+			// Canonical static source: resolve powers by job tags; path/regent names
+			// are matched via the spell's tags.
 			const trimmedQuery = searchQuery.trim();
-			if (trimmedQuery) {
-				const canonicalQuery = normalizeRegentSearch(trimmedQuery);
-				query = query.ilike("name", `%${canonicalQuery}%`);
-			}
+			const canonicalQuery = trimmedQuery
+				? normalizeRegentSearch(trimmedQuery).toLowerCase()
+				: "";
 
-			const { data, error } = await query;
-
-			// If Supabase returned results, use them
-			if (!error && data && data.length > 0) {
-				return filterRowsBySourcebookAccess(
-					data,
-					(power) => power.source_book,
-					{ campaignId },
-				);
-			}
-
-			// Static fallback: use ProtocolDataManager which has the full spell pack
 			const spells = getStaticSpells();
 			const jobNameLower = (character?.job ?? "").toLowerCase();
+			const pathNameLower = (character?.path ?? "").toLowerCase();
+			const regentNamesLower = regentNames.map((name) => name.toLowerCase());
 			const filtered = spells
 				.filter((spell) => {
 					// Level gate
 					if ((spell.level ?? 0) > maxPowerLevel) return false;
-					// Job filter matches if job is in the tags list (or allow all if none specified)
-					const tags = spell.tags || [];
+					// Name filter
+					if (
+						canonicalQuery &&
+						!spell.name.toLowerCase().includes(canonicalQuery)
+					) {
+						return false;
+					}
+					// Job/path/regent tag filter: allow if no tags or tag matches any
+					const tags = (spell.tags || []).map((c) => c.toLowerCase());
 					const matches =
 						tags.length === 0 ||
-						tags.some((c: string) => c.toLowerCase() === jobNameLower);
+						tags.includes(jobNameLower) ||
+						(pathNameLower && tags.includes(pathNameLower)) ||
+						regentNamesLower.some((regentName) => tags.includes(regentName));
 					if (!matches) return false;
 
 					return true;
 				})
 				.slice(0, 200);
 
-			return (filtered || []).map((spell) => ({
+			return filtered.map((spell) => ({
 				id: spell.id,
 				name: spell.name,
 				description: spell.description ?? "",
@@ -222,7 +180,7 @@ export function AddPowerDialog({
 				ritual: false,
 				save_ability: null,
 				target: null,
-			})) as unknown as NonNullable<typeof data>;
+			}));
 		},
 		enabled: open && !!character?.job,
 	});

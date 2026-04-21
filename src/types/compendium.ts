@@ -392,6 +392,10 @@ export interface CompendiumSigil extends BaseCompendiumItem {
 	rarity: string;
 	tags: string[];
 	effect_description?: string;
+	active_feature?: string;
+	effect_type?: string;
+	requires_level?: number;
+	inscription_difficulty?: string | number;
 	rune_type?: string;
 	rune_level?: number;
 	rune_category?: string;

@@ -30,13 +30,14 @@ import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { findCanonicalEntryByName } from "@/lib/canonicalCompendium";
 import { addTemporaryHP, applyResourceRest } from "@/lib/characterResources";
 import { normalizeCustomModifiers } from "@/lib/customModifiers";
 import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { autoLearnRunes } from "@/lib/runeAutomation";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 export function useCharacterPageModel() {
@@ -80,52 +81,32 @@ export function useCharacterPageModel() {
 	const _ddbEnhancements = useCharacterSheetEnhancements(character?.id || "");
 	const ascendantTools = useAscendantTools();
 
-	// Compendium Display Rows for Vernacular
+	// Compendium Display Rows for Vernacular — backed by canonical static.
+	const resolveDisplayRow = async (
+		type: "jobs" | "paths" | "backgrounds",
+		name: string | null | undefined,
+	) => {
+		if (!name) return null;
+		const entry = await findCanonicalEntryByName(type, name);
+		if (!entry) return null;
+		if (!(await isSourcebookAccessible(entry.source_book, { campaignId }))) {
+			return null;
+		}
+		return {
+			name: entry.name,
+			display_name: entry.display_name ?? null,
+		};
+	};
+
 	const { data: jobDisplayRow } = useQuery({
 		queryKey: ["compendium-display-job", character?.job, campaignId],
-		queryFn: async () => {
-			if (!character?.job) return null;
-			const { data } = await supabase
-				.from("compendium_jobs")
-				.select("name, display_name, source_book")
-				.eq("name", character.job)
-				.maybeSingle();
-			const accessibleRows = await filterRowsBySourcebookAccess(
-				data ? [data] : [],
-				(row) => row.source_book,
-				{ campaignId },
-			);
-			return accessibleRows[0]
-				? {
-						name: accessibleRows[0].name,
-						display_name: accessibleRows[0].display_name ?? null,
-					}
-				: null;
-		},
+		queryFn: () => resolveDisplayRow("jobs", character?.job),
 		enabled: isSupabaseConfigured && Boolean(character?.job) && !isLocal,
 	});
 
 	const { data: pathDisplayRow } = useQuery({
 		queryKey: ["compendium-display-path", character?.path, campaignId],
-		queryFn: async () => {
-			if (!character?.path) return null;
-			const { data } = await supabase
-				.from("compendium_job_paths")
-				.select("name, display_name, source_book")
-				.eq("name", character.path)
-				.maybeSingle();
-			const accessibleRows = await filterRowsBySourcebookAccess(
-				data ? [data] : [],
-				(row) => row.source_book,
-				{ campaignId },
-			);
-			return accessibleRows[0]
-				? {
-						name: accessibleRows[0].name,
-						display_name: accessibleRows[0].display_name ?? null,
-					}
-				: null;
-		},
+		queryFn: () => resolveDisplayRow("paths", character?.path),
 		enabled: isSupabaseConfigured && Boolean(character?.path) && !isLocal,
 	});
 
@@ -135,25 +116,7 @@ export function useCharacterPageModel() {
 			character?.background,
 			campaignId,
 		],
-		queryFn: async () => {
-			if (!character?.background) return null;
-			const { data } = await supabase
-				.from("compendium_backgrounds")
-				.select("name, display_name, source_book")
-				.eq("name", character.background)
-				.maybeSingle();
-			const accessibleRows = await filterRowsBySourcebookAccess(
-				data ? [data] : [],
-				(row) => row.source_book,
-				{ campaignId },
-			);
-			return accessibleRows[0]
-				? {
-						name: accessibleRows[0].name,
-						display_name: accessibleRows[0].display_name ?? null,
-					}
-				: null;
-		},
+		queryFn: () => resolveDisplayRow("backgrounds", character?.background),
 		enabled: isSupabaseConfigured && Boolean(character?.background) && !isLocal,
 	});
 

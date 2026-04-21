@@ -147,7 +147,7 @@ Moving between locations within the Restricted Zone uses the following travel ti
 3. **Bureau Patrol** — 4 Bureau soldiers. Verify credentials. Penalty if carrying contraband Runes.
 4. **Vermillion Scouts** — 2 Guild runners offer to sell information (100 Credits)
 5. **Awoko Graffiti** — Cult symbols painted on walls. DC 12 Investigation reveals a hidden cache (1d4 × 50 Credits)
-6. **Gate Fluctuation** — A nearby Gate pulses. All Ascendants make DC 10 Constitution save or gain 1 level of Mana Fatigue.
+6. **Gate Fluctuation** — A nearby Gate pulses. All Ascendants make DC 10 Vitality save or gain 1 level of Mana Fatigue.
 
 ## Gate Surge Mechanics
 
@@ -164,7 +164,7 @@ Every 3 in-game days, the Warden rolls on the **Gate Surge Table**:
 
 ## Mana Exposure
 
-The district has elevated ambient mana due to the Gate cluster. Long rests taken without mana shielding (available at Bureau HQ or Guild Hall) require a DC 8 Constitution save. On failure, the Ascendant has vivid nightmares of the Regent and gains no benefit from the rest.`,
+The district has elevated ambient mana due to the Gate cluster. Long rests taken without mana shielding (available at Bureau HQ or Guild Hall) require a DC 8 Vitality save. On failure, the Ascendant has vivid nightmares of the Regent and gains no benefit from the rest.`,
 	},
 	{
 		title: "Chapter 4: Factions & Reputation",
@@ -186,7 +186,7 @@ Three major factions operate within the Restricted Zone. Each tracks the party's
 
 > *"Order through regulation. Safety through strength."*
 
-**Leader**: Commander Park Jae-won (Level 8 Vanguard)
+**Leader**: Commander Park Jae-won (Level 8 Destroyer)
 **Base**: Bureau District Headquarters (modern office building, 4th floor converted to operations center)
 **Goal**: Clear all Gates by the book, contain the Regent threat, maintain civilian safety
 
@@ -246,7 +246,7 @@ Three major factions operate within the Restricted Zone. Each tracks the party's
 
 > *"The Regent offers Ascension beyond the system. True power has no Rank."*
 
-**Leader**: High Priestess Nyx (Level 9 Void Priestess)
+**Leader**: The Hollow Mother (Level 9 Void Priestess)
 **Base**: Mobile — currently operating from inside the Ashen Vault Gate (C-Rank)
 **Goal**: Accelerate the Regent's manifestation. They believe the Regent will grant them power beyond the Rank system.
 
@@ -259,7 +259,7 @@ Three major factions operate within the Restricted Zone. Each tracks the party's
 
 ### Cult NPC Dialogue
 
-**High Priestess Nyx** (encountered in the Ashen Vault):
+**The Hollow Mother** (encountered in the Ashen Vault):
 > *"You call yourselves Ascendants? You are leashed dogs begging the Bureau for scraps of power. The Regent does not rank. The Regent does not limit. When it manifests, those who served will rise. Those who resisted will burn."*`,
 	},
 	{
@@ -303,7 +303,7 @@ The Bureau has commandeered the fourth and fifth floors of the **Yongsan Federal
 ### 5F — Barracks & Rest Area
 - **Mana-Shielded Quarters**: Long rests here always succeed (no mana exposure saves).
 - **Mess Hall**: Corporal Deng cooks surprisingly good food. Morale bonus: +1 to first ability check after resting here.
-- **Medical Bay**: Dr. Voss's lab. Heals all HP and removes conditions for free, but she'll ask for Anomaly tissue samples.
+- **Medical Bay**: Dr. Hayashi's lab. Heals all HP and removes conditions for free, but she'll ask for Anomaly tissue samples.
 
 ### 5F — Communications Room
 - **Relay Officer Reyes**: Maintains contact with Bureau Central Command outside the Restricted Zone.
@@ -312,17 +312,17 @@ The Bureau has commandeered the fourth and fifth floors of the **Yongsan Federal
 ## Key NPCs Present
 
 ### Commander Park Jae-won
-**Level 8 Vanguard** | Bureau Faction Leader
+**Level 8 Destroyer** | Bureau Faction Leader
 - Gives main quest assignments (Gate clears in priority order)
 - Requires Trusted reputation to discuss the Regent intelligence
 - **Personal Quest**: Find the missing Strike Team Seven (see Side Quests)
 
 ### Quartermaster Lin Mei-hua
-**Level 4 Artificer** | Equipment & Supplies
+**Level 4 Technomancer** | Equipment & Supplies
 - Joins the party if the Vermillion Bazaar is destroyed or conquered
 - Has a hidden stash of B-Rank equipment she's saving "for emergencies"
 
-### Dr. Elara Voss
+### Dr. Serin Hayashi
 **Level 6 Scholar** | Researcher
 - Believes the Regent can be communicated with, not just destroyed
 - Trades Anomaly tissue samples for free healing and mana analysis
@@ -379,10 +379,10 @@ Active bounties posted by Guildmaster Orin:
 **Level 7 Assassin** | Guild Enforcer
 - Absorbed a haste-Rune — moves at twice normal speed
 - Partner was killed by the Awoko Cult. Wants revenge.
-- **Recruitment**: Help eliminate High Priestess Nyx
+- **Recruitment**: Help eliminate The Hollow Mother
 
 ### Mother Rust
-**Level 5 Alchemist** | Potion Brewer
+**Level 5 Technomancer** | Potion Brewer
 - Disgraced university chemist. Working on a compound to force-close Gates.
 - **Services**: Brews custom potions from Anomaly parts. 200 Credits per potion.
 - **Recruitment**: Bring a vial of 'living mana' from the Botanical District Gate
@@ -418,7 +418,7 @@ Between Gate raids, the Ascendants exist in a strange limbo — a modern city di
 Between raids, each Ascendant can perform **one downtime activity** per day:
 
 ### Rest & Recovery
-Take a long rest at Bureau HQ (mana-shielded, guaranteed) or sleep rough in an abandoned building (DC 8 Constitution save against mana nightmares).
+Take a long rest at Bureau HQ (mana-shielded, guaranteed) or sleep rough in an abandoned building (DC 8 Vitality save against mana nightmares).
 
 ### Shop
 Visit Bureau Quartermaster or the Vermillion Bazaar. See Chapters 5 and 6 for stock.

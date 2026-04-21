@@ -13,10 +13,24 @@ import {
 import type { Database } from "@/integrations/supabase/types";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
+interface BackgroundFeature {
+	name: string;
+	description?: string | null;
+}
+
 type Background =
 	Database["public"]["Tables"]["compendium_backgrounds"]["Row"] & {
 		display_name?: string | null;
 	};
+
+const isBackgroundFeature = (feature: unknown): feature is BackgroundFeature =>
+	typeof feature === "object" &&
+	feature !== null &&
+	"name" in feature &&
+	typeof feature.name === "string" &&
+	(!("description" in feature) ||
+		feature.description == null ||
+		typeof feature.description === "string");
 
 interface BackgroundStepProps {
 	selectedBackground: string;
@@ -32,6 +46,18 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 	const selectedBackgroundData = allBackgrounds.find(
 		(b) => b.id === selectedBackground,
 	);
+	const backgroundLanguages: string[] = Array.isArray(
+		selectedBackgroundData?.languages,
+	)
+		? (selectedBackgroundData.languages as unknown[]).filter(
+				(language): language is string => typeof language === "string",
+			)
+		: [];
+	const backgroundFeatures: BackgroundFeature[] = Array.isArray(
+		selectedBackgroundData?.features,
+	)
+		? (selectedBackgroundData.features as unknown[]).filter(isBackgroundFeature)
+		: [];
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -123,34 +149,33 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 										</div>
 									)}
 
-								{(selectedBackgroundData as any).languages &&
-									((selectedBackgroundData as any).languages as string[]).length > 0 && (
-										<div className="space-y-1">
-											<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
-												Linguistic Bindings
-											</Label>
-											<div className="flex flex-wrap gap-2 mt-1">
-												{((selectedBackgroundData as any).languages as string[]).map((lang: string) => (
-													<Badge
-														key={`lang-${lang}`}
-														variant="secondary"
-														className="text-[10px] h-5 bg-primary/10 border-primary/20"
-													>
-														{formatRegentVernacular(lang)}
-													</Badge>
-												))}
-											</div>
+								{backgroundLanguages.length > 0 && (
+									<div className="space-y-1">
+										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Linguistic Bindings
+										</Label>
+										<div className="flex flex-wrap gap-2 mt-1">
+											{backgroundLanguages.map((lang) => (
+												<Badge
+													key={`lang-${lang}`}
+													variant="secondary"
+													className="text-[10px] h-5 bg-primary/10 border-primary/20"
+												>
+													{formatRegentVernacular(lang)}
+												</Badge>
+											))}
 										</div>
-									)}
+									</div>
+								)}
 
 								{/* Starting Wealth / Credits */}
-								{(selectedBackgroundData as any).starting_credits !== undefined && (
+								{selectedBackgroundData.starting_credits != null && (
 									<div className="space-y-1">
 										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
 											Starting Capital
 										</Label>
 										<div className="text-[11px] text-primary/80 font-semibold mt-1">
-											{(selectedBackgroundData as any).starting_credits} Credits
+											{selectedBackgroundData.starting_credits} Credits
 										</div>
 									</div>
 								)}
@@ -163,7 +188,9 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 												Starting Inventory Pack
 											</Label>
 											<div className="text-[11px] text-muted-foreground italic leading-tight mt-1 pl-2 border-l border-primary/20 py-1">
-												{Array.isArray(selectedBackgroundData.starting_equipment)
+												{Array.isArray(
+													selectedBackgroundData.starting_equipment,
+												)
 													? selectedBackgroundData.starting_equipment.join(", ")
 													: selectedBackgroundData.starting_equipment}
 											</div>
@@ -182,14 +209,17 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 											</AscendantText>
 										</div>
 									)}
-									
-									{(selectedBackgroundData as any).features && (selectedBackgroundData as any).features.length > 0 && (
+
+									{backgroundFeatures.length > 0 && (
 										<div className="space-y-3">
 											<Label className="text-[10px] font-heading font-semibold text-primary uppercase tracking-wider">
 												Background Features
 											</Label>
-											{(selectedBackgroundData as any).features.map((f: any, i: number) => (
-												<div key={i} className="p-3 bg-black/40 rounded border border-primary/10">
+											{backgroundFeatures.map((f) => (
+												<div
+													key={f.name}
+													className="p-3 bg-black/40 rounded border border-primary/10"
+												>
 													<Label className="text-[10px] uppercase tracking-tighter text-primary/80 font-bold">
 														{f.name}
 													</Label>

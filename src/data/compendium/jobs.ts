@@ -177,7 +177,9 @@ export const jobs: Job[] = [
 		speed: 30,
 		languages: ["English", "Korean"],
 		darkvision: 60,
-		specialSenses: ["Structural Weakness Sight (passively perceive HP percentage and AC of structures and objects within 30 ft)"],
+		specialSenses: [
+			"Structural Weakness Sight (passively perceive HP percentage and AC of structures and objects within 30 ft)",
+		],
 		damage_resistances: [
 			"bludgeoning from nonmagical attacks (while conscious)",
 		],
@@ -643,7 +645,9 @@ export const jobs: Job[] = [
 		speed: 35,
 		languages: ["English", "Umbral Cant"],
 		darkvision: 120,
-		specialSenses: ["Phase Sight (detect motion through walls up to 5 ft thick; always know when being observed)"],
+		specialSenses: [
+			"Phase Sight (detect motion through walls up to 5 ft thick; always know when being observed)",
+		],
 		condition_immunities: ["magical sleep"],
 		startingEquipment: [
 			["Rapier", "Shortsword"],
@@ -1160,17 +1164,7 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
-			spellSlots: {
-				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
-				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
-				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
-				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-			},
+			spellSlots: FULL_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -1362,7 +1356,10 @@ export const jobs: Job[] = [
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Ancient Greek"],
-		specialSenses: ["Blindsight 10 ft (psychic field)", "Emotion Sense (passively detect emotional states of creatures within 30 ft)"],
+		specialSenses: [
+			"Blindsight 10 ft (psychic field)",
+			"Emotion Sense (passively detect emotional states of creatures within 30 ft)",
+		],
 		damage_resistances: ["force"],
 		startingEquipment: [
 			["Light Crossbow", "Dagger"],
@@ -1384,17 +1381,7 @@ export const jobs: Job[] = [
 			spellsKnown: [
 				2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15,
 			],
-			spellSlots: {
-				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
-				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
-				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
-				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-			},
+			spellSlots: FULL_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -1604,17 +1591,7 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
-			spellSlots: {
-				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
-				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
-				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
-				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-			},
+			spellSlots: FULL_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -1820,7 +1797,9 @@ export const jobs: Job[] = [
 		speed: 30,
 		languages: ["English", "Gate Speak"],
 		darkvision: 60,
-		specialSenses: ["Gate Resonance (sense the location of open gates and anomaly concentrations within 1 mile)"],
+		specialSenses: [
+			"Gate Resonance (sense the location of open gates and anomaly concentrations within 1 mile)",
+		],
 		damage_resistances: ["poison"],
 		startingEquipment: [
 			["Shield", "Spear"],
@@ -1838,17 +1817,7 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
 			],
-			spellSlots: {
-				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
-				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
-				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
-				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-			},
+			spellSlots: FULL_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -2040,7 +2009,9 @@ export const jobs: Job[] = [
 		speed: 35,
 		languages: ["English", "Celestial"],
 		darkvision: 60,
-		specialSenses: ["Celestial Perception (sense the presence of celestials, fiends, and undead within 60 ft)"],
+		specialSenses: [
+			"Celestial Perception (sense the presence of celestials, fiends, and undead within 60 ft)",
+		],
 		damage_resistances: ["necrotic", "radiant"],
 		startingEquipment: [
 			["Mace", "Warhammer"],
@@ -2060,17 +2031,7 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
 			],
-			spellSlots: {
-				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
-				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
-				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
-				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-			},
+			spellSlots: FULL_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -2286,13 +2247,7 @@ export const jobs: Job[] = [
 			spellsKnown: [
 				2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15,
 			],
-			spellSlots: {
-				"1st": [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				"2nd": [0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				"3rd": [0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				"4th": [0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4],
-			},
+			spellSlots: PACT_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -2512,13 +2467,7 @@ export const jobs: Job[] = [
 			spellsKnown: [
 				0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
 			],
-			spellSlots: {
-				"1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2],
-			},
+			spellSlots: HALF_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -2736,7 +2685,9 @@ export const jobs: Job[] = [
 		speed: 30,
 		languages: ["English", "Ancient Hebrew"],
 		darkvision: 60,
-		specialSenses: ["Divine Sense (detect the presence of celestials, fiends, and undead within 60 ft; 1/short rest)"],
+		specialSenses: [
+			"Divine Sense (detect the presence of celestials, fiends, and undead within 60 ft; 1/short rest)",
+		],
 		damage_resistances: ["radiant"],
 		startingEquipment: [
 			["Longsword", "Battleaxe"],
@@ -2756,13 +2707,7 @@ export const jobs: Job[] = [
 		spellcasting: {
 			ability: "Presence",
 			focus: "Absolute focus",
-			spellSlots: {
-				"1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2],
-			},
+			spellSlots: HALF_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -2994,7 +2939,10 @@ export const jobs: Job[] = [
 		languages: ["English", "Arabic"],
 		darkvision: 60,
 		damage_resistances: ["lightning"],
-		specialSenses: ["Mandate Vision (identify magic items by touch, 1 minute)", "Electromagnetic Vision (perceive heat signatures and UV spectrum within 30 ft)"],
+		specialSenses: [
+			"Mandate Vision (identify magic items by touch, 1 minute)",
+			"Electromagnetic Vision (perceive heat signatures and UV spectrum within 30 ft)",
+		],
 		startingEquipment: [
 			["Handaxe", "Dagger"],
 			["Handaxe", "Dagger"],
@@ -3013,13 +2961,7 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4,
 			],
-			spellSlots: {
-				"1st": [0, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2],
-			},
+			spellSlots: HALF_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{
@@ -3272,7 +3214,9 @@ export const jobs: Job[] = [
 		speed: 35,
 		languages: ["English", "One additional Earth language of choice"],
 		darkvision: 60,
-		specialSenses: ["Crowd Reading (passively sense the emotional state of groups within 30 ft)"],
+		specialSenses: [
+			"Crowd Reading (passively sense the emotional state of groups within 30 ft)",
+		],
 		startingEquipment: [
 			["Rapier", "Longsword", "Dagger"],
 			["Diplomat's Pack", "Entertainer's Pack"],
@@ -3293,17 +3237,7 @@ export const jobs: Job[] = [
 				4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22,
 				22,
 			],
-			spellSlots: {
-				"1st": [2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-				"2nd": [0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"3rd": [0, 0, 0, 0, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"4th": [0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-				"5th": [0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3],
-				"6th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2],
-				"7th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2],
-				"8th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-				"9th": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
-			},
+			spellSlots: FULL_CASTER_SLOTS,
 		},
 		classFeatures: [
 			{

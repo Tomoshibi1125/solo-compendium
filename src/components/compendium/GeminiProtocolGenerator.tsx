@@ -35,16 +35,15 @@ import {
 	useCharacterSovereign,
 	useSaveSovereign,
 } from "@/hooks/useSavedSovereigns";
-import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	calculateTotalCombinations,
 	type GeneratedSovereign,
 	generateSovereign,
 	generateSovereignWithAI,
 } from "@/lib/geminiProtocol";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
 	REGENT_LABEL,
@@ -83,110 +82,77 @@ export function GeminiProtocolGenerator() {
 	const recordRoll = useRecordRoll();
 	const ascendantTools = useAscendantTools();
 
-	// Fetch all jobs
+	// Fetch all jobs from canonical static.
 	const { data: jobs = [], isLoading: jobsLoading } = useQuery({
 		queryKey: ["gemini-jobs", campaignId],
 		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("compendium_jobs")
-				.select("*")
-				.order("name");
-			if (error) throw error;
-
-			return filterRowsBySourcebookAccess(
-				data || [],
-				(job) => job.source_book,
-				{ campaignId },
-			);
+			const entries = await listCanonicalEntries("jobs", undefined, {
+				campaignId,
+			});
+			return entries.slice().sort((a, b) => a.name.localeCompare(b.name));
 		},
 	});
 
-	// Fetch paths for selected job
+	// Fetch paths for selected job from canonical static. We filter by
+	// the selected job's canonical name so the UI works regardless of id shape.
+	const selectedJobName = useMemo(
+		() => jobs.find((j) => j.id === selectedJob)?.name ?? null,
+		[jobs, selectedJob],
+	);
 	const { data: paths = [], isLoading: pathsLoading } = useQuery({
-		queryKey: ["gemini-paths", selectedJob, campaignId],
+		queryKey: ["gemini-paths", selectedJob, selectedJobName, campaignId],
 		queryFn: async () => {
-			if (!selectedJob) return [];
-			const { data, error } = await supabase
-				.from("compendium_job_paths")
-				.select("*")
-				.eq("job_id", selectedJob)
-				.order("name");
-			if (error) throw error;
-
-			return filterRowsBySourcebookAccess(
-				data || [],
-				(path) => path.source_book,
-				{ campaignId },
-			);
+			if (!selectedJob || !selectedJobName) return [];
+			const entries = await listCanonicalEntries("paths", undefined, {
+				campaignId,
+			});
+			const jobNameKey = selectedJobName.trim().toLowerCase();
+			return entries
+				.filter((p) => {
+					const linked =
+						(p as { jobName?: string | null; job_name?: string | null })
+							.jobName ??
+						(p as { job_name?: string | null }).job_name ??
+						p.job_name ??
+						null;
+					return (
+						typeof linked === "string" &&
+						linked.trim().toLowerCase() === jobNameKey
+					);
+				})
+				.sort((a, b) => a.name.localeCompare(b.name));
 		},
-		enabled: !!selectedJob,
+		enabled: !!selectedJob && !!selectedJobName,
 	});
 
 	const { data: allPaths = [], isLoading: allPathsLoading } = useQuery({
 		queryKey: ["gemini-paths-all", campaignId],
 		queryFn: async () => {
-			const { data, error } = await supabase
-				.from("compendium_job_paths")
-				.select("*")
-				.order("name");
-			if (error) throw error;
-
-			return filterRowsBySourcebookAccess(
-				data || [],
-				(path) => path.source_book,
-				{ campaignId },
-			);
+			const entries = await listCanonicalEntries("paths", undefined, {
+				campaignId,
+			});
+			return entries.slice().sort((a, b) => a.name.localeCompare(b.name));
 		},
 	});
 
-	// Fetch all regents
+	// Fetch all regents from canonical static.
 	const { data: regents = [], isLoading: regentsLoading } = useQuery<
 		RegentOption[]
 	>({
 		queryKey: ["gemini-regents", campaignId],
 		queryFn: async () => {
-			const canonicalResult = await supabase
-				.from("compendium_regents")
-				.select("*")
-				.order("name");
-
-			if (!canonicalResult.data || canonicalResult.error) {
-				const fallbackResult = await supabase
-					.from("compendium_regents")
-					.select("*")
-					.order("name");
-				if (fallbackResult.error) throw fallbackResult.error;
-
-				const fallbackData: RegentOption[] = (fallbackResult.data || []).map(
-					(r) => ({
-						...r,
-						title: r.title || null,
-						theme: r.theme || null,
-						source_book: r.source_book || null,
-					}),
-				);
-
-				return filterRowsBySourcebookAccess(
-					fallbackData,
-					(regent) => regent.source_book,
-					{
-						campaignId,
-					},
-				);
-			}
-
-			const data: RegentOption[] = canonicalResult.data.map((r) => ({
-				...r,
-				title: r.title || null,
-				theme: r.theme || null,
-				source_book: r.source_book || null,
-			}));
-
-			return filterRowsBySourcebookAccess(
-				data,
-				(regent) => regent.source_book,
-				{ campaignId },
-			);
+			const entries = await listCanonicalEntries("regents", undefined, {
+				campaignId,
+			});
+			return entries
+				.slice()
+				.sort((a, b) => a.name.localeCompare(b.name))
+				.map((r) => ({
+					...r,
+					title: r.title || null,
+					theme: r.theme || null,
+					source_book: r.source_book || null,
+				})) as RegentOption[];
 		},
 	});
 
@@ -248,8 +214,20 @@ export function GeminiProtocolGenerator() {
 				(path) => normalizePath(path.name) === desired,
 			);
 			if (match) {
-				if (selectedJob !== match.job_id) {
-					setSelectedJob(match.job_id);
+				const linkedJobName =
+					(match as { jobName?: string | null; job_name?: string | null })
+						.jobName ??
+					match.job_name ??
+					null;
+				const matchedJob = linkedJobName
+					? jobs.find(
+							(j) =>
+								j.name.trim().toLowerCase() ===
+								linkedJobName.trim().toLowerCase(),
+						)
+					: null;
+				if (matchedJob && selectedJob !== matchedJob.id) {
+					setSelectedJob(matchedJob.id);
 				}
 				if (selectedPath !== match.id) {
 					setSelectedPath(match.id);
@@ -261,7 +239,15 @@ export function GeminiProtocolGenerator() {
 		if (selectedJob && !selectedPath && paths.length > 0) {
 			setSelectedPath(paths[0].id);
 		}
-	}, [activeCharacter, allPaths, autoMode, paths, selectedJob, selectedPath]);
+	}, [
+		activeCharacter,
+		allPaths,
+		autoMode,
+		jobs,
+		paths,
+		selectedJob,
+		selectedPath,
+	]);
 
 	const selectedJobEntry = useMemo(
 		() => jobs.find((job) => job.id === selectedJob) || null,

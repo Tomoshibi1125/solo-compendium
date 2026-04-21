@@ -3,8 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumPath } from "@/types/compendium";
@@ -30,49 +29,31 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 	const [jobName, setJobName] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (!isSupabaseConfigured) return;
 		let isCancelled = false;
 
 		const loadPathData = async () => {
+			// Features come directly from the canonical static path.
+			const staticFeatures: PathFeature[] = (data.features || [])
+				.slice()
+				.sort((a, b) => (a.level ?? 0) - (b.level ?? 0))
+				.map((feature, idx) => ({
+					id: `${data.id}-path-feat-${idx}`,
+					name: feature.name,
+					description: feature.description,
+					level: feature.level,
+				}));
+
+			if (!isCancelled) setFeatures(staticFeatures);
+
 			const jobId = data.job_id;
-
-			const featuresRes = await supabase
-				.from("compendium_job_features")
-				.select(
-					"id, name, display_name, description, level, action_type, recharge, uses_formula, prerequisites",
-				)
-				.eq("path_id", data.id)
-				.eq("is_path_feature", true)
-				.order("level");
-
-			const accessibleFeatures = await filterRowsBySourcebookAccess(
-				(featuresRes.data as Array<
-					PathFeature & { source_name?: string | null }
-				>) || [],
-				(feature) => feature.source_name,
-			);
-
-			if (!isCancelled) {
-				setFeatures(accessibleFeatures);
-			}
-
 			if (!jobName && jobId) {
-				const { data: jobData } = await supabase
-					.from("compendium_jobs")
-					.select("name, display_name, source_book")
-					.eq("id", jobId)
-					.maybeSingle();
-
-				const accessibleJobs = await filterRowsBySourcebookAccess(
-					jobData ? [jobData] : [],
-					(job) => job.source_book,
+				const canonicalJobs = await listCanonicalEntries("jobs");
+				const jobIdKey = jobId.trim().toLowerCase();
+				const match = canonicalJobs.find(
+					(j) => j.id.trim().toLowerCase() === jobIdKey,
 				);
-				const accessibleJob = accessibleJobs[0];
-
 				if (!isCancelled) {
-					setJobName(
-						accessibleJob?.display_name || accessibleJob?.name || null,
-					);
+					setJobName(match?.display_name || match?.name || null);
 				}
 			}
 		};
@@ -82,7 +63,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 		return () => {
 			isCancelled = true;
 		};
-	}, [data.id, data.job_id, jobName]);
+	}, [data.id, data.job_id, data.features, jobName]);
 
 	const abilityFeatures = useMemo(
 		() =>

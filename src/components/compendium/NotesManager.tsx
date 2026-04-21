@@ -15,6 +15,9 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+// NOTE: compendium_notes is an inherently dynamic table — it stores user-authored
+// notes attached to compendium entries. It is NOT built-in content and is
+// correctly served by Supabase rather than the canonical static compendium.
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";

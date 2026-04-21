@@ -10,15 +10,11 @@ import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useRecentItems } from "@/hooks/useRecentItems";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types";
-import { normalizeSearchText } from "@/lib/fullTextSearch";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { error as logError } from "@/lib/logger";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
-import {
-	formatRegentVernacular,
-	normalizeRegentSearch,
-} from "@/lib/vernacular";
+import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface SearchResult {
 	id: string;
@@ -28,13 +24,29 @@ interface SearchResult {
 	href: string;
 }
 
-type SearchRow = {
-	id: string;
-	name: string;
-	display_name?: string | null;
-	description?: string | null;
-	source_book?: string | null;
-};
+const canonicalSearchTypes = [
+	"jobs",
+	"paths",
+	"powers",
+	"runes",
+	"relics",
+	"anomalies",
+	"backgrounds",
+	"conditions",
+	"regents",
+	"feats",
+	"skills",
+	"equipment",
+	"shadow-soldiers",
+	"items",
+	"spells",
+	"techniques",
+	"artifacts",
+	"locations",
+	"sigils",
+	"tattoos",
+	"pantheon",
+] as const;
 
 export function GlobalSearch({ className }: { className?: string }) {
 	const navigate = useNavigate();
@@ -62,141 +74,50 @@ export function GlobalSearch({ className }: { className?: string }) {
 			if (!debouncedQuery.trim()) return [];
 
 			const allResults: SearchResult[] = [];
-			const canonicalQuery = normalizeRegentSearch(debouncedQuery);
-			const searchTerms =
-				canonicalQuery === debouncedQuery
-					? [debouncedQuery]
-					: [debouncedQuery, canonicalQuery];
 
-			// Search across all compendium types
-			const tables = [
-				{ table: "compendium_jobs", type: "jobs", hasSourceBook: true },
-				{ table: "compendium_job_paths", type: "paths", hasSourceBook: true },
-				{ table: "compendium_powers", type: "powers", hasSourceBook: true },
-				{ table: "compendium_runes", type: "runes", hasSourceBook: true },
-				{ table: "compendium_relics", type: "relics", hasSourceBook: true },
-				{
-					table: "compendium_equipment",
-					type: "equipment",
-					hasSourceBook: true,
-				},
-				{
-					table: "compendium_Anomalies",
-					type: "anomalies",
-					hasSourceBook: true,
-				},
-				{ table: "compendium_regents", type: "regents", hasSourceBook: true },
-				{
-					table: "compendium_sovereigns",
-					type: "sovereigns",
-					hasSourceBook: true,
-				},
-				{
-					table: "compendium_backgrounds",
-					type: "backgrounds",
-					hasSourceBook: true,
-				},
-				{
-					table: "compendium_conditions",
-					type: "conditions",
-					hasSourceBook: false,
-				},
-				{
-					table: "compendium_shadow_soldiers",
-					type: "shadow-soldiers",
-					hasSourceBook: false,
-				},
-				{ table: "compendium_feats", type: "feats", hasSourceBook: true },
-				{ table: "compendium_skills", type: "skills", hasSourceBook: true },
-				{ table: "compendium_spells", type: "spells", hasSourceBook: true },
-				{
-					table: "compendium_techniques",
-					type: "techniques",
-					hasSourceBook: true,
-				},
-				{
-					table: "compendium_artifacts",
-					type: "artifacts",
-					hasSourceBook: true,
-				},
-				{
-					table: "compendium_locations",
-					type: "locations",
-					hasSourceBook: true,
-				},
-				{ table: "compendium_sigils", type: "sigils", hasSourceBook: true },
-				{ table: "compendium_tattoos", type: "tattoos", hasSourceBook: true },
-				{ table: "compendium_pantheon", type: "pantheon", hasSourceBook: true },
-				{ table: "compendium_items", type: "items", hasSourceBook: true },
-			] as const satisfies ReadonlyArray<{
-				table: keyof Database["public"]["Tables"];
-				type: string;
-				hasSourceBook: boolean;
-			}>;
+			const canonicalResults = await Promise.all(
+				canonicalSearchTypes.map(async (type) => {
+					const entries = await listCanonicalEntries(type, debouncedQuery);
+					return entries.slice(0, 5).map((entry) => ({
+						id: entry.id,
+						name: entry.display_name || entry.name,
+						type,
+						description: entry.description || undefined,
+						href: `/compendium/${type}/${entry.id}`,
+					}));
+				}),
+			);
 
-			for (const { table, type, hasSourceBook } of tables) {
-				try {
-					const preparedQuery = normalizeSearchText(debouncedQuery);
-					if (!preparedQuery) {
-						continue;
-					}
+			allResults.push(...canonicalResults.flat());
 
-					const ilikeFilters = searchTerms
-						.map(
-							(term) =>
-								`name.ilike.%${term}%,display_name.ilike.%${term}%,description.ilike.%${term}%`,
-						)
-						.join(",");
-					const selectColumns = hasSourceBook
-						? "id, name, display_name, description, source_book"
-						: "id, name, display_name, description";
+			try {
+				const { data: sovereignData, error: sovereignError } = await supabase
+					.from("compendium_sovereigns")
+					.select("id, name, display_name, description, source_book")
+					.or(
+						`name.ilike.%${debouncedQuery}%,display_name.ilike.%${debouncedQuery}%,description.ilike.%${debouncedQuery}%`,
+					)
+					.limit(5);
 
-					const { data: ilikeData, error: ilikeError } = await supabase
-						.from(table)
-						.select(selectColumns)
-						.or(ilikeFilters)
-						.limit(5);
-
-					if (ilikeError) {
-						logError(`Error searching ${table}:`, ilikeError);
-						continue;
-					}
-
-					if (!ilikeData || !Array.isArray(ilikeData)) {
-						continue;
-					}
-
-					const items = ilikeData as unknown[];
-					const validItems = items.filter((item): item is SearchRow => {
-						if (typeof item !== "object" || item === null) return false;
-						const obj = item as Record<string, unknown>;
-						if (!("id" in obj) || !("name" in obj)) return false;
-						if (typeof obj.id !== "string" || typeof obj.name !== "string")
-							return false;
-						return true;
-					});
-
-					const filteredItems = hasSourceBook
-						? await filterRowsBySourcebookAccess(
-								validItems,
-								(item) => item.source_book,
-							)
-						: validItems;
-
-					if (filteredItems.length > 0) {
-						allResults.push(
-							...filteredItems.map((item: SearchRow) => ({
-								id: item.id,
-								name: item.display_name || item.name,
-								type,
-								description: item.description || undefined,
-								href: `/compendium/${type}/${item.id}`,
-							})),
-						);
-					}
-				} catch (error) {
-					logError(`Error searching ${table}:`, error);
+				if (sovereignError) {
+					logError("Error searching compendium_sovereigns:", sovereignError);
+				} else if (Array.isArray(sovereignData)) {
+					const filteredSovereigns = await filterRowsBySourcebookAccess(
+						sovereignData,
+						(item) => item.source_book,
+					);
+					allResults.push(
+						...filteredSovereigns.map((item) => ({
+							id: item.id,
+							name: item.display_name || item.name,
+							type: "sovereigns",
+							description: item.description || undefined,
+							href: `/compendium/sovereigns/${item.id}`,
+						})),
+					);
 				}
+			} catch (error) {
+				logError("Error searching sovereigns:", error);
 			}
 
 			// Search characters
@@ -221,7 +142,15 @@ export function GlobalSearch({ className }: { className?: string }) {
 				logError("Error searching characters:", error);
 			}
 
-			return allResults.slice(0, 10);
+			const dedupedResults = new Map<string, SearchResult>();
+			for (const result of allResults) {
+				const key = `${result.type}:${result.id}`;
+				if (!dedupedResults.has(key)) {
+					dedupedResults.set(key, result);
+				}
+			}
+
+			return Array.from(dedupedResults.values()).slice(0, 10);
 		},
 		enabled: debouncedQuery.length > 0,
 	});

@@ -109,14 +109,14 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 	const mechanics = ext.mechanics as Record<string, string> | undefined;
 	const limitations = ext.limitations as Record<string, unknown> | undefined;
 
-	const abilityScores = [
+	const abilityScores: { label: string; value: number }[] = [
 		{ label: "STR", value: str },
 		{ label: "AGI", value: agi },
 		{ label: "VIT", value: vit },
 		{ label: "INT", value: int },
 		{ label: "SEN", value: sense },
 		{ label: "PRE", value: pre },
-	].filter((a) => a.value != null);
+	].filter((a): a is { label: string; value: number } => a.value != null);
 
 	return (
 		<div className="space-y-6">
@@ -237,7 +237,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 									{ability.value}
 								</div>
 								<div className="text-xs text-cyan">
-									{getAbilityMod(ability.value!)}
+									{getAbilityMod(ability.value)}
 								</div>
 							</div>
 						))}

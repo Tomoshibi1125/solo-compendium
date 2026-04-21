@@ -97,6 +97,11 @@ export default function FeatureChoicesAdmin() {
 		[search],
 	);
 
+	// NOTE: FeatureChoicesAdmin is an admin-only CRUD UI for the DB-native
+	// compendium_feature_choice_groups/_options schema. The choice schema uses
+	// compendium_jobs.id and compendium_job_features.id as foreign keys, so these
+	// reads intentionally target Supabase even though runtime built-in content
+	// resolution is canonical-static elsewhere in the app.
 	const { data: jobs = [] } = useQuery({
 		queryKey: ["admin-choice-jobs"],
 		queryFn: async () => {

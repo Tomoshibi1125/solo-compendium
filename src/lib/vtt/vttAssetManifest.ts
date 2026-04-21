@@ -1165,17 +1165,21 @@ export type SfxEntry =
 
 export const SFX_ASSET_MAP: Record<string, SfxEntry> = {
 	// Quick-sound panel (WardenToolsPanel quick sounds)
-	"door-creak":   { type: "mood", mood: "dungeon-exploration" },
-	"sword-clash":  { type: "mood", mood: "combat-tension" },
-	fireball:       { type: "mood", mood: "boss-epic" },
-	thunder:        { type: "mood", mood: "horror-dread" },
-	heal:           { type: "mood", mood: "mystical-wonder" },
+	"door-creak": { type: "mood", mood: "dungeon-exploration" },
+	"sword-clash": { type: "mood", mood: "combat-tension" },
+	fireball: { type: "mood", mood: "boss-epic" },
+	thunder: { type: "mood", mood: "horror-dread" },
+	heal: { type: "mood", mood: "mystical-wonder" },
 	"Anomaly-roar": { type: "mood", mood: "shadow-realm" },
 	// Atmosphere panel weather buttons
-	rain:           { type: "mood", mood: "rainfall" },
-	wind:           { type: "mood", mood: "ocean-ambient" },
+	rain: { type: "mood", mood: "rainfall" },
+	wind: { type: "mood", mood: "ocean-ambient" },
 	// Local SFX file
-	"magic-spell":  { type: "file", path: "/audio/sfx/magic-spell.mp3", mimeType: "audio/mpeg" },
+	"magic-spell": {
+		type: "file",
+		path: "/audio/sfx/magic-spell.mp3",
+		mimeType: "audio/mpeg",
+	},
 };
 
 // ─── Downloaded CC0 Music Tracks (local, no external dependency) ────

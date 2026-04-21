@@ -19,6 +19,7 @@ import { useCampaignToolState } from "@/hooks/useToolState";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import "@/styles/vtt-player-map.css";
 import "@/styles/vtt-performance.css";
@@ -91,6 +92,8 @@ type VTTScenesState = {
 	currentSceneId: string | null;
 };
 
+const MOBILE_BREAKPOINT_QUERY = "(max-width: 767px)";
+
 const SIZE_VALUES = {
 	small: 32,
 	medium: 48,
@@ -114,6 +117,7 @@ const PlayerMapView = ({
 		searchParams.get("sessionId") ||
 		"") as string;
 	const { user } = useAuth();
+	const { fx } = usePerformanceProfile();
 
 	// Query campaign members to find player's character even without token
 	const { data: members } = useCampaignMembers(effectiveCampaignId);
@@ -139,15 +143,55 @@ const PlayerMapView = ({
 	const [draggedTokenId, setDraggedTokenId] = useState<string | null>(null);
 	const [isMobile, setIsMobile] = useState(false);
 	const [mobilePanel, setMobilePanel] = useState<string | null>(null);
-	const _touchRef = useRef<{ startDist: number; startZoom: number } | null>(
+	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
 	);
+	const lastDraggedCellRef = useRef<string | null>(null);
+	const lastCursorCellRef = useRef<string | null>(null);
+	const viewportPanRef = useRef<{
+		startX: number;
+		startY: number;
+		startLeft: number;
+		startTop: number;
+	} | null>(null);
+	const spacePanPressedRef = useRef(false);
+	const [isViewportPanning, setIsViewportPanning] = useState(false);
 
 	useEffect(() => {
-		const check = () => setIsMobile(window.innerWidth < 768);
-		check();
-		window.addEventListener("resize", check);
-		return () => window.removeEventListener("resize", check);
+		if (typeof window === "undefined") return;
+		const mediaQuery = window.matchMedia(MOBILE_BREAKPOINT_QUERY);
+		const updateMobileState = (event?: MediaQueryListEvent) => {
+			setIsMobile(event?.matches ?? mediaQuery.matches);
+		};
+		updateMobileState();
+		if (typeof mediaQuery.addEventListener === "function") {
+			mediaQuery.addEventListener("change", updateMobileState);
+			return () => mediaQuery.removeEventListener("change", updateMobileState);
+		}
+		mediaQuery.addListener(updateMobileState);
+		return () => mediaQuery.removeListener(updateMobileState);
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const handleWindowMouseUp = () => {
+			if (!viewportPanRef.current) return;
+			viewportPanRef.current = null;
+			setIsViewportPanning(false);
+		};
+		const handleWindowBlur = () => {
+			spacePanPressedRef.current = false;
+			touchRef.current = null;
+			if (!viewportPanRef.current) return;
+			viewportPanRef.current = null;
+			setIsViewportPanning(false);
+		};
+		window.addEventListener("mouseup", handleWindowMouseUp);
+		window.addEventListener("blur", handleWindowBlur);
+		return () => {
+			window.removeEventListener("mouseup", handleWindowMouseUp);
+			window.removeEventListener("blur", handleWindowBlur);
+		};
 	}, []);
 
 	// Scene state received from Warden
@@ -359,11 +403,49 @@ const PlayerMapView = ({
 		[getGridPosition, vttRealtime],
 	);
 
+	const handleRequestZoom = useCallback((nextZoom: number) => {
+		setZoom((prev) => {
+			const clamped = Math.max(0.5, Math.min(2, nextZoom));
+			if (Math.abs(prev - clamped) < 0.001) return prev;
+			return clamped;
+		});
+	}, []);
+
+	const clearViewportPan = useCallback(() => {
+		viewportPanRef.current = null;
+		setIsViewportPanning(false);
+	}, []);
+
+	const handleMapMouseDown = useCallback(
+		(e: React.MouseEvent<HTMLDivElement>) => {
+			mapRef.current?.focus();
+			if (
+				(e.button === 1 || (e.button === 0 && spacePanPressedRef.current)) &&
+				mapRef.current
+			) {
+				e.preventDefault();
+				viewportPanRef.current = {
+					startX: e.clientX,
+					startY: e.clientY,
+					startLeft: mapRef.current.scrollLeft,
+					startTop: mapRef.current.scrollTop,
+				};
+				setIsViewportPanning(true);
+			}
+		},
+		[],
+	);
+
 	// Token drag handlers — players can drag tokens they own
 	const handleTokenMouseDown = useCallback(
 		(token: PlacedToken, e: React.MouseEvent) => {
+			if (e.button === 1 || (e.button === 0 && spacePanPressedRef.current)) {
+				return;
+			}
 			if (token.locked || !isOwnToken(token)) return;
 			e.stopPropagation();
+			mapRef.current?.focus();
+			lastDraggedCellRef.current = `${token.x},${token.y}`;
 			setDraggedTokenId(token.id);
 		},
 		[isOwnToken],
@@ -371,16 +453,31 @@ const PlayerMapView = ({
 
 	const handleMapMouseMove = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
+			const viewportPan = viewportPanRef.current;
+			if (viewportPan && mapRef.current) {
+				mapRef.current.scrollLeft =
+					viewportPan.startLeft - (e.clientX - viewportPan.startX);
+				mapRef.current.scrollTop =
+					viewportPan.startTop - (e.clientY - viewportPan.startY);
+				return;
+			}
 			if (!draggedTokenId) return;
 			const pos = getGridPosition(e);
 			if (!pos) return;
+			const cellKey = `${pos.gx},${pos.gy}`;
+			if (lastDraggedCellRef.current === cellKey) return;
+			lastDraggedCellRef.current = cellKey;
 			setCurrentScene((prev) => {
 				if (!prev) return prev;
+				const tokenIndex = prev.tokens.findIndex((t) => t.id === draggedTokenId);
+				if (tokenIndex === -1) return prev;
+				const currentToken = prev.tokens[tokenIndex];
+				if (currentToken.x === pos.gx && currentToken.y === pos.gy) return prev;
+				const nextTokens = [...prev.tokens];
+				nextTokens[tokenIndex] = { ...currentToken, x: pos.gx, y: pos.gy };
 				return {
 					...prev,
-					tokens: prev.tokens.map((t) =>
-						t.id === draggedTokenId ? { ...t, x: pos.gx, y: pos.gy } : t,
-					),
+					tokens: nextTokens,
 				};
 			});
 		},
@@ -388,31 +485,146 @@ const PlayerMapView = ({
 	);
 
 	const handleMapMouseUp = useCallback(() => {
+		if (viewportPanRef.current) {
+			clearViewportPan();
+			return;
+		}
 		if (!draggedTokenId) return;
 		const token = currentScene?.tokens.find((t) => t.id === draggedTokenId);
 		if (token) {
 			vttRealtime.broadcastTokenMove(draggedTokenId, token.x, token.y);
 		}
+		lastDraggedCellRef.current = null;
 		setDraggedTokenId(null);
-	}, [currentScene?.tokens, draggedTokenId, vttRealtime]);
+	}, [clearViewportPan, currentScene?.tokens, draggedTokenId, vttRealtime]);
 
 	// Broadcast cursor position on mouse move (throttled)
 	const lastCursorBroadcast = useRef(0);
 	const handleCursorMove = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (viewportPanRef.current) return;
 			const now = Date.now();
 			if (now - lastCursorBroadcast.current < 100) return; // throttle 100ms
 			lastCursorBroadcast.current = now;
 			const pos = getGridPosition(e);
 			if (pos) {
+				const cellKey = `${pos.gx},${pos.gy}`;
+				if (lastCursorCellRef.current === cellKey) return;
+				lastCursorCellRef.current = cellKey;
 				vttRealtime.updateCursor({ x: pos.gx, y: pos.gy });
 			}
 		},
 		[getGridPosition, vttRealtime],
 	);
 
+	const handleMapWheel = useCallback(
+		(e: React.WheelEvent<HTMLDivElement>) => {
+			if (!(e.ctrlKey || e.metaKey) || Math.abs(e.deltaY) < 1) return;
+			e.preventDefault();
+			const direction = e.deltaY > 0 ? -1 : 1;
+			handleRequestZoom(zoom + direction * 0.1);
+		},
+		[handleRequestZoom, zoom],
+	);
+
+	const handleMapTouchStart = useCallback(
+		(e: React.TouchEvent<HTMLDivElement>) => {
+			if (e.touches.length !== 2) return;
+			const dx = e.touches[0].clientX - e.touches[1].clientX;
+			const dy = e.touches[0].clientY - e.touches[1].clientY;
+			touchRef.current = {
+				startDist: Math.hypot(dx, dy),
+				startZoom: zoom,
+			};
+		},
+		[zoom],
+	);
+
+	const handleMapTouchMove = useCallback(
+		(e: React.TouchEvent<HTMLDivElement>) => {
+			if (e.touches.length !== 2 || !touchRef.current) return;
+			const dx = e.touches[0].clientX - e.touches[1].clientX;
+			const dy = e.touches[0].clientY - e.touches[1].clientY;
+			const nextDist = Math.hypot(dx, dy);
+			if (touchRef.current.startDist <= 0) return;
+			e.preventDefault();
+			handleRequestZoom(
+				(touchRef.current.startZoom * nextDist) / touchRef.current.startDist,
+			);
+		},
+		[handleRequestZoom],
+	);
+
+	const handleMapTouchEnd = useCallback(() => {
+		touchRef.current = null;
+	}, []);
+
+	const handleMapKeyDown = useCallback(
+		(e: React.KeyboardEvent<HTMLDivElement>) => {
+			if (e.code !== "Space") return;
+			spacePanPressedRef.current = true;
+			e.preventDefault();
+		},
+		[],
+	);
+
+	const handleMapKeyUp = useCallback(
+		(e: React.KeyboardEvent<HTMLDivElement>) => {
+			if (e.code !== "Space") return;
+			spacePanPressedRef.current = false;
+			e.preventDefault();
+		},
+		[],
+	);
+
+	const handleMapBlur = useCallback(() => {
+		spacePanPressedRef.current = false;
+		touchRef.current = null;
+		lastDraggedCellRef.current = null;
+		setDraggedTokenId(null);
+		if (viewportPanRef.current) {
+			clearViewportPan();
+		}
+	}, [clearViewportPan]);
+
 	const sceneWidth = currentScene?.width ?? 20;
 	const sceneHeight = currentScene?.height ?? 20;
+	const ownCharacterId = useMemo(() => {
+		const ownToken = visibleTokens.find((t) => isOwnToken(t) && t.characterId);
+		return ownToken?.characterId || myCharacterId;
+	}, [isOwnToken, myCharacterId, visibleTokens]);
+	const fogCells = useMemo(() => {
+		if (!currentScene?.fogOfWar || !currentScene.fogData) return [];
+		return currentScene.fogData.flatMap((row, ry) =>
+			row
+				.map((revealed, rx) => ({ revealed, rx, ry }))
+				.filter((cell) => !cell.revealed),
+		);
+	}, [currentScene?.fogData, currentScene?.fogOfWar]);
+	const auraTokens = useMemo(
+		() => visibleTokens.filter((t) => t.auraRadius && t.auraRadius > 0),
+		[visibleTokens],
+	);
+	const weatherPreset = useMemo(() => {
+		const weather = currentScene?.weather;
+		if (!weather || weather === "clear") return null;
+		return WEATHER_PRESETS[weather as keyof typeof WEATHER_PRESETS] ?? null;
+	}, [currentScene?.weather]);
+	const weatherParticles = useMemo(() => {
+		if (!weatherPreset || !currentScene?.weather) return [];
+		const particleCount = Math.min(
+			weatherPreset.particleCount,
+			Math.max(16, fx.particleCount * 4),
+		);
+		return Array.from({ length: particleCount }, (_, index) => ({
+			id: `${currentScene.id}-${currentScene.weather}-${index}`,
+			size: Math.random() * 4 + 2,
+			left: Math.random() * 100,
+			top: Math.random() * 100,
+			animationDuration: Math.random() * 2 + 1,
+			delay: Math.random() * -2,
+		}));
+	}, [currentScene?.id, currentScene?.weather, fx.particleCount, weatherPreset]);
 
 	const _overlayStyles = useMemo(() => {
 		const parts: string[] = [];
@@ -537,7 +749,7 @@ const PlayerMapView = ({
 									<Button
 										variant="outline"
 										size="sm"
-										onClick={() => setZoom(Math.max(0.5, zoom - 0.1))}
+										onClick={() => handleRequestZoom(zoom - 0.1)}
 									>
 										<Minus className="w-3 h-3" />
 									</Button>
@@ -547,7 +759,7 @@ const PlayerMapView = ({
 									<Button
 										variant="outline"
 										size="sm"
-										onClick={() => setZoom(Math.min(2, zoom + 0.1))}
+										onClick={() => handleRequestZoom(zoom + 0.1)}
 									>
 										<Plus className="w-3 h-3" />
 									</Button>
@@ -579,7 +791,11 @@ const PlayerMapView = ({
 								{/* Map Canvas */}
 								<div
 									ref={mapRef}
-									className="flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto"
+									className={cn(
+										"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto",
+										isViewportPanning && "cursor-grabbing select-none",
+									)}
+									onMouseDown={handleMapMouseDown}
 									onMouseMove={(e) => {
 										handleMapMouseMove(e);
 										handleCursorMove(e);
@@ -587,7 +803,15 @@ const PlayerMapView = ({
 									onMouseUp={handleMapMouseUp}
 									onMouseLeave={handleMapMouseUp}
 									onDoubleClick={handleMapDoubleClick}
+									onWheel={handleMapWheel}
+									onTouchStart={handleMapTouchStart}
+									onTouchMove={handleMapTouchMove}
+									onTouchEnd={handleMapTouchEnd}
+									onKeyDown={handleMapKeyDown}
+									onKeyUp={handleMapKeyUp}
+									onBlur={handleMapBlur}
 									role="application"
+									tabIndex={0}
 									aria-label="Battle Map Canvas"
 								>
 									<ErrorBoundary>
@@ -631,12 +855,7 @@ const PlayerMapView = ({
 											{/* Fog of war */}
 											{currentScene?.fogOfWar && currentScene.fogData && (
 												<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
-													{currentScene.fogData
-														.flatMap((row, ry) =>
-															row.map((revealed, rx) => ({ revealed, rx, ry })),
-														)
-														.map((cell) =>
-															!cell.revealed ? (
+													{fogCells.map((cell) => (
 																<DynamicStyle
 																	key={`fog-${cell.rx}-${cell.ry}`}
 																	className="absolute vtt-fog-cell bg-black"
@@ -648,8 +867,7 @@ const PlayerMapView = ({
 																		opacity: 0.9,
 																	}}
 																/>
-															) : null,
-														)}
+														))}
 												</div>
 											)}
 
@@ -744,86 +962,59 @@ const PlayerMapView = ({
 												)}
 
 											{/* Weather overlay */}
-											{currentScene?.weather &&
-												currentScene.weather !== "clear" &&
-												WEATHER_PRESETS[
-													currentScene.weather as keyof typeof WEATHER_PRESETS
-												] && (
-													<div
-														className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
-														data-testid="vtt-weather-overlay"
-													>
-														<style>
-															{getWeatherCSSAnimation(
-																WEATHER_PRESETS[
-																	currentScene.weather as keyof typeof WEATHER_PRESETS
-																],
-															)}
-														</style>
-														{Array.from({
-															length: Math.min(
-																WEATHER_PRESETS[
-																	currentScene.weather as keyof typeof WEATHER_PRESETS
-																].particleCount,
-																200,
-															),
-														})
-															.map((_, idx) => idx)
-															.map((i) => {
-																const size = Math.random() * 4 + 2;
-																const left = Math.random() * 100;
-																const top = Math.random() * 100;
-																const animDuration = Math.random() * 2 + 1;
-																const delay = Math.random() * -2;
-																return (
-																	<DynamicStyle
-																		key={`weather-particle-${currentScene.weather}-${i}`}
-																		className="absolute rounded-full"
-																		vars={{
-																			width: `${size}px`,
-																			height: `${size}px`,
-																			left: `${left}%`,
-																			top: `${top}%`,
-																			backgroundColor:
-																				WEATHER_PRESETS[
-																					currentScene?.weather as keyof typeof WEATHER_PRESETS
-																				].particleColor,
-																			animation: `weather-particle-${currentScene?.weather} ${animDuration}s linear infinite`,
-																			animationDelay: `${delay}s`,
-																		}}
-																	/>
-																);
-															})}
-													</div>
-												)}
+											{weatherPreset && weatherParticles.length > 0 && (
+												<div
+													className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
+													data-testid="vtt-weather-overlay"
+												>
+													<style>
+														{getWeatherCSSAnimation(weatherPreset)}
+													</style>
+													{weatherParticles.map((particle) => {
+														return (
+															<DynamicStyle
+																key={particle.id}
+																className="absolute rounded-full"
+																vars={{
+																	width: `${particle.size}px`,
+																	height: `${particle.size}px`,
+																	left: `${particle.left}%`,
+																	top: `${particle.top}%`,
+																	backgroundColor: weatherPreset.particleColor,
+																	animation: `weather-particle-${currentScene?.weather} ${particle.animationDuration}s linear infinite`,
+																	animationDelay: `${particle.delay}s`,
+																}}
+															/>
+														);
+													})}
+												</div>
+											)}
 
 											{/* Token Auras */}
-											{visibleTokens
-												.filter((t) => t.auraRadius && t.auraRadius > 0)
-												.map((token) => {
-													const auraSize =
-														((token.auraRadius as number) * 2 + 1) *
-														gridSize *
-														zoom;
-													const tokenSize = SIZE_VALUES[token.size] * zoom;
-													const centerOffset = tokenSize / 2 - auraSize / 2;
-													return (
-														<DynamicStyle
-															key={`aura-${token.id}`}
-															className="absolute rounded-full pointer-events-none animate-pulse vtt-token-aura"
-															vars={{
-																"--aura-left":
-																	token.x * gridSize * zoom + centerOffset,
-																"--aura-top":
-																	token.y * gridSize * zoom + centerOffset,
-																"--aura-size": `${auraSize}px`,
-																"--aura-bg-color": `${token.auraColor || "#3b82f6"}18`,
-																"--aura-border-color": `${token.auraColor || "#3b82f6"}40`,
-																"--aura-z-index": token.layer * 10 + 5,
-															}}
-														/>
-													);
-												})}
+											{auraTokens.map((token) => {
+												const auraSize =
+													((token.auraRadius as number) * 2 + 1) *
+													gridSize *
+													zoom;
+												const tokenSize = SIZE_VALUES[token.size] * zoom;
+												const centerOffset = tokenSize / 2 - auraSize / 2;
+												return (
+													<DynamicStyle
+														key={`aura-${token.id}`}
+														className="absolute rounded-full pointer-events-none animate-pulse vtt-token-aura"
+														vars={{
+															"--aura-left":
+																token.x * gridSize * zoom + centerOffset,
+															"--aura-top":
+																token.y * gridSize * zoom + centerOffset,
+															"--aura-size": `${auraSize}px`,
+															"--aura-bg-color": `${token.auraColor || "#3b82f6"}18`,
+															"--aura-border-color": `${token.auraColor || "#3b82f6"}40`,
+															"--aura-z-index": token.layer * 10 + 5,
+														}}
+													/>
+												);
+											})}
 
 											{/* Tokens */}
 											{visibleTokens.map((token) => {
@@ -1061,15 +1252,10 @@ const PlayerMapView = ({
 									className="space-y-2 max-h-[calc(100vh-280px)] overflow-y-auto"
 								>
 									{(() => {
-										// Auto-detect: first from owned token, then from campaign membership
-										const ownToken = visibleTokens.find(
-											(t) => isOwnToken(t) && t.characterId,
-										);
-										const charId = ownToken?.characterId || myCharacterId;
-										if (charId) {
+										if (ownCharacterId) {
 											return (
 												<VTTCharacterPanel
-													characterId={charId}
+													characterId={ownCharacterId}
 													onRoll={(formula) =>
 														vttRealtime.rollAndBroadcast(formula)
 													}
@@ -1422,7 +1608,7 @@ const PlayerMapView = ({
 						<div className="vtt-mobile-toolbar">
 							<button
 								type="button"
-								onClick={() => setZoom(Math.max(0.5, zoom - 0.15))}
+								onClick={() => handleRequestZoom(zoom - 0.15)}
 							>
 								−
 							</button>
@@ -1431,7 +1617,7 @@ const PlayerMapView = ({
 							</span>
 							<button
 								type="button"
-								onClick={() => setZoom(Math.min(2, zoom + 0.15))}
+								onClick={() => handleRequestZoom(zoom + 0.15)}
 							>
 								+
 							</button>
@@ -1616,14 +1802,10 @@ const PlayerMapView = ({
 								)}
 								{mobilePanel === "sheet" &&
 									(() => {
-										const ownToken = visibleTokens.find(
-											(t) => isOwnToken(t) && t.characterId,
-										);
-										const charId = ownToken?.characterId || myCharacterId;
-										if (charId) {
+										if (ownCharacterId) {
 											return (
 												<VTTCharacterPanel
-													characterId={charId}
+													characterId={ownCharacterId}
 													onRoll={(formula) =>
 														vttRealtime.rollAndBroadcast(formula)
 													}

@@ -78,6 +78,7 @@ type VttPixiStageProps = {
 	lightSources?: import("@/lib/vtt").LightSource[];
 	gridConfig?: { type: "square" | "hex"; size: number };
 	onRequestZoom: (nextZoom: number) => void;
+	viewportPanModifierActive?: boolean;
 	onTokenDragStart?: (tokenId: string) => void;
 	onTokenDragEnd?: (tokenId: string) => void;
 	drawMode?: "none" | "ruler" | "cone" | "sphere" | "cube" | "wall";
@@ -113,6 +114,7 @@ export function VttPixiStage({
 	lightSources = [],
 	gridConfig = { type: "square", size: gridSize },
 	onRequestZoom,
+	viewportPanModifierActive = false,
 	onTokenDragStart,
 	onTokenDragEnd,
 	drawMode = "none",
@@ -244,7 +246,10 @@ export function VttPixiStage({
 
 	useEffect(() => {
 		const app = appRef.current;
-		if (!app) return;
+		// Wait until the async Pixi Application init has completed before wiring
+		// the render graph. appReady flips to true once init resolves, and is a
+		// reactive signal that re-triggers this effect at the right moment.
+		if (!app || !appReady) return;
 
 		const stage = app.stage;
 		stage.removeChildren();
@@ -721,19 +726,9 @@ export function VttPixiStage({
 			fog.addChild(lightLayer);
 		};
 
-		const renderSnapGhost = (gx: number, gy: number) => {
-			snapGhostLayer.removeChildren();
-			const step = gridSize * zoom;
-			const g = new Graphics();
-			g.rect(gx * step, gy * step, step, step);
-			g.fill({ color: 0xfbbf24, alpha: 0.18 });
-			g.stroke({ width: 2, color: 0xfbbf24, alpha: 0.7 });
-			snapGhostLayer.addChild(g);
-		};
-
-		const clearSnapGhost = () => {
-			snapGhostLayer.removeChildren();
-		};
+		// Snap-to-grid ghost rendering lives in the pointer-handler effect below;
+		// we share the layer via snapGhostLayerRef because the pointer handlers
+		// run in a separate effect closure and need access to it.
 
 		const renderTokens = async () => {
 			tokenLayer.removeChildren();
@@ -944,6 +939,9 @@ export function VttPixiStage({
 				}
 
 				container.on("pointerdown", (e) => {
+					if (viewportPanModifierActive || e.button === 1) {
+						return;
+					}
 					e.stopPropagation();
 					setActiveTokenId(token.id);
 					window.dispatchEvent(
@@ -1257,6 +1255,22 @@ export function VttPixiStage({
 		};
 
 		const handlePointerDown = (e: PointerEvent) => {
+			if (
+				containerRef.current &&
+				(e.button === 1 ||
+					(e.pointerType === "mouse" && viewportPanModifierActive))
+			) {
+				e.preventDefault();
+				scrollDragRef.current = {
+					pointerId: e.pointerId,
+					startX: e.clientX,
+					startY: e.clientY,
+					startLeft: containerRef.current.scrollLeft,
+					startTop: containerRef.current.scrollTop,
+				};
+				return;
+			}
+
 			if (drawMode !== "none") {
 				const rect = host.getBoundingClientRect();
 				const x = e.clientX - rect.left;
@@ -1328,6 +1342,7 @@ export function VttPixiStage({
 		onRequestZoom,
 		onTokenDragEnd,
 		updateToken,
+		viewportPanModifierActive,
 		zoom,
 		drawMode,
 		onWallCreated,
@@ -1373,8 +1388,7 @@ export function VttPixiStage({
 	return (
 		<div
 			ref={canvasHostRef}
-			className="w-full h-full relative min-h-[400px]"
-			style={{ touchAction: "none" }}
+			className="w-full h-full relative min-h-[400px] touch-none"
 		/>
 	);
 }
