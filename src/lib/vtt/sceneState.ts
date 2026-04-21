@@ -108,6 +108,139 @@ export const upsertVttScene = (
 	return next;
 };
 
+interface DeleteVttSceneInput {
+	scenes: VTTScene[];
+	sceneId: string;
+	currentSceneId?: string | null;
+	liveSceneId?: string | null;
+	replacementSceneName?: string;
+}
+
+interface DeleteVttSceneResult {
+	scenes: VTTScene[];
+	currentScene: VTTScene | null;
+	currentSceneId: string | null;
+	liveSceneId: string | null;
+	deletedScene: VTTScene | null;
+	createdReplacementScene: boolean;
+}
+
+export const deleteVttScene = ({
+	scenes,
+	sceneId,
+	currentSceneId = null,
+	liveSceneId = null,
+	replacementSceneName = "Scene 1",
+}: DeleteVttSceneInput): DeleteVttSceneResult => {
+	const deletedScene = scenes.find((scene) => scene.id === sceneId) ?? null;
+	if (!deletedScene) {
+		const preservedCurrentScene =
+			(currentSceneId
+				? (scenes.find((scene) => scene.id === currentSceneId) ?? null)
+				: null) ??
+			scenes[0] ??
+			null;
+		const preservedLiveScene =
+			(liveSceneId
+				? (scenes.find((scene) => scene.id === liveSceneId) ?? null)
+				: null) ?? preservedCurrentScene;
+		return {
+			scenes,
+			currentScene: preservedCurrentScene,
+			currentSceneId: preservedCurrentScene?.id ?? null,
+			liveSceneId: preservedLiveScene?.id ?? null,
+			deletedScene: null,
+			createdReplacementScene: false,
+		};
+	}
+
+	const remainingScenes = scenes.filter((scene) => scene.id !== sceneId);
+	const deletedIndex = scenes.findIndex((scene) => scene.id === sceneId);
+	const createdReplacementScene = remainingScenes.length === 0;
+	const nextScenes = createdReplacementScene
+		? [buildDefaultVttScene({ name: replacementSceneName })]
+		: remainingScenes;
+	const preservedCurrentScene = currentSceneId
+		? (nextScenes.find((scene) => scene.id === currentSceneId) ?? null)
+		: null;
+	const preservedLiveScene = liveSceneId
+		? (nextScenes.find((scene) => scene.id === liveSceneId) ?? null)
+		: null;
+	const fallbackScene =
+		preservedCurrentScene ??
+		preservedLiveScene ??
+		nextScenes[Math.min(Math.max(deletedIndex, 0), nextScenes.length - 1)] ??
+		nextScenes[0] ??
+		null;
+
+	return {
+		scenes: nextScenes,
+		currentScene: fallbackScene,
+		currentSceneId: fallbackScene?.id ?? null,
+		liveSceneId: preservedLiveScene?.id ?? fallbackScene?.id ?? null,
+		deletedScene,
+		createdReplacementScene,
+	};
+};
+
+interface RemoveAssetFromVttScenesResult {
+	scenes: VTTScene[];
+	didChange: boolean;
+	removedBackgroundSceneIds: string[];
+	removedTokenIds: string[];
+}
+
+export const removeAssetFromVttScenes = (
+	scenes: VTTScene[],
+	assetUrl: string,
+): RemoveAssetFromVttScenesResult => {
+	let didChange = false;
+	const removedBackgroundSceneIds: string[] = [];
+	const removedTokenIds: string[] = [];
+
+	const nextScenes = scenes.map((scene) => {
+		const backgroundMatches = scene.backgroundImage === assetUrl;
+		const nextTokens = scene.tokens.filter((token) => {
+			const matches = token.imageUrl === assetUrl;
+			if (matches) {
+				removedTokenIds.push(token.id);
+			}
+			return !matches;
+		});
+
+		if (!backgroundMatches && nextTokens.length === scene.tokens.length) {
+			return scene;
+		}
+
+		didChange = true;
+		if (backgroundMatches) {
+			removedBackgroundSceneIds.push(scene.id);
+		}
+
+		return {
+			...scene,
+			backgroundImage: backgroundMatches ? undefined : scene.backgroundImage,
+			backgroundScale: backgroundMatches
+				? DEFAULT_SCENE_SETTINGS.backgroundScale
+				: scene.backgroundScale,
+			backgroundOffsetX: backgroundMatches
+				? DEFAULT_SCENE_SETTINGS.backgroundOffsetX
+				: scene.backgroundOffsetX,
+			backgroundOffsetY: backgroundMatches
+				? DEFAULT_SCENE_SETTINGS.backgroundOffsetY
+				: scene.backgroundOffsetY,
+			tokens: nextTokens,
+		};
+	});
+
+	return {
+		scenes: nextScenes,
+		didChange,
+		removedBackgroundSceneIds,
+		removedTokenIds,
+	};
+};
+
 export interface VttScenesStateShape {
 	scenes?: VTTScene[];
 	currentSceneId?: string | null;

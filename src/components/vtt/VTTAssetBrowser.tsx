@@ -96,12 +96,37 @@ function addRecentAssetId(id: string) {
 	);
 }
 
+function removeRecentAssetId(id: string) {
+	const recent = getRecentAssetIds().filter((r) => r !== id);
+	localStorage.setItem(
+		RECENT_ASSETS_KEY,
+		JSON.stringify(recent.slice(0, MAX_RECENT)),
+	);
+}
+
+function matchesAssetSearch(asset: VTTAsset, search: string) {
+	const query = search.trim().toLowerCase();
+	if (!query) return true;
+	return (
+		asset.name.toLowerCase().includes(query) ||
+		asset.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+		(asset.rank?.toLowerCase().includes(query) ?? false) ||
+		(asset.description?.toLowerCase().includes(query) ?? false)
+	);
+}
+
 interface VTTAssetBrowserProps {
 	onUseAsMap?: (imageUrl: string, name: string) => void;
 	onUseAsToken?: (imageUrl: string, name: string) => void;
 	onUseAsEffect?: (imageUrl: string, name: string) => void;
 	onShareHandout?: (imageUrl: string, name: string) => void;
 	campaignId?: string;
+	customAssets?: VTTAsset[];
+	onUploadAsset?: (
+		file: File,
+		usage: "map" | "token",
+	) => Promise<VTTAsset | null>;
+	onDeleteAsset?: (asset: VTTAsset) => Promise<boolean>;
 	readOnly?: boolean;
 }
 
@@ -111,6 +136,9 @@ export function VTTAssetBrowser({
 	onUseAsEffect,
 	onShareHandout,
 	campaignId,
+	customAssets,
+	onUploadAsset,
+	onDeleteAsset,
 	readOnly,
 }: VTTAssetBrowserProps) {
 	const { toast } = useToast();
@@ -129,8 +157,37 @@ export function VTTAssetBrowser({
 	const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 	const uploadRef = useRef<HTMLInputElement>(null);
 	const gridRef = useRef<HTMLDivElement>(null);
-	const assetLibrary = useMemo(() => getVTTAssetLibrary(), []);
-	const assetCategories = useMemo(() => getVTTAssetCategories(), []);
+	const staticAssetLibrary = useMemo(() => getVTTAssetLibrary(), []);
+	const normalizedCustomAssets = useMemo(
+		() =>
+			(customAssets ?? []).filter(
+				(asset): asset is VTTAsset =>
+					!!asset &&
+					typeof asset.id === "string" &&
+					typeof asset.name === "string" &&
+					typeof asset.imageUrl === "string",
+			),
+		[customAssets],
+	);
+	const assetLibrary = useMemo(() => {
+		const seen = new Set<string>();
+		return [...normalizedCustomAssets, ...staticAssetLibrary].filter(
+			(asset) => {
+				if (seen.has(asset.id)) return false;
+				seen.add(asset.id);
+				return true;
+			},
+		);
+	}, [normalizedCustomAssets, staticAssetLibrary]);
+	const assetCategories = useMemo(
+		() =>
+			getVTTAssetCategories().map((category) => ({
+				...category,
+				count: assetLibrary.filter((asset) => asset.category === category.id)
+					.length,
+			})),
+		[assetLibrary],
+	);
 	const assetLookup = useMemo(
 		() => new Map(assetLibrary.map((asset) => [asset.id, asset])),
 		[assetLibrary],
@@ -142,15 +199,18 @@ export function VTTAssetBrowser({
 		return () => clearTimeout(timer);
 	}, [search]);
 
-	// Reset pagination when filters change
-	useEffect(() => {
-		setVisibleCount(PAGE_SIZE);
-	}, [activeCategory, debouncedSearch]);
-
-	const allResults = useMemo(
-		() => searchAssets(debouncedSearch, activeCategory ?? undefined),
-		[debouncedSearch, activeCategory],
-	);
+	const allResults = useMemo(() => {
+		const customResults = normalizedCustomAssets.filter((asset) => {
+			if (activeCategory && asset.category !== activeCategory) return false;
+			return matchesAssetSearch(asset, debouncedSearch);
+		});
+		const customIds = new Set(customResults.map((asset) => asset.id));
+		const staticResults = searchAssets(
+			debouncedSearch,
+			activeCategory ?? undefined,
+		).filter((asset) => !customIds.has(asset.id));
+		return [...customResults, ...staticResults];
+	}, [activeCategory, debouncedSearch, normalizedCustomAssets]);
 
 	const results = useMemo(
 		() => allResults.slice(0, visibleCount),
@@ -158,7 +218,8 @@ export function VTTAssetBrowser({
 	);
 	const hasMore = visibleCount < allResults.length;
 	const activeCategoryLabel = useMemo(
-		() => assetCategories.find((category) => category.id === activeCategory)?.label,
+		() =>
+			assetCategories.find((category) => category.id === activeCategory)?.label,
 		[activeCategory, assetCategories],
 	);
 
@@ -172,6 +233,12 @@ export function VTTAssetBrowser({
 	const trackAndPreview = useCallback((asset: VTTAsset) => {
 		setPreviewAsset((prev) => (prev?.id === asset.id ? null : asset));
 	}, []);
+
+	useEffect(() => {
+		if (previewAsset && !assetLookup.has(previewAsset.id)) {
+			setPreviewAsset(null);
+		}
+	}, [assetLookup, previewAsset]);
 
 	const handleUseAsset = useCallback(
 		(asset: VTTAsset, action: "map" | "token" | "effect" | "handout") => {
@@ -214,43 +281,68 @@ export function VTTAssetBrowser({
 
 			setIsUploading(true);
 			try {
-				let publicUrl = "";
-				if (isSupabaseConfigured && user?.id) {
-					const maxSize = usage === "map" ? 4096 : 512;
-					const compressed = await compressImage(file, {
-						maxWidth: maxSize,
-						maxHeight: maxSize,
-						quality: usage === "map" ? 0.85 : 0.8,
-						format: "webp",
-					});
-					const folder = usage === "map" ? "maps" : "tokens";
-					const fileName = `vtt/${folder}/${campaignId || "global"}/${usage}-${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
-					const { error: uploadError } = await supabase.storage
-						.from("compendium-images")
-						.upload(fileName, compressed, {
-							cacheControl: "3600",
-							upsert: false,
-							contentType: "image/webp",
-						});
-					if (uploadError) throw uploadError;
-					const { data } = supabase.storage
-						.from("compendium-images")
-						.getPublicUrl(fileName);
-					publicUrl = data.publicUrl;
+				let uploadedAsset: VTTAsset | null = null;
+				if (onUploadAsset) {
+					uploadedAsset = await onUploadAsset(file, usage);
+					if (!uploadedAsset) {
+						throw new Error("Upload failed");
+					}
 				} else {
-					publicUrl = await new Promise<string>((resolve, reject) => {
-						const reader = new FileReader();
-						reader.onload = () => resolve(reader.result as string);
-						reader.onerror = () => reject(new Error("Failed to read file."));
-						reader.readAsDataURL(file);
-					});
+					let publicUrl = "";
+					if (isSupabaseConfigured && user?.id) {
+						const maxSize = usage === "map" ? 4096 : 512;
+						const compressed = await compressImage(file, {
+							maxWidth: maxSize,
+							maxHeight: maxSize,
+							quality: usage === "map" ? 0.85 : 0.8,
+							format: "webp",
+						});
+						const folder = usage === "map" ? "maps" : "tokens";
+						const fileName = `vtt/${folder}/${campaignId || "global"}/${usage}-${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
+						const { error: uploadError } = await supabase.storage
+							.from("compendium-images")
+							.upload(fileName, compressed, {
+								cacheControl: "3600",
+								upsert: false,
+								contentType: "image/webp",
+							});
+						if (uploadError) throw uploadError;
+						const { data } = supabase.storage
+							.from("compendium-images")
+							.getPublicUrl(fileName);
+						publicUrl = data.publicUrl;
+					} else {
+						publicUrl = await new Promise<string>((resolve, reject) => {
+							const reader = new FileReader();
+							reader.onload = () => resolve(reader.result as string);
+							reader.onerror = () => reject(new Error("Failed to read file."));
+							reader.readAsDataURL(file);
+						});
+					}
+
+					const name = file.name.replace(/\.\w+$/, "").replace(/[-_]/g, " ");
+					uploadedAsset = {
+						id: `${usage}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+						name,
+						category: usage === "map" ? "map" : "token",
+						imageUrl: publicUrl,
+						thumbnailUrl: publicUrl,
+						tags: ["uploaded", usage],
+						description: null,
+						isCustom: true,
+						uploadedBy: user?.id ?? undefined,
+						uploadedAt: new Date().toISOString(),
+					};
 				}
 
-				const name = file.name.replace(/\.\w+$/, "").replace(/[-_]/g, " ");
+				addRecentAssetId(uploadedAsset.id);
+				setRecentAssetIds(getRecentAssetIds());
+				setShowRecent(false);
+				setPreviewAsset(uploadedAsset);
 				if (usage === "map") {
-					onUseAsMap?.(publicUrl, name);
+					onUseAsMap?.(uploadedAsset.imageUrl, uploadedAsset.name);
 				} else {
-					onUseAsToken?.(publicUrl, name);
+					onUseAsToken?.(uploadedAsset.imageUrl, uploadedAsset.name);
 				}
 				toast({
 					title: "Uploaded!",
@@ -267,7 +359,34 @@ export function VTTAssetBrowser({
 				if (uploadRef.current) uploadRef.current.value = "";
 			}
 		},
-		[campaignId, onUseAsMap, onUseAsToken, toast, user?.id],
+		[campaignId, onUploadAsset, onUseAsMap, onUseAsToken, toast, user?.id],
+	);
+
+	const handleDeleteAsset = useCallback(
+		async (asset: VTTAsset) => {
+			if (!onDeleteAsset || !asset.isCustom) return;
+			if (
+				!window.confirm(
+					`Delete "${asset.name}" from the shared asset library? This also removes it from scenes that use it.`,
+				)
+			) {
+				return;
+			}
+			try {
+				const deleted = await onDeleteAsset(asset);
+				if (!deleted) return;
+				removeRecentAssetId(asset.id);
+				setRecentAssetIds(getRecentAssetIds());
+				setPreviewAsset((prev) => (prev?.id === asset.id ? null : prev));
+			} catch (error) {
+				toast({
+					title: "Delete failed",
+					description: String(error),
+					variant: "destructive",
+				});
+			}
+		},
+		[onDeleteAsset, toast],
 	);
 
 	return (
@@ -277,14 +396,20 @@ export function VTTAssetBrowser({
 				<Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-foreground/70" />
 				<Input
 					value={search}
-					onChange={(e) => setSearch(e.target.value)}
+					onChange={(e) => {
+						setSearch(e.target.value);
+						setVisibleCount(PAGE_SIZE);
+					}}
 					placeholder={`Search ${assetLibrary.length} assets...`}
 					className="pl-8 text-xs h-8"
 				/>
 				{search && (
 					<button
 						type="button"
-						onClick={() => setSearch("")}
+						onClick={() => {
+							setSearch("");
+							setVisibleCount(PAGE_SIZE);
+						}}
 						className="absolute right-2 top-1/2 -translate-y-1/2 text-foreground/70 hover:text-foreground"
 						aria-label="Clear search"
 					>
@@ -297,7 +422,10 @@ export function VTTAssetBrowser({
 			<div className="flex flex-wrap gap-1">
 				<button
 					type="button"
-					onClick={() => setActiveCategory(null)}
+					onClick={() => {
+						setActiveCategory(null);
+						setVisibleCount(PAGE_SIZE);
+					}}
 					className={cn(
 						"px-2 py-0.5 rounded-full text-[10px] border transition-all",
 						!activeCategory
@@ -311,9 +439,10 @@ export function VTTAssetBrowser({
 					<button
 						type="button"
 						key={cat.id}
-						onClick={() =>
-							setActiveCategory(activeCategory === cat.id ? null : cat.id)
-						}
+						onClick={() => {
+							setActiveCategory(activeCategory === cat.id ? null : cat.id);
+							setVisibleCount(PAGE_SIZE);
+						}}
 						className={cn(
 							"px-2 py-0.5 rounded-full text-[10px] border transition-all flex items-center gap-1",
 							activeCategory === cat.id
@@ -468,6 +597,14 @@ export function VTTAssetBrowser({
 							<div className="text-[9px] truncate font-medium">
 								{asset.name}
 							</div>
+							{asset.isCustom && (
+								<Badge
+									variant="outline"
+									className="text-[8px] px-1 py-0 h-3.5 mr-1"
+								>
+									Custom
+								</Badge>
+							)}
 							{asset.rank && (
 								<Badge variant="outline" className="text-[8px] px-1 py-0 h-3.5">
 									{asset.rank}
@@ -514,6 +651,11 @@ export function VTTAssetBrowser({
 							</p>
 						)}
 						<div className="flex flex-wrap gap-1">
+							{previewAsset.isCustom && (
+								<span className="text-[8px] px-1.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-200">
+									custom
+								</span>
+							)}
 							{previewAsset.tags.map((tag) => (
 								<span
 									key={tag}
@@ -657,6 +799,17 @@ export function VTTAssetBrowser({
 									title="Share as handout"
 								>
 									<BookOpen className="w-3 h-3" />
+								</Button>
+							)}
+							{previewAsset.isCustom && onDeleteAsset && (
+								<Button
+									variant="outline"
+									size="sm"
+									className="text-[10px] h-7 px-2 text-destructive border-destructive/30 hover:bg-destructive/10"
+									onClick={() => void handleDeleteAsset(previewAsset)}
+									title="Delete uploaded asset"
+								>
+									<X className="w-3 h-3" />
 								</Button>
 							)}
 						</div>

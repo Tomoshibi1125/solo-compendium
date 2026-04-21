@@ -5,9 +5,11 @@ import {
 	createVttSceneId,
 	createVttTokenInstanceId,
 	DEFAULT_SCENE_SETTINGS,
+	deleteVttScene,
 	duplicateVttScene,
 	getValidActiveTokenId,
 	normalizeVttScene,
+	removeAssetFromVttScenes,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
@@ -202,6 +204,123 @@ describe("upsertVttScene", () => {
 		const clone = [...initial];
 		upsertVttScene(initial, scene("s-2", "two"));
 		expect(initial).toEqual(clone);
+	});
+});
+
+describe("deleteVttScene", () => {
+	const scene = (id: string, name: string): VTTScene => ({
+		...buildDefaultVttScene({ name }),
+		id,
+	});
+
+	it("removes the requested scene and falls back to the next available scene", () => {
+		const sceneOne = scene("s-1", "one");
+		const sceneTwo = scene("s-2", "two");
+		const sceneThree = scene("s-3", "three");
+
+		const result = deleteVttScene({
+			scenes: [sceneOne, sceneTwo, sceneThree],
+			sceneId: sceneTwo.id,
+			currentSceneId: sceneTwo.id,
+			liveSceneId: sceneTwo.id,
+		});
+
+		expect(result.deletedScene?.id).toBe(sceneTwo.id);
+		expect(result.scenes.map((entry) => entry.id)).toEqual([
+			sceneOne.id,
+			sceneThree.id,
+		]);
+		expect(result.currentSceneId).toBe(sceneThree.id);
+		expect(result.liveSceneId).toBe(sceneThree.id);
+		expect(result.createdReplacementScene).toBe(false);
+	});
+
+	it("creates a blank replacement scene when deleting the last remaining scene", () => {
+		const onlyScene = scene("s-1", "only");
+
+		const result = deleteVttScene({
+			scenes: [onlyScene],
+			sceneId: onlyScene.id,
+			currentSceneId: onlyScene.id,
+			liveSceneId: onlyScene.id,
+			replacementSceneName: "Fresh Scene",
+		});
+
+		expect(result.deletedScene?.id).toBe(onlyScene.id);
+		expect(result.scenes).toHaveLength(1);
+		expect(result.scenes[0].id).not.toBe(onlyScene.id);
+		expect(result.scenes[0].name).toBe("Fresh Scene");
+		expect(result.currentSceneId).toBe(result.scenes[0].id);
+		expect(result.liveSceneId).toBe(result.scenes[0].id);
+		expect(result.createdReplacementScene).toBe(true);
+	});
+
+	it("returns the original scene state when the scene id does not exist", () => {
+		const sceneOne = scene("s-1", "one");
+		const sceneTwo = scene("s-2", "two");
+
+		const result = deleteVttScene({
+			scenes: [sceneOne, sceneTwo],
+			sceneId: "missing",
+			currentSceneId: sceneTwo.id,
+			liveSceneId: sceneOne.id,
+		});
+
+		expect(result.deletedScene).toBeNull();
+		expect(result.scenes).toEqual([sceneOne, sceneTwo]);
+		expect(result.currentSceneId).toBe(sceneTwo.id);
+		expect(result.liveSceneId).toBe(sceneOne.id);
+	});
+});
+
+describe("removeAssetFromVttScenes", () => {
+	it("clears matching scene backgrounds and removes placed tokens using the same asset", () => {
+		const assetUrl = "https://example.com/custom-asset.webp";
+		const sceneOne: VTTScene = {
+			...buildDefaultVttScene({ name: "one" }),
+			backgroundImage: assetUrl,
+			backgroundScale: 1.4,
+			backgroundOffsetX: 3,
+			backgroundOffsetY: 4,
+			tokens: [
+				{ ...createToken("token-1"), imageUrl: assetUrl },
+				{
+					...createToken("token-2"),
+					imageUrl: "https://example.com/keep.webp",
+				},
+			],
+		};
+		const sceneTwo: VTTScene = {
+			...buildDefaultVttScene({ name: "two" }),
+			tokens: [{ ...createToken("token-3"), imageUrl: assetUrl }],
+		};
+
+		const result = removeAssetFromVttScenes([sceneOne, sceneTwo], assetUrl);
+
+		expect(result.didChange).toBe(true);
+		expect(result.removedBackgroundSceneIds).toEqual([sceneOne.id]);
+		expect(result.removedTokenIds).toEqual(["token-1", "token-3"]);
+		expect(result.scenes[0].backgroundImage).toBeUndefined();
+		expect(result.scenes[0].backgroundScale).toBe(
+			DEFAULT_SCENE_SETTINGS.backgroundScale,
+		);
+		expect(result.scenes[0].tokens.map((token) => token.id)).toEqual([
+			"token-2",
+		]);
+		expect(result.scenes[1].tokens).toEqual([]);
+	});
+
+	it("returns unchanged scenes when no scene references the asset", () => {
+		const sceneOne = buildDefaultVttScene({ name: "one" });
+		const result = removeAssetFromVttScenes(
+			[sceneOne],
+			"https://example.com/missing.webp",
+		);
+
+		expect(result.didChange).toBe(false);
+		expect(result.scenes).toEqual([sceneOne]);
+		expect(result.removedBackgroundSceneIds).toEqual([]);
+		expect(result.removedTokenIds).toEqual([]);
 	});
 });
 

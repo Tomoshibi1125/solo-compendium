@@ -45,6 +45,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
 import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
+import type { VTTAsset } from "@/data/vttAssetLibrary";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -129,6 +130,12 @@ interface WardenToolsPanelProps {
 	onMusicChange?: (musicId: string) => void;
 	onChangeMap?: (imageUrl: string, name?: string) => void;
 	onShareHandout?: (imageUrl: string, name?: string) => void;
+	customAssets?: VTTAsset[];
+	onUploadAsset?: (
+		file: File,
+		usage: "map" | "token",
+	) => Promise<VTTAsset | null>;
+	onDeleteAsset?: (asset: VTTAsset) => Promise<boolean>;
 	className?: string;
 }
 
@@ -141,6 +148,9 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 	onMusicChange,
 	onChangeMap,
 	onShareHandout,
+	customAssets,
+	onUploadAsset,
+	onDeleteAsset,
 	className,
 }) => {
 	const { toast } = useToast();
@@ -505,6 +515,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									</TabsList>
 									<TabsContent value="browser" className="pt-2">
 										<VTTAssetBrowser
+											campaignId={campaignId}
+											customAssets={customAssets}
+											onUploadAsset={onUploadAsset}
+											onDeleteAsset={onDeleteAsset}
 											onUseAsMap={(url, name) => onChangeMap?.(url, name)}
 											onUseAsToken={(url, name) => {
 												onAddToken?.({

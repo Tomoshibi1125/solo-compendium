@@ -1,120 +1,3 @@
-import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { Layout } from "@/components/layout/Layout";
-import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
-import { AscendantWindow } from "@/components/ui/AscendantWindow";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { DynamicStyle } from "@/components/ui/DynamicStyle";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-} from "@/components/ui/sheet";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
-import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
-import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
-import { VttPixiStage } from "@/components/vtt/VttPixiStage";
-import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
-import {
-	WardenToolsPanel as ProtocolWardenTools,
-	type VTTEffectPayload,
-	type VTTTokenPayload,
-} from "@/components/vtt/WardenToolsPanel";
-import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
-import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
-import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
-import {
-	DEFAULT_TOKENS,
-	type LibraryToken,
-	mergeBaseTokens,
-	normalizeLibraryTokens,
-} from "@/data/tokenLibraryDefaults";
-import { useToast } from "@/hooks/use-toast";
-import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
-import {
-	type CampaignMember,
-	useCampaignMembers,
-	useCampaignRole,
-} from "@/hooks/useCampaigns";
-import { useDebounce } from "@/hooks/useDebounce";
-import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
-import {
-	readLocalToolState,
-	useCampaignToolState,
-	useUserToolState,
-} from "@/hooks/useToolState";
-import {
-	useCreateVTTAudioTrack,
-	useDeleteVTTAudioTrack,
-	useUpdateVTTAudioTrack,
-	useVTTAudioTracks,
-	vttAudioManager,
-} from "@/hooks/useVTTAudio";
-import "./VTTEnhanced.css";
-import { useVTTRealtime } from "@/hooks/useVTTRealtime";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/lib/auth/authContext";
-import { usePerformanceProfile } from "@/lib/performanceProfile";
-import { cn } from "@/lib/utils";
-import {
-	type AmbientSoundZone,
-	computeAllZoneStates,
-	computeZoneVolume,
-	createAmbientSoundZone,
-	createDrawing,
-	createTerrainZone,
-	distanceToZone,
-	getCoverBonusAtPosition,
-	getMovementCostAtPosition,
-	getWeatherCSSAnimation,
-	getWeatherMechanics,
-	type HexGridConfig,
-	isListenerInZone,
-	isPointInTerrainZone,
-	type LightSource,
-	type MusicMood,
-	snapToHexCenter,
-	type TerrainZone,
-	VttMusicEngine,
-	WEATHER_PRESETS,
-} from "@/lib/vtt";
-import {
-	buildDefaultVttScene,
-	computeVttHydration,
-	createVttTokenInstanceId,
-	DEFAULT_SCENE_SETTINGS,
-	duplicateVttScene,
-	getValidActiveTokenId,
-	type LegacyVttScenesStateShape,
-	normalizeVttScene,
-	upsertVttScene,
-} from "@/lib/vtt/sceneState";
-import PlayerMapView from "@/pages/player-tools/PlayerMapView";
-import "@/styles/vtt-enhanced-dynamic.css";
-import "@/styles/vtt-enhanced.css";
-import "@/styles/vtt-performance.css";
 import { useQuery } from "@tanstack/react-query";
 import {
 	ArrowLeft,
@@ -168,18 +51,151 @@ import {
 	useParams,
 	useSearchParams,
 } from "react-router-dom";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { Layout } from "@/components/layout/Layout";
+import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+} from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
+import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
+import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
+import { VttPixiStage } from "@/components/vtt/VttPixiStage";
+import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
+import {
+	WardenToolsPanel as ProtocolWardenTools,
+	type VTTEffectPayload,
+	type VTTTokenPayload,
+} from "@/components/vtt/WardenToolsPanel";
+import { DirectiveLattice } from "@/components/warden-directives/DirectiveMatrix";
+import { EmbeddedProvider } from "@/contexts/EmbeddedContext";
+import PREMADE_MAPS, { type PremadeMap } from "@/data/premadeMaps";
+import {
+	DEFAULT_TOKENS,
+	type LibraryToken,
+	mergeBaseTokens,
+	normalizeLibraryTokens,
+} from "@/data/tokenLibraryDefaults";
+import type { VTTAsset as BrowserAsset } from "@/data/vttAssetLibrary";
+import { useToast } from "@/hooks/use-toast";
+import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
+import {
+	type CampaignMember,
+	useCampaignMembers,
+	useCampaignRole,
+} from "@/hooks/useCampaigns";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
+import {
+	readLocalToolState,
+	useCampaignToolState,
+	useUserToolState,
+} from "@/hooks/useToolState";
+import {
+	useCreateVTTAudioTrack,
+	useDeleteVTTAudioTrack,
+	useUpdateVTTAudioTrack,
+	useVTTAudioTracks,
+	vttAudioManager,
+} from "@/hooks/useVTTAudio";
+import { useVTTRealtime } from "@/hooks/useVTTRealtime";
+import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/auth/authContext";
+import { compressImage } from "@/lib/imageOptimization";
+import { usePerformanceProfile } from "@/lib/performanceProfile";
+import { cn } from "@/lib/utils";
+import {
+	type AmbientSoundZone,
+	computeAllZoneStates,
+	computeZoneVolume,
+	createAmbientSoundZone,
+	createDrawing,
+	createTerrainZone,
+	distanceToZone,
+	getCoverBonusAtPosition,
+	getMovementCostAtPosition,
+	getWeatherCSSAnimation,
+	getWeatherMechanics,
+	type HexGridConfig,
+	isListenerInZone,
+	isPointInTerrainZone,
+	type LightSource,
+	type MusicMood,
+	snapToHexCenter,
+	type TerrainZone,
+	VttMusicEngine,
+	WEATHER_PRESETS,
+} from "@/lib/vtt";
+import {
+	buildDefaultVttScene,
+	computeVttHydration,
+	createVttTokenInstanceId,
+	DEFAULT_SCENE_SETTINGS,
+	deleteVttScene,
+	duplicateVttScene,
+	getValidActiveTokenId,
+	type LegacyVttScenesStateShape,
+	normalizeVttScene,
+	removeAssetFromVttScenes,
+	upsertVttScene,
+} from "@/lib/vtt/sceneState";
+import PlayerMapView from "@/pages/player-tools/PlayerMapView";
 import type {
 	VTTDrawing,
 	VTTScene,
 	VTTTokenInstance,
 	WeatherType,
 } from "@/types/vtt";
+import "@/styles/vtt-enhanced-dynamic.css";
+import "@/styles/vtt-enhanced.css";
+import "@/styles/vtt-performance.css";
+import "./VTTEnhanced.css";
 
 const WardenDirectiveMatrix = React.lazy(() =>
 	import("@/components/warden-directives/WardenDirectiveMatrix").then((m) => ({
 		default: m.WardenDirectiveMatrix,
 	})),
 );
+
+const isVttShortcutTarget = (target: EventTarget | null) => {
+	if (typeof HTMLElement === "undefined" || !(target instanceof HTMLElement)) {
+		return false;
+	}
+	return (
+		target.isContentEditable ||
+		target.closest(
+			"button, input, select, textarea, [contenteditable='true'], [role='textbox']",
+		) !== null
+	);
+};
 
 // --- Sub-Engine Processor to resolve orphaned Knip functions by actively wiring them into the token stream ---
 const VTTSubEngineProcessor: React.FC<{
@@ -362,6 +378,86 @@ const isCharacterSummary = (
 const EMPTY_ARRAY: never[] = [];
 const MOBILE_BREAKPOINT_QUERY = "(max-width: 767px)";
 
+type VTTCampaignAsset = BrowserAsset;
+
+const createCustomVttAssetId = () => {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
+		return `custom-asset-${crypto.randomUUID()}`;
+	}
+	return `custom-asset-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+const buildUploadedAssetName = (fileName: string) =>
+	fileName.replace(/\.\w+$/, "").replace(/[-_]/g, " ");
+
+const getCompendiumImageStoragePath = (
+	asset: Pick<VTTCampaignAsset, "storagePath" | "imageUrl">,
+) => {
+	if (typeof asset.storagePath === "string" && asset.storagePath.length > 0) {
+		return asset.storagePath;
+	}
+	const marker = "/storage/v1/object/public/compendium-images/";
+	const markerIndex = asset.imageUrl.indexOf(marker);
+	if (markerIndex === -1) return null;
+	const encodedPath = asset.imageUrl
+		.slice(markerIndex + marker.length)
+		.split("?")[0];
+	return encodedPath ? decodeURIComponent(encodedPath) : null;
+};
+
+const normalizeCustomVttAsset = (value: unknown): VTTCampaignAsset | null => {
+	if (!value || typeof value !== "object") return null;
+	const asset = value as Partial<VTTCampaignAsset>;
+	if (
+		typeof asset.id !== "string" ||
+		typeof asset.name !== "string" ||
+		typeof asset.imageUrl !== "string"
+	) {
+		return null;
+	}
+	const tags = Array.isArray(asset.tags)
+		? asset.tags.filter((tag): tag is string => typeof tag === "string")
+		: [];
+	return {
+		id: asset.id,
+		name: asset.name,
+		category:
+			typeof asset.category === "string"
+				? (asset.category as VTTCampaignAsset["category"])
+				: "token",
+		imageUrl: asset.imageUrl,
+		thumbnailUrl:
+			typeof asset.thumbnailUrl === "string"
+				? asset.thumbnailUrl
+				: asset.imageUrl,
+		tags,
+		rank: typeof asset.rank === "string" ? asset.rank : undefined,
+		description:
+			asset.description === null
+				? null
+				: typeof asset.description === "string"
+					? asset.description
+					: undefined,
+		isCustom: true,
+		uploadedBy:
+			typeof asset.uploadedBy === "string" ? asset.uploadedBy : undefined,
+		uploadedAt:
+			typeof asset.uploadedAt === "string" ? asset.uploadedAt : undefined,
+		storagePath:
+			typeof asset.storagePath === "string" ? asset.storagePath : undefined,
+	};
+};
+
+const normalizeCustomVttAssets = (value: unknown): VTTCampaignAsset[] =>
+	Array.isArray(value)
+		? value
+				.map(normalizeCustomVttAsset)
+				.filter((asset): asset is VTTCampaignAsset => asset !== null)
+		: [];
+
 /** Stable memo wrapper – MUST live outside the component to avoid remount on every render */
 const MemoizedVttPixiStage = React.memo(VttPixiStage);
 
@@ -385,8 +481,6 @@ const VTTEnhanced = () => {
 	const suppressViewportPanClickRef = useRef(false);
 	const pendingDrawingPointRef = useRef<{ x: number; y: number } | null>(null);
 	const drawingFrameRef = useRef<number | null>(null);
-	const pendingTouchZoomRef = useRef<number | null>(null);
-	const touchZoomFrameRef = useRef<number | null>(null);
 	const { fx } = usePerformanceProfile();
 	const [zoom, setZoom] = useState(1);
 	const [showGrid, setShowGrid] = useState(true);
@@ -444,8 +538,7 @@ const VTTEnhanced = () => {
 		3: true,
 	});
 
-	const { saveVTTScene, uploadVTTAsset } =
-		useWardenToolsEnhancements(campaignId);
+	const { saveVTTScene } = useWardenToolsEnhancements(campaignId);
 	const [selectedTool, setSelectedTool] = useState<
 		"select" | "fog" | "measure" | "draw" | "effect" | "note"
 	>("select");
@@ -584,9 +677,13 @@ const VTTEnhanced = () => {
 	}, [clearViewportPan]);
 	const [isHydrated, setIsHydrated] = useState(false);
 	const toolKey = sessionId ? `vtt_scenes:${sessionId}` : "vtt_scenes";
+	const assetsToolKey = sessionId ? `vtt_assets:${sessionId}` : "vtt_assets";
 	const legacyStorageKey = campaignId
 		? `vtt-scenes-${campaignId}${sessionId ? `-${sessionId}` : ""}`
 		: "vtt-scenes";
+	const legacyAssetsStorageKey = campaignId
+		? `vtt-assets-${campaignId}${sessionId ? `-${sessionId}` : ""}`
+		: "vtt-assets";
 	// Role determination (must come before savePayload memo)
 	const isStandalone = !campaignId;
 	const guestRole = searchParams.get("role")?.toLowerCase();
@@ -610,6 +707,22 @@ const VTTEnhanced = () => {
 		initialState: { scenes: [], currentSceneId: null },
 		storageKey: legacyStorageKey,
 	});
+	const {
+		state: customAssetsState,
+		setState: setCustomAssetsState,
+		saveNow: saveCustomAssetsNow,
+	} = useCampaignToolState<VTTCampaignAsset[]>(
+		campaignId || null,
+		assetsToolKey,
+		{
+			initialState: [],
+			storageKey: legacyAssetsStorageKey,
+		},
+	);
+	const customAssets = useMemo(
+		() => normalizeCustomVttAssets(customAssetsState),
+		[customAssetsState],
+	);
 	const mergedScenes = useMemo(() => {
 		if (!currentScene) return scenes;
 		const index = scenes.findIndex((scene) => scene.id === currentScene.id);
@@ -621,7 +734,9 @@ const VTTEnhanced = () => {
 	const savePayload = useMemo(
 		() => ({
 			scenes: mergedScenes,
-			currentSceneId: isWarden ? liveSceneId : (currentScene?.id ?? null),
+			currentSceneId: isWarden
+				? (liveSceneId ?? currentScene?.id ?? null)
+				: (currentScene?.id ?? null),
 		}),
 		[isWarden, liveSceneId, currentScene?.id, mergedScenes],
 	);
@@ -827,7 +942,6 @@ const VTTEnhanced = () => {
 
 	useEffect(() => {
 		const handler = () => {
-			mapRef.current?.focus();
 			suppressNextMapActionRef.current = true;
 			window.setTimeout(() => {
 				suppressNextMapActionRef.current = false;
@@ -975,15 +1089,21 @@ const VTTEnhanced = () => {
 				(payload) => {
 					const row = payload.new as {
 						tool_key?: string;
-						state?: VTTScenesState;
+						state?: unknown;
 						updated_by?: string | null;
 					} | null;
-					if (!row || row.tool_key !== toolKey || !row.state) return;
+					if (!row || !row.tool_key || row.state === undefined) return;
 					if (row.updated_by && row.updated_by === user?.id) return;
-					const incoming = row.state;
+					if (row.tool_key === assetsToolKey) {
+						setCustomAssetsState(normalizeCustomVttAssets(row.state));
+						return;
+					}
+					if (row.tool_key !== toolKey) return;
+					const incoming = row.state as VTTScenesState;
 					if (!Array.isArray(incoming.scenes)) return;
 					const nextScenes = incoming.scenes.map(normalizeVttScene);
 					setScenes(nextScenes);
+					setLiveSceneId(incoming.currentSceneId ?? null);
 					const selected =
 						nextScenes.find((scene) => scene.id === incoming.currentSceneId) ||
 						nextScenes[0] ||
@@ -996,7 +1116,14 @@ const VTTEnhanced = () => {
 		return () => {
 			supabase.removeChannel(channel);
 		};
-	}, [campaignId, isAuthed, toolKey, user?.id]);
+	}, [
+		assetsToolKey,
+		campaignId,
+		isAuthed,
+		setCustomAssetsState,
+		toolKey,
+		user?.id,
+	]);
 
 	useEffect(() => {
 		if (!campaignId) return;
@@ -1036,28 +1163,43 @@ const VTTEnhanced = () => {
 		void publish();
 	}, [campaignId, fogPublishPayload, isAuthed, isWarden, sessionId, user?.id]);
 
+	const getPersistedSceneId = useCallback(
+		(
+			fallbackCurrentSceneId: string | null,
+			overrideLiveSceneId?: string | null,
+		) => overrideLiveSceneId ?? liveSceneId ?? fallbackCurrentSceneId,
+		[liveSceneId],
+	);
+
 	const persistSceneState = useCallback(
-		(nextScenes: VTTScene[], currentSceneId: string | null) => {
-			if (!campaignId || !isWarden) return;
+		(
+			nextScenes: VTTScene[],
+			currentSceneId: string | null,
+			overrideLiveSceneId?: string | null,
+		) => {
+			if (!isWarden) return;
 			void saveNow({
 				scenes: nextScenes,
-				currentSceneId,
+				currentSceneId: getPersistedSceneId(
+					currentSceneId,
+					overrideLiveSceneId,
+				),
 				savedAt: new Date().toISOString(),
 			});
 		},
-		[campaignId, isWarden, saveNow],
+		[getPersistedSceneId, isWarden, saveNow],
 	);
 
 	const saveScenes = () => {
-		if (!campaignId || !isWarden) return;
+		if (!isWarden) return;
 		const state = {
 			scenes: mergedScenes,
-			currentSceneId: currentScene?.id ?? null,
+			currentSceneId: getPersistedSceneId(currentScene?.id ?? null),
 			savedAt: new Date().toISOString(),
 		};
 		void saveNow(state);
 
-		if (currentScene) {
+		if (campaignId && currentScene) {
 			void saveVTTScene(campaignId, {
 				name: currentScene.name,
 				backgroundImage: currentScene.backgroundImage,
@@ -1070,6 +1212,135 @@ const VTTEnhanced = () => {
 			description: "Scene saved.",
 		});
 	};
+
+	const uploadCustomAsset = useCallback(
+		async (
+			file: File,
+			usage: "map" | "token",
+		): Promise<VTTCampaignAsset | null> => {
+			if (!file.type.startsWith("image/")) {
+				throw new Error("Please upload an image file.");
+			}
+
+			let imageUrl = "";
+			let storagePath: string | undefined;
+			if (isAuthed && isSupabaseConfigured) {
+				const compressed = await compressImage(file, {
+					maxWidth: usage === "map" ? 2048 : 1024,
+					maxHeight: usage === "map" ? 2048 : 1024,
+					quality: 0.88,
+					format: "webp",
+				});
+				const folder = usage === "map" ? "maps" : "tokens";
+				storagePath = `vtt/${folder}/${campaignId || "global"}/${usage}-${Date.now()}-${Math.random().toString(36).slice(2)}.webp`;
+				const { error: uploadError } = await supabase.storage
+					.from("compendium-images")
+					.upload(storagePath, compressed, {
+						cacheControl: "3600",
+						upsert: false,
+						contentType: "image/webp",
+					});
+				if (uploadError) throw uploadError;
+				const { data } = supabase.storage
+					.from("compendium-images")
+					.getPublicUrl(storagePath);
+				imageUrl = data.publicUrl;
+			} else {
+				imageUrl = await new Promise<string>((resolve, reject) => {
+					const reader = new FileReader();
+					reader.onload = () => resolve(reader.result as string);
+					reader.onerror = () => reject(new Error("Failed to read file."));
+					reader.readAsDataURL(file);
+				});
+			}
+
+			const asset: VTTCampaignAsset = {
+				id: createCustomVttAssetId(),
+				name: buildUploadedAssetName(file.name),
+				category: usage === "map" ? "map" : "token",
+				imageUrl,
+				thumbnailUrl: imageUrl,
+				tags: ["custom", "uploaded", usage],
+				description: null,
+				isCustom: true,
+				uploadedBy: user?.id ?? undefined,
+				uploadedAt: new Date().toISOString(),
+				storagePath,
+			};
+			const nextAssets = [
+				asset,
+				...customAssets.filter((entry) => entry.id !== asset.id),
+			];
+			setCustomAssetsState(nextAssets);
+			void saveCustomAssetsNow(nextAssets);
+			return asset;
+		},
+		[
+			campaignId,
+			customAssets,
+			isAuthed,
+			saveCustomAssetsNow,
+			setCustomAssetsState,
+			user?.id,
+		],
+	);
+
+	const deleteCustomAsset = useCallback(
+		async (asset: VTTCampaignAsset): Promise<boolean> => {
+			if (!asset.isCustom) return false;
+			const storagePath = getCompendiumImageStoragePath(asset);
+			if (storagePath && isAuthed && isSupabaseConfigured) {
+				const { error } = await supabase.storage
+					.from("compendium-images")
+					.remove([storagePath]);
+				if (error && !/not found/i.test(error.message || "")) {
+					throw error;
+				}
+			}
+
+			const nextAssets = customAssets.filter((entry) => entry.id !== asset.id);
+			setCustomAssetsState(nextAssets);
+			void saveCustomAssetsNow(nextAssets);
+
+			const removal = removeAssetFromVttScenes(mergedScenes, asset.imageUrl);
+			if (removal.didChange) {
+				setScenes(removal.scenes);
+				const nextCurrentScene =
+					(currentScene
+						? (removal.scenes.find((scene) => scene.id === currentScene.id) ??
+							null)
+						: null) ??
+					removal.scenes[0] ??
+					null;
+				setCurrentScene(nextCurrentScene);
+				persistSceneState(removal.scenes, nextCurrentScene?.id ?? null);
+				vttRealtime.broadcastSceneSync(
+					removal.scenes,
+					getPersistedSceneId(nextCurrentScene?.id ?? null),
+				);
+			}
+
+			toast({
+				title: "Asset deleted",
+				description: removal.didChange
+					? `Removed "${asset.name}" and cleared its scene references.`
+					: `Removed "${asset.name}" from the shared asset library.`,
+			});
+			return true;
+		},
+		[
+			currentScene,
+			customAssets,
+			getPersistedSceneId,
+			isAuthed,
+			mergedScenes,
+			persistSceneState,
+			saveCustomAssetsNow,
+			setCustomAssetsState,
+			toast,
+			vttRealtime,
+		],
+	);
 
 	const updateScene = useCallback((updates: Partial<VTTScene>) => {
 		setCurrentScene((prev) => {
@@ -1108,7 +1379,9 @@ const VTTEnhanced = () => {
 		(tokenId: string, updates: Partial<VTTTokenInstance>) => {
 			setCurrentScene((prev) => {
 				if (!prev) return prev;
-				const tokenIndex = prev.tokens.findIndex((token) => token.id === tokenId);
+				const tokenIndex = prev.tokens.findIndex(
+					(token) => token.id === tokenId,
+				);
 				if (tokenIndex === -1) return prev;
 				const currentToken = prev.tokens[tokenIndex];
 				const hasChanges = Object.entries(updates).some(
@@ -1203,6 +1476,7 @@ const VTTEnhanced = () => {
 			if (payload.syncedBy === vttRealtime.userId) return;
 			const incoming = (payload.scenes as VTTScene[]).map(normalizeVttScene);
 			setScenes(incoming);
+			setLiveSceneId(payload.currentSceneId ?? null);
 			const selected =
 				incoming.find((s) => s.id === payload.currentSceneId) ||
 				incoming[0] ||
@@ -1320,25 +1594,6 @@ const VTTEnhanced = () => {
 		[],
 	);
 
-	const flushPendingTouchZoom = useCallback(() => {
-		const nextZoom = pendingTouchZoomRef.current;
-		if (typeof nextZoom !== "number") return;
-		pendingTouchZoomRef.current = null;
-		setZoom((prev) => (Math.abs(prev - nextZoom) < 0.01 ? prev : nextZoom));
-	}, []);
-
-	const scheduleTouchZoom = useCallback(
-		(nextZoom: number) => {
-			pendingTouchZoomRef.current = nextZoom;
-			if (touchZoomFrameRef.current !== null) return;
-			touchZoomFrameRef.current = window.requestAnimationFrame(() => {
-				touchZoomFrameRef.current = null;
-				flushPendingTouchZoom();
-			});
-		},
-		[flushPendingTouchZoom],
-	);
-
 	const scheduleDrawingPoint = useCallback(
 		(point: { x: number; y: number }) => {
 			pendingDrawingPointRef.current = point;
@@ -1347,7 +1602,9 @@ const VTTEnhanced = () => {
 				drawingFrameRef.current = null;
 				const pendingPoint = pendingDrawingPointRef.current;
 				pendingDrawingPointRef.current = null;
-				setActiveDrawing((prev) => applyPendingPointToDrawing(prev, pendingPoint));
+				setActiveDrawing((prev) =>
+					applyPendingPointToDrawing(prev, pendingPoint),
+				);
 			});
 		},
 		[applyPendingPointToDrawing],
@@ -1357,9 +1614,6 @@ const VTTEnhanced = () => {
 		return () => {
 			if (drawingFrameRef.current !== null) {
 				window.cancelAnimationFrame(drawingFrameRef.current);
-			}
-			if (touchZoomFrameRef.current !== null) {
-				window.cancelAnimationFrame(touchZoomFrameRef.current);
 			}
 		};
 	}, []);
@@ -1378,29 +1632,13 @@ const VTTEnhanced = () => {
 
 			setIsUploadingMap(true);
 			try {
-				let publicUrl = "";
-				if (isAuthed && isSupabaseConfigured) {
-					const asset = (await uploadVTTAsset(
-						campaignId || "global",
-						file,
-						"map",
-					)) as Record<string, unknown> | null;
-					if (asset && typeof asset.imageUrl === "string") {
-						publicUrl = asset.imageUrl;
-					} else {
-						throw new Error("Asset upload failed");
-					}
-				} else {
-					publicUrl = await new Promise<string>((resolve, reject) => {
-						const reader = new FileReader();
-						reader.onload = () => resolve(reader.result as string);
-						reader.onerror = () => reject(new Error("Failed to read file."));
-						reader.readAsDataURL(file);
-					});
+				const asset = await uploadCustomAsset(file, "map");
+				if (!asset) {
+					throw new Error("Asset upload failed");
 				}
 
 				updateScene({
-					backgroundImage: publicUrl,
+					backgroundImage: asset.imageUrl,
 					backgroundScale: DEFAULT_SCENE_SETTINGS.backgroundScale,
 					backgroundOffsetX: DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
 					backgroundOffsetY: DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
@@ -1419,7 +1657,108 @@ const VTTEnhanced = () => {
 				setIsUploadingMap(false);
 			}
 		},
-		[campaignId, currentScene, isAuthed, updateScene, uploadVTTAsset, toast],
+		[currentScene, toast, updateScene, uploadCustomAsset],
+	);
+
+	const handleClearBackgroundImage = useCallback(async () => {
+		if (!currentScene?.backgroundImage) return;
+		const matchingCustomAsset = customAssets.find(
+			(asset) => asset.imageUrl === currentScene.backgroundImage,
+		);
+		if (
+			matchingCustomAsset &&
+			window.confirm(
+				`Also delete "${matchingCustomAsset.name}" from the shared asset library? This removes it from every scene that uses it.`,
+			)
+		) {
+			try {
+				await deleteCustomAsset(matchingCustomAsset);
+				return;
+			} catch {
+				toast({
+					title: "Asset delete failed",
+					description:
+						"The uploaded map could not be deleted from the shared library.",
+					variant: "destructive",
+				});
+				return;
+			}
+		}
+
+		updateScene({
+			backgroundImage: undefined,
+			backgroundScale: DEFAULT_SCENE_SETTINGS.backgroundScale,
+			backgroundOffsetX: DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
+			backgroundOffsetY: DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
+		});
+	}, [
+		currentScene?.backgroundImage,
+		customAssets,
+		deleteCustomAsset,
+		toast,
+		updateScene,
+	]);
+
+	const handleDeleteScene = useCallback(
+		async (scene: VTTScene) => {
+			if (!isWarden) return;
+			const warning =
+				mergedScenes.length === 1
+					? `Delete "${scene.name}"? A blank replacement scene will be created so the VTT stays usable.`
+					: `Delete "${scene.name}"?`;
+			if (!window.confirm(warning)) return;
+
+			const result = deleteVttScene({
+				scenes: mergedScenes,
+				sceneId: scene.id,
+				currentSceneId: currentScene?.id ?? null,
+				liveSceneId,
+				replacementSceneName: "Scene 1",
+			});
+			if (!result.deletedScene) return;
+
+			setScenes(result.scenes);
+			setCurrentScene(result.currentScene);
+			setLiveSceneId(result.liveSceneId);
+			persistSceneState(
+				result.scenes,
+				result.currentSceneId,
+				result.liveSceneId,
+			);
+			vttRealtime.broadcastSceneSync(
+				result.scenes,
+				getPersistedSceneId(result.currentSceneId, result.liveSceneId),
+			);
+
+			if (campaignId && sessionId && isAuthed) {
+				void supabase
+					.from("vtt_fog_state")
+					.delete()
+					.eq("campaign_id", campaignId)
+					.eq("session_id", sessionId)
+					.eq("scene_id", result.deletedScene.id);
+			}
+
+			toast({
+				title: "Scene deleted",
+				description: result.createdReplacementScene
+					? `Deleted "${scene.name}" and created a blank replacement scene.`
+					: `Deleted "${scene.name}".`,
+			});
+		},
+		[
+			campaignId,
+			currentScene?.id,
+			getPersistedSceneId,
+			isAuthed,
+			isWarden,
+			liveSceneId,
+			mergedScenes,
+			persistSceneState,
+			sessionId,
+			toast,
+			vttRealtime,
+		],
 	);
 
 	const resizeScene = useCallback(
@@ -1630,28 +1969,11 @@ const VTTEnhanced = () => {
 	const { mutate: updateTrack } = useUpdateVTTAudioTrack();
 	const { mutate: deleteTrack } = useDeleteVTTAudioTrack();
 
-	const handleMapClick = useCallback(
-		(e: React.MouseEvent<HTMLDivElement>) => {
-			if (
-				suppressNextMapActionRef.current ||
-				suppressViewportPanClickRef.current
-			) {
-				e.stopPropagation();
-				return;
-			}
-			const grid = getGridPosition(e);
-			if (!grid) return;
-			handleMapGridAction(grid);
-		},
-		[getGridPosition, handleMapGridAction],
-	);
-
 	const handleMapMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (suppressNextMapActionRef.current) {
 			e.stopPropagation();
 			return;
 		}
-		mapRef.current?.focus();
 		if (e.button === 1 || (e.button === 0 && isViewportPanModifierActive)) {
 			e.preventDefault();
 			suppressViewportPanClickRef.current = true;
@@ -1693,11 +2015,10 @@ const VTTEnhanced = () => {
 	};
 
 	const handleMapKeyDown = useCallback(
-		(e: React.KeyboardEvent<HTMLDivElement>) => {
+		(e: KeyboardEvent) => {
+			if (isVttShortcutTarget(e.target)) return;
 			if (e.code === "Space") {
-				if (!isViewportPanModifierActive) {
-					setIsViewportPanModifierActive(true);
-				}
+				setIsViewportPanModifierActive(true);
 				e.preventDefault();
 				return;
 			}
@@ -1777,22 +2098,21 @@ const VTTEnhanced = () => {
 		],
 	);
 
-	const handleMapKeyUp = useCallback(
-		(e: React.KeyboardEvent<HTMLDivElement>) => {
-			if (e.code !== "Space") return;
-			setIsViewportPanModifierActive(false);
-			e.preventDefault();
-		},
-		[],
-	);
-
-	const handleMapBlur = useCallback(() => {
+	const handleMapKeyUp = useCallback((e: KeyboardEvent) => {
+		if (e.code !== "Space") return;
 		setIsViewportPanModifierActive(false);
-		touchRef.current = null;
-		if (viewportPanActiveRef.current) {
-			clearViewportPan();
-		}
-	}, [clearViewportPan]);
+		e.preventDefault();
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		window.addEventListener("keydown", handleMapKeyDown);
+		window.addEventListener("keyup", handleMapKeyUp);
+		return () => {
+			window.removeEventListener("keydown", handleMapKeyDown);
+			window.removeEventListener("keyup", handleMapKeyUp);
+		};
+	}, [handleMapKeyDown, handleMapKeyUp]);
 
 	const removeAnnotation = useCallback(
 		(noteId: string) => {
@@ -1825,7 +2145,10 @@ const VTTEnhanced = () => {
 			const grid = getGridPosition(e);
 			if (!grid) return;
 
-			if (draggedToken && (draggedToken.x !== grid.gridX || draggedToken.y !== grid.gridY)) {
+			if (
+				draggedToken &&
+				(draggedToken.x !== grid.gridX || draggedToken.y !== grid.gridY)
+			) {
 				updateToken(draggedToken.id, { x: grid.gridX, y: grid.gridY });
 			}
 
@@ -1890,35 +2213,65 @@ const VTTEnhanced = () => {
 		[getGridPosition, vttRealtime],
 	);
 
-	const handleMapMouseUp = useCallback(() => {
-		if (viewportPanActiveRef.current) {
-			clearViewportPan();
-			return;
-		}
-		if (drawingFrameRef.current !== null) {
-			window.cancelAnimationFrame(drawingFrameRef.current);
-			drawingFrameRef.current = null;
-		}
-		const finalizedDrawing = applyPendingPointToDrawing(
+	const handleMapMouseUp = useCallback(
+		(e?: React.MouseEvent<HTMLDivElement>) => {
+			const wasDraggingToken = draggedToken != null;
+			const wasFogPainting = isFogPainting;
+			const hadActiveDrawing = activeDrawing != null;
+			if (viewportPanActiveRef.current) {
+				clearViewportPan();
+				return;
+			}
+			if (drawingFrameRef.current !== null) {
+				window.cancelAnimationFrame(drawingFrameRef.current);
+				drawingFrameRef.current = null;
+			}
+			const finalizedDrawing = applyPendingPointToDrawing(
+				activeDrawing,
+				pendingDrawingPointRef.current,
+			);
+			pendingDrawingPointRef.current = null;
+			if (draggedToken) {
+				setDraggedToken(null);
+			}
+			if (isFogPainting) {
+				setIsFogPainting(false);
+				lastFogCellRef.current = null;
+			}
+			lastMeasureCellRef.current = null;
+			if (finalizedDrawing && currentScene) {
+				updateScene({
+					drawings: [...(currentScene.drawings ?? []), finalizedDrawing],
+				});
+				setActiveDrawing(null);
+				return;
+			}
+			if (
+				e?.type === "mouseup" &&
+				e.button === 0 &&
+				!suppressNextMapActionRef.current &&
+				!suppressViewportPanClickRef.current &&
+				!wasDraggingToken &&
+				!wasFogPainting &&
+				!hadActiveDrawing
+			) {
+				const grid = getGridPosition(e);
+				if (!grid) return;
+				handleMapGridAction(grid);
+			}
+		},
+		[
 			activeDrawing,
-			pendingDrawingPointRef.current,
-		);
-		pendingDrawingPointRef.current = null;
-		if (draggedToken) {
-			setDraggedToken(null);
-		}
-		if (isFogPainting) {
-			setIsFogPainting(false);
-			lastFogCellRef.current = null;
-		}
-		lastMeasureCellRef.current = null;
-		if (finalizedDrawing && currentScene) {
-			updateScene({
-				drawings: [...(currentScene.drawings ?? []), finalizedDrawing],
-			});
-			setActiveDrawing(null);
-		}
-	}, [activeDrawing, applyPendingPointToDrawing, clearViewportPan, currentScene, draggedToken, isFogPainting, updateScene]);
+			applyPendingPointToDrawing,
+			clearViewportPan,
+			currentScene,
+			draggedToken,
+			getGridPosition,
+			handleMapGridAction,
+			isFogPainting,
+			updateScene,
+		],
+	);
 
 	// Sync HP back to character in Supabase when a linked token's HP changes
 	const syncCharacterHP = useCallback(
@@ -2029,7 +2382,12 @@ const VTTEnhanced = () => {
 			animationDuration: Math.random() * 2 + 1,
 			delay: Math.random() * -2,
 		}));
-	}, [currentScene?.id, currentScene?.weather, fx.particleCount, weatherPreset]);
+	}, [
+		currentScene?.id,
+		currentScene?.weather,
+		fx.particleCount,
+		weatherPreset,
+	]);
 
 	const overlayStyles = useMemo(() => {
 		const parts: string[] = [];
@@ -2564,33 +2922,17 @@ const VTTEnhanced = () => {
 																>
 																	<Copy className="w-3 h-3" />
 																</button>
-																{scenes.length > 1 && (
-																	<button
-																		type="button"
-																		onClick={() => {
-																			if (
-																				!window.confirm(
-																					`Delete "${scene.name}"?`,
-																				)
-																			)
-																				return;
-																			const next = scenes.filter(
-																				(s) => s.id !== scene.id,
-																			);
-																			setScenes(next);
-																			setCurrentScene(next[0] || null);
-																			persistSceneState(
-																				next,
-																				next[0]?.id ?? null,
-																			);
-																		}}
-																		className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
-																		title="Delete scene"
-																		aria-label="Delete scene"
-																	>
-																		<X className="w-3 h-3" />
-																	</button>
-																)}
+																<button
+																	type="button"
+																	onClick={() => {
+																		void handleDeleteScene(scene);
+																	}}
+																	className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
+																	title="Delete scene"
+																	aria-label="Delete scene"
+																>
+																	<X className="w-3 h-3" />
+																</button>
 															</div>
 														</div>
 													))}
@@ -2656,7 +2998,7 @@ const VTTEnhanced = () => {
 												</div>
 												{selectedTool === "measure" && (
 													<div className="mt-3 pt-3 border-t border-border/50 space-y-2">
-														<Label className="text-xs block">AoE Shape</Label>
+														<Label className="text-xs">AoE Shape</Label>
 														<div className="grid grid-cols-4 gap-1">
 															{(
 																[
@@ -2696,7 +3038,7 @@ const VTTEnhanced = () => {
 														</div>
 														{measureShape !== "line" && (
 															<div>
-																<Label className="text-xs block mb-1">
+																<Label className="text-xs">
 																	Radius: {measureRadius * 5}ft ({measureRadius}{" "}
 																	sq)
 																</Label>
@@ -2720,7 +3062,7 @@ const VTTEnhanced = () => {
 											<AscendantWindow title="CONTROLS" density="compact">
 												<div className="space-y-3 overflow-y-auto max-h-[35vh]">
 													<div>
-														<Label className="text-xs mb-1 block">Zoom</Label>
+														<Label className="text-xs">Zoom</Label>
 														<div className="flex items-center gap-1">
 															<Button
 																variant="outline"
@@ -2757,7 +3099,9 @@ const VTTEnhanced = () => {
 																		rect.height / sh,
 																		2,
 																	);
-																	handleRequestZoom(Math.round(fitZoom * 20) / 20);
+																	handleRequestZoom(
+																		Math.round(fitZoom * 20) / 20,
+																	);
 																}}
 															>
 																<Maximize2 className="w-3 h-3" />
@@ -3078,7 +3422,7 @@ const VTTEnhanced = () => {
 																variant="outline"
 																size="sm"
 																onClick={() =>
-																	updateScene({ backgroundImage: undefined })
+																	void handleClearBackgroundImage()
 																}
 															>
 																Clear
@@ -3552,16 +3896,11 @@ const VTTEnhanced = () => {
 										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
 										data-testid="vtt-map"
 										ref={mapRef}
-										onClick={handleMapClick}
 										onDoubleClick={handleMapDoubleClick}
 										onMouseDown={handleMapMouseDown}
 										onMouseMove={handleMapMouseMove}
 										onMouseUp={handleMapMouseUp}
 										onMouseLeave={handleMapMouseUp}
-										onKeyDown={handleMapKeyDown}
-										onKeyUp={handleMapKeyUp}
-										onBlur={handleMapBlur}
-										tabIndex={0}
 										onContextMenu={(e) => {
 											e.preventDefault();
 											// Find token at click position for right-click/long-press context menu
@@ -3635,7 +3974,9 @@ const VTTEnhanced = () => {
 													setActiveTokenId={setActiveTokenId}
 													updateToken={updateToken}
 													onRequestZoom={handleRequestZoom}
-													viewportPanModifierActive={isViewportPanModifierActive}
+													viewportPanModifierActive={
+														isViewportPanModifierActive
+													}
 													onTokenDragStart={handlePixiTokenDragStart}
 													onTokenDragEnd={handlePixiTokenDragEnd}
 												/>
@@ -3895,7 +4236,8 @@ const VTTEnhanced = () => {
 
 											{/* Weather overlay */}
 											{currentScene?.weather &&
-												weatherPreset && weatherParticles.length > 0 && (
+												weatherPreset &&
+												weatherParticles.length > 0 && (
 													<div
 														className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80"
 														data-testid="vtt-weather-overlay"
@@ -3912,7 +4254,8 @@ const VTTEnhanced = () => {
 																		"--vtt-particle-size": `${particle.size}px`,
 																		"--vtt-particle-left": `${particle.left}%`,
 																		"--vtt-particle-top": `${particle.top}%`,
-																		"--vtt-particle-color": weatherPreset.particleColor,
+																		"--vtt-particle-color":
+																			weatherPreset.particleColor,
 																		"--vtt-particle-animation": `weather-particle-${currentScene?.weather} ${particle.animationDuration}s linear infinite`,
 																		"--vtt-particle-delay": `${particle.delay}s`,
 																	}}
@@ -4171,6 +4514,9 @@ const VTTEnhanced = () => {
 												<ProtocolWardenTools
 													campaignId={campaignId || ""}
 													onRoll={vttRealtime.rollAndBroadcast}
+													customAssets={customAssets}
+													onUploadAsset={uploadCustomAsset}
+													onDeleteAsset={deleteCustomAsset}
 													onChangeMap={(url, name) => {
 														if (currentScene) {
 															// Use the same field name the scene type + Pixi renderer read
@@ -4190,7 +4536,7 @@ const VTTEnhanced = () => {
 															updateScene(nextScene);
 															vttRealtime.broadcastSceneSync(
 																upsertVttScene(scenes, nextScene),
-																currentScene.id,
+																getPersistedSceneId(nextScene.id),
 															);
 														}
 													}}
@@ -4212,10 +4558,10 @@ const VTTEnhanced = () => {
 													onAddEffect={(e: VTTEffectPayload) => {
 														if (!currentScene) return;
 														const cx = Math.floor(
-															(currentScene.width || 20) / 2,
+															(currentScene.width ?? 20) / 2,
 														);
 														const cy = Math.floor(
-															(currentScene.height || 20) / 2,
+															(currentScene.height ?? 20) / 2,
 														);
 
 														if (e.type === "magic" || e.type === "image") {
@@ -4270,7 +4616,7 @@ const VTTEnhanced = () => {
 															updateScene(nextScene);
 															vttRealtime.broadcastSceneSync(
 																upsertVttScene(scenes, nextScene),
-																currentScene.id,
+																getPersistedSceneId(nextScene.id),
 															);
 														} else if (e.type === "terrain") {
 															const terrainCenter = {
@@ -4314,7 +4660,7 @@ const VTTEnhanced = () => {
 															updateScene(nextScene);
 															vttRealtime.broadcastSceneSync(
 																upsertVttScene(scenes, nextScene),
-																nextScene.id,
+																getPersistedSceneId(nextScene.id),
 															);
 														} else if (e.type === "ambient") {
 															const newAmbient: AmbientSoundZone = {
@@ -4347,7 +4693,7 @@ const VTTEnhanced = () => {
 															updateScene(nextScene);
 															vttRealtime.broadcastSceneSync(
 																upsertVttScene(scenes, nextScene),
-																nextScene.id,
+																getPersistedSceneId(nextScene.id),
 															);
 														}
 													}}
@@ -5391,6 +5737,9 @@ const VTTEnhanced = () => {
 										<AscendantWindow title="ASSET LIBRARY" density="compact">
 											<VTTAssetBrowser
 												campaignId={campaignId}
+												customAssets={customAssets}
+												onUploadAsset={uploadCustomAsset}
+												onDeleteAsset={deleteCustomAsset}
 												onUseAsMap={(imageUrl, name) => {
 													if (currentScene) {
 														updateScene({
@@ -5684,23 +6033,35 @@ const VTTEnhanced = () => {
 												Scenes
 											</h4>
 											{scenes.map((scene) => (
-												<button
-													type="button"
-													key={scene.id}
-													onClick={() => {
-														setCurrentScene(scene);
-														vttRealtime.broadcastSceneChange(scene.id);
-														setMobilePanel(null);
-													}}
-													className={cn(
-														"w-full text-left p-2 rounded text-sm",
-														currentScene?.id === scene.id
-															? "bg-primary/20 border border-primary"
-															: "border border-border",
-													)}
-												>
-													{scene.name}
-												</button>
+												<div key={scene.id} className="flex items-center gap-2">
+													<button
+														type="button"
+														onClick={() => {
+															setCurrentScene(scene);
+															vttRealtime.broadcastSceneChange(scene.id);
+															setMobilePanel(null);
+														}}
+														className={cn(
+															"flex-1 text-left p-2 rounded text-sm",
+															currentScene?.id === scene.id
+																? "bg-primary/20 border border-primary"
+																: "border border-border",
+														)}
+													>
+														{scene.name}
+													</button>
+													<button
+														type="button"
+														onClick={() => {
+															void handleDeleteScene(scene);
+														}}
+														className="p-2 rounded border border-destructive/30 text-destructive hover:bg-destructive/10"
+														aria-label={`Delete ${scene.name}`}
+														title="Delete scene"
+													>
+														<X className="w-3.5 h-3.5" />
+													</button>
+												</div>
 											))}
 										</div>
 									</div>
@@ -5840,6 +6201,9 @@ const VTTEnhanced = () => {
 										<TabsContent value="assets">
 											<VTTAssetBrowser
 												campaignId={campaignId}
+												customAssets={customAssets}
+												onUploadAsset={uploadCustomAsset}
+												onDeleteAsset={deleteCustomAsset}
 												onUseAsMap={(imageUrl, name) => {
 													if (currentScene) {
 														updateScene({

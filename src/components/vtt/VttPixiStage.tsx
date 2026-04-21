@@ -1019,6 +1019,7 @@ export function VttPixiStage({
 		onStageReady,
 		onTokenDragStart,
 		updateToken,
+		viewportPanModifierActive,
 		zoom,
 		fx.particleCount,
 	]);

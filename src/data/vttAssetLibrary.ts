@@ -46,6 +46,10 @@ export interface VTTAsset {
 	tags: string[];
 	rank?: string;
 	description?: string | null;
+	isCustom?: boolean;
+	uploadedBy?: string;
+	uploadedAt?: string;
+	storagePath?: string;
 }
 
 // ── Premade Battle Maps ──────────────────────────────────────────────────

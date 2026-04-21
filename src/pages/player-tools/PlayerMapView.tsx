@@ -13,6 +13,7 @@ import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
+import type { VTTAsset } from "@/data/vttAssetLibrary";
 import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useCampaignToolState } from "@/hooks/useToolState";
@@ -93,6 +94,18 @@ type VTTScenesState = {
 };
 
 const MOBILE_BREAKPOINT_QUERY = "(max-width: 767px)";
+
+const isPlayerMapShortcutTarget = (target: EventTarget | null) => {
+	if (typeof HTMLElement === "undefined" || !(target instanceof HTMLElement)) {
+		return false;
+	}
+	return (
+		target.isContentEditable ||
+		target.closest(
+			"button, input, select, textarea, [contenteditable='true'], [role='textbox']",
+		) !== null
+	);
+};
 
 const SIZE_VALUES = {
 	small: 32,
@@ -182,6 +195,8 @@ const PlayerMapView = ({
 		const handleWindowBlur = () => {
 			spacePanPressedRef.current = false;
 			touchRef.current = null;
+			lastDraggedCellRef.current = null;
+			setDraggedTokenId(null);
 			if (!viewportPanRef.current) return;
 			viewportPanRef.current = null;
 			setIsViewportPanning(false);
@@ -214,14 +229,28 @@ const PlayerMapView = ({
 	const toolKey = effectiveSessionId
 		? `vtt_scenes:${effectiveSessionId}`
 		: "vtt_scenes";
+	const assetsToolKey = effectiveSessionId
+		? `vtt_assets:${effectiveSessionId}`
+		: "vtt_assets";
 	const legacyStorageKey = effectiveCampaignId
 		? `vtt-scenes-${effectiveCampaignId}${effectiveSessionId ? `-${effectiveSessionId}` : ""}`
 		: "vtt-scenes";
+	const legacyAssetsStorageKey = effectiveCampaignId
+		? `vtt-assets-${effectiveCampaignId}${effectiveSessionId ? `-${effectiveSessionId}` : ""}`
+		: "vtt-assets";
 	const { state: storedState, isLoading } =
 		useCampaignToolState<VTTScenesState>(effectiveCampaignId || null, toolKey, {
 			initialState: { scenes: [], currentSceneId: null },
 			storageKey: legacyStorageKey,
 		});
+	const { state: sharedCustomAssets } = useCampaignToolState<VTTAsset[]>(
+		effectiveCampaignId || null,
+		assetsToolKey,
+		{
+			initialState: [],
+			storageKey: legacyAssetsStorageKey,
+		},
+	);
 
 	// Hydrate scene from stored state
 	useEffect(() => {
@@ -418,7 +447,6 @@ const PlayerMapView = ({
 
 	const handleMapMouseDown = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
-			mapRef.current?.focus();
 			if (
 				(e.button === 1 || (e.button === 0 && spacePanPressedRef.current)) &&
 				mapRef.current
@@ -444,7 +472,6 @@ const PlayerMapView = ({
 			}
 			if (token.locked || !isOwnToken(token)) return;
 			e.stopPropagation();
-			mapRef.current?.focus();
 			lastDraggedCellRef.current = `${token.x},${token.y}`;
 			setDraggedTokenId(token.id);
 		},
@@ -469,7 +496,9 @@ const PlayerMapView = ({
 			lastDraggedCellRef.current = cellKey;
 			setCurrentScene((prev) => {
 				if (!prev) return prev;
-				const tokenIndex = prev.tokens.findIndex((t) => t.id === draggedTokenId);
+				const tokenIndex = prev.tokens.findIndex(
+					(t) => t.id === draggedTokenId,
+				);
 				if (tokenIndex === -1) return prev;
 				const currentToken = prev.tokens[tokenIndex];
 				if (currentToken.x === pos.gx && currentToken.y === pos.gy) return prev;
@@ -559,33 +588,28 @@ const PlayerMapView = ({
 		touchRef.current = null;
 	}, []);
 
-	const handleMapKeyDown = useCallback(
-		(e: React.KeyboardEvent<HTMLDivElement>) => {
-			if (e.code !== "Space") return;
-			spacePanPressedRef.current = true;
-			e.preventDefault();
-		},
-		[],
-	);
+	const handleMapKeyDown = useCallback((e: KeyboardEvent) => {
+		if (isPlayerMapShortcutTarget(e.target)) return;
+		if (e.code !== "Space") return;
+		spacePanPressedRef.current = true;
+		e.preventDefault();
+	}, []);
 
-	const handleMapKeyUp = useCallback(
-		(e: React.KeyboardEvent<HTMLDivElement>) => {
-			if (e.code !== "Space") return;
-			spacePanPressedRef.current = false;
-			e.preventDefault();
-		},
-		[],
-	);
-
-	const handleMapBlur = useCallback(() => {
+	const handleMapKeyUp = useCallback((e: KeyboardEvent) => {
+		if (e.code !== "Space") return;
 		spacePanPressedRef.current = false;
-		touchRef.current = null;
-		lastDraggedCellRef.current = null;
-		setDraggedTokenId(null);
-		if (viewportPanRef.current) {
-			clearViewportPan();
-		}
-	}, [clearViewportPan]);
+		e.preventDefault();
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		window.addEventListener("keydown", handleMapKeyDown);
+		window.addEventListener("keyup", handleMapKeyUp);
+		return () => {
+			window.removeEventListener("keydown", handleMapKeyDown);
+			window.removeEventListener("keyup", handleMapKeyUp);
+		};
+	}, [handleMapKeyDown, handleMapKeyUp]);
 
 	const sceneWidth = currentScene?.width ?? 20;
 	const sceneHeight = currentScene?.height ?? 20;
@@ -624,7 +648,12 @@ const PlayerMapView = ({
 			animationDuration: Math.random() * 2 + 1,
 			delay: Math.random() * -2,
 		}));
-	}, [currentScene?.id, currentScene?.weather, fx.particleCount, weatherPreset]);
+	}, [
+		currentScene?.id,
+		currentScene?.weather,
+		fx.particleCount,
+		weatherPreset,
+	]);
 
 	const _overlayStyles = useMemo(() => {
 		const parts: string[] = [];
@@ -807,11 +836,7 @@ const PlayerMapView = ({
 									onTouchStart={handleMapTouchStart}
 									onTouchMove={handleMapTouchMove}
 									onTouchEnd={handleMapTouchEnd}
-									onKeyDown={handleMapKeyDown}
-									onKeyUp={handleMapKeyUp}
-									onBlur={handleMapBlur}
 									role="application"
-									tabIndex={0}
 									aria-label="Battle Map Canvas"
 								>
 									<ErrorBoundary>
@@ -856,18 +881,18 @@ const PlayerMapView = ({
 											{currentScene?.fogOfWar && currentScene.fogData && (
 												<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
 													{fogCells.map((cell) => (
-																<DynamicStyle
-																	key={`fog-${cell.rx}-${cell.ry}`}
-																	className="absolute vtt-fog-cell bg-black"
-																	vars={{
-																		left: `${cell.rx * gridSize * zoom}px`,
-																		top: `${cell.ry * gridSize * zoom}px`,
-																		width: `${gridSize * zoom}px`,
-																		height: `${gridSize * zoom}px`,
-																		opacity: 0.9,
-																	}}
-																/>
-														))}
+														<DynamicStyle
+															key={`fog-${cell.rx}-${cell.ry}`}
+															className="absolute vtt-fog-cell bg-black"
+															vars={{
+																left: `${cell.rx * gridSize * zoom}px`,
+																top: `${cell.ry * gridSize * zoom}px`,
+																width: `${gridSize * zoom}px`,
+																height: `${gridSize * zoom}px`,
+																opacity: 0.9,
+															}}
+														/>
+													))}
 												</div>
 											)}
 
@@ -967,9 +992,7 @@ const PlayerMapView = ({
 													className="absolute inset-0 pointer-events-none z-[100] overflow-hidden mix-blend-screen opacity-80"
 													data-testid="vtt-weather-overlay"
 												>
-													<style>
-														{getWeatherCSSAnimation(weatherPreset)}
-													</style>
+													<style>{getWeatherCSSAnimation(weatherPreset)}</style>
 													{weatherParticles.map((particle) => {
 														return (
 															<DynamicStyle
@@ -1548,6 +1571,7 @@ const PlayerMapView = ({
 									<AscendantWindow title="ASSET LIBRARY">
 										<VTTAssetBrowser
 											campaignId={campaignId}
+											customAssets={sharedCustomAssets}
 											readOnly={false}
 											onUseAsToken={(_imageUrl, name) => {
 												vttRealtime.sendChatMessage(
@@ -1825,6 +1849,7 @@ const PlayerMapView = ({
 								{mobilePanel === "assets" && (
 									<VTTAssetBrowser
 										campaignId={effectiveCampaignId}
+										customAssets={sharedCustomAssets}
 										readOnly={false}
 										onUseAsToken={(_imageUrl, name) => {
 											vttRealtime.sendChatMessage(
