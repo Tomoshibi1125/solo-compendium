@@ -3,11 +3,11 @@ import type { CompendiumRune } from "../../../types/compendium";
 export const runes_a: CompendiumRune[] = [
 	{
 		id: "rune-spell-a-1",
-		name: "Rune of Heart wave",
-		display_name: "Rune of Heart wave",
+		name: "Rune of Heart Wave",
+		display_name: "Rune of Heart Wave",
 		description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Blinded.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "When words fail, this speaks.",
+			"Strikes for 8d10 damage; on a failed DC 18 Agility save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A direct answer in place of a verbal one.",
 		tags: [
 			"awakened",
 			"magic",
@@ -23,7 +23,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Blinded.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Blinded.",
+			"Strikes for 8d10 damage; on a failed DC 18 Agility save the target takes full damage and becomes Blinded, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -57,11 +57,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-2",
-		name: "Rune of Bright spike",
-		display_name: "Rune of Bright spike",
+		name: "Rune of Bright Spike",
+		display_name: "Rune of Bright Spike",
 		description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Stunned.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "When words fail, this speaks.",
+			"Strikes for 8d10 damage; on a failed DC 18 Agility save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "Reserved for moments past negotiation.",
 		tags: [
 			"awakened",
 			"magic",
@@ -77,7 +77,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Stunned.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Stunned.",
+			"Strikes for 8d10 damage; on a failed DC 18 Agility save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -111,11 +111,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-3",
-		name: "Rune of Umbral tear",
-		display_name: "Rune of Umbral tear",
+		name: "Rune of Umbral Tear",
+		display_name: "Rune of Umbral Tear",
 		description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Sense saving throw or suffer its full effects and is Prone.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "An ancient secret reclaimed from the dust.",
+			"Strikes for 8d10 damage; on a failed DC 18 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
 			"magic",
@@ -131,7 +131,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Prone.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Sense saving throw or suffer its full effects and is Prone.",
+			"Strikes for 8d10 damage; on a failed DC 18 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -165,11 +165,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-4",
-		name: "Rune of Light burst",
-		display_name: "Rune of Light burst",
+		name: "Rune of Light Burst",
+		display_name: "Rune of Light Burst",
 		description:
-			"Unleashes a surge of magical power dealing 12d6 damage. Targets must succeed on a DC 18 Sense saving throw or suffer its full effects and is Frightened.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "When words fail, this speaks.",
+			"Strikes for 12d6 damage; on a failed DC 18 Sense save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A direct answer in place of a verbal one.",
 		tags: [
 			"awakened",
 			"magic",
@@ -185,7 +185,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Frightened.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 12d6 damage. Targets must succeed on a DC 18 Sense saving throw or suffer its full effects and is Frightened.",
+			"Strikes for 12d6 damage; on a failed DC 18 Sense save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -219,10 +219,10 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-5",
-		name: "Rune of Corona shackle",
-		display_name: "Rune of Corona shackle",
+		name: "Rune of Corona Shackle",
+		display_name: "Rune of Corona Shackle",
 		description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Frightened.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 8d10 damage; on a failed DC 18 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -239,7 +239,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Frightened.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Frightened.",
+			"Strikes for 8d10 damage; on a failed DC 18 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -273,11 +273,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-6",
-		name: "Rune of Carnage tear",
-		display_name: "Rune of Carnage tear",
+		name: "Rune of Carnage Tear",
+		display_name: "Rune of Carnage Tear",
 		description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Presence saving throw or suffer its full effects and is Stunned.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "An ancient secret reclaimed from the dust.",
+			"Strikes for 8d10 damage; on a failed DC 18 Presence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
 			"magic",
@@ -293,7 +293,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Stunned.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d10 damage. Targets must succeed on a DC 18 Presence saving throw or suffer its full effects and is Stunned.",
+			"Strikes for 8d10 damage; on a failed DC 18 Presence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -327,11 +327,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-7",
-		name: "Rune of Shock tear",
-		display_name: "Rune of Shock tear",
+		name: "Rune of Shock Tear",
+		display_name: "Rune of Shock Tear",
 		description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Vitality saving throw or suffer its full effects and is Blinded.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "When words fail, this speaks.",
+			"Strikes for 8d12 damage; on a failed DC 18 Vitality save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "Used when subtler instruments are out of reach.",
 		tags: [
 			"awakened",
 			"magic",
@@ -347,7 +347,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Blinded.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Vitality saving throw or suffer its full effects and is Blinded.",
+			"Strikes for 8d12 damage; on a failed DC 18 Vitality save the target takes full damage and becomes Blinded, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -381,11 +381,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-8",
-		name: "Rune of Rime pulse",
-		display_name: "Rune of Rime pulse",
+		name: "Rune of Rime Pulse",
+		display_name: "Rune of Rime Pulse",
 		description:
-			"Unleashes a surge of magical power dealing 10d8 damage. Targets must succeed on a DC 18 Presence saving throw or suffer its full effects and is Frightened.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "A testament to raw magical superiority.",
+			"Strikes for 10d8 damage; on a failed DC 18 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A tuned release of accumulated resonance.",
 		tags: [
 			"awakened",
 			"magic",
@@ -401,7 +401,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Frightened.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 10d8 damage. Targets must succeed on a DC 18 Presence saving throw or suffer its full effects and is Frightened.",
+			"Strikes for 10d8 damage; on a failed DC 18 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -435,11 +435,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-9",
-		name: "Rune of Frost judgment",
-		display_name: "Rune of Frost judgment",
+		name: "Rune of Frost Judgment",
+		display_name: "Rune of Frost Judgment",
 		description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Intelligence saving throw or suffer its full effects and is Incapacitated.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "The manifestation of true Hunter authority.",
+			"Strikes for 8d12 damage; on a failed DC 18 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A Bureau-validated combat pattern.",
 		tags: [
 			"awakened",
 			"magic",
@@ -455,7 +455,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Incapacitated.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Intelligence saving throw or suffer its full effects and is Incapacitated.",
+			"Strikes for 8d12 damage; on a failed DC 18 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -489,11 +489,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-10",
-		name: "Rune of Lightning strike",
-		display_name: "Rune of Lightning strike",
+		name: "Rune of Lightning Strike",
+		display_name: "Rune of Lightning Strike",
 		description:
-			"Unleashes a surge of magical power dealing 6d12 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Stunned.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "When words fail, this speaks.",
+			"Strikes for 6d12 damage; on a failed DC 18 Agility save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A direct answer in place of a verbal one.",
 		tags: [
 			"awakened",
 			"magic",
@@ -509,7 +509,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Stunned.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 6d12 damage. Targets must succeed on a DC 18 Agility saving throw or suffer its full effects and is Stunned.",
+			"Strikes for 6d12 damage; on a failed DC 18 Agility save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -543,11 +543,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-11",
-		name: "Rune of Shock spike",
-		display_name: "Rune of Shock spike",
+		name: "Rune of Shock Spike",
+		display_name: "Rune of Shock Spike",
 		description:
-			"Unleashes a surge of magical power dealing 10d8 damage. Targets must succeed on a DC 18 Sense saving throw or suffer its full effects and is Prone.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "The world itself shudders.",
+			"Strikes for 10d8 damage; on a failed DC 18 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "The air takes on a measurable weight.",
 		tags: [
 			"awakened",
 			"magic",
@@ -563,7 +563,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Prone.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 10d8 damage. Targets must succeed on a DC 18 Sense saving throw or suffer its full effects and is Prone.",
+			"Strikes for 10d8 damage; on a failed DC 18 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -597,11 +597,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-12",
-		name: "Rune of Volt wave",
-		display_name: "Rune of Volt wave",
+		name: "Rune of Volt Wave",
+		display_name: "Rune of Volt Wave",
 		description:
-			"Unleashes a surge of magical power dealing 10d8 damage. Targets must succeed on a DC 18 Strength saving throw or suffer its full effects and is Restrained.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "The world itself shudders.",
+			"Strikes for 10d8 damage; on a failed DC 18 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "Reality registers the strike as an event.",
 		tags: [
 			"awakened",
 			"magic",
@@ -617,7 +617,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Restrained.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 10d8 damage. Targets must succeed on a DC 18 Strength saving throw or suffer its full effects and is Restrained.",
+			"Strikes for 10d8 damage; on a failed DC 18 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -651,11 +651,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-13",
-		name: "Rune of Void blast",
-		display_name: "Rune of Void blast",
+		name: "Rune of Void Blast",
+		display_name: "Rune of Void Blast",
 		description:
-			"Unleashes a surge of magical power dealing 6d12 damage. Targets must succeed on a DC 18 Presence saving throw or suffer its full effects and is Stunned.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "A testament to raw magical superiority.",
+			"Strikes for 6d12 damage; on a failed DC 18 Presence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "A tuned release of accumulated resonance.",
 		tags: [
 			"awakened",
 			"magic",
@@ -671,7 +671,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Stunned.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 6d12 damage. Targets must succeed on a DC 18 Presence saving throw or suffer its full effects and is Stunned.",
+			"Strikes for 6d12 damage; on a failed DC 18 Presence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -705,11 +705,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-14",
-		name: "Rune of Pulse storm",
-		display_name: "Rune of Pulse storm",
+		name: "Rune of Pulse Storm",
+		display_name: "Rune of Pulse Storm",
 		description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Strength saving throw or suffer its full effects and is Prone.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "The world itself shudders.",
+			"Strikes for 8d12 damage; on a failed DC 18 Strength save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "The air takes on a measurable weight.",
 		tags: [
 			"awakened",
 			"magic",
@@ -725,7 +725,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Prone.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Strength saving throw or suffer its full effects and is Prone.",
+			"Strikes for 8d12 damage; on a failed DC 18 Strength save the target takes full damage and becomes Prone, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",
@@ -759,11 +759,11 @@ export const runes_a: CompendiumRune[] = [
 	},
 	{
 		id: "rune-spell-a-15",
-		name: "Rune of Surge grasp",
-		display_name: "Rune of Surge grasp",
+		name: "Rune of Surge Grasp",
+		display_name: "Rune of Surge Grasp",
 		description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Intelligence saving throw or suffer its full effects and is Stunned.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
-		flavor: "A technique born in the bloody depths of a Red Gate.",
+			"Strikes for 8d12 damage; on a failed DC 18 Intelligence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+		flavor: "Developed under live Gate-incursion conditions.",
 		tags: [
 			"awakened",
 			"magic",
@@ -779,7 +779,7 @@ export const runes_a: CompendiumRune[] = [
 			secondary: "On failure, the target is Stunned.",
 		},
 		effect_description:
-			"Unleashes a surge of magical power dealing 8d12 damage. Targets must succeed on a DC 18 Intelligence saving throw or suffer its full effects and is Stunned.",
+			"Strikes for 8d12 damage; on a failed DC 18 Intelligence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		rune_type: "Consumable",
 		effect_type: "active",
 		activation_action: "Action",

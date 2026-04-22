@@ -873,7 +873,7 @@ export const items_part8: Item[] = [
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Commands the certainty of outcomes. The final equation in a war without end.",
+			"Pins the cast's result to one deterministic branch. The final equation in a war without end.",
 		discovery_lore:
 			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "single-target", "mobility", "offensive"],

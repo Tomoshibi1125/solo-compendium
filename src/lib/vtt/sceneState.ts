@@ -64,6 +64,8 @@ export const buildDefaultVttScene = ({
 	fogOfWar: false,
 	gridType: "square",
 	weather: "clear",
+	musicMood: null,
+	musicAutoplay: false,
 	terrain: [],
 	ambientSounds: [],
 });
@@ -91,6 +93,8 @@ export const normalizeVttScene = (scene: VTTScene): VTTScene => ({
 	annotations: Array.isArray(scene.annotations) ? scene.annotations : [],
 	walls: Array.isArray(scene.walls) ? scene.walls : [],
 	lights: Array.isArray(scene.lights) ? scene.lights : [],
+	musicMood: scene.musicMood ?? null,
+	musicAutoplay: scene.musicAutoplay ?? false,
 	terrain: Array.isArray(scene.terrain) ? scene.terrain : [],
 	ambientSounds: Array.isArray(scene.ambientSounds) ? scene.ambientSounds : [],
 	weather: scene.weather,

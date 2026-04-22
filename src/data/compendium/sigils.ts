@@ -14,12 +14,12 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Forged by the Bureau's arcane division to combat carapace-armored monsters encountered in C-Rank gates.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+				"Entered into the Bureau's dermal-inscription registry after initial trials.",
+			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
-			personality: "Deeply territorial.",
-			current_owner: "Circulating in the underground Hunter markets.",
-			prior_owners: ["The First Ascendant"],
+			personality: "Binds cleanly to an authorized socket on first inscription.",
+			current_owner: "Issued via the Guild's rank-appropriate supply chain.",
+			prior_owners: ["Guild Historical Registry"],
 		},
 		flavor: "Cut through the noise.",
 		mechanics: {
@@ -82,7 +82,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Salvaged from crushed gravity-crystals found in the Ruins of the Old World.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -149,10 +149,10 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Outlawed in seventy-two countries due to its horrific lingering effects on unawakened tissue.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
-			current_owner: "Circulating in the underground Hunter markets.",
+			current_owner: "Available through Bureau-licensed artificer studios.",
 			prior_owners: ["An unknown rogue Awakened"],
 		},
 		flavor: "They won't stop bleeding.",
@@ -216,11 +216,11 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Refined from the ashes of a Fire Drake's heart extracted during a massive raid in Johannesburg.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Proud and unyielding.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
-			prior_owners: ["The First Ascendant"],
+			prior_owners: ["Bureau Shared-Materiel Archive"],
 		},
 		flavor: "Burn away the impurities.",
 		mechanics: {
@@ -283,7 +283,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Engineered in the Siberian dead-zones where frost magic is key to survival.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Held by a rogue guild.",
@@ -349,7 +349,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "A traditional shamanic rune adapted by modern Guild enchanters.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -416,7 +416,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Sanctified by the High Priests of the Cathedral to purge the encroaching darkness of S-Rank gates.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -483,7 +483,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Carved from the obsidian bone shards of stealth-type assassins from the Shadow Domain.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Proud and unyielding.",
 			current_owner: "Currently unaccounted for.",
@@ -549,7 +549,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Standard issue for Guild operatives facing goblin archers and magical artillery.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -616,11 +616,11 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Developed by healers attempting to keep critically wounded Hunters alive long enough for Evacuation.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Currently unaccounted for.",
-			prior_owners: ["The First Ascendant"],
+			prior_owners: ["Bureau Artifact Vault"],
 		},
 		flavor: "Hold the line.",
 		mechanics: {
@@ -682,7 +682,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Invented after a tragic eruption of a Red Gate composed of volcanic anomalies.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -748,7 +748,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Favored by hunters operating in the Siberian outposts, where freezing to death is a greater threat than monsters.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Currently unaccounted for.",
@@ -813,7 +813,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Built by reverse-engineering the scales of the Storm Wyvern.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Proud and unyielding.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -879,10 +879,10 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "An agile enhancement favored by the Guild's scouting corps.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Dormant and silent.",
-			current_owner: "Circulating in the underground Hunter markets.",
+			current_owner: "Held by licensed Hunter Guild supply offices.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "Weightless steps.",
@@ -946,7 +946,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Created by a mage attempting to decode the language of the Rifts.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Aggressive and volatile.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -1013,7 +1013,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"An essential component for Ranger-class Hunters defending the Safe Zones.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -1080,10 +1080,10 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"A favorite among Assassin-class Hunters looking for the perfect opening.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
-			personality: "Deeply territorial.",
+			personality: "Requires a calibrated socket to stabilize.",
 			current_owner: "Held by a rogue guild.",
 			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
 		},
@@ -1148,7 +1148,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Used by Vanguard Hunters to physically wrestle dungeon bosses to the ground.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -1215,7 +1215,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Reserved for Guild Masters and those who lead raids into the Abyss.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Wielded by Vanguard Hunters.",
@@ -1282,9 +1282,9 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Extremely rare; typically awarded only to National-Level Hunters.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
-			personality: "Deeply territorial.",
+			personality: "Resonates only with lattice-compatible host items.",
 			current_owner: "Held by a rogue guild.",
 			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
 		},
@@ -1349,7 +1349,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"A forbidden artifact; those who study its design too closely often lose their minds to the whispering dark.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Currently unaccounted for.",
@@ -1416,7 +1416,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"The ultimate safeguard for Hunters entering uncharted Red Gates.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Currently unaccounted for.",
@@ -1483,7 +1483,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"A necessity when traversing the deeper layers of Hell-Class gates.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Proud and unyielding.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -1551,7 +1551,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Invented to survive encounters with Ice-type anomalies beyond the Northern Rifts.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -1618,11 +1618,11 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Carved into the shields of Vanguard Hunters facing storm-elemental bosses.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Coldly analytical.",
 			current_owner: "Wielded by Vanguard Hunters.",
-			prior_owners: ["The First Ascendant"],
+			prior_owners: ["Bureau Shared-Materiel Archive"],
 		},
 		flavor: "The storm ignored.",
 		mechanics: {
@@ -1685,9 +1685,9 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Crucial for fighting the acid-spitting Arachnids of Sector D gates.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
-			personality: "Deeply territorial.",
+			personality: "Resonates only with lattice-compatible host items.",
 			current_owner: "Wielded by Vanguard Hunters.",
 			prior_owners: ["Archmage Valerius"],
 		},
@@ -1752,10 +1752,10 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Derived from the antidote protocols used in the Amazon Rift Zone.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Aggressive and volatile.",
-			current_owner: "Circulating in the underground Hunter markets.",
+			current_owner: "Available through Bureau-licensed artificer studios.",
 			prior_owners: ["An unknown rogue Awakened"],
 		},
 		flavor: "A pure heart.",
@@ -1819,7 +1819,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Favored by operatives exploring dwarven ruin-gates where sound triggers traps.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Aggressive and volatile.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -1886,7 +1886,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"An absolute requirement to survive a high-tier Telekinetic anomaly's assault.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Held by a rogue guild.",
@@ -1953,7 +1953,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Constructed after an Illithid-variant gate resulted in hundreds of mind-controlled casualties.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Held by a rogue guild.",
@@ -2020,10 +2020,10 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"The pinnacle of cutting augmentation, designed by an elite Guild Master who broke too many swords.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
-			current_owner: "Circulating in the underground Hunter markets.",
+			current_owner: "Distributed by Bureau-certified inscription workshops.",
 			prior_owners: ["The Obsidian Vanguard"],
 		},
 		flavor: "Nothing stands in the way.",
@@ -2087,7 +2087,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Built for Vanguard hunters dealing with heavily armored stone golems.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Held by a rogue guild.",
@@ -2152,11 +2152,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Ensured a 100% kill rate for the Guild's elite archer division.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Wielded by Vanguard Hunters.",
-			prior_owners: ["The First Ascendant"],
+			prior_owners: ["Hunter Academy Reference Collection"],
 		},
 		flavor: "There's nowhere to hide.",
 		mechanics: {
@@ -2218,7 +2218,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Keeps the deadliest horrors exactly an arm's length away.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Aggressive and volatile.",
 			current_owner: "Held by a rogue guild.",
@@ -2284,7 +2284,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"For when you absolutely must cleave the monster in two on the first swing.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -2350,11 +2350,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "The mage's ultimate catalyst.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
-			current_owner: "Circulating in the underground Hunter markets.",
-			prior_owners: ["The First Ascendant"],
+			current_owner: "Stocked at Guild-credentialed materiel counters.",
+			prior_owners: ["Bureau Shared-Materiel Archive"],
 		},
 		flavor: "Precision of the unseen.",
 		mechanics: {
@@ -2417,7 +2417,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Stolen from a regenerating Troll boss inside an A-Rank labyrinth.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Coldly analytical.",
 			current_owner: "Wielded by Vanguard Hunters.",
@@ -2483,7 +2483,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "For when you need to outrun an angry S-Rank anomaly.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Wielded by Vanguard Hunters.",
@@ -2549,7 +2549,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Monsters feed on fear; this sigil starves them.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Coldly analytical.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
@@ -2615,9 +2615,9 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Favored by solo-tank specialists holding the front line of Rift breaks.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
-			personality: "Deeply territorial.",
+			personality: "Resonates only with lattice-compatible host items.",
 			current_owner: "Wielded by Vanguard Hunters.",
 			prior_owners: ["The Obsidian Vanguard"],
 		},
@@ -2681,11 +2681,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Bypasses the cloaking mechanisms of Class-A stalker anomalies.",
-			history: "Its true history remains a heavily guarded Bureau secret.",
+			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Coldly analytical.",
 			current_owner: "Held by a rogue guild.",
-			prior_owners: ["The First Ascendant"],
+			prior_owners: ["Guild Historical Registry"],
 		},
 		flavor: "Nothing remains hidden.",
 		mechanics: {

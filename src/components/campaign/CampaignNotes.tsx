@@ -8,7 +8,7 @@ import {
 	Share2,
 	Trash2,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -37,12 +37,20 @@ import {
 	useDeleteCampaignNote,
 	useUpdateCampaignNote,
 } from "@/hooks/useCampaignNotes";
-import { useHasWardenAccess } from "@/hooks/useCampaigns";
+import { useCampaignMembers, useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useAuth } from "@/lib/auth/authContext";
 import {
+	decodeCampaignNoteContent,
+	encodeCampaignNoteContent,
+	parseCampaignNoteSegments,
+} from "@/lib/campaignNoteContent";
+import {
 	canEditNote,
+	canViewNote,
 	createPrivacySettings,
 	filterVisibleNotes,
+	type NotePermission,
+	type NoteVisibility,
 	type SecuredNote,
 } from "@/lib/notePrivacy";
 
@@ -56,29 +64,56 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 	const [title, setTitle] = useState("");
 	const [content, setContent] = useState("");
 	const [category, setCategory] = useState("general");
-	const [isShared, setIsShared] = useState(false);
+	const [visibility, setVisibility] = useState<NoteVisibility>("private");
+	const [showTitleOnly, setShowTitleOnly] = useState(false);
+	const [playerPermissions, setPlayerPermissions] = useState<
+		Record<string, NotePermission>
+	>({});
 
 	const { data: notes = [], isLoading } = useCampaignNotes(campaignId);
+	const { data: members = [] } = useCampaignMembers(campaignId);
 	const { data: hasWardenAccess = false } = useHasWardenAccess(campaignId);
 	const { user } = useAuth();
 	const createNote = useCreateCampaignNote();
 	const updateNote = useUpdateCampaignNote();
 	const deleteNote = useDeleteCampaignNote();
+	const campaignPlayers = useMemo(
+		() =>
+			members
+				.filter((member) => member.role === "ascendant")
+				.map((member) => ({
+					userId: member.user_id,
+					label:
+						typeof member.characters?.name === "string"
+							? member.characters.name
+							: `Player ${member.user_id.slice(0, 8)}`,
+				})),
+		[members],
+	);
 
 	// Bridge Supabase notes into SecuredNote format for privacy filtering
-	const securedNotes: SecuredNote[] = notes.map((n) => ({
-		id: n.id,
-		title: n.title,
-		content: n.content || "",
-		campaignId,
-		privacy: {
-			...createPrivacySettings(n.user_id),
-			visibility: n.is_shared ? "shared" : "private",
-		},
-		createdAt: n.created_at,
-		updatedAt: n.updated_at,
-		category: (n.category as SecuredNote["category"]) || "campaign_note",
-	}));
+	const securedNotes: SecuredNote[] = useMemo(
+		() =>
+			notes.map((note) => {
+				const decoded = decodeCampaignNoteContent({
+					content: note.content,
+					ownerId: note.user_id,
+					isShared: note.is_shared,
+				});
+				return {
+					id: note.id,
+					title: note.title,
+					content: decoded.body,
+					campaignId,
+					privacy: decoded.privacy,
+					createdAt: note.created_at,
+					updatedAt: note.updated_at,
+					category:
+						(note.category as SecuredNote["category"]) || "campaign_note",
+				};
+			}),
+		[campaignId, notes],
+	);
 
 	const userId = user?.id ?? "";
 	const visibleNotes = filterVisibleNotes(
@@ -89,20 +124,24 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 
 	const handleOpenDialog = (noteId?: string) => {
 		if (noteId) {
-			const note = notes.find((n) => n.id === noteId);
+			const note = securedNotes.find((entry) => entry.id === noteId);
 			if (note) {
 				setEditingNote(noteId);
 				setTitle(note.title);
 				setContent(note.content || "");
 				setCategory(note.category || "general");
-				setIsShared(note.is_shared);
+				setVisibility(note.privacy.visibility);
+				setShowTitleOnly(note.privacy.showTitleOnly);
+				setPlayerPermissions(note.privacy.playerPermissions);
 			}
 		} else {
 			setEditingNote(null);
 			setTitle("");
 			setContent("");
 			setCategory("general");
-			setIsShared(false);
+			setVisibility("private");
+			setShowTitleOnly(false);
+			setPlayerPermissions({});
 		}
 		setDialogOpen(true);
 	};
@@ -113,18 +152,56 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 		setTitle("");
 		setContent("");
 		setCategory("general");
-		setIsShared(false);
+		setVisibility("private");
+		setShowTitleOnly(false);
+		setPlayerPermissions({});
+	};
+
+	const handlePlayerPermissionChange = (
+		playerId: string,
+		permission: NotePermission,
+	) => {
+		setPlayerPermissions((prev) => {
+			if (permission === "none") {
+				const { [playerId]: _removed, ...remaining } = prev;
+				return remaining;
+			}
+			return {
+				...prev,
+				[playerId]: permission,
+			};
+		});
 	};
 
 	const handleSave = async () => {
 		if (!title.trim()) return;
+
+		const ownerId =
+			securedNotes.find((note) => note.id === editingNote)?.privacy.ownerId ??
+			userId ??
+			"local-owner";
+		const privacy = createPrivacySettings(ownerId);
+		privacy.visibility = hasWardenAccess ? visibility : "private";
+		privacy.showTitleOnly =
+			hasWardenAccess && privacy.visibility === "per-player"
+				? showTitleOnly
+				: false;
+		privacy.playerPermissions =
+			hasWardenAccess && privacy.visibility === "per-player"
+				? playerPermissions
+				: {};
+		const encodedContent = encodeCampaignNoteContent({
+			body: content,
+			privacy,
+		});
+		const isShared = privacy.visibility === "shared";
 
 		if (editingNote) {
 			await updateNote.mutateAsync({
 				noteId: editingNote,
 				campaignId,
 				title,
-				content,
+				content: encodedContent,
 				category,
 				isShared,
 			});
@@ -132,7 +209,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 			await createNote.mutateAsync({
 				campaignId,
 				title,
-				content,
+				content: encodedContent,
 				category,
 				isShared,
 			});
@@ -194,6 +271,14 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 							const note = notes.find((n) => n.id === secured.id);
 							if (!note) return null;
 							const userCanEdit = canEditNote(secured, userId, hasWardenAccess);
+							const userCanViewContent = canViewNote(
+								secured,
+								userId,
+								hasWardenAccess,
+							);
+							const canViewSecretBlocks =
+								hasWardenAccess || secured.privacy.ownerId === userId;
+							const segments = parseCampaignNoteSegments(secured.content);
 							return (
 								<div
 									key={note.id}
@@ -211,7 +296,10 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 											>
 												{note.category}
 											</Badge>
-											{note.is_shared ? (
+											<Badge variant="outline" className="text-[10px] uppercase">
+												{secured.privacy.visibility}
+											</Badge>
+											{secured.privacy.visibility === "shared" ? (
 												<Share2 className="w-3 h-3 text-muted-foreground" />
 											) : (
 												<Lock className="w-3 h-3 text-muted-foreground" />
@@ -238,9 +326,40 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 											</div>
 										)}
 									</div>
-									{note.content && (
-										<p className="text-sm whitespace-pre-wrap">
-											{note.content}
+									{userCanViewContent ? (
+										<div className="space-y-2">
+											{segments.map((segment, index) =>
+												segment.kind === "text" ? (
+													segment.content.trim() ? (
+														<p key={`${note.id}-text-${index}`} className="text-sm whitespace-pre-wrap">
+															{segment.content}
+														</p>
+													) : null
+												) : canViewSecretBlocks ? (
+													<div
+														key={`${note.id}-secret-${index}`}
+														className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 space-y-1"
+													>
+														<p className="text-[10px] uppercase tracking-wide text-amber-300">
+															{segment.label || "Secret"}
+														</p>
+														<p className="text-sm whitespace-pre-wrap">
+															{segment.content}
+														</p>
+													</div>
+												) : (
+													<div
+														key={`${note.id}-secret-${index}`}
+														className="rounded-md border border-dashed border-muted-foreground/30 bg-muted/40 px-3 py-2 text-xs text-muted-foreground"
+													>
+														Secret text hidden.
+													</div>
+												),
+											)}
+										</div>
+									) : (
+										<p className="text-xs italic text-muted-foreground">
+											Visible by title only.
 										</p>
 									)}
 									<p className="text-xs text-muted-foreground mt-2">
@@ -260,8 +379,8 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 							{editingNote ? "Edit Note" : "Create Note"}
 						</DialogTitle>
 						<DialogDescription>
-							Add a note for this campaign. Shared notes are visible to all
-							members.
+							Add a note for this campaign. Use [[secret]]...[[/secret]] for
+							Warden-only sections inside an otherwise visible note.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="space-y-4 py-4">
@@ -292,20 +411,74 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 									</SelectContent>
 								</Select>
 							</div>
-							<div className="flex items-center gap-3 pt-6">
-								<Switch
-									id="note-shared"
-									checked={isShared}
-									onCheckedChange={setIsShared}
+							<div>
+								<Label htmlFor="note-visibility">Visibility</Label>
+								<Select
+									value={hasWardenAccess ? visibility : "private"}
+									onValueChange={(value: NoteVisibility) => setVisibility(value)}
 									disabled={!hasWardenAccess}
-								/>
-								<Label htmlFor="note-shared" className="cursor-pointer">
-									{hasWardenAccess
-										? "Share with campaign members"
-										: "Share with campaign members (Warden only)"}
-								</Label>
+								>
+									<SelectTrigger id="note-visibility" className="mt-1">
+										<SelectValue />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="private">Private</SelectItem>
+										<SelectItem value="shared">Shared</SelectItem>
+										<SelectItem value="per-player">Per-player</SelectItem>
+									</SelectContent>
+								</Select>
+								{!hasWardenAccess && (
+									<p className="mt-1 text-xs text-muted-foreground">
+										Only the Warden can grant player visibility.
+									</p>
+								)}
 							</div>
 						</div>
+						{hasWardenAccess && visibility === "per-player" && (
+							<div className="space-y-3 rounded-lg border border-border/60 p-3">
+								<div className="flex items-center gap-3">
+									<Switch
+										id="note-show-title-only"
+										checked={showTitleOnly}
+										onCheckedChange={setShowTitleOnly}
+									/>
+									<Label htmlFor="note-show-title-only" className="cursor-pointer">
+										Show title to players without content access
+									</Label>
+								</div>
+								<div className="space-y-2">
+									{campaignPlayers.length === 0 ? (
+										<p className="text-sm text-muted-foreground">
+											No player members are available for per-player permissions.
+										</p>
+									) : (
+										campaignPlayers.map((player) => (
+											<div
+												key={player.userId}
+												className="grid grid-cols-[1fr_140px] items-center gap-3"
+											>
+												<div className="text-sm">{player.label}</div>
+												<Select
+													value={playerPermissions[player.userId] || "none"}
+													onValueChange={(value: NotePermission) =>
+														handlePlayerPermissionChange(player.userId, value)
+													}
+												>
+													<SelectTrigger>
+														<SelectValue />
+													</SelectTrigger>
+													<SelectContent>
+														<SelectItem value="none">No access</SelectItem>
+														<SelectItem value="read">Read</SelectItem>
+														<SelectItem value="write">Write</SelectItem>
+													</SelectContent>
+												</Select>
+											</div>
+										))
+									)}
+								</div>
+							</div>
+						)}
 						<div>
 							<Label htmlFor="note-content">Content</Label>
 							<Textarea

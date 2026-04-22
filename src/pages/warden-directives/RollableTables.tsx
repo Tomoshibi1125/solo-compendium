@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Dice6, Loader2, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,16 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEmbedded } from "@/contexts/EmbeddedContext";
-import {
-	GATE_BIOMES,
-	GATE_COMPLICATIONS,
-	GATE_HAZARDS,
-	GATE_REWARDS,
-	GATE_THEMES,
-	NPC_MOTIVATIONS,
-	NPC_SECRETS,
-	TREASURE_TIERS,
-} from "@/data/wardenGeneratorContent";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -25,6 +17,7 @@ import { usePreferredCampaignSelection } from "@/hooks/usePreferredCampaignSelec
 import { useUserToolState } from "@/hooks/useToolState";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -37,12 +30,139 @@ type RollableTablesState = {
 	results: Record<string, string>;
 };
 
+type CanonicalRollableTable = StaticCompendiumEntry & {
+	table_category?: string | null;
+	table_group?: string | null;
+	rollable_entries?: string[] | null;
+	rank?: string | null;
+};
+
+type BadgeVariant = "default" | "secondary" | "destructive" | "outline";
+
+type RollableTableCardConfig = {
+	tableId: string;
+	title: string;
+	badgeLabel: string;
+	badgeVariant: BadgeVariant;
+	shareTitle: string;
+	rollLabel: string;
+};
+
+const LEGACY_RESULT_KEY_MAP: Record<string, string> = {
+	complication: "rift-complications",
+	hazard: "rift-hazards",
+	theme: "rift-themes",
+	biome: "rift-biomes",
+	reward: "rift-rewards",
+	motivation: "npc-motivations",
+	secret: "npc-secrets",
+};
+
+const GATE_TABLE_CONFIGS: RollableTableCardConfig[] = [
+	{
+		tableId: "rift-complications",
+		title: "RIFT COMPLICATIONS",
+		badgeLabel: "Complication",
+		badgeVariant: "destructive",
+		shareTitle: "Rift Complication",
+		rollLabel: "Roll Complication",
+	},
+	{
+		tableId: "rift-hazards",
+		title: "RIFT HAZARDS",
+		badgeLabel: "Hazard",
+		badgeVariant: "destructive",
+		shareTitle: "Rift Hazard",
+		rollLabel: "Roll Hazard",
+	},
+	{
+		tableId: "rift-themes",
+		title: "RIFT THEMES",
+		badgeLabel: "Theme",
+		badgeVariant: "secondary",
+		shareTitle: "Rift Theme",
+		rollLabel: "Roll Theme",
+	},
+	{
+		tableId: "rift-biomes",
+		title: "RIFT BIOMES",
+		badgeLabel: "Biome",
+		badgeVariant: "secondary",
+		shareTitle: "Rift Biome",
+		rollLabel: "Roll Biome",
+	},
+];
+
+const REWARD_TABLE_CONFIGS: RollableTableCardConfig[] = [
+	{
+		tableId: "rift-rewards",
+		title: "RIFT REWARDS",
+		badgeLabel: "Reward",
+		badgeVariant: "default",
+		shareTitle: "Rift Reward",
+		rollLabel: "Roll Reward",
+	},
+];
+
+const NPC_TABLE_CONFIGS: RollableTableCardConfig[] = [
+	{
+		tableId: "npc-motivations",
+		title: "NPC MOTIVATIONS",
+		badgeLabel: "Motivation",
+		badgeVariant: "secondary",
+		shareTitle: "NPC Motivation",
+		rollLabel: "Roll Motivation",
+	},
+	{
+		tableId: "npc-secrets",
+		title: "NPC SECRETS",
+		badgeLabel: "Secret",
+		badgeVariant: "destructive",
+		shareTitle: "NPC Secret",
+		rollLabel: "Roll Secret",
+	},
+];
+
+const TREASURE_RANK_ORDER = [
+	"E-Rank",
+	"D-Rank",
+	"C-Rank",
+	"B-Rank",
+	"A-Rank",
+	"S-Rank",
+] as const;
+
+const tabs: Array<{
+	value: RollableTablesState["activeTab"];
+	label: string;
+}> = [
+	{ value: "gates", label: "Rifts" },
+	{ value: "rewards", label: "Rewards" },
+	{ value: "npcs", label: "NPCs" },
+	{ value: "treasure", label: "Treasure" },
+];
+
+const toTreasureTableId = (rank: string) =>
+	`treasure-${rank.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
+const normalizeResultKey = (key: string) =>
+	LEGACY_RESULT_KEY_MAP[key] ??
+		(key.startsWith("treasure-") ? key.toLowerCase() : key);
+
+const normalizeStoredResults = (results: Record<string, string>) =>
+	Object.fromEntries(
+		Object.entries(results).map(([key, value]) => [
+			normalizeResultKey(key),
+			value,
+		]),
+	);
+
 const RollableTables = () => {
 	const navigate = useNavigate();
 	const embedded = useEmbedded();
 	const {
 		state: storedState,
-		isLoading,
+		isLoading: isStateLoading,
 		saveNow,
 	} = useUserToolState<RollableTablesState>("rollable_tables", {
 		initialState: {
@@ -56,6 +176,24 @@ const RollableTables = () => {
 	const { campaignId: selectedCampaignId } =
 		usePreferredCampaignSelection("rollable_tables");
 	const { toast } = useToast();
+	const { data: canonicalTables = [], isLoading: tablesLoading } = useQuery({
+		queryKey: ["canonical-rollable-tables", selectedCampaignId ?? null],
+		queryFn: async () =>
+			(await listCanonicalEntries("rollable-tables", undefined, {
+				campaignId: selectedCampaignId,
+			})) as CanonicalRollableTable[],
+		staleTime: 300_000,
+	});
+	const tableIndex = useMemo(
+		() => new Map(canonicalTables.map((table) => [table.id, table])),
+		[canonicalTables],
+	);
+	const treasureTables = useMemo(
+		() =>
+			TREASURE_RANK_ORDER.map((rank) => tableIndex.get(toTreasureTableId(rank)))
+				.filter((table): table is CanonicalRollableTable => !!table),
+		[tableIndex],
+	);
 
 	const [activeTab, setActiveTab] =
 		useState<RollableTablesState["activeTab"]>("gates");
@@ -64,18 +202,18 @@ const RollableTables = () => {
 	const hydrated = useMemo(() => {
 		return {
 			activeTab: storedState.activeTab ?? "gates",
-			results: storedState.results ?? {},
+			results: normalizeStoredResults(storedState.results ?? {}),
 		} satisfies RollableTablesState;
 	}, [storedState.activeTab, storedState.results]);
 
 	const hydratedRef = useRef(false);
 	useEffect(() => {
-		if (isLoading) return;
+		if (isStateLoading) return;
 		if (hydratedRef.current) return;
 		setActiveTab(hydrated.activeTab);
 		setResults(hydrated.results);
 		hydratedRef.current = true;
-	}, [hydrated.activeTab, hydrated.results, isLoading]);
+	}, [hydrated.activeTab, hydrated.results, isStateLoading]);
 
 	const savePayload = useMemo(
 		() => ({ activeTab, results }) satisfies RollableTablesState,
@@ -84,20 +222,25 @@ const RollableTables = () => {
 	const debouncedPayload = useDebounce(savePayload, 350);
 
 	useEffect(() => {
-		if (isLoading) return;
+		if (isStateLoading) return;
 		if (!hydratedRef.current) return;
 		void saveNow(debouncedPayload);
-	}, [debouncedPayload, isLoading, saveNow]);
+	}, [debouncedPayload, isStateLoading, saveNow]);
 
 	const { isEnhancing, enhancedText, enhance } = useAIEnhance();
 
 	const handleAIEnhance = async () => {
-		const filledResults = Object.entries(results).filter(([, v]) => v);
+		const filledResults = Object.entries(results)
+			.filter(([, value]) => value)
+			.map(([key, value]) => ({
+				label: tableIndex.get(key)?.name ?? key,
+				value,
+			}));
 		if (filledResults.length === 0) return;
 		const seed = `Expand these rollable table results into fully detailed TTRPG content for a Rift Ascendant campaign.
 
 ROLLED RESULTS:
-${filledResults.map(([key, value]) => `- ${key}: ${value}`).join("\n")}
+${filledResults.map(({ label, value }) => `- ${label}: ${value}`).join("\n")}
 
 For EACH result, provide:
 1. Full description (2-3 sentences) with sensory details and atmosphere
@@ -108,15 +251,65 @@ For EACH result, provide:
 		await enhance("table-results", seed);
 	};
 
-	const roll = (key: string, table: readonly string[]) => {
-		const result = formatRegentVernacular(rollTable(table));
+	const roll = (tableId: string) => {
+		const table = tableIndex.get(tableId);
+		const entries = table?.rollable_entries ?? [];
+		if (entries.length === 0) {
+			toast({
+				title: "Table Unavailable",
+				description: "This canonical table has no entries to roll from yet.",
+				variant: "destructive",
+			});
+			return;
+		}
+		const result = formatRegentVernacular(rollTable(entries));
 		setResults((prev) => {
-			const next = { ...prev, [key]: result };
-			if (hydratedRef.current && !isLoading) {
+			const next = { ...prev, [tableId]: result };
+			if (hydratedRef.current && !isStateLoading) {
 				void saveNow({ activeTab, results: next });
 			}
 			return next;
 		});
+	};
+
+	const renderTableCard = (config: RollableTableCardConfig) => {
+		const table = tableIndex.get(config.tableId);
+		const result = results[config.tableId];
+		return (
+			<AscendantWindow key={config.tableId} title={config.title}>
+				<div className="space-y-3">
+					<Button
+						onClick={() => roll(config.tableId)}
+						className="w-full gap-2"
+						disabled={tablesLoading || !table?.rollable_entries?.length}
+					>
+						<Dice6 className="w-4 h-4" />
+						{config.rollLabel}
+					</Button>
+					{!tablesLoading && !table && (
+						<p className="text-xs text-muted-foreground">
+							This canonical table is unavailable.
+						</p>
+					)}
+					{result && (
+						<div className="p-3 rounded border bg-muted/30 relative group">
+							<Badge variant={config.badgeVariant} className="mb-2">
+								{config.badgeLabel}
+							</Badge>
+							<p className="font-heading">{result}</p>
+							<Button
+								size="sm"
+								variant="ghost"
+								className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
+								onClick={() => shareToCampaign(config.shareTitle, result)}
+							>
+								Share
+							</Button>
+						</div>
+					)}
+				</div>
+			</AscendantWindow>
+		);
 	};
 
 	const shareToCampaign = async (title: string, content: string) => {
@@ -182,268 +375,63 @@ For EACH result, provide:
 					onValueChange={(value) => {
 						const nextTab = value as RollableTablesState["activeTab"];
 						setActiveTab(nextTab);
-						if (hydratedRef.current && !isLoading) {
+						if (hydratedRef.current && !isStateLoading) {
 							void saveNow({ activeTab: nextTab, results });
 						}
 					}}
 					className="w-full"
 				>
 					<TabsList className="grid w-full grid-cols-4">
-						<TabsTrigger value="gates">Rifts</TabsTrigger>
-						<TabsTrigger value="rewards">Rewards</TabsTrigger>
-						<TabsTrigger value="npcs">NPCs</TabsTrigger>
-						<TabsTrigger value="treasure">Treasure</TabsTrigger>
+						{tabs.map((tab) => (
+							<TabsTrigger key={tab.value} value={tab.value}>
+								{tab.label}
+							</TabsTrigger>
+						))}
 					</TabsList>
 
 					<TabsContent value="gates" className="space-y-4 mt-6">
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<AscendantWindow title="RIFT COMPLICATIONS">
-								<div className="space-y-3">
-									<Button
-										onClick={() => roll("complication", GATE_COMPLICATIONS)}
-										className="w-full gap-2"
-									>
-										<Dice6 className="w-4 h-4" />
-										Roll Complication
-									</Button>
-									{results.complication && (
-										<div className="p-3 rounded border bg-muted/30 relative group">
-											<Badge variant="destructive" className="mb-2">
-												Complication
-											</Badge>
-											<p className="font-heading">{results.complication}</p>
-											<Button
-												size="sm"
-												variant="ghost"
-												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
-												onClick={() =>
-													shareToCampaign(
-														"Rift Complication",
-														results.complication,
-													)
-												}
-											>
-												Share
-											</Button>
-										</div>
-									)}
-								</div>
-							</AscendantWindow>
-
-							<AscendantWindow title="RIFT HAZARDS">
-								<div className="space-y-3">
-									<Button
-										onClick={() => roll("hazard", GATE_HAZARDS)}
-										className="w-full gap-2"
-									>
-										<Dice6 className="w-4 h-4" />
-										Roll Hazard
-									</Button>
-									{results.hazard && (
-										<div className="p-3 rounded border bg-muted/30 relative group">
-											<Badge variant="destructive" className="mb-2">
-												Hazard
-											</Badge>
-											<p className="font-heading">{results.hazard}</p>
-											<Button
-												size="sm"
-												variant="ghost"
-												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
-												onClick={() =>
-													shareToCampaign("Rift Hazard", results.hazard)
-												}
-											>
-												Share
-											</Button>
-										</div>
-									)}
-								</div>
-							</AscendantWindow>
-
-							<AscendantWindow title="RIFT THEMES">
-								<div className="space-y-3">
-									<Button
-										onClick={() => roll("theme", GATE_THEMES)}
-										className="w-full gap-2"
-									>
-										<Dice6 className="w-4 h-4" />
-										Roll Theme
-									</Button>
-									{results.theme && (
-										<div className="p-3 rounded border bg-muted/30 relative group">
-											<Badge variant="secondary" className="mb-2">
-												Theme
-											</Badge>
-											<p className="font-heading">{results.theme}</p>
-											<Button
-												size="sm"
-												variant="ghost"
-												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
-												onClick={() =>
-													shareToCampaign("Rift Theme", results.theme)
-												}
-											>
-												Share
-											</Button>
-										</div>
-									)}
-								</div>
-							</AscendantWindow>
-
-							<AscendantWindow title="RIFT BIOMES">
-								<div className="space-y-3">
-									<Button
-										onClick={() => roll("biome", GATE_BIOMES)}
-										className="w-full gap-2"
-									>
-										<Dice6 className="w-4 h-4" />
-										Roll Biome
-									</Button>
-									{results.biome && (
-										<div className="p-3 rounded border bg-muted/30 relative group">
-											<Badge variant="secondary" className="mb-2">
-												Biome
-											</Badge>
-											<p className="font-heading">{results.biome}</p>
-											<Button
-												size="sm"
-												variant="ghost"
-												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
-												onClick={() =>
-													shareToCampaign("Rift Biome", results.biome)
-												}
-											>
-												Share
-											</Button>
-										</div>
-									)}
-								</div>
-							</AscendantWindow>
+							{GATE_TABLE_CONFIGS.map(renderTableCard)}
 						</div>
 					</TabsContent>
 
 					<TabsContent value="rewards" className="space-y-4 mt-6">
-						<AscendantWindow title="RIFT REWARDS">
-							<div className="space-y-3">
-								<Button
-									onClick={() => roll("reward", GATE_REWARDS)}
-									className="w-full gap-2"
-								>
-									<Dice6 className="w-4 h-4" />
-									Roll Reward
-								</Button>
-								{results.reward && (
-									<div className="p-3 rounded border bg-muted/30 relative group">
-										<Badge variant="default" className="mb-2">
-											Reward
-										</Badge>
-										<p className="font-heading">{results.reward}</p>
-										<Button
-											size="sm"
-											variant="ghost"
-											className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
-											onClick={() =>
-												shareToCampaign("Rift Reward", results.reward)
-											}
-										>
-											Share
-										</Button>
-									</div>
-								)}
-							</div>
-						</AscendantWindow>
+						{REWARD_TABLE_CONFIGS.map(renderTableCard)}
 					</TabsContent>
 
 					<TabsContent value="npcs" className="space-y-4 mt-6">
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<AscendantWindow title="NPC MOTIVATIONS">
-								<div className="space-y-3">
-									<Button
-										onClick={() => roll("motivation", NPC_MOTIVATIONS)}
-										className="w-full gap-2"
-									>
-										<Dice6 className="w-4 h-4" />
-										Roll Motivation
-									</Button>
-									{results.motivation && (
-										<div className="p-3 rounded border bg-muted/30 relative group">
-											<Badge variant="secondary" className="mb-2">
-												Motivation
-											</Badge>
-											<p className="font-heading">{results.motivation}</p>
-											<Button
-												size="sm"
-												variant="ghost"
-												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
-												onClick={() =>
-													shareToCampaign("NPC Motivation", results.motivation)
-												}
-											>
-												Share
-											</Button>
-										</div>
-									)}
-								</div>
-							</AscendantWindow>
-
-							<AscendantWindow title="NPC SECRETS">
-								<div className="space-y-3">
-									<Button
-										onClick={() => roll("secret", NPC_SECRETS)}
-										className="w-full gap-2"
-									>
-										<Dice6 className="w-4 h-4" />
-										Roll Secret
-									</Button>
-									{results.secret && (
-										<div className="p-3 rounded border bg-muted/30 relative group">
-											<Badge variant="destructive" className="mb-2">
-												Secret
-											</Badge>
-											<p className="font-heading">{results.secret}</p>
-											<Button
-												size="sm"
-												variant="ghost"
-												className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity"
-												onClick={() =>
-													shareToCampaign("NPC Secret", results.secret)
-												}
-											>
-												Share
-											</Button>
-										</div>
-									)}
-								</div>
-							</AscendantWindow>
+							{NPC_TABLE_CONFIGS.map(renderTableCard)}
 						</div>
 					</TabsContent>
 
 					<TabsContent value="treasure" className="space-y-4 mt-6">
 						<AscendantWindow title="TREASURE BY RIFT RANK">
 							<div className="space-y-4">
-								{Object.entries(TREASURE_TIERS).map(([rank, items]) => (
-									<div key={rank} className="border rounded p-3">
+								{treasureTables.map((table) => (
+									<div key={table.id} className="border rounded p-3">
 										<div className="flex items-center justify-between mb-2">
 											<h3 className="font-heading font-semibold">
-												{rank} Rifts
+												{table.rank} Rifts
 											</h3>
 											<Button
 												size="sm"
 												variant="outline"
-												onClick={() => roll(`treasure-${rank}`, items)}
+												onClick={() => roll(table.id)}
 												className="gap-2"
+												disabled={tablesLoading || !table.rollable_entries?.length}
 											>
 												<Dice6 className="w-3 h-3" />
 												Roll
 											</Button>
 										</div>
-										{results[`treasure-${rank}`] && (
+										{results[table.id] && (
 											<div className="mt-2 p-2 rounded bg-muted/30 relative group">
 												<Badge variant="default" className="mb-1">
-													{rank}
+													{table.rank}
 												</Badge>
 												<p className="font-heading text-sm">
-													{results[`treasure-${rank}`]}
+													{results[table.id]}
 												</p>
 												<Button
 													size="sm"
@@ -451,8 +439,8 @@ For EACH result, provide:
 													className="absolute top-2 right-2 opacity-100 md:opacity-20 md:group-hover:opacity-100 transition-opacity h-6 px-2 text-xs"
 													onClick={() =>
 														shareToCampaign(
-															`Treasure (${rank})`,
-															results[`treasure-${rank}`],
+															`Treasure (${table.rank})`,
+															results[table.id],
 														)
 													}
 												>
@@ -461,10 +449,17 @@ For EACH result, provide:
 											</div>
 										)}
 										<div className="text-xs text-muted-foreground mt-2">
-											{items.map(formatRegentVernacular).join(", ")}
+											{(table.rollable_entries ?? [])
+												.map(formatRegentVernacular)
+												.join(", ")}
 										</div>
 									</div>
 								))}
+								{!tablesLoading && treasureTables.length === 0 && (
+									<p className="text-sm text-muted-foreground">
+										No canonical treasure tables are available.
+									</p>
+								)}
 							</div>
 						</AscendantWindow>
 					</TabsContent>

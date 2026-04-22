@@ -19,10 +19,14 @@ import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
+	findCanonicalCastableByName,
+	type CanonicalCastableEntry,
 	findCanonicalEntryByName,
 	listCanonicalEntries,
+	listLearnableCastables,
 } from "@/lib/canonicalCompendium";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
+import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/core-rules";
 
@@ -148,6 +152,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 		],
 		queryFn: async () => {
 			if (!characterJob) return null;
+			const campaignId = await getCharacterCampaignId(characterId);
 
 			const regentOverlayIds = asUuidArray(
 				(character as CharacterExtended)?.regent_overlays,
@@ -166,25 +171,24 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 			}
 
 			const eligiblePowerNames = new Set<string>();
+			const learnablePowerByName = new Map<string, CanonicalCastableEntry>();
 			{
 				const maxPowerLevel = getMaxPowerLevelForJobAtLevel(
 					characterJob,
 					characterLevel ?? 1,
 				);
-				const jobTag = characterJob.toLowerCase();
-				const pathTag = (characterPath || "").toLowerCase();
-				const regentTagsLower = regentNames.map((n) => n.toLowerCase());
 
-				const powers = await listCanonicalEntries("powers");
-				for (const power of powers) {
-					if ((power.power_level ?? 0) > maxPowerLevel) continue;
-					const tags = (power.tags || []).map((t) => t.toLowerCase());
-					const matches =
-						tags.length === 0 ||
-						tags.includes(jobTag) ||
-						(pathTag && tags.includes(pathTag)) ||
-						regentTagsLower.some((r) => tags.includes(r));
-					if (matches && power.name) eligiblePowerNames.add(power.name);
+				const learnablePowers = await listLearnableCastables({
+					accessContext: { campaignId },
+					jobName: characterJob,
+					pathName: characterPath,
+					regentNames,
+					maxPowerLevel,
+				});
+				for (const power of learnablePowers) {
+					if (!power.name) continue;
+					eligiblePowerNames.add(power.name);
+					learnablePowerByName.set(power.name, power);
 				}
 			}
 
@@ -267,6 +271,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 				pendingGroups,
 				options: filteredOptions,
 				eligiblePowerNames,
+				learnablePowerByName,
 			};
 		},
 		enabled:
@@ -306,6 +311,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 		setSaving(true);
 		try {
+			const campaignId = await getCharacterCampaignId(characterId);
 			const { data: characterRow } = await supabase
 				.from("characters")
 				.select("skill_proficiencies, skill_expertise, tool_proficiencies")
@@ -744,36 +750,28 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const powerName = grant.name;
 						if (existingPowerNames.has(powerName)) continue;
 
-						const powerRow = await findCanonicalEntryByName(
-							"powers",
-							powerName,
-						);
+						const powerRow =
+							choiceData.learnablePowerByName.get(powerName) ||
+							(await findCanonicalCastableByName(powerName, { campaignId }));
 						if (!powerRow?.name) continue;
+						const powerSource =
+							powerRow.canonical_type === "spells"
+								? `Choice Spell: ${group.choice_key}`
+								: `Choice Power: ${group.choice_key}`;
 
 						await supabase.from("character_powers").insert({
 							character_id: characterId,
 							name: powerRow.name,
 							power_level: powerRow.power_level ?? 0,
-							source: `Choice: ${group.choice_key}`,
-							casting_time:
-								typeof powerRow.casting_time === "string"
-									? powerRow.casting_time
-									: null,
-							range: typeof powerRow.range === "string" ? powerRow.range : null,
-							duration:
-								typeof powerRow.duration === "string"
-									? powerRow.duration
-									: null,
+							source: powerSource,
+							casting_time: powerRow.casting_time || null,
+							range: powerRow.range || null,
+							duration: powerRow.duration || null,
 							concentration: powerRow.concentration ?? false,
 							is_prepared: true,
 							is_known: true,
 							description: powerRow.description ?? null,
-							higher_levels:
-								typeof (powerRow as { higher_levels?: string })
-									.higher_levels === "string"
-									? ((powerRow as { higher_levels?: string }).higher_levels ??
-										null)
-									: null,
+							higher_levels: powerRow.higher_levels ?? null,
 						});
 
 						existingPowerNames.add(powerName);

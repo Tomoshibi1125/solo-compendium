@@ -311,6 +311,8 @@ export function createLocalCharacter(
 		immunities: [],
 		vulnerabilities: [],
 		condition_immunities: [],
+		// Racial parity — union of job.languages + player-selected languages.
+		languages: (data as Record<string, unknown>).languages as string[] ?? [],
 	};
 
 	upsertLocalCharacter(character);

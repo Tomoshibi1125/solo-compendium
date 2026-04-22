@@ -225,6 +225,46 @@ export interface StaticJob {
 	damage_immunities?: string[];
 	conditionImmunities?: string[];
 	condition_immunities?: string[];
+	// --- Racial parity extensions (RA-original) ---
+	innateChanneling?: {
+		ability: "Strength" | "Agility" | "Vitality" | "Intelligence" | "Sense" | "Presence";
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?:
+				| { value: number; per: "short-rest" | "long-rest" }
+				| "at-will";
+			description?: string;
+		}>;
+	};
+	naturalWeapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}>;
+	naturalArmor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
+		description?: string;
+	};
+	resonanceBreath?: {
+		name: string;
+		shape: "cone" | "line" | "sphere" | "cube";
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
+		scaling?: Array<{ level: number; dice: string }>;
+		rechargeRest: "short-rest" | "long-rest";
+	};
+	bonusHpPerLevel?: number;
+	climb_speed?: number;
+	swim_speed?: number;
+	fly_speed?: number;
+	age?: { adult: string; maxLifespan: string };
 }
 
 export interface StaticBackground {

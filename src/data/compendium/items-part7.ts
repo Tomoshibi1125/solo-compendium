@@ -1446,7 +1446,7 @@ export const items_part7: Item[] = [
 			prior_owners: ["A rogue Awakened"],
 		},
 		flavor:
-			"Commands the certainty of outcomes. A testament to what Hunters have become.",
+			"Pins the cast's result to one deterministic branch. A testament to what Hunters have become.",
 		discovery_lore:
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "support", "perception", "defensive"],

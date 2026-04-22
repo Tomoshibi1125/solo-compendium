@@ -81,6 +81,8 @@ describe("buildDefaultVttScene", () => {
 		expect(scene.lights).toEqual([]);
 		expect(scene.terrain).toEqual([]);
 		expect(scene.ambientSounds).toEqual([]);
+		expect(scene.musicMood).toBeNull();
+		expect(scene.musicAutoplay).toBe(false);
 		expect(scene.fogOfWar).toBe(false);
 		expect(scene.gridType).toBe("square");
 		expect(scene.id).toMatch(/^scene-/);
@@ -163,6 +165,8 @@ describe("normalizeVttScene", () => {
 		expect(normalized.annotations).toEqual([]);
 		expect(normalized.walls).toEqual([]);
 		expect(normalized.lights).toEqual([]);
+		expect(normalized.musicMood).toBeNull();
+		expect(normalized.musicAutoplay).toBe(false);
 		expect(normalized.terrain).toEqual([]);
 		expect(normalized.ambientSounds).toEqual([]);
 		expect(normalized.gridType).toBe("square");
@@ -172,9 +176,13 @@ describe("normalizeVttScene", () => {
 		const scene = buildDefaultVttScene({ name: "Scene" });
 		scene.gridSize = 80;
 		scene.gridType = "hex";
+		scene.musicMood = "boss-epic";
+		scene.musicAutoplay = true;
 		const normalized = normalizeVttScene(scene);
 		expect(normalized.gridSize).toBe(80);
 		expect(normalized.gridType).toBe("hex");
+		expect(normalized.musicMood).toBe("boss-epic");
+		expect(normalized.musicAutoplay).toBe(true);
 	});
 });
 

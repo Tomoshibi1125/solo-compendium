@@ -17,24 +17,24 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
-			"Commands the certainty of outcomes. The line between Hunter and monster.",
+			"Pins the cast's result to one deterministic branch. The line between Hunter and monster.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Recorded in the Hunter's inventory during their last resupply.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Initiated via the bearer's conditioned trigger state.",
 			type: "Tattoo",
 			frequency: "1/long rest",
 			duration: "Permanent (passive)",
-			action: "Focus your intent on the glyph",
+			action: "Initiated via the bearer's conditioned trigger state.",
 			ability: "Vitality",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
@@ -50,7 +50,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -77,7 +77,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Initiated via the bearer's conditioned trigger state. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -128,17 +128,17 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
 			"Devours the concept of distance. Proof that some things cannot be survived.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Entered into the Hunter's inventory via standard requisition.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Channel mana through the ink circuits",
@@ -161,7 +161,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -234,11 +234,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -267,7 +267,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -341,11 +341,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -374,7 +374,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -448,11 +448,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor: "Warps the laws of physics. A whisper from the edge of oblivion.",
@@ -466,7 +466,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Press your palm against the design",
 			ability: "Vitality",
-			damage_profile: "2d4 fire",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -480,7 +480,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -554,11 +554,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -573,7 +573,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 minute",
 			action: "Speak the tattoo's true name",
 			ability: "Presence",
-			damage_profile: "1d10 force",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -587,7 +587,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -660,11 +660,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -673,11 +673,11 @@ export const tattoos: CompendiumTattoo[] = [
 			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Called up through a practiced activation pose.",
 			type: "Tattoo",
 			frequency: "2/short rest",
 			duration: "1 hour",
-			action: "Focus your intent on the glyph",
+			action: "Called up through a practiced activation pose.",
 			ability: "Intelligence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
@@ -688,12 +688,12 @@ export const tattoos: CompendiumTattoo[] = [
 			],
 			condition: "Blindness",
 			attack: {
-				type: "force",
+				type: "self",
 				mode: "self",
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -720,7 +720,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Called up through a practiced activation pose. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -771,11 +771,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -790,7 +790,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Speak the tattoo's true name",
 			ability: "Intelligence",
-			damage_profile: "1d10 psychic",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -804,7 +804,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -881,11 +881,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -909,12 +909,12 @@ export const tattoos: CompendiumTattoo[] = [
 			],
 			condition: "Stunning",
 			attack: {
-				type: "cold",
+				type: "self",
 				mode: "self",
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -988,11 +988,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1007,7 +1007,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Speak the tattoo's true name",
 			ability: "Vitality",
-			damage_profile: "2d6 poison",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -1021,7 +1021,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1094,11 +1094,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1113,7 +1113,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Speak the tattoo's true name",
 			ability: "Presence",
-			damage_profile: "2d6 acid",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -1127,7 +1127,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1200,11 +1200,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1213,13 +1213,13 @@ export const tattoos: CompendiumTattoo[] = [
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Activated by directing attention to the glyph.",
 			type: "Tattoo",
 			frequency: "Passive",
 			duration: "10 minutes",
-			action: "Focus your intent on the glyph",
+			action: "Activated by directing attention to the glyph.",
 			ability: "Presence",
-			damage_profile: "2d4 cold",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -1233,7 +1233,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1257,7 +1257,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Activated by directing attention to the glyph. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -1307,11 +1307,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1340,7 +1340,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1414,11 +1414,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1447,7 +1447,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1521,18 +1521,18 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse:
 				"The user becomes unable to dream, replaced by visions of the void between Gates.",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
 			"Purges the chains of mortality. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Checked out through the Guild's credentialed loaner program.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Press your palm against the design",
@@ -1555,7 +1555,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1633,12 +1633,12 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1653,7 +1653,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 minute",
 			action: "Channel mana through the ink circuits",
 			ability: "Intelligence",
-			damage_profile: "1d8 fire",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -1667,7 +1667,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1741,11 +1741,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1760,7 +1760,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "Permanent (passive)",
 			action: "Speak the tattoo's true name",
 			ability: "Presence",
-			damage_profile: "2d4 necrotic",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -1774,7 +1774,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1850,11 +1850,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1883,7 +1883,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -1957,11 +1957,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1990,7 +1990,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2063,11 +2063,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2091,12 +2091,12 @@ export const tattoos: CompendiumTattoo[] = [
 			],
 			condition: "Stunning",
 			attack: {
-				type: "necrotic",
+				type: "self",
 				mode: "self",
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2170,11 +2170,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2183,13 +2183,13 @@ export const tattoos: CompendiumTattoo[] = [
 			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Initiated via the bearer's conditioned trigger state.",
 			type: "Tattoo",
 			frequency: "2/short rest",
 			duration: "1 hour",
-			action: "Focus your intent on the glyph",
+			action: "Initiated via the bearer's conditioned trigger state.",
 			ability: "Intelligence",
-			damage_profile: "1d10 thunder",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -2203,7 +2203,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2227,7 +2227,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Initiated via the bearer's conditioned trigger state. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -2277,11 +2277,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2290,11 +2290,11 @@ export const tattoos: CompendiumTattoo[] = [
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Engaged by a deliberate focal gesture on the tattoo.",
 			type: "Tattoo",
 			frequency: "Passive",
 			duration: "10 minutes",
-			action: "Focus your intent on the glyph",
+			action: "Engaged by a deliberate focal gesture on the tattoo.",
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
@@ -2310,7 +2310,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2334,7 +2334,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Engaged by a deliberate focal gesture on the tattoo. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -2384,11 +2384,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2417,7 +2417,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2494,11 +2494,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2527,7 +2527,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2605,11 +2605,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2624,7 +2624,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 minute",
 			action: "Flex the tattooed muscle group",
 			ability: "Intelligence",
-			damage_profile: "1d8 acid",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -2638,7 +2638,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2712,11 +2712,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2731,7 +2731,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Press your palm against the design",
 			ability: "Presence",
-			damage_profile: "1d8 poison",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -2745,7 +2745,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2819,11 +2819,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2838,7 +2838,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "Permanent (passive)",
 			action: "Speak the tattoo's true name",
 			ability: "Presence",
-			damage_profile: "1d8 force",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Luminite Extract resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -2847,12 +2847,12 @@ export const tattoos: CompendiumTattoo[] = [
 			],
 			condition: "Fear",
 			attack: {
-				type: "force",
+				type: "self",
 				mode: "self",
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -2925,11 +2925,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2944,7 +2944,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "Permanent (passive)",
 			action: "Flex the tattooed muscle group",
 			ability: "Presence",
-			damage_profile: "1d8 necrotic",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -2958,7 +2958,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3031,11 +3031,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3064,7 +3064,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3138,16 +3138,16 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor: "Rends the laws of physics. The line between Hunter and monster.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Entered into the Hunter's inventory via standard requisition.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Flex the tattooed muscle group",
@@ -3170,7 +3170,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3244,12 +3244,12 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3264,7 +3264,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 hour",
 			action: "Speak the tattoo's true name",
 			ability: "Intelligence",
-			damage_profile: "1d10 poison",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -3278,7 +3278,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3351,11 +3351,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3384,7 +3384,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3458,11 +3458,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3477,7 +3477,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 minute",
 			action: "Speak the tattoo's true name",
 			ability: "Vitality",
-			damage_profile: "1d6 lightning",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Storm Essence Distillate resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -3486,12 +3486,12 @@ export const tattoos: CompendiumTattoo[] = [
 			],
 			condition: "Lethargy",
 			attack: {
-				type: "lightning",
+				type: "self",
 				mode: "self",
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3564,12 +3564,12 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse:
 				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3598,7 +3598,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3671,11 +3671,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3684,13 +3684,13 @@ export const tattoos: CompendiumTattoo[] = [
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Initiated via the bearer's conditioned trigger state.",
 			type: "Tattoo",
 			frequency: "1/long rest",
 			duration: "Permanent (passive)",
-			action: "Focus your intent on the glyph",
+			action: "Initiated via the bearer's conditioned trigger state.",
 			ability: "Presence",
-			damage_profile: "2d4 poison",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -3699,12 +3699,12 @@ export const tattoos: CompendiumTattoo[] = [
 			],
 			condition: "Lethargy",
 			attack: {
-				type: "poison",
+				type: "self",
 				mode: "self",
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3731,7 +3731,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Initiated via the bearer's conditioned trigger state. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -3782,11 +3782,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3801,7 +3801,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Speak the tattoo's true name",
 			ability: "Presence",
-			damage_profile: "2d4 force",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -3815,7 +3815,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3887,11 +3887,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3920,7 +3920,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -3994,11 +3994,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4013,7 +4013,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 minute",
 			action: "Channel mana through the ink circuits",
 			ability: "Intelligence",
-			damage_profile: "2d4 poison",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4027,7 +4027,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4101,11 +4101,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4134,7 +4134,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4212,11 +4212,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4231,7 +4231,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Channel mana through the ink circuits",
 			ability: "Intelligence",
-			damage_profile: "1d10 psychic",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4245,7 +4245,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4319,12 +4319,12 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4339,7 +4339,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 hour",
 			action: "Speak the tattoo's true name",
 			ability: "Presence",
-			damage_profile: "2d6 force",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Phoenix Ash Emulsion resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4353,7 +4353,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4426,11 +4426,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4445,7 +4445,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 minute",
 			action: "Flex the tattooed muscle group",
 			ability: "Intelligence",
-			damage_profile: "2d6 radiant",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4459,7 +4459,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4536,11 +4536,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4555,7 +4555,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 hour",
 			action: "Press your palm against the design",
 			ability: "Vitality",
-			damage_profile: "1d8 fire",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Shadowblood Tincture resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4569,7 +4569,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4642,11 +4642,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4655,13 +4655,13 @@ export const tattoos: CompendiumTattoo[] = [
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Engaged by a deliberate focal gesture on the tattoo.",
 			type: "Tattoo",
 			frequency: "1/long rest",
 			duration: "1 hour",
-			action: "Focus your intent on the glyph",
+			action: "Engaged by a deliberate focal gesture on the tattoo.",
 			ability: "Presence",
-			damage_profile: "1d8 necrotic",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Abyssal Ichor resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4675,7 +4675,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4699,7 +4699,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Engaged by a deliberate focal gesture on the tattoo. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -4749,11 +4749,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4768,7 +4768,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "1 hour",
 			action: "Press your palm against the design",
 			ability: "Intelligence",
-			damage_profile: "1d8 thunder",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4782,7 +4782,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4856,11 +4856,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Produced in compliance with Hunter Bureau augmentation standards.",
+			history: "Reviewed periodically under the Hunter augmentation license.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Inert until intentionally engaged.",
+			current_owner: "A standard augmentation offering at licensed studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4869,11 +4869,11 @@ export const tattoos: CompendiumTattoo[] = [
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Called up through a practiced activation pose.",
 			type: "Tattoo",
 			frequency: "1/long rest",
 			duration: "1 hour",
-			action: "Focus your intent on the glyph",
+			action: "Called up through a practiced activation pose.",
 			ability: "Presence",
 			damage_profile: "N/A (utility/defensive)",
 			lattice_interaction:
@@ -4889,7 +4889,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -4912,7 +4912,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Called up through a practiced activation pose. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -4962,11 +4962,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4981,7 +4981,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "Permanent (passive)",
 			action: "Channel mana through the ink circuits",
 			ability: "Vitality",
-			damage_profile: "1d10 radiant",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -4995,7 +4995,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -5069,11 +5069,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Applied under the Guild Association's dermal-weave protocol.",
+			history: "Covered by the standard Guild Association compliance agreement.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Disciplined in its at-rest state.",
+			current_owner: "Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -5102,7 +5102,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -5176,26 +5176,26 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Neutral in personality profile.",
+			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
 			"Rends the chains of mortality. The reason S-Rank Gates are feared.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Logged by the Bureau's issue-desk after a scheduled handover.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
-			action_type: "Focus your intent on the glyph",
+			action_type: "Activated by directing attention to the glyph.",
 			type: "Tattoo",
 			frequency: "Proficiency/long rest",
 			duration: "1 minute",
-			action: "Focus your intent on the glyph",
+			action: "Activated by directing attention to the glyph.",
 			ability: "Presence",
-			damage_profile: "1d8 cold",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Mana-Crystal Pigment resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -5209,7 +5209,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -5233,7 +5233,7 @@ export const tattoos: CompendiumTattoo[] = [
 				{
 					name: "Tattoo Activation",
 					description:
-						"Focus your intent on the glyph to activate for 1 minute.",
+						"Activated by directing attention to the glyph. to activate for 1 minute.",
 					action: "Bonus Action",
 					frequency: "1/short rest",
 				},
@@ -5283,11 +5283,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor: "Rends the illusion of safety. The reason S-Rank Gates are feared.",
@@ -5301,7 +5301,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "Permanent (passive)",
 			action: "Press your palm against the design",
 			ability: "Vitality",
-			damage_profile: "1d10 thunder",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Starfall Residue resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -5315,7 +5315,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -5389,11 +5389,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Formulated within the Guild's authorized dermal-mod program.",
+			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Quiet between activations.",
+			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -5408,7 +5408,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Flex the tattooed muscle group",
 			ability: "Presence",
-			damage_profile: "2d6 cold",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -5422,7 +5422,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",
@@ -5496,11 +5496,11 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
-			history: "Highly regulated by the International Guild Association.",
+				"Inked by Bureau-credentialed studio practitioners.",
+			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
-			personality: "Silent, hungry.",
-			current_owner: "Widespread among underground syndicates.",
+			personality: "Unobtrusive while not being used.",
+			current_owner: "Applied routinely to qualifying field operatives.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -5515,7 +5515,7 @@ export const tattoos: CompendiumTattoo[] = [
 			duration: "10 minutes",
 			action: "Channel mana through the ink circuits",
 			ability: "Intelligence",
-			damage_profile: "1d10 psychic",
+			damage_profile: "utility",
 			lattice_interaction:
 				"Rift Essence Suspension resonates with the bearer's mana lattice through dermal contact",
 			restrictions: [
@@ -5529,7 +5529,7 @@ export const tattoos: CompendiumTattoo[] = [
 				resolution: "automatic",
 				modifier: "",
 				damage: "0",
-				damage_type: "none",
+				damage_type: "",
 			},
 			saving_throw: {
 				ability: "",

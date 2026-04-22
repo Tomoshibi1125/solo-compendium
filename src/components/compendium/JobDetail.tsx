@@ -349,6 +349,154 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				</AscendantWindow>
 			)}
 
+			{/* Racial Traits (Awakening lineage — the "race" half of the Job). */}
+			{data.racial_traits && data.racial_traits.length > 0 && (
+				<AscendantWindow title="INNATE RACIAL TRAITS">
+					<div className="space-y-3">
+						{data.racial_traits.map((t) => (
+							<div
+								key={t.name}
+								className="p-3 rounded bg-primary/5 border border-primary/10"
+							>
+								<div className="flex items-baseline justify-between gap-2 mb-1">
+									<h4 className="font-heading font-semibold text-primary">
+										{formatRegentVernacular(t.name)}
+									</h4>
+									{t.type && (
+										<span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+											{t.type}
+										</span>
+									)}
+								</div>
+								<p className="text-sm text-foreground/80">
+									<AutoLinkText text={t.description} />
+								</p>
+							</div>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Natural Weapons */}
+			{data.natural_weapons && data.natural_weapons.length > 0 && (
+				<AscendantWindow title="NATURAL WEAPONS">
+					<div className="space-y-2">
+						{data.natural_weapons.map((nw) => (
+							<div
+								key={nw.name}
+								className="p-3 rounded border border-border flex flex-col gap-1"
+							>
+								<div className="flex items-baseline justify-between">
+									<h4 className="font-heading font-semibold">
+										{formatRegentVernacular(nw.name)}
+									</h4>
+									<span className="font-display text-sm text-amber-400">
+										{nw.damage} {nw.damage_type}
+									</span>
+								</div>
+								{nw.description && (
+									<p className="text-xs text-muted-foreground">
+										{nw.description}
+									</p>
+								)}
+							</div>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Natural Armor */}
+			{data.natural_armor && (
+				<AscendantWindow title="NATURAL ARMOR">
+					<div className="space-y-1">
+						<p className="font-heading">
+							Base AC: {data.natural_armor.baseAC}
+							{data.natural_armor.abilityMod &&
+								` + ${data.natural_armor.abilityMod} mod`}
+							{data.natural_armor.addDex && " + Dex mod"}
+						</p>
+						{data.natural_armor.description && (
+							<p className="text-sm text-muted-foreground">
+								{data.natural_armor.description}
+							</p>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Resonance Breath */}
+			{data.resonance_breath && (
+				<AscendantWindow title="RESONANCE BREATH">
+					<div className="p-3 rounded border border-border">
+						<div className="flex items-baseline justify-between mb-1">
+							<h4 className="font-heading font-semibold text-primary">
+								{data.resonance_breath.name}
+							</h4>
+							<span className="font-display text-sm text-amber-400">
+								{data.resonance_breath.damage_die}{" "}
+								{data.resonance_breath.damage_type}
+							</span>
+						</div>
+						<p className="text-sm text-foreground/80">
+							{data.resonance_breath.size}-ft {data.resonance_breath.shape}.{" "}
+							{data.resonance_breath.save} save for half. Recharges on a{" "}
+							{data.resonance_breath.rechargeRest}.
+						</p>
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Innate Channeling */}
+			{data.innate_channeling &&
+				data.innate_channeling.spells.length > 0 && (
+					<AscendantWindow title="INNATE CHANNELING">
+						<p className="text-sm text-muted-foreground mb-3">
+							Spellcasting ability:{" "}
+							<span className="font-heading text-foreground">
+								{formatRegentVernacular(data.innate_channeling.ability)}
+							</span>
+						</p>
+						<div className="space-y-2">
+							{data.innate_channeling.spells.map((sp) => (
+								<div
+									key={sp.name}
+									className="p-3 rounded border border-border"
+								>
+									<div className="flex items-baseline justify-between mb-1">
+										<h4 className="font-heading font-semibold">
+											{formatRegentVernacular(sp.name)}
+										</h4>
+										<span className="text-xs text-muted-foreground">
+											{sp.uses === "at-will"
+												? "At will"
+												: sp.uses
+													? `${sp.uses.value}/${sp.uses.per}`
+													: ""}
+											{" · unlock lvl "}
+											{sp.unlockLevel}
+										</span>
+									</div>
+									{sp.description && (
+										<p className="text-xs text-muted-foreground">
+											{sp.description}
+										</p>
+									)}
+								</div>
+							))}
+						</div>
+					</AscendantWindow>
+				)}
+
+			{/* Bonus HP per level */}
+			{typeof data.bonus_hp_per_level === "number" &&
+				data.bonus_hp_per_level > 0 && (
+					<AscendantWindow title="REINFORCED CONSTITUTION">
+						<p className="font-heading">
+							+{data.bonus_hp_per_level} HP per character level (racial).
+						</p>
+					</AscendantWindow>
+				)}
+
 			{/* Regent Prerequisites */}
 			{data.regent_requirements && (
 				<AscendantWindow title="REGENT PREREQUISITES">

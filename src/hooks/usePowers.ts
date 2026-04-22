@@ -3,29 +3,29 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import {
-	findCanonicalEntryByName,
-	listCanonicalEntries,
+  type CanonicalCastableEntry,
+  type CanonicalCastableType,
+  findCanonicalCastableByName,
+  listCanonicalCastables,
 } from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
-	addLocalPower,
-	isLocalCharacterId,
-	listLocalPowers,
-	removeLocalPower,
-	updateLocalPower,
+  addLocalPower,
+  isLocalCharacterId,
+  listLocalPowers,
+  removeLocalPower,
+  updateLocalPower,
 } from "@/lib/guestStore";
 import {
-	filterRowsBySourcebookAccess,
-	getCharacterCampaignId,
-	isSourcebookAccessible,
+  getCharacterCampaignId,
+  isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 
 export type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
-export type CompendiumPower =
-	Database["public"]["Tables"]["compendium_powers"]["Row"];
+export type CompendiumPower = CanonicalCastableEntry;
 
 export interface CharacterPower extends PowerRow {
-	power?: CompendiumPower;
+  power?: CompendiumPower;
 }
 
 export type Power = CharacterPower;
@@ -33,47 +33,76 @@ type PowerInsert = Database["public"]["Tables"]["character_powers"]["Insert"];
 type PowerUpdate = Database["public"]["Tables"]["character_powers"]["Update"];
 
 const buildPowersCacheKey = (userId: string, characterId: string) => {
-	return `solo-compendium.cache.powers.${userId}.character:${characterId}.v1`;
+  return `solo-compendium.cache.powers.${userId}.character:${characterId}.v1`;
 };
 
 const readCachedPowers = (key: string): Power[] | null => {
-	try {
-		if (typeof window === "undefined") return null;
-		const raw = window.localStorage.getItem(key);
-		if (!raw) return null;
-		const parsed: unknown = JSON.parse(raw);
-		return Array.isArray(parsed) ? (parsed as Power[]) : null;
-	} catch {
-		return null;
-	}
+  try {
+    if (typeof window === "undefined") return null;
+    const raw = window.localStorage.getItem(key);
+    if (!raw) return null;
+    const parsed: unknown = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as Power[]) : null;
+  } catch {
+    return null;
+  }
 };
 
 const writeCachedPowers = (key: string, powers: Power[]) => {
-	try {
-		if (typeof window === "undefined") return;
-		window.localStorage.setItem(key, JSON.stringify(powers));
-	} catch {
-		// ignore
-	}
+  try {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(key, JSON.stringify(powers));
+  } catch {
+    // ignore
+  }
+};
+
+const getPreferredCastableTypes = (
+  source: string | null | undefined,
+): readonly CanonicalCastableType[] => {
+  const normalizedSource = source?.toLowerCase() ?? "";
+  if (normalizedSource.includes("spell")) return ["spells", "powers"];
+  if (normalizedSource.includes("power")) return ["powers", "spells"];
+  return ["powers", "spells"];
+};
+
+const selectCanonicalCastable = (
+  entries: CanonicalCastableEntry[],
+  powerRow: PowerRow,
+): CanonicalCastableEntry | undefined => {
+  if (entries.length === 0) return undefined;
+  const preferredTypes = getPreferredCastableTypes(powerRow.source);
+  const level = powerRow.power_level ?? 0;
+  const rankType = (entry: CanonicalCastableEntry) => {
+    const index = preferredTypes.indexOf(entry.canonical_type);
+    return index === -1 ? preferredTypes.length : index;
+  };
+
+  const exactLevelMatch = entries
+    .filter((entry) => entry.power_level === level)
+    .sort((a, b) => rankType(a) - rankType(b))[0];
+  if (exactLevelMatch) return exactLevelMatch;
+
+  return [...entries].sort((a, b) => rankType(a) - rankType(b))[0];
 };
 
 export const usePowers = (characterId: string) => {
-	const queryClient = useQueryClient();
-	const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
-	const { data: powers = [], isLoading } = useQuery({
-		queryKey: ["powers", characterId],
-		queryFn: async () => {
-			if (isLocalCharacterId(characterId)) {
-				return listLocalPowers(characterId) as Power[];
-			}
+  const { data: powers = [], isLoading } = useQuery({
+    queryKey: ["powers", characterId],
+    queryFn: async () => {
+      if (isLocalCharacterId(characterId)) {
+        return listLocalPowers(characterId) as Power[];
+      }
 
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			const cacheKey = user?.id
-				? buildPowersCacheKey(user.id, characterId)
-				: null;
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const cacheKey = user?.id
+        ? buildPowersCacheKey(user.id, characterId)
+        : null;
 
 			const { data, error } = await supabase
 				.from("character_powers")
@@ -109,49 +138,50 @@ export const usePowers = (characterId: string) => {
 
 			const uniqueNameSet = new Set(uniqueNames);
 			const campaignId = await getCharacterCampaignId(characterId);
-			const allCanonicalPowers = await listCanonicalEntries("powers");
-			const accessibleCanonicalPowers = await filterRowsBySourcebookAccess(
-				allCanonicalPowers,
-				(entry) => entry.source_book,
-				{ campaignId },
-			);
+			const [allCanonicalCastables, accessibleCanonicalCastables] =
+				await Promise.all([
+					listCanonicalCastables(),
+					listCanonicalCastables(undefined, { campaignId }),
+				]);
 
-			const sourceBookByName = new Map<string, string | null>();
-			const compendiumByName = new Map<
-				string,
-				(typeof allCanonicalPowers)[number]
-			>();
-			for (const entry of allCanonicalPowers) {
+			const allByName = new Map<string, CanonicalCastableEntry[]>();
+			for (const entry of allCanonicalCastables) {
 				if (uniqueNameSet.has(entry.name)) {
-					sourceBookByName.set(entry.name, entry.source_book ?? null);
-					compendiumByName.set(entry.name, entry);
+					const existing = allByName.get(entry.name) || [];
+					existing.push(entry);
+					allByName.set(entry.name, existing);
+				}
+			}
+			const accessibleByName = new Map<string, CanonicalCastableEntry[]>();
+			for (const entry of accessibleCanonicalCastables) {
+				if (uniqueNameSet.has(entry.name)) {
+					const existing = accessibleByName.get(entry.name) || [];
+					existing.push(entry);
+					accessibleByName.set(entry.name, existing);
 				}
 			}
 
-			if (sourceBookByName.size === 0) {
+			if (allByName.size === 0) {
 				if (cacheKey) {
 					writeCachedPowers(cacheKey, powers);
 				}
 				return powers;
 			}
 
-			const accessibleNames = new Set(
-				accessibleCanonicalPowers.map((entry) => entry.name),
-			);
-
 			const filtered = powers
 				.filter((power) => {
-					if (!sourceBookByName.has(power.name)) {
+					if (!allByName.has(power.name)) {
 						return true;
 					}
 
-					return accessibleNames.has(power.name);
+					return (accessibleByName.get(power.name)?.length ?? 0) > 0;
 				})
 				.map((power) => ({
 					...power,
-					power: compendiumByName.get(power.name) as
-						| CompendiumPower
-						| undefined,
+					power: selectCanonicalCastable(
+						accessibleByName.get(power.name) || [],
+						power,
+					),
 				}));
 
 			if (cacheKey) {
@@ -205,9 +235,10 @@ export const usePowers = (characterId: string) => {
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const canonicalEntry = await findCanonicalEntryByName(
-				"powers",
+			const canonicalEntry = await findCanonicalCastableByName(
 				power.name,
+				undefined,
+				getPreferredCastableTypes(power.source),
 			);
 
 			if (
@@ -277,7 +308,7 @@ export const usePowers = (characterId: string) => {
 				const { data: existingPower, error: existingPowerError } =
 					await supabase
 						.from("character_powers")
-						.select("name")
+						.select("name, source")
 						.eq("id", id)
 						.maybeSingle();
 
@@ -289,9 +320,10 @@ export const usePowers = (characterId: string) => {
 				}
 
 				if (existingPower?.name) {
-					const canonicalEntry = await findCanonicalEntryByName(
-						"powers",
+					const canonicalEntry = await findCanonicalCastableByName(
 						existingPower.name,
+						undefined,
+						getPreferredCastableTypes(existingPower.source),
 					);
 
 					if (

@@ -5,6 +5,7 @@ export type LightSource = import("@/lib/vtt").LightSource;
 export type WeatherType = import("@/lib/vtt").WeatherType;
 export type TerrainZone = import("@/lib/vtt").TerrainZone;
 export type AmbientSoundZone = import("@/lib/vtt").AmbientSoundZone;
+export type MusicMood = import("@/lib/vtt").MusicMood;
 
 export type VTTRenderMode = "token" | "overlay";
 export type VTTBlendMode =
@@ -96,6 +97,8 @@ export interface VTTScene {
 	fogOfWar: boolean;
 	fogData?: boolean[][];
 	weather?: WeatherType;
+	musicMood?: MusicMood | null;
+	musicAutoplay?: boolean;
 	terrain?: TerrainZone[];
 	ambientSounds?: AmbientSoundZone[];
 }

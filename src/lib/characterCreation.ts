@@ -399,6 +399,412 @@ export type FeatureModifier = {
 	source: string;
 };
 
+/**
+ * Get the engine-facing modifiers for a job's racial trait (the "race" half of
+ * the race+class fused job). Unlike `getJobTraitModifiers` (class-layer traits),
+ * these encode the lineage/physiology grants at Awakening: AC bumps, save
+ * advantages/bonuses, racial skill proficiencies, resistances, and the like.
+ * New traits authored in `jobs.ts` should be mirrored here.
+ */
+export function getRacialTraitModifiers(
+	jobName: string,
+	traitName: string,
+): FeatureModifier[] {
+	const job = jobName.trim().toLowerCase();
+	const trait = traitName.trim().toLowerCase();
+
+	// 1. DESTROYER — crystalline gate-frame lineage (Fighter analog).
+	if (job === "destroyer") {
+		if (trait === "crystalline bone density") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "STR_saves:prone",
+					source: traitName,
+				},
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Athletics",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "kinetic battery") {
+			return [
+				{
+					type: "damage_reflect",
+					value: 0,
+					target: "bludgeoning|force",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 2. BERSERKER — thermal-vent mana physiology (Barbarian analog).
+	if (job === "berserker") {
+		if (trait === "thermal venting") {
+			return [
+				{
+					type: "reactive_damage",
+					value: 6,
+					target: "fire",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "mana-saturated metabolism") {
+			return [
+				{ type: "advantage", value: 0, target: "save:poison", source: traitName },
+				{ type: "resistance", value: 0, target: "poison", source: traitName },
+			];
+		}
+		if (trait === "volatile resonance aura") {
+			return [
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Intimidation",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 3. ASSASSIN — partial-dimensional umbral lineage (Rogue analog).
+	if (job === "assassin") {
+		if (trait === "partial dimensional existence") {
+			return [
+				{ type: "skill_prof", value: 0, target: "Stealth", source: traitName },
+				{
+					type: "tool_prof",
+					value: 0,
+					target: "Thieves' Tools",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "apex sensory array") {
+			return [
+				{ type: "darkvision", value: 120, target: "range", source: traitName },
+				{
+					type: "advantage",
+					value: 0,
+					target: "AGI_saves:sound",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 4. STRIKER — hyper-twitch kinetic lineage (Monk analog).
+	if (job === "striker") {
+		if (trait === "hyper-twitch fibers") {
+			return [
+				{ type: "speed", value: 10, target: "walking", source: traitName },
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Acrobatics",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "adrenaline synthesizer") {
+			return [
+				{
+					type: "initiative_bonus",
+					value: 0,
+					target: "prof",
+					source: traitName,
+				},
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:paralyzed|restrained",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 5. MAGE — aetheric-cortex lineage (Wizard analog).
+	if (job === "mage") {
+		if (trait === "mana-bleed dependency") {
+			return [
+				{ type: "healing_max", value: 0, target: "self", source: traitName },
+				{
+					type: "disadvantage",
+					value: 0,
+					target: "save:psychic",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "aetheric resonance shield") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "INT_saves:magic",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "arcane optic mutation") {
+			return [
+				{ type: "skill_prof", value: 0, target: "Arcana", source: traitName },
+				{
+					type: "see_invisible",
+					value: 30,
+					target: "range",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 6. ESPER — neural-overclock psionic lineage (Sorcerer analog).
+	if (job === "esper") {
+		if (trait === "neural overclocking") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "INT_saves",
+					source: traitName,
+				},
+				{ type: "skill_prof", value: 0, target: "Insight", source: traitName },
+				{
+					type: "immunity",
+					value: 0,
+					target: "surprised",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 7. REVENANT — death-scarred undying lineage (Necromancer analog).
+	if (job === "revenant") {
+		if (trait === "death-scarred physiology") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:poison",
+					source: traitName,
+				},
+				{
+					type: "immunity",
+					value: 0,
+					target: "disease",
+					source: traitName,
+				},
+				{ type: "skill_prof", value: 0, target: "Medicine", source: traitName },
+			];
+		}
+	}
+
+	// 8. SUMMONER — biome-bonded anchor lineage (Druid analog).
+	if (job === "summoner") {
+		if (trait === "aetheric anchor") {
+			return [
+				{ type: "skill_prof", value: 0, target: "Nature", source: traitName },
+			];
+		}
+		if (trait === "summoner's ward") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:banishment|teleport",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 9. HERALD — signal-receiver sanctified antenna (Cleric analog).
+	if (job === "herald") {
+		if (trait === "mandate-receptive cortex") {
+			return [
+				{ type: "skill_prof", value: 0, target: "Religion", source: traitName },
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:deafened",
+					source: traitName,
+				},
+				{
+					type: "immunity",
+					value: 0,
+					target: "silence",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 10. CONTRACTOR — pact-branded rift-vessel lineage (Warlock analog).
+	if (job === "contractor") {
+		if (trait === "pact brand physiology") {
+			return [
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Deception",
+					source: traitName,
+				},
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:charm:non_patron",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 11. STALKER — predator-optimized rift-tracker lineage (Ranger analog).
+	if (job === "stalker") {
+		if (trait === "predator-optimized physiology") {
+			return [
+				{ type: "speed", value: 5, target: "walking", source: traitName },
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Athletics",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "rift resonance sense") {
+			return [
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Survival",
+					source: traitName,
+				},
+				{
+					type: "gate_detect",
+					value: 5280,
+					target: "range_ft",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 12. HOLY KNIGHT — radiant-scaled covenant lineage (Paladin analog).
+	if (job === "holy-knight" || job === "holy knight") {
+		if (trait === "radiant scales") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:blinded",
+					source: traitName,
+				},
+				{
+					type: "crit_mitigation",
+					value: 1,
+					target: "per_long_rest",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "aura of command") {
+			return [
+				{ type: "skill_prof", value: 0, target: "History", source: traitName },
+				{
+					type: "advantage",
+					value: 0,
+					target: "skill:Persuasion|Intimidation:lower_ranked",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 13. TECHNOMANCER — cyber-mana alloyed lineage (Artificer analog).
+	if (job === "technomancer") {
+		if (trait === "cyber-mana integration") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "INT_saves",
+					source: traitName,
+				},
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Investigation",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "metallic dermis") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:poisoned",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	// 14. IDOL — harmonic-frequency resonance lineage (Bard analog).
+	if (job === "idol") {
+		if (trait === "harmonic frequency physiology") {
+			return [
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Performance",
+					source: traitName,
+				},
+				{
+					type: "advantage",
+					value: 0,
+					target: "skill:Persuasion|Performance",
+					source: traitName,
+				},
+			];
+		}
+		if (trait === "dissonance immunity") {
+			return [
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:frightened|charmed",
+					source: traitName,
+				},
+				{
+					type: "immunity",
+					value: 0,
+					target: "magical_sleep",
+					source: traitName,
+				},
+				{
+					type: "immunity",
+					value: 0,
+					target: "silence",
+					source: traitName,
+				},
+			];
+		}
+	}
+
+	return [];
+}
+
 export function getJobTraitModifiers(
 	jobName: string,
 	traitName: string,
@@ -2472,20 +2878,99 @@ export async function applyJobAwakeningTraitsToCharacter(
 		job.conditionImmunities,
 	);
 
-	// Languages are not persisted on characters today (no column). We still
-	// pass-through via job traits / awakening features for display; the
-	// selectedLanguages argument is retained so callers can forward the
-	// player's chosen language once a languages column or table is added.
-	void selectedLanguages;
+	// Add climb/swim/fly speed entries into senses so they display on the
+	// sheet until dedicated columns exist.
+	if (typeof job.climb_speed === "number" && job.climb_speed > 0) {
+		jobSenses.push(`Climb speed ${job.climb_speed} ft.`);
+	}
+	if (typeof job.swim_speed === "number" && job.swim_speed > 0) {
+		jobSenses.push(`Swim speed ${job.swim_speed} ft.`);
+	}
+	if (typeof job.fly_speed === "number" && job.fly_speed > 0) {
+		jobSenses.push(`Fly speed ${job.fly_speed} ft.`);
+	}
+
+	// Racial saving throw proficiencies (jobs are race+class fused, so the
+	// job's saving_throws are the character's save profs).
+	const asiSystemAbilityMap: Record<string, string> = {
+		strength: "STR",
+		agility: "AGI",
+		vitality: "VIT",
+		intelligence: "INT",
+		sense: "SENSE",
+		presence: "PRE",
+	};
+	const jobSaves = dedupe(
+		(job.saving_throws ?? []).map(
+			(s) => asiSystemAbilityMap[String(s).toLowerCase()] ?? String(s),
+		),
+	);
+
+	const jobWeaponProfs = dedupe(
+		job.weapon_proficiencies,
+		job.weaponProficiencies,
+	);
+	const jobArmorProfs = dedupe(job.armor_proficiencies, job.armorProficiencies);
+	const jobToolProfs = dedupe(job.tool_proficiencies, job.toolProficiencies);
+
+	// Merged languages for future Phase 4 column; kept here so guests see them
+	// in whatever shape local storage supports.
+	const mergedLanguages = dedupe(job.languages, selectedLanguages);
+
+	// Compute ASI delta (idempotent — applied once per character-job pair via
+	// a hidden marker feature).
+	const jobName = job.name;
+	const asiApplyKey = `Racial ASI: ${jobName}`;
+	const asiEntries: Array<{ db: "str" | "agi" | "vit" | "int" | "sense" | "pre"; delta: number }> = [];
+	if (job.abilityScoreImprovements && !Array.isArray(job.abilityScoreImprovements)) {
+		const rawASI = job.abilityScoreImprovements as Record<string, number>;
+		const map: Record<string, "str" | "agi" | "vit" | "int" | "sense" | "pre"> = {
+			strength: "str",
+			agility: "agi",
+			vitality: "vit",
+			intelligence: "int",
+			sense: "sense",
+			presence: "pre",
+		};
+		for (const [key, value] of Object.entries(rawASI)) {
+			const col = map[key.toLowerCase()];
+			if (col && typeof value === "number" && value !== 0) {
+				asiEntries.push({ db: col, delta: value });
+			}
+		}
+	}
 
 	// Load existing arrays so we merge instead of overwrite. For guest/local
 	// characters this goes through updateLocalCharacter; for Supabase we read
 	// the current row and write back a merged update.
 	if (isLocalCharacterId(characterId)) {
-		const { getLocalCharacterWithAbilities, updateLocalCharacter } =
-			await import("@/lib/guestStore");
+		const {
+			getLocalCharacterWithAbilities,
+			updateLocalCharacter,
+			listLocalFeatures,
+		} = await import("@/lib/guestStore");
 		const existing = getLocalCharacterWithAbilities(characterId);
 		if (!existing) return;
+
+		// Idempotent ASI apply (guest): track via a marker feature.
+		const existingFeatures = listLocalFeatures(characterId);
+		const asiAlreadyApplied = existingFeatures.some(
+			(f) => (f?.source ?? "") === asiApplyKey || (f?.name ?? "") === asiApplyKey,
+		);
+		const statsPatch: Record<string, number> = {};
+		if (!asiAlreadyApplied) {
+			for (const { db, delta } of asiEntries) {
+				const current =
+					(existing as unknown as Record<string, number | null | undefined>)[db] ??
+					0;
+				statsPatch[db] = Number(current) + delta;
+			}
+		}
+
+		const existingLanguages =
+			(existing as unknown as { languages?: string[] | null }).languages ??
+			null;
+
 		updateLocalCharacter(characterId, {
 			senses: dedupe(existing.senses, jobSenses),
 			resistances: dedupe(existing.resistances, jobResistances),
@@ -2494,18 +2979,65 @@ export async function applyJobAwakeningTraitsToCharacter(
 				existing.condition_immunities,
 				jobConditionImmunities,
 			),
-		});
+			speed: Math.max(existing.speed ?? 30, job.speed ?? 30),
+			saving_throw_proficiencies: dedupe(
+				existing.saving_throw_proficiencies,
+				jobSaves,
+			) as never,
+			weapon_proficiencies: dedupe(
+				existing.weapon_proficiencies,
+				jobWeaponProfs,
+			),
+			armor_proficiencies: dedupe(existing.armor_proficiencies, jobArmorProfs),
+			tool_proficiencies: dedupe(existing.tool_proficiencies, jobToolProfs),
+			languages: dedupe(existingLanguages, mergedLanguages),
+			...statsPatch,
+		} as never);
+
+		if (!asiAlreadyApplied && asiEntries.length > 0) {
+			addLocalFeature(characterId, {
+				name: asiApplyKey,
+				source: asiApplyKey,
+				level_acquired: 1,
+				description: `Racial ASI applied: ${asiEntries
+					.map((e) => `${e.db.toUpperCase()} +${e.delta}`)
+					.join(", ")}.`,
+				action_type: null,
+				uses_max: null,
+				uses_current: null,
+				recharge: null,
+				is_active: false,
+			});
+		}
 		return;
 	}
 
 	const { data: existing, error: readErr } = await supabase
 		.from("characters")
 		.select(
-			"senses, resistances, immunities, condition_immunities, vulnerabilities",
+			"senses, resistances, immunities, condition_immunities, vulnerabilities, speed, saving_throw_proficiencies, weapon_proficiencies, armor_proficiencies, tool_proficiencies, languages, str, agi, vit, int, sense, pre",
 		)
 		.eq("id", characterId)
 		.single();
 	if (readErr || !existing) return;
+
+	// Idempotent ASI apply (supabase): check marker feature.
+	const { data: asiMarkerRows } = await supabase
+		.from("character_features")
+		.select("id")
+		.eq("character_id", characterId)
+		.eq("source", asiApplyKey)
+		.limit(1);
+	const asiAlreadyApplied = !!(asiMarkerRows && asiMarkerRows.length > 0);
+	const statsPatch: Record<string, number> = {};
+	if (!asiAlreadyApplied) {
+		for (const { db, delta } of asiEntries) {
+			const current =
+				(existing as unknown as Record<string, number | null | undefined>)[db] ??
+				0;
+			statsPatch[db] = Number(current) + delta;
+		}
+	}
 
 	const { error: writeErr } = await supabase
 		.from("characters")
@@ -2517,7 +3049,26 @@ export async function applyJobAwakeningTraitsToCharacter(
 				existing.condition_immunities,
 				jobConditionImmunities,
 			),
+			speed: Math.max(existing.speed ?? 30, job.speed ?? 30),
+			saving_throw_proficiencies: dedupe(
+				existing.saving_throw_proficiencies as string[] | null,
+				jobSaves,
+			) as Database["public"]["Enums"]["ability_score"][],
+			weapon_proficiencies: dedupe(
+				existing.weapon_proficiencies,
+				jobWeaponProfs,
+			),
+			armor_proficiencies: dedupe(
+				existing.armor_proficiencies,
+				jobArmorProfs,
+			),
+			tool_proficiencies: dedupe(existing.tool_proficiencies, jobToolProfs),
+			languages: dedupe(
+				(existing as { languages?: string[] | null }).languages,
+				mergedLanguages,
+			),
 			// Vulnerabilities intentionally not job-granted today; preserved as-is.
+			...statsPatch,
 		})
 		.eq("id", characterId);
 	if (writeErr) {
@@ -2525,6 +3076,19 @@ export async function applyJobAwakeningTraitsToCharacter(
 			"applyJobAwakeningTraitsToCharacter: failed to persist job traits",
 			writeErr,
 		);
+	}
+
+	if (!asiAlreadyApplied && asiEntries.length > 0) {
+		await supabase.from("character_features").insert({
+			character_id: characterId,
+			name: asiApplyKey,
+			source: asiApplyKey,
+			level_acquired: 1,
+			description: `Racial ASI applied: ${asiEntries
+				.map((e) => `${e.db.toUpperCase()} +${e.delta}`)
+				.join(", ")}.`,
+			is_active: false,
+		});
 	}
 }
 
@@ -2670,6 +3234,204 @@ export async function addJobAwakeningBenefitsForLevel(
 				modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
 			});
 		}
+
+		// Racial traits — the "race" half of the race+class fused job.
+		// Each becomes a character feature at level 1 with engine modifiers.
+		for (const trait of job.racialTraits || []) {
+			if (existingNames.has(trait.name)) continue;
+
+			const modifiers = getRacialTraitModifiers(jobName, trait.name);
+			await insertCharacterFeature(characterId, {
+				name: trait.name,
+				source: `Racial Trait: ${jobName}`,
+				level_acquired: 1,
+				description: trait.description,
+				is_active: true,
+				modifiers: modifiers.length > 0 ? (modifiers as Json) : null,
+			});
+		}
+
+		// Natural weapons (Gate-Crystal Fists, Hyper-Cadence Strikes, Necrotic Grasp, etc).
+		// Each becomes a read-only feature describing the innate unarmed attack.
+		for (const nw of job.naturalWeapons || []) {
+			const featureName = `Natural Weapon: ${nw.name}`;
+			if (existingNames.has(featureName)) continue;
+			await insertCharacterFeature(characterId, {
+				name: featureName,
+				source: `Racial Trait: ${jobName}`,
+				level_acquired: 1,
+				description:
+					nw.description ??
+					`${nw.damage} ${nw.damage_type} (natural weapon)`,
+				is_active: true,
+				modifiers: [
+					{
+						type: "natural_weapon",
+						target: nw.damage_type,
+						value: nw.damage,
+						source: nw.name,
+					},
+				] as unknown as Json,
+			});
+		}
+
+		// Natural armor (Metallic Dermis — base AC 13 + INT mod, etc.).
+		if (job.naturalArmor) {
+			const featureName = `Natural Armor`;
+			if (!existingNames.has(featureName)) {
+				const na = job.naturalArmor;
+				await insertCharacterFeature(characterId, {
+					name: featureName,
+					source: `Racial Trait: ${jobName}`,
+					level_acquired: 1,
+					description:
+						na.description ??
+						`Base AC = ${na.baseAC}${na.abilityMod ? ` + ${na.abilityMod} mod` : ""}${na.addDex ? " + Dex mod" : ""}.`,
+					is_active: true,
+					modifiers: [
+						{
+							type: "ac_base",
+							value: na.baseAC,
+							target: na.addDex ? "with_dex" : "no_dex",
+							source: "Natural Armor",
+							// `abilityMod` stored on the modifier so the AC engine can
+							// add the right ability modifier (e.g. Technomancer INT).
+							...(na.abilityMod ? { ability_mod: na.abilityMod } : {}),
+						},
+					] as unknown as Json,
+				});
+			}
+		}
+
+		// Resonance breath (thermal vent / judgment ray / resonant pulse).
+		if (job.resonanceBreath) {
+			const rb = job.resonanceBreath;
+			const featureName = `Resonance Breath: ${rb.name}`;
+			if (!existingNames.has(featureName)) {
+				await insertCharacterFeature(characterId, {
+					name: featureName,
+					source: `Racial Trait: ${jobName}`,
+					level_acquired: 1,
+					description: `${rb.size}-ft ${rb.shape} of ${rb.damage_type}. ${rb.save} save for half. ${rb.damage_die} damage (scaling with level). Recharges on a ${rb.rechargeRest}.`,
+					is_active: true,
+					modifiers: [
+						{
+							type: "resonance_breath",
+							target: rb.damage_type,
+							value: rb.damage_die,
+							source: rb.name,
+						},
+					] as unknown as Json,
+				});
+			}
+		}
+
+		// Bonus HP per level (Destroyer crystalline frame — +1 HP per level).
+		if (typeof job.bonusHpPerLevel === "number" && job.bonusHpPerLevel > 0) {
+			const featureName = `Reinforced Constitution`;
+			if (!existingNames.has(featureName)) {
+				await insertCharacterFeature(characterId, {
+					name: featureName,
+					source: `Racial Trait: ${jobName}`,
+					level_acquired: 1,
+					description: `Your reinforced physiology grants +${job.bonusHpPerLevel} HP per character level.`,
+					is_active: true,
+					modifiers: [
+						{
+							type: "hp-max",
+							value: job.bonusHpPerLevel,
+							target: "per_level",
+							source: featureName,
+						},
+					] as unknown as Json,
+				});
+			}
+		}
+	}
+
+	// Innate channeling spells unlocking at this level.
+	if (isStaticJob(job) && job.innateChanneling) {
+		await addInnateChannelingForLevel(characterId, job, level);
+	}
+}
+
+/**
+ * Insert any innate channeling spells (RA racial spellcasting) that unlock at
+ * the given level into the character's power list. Idempotent: re-running at
+ * the same level skips spells already present.
+ */
+export async function addInnateChannelingForLevel(
+	characterId: string,
+	job: StaticJob,
+	level: number,
+): Promise<void> {
+	const channeling = job.innateChanneling;
+	if (!channeling) return;
+
+	const jobName = job.name;
+	const unlocked = (channeling.spells ?? []).filter(
+		(s) => s.unlockLevel === level,
+	);
+	if (unlocked.length === 0) return;
+
+	for (const spell of unlocked) {
+		const sourceLabel = `Racial Channeling: ${jobName}`;
+		const usesMax =
+			spell.uses && spell.uses !== "at-will" ? spell.uses.value : null;
+		const usesCurrent = usesMax;
+		const recharge =
+			spell.uses && spell.uses !== "at-will"
+				? spell.uses.per
+				: spell.uses === "at-will"
+					? "at-will"
+					: null;
+
+		if (isLocalCharacterId(characterId)) {
+			const { addLocalPower, listLocalPowers } = await import(
+				"@/lib/guestStore"
+			);
+			const existingPowers = listLocalPowers(characterId);
+			if (
+				existingPowers.some(
+					(p) => p?.name === spell.name && p?.source === sourceLabel,
+				)
+			)
+				continue;
+			addLocalPower(characterId, {
+				name: spell.name,
+				source: sourceLabel,
+				level: spell.level,
+				prepared: true,
+				known: true,
+				description: spell.description ?? null,
+				recharge: recharge as never,
+				uses_max: usesMax,
+				uses_current: usesCurrent,
+			} as never);
+			continue;
+		}
+
+		const { data: existingPowers } = await supabase
+			.from("character_powers")
+			.select("id, name, source")
+			.eq("character_id", characterId)
+			.eq("name", spell.name)
+			.eq("source", sourceLabel)
+			.limit(1);
+		if (existingPowers && existingPowers.length > 0) continue;
+
+		await supabase.from("character_powers").insert({
+			character_id: characterId,
+			name: spell.name,
+			source: sourceLabel,
+			level: spell.level,
+			prepared: true,
+			known: true,
+			description: spell.description ?? null,
+			recharge: recharge as never,
+			uses_max: usesMax,
+			uses_current: usesCurrent,
+		});
 	}
 }
 
@@ -2943,36 +3705,30 @@ export async function addStartingPowers(
 
 	const maxPowerLevel = getMaxPowerLevelForJobAtLevel(job, 1);
 
-	// Canonical static spells gated by job tag + max power level.
-	const { listCanonicalEntries } = await import("@/lib/canonicalCompendium");
-	const entries = await listCanonicalEntries("spells", undefined, {
-		campaignId,
-	});
-	const jobTag = (jobName ?? "").toLowerCase();
-	const accessiblePowers = entries.filter((power) => {
-		if ((power.power_level ?? power.level ?? 0) > maxPowerLevel) return false;
-		const tags = (power.tags || []).map((t) => t.toLowerCase());
-		return tags.length === 0 || tags.includes(jobTag);
+	const { listLearnableCastables } = await import("@/lib/canonicalCompendium");
+	const accessiblePowers = await listLearnableCastables({
+		accessContext: { campaignId },
+		jobName: jobName ?? null,
+		maxPowerLevel,
 	});
 
 	if (accessiblePowers.length > 0) {
 		for (const power of accessiblePowers) {
 			const powerLevel = power.power_level ?? power.level ?? 0;
-			const castingTime =
-				typeof power.casting_time === "string" ? power.casting_time : null;
-			const range = typeof power.range === "string" ? power.range : null;
-			const duration =
-				typeof power.duration === "string" ? power.duration : null;
-			const higherLevels =
-				typeof (power as { higher_levels?: string }).higher_levels === "string"
-					? ((power as { higher_levels?: string }).higher_levels ?? null)
-					: null;
+			const castingTime = power.casting_time || null;
+			const range = power.range || null;
+			const duration = power.duration || null;
+			const higherLevels = power.higher_levels ?? null;
+			const source =
+				power.canonical_type === "spells"
+					? `Job Spell: ${jobName}`
+					: `Job Power: ${jobName}`;
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalPower(characterId, {
 					name: power.name,
 					power_level: powerLevel,
-					source: `Job: ${jobName}`,
+					source,
 					casting_time: castingTime,
 					range,
 					duration,
@@ -2987,7 +3743,7 @@ export async function addStartingPowers(
 					character_id: characterId,
 					name: power.name,
 					power_level: powerLevel,
-					source: `Job: ${jobName}`,
+					source,
 					casting_time: castingTime,
 					range,
 					duration,

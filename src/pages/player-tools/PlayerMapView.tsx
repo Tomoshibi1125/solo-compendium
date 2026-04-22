@@ -22,6 +22,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
+import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import "@/styles/vtt-player-map.css";
 import "@/styles/vtt-performance.css";
 import "./PlayerMapView.css";
@@ -31,8 +32,10 @@ import type { LibraryToken } from "@/data/tokenLibraryDefaults";
 import {
 	type AmbientSoundZone,
 	getWeatherCSSAnimation,
+	type MusicMood,
 	type TerrainZone,
 	type VTTDrawing,
+	VttMusicEngine,
 	WEATHER_PRESETS,
 	type WeatherType,
 } from "@/lib/vtt";
@@ -82,6 +85,8 @@ interface Scene {
 	fogData?: boolean[][];
 	drawings?: VTTDrawing[];
 	weather?: WeatherType;
+	musicMood?: MusicMood | null;
+	musicAutoplay?: boolean;
 	terrain?: TerrainZone[];
 	ambientSounds?: AmbientSoundZone[];
 }
@@ -169,6 +174,17 @@ const PlayerMapView = ({
 	} | null>(null);
 	const spacePanPressedRef = useRef(false);
 	const [isViewportPanning, setIsViewportPanning] = useState(false);
+	const musicEngineRef = useRef<VttMusicEngine | null>(null);
+	const syncPlayerSceneMusic = useCallback(
+		(scene: Pick<Scene, "musicMood" | "musicAutoplay"> | null | undefined) => {
+			const wantsMusic = !!scene?.musicMood && scene.musicAutoplay !== false;
+			if (wantsMusic && !musicEngineRef.current) {
+				musicEngineRef.current = new VttMusicEngine();
+			}
+			syncSceneMusicEngine(musicEngineRef.current, scene);
+		},
+		[],
+	);
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;
@@ -211,6 +227,21 @@ const PlayerMapView = ({
 
 	// Scene state received from Warden
 	const [currentScene, setCurrentScene] = useState<Scene | null>(null);
+	useEffect(() => {
+		syncPlayerSceneMusic(currentScene);
+	}, [
+		currentScene?.id,
+		currentScene?.musicAutoplay,
+		currentScene?.musicMood,
+		syncPlayerSceneMusic,
+	]);
+	useEffect(
+		() => () => {
+			musicEngineRef.current?.dispose();
+			musicEngineRef.current = null;
+		},
+		[],
+	);
 
 	const { data: combatData } = useCampaignCombatSession(
 		effectiveCampaignId,
@@ -368,6 +399,17 @@ const PlayerMapView = ({
 			if (payload.changedBy === vttRealtime.userId) return;
 			// Scene change handled by campaign_tool_states subscription
 		});
+		const unsub7 = vttRealtime.on("audio_sync", (payload) => {
+			if (payload.playedBy === vttRealtime.userId) return;
+			if (payload.action === "music_change" && payload.id) {
+				syncPlayerSceneMusic({
+					musicMood: payload.id as MusicMood,
+					musicAutoplay: true,
+				});
+			} else if (payload.action === "music_stop") {
+				syncPlayerSceneMusic({ musicMood: null, musicAutoplay: false });
+			}
+		});
 
 		return () => {
 			unsub1();
@@ -376,8 +418,9 @@ const PlayerMapView = ({
 			unsub4();
 			unsub5();
 			unsub6();
+			unsub7();
 		};
-	}, [effectiveCampaignId, vttRealtime]);
+	}, [effectiveCampaignId, syncPlayerSceneMusic, vttRealtime]);
 
 	const gridSize = currentScene?.gridSize ?? 50;
 

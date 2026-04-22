@@ -18,13 +18,17 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
-import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import type { CanonicalCastableEntry } from "@/lib/canonicalCompendium";
+import {
+	listCanonicalEntries,
+	listLearnableCastables,
+} from "@/lib/canonicalCompendium";
 import {
 	getCantripsKnownLimit,
 	getSpellsKnownLimit,
 } from "@/lib/characterCalculations";
 import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
-import { getStaticSpells } from "@/lib/ProtocolDataManager";
+import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
@@ -56,7 +60,7 @@ export function AddPowerDialog({
 	);
 
 	const [replaceTarget, setReplaceTarget] = useState<null | {
-		powerToLearn: { name: string; power_level: number };
+		powerToLearn: CanonicalCastableEntry;
 		kind: "cantrip" | "known";
 		limit: number;
 	}>(null);
@@ -65,7 +69,7 @@ export function AddPowerDialog({
 		? getMaxPowerLevelForJobAtLevel(jobObj || character.job, character.level)
 		: 0;
 
-	const { data: powers = [], isLoading } = useQuery({
+	const { data: powers = [], isLoading } = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
 			"compendium-powers",
 			characterId,
@@ -76,7 +80,6 @@ export function AddPowerDialog({
 		queryFn: async () => {
 			if (!character?.job) return [];
 
-			// Calculate max power level for the job at current level
 			const maxPowerLevel = getMaxPowerLevelForJobAtLevel(
 				character.job,
 				character.level || 1,
@@ -100,87 +103,18 @@ export function AddPowerDialog({
 					);
 			}
 
-			// Canonical static source: resolve powers by job tags; path/regent names
-			// are matched via the spell's tags.
+			const campaignId = await getCharacterCampaignId(characterId);
 			const trimmedQuery = searchQuery.trim();
-			const canonicalQuery = trimmedQuery
-				? normalizeRegentSearch(trimmedQuery).toLowerCase()
-				: "";
-
-			const spells = getStaticSpells();
-			const jobNameLower = (character?.job ?? "").toLowerCase();
-			const pathNameLower = (character?.path ?? "").toLowerCase();
-			const regentNamesLower = regentNames.map((name) => name.toLowerCase());
-			const filtered = spells
-				.filter((spell) => {
-					// Level gate
-					if ((spell.level ?? 0) > maxPowerLevel) return false;
-					// Name filter
-					if (
-						canonicalQuery &&
-						!spell.name.toLowerCase().includes(canonicalQuery)
-					) {
-						return false;
-					}
-					// Job/path/regent tag filter: allow if no tags or tag matches any
-					const tags = (spell.tags || []).map((c) => c.toLowerCase());
-					const matches =
-						tags.length === 0 ||
-						tags.includes(jobNameLower) ||
-						(pathNameLower && tags.includes(pathNameLower)) ||
-						regentNamesLower.some((regentName) => tags.includes(regentName));
-					if (!matches) return false;
-
-					return true;
-				})
-				.slice(0, 200);
-
-			return filtered.map((spell) => ({
-				id: spell.id,
-				name: spell.name,
-				description: spell.description ?? "",
-				power_level: spell.level ?? 0,
-				school: spell.school ?? null,
-				casting_time:
-					typeof spell.casting_time === "string"
-						? spell.casting_time
-						: "1 action",
-				range: typeof spell.range === "string" ? spell.range : "Self",
-				duration:
-					typeof spell.duration === "string" ? spell.duration : "Instantaneous",
-				concentration: spell.concentration ?? false,
-				higher_levels:
-					typeof spell.higher_levels === "string" ? spell.higher_levels : null,
-				source_book: "Rift Ascendant Canon",
-				source_name: null,
-				source_kind: null,
-				display_name: spell.name,
-				job_names: character?.job ? [character.job] : [],
-				path_names: character?.path ? [character.path] : [],
-				regent_names: [],
-				created_at: new Date().toISOString(),
-				updated_at: new Date().toISOString(),
-				tags: Array.isArray(spell.tags) ? spell.tags : [],
-				theme_tags: null,
-				activation_time: null,
-				aliases: null,
-				components: null,
-				damage_roll: null,
-				damage_type: null,
-				flavor: null,
-				generated_reason: null,
-				has_attack_roll: false,
-				has_save: false,
-				image: null,
-				image_url: null,
-				license_note: null,
-				lore: null,
-				mechanics: null,
-				power_type: spell.type ?? null,
-				ritual: false,
-				save_ability: null,
-				target: null,
-			}));
+			return listLearnableCastables({
+				search: trimmedQuery
+					? normalizeRegentSearch(trimmedQuery).toLowerCase()
+					: undefined,
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: character.path ?? null,
+				regentNames,
+				maxPowerLevel,
+			});
 		},
 		enabled: open && !!character?.job,
 	});
@@ -232,6 +166,10 @@ export function AddPowerDialog({
 
 	const handleAdd = async (power: (typeof powers)[0]) => {
 		const displayName = formatRegentVernacular(power.name);
+		const source =
+			power.canonical_type === "spells"
+				? "Compendium Spell"
+				: "Compendium Power";
 		try {
 			if (character?.job) {
 				if (power.power_level === 0) {
@@ -241,10 +179,7 @@ export function AddPowerDialog({
 					);
 					if (cantripLimit !== null && knownCantripCount >= cantripLimit) {
 						setReplaceTarget({
-							powerToLearn: {
-								name: power.name,
-								power_level: power.power_level,
-							},
+							powerToLearn: power,
 							kind: "cantrip",
 							limit: cantripLimit,
 						});
@@ -262,10 +197,7 @@ export function AddPowerDialog({
 					);
 					if (knownLimit !== null && knownNonCantripCount >= knownLimit) {
 						setReplaceTarget({
-							powerToLearn: {
-								name: power.name,
-								power_level: power.power_level,
-							},
+							powerToLearn: power,
 							kind: "known",
 							limit: knownLimit,
 						});
@@ -283,7 +215,7 @@ export function AddPowerDialog({
 				character_id: characterId,
 				name: power.name,
 				power_level: power.power_level,
-				source: "Compendium",
+				source,
 				casting_time: power.casting_time || null,
 				range: power.range || null,
 				duration: power.duration || null,
@@ -325,6 +257,10 @@ export function AddPowerDialog({
 
 		const { powerToLearn } = replaceTarget;
 		const displayName = formatRegentVernacular(powerToLearn.name);
+		const source =
+			powerToLearn.canonical_type === "spells"
+				? "Compendium Spell"
+				: "Compendium Power";
 
 		try {
 			await removePower(existingPowerId);
@@ -333,13 +269,13 @@ export function AddPowerDialog({
 				character_id: characterId,
 				name: powerToLearn.name,
 				power_level: powerToLearn.power_level,
-				source: "Compendium",
-				casting_time: null,
-				range: null,
-				duration: null,
-				concentration: false,
-				description: null,
-				higher_levels: null,
+				source,
+				casting_time: powerToLearn.casting_time || null,
+				range: powerToLearn.range || null,
+				duration: powerToLearn.duration || null,
+				concentration: powerToLearn.concentration || false,
+				description: powerToLearn.description || null,
+				higher_levels: powerToLearn.higher_levels || null,
 				is_prepared: false,
 				is_known: true,
 			});

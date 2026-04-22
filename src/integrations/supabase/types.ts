@@ -3078,6 +3078,7 @@ export type Database = {
 					initiative: number;
 					int: number | null;
 					job: string | null;
+					languages: string[];
 					level: number;
 					monarch_overlays: string[] | null;
 					name: string;
@@ -3140,6 +3141,7 @@ export type Database = {
 					initiative?: number;
 					int?: number | null;
 					job?: string | null;
+					languages?: string[];
 					level?: number;
 					monarch_overlays?: string[] | null;
 					name: string;
@@ -3202,6 +3204,7 @@ export type Database = {
 					initiative?: number;
 					int?: number | null;
 					job?: string | null;
+					languages?: string[];
 					level?: number;
 					monarch_overlays?: string[] | null;
 					name?: string;

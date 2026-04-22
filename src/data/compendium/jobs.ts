@@ -169,10 +169,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: {
-			strength: 2,
-			vitality: 1,
-		},
+		abilityScoreImprovements: { strength: 2, vitality: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Korean"],
@@ -267,35 +264,30 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Crystalline Bone Density",
-				description:
-					"Lineage trait. Your skeleton is reinforced with gate-crystal deposits — forensic X-rays classify you as a separate biological category. You count as one size larger when determining carrying capacity and the weight you can push, drag, or lift. You have advantage on Strength (Athletics) checks made to grapple.",
+				description: "Lineage trait. Your skeleton is reinforced with gate-crystal deposits. You count as one size larger when determining carrying capacity. Your unarmed strikes deal double damage to inanimate objects and gate structures. You have advantage on Strength saving throws against being knocked prone.",
 				type: "physiology",
 			},
 			{
-				name: "Mana-Sight Inheritance",
-				description:
-					"Lineage trait. Your Aetheric-Sight is not a learned skill — it is baked into your optic nerves at Awakening. You automatically detect active magical effects, enchanted objects, and gate residue within 30 ft without concentration. You cannot be blinded by magical darkness.",
-				type: "sense",
+				name: "Kinetic Battery",
+				description: "Physiology trait. When you take bludgeoning or force damage, your mana-skeleton absorbs the impact. Your next melee attack deals bonus force damage equal to half the damage taken (max 10).",
+				type: "physiology",
 			},
 			{
 				name: "Bureau Classification: Strategic Asset",
-				description:
-					"Social lineage trait. The Ascendant Bureau registers Destroyers as Priority-Alpha gate response assets. You have official clearance to enter active gate zones, carry unrestricted weaponry in public, and commandeer civilian resources during a gate break. Non-Awakened law enforcement cannot legally detain you without Bureau authorization.",
+				description: "Social lineage trait. You have federal clearance to enter active gate zones. Civilian law enforcement cannot detain you without Ascendant Bureau authorization.",
 				type: "social",
-			},
+			}
+		],
+		naturalWeapons: [
 			{
-				name: "Structural Deconstruction",
+				name: "Gate-Crystal Fists",
+				damage: "1d4",
+				damage_type: "bludgeoning",
 				description:
-					"Innate ability. Once per turn as part of the Attack action, you may designate one object or structure you can see within 5 ft. It takes double your Strength modifier in force damage (no roll required). Gate-crystal lattices, reinforced doors, vehicle armor, and anomaly carapaces all count.",
-				type: "innate-magic",
-			},
-			{
-				name: "Recoil Tolerance",
-				description:
-					"Physiology trait. Your crystallized mana skeleton absorbs the kinetic feedback of heavy weapon use. You suffer no penalties from wielding oversized weapons, and can wield two-handed weapons one-handed with no disadvantage. Recoil from firearms does not knock you prone.",
-				type: "physiology",
+					"Crystalline deposits in your bones let your unarmed strikes shatter stone — 1d4 bludgeoning, doubled against inanimate objects and gate structures.",
 			},
 		],
+		bonusHpPerLevel: 1,
 		abilities: [
 			"Aetheric Mark",
 			"Essence Harvest",
@@ -390,10 +382,7 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: {
-			strength: 2,
-			agility: 1,
-		},
+		abilityScoreImprovements: { strength: 2, agility: 1 },
 		size: "medium",
 		speed: 35,
 		languages: ["English"],
@@ -508,36 +497,36 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Mana-Saturated Musculature",
-				description:
-					"Lineage trait. Your muscle tissue is permanently interwoven with crystallized mana — medical imaging shows fiber densities that have no biological analog. Your unarmed strikes deal 1d6 bludgeoning damage and count as magical. You can lift and throw objects up to 4× your Strength score in pounds.",
+				name: "Thermal Venting",
+				description: "Physiology trait. As a reaction when hit by a melee attack, you release a burst of superheated mana steam. The attacker takes 1d6 fire damage and is pushed 5 ft back.",
+				type: "physiology",
+			},
+			{
+				name: "Mana-Saturated Metabolism",
+				description: "Physiology trait. You burn through toxins instantly. You have advantage on saving throws against poison, and you have resistance against poison damage. You cannot suffer exhaustion from physical exertion.",
 				type: "physiology",
 			},
 			{
 				name: "Volatile Resonance Aura",
-				description:
-					"Lineage trait. Your mana output is visibly unstable — electronics glitch within 10 ft of you during emotional spikes, animals react skittishly, and other Awakened can feel your resonance without any scan. You have advantage on Intimidation checks against non-Awakened creatures. Undead and constructs treat you as a magical threat source regardless of your current weapon.",
+				description: "Sense trait. Your unstable mana causes electronics to glitch within 10 ft of you when you are stressed.",
 				type: "sense",
-			},
-			{
-				name: "Bureau Classification: High-Risk Asset",
-				description:
-					"Social lineage trait. The Ascendant Bureau assigns Berserkers a mandatory behavioral monitor — a Bureau handler who also serves as your legal advocate. You are exempt from civilian assault charges during registered gate operations. Your Overload footage is classified; unauthorized recording carries Bureau penalties. Insurance companies pay out twice the standard rate on missions you participate in.",
-				type: "social",
-			},
-			{
-				name: "Feedback Absorption",
-				description:
-					"Innate ability. When you take 10 or more damage from a single hit, your mana loop converts the excess into raw momentum. Until the end of your next turn, your first melee attack deals bonus force damage equal to half the damage you just took (max 20). This does not require Overload to activate.",
-				type: "innate-magic",
-			},
-			{
-				name: "Biological Overdrive Immunity",
-				description:
-					"Physiology trait. Your mana-saturated metabolism burns through exhaustion, pain, and biological limits that would floor ordinary humans. You are immune to the Exhaustion condition from physical exertion (combat sprinting, forced marching, manual labor). Sleep deprivation has no mechanical effect on you.",
-				type: "physiology",
-			},
+			}
 		],
+		resonanceBreath: {
+			name: "Thermal Release",
+			shape: "cone",
+			size: 15,
+			damage_die: "2d6",
+			damage_type: "fire",
+			save: "AGI",
+			scaling: [
+				{ level: 1, dice: "2d6" },
+				{ level: 6, dice: "3d6" },
+				{ level: 11, dice: "4d6" },
+				{ level: 16, dice: "5d6" },
+			],
+			rechargeRest: "short-rest",
+		},
 		abilities: [
 			"Overload State",
 			"Mana-Hardened Body",
@@ -637,10 +626,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: {
-			agility: 2,
-			intelligence: 1,
-		},
+		abilityScoreImprovements: { agility: 2, intelligence: 1 },
 		size: "medium",
 		speed: 35,
 		languages: ["English", "Umbral Cant"],
@@ -760,35 +746,21 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Partial Dimensional Existence",
-				description:
-					"Lineage trait. Your body permanently exists between two dimensional planes — biometric scanners occasionally fail to register you, and some people report seeing your outline flicker. You are considered to have the 'between dimensions' condition for all phasing-adjacent effects. You leave no biological trace (no fingerprints, no skin cells, no detectable scent).",
+				description: "Physiology trait. Biometric scanners fail to read your fingerprints or retinas. You leave no biological trace. You can squeeze through gaps as small as 1 inch wide without penalty.",
 				type: "physiology",
 			},
 			{
-				name: "Umbral Cant (Language)",
-				description:
-					"Lineage trait. You are fluent in Umbral Cant — the encrypted language of Ascendant operatives. It includes verbal codes, body language signals, dead-drop protocols, and dark-web text strings. Any Assassin lineage Awakened can communicate with you in this language; it cannot be decoded by non-Assassin intelligence agencies without direct Bureau assistance.",
-				type: "lineage",
-			},
-			{
-				name: "Bureau Classification: Umbral Operative",
-				description:
-					"Social lineage trait. Assassins are not listed in any public Ascendant Bureau registry. Your identity is classified at the highest clearance tier. Law enforcement agencies are legally prohibited from running background checks on you without a written Bureau mandate. You have an automatically generated civilian cover identity with full documentation.",
-				type: "social",
-			},
-			{
 				name: "Phase Echo",
-				description:
-					"Innate ability. Once per short rest, when you take damage that would reduce you to 0 HP, your dimensional anchor briefly lapses — you phase out, the damage passes through empty space, and you reappear 10 ft away at 1 HP. No action required. The Ascendant Bureau has footage of Assassins surviving direct headshots through this mechanism.",
+				description: "Innate ability. Once per short rest, when you take damage, you can phase out of reality for a microsecond. Halve the damage taken, and instantly teleport up to 10 ft.",
 				type: "innate-magic",
 			},
 			{
 				name: "Apex Sensory Array",
-				description:
-					"Physiology trait. Your phase-shifted eyes grant you superior darkvision (120 ft), advantage on Perception checks relying on hearing, and the ability to detect motion through walls up to 5 ft thick as a passive effect. You always know when you are being observed, even by surveillance equipment.",
+				description: "Sense trait. You have superior darkvision up to 120 ft. You can passively detect motion through walls up to 5 ft thick. You have advantage on Agility saving throws against effects you can hear.",
 				type: "sense",
-			},
+			}
 		],
+		climb_speed: 20,
 		abilities: [
 			"Specialist Training",
 			"Vulnerability Analysis",
@@ -883,10 +855,7 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: {
-			agility: 2,
-			strength: 1,
-		},
+		abilityScoreImprovements: { agility: 2, strength: 1 },
 		size: "medium",
 		speed: 40,
 		languages: ["English", "Japanese"],
@@ -1016,34 +985,28 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Neural Rewire Physiology",
-				description:
-					"Lineage trait. Your nervous system was entirely restructured at Awakening — nerve conduction velocity tests return values physically impossible for organic tissue. You are immune to the Paralyzed and Stunned conditions from non-magical sources. Electrical attacks against you deal half damage before resistances are applied.",
+				name: "Hyper-Twitch Fibers",
+				description: "Physiology trait. Base speed is 40 ft. You ignore difficult terrain caused by urban environments (rubble, shattered pavement, crowds).",
 				type: "physiology",
 			},
 			{
-				name: "Bioelectric Awareness",
-				description:
-					"Lineage trait. You passively detect the bioelectric fields of all living creatures within 30 ft, even through walls and total darkness. This sense cannot be fooled by illusions, disguises, or invisibility — you detect the organism, not the appearance. You know the emotional state (calm, frightened, hostile, dying) of any creature you detect this way.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: Rapid-Response Ascendant",
-				description:
-					"Social lineage trait. Strikers are first-contacted for urban gate eruptions due to their unmatched response speed. The Bureau provides Strikers with a priority dispatch app and emergency vehicle override codes — traffic lights turn green, subway doors hold, and police create corridors on your route. Your speed-related feats are viral media events.",
-				type: "social",
-			},
-			{
-				name: "Impulse Gate Burst",
-				description:
-					"Innate ability. Once per short rest as a bonus action, surge through your nerve gates simultaneously. Move up to your full speed without provoking opportunity attacks. Every creature you pass within 5 ft during this movement must make a Vitality saving throw (DC 8 + proficiency + Agility mod) or take 2d6 force damage and be pushed 5 ft away from your path.",
+				name: "Kinetic Redirection",
+				description: "Innate ability. When you miss a melee attack, you can immediately pivot your momentum to make an unarmed strike against a different target within reach as a free action.",
 				type: "innate-magic",
 			},
 			{
-				name: "Autonomic Override",
-				description:
-					"Physiology trait. Your total control over involuntary functions grants several permanent biological advantages: you do not need to breathe for up to 10 minutes per hour, you can regulate your body temperature between -40°C and 80°C, and your pain response is fully suppressible — you cannot be forced to drop concentration on a spell due to physical pain alone.",
+				name: "Adrenaline Synthesizer",
+				description: "Physiology trait. Your body pre-emptively dumps adrenaline when danger is near. You add your proficiency bonus to Initiative rolls and have advantage on saving throws against being paralyzed or restrained.",
 				type: "physiology",
+			}
+		],
+		naturalWeapons: [
+			{
+				name: "Hyper-Cadence Strikes",
+				damage: "1d4",
+				damage_type: "bludgeoning",
+				description:
+					"Kinetic-channeled unarmed strikes — scale with your monk unarmed-damage progression.",
 			},
 		],
 		abilities: [
@@ -1140,10 +1103,7 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: {
-			intelligence: 2,
-			sense: 1,
-		},
+		abilityScoreImprovements: { intelligence: 2, presence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Sanskrit"],
@@ -1226,36 +1186,34 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Aetheric-Weave Attunement",
-				description:
-					"Lineage trait. Your brain is permanently interfaced with the Aetheric-Weave at a structural level — you perceive magical architecture the way others perceive light. You automatically know the school of any spell cast within 60 ft and can identify the spell by name on an Intelligence check (DC 10 + spell level). This is a passive, always-active sense that requires no action.",
-				type: "sense",
+				name: "Mana-Bleed Dependency",
+				description: "Physiology trait. Your body constantly absorbs ambient mana. Healing magic cast on you restores the maximum possible HP, but you have disadvantage on saving throws against psychic damage.",
+				type: "physiology",
 			},
 			{
-				name: "Grimoire Cognition",
-				description:
-					"Lineage trait. Your memory stores spells in a perfect mana-crystalline format — you cannot forget a spell you have copied, and your grimoire is reconstructible from memory during any long rest (no material cost). You can read and understand any magical text regardless of language, as the Aetheric-Weave translates the resonance pattern directly.",
-				type: "lineage",
-			},
-			{
-				name: "Bureau Classification: Aetheric Scholar",
-				description:
-					"Social lineage trait. Mages are credentialed by the Global Aetheric Research Division as licensed resonance analysts. You have academic access to all Bureau magical archives, can legally purchase restricted magical components, and are granted visiting status at any accredited aetheric research institution worldwide. Universities compete for your publication.",
-				type: "social",
-			},
-			{
-				name: "Counter-Resonance Reflex",
-				description:
-					"Innate ability. When a spell of 3rd level or lower targets you and you are not the only target, you can use your reaction to impose disadvantage on the attack roll or grant yourself advantage on the saving throw. Your Aetheric-Sight identifies the incoming resonance pattern fast enough to pre-configure a counter-field. Proficiency bonus uses per long rest.",
+				name: "Aetheric Resonance Shield",
+				description: "Innate ability. You generate a passive barrier. The first time you take damage in any combat encounter, that damage is reduced by an amount equal to your Intelligence score. You have advantage on Intelligence saving throws against magic.",
 				type: "innate-magic",
 			},
 			{
-				name: "Cortex Shielding",
-				description:
-					"Physiology trait. Your restructured neural architecture provides an innate barrier against psychic intrusion. You have resistance to psychic damage and advantage on Intelligence saving throws against spells and magical effects. Mind-reading spells receive only the surface thoughts you consciously choose to transmit.",
-				type: "physiology",
-			},
+				name: "Arcane Optic Mutation",
+				description: "Sense trait. Your eyes permanently glow. You can inherently read any magical or anomalous text, and you can see invisible creatures within 30 ft.",
+				type: "sense",
+			}
 		],
+		innateChanneling: {
+			ability: "Intelligence",
+			spells: [
+				{
+					name: "Arcane Index",
+					level: 0,
+					unlockLevel: 1,
+					uses: "at-will",
+					description:
+						"Index one wizard cantrip of your choice from the lattice at Awakening. You may cast it at will using Intelligence as your spellcasting ability.",
+				},
+			],
+		},
 		abilities: [
 			"Lattice Compilation",
 			"Spell Deconstruction",
@@ -1349,10 +1307,7 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: {
-			presence: 2,
-			sense: 1,
-		},
+		abilityScoreImprovements: { sense: 2, intelligence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Ancient Greek"],
@@ -1443,36 +1398,34 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Living Mana Reactor",
-				description:
-					"Lineage trait. Your body is a continuous mana emitter — Geiger counters spike in your presence, and specialized aetheric scanners register you as an ambient magical field rather than a discrete creature. You can be detected by mana-sensing spells and effects at twice the normal range, but you also cannot be rendered magic-null by suppression fields — your internal reactor overrides external dampening.",
+				name: "Neural Overclocking",
+				description: "Physiology trait. Your brain processes information at superhuman speeds. You cannot be surprised while conscious. You can read a 500-page book in 1 minute. You have advantage on Intelligence saving throws.",
 				type: "physiology",
 			},
 			{
-				name: "Probability Distortion Field",
-				description:
-					"Lineage trait. Your ambient mana warps probability in a 5-ft radius around you at all times. Any creature that attacks you for the first time each round must roll their attack twice and use the lower result (this is not concentration and cannot be suppressed). This field is a physiological constant, not a spell.",
-				type: "lineage",
-			},
-			{
-				name: "Bureau Classification: Anomaly of Interest",
-				description:
-					"Social lineage trait. Espers are simultaneously the most watched and most protected Awakened category. The Bureau assigns you a Containment Liaison — not to restrict you, but to manage the media fallout of your aetheric events. Your flux incidents are classified as natural disasters for insurance purposes. Your public appearances require advance notice to local emergency services.",
-				type: "social",
-			},
-			{
-				name: "Surge Discharge",
-				description:
-					"Innate ability. Once per short rest, as a reaction when you take damage, your reactor vents raw mana in a 15-ft radius. Each creature in range (excluding yourself) must make a Vitality saving throw (DC 8 + proficiency + Presence mod) or take force damage equal to 2d6 + your Presence modifier and be pushed 10 ft. On a success, they take half damage and are not pushed.",
+				name: "Cognitive Feedback",
+				description: "Innate ability. Any creature that deals psychic damage to you or attempts to read your mind takes 1d6 psychic damage and is blinded until the end of its next turn.",
 				type: "innate-magic",
 			},
 			{
-				name: "Charm-Null Biology",
-				description:
-					"Physiology trait. Your mana saturation creates a constant interference pattern against external psychic influence. You have advantage on all saves against being charmed, frightened, or having your mind read. Magic cannot put you to sleep — your reactor keeps you conscious. External psionic intrusion has a 50% chance of failing outright before any save is even rolled.",
-				type: "physiology",
-			},
+				name: "Telekinetic Micro-Manipulation",
+				description: "Innate ability. You can flawlessly manipulate objects up to 10 lbs within 30 ft (e.g., picking locks from afar, typing on keyboards without touching them).",
+				type: "innate-magic",
+			}
 		],
+		innateChanneling: {
+			ability: "Sense",
+			spells: [
+				{
+					name: "Aetheric Pulse",
+					level: 1,
+					unlockLevel: 3,
+					uses: { value: 1, per: "long-rest" },
+					description:
+						"Release a 30-ft line of aetheric force from your forehead. Each creature in the line makes a Sense save or takes 3d6 force damage (half on success). Keyed to your sorcerer-origin spark.",
+				},
+			],
+		},
 		abilities: [
 			"Innate Channeling",
 			"Anomaly Source",
@@ -1566,16 +1519,13 @@ export const jobs: Job[] = [
 				frequency: "at-will",
 			},
 		],
-		abilityScoreImprovements: {
-			vitality: 2,
-			intelligence: 1,
-		},
+		abilityScoreImprovements: { vitality: 2, strength: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Umbral"],
 		darkvision: 120,
-		damage_resistances: ["necrotic"],
-		condition_immunities: ["frightened"],
+		damage_resistances: ["necrotic", "poison"],
+		condition_immunities: ["frightened", "disease"],
 		startingEquipment: [
 			["Quarterstaff", "Dagger"],
 			["Component Pouch", "Arcane Focus"],
@@ -1659,36 +1609,31 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Entropy-Saturated Biology",
-				description:
-					"Lineage trait. Your cells are permeated with entropy-mana — the same force that Marthos channels to unmake the corrupted. Organic pathogens cannot survive in your system; food rots faster in your presence; and plants in your immediate vicinity yellow slightly. You are immune to disease and have resistance to necrotic damage and poison damage. HP maximum cannot be reduced by any effect.",
+				name: "Death-Scarred Physiology",
+				description: "Physiology trait. You have no pulse and your skin is cold. You don't need to breathe, eat, drink, or sleep. Immune to disease. You have advantage on saving throws against being poisoned.",
 				type: "physiology",
 			},
 			{
-				name: "Void-Sense",
-				description:
-					"Lineage trait. Marthos's mandate tunes your perception to the threshold between life and entropy. You always know the exact HP total of any creature within 60 ft that is below half its maximum. You detect undead and creatures with 0 HP within 120 ft through any barrier. You can communicate with the lingering echo of a creature that died within the last 24 hours in your current location.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: End-Cycle Asset",
-				description:
-					"Social lineage trait. Revenants carry Marthos's mandate as a registered supernatural authority recognized by the Bureau's Anomaly Tribunal. You have legal authority to authorize the dissolution of corrupted gate entities without trial. Morgues and emergency services are required to contact the Bureau before conducting autopsies on creatures you have slain — your kills are classified evidence.",
-				type: "social",
-			},
-			{
-				name: "Entropy Cascade",
-				description:
-					"Innate ability. Once per long rest as an action, release a 20-ft radius entropy pulse centered on yourself. All living creatures in range must make a Vitality saving throw (DC 8 + proficiency + Intelligence mod). On failure: they take 3d8 necrotic damage and their speed is reduced by 10 ft until the end of your next turn. On success: half damage, no speed reduction. Undead in range instead take radiant damage from the purge-resonance feedback.",
+				name: "Soul Tether",
+				description: "Innate ability. If a limb is severed, it does not bleed. You can reattach it by holding it in place for 1 action.",
 				type: "innate-magic",
 			},
 			{
-				name: "Death Threshold Physiology",
+				name: "Aura of the Grave",
+				description: "Sense trait. Low-intelligence gate anomalies and undead ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
+				type: "sense",
+			}
+		],
+		naturalWeapons: [
+			{
+				name: "Necrotic Grasp",
+				damage: "1d4",
+				damage_type: "piercing",
 				description:
-					"Physiology trait. Having already crossed the void threshold at Awakening, your biology treats death as a temporary state. You have advantage on death saving throws. When you succeed on a death save with a natural 20, you regain 1 HP immediately. The frightened condition cannot be applied to you by any means — Marthos's mandate overwrites all fear-resonance.",
-				type: "physiology",
+					"Skeletal fingers deal 1d4 piercing + your Intelligence modifier necrotic damage. Counts as a melee weapon attack.",
 			},
 		],
+		climb_speed: 20,
 		abilities: [
 			"Entropy Mandate",
 			"Death Harvest",
@@ -1789,10 +1734,7 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 		],
-		abilityScoreImprovements: {
-			sense: 2,
-			vitality: 1,
-		},
+		abilityScoreImprovements: { presence: 2, intelligence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Gate Speak"],
@@ -1891,722 +1833,52 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Biome-Bonded Physiology",
-				description:
-					"Lineage trait. Your body permanently interfaces with gate ecosystems — biologists classify Summoners as a distinct ecological category, not purely human. You breathe gate atmosphere without penalty, your immune system neutralizes all known gate-native toxins, and your body temperature, humidity tolerance, and atmospheric pressure range all exceed human limits. You are simultaneously classified as a creature and as a biome indicator species.",
+				name: "Aetheric Anchor",
+				description: "Physiology trait. Your physical shadow acts as a localized storage dimension. You can store up to 500 lbs of inanimate objects inside your shadow and retrieve them as an action.",
 				type: "physiology",
 			},
 			{
-				name: "Gate Speak (Language)",
-				description:
-					"Lineage trait. You are fluent in Gate Speak — the primal resonance-language shared across all gate ecosystems. You can communicate intent with any beast, plant creature, or gate-native entity regardless of intelligence. This is not a spell; it is an always-active biological attunement. Other Summoners recognize your gate-speech accent and can identify your biome specialization from your vocal patterns alone.",
-				type: "lineage",
-			},
-			{
-				name: "Bureau Classification: Gate Ecologist",
-				description:
-					"Social lineage trait. Summoners are licensed by the Bureau's Ecology Division as the only Awakened authorized to catalogue, tag, and selectively relocate gate-native fauna. You can legally transport gate creatures through public spaces with a Bureau transit permit you can self-issue. UN environmental agencies list you as a protected scientific observer. Your testimony on gate ecosystem health is legally binding in environmental court.",
-				type: "social",
-			},
-			{
-				name: "Primal Resonance Burst",
-				description:
-					"Innate ability. Once per short rest as a bonus action, broadcast a concentrated pulse of gate-biome mana in a 20-ft radius. All beasts, plant creatures, and gate entities in range are charmed by you for 1 minute (Sense save DC 8 + proficiency + Sense mod to resist). Creatures that fail are not hostile to you and will not attack your allies unless attacked first. On a successful save, they are merely indifferent.",
+				name: "Summoner's Ward",
+				description: "Innate ability. The Aether protects its conduits. Whenever a summoned entity of yours drops to 0 HP, you gain temporary hit points equal to your Summoner level. You have advantage on saving throws against effects that would banish or teleport you.",
 				type: "innate-magic",
 			},
 			{
-				name: "Retained Biome Traits",
-				description:
-					"Physiology trait. Each gate biome you spend a long rest within leaves a permanent minor adaptation: enhanced low-light smell from a forest gate, pressure resistance from a deep-sea gate, heat tolerance from a volcanic gate, etc. You accumulate up to Sense modifier such adaptations, choosing which to keep when you exceed the limit. These are cosmetic-to-minor mechanical benefits chosen collaboratively with the Warden.",
-				type: "physiology",
-			},
+				name: "Empathic Resonance",
+				description: "Sense trait. You can feel the emotional state and surface intent of any creature (including monsters and anomalies) within 30 ft.",
+				type: "sense",
+			}
 		],
+		innateChanneling: {
+			ability: "Sense",
+			spells: [
+				{
+					name: "Biome Commune",
+					level: 0,
+					unlockLevel: 1,
+					uses: "at-will",
+					description:
+						"Speak with any beast or plant creature at will (understanding limited by the creature's intelligence). Extends your Empathic Resonance into a conversational interface.",
+				},
+			],
+		},
 		abilities: [
-			"Gate Speak",
-			"Primal Channeling",
+			"Biome Attunement",
+			"Gate Ecology Sense",
 			"Entity Shift",
 			"Biome Command",
 			"Affinity Circle",
+			"Hybrid Casting",
 		],
 		image: "/generated/compendium/jobs/summoner.webp",
 		stats: {
 			strength: 10,
-			agility: 12,
+			agility: 13,
 			vitality: 14,
 			intelligence: 13,
 			sense: 15,
-			presence: 8,
+			presence: 12,
 		},
-		primary_abilities: ["Sense", "Vitality"],
-		source: "Ascendant Compendium",
-	},
-	{
-		id: "herald",
-		name: "Herald",
-		type: "Job",
-		rank: "B",
-		description:
-			"The Herald is an Awakened identity that specializes in the Divine Radiance mandate. As an Ascendant of this lineage, they serve as the direct conduits for the Absolute's restorative and protective mandates. In modern society, Heralds are the most celebrated healers, their presence a beacon of hope at gate-break sites and busy multi-specialty hospitals. They channel pure Aetheric light, guided by an intuitive resonance that identifies wounds and fractures before the eye can see them. They are the living bridge between the mortal realm and the Absolute authority.",
-		hitDie: "1d8",
-		primaryAbility: "Sense",
-		saving_throws: ["Sense", "Presence"],
-		skillChoices: ["History", "Insight", "Medicine", "Persuasion", "Religion"],
-		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
-		weaponProficiencies: ["Simple weapons"],
-		tool_proficiencies: [],
-		awakeningFeatures: [
-			{
-				name: "Restoration Mandate",
-				description:
-					"Your hands channel the Absolute's restorative resonance â€” visible as a warm golden glow that hospital patients and trauma victims find deeply comforting. As an action, touch a creature and restore HP = Herald level. Once per long rest.",
-				level: 1,
-			},
-			{
-				name: "Aetheric-Sight Connection",
-				description:
-					"Direct attunement to the Absolute's governing mandate â€” you receive resonance bursts that feel like intuition, guiding your hands to wounds and your rites to where they're needed most. Action touch: heal 1d8 + Sense mod HP. Prof bonus uses per long rest.",
-				level: 1,
-			},
-			{
-				name: "Absolute Connection",
-				description:
-					"Your resonance radiates outward. Allies within 10 ft gain +1 to saves (+2 at 11th). Range 30 ft at 18th.",
-				level: 6,
-			},
-			{
-				name: "Direct Petition",
-				description:
-					"Petition the Absolute directly for intervention. At 20th level, the Absolute always responds.",
-				level: 10,
-			},
-		],
-		jobTraits: [
-			{
-				name: "Entity Detection",
-				description:
-					"Your Absolute attunement flags hostile entities through an intuitive resonanceâ€”you get an internal ping when fiends, celestials, or undead are within 60 ft. Know type but not identity.",
-				type: "passive",
-			},
-			{
-				name: "Resonance Hardening",
-				description:
-					"Your Absolute connection reinforces your life force like a spiritual sanctum â€” death energy and radiant surges are harmonized before reaching your core. Resistance to necrotic and radiant. Advantage on saves vs HP max reduction.",
-				type: "resistance",
-			},
-			{
-				name: "Purge Mandate",
-				description:
-					"Action: broadcast an Absolute purge resonance â€” visible as a pulse of golden light that makes undead recoil like cockroaches from a flashlight. Undead within 30 ft: Sense save or turned 1 min. Destroy low-CR undead at 5th+.",
-				type: "active",
-				frequency: "short-rest",
-			},
-		],
-		abilityScoreImprovements: {
-			sense: 2,
-			presence: 1,
-		},
-		size: "medium",
-		speed: 35,
-		languages: ["English", "Celestial"],
-		darkvision: 60,
-		specialSenses: [
-			"Celestial Perception (sense the presence of celestials, fiends, and undead within 60 ft)",
-		],
-		damage_resistances: ["necrotic", "radiant"],
-		startingEquipment: [
-			["Mace", "Warhammer"],
-			["Scale Mail", "Leather Armor", "Chain Mail"],
-			["Light Crossbow", "Mace"],
-			["Crossbow Bolts (20)"],
-			["Priest's Pack", "Explorer's Pack"],
-			["Shield"],
-			["Absolute Focus"],
-		],
-		hitPointsAtFirstLevel: "8 + your Vitality modifier",
-		hitPointsAtHigherLevels:
-			"1d8 (or 5) + your Vitality modifier per level after 1st",
-		spellcasting: {
-			ability: "Sense",
-			focus: "Absolute focus",
-			cantripsKnown: [
-				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-			],
-			spellSlots: FULL_CASTER_SLOTS,
-		},
-		classFeatures: [
-			{
-				level: 1,
-				name: "Aetheric Transmission",
-				description:
-					"Receive and cast Herald spells using Sense. Prepare from the full list each day. When you heal a creature with a rite, they also gain temp HP equal to your Sense mod â€” the Absolute reinforces what you restore.",
-			},
-			{
-				level: 1,
-				name: "Divine Mandate",
-				description:
-					"Choose a Divine Mandate â€” the specific frequency of Aetheric energy you channel. Bonus spells and features at 1st, 2nd, 6th, 8th, and 17th level.",
-			},
-			{
-				level: 2,
-				name: "Mandate Activation",
-				description:
-					"Channel raw Absolute energy for powerful effects: Purge Mandate (undead/fiends in 30 ft make Sense save or are turned 1 min) + one mandate-specific ability. 1/short rest (2 at 6th, 3 at 18th).",
-			},
-			{
-				level: 4,
-				name: "Ability Score Improvement",
-				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
-			},
-			{
-				level: 5,
-				name: "Frequency Amplification",
-				description:
-					"Purge resonance now destroys weak undead outright (CR â‰¤ 1/2 at 5th, 1 at 8th, 2 at 11th, 3 at 14th, 4 at 17th). Your Absolute connection broadcasts at higher power.",
-			},
-			{
-				level: 6,
-				name: "Mandate Feature",
-				description: "Feature from your Divine Mandate.",
-			},
-			{
-				level: 8,
-				name: "Mandate Feature",
-				description: "Feature from your Divine Mandate.",
-			},
-			{
-				level: 10,
-				name: "Direct Petition",
-				description:
-					"Once per long rest, petition the Absolute directly. Roll d100 â‰¤ Herald level for the Absolute to intervene with an effect of the Warden's choosing. Your connection reaches the Absolute core.",
-			},
-			{
-				level: 14,
-				name: "Mana Redistribution",
-				description:
-					"When you cast a healing spell of 1st+, you can simultaneously purge one spell effect or condition on the target â€” the Absolute overwrites the affliction like realigning corrupted frequencies. Emergency rooms with Herald staff have the highest survival rates in the world.",
-			},
-			{
-				level: 17,
-				name: "Mandate Feature",
-				description: "Final feature from your Divine Mandate.",
-			},
-			{
-				level: 20,
-				name: "Zenith Herald of the Absolute",
-				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” ABSOLUTE MANDATE]. Direct Petition succeeds automatically. Once per long rest, cast any Herald rite without a slot (max 7th). Your resonance with the Absolute core is total; hospital networks and global agencies seek your intervention.",
-			},
-		],
-		racialTraits: [
-			{
-				name: "Absolute-Channeling Physiology",
-				description:
-					"Lineage trait. Your body acts as a living conduit for the Absolute's restorative resonance — your touch carries a faint warmth, your voice carries harmonic overtones that trauma patients describe as 'deeply calming,' and your blood contains trace mana that accelerates clotting in others. When you are within 5 ft of a dying creature, it automatically stabilizes at the start of your turn without requiring an action.",
-				type: "physiology",
-			},
-			{
-				name: "Entity Resonance Detection",
-				description:
-					"Lineage trait. The Absolute's mandate tunes your awareness to the presence of fiends, celestials, undead, and corrupted gate entities. You always know when such a creature is within 60 ft — their mana-signature registers as an intuitive alert, like a phone notification you feel rather than hear. You know the category (fiend/celestial/undead) but not the specific identity.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: Priority Medical Asset",
-				description:
-					"Social lineage trait. Heralds are the only Awakened with automatic medical authority at any gate-break site — your Bureau badge overrides any hospital's triage protocol. You cannot be refused entry to any medical facility, emergency zone, or Bureau operation on grounds of clearance. Global health organizations have a standing Bureau agreement to deploy you on request. Your survival rates are classified as strategic information.",
-				type: "social",
-			},
-			{
-				name: "Radiant Mandate Pulse",
-				description:
-					"Innate ability. Once per short rest as a bonus action, emit a 30-ft radius pulse of Absolute radiant resonance. All undead and fiends in range must make a Sense saving throw (DC 8 + proficiency + Sense mod) or be turned for 1 minute. Simultaneously, all allies in range regain HP equal to your Sense modifier. This is not a spell — it is a physiological broadcast of your mandate.",
-				type: "innate-magic",
-			},
-			{
-				name: "Corruption Immunity",
-				description:
-					"Physiology trait. The Absolute's restorative current flowing through your body neutralizes corruption at the cellular level. You are immune to disease, the poisoned condition, and all forms of magical corruption (curses, hexes, gate-taint). Attempts to magically reduce your maximum HP automatically fail. Necromantic effects that target your life force are rejected before they can take hold.",
-				type: "physiology",
-			},
-		],
-		abilities: [
-			"Absolute Transmission",
-			"Absolute Mandate",
-			"Mandate Activation",
-			"Direct Petition",
-			"Mana Redistribution",
-		],
-		image: "/generated/compendium/jobs/healer.webp",
-		stats: {
-			strength: 12,
-			agility: 10,
-			vitality: 14,
-			intelligence: 13,
-			sense: 15,
-			presence: 8,
-		},
-		primary_abilities: ["Sense", "Presence"],
-		source: "Ascendant Compendium",
-	},
-	{
-		id: "contractor",
-		name: "Contractor",
-		type: "Job",
-		rank: "B",
-		description:
-			"The Contractor is an Awakened identity that specializes in the Entity Broker and Gate Pact Negotiator mandate. As an Ascendant of this lineage, their power is forged through supernatural NDAs and legal-magical bargains regulated by modern contract law. The entity grants power; the Contractor provides service (often gate-clearance kills that feed the entity). Many Contractors work as lobbyists, fixers, or high-end consultants, leveraging their patron's influence in both the gate world and boardrooms.",
-		hitDie: "1d8",
-		primaryAbility: "Presence",
-		saving_throws: ["Sense", "Presence"],
-		skillChoices: [
-			"Arcana",
-			"Deception",
-			"History",
-			"Intimidation",
-			"Investigation",
-			"Nature",
-			"Religion",
-		],
-		armorProficiencies: ["Light armor"],
-		weaponProficiencies: ["Simple weapons"],
-		tool_proficiencies: [],
-		awakeningFeatures: [
-			{
-				name: "Pact-Warded Mind",
-				description:
-					"Your patron's mark shields your consciousness like a supernatural restraining order â€” other entities can't touch you, and even real-world manipulation (sales pitches, propaganda, interrogation) slides off. Advantage on saves vs charm. Lesser entities cannot override your patron's claim.",
-				level: 1,
-			},
-			{
-				name: "Entity Awareness",
-				description:
-					"You can sense when someone else has a pact â€” at business meetings, in courtrooms, even on the subway. Detect otherworldly entities, active contracts, and gate-bound creatures within 100 ft. Concentrate 1 min to determine pact type and entity rank.",
-				level: 1,
-			},
-			{
-				name: "Empowered Conduit",
-				description:
-					"Your patron reinforces your attacks. When you hit with your signature blast, push the target 10 ft and add Presence mod as bonus force damage.",
-				level: 5,
-			},
-			{
-				name: "Patron's Boon",
-				description:
-					"Your entity grants a permanent gift: resistance to one damage type of your choice, changeable on long rest as you renegotiate terms.",
-				level: 14,
-			},
-		],
-		jobTraits: [
-			{
-				name: "Umbral-Sight Resonance",
-				description:
-					"Your patron's influence rewired your visionâ€”you see perfectly in total darkness, including inside absolute voids where other ascendants stumble. Superior darkvision 120 ft.",
-				type: "passive",
-			},
-			{
-				name: "Contract Protection",
-				description:
-					"Your pact shields you from competing influence. Advantage on saves against being charmed by fiends, fey, or aberrations.",
-				type: "resistance",
-			},
-			{
-				name: "Invoke Patron",
-				description:
-					"Call upon your entity for a burst of power â€” your eyes flash with your patron's color and your voice briefly harmonizes with theirs. Bonus action: advantage on one attack, check, or save. Once per short rest.",
-				type: "active",
-				frequency: "short-rest",
-			},
-		],
-		abilityScoreImprovements: {
-			intelligence: 2,
-			presence: 1,
-		},
-		size: "medium",
-		speed: 30,
-		languages: ["English", "Abyssal"],
-		darkvision: 120,
-		damage_resistances: ["fire"],
-		startingEquipment: [
-			["Light Crossbow", "Quarterstaff"],
-			["Crossbow Bolts (20)"],
-			["Component Pouch", "Arcane Focus"],
-			["Scholar's Pack", "Dungeoneer's Pack"],
-			["Leather Armor"],
-			["Dagger"],
-			["Dagger"],
-		],
-		hitPointsAtFirstLevel: "8 + your Vitality modifier",
-		hitPointsAtHigherLevels:
-			"1d8 (or 5) + your Vitality modifier per level after 1st",
-		spellcasting: {
-			ability: "Presence",
-			focus: "Arcane focus",
-			cantripsKnown: [
-				2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-			],
-			spellsKnown: [
-				2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15,
-			],
-			spellSlots: PACT_CASTER_SLOTS,
-		},
-		classFeatures: [
-			{
-				level: 1,
-				name: "Contract Magic",
-				description:
-					"Cast Contractor spells using Presence â€” your power comes in controlled doses, like a subscription service from an extradimensional being. All contract slots are the same level and recharge on short rest. When you kill a creature, your patron feeds â€” regain one contract slot. Once per short rest.",
-			},
-			{
-				level: 1,
-				name: "Gate Entity",
-				description:
-					"Choose the entity you've contracted with. Features at 1st, 6th, 10th, and 14th level.",
-			},
-			{
-				level: 2,
-				name: "Pact Clauses",
-				description:
-					"Negotiate 2 permanent contract modifications â€” like addendums to a modern employment agreement. Options: extended spell range, see in magical darkness, disguise self at will, detect magic at will, or entity-specific clauses. More clauses at higher levels. Renegotiate one on level up (your patron's lawyer handles the paperwork).",
-			},
-			{
-				level: 3,
-				name: "Binding Gift",
-				description:
-					"Your entity manifests a physical anchor of the pact. Choose: Familiar Bond (entity-touched familiar with enhanced abilities), Weapon Bond (summonable pact weapon that uses Presence for attacks), or Knowledge Bond (three additional cantrips from any spell list + ritual casting from a grimoire your patron fills).",
-			},
-			{
-				level: 4,
-				name: "Ability Score Improvement",
-				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
-			},
-			{
-				level: 5,
-				name: "Entity Manifestation",
-				description:
-					"Once per long rest, briefly manifest your patron's power â€” your appearance shifts, your voice deepens/echoes, and bystanders' smartphones glitch. For 1 min: 30 ft fly speed, spells deal +PRE mod bonus damage, and you emit a 10-ft aura (fear, charm, or damage). Gate-clearance footage of manifestations gets millions of views on social media.",
-			},
-			{
-				level: 6,
-				name: "Entity Feature",
-				description: "Feature from your Gate Entity.",
-			},
-			{
-				level: 10,
-				name: "Entity Feature",
-				description: "Feature from your Gate Entity.",
-			},
-			{
-				level: 11,
-				name: "Greater Contract",
-				description:
-					"Renegotiate for higher-tier access. Gain a 6th-level spell cast once per long rest without a slot. Additional: 7th at 13th, 8th at 15th, 9th at 17th.",
-			},
-			{
-				level: 14,
-				name: "Entity Feature",
-				description: "Feature from your Gate Entity.",
-			},
-			{
-				level: 20,
-				name: "Zenith Arch-Contractor",
-				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” ABSOLUTE MANIFESTATION GRANTED]. Entity Manifestation lasts 10 min, grants resistance to all damage, and your aura extends to 30 ft. You transcend the limits of a mere broker, becoming a peer to your patron. International legal systems have been rewritten to accommodate your mandated authority.",
-			},
-		],
-		racialTraits: [
-			{
-				name: "Pact-Marked Physiology",
-				description:
-					"Lineage trait. Your patron's mark is physically inscribed into your biology — visible as a faintly luminescent sigil that appears on your skin under emotional duress or in dim light. This mark is a legal document recognized in both the Ascendant Bureau's supernatural registry and in your patron's extradimensional legal jurisdiction. Lesser entities cannot possess, charm, or bind you without violating the pact terms, which carries automatic penalties enforced by your patron.",
-				type: "physiology",
-			},
-			{
-				name: "Entity Perception",
-				description:
-					"Lineage trait. Your patron's mark grants you extradimensional awareness — you detect the presence of other pact-holders, active supernatural contracts, and gate-bound entities within 100 ft as an ambient sense. You see in magical darkness (your patron's influence negates it). You can tell at a glance whether a creature has a supernatural patron, though not who the patron is.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: Contracted Operative",
-				description:
-					"Social lineage trait. The Bureau recognizes Contractor pacts as binding supernatural employment agreements. Your patron's legal standing means you operate under dual jurisdiction — Bureau law and your patron's extradimensional mandate. This grants you unusual leverage: Bureau directors are reluctant to cross you, knowing your patron's reach exceeds the Bureau's. High-profile fixers, corporate consultants, and political operatives seek your brokerage.",
-				type: "social",
-			},
-			{
-				name: "Patron's Mark Activation",
-				description:
-					"Innate ability. Once per long rest as a bonus action, activate the full resonance of your patron's mark. For 1 minute: you gain advantage on all Presence-based checks and saves, your eyes glow with your patron's color, and creatures that can see you must make a Presence saving throw (DC 8 + proficiency + Presence mod) or become frightened of you until the start of your next turn. This is a biological event, not a spell, and cannot be dispelled.",
-				type: "innate-magic",
-			},
-			{
-				name: "Contract Resilience",
-				description:
-					"Physiology trait. Your pact anchor reinforces your life force against supernatural termination. You have advantage on saves against being charmed by fiends, fey, or aberrations. When you are reduced to 0 HP, your patron's contract includes a standard revival clause — once per long rest, you drop to 1 HP instead. Additionally, you have resistance to your patron's associated damage type at all times (chosen when you select your Gate Entity).",
-				type: "physiology",
-			},
-		],
-		abilities: [
-			"Contract Magic",
-			"Gate Entity",
-			"Pact Clauses",
-			"Binding Gift",
-			"Entity Manifestation",
-		],
-		image: "/generated/compendium/jobs/warlock.webp",
-		stats: {
-			strength: 8,
-			agility: 14,
-			vitality: 13,
-			intelligence: 12,
-			sense: 10,
-			presence: 15,
-		},
-		primary_abilities: ["Presence", "Vitality"],
-		source: "Ascendant Compendium",
-	},
-	{
-		id: "stalker",
-		name: "Stalker",
-		type: "Job",
-		rank: "B",
-		description:
-			"The Stalker is an Awakened identity that specializes in the Rift Tracker and Dimensional Predator mandate. As an Ascendant of this lineage, they possess a refined aetheric sense that perceives mana-trails and gate-born energy signatures even through dense urban environments. They adapt to any terrain in seconds, tracking prey across dimensional boundaries. Many work as freelance bounty ascendants tracking escaped gate creatures through subway systems, forests, and abandoned buildings. Half martial, half primal caster, all predator.",
-		hitDie: "1d10",
-		primaryAbility: "Agility",
-		saving_throws: ["Strength", "Agility"],
-		skillChoices: [
-			"Animal Handling",
-			"Athletics",
-			"Insight",
-			"Investigation",
-			"Nature",
-			"Perception",
-			"Stealth",
-			"Survival",
-		],
-		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
-		weaponProficiencies: ["Simple weapons", "Martial weapons"],
-		tool_proficiencies: [],
-		awakeningFeatures: [
-			{
-				name: "Predator Physiology",
-				description:
-					"Your senses sharpened beyond human limits â€” you can hear a phone vibrating three rooms away and smell gate residue on someone's clothes from across a parking lot. Advantage on Perception (hearing/smell). Hide when only lightly obscured by foliage, rain, mist, or urban cover.",
-				level: 1,
-			},
-			{
-				name: "Enhanced Locomotion",
-				description:
-					"Your awakening optimized your legs for pursuit â€” you've outrun police cruisers in foot chases and vaulted highway barriers without breaking stride. Base walking speed 35 ft. Maintain a dead sprint for hours without tiring.",
-				level: 1,
-			},
-			{
-				name: "Prey Lock",
-				description:
-					"Choose a designated prey type â€” the Ascendant Bureau assigns Stalkers to specific anomaly classifications like detectives get case specialties. Sense creatures of that type within 120 ft by mana signature, even through concrete walls. Advantage on Survival to track them across any terrain.",
-				level: 1,
-			},
-			{
-				name: "Terrain Adaptation",
-				description:
-					"In your chosen hunting ground â€” whether it's an urban cityscape, dense forest, or subterranean gate â€” you can't be surprised, leave no tracks, and move at full speed through difficult terrain. Your body auto-adapts: temperature regulation, grip adjustment, even skin camouflage.",
-				level: 3,
-			},
-			{
-				name: "Apex Instinct",
-				description:
-					"Your first attack each turn against designated prey deals extra damage equal to your proficiency bonus. Your Aetheric-Sight identifies their primal weaknesses.",
-				level: 11,
-			},
-		],
-		jobTraits: [
-			{
-				name: "Gate Navigator",
-				description:
-					"You instinctively find safe paths through gates the way a native navigates their hometown â€” dimensional distortions, toxic zones, and hidden traps register as gut feelings. Advantage on saves vs gate environmental hazards.",
-				type: "passive",
-			},
-			{
-				name: "Rift Sense",
-				description:
-					"Spend a spell slot to scan for designated prey within 1 mile (6 miles in favored terrain) for 1 minute per slot level. You read dimensional residue.",
-				type: "active",
-				frequency: "at-will",
-			},
-			{
-				name: "Adaptive Camouflage",
-				description:
-					"Spend 1 minute to blend with any surface. Invisible while motionless against it. Lasts until you move. Your skin pigmentation shifts.",
-				type: "active",
-				frequency: "at-will",
-			},
-		],
-		abilityScoreImprovements: {
-			agility: 2,
-			sense: 1,
-		},
-		size: "medium",
-		speed: 35,
-		languages: ["English", "Sylvan"],
-		darkvision: 60,
-		specialSenses: ["Keen Hearing and Smell"],
-		startingEquipment: [
-			["Scale Mail", "Leather Armor"],
-			["Shortsword"],
-			["Shortsword"],
-			["Dungeoneer's Pack", "Explorer's Pack"],
-			["Longbow"],
-			["Arrows (20)"],
-		],
-		hitPointsAtFirstLevel: "10 + your Vitality modifier",
-		hitPointsAtHigherLevels:
-			"1d10 (or 6) + your Vitality modifier per level after 1st",
-		spellcasting: {
-			ability: "Sense",
-			focus: "None (no focus needed)",
-			spellsKnown: [
-				0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
-			],
-			spellSlots: HALF_CASTER_SLOTS,
-		},
-		classFeatures: [
-			{
-				level: 1,
-				name: "Prey Lock",
-				description:
-					"Bonus action: lock onto a creature's mana signature like a GPS tracker â€” you always know its direction and distance, even through buildings and underground. Attacks deal +1d4 damage. Lock persists until target dies or you switch. Additional lock slots at 6th and 14th (track multiple bounties simultaneously).",
-			},
-			{
-				level: 1,
-				name: "Gate Navigator",
-				description:
-					"Choose a gate terrain type you've trained in. In that terrain: you can't be lost, you move at full speed through difficult terrain, and you detect traps/ambushes automatically (passive Perception +5). Additional terrains at 6th and 10th.",
-			},
-			{
-				level: 2,
-				name: "Primal Tracking",
-				description:
-					"Cast Stalker spells using Sense. Known caster with half-caster progression. Your spells manifest as environmental instincts â€” tracking pulses, scent markers, and terrain manipulation.",
-			},
-			{
-				level: 2,
-				name: "Ambush Tactics",
-				description:
-					"When you attack from hiding or before the target acts â€” dropping from rooftops, emerging from alleyways, or striking from a parked car â€” deal +1d8 bonus damage. Stacks with Prey Lock.",
-			},
-			{
-				level: 3,
-				name: "Pursuit Path",
-				description:
-					"Choose a hunting specialization. Features at 3rd, 7th, 11th, and 15th level.",
-			},
-			{
-				level: 3,
-				name: "Rift Sense",
-				description:
-					"Spend a spell slot to scan for locked prey or gate creatures within 1 mile (6 in favored terrain). Duration: 1 min per slot level. Also detect gate openings and their rank.",
-			},
-			{
-				level: 4,
-				name: "Ability Score Improvement",
-				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
-			},
-			{
-				level: 5,
-				name: "Pursuit Strike",
-				description:
-					"Attack twice per Attack action. When both attacks hit the same Prey Locked target, it must make a STR save or be knocked prone as your combined force overwhelms its footing.",
-			},
-			{
-				level: 7,
-				name: "Pursuit Feature",
-				description: "Feature from your Pursuit Path.",
-			},
-			{
-				level: 8,
-				name: "Terrain Fluidity",
-				description:
-					"Your body auto-adapts to any environment. Move through nonmagical difficult terrain without extra cost. Advantage on saves vs environmental hazards.",
-			},
-			{
-				level: 11,
-				name: "Pursuit Feature",
-				description: "Feature from your Pursuit Path.",
-			},
-			{
-				level: 14,
-				name: "Ghost Mandate",
-				description:
-					"Hide as a bonus action. Cannot be tracked by nonmagical means, including drones and surveillance cameras. Your Prey Lock range extends to 10 miles, allowing you to track targets across entire cities.",
-			},
-			{
-				level: 15,
-				name: "Pursuit Feature",
-				description: "Feature from your Pursuit Path.",
-			},
-			{
-				level: 18,
-				name: "Apex Senses",
-				description:
-					"No disadvantage attacking invisible creatures. Aware of all creatures within 30 ft via mana signature, even through walls (up to 1 ft thick), and in crowded areas like shopping malls or public transportation.",
-			},
-			{
-				level: 20,
-				name: "Zenith Apex Predator",
-				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” APEX PREDATOR]. No prey has ever escaped your scent once the Aetheric-Weave has marked them. The global bounty networks fall silent when you take a contract. Your Prey Lock bonus â†’ +1d8. Ambush Tactics â†’ +2d8. Add Sense mod to attack/damage vs locked targets once per turn.",
-			},
-		],
-		racialTraits: [
-			{
-				name: "Predator-Optimized Physiology",
-				description:
-					"Lineage trait. Your Awakening restructured your body for pursuit — your leg musculature, lung capacity, and cardiovascular system are all optimized for sustained high-speed chase. Your base walking speed is 35 ft. You can maintain a full sprint for hours without fatigue checks. You automatically succeed on Athletics checks to maintain pursuit on foot and can track a target's mana signature across any terrain without a roll once they have been Prey Locked.",
-				type: "physiology",
-			},
-			{
-				name: "Rift Resonance Sense",
-				description:
-					"Lineage trait. Your aetheric sense is tuned to dimensional anomalies — you detect active gates within 1 mile by the dimensional pressure they create, and you feel gate-creature mana signatures the way a dog smells a trail. You know the rank and approximate type of any gate within detection range. This sense cannot be jammed or suppressed by environmental factors.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: Dimensional Predator",
-				description:
-					"Social lineage trait. Stalkers are the Bureau's preferred bounty and extraction specialists. You hold a permanent open-contract license allowing you to pursue any Bureau-designated target across all jurisdictions without a separate warrant. International law enforcement agencies are required to extend professional courtesy and logistical support during active pursuits. The global bounty network goes quiet when your name appears on a contract.",
-				type: "social",
-			},
-			{
-				name: "Ambush Initiation",
-				description:
-					"Innate ability. When you attack a creature that has not yet acted in combat, or a creature that is unaware of you, you may make one additional attack as part of the same Attack action (not a bonus action). This attack deals an additional 1d8 damage of the weapon's type. This is separate from your Ambush Tactics feature and stacks with it.",
-				type: "innate-magic",
-			},
-			{
-				name: "Terrain Imprinting",
-				description:
-					"Physiology trait. Your body permanently adapts to gate terrain types you spend extended time in. For each Gate Terrain type designated as a favored terrain, you also gain: you cannot be slowed by natural difficult terrain of that type, environmental damage of that terrain type is reduced by your proficiency bonus, and your camouflage in that terrain is automatic (no roll required to hide when stationary).",
-				type: "physiology",
-			},
-		],
-		abilities: [
-			"Prey Lock",
-			"Gate Navigator",
-			"Primal Tracking",
-			"Ambush Tactics",
-			"Pursuit Strike",
-			"Pursuit Path",
-		],
-		image: "/generated/compendium/jobs/ranger.webp",
-		stats: {
-			strength: 12,
-			agility: 15,
-			vitality: 13,
-			intelligence: 10,
-			sense: 14,
-			presence: 8,
-		},
-		primary_abilities: ["Agility", "Sense"],
+		primary_abilities: ["Sense", "Intelligence"],
 		source: "Ascendant Compendium",
 	},
 	{
@@ -2677,10 +1949,7 @@ export const jobs: Job[] = [
 				type: "immunity",
 			},
 		],
-		abilityScoreImprovements: {
-			strength: 2,
-			presence: 1,
-		},
+		abilityScoreImprovements: { strength: 2, presence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Ancient Hebrew"],
@@ -2800,36 +2069,36 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Covenant-Inscribed Biology",
-				description:
-					"Lineage trait. Your oath is not merely a spiritual commitment — it is physically encoded into your mana pathways as a permanent resonance signature. Your body rejects corruption at the biological level: you are immune to disease and the poisoned condition. Necromantic effects that target your life force require an additional Intelligence check (DC = your Presence modifier + 10) to bypass your covenant's rejection field.",
+				name: "Radiant Scales",
+				description: "Physiology trait. Patches of luminous scales cover your vital organs. When you take a critical hit, the scales shatter, turning the critical hit into a normal hit. Regenerates on a long rest. You have advantage on saving throws against being blinded.",
 				type: "physiology",
 			},
 			{
-				name: "Aetheric Covenant Sense",
-				description:
-					"Lineage trait. Your covenant tunes you to the resonance of absolute order — you feel the presence of fiends, celestials, and undead within 60 ft as a physical alert, like pressure in the back of your skull. Additionally, you can detect when a creature within 30 ft is lying; the covenant dissonance feels like a distinct vibration. This is a passive, always-active biological sense.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: Covenant Enforcer",
-				description:
-					"Social lineage trait. Holy Knights are recognized as authorized agents of both the Ascendant Bureau and the Absolute's covenant framework — a dual authority that grants them unique legal standing. You may legally detain any Awakened individual pending Bureau review during a gate-break event. Guild leaders, Bureau directors, and civilian governments all extend automatic deference to Holy Knights in crisis situations. Breaking your oath publicly is classified as a Bureau-level incident.",
-				type: "social",
-			},
-			{
-				name: "Covenant Flare",
-				description:
-					"Innate ability. Once per short rest as a bonus action, release a burst of concentrated radiant covenant energy. All undead and fiends within 30 ft must make a Sense saving throw (DC 8 + proficiency + Presence mod) or take 2d8 radiant damage and be pushed 15 ft away from you. Simultaneously, all allies within 15 ft regain HP equal to your Presence modifier. This is not a spell and cannot be dispelled or counterspelled.",
+				name: "Radiant Ignition",
+				description: "Innate ability. You can channel mana into any weapon you hold, causing it to ignite. Ignited weapons deal +1 radiant damage and shed bright light for 10 ft.",
 				type: "innate-magic",
 			},
 			{
-				name: "Sworn Resolve",
-				description:
-					"Physiology trait. Your oath's resonance reinforces your mental and physical resolve against any force that would break it. You are immune to the Frightened condition. You have advantage on all saving throws against effects that would force you to act against your oath's tenets (compulsion, domination, charm). While above half your maximum HP, you cannot be knocked prone by non-magical forced movement.",
-				type: "physiology",
-			},
+				name: "Aura of Command",
+				description: "Social trait. Your voice carries supernatural weight. You have advantage on Persuasion and Intimidation checks against lower-ranked Awakened or un-Awakened civilians.",
+				type: "social",
+			}
 		],
+		resonanceBreath: {
+			name: "Judgment Ray",
+			shape: "line",
+			size: 30,
+			damage_die: "2d8",
+			damage_type: "radiant",
+			save: "PRE",
+			scaling: [
+				{ level: 1, dice: "2d8" },
+				{ level: 6, dice: "3d8" },
+				{ level: 11, dice: "4d8" },
+				{ level: 16, dice: "5d8" },
+			],
+			rechargeRest: "short-rest",
+		},
 		abilities: [
 			"Oath Sense",
 			"Covenant's Mercy",
@@ -2930,10 +2199,7 @@ export const jobs: Job[] = [
 				frequency: "long-rest",
 			},
 		],
-		abilityScoreImprovements: {
-			intelligence: 2,
-			agility: 1,
-		},
+		abilityScoreImprovements: { intelligence: 2, agility: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Arabic"],
@@ -3064,36 +2330,41 @@ export const jobs: Job[] = [
 		],
 		racialTraits: [
 			{
-				name: "Weave-Interfaced Cognition",
-				description:
-					"Lineage trait. Your brain is permanently networked to the Weave-Resonance layer — the fundamental interface between magic and physical matter. You perceive the construction resonance of all objects as a passive AR overlay: stress points, internal mechanisms, upgrade paths, and magical signatures are all immediately visible. You cannot be fooled by mundane disguises applied to objects (fake magic items, trapped containers, disguised weapons) — their actual resonance is immediately apparent.",
+				name: "Cyber-Mana Integration",
+				description: "Physiology trait. Your body naturally fuses with tech. You can interface with any computer or electronic lock by touching it, bypassing the need for passwords or screens. You have advantage on Intelligence saving throws.",
 				type: "physiology",
 			},
 			{
-				name: "Attunement Resonance",
-				description:
-					"Lineage trait. Your Weave-interface grants an additional attunement slot beyond the standard limit, and you attune to items as a bonus action. More critically: you can read the full history and properties of any magic item by holding it for 1 minute (no Identify spell needed), and you detect the presence of magic items within 30 ft passively, as if under a permanent Detect Magic effect for objects only.",
-				type: "sense",
-			},
-			{
-				name: "Bureau Classification: Aetheric Design Engineer",
-				description:
-					"Social lineage trait. Technomancers are licensed by both the Bureau and the Global Patent Authority as the only individuals authorized to legally construct and sell Absolute-infused technology. Your Bureau certification grants IP protection on all Absolute infusions you create. Defense contractors, Silicon Valley firms, and government agencies all operate under Bureau agreements that require your consultation fee before reverse-engineering any gate-derived technology.",
-				type: "social",
-			},
-			{
-				name: "Mandate Overclock",
-				description:
-					"Innate ability. Once per long rest as a bonus action, overclock your Weave-interface for 1 minute. During this time: your Intelligence modifier is doubled for all Intelligence checks and saving throws, the cost of all infusions is reduced by 1 (minimum 0), and any spell you cast through an infused item uses your Intelligence modifier + 2 as the casting modifier. Electronics within 10 ft display random diagnostic outputs during the overclock.",
+				name: "Current Conductor",
+				description: "Innate ability. You can draw power from electrical grids or heavy batteries to regain HP (1d8 per power source drained, destroying the source).",
 				type: "innate-magic",
 			},
 			{
-				name: "Tool Integration",
-				description:
-					"Physiology trait. Your neural-tool synchronization means tools become extensions of your body — you have double proficiency with all tools you hold, your hands function as a universal toolkit (you can attempt any toolset task without physical tools at disadvantage), and your Weave-interface prevents tool failures: natural 1s on tool checks are treated as 5s.",
+				name: "Metallic Dermis",
+				description: "Physiology trait. Your skin hardens into a dense alloy. Your base AC is 13 + your Intelligence modifier when unarmored. You have advantage on saving throws against being poisoned.",
 				type: "physiology",
-			},
+			}
 		],
+		naturalArmor: {
+			baseAC: 13,
+			addDex: false,
+			abilityMod: "INT",
+			description:
+				"Metallic Dermis — dense cyber-alloy skin. AC = 13 + your Intelligence modifier while unarmored.",
+		},
+		innateChanneling: {
+			ability: "Intelligence",
+			spells: [
+				{
+					name: "System Interface",
+					level: 0,
+					unlockLevel: 1,
+					uses: "at-will",
+					description:
+						"Interface with any electronic system by touch (cantrip-scale). Read data, bypass locks, disable low-tier alarms, issue simple commands. Extends your Cyber-Mana Integration.",
+				},
+			],
+		},
 		abilities: [
 			"Mandate Tinkering",
 			"Technical Casting",
@@ -3206,10 +2477,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: {
-			presence: 2,
-			agility: 1,
-		},
+		abilityScoreImprovements: { presence: 2, agility: 1 },
 		size: "medium",
 		speed: 35,
 		languages: ["English", "One additional Earth language of choice"],
@@ -3348,6 +2616,35 @@ export const jobs: Job[] = [
 				type: "physiology",
 			},
 		],
+		innateChanneling: {
+			ability: "Presence",
+			spells: [
+				{
+					name: "Anthem Note",
+					level: 0,
+					unlockLevel: 1,
+					uses: "at-will",
+					description:
+						"Broadcast a targeted harmonic note (cantrip-scale). Deal 1d6 thunder damage to a creature within 60 ft on a failed Presence save, or grant an ally within 60 ft 1d4 temporary HP. Scales at 5th, 11th, 17th.",
+				},
+			],
+		},
+		resonanceBreath: {
+			name: "Resonant Pulse",
+			shape: "sphere",
+			size: 10,
+			damage_die: "2d6",
+			damage_type: "thunder",
+			save: "PRE",
+			scaling: [
+				{ level: 1, dice: "2d6" },
+				{ level: 6, dice: "3d6" },
+				{ level: 11, dice: "4d6" },
+				{ level: 16, dice: "5d6" },
+			],
+			rechargeRest: "short-rest",
+		},
+		condition_immunities: ["magical sleep"],
 		abilities: [
 			"Frequency Casting",
 			"Hype",
@@ -3366,6 +2663,613 @@ export const jobs: Job[] = [
 			presence: 15,
 		},
 		primary_abilities: ["Presence", "Agility"],
+		source: "Ascendant Compendium",
+	},
+	{
+		id: "herald",
+		name: "Herald",
+		type: "Job",
+		rank: "B",
+		description:
+			"The Herald is an Awakened identity that specializes in the Absolute Transmission mandate. As an Ascendant of this lineage, their nervous system was restructured at Awakening into a living antenna — a receiver tuned to the Absolute's broadcast, translating sanctified resonance into restorative, radiant, and reality-correcting mantras. In the modern world, Heralds are the Ascendant Bureau's field chaplains and raid medics; their very presence re-anchors an ally's vitals, and their mantras can mend shattered bones or incinerate unholy anomalies with equal authority. They are the bridge between civilians and the Absolute's will.",
+		hitDie: "1d8",
+		primaryAbility: "Presence",
+		saving_throws: ["Sense", "Presence"],
+		skillChoices: [
+			"History",
+			"Insight",
+			"Medicine",
+			"Persuasion",
+			"Religion",
+		],
+		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
+		weaponProficiencies: ["Simple weapons"],
+		tool_proficiencies: [],
+		awakeningFeatures: [
+			{
+				name: "Mandate Signal",
+				description:
+					"Your Awakening established a permanent resonance link to the Absolute. Once per short rest as a bonus action, invoke a 10-ft aura for 1 minute: allies within the aura add your Presence modifier to their next saving throw before the aura ends.",
+				level: 1,
+			},
+			{
+				name: "Sanctified Transmission",
+				description:
+					"The Absolute's broadcast flows through you. When you cast a Herald mantra that restores hit points, add your Presence modifier to the total healed.",
+				level: 1,
+			},
+			{
+				name: "Resonance Channel",
+				description:
+					"Your body tolerates higher-bandwidth transmissions. At 6th level, you can maintain concentration on two Herald mantras of 1st level or lower simultaneously.",
+				level: 6,
+			},
+			{
+				name: "Covenant Broadcast",
+				description:
+					"At 10th level, when you take damage while within 30 ft of at least one ally, you can use your reaction to redirect the damage: you take half, and the remaining half is negated by the Absolute's broadcast.",
+				level: 10,
+			},
+		],
+		jobTraits: [
+			{
+				name: "Mantra Reservoir",
+				description:
+					"You carry a reservoir of Absolute resonance = 5 × Herald level. Spend as a bonus action to restore HP by touch (1 HP per point) or to grant an ally within 30 ft resistance to one damage type until your next long rest.",
+				type: "active",
+				frequency: "long-rest",
+			},
+			{
+				name: "Receiver's Ward",
+				description:
+					"Your tuned cortex filters invasive frequencies. Advantage on saving throws against being charmed, and magic cannot put you to sleep.",
+				type: "resistance",
+			},
+			{
+				name: "Authoritative Broadcast",
+				description:
+					"When you speak in an official capacity, civilian crowds instinctively defer. Advantage on Presence (Persuasion) checks made to direct or calm groups of 5 or more non-hostile civilians.",
+				type: "passive",
+			},
+		],
+		abilityScoreImprovements: { presence: 2, sense: 1 },
+		size: "medium",
+		speed: 30,
+		languages: ["English", "Liturgical Latin"],
+		specialSenses: [
+			"Transmission Reception (detect concentrations of Absolute or Entropic resonance within 1 mile)",
+		],
+		damage_resistances: ["radiant"],
+		startingEquipment: [
+			["Mace", "Warhammer"],
+			["Scale Mail", "Leather Armor", "Chain Mail"],
+			["Light Crossbow and 20 bolts", "Any simple weapon"],
+			["Priest's Pack", "Explorer's Pack"],
+			["Shield"],
+			["Absolute Focus"],
+		],
+		hitPointsAtFirstLevel: "8 + your Vitality modifier",
+		hitPointsAtHigherLevels:
+			"1d8 (or 5) + your Vitality modifier per level after 1st",
+		spellcasting: {
+			ability: "Presence",
+			focus: "Absolute focus",
+			cantripsKnown: [
+				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
+			],
+			spellSlots: FULL_CASTER_SLOTS,
+		},
+		classFeatures: [
+			{
+				level: 1,
+				name: "Absolute Channeling",
+				description:
+					"Cast Herald mantras using Presence. Prepare from the full Herald list each day (Presence mod + Herald level mantras).",
+			},
+			{
+				level: 1,
+				name: "Receive Signal",
+				description:
+					"As a bonus action, detect the presence and type of celestials, fiends, and undead within 60 ft. Uses = Presence mod per long rest.",
+			},
+			{
+				level: 2,
+				name: "Channel Absolute",
+				description:
+					"Once per short rest, invoke the Absolute's authority for a chosen effect (Turn Unholy, Restorative Pulse, or Radiant Ignition). Additional uses and effects unlock at higher levels.",
+			},
+			{
+				level: 3,
+				name: "Mandate",
+				description:
+					"Choose a Mandate — your specialty of Absolute transmission. Mandate features at 3rd, 6th, 8th, and 17th level.",
+			},
+			{
+				level: 4,
+				name: "Ability Score Improvement",
+				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
+			},
+			{
+				level: 5,
+				name: "Broadcast Undead",
+				description:
+					"When you Receive Signal, undead and fiends of CR 1/2 or lower within 30 ft must save or be destroyed. Higher CR thresholds unlock with level.",
+			},
+			{
+				level: 10,
+				name: "Absolute Intervention",
+				description:
+					"Once per long rest, implore the Absolute directly for aid — the DM determines the form of intervention (heal, damage, teleport, revelation). At 20th, the intervention is automatic.",
+			},
+			{
+				level: 18,
+				name: "Mandate Apex",
+				description:
+					"Your Mandate reaches its final broadcast frequency — capstone feature from your chosen Mandate.",
+			},
+			{
+				level: 20,
+				name: "Zenith Voice of the Absolute",
+				description:
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — VOICE OF THE ABSOLUTE]. Absolute Intervention becomes automatic (no roll). Your mantras ignore resistance, and creatures reduced to 0 HP by your radiant damage cannot be resurrected without your consent. Religious authorities across Earth cite your broadcasts as canonical.",
+			},
+		],
+		racialTraits: [
+			{
+				name: "Mandate-Receptive Cortex",
+				description:
+					"Lineage trait. Your nervous system is a tuned receiver for the Absolute's transmissions. You have advantage on saving throws against being deafened, silence effects fail to prevent you from hearing the Absolute's signal, and you can read any religious, mantra-inscribed, or Absolute-stamped text by touching it (language-independent).",
+				type: "physiology",
+			},
+			{
+				name: "Covenant Brand",
+				description:
+					"Innate ability. A sacred glyph manifests on your skin at Awakening — its shape uniquely identifies your covenant. Once per long rest as a bonus action, channel the brand to release a d6 restorative pulse (1d6 + Presence mod HP) to yourself or an ally within 30 ft.",
+				type: "innate-magic",
+			},
+			{
+				name: "Bureau Classification: Broadcast Asset",
+				description:
+					"Social lineage trait. Heralds are legally authorized to issue Absolute-stamped directives that civilian networks mirror during gate events. You hold standing emergency-broadcast credentials, and your mantras are admissible as legal evidence in Bureau tribunals. Religious institutions across Earth extend hospitality automatically.",
+				type: "social",
+			},
+		],
+		innateChanneling: {
+			ability: "Presence",
+			spells: [
+				{
+					name: "Liturgy Receiver",
+					level: 0,
+					unlockLevel: 1,
+					uses: "at-will",
+					description:
+						"Channel a cleric cantrip of your choice (at Awakening) — the Absolute's transmission flows through your tuned cortex. Uses Presence as your spellcasting ability.",
+				},
+				{
+					name: "Covenant Restoration",
+					level: 2,
+					unlockLevel: 3,
+					uses: { value: 1, per: "long-rest" },
+					description:
+						"Heal a creature you can see within 30 ft for 2d8 + your Presence modifier HP, broadcast as a stabilizing Covenant pulse.",
+				},
+			],
+		},
+		condition_immunities: ["magical sleep"],
+		abilities: [
+			"Absolute Channeling",
+			"Receive Signal",
+			"Channel Absolute",
+			"Mandate",
+			"Broadcast Undead",
+			"Absolute Intervention",
+		],
+		image: "/generated/compendium/jobs/healer.webp",
+		stats: {
+			strength: 10,
+			agility: 10,
+			vitality: 13,
+			intelligence: 12,
+			sense: 14,
+			presence: 15,
+		},
+		primary_abilities: ["Presence", "Sense"],
+		source: "Ascendant Compendium",
+	},
+	{
+		id: "contractor",
+		name: "Contractor",
+		type: "Job",
+		rank: "B",
+		description:
+			"The Contractor is an Awakened identity that specializes in the Rift-Pact Vessel mandate. As an Ascendant of this lineage, their Awakening was not a gift from the Absolute — it was a bargain with an extraplanar entity whose sigil is literally branded onto their vessel. They draw power through an aetheric umbilical to their patron, trading autonomy for aetheric bandwidth that vastly exceeds their rank. In the modern world, Contractors are both the Bureau's most flexible pact-specialists and its most-watched liability; every pact is registered with Extraplanar Affairs, and every Contractor is subject to monthly resonance audits.",
+		hitDie: "1d8",
+		primaryAbility: "Presence",
+		saving_throws: ["Sense", "Presence"],
+		skillChoices: [
+			"Arcana",
+			"Deception",
+			"History",
+			"Intimidation",
+			"Investigation",
+			"Nature",
+			"Religion",
+		],
+		armorProficiencies: ["Light armor"],
+		weaponProficiencies: ["Simple weapons"],
+		tool_proficiencies: [],
+		awakeningFeatures: [
+			{
+				name: "Patron Tether",
+				description:
+					"At Awakening, your patron inscribes a pact-sigil on your skin and establishes the aetheric umbilical. The brand pulses warmly when your patron observes you and glows brightly when they wish to speak.",
+				level: 1,
+			},
+			{
+				name: "Pact Boon",
+				description:
+					"Your patron grants one boon: Boon of the Blade (summon a pact weapon), Boon of the Tome (bonus cantrips), or Boon of the Familiar (summon a pact-bound imp/sprite/quasit).",
+				level: 3,
+			},
+			{
+				name: "Contract Invocations",
+				description:
+					"You learn specialized invocations that rewrite your vessel's capabilities — extra eye, see-in-darkness, unnaturally persuasive voice, etc. Gain additional invocations at 2nd, 5th, 7th, 9th, 12th, 15th, and 18th level.",
+				level: 2,
+			},
+			{
+				name: "Rift Mantle",
+				description:
+					"At 10th level, you can wrap yourself in your patron's resonance as a reaction: resistance to all damage until the start of your next turn. Once per short rest.",
+				level: 10,
+			},
+		],
+		jobTraits: [
+			{
+				name: "Aetheric Bandwidth",
+				description:
+					"Your pact feeds you more mana per recovery than your rank should allow. You regain all expended pact slots on a short rest.",
+				type: "passive",
+			},
+			{
+				name: "Patron's Shield",
+				description:
+					"Your patron actively defends their investment. Once per long rest as a reaction when you fail a saving throw, reroll it with advantage.",
+				type: "active",
+				frequency: "long-rest",
+			},
+			{
+				name: "Contract Enforcement",
+				description:
+					"Creatures that attempt to break a pact with you while it is active take 1d10 psychic damage and must succeed on a Presence save or be frightened of you until the end of their next turn.",
+				type: "active",
+			},
+		],
+		abilityScoreImprovements: { presence: 2, vitality: 1 },
+		size: "medium",
+		speed: 30,
+		languages: ["English", "Patron's Tongue"],
+		darkvision: 60,
+		damage_resistances: ["fire"],
+		startingEquipment: [
+			["Light Crossbow and 20 bolts", "Any simple weapon"],
+			["Component Pouch", "Pact Focus"],
+			["Scholar's Pack", "Dungeoneer's Pack"],
+			["Leather Armor"],
+			["Any simple weapon"],
+			["Two Daggers"],
+		],
+		hitPointsAtFirstLevel: "8 + your Vitality modifier",
+		hitPointsAtHigherLevels:
+			"1d8 (or 5) + your Vitality modifier per level after 1st",
+		spellcasting: {
+			ability: "Presence",
+			focus: "Pact focus",
+			cantripsKnown: [
+				2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+			],
+			spellSlots: PACT_CASTER_SLOTS,
+		},
+		classFeatures: [
+			{
+				level: 1,
+				name: "Pact Bargain",
+				description:
+					"Choose your patron: Archfey (glamour), Fiend (infernal), Great Old One (void), or Celestial (radiant). Patron features at 1st, 6th, 10th, and 14th level.",
+			},
+			{
+				level: 1,
+				name: "Pact Casting",
+				description:
+					"Cast Contractor spells using Presence. Short-rest slot recovery. Known spells rather than prepared.",
+			},
+			{
+				level: 2,
+				name: "Invocations",
+				description:
+					"Learn 2 invocations. Gain more at 5th, 7th, 9th, 12th, 15th, and 18th level. Invocations rewrite specific capabilities of your vessel.",
+			},
+			{
+				level: 3,
+				name: "Pact Boon",
+				description:
+					"Your patron grants a permanent boon: Pact of the Blade (summon a weapon), Pact of the Tome (bonus cantrips), or Pact of the Chain (familiar).",
+			},
+			{
+				level: 4,
+				name: "Ability Score Improvement",
+				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
+			},
+			{
+				level: 11,
+				name: "Mystic Arcanum (6th)",
+				description:
+					"Your patron grants you one 6th-level spell you can cast once per long rest without using a pact slot. Additional levels at 13th (7th), 15th (8th), 17th (9th).",
+			},
+			{
+				level: 20,
+				name: "Zenith Rift-Bound Vessel",
+				description:
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — RIFT-BOUND VESSEL]. Your pact slots recover on any rest. Your patron's full attention is yours for 1 minute per long rest — during this window, you can invoke any spell on their patron list without cost. Bureau treats you as a diplomatic entity with standing embassy privileges.",
+			},
+		],
+		racialTraits: [
+			{
+				name: "Pact Brand Physiology",
+				description:
+					"Lineage trait. A patron-sigil is burned into your skin at Awakening; its glow betrays your patron's attention. You have advantage on saving throws against being charmed by entities other than your patron, and your brand can be revealed on command to prove your pact to any Bureau official or fellow Contractor.",
+				type: "physiology",
+			},
+			{
+				name: "Aetheric Umbilical",
+				description:
+					"Innate ability. A hair-thin rift-tether links you to your patron across any distance. Once per long rest as an action, you may request a one-word answer (true / false / unknown) to a yes-or-no question about a creature, place, or object you have knowledge of. Your patron answers truthfully within the limits of their own knowledge.",
+				type: "innate-magic",
+			},
+			{
+				name: "Bureau Classification: Pact Vessel",
+				description:
+					"Social lineage trait. The Bureau's Extraplanar Affairs division maintains a standing file on your pact. You are legally entitled to consultation rights with Bureau patron-negotiators before any charges involving your pact can proceed, but you are subject to monthly resonance audits and must file any new pact amendments within 72 hours. Other Contractors recognize your brand on sight.",
+				type: "social",
+			},
+		],
+		innateChanneling: {
+			ability: "Presence",
+			spells: [
+				{
+					name: "Pact Mark",
+					level: 0,
+					unlockLevel: 1,
+					uses: "at-will",
+					description:
+						"Brand a creature you can see within 60 ft with your patron's sigil for 1 minute (Presence save negates). While marked, you deal +1d4 necrotic damage on any hit against the target. Only one creature may be marked at a time.",
+				},
+				{
+					name: "Patron's Reprieve",
+					level: 1,
+					unlockLevel: 3,
+					uses: { value: 1, per: "long-rest" },
+					description:
+						"When you fail a saving throw, your patron intervenes as a reaction: reroll with advantage. The patron may later demand a minor service in return (DM's discretion).",
+				},
+			],
+		},
+		abilities: [
+			"Pact Bargain",
+			"Pact Casting",
+			"Invocations",
+			"Pact Boon",
+			"Mystic Arcanum",
+			"Patron's Shield",
+		],
+		image: "/generated/compendium/jobs/warlock.webp",
+		stats: {
+			strength: 8,
+			agility: 12,
+			vitality: 13,
+			intelligence: 12,
+			sense: 10,
+			presence: 15,
+		},
+		primary_abilities: ["Presence", "Vitality"],
+		source: "Ascendant Compendium",
+	},
+	{
+		id: "stalker",
+		name: "Stalker",
+		type: "Job",
+		rank: "B",
+		description:
+			"The Stalker is an Awakened identity that specializes in the Dimensional Predator mandate. As an Ascendant of this lineage, their body was restructured for pursuit — their leg musculature, lung capacity, and cardiovascular system are optimized for sustained high-speed chase, and their aetheric sense is permanently tuned to dimensional anomalies. In the modern world, Stalkers are the Bureau's preferred bounty and extraction specialists; they work alone, they always catch their mark, and when their name appears on a contract the global bounty network goes quiet.",
+		hitDie: "1d10",
+		primaryAbility: "Agility",
+		saving_throws: ["Strength", "Agility"],
+		skillChoices: [
+			"Animal Handling",
+			"Athletics",
+			"Insight",
+			"Investigation",
+			"Nature",
+			"Perception",
+			"Stealth",
+			"Survival",
+		],
+		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
+		weaponProficiencies: ["Simple weapons", "Martial weapons"],
+		tool_proficiencies: [],
+		awakeningFeatures: [
+			{
+				name: "Prey Lock",
+				description:
+					"At Awakening, you gained the ability to mark a single target as prey. As a bonus action, designate a creature you can see — you know its location within 1 mile until you rest, have advantage on tracking checks against it, and deal +1d6 damage on your first hit against it each turn.",
+				level: 1,
+			},
+			{
+				name: "Gate Navigator",
+				description:
+					"Your body remembers gate terrain after a single exposure. After spending 1 hour in a gate biome, you gain it as a Favored Terrain: advantage on Wisdom (Perception) and Wisdom (Survival) checks there, and difficult terrain of that type doesn't slow you.",
+				level: 1,
+			},
+			{
+				name: "Pursuit Burst",
+				description:
+					"At 6th level, once per short rest as a bonus action, your speed doubles until the end of your next turn and opportunity attacks against you have disadvantage while you are moving toward your Prey Lock target.",
+				level: 6,
+			},
+			{
+				name: "Terminal Sight",
+				description:
+					"At 10th level, you gain superior darkvision (120 ft) and can see through magical darkness within that range when tracking a Prey Lock target.",
+				level: 10,
+			},
+		],
+		jobTraits: [
+			{
+				name: "Primal Tracking",
+				description:
+					"You can follow any trail — physical, aetheric, or dimensional — left within the last 24 hours at the rate of a fast march. You automatically spot obvious tracks without a check.",
+				type: "passive",
+			},
+			{
+				name: "Ambush Tactics",
+				description:
+					"On the first round of combat, if you are not surprised, you have advantage on attack rolls against any creature that has not yet acted.",
+				type: "passive",
+			},
+			{
+				name: "Gate Predator",
+				description:
+					"Creatures native to a gate biome have disadvantage on attack rolls against you while you are in that biome. You have advantage on saving throws against their innate abilities.",
+				type: "resistance",
+			},
+		],
+		abilityScoreImprovements: { agility: 2, sense: 1 },
+		size: "medium",
+		speed: 35,
+		languages: ["English"],
+		darkvision: 60,
+		specialSenses: [
+			"Rift Resonance (detect active gates within 1 mile and identify their rank and approximate type)",
+		],
+		startingEquipment: [
+			["Scale Mail", "Leather Armor"],
+			["Two Shortswords", "Two Simple Melee Weapons"],
+			["Dungeoneer's Pack", "Explorer's Pack"],
+			["Longbow and Quiver of 20 Arrows"],
+		],
+		hitPointsAtFirstLevel: "10 + your Vitality modifier",
+		hitPointsAtHigherLevels:
+			"1d10 (or 6) + your Vitality modifier per level after 1st",
+		spellcasting: {
+			ability: "Sense",
+			focus: "Primal focus",
+			spellSlots: HALF_CASTER_SLOTS,
+		},
+		classFeatures: [
+			{
+				level: 1,
+				name: "Prey Lock",
+				description:
+					"As a bonus action, mark a creature you can see as your prey. Track their location within 1 mile until you rest. Deal +1d6 damage on the first hit each turn against the marked prey.",
+			},
+			{
+				level: 1,
+				name: "Favored Terrain",
+				description:
+					"Choose one gate biome as your starting favored terrain. Additional favored terrains at 6th and 10th level.",
+			},
+			{
+				level: 2,
+				name: "Primal Channeling",
+				description:
+					"Cast Stalker spells using Sense. Spells known progression; prepare from the Stalker list.",
+			},
+			{
+				level: 2,
+				name: "Fighting Style",
+				description:
+					"Choose a fighting style: Archery, Defense, Dueling, Two-Weapon Fighting, or Natural Explorer.",
+			},
+			{
+				level: 3,
+				name: "Conclave",
+				description:
+					"Choose a Stalker Conclave — your hunting specialization. Conclave features at 3rd, 7th, 11th, and 15th level.",
+			},
+			{
+				level: 4,
+				name: "Ability Score Improvement",
+				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
+			},
+			{
+				level: 5,
+				name: "Extra Attack",
+				description:
+					"Attack twice whenever you take the Attack action on your turn.",
+			},
+			{
+				level: 14,
+				name: "Vanish",
+				description:
+					"Use the Hide action as a bonus action on each of your turns. You cannot be tracked by non-magical means.",
+			},
+			{
+				level: 20,
+				name: "Zenith Apex Predator",
+				description:
+					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S — APEX PREDATOR]. Your Prey Lock has no rest limitation; you always know the location of any creature you have ever Prey Locked. International law enforcement grants you extradition authority in any jurisdiction with a Bureau treaty.",
+			},
+		],
+		racialTraits: [
+			{
+				name: "Predator-Optimized Physiology",
+				description:
+					"Lineage trait. Your Awakening restructured your body for pursuit — your leg musculature, lung capacity, and cardiovascular system are all optimized for sustained high-speed chase. Your base walking speed is 35 ft. You can maintain a full sprint for hours without fatigue checks. You automatically succeed on Athletics checks to maintain pursuit on foot and can track a target's mana signature across any terrain without a roll once they have been Prey Locked.",
+				type: "physiology",
+			},
+			{
+				name: "Rift Resonance Sense",
+				description:
+					"Lineage trait. Your aetheric sense is tuned to dimensional anomalies — you detect active gates within 1 mile by the dimensional pressure they create, and you feel gate-creature mana signatures the way a dog smells a trail. You know the rank and approximate type of any gate within detection range. This sense cannot be jammed or suppressed by environmental factors.",
+				type: "sense",
+			},
+			{
+				name: "Bureau Classification: Dimensional Predator",
+				description:
+					"Social lineage trait. Stalkers are the Bureau's preferred bounty and extraction specialists. You hold a permanent open-contract license allowing you to pursue any Bureau-designated target across all jurisdictions without a separate warrant. International law enforcement agencies are required to extend professional courtesy and logistical support during active pursuits. The global bounty network goes quiet when your name appears on a contract.",
+				type: "social",
+			},
+			{
+				name: "Ambush Initiation",
+				description:
+					"Innate ability. When you attack a creature that has not yet acted in combat, or a creature that is unaware of you, you may make one additional attack as part of the same Attack action (not a bonus action). This attack deals an additional 1d8 damage of the weapon's type. This is separate from your Ambush Tactics feature and stacks with it.",
+				type: "innate-magic",
+			},
+			{
+				name: "Terrain Imprinting",
+				description:
+					"Physiology trait. Your body permanently adapts to gate terrain types you spend extended time in. For each Gate Terrain type designated as a favored terrain, you also gain: you cannot be slowed by natural difficult terrain of that type, environmental damage of that terrain type is reduced by your proficiency bonus, and your camouflage in that terrain is automatic (no roll required to hide when stationary).",
+				type: "physiology",
+			},
+		],
+		abilities: [
+			"Prey Lock",
+			"Gate Navigator",
+			"Primal Tracking",
+			"Ambush Tactics",
+			"Pursuit Strike",
+			"Pursuit Path",
+		],
+		image: "/generated/compendium/jobs/ranger.webp",
+		stats: {
+			strength: 12,
+			agility: 15,
+			vitality: 13,
+			intelligence: 10,
+			sense: 14,
+			presence: 8,
+		},
+		primary_abilities: ["Agility", "Sense"],
 		source: "Ascendant Compendium",
 	},
 ];

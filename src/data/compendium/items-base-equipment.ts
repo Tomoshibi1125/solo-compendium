@@ -925,7 +925,7 @@ export const baseEquipment: Item[] = [
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Logged by the Bureau's issue-desk after a scheduled handover.",
 		tags: ["equipment", "stealth", "radiant"],
 		theme_tags: ["forbidden", "modern-warfare", "urban-combat"],
 	},
@@ -1012,7 +1012,7 @@ export const baseEquipment: Item[] = [
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Logged by the Bureau's issue-desk after a scheduled handover.",
 		tags: ["equipment", "sustained", "healing", "defensive", "mobility"],
 		theme_tags: ["system-glitch", "classified"],
 	},
@@ -1219,7 +1219,7 @@ export const baseEquipment: Item[] = [
 		},
 		flavor: "A masterpiece of destructive intent.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Recorded in the Hunter's inventory during their last resupply.",
 		tags: ["equipment", "mobility", "control", "fire", "healing"],
 		theme_tags: ["ancient-power", "rift-energy"],
 	},
@@ -1593,7 +1593,7 @@ export const baseEquipment: Item[] = [
 		},
 		flavor: "Reforged from the ashes of a fallen Regent.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Recorded in the Hunter's inventory during their last resupply.",
 		tags: ["equipment", "burst", "area", "damage", "offensive"],
 		theme_tags: ["experimental", "post-awakening", "guild-ops"],
 	},
@@ -2134,7 +2134,7 @@ export const baseEquipment: Item[] = [
 		},
 		flavor: "Tread carefully; magic like this has a cost.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
+			"Transferred to the Hunter's kit by routine Bureau allotment.",
 		tags: ["equipment", "buff", "sustained"],
 		theme_tags: ["dimensional-bleed", "urban-combat"],
 	},

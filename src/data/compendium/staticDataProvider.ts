@@ -201,6 +201,50 @@ export interface StaticCompendiumEntry {
 		frequency?: string;
 	}> | null;
 	ability_score_improvements?: Record<string, number> | null;
+	// Racial-parity fields (Jobs-as-race+class — Awakening lineage surface).
+	racial_traits?: Array<{
+		name: string;
+		description: string;
+		type?: string;
+	}> | null;
+	natural_weapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}> | null;
+	natural_armor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: string;
+		description?: string;
+	} | null;
+	resonance_breath?: {
+		name: string;
+		shape: string;
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: string;
+		rechargeRest: string;
+		scaling?: Array<{ level: number; dice: string }>;
+	} | null;
+	innate_channeling?: {
+		ability: string;
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?:
+				| { value: number; per: "short-rest" | "long-rest" }
+				| "at-will";
+			description?: string;
+		}>;
+	} | null;
+	bonus_hp_per_level?: number | null;
+	climb_speed?: number | null;
+	swim_speed?: number | null;
+	fly_speed?: number | null;
 	class_features?: Array<{
 		level: number;
 		name: string;
@@ -445,6 +489,50 @@ type StaticJobSource = {
 	}>;
 	abilityScoreImprovements?: Record<string, number>;
 	classFeatures?: Array<{ level: number; name: string; description: string }>;
+	// Racial-parity extensions (Jobs-as-race+class).
+	racialTraits?: Array<{
+		name: string;
+		description: string;
+		type?: string;
+	}>;
+	naturalWeapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}>;
+	naturalArmor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: string;
+		description?: string;
+	};
+	resonanceBreath?: {
+		name: string;
+		shape: string;
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: string;
+		rechargeRest: string;
+		scaling?: Array<{ level: number; dice: string }>;
+	};
+	innateChanneling?: {
+		ability: string;
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?:
+				| { value: number; per: "short-rest" | "long-rest" }
+				| "at-will";
+			description?: string;
+		}>;
+	};
+	bonusHpPerLevel?: number;
+	climb_speed?: number;
+	swim_speed?: number;
+	fly_speed?: number;
 	source?: string;
 };
 
@@ -1006,6 +1094,17 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		awakening_features: job.awakeningFeatures || null,
 		job_traits: job.jobTraits || null,
 		ability_score_improvements: job.abilityScoreImprovements || null,
+		racial_traits: job.racialTraits || null,
+		natural_weapons: job.naturalWeapons || null,
+		natural_armor: job.naturalArmor || null,
+		resonance_breath: job.resonanceBreath || null,
+		innate_channeling: job.innateChanneling || null,
+		bonus_hp_per_level:
+			typeof job.bonusHpPerLevel === "number" ? job.bonusHpPerLevel : null,
+		climb_speed:
+			typeof job.climb_speed === "number" ? job.climb_speed : null,
+		swim_speed: typeof job.swim_speed === "number" ? job.swim_speed : null,
+		fly_speed: typeof job.fly_speed === "number" ? job.fly_speed : null,
 		class_features: job.classFeatures || null,
 		spellcasting: job.spellcasting || null,
 		level: undefined,

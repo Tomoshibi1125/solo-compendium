@@ -3,8 +3,10 @@
  * Only logs in development mode, with exceptions for critical errors
  */
 
-const isDevelopment = import.meta.env.DEV;
-const isE2E = import.meta.env.VITE_E2E === "true";
+const viteEnv: Record<string, unknown> =
+	(import.meta as { env?: Record<string, unknown> }).env ?? {};
+const isDevelopment = Boolean(viteEnv.DEV);
+const isE2E = viteEnv.VITE_E2E === "true";
 const allowConsole = isDevelopment && !isE2E;
 
 interface Logger {

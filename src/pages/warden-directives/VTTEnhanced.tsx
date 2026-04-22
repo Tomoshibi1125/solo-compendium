@@ -129,6 +129,10 @@ import {
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import {
+	applyDamageMitigation,
+	type DamageApplicationMode,
+} from "@/lib/damageApplication";
 import { compressImage } from "@/lib/imageOptimization";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
@@ -167,6 +171,7 @@ import {
 	removeAssetFromVttScenes,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
+import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import PlayerMapView from "@/pages/player-tools/PlayerMapView";
 import type {
 	VTTDrawing,
@@ -344,6 +349,9 @@ type CharacterSummary = {
 	hp_current?: number;
 	hp_max?: number;
 	armor_class?: number;
+	resistances?: string[] | null;
+	immunities?: string[] | null;
+	vulnerabilities?: string[] | null;
 	portrait_url?: string | null;
 	level?: number;
 	job?: string;
@@ -377,6 +385,21 @@ const isCharacterSummary = (
 
 const EMPTY_ARRAY: never[] = [];
 const MOBILE_BREAKPOINT_QUERY = "(max-width: 767px)";
+const DAMAGE_TYPE_OPTIONS = [
+	"acid",
+	"bludgeoning",
+	"cold",
+	"fire",
+	"force",
+	"lightning",
+	"necrotic",
+	"piercing",
+	"poison",
+	"psychic",
+	"radiant",
+	"slashing",
+	"thunder",
+] as const;
 
 type VTTCampaignAsset = BrowserAsset;
 
@@ -496,8 +519,27 @@ const VTTEnhanced = () => {
 	>(null);
 	const [damageDialogOpen, setDamageDialogOpen] = useState(false);
 	const [damageAmount, setDamageAmount] = useState("");
+	const [damageType, setDamageType] = useState("");
+	const [damageMode, setDamageMode] =
+		useState<DamageApplicationMode>("typed");
 	const [currentScene, setCurrentScene] = useState<VTTScene | null>(null);
 	const [liveSceneId, setLiveSceneId] = useState<string | null>(null);
+	const resetDamageDialog = useCallback(() => {
+		setDamageDialogOpen(false);
+		setDamageAmount("");
+		setDamageType("");
+		setDamageMode("typed");
+	}, []);
+	const syncLocalSceneMusic = useCallback(
+		(scene: Pick<VTTScene, "musicMood" | "musicAutoplay"> | null | undefined) => {
+			const wantsMusic = !!scene?.musicMood && scene.musicAutoplay !== false;
+			if (wantsMusic && !musicEngineRef.current) {
+				musicEngineRef.current = new VttMusicEngine();
+			}
+			syncSceneMusicEngine(musicEngineRef.current, scene);
+		},
+		[],
+	);
 
 	// Derive Active Initiative Token
 	const { data: combatData } = useCampaignCombatSession(
@@ -803,11 +845,12 @@ const VTTEnhanced = () => {
 			if (payload.playedBy === vttRealtime.userId) return;
 
 			if (payload.action === "music_change" && payload.id) {
-				if (!musicEngineRef.current)
-					musicEngineRef.current = new VttMusicEngine();
-				musicEngineRef.current.play(payload.id as MusicMood);
+				syncLocalSceneMusic({
+					musicMood: payload.id as MusicMood,
+					musicAutoplay: true,
+				});
 			} else if (payload.action === "music_stop") {
-				if (musicEngineRef.current) musicEngineRef.current.stop();
+				syncLocalSceneMusic({ musicMood: null, musicAutoplay: false });
 			} else if (payload.action === "play_sound" && payload.id) {
 				// We can add logic to play specific sound IDs here
 				// E.g., a simple HTMLAudioElement wrapper
@@ -821,7 +864,7 @@ const VTTEnhanced = () => {
 			unsubSceneChange();
 			unsubAudioSync();
 		};
-	}, [vttRealtime, isWarden, scenes]);
+	}, [vttRealtime, isWarden, scenes, syncLocalSceneMusic]);
 
 	const effectiveVisibleLayers: Record<number, boolean> = useMemo(
 		() => ({
@@ -875,6 +918,15 @@ const VTTEnhanced = () => {
 			isCharacterSummary(entry),
 		);
 	}, [campaignCharacters, localCampaignCharacters, useLocalCharacters]);
+	const activeCharacter = useMemo(
+		() =>
+			activeToken?.characterId
+				? resolvedCharacters.find(
+						(character) => character.id === activeToken.characterId,
+					) ?? null
+				: null,
+		[activeToken?.characterId, resolvedCharacters],
+	);
 
 	// Map character IDs to their owning user IDs for token ownership
 	const characterOwnerMap = useMemo<Map<string, string>>(() => {
@@ -920,6 +972,21 @@ const VTTEnhanced = () => {
 		if (!currentScene) return;
 		setFogOfWar(currentScene.fogOfWar ?? false);
 	}, [currentScene]);
+	useEffect(() => {
+		syncLocalSceneMusic(currentScene);
+	}, [
+		currentScene?.id,
+		currentScene?.musicAutoplay,
+		currentScene?.musicMood,
+		syncLocalSceneMusic,
+	]);
+	useEffect(
+		() => () => {
+			musicEngineRef.current?.dispose();
+			musicEngineRef.current = null;
+		},
+		[],
+	);
 
 	useEffect(() => {
 		currentSceneRef.current = currentScene;
@@ -935,10 +1002,9 @@ const VTTEnhanced = () => {
 			setActiveTokenId(null);
 		}
 		if (damageDialogOpen) {
-			setDamageDialogOpen(false);
-			setDamageAmount("");
+			resetDamageDialog();
 		}
-	}, [activeTokenId, currentScene?.tokens, damageDialogOpen]);
+	}, [activeTokenId, currentScene?.tokens, damageDialogOpen, resetDamageDialog]);
 
 	useEffect(() => {
 		const handler = () => {
@@ -2291,6 +2357,50 @@ const VTTEnhanced = () => {
 		},
 		[],
 	);
+	const applyDamageToActiveToken = useCallback(() => {
+		if (!activeToken || !damageAmount) {
+			resetDamageDialog();
+			return;
+		}
+
+		const damage = parseInt(damageAmount, 10);
+		if (Number.isNaN(damage) || damage <= 0) {
+			resetDamageDialog();
+			return;
+		}
+
+		const damageResult = applyDamageMitigation({
+			rawDamage: damage,
+			damageType,
+			mode: damageMode,
+			mitigation: activeCharacter
+				? {
+						resistances: activeCharacter.resistances,
+						immunities: activeCharacter.immunities,
+						vulnerabilities: activeCharacter.vulnerabilities,
+					}
+				: null,
+		});
+		const currentHP = activeToken.hp ?? 0;
+		const newHP = Math.max(0, currentHP - damageResult.finalDamage);
+		updateToken(activeToken.id, { hp: newHP });
+		syncCharacterHP(activeToken.characterId, newHP);
+		toast({
+			title: "Damage Applied",
+			description: `${damageResult.finalDamage} damage applied to ${activeToken.name}. HP: ${currentHP} → ${newHP}. ${damageResult.summary}`,
+		});
+		resetDamageDialog();
+	}, [
+		activeCharacter,
+		activeToken,
+		damageAmount,
+		damageMode,
+		damageType,
+		resetDamageDialog,
+		syncCharacterHP,
+		toast,
+		updateToken,
+	]);
 
 	const updateTokenInitiative = (tokenId: string, initiative: number) => {
 		updateToken(tokenId, { initiative });
@@ -4714,18 +4824,29 @@ const VTTEnhanced = () => {
 														});
 													}}
 													onMusicChange={(musicId) => {
-														if (!musicEngineRef.current) {
-															musicEngineRef.current = new VttMusicEngine();
-														}
 														if (musicId === "stop") {
-															musicEngineRef.current.stop();
+															syncLocalSceneMusic({
+																musicMood: null,
+																musicAutoplay: false,
+															});
+															updateScene({
+																musicMood: null,
+																musicAutoplay: false,
+															});
 															vttRealtime.broadcastAudioSync(
 																"music_stop",
 																"stop",
 															);
 															toast({ title: "Music Stopped" });
 														} else {
-															musicEngineRef.current.play(musicId as MusicMood);
+															syncLocalSceneMusic({
+																musicMood: musicId as MusicMood,
+																musicAutoplay: true,
+															});
+															updateScene({
+																musicMood: musicId as MusicMood,
+																musicAutoplay: true,
+															});
 															vttRealtime.broadcastAudioSync(
 																"music_change",
 																musicId,
@@ -5127,10 +5248,29 @@ const VTTEnhanced = () => {
 												Apply Damage to {activeToken?.name}
 											</DialogTitle>
 											<DialogDescription>
-												Enter the damage amount to apply to this token.
+												Apply raw or typed damage to this token.
 											</DialogDescription>
 										</DialogHeader>
 										<div className="grid gap-4 py-4">
+											<div className="grid grid-cols-4 items-center gap-4">
+												<Label htmlFor="damage-mode" className="text-right">
+													Mode
+												</Label>
+												<Select
+													value={damageMode}
+													onValueChange={(value: DamageApplicationMode) =>
+														setDamageMode(value)
+													}
+												>
+													<SelectTrigger id="damage-mode" className="col-span-3">
+														<SelectValue />
+													</SelectTrigger>
+													<SelectContent>
+														<SelectItem value="typed">Typed damage</SelectItem>
+														<SelectItem value="raw">Raw override</SelectItem>
+													</SelectContent>
+												</Select>
+											</div>
 											<div className="grid grid-cols-4 items-center gap-4">
 												<Label htmlFor="damage-amount" className="text-right">
 													Damage
@@ -5146,36 +5286,59 @@ const VTTEnhanced = () => {
 													autoFocus
 												/>
 											</div>
+											<div className="grid grid-cols-4 items-center gap-4">
+												<Label htmlFor="damage-type" className="text-right">
+													Type
+												</Label>
+												<Select
+													value={damageType || "untyped"}
+													onValueChange={(value) =>
+														setDamageType(value === "untyped" ? "" : value)
+													}
+													disabled={damageMode === "raw"}
+												>
+													<SelectTrigger id="damage-type" className="col-span-3">
+														<SelectValue />
+													</SelectTrigger>
+													<SelectContent>
+														<SelectItem value="untyped">Untyped</SelectItem>
+														{DAMAGE_TYPE_OPTIONS.map((option) => (
+															<SelectItem key={option} value={option}>
+																{option}
+															</SelectItem>
+														))}
+													</SelectContent>
+												</Select>
+											</div>
+											<div className="rounded-md border border-border/60 bg-muted/40 px-3 py-2 text-xs space-y-1">
+												<p>
+													{activeCharacter
+														? `Target mitigation for ${activeCharacter.name}`
+														: "No linked character mitigation is available for this token."}
+												</p>
+												{activeCharacter && (
+													<>
+														<p>
+															Resistances: {activeCharacter.resistances?.join(", ") || "None"}
+														</p>
+														<p>
+															Immunities: {activeCharacter.immunities?.join(", ") || "None"}
+														</p>
+														<p>
+															Vulnerabilities: {activeCharacter.vulnerabilities?.join(", ") || "None"}
+														</p>
+													</>
+												)}
+											</div>
 										</div>
 										<DialogFooter>
 											<Button
 												variant="outline"
-												onClick={() => {
-													setDamageDialogOpen(false);
-													setDamageAmount("");
-												}}
+												onClick={resetDamageDialog}
 											>
 												Cancel
 											</Button>
-											<Button
-												onClick={() => {
-													if (activeToken && damageAmount) {
-														const damage = parseInt(damageAmount, 10);
-														if (!Number.isNaN(damage) && damage > 0) {
-															const currentHP = activeToken.hp ?? 0;
-															const newHP = Math.max(0, currentHP - damage);
-															updateToken(activeToken.id, { hp: newHP });
-															syncCharacterHP(activeToken.characterId, newHP);
-															toast({
-																title: "Damage Applied",
-																description: `${damage} damage applied to ${activeToken.name}. HP: ${currentHP} → ${newHP}`,
-															});
-														}
-													}
-													setDamageDialogOpen(false);
-													setDamageAmount("");
-												}}
-											>
+											<Button onClick={applyDamageToActiveToken}>
 												Apply Damage
 											</Button>
 										</DialogFooter>

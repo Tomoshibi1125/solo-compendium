@@ -99,6 +99,50 @@ export interface StaticCompendiumEntry {
 		frequency?: string;
 	}> | null;
 	ability_score_improvements?: Record<string, number> | null;
+	// Racial-parity fields (Jobs-as-race+class — surface Awakening lineage on Job detail view).
+	racial_traits?: Array<{
+		name: string;
+		description: string;
+		type?: string;
+	}> | null;
+	natural_weapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}> | null;
+	natural_armor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: string;
+		description?: string;
+	} | null;
+	resonance_breath?: {
+		name: string;
+		shape: string;
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: string;
+		rechargeRest: string;
+		scaling?: Array<{ level: number; dice: string }>;
+	} | null;
+	innate_channeling?: {
+		ability: string;
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?:
+				| { value: number; per: "short-rest" | "long-rest" }
+				| "at-will";
+			description?: string;
+		}>;
+	} | null;
+	bonus_hp_per_level?: number | null;
+	climb_speed?: number | null;
+	swim_speed?: number | null;
+	fly_speed?: number | null;
 	class_features?: Array<{
 		level: number;
 		name: string;
@@ -169,6 +213,11 @@ export interface StaticCompendiumEntry {
 	body_part?: string | null;
 	attunement?: boolean | null;
 	effects?: Record<string, Json> | null;
+	// Narrative fields preserved by enriched provider transforms (sigils, tattoos,
+	// relics, castables). They flow through to detail views and the audit.
+	flavor?: string | null;
+	discovery_lore?: string | null;
+	theme_tags?: string[] | null;
 	// Regent/generic title alias
 	title?: string | null;
 	// Shadow soldier runtime fields
@@ -183,6 +232,9 @@ export interface StaticCompendiumEntry {
 	inscription_difficulty?: number | null;
 	// Supabase-shape aliases for techniques
 	level_requirement?: number | null;
+	table_category?: string | null;
+	table_group?: string | null;
+	rollable_entries?: string[] | null;
 }
 
 export interface StaticDataProvider {
@@ -204,6 +256,7 @@ export interface StaticDataProvider {
 	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getRollableTables: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }

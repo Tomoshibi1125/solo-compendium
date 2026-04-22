@@ -517,6 +517,41 @@ export interface CompendiumJob extends BaseCompendiumItem {
 	weapon_proficiencies: string[];
 	skill_choices: string[];
 	type: string;
+	natural_weapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}>;
+	natural_armor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: string;
+		description?: string;
+	};
+	resonance_breath?: {
+		name: string;
+		shape: string;
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: string;
+		rechargeRest: string;
+	};
+	innate_channeling?: {
+		ability: string;
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
+			description?: string;
+		}>;
+	};
+	bonus_hp_per_level?: number;
+	climb_speed?: number;
+	swim_speed?: number;
+	fly_speed?: number;
 	racial_traits?: Array<{
 		name: string;
 		description: string;

@@ -41,6 +41,8 @@ const dataLoaders = {
 		import("../relics-comprehensive").then(
 			(module) => module.comprehensiveRelics,
 		),
+	rollableTables: () =>
+		import("../rollableTables").then((module) => module.rollableTables),
 	powers: () => import("../powers").then((module) => module.powers),
 	techniques: () => import("../techniques").then((module) => module.techniques),
 	artifacts: () => import("../artifacts").then((module) => module.artifacts),
@@ -201,6 +203,50 @@ export interface StaticCompendiumEntry {
 		frequency?: string;
 	}> | null;
 	ability_score_improvements?: Record<string, number> | null;
+	// Racial-parity fields (Jobs-as-race+class — Awakening lineage surface).
+	racial_traits?: Array<{
+		name: string;
+		description: string;
+		type?: string;
+	}> | null;
+	natural_weapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}> | null;
+	natural_armor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: string;
+		description?: string;
+	} | null;
+	resonance_breath?: {
+		name: string;
+		shape: string;
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: string;
+		rechargeRest: string;
+		scaling?: Array<{ level: number; dice: string }>;
+	} | null;
+	innate_channeling?: {
+		ability: string;
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?:
+				| { value: number; per: "short-rest" | "long-rest" }
+				| "at-will";
+			description?: string;
+		}>;
+	} | null;
+	bonus_hp_per_level?: number | null;
+	climb_speed?: number | null;
+	swim_speed?: number | null;
+	fly_speed?: number | null;
 	class_features?: Array<{
 		level: number;
 		name: string;
@@ -313,6 +359,9 @@ export interface StaticCompendiumEntry {
 	saving_throw_ability?: string | null;
 	has_attack_roll?: boolean | null;
 	area_of_effect?: Record<string, Json> | null;
+	table_category?: string | null;
+	table_group?: string | null;
+	rollable_entries?: string[] | null;
 }
 
 interface StaticDataProvider {
@@ -334,9 +383,22 @@ interface StaticDataProvider {
 	getArtifacts: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getSigils: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getTattoos: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getRollableTables: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
+
+type StaticRollableTableSource = {
+	id: string;
+	name: string;
+	description: string;
+	category: string;
+	group: string;
+	entries: string[];
+	rank?: string;
+	source_book: string;
+	tags?: string[];
+};
 
 // Helper function to filter by search query
 function filterBySearch<T>(
@@ -445,6 +507,50 @@ type StaticJobSource = {
 	}>;
 	abilityScoreImprovements?: Record<string, number>;
 	classFeatures?: Array<{ level: number; name: string; description: string }>;
+	// Racial-parity extensions (Jobs-as-race+class).
+	racialTraits?: Array<{
+		name: string;
+		description: string;
+		type?: string;
+	}>;
+	naturalWeapons?: Array<{
+		name: string;
+		damage: string;
+		damage_type: string;
+		description?: string;
+	}>;
+	naturalArmor?: {
+		baseAC: number;
+		addDex: boolean;
+		abilityMod?: string;
+		description?: string;
+	};
+	resonanceBreath?: {
+		name: string;
+		shape: string;
+		size: number;
+		damage_die: string;
+		damage_type: string;
+		save: string;
+		rechargeRest: string;
+		scaling?: Array<{ level: number; dice: string }>;
+	};
+	innateChanneling?: {
+		ability: string;
+		spells: Array<{
+			name: string;
+			level: number;
+			unlockLevel: number;
+			uses?:
+				| { value: number; per: "short-rest" | "long-rest" }
+				| "at-will";
+			description?: string;
+		}>;
+	};
+	bonusHpPerLevel?: number;
+	climb_speed?: number;
+	swim_speed?: number;
+	fly_speed?: number;
 	source?: string;
 };
 
@@ -455,6 +561,7 @@ type StaticSpellSource = {
 	type?: string;
 	rank?: string;
 	image?: string;
+	tags?: string[];
 	effect?: string;
 	range?: number | string | Record<string, Json>;
 	activation?: Record<string, Json>;
@@ -466,13 +573,15 @@ type StaticSpellSource = {
 	flavor?: string;
 	higher_levels?: string;
 	atHigherLevels?: string;
-	// Fields present on well-formed spells (first 3)
 	level?: number;
 	school?: string;
+	casting_time?: string;
 	castingTime?: string;
 	concentration?: boolean;
 	ritual?: boolean;
 	classes?: string[];
+	saving_throw?: Record<string, Json>;
+	attack?: Record<string, Json>;
 	savingThrow?: Record<string, Json>;
 	spellAttack?: Record<string, Json>;
 	area?: Record<string, Json>;
@@ -518,10 +627,11 @@ function deriveSchool(spell: StaticSpellSource): string {
 	for (const [pattern, school] of SCHOOL_KEYWORDS) {
 		if (pattern.test(text)) return school;
 	}
-	return "Evocation"; // default for SA combat-heavy setting
+	return "Evocation";
 }
 
 function deriveCastingTime(spell: StaticSpellSource): string {
+	if (spell.casting_time) return spell.casting_time;
 	if (spell.castingTime) return spell.castingTime;
 	const act = spell.activation as Record<string, Json> | undefined;
 	if (!act) return "1 action";
@@ -1006,6 +1116,17 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		awakening_features: job.awakeningFeatures || null,
 		job_traits: job.jobTraits || null,
 		ability_score_improvements: job.abilityScoreImprovements || null,
+		racial_traits: job.racialTraits || null,
+		natural_weapons: job.naturalWeapons || null,
+		natural_armor: job.naturalArmor || null,
+		resonance_breath: job.resonanceBreath || null,
+		innate_channeling: job.innateChanneling || null,
+		bonus_hp_per_level:
+			typeof job.bonusHpPerLevel === "number" ? job.bonusHpPerLevel : null,
+		climb_speed:
+			typeof job.climb_speed === "number" ? job.climb_speed : null,
+		swim_speed: typeof job.swim_speed === "number" ? job.swim_speed : null,
+		fly_speed: typeof job.fly_speed === "number" ? job.fly_speed : null,
 		class_features: job.classFeatures || null,
 		spellcasting: job.spellcasting || null,
 		level: undefined,
@@ -1054,17 +1175,23 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		created_at:
 			(spell as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
-		tags: [spell.type, spell.rank, school, ...classes].filter(
+		tags: [...(spell.tags ?? []), spell.type, spell.rank, school, ...classes].filter(
 			Boolean,
 		) as string[],
 		source_book: "Rift Ascendant Homebrew",
 		image_url: spell.image,
 		spell_type: spell.type,
+		power_type: "Spell",
 		rank: rankValue,
 		level: spellLevel,
+		power_level: spellLevel,
 		effect: spell.effect,
 		range: rangeValue,
 		school: school,
+		classes,
+		casting_time: castingTime,
+		concentration,
+		ritual,
 		activation: (spell.activation && typeof spell.activation === "object"
 			? spell.activation
 			: derivedActivation) as Record<string, Json>,
@@ -1100,6 +1227,21 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 				}) as Record<string, Json>,
 		flavor:
 			typeof spell.flavor === "string" ? spell.flavor : spell.description || "",
+		spell_attack:
+			(spell.attack as Record<string, Json>) ||
+			(spell.spellAttack as Record<string, Json>) ||
+			null,
+		saving_throw:
+			(spell.saving_throw as Record<string, Json>) ||
+			(spell.savingThrow as Record<string, Json>) ||
+			null,
+		saving_throw_ability:
+			typeof (spell.saving_throw ?? spell.savingThrow)?.ability === "string"
+				? String((spell.saving_throw ?? spell.savingThrow)?.ability)
+				: null,
+		has_attack_roll: Boolean(
+			spell.attack || spell.spellAttack || spell.mechanics?.attack,
+		),
 		higher_levels: spell.higher_levels || spell.atHigherLevels || null,
 		atHigherLevels: spell.atHigherLevels || spell.higher_levels || null,
 		rarity:
@@ -1593,7 +1735,7 @@ export const staticDataProvider: StaticDataProvider = {
 					? ((feat.prerequisites as Record<string, Json>).feats as string[])
 					: []),
 			].filter(Boolean) as string[],
-			source_book: feat.source,
+			source_book: feat.source || "Rift Ascendant Canon",
 			prerequisites: feat.prerequisites
 				? typeof feat.prerequisites === "string"
 					? feat.prerequisites
@@ -1673,70 +1815,102 @@ export const staticDataProvider: StaticDataProvider = {
 			} | null;
 			flavor?: string;
 			element?: string;
+			tags?: string[] | null;
+			theme_tags?: string[] | null;
+			power_type?: string | null;
+			school?: string | null;
+			casting_time?: string | null;
+			concentration?: boolean | null;
+			ritual?: boolean | null;
+			damage_roll?: string | null;
+			damage_type?: string | null;
+			higher_levels?: string | null;
+			target?: string | null;
 			saving_throw?: { ability?: string; dc?: number | string } | null;
 			attack_roll?: { modifier?: string; type?: string } | null;
-			mechanics?: {
-				action?: string;
-				damage?: string;
-				duration?: string;
-				range?: string;
-			} | null;
+			mechanics?: Record<string, Json> | null;
 		}>("powers");
 		const filtered = filterBySearch(powers, search, [
 			"name",
 			"description",
 			"type",
 		]);
-		return filtered.map((power) => ({
-			id: power.id,
-			name: power.name,
-			display_name: power.name,
-			description: power.description,
-			created_at: new Date().toISOString(),
-			tags: ["power", power.type, power.rarity].filter(Boolean) as string[],
-			source_book: power.source,
-			image_url: power.image,
-			// Power level: use canonical power_level field first, then derive from type
-			power_level:
-				power.power_level ??
-				(power.type === "divine" ? 10 : power.type === "monstrous" ? 8 : 5),
-			// Use actual school field from source record, fallback to type bucket
-			school:
-				(power as unknown as { school?: string }).school || power.type || null,
-			title: power.type,
-			theme: power.type,
-			element: power.element || null,
-			prerequisites: power.requirements
-				? JSON.stringify(power.requirements)
-				: null,
-			rarity: power.rarity,
-			level: power.requirements?.level,
-			// Canonical mechanics fields — previously dropped, now mapped through
-			power_type:
-				(power as unknown as { power_type?: string }).power_type ||
-				power.type ||
-				null,
-			damage_roll:
-				(power as unknown as { damage_roll?: string }).damage_roll || null,
-			damage_type:
-				(power as unknown as { damage_type?: string }).damage_type || null,
-			casting_time:
-				(power as unknown as { casting_time?: string }).casting_time || null,
-			concentration:
-				(power as unknown as { concentration?: boolean }).concentration ?? null,
-			ritual: (power as unknown as { ritual?: boolean }).ritual ?? null,
-			// Rich fields for detail views
-			activation: (power.activation as Record<string, Json>) || null,
-			duration: power.duration || null,
-			range: power.range || null,
-			components: (power.components as Record<string, Json>) || null,
-			effects: (power.effects as Record<string, Json>) || null,
-			limitations: (power.limitations as Record<string, Json>) || null,
-			flavor: power.flavor || null,
-			saving_throw: (power.saving_throw as Record<string, Json>) || null,
-			attack: (power.attack_roll as Record<string, Json>) || null,
-			mechanics: (power.mechanics as Record<string, Json>) || null,
-		}));
+		return filtered.map((power) => {
+			const rawTags = Array.isArray(power.tags) ? power.tags : [];
+			const themeTags = Array.isArray(power.theme_tags) ? power.theme_tags : [];
+			const requirementTags = [
+				typeof power.requirements?.class === "string"
+					? power.requirements.class
+					: null,
+				typeof power.requirements?.job === "string"
+					? power.requirements.job
+					: null,
+			].filter((tag): tag is string => Boolean(tag));
+
+			return {
+				id: power.id,
+				name: power.name,
+				display_name: power.name,
+				description: power.description,
+				created_at: new Date().toISOString(),
+				tags: Array.from(
+					new Set(
+						[
+							...rawTags,
+							...themeTags,
+							...requirementTags,
+							"power",
+							power.type,
+							power.rarity,
+						].filter(
+							(value): value is string =>
+								typeof value === "string" && value.trim().length > 0,
+						),
+					),
+				),
+				source_book: power.source || "Rift Ascendant Canon",
+				image_url: power.image,
+				// Power level: use canonical power_level field first, then derive from type
+				power_level:
+					power.power_level ??
+					(power.type === "divine" ? 10 : power.type === "monstrous" ? 8 : 5),
+				// Use actual school field from source record, fallback to type bucket
+				school: power.school || power.type || null,
+				title: power.type,
+				theme: power.type,
+				element: power.element || null,
+				prerequisites: power.requirements
+					? JSON.stringify(power.requirements)
+					: null,
+				rarity: power.rarity,
+				level: power.requirements?.level,
+				// Canonical mechanics fields — previously dropped, now mapped through
+				power_type: power.power_type || power.type || null,
+				damage_roll: power.damage_roll || null,
+				damage_type: power.damage_type || null,
+				casting_time: power.casting_time || null,
+				concentration: power.concentration ?? null,
+				ritual: power.ritual ?? null,
+				higher_levels: power.higher_levels || null,
+				target: power.target || null,
+				has_attack_roll: Boolean(power.attack_roll || power.mechanics?.attack),
+				saving_throw_ability:
+					typeof power.saving_throw?.ability === "string"
+						? power.saving_throw.ability
+						: null,
+				// Rich fields for detail views
+				activation: (power.activation as Record<string, Json>) || null,
+				duration: power.duration || null,
+				range: power.range || null,
+				components: (power.components as Record<string, Json>) || null,
+				effects: (power.effects as Record<string, Json>) || null,
+				limitations: (power.limitations as Record<string, Json>) || null,
+				flavor: power.flavor || null,
+				saving_throw: (power.saving_throw as Record<string, Json>) || null,
+				attack: (power.attack_roll as Record<string, Json>) || null,
+				mechanics: (power.mechanics as Record<string, Json>) || null,
+			};
+		});
 	},
 
 	getTechniques: async (search?: string) => {
@@ -1774,7 +1948,7 @@ export const staticDataProvider: StaticDataProvider = {
 			tags: ["technique", technique.type, technique.style].filter(
 				Boolean,
 			) as string[],
-			source_book: technique.source,
+			source_book: technique.source || "Rift Ascendant Canon",
 			image_url: technique.image,
 			type: technique.type,
 			technique_type: technique.type,
@@ -1951,6 +2125,21 @@ export const staticDataProvider: StaticDataProvider = {
 			can_inscribe_on: sigil.can_inscribe_on || null,
 			inscription_difficulty: sigil.inscription_difficulty ?? null,
 			active_feature: sigil.active_feature ?? null,
+			// Expose narrative fields so audit and canonical resolvers can see them.
+			flavor: (sigil as { flavor?: string | null }).flavor ?? null,
+			lore: ((sigil as { lore?: unknown }).lore ?? null) as
+				| Record<string, Json>
+				| null,
+			effects: ((sigil as { effects?: unknown }).effects ?? null) as
+				| Record<string, Json>
+				| null,
+			mechanics: ((sigil as { mechanics?: unknown }).mechanics ?? null) as
+				| Record<string, Json>
+				| null,
+			discovery_lore:
+				(sigil as { discovery_lore?: string | null }).discovery_lore ?? null,
+			theme_tags:
+				(sigil as { theme_tags?: string[] | null }).theme_tags ?? null,
 		}));
 	},
 	getTattoos: async (search?: string) => {
@@ -1961,8 +2150,16 @@ export const staticDataProvider: StaticDataProvider = {
 			rarity?: string;
 			image?: string;
 			source?: string;
+			source_book?: string;
 			attunement?: boolean | null;
 			body_part?: string | null;
+			flavor?: string | null;
+			lore?: Record<string, Json> | null;
+			effects?: Record<string, Json> | null;
+			mechanics?: Record<string, Json> | null;
+			discovery_lore?: string | null;
+			theme_tags?: string[] | null;
+			tags?: string[] | null;
 		}>("tattoos");
 		const filtered = filterBySearch(tattoos, search, ["name", "description"]);
 		return filtered.map((tattoo) => ({
@@ -1971,12 +2168,40 @@ export const staticDataProvider: StaticDataProvider = {
 			display_name: tattoo.name,
 			description: tattoo.description,
 			created_at: new Date().toISOString(),
-			tags: ["tattoo", tattoo.rarity].filter(Boolean) as string[],
-			source_book: tattoo.source || "Rift Ascendant Canon",
+			tags: tattoo.tags ?? (["tattoo", tattoo.rarity].filter(Boolean) as string[]),
+			source_book: tattoo.source_book || tattoo.source || "Rift Ascendant Canon",
 			image_url: tattoo.image,
 			rarity: tattoo.rarity || "uncommon",
 			attunement: tattoo.attunement,
 			body_part: tattoo.body_part,
+			flavor: tattoo.flavor ?? null,
+			lore: tattoo.lore ?? null,
+			effects: tattoo.effects ?? null,
+			mechanics: tattoo.mechanics ?? null,
+			discovery_lore: tattoo.discovery_lore ?? null,
+			theme_tags: tattoo.theme_tags ?? null,
+		}));
+	},
+	getRollableTables: async (search?: string) => {
+		const tables = await loadData<StaticRollableTableSource>("rollableTables");
+		const filtered = filterBySearch(tables, search, [
+			"name",
+			"description",
+			"category",
+			"group",
+		]);
+		return filtered.map((table) => ({
+			id: table.id,
+			name: table.name,
+			display_name: table.name,
+			description: table.description,
+			created_at: new Date().toISOString(),
+			tags: table.tags ?? [table.category, table.group].filter(Boolean),
+			source_book: table.source_book,
+			table_category: table.category,
+			table_group: table.group,
+			rollable_entries: table.entries,
+			rank: table.rank ?? null,
 		}));
 	},
 	getPantheon: async (search?: string) => {
