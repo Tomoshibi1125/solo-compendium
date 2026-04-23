@@ -1,4 +1,17 @@
-import { ArrowLeft, Crosshair, Dice1, Minus, Plus, Send } from "lucide-react";
+import {
+	ArrowLeft,
+	BookOpen,
+	Clock,
+	Crosshair,
+	Dice1,
+	Dice6,
+	ImageIcon,
+	MessageSquare,
+	Minus,
+	Plus,
+	Send,
+	User as UserIcon,
+} from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
@@ -13,6 +26,12 @@ import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
+import { VTTDrawer } from "@/components/vtt/VTTDrawer";
+import {
+	VTTIconRail,
+	type VTTIconRailItem,
+} from "@/components/vtt/VTTIconRail";
+import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import type { VTTAsset } from "@/data/vttAssetLibrary";
 import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
@@ -161,6 +180,14 @@ const PlayerMapView = ({
 	const [draggedTokenId, setDraggedTokenId] = useState<string | null>(null);
 	const [isMobile, setIsMobile] = useState(false);
 	const [mobilePanel, setMobilePanel] = useState<string | null>(null);
+	// Right drawer state for the Player view — mirrors the Warden view's
+	// overlay-drawer pattern. Opens by clicking a right-rail icon.
+	type PlayerDrawerTab = "sheet" | "chat" | "dice" | "init" | "assets" | null;
+	const [playerDrawerTab, setPlayerDrawerTab] = useState<PlayerDrawerTab>(
+		typeof window !== "undefined" && window.innerWidth >= 1280
+			? "sheet"
+			: null,
+	);
 	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
 	);
@@ -751,70 +778,77 @@ const PlayerMapView = ({
 	}, [currentScene?.drawings, gridSize, sceneWidth, sceneHeight, zoom]);
 
 	return (
-		<Layout>
-			<div className="container mx-auto px-4 py-4 max-w-[1920px]">
-				{/* Header */}
-				<div className="flex items-center justify-between mb-4">
-					<div>
-						<Button variant="ghost" onClick={() => navigate("/player-tools")}>
-							<ArrowLeft className="w-4 h-4 mr-2" />
-							Back to Player Tools
-						</Button>
-						<RiftHeading
-							level={1}
-							variant="sovereign"
-							dimensional
-							className="mt-1"
-						>
-							BATTLE MAP {currentScene ? `— ${currentScene.name}` : ""}
-						</RiftHeading>
-					</div>
-
-					<div className="flex items-center gap-2">
-						<Badge
-							variant={vttRealtime.isConnected ? "default" : "destructive"}
-						>
-							{vttRealtime.isConnected ? "Connected" : "Disconnected"}
-						</Badge>
-						{vttRealtime.activeUsers.length > 0 && (
-							<div className="flex -space-x-1.5">
-								{vttRealtime.activeUsers.slice(0, 5).map((u) => (
-									<DynamicStyle
-										key={u.userId}
-										className="vtt-user-avatar"
-										vars={{ "--avatar-bg-color": u.color }}
-										title={`${u.userName} (${u.role})`}
-									>
-										{u.userName.charAt(0).toUpperCase()}
-									</DynamicStyle>
-								))}
+		<Layout fullBleed>
+			<div className="vtt-shell relative w-full h-[100dvh] overflow-hidden">
+				<VTTTopBar
+					left={
+						<>
+							<Button
+								variant="ghost"
+								onClick={() => navigate("/player-tools")}
+								size="sm"
+								className="shrink-0 h-8 px-2"
+								aria-label="Back to Player Tools"
+							>
+								<ArrowLeft className="w-4 h-4" aria-hidden />
+								<span className="hidden md:inline ml-1.5 text-xs">Back</span>
+							</Button>
+							<div className="min-w-0 flex-1 truncate">
+								<RiftHeading
+									level={1}
+									variant="sovereign"
+									dimensional
+									className="leading-tight text-sm sm:text-base md:text-lg truncate"
+								>
+									BATTLE MAP {currentScene ? `— ${currentScene.name}` : ""}
+								</RiftHeading>
 							</div>
-						)}
-					</div>
-				</div>
+							<Badge
+								variant={vttRealtime.isConnected ? "default" : "destructive"}
+								className="text-[10px] shrink-0"
+							>
+								{vttRealtime.isConnected ? "LIVE" : "OFFLINE"}
+							</Badge>
+							{vttRealtime.activeUsers.length > 0 && (
+								<div className="hidden md:flex -space-x-1.5 shrink-0">
+									{vttRealtime.activeUsers.slice(0, 5).map((u) => (
+										<DynamicStyle
+											key={u.userId}
+											className="vtt-user-avatar w-5 h-5 text-[9px]"
+											vars={{ "--avatar-bg-color": u.color }}
+											title={`${u.userName} (${u.role})`}
+										>
+											{u.userName.charAt(0).toUpperCase()}
+										</DynamicStyle>
+									))}
+								</div>
+							)}
+						</>
+					}
+				/>
 
 				{!effectiveCampaignId ? (
-					<AscendantWindow title="NO CAMPAIGN" variant="alert">
-						<AscendantText className="block text-sm text-muted-foreground">
-							Open this page from a campaign to view the shared map.
-						</AscendantText>
-					</AscendantWindow>
+					<div className="absolute inset-0 pt-[52px] px-4 flex items-center justify-center">
+						<AscendantWindow title="NO CAMPAIGN" variant="alert">
+							<AscendantText className="block text-sm text-muted-foreground">
+								Open this page from a campaign to view the shared map.
+							</AscendantText>
+						</AscendantWindow>
+					</div>
 				) : (
 					<div
 						className={cn(
-							"grid grid-cols-1 xl:grid-cols-12 gap-4",
-							"vtt-main-grid",
+							"vtt-content absolute inset-0 flex gap-2 sm:gap-3",
+							"pt-[52px] px-2 sm:px-3 pb-2",
+							isMobile && "pb-[64px]",
 						)}
 					>
-						{/* Main Map Area */}
-						<div className="col-span-1 xl:col-span-9 min-h-0">
-							<AscendantWindow
-								title="MAP"
+						{/* Main Map Area fills remaining viewport. */}
+						<div className="vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden">
+							<div
 								className={cn(
-									"min-h-[40vh] xl:min-h-0 xl:h-full",
-									isMobile && "h-[100dvh]",
+									"h-full w-full flex flex-col min-h-0 overflow-hidden relative",
 								)}
-								contentClassName="flex-1 flex flex-col"
 							>
 								{/* Controls */}
 								<div className="flex items-center gap-2 mb-2">
@@ -1270,15 +1304,74 @@ const PlayerMapView = ({
 										</DynamicStyle>
 									</ErrorBoundary>
 								</div>
-							</AscendantWindow>
+							</div>
 						</div>
 
-						{/* Right Sidebar — hidden on mobile, shown via bottom sheet */}
-						<div
-							className={cn(
-								"col-span-1 xl:col-span-3 flex flex-col gap-4 xl:overflow-y-auto min-h-0",
-								isMobile && "hidden",
-							)}
+						{/* Right icon rail — desktop only. Tapping an icon opens its drawer. */}
+						{!isMobile && (
+							<VTTIconRail
+								side="right"
+								activeId={playerDrawerTab}
+								onSelect={(id) =>
+									setPlayerDrawerTab(id as PlayerDrawerTab)
+								}
+								items={
+									[
+										{
+											id: "sheet",
+											icon: UserIcon,
+											label: "Character Sheet",
+											testId: "vtt-rail-player-sheet",
+										},
+										{
+											id: "chat",
+											icon: MessageSquare,
+											label: "Chat",
+											testId: "vtt-rail-player-chat",
+										},
+										{
+											id: "dice",
+											icon: Dice6,
+											label: "Dice",
+											testId: "vtt-rail-player-dice",
+										},
+										{
+											id: "init",
+											icon: Clock,
+											label: "Initiative",
+											testId: "vtt-rail-player-init",
+										},
+										{
+											id: "assets",
+											icon: ImageIcon,
+											label: "Assets",
+											testId: "vtt-rail-player-assets",
+										},
+									] as VTTIconRailItem[]
+								}
+							/>
+						)}
+
+						{/* Right drawer — panels slide over the canvas instead of stealing space. */}
+						<VTTDrawer
+							side="right"
+							open={playerDrawerTab !== null}
+							onOpenChange={(o) =>
+								!o && setPlayerDrawerTab(null)
+							}
+							title={
+								playerDrawerTab === "sheet"
+									? "Character Sheet"
+									: playerDrawerTab === "chat"
+										? "Chat"
+										: playerDrawerTab === "dice"
+											? "Dice Roller"
+											: playerDrawerTab === "init"
+												? "Initiative"
+												: playerDrawerTab === "assets"
+													? "Assets"
+													: "Panel"
+							}
 						>
 							{/* Player Tools Panel */}
 							<PlayerToolsPanel
@@ -1304,7 +1397,13 @@ const PlayerMapView = ({
 								}}
 							/>
 
-							<Tabs defaultValue="sheet" className="w-full">
+							<Tabs
+								value={playerDrawerTab ?? "sheet"}
+								onValueChange={(v) =>
+									setPlayerDrawerTab(v as PlayerDrawerTab)
+								}
+								className="w-full"
+							>
 								<TabsList className="grid w-full grid-cols-5">
 									<TabsTrigger value="sheet">Sheet</TabsTrigger>
 									<TabsTrigger value="chat">Chat</TabsTrigger>
@@ -1665,7 +1764,7 @@ const PlayerMapView = ({
 									)}
 								</div>
 							</AscendantWindow>
-						</div>
+						</VTTDrawer>
 					</div>
 				)}
 

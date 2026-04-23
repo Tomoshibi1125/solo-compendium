@@ -3,6 +3,7 @@ import {
 	ArrowLeft,
 	ArrowRight,
 	BookOpen,
+	Bot,
 	Circle,
 	Clock,
 	Cloud,
@@ -12,19 +13,17 @@ import {
 	EyeOff,
 	FileText,
 	Image as ImageIcon,
+	Layers,
 	MapPin,
 	Maximize2,
 	MessageSquare,
 	Minus,
 	MousePointer2,
-	PanelLeftClose,
-	PanelLeftOpen,
-	PanelRightClose,
-	PanelRightOpen,
 	Pause,
 	Pencil,
 	Play,
 	Plus,
+	Radio,
 	Ruler,
 	Save,
 	ShieldAlert,
@@ -32,6 +31,7 @@ import {
 	Square,
 	Triangle,
 	Upload,
+	User,
 	Users,
 	Wifi,
 	WifiOff,
@@ -88,6 +88,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
+import { VTTDrawer } from "@/components/vtt/VTTDrawer";
+import { VTTIconRail, type VTTIconRailItem } from "@/components/vtt/VTTIconRail";
+import { VTTMobileTabBar } from "@/components/vtt/VTTMobileTabBar";
+import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import {
@@ -596,45 +600,32 @@ const VTTEnhanced = () => {
 	const [tokenSearch, setTokenSearch] = useState("");
 	const [isMapExpanded, setIsMapExpanded] = useState(false);
 	const [isUploadingMap, setIsUploadingMap] = useState(false);
-	// --- Sidebar collapse state (DDB/Roll20/Foundry parity) ------------------
-	// Persisted per-campaign so Warden choice survives reloads. Default both
-	// sidebars open on wide displays. Icon rail is shown when a side is closed.
-	const sidebarPrefKey = campaignId
-		? `vtt-sidebar-prefs-${campaignId}`
-		: "vtt-sidebar-prefs";
-	const [leftSidebarOpen, setLeftSidebarOpen] = useState<boolean>(() => {
-		if (typeof window === "undefined") return true;
-		try {
-			const raw = window.localStorage.getItem(sidebarPrefKey);
-			if (!raw) return true;
-			const parsed = JSON.parse(raw) as { left?: boolean };
-			return parsed.left !== false;
-		} catch {
-			return true;
-		}
-	});
-	const [rightSidebarOpen, setRightSidebarOpen] = useState<boolean>(() => {
-		if (typeof window === "undefined") return true;
-		try {
-			const raw = window.localStorage.getItem(sidebarPrefKey);
-			if (!raw) return true;
-			const parsed = JSON.parse(raw) as { right?: boolean };
-			return parsed.right !== false;
-		} catch {
-			return true;
-		}
-	});
-	useEffect(() => {
-		if (typeof window === "undefined") return;
-		try {
-			window.localStorage.setItem(
-				sidebarPrefKey,
-				JSON.stringify({ left: leftSidebarOpen, right: rightSidebarOpen }),
-			);
-		} catch {
-			// ignore quota/SSR issues
-		}
-	}, [leftSidebarOpen, rightSidebarOpen, sidebarPrefKey]);
+	// --- Drawer state (Roll20/Foundry-style overlay rails) ------------------
+	// Replaces docked sidebars with overlay drawers opened from icon rails.
+	// `null` means closed; otherwise the value is the active section/tab.
+	type LeftDrawerTab = "scenes" | "toolbox" | "map" | "tokens" | null;
+	type RightDrawerTab =
+		| "token"
+		| "initiative"
+		| "chat"
+		| "dice"
+		| "assets"
+		| "journal"
+		| "broadcast"
+		| "ai"
+		| null;
+	const [leftDrawerTab, setLeftDrawerTab] = useState<LeftDrawerTab>(null);
+	const [rightDrawerTab, setRightDrawerTab] = useState<RightDrawerTab>(null);
+	// The right drawer's inner Tabs default value when a non-tab rail (like
+	// `token`) opens the drawer. Defaults to `initiative` to match the
+	// previous uncontrolled behavior.
+	const [rightInnerTab, setRightInnerTab] = useState<Exclude<
+		RightDrawerTab,
+		null | "token"
+	>>("initiative");
+	// `mobileDrawer` opens the bottom-sheet drawer tied to the mobile tab bar.
+	type MobileDrawer = "tools" | "token" | "panel" | "assets" | null;
+	const [mobileDrawer, setMobileDrawer] = useState<MobileDrawer>(null);
 	// Warden Tools drawer (macros, music, atmosphere, map-gen, encounters)
 	// now lives in a right-side Sheet so the right sidebar stays focused on
 	// token/initiative/chat. Toggled from the header via a Wrench button.
@@ -2653,7 +2644,7 @@ const VTTEnhanced = () => {
 	);
 
 	return (
-		<Layout>
+		<Layout fullBleed>
 			{/* Test detection element */}
 			<div data-testid="vtt-interface" aria-hidden="true">
 				{import.meta.env.DEV && (
@@ -2672,83 +2663,65 @@ const VTTEnhanced = () => {
 				)}
 			</div>
 
-			<div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-[1920px]">
-				{isActualWarden && (
-					<div className="flex justify-end mb-4">
-						<Button
-							data-testid="vtt-player-view-toggle"
-							variant="outline"
-							size="sm"
-							onClick={() => setSimulatePlayerView(!simulatePlayerView)}
-							className={
-								simulatePlayerView
-									? "border-primary text-primary"
-									: "text-foreground/70"
-							}
-						>
-							{simulatePlayerView ? "Exit Player View" : "Simulate Player View"}
-						</Button>
-					</div>
-				)}
-				{!isWarden ? (
-					<EmbeddedProvider>
-						<PlayerMapView
-							campaignId={campaignId || ""}
-							sessionId={sessionId || undefined}
-						/>
-					</EmbeddedProvider>
-				) : (
-					<>
-						<div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-							<div className="min-w-0 flex-1">
-								<Button
-									variant="ghost"
-									onClick={() => navigate(`/campaigns/${campaignId}`)}
-									className="mb-1 sm:mb-2"
-									size="sm"
-								>
-									<ArrowLeft className="w-4 h-4 mr-2" />
-									<span className="hidden sm:inline">Back to Campaign</span>
-									<span className="sm:hidden">Back</span>
-								</Button>
-								<RiftHeading
-									level={1}
-									variant="sovereign"
-									dimensional
-									className="leading-tight"
-								>
-									VTT — {currentScene?.name || "No Scene"}
-								</RiftHeading>
-								<div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1">
+			{!isWarden ? (
+				<EmbeddedProvider>
+					<PlayerMapView
+						campaignId={campaignId || ""}
+						sessionId={sessionId || undefined}
+					/>
+				</EmbeddedProvider>
+			) : (
+				<div className="vtt-shell relative w-full h-[100dvh] overflow-hidden">
+						{/* Floating top bar (absolute positioned via VTTTopBar internals). */}
+						<VTTTopBar
+							left={
+								<>
+									<Button
+										variant="ghost"
+										onClick={() => navigate(`/campaigns/${campaignId}`)}
+										size="sm"
+										className="shrink-0 h-8 px-2"
+										aria-label="Back to Campaign"
+									>
+										<ArrowLeft className="w-4 h-4" aria-hidden />
+										<span className="hidden md:inline ml-1.5 text-xs">
+											Back
+										</span>
+									</Button>
+									<div className="min-w-0 flex-1 truncate">
+										<RiftHeading
+											level={1}
+											variant="sovereign"
+											dimensional
+											className="leading-tight text-sm sm:text-base md:text-lg truncate"
+										>
+											VTT — {currentScene?.name || "No Scene"}
+										</RiftHeading>
+									</div>
 									<Badge
 										variant={
 											vttRealtime.isConnected ? "default" : "destructive"
 										}
-										className="text-xs inline-flex items-center gap-1"
+										className="text-[10px] inline-flex items-center gap-1 shrink-0"
 									>
 										{vttRealtime.isConnected ? (
 											<>
 												<Wifi className="w-3 h-3" aria-hidden />
-												LIVE
+												<span className="hidden sm:inline">LIVE</span>
 											</>
 										) : (
 											<>
 												<WifiOff className="w-3 h-3" aria-hidden />
-												OFFLINE
+												<span className="hidden sm:inline">OFFLINE</span>
 											</>
 										)}
 									</Badge>
 									{vttRealtime.activeUsers.length > 0 && (
-										<span className="text-xs text-foreground/70">
-											{vttRealtime.activeUsers.length + 1} connected
-										</span>
-									)}
-									{vttRealtime.activeUsers.length > 0 && (
-										<div className="flex -space-x-1.5">
-											{vttRealtime.activeUsers.slice(0, 6).map((u) => (
+										<div className="hidden md:flex -space-x-1.5 shrink-0">
+											{vttRealtime.activeUsers.slice(0, 5).map((u) => (
 												<DynamicStyle
 													key={u.userId}
-													className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white border border-background vtt-user-avatar"
+													className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white border border-background vtt-user-avatar"
 													vars={{
 														"--vtt-user-color": u.color,
 													}}
@@ -2759,184 +2732,220 @@ const VTTEnhanced = () => {
 											))}
 										</div>
 									)}
-								</div>
-							</div>
-							<div className="flex gap-2 items-center flex-wrap">
-								{isWarden && (
-									<>
+								</>
+							}
+							right={
+								<>
+									{isActualWarden && (
 										<Button
-											onClick={saveScenes}
+											data-testid="vtt-player-view-toggle"
 											variant="outline"
 											size="sm"
-											className="min-h-[44px]"
+											onClick={() => setSimulatePlayerView(!simulatePlayerView)}
+											className={cn(
+												"h-8 text-[11px] px-2",
+												simulatePlayerView
+													? "border-primary text-primary"
+													: "text-foreground/70",
+											)}
 										>
-											<Save className="w-4 h-4 mr-1 sm:mr-2" />
-											<span className="hidden sm:inline">Save</span>
-											<span className="sm:hidden">S</span>
+											<span className="hidden md:inline">
+												{simulatePlayerView
+													? "Exit Player View"
+													: "Player View"}
+											</span>
+											<span className="md:hidden">
+												<Eye className="w-3.5 h-3.5" aria-hidden />
+											</span>
 										</Button>
-										<Button
-											data-testid="vtt-new-scene"
-											onClick={createNewScene}
-											variant="outline"
-											size="sm"
-											className="min-h-[44px]"
-										>
-											<Plus className="w-4 h-4 mr-1 sm:mr-2" />
-											<span className="hidden sm:inline">New</span>
-											<span className="sm:hidden">+</span>
-										</Button>
-										<Button
-											data-testid="vtt-warden-tools-trigger"
-											onClick={() => setWardenToolsOpen(true)}
-											variant="outline"
-											size="sm"
-											className="min-h-[44px] border-primary/40 text-primary hover:bg-primary/10"
-										>
-											<Wrench className="w-4 h-4 mr-1 sm:mr-2" />
-											<span className="hidden sm:inline">Warden Tools</span>
-											<span className="sm:hidden">Tools</span>
-										</Button>
-										<Dialog>
+									)}
+									{isWarden && (
+										<>
 											<Button
-												variant="ghost"
+												onClick={saveScenes}
+												variant="outline"
 												size="sm"
-												className="px-2 text-foreground/70 hover:text-foreground min-h-[44px]"
-												asChild
+												className="h-8 px-2"
+												aria-label="Save scenes"
 											>
-												<DialogTrigger>?</DialogTrigger>
+												<Save className="w-4 h-4" aria-hidden />
+												<span className="hidden lg:inline ml-1.5 text-xs">
+													Save
+												</span>
 											</Button>
-											<DialogContent className="max-w-md w-[calc(100%-2rem)]">
-												<DialogHeader>
-													<DialogTitle>Keyboard Shortcuts</DialogTitle>
-													<DialogDescription>
-														Available when the map canvas is focused.
-													</DialogDescription>
-												</DialogHeader>
-												<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
-													<span className="text-foreground/70">Escape</span>
-													<span>Deselect token</span>
-													<span className="text-foreground/70">
-														Delete / Backspace
-													</span>
-													<span>Remove selected token</span>
-													<span className="text-foreground/70">Arrow keys</span>
-													<span>Nudge token 1 square</span>
-													<span className="text-foreground/70">L</span>
-													<span>Lock / unlock token</span>
-													<span className="text-foreground/70">O</span>
-													<span>Open character sheet</span>
-													<span className="text-foreground/70 font-semibold mt-2">
-														Tool Hotkeys
-													</span>
-													<span className="mt-2" />
-													<span className="text-foreground/70">S</span>
-													<span>Select tool</span>
-													<span className="text-foreground/70">F</span>
-													<span>Fog tool</span>
-													<span className="text-foreground/70">D</span>
-													<span>Draw tool</span>
-													<span className="text-foreground/70">E</span>
-													<span>Effect tool</span>
-													<span className="text-foreground/70">N</span>
-													<span>Note tool</span>
-													<span className="text-foreground/70">M</span>
-													<span>Measure tool</span>
-													<span className="text-foreground/70 font-semibold mt-2">
-														Asset Browser
-													</span>
-													<span className="mt-2" />
-													<span className="text-foreground/70">
-														Drag &amp; Drop
-													</span>
-													<span>Drag asset onto map</span>
-												</div>
-												<DialogFooter>
-													<AscendantText className="block text-xs text-foreground/70">
-														Click the map first to enable keyboard shortcuts.
-													</AscendantText>
-												</DialogFooter>
-											</DialogContent>
-										</Dialog>
-									</>
-								)}
-							</div>
-						</div>
+											<Button
+												data-testid="vtt-new-scene"
+												onClick={createNewScene}
+												variant="outline"
+												size="sm"
+												className="h-8 px-2"
+												aria-label="New scene"
+											>
+												<Plus className="w-4 h-4" aria-hidden />
+												<span className="hidden lg:inline ml-1.5 text-xs">
+													New
+												</span>
+											</Button>
+											<Button
+												variant="outline"
+												size="sm"
+												onClick={() => setIsMapExpanded((prev) => !prev)}
+												className="h-8 px-2"
+												aria-label={isMapExpanded ? "Exit Focus" : "Focus"}
+												title={isMapExpanded ? "Exit Focus mode" : "Focus mode"}
+											>
+												<Maximize2 className="w-4 h-4" aria-hidden />
+												<span className="hidden lg:inline ml-1.5 text-xs">
+													{isMapExpanded ? "Exit" : "Focus"}
+												</span>
+											</Button>
+											<Dialog>
+												<DialogTrigger asChild>
+													<Button
+														variant="ghost"
+														size="sm"
+														className="h-8 w-8 p-0 text-foreground/70 hover:text-foreground"
+														aria-label="Keyboard shortcuts"
+														title="Keyboard shortcuts"
+													>
+														?
+													</Button>
+												</DialogTrigger>
+												<DialogContent className="max-w-md w-[calc(100%-2rem)]">
+													<DialogHeader>
+														<DialogTitle>Keyboard Shortcuts</DialogTitle>
+														<DialogDescription>
+															Available when the map canvas is focused.
+														</DialogDescription>
+													</DialogHeader>
+													<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
+														<span className="text-foreground/70">Escape</span>
+														<span>Deselect token</span>
+														<span className="text-foreground/70">
+															Delete / Backspace
+														</span>
+														<span>Remove selected token</span>
+														<span className="text-foreground/70">
+															Arrow keys
+														</span>
+														<span>Nudge token 1 square</span>
+														<span className="text-foreground/70">L</span>
+														<span>Lock / unlock token</span>
+														<span className="text-foreground/70">O</span>
+														<span>Open character sheet</span>
+														<span className="text-foreground/70 font-semibold mt-2">
+															Tool Hotkeys
+														</span>
+														<span className="mt-2" />
+														<span className="text-foreground/70">S</span>
+														<span>Select tool</span>
+														<span className="text-foreground/70">F</span>
+														<span>Fog tool</span>
+														<span className="text-foreground/70">D</span>
+														<span>Draw tool</span>
+														<span className="text-foreground/70">E</span>
+														<span>Effect tool</span>
+														<span className="text-foreground/70">N</span>
+														<span>Note tool</span>
+														<span className="text-foreground/70">M</span>
+														<span>Measure tool</span>
+														<span className="text-foreground/70 font-semibold mt-2">
+															Asset Browser
+														</span>
+														<span className="mt-2" />
+														<span className="text-foreground/70">
+															Drag &amp; Drop
+														</span>
+														<span>Drag asset onto map</span>
+													</div>
+													<DialogFooter>
+														<AscendantText className="block text-xs text-foreground/70">
+															Click the map first to enable keyboard shortcuts.
+														</AscendantText>
+													</DialogFooter>
+												</DialogContent>
+											</Dialog>
+										</>
+									)}
+								</>
+							}
+						/>
 
+						{/* Content area: rails + canvas. Top-padding accommodates floating top bar. */}
 						<div
 							className={cn(
-								"flex flex-col xl:flex-row gap-4 xl:gap-5",
-								!isMobile && "xl:h-[calc(100dvh-180px)]",
-								isMobile && "h-[calc(100dvh-120px)]",
+								"vtt-content absolute inset-0 flex gap-2 sm:gap-3",
+								"pt-[52px] px-2 sm:px-3 pb-2",
+								isMobile && "pb-[64px]",
 							)}
 						>
-							{/* Left icon-rail shown when the Warden has collapsed the left
-							    sidebar — click to expand back to the last-open section. */}
-							{isWarden && !isMobile && !isMapExpanded && !leftSidebarOpen && (
-								<div className="hidden xl:flex flex-col items-center gap-2 w-10 shrink-0 py-2 border border-border/40 rounded-lg bg-card/60">
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setLeftSidebarOpen(true)}
-										title="Expand toolbox"
-										aria-label="Expand toolbox"
-									>
-										<PanelLeftOpen className="w-4 h-4" aria-hidden />
-									</Button>
-									<div className="w-6 h-px bg-border/40" />
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setLeftSidebarOpen(true)}
-										title="Scenes"
-										aria-label="Open scenes"
-									>
-										<Copy className="w-4 h-4" aria-hidden />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setLeftSidebarOpen(true)}
-										title="Tools"
-										aria-label="Open tools"
-									>
-										<MousePointer2 className="w-4 h-4" aria-hidden />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setLeftSidebarOpen(true)}
-										title="Map settings"
-										aria-label="Open map settings"
-									>
-										<MapPin className="w-4 h-4" aria-hidden />
-									</Button>
-								</div>
+							{/* Always-visible left icon rail (Warden only, desktop). */}
+							{isWarden && !isMobile && !isMapExpanded && (
+								<VTTIconRail
+									side="left"
+									activeId={leftDrawerTab}
+									onSelect={(id) => setLeftDrawerTab(id as LeftDrawerTab)}
+									items={
+										[
+											{
+												id: "scenes",
+												icon: Layers,
+												label: "Scenes",
+												testId: "vtt-rail-left-scenes",
+											},
+											{
+												id: "toolbox",
+												icon: Wrench,
+												label: "Toolbox",
+												testId: "vtt-rail-left-toolbox",
+											},
+											{
+												id: "map",
+												icon: MapPin,
+												label: "Map Settings",
+												testId: "vtt-rail-left-map",
+											},
+											{
+												id: "tokens",
+												icon: Users,
+												label: "Tokens",
+												testId: "vtt-rail-left-tokens",
+											},
+										] as VTTIconRailItem[]
+									}
+								/>
 							)}
-							{/* Left Sidebar: hidden on mobile, shown via bottom sheet */}
-							<div
-								className={cn(
-									"flex flex-col min-h-0 xl:h-full order-2 xl:order-1 overflow-hidden",
-									"xl:w-[320px] xl:shrink-0",
-									isMapExpanded && "hidden",
-									isMobile && "hidden",
-									!leftSidebarOpen && "xl:hidden",
-								)}
-							>
-								{isWarden ? (
+							{/* Left drawer: overlay panel populated by the rail selection. */}
+							{isWarden && (
+								<VTTDrawer
+									side="left"
+									open={leftDrawerTab !== null}
+									onOpenChange={(o) => !o && setLeftDrawerTab(null)}
+									title={
+										leftDrawerTab === "scenes"
+											? "Scenes"
+											: leftDrawerTab === "toolbox"
+												? "Toolbox"
+												: leftDrawerTab === "map"
+													? "Map Settings"
+													: leftDrawerTab === "tokens"
+														? "Tokens"
+														: "Toolbox"
+									}
+								>
 									<Tabs
-										defaultValue="scene"
+										value={leftDrawerTab ?? "scenes"}
+										onValueChange={(v) =>
+											setLeftDrawerTab(v as LeftDrawerTab)
+										}
 										className="flex flex-col min-h-0 h-full"
 									>
-										<TabsList className="grid w-full grid-cols-3 h-auto p-1 mb-2 shrink-0 bg-card border border-border rounded-lg shadow-sm">
+										<TabsList className="grid w-full grid-cols-4 h-auto p-1 mb-2 shrink-0 bg-card border border-border rounded-lg shadow-sm">
 											<TabsTrigger
-												value="scene"
+												value="scenes"
 												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
 											>
-												Scene
+												Scenes
 											</TabsTrigger>
 											<TabsTrigger
 												value="toolbox"
@@ -2950,11 +2959,17 @@ const VTTEnhanced = () => {
 											>
 												Map
 											</TabsTrigger>
+											<TabsTrigger
+												value="tokens"
+												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+											>
+												Tokens
+											</TabsTrigger>
 										</TabsList>
 
 										{/* Scene tab: Scenes list */}
 										<TabsContent
-											value="scene"
+											value="scenes"
 											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
 										>
 											<AscendantWindow title="SCENES" compact density="compact">
@@ -2971,6 +2986,7 @@ const VTTEnhanced = () => {
 														>
 															<button
 																type="button"
+																data-testid={`vtt-scene-select-${scene.name.replace(/\s+/g, "-").toLowerCase()}`}
 																onClick={() => {
 																	setCurrentScene(scene);
 																	if (!isWarden) {
@@ -3775,9 +3791,10 @@ const VTTEnhanced = () => {
 												</AscendantWindow>
 											)}
 										</TabsContent>
-									</Tabs>
-								) : null}
-
+										<TabsContent
+											value="tokens"
+											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+										>
 								<AscendantWindow title="TOKENS" density="compact">
 									<Tabs defaultValue="characters" className="w-full">
 										<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
@@ -3932,92 +3949,27 @@ const VTTEnhanced = () => {
 										</TabsContent>
 									</Tabs>
 								</AscendantWindow>
-							</div>
+										</TabsContent>
+									</Tabs>
+								</VTTDrawer>
+							)}
 
-							{/* Main Map Area — takes whatever space the collapsed sidebars free up */}
+							{/* Main Map Area — fills remaining viewport. */}
 							<div
 								className={cn(
-									"order-1 xl:order-2 min-h-0 overflow-hidden xl:flex-1 xl:min-w-0",
-									// min-h-0 + overflow-hidden ensures map doesn't blow out grid
+									"vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden",
 								)}
 							>
-								<AscendantWindow
-									title="MAP"
-									className="h-full flex flex-col overflow-hidden"
-									contentClassName="flex-1 flex flex-col min-h-0 overflow-hidden"
-									actions={
-										<div className="flex items-center gap-1 sm:gap-2">
-											<span className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full border border-primary/40 bg-primary/10 text-primary/90 select-none">
-												Layer {currentLayer} Active
-											</span>
-											{isWarden && !isMobile && !isMapExpanded && (
-												<>
-													<Button
-														variant="ghost"
-														size="sm"
-														className="hidden xl:inline-flex h-7 w-7 p-0 text-foreground/70 hover:text-foreground"
-														onClick={() => setLeftSidebarOpen((prev) => !prev)}
-														title={
-															leftSidebarOpen ? "Hide toolbox" : "Show toolbox"
-														}
-														aria-label={
-															leftSidebarOpen ? "Hide toolbox" : "Show toolbox"
-														}
-													>
-														{leftSidebarOpen ? (
-															<PanelLeftClose
-																className="w-3.5 h-3.5"
-																aria-hidden
-															/>
-														) : (
-															<PanelLeftOpen
-																className="w-3.5 h-3.5"
-																aria-hidden
-															/>
-														)}
-													</Button>
-													<Button
-														variant="ghost"
-														size="sm"
-														className="hidden xl:inline-flex h-7 w-7 p-0 text-foreground/70 hover:text-foreground"
-														onClick={() => setRightSidebarOpen((prev) => !prev)}
-														title={
-															rightSidebarOpen ? "Hide panels" : "Show panels"
-														}
-														aria-label={
-															rightSidebarOpen ? "Hide panels" : "Show panels"
-														}
-													>
-														{rightSidebarOpen ? (
-															<PanelRightClose
-																className="w-3.5 h-3.5"
-																aria-hidden
-															/>
-														) : (
-															<PanelRightOpen
-																className="w-3.5 h-3.5"
-																aria-hidden
-															/>
-														)}
-													</Button>
-												</>
-											)}
-											<Button
-												variant="outline"
-												size="sm"
-												className="h-7 text-[10px] px-2 border-primary/30 hover:bg-primary/10"
-												onClick={() => setIsMapExpanded((prev) => !prev)}
-											>
-												<Maximize2 className="w-3 h-3 mr-1" />
-												<span className="hidden sm:inline">
-													{isMapExpanded ? "Exit Focus" : "Focus"}
-												</span>
-												<span className="sm:hidden">
-													{isMapExpanded ? "Exit" : "Focus"}
-												</span>
-											</Button>
-										</div>
-									}
+								{/* Floating layer badge (top-left over canvas). */}
+								<div className="absolute top-2 left-2 z-20 pointer-events-none">
+									<span className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full border border-primary/40 bg-card/80 backdrop-blur-sm text-primary/90 select-none">
+										Layer {currentLayer} Active
+									</span>
+								</div>
+								<div
+									className={cn(
+										"h-full w-full flex flex-col min-h-0 overflow-hidden relative",
+									)}
 								>
 									<div
 										role="application"
@@ -4429,96 +4381,101 @@ const VTTEnhanced = () => {
 											)}
 										</div>
 									</div>
-								</AscendantWindow>
+								</div>
 							</div>
 
-							{/* Right icon-rail when collapsed — click to expand. */}
-							{isWarden && !isMobile && !isMapExpanded && !rightSidebarOpen && (
-								<div className="hidden xl:flex flex-col items-center gap-2 w-10 shrink-0 py-2 border border-border/40 rounded-lg bg-card/60 order-3">
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setRightSidebarOpen(true)}
-										title="Expand panels"
-										aria-label="Expand panels"
-									>
-										<PanelRightOpen className="w-4 h-4" aria-hidden />
-									</Button>
-									<div className="w-6 h-px bg-border/40" />
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setRightSidebarOpen(true)}
-										title="Initiative"
-										aria-label="Open initiative"
-									>
-										<Clock className="w-4 h-4" aria-hidden />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setRightSidebarOpen(true)}
-										title="Chat"
-										aria-label="Open chat"
-									>
-										<MessageSquare className="w-4 h-4" aria-hidden />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setRightSidebarOpen(true)}
-										title="Dice"
-										aria-label="Open dice"
-									>
-										<Dice6 className="w-4 h-4" aria-hidden />
-									</Button>
-									<Button
-										variant="ghost"
-										size="sm"
-										className="h-8 w-8 p-0"
-										onClick={() => setRightSidebarOpen(true)}
-										title="Assets"
-										aria-label="Open assets"
-									>
-										<ImageIcon className="w-4 h-4" aria-hidden />
-									</Button>
-								</div>
+							{/* Always-visible right icon rail (Warden only, desktop). */}
+							{isWarden && !isMobile && !isMapExpanded && (
+								<VTTIconRail
+									side="right"
+									activeId={wardenToolsOpen ? "warden-tools" : rightDrawerTab}
+									onSelect={(id) => {
+										// The warden-tools rail item opens the existing Sheet
+										// instead of driving the drawer/inner-tab state.
+										if (id === "warden-tools") {
+											setWardenToolsOpen((prev) => !prev);
+											setRightDrawerTab(null);
+											return;
+										}
+										const next = id as RightDrawerTab;
+										setRightDrawerTab(next);
+										setWardenToolsOpen(false);
+										if (
+											next &&
+											next !== "token" &&
+											next !== null
+										) {
+											setRightInnerTab(
+												next as Exclude<RightDrawerTab, null | "token">,
+											);
+										}
+									}}
+									items={[
+										{
+											id: "token",
+											icon: User,
+											label: "Selected Token",
+											testId: "vtt-rail-right-token",
+										},
+										{
+											id: "initiative",
+											icon: Clock,
+											label: "Initiative",
+											testId: "vtt-rail-right-initiative",
+										},
+										{
+											id: "chat",
+											icon: MessageSquare,
+											label: "Chat",
+											testId: "vtt-rail-right-chat",
+										},
+										{
+											id: "dice",
+											icon: Dice6,
+											label: "Dice",
+											testId: "vtt-rail-right-dice",
+										},
+										{
+											id: "assets",
+											icon: ImageIcon,
+											label: "Assets",
+											testId: "vtt-rail-right-assets",
+										},
+										{
+											id: "journal",
+											icon: BookOpen,
+											label: "Journal",
+											testId: "vtt-rail-right-journal",
+										},
+										{
+											id: "broadcast",
+											icon: Radio,
+											label: "Broadcast",
+											testId: "vtt-rail-right-broadcast",
+										},
+										{
+											id: "ai",
+											icon: Bot,
+											label: "AI Assistant",
+											testId: "vtt-rail-right-ai",
+										},
+										{
+											id: "warden-tools",
+											icon: Wrench,
+											label: "Warden Tools",
+											testId: "vtt-rail-right-warden-tools",
+										},
+									] as VTTIconRailItem[]}
+								/>
 							)}
-							{/* Right Sidebar: hidden on mobile, shown via bottom sheet */}
-							<div
-								className={cn(
-									"flex flex-col gap-4 xl:h-full xl:overflow-y-auto order-3",
-									"xl:w-[320px] xl:shrink-0 min-h-0 pb-2",
-									// gap-4 + pb-2 keep corner-bracketed panels from touching and
-									// preserve the last panel's bottom glow past the scroll edge.
-									isMapExpanded && "hidden",
-									isMobile && "hidden",
-									!rightSidebarOpen && "xl:hidden",
-								)}
-							>
-								{/*
-								  NOTE: The old in-sidebar COMBAT TRACKER was redundant with the
-								  Initiative tab below — removed to stop vertical scroll churn.
-								  The old AUDIO TRACKS and big ProtocolWardenTools accordion are
-								  now rendered inside a right-side Sheet (`wardenToolsOpen`),
-								  triggered from the header. This keeps the right sidebar focused
-								  on: selected-token + tabs (Init/Chat/Dice/Assets/AI/Broadcast/Journal).
-								  The Sheet render lives below the sidebar, next to the handout
-								  popup, so it overlays the entire viewport regardless of which
-								  sidebar is collapsed.
-								*/}
 
-								{/* Warden Tools drawer — macros, music, atmosphere, terrain, ambient, map-gen, encounters. */}
-								{isWarden && (
-									<Sheet
-										open={wardenToolsOpen}
-										onOpenChange={setWardenToolsOpen}
-									>
-										<SheetContent
+							{/* Warden Tools Sheet (opened by rail "warden-tools" or top-bar button). */}
+							{isWarden && (
+								<Sheet
+									open={wardenToolsOpen}
+									onOpenChange={setWardenToolsOpen}
+								>
+									<SheetContent
 											side="right"
 											className="w-[min(560px,95vw)] sm:max-w-[600px] p-0 flex flex-col bg-card border-l border-primary/30"
 										>
@@ -4881,6 +4838,32 @@ const VTTEnhanced = () => {
 									</Sheet>
 								)}
 
+							{/* Right drawer — opens when a right-rail button selects a tab. */}
+							{isWarden && (
+								<VTTDrawer
+									side="right"
+									open={rightDrawerTab !== null}
+									onOpenChange={(o) => !o && setRightDrawerTab(null)}
+									title={
+										rightDrawerTab === "token"
+											? "Selected Token"
+											: rightDrawerTab === "initiative"
+												? "Initiative"
+												: rightDrawerTab === "chat"
+													? "Chat"
+													: rightDrawerTab === "dice"
+														? "Dice Roller"
+														: rightDrawerTab === "assets"
+															? "Asset Library"
+															: rightDrawerTab === "journal"
+																? "Journal"
+																: rightDrawerTab === "broadcast"
+																	? "Broadcast"
+																	: rightDrawerTab === "ai"
+																		? "AI Assistant"
+																		: "Panel"
+									}
+								>
 								{activeToken && (
 									<AscendantWindow title="ACTIVE TOKEN" density="compact">
 										<div className="space-y-3 text-xs">
@@ -5363,7 +5346,16 @@ const VTTEnhanced = () => {
 									</DialogContent>
 								</Dialog>
 
-								<Tabs defaultValue="initiative" className="w-full">
+								<Tabs
+									value={rightInnerTab}
+									onValueChange={(v) => {
+										setRightInnerTab(
+											v as Exclude<RightDrawerTab, null | "token">,
+										);
+										setRightDrawerTab(v as RightDrawerTab);
+									}}
+									className="w-full"
+								>
 									<TabsList className="flex flex-wrap gap-1 w-full h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
 										<TabsTrigger
 											value="initiative"
@@ -6044,14 +6036,13 @@ const VTTEnhanced = () => {
 										<DirectiveLattice />
 									</TabsContent>
 								</Tabs>
-							</div>
+								</VTTDrawer>
+							)}
 						</div>
-					</>
-				)}
 
-				{/* Mobile Toolbar + Bottom Sheet */}
-				{isMobile && isWarden && (
-					<>
+						{/* Mobile bottom tab bar (Warden only). */}
+						{isMobile && isWarden && (
+							<>
 						<div className="vtt-mobile-toolbar">
 							{(
 								[
@@ -6444,6 +6435,8 @@ const VTTEnhanced = () => {
 						</div>
 					</>
 				)}
+				</div>
+			)}
 
 				{/* Token Context Menu */}
 				{contextMenu &&
@@ -6581,7 +6574,6 @@ const VTTEnhanced = () => {
 						</div>
 					</button>
 				)}
-			</div>
 			{/* Shared 3D Dice Overlay (DDB parity) */}
 			<SharedDiceTray
 				roll={vttRealtime.sharedDiceRoll}

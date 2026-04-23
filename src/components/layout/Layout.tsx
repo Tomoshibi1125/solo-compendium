@@ -12,6 +12,11 @@ import { WardenChatbot } from "../warden-directives/WardenChatbot";
 interface LayoutProps {
 	children?: React.ReactNode;
 	className?: string;
+	/**
+	 * When true, removes the default horizontal/vertical padding on <main> so the
+	 * page can render a full-viewport experience (used by VTT canvas pages).
+	 */
+	fullBleed?: boolean;
 }
 
 // Module-level custom hook (must not be defined inside a component)
@@ -64,7 +69,7 @@ function useSAZone(): string {
 	return "character"; // default
 }
 
-export function Layout({ children, className }: LayoutProps) {
+export function Layout({ children, className, fullBleed }: LayoutProps) {
 	const embedded = useEmbedded();
 	const { reducedMotion, highContrast } = useAccessibility();
 	const saZone = useSAZone();
@@ -131,7 +136,8 @@ export function Layout({ children, className }: LayoutProps) {
 				tabIndex={-1}
 				className={cn(
 					"flex-1",
-					isMobile ? "px-4 pt-6 pb-32" : "px-8 pt-8 pb-32",
+					!fullBleed && (isMobile ? "px-4 pt-6 pb-32" : "px-8 pt-8 pb-32"),
+					fullBleed && "vtt-fullbleed",
 				)}
 			>
 				{children || <Outlet />}
