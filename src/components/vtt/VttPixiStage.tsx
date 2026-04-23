@@ -174,6 +174,9 @@ export function VttPixiStage({
 	// Weather state
 	const weatherEmitterRef = useRef<Emitter | null>(null);
 	const rootContainerRef = useRef<Container | null>(null);
+	// Background container ref — stored separately so the dedicated background
+	// update effect can re-render it without tearing down the full pipeline.
+	const bgContainerRef = useRef<Container | null>(null);
 	// Snap-to-grid ghost overlay shown while dragging a token. Populated by
 	// the stage-init effect and consumed by pointer handlers in a separate
 	// effect, so we share it via a ref rather than nested closure scope.
@@ -259,6 +262,7 @@ export function VttPixiStage({
 		stage.addChild(root);
 
 		const bg = new Container();
+		bgContainerRef.current = bg;
 		const weatherLayer = new Container();
 		const effectsLayer = new Container(); // Spell/combat particle effects
 		const grid = new Container();
@@ -292,25 +296,10 @@ export function VttPixiStage({
 		drawOverlay.zIndex = 1000;
 		root.addChild(drawOverlay);
 
-		const renderBackground = async () => {
-			bg.removeChildren();
-			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
-
-			try {
-				const texture = await Assets.load(scene.backgroundImage);
-				const sprite = Sprite.from(texture as never);
-				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
-				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
-				const scale = scene.backgroundScale ?? 1;
-				sprite.scale.set(scale);
-				sprite.width = (scene.width ?? 0) * gridSize * zoom * scale;
-				sprite.height = (scene.height ?? 0) * gridSize * zoom * scale;
-				sprite.alpha = 0.95;
-				bg.addChild(sprite);
-			} catch {
-				// ignore
-			}
-		};
+		// Background rendering is handled by a dedicated useEffect below
+		// (the "background update" effect) so it can re-run independently
+		// when only backgroundImage/scale/offset change. The bg container
+		// is shared via bgContainerRef.
 
 		const renderWeather = () => {
 			// Clean up previous emitter
@@ -975,7 +964,7 @@ export function VttPixiStage({
 			tokenLayer.sortableChildren = true;
 		};
 
-		void renderBackground();
+		// Background is rendered by the dedicated background useEffect below.
 		renderWeather();
 		renderGrid();
 		renderWalls();
@@ -1000,6 +989,7 @@ export function VttPixiStage({
 			}
 			stage.removeChildren();
 			rootContainerRef.current = null;
+			bgContainerRef.current = null;
 		};
 	}, [
 		activeTokenId,
@@ -1022,6 +1012,59 @@ export function VttPixiStage({
 		viewportPanModifierActive,
 		zoom,
 		fx.particleCount,
+	]);
+
+	// ── Dedicated background rendering effect ─────────────────────────────────
+	// Runs independently when background-related props change so we don't
+	// have to tear down and rebuild the entire Pixi render pipeline just
+	// to update the map image. Uses an `active` flag to cancel stale async
+	// texture loads (Foundry/Roll20 parity: background updates are atomic).
+	useEffect(() => {
+		const bg = bgContainerRef.current;
+		if (!bg || !appReady) return;
+
+		let active = true;
+
+		const updateBackground = async () => {
+			bg.removeChildren();
+			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
+
+			try {
+				const texture = await Assets.load(scene.backgroundImage);
+				if (!active) return; // Effect was cleaned up while loading
+				const sprite = Sprite.from(texture as never);
+				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
+				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
+				const bgScale = scene.backgroundScale ?? 1;
+				sprite.width = (scene.width ?? 0) * gridSize * zoom;
+				sprite.height = (scene.height ?? 0) * gridSize * zoom;
+				if (bgScale !== 1) {
+					sprite.scale.x *= bgScale;
+					sprite.scale.y *= bgScale;
+				}
+				sprite.alpha = 0.95;
+				bg.addChild(sprite);
+			} catch (err) {
+				console.warn('[VTT] Failed to load background image:', err);
+			}
+		};
+
+		void updateBackground();
+
+		return () => {
+			active = false;
+		};
+	}, [
+		appReady,
+		scene?.backgroundImage,
+		scene?.backgroundScale,
+		scene?.backgroundOffsetX,
+		scene?.backgroundOffsetY,
+		scene?.width,
+		scene?.height,
+		gridSize,
+		zoom,
+		effectiveVisibleLayers,
 	]);
 
 	useEffect(() => {

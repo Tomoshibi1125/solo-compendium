@@ -496,6 +496,9 @@ const VTTEnhanced = () => {
 	const suppressNextMapActionRef = useRef(false);
 	const pixiDraggingTokenIdRef = useRef<string | null>(null);
 	const currentSceneRef = useRef<VTTScene | null>(null);
+	// Tracks when an explicit save (delete, persist) last fired so the debounced
+	// auto-save effect can skip stale payloads that would overwrite the delete.
+	const lastExplicitSaveTimestampRef = useRef<number>(0);
 	const musicEngineRef = useRef<VttMusicEngine | null>(null);
 	const lastFogCellRef = useRef<string | null>(null);
 	const lastMeasureCellRef = useRef<string | null>(null);
@@ -768,7 +771,11 @@ const VTTEnhanced = () => {
 	const mergedScenes = useMemo(() => {
 		if (!currentScene) return scenes;
 		const index = scenes.findIndex((scene) => scene.id === currentScene.id);
-		if (index === -1) return [...scenes, currentScene];
+		// Don't re-add scenes that aren't in the scenes array — this prevents
+		// deleted scenes from resurrecting via a stale currentScene reference.
+		// createNewScene already adds to both `scenes` and `currentScene`, so
+		// newly created scenes are always found by findIndex above.
+		if (index === -1) return scenes;
 		const next = [...scenes];
 		next[index] = currentScene;
 		return next;
@@ -869,6 +876,9 @@ const VTTEnhanced = () => {
 	const effectiveVisibleLayers: Record<number, boolean> = useMemo(
 		() => ({
 			...visibleLayers,
+			// Map layer (0) always visible for Warden — matches Foundry/Roll20/DDB
+			// where the GM always sees the background map regardless of layer toggles.
+			0: isWarden ? true : visibleLayers[0],
 			3: isWarden ? visibleLayers[3] : false,
 		}),
 		[isWarden, visibleLayers],
@@ -1080,6 +1090,11 @@ const VTTEnhanced = () => {
 
 	useEffect(() => {
 		if (!campaignId || !isHydrated || !isWarden) return;
+		// Skip if an explicit save (scene delete, persistSceneState) fired
+		// within the debounce window. The debounced payload is stale and
+		// would overwrite the authoritative state from the explicit save,
+		// causing deleted scenes to resurrect.
+		if (Date.now() - lastExplicitSaveTimestampRef.current < 1200) return;
 		void saveNow({
 			...debouncedState,
 			savedAt: new Date().toISOString(),
@@ -1244,6 +1259,9 @@ const VTTEnhanced = () => {
 			overrideLiveSceneId?: string | null,
 		) => {
 			if (!isWarden) return;
+			// Mark this as an explicit (authoritative) save so the debounced
+			// auto-save effect skips its stale payload window.
+			lastExplicitSaveTimestampRef.current = Date.now();
 			void saveNow({
 				scenes: nextScenes,
 				currentSceneId: getPersistedSceneId(
