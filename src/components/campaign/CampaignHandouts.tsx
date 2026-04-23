@@ -1,130 +1,28 @@
-import { FileText, Loader2, Sparkles } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { FileText, Loader2, Lock, Sparkles } from "lucide-react";
+import { useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useCampaignHandouts } from "@/hooks/useCampaignHandouts";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
 import { useHasWardenAccess } from "@/hooks/useCampaigns";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
-import type { Database, Json } from "@/integrations/supabase/types";
-import { useAuth } from "@/lib/auth/authContext";
 import { cn } from "@/lib/utils";
 
-interface HandoutEntry {
-	id: string;
-	title: string;
-	content: string;
-	visibleToPlayers: boolean;
-	category: "session" | "note" | "lore" | "handout";
-	createdAt: string;
-	updatedAt: string;
-}
-
-type VttJournalRow = Database["public"]["Tables"]["vtt_journal_entries"]["Row"];
-
-type RemoteJournalRow = Pick<
-	VttJournalRow,
-	| "id"
-	| "title"
-	| "content"
-	| "category"
-	| "visible_to_players"
-	| "created_at"
-	| "updated_at"
->;
-
-const JOURNAL_CATEGORIES = ["session", "note", "lore", "handout"] as const;
-const toJournalCategory = (value: Json): HandoutEntry["category"] => {
-	return (JOURNAL_CATEGORIES as readonly string[]).includes(String(value))
-		? (value as HandoutEntry["category"])
-		: "note";
-};
-
-const readLocal = (campaignId: string): HandoutEntry[] => {
-	const saved = localStorage.getItem(`vtt-journal-${campaignId}`);
-	if (!saved) return [];
-	try {
-		return JSON.parse(saved) as HandoutEntry[];
-	} catch {
-		return [];
-	}
-};
-
-const writeLocal = (campaignId: string, entries: HandoutEntry[]) => {
-	localStorage.setItem(`vtt-journal-${campaignId}`, JSON.stringify(entries));
+const CATEGORY_LABELS: Record<string, string> = {
+	session: "Session Log",
+	note: "Warden Note",
+	lore: "Lore",
+	handout: "Handout",
 };
 
 export function CampaignHandouts({ campaignId }: { campaignId: string }) {
-	const { user, loading } = useAuth();
-	const isAuthed = isSupabaseConfigured && !!user?.id;
-
-	const [entries, setEntries] = useState<HandoutEntry[]>([]);
-	const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
 	const { data: hasWardenAccess } = useHasWardenAccess(campaignId);
 	const { injectSandbox, isInjecting } = useCampaignSandboxInjector(campaignId);
+	const { entries, isLoading } = useCampaignHandouts(campaignId);
 
-	useEffect(() => {
-		if (!campaignId) {
-			setIsLoading(false);
-			return;
-		}
-		if (loading) return;
-
-		let active = true;
-
-		const loadRemote = async () => {
-			const { data, error } = await supabase
-				.from("vtt_journal_entries")
-				.select(
-					"id, title, content, category, visible_to_players, created_at, updated_at",
-				)
-				.eq("campaign_id", campaignId)
-				.order("created_at", { ascending: false });
-
-			if (error) {
-				return null;
-			}
-
-			return (data || []).map((row: RemoteJournalRow) => ({
-				id: row.id,
-				title: row.title,
-				content: row.content ?? "",
-				category: toJournalCategory(row.category),
-				visibleToPlayers: !!row.visible_to_players,
-				createdAt: row.created_at,
-				updatedAt: row.updated_at,
-			})) as HandoutEntry[];
-		};
-
-		const hydrate = async () => {
-			setIsLoading(true);
-			const localEntries = readLocal(campaignId);
-
-			if (!isAuthed) {
-				if (active) {
-					setEntries(localEntries);
-					setSelectedEntryId(localEntries[0]?.id ?? null);
-				}
-				setIsLoading(false);
-				return;
-			}
-
-			const remoteEntries = await loadRemote();
-			if (!active) return;
-
-			const nextEntries = remoteEntries === null ? localEntries : remoteEntries;
-			setEntries(nextEntries);
-			writeLocal(campaignId, nextEntries);
-			setSelectedEntryId(nextEntries[0]?.id ?? null);
-			setIsLoading(false);
-		};
-
-		void hydrate();
-		return () => {
-			active = false;
-		};
-	}, [campaignId, isAuthed, loading]);
+	const [selectedEntryId, setSelectedEntryId] = useState<string | null>(null);
 
 	const visibleEntries = useMemo(
 		() => entries.filter((entry) => hasWardenAccess || entry.visibleToPlayers),
@@ -139,12 +37,12 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 		[selectedEntryId, visibleEntries],
 	);
 
-	const categories = {
-		session: "Session Log",
-		note: "Warden Note",
-		lore: "Lore",
-		handout: "Handout",
-	};
+	// Auto-select first entry when data loads
+	useMemo(() => {
+		if (!selectedEntryId && visibleEntries.length > 0) {
+			setSelectedEntryId(visibleEntries[0].id);
+		}
+	}, [visibleEntries, selectedEntryId]);
 
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -193,13 +91,24 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 								>
 									<div className="flex items-start justify-between mb-1">
 										<div className="flex-1 min-w-0">
-											<div className="font-heading font-semibold text-sm truncate">
+											<div className="font-heading font-semibold text-sm truncate flex items-center gap-1.5">
 												{entry.title}
+												{!entry.visibleToPlayers && hasWardenAccess && (
+													<Lock className="w-3 h-3 text-amber-400 opacity-60 shrink-0" />
+												)}
 											</div>
 											<div className="flex items-center gap-2 mt-1">
 												<Badge variant="outline" className="text-xs">
-													{categories[entry.category]}
+													{CATEGORY_LABELS[entry.category] || entry.category}
 												</Badge>
+												{!entry.visibleToPlayers && hasWardenAccess && (
+													<Badge
+														variant="outline"
+														className="text-[10px] text-amber-400 border-amber-500/30"
+													>
+														Warden Only
+													</Badge>
+												)}
 											</div>
 										</div>
 									</div>
@@ -219,20 +128,34 @@ export function CampaignHandouts({ campaignId }: { campaignId: string }) {
 						<div className="space-y-4">
 							<div className="flex items-center gap-2 pb-4 border-b border-border">
 								<Badge variant="outline">
-									{categories[selectedEntry.category]}
+									{CATEGORY_LABELS[selectedEntry.category] ||
+										selectedEntry.category}
 								</Badge>
-								<Badge variant="outline" className="text-green-400">
-									Shared
-								</Badge>
+								{selectedEntry.visibleToPlayers ? (
+									<Badge
+										variant="outline"
+										className="text-green-400 border-green-500/30"
+									>
+										Shared with Players
+									</Badge>
+								) : (
+									<Badge
+										variant="outline"
+										className="text-amber-400 border-amber-500/30"
+									>
+										<Lock className="w-3 h-3 mr-1" />
+										Warden Only
+									</Badge>
+								)}
 							</div>
 
-							<div className="prose prose-invert max-w-none">
-								<div className="whitespace-pre-wrap font-mono text-sm text-muted-foreground">
-									{selectedEntry.content || (
-										<em className="text-muted-foreground">No content yet.</em>
-									)}
+							<ScrollArea className="max-h-[60vh]">
+								<div className="prose prose-invert prose-emerald max-w-none prose-headings:font-display prose-headings:text-primary prose-a:text-accent prose-a:no-underline prose-blockquote:border-primary/30 prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded">
+									<ReactMarkdown>
+										{selectedEntry.content || "*No content yet.*"}
+									</ReactMarkdown>
 								</div>
-							</div>
+							</ScrollArea>
 
 							<div className="pt-4 border-t border-border text-xs text-muted-foreground">
 								Published: {new Date(selectedEntry.createdAt).toLocaleString()}

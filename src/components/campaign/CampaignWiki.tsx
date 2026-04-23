@@ -48,6 +48,7 @@ const CATEGORIES = [
 	{ id: "location", label: "Locations", icon: MapPin },
 	{ id: "quest", label: "Quests", icon: HelpCircle },
 	{ id: "faction", label: "Factions", icon: BookOpen },
+	{ id: "handout", label: "Handouts", icon: FileText },
 ];
 
 export function CampaignWiki({ campaignId }: { campaignId: string }) {

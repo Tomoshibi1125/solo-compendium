@@ -329,10 +329,10 @@ export const useCreateGuild = () => {
 
 			const rpcResult = await supabase.rpc("create_guild_with_code", {
 				p_name: params.name,
-				p_description: params.description ?? null,
-				p_motto: params.motto ?? null,
+				p_description: params.description ?? "",
+				p_motto: params.motto ?? "",
 				p_leader_user_id: user.id,
-				p_campaign_id: params.campaignId ?? null,
+				p_campaign_id: params.campaignId,
 			});
 
 			if (rpcResult.error) {

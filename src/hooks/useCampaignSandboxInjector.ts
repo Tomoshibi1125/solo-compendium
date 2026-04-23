@@ -363,12 +363,14 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						const existingJournals = readLocalJournals(targetId);
 						for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
 							const h = massiveSandboxModule.handouts[i];
+							// Normalize double-escaped newlines from static sandbox data
+							const normalizedContent = h.content.replace(/\\n/g, "\n");
 							if (!existingJournals.find((j) => j.title === h.title)) {
 								existingJournals.push({
 									id: crypto.randomUUID(),
 									campaign_id: targetId,
 									title: h.title,
-									content: h.content,
+									content: normalizedContent,
 									category: h.category,
 									tags: [],
 									visible_to_players: h.visibleToPlayers,
@@ -383,6 +385,8 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 					} else {
 						for (let i = 0; i < massiveSandboxModule.handouts.length; i++) {
 							const h = massiveSandboxModule.handouts[i];
+							// Normalize double-escaped newlines from static sandbox data
+							const normalizedContent = h.content.replace(/\\n/g, "\n");
 							const { data: existingHandout } = await supabase
 								.from("vtt_journal_entries")
 								.select("id")
@@ -397,7 +401,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 										campaign_id: targetId,
 										user_id: user?.id || "guest",
 										title: h.title,
-										content: h.content,
+										content: normalizedContent,
 										visible_to_players: h.visibleToPlayers,
 										category: h.category,
 									});
@@ -428,20 +432,28 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 
 			if (summary) {
 				toast({
-					title: "Sandbox Generated Successfully!",
-					description: `Imported: ${summary}.`,
+					title: "Module Import Complete ✦ The Shadow of the Regent",
+					description: `${summary}. All content is now available in the Wiki, Handouts, and VTT tabs.`,
 				});
 			} else {
 				toast({
 					title: "Sandbox Already Imported",
 					description:
-						"All module content was already present. No new data was added. Go to the VTT to view the map.",
+						"All module content is already present. Check the Wiki, Handouts, and VTT tabs to view imported data.",
 				});
 			}
 
 			// Invalidate queries with campaign-scoped keys to immediately reflect UI
-			queryClient.invalidateQueries({ queryKey: ["campaign_wiki_articles"] });
-			queryClient.invalidateQueries({ queryKey: ["vtt_journal_entries"] });
+			// Invalidate with campaign-scoped keys so useCampaignWiki / CampaignHandouts refetch
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_wiki_articles", targetId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["vtt_journal_entries", targetId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_tool_states", targetId],
+			});
 		} catch (error) {
 			console.error("Sandbox Injection Error:", error);
 			toast({
