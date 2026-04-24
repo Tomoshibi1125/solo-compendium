@@ -42,6 +42,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { cn } from "@/lib/utils";
 import type { WallSegment } from "@/lib/vtt";
+import { getTokenSizePx, type TokenSize } from "@/lib/vtt/tokenSizing";
 
 interface PlacedToken {
 	id: string;
@@ -51,7 +52,7 @@ interface PlacedToken {
 	emoji?: string;
 	imageUrl?: string;
 	color?: string;
-	size: "small" | "medium" | "large" | "huge";
+	size: TokenSize;
 	x: number;
 	y: number;
 	rotation: number;
@@ -79,13 +80,6 @@ type VTTMapState = {
 	walls?: WallSegment[];
 	weather?: "none" | "rain" | "snow" | "embers" | "gas";
 	savedAt?: string;
-};
-
-const SIZE_VALUES = {
-	small: 32,
-	medium: 48,
-	large: 64,
-	huge: 96,
 };
 
 const VTTMap = () => {
@@ -626,7 +620,10 @@ const VTTMap = () => {
 									</AscendantText>
 								) : (
 									availableTokens.map((token) => {
-										const size = SIZE_VALUES[token.size];
+										// Asset-browser thumbnails: show the footprint at
+										// the scene's grid size so Warden previews match
+										// actual placement. zoom=1 for thumbnails.
+										const size = getTokenSizePx(token.size, gridSize, 1);
 										const isOverlayPreview =
 											token.render?.mode === "overlay" ||
 											token.type === "effect" ||
@@ -828,7 +825,8 @@ const VTTMap = () => {
 
 									{/* Placed Tokens */}
 									{visibleTokens.map((token) => {
-										const size = SIZE_VALUES[token.size] * zoom;
+										// Grid-unit footprint (Roll20/Foundry/DDB parity).
+										const size = getTokenSizePx(token.size, gridSize, zoom);
 										const isOverlayToken =
 											token.render?.mode === "overlay" ||
 											token.tokenType === "effect" ||

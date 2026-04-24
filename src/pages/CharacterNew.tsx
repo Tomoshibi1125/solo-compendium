@@ -40,7 +40,10 @@ import {
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
-import { getStaticBackgroundsAll } from "@/lib/ProtocolDataManager";
+import {
+	getStaticBackgroundsAll,
+	initializeProtocolData,
+} from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import type {
 	Background,
@@ -295,6 +298,11 @@ const CharacterNew = () => {
 	const { data: backgrounds = [] } = useQuery({
 		queryKey: ["backgrounds"],
 		queryFn: async () => {
+			// Backgrounds come from the async compendium registry. If the
+			// initial pre-load (main.tsx) is still in flight when this query
+			// runs, awaiting initialization here guarantees we never return
+			// an empty list and strand the wizard on the Background step.
+			await initializeProtocolData();
 			const mapped = getStaticBackgroundsAll().map((b) => ({
 				...b,
 				display_name: b.name,

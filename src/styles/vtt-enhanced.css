@@ -711,15 +711,22 @@
 
 /* When Layout is asked to render fullBleed, strip the default page gutters
    so the VTT can use the entire viewport. */
-.vtt-fullbleed {
-	padding: 0 !important;
+.vtt-fullbleed.vtt-fullbleed {
+	padding: 0;
 }
 
 /* The outermost VTT container: sized to 100dvh, positioned so absolute
-   children (top bar, rails, drawers) resolve against it. */
+   children (top bar, rails, drawers) resolve against it.
+   touch-action:none disables browser pinch-zoom inside the shell — the
+   map's own zoom listener handles pinch via pointer events. This is the
+   CSS side of the "zoom is only the map, not the app" invariant; the
+   JS side is a wheel listener on .vtt-shell that preventDefaults
+   ctrl+wheel so the browser can't page-zoom. */
 .vtt-shell {
 	isolation: isolate;
 	contain: layout paint;
+	touch-action: none;
+	overscroll-behavior: contain;
 }
 
 /* Content layer below the floating top bar. */
@@ -727,7 +734,9 @@
 	min-height: 0;
 }
 
-/* Map canvas region — always fills remaining inline space. */
+/* Map canvas region — always fills remaining inline space.
+   overscroll-behavior:contain prevents map scroll from leaking into page
+   scroll/rubber-band on trackpad devices. */
 .vtt-map-area {
 	border: 1px solid hsl(var(--border) / 0.35);
 	border-radius: 12px;
@@ -741,6 +750,7 @@
 	box-shadow:
 		0 0 0 1px hsl(var(--primary) / 0.08),
 		0 18px 48px rgba(0, 0, 0, 0.35);
+	overscroll-behavior: contain;
 }
 
 /* Icon rails (reusable primitive). Tailwind handles the bulk of the styling;

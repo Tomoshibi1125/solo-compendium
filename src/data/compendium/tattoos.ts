@@ -16,12 +16,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -127,8 +128,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -233,8 +233,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -340,12 +339,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -452,7 +452,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor: "Warps the laws of physics. A whisper from the edge of oblivion.",
@@ -553,8 +554,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -770,8 +770,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -880,8 +879,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -987,8 +985,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -1093,8 +1090,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -1204,7 +1200,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1306,12 +1303,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1520,8 +1518,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse:
 				"The user becomes unable to dream, replaced by visions of the void between Gates.",
@@ -1632,8 +1629,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
@@ -1745,7 +1741,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1854,7 +1851,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -1956,12 +1954,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2169,12 +2168,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2276,8 +2276,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -2383,8 +2382,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -2493,12 +2491,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2609,7 +2608,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -2711,8 +2711,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -2924,12 +2923,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3035,7 +3035,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3137,8 +3138,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -3249,7 +3249,8 @@ export const tattoos: CompendiumTattoo[] = [
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3457,8 +3458,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -3569,7 +3569,8 @@ export const tattoos: CompendiumTattoo[] = [
 			curse:
 				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3670,12 +3671,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -3781,8 +3783,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -3886,8 +3887,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -3993,12 +3993,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4211,8 +4212,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -4425,12 +4425,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4540,7 +4541,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -4641,8 +4643,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -4748,8 +4749,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
@@ -4961,12 +4961,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -5068,12 +5069,13 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Applied under the Guild Association's dermal-weave protocol.",
-			history: "Covered by the standard Guild Association compliance agreement.",
+			origin: "Applied under the Guild Association's dermal-weave protocol.",
+			history:
+				"Covered by the standard Guild Association compliance agreement.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner: "Available through the Bureau's open augmentation catalog.",
+			current_owner:
+				"Available through the Bureau's open augmentation catalog.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -5180,7 +5182,8 @@ export const tattoos: CompendiumTattoo[] = [
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Widely issued to qualifying Hunters through Bureau studios.",
+			current_owner:
+				"Widely issued to qualifying Hunters through Bureau studios.",
 			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
 		},
 		flavor:
@@ -5282,8 +5285,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -5388,8 +5390,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Formulated within the Guild's authorized dermal-mod program.",
+			origin: "Formulated within the Guild's authorized dermal-mod program.",
 			history: "Tracked through the Guild Association's compliance schedule.",
 			curse: "",
 			personality: "Quiet between activations.",
@@ -5495,8 +5496,7 @@ export const tattoos: CompendiumTattoo[] = [
 		source_book: "Modern Urban Fantasy Core",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
-			origin:
-				"Inked by Bureau-credentialed studio practitioners.",
+			origin: "Inked by Bureau-credentialed studio practitioners.",
 			history: "Logged in the Bureau's ongoing dermal-mod registry.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",

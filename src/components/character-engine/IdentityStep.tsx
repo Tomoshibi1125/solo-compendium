@@ -47,6 +47,7 @@ export const IdentityStep: React.FC<IdentityStepProps> = ({
 							</Label>
 							<Input
 								id="char-name"
+								data-testid="character-name"
 								placeholder="Enter entity designation..."
 								value={name}
 								onChange={(e) => setName(e.target.value)}

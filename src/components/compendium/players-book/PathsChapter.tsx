@@ -1,9 +1,10 @@
 import { Shield } from "lucide-react";
 import { RiftHeading } from "@/components/ui/AscendantText";
-import { jobs } from "@/data/compendium/jobs";
 import { paths } from "@/data/compendium/paths";
+import { useStaticJobs } from "@/hooks/useStaticJobs";
 
 export const PathsChapter = () => {
+	const { data: jobs = [] } = useStaticJobs();
 	return (
 		<div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 max-w-5xl mx-auto">
 			<section className="text-center mb-16">

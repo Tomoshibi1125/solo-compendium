@@ -46,7 +46,10 @@ export function VTTDrawer({
 		<Sheet open={open} onOpenChange={onOpenChange}>
 			<SheetContent
 				side={side}
-				data-testid={testId ?? `vtt-drawer-${side}-${title.toLowerCase().replace(/\s+/g, "-")}`}
+				data-testid={
+					testId ??
+					`vtt-drawer-${side}-${title.toLowerCase().replace(/\s+/g, "-")}`
+				}
 				className={cn(
 					"vtt-drawer flex flex-col gap-0 p-0",
 					widthClasses,

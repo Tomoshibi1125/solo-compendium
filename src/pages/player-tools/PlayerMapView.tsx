@@ -1,6 +1,5 @@
 import {
 	ArrowLeft,
-	BookOpen,
 	Clock,
 	Crosshair,
 	Dice1,
@@ -43,6 +42,7 @@ import { useAuth } from "@/lib/auth/authContext";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
+import { getTokenSizePx } from "@/lib/vtt/tokenSizing";
 import "@/styles/vtt-player-map.css";
 import "@/styles/vtt-performance.css";
 import "./PlayerMapView.css";
@@ -130,13 +130,6 @@ const isPlayerMapShortcutTarget = (target: EventTarget | null) => {
 			"button, input, select, textarea, [contenteditable='true'], [role='textbox']",
 		) !== null
 	);
-};
-
-const SIZE_VALUES = {
-	small: 32,
-	medium: 48,
-	large: 64,
-	huge: 96,
 };
 
 const PlayerMapView = ({
@@ -255,12 +248,7 @@ const PlayerMapView = ({
 	const [currentScene, setCurrentScene] = useState<Scene | null>(null);
 	useEffect(() => {
 		syncPlayerSceneMusic(currentScene);
-	}, [
-		currentScene?.id,
-		currentScene?.musicAutoplay,
-		currentScene?.musicMood,
-		syncPlayerSceneMusic,
-	]);
+	}, [currentScene, syncPlayerSceneMusic]);
 	useEffect(
 		() => () => {
 			musicEngineRef.current?.dispose();
@@ -1202,7 +1190,11 @@ const PlayerMapView = ({
 													((token.auraRadius as number) * 2 + 1) *
 													gridSize *
 													zoom;
-												const tokenSize = SIZE_VALUES[token.size] * zoom;
+												const tokenSize = getTokenSizePx(
+													token.size,
+													gridSize,
+													zoom,
+												);
 												const centerOffset = tokenSize / 2 - auraSize / 2;
 												return (
 													<DynamicStyle
@@ -1224,7 +1216,8 @@ const PlayerMapView = ({
 
 											{/* Tokens */}
 											{visibleTokens.map((token) => {
-												const size = SIZE_VALUES[token.size] * zoom;
+												// Grid-unit footprint (Roll20/Foundry/DDB parity).
+												const size = getTokenSizePx(token.size, gridSize, zoom);
 												const canDrag = isOwnToken(token) && !token.locked;
 												const hpPercent =
 													token.maxHp && token.maxHp > 0

@@ -133,9 +133,7 @@ export interface StaticCompendiumEntry {
 			name: string;
 			level: number;
 			unlockLevel: number;
-			uses?:
-				| { value: number; per: "short-rest" | "long-rest" }
-				| "at-will";
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
 			description?: string;
 		}>;
 	} | null;

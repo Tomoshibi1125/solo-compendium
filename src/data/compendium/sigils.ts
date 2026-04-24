@@ -17,7 +17,8 @@ export const sigils: CompendiumSigil[] = [
 				"Entered into the Bureau's dermal-inscription registry after initial trials.",
 			history: "Catalogued in the Artificer Guild's closed-reference volume.",
 			curse: "",
-			personality: "Binds cleanly to an authorized socket on first inscription.",
+			personality:
+				"Binds cleanly to an authorized socket on first inscription.",
 			current_owner: "Issued via the Guild's rank-appropriate supply chain.",
 			prior_owners: ["Guild Historical Registry"],
 		},

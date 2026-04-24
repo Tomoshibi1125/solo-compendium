@@ -447,45 +447,41 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			)}
 
 			{/* Innate Channeling */}
-			{data.innate_channeling &&
-				data.innate_channeling.spells.length > 0 && (
-					<AscendantWindow title="INNATE CHANNELING">
-						<p className="text-sm text-muted-foreground mb-3">
-							Spellcasting ability:{" "}
-							<span className="font-heading text-foreground">
-								{formatRegentVernacular(data.innate_channeling.ability)}
-							</span>
-						</p>
-						<div className="space-y-2">
-							{data.innate_channeling.spells.map((sp) => (
-								<div
-									key={sp.name}
-									className="p-3 rounded border border-border"
-								>
-									<div className="flex items-baseline justify-between mb-1">
-										<h4 className="font-heading font-semibold">
-											{formatRegentVernacular(sp.name)}
-										</h4>
-										<span className="text-xs text-muted-foreground">
-											{sp.uses === "at-will"
-												? "At will"
-												: sp.uses
-													? `${sp.uses.value}/${sp.uses.per}`
-													: ""}
-											{" · unlock lvl "}
-											{sp.unlockLevel}
-										</span>
-									</div>
-									{sp.description && (
-										<p className="text-xs text-muted-foreground">
-											{sp.description}
-										</p>
-									)}
+			{data.innate_channeling && data.innate_channeling.spells.length > 0 && (
+				<AscendantWindow title="INNATE CHANNELING">
+					<p className="text-sm text-muted-foreground mb-3">
+						Spellcasting ability:{" "}
+						<span className="font-heading text-foreground">
+							{formatRegentVernacular(data.innate_channeling.ability)}
+						</span>
+					</p>
+					<div className="space-y-2">
+						{data.innate_channeling.spells.map((sp) => (
+							<div key={sp.name} className="p-3 rounded border border-border">
+								<div className="flex items-baseline justify-between mb-1">
+									<h4 className="font-heading font-semibold">
+										{formatRegentVernacular(sp.name)}
+									</h4>
+									<span className="text-xs text-muted-foreground">
+										{sp.uses === "at-will"
+											? "At will"
+											: sp.uses
+												? `${sp.uses.value}/${sp.uses.per}`
+												: ""}
+										{" · unlock lvl "}
+										{sp.unlockLevel}
+									</span>
 								</div>
-							))}
-						</div>
-					</AscendantWindow>
-				)}
+								{sp.description && (
+									<p className="text-xs text-muted-foreground">
+										{sp.description}
+									</p>
+								)}
+							</div>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
 
 			{/* Bonus HP per level */}
 			{typeof data.bonus_hp_per_level === "number" &&

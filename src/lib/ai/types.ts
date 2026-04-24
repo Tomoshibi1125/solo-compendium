@@ -156,6 +156,48 @@ export const PromptEnhancementSchema = z.object({
 
 export type PromptEnhancement = z.infer<typeof PromptEnhancementSchema>;
 
+// ── Audio generation (Stable Audio Open / MusicGen via HF) ──────────
+export type AudioGenerationKind = "sfx" | "ambient" | "music";
+
+export interface AudioGenerationRequest {
+	prompt: string;
+	durationSeconds: number; // 1..47
+	kind: AudioGenerationKind;
+	campaignId?: string;
+}
+
+export interface AudioGenerationSuccess {
+	success: true;
+	audioUrl: string;
+	storagePath: string;
+	mimeType: string;
+	bytes: number;
+	provider: string;
+	prompt: string;
+	kind: AudioGenerationKind;
+	durationSeconds: number;
+	createdAt: string;
+}
+
+export interface AudioGenerationModelLoading {
+	success: false;
+	status: "model_loading";
+	error: string;
+	retryAfterSeconds: number;
+}
+
+export interface AudioGenerationError {
+	success: false;
+	status?: "error";
+	error: string;
+	retryAfterSeconds?: number;
+}
+
+export type AudioGenerationResponse =
+	| AudioGenerationSuccess
+	| AudioGenerationModelLoading
+	| AudioGenerationError;
+
 /** Minimal character shape required by AI integration methods */
 export interface AICharacterInput {
 	name: string;

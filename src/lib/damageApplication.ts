@@ -24,9 +24,14 @@ export interface DamageApplicationResult {
 	summary: string;
 }
 
-export function normalizeDamageType(value: string | null | undefined): string | null {
+export function normalizeDamageType(
+	value: string | null | undefined,
+): string | null {
 	if (!value) return null;
-	const normalized = value.toLowerCase().trim().replace(/\s+damage$/, "");
+	const normalized = value
+		.toLowerCase()
+		.trim()
+		.replace(/\s+damage$/, "");
 	return normalized.length > 0 ? normalized : null;
 }
 

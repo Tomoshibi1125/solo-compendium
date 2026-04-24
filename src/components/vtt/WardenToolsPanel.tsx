@@ -292,14 +292,20 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 		}
 	};
 
-	// Quick sound effects — Populated from SOUND_CATEGORIES
+	// Quick sound effects — routed through SFX_ASSET_MAP via useWardenAudio.
+	// Every id below maps to a real WAV file in public/audio/sfx/.
 	const quickSounds = [
 		{ id: "door-creak", name: "Door Creak", icon: "🚪" },
 		{ id: "sword-clash", name: "Sword Clash", icon: "⚔️" },
+		{ id: "sword-unsheath", name: "Sword Draw", icon: "🗡️" },
 		{ id: "fireball", name: "Fireball", icon: "🔥" },
 		{ id: "thunder", name: "Thunder", icon: "⛈️" },
 		{ id: "heal", name: "Healing", icon: "✨" },
+		{ id: "spell-cast", name: "Spell Cast", icon: "🪄" },
+		{ id: "arrow-shot", name: "Arrow Shot", icon: "🏹" },
 		{ id: "Anomaly-roar", name: "Anomaly Roar", icon: "👹" },
+		{ id: "footstep-stone", name: "Footstep", icon: "👣" },
+		{ id: "dice-roll", name: "Dice Roll", icon: "🎲" },
 	];
 
 	// Quick music moods — populated from MOOD_TAGS

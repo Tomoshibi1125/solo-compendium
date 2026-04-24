@@ -457,7 +457,12 @@ export function getRacialTraitModifiers(
 		}
 		if (trait === "mana-saturated metabolism") {
 			return [
-				{ type: "advantage", value: 0, target: "save:poison", source: traitName },
+				{
+					type: "advantage",
+					value: 0,
+					target: "save:poison",
+					source: traitName,
+				},
 				{ type: "resistance", value: 0, target: "poison", source: traitName },
 			];
 		}
@@ -2921,17 +2926,24 @@ export async function applyJobAwakeningTraitsToCharacter(
 	// a hidden marker feature).
 	const jobName = job.name;
 	const asiApplyKey = `Racial ASI: ${jobName}`;
-	const asiEntries: Array<{ db: "str" | "agi" | "vit" | "int" | "sense" | "pre"; delta: number }> = [];
-	if (job.abilityScoreImprovements && !Array.isArray(job.abilityScoreImprovements)) {
+	const asiEntries: Array<{
+		db: "str" | "agi" | "vit" | "int" | "sense" | "pre";
+		delta: number;
+	}> = [];
+	if (
+		job.abilityScoreImprovements &&
+		!Array.isArray(job.abilityScoreImprovements)
+	) {
 		const rawASI = job.abilityScoreImprovements as Record<string, number>;
-		const map: Record<string, "str" | "agi" | "vit" | "int" | "sense" | "pre"> = {
-			strength: "str",
-			agility: "agi",
-			vitality: "vit",
-			intelligence: "int",
-			sense: "sense",
-			presence: "pre",
-		};
+		const map: Record<string, "str" | "agi" | "vit" | "int" | "sense" | "pre"> =
+			{
+				strength: "str",
+				agility: "agi",
+				vitality: "vit",
+				intelligence: "int",
+				sense: "sense",
+				presence: "pre",
+			};
 		for (const [key, value] of Object.entries(rawASI)) {
 			const col = map[key.toLowerCase()];
 			if (col && typeof value === "number" && value !== 0) {
@@ -2955,14 +2967,16 @@ export async function applyJobAwakeningTraitsToCharacter(
 		// Idempotent ASI apply (guest): track via a marker feature.
 		const existingFeatures = listLocalFeatures(characterId);
 		const asiAlreadyApplied = existingFeatures.some(
-			(f) => (f?.source ?? "") === asiApplyKey || (f?.name ?? "") === asiApplyKey,
+			(f) =>
+				(f?.source ?? "") === asiApplyKey || (f?.name ?? "") === asiApplyKey,
 		);
 		const statsPatch: Record<string, number> = {};
 		if (!asiAlreadyApplied) {
 			for (const { db, delta } of asiEntries) {
 				const current =
-					(existing as unknown as Record<string, number | null | undefined>)[db] ??
-					0;
+					(existing as unknown as Record<string, number | null | undefined>)[
+						db
+					] ?? 0;
 				statsPatch[db] = Number(current) + delta;
 			}
 		}
@@ -3033,8 +3047,9 @@ export async function applyJobAwakeningTraitsToCharacter(
 	if (!asiAlreadyApplied) {
 		for (const { db, delta } of asiEntries) {
 			const current =
-				(existing as unknown as Record<string, number | null | undefined>)[db] ??
-				0;
+				(existing as unknown as Record<string, number | null | undefined>)[
+					db
+				] ?? 0;
 			statsPatch[db] = Number(current) + delta;
 		}
 	}
@@ -3058,10 +3073,7 @@ export async function applyJobAwakeningTraitsToCharacter(
 				existing.weapon_proficiencies,
 				jobWeaponProfs,
 			),
-			armor_proficiencies: dedupe(
-				existing.armor_proficiencies,
-				jobArmorProfs,
-			),
+			armor_proficiencies: dedupe(existing.armor_proficiencies, jobArmorProfs),
 			tool_proficiencies: dedupe(existing.tool_proficiencies, jobToolProfs),
 			languages: dedupe(
 				(existing as { languages?: string[] | null }).languages,
@@ -3261,8 +3273,7 @@ export async function addJobAwakeningBenefitsForLevel(
 				source: `Racial Trait: ${jobName}`,
 				level_acquired: 1,
 				description:
-					nw.description ??
-					`${nw.damage} ${nw.damage_type} (natural weapon)`,
+					nw.description ?? `${nw.damage} ${nw.damage_type} (natural weapon)`,
 				is_active: true,
 				modifiers: [
 					{

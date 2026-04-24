@@ -111,7 +111,6 @@ import {
 	VTTIconRail,
 	type VTTIconRailItem,
 } from "@/components/vtt/VTTIconRail";
-import { VTTMobileTabBar } from "@/components/vtt/VTTMobileTabBar";
 import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
@@ -181,6 +180,7 @@ import {
 	isPointInTerrainZone,
 	type LightSource,
 	type MusicMood,
+	SFX_ASSET_MAP,
 	snapToHexCenter,
 	type TerrainZone,
 	VttMusicEngine,
@@ -520,6 +520,8 @@ const VTTEnhanced = () => {
 	const { user, loading } = useAuth();
 	const sessionId = searchParams.get("sessionId")?.trim() || null;
 	const mapRef = useRef<HTMLDivElement>(null);
+	/** Outer VTT shell — used to scope the ctrl+wheel browser-zoom lock. */
+	const shellRef = useRef<HTMLDivElement>(null);
 	const mapInputRef = useRef<HTMLInputElement>(null);
 	const suppressNextMapActionRef = useRef(false);
 	const pixiDraggingTokenIdRef = useRef<string | null>(null);
@@ -533,6 +535,17 @@ const VTTEnhanced = () => {
 	const lastCursorCellRef = useRef<string | null>(null);
 	const viewportPanActiveRef = useRef(false);
 	const suppressViewportPanClickRef = useRef(false);
+	/**
+	 * Tracks a right-mouse-button drag in progress so we can (a) suppress the
+	 * browser context menu when the user actually dragged, and (b) start the
+	 * pan-viewport flow. A click + release without crossing `MOVED_THRESHOLD`
+	 * still opens the token context menu (Roll20/Foundry parity).
+	 */
+	const rightClickDragRef = useRef<{
+		startX: number;
+		startY: number;
+		moved: boolean;
+	} | null>(null);
 	const pendingDrawingPointRef = useRef<{ x: number; y: number } | null>(null);
 	const drawingFrameRef = useRef<number | null>(null);
 	const { fx } = usePerformanceProfile();
@@ -647,9 +660,6 @@ const VTTEnhanced = () => {
 	// previous uncontrolled behavior.
 	const [rightInnerTab, setRightInnerTab] =
 		useState<Exclude<RightDrawerTab, null | "token">>("initiative");
-	// `mobileDrawer` opens the bottom-sheet drawer tied to the mobile tab bar.
-	type MobileDrawer = "tools" | "token" | "panel" | "assets" | null;
-	const [mobileDrawer, setMobileDrawer] = useState<MobileDrawer>(null);
 	// Warden Tools drawer (macros, music, atmosphere, map-gen, encounters)
 	// now lives in a right-side Sheet so the right sidebar stays focused on
 	// token/initiative/chat. Toggled from the header via a Wrench button.
@@ -716,6 +726,27 @@ const VTTEnhanced = () => {
 			suppressViewportPanClickRef.current = false;
 		}, 0);
 	}, []);
+	// Ctrl+wheel / Cmd+wheel / trackpad-pinch anywhere inside the VTT shell
+	// must NEVER zoom the browser page — the whole app layout is fragile to
+	// page zoom (absolute-positioned drawers/top bars/zoom HUD all drift).
+	// The map container has its own wheel listener that handles ctrl+wheel as
+	// an in-map zoom. Anywhere else in the shell (drawers, top bar, rails),
+	// ctrl+wheel is simply swallowed. This is the JS half of the invariant;
+	// the CSS half is `touch-action:none` on `.vtt-shell`.
+	useEffect(() => {
+		const shell = shellRef.current;
+		if (!shell) return;
+		const handleShellWheel = (e: WheelEvent) => {
+			if (e.ctrlKey || e.metaKey) {
+				e.preventDefault();
+			}
+		};
+		shell.addEventListener("wheel", handleShellWheel, { passive: false });
+		return () => {
+			shell.removeEventListener("wheel", handleShellWheel as EventListener);
+		};
+	}, []);
+
 	useEffect(() => {
 		if (typeof window === "undefined") return;
 		const handleWindowMouseUp = () => {
@@ -829,12 +860,39 @@ const VTTEnhanced = () => {
 		[currentScene?.id],
 	);
 
-	const handleRequestZoom = useCallback((nextZoom: number) => {
-		setZoom((prev) => {
-			if (Math.abs(prev - nextZoom) < 0.001) return prev;
-			return Math.max(0.5, Math.min(2, nextZoom));
-		});
-	}, []);
+	const handleRequestZoom = useCallback(
+		(nextZoom: number, cursor?: { x: number; y: number }) => {
+			setZoom((prev) => {
+				const clamped = Math.max(0.5, Math.min(2, nextZoom));
+				if (Math.abs(prev - clamped) < 0.001) return prev;
+				// Foundry/ZoomPanOptions parity: keep the world-point under the
+				// cursor stationary by adjusting the map container's scroll so
+				// the cell that was under the cursor before the zoom lands in
+				// the same viewport location after. Skipped when `cursor` is
+				// omitted (keyboard +/- and HUD buttons intentionally zoom to
+				// viewport center).
+				const el = mapRef.current;
+				if (el && cursor && prev > 0 && clamped > 0) {
+					const ratio = clamped / prev;
+					// offsetX/Y in container coords already includes scroll,
+					// so the world-point = scrollLeft + cursor.x. After zoom
+					// the same world-point needs to land at cursor.x again =>
+					// newScroll = worldPoint * ratio - cursor.x.
+					const worldX = el.scrollLeft + cursor.x;
+					const worldY = el.scrollTop + cursor.y;
+					// Defer scroll update until after React applies the zoom
+					// transform (container size changes on state flush).
+					requestAnimationFrame(() => {
+						if (!mapRef.current) return;
+						mapRef.current.scrollLeft = worldX * ratio - cursor.x;
+						mapRef.current.scrollTop = worldY * ratio - cursor.y;
+					});
+				}
+				return clamped;
+			});
+		},
+		[],
+	);
 	const handleFitZoom = useCallback(() => {
 		if (!mapRef.current || !currentSceneRef.current) return;
 		const rect = mapRef.current.parentElement?.getBoundingClientRect();
@@ -901,11 +959,19 @@ const VTTEnhanced = () => {
 			} else if (payload.action === "music_stop") {
 				syncLocalSceneMusic({ musicMood: null, musicAutoplay: false });
 			} else if (payload.action === "play_sound" && payload.id) {
-				// We can add logic to play specific sound IDs here
-				// E.g., a simple HTMLAudioElement wrapper
-				const audio = new Audio(`/audio/${payload.id}.mp3`); // Or wherever sound effects stream from
+				// Route broadcast SFX through SFX_ASSET_MAP so every id resolves
+				// to a real audio file (WAV/MP3). Fallback to a direct
+				// /audio/sfx/{id}.wav lookup if the id isn't in the map.
+				const entry = SFX_ASSET_MAP[payload.id];
+				const src =
+					entry && entry.type === "file"
+						? entry.path
+						: `/audio/sfx/${payload.id}.wav`;
+				const audio = new Audio(src);
 				audio.volume = payload.volume ?? 0.8;
-				void audio.play().catch(() => {});
+				void audio.play().catch(() => {
+					// Silently ignore — asset missing or autoplay blocked
+				});
 			}
 		});
 
@@ -1026,12 +1092,7 @@ const VTTEnhanced = () => {
 	}, [currentScene]);
 	useEffect(() => {
 		syncLocalSceneMusic(currentScene);
-	}, [
-		currentScene?.id,
-		currentScene?.musicAutoplay,
-		currentScene?.musicMood,
-		syncLocalSceneMusic,
-	]);
+	}, [currentScene, syncLocalSceneMusic]);
 	useEffect(
 		() => () => {
 			musicEngineRef.current?.dispose();
@@ -2112,6 +2173,21 @@ const VTTEnhanced = () => {
 			setIsViewportPanning(true);
 			return;
 		}
+		if (e.button === 2) {
+			// Right-click: record the press so we can distinguish a simple
+			// right-click (open context menu) from a right-click-drag (pan
+			// the map, Foundry/Roll20 default). The actual pan is activated
+			// in `handleMapMouseMove` once the pointer crosses a threshold.
+			rightClickDragRef.current = {
+				startX: e.clientX,
+				startY: e.clientY,
+				moved: false,
+			};
+			// Don't preventDefault here — we still want contextmenu to fire
+			// if the user simply clicks without moving. The contextmenu
+			// handler consults rightClickDragRef.moved to suppress itself.
+			return;
+		}
 		if (!currentScene) return;
 		const grid = getGridPosition(e);
 		if (!grid) return;
@@ -2267,6 +2343,21 @@ const VTTEnhanced = () => {
 					handleFitZoom();
 					return;
 				}
+				// Foundry parity: Page Up / Page Down = coarse zoom in/out.
+				// Zooms to viewport center (not cursor), matching Foundry's
+				// design decision documented at foundryvtt.com/article/controls.
+				if (e.key === "PageUp") {
+					e.preventDefault();
+					setZoom((prev) => Math.min(2, Math.round((prev + 0.25) * 100) / 100));
+					return;
+				}
+				if (e.key === "PageDown") {
+					e.preventDefault();
+					setZoom((prev) =>
+						Math.max(0.5, Math.round((prev - 0.25) * 100) / 100),
+					);
+					return;
+				}
 				// Layer quick-cycle (Roll20 parity): `[` prev / `]` next
 				if ((e.key === "[" || e.key === "]") && isWarden) {
 					e.preventDefault();
@@ -2301,8 +2392,6 @@ const VTTEnhanced = () => {
 			handleMapGridAction,
 			isWarden,
 			removeToken,
-			selectedTool,
-			setZoom,
 			updateToken,
 		],
 	);
@@ -2354,7 +2443,34 @@ const VTTEnhanced = () => {
 
 	const handleMapMouseMove = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
-			if (viewportPanActiveRef.current) return;
+			// Right-click-drag threshold detection (Foundry/Roll20 parity).
+			// If the user moves more than 6px with the right button held,
+			// promote the press into a pan-viewport gesture and suppress the
+			// upcoming contextmenu event. Once promoted, `viewportPanActiveRef`
+			// drives the consolidated pan-scroll below — no double scroll.
+			const rcd = rightClickDragRef.current;
+			if (rcd && !rcd.moved) {
+				const dx = e.clientX - rcd.startX;
+				const dy = e.clientY - rcd.startY;
+				if (dx * dx + dy * dy > 36) {
+					rcd.moved = true;
+					suppressViewportPanClickRef.current = true;
+					viewportPanActiveRef.current = true;
+					setIsViewportPanning(true);
+				}
+			}
+			if (viewportPanActiveRef.current) {
+				// Space/middle-mouse/right-click pan: scroll the container
+				// continuously while modifier is held. Using movement deltas
+				// keeps the pan 1:1 with the pointer regardless of scroll
+				// position. The container is `overflow:auto` so scrollLeft
+				// clamps automatically at the scene boundaries.
+				if (mapRef.current) {
+					mapRef.current.scrollLeft -= e.movementX;
+					mapRef.current.scrollTop -= e.movementY;
+				}
+				return;
+			}
 			const grid = getGridPosition(e);
 			if (!grid) return;
 
@@ -2435,6 +2551,14 @@ const VTTEnhanced = () => {
 			const wasDraggingToken = draggedToken != null;
 			const wasFogPainting = isFogPainting;
 			const hadActiveDrawing = activeDrawing != null;
+			// Clean up any in-flight right-click-drag state. If the user
+			// released without crossing the drag threshold, the contextmenu
+			// event (fired just after mouseup) will read rightClickDragRef
+			// to decide whether to open the menu — so only clear here when
+			// a drag actually moved.
+			if (e?.button === 2 && rightClickDragRef.current?.moved) {
+				rightClickDragRef.current = null;
+			}
 			if (viewportPanActiveRef.current) {
 				clearViewportPan();
 				return;
@@ -2813,7 +2937,10 @@ const VTTEnhanced = () => {
 					/>
 				</EmbeddedProvider>
 			) : (
-				<div className="vtt-shell relative w-full h-[100dvh] overflow-hidden">
+				<div
+					ref={shellRef}
+					className="vtt-shell relative w-full h-[100dvh] overflow-hidden"
+				>
 					{/* Floating top bar (absolute positioned via VTTTopBar internals). */}
 					<VTTTopBar
 						left={
@@ -4217,7 +4344,14 @@ const VTTEnhanced = () => {
 									onMouseLeave={handleMapMouseUp}
 									onContextMenu={(e) => {
 										e.preventDefault();
-										// Find token at click position for right-click/long-press context menu
+										// Suppress the context menu if the user just finished a
+										// right-click-drag pan (Foundry/Roll20 parity — a moved
+										// right click is a pan gesture, not a menu request).
+										const rcd = rightClickDragRef.current;
+										rightClickDragRef.current = null;
+										if (rcd?.moved) return;
+										// Find token at click position for right-click/long-press
+										// context menu (click-and-release without drag).
 										const rect = mapRef.current?.getBoundingClientRect();
 										if (!rect) return;
 										const mx = e.clientX - rect.left;

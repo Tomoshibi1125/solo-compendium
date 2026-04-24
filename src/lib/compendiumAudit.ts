@@ -95,13 +95,6 @@ const templatedPhrasePatterns: RegExp[] = [
 ];
 
 const castableDatasets = new Set(["spells", "powers", "techniques"]);
-const castableDatasetsWithRunes = new Set([
-	"spells",
-	"powers",
-	"techniques",
-	"runes",
-]);
-
 // Datasets whose entries carry Title-Cased display names and may host damage
 // / utility mechanics (sigils and tattoos included) and therefore participate
 // in the naming-case, damage-theme, and utility-damage audits.
@@ -162,10 +155,19 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 		pattern: /\b(Radiant|Sun|Solar|Corona|Holy|Divine|Dawn|Judgment)\b/i,
 		expected: ["radiant", "fire"],
 	},
-	{ pattern: /\b(Chill|Ice|Frost|Arctic|Glacial|Blizzard|Cold)\b/i, expected: ["cold"] },
-	{ pattern: /\b(Fire|Flame|Blaze|Inferno|Scorch|Pyre|Molten|Burning)\b/i, expected: ["fire"] },
+	{
+		pattern: /\b(Chill|Ice|Frost|Arctic|Glacial|Blizzard|Cold)\b/i,
+		expected: ["cold"],
+	},
+	{
+		pattern: /\b(Fire|Flame|Blaze|Inferno|Scorch|Pyre|Molten|Burning)\b/i,
+		expected: ["fire"],
+	},
 	{ pattern: /\b(Poison|Toxin|Venom|Plague|Blight)\b/i, expected: ["poison"] },
-	{ pattern: /\b(Psychic|Mind|Psion|Mental|Nightmare)\b/i, expected: ["psychic"] },
+	{
+		pattern: /\b(Psychic|Mind|Psion|Mental|Nightmare)\b/i,
+		expected: ["psychic"],
+	},
 	{ pattern: /\b(Acid|Corrosive)\b/i, expected: ["acid"] },
 	{
 		pattern: /\b(Shadow|Void|Night|Dark|Umbral|Eclipse|Abyssal)\b/i,
@@ -215,13 +217,16 @@ const getFormulaString = (value: unknown): string | null => {
 	if (typeof value === "string" && value.trim().length > 0) return value;
 	if (typeof value === "number") return String(value);
 	if (!isRecord(value)) return null;
-	return getString(value.dice) ?? getString(value.roll) ?? getString(value.amount);
+	return (
+		getString(value.dice) ?? getString(value.roll) ?? getString(value.amount)
+	);
 };
 
 const collectTextFragments = (value: unknown): string[] => {
 	if (typeof value === "string") return [value];
 	if (Array.isArray(value)) return value.flatMap(collectTextFragments);
-	if (isRecord(value)) return Object.values(value).flatMap(collectTextFragments);
+	if (isRecord(value))
+		return Object.values(value).flatMap(collectTextFragments);
 	return [];
 };
 
@@ -279,9 +284,7 @@ async function loadAuditDatasets(
 		conditions,
 		equipment: items.filter((entry) => isEquipmentLikeEntry(entry as never)),
 		feats,
-		items: items.filter(
-			(entry) => !isEquipmentLikeEntry(entry as never),
-		),
+		items: items.filter((entry) => !isEquipmentLikeEntry(entry as never)),
 		jobs,
 		locations,
 		paths,
@@ -316,7 +319,7 @@ function auditDuplicates(
 				severity: "error",
 				dataset,
 				code: "duplicate_id",
-				message: `Duplicate id \"${id}\" appears ${count} times.`,
+				message: `Duplicate id "${id}" appears ${count} times.`,
 				entryId: id,
 			});
 		}
@@ -328,7 +331,7 @@ function auditDuplicates(
 				severity: "error",
 				dataset,
 				code: "duplicate_name",
-				message: `Duplicate name \"${name}\" appears ${count} times.`,
+				message: `Duplicate name "${name}" appears ${count} times.`,
 				entryName: name,
 			});
 		}
@@ -375,7 +378,9 @@ function auditTemplatedLanguage(
 		(entry as { effects?: unknown }).effects,
 	]).join("\n");
 
-	const matchedPattern = templatedPhrasePatterns.find((pattern) => pattern.test(text));
+	const matchedPattern = templatedPhrasePatterns.find((pattern) =>
+		pattern.test(text),
+	);
 	if (!matchedPattern) return;
 
 	addIssue(issues, {
@@ -411,12 +416,14 @@ function auditCastableEntry(
 			? ((entry as { attack?: Record<string, Json> }).attack ?? null)
 			: null) ||
 		(isRecord((entry as { spell_attack?: unknown }).spell_attack)
-			? ((entry as { spell_attack?: Record<string, Json> }).spell_attack ?? null)
+			? ((entry as { spell_attack?: Record<string, Json> }).spell_attack ??
+				null)
 			: null) ||
 		(isRecord(mechanics.attack) ? mechanics.attack : null);
 	const savingThrow =
 		(isRecord((entry as { saving_throw?: unknown }).saving_throw)
-			? ((entry as { saving_throw?: Record<string, Json> }).saving_throw ?? null)
+			? ((entry as { saving_throw?: Record<string, Json> }).saving_throw ??
+				null)
 			: null) ||
 		(isRecord(mechanics.saving_throw) ? mechanics.saving_throw : null);
 	const healing = isRecord(mechanics.healing) ? mechanics.healing : null;
@@ -426,7 +433,8 @@ function auditCastableEntry(
 			severity: "error",
 			dataset,
 			code: "missing_resolution",
-			message: "Mechanics do not expose an attack, save, or healing resolution.",
+			message:
+				"Mechanics do not expose an attack, save, or healing resolution.",
 			entryId: entry.id,
 			entryName: entry.name,
 		});
@@ -451,9 +459,9 @@ function auditCastableEntry(
 
 	const hasActionEconomy = Boolean(
 		getString((entry as { casting_time?: unknown }).casting_time) ||
-		getString((entry as { activation_time?: unknown }).activation_time) ||
-		getString((entry as { activation_action?: unknown }).activation_action) ||
-		isRecord((entry as { activation?: unknown }).activation),
+			getString((entry as { activation_time?: unknown }).activation_time) ||
+			getString((entry as { activation_action?: unknown }).activation_action) ||
+			isRecord((entry as { activation?: unknown }).activation),
 	);
 	if (!hasActionEconomy) {
 		addIssue(issues, {
@@ -468,8 +476,8 @@ function auditCastableEntry(
 
 	const hasTargeting = Boolean(
 		(entry as { range?: unknown }).range !== undefined ||
-		getString((entry as { target?: unknown }).target) ||
-		isRecord((entry as { area?: unknown }).area),
+			getString((entry as { target?: unknown }).target) ||
+			isRecord((entry as { area?: unknown }).area),
 	);
 	if (!hasTargeting) {
 		addIssue(issues, {
@@ -480,7 +488,7 @@ function auditCastableEntry(
 			entryId: entry.id,
 			entryName: entry.name,
 		});
-		}
+	}
 }
 
 function collectDamageType(entry: AuditEntry): string | null {
@@ -502,7 +510,8 @@ function collectDamageType(entry: AuditEntry): string | null {
 
 function hasDamageRoll(entry: AuditEntry): boolean {
 	const mechanics = isRecord(entry.mechanics) ? entry.mechanics : null;
-	const attack = mechanics && isRecord(mechanics.attack) ? mechanics.attack : null;
+	const attack =
+		mechanics && isRecord(mechanics.attack) ? mechanics.attack : null;
 	const attackDamage = getString(attack?.damage);
 	if (attackDamage && /\d+d\d+/.test(attackDamage)) return true;
 	const profile = mechanics ? getString(mechanics.damage_profile) : null;
@@ -512,7 +521,9 @@ function hasDamageRoll(entry: AuditEntry): boolean {
 		: null;
 	const topAttackDamage = getString(topAttack?.damage);
 	if (topAttackDamage && /\d+d\d+/.test(topAttackDamage)) return true;
-	const damageRoll = getString((entry as { damage_roll?: unknown }).damage_roll);
+	const damageRoll = getString(
+		(entry as { damage_roll?: unknown }).damage_roll,
+	);
 	if (damageRoll && /\d+d\d+/.test(damageRoll)) return true;
 	return false;
 }
@@ -619,7 +630,8 @@ function auditEquipmentEntry(
 		severity: "warning",
 		dataset: "equipment",
 		code: "mechanically_thin_equipment",
-		message: "Equipment entry lacks explicit mechanics, properties, effects, or numeric payload.",
+		message:
+			"Equipment entry lacks explicit mechanics, properties, effects, or numeric payload.",
 		entryId: entry.id,
 		entryName: entry.name,
 	});
@@ -655,7 +667,10 @@ export async function runCompendiumAudit(
 	const errors = issues.filter((issue) => issue.severity === "error");
 	const warnings = issues.filter((issue) => issue.severity === "warning");
 	const datasetCounts = Object.fromEntries(
-		Object.entries(datasets).map(([dataset, entries]) => [dataset, entries.length]),
+		Object.entries(datasets).map(([dataset, entries]) => [
+			dataset,
+			entries.length,
+		]),
 	);
 	const totalEntries = Object.values(datasetCounts).reduce(
 		(total, count) => total + count,
@@ -671,12 +686,19 @@ export async function runCompendiumAudit(
 	};
 }
 
-export function formatCompendiumAuditIssue(issue: CompendiumAuditIssue): string {
-	const entryLabel = issue.entryName || issue.entryId ? ` (${issue.entryName ?? issue.entryId})` : "";
+export function formatCompendiumAuditIssue(
+	issue: CompendiumAuditIssue,
+): string {
+	const entryLabel =
+		issue.entryName || issue.entryId
+			? ` (${issue.entryName ?? issue.entryId})`
+			: "";
 	return `[${issue.severity.toUpperCase()}] ${issue.dataset}:${issue.code}${entryLabel} ${issue.message}`;
 }
 
-export function formatCompendiumAuditReport(summary: CompendiumAuditSummary): string {
+export function formatCompendiumAuditReport(
+	summary: CompendiumAuditSummary,
+): string {
 	const lines = [
 		"=== COMPENDIUM AUDIT START ===",
 		`Datasets: ${Object.entries(summary.datasets)
@@ -695,7 +717,9 @@ export function formatCompendiumAuditReport(summary: CompendiumAuditSummary): st
 
 	if (buckets.size > 0) {
 		lines.push("Issue buckets:");
-		for (const [key, count] of [...buckets.entries()].sort((a, b) => b[1] - a[1])) {
+		for (const [key, count] of [...buckets.entries()].sort(
+			(a, b) => b[1] - a[1],
+		)) {
 			lines.push(`- ${key} x${count}`);
 		}
 	}

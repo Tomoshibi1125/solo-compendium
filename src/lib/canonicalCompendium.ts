@@ -288,7 +288,8 @@ function formatDurationText(value: unknown): string | null {
 		return `Concentration, up to ${time}`;
 	}
 	if (time && unit) return `${time} ${unit}`;
-	if (time && type && time !== type) return `${time} ${humanizeToken(type)}`.trim();
+	if (time && type && time !== type)
+		return `${time} ${humanizeToken(type)}`.trim();
 	return type ?? time ?? null;
 }
 
@@ -385,8 +386,9 @@ function normalizeCastableEntry(
 	const savingThrow = getSavingThrowRecord(entry, mechanics);
 	const rawTags = Array.isArray(entry.tags)
 		? entry.tags.filter(
-			(tag): tag is string => typeof tag === "string" && tag.trim().length > 0,
-		)
+				(tag): tag is string =>
+					typeof tag === "string" && tag.trim().length > 0,
+			)
 		: [];
 	const saveAbility =
 		getNonEmptyString((entry as { save_ability?: unknown }).save_ability) ??
@@ -422,13 +424,17 @@ function normalizeCastableEntry(
 		ritual: Boolean(entry.ritual),
 		higher_levels:
 			getNonEmptyString((entry as { higher_levels?: unknown }).higher_levels) ??
-			getNonEmptyString((entry as { atHigherLevels?: unknown }).atHigherLevels) ??
+			getNonEmptyString(
+				(entry as { atHigherLevels?: unknown }).atHigherLevels,
+			) ??
 			getNonEmptyString(
 				(entry as { at_higher_levels?: unknown }).at_higher_levels,
 			),
 		has_attack_roll: entry.has_attack_roll ?? Boolean(attack),
 		has_save: Boolean(
-			(entry as { has_save?: boolean | null }).has_save ?? saveAbility ?? savingThrow,
+			(entry as { has_save?: boolean | null }).has_save ??
+				saveAbility ??
+				savingThrow,
 		),
 		save_ability: saveAbility,
 		damage_roll: extractDamageRoll(entry, attack, mechanics),
@@ -447,7 +453,10 @@ function normalizeEligibilityToken(value: string | null | undefined): string {
 
 function matchesCastableEligibility(
 	entry: CanonicalCastableEntry,
-	filters: Pick<LearnableCastableOptions, "jobName" | "pathName" | "regentNames">,
+	filters: Pick<
+		LearnableCastableOptions,
+		"jobName" | "pathName" | "regentNames"
+	>,
 ): boolean {
 	const requestedTokens = [
 		normalizeEligibilityToken(filters.jobName),
@@ -495,7 +504,9 @@ export async function listCanonicalCastables(
 	);
 
 	return canonicalCastableTypes.flatMap((type) =>
-		(results.get(type) ?? []).map((entry) => normalizeCastableEntry(entry, type)),
+		(results.get(type) ?? []).map((entry) =>
+			normalizeCastableEntry(entry, type),
+		),
 	);
 }
 

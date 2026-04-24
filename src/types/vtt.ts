@@ -45,7 +45,12 @@ export interface VTTTokenInstance {
 	imageUrl?: string;
 	portrait_url?: string;
 	color?: string;
-	size: "small" | "medium" | "large" | "huge";
+	size: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
+	/** Foundry-parity per-token footprint override in grid units. */
+	gridWidth?: number;
+	gridHeight?: number;
+	/** Image-only scale multiplier, decoupled from grid footprint. */
+	imageScale?: number;
 	x: number;
 	y: number;
 	rotation: number;

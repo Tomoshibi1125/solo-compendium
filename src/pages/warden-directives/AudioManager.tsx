@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AIAudioGenerateTab } from "@/components/audio/AIAudioGenerateTab";
 import { AIEnhancedAudio } from "@/components/audio/AIEnhancedAudio";
 import { AudioLibrary } from "@/components/audio/AudioLibrary";
 import { AudioPlayer } from "@/components/audio/AudioPlayer";
@@ -25,10 +26,12 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { useAudioLibrary, useAudioPlayer } from "@/lib/audio/hooks";
 import type { AudioTrack, Playlist } from "@/lib/audio/types";
+import { useAuth } from "@/lib/auth/authContext";
 
 export default function AcousticResonanceManager() {
 	const navigate = useNavigate();
 	const { toast } = useToast();
+	const { user } = useAuth();
 	const {
 		state: storedState,
 		isLoading,
@@ -39,6 +42,7 @@ export default function AcousticResonanceManager() {
 	});
 
 	const [activeTab, setActiveTab] = useState("player");
+	const [libraryRefreshKey, setLibraryRefreshKey] = useState(0);
 
 	const hydrated = useMemo(
 		() => ({ activeTab: storedState.activeTab ?? "player" }),
@@ -65,6 +69,8 @@ export default function AcousticResonanceManager() {
 		tracks: libraryTracks,
 		getTracksByCategory,
 		getTracksByMood,
+		loadLibrary,
+		registerStoredTrack,
 	} = useAudioLibrary();
 	const {
 		loadTrack,
@@ -150,6 +156,16 @@ export default function AcousticResonanceManager() {
 		}
 
 		await handleTrackSelect(effectTracks[0]);
+	};
+
+	const handleImportGeneratedTrack = async (
+		track: AudioTrack,
+		options: { storagePath: string; bucket?: "ai-audio" | "audio-tracks" },
+	) => {
+		const storedTrack = await registerStoredTrack(track, options);
+		await loadLibrary();
+		setLibraryRefreshKey((value) => value + 1);
+		return storedTrack;
 	};
 
 	return (
@@ -379,7 +395,10 @@ export default function AcousticResonanceManager() {
 					</TabsContent>
 
 					<TabsContent value="library" className="space-y-4">
-						<AudioLibrary onTrackSelect={handleTrackSelect} />
+						<AudioLibrary
+							key={libraryRefreshKey}
+							onTrackSelect={handleTrackSelect}
+						/>
 					</TabsContent>
 
 					<TabsContent value="settings" className="space-y-4">
@@ -444,7 +463,14 @@ export default function AcousticResonanceManager() {
 					</TabsContent>
 
 					<TabsContent value="ai" className="space-y-4">
-						<AIEnhancedAudio />
+						<div className="space-y-6">
+							<AIAudioGenerateTab
+								canGenerate={user?.role === "warden"}
+								onImportTrack={handleImportGeneratedTrack}
+								onLoadTrack={handleTrackSelect}
+							/>
+							<AIEnhancedAudio />
+						</div>
 					</TabsContent>
 				</Tabs>
 			</div>

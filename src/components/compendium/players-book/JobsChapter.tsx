@@ -1,9 +1,10 @@
 import { Shield } from "lucide-react";
 import { RiftHeading } from "@/components/ui/AscendantText";
-import { jobs } from "@/data/compendium/jobs";
 import { paths } from "@/data/compendium/paths";
+import { useStaticJobs } from "@/hooks/useStaticJobs";
 
 export const JobsChapter = () => {
+	const { data: jobs = [] } = useStaticJobs();
 	// Group paths by job for easy rendering
 	const pathsByJob = paths.reduce(
 		(acc, path) => {

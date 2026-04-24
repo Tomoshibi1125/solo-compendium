@@ -611,6 +611,8 @@ export interface CompendiumJob extends BaseCompendiumItem {
 		quest_completion: string;
 		warden_approval: boolean;
 	};
+	darkvision?: number;
+	specialSenses?: string[];
 }
 
 export interface CompendiumPath extends BaseCompendiumItem {

@@ -13,7 +13,16 @@ export interface HandoutEntry {
 	updatedAt: string;
 }
 
-const isLocalMode = () => !isSupabaseConfigured;
+/**
+ * Guest-aware: returns true when Supabase isn't configured OR when the
+ * user is signed out. The sandbox injector writes handouts to
+ * localStorage in both cases, so the reader must fall through.
+ */
+const isLocalMode = async (): Promise<boolean> => {
+	if (!isSupabaseConfigured) return true;
+	const { data } = await supabase.auth.getUser();
+	return !data.user;
+};
 
 const JOURNAL_CATEGORIES = ["session", "note", "lore", "handout"] as const;
 const toJournalCategory = (value: Json): string => {
@@ -49,7 +58,7 @@ export const useCampaignHandouts = (campaignId: string | null) => {
 		queryFn: async (): Promise<HandoutEntry[]> => {
 			if (!campaignId) return [];
 
-			if (isLocalMode()) {
+			if (await isLocalMode()) {
 				return readLocalJournals(campaignId);
 			}
 

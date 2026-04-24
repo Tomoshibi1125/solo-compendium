@@ -6,7 +6,8 @@ import type { CompendiumSpell } from "../../../types/compendium";
 //   - damage_type + school aligned with the spell's theme
 //   - unique lore fields tied to Rift Ascendant worldbuilding
 //   - distinct display names (D-tier duplicates renamed to tier-unique forms)
-export const spells_d: CompendiumSpell[] = [	{
+export const spells_d: CompendiumSpell[] = [
+	{
 		id: "spell-d-1",
 		name: "Chill Lance",
 		display_name: "Chill Lance",
@@ -20,8 +21,7 @@ export const spells_d: CompendiumSpell[] = [	{
 			curse: "",
 			personality:
 				"Quiet and precise; the spell hums faintly against metal within arm's reach.",
-			current_owner:
-				"Distributed openly to Bureau-licensed Rank D Hunters.",
+			current_owner: "Distributed openly to Bureau-licensed Rank D Hunters.",
 			prior_owners: [
 				"Medic-3 of the Harbin Recovery Team",
 				"Gate Bureau archivist S. Ro",
@@ -117,8 +117,7 @@ export const spells_d: CompendiumSpell[] = [	{
 			curse: "",
 			personality:
 				"Impatient; the air pressure spikes the moment the casting gesture begins.",
-			current_owner:
-				"Open Bureau training manual, Rank D volume.",
+			current_owner: "Open Bureau training manual, Rank D volume.",
 			prior_owners: [
 				"Hunter K. Yun of the Seoul Third Wall",
 				"Bureau Research Team Echo-9",
@@ -423,7 +422,8 @@ export const spells_d: CompendiumSpell[] = [	{
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "1d8 necrotic damage on hit.",
-			secondary: "DC 14 Intelligence save; failure = full damage + Frightened 1 minute.",
+			secondary:
+				"DC 14 Intelligence save; failure = full damage + Frightened 1 minute.",
 		},
 		level: 2,
 		school: "Necromancy",
@@ -512,8 +512,7 @@ export const spells_d: CompendiumSpell[] = [	{
 				"Hunter Academy Instructor S. Moon",
 			],
 		},
-		flavor:
-			"A door made of light that only ever opens outward, and only once.",
+		flavor: "A door made of light that only ever opens outward, and only once.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -603,13 +602,9 @@ export const spells_d: CompendiumSpell[] = [	{
 			personality:
 				"Clean; the lance leaves no residual frost, only a straight scar of cold air.",
 			current_owner: "Rank D Bureau marksman program.",
-			prior_owners: [
-				"Bureau Marksman L. Oh",
-				"Ural Expedition Team Three",
-			],
+			prior_owners: ["Bureau Marksman L. Oh", "Ural Expedition Team Three"],
 		},
-		flavor:
-			"One exhale held, sharpened, and launched without regret.",
+		flavor: "One exhale held, sharpened, and launched without regret.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -700,10 +695,7 @@ export const spells_d: CompendiumSpell[] = [	{
 			personality:
 				"Forthright; the line is briefly visible as a red thread before the damage resolves.",
 			current_owner: "Bureau demolition and breach specialists.",
-			prior_owners: [
-				"Demolition Lead P. Cha",
-				"Fifth Wall First Squad",
-			],
+			prior_owners: ["Demolition Lead P. Cha", "Fifth Wall First Squad"],
 		},
 		flavor:
 			"A guaranteed line of force, delivered at the speed of a held breath.",
@@ -796,10 +788,7 @@ export const spells_d: CompendiumSpell[] = [	{
 			personality:
 				"Self-critical; the caster always flinches a fraction of a second before the target reacts.",
 			current_owner: "Rank D divination-track casters.",
-			prior_owners: [
-				"Divination Scholar B. Noh",
-				"Field Hunter Y. Jeong",
-			],
+			prior_owners: ["Divination Scholar B. Noh", "Field Hunter Y. Jeong"],
 		},
 		flavor:
 			"A precise wound, dealt at arm's length by a hand that isn't there.",
@@ -891,15 +880,13 @@ export const spells_d: CompendiumSpell[] = [	{
 			curse: "",
 			personality:
 				"Territorial; the dim light cannot be dispelled by standard light sources until the caster ends the spell.",
-			current_owner:
-				"Bureau-vetted Rank D casters on nocturnal assignments.",
+			current_owner: "Bureau-vetted Rank D casters on nocturnal assignments.",
 			prior_owners: [
 				"An unidentified Void-touched broker",
 				"Bureau Safety Review Cell",
 			],
 		},
-		flavor:
-			"A quiet promise kept between the caster and the dark.",
+		flavor: "A quiet promise kept between the caster and the dark.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -994,8 +981,7 @@ export const spells_d: CompendiumSpell[] = [	{
 				"Close-Combat Instructor A. Baek",
 			],
 		},
-		flavor:
-			"Cleared space, cheaply paid for.",
+		flavor: "Cleared space, cheaply paid for.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -1091,8 +1077,7 @@ export const spells_d: CompendiumSpell[] = [	{
 				"Bureau Resonance Monitoring Cell",
 			],
 		},
-		flavor:
-			"A cup held out to the target's future, and then tipped over.",
+		flavor: "A cup held out to the target's future, and then tipped over.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -1165,7 +1150,11 @@ export const spells_d: CompendiumSpell[] = [	{
 		},
 		discovery_lore:
 			"The confinement trial's third caster reported 'nothing useful' for thirty-eight days and then produced the spell on day thirty-nine, fully formed.",
-		theme_tags: ["resonance-monitoring", "forbidden-until-cleared", "gate-recovery"],
+		theme_tags: [
+			"resonance-monitoring",
+			"forbidden-until-cleared",
+			"gate-recovery",
+		],
 	},
 	{
 		id: "spell-d-13",
@@ -1182,13 +1171,9 @@ export const spells_d: CompendiumSpell[] = [	{
 			personality:
 				"Bright; the cast's after-image lingers for 1 round on reflective surfaces.",
 			current_owner: "Rank D Bureau evocation specialists.",
-			prior_owners: [
-				"Bureau Corona Cell",
-				"Solar-Flare Response Team",
-			],
+			prior_owners: ["Bureau Corona Cell", "Solar-Flare Response Team"],
 		},
-		flavor:
-			"One minute of sky pulled down, sixty seconds early.",
+		flavor: "One minute of sky pulled down, sixty seconds early.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -1285,8 +1270,7 @@ export const spells_d: CompendiumSpell[] = [	{
 				"Bureau Standards Office",
 			],
 		},
-		flavor:
-			"A controlled grounding, extended just far enough to matter.",
+		flavor: "A controlled grounding, extended just far enough to matter.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -1382,8 +1366,7 @@ export const spells_d: CompendiumSpell[] = [	{
 				"Arctic Lance lineage casters",
 			],
 		},
-		flavor:
-			"A reliable, boring miracle: it always lands where you pointed.",
+		flavor: "A reliable, boring miracle: it always lands where you pointed.",
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",

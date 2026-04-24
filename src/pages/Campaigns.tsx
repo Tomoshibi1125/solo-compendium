@@ -163,20 +163,17 @@ const Campaigns = () => {
 				],
 			);
 
-			// Inject sandbox module if requested — only for authenticated users
-			// whose campaign was verified by the RPC + post-check
-			if (importSandbox && user) {
+			// Inject sandbox module if requested. Authenticated users hit the
+			// Supabase path; guests hit the localStorage path automatically via
+			// `isLocalMode()` inside `useCampaignSandboxInjector`. Gating on
+			// `user` here silently stranded guests with an empty campaign even
+			// though the injector fully supports guest mode.
+			if (importSandbox) {
 				void injectSandbox(campaignId);
 				toast({
 					title: "Campaign Established",
 					description:
 						'Importing "The Shadow of the Regent" sandbox module in the background...',
-				});
-			} else if (importSandbox && !user) {
-				toast({
-					title: "Campaign Established",
-					description:
-						"Sign in to import the sandbox module with full wiki, maps, and encounters.",
 				});
 			}
 

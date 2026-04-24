@@ -3,6 +3,7 @@
  * Handles AI integrations for audio and art enhancement
  */
 
+import { supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { logger } from "@/lib/logger";
 import type {
@@ -11,6 +12,8 @@ import type {
 	AIResponse,
 	AIService,
 	AudioAnalysis,
+	AudioGenerationRequest,
+	AudioGenerationResponse,
 	ImageAnalysis,
 	PromptEnhancement,
 } from "./types";
@@ -28,6 +31,11 @@ const REQUEST_TIMEOUT_MS = 25000;
 const OLLAMA_TAGS_TIMEOUT_MS = 2500;
 // Server-side proxy endpoint — keeps the API key off the client
 const AI_PROXY_ENDPOINT = "/api/ai";
+const AI_AUDIO_PROXY_ENDPOINT = "/api/aiAudio";
+// Stable Audio Open via HF can be slow on cold-start; allow 2 min total
+// including up to 3 polling retries when the model is loading.
+const AUDIO_GEN_TIMEOUT_MS = 120_000;
+const AUDIO_GEN_MAX_RETRIES = 3;
 const OLLAMA_MODEL_PRIORITY = [
 	"qwen2.5:14b-instruct",
 	"qwen2.5:7b-instruct",
@@ -239,6 +247,118 @@ export class AIServiceManager {
 			description:
 				analysis.description ||
 				`Audio analysis completed for ${audioFile.name}.`,
+		};
+	}
+
+	/**
+	 * Generate audio from a text prompt via Stable Audio Open / MusicGen on
+	 * Hugging Face (routed through /api/aiAudio). Warden-only on the server;
+	 * returns the uploaded Supabase Storage public URL on success.
+	 *
+	 * Handles HF cold-start by automatically polling up to AUDIO_GEN_MAX_RETRIES
+	 * times with the retry-after interval reported by the server.
+	 */
+	async generateAudio(
+		request: AudioGenerationRequest,
+		onStatus?: (status: {
+			state: "loading" | "retrying";
+			retryAfterSeconds?: number;
+			attempt?: number;
+		}) => void,
+	): Promise<AudioGenerationResponse> {
+		// Resolve the user's Supabase access token (required by the proxy).
+		let accessToken: string | null = null;
+		try {
+			const { data } = await supabase.auth.getSession();
+			accessToken = data.session?.access_token ?? null;
+		} catch (err) {
+			logger.warn(
+				"aiService.generateAudio: failed to read Supabase session",
+				err,
+			);
+		}
+		if (!accessToken) {
+			return {
+				success: false,
+				status: "error",
+				error:
+					"Not signed in. Audio generation requires an authenticated Warden session.",
+			};
+		}
+
+		onStatus?.({ state: "loading" });
+
+		for (let attempt = 0; attempt < AUDIO_GEN_MAX_RETRIES; attempt++) {
+			const controller = new AbortController();
+			const timer = setTimeout(() => controller.abort(), AUDIO_GEN_TIMEOUT_MS);
+
+			try {
+				const response = await fetch(AI_AUDIO_PROXY_ENDPOINT, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${accessToken}`,
+					},
+					body: JSON.stringify(request),
+					signal: controller.signal,
+				});
+
+				const data = await response
+					.json()
+					.catch(() => ({}) as Record<string, unknown>);
+
+				if (response.ok && data?.success === true) {
+					return data as AudioGenerationResponse;
+				}
+
+				// Cold-start — poll again
+				if (response.status === 503 && data?.status === "model_loading") {
+					const retryAfter = Math.min(
+						Math.max(Number(data.retryAfterSeconds) || 20, 10),
+						60,
+					);
+					onStatus?.({
+						state: "retrying",
+						retryAfterSeconds: retryAfter,
+						attempt: attempt + 1,
+					});
+					await new Promise((r) => setTimeout(r, retryAfter * 1000));
+					continue;
+				}
+
+				return {
+					success: false,
+					status: "error",
+					error:
+						(typeof data.error === "string" ? data.error : null) ||
+						`Audio generation failed (HTTP ${response.status})`,
+					retryAfterSeconds:
+						typeof data.retryAfterSeconds === "number"
+							? data.retryAfterSeconds
+							: undefined,
+				};
+			} catch (err) {
+				if (err instanceof Error && err.name === "AbortError") {
+					return {
+						success: false,
+						status: "error",
+						error: "Audio generation timed out",
+					};
+				}
+				return {
+					success: false,
+					status: "error",
+					error: err instanceof Error ? err.message : "Audio generation error",
+				};
+			} finally {
+				clearTimeout(timer);
+			}
+		}
+
+		return {
+			success: false,
+			status: "error",
+			error: `Model still warming up after ${AUDIO_GEN_MAX_RETRIES} retries. Try again in a minute.`,
 		};
 	}
 

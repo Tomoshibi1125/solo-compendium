@@ -11,6 +11,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { computeVisibilityPolygon, createHexGrid } from "@/lib/vtt";
+import { getTokenFootprintPx, type TokenSize } from "@/lib/vtt/tokenSizing";
 
 type TokenBlendMode =
 	| "normal"
@@ -33,7 +34,12 @@ type PlacedToken = {
 	borderColor?: string;
 	/** Shared group id used to move multiple tokens as a unit (Shift+G). */
 	groupId?: string;
-	size: "small" | "medium" | "large" | "huge";
+	size: TokenSize;
+	/** Foundry-parity per-token grid footprint overrides. */
+	gridWidth?: number;
+	gridHeight?: number;
+	/** Visual image scale that does not affect the grid footprint. */
+	imageScale?: number;
 	x: number;
 	y: number;
 	rotation: number;
@@ -82,7 +88,7 @@ type VttPixiStageProps = {
 	walls?: import("@/lib/vtt").WallSegment[];
 	lightSources?: import("@/lib/vtt").LightSource[];
 	gridConfig?: { type: "square" | "hex"; size: number };
-	onRequestZoom: (nextZoom: number) => void;
+	onRequestZoom: (nextZoom: number, cursor?: { x: number; y: number }) => void;
 	viewportPanModifierActive?: boolean;
 	onTokenDragStart?: (tokenId: string) => void;
 	onTokenDragEnd?: (tokenId: string) => void;
@@ -91,13 +97,6 @@ type VttPixiStageProps = {
 	weather?: "none" | "rain" | "snow" | "embers" | "gas";
 	/** Called when the PixiJS stage is ready, exposing the app and effects container for particle effects */
 	onStageReady?: (app: Application, effectsContainer: Container) => void;
-};
-
-const SIZE_VALUES: Record<PlacedToken["size"], number> = {
-	small: 32,
-	medium: 48,
-	large: 64,
-	huge: 96,
 };
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
@@ -764,7 +763,21 @@ export function VttPixiStage({
 			});
 
 			for (const token of visible) {
-				const size = SIZE_VALUES[token.size] * zoom;
+				// Grid-unit footprint (industry standard: Roll20/Foundry/DDB).
+				// Medium = 1×1 cells, Large = 2×2, Huge = 3×3, Gargantuan = 4×4,
+				// Tiny = 0.5×0.5. Previous code used fixed pixel constants
+				// (48/64/96) which made tokens look tiny on scenes with larger
+				// grid sizes (e.g. sandbox scenes use gridSize=70).
+				const { width: footprintW, height: footprintH } = getTokenFootprintPx(
+					token.size,
+					gridSize,
+					zoom,
+					{ gridWidth: token.gridWidth, gridHeight: token.gridHeight },
+				);
+				// Circle/bar geometry stays square — use the larger dimension so
+				// non-square tokens are fully circumscribed.
+				const size = Math.max(footprintW, footprintH);
+				const imageScale = token.imageScale ?? 1;
 				const isOverlayToken =
 					token.render?.mode === "overlay" ||
 					token.tokenType === "effect" ||
@@ -776,8 +789,8 @@ export function VttPixiStage({
 				const container = new Container();
 				container.x = token.x * gridSize * zoom;
 				container.y = token.y * gridSize * zoom;
-				container.width = size;
-				container.height = size;
+				container.width = footprintW;
+				container.height = footprintH;
 				container.rotation = (token.rotation * Math.PI) / 180;
 				container.zIndex = token.layer * 10 + 10;
 				container.eventMode = "static";
@@ -822,8 +835,15 @@ export function VttPixiStage({
 					try {
 						const texture = await Assets.load(token.imageUrl);
 						const sprite = Sprite.from(texture as never);
-						sprite.width = size;
-						sprite.height = size;
+						// Foundry parity: imageScale multiplies sprite size but
+						// never the grid footprint/token.
+						sprite.width = footprintW * imageScale;
+						sprite.height = footprintH * imageScale;
+						// Re-center after scale so oversized art stays centered.
+						const offsetX = (footprintW - sprite.width) / 2;
+						const offsetY = (footprintH - sprite.height) / 2;
+						sprite.x = offsetX;
+						sprite.y = offsetY;
 						sprite.anchor.set(0);
 						sprite.alpha = token.render?.opacity ?? 1;
 						sprite.blendMode = blendModeToPixi(
@@ -832,7 +852,9 @@ export function VttPixiStage({
 						if (!isOverlayToken) {
 							sprite.mask = tokenBg;
 						}
-						sprite.scale.set(1);
+						// NOTE: don't call sprite.scale.set(1) here — sprite.width/height
+						// internally update scale to match our target footprint, and
+						// resetting to 1 would collapse the sprite back to texture size.
 						tokenLayer.addChild(container);
 						container.addChild(sprite);
 					} catch {
@@ -958,9 +980,11 @@ export function VttPixiStage({
 						},
 					});
 					label.anchor.set(0.5, 0);
-					// Position nameplate below the token
-					label.x = token.x * gridSize * zoom + size / 2;
-					label.y = token.y * gridSize * zoom + size + 2;
+					// Position nameplate below the token. Horizontal center is half
+					// the footprint width; vertical anchor uses full footprint
+					// height so non-square tokens still get a well-placed label.
+					label.x = token.x * gridSize * zoom + footprintW / 2;
+					label.y = token.y * gridSize * zoom + footprintH + 2;
 					label.zIndex = token.layer * 10 + 11;
 					// Highlight nameplate if token is active initiative token
 					if (activeInitiativeTokenId === token.id) {
@@ -1398,15 +1422,23 @@ export function VttPixiStage({
 			// deltaMode 0 = pixel, 1 = line, 2 = page. Normalize to a small
 			// per-notch zoom delta so trackpads and mice feel similar.
 			const normalized =
-				e.deltaMode === 0 ? e.deltaY / 100 : e.deltaMode === 1 ? e.deltaY / 3 : e.deltaY;
+				e.deltaMode === 0
+					? e.deltaY / 100
+					: e.deltaMode === 1
+						? e.deltaY / 3
+						: e.deltaY;
 			const direction = normalized > 0 ? -1 : 1;
 			const magnitude = e.ctrlKey || e.metaKey ? 0.2 : 0.1;
-			const nextZoom = Math.max(
-				0.5,
-				Math.min(2, zoom + direction * magnitude),
-			);
+			const nextZoom = Math.max(0.5, Math.min(2, zoom + direction * magnitude));
 			if (Math.abs(nextZoom - zoom) > 0.001) {
-				onRequestZoom(nextZoom);
+				// Foundry-parity zoom-at-cursor: pass the wheel event's
+				// container-relative offset so scroll adjusts to keep the
+				// world-point under the cursor stationary after zoom.
+				const rect = container.getBoundingClientRect();
+				onRequestZoom(nextZoom, {
+					x: e.clientX - rect.left,
+					y: e.clientY - rect.top,
+				});
 			}
 		};
 

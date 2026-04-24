@@ -18,6 +18,7 @@ interface StoredCampaignNoteMeta {
 }
 
 export interface CampaignNoteSecretSegment {
+	id: string;
 	kind: "text" | "secret";
 	content: string;
 	label?: string | null;
@@ -35,9 +36,8 @@ const globalBuffer = globalThis as typeof globalThis & {
 const encodeBase64 = (value: string): string => {
 	if (typeof globalThis.btoa === "function") {
 		return globalThis.btoa(
-			encodeURIComponent(value).replace(
-			/%([0-9A-F]{2})/g,
-			(_, hex: string) => String.fromCharCode(parseInt(hex, 16)),
+			encodeURIComponent(value).replace(/%([0-9A-F]{2})/g, (_, hex: string) =>
+				String.fromCharCode(parseInt(hex, 16)),
 			),
 		);
 	}
@@ -71,13 +71,17 @@ const sanitizePermissions = (
 			const permission = entry[1];
 			return (
 				typeof entry[0] === "string" &&
-				(permission === "none" || permission === "read" || permission === "write")
+				(permission === "none" ||
+					permission === "read" ||
+					permission === "write")
 			);
 		}),
 	);
 };
 
-export const stripCampaignNoteMetadata = (content: string | null | undefined) => {
+export const stripCampaignNoteMetadata = (
+	content: string | null | undefined,
+) => {
 	if (!content) return "";
 	return content.replace(NOTE_META_REGEX, "");
 };
@@ -162,14 +166,17 @@ export const parseCampaignNoteSegments = (
 	let cursor = 0;
 	let match = SECRET_BLOCK_REGEX.exec(body);
 
+	let segIdx = 0;
 	while (match) {
 		if (match.index > cursor) {
 			segments.push({
+				id: `text-${segIdx++}`,
 				kind: "text",
 				content: body.slice(cursor, match.index),
 			});
 		}
 		segments.push({
+			id: `secret-${segIdx++}`,
 			kind: "secret",
 			label: match[1]?.trim() || null,
 			content: match[2] || "",
@@ -179,11 +186,15 @@ export const parseCampaignNoteSegments = (
 	}
 
 	if (cursor < body.length) {
-		segments.push({ kind: "text", content: body.slice(cursor) });
+		segments.push({
+			id: `text-${segIdx++}`,
+			kind: "text",
+			content: body.slice(cursor),
+		});
 	}
 
 	if (segments.length === 0) {
-		segments.push({ kind: "text", content: body });
+		segments.push({ id: "text-0", kind: "text", content: body });
 	}
 
 	SECRET_BLOCK_REGEX.lastIndex = 0;

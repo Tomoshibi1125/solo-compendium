@@ -3,6 +3,10 @@ import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import {
+	readLocalEncounterEntries,
+	readLocalEncounters,
+} from "@/lib/guestStore";
 
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
@@ -24,12 +28,21 @@ export const useCampaignEncounters = (campaignId: string) => {
 	return useQuery({
 		queryKey: ["campaigns", campaignId, "encounters"],
 		queryFn: async (): Promise<EncounterRow[]> => {
-			if (!isSupabaseConfigured) return [];
+			if (!campaignId) return [];
+
+			const hydrateLocal = (): EncounterRow[] =>
+				readLocalEncounters(campaignId)
+					.slice()
+					.sort((a, b) =>
+						(b.updated_at ?? "").localeCompare(a.updated_at ?? ""),
+					);
+
+			if (!isSupabaseConfigured) return hydrateLocal();
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
 			if (!user) {
-				if (guestEnabled) return [];
+				if (guestEnabled) return hydrateLocal();
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
@@ -46,16 +59,29 @@ export const useCampaignEncounters = (campaignId: string) => {
 	});
 };
 
-export const useCampaignEncounterEntries = (encounterId: string | null) => {
+export const useCampaignEncounterEntries = (
+	encounterId: string | null,
+	campaignId?: string,
+) => {
 	return useQuery({
 		queryKey: ["campaigns", "encounters", encounterId, "entries"],
 		queryFn: async (): Promise<EncounterEntryRow[]> => {
-			if (!encounterId || !isSupabaseConfigured) return [];
+			if (!encounterId) return [];
+
+			const hydrateLocal = (): EncounterEntryRow[] => {
+				if (!campaignId) return [];
+				return readLocalEncounterEntries(campaignId)
+					.filter((e) => e.encounter_id === encounterId)
+					.slice()
+					.sort((a, b) => a.created_at.localeCompare(b.created_at));
+			};
+
+			if (!isSupabaseConfigured) return hydrateLocal();
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
 			if (!user) {
-				if (guestEnabled) return [];
+				if (guestEnabled) return hydrateLocal();
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 

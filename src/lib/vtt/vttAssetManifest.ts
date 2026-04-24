@@ -36,7 +36,7 @@ export interface VTTAsset {
 	/** SA rank tier (E through S) */
 	tier?: "E" | "D" | "C" | "B" | "A" | "S";
 	/** File format */
-	format: "webp" | "svg" | "png" | "mp3" | "ogg" | "stream";
+	format: "webp" | "svg" | "png" | "mp3" | "ogg" | "wav" | "stream";
 	/** Attribution/license info */
 	attribution?: string;
 }
@@ -332,7 +332,14 @@ export const MAP_ASSETS: VTTAsset[] = [
 		name: "The Hollow Subway",
 		category: "map",
 		path: "/generated/compendium/sandbox_assets/subway_map.png",
-		tags: ["sandbox", "subway", "underground", "dungeon", "haunted", "campaign"],
+		tags: [
+			"sandbox",
+			"subway",
+			"underground",
+			"dungeon",
+			"haunted",
+			"campaign",
+		],
 		tier: "D",
 		format: "png",
 		attribution: "AI Generated — Rift Ascendant",
@@ -352,7 +359,14 @@ export const MAP_ASSETS: VTTAsset[] = [
 		name: "Fungal Depths / Verdant Overgrowth",
 		category: "map",
 		path: "/generated/compendium/sandbox_assets/overgrown_map.png",
-		tags: ["sandbox", "fungal", "overgrown", "cavern", "bioluminescent", "campaign"],
+		tags: [
+			"sandbox",
+			"fungal",
+			"overgrown",
+			"cavern",
+			"bioluminescent",
+			"campaign",
+		],
 		tier: "C",
 		format: "png",
 		attribution: "AI Generated — Rift Ascendant",
@@ -362,7 +376,14 @@ export const MAP_ASSETS: VTTAsset[] = [
 		name: "Aetheric Sewer Network",
 		category: "map",
 		path: "/generated/compendium/sandbox_assets/sewer_map.png",
-		tags: ["sandbox", "sewer", "underground", "tunnels", "aetheric", "campaign"],
+		tags: [
+			"sandbox",
+			"sewer",
+			"underground",
+			"tunnels",
+			"aetheric",
+			"campaign",
+		],
 		tier: "C",
 		format: "png",
 		attribution: "AI Generated — Rift Ascendant",
@@ -412,7 +433,15 @@ export const MAP_ASSETS: VTTAsset[] = [
 		name: "Throne of the Regent",
 		category: "map",
 		path: "/generated/compendium/sandbox_assets/throne_map.png",
-		tags: ["sandbox", "throne", "boss", "final", "regent", "shadow", "campaign"],
+		tags: [
+			"sandbox",
+			"throne",
+			"boss",
+			"final",
+			"regent",
+			"shadow",
+			"campaign",
+		],
 		tier: "S",
 		format: "png",
 		attribution: "AI Generated — Rift Ascendant",
@@ -991,49 +1020,52 @@ export const EFFECT_ASSETS: VTTAsset[] = [
 	},
 ];
 
-// ─── Free Audio Streams (no download needed) ────────────────
-// Audio entries use vtt-engine:// (VttMusicEngine procedural synthesis) or
-// local /audio/music/* paths (Howler.js via audioService). No external URLs.
+// ─── Ambient Audio (real recordings / synthesized loops) ────────────
+// All paths point to real audio files on disk under /public/audio/.
+// Synthesised WAV files (CC0, self-authored) replace former vtt-engine://
+// procedural substitutes per the Phase 2 audio overhaul.
+// Warden-grade high-fidelity replacements can be generated at runtime
+// via the Stable Audio Open integration (Audio Manager → AI Generate tab).
 
 export const AUDIO_ASSETS: VTTAsset[] = [
-	// Environment -- VttMusicEngine procedural synthesis
+	// Environment
 	{
 		id: "audio-campfire",
 		name: "Campfire",
 		category: "audio",
-		path: "vtt-engine://dungeon-exploration",
+		path: "/audio/ambient/campfire-crackle.wav",
 		tags: ["campfire", "fire", "rest", "camp"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
 	{
 		id: "audio-rain",
 		name: "Gentle Rain",
 		category: "audio",
-		path: "vtt-engine://rainfall",
+		path: "/audio/ambient/rain-light.wav",
 		tags: ["rain", "weather", "outdoor", "calm"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
 	{
 		id: "audio-thunderstorm",
 		name: "Thunderstorm",
 		category: "audio",
-		path: "vtt-engine://horror-dread",
+		path: "/audio/ambient/rain-thunderstorm.wav",
 		tags: ["thunder", "storm", "rain", "weather"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
 	{
 		id: "audio-wind",
 		name: "Wind",
 		category: "audio",
-		path: "vtt-engine://ocean-ambient",
+		path: "/audio/ambient/wind-gust.wav",
 		tags: ["wind", "weather", "outdoor"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Social -- local file
+	// Social
 	{
 		id: "audio-tavern",
 		name: "Busy Tavern",
@@ -1043,27 +1075,36 @@ export const AUDIO_ASSETS: VTTAsset[] = [
 		format: "ogg",
 		attribution: "CC0",
 	},
-	// Dungeon -- local file
+	// Dungeon
 	{
 		id: "audio-dungeon",
 		name: "Dungeon Depths",
 		category: "audio",
-		path: "/audio/music/dungeon-ambience.ogg",
+		path: "/audio/ambient/dungeon-drip.wav",
 		tags: ["dungeon", "underground", "dark", "drip"],
-		format: "ogg",
-		attribution: "yd / CC0",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Outdoor -- VttMusicEngine
+	// Outdoor
 	{
 		id: "audio-forest",
 		name: "Dark Forest",
 		category: "audio",
-		path: "vtt-engine://forest-peaceful",
+		path: "/audio/ambient/forest-night.wav",
 		tags: ["forest", "nature", "outdoor", "birds"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Cave -- local file
+	{
+		id: "audio-forest-day",
+		name: "Forest (Daytime)",
+		category: "audio",
+		path: "/audio/ambient/forest-birds.wav",
+		tags: ["forest", "birds", "outdoor", "day"],
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
+	},
+	// Cave
 	{
 		id: "audio-cave",
 		name: "Underground Cave",
@@ -1073,7 +1114,7 @@ export const AUDIO_ASSETS: VTTAsset[] = [
 		format: "ogg",
 		attribution: "Paul Wortmann / CC0",
 	},
-	// Combat -- local file
+	// Combat
 	{
 		id: "audio-combat",
 		name: "Combat Music",
@@ -1083,98 +1124,104 @@ export const AUDIO_ASSETS: VTTAsset[] = [
 		format: "ogg",
 		attribution: "CC0",
 	},
-	// Boss -- VttMusicEngine
-	{
-		id: "audio-boss-fight",
-		name: "Boss Fight",
-		category: "audio",
-		path: "vtt-engine://boss-epic",
-		tags: ["boss", "fight", "epic", "final"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
-	},
-	// Urban -- VttMusicEngine
+	// Urban
 	{
 		id: "audio-city",
 		name: "City Streets",
 		category: "audio",
-		path: "vtt-engine://city-bustle",
+		path: "/audio/ambient/marketplace-bustle.wav",
 		tags: ["city", "urban", "traffic", "modern"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
 	{
 		id: "audio-marketplace",
 		name: "Marketplace",
 		category: "audio",
-		path: "vtt-engine://city-bustle",
+		path: "/audio/ambient/marketplace-bustle.wav",
 		tags: ["market", "bazaar", "trading", "social"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Ocean -- VttMusicEngine
+	// Ocean
 	{
 		id: "audio-ocean",
 		name: "Ocean Waves",
 		category: "audio",
-		path: "vtt-engine://ocean-ambient",
+		path: "/audio/ambient/ocean-waves.wav",
 		tags: ["ocean", "waves", "water", "coast"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Horror / Swamp -- local file
+	// Swamp (proper swamp sound, not reused horror track)
 	{
 		id: "audio-swamp",
 		name: "Haunted Swamp",
 		category: "audio",
-		path: "/audio/music/cold-silence.ogg",
-		tags: ["swamp", "marsh", "creepy", "outdoor"],
-		format: "ogg",
-		attribution: "Eponasoft / CC0",
+		path: "/audio/ambient/swamp-frogs.wav",
+		tags: ["swamp", "marsh", "creepy", "outdoor", "frogs"],
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Crypt -- local file
+	// Crypt (proper crypt echoes, not reused cave track)
 	{
 		id: "audio-crypt",
 		name: "Dark Crypt",
 		category: "audio",
-		path: "/audio/music/dark-cavern-ambient-2.ogg",
+		path: "/audio/ambient/crypt-echoes.wav",
 		tags: ["crypt", "undead", "dark", "dungeon"],
-		format: "ogg",
-		attribution: "Paul Wortmann / CC0",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
-	// Library -- VttMusicEngine
+	// Library
 	{
 		id: "audio-library",
 		name: "Ancient Library",
 		category: "audio",
-		path: "vtt-engine://stealth-suspense",
+		path: "/audio/ambient/library-quiet.wav",
 		tags: ["library", "study", "quiet", "arcane"],
-		format: "stream",
-		attribution: "VttMusicEngine (procedural, CC0)",
+		format: "wav",
+		attribution: "CC0 (synthesised, self-authored)",
 	},
 ];
 
 // SFX Asset Map
-// Maps Warden quick-sound button IDs (WardenToolsPanel) and weather/atmosphere
-// IDs to either a local file or a VttMusicEngine procedural mood.
+// Maps Warden quick-sound button IDs (WardenToolsPanel), broadcast SFX
+// (VTTEnhanced play_sound), and weather/atmosphere IDs to a local file on
+// disk. All SFX are real WAV/MP3 files — no procedural-music substitution.
 // useWardenAudio reads this map to route onPlaySound() calls correctly.
+// Warden-grade high-fidelity replacements can be generated at runtime via
+// the Stable Audio Open integration (Audio Manager → AI Generate tab).
 
 export type SfxEntry =
 	| { type: "file"; path: string; mimeType: string }
 	| { type: "mood"; mood: string };
 
+const wavFile = (name: string): SfxEntry => ({
+	type: "file",
+	path: `/audio/sfx/${name}.wav`,
+	mimeType: "audio/wav",
+});
+
 export const SFX_ASSET_MAP: Record<string, SfxEntry> = {
 	// Quick-sound panel (WardenToolsPanel quick sounds)
-	"door-creak": { type: "mood", mood: "dungeon-exploration" },
-	"sword-clash": { type: "mood", mood: "combat-tension" },
-	fireball: { type: "mood", mood: "boss-epic" },
-	thunder: { type: "mood", mood: "horror-dread" },
-	heal: { type: "mood", mood: "mystical-wonder" },
-	"Anomaly-roar": { type: "mood", mood: "shadow-realm" },
+	"door-creak": wavFile("door-creak"),
+	"sword-clash": wavFile("sword-clash"),
+	fireball: wavFile("fireball-whoosh"),
+	thunder: wavFile("thunder-rumble"),
+	heal: wavFile("heal-chime"),
+	"Anomaly-roar": wavFile("monster-roar"),
+	"monster-roar": wavFile("monster-roar"),
 	// Atmosphere panel weather buttons
-	rain: { type: "mood", mood: "rainfall" },
-	wind: { type: "mood", mood: "ocean-ambient" },
-	// Local SFX file
+	rain: wavFile("rain-light"),
+	wind: wavFile("wind-gust"),
+	// Broadcast SFX (VTTEnhanced "play_sound" action + extended library)
+	"arrow-shot": wavFile("arrow-shot"),
+	"dice-roll": wavFile("dice-roll"),
+	"footstep-stone": wavFile("footstep-stone"),
+	"sword-unsheath": wavFile("sword-unsheath"),
+	"spell-cast": wavFile("spell-cast"),
+	// Magic spell — existing CC0 MP3
 	"magic-spell": {
 		type: "file",
 		path: "/audio/sfx/magic-spell.mp3",

@@ -296,7 +296,10 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 											>
 												{note.category}
 											</Badge>
-											<Badge variant="outline" className="text-[10px] uppercase">
+											<Badge
+												variant="outline"
+												className="text-[10px] uppercase"
+											>
 												{secured.privacy.visibility}
 											</Badge>
 											{secured.privacy.visibility === "shared" ? (
@@ -328,16 +331,19 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 									</div>
 									{userCanViewContent ? (
 										<div className="space-y-2">
-											{segments.map((segment, index) =>
+											{segments.map((segment) =>
 												segment.kind === "text" ? (
 													segment.content.trim() ? (
-														<p key={`${note.id}-text-${index}`} className="text-sm whitespace-pre-wrap">
+														<p
+															key={`${note.id}-${segment.id}`}
+															className="text-sm whitespace-pre-wrap"
+														>
 															{segment.content}
 														</p>
 													) : null
 												) : canViewSecretBlocks ? (
 													<div
-														key={`${note.id}-secret-${index}`}
+														key={`${note.id}-${segment.id}`}
 														className="rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 space-y-1"
 													>
 														<p className="text-[10px] uppercase tracking-wide text-amber-300">
@@ -349,7 +355,7 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 													</div>
 												) : (
 													<div
-														key={`${note.id}-secret-${index}`}
+														key={`${note.id}-${segment.id}`}
 														className="rounded-md border border-dashed border-muted-foreground/30 bg-muted/40 px-3 py-2 text-xs text-muted-foreground"
 													>
 														Secret text hidden.
@@ -415,7 +421,9 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 								<Label htmlFor="note-visibility">Visibility</Label>
 								<Select
 									value={hasWardenAccess ? visibility : "private"}
-									onValueChange={(value: NoteVisibility) => setVisibility(value)}
+									onValueChange={(value: NoteVisibility) =>
+										setVisibility(value)
+									}
 									disabled={!hasWardenAccess}
 								>
 									<SelectTrigger id="note-visibility" className="mt-1">
@@ -442,14 +450,18 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 										checked={showTitleOnly}
 										onCheckedChange={setShowTitleOnly}
 									/>
-									<Label htmlFor="note-show-title-only" className="cursor-pointer">
+									<Label
+										htmlFor="note-show-title-only"
+										className="cursor-pointer"
+									>
 										Show title to players without content access
 									</Label>
 								</div>
 								<div className="space-y-2">
 									{campaignPlayers.length === 0 ? (
 										<p className="text-sm text-muted-foreground">
-											No player members are available for per-player permissions.
+											No player members are available for per-player
+											permissions.
 										</p>
 									) : (
 										campaignPlayers.map((player) => (

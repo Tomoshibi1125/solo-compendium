@@ -1,6 +1,7 @@
 import type { CompendiumSpell } from "../../../types/compendium";
 
-export const spells_s: CompendiumSpell[] = [	{
+export const spells_s: CompendiumSpell[] = [
+	{
 		id: "spell-s-1",
 		name: "Tempest Lance",
 		display_name: "Tempest Lance",
@@ -8,10 +9,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d8 damage; on a failed DC 22 Intelligence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "The lattice flexes around the cast.",
@@ -97,10 +100,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d12 damage; on a failed DC 22 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Reality registers the strike as an event.",
@@ -186,10 +191,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d8 damage; on a failed DC 22 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Reserved for moments past negotiation.",
@@ -275,10 +282,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d8 damage; on a failed DC 22 Presence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.",
 		lore: {
 			origin: "A relic of the Shadow Legion.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "A standardized Bureau-issued casting pattern.",
@@ -364,11 +373,13 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 15d12 damage; on a failed DC 22 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse:
 				"The user's blood turns slightly luminescent, making stealth in darkness progressively more difficult.",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "A blunt demonstration of channel capacity.",
@@ -454,10 +465,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 12d12 damage; on a failed DC 22 Strength save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Developed under live Gate-incursion conditions.",
@@ -543,10 +556,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d12 damage; on a failed DC 22 Sense save the target takes full damage and becomes Deafened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Reality registers the strike as an event.",
@@ -632,10 +647,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 12d12 damage; on a failed DC 22 Intelligence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.",
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Reserved for moments past negotiation.",
@@ -721,10 +738,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 14d10 damage; on a failed DC 22 Intelligence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "The Bureau tried to ban this. They failed.",
@@ -810,10 +829,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d8 damage; on a failed DC 22 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "An entry in the Hunter Bureau's approved catalog.",
@@ -899,10 +920,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d12 damage; on a failed DC 22 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "A clean resolution in one beat.",
@@ -988,10 +1011,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d8 damage; on a failed DC 22 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.",
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Calibrated to finish the exchange in a single pass.",
@@ -1077,10 +1102,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d8 damage; on a failed DC 22 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.",
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "The lattice flexes around the cast.",
@@ -1166,10 +1193,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 15d12 damage; on a failed DC 22 Intelligence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.",
 		lore: {
 			origin: "A relic of the Shadow Legion.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "Field-refined during ongoing Red-Gate engagements.",
@@ -1255,10 +1284,12 @@ export const spells_s: CompendiumSpell[] = [	{
 			"Strikes for 20d12 damage; on a failed DC 22 Intelligence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.",
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
-			history: "Catalogued in the Bureau's standard rank-appropriate compendium.",
+			history:
+				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse: "",
 			personality: "Neutral in personality profile.",
-			current_owner: "Available to Bureau-certified casters at the appropriate rank.",
+			current_owner:
+				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor: "A Bureau-validated combat pattern.",

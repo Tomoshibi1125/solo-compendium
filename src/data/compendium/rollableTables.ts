@@ -38,7 +38,8 @@ export const rollableTables: StaticRollableTableSource[] = [
 	{
 		id: "rift-hazards",
 		name: "Rift Hazards",
-		description: "Environmental hazards and battlefield effects inside unstable rifts.",
+		description:
+			"Environmental hazards and battlefield effects inside unstable rifts.",
 		category: "gates",
 		group: "hazard",
 		entries: [...GATE_HAZARDS],

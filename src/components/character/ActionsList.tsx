@@ -74,36 +74,36 @@ export function ActionsList({
 		<div className="space-y-4">
 			<TrackedResourcesList resources={resources} onChange={setResources} />
 
-			<div className="flex items-center justify-between gap-4 mt-8 pt-4 border-t border-primary/10">
-				<TabsList className="grid flex-1 grid-cols-5 h-10">
-					<TabsTrigger value="all" className="text-xs">
-						All
-					</TabsTrigger>
-					<TabsTrigger value="action" className="text-xs">
-						Action
-					</TabsTrigger>
-					<TabsTrigger value="bonus" className="text-xs">
-						Bonus
-					</TabsTrigger>
-					<TabsTrigger value="reaction" className="text-xs">
-						Reaction
-					</TabsTrigger>
-					<TabsTrigger value="other" className="text-xs">
-						Other
-					</TabsTrigger>
-				</TabsList>
-				<Button
-					size="sm"
-					variant="outline"
-					className="flex-shrink-0 gap-2 border-solar-glow/30 hover:bg-solar-glow/10"
-					onClick={() => setIsAddDialogOpen(true)}
-				>
-					<Plus className="h-4 w-4" />
-					Discover Technique
-				</Button>
-			</div>
-
 			<Tabs defaultValue="all" className="w-full">
+				<div className="flex items-center justify-between gap-4 mt-8 pt-4 border-t border-primary/10">
+					<TabsList className="grid flex-1 grid-cols-5 h-10">
+						<TabsTrigger value="all" className="text-xs">
+							All
+						</TabsTrigger>
+						<TabsTrigger value="action" className="text-xs">
+							Action
+						</TabsTrigger>
+						<TabsTrigger value="bonus" className="text-xs">
+							Bonus
+						</TabsTrigger>
+						<TabsTrigger value="reaction" className="text-xs">
+							Reaction
+						</TabsTrigger>
+						<TabsTrigger value="other" className="text-xs">
+							Other
+						</TabsTrigger>
+					</TabsList>
+					<Button
+						size="sm"
+						variant="outline"
+						className="flex-shrink-0 gap-2 border-solar-glow/30 hover:bg-solar-glow/10"
+						onClick={() => setIsAddDialogOpen(true)}
+					>
+						<Plus className="h-4 w-4" />
+						Discover Technique
+					</Button>
+				</div>
+
 				<TabsContent value="all" className="mt-4 space-y-4">
 					{actions.map((action) => (
 						<ActionCard

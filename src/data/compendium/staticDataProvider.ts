@@ -235,9 +235,7 @@ export interface StaticCompendiumEntry {
 			name: string;
 			level: number;
 			unlockLevel: number;
-			uses?:
-				| { value: number; per: "short-rest" | "long-rest" }
-				| "at-will";
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
 			description?: string;
 		}>;
 	} | null;
@@ -523,9 +521,7 @@ type StaticJobSource = {
 			name: string;
 			level: number;
 			unlockLevel: number;
-			uses?:
-				| { value: number; per: "short-rest" | "long-rest" }
-				| "at-will";
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
 			description?: string;
 		}>;
 	};
@@ -1101,8 +1097,7 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		innate_channeling: job.innateChanneling || null,
 		bonus_hp_per_level:
 			typeof job.bonusHpPerLevel === "number" ? job.bonusHpPerLevel : null,
-		climb_speed:
-			typeof job.climb_speed === "number" ? job.climb_speed : null,
+		climb_speed: typeof job.climb_speed === "number" ? job.climb_speed : null,
 		swim_speed: typeof job.swim_speed === "number" ? job.swim_speed : null,
 		fly_speed: typeof job.fly_speed === "number" ? job.fly_speed : null,
 		class_features: job.classFeatures || null,

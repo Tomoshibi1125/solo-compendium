@@ -19,8 +19,8 @@ import { supabase } from "@/integrations/supabase/client";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
-	findCanonicalCastableByName,
 	type CanonicalCastableEntry,
+	findCanonicalCastableByName,
 	findCanonicalEntryByName,
 	listCanonicalEntries,
 	listLearnableCastables,

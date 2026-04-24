@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { readLocalSessionLogs, readLocalSessions } from "@/lib/guestStore";
 import { enqueueOfflineSync } from "@/lib/offlineSync";
 import { useOptimisticMutation } from "@/lib/optimisticUpdates";
 
@@ -94,11 +95,29 @@ export const useCampaignSessions = (campaignId: string) => {
 	return useQuery({
 		queryKey: [...KEY, campaignId],
 		queryFn: async (): Promise<CampaignSessionRecord[]> => {
-			if (!isSupabaseConfigured || !campaignId) return [];
+			if (!campaignId) return [];
+
+			// Guest / local-mode: hydrate from localStorage so the sandbox
+			// injector's writes are visible in the Sessions tab without
+			// requiring Supabase auth. The reader expects a list sorted by
+			// scheduled_for DESC; mirror Supabase's `order("scheduled_for", desc)`.
+			if (!isSupabaseConfigured) {
+				return readLocalSessions(campaignId)
+					.slice()
+					.sort((a, b) =>
+						(b.scheduled_for ?? "").localeCompare(a.scheduled_for ?? ""),
+					) as CampaignSessionRecord[];
+			}
 
 			const { data } = await supabase.auth.getUser();
 			if (!data.user) {
-				if (guestEnabled) return [];
+				if (guestEnabled) {
+					return readLocalSessions(campaignId)
+						.slice()
+						.sort((a, b) =>
+							(b.scheduled_for ?? "").localeCompare(a.scheduled_for ?? ""),
+						) as CampaignSessionRecord[];
+				}
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
@@ -122,11 +141,26 @@ export const useCampaignSessionLogs = (
 	return useQuery({
 		queryKey: [...KEY, campaignId, "logs", sessionId ?? "all"],
 		queryFn: async (): Promise<CampaignSessionLogRecord[]> => {
-			if (!isSupabaseConfigured || !campaignId) return [];
+			if (!campaignId) return [];
+
+			// Guest / local-mode hydration mirror of the session logs reader.
+			const hydrateLocal = (): CampaignSessionLogRecord[] => {
+				const all = readLocalSessionLogs(campaignId);
+				const filtered = sessionId
+					? all.filter((l) => l.session_id === sessionId)
+					: all;
+				return filtered
+					.slice()
+					.sort((a, b) =>
+						b.created_at.localeCompare(a.created_at),
+					) as unknown as CampaignSessionLogRecord[];
+			};
+
+			if (!isSupabaseConfigured) return hydrateLocal();
 
 			const { data } = await supabase.auth.getUser();
 			if (!data.user) {
-				if (guestEnabled) return [];
+				if (guestEnabled) return hydrateLocal();
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 

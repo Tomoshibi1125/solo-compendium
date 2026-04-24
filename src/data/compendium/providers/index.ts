@@ -237,9 +237,7 @@ export interface StaticCompendiumEntry {
 			name: string;
 			level: number;
 			unlockLevel: number;
-			uses?:
-				| { value: number; per: "short-rest" | "long-rest" }
-				| "at-will";
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
 			description?: string;
 		}>;
 	} | null;
@@ -541,9 +539,7 @@ type StaticJobSource = {
 			name: string;
 			level: number;
 			unlockLevel: number;
-			uses?:
-				| { value: number; per: "short-rest" | "long-rest" }
-				| "at-will";
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
 			description?: string;
 		}>;
 	};
@@ -1123,8 +1119,7 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		innate_channeling: job.innateChanneling || null,
 		bonus_hp_per_level:
 			typeof job.bonusHpPerLevel === "number" ? job.bonusHpPerLevel : null,
-		climb_speed:
-			typeof job.climb_speed === "number" ? job.climb_speed : null,
+		climb_speed: typeof job.climb_speed === "number" ? job.climb_speed : null,
 		swim_speed: typeof job.swim_speed === "number" ? job.swim_speed : null,
 		fly_speed: typeof job.fly_speed === "number" ? job.fly_speed : null,
 		class_features: job.classFeatures || null,
@@ -1175,9 +1170,13 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		created_at:
 			(spell as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
-		tags: [...(spell.tags ?? []), spell.type, spell.rank, school, ...classes].filter(
-			Boolean,
-		) as string[],
+		tags: [
+			...(spell.tags ?? []),
+			spell.type,
+			spell.rank,
+			school,
+			...classes,
+		].filter(Boolean) as string[],
 		source_book: "Rift Ascendant Homebrew",
 		image_url: spell.image,
 		spell_type: spell.type,
@@ -2127,15 +2126,16 @@ export const staticDataProvider: StaticDataProvider = {
 			active_feature: sigil.active_feature ?? null,
 			// Expose narrative fields so audit and canonical resolvers can see them.
 			flavor: (sigil as { flavor?: string | null }).flavor ?? null,
-			lore: ((sigil as { lore?: unknown }).lore ?? null) as
-				| Record<string, Json>
-				| null,
-			effects: ((sigil as { effects?: unknown }).effects ?? null) as
-				| Record<string, Json>
-				| null,
-			mechanics: ((sigil as { mechanics?: unknown }).mechanics ?? null) as
-				| Record<string, Json>
-				| null,
+			lore: ((sigil as { lore?: unknown }).lore ?? null) as Record<
+				string,
+				Json
+			> | null,
+			effects: ((sigil as { effects?: unknown }).effects ?? null) as Record<
+				string,
+				Json
+			> | null,
+			mechanics: ((sigil as { mechanics?: unknown }).mechanics ??
+				null) as Record<string, Json> | null,
 			discovery_lore:
 				(sigil as { discovery_lore?: string | null }).discovery_lore ?? null,
 			theme_tags:
@@ -2168,8 +2168,10 @@ export const staticDataProvider: StaticDataProvider = {
 			display_name: tattoo.name,
 			description: tattoo.description,
 			created_at: new Date().toISOString(),
-			tags: tattoo.tags ?? (["tattoo", tattoo.rarity].filter(Boolean) as string[]),
-			source_book: tattoo.source_book || tattoo.source || "Rift Ascendant Canon",
+			tags:
+				tattoo.tags ?? (["tattoo", tattoo.rarity].filter(Boolean) as string[]),
+			source_book:
+				tattoo.source_book || tattoo.source || "Rift Ascendant Canon",
 			image_url: tattoo.image,
 			rarity: tattoo.rarity || "uncommon",
 			attunement: tattoo.attunement,

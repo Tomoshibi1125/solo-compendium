@@ -65,13 +65,18 @@ describe("compendium audit (provider-backed)", () => {
 
 	it("enforces source_book and description on every entry", async () => {
 		const summary = await runCompendiumAudit(staticDataProvider);
-		const missingMeta = summary.issues.filter((issue) =>
-			issue.code === "missing_source_book" || issue.code === "missing_description",
+		const missingMeta = summary.issues.filter(
+			(issue) =>
+				issue.code === "missing_source_book" ||
+				issue.code === "missing_description",
 		);
 		expect(
 			missingMeta,
 			`Entries missing required metadata:\n${missingMeta
-				.map((issue) => `- ${issue.dataset}:${issue.code} ${issue.entryName ?? issue.entryId}`)
+				.map(
+					(issue) =>
+						`- ${issue.dataset}:${issue.code} ${issue.entryName ?? issue.entryId}`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -84,7 +89,9 @@ describe("compendium audit (provider-backed)", () => {
 		expect(
 			templated,
 			`Templated-language regressions:\n${templated
-				.map((issue) => `- ${issue.dataset}:${issue.entryName ?? issue.entryId}`)
+				.map(
+					(issue) => `- ${issue.dataset}:${issue.entryName ?? issue.entryId}`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -97,7 +104,10 @@ describe("compendium audit (provider-backed)", () => {
 		expect(
 			casing,
 			`Naming-case regressions:\n${casing
-				.map((issue) => `- ${issue.dataset}:${issue.entryName ?? issue.entryId}: ${issue.message}`)
+				.map(
+					(issue) =>
+						`- ${issue.dataset}:${issue.entryName ?? issue.entryId}: ${issue.message}`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -110,7 +120,10 @@ describe("compendium audit (provider-backed)", () => {
 		expect(
 			themeMismatches,
 			`Damage-theme mismatches:\n${themeMismatches
-				.map((issue) => `- ${issue.dataset}:${issue.entryName ?? issue.entryId}: ${issue.message}`)
+				.map(
+					(issue) =>
+						`- ${issue.dataset}:${issue.entryName ?? issue.entryId}: ${issue.message}`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -123,7 +136,9 @@ describe("compendium audit (provider-backed)", () => {
 		expect(
 			utilityDamage,
 			`Utility entries with damage rolls:\n${utilityDamage
-				.map((issue) => `- ${issue.dataset}:${issue.entryName ?? issue.entryId}`)
+				.map(
+					(issue) => `- ${issue.dataset}:${issue.entryName ?? issue.entryId}`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -132,12 +147,16 @@ describe("compendium audit (provider-backed)", () => {
 		const summary = await runCompendiumAudit(staticDataProvider);
 		const missingResolution = summary.issues.filter(
 			(issue) =>
-				issue.code === "missing_resolution" || issue.code === "missing_mechanics",
+				issue.code === "missing_resolution" ||
+				issue.code === "missing_mechanics",
 		);
 		expect(
 			missingResolution,
 			`Castable entries without resolution metadata:\n${missingResolution
-				.map((issue) => `- ${issue.dataset}:${issue.code} ${issue.entryName ?? issue.entryId}`)
+				.map(
+					(issue) =>
+						`- ${issue.dataset}:${issue.code} ${issue.entryName ?? issue.entryId}`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});

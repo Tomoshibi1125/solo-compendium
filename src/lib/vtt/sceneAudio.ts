@@ -1,5 +1,4 @@
-import type { MusicMood } from "@/lib/vtt";
-import { VttMusicEngine } from "@/lib/vtt";
+import type { MusicMood, VttMusicEngine } from "@/lib/vtt";
 
 export interface SceneMusicState {
 	musicMood?: MusicMood | null;

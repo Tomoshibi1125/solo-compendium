@@ -12,6 +12,8 @@ import type {
 	AIResponse,
 	AIService,
 	AudioAnalysis,
+	AudioGenerationRequest,
+	AudioGenerationResponse,
 	ImageAnalysis,
 	PromptEnhancement,
 } from "./types";
@@ -21,6 +23,12 @@ export type BatchResult = {
 	success: boolean;
 	data?: AIResponse["data"];
 	error?: string;
+};
+
+export type AIAudioGenerationStatus = {
+	state: "idle" | "loading" | "retrying" | "success" | "error";
+	retryAfterSeconds?: number;
+	attempt?: number;
 };
 
 /**
@@ -222,6 +230,72 @@ export function useAIAudioAnalysis() {
 		analysis,
 		error,
 		analyzeAudio,
+	};
+}
+
+/**
+ * Hook for AI-powered audio generation
+ */
+export function useAIAudioGeneration() {
+	const [isGenerating, setIsGenerating] = useState(false);
+	const [result, setResult] = useState<AudioGenerationResponse | null>(null);
+	const [error, setError] = useState<string | null>(null);
+	const [status, setStatus] = useState<AIAudioGenerationStatus>({
+		state: "idle",
+	});
+
+	const generateAudio = useCallback(async (request: AudioGenerationRequest) => {
+		setIsGenerating(true);
+		setError(null);
+		setResult(null);
+		setStatus({ state: "loading" });
+
+		try {
+			const response = await aiService.generateAudio(request, (nextStatus) => {
+				setStatus({
+					state: nextStatus.state,
+					retryAfterSeconds: nextStatus.retryAfterSeconds,
+					attempt: nextStatus.attempt,
+				});
+			});
+
+			setResult(response);
+
+			if (response.success) {
+				setStatus({ state: "success" });
+				return response;
+			}
+
+			setError(response.error);
+			setStatus({
+				state: response.status === "model_loading" ? "retrying" : "error",
+				retryAfterSeconds: response.retryAfterSeconds,
+			});
+			return response;
+		} catch (err) {
+			const message =
+				err instanceof Error ? err.message : "Audio generation failed";
+			setError(message);
+			setStatus({ state: "error" });
+			throw err;
+		} finally {
+			setIsGenerating(false);
+		}
+	}, []);
+
+	const reset = useCallback(() => {
+		setResult(null);
+		setError(null);
+		setStatus({ state: "idle" });
+	}, []);
+
+	return {
+		isGenerating,
+		result,
+		error,
+		status,
+		generateAudio,
+		reset,
 	};
 }
 

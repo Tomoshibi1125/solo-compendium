@@ -6,7 +6,9 @@ describe("canonical rollable tables", () => {
 		const tables = await staticDataProvider.getRollableTables();
 
 		expect(tables.length).toBeGreaterThan(0);
-		expect(tables.some((table) => table.id === "rift-complications")).toBe(true);
+		expect(tables.some((table) => table.id === "rift-complications")).toBe(
+			true,
+		);
 		for (const table of tables) {
 			expect(typeof table.id).toBe("string");
 			expect(typeof table.name).toBe("string");

@@ -17,13 +17,19 @@ describe("canonicalCompendium resolver", () => {
 			if (["—", "-", "n/a", "na", "none", "self"].includes(normalized)) {
 				return true;
 			}
-			return !/\d+d\d+/i.test(normalized) && !/^\d+(\s*[+-]\s*\d+)?$/.test(normalized);
+			return (
+				!/\d+d\d+/i.test(normalized) &&
+				!/^\d+(\s*[+-]\s*\d+)?$/.test(normalized)
+			);
 		});
 
 		expect(
 			bogusDamageRolls,
 			`Bogus damage_roll values survived canonical normalization:\n${bogusDamageRolls
-				.map((entry) => `- ${entry.canonical_type}:${entry.name} = "${entry.damage_roll}"`)
+				.map(
+					(entry) =>
+						`- ${entry.canonical_type}:${entry.name} = "${entry.damage_roll}"`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -39,7 +45,10 @@ describe("canonicalCompendium resolver", () => {
 		expect(
 			bogusTypes,
 			`Bogus damage_type values survived canonical normalization:\n${bogusTypes
-				.map((entry) => `- ${entry.canonical_type}:${entry.name} = "${entry.damage_type}"`)
+				.map(
+					(entry) =>
+						`- ${entry.canonical_type}:${entry.name} = "${entry.damage_type}"`,
+				)
 				.join("\n")}`,
 		).toHaveLength(0);
 	});
@@ -51,7 +60,9 @@ describe("canonicalCompendium resolver", () => {
 
 		const utilityWithResolution = castables.filter((entry) => {
 			if (!utilityTokens.test(entry.name)) return false;
-			return entry.has_save || entry.has_attack_roll || Boolean(entry.save_ability);
+			return (
+				entry.has_save || entry.has_attack_roll || Boolean(entry.save_ability)
+			);
 		});
 
 		// The reshape work should have preserved at least one resolution path
@@ -75,7 +86,9 @@ describe("canonicalCompendium resolver", () => {
 
 		// Spot-check: every sigil must carry a description, and at least a
 		// majority expose flavor/lore from the enriched provider transform.
-		const withFlavor = sigils.filter((s) => typeof s.flavor === "string" && s.flavor.trim().length > 0);
+		const withFlavor = sigils.filter(
+			(s) => typeof s.flavor === "string" && s.flavor.trim().length > 0,
+		);
 		const withLore = sigils.filter((s) => {
 			const lore = s.lore;
 			if (typeof lore === "string") return lore.trim().length > 0;

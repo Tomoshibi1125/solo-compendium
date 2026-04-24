@@ -264,19 +264,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Crystalline Bone Density",
-				description: "Lineage trait. Your skeleton is reinforced with gate-crystal deposits. You count as one size larger when determining carrying capacity. Your unarmed strikes deal double damage to inanimate objects and gate structures. You have advantage on Strength saving throws against being knocked prone.",
+				description:
+					"Lineage trait. Your skeleton is reinforced with gate-crystal deposits. You count as one size larger when determining carrying capacity. Your unarmed strikes deal double damage to inanimate objects and gate structures. You have advantage on Strength saving throws against being knocked prone.",
 				type: "physiology",
 			},
 			{
 				name: "Kinetic Battery",
-				description: "Physiology trait. When you take bludgeoning or force damage, your mana-skeleton absorbs the impact. Your next melee attack deals bonus force damage equal to half the damage taken (max 10).",
+				description:
+					"Physiology trait. When you take bludgeoning or force damage, your mana-skeleton absorbs the impact. Your next melee attack deals bonus force damage equal to half the damage taken (max 10).",
 				type: "physiology",
 			},
 			{
 				name: "Bureau Classification: Strategic Asset",
-				description: "Social lineage trait. You have federal clearance to enter active gate zones. Civilian law enforcement cannot detain you without Ascendant Bureau authorization.",
+				description:
+					"Social lineage trait. You have federal clearance to enter active gate zones. Civilian law enforcement cannot detain you without Ascendant Bureau authorization.",
 				type: "social",
-			}
+			},
 		],
 		naturalWeapons: [
 			{
@@ -498,19 +501,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Thermal Venting",
-				description: "Physiology trait. As a reaction when hit by a melee attack, you release a burst of superheated mana steam. The attacker takes 1d6 fire damage and is pushed 5 ft back.",
+				description:
+					"Physiology trait. As a reaction when hit by a melee attack, you release a burst of superheated mana steam. The attacker takes 1d6 fire damage and is pushed 5 ft back.",
 				type: "physiology",
 			},
 			{
 				name: "Mana-Saturated Metabolism",
-				description: "Physiology trait. You burn through toxins instantly. You have advantage on saving throws against poison, and you have resistance against poison damage. You cannot suffer exhaustion from physical exertion.",
+				description:
+					"Physiology trait. You burn through toxins instantly. You have advantage on saving throws against poison, and you have resistance against poison damage. You cannot suffer exhaustion from physical exertion.",
 				type: "physiology",
 			},
 			{
 				name: "Volatile Resonance Aura",
-				description: "Sense trait. Your unstable mana causes electronics to glitch within 10 ft of you when you are stressed.",
+				description:
+					"Sense trait. Your unstable mana causes electronics to glitch within 10 ft of you when you are stressed.",
 				type: "sense",
-			}
+			},
 		],
 		resonanceBreath: {
 			name: "Thermal Release",
@@ -746,19 +752,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Partial Dimensional Existence",
-				description: "Physiology trait. Biometric scanners fail to read your fingerprints or retinas. You leave no biological trace. You can squeeze through gaps as small as 1 inch wide without penalty.",
+				description:
+					"Physiology trait. Biometric scanners fail to read your fingerprints or retinas. You leave no biological trace. You can squeeze through gaps as small as 1 inch wide without penalty.",
 				type: "physiology",
 			},
 			{
 				name: "Phase Echo",
-				description: "Innate ability. Once per short rest, when you take damage, you can phase out of reality for a microsecond. Halve the damage taken, and instantly teleport up to 10 ft.",
+				description:
+					"Innate ability. Once per short rest, when you take damage, you can phase out of reality for a microsecond. Halve the damage taken, and instantly teleport up to 10 ft.",
 				type: "innate-magic",
 			},
 			{
 				name: "Apex Sensory Array",
-				description: "Sense trait. You have superior darkvision up to 120 ft. You can passively detect motion through walls up to 5 ft thick. You have advantage on Agility saving throws against effects you can hear.",
+				description:
+					"Sense trait. You have superior darkvision up to 120 ft. You can passively detect motion through walls up to 5 ft thick. You have advantage on Agility saving throws against effects you can hear.",
 				type: "sense",
-			}
+			},
 		],
 		climb_speed: 20,
 		abilities: [
@@ -986,19 +995,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Hyper-Twitch Fibers",
-				description: "Physiology trait. Base speed is 40 ft. You ignore difficult terrain caused by urban environments (rubble, shattered pavement, crowds).",
+				description:
+					"Physiology trait. Base speed is 40 ft. You ignore difficult terrain caused by urban environments (rubble, shattered pavement, crowds).",
 				type: "physiology",
 			},
 			{
 				name: "Kinetic Redirection",
-				description: "Innate ability. When you miss a melee attack, you can immediately pivot your momentum to make an unarmed strike against a different target within reach as a free action.",
+				description:
+					"Innate ability. When you miss a melee attack, you can immediately pivot your momentum to make an unarmed strike against a different target within reach as a free action.",
 				type: "innate-magic",
 			},
 			{
 				name: "Adrenaline Synthesizer",
-				description: "Physiology trait. Your body pre-emptively dumps adrenaline when danger is near. You add your proficiency bonus to Initiative rolls and have advantage on saving throws against being paralyzed or restrained.",
+				description:
+					"Physiology trait. Your body pre-emptively dumps adrenaline when danger is near. You add your proficiency bonus to Initiative rolls and have advantage on saving throws against being paralyzed or restrained.",
 				type: "physiology",
-			}
+			},
 		],
 		naturalWeapons: [
 			{
@@ -1187,19 +1199,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Mana-Bleed Dependency",
-				description: "Physiology trait. Your body constantly absorbs ambient mana. Healing magic cast on you restores the maximum possible HP, but you have disadvantage on saving throws against psychic damage.",
+				description:
+					"Physiology trait. Your body constantly absorbs ambient mana. Healing magic cast on you restores the maximum possible HP, but you have disadvantage on saving throws against psychic damage.",
 				type: "physiology",
 			},
 			{
 				name: "Aetheric Resonance Shield",
-				description: "Innate ability. You generate a passive barrier. The first time you take damage in any combat encounter, that damage is reduced by an amount equal to your Intelligence score. You have advantage on Intelligence saving throws against magic.",
+				description:
+					"Innate ability. You generate a passive barrier. The first time you take damage in any combat encounter, that damage is reduced by an amount equal to your Intelligence score. You have advantage on Intelligence saving throws against magic.",
 				type: "innate-magic",
 			},
 			{
 				name: "Arcane Optic Mutation",
-				description: "Sense trait. Your eyes permanently glow. You can inherently read any magical or anomalous text, and you can see invisible creatures within 30 ft.",
+				description:
+					"Sense trait. Your eyes permanently glow. You can inherently read any magical or anomalous text, and you can see invisible creatures within 30 ft.",
 				type: "sense",
-			}
+			},
 		],
 		innateChanneling: {
 			ability: "Intelligence",
@@ -1399,19 +1414,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Neural Overclocking",
-				description: "Physiology trait. Your brain processes information at superhuman speeds. You cannot be surprised while conscious. You can read a 500-page book in 1 minute. You have advantage on Intelligence saving throws.",
+				description:
+					"Physiology trait. Your brain processes information at superhuman speeds. You cannot be surprised while conscious. You can read a 500-page book in 1 minute. You have advantage on Intelligence saving throws.",
 				type: "physiology",
 			},
 			{
 				name: "Cognitive Feedback",
-				description: "Innate ability. Any creature that deals psychic damage to you or attempts to read your mind takes 1d6 psychic damage and is blinded until the end of its next turn.",
+				description:
+					"Innate ability. Any creature that deals psychic damage to you or attempts to read your mind takes 1d6 psychic damage and is blinded until the end of its next turn.",
 				type: "innate-magic",
 			},
 			{
 				name: "Telekinetic Micro-Manipulation",
-				description: "Innate ability. You can flawlessly manipulate objects up to 10 lbs within 30 ft (e.g., picking locks from afar, typing on keyboards without touching them).",
+				description:
+					"Innate ability. You can flawlessly manipulate objects up to 10 lbs within 30 ft (e.g., picking locks from afar, typing on keyboards without touching them).",
 				type: "innate-magic",
-			}
+			},
 		],
 		innateChanneling: {
 			ability: "Sense",
@@ -1610,19 +1628,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Death-Scarred Physiology",
-				description: "Physiology trait. You have no pulse and your skin is cold. You don't need to breathe, eat, drink, or sleep. Immune to disease. You have advantage on saving throws against being poisoned.",
+				description:
+					"Physiology trait. You have no pulse and your skin is cold. You don't need to breathe, eat, drink, or sleep. Immune to disease. You have advantage on saving throws against being poisoned.",
 				type: "physiology",
 			},
 			{
 				name: "Soul Tether",
-				description: "Innate ability. If a limb is severed, it does not bleed. You can reattach it by holding it in place for 1 action.",
+				description:
+					"Innate ability. If a limb is severed, it does not bleed. You can reattach it by holding it in place for 1 action.",
 				type: "innate-magic",
 			},
 			{
 				name: "Aura of the Grave",
-				description: "Sense trait. Low-intelligence gate anomalies and undead ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
+				description:
+					"Sense trait. Low-intelligence gate anomalies and undead ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
 				type: "sense",
-			}
+			},
 		],
 		naturalWeapons: [
 			{
@@ -1834,19 +1855,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Aetheric Anchor",
-				description: "Physiology trait. Your physical shadow acts as a localized storage dimension. You can store up to 500 lbs of inanimate objects inside your shadow and retrieve them as an action.",
+				description:
+					"Physiology trait. Your physical shadow acts as a localized storage dimension. You can store up to 500 lbs of inanimate objects inside your shadow and retrieve them as an action.",
 				type: "physiology",
 			},
 			{
 				name: "Summoner's Ward",
-				description: "Innate ability. The Aether protects its conduits. Whenever a summoned entity of yours drops to 0 HP, you gain temporary hit points equal to your Summoner level. You have advantage on saving throws against effects that would banish or teleport you.",
+				description:
+					"Innate ability. The Aether protects its conduits. Whenever a summoned entity of yours drops to 0 HP, you gain temporary hit points equal to your Summoner level. You have advantage on saving throws against effects that would banish or teleport you.",
 				type: "innate-magic",
 			},
 			{
 				name: "Empathic Resonance",
-				description: "Sense trait. You can feel the emotional state and surface intent of any creature (including monsters and anomalies) within 30 ft.",
+				description:
+					"Sense trait. You can feel the emotional state and surface intent of any creature (including monsters and anomalies) within 30 ft.",
 				type: "sense",
-			}
+			},
 		],
 		innateChanneling: {
 			ability: "Sense",
@@ -2070,19 +2094,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Radiant Scales",
-				description: "Physiology trait. Patches of luminous scales cover your vital organs. When you take a critical hit, the scales shatter, turning the critical hit into a normal hit. Regenerates on a long rest. You have advantage on saving throws against being blinded.",
+				description:
+					"Physiology trait. Patches of luminous scales cover your vital organs. When you take a critical hit, the scales shatter, turning the critical hit into a normal hit. Regenerates on a long rest. You have advantage on saving throws against being blinded.",
 				type: "physiology",
 			},
 			{
 				name: "Radiant Ignition",
-				description: "Innate ability. You can channel mana into any weapon you hold, causing it to ignite. Ignited weapons deal +1 radiant damage and shed bright light for 10 ft.",
+				description:
+					"Innate ability. You can channel mana into any weapon you hold, causing it to ignite. Ignited weapons deal +1 radiant damage and shed bright light for 10 ft.",
 				type: "innate-magic",
 			},
 			{
 				name: "Aura of Command",
-				description: "Social trait. Your voice carries supernatural weight. You have advantage on Persuasion and Intimidation checks against lower-ranked Awakened or un-Awakened civilians.",
+				description:
+					"Social trait. Your voice carries supernatural weight. You have advantage on Persuasion and Intimidation checks against lower-ranked Awakened or un-Awakened civilians.",
 				type: "social",
-			}
+			},
 		],
 		resonanceBreath: {
 			name: "Judgment Ray",
@@ -2331,19 +2358,22 @@ export const jobs: Job[] = [
 		racialTraits: [
 			{
 				name: "Cyber-Mana Integration",
-				description: "Physiology trait. Your body naturally fuses with tech. You can interface with any computer or electronic lock by touching it, bypassing the need for passwords or screens. You have advantage on Intelligence saving throws.",
+				description:
+					"Physiology trait. Your body naturally fuses with tech. You can interface with any computer or electronic lock by touching it, bypassing the need for passwords or screens. You have advantage on Intelligence saving throws.",
 				type: "physiology",
 			},
 			{
 				name: "Current Conductor",
-				description: "Innate ability. You can draw power from electrical grids or heavy batteries to regain HP (1d8 per power source drained, destroying the source).",
+				description:
+					"Innate ability. You can draw power from electrical grids or heavy batteries to regain HP (1d8 per power source drained, destroying the source).",
 				type: "innate-magic",
 			},
 			{
 				name: "Metallic Dermis",
-				description: "Physiology trait. Your skin hardens into a dense alloy. Your base AC is 13 + your Intelligence modifier when unarmored. You have advantage on saving throws against being poisoned.",
+				description:
+					"Physiology trait. Your skin hardens into a dense alloy. Your base AC is 13 + your Intelligence modifier when unarmored. You have advantage on saving throws against being poisoned.",
 				type: "physiology",
-			}
+			},
 		],
 		naturalArmor: {
 			baseAC: 13,
@@ -2675,13 +2705,7 @@ export const jobs: Job[] = [
 		hitDie: "1d8",
 		primaryAbility: "Presence",
 		saving_throws: ["Sense", "Presence"],
-		skillChoices: [
-			"History",
-			"Insight",
-			"Medicine",
-			"Persuasion",
-			"Religion",
-		],
+		skillChoices: ["History", "Insight", "Medicine", "Persuasion", "Religion"],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons"],
 		tool_proficiencies: [],

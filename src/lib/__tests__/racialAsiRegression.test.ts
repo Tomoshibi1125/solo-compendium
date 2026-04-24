@@ -12,13 +12,13 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { jobs } from "@/data/compendium/jobs";
+import { applyJobAwakeningTraitsToCharacter } from "@/lib/characterCreation";
 import {
 	createLocalCharacter,
 	getLocalCharacterWithAbilities,
 	listLocalFeatures,
 } from "@/lib/guestStore";
-import { applyJobAwakeningTraitsToCharacter } from "@/lib/characterCreation";
-import { jobs } from "@/data/compendium/jobs";
 
 // Minimal localStorage polyfill for vitest environments that strip it.
 function ensureLocalStorage() {
@@ -54,7 +54,7 @@ describe("racial ASI at level 1", () => {
 
 	it("merges Destroyer ASI (STR +2, VIT +1) into character stats", async () => {
 		const destroyer = jobs.find((j) => j.id === "destroyer");
-		expect(destroyer).toBeDefined();
+		if (!destroyer) throw new Error("Destroyer job not found");
 
 		// Baseline: 15/13/14/10/12/8 (per the Destroyer's `stats` block).
 		const row = createLocalCharacter({
@@ -68,7 +68,7 @@ describe("racial ASI at level 1", () => {
 			job: "Destroyer",
 		});
 
-		await applyJobAwakeningTraitsToCharacter(row.id, destroyer!);
+		await applyJobAwakeningTraitsToCharacter(row.id, destroyer);
 
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after).toBeDefined();
@@ -81,14 +81,14 @@ describe("racial ASI at level 1", () => {
 
 		// Marker feature is present.
 		const features = listLocalFeatures(row.id);
-		expect(
-			features.some((f) => f.source === "Racial ASI: Destroyer"),
-		).toBe(true);
+		expect(features.some((f) => f.source === "Racial ASI: Destroyer")).toBe(
+			true,
+		);
 	});
 
 	it("is idempotent — invoking twice does not double-apply ASI", async () => {
 		const mage = jobs.find((j) => j.id === "mage");
-		expect(mage).toBeDefined();
+		if (!mage) throw new Error("Mage job not found");
 
 		const row = createLocalCharacter({
 			name: "Test Mage",
@@ -101,9 +101,9 @@ describe("racial ASI at level 1", () => {
 			job: "Mage",
 		});
 
-		await applyJobAwakeningTraitsToCharacter(row.id, mage!);
-		await applyJobAwakeningTraitsToCharacter(row.id, mage!);
-		await applyJobAwakeningTraitsToCharacter(row.id, mage!);
+		await applyJobAwakeningTraitsToCharacter(row.id, mage);
+		await applyJobAwakeningTraitsToCharacter(row.id, mage);
+		await applyJobAwakeningTraitsToCharacter(row.id, mage);
 
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after?.int).toBe(17); // 15 + 2, NOT 15 + 6
@@ -112,7 +112,7 @@ describe("racial ASI at level 1", () => {
 
 	it("sets Summoner saving throw profs, speed, senses, resistances at creation", async () => {
 		const summoner = jobs.find((j) => j.id === "summoner");
-		expect(summoner).toBeDefined();
+		if (!summoner) throw new Error("Summoner job not found");
 
 		const row = createLocalCharacter({
 			name: "Test Summoner",
@@ -125,7 +125,7 @@ describe("racial ASI at level 1", () => {
 			job: "Summoner",
 		});
 
-		await applyJobAwakeningTraitsToCharacter(row.id, summoner!);
+		await applyJobAwakeningTraitsToCharacter(row.id, summoner);
 
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after?.speed).toBeGreaterThanOrEqual(30);
@@ -140,7 +140,7 @@ describe("racial ASI at level 1", () => {
 
 	it("applies Stalker speed 35 and Survival is a legal skill choice", async () => {
 		const stalker = jobs.find((j) => j.id === "stalker");
-		expect(stalker).toBeDefined();
+		if (!stalker) throw new Error("Stalker job not found");
 
 		const row = createLocalCharacter({
 			name: "Test Stalker",
@@ -153,7 +153,7 @@ describe("racial ASI at level 1", () => {
 			job: "Stalker",
 		});
 
-		await applyJobAwakeningTraitsToCharacter(row.id, stalker!);
+		await applyJobAwakeningTraitsToCharacter(row.id, stalker);
 
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after?.speed).toBe(35);
@@ -165,7 +165,7 @@ describe("racial ASI at level 1", () => {
 
 	it("Herald ASI (PRE +2, SENSE +1) applies and saves are [SENSE, PRE]", async () => {
 		const herald = jobs.find((j) => j.id === "herald");
-		expect(herald).toBeDefined();
+		if (!herald) throw new Error("Herald job not found");
 
 		const row = createLocalCharacter({
 			name: "Test Herald",
@@ -178,7 +178,7 @@ describe("racial ASI at level 1", () => {
 			job: "Herald",
 		});
 
-		await applyJobAwakeningTraitsToCharacter(row.id, herald!);
+		await applyJobAwakeningTraitsToCharacter(row.id, herald);
 
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after?.pre).toBe(17); // 15 + 2

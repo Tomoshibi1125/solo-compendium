@@ -16,8 +16,8 @@
  */
 
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { jobs } from "@/data/compendium/jobs";
 import { getRacialTraitModifiers } from "@/lib/characterCreation";
@@ -90,10 +90,14 @@ describe("jobs racial parity", () => {
 		for (const job of jobs) {
 			const asi = job.abilityScoreImprovements;
 			expect(asi, `${job.name} ASI defined`).toBeTruthy();
-			expect(Array.isArray(asi), `${job.name} ASI is object not level array`).toBe(false);
-			const total = Object.values(
-				asi as Record<string, number>,
-			).reduce<number>((a, b) => a + (typeof b === "number" ? b : 0), 0);
+			expect(
+				Array.isArray(asi),
+				`${job.name} ASI is object not level array`,
+			).toBe(false);
+			const total = Object.values(asi as Record<string, number>).reduce<number>(
+				(a, b) => a + (typeof b === "number" ? b : 0),
+				0,
+			);
 			expect(total, `${job.name} ASI sum`).toBe(3);
 		}
 	});
@@ -128,9 +132,10 @@ describe("jobs racial parity", () => {
 		// top-level `},` marker for that job (very coarse but effective here).
 		const objectStarts: Array<{ idValue: string; start: number }> = [];
 		const idRegex = /\{\s*\n?\s*id:\s*"([^"]+)"/g;
-		let match: RegExpExecArray | null;
-		while ((match = idRegex.exec(text)) !== null) {
+		let match: RegExpExecArray | null = idRegex.exec(text);
+		while (match !== null) {
 			objectStarts.push({ idValue: match[1], start: match.index });
+			match = idRegex.exec(text);
 		}
 		for (let i = 0; i < objectStarts.length; i++) {
 			const start = objectStarts[i].start;

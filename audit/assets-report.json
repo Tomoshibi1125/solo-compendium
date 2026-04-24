@@ -1,0 +1,2003 @@
+{
+  "generatedAt": "2026-04-24T22:00:16.257Z",
+  "totals": {
+    "uniquePaths": 759,
+    "missing": 114,
+    "casingMismatch": 0,
+    "placeholderAnomalies": 243
+  },
+  "categories": [
+    {
+      "category": "audio-music",
+      "total": 8,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "audio-sfx",
+      "total": 1,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-anomaly",
+      "total": 243,
+      "missing": 3,
+      "casingMismatch": 0,
+      "placeholder": 243
+    },
+    {
+      "category": "image-background",
+      "total": 1,
+      "missing": 1,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-condition",
+      "total": 6,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-effect",
+      "total": 21,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-job",
+      "total": 14,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-location",
+      "total": 244,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-map",
+      "total": 62,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-other-compendium",
+      "total": 15,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-prop",
+      "total": 20,
+      "missing": 0,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-regent-BADCASE",
+      "total": 12,
+      "missing": 12,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "image-token",
+      "total": 14,
+      "missing": 6,
+      "casingMismatch": 0,
+      "placeholder": 0
+    },
+    {
+      "category": "other",
+      "total": 98,
+      "missing": 92,
+      "casingMismatch": 0,
+      "placeholder": 0
+    }
+  ],
+  "missing": [
+    {
+      "path": "/generated/armor/iron-chestplate.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/iron-gauntlets.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/leather-boots.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/leather-cloak.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/mage-robe.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/steel-helmet.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/steel-shield.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/armor/wooden-shield.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/castle-ruins.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/coastal-lighthouse.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/farm-barn.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/stone-bridge.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/stone-church.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/watch-tower.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/windmill.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/buildings/wooden-cottage.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0601.webp",
+      "category": "image-anomaly",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\anomalies\\rank-s.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0602.webp",
+      "category": "image-anomaly",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\anomalies\\rank-s.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0603.webp",
+      "category": "image-anomaly",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\anomalies\\rank-s.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/backgrounds/paramedic.webp",
+      "category": "image-background",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\items-part1.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/beast-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/blood-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/destruction-Regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/frost-Regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/gravity-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/mimic-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/plague-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/shadow-command-Regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/spatial-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/steel-flesh-Regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/umbral-regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/compendium/Regents/white-flame-Regent.webp",
+      "category": "image-regent-BADCASE",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\compendium\\regents.ts"
+      ]
+    },
+    {
+      "path": "/generated/cosmic/comet-tail.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/cosmic/full-moon.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/cosmic/purple-nebula.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/cosmic/ringed-planet.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/cosmic/rising-sun.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/cosmic/star-cluster.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/brown-bear.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/fire-phoenix.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/golden-eagle.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/grey-wolf.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/male-lion.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/red-dragon.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/siberian-tiger.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/creatures/war-horse.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/divine/cherub.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/divine/golden-halo.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/divine/light-beam.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/divine/silver-cross.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/divine/warrior-angel.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/divine/white-dove.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/elementals/air-sylph.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/elementals/earth-golem.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/elementals/fire-spirit.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/elementals/ice-shard.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/elementals/lightning-bolt.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/elementals/water-nymph.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/autumn-forest.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/desert-dunes.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/fog-morning.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/lightning-storm.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/mountain-peak.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/rain-storm.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/snow-fall.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/spring-meadow.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/sunny-day.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/environments/volcano-eruption.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/magical/ancient-scroll.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/magical/enchanted-wand.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/magical/focusing-crystal.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/magical/glowing-potion.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/magical/mystical-orb.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/magical/rune-circle.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/mechanical/brass-gear.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/mechanical/bronze-automaton.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/mechanical/clock-tower.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/mechanical/cog-wheel.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/mechanical/steam-piston.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/city-guard.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/elderly-scholar.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/female-blacksmith.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/female-merchant.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/male-farmer.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/male-innkeeper.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/noble-lord.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/npcs/village-child.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/shadow/cloaked-wraith.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/shadow/dark-tentacle.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/shadow/formless-shadow.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/shadow/horned-shadow-demon.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/shadow/void-portal.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/tokens/Anomalies/demon-lord.svg",
+      "category": "image-token",
+      "refCount": 1,
+      "sources": [
+        "src\\lib\\vtt\\vttAssetManifest.ts"
+      ]
+    },
+    {
+      "path": "/generated/tokens/Anomalies/fire-elemental.svg",
+      "category": "image-token",
+      "refCount": 1,
+      "sources": [
+        "src\\lib\\vtt\\vttAssetManifest.ts"
+      ]
+    },
+    {
+      "path": "/generated/tokens/Anomalies/goblin.svg",
+      "category": "image-token",
+      "refCount": 1,
+      "sources": [
+        "src\\lib\\vtt\\vttAssetManifest.ts"
+      ]
+    },
+    {
+      "path": "/generated/tokens/Anomalies/magic-beast.svg",
+      "category": "image-token",
+      "refCount": 1,
+      "sources": [
+        "src\\lib\\vtt\\vttAssetManifest.ts"
+      ]
+    },
+    {
+      "path": "/generated/tokens/Anomalies/orc-warrior.svg",
+      "category": "image-token",
+      "refCount": 1,
+      "sources": [
+        "src\\lib\\vtt\\vttAssetManifest.ts"
+      ]
+    },
+    {
+      "path": "/generated/tokens/Anomalies/shadow-follower.svg",
+      "category": "image-token",
+      "refCount": 1,
+      "sources": [
+        "src\\lib\\vtt\\vttAssetManifest.ts"
+      ]
+    },
+    {
+      "path": "/generated/vehicles/fishing-boat.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/vehicles/hot-air-balloon.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/vehicles/merchant-cart.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/vehicles/royal-carriage.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/vehicles/sailing-ship.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/vehicles/simple-raft.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/battle-axe.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/dagger.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/heavy-crossbow.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/heavy-mace.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/longbow.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/longsword.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/magic-staff.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/simple-wand.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/warhammer.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    },
+    {
+      "path": "/generated/weapons/wooden-spear.webp",
+      "category": "other",
+      "refCount": 1,
+      "sources": [
+        "src\\data\\vttAssetLibrary.ts"
+      ]
+    }
+  ],
+  "casingMismatch": [],
+  "placeholderAnomalies": [
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0002.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0003.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0004.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0005.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0006.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0007.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0008.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0009.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0010.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0011.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0012.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0013.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0014.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0015.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0016.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0017.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0018.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0019.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0020.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0021.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0022.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0023.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0024.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0025.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0026.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0027.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0028.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0029.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0030.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0031.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0032.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0033.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0034.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0035.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0036.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0037.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0038.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0039.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0040.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0041.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0042.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0043.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0044.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0045.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0046.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0047.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0048.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0049.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0050.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0051.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0052.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0053.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0054.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0055.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0056.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0057.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0058.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0059.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0060.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0061.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0062.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0063.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0064.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0065.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0066.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0067.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0068.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0069.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0070.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0071.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0072.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0073.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0074.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0075.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0076.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0077.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0078.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0079.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0080.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0081.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0082.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0083.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0084.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0085.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0086.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0087.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0088.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0089.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0090.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0091.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0092.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0093.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0094.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0095.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0096.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0097.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0098.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0099.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0100.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0101.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0102.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0103.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0104.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0105.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0106.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0107.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0108.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0109.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0110.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0111.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0112.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0113.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0114.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0115.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0116.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0117.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0118.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0119.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0120.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0121.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0122.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0123.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0124.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0125.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0126.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0127.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0128.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0129.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0130.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0131.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0132.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0133.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0134.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0135.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0136.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0137.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0138.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0139.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0140.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0141.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0142.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0143.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0144.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0145.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0146.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0147.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0148.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0149.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0150.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0151.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0152.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0153.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0154.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0155.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0156.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0157.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0158.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0159.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0160.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0161.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0162.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0163.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0164.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0165.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0166.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0167.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0168.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0169.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0170.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0171.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0172.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0173.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0174.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0175.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0176.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0177.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0178.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0179.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0180.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0181.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0182.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0183.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0184.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0185.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0186.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0187.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0188.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0189.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0190.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0191.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0192.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0193.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0194.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0195.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0196.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0197.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0198.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0199.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0200.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0201.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0202.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0203.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0204.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0205.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0206.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0207.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0208.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0209.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0210.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0211.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0212.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0213.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0214.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0215.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0216.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0217.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0218.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0219.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0220.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0221.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0222.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0223.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0224.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0225.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0226.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0227.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0228.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0229.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0230.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0231.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0232.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0233.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0234.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0235.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0236.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0237.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0238.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0239.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0240.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0241.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0601.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0602.webp",
+      "refCount": 1
+    },
+    {
+      "path": "/generated/compendium/anomalies/anomaly-0603.webp",
+      "refCount": 1
+    }
+  ],
+  "regentFolder": {
+    "diskPath": "public/generated/compendium/regents",
+    "fileCount": 0,
+    "files": []
+  }
+}

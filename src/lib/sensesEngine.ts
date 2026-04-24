@@ -5,7 +5,7 @@
  * Uses "best-of" stacking: multiple sources of darkvision use the highest range.
  */
 
-import { jobs as STATIC_JOBS } from "@/data/compendium/jobs";
+import { getStaticJobs } from "@/lib/ProtocolDataManager";
 
 // ─── Types ──────────────────────────────────────────────────
 export interface CharacterSenses {
@@ -56,9 +56,13 @@ function parseSpecialSense(jobName: string, text: string): SenseSource | null {
 	return null;
 }
 
-const JOB_SENSES: Record<string, SenseSource[]> = (() => {
+let _jobSensesCache: Record<string, SenseSource[]> | null = null;
+
+function getJobSenses(): Record<string, SenseSource[]> {
+	if (_jobSensesCache) return _jobSensesCache;
+	const staticJobs = getStaticJobs();
 	const out: Record<string, SenseSource[]> = {};
-	for (const job of STATIC_JOBS) {
+	for (const job of staticJobs) {
 		const sources: SenseSource[] = [];
 		if (typeof job.darkvision === "number" && job.darkvision > 0) {
 			sources.push({
@@ -76,8 +80,9 @@ const JOB_SENSES: Record<string, SenseSource[]> = (() => {
 			out[job.name.toLowerCase().trim()] = sources;
 		}
 	}
+	_jobSensesCache = out;
 	return out;
-})();
+}
 
 // ─── Compute Functions ──────────────────────────────────────
 
@@ -105,8 +110,9 @@ export function computeSenses(
 	// Add Job senses
 	if (job) {
 		const jobKey = job.toLowerCase().trim();
-		if (JOB_SENSES[jobKey]) {
-			allSources.push(...JOB_SENSES[jobKey]);
+		const jobSenses = getJobSenses();
+		if (jobSenses[jobKey]) {
+			allSources.push(...jobSenses[jobKey]);
 		}
 	}
 

@@ -93,9 +93,11 @@ function makeLocalTrack(
 ): AudioTrack {
 	const mimeType = path.endsWith(".ogg")
 		? "audio/ogg"
-		: path.endsWith(".mp3")
-			? "audio/mpeg"
-			: "audio/mpeg";
+		: path.endsWith(".wav")
+			? "audio/wav"
+			: path.endsWith(".mp3")
+				? "audio/mpeg"
+				: "audio/mpeg";
 	return {
 		id,
 		title: name,

@@ -227,14 +227,18 @@ export interface StaticJob {
 	condition_immunities?: string[];
 	// --- Racial parity extensions (RA-original) ---
 	innateChanneling?: {
-		ability: "Strength" | "Agility" | "Vitality" | "Intelligence" | "Sense" | "Presence";
+		ability:
+			| "Strength"
+			| "Agility"
+			| "Vitality"
+			| "Intelligence"
+			| "Sense"
+			| "Presence";
 		spells: Array<{
 			name: string;
 			level: number;
 			unlockLevel: number;
-			uses?:
-				| { value: number; per: "short-rest" | "long-rest" }
-				| "at-will";
+			uses?: { value: number; per: "short-rest" | "long-rest" } | "at-will";
 			description?: string;
 		}>;
 	};

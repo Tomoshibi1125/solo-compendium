@@ -22,6 +22,43 @@ type StoredAudioTrack = AudioTrack & { storagePath?: string };
 type AudioTrackRow = Database["public"]["Tables"]["audio_tracks"]["Row"];
 type AudioPlaylistRow = Database["public"]["Tables"]["audio_playlists"]["Row"];
 
+type AudioStorageBucket = "audio-tracks" | "ai-audio";
+
+function parseStorageReference(
+	storagePath?: string | null,
+): { bucket: AudioStorageBucket; path: string } | null {
+	if (!storagePath) return null;
+	if (storagePath.startsWith("ai-audio:")) {
+		return {
+			bucket: "ai-audio",
+			path: storagePath.slice("ai-audio:".length),
+		};
+	}
+	if (storagePath.startsWith("audio-tracks:")) {
+		return {
+			bucket: "audio-tracks",
+			path: storagePath.slice("audio-tracks:".length),
+		};
+	}
+	return { bucket: "audio-tracks", path: storagePath };
+}
+
+function encodeStorageReference(
+	bucket: AudioStorageBucket,
+	path: string,
+): string {
+	return bucket === "audio-tracks" ? path : `${bucket}:${path}`;
+}
+
+function resolveStoredTrackUrl(storagePath?: string | null): string {
+	const storageRef = parseStorageReference(storagePath);
+	if (!storageRef) return "";
+	const { data } = supabase.storage
+		.from(storageRef.bucket)
+		.getPublicUrl(storageRef.path);
+	return data?.publicUrl ?? "";
+}
+
 const DEFAULT_TRACKS: StoredAudioTrack[] = [
 	{
 		id: "default-bleeding-out",
@@ -354,13 +391,7 @@ export function useAudioLibrary() {
 
 			const mappedTracks = (tracksResult.data || []).map(
 				(row: AudioTrackRow) => {
-					let publicUrl = "";
-					if (row.storage_path) {
-						const { data: urlData } = supabase.storage
-							.from("audio-tracks")
-							.getPublicUrl(row.storage_path);
-						publicUrl = urlData?.publicUrl ?? "";
-					}
+					const publicUrl = resolveStoredTrackUrl(row.storage_path);
 
 					return {
 						id: row.id,
@@ -449,6 +480,77 @@ export function useAudioLibrary() {
 		[isAuthed, saveTracks, tracks, user?.id],
 	);
 
+	const registerStoredTrack = useCallback(
+		async (
+			track: AudioTrack,
+			options: { storagePath: string; bucket?: AudioStorageBucket },
+		) => {
+			const encodedStoragePath = encodeStorageReference(
+				options.bucket ?? "audio-tracks",
+				options.storagePath,
+			);
+
+			if (!isAuthed || !user?.id) {
+				const storedTrack: StoredAudioTrack = {
+					...track,
+					storagePath: encodedStoragePath,
+				};
+				saveTracks([...tracks, storedTrack]);
+				return storedTrack;
+			}
+
+			const { data, error } = await supabase
+				.from("audio_tracks")
+				.insert({
+					user_id: user.id,
+					title: track.title,
+					artist: track.artist,
+					category: track.category,
+					duration: track.duration,
+					storage_path: encodedStoragePath,
+					volume: track.volume,
+					loop: track.loop,
+					tags: track.tags,
+					mood: track.mood,
+					license: track.license,
+					source: track.source,
+					file_size: track.fileSize,
+					mime_type: track.mimeType,
+				})
+				.select("*")
+				.single();
+
+			if (error || !data) {
+				throw error || new Error("Failed to register stored audio track");
+			}
+
+			const storedTrack: StoredAudioTrack = {
+				id: data.id,
+				title: data.title,
+				artist: data.artist,
+				category: data.category as StoredAudioTrack["category"],
+				duration: data.duration,
+				url: resolveStoredTrackUrl(data.storage_path),
+				volume: data.volume ?? 0.7,
+				loop: data.loop ?? false,
+				tags: Array.isArray(data.tags) ? data.tags : [],
+				mood: data.mood ?? undefined,
+				license: data.license ?? "Custom Upload",
+				source: data.source ?? "Custom Upload",
+				isLocal: false,
+				fileSize: data.file_size ?? undefined,
+				mimeType: data.mime_type ?? track.mimeType,
+				createdAt: data.created_at,
+				updatedAt: data.updated_at,
+				storagePath: data.storage_path,
+			};
+
+			setTracks((prev) => [storedTrack, ...prev]);
+			return storedTrack;
+		},
+		[isAuthed, saveTracks, tracks, user?.id],
+	);
+
 	// Remove track
 	const removeTrack = useCallback(
 		async (trackId: string) => {
@@ -507,9 +609,12 @@ export function useAudioLibrary() {
 			);
 
 			if (storagePath) {
-				const { error: storageError } = await supabase.storage
-					.from("audio-tracks")
-					.remove([storagePath]);
+				const storageRef = parseStorageReference(storagePath);
+				const { error: storageError } = storageRef
+					? await supabase.storage
+							.from(storageRef.bucket)
+							.remove([storageRef.path])
+					: { error: null };
 				if (storageError) {
 					logger.warn("Failed to delete audio file:", storageError);
 				}
@@ -767,6 +872,7 @@ export function useAudioLibrary() {
 		// Actions
 		loadLibrary,
 		addTrack,
+		registerStoredTrack,
 		removeTrack,
 		updateTrack,
 		addPlaylist,

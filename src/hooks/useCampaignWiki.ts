@@ -5,7 +5,21 @@ import type { Database } from "@/integrations/supabase/types";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import { readLocalWikiArticles, saveLocalWikiArticles } from "@/lib/guestStore";
 
-const isLocalMode = () => !isSupabaseConfigured;
+/**
+ * Guest-aware local mode: true if Supabase isn't configured at all, OR
+ * if the user is signed out (guest mode via `Continue as Guest`). The
+ * sandbox injector writes to localStorage in both cases, so the reader
+ * hook must fall through to the same store to surface the imported
+ * articles.
+ *
+ * We check `supabase.auth.getUser()` inline rather than threading the
+ * user arg through the mutation callers.
+ */
+const isLocalMode = async (): Promise<boolean> => {
+	if (!isSupabaseConfigured) return true;
+	const { data } = await supabase.auth.getUser();
+	return !data.user;
+};
 
 export type WikiArticle =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Row"];
@@ -23,7 +37,7 @@ export const useCampaignWiki = (campaignId: string | null) => {
 		queryFn: async () => {
 			if (!campaignId) return [];
 
-			if (isLocalMode()) {
+			if (await isLocalMode()) {
 				return readLocalWikiArticles(campaignId);
 			}
 
@@ -47,7 +61,7 @@ export const useCampaignWiki = (campaignId: string | null) => {
 		mutationFn: async (article: Omit<WikiArticleInsert, "campaign_id">) => {
 			if (!campaignId) throw new Error("No active campaign");
 
-			if (isLocalMode()) {
+			if (await isLocalMode()) {
 				const existing = readLocalWikiArticles(campaignId);
 				const now = new Date().toISOString();
 				const nextId = `local_wiki_${crypto.randomUUID()}`;
@@ -106,7 +120,7 @@ export const useCampaignWiki = (campaignId: string | null) => {
 			id: string;
 			updates: WikiArticleUpdate;
 		}) => {
-			if (isLocalMode()) {
+			if (await isLocalMode()) {
 				if (!campaignId) return null;
 				const existing = readLocalWikiArticles(campaignId);
 				const targetIndex = existing.findIndex((a) => a.id === id);
@@ -153,7 +167,7 @@ export const useCampaignWiki = (campaignId: string | null) => {
 
 	const removeArticle = useMutation({
 		mutationFn: async (id: string) => {
-			if (isLocalMode()) {
+			if (await isLocalMode()) {
 				if (!campaignId) return null;
 				const existing = readLocalWikiArticles(campaignId);
 				const filtered = existing.filter((a) => a.id !== id);

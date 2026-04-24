@@ -6,14 +6,14 @@ import type { CompendiumRune } from "../../../types/compendium";
 //   - Rune of Tempest shackle → Rune of Tempest Binding
 //   - Rune of Crimson strike  → Rune of Crimson Cleave
 //   - Rune of Lightning strike → Rune of Lightning Lance
-export const spell_rank_d_runes: CompendiumRune[] = [	{
+export const spell_rank_d_runes: CompendiumRune[] = [
+	{
 		id: "rune-spell-d-1",
 		name: "Rune of Chill Lance",
 		display_name: "Rune of Chill Lance",
 		description:
 			"Consuming this rune permanently teaches Chill Lance. The learned spell resolves as a 1d10 cold ranged attack (Sense) or a DC 14 Sense save that ends in Frightened on a failure. Cross-Class Adaptation: if Chill Lance is outside the learner's native Job, uses per rest equal Proficiency + the Job's primary stat modifier.",
-		flavor:
-			"A palm-sized shard that feels colder than the room it is in.",
+		flavor: "A palm-sized shard that feels colder than the room it is in.",
 		tags: [
 			"awakened",
 			"magic",
@@ -122,8 +122,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		display_name: "Rune of Tempest Binding",
 		description:
 			"Consuming this rune permanently teaches Tempest Binding. The learned spell resolves as a 2d8 thunder ranged attack (Sense) and a DC 13 Agility save in a 20-foot cube (failure = full damage + Prone, success = half damage).",
-		flavor:
-			"A coin-sized sigil that refuses to lie flat against metal.",
+		flavor: "A coin-sized sigil that refuses to lie flat against metal.",
 		tags: [
 			"awakened",
 			"magic",
@@ -246,7 +245,8 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Teaches Sanguine Strike (1d8 necrotic).",
-			secondary: "Learned spell: DC 14 Intelligence save; failure = Frightened 1 minute.",
+			secondary:
+				"Learned spell: DC 14 Intelligence save; failure = Frightened 1 minute.",
 		},
 		effect_description:
 			"Teaches Sanguine Strike: 1d8 necrotic (Presence ranged), DC 14 Intelligence save; failure = Frightened.",
@@ -287,8 +287,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		display_name: "Rune of Bright Tomb",
 		description:
 			"Consuming this rune permanently teaches Bright Tomb. The learned spell places a 20-foot radiant ward that strikes the first entrant for 1d10+3 radiant (Sense melee attack), with a DC 12 Presence save on cross (failure = full damage + Prone).",
-		flavor:
-			"A disc the exact weight of an Archive Guard challenge coin.",
+		flavor: "A disc the exact weight of an Archive Guard challenge coin.",
 		tags: [
 			"awakened",
 			"magic",
@@ -301,7 +300,8 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Teaches Bright Tomb (1d10+3 radiant ward).",
-			secondary: "Learned spell: DC 12 Presence save on cross; failure = Prone.",
+			secondary:
+				"Learned spell: DC 12 Presence save on cross; failure = Prone.",
 		},
 		effect_description:
 			"Teaches Bright Tomb: 1d10+3 radiant ward ward (Sense melee), DC 12 Presence save on cross; failure = Prone.",
@@ -342,8 +342,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		display_name: "Rune of Arctic Lance",
 		description:
 			"Consuming this rune permanently teaches Arctic Lance. The learned spell resolves as 2d6+2 cold (Sense ranged attack) in a 60-foot line with a DC 14 Intelligence save (failure = full damage + Prone, success = half damage).",
-		flavor:
-			"A shard that never fogs, even when held in a warm palm.",
+		flavor: "A shard that never fogs, even when held in a warm palm.",
 		tags: [
 			"awakened",
 			"magic",
@@ -411,7 +410,8 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Teaches Crimson Cleave (3d4 force line).",
-			secondary: "Learned spell: critical hits damage adjacent creatures for 1d4.",
+			secondary:
+				"Learned spell: critical hits damage adjacent creatures for 1d4.",
 		},
 		effect_description:
 			"Teaches Crimson Cleave: 3d4 force (Intelligence melee) 60-foot line, no save; critical hits splash adjacent creatures.",
@@ -562,8 +562,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		display_name: "Rune of Carnage Strike",
 		description:
 			"Consuming this rune permanently teaches Carnage Strike. The learned spell resolves as 2d6 force (Sense ranged attack) in a 10-foot cube centered on the caster with a DC 12 Agility save (failure = full damage + Prone).",
-		flavor:
-			"A shard that tastes faintly of iron even through glass.",
+		flavor: "A shard that tastes faintly of iron even through glass.",
 		tags: [
 			"awakened",
 			"magic",
@@ -782,8 +781,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		display_name: "Rune of Ice Lance",
 		description:
 			"Consuming this rune permanently teaches Ice Lance. The learned spell resolves as 2d6 cold (Presence ranged attack) in a 30-foot line with no save; the line becomes difficult terrain until the end of the caster's next turn.",
-		flavor:
-			"A predictable shard; nothing about it surprises its holder.",
+		flavor: "A predictable shard; nothing about it surprises its holder.",
 		tags: [
 			"awakened",
 			"magic",
@@ -796,7 +794,8 @@ export const spell_rank_d_runes: CompendiumRune[] = [	{
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Teaches Ice Lance (2d6 cold line).",
-			secondary: "Learned spell: line becomes difficult terrain until end of caster's next turn.",
+			secondary:
+				"Learned spell: line becomes difficult terrain until end of caster's next turn.",
 		},
 		effect_description:
 			"Teaches Ice Lance: 2d6 cold (Presence ranged) 30-foot line, no save; line becomes difficult terrain until end of caster's next turn.",

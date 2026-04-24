@@ -312,7 +312,7 @@ export function createLocalCharacter(
 		vulnerabilities: [],
 		condition_immunities: [],
 		// Racial parity — union of job.languages + player-selected languages.
-		languages: (data as Record<string, unknown>).languages as string[] ?? [],
+		languages: ((data as Record<string, unknown>).languages as string[]) ?? [],
 	};
 
 	upsertLocalCharacter(character);
@@ -957,6 +957,199 @@ export function saveLocalJournals(
 		window.localStorage.setItem(
 			`vtt-journal-${campaignId}`,
 			JSON.stringify(entries),
+		);
+	} catch {}
+}
+
+// ── Campaign Sessions + Session Logs (guest mode) ───────────────────────────
+
+export type CampaignSessionRow =
+	Database["public"]["Tables"]["campaign_sessions"]["Row"];
+export type CampaignSessionLogRow =
+	Database["public"]["Tables"]["campaign_session_logs"]["Row"];
+
+export function readLocalSessions(campaignId: string): CampaignSessionRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.sessions.${campaignId}`,
+		);
+		return raw ? (JSON.parse(raw) as CampaignSessionRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalSessions(
+	campaignId: string,
+	sessions: CampaignSessionRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.sessions.${campaignId}`,
+			JSON.stringify(sessions),
+		);
+	} catch {}
+}
+
+export function readLocalSessionLogs(
+	campaignId: string,
+): CampaignSessionLogRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.session-logs.${campaignId}`,
+		);
+		return raw ? (JSON.parse(raw) as CampaignSessionLogRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalSessionLogs(
+	campaignId: string,
+	logs: CampaignSessionLogRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.session-logs.${campaignId}`,
+			JSON.stringify(logs),
+		);
+	} catch {}
+}
+
+// ── Campaign Notes (guest mode) ─────────────────────────────────────────────
+
+export type CampaignNoteRow =
+	Database["public"]["Tables"]["campaign_notes"]["Row"];
+
+/**
+ * Note: the `useCampaignNotes` hook already uses
+ * `solo-compendium.campaign.${id}.notes` as its localStorage key. We mirror
+ * that exact key so the sandbox injector and the reader hook share state
+ * in guest mode without a separate migration.
+ */
+export function readLocalCampaignNotes(campaignId: string): CampaignNoteRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.campaign.${campaignId}.notes`,
+		);
+		return raw ? (JSON.parse(raw) as CampaignNoteRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalCampaignNotes(
+	campaignId: string,
+	notes: CampaignNoteRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.campaign.${campaignId}.notes`,
+			JSON.stringify(notes),
+		);
+	} catch {}
+}
+
+// ── Campaign Encounters + Entries (guest mode) ──────────────────────────────
+
+export type CampaignEncounterRow =
+	Database["public"]["Tables"]["campaign_encounters"]["Row"];
+export type CampaignEncounterEntryRow =
+	Database["public"]["Tables"]["campaign_encounter_entries"]["Row"];
+
+export function readLocalEncounters(
+	campaignId: string,
+): CampaignEncounterRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.encounters.${campaignId}`,
+		);
+		return raw ? (JSON.parse(raw) as CampaignEncounterRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalEncounters(
+	campaignId: string,
+	encounters: CampaignEncounterRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.encounters.${campaignId}`,
+			JSON.stringify(encounters),
+		);
+	} catch {}
+}
+
+export function readLocalEncounterEntries(
+	campaignId: string,
+): CampaignEncounterEntryRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.encounter-entries.${campaignId}`,
+		);
+		return raw ? (JSON.parse(raw) as CampaignEncounterEntryRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalEncounterEntries(
+	campaignId: string,
+	entries: CampaignEncounterEntryRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.encounter-entries.${campaignId}`,
+			JSON.stringify(entries),
+		);
+	} catch {}
+}
+
+// ── NPC Characters (guest mode, warden-claimed) ─────────────────────────────
+//
+// Sandbox NPCs become character rows with `user_id = wardenId` and a
+// `[SANDBOX_NPC]` marker prefix in `notes` — the Characters tab filter
+// uses that marker to hide rows from players until a proper
+// `character_type` column lands in a future migration.
+
+export type LocalCharacterRow =
+	Database["public"]["Tables"]["characters"]["Row"];
+
+export function readLocalNpcCharacters(
+	campaignId: string,
+): LocalCharacterRow[] {
+	if (typeof window === "undefined") return [];
+	try {
+		const raw = window.localStorage.getItem(
+			`solo-compendium.npc-characters.${campaignId}`,
+		);
+		return raw ? (JSON.parse(raw) as LocalCharacterRow[]) : [];
+	} catch {
+		return [];
+	}
+}
+
+export function saveLocalNpcCharacters(
+	campaignId: string,
+	npcs: LocalCharacterRow[],
+): void {
+	if (typeof window === "undefined") return;
+	try {
+		window.localStorage.setItem(
+			`solo-compendium.npc-characters.${campaignId}`,
+			JSON.stringify(npcs),
 		);
 	} catch {}
 }

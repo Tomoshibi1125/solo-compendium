@@ -147,7 +147,7 @@ const toTreasureTableId = (rank: string) =>
 
 const normalizeResultKey = (key: string) =>
 	LEGACY_RESULT_KEY_MAP[key] ??
-		(key.startsWith("treasure-") ? key.toLowerCase() : key);
+	(key.startsWith("treasure-") ? key.toLowerCase() : key);
 
 const normalizeStoredResults = (results: Record<string, string>) =>
 	Object.fromEntries(
@@ -190,8 +190,9 @@ const RollableTables = () => {
 	);
 	const treasureTables = useMemo(
 		() =>
-			TREASURE_RANK_ORDER.map((rank) => tableIndex.get(toTreasureTableId(rank)))
-				.filter((table): table is CanonicalRollableTable => !!table),
+			TREASURE_RANK_ORDER.map((rank) =>
+				tableIndex.get(toTreasureTableId(rank)),
+			).filter((table): table is CanonicalRollableTable => !!table),
 		[tableIndex],
 	);
 
@@ -419,7 +420,9 @@ For EACH result, provide:
 												variant="outline"
 												onClick={() => roll(table.id)}
 												className="gap-2"
-												disabled={tablesLoading || !table.rollable_entries?.length}
+												disabled={
+													tablesLoading || !table.rollable_entries?.length
+												}
 											>
 												<Dice6 className="w-3 h-3" />
 												Roll

@@ -66,7 +66,8 @@ export function VTTIconRail({
 							"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
 							isActive &&
 								"bg-primary/20 text-primary shadow-[0_0_14px_hsl(var(--primary)/0.35)]",
-							item.disabled && "opacity-40 cursor-not-allowed hover:bg-transparent",
+							item.disabled &&
+								"opacity-40 cursor-not-allowed hover:bg-transparent",
 						)}
 					>
 						<Icon className="w-5 h-5" aria-hidden />
