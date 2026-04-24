@@ -4,6 +4,7 @@ import {
 	ArrowRight,
 	BookOpen,
 	Bot,
+	ChevronDown,
 	Circle,
 	Clock,
 	Cloud,
@@ -51,9 +52,10 @@ import {
 	useParams,
 	useSearchParams,
 } from "react-router-dom";
+import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
-import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -67,6 +69,14 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
@@ -85,13 +95,26 @@ import {
 	SheetTitle,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+	ConnectedPlayersPopover,
+	type ConnectedUser,
+} from "@/components/vtt/ConnectedPlayersPopover";
 import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
+import { GameSettingsDrawer } from "@/components/vtt/GameSettingsDrawer";
+import { LayerQuickSwitch } from "@/components/vtt/LayerQuickSwitch";
+import { SessionControlsMenu } from "@/components/vtt/SessionControlsMenu";
+import { TokenActionBar } from "@/components/vtt/TokenActionBar";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
 import { VTTDrawer } from "@/components/vtt/VTTDrawer";
-import { VTTIconRail, type VTTIconRailItem } from "@/components/vtt/VTTIconRail";
+import {
+	VTTIconRail,
+	type VTTIconRailItem,
+} from "@/components/vtt/VTTIconRail";
 import { VTTMobileTabBar } from "@/components/vtt/VTTMobileTabBar";
+import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
+import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import {
@@ -131,6 +154,7 @@ import {
 	vttAudioManager,
 } from "@/hooks/useVTTAudio";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
+import { useVTTSettings } from "@/hooks/useVTTSettings";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import {
@@ -162,6 +186,7 @@ import {
 	VttMusicEngine,
 	WEATHER_PRESETS,
 } from "@/lib/vtt";
+import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import {
 	buildDefaultVttScene,
 	computeVttHydration,
@@ -175,7 +200,6 @@ import {
 	removeAssetFromVttScenes,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
-import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import PlayerMapView from "@/pages/player-tools/PlayerMapView";
 import type {
 	VTTDrawing,
@@ -527,8 +551,7 @@ const VTTEnhanced = () => {
 	const [damageDialogOpen, setDamageDialogOpen] = useState(false);
 	const [damageAmount, setDamageAmount] = useState("");
 	const [damageType, setDamageType] = useState("");
-	const [damageMode, setDamageMode] =
-		useState<DamageApplicationMode>("typed");
+	const [damageMode, setDamageMode] = useState<DamageApplicationMode>("typed");
 	const [currentScene, setCurrentScene] = useState<VTTScene | null>(null);
 	const [liveSceneId, setLiveSceneId] = useState<string | null>(null);
 	const resetDamageDialog = useCallback(() => {
@@ -538,7 +561,9 @@ const VTTEnhanced = () => {
 		setDamageMode("typed");
 	}, []);
 	const syncLocalSceneMusic = useCallback(
-		(scene: Pick<VTTScene, "musicMood" | "musicAutoplay"> | null | undefined) => {
+		(
+			scene: Pick<VTTScene, "musicMood" | "musicAutoplay"> | null | undefined,
+		) => {
 			const wantsMusic = !!scene?.musicMood && scene.musicAutoplay !== false;
 			if (wantsMusic && !musicEngineRef.current) {
 				musicEngineRef.current = new VttMusicEngine();
@@ -589,7 +614,7 @@ const VTTEnhanced = () => {
 
 	const { saveVTTScene } = useWardenToolsEnhancements(campaignId);
 	const [selectedTool, setSelectedTool] = useState<
-		"select" | "fog" | "measure" | "draw" | "effect" | "note"
+		"select" | "fog" | "measure" | "draw" | "effect" | "note" | "pointer"
 	>("select");
 	const [drawingMode, setDrawingMode] =
 		useState<VTTDrawing["type"]>("freehand");
@@ -613,16 +638,15 @@ const VTTEnhanced = () => {
 		| "journal"
 		| "broadcast"
 		| "ai"
+		| "log"
 		| null;
 	const [leftDrawerTab, setLeftDrawerTab] = useState<LeftDrawerTab>(null);
 	const [rightDrawerTab, setRightDrawerTab] = useState<RightDrawerTab>(null);
 	// The right drawer's inner Tabs default value when a non-tab rail (like
 	// `token`) opens the drawer. Defaults to `initiative` to match the
 	// previous uncontrolled behavior.
-	const [rightInnerTab, setRightInnerTab] = useState<Exclude<
-		RightDrawerTab,
-		null | "token"
-	>>("initiative");
+	const [rightInnerTab, setRightInnerTab] =
+		useState<Exclude<RightDrawerTab, null | "token">>("initiative");
 	// `mobileDrawer` opens the bottom-sheet drawer tied to the mobile tab bar.
 	type MobileDrawer = "tools" | "token" | "panel" | "assets" | null;
 	const [mobileDrawer, setMobileDrawer] = useState<MobileDrawer>(null);
@@ -811,6 +835,25 @@ const VTTEnhanced = () => {
 			return Math.max(0.5, Math.min(2, nextZoom));
 		});
 	}, []);
+	const handleFitZoom = useCallback(() => {
+		if (!mapRef.current || !currentSceneRef.current) return;
+		const rect = mapRef.current.parentElement?.getBoundingClientRect();
+		if (!rect) return;
+		const sw = (currentSceneRef.current.width ?? 20) * gridSize;
+		const sh = (currentSceneRef.current.height ?? 20) * gridSize;
+		if (sw <= 0 || sh <= 0) return;
+		const fitZoom = Math.min(rect.width / sw, rect.height / sh, 2);
+		handleRequestZoom(Math.max(0.5, Math.round(fitZoom * 20) / 20));
+	}, [gridSize, handleRequestZoom]);
+	const handleRecenter = useCallback(() => {
+		const el = mapRef.current;
+		if (!el) return;
+		el.scrollTo({
+			left: 0,
+			top: 0,
+			behavior: "smooth",
+		});
+	}, []);
 	const {
 		state: libraryTokens,
 		isLoading: libraryLoading,
@@ -826,6 +869,14 @@ const VTTEnhanced = () => {
 		sessionId: isStandalone ? null : sessionId,
 		isWarden,
 	});
+
+	// --- Warden-controlled VTT game settings + session status (DDB parity) ---
+	const {
+		settings: vttSettings,
+		sessionStatus,
+		setSettings: setVTTSettings,
+		setSessionState,
+	} = useVTTSettings(campaignId ?? null);
 
 	// Handle realtime events
 	useEffect(() => {
@@ -922,9 +973,9 @@ const VTTEnhanced = () => {
 	const activeCharacter = useMemo(
 		() =>
 			activeToken?.characterId
-				? resolvedCharacters.find(
+				? (resolvedCharacters.find(
 						(character) => character.id === activeToken.characterId,
-					) ?? null
+					) ?? null)
 				: null,
 		[activeToken?.characterId, resolvedCharacters],
 	);
@@ -1005,7 +1056,12 @@ const VTTEnhanced = () => {
 		if (damageDialogOpen) {
 			resetDamageDialog();
 		}
-	}, [activeTokenId, currentScene?.tokens, damageDialogOpen, resetDamageDialog]);
+	}, [
+		activeTokenId,
+		currentScene?.tokens,
+		damageDialogOpen,
+		resetDamageDialog,
+	]);
 
 	useEffect(() => {
 		const handler = () => {
@@ -2132,8 +2188,44 @@ const VTTEnhanced = () => {
 				}
 				return;
 			}
+			// Shift+H / Shift+L / Shift+G — DDB token hotkeys
+			if (e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey) {
+				const key = e.key.toLowerCase();
+				if (key === "h" && activeTokenId && isWarden) {
+					e.preventDefault();
+					const token = (currentScene?.tokens ?? []).find(
+						(t: VTTTokenInstance) => t.id === activeTokenId,
+					);
+					if (token) {
+						updateToken(activeTokenId, { visible: !token.visible });
+					}
+					return;
+				}
+				if (key === "l" && activeTokenId && isWarden) {
+					e.preventDefault();
+					const token = (currentScene?.tokens ?? []).find(
+						(t: VTTTokenInstance) => t.id === activeTokenId,
+					);
+					if (token) {
+						updateToken(activeTokenId, { locked: !token.locked });
+					}
+					return;
+				}
+				if (key === "g" && activeTokenId && isWarden) {
+					e.preventDefault();
+					const token = (currentScene?.tokens ?? []).find(
+						(t: VTTTokenInstance) => t.id === activeTokenId,
+					);
+					if (token) {
+						// Generate a shared groupId (or clear existing one if already grouped).
+						const nextGroupId = token.groupId ? undefined : `grp-${Date.now()}`;
+						updateToken(activeTokenId, { groupId: nextGroupId });
+					}
+					return;
+				}
+			}
 			// Tool hotkeys (only when no modifier keys)
-			if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+			if (!e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey) {
 				const toolKeys: Record<string, typeof selectedTool> = {
 					s: "select",
 					f: "fog",
@@ -2141,11 +2233,50 @@ const VTTEnhanced = () => {
 					e: "effect",
 					n: "note",
 					m: "measure",
+					r: "measure", // Ruler alias (DDB/Roll20 parity)
+					x: "pointer", // DDB "Point & Ping" parity
 				};
 				const tool = toolKeys[e.key.toLowerCase()];
 				if (tool && isWarden) {
 					e.preventDefault();
 					setSelectedTool(tool);
+					return;
+				}
+			}
+			// Zoom hotkeys (DDB/Foundry parity) — match when not in a text input.
+			if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+				if (e.key === "+" || e.key === "=") {
+					e.preventDefault();
+					setZoom((prev) => Math.min(2, Math.round((prev + 0.1) * 100) / 100));
+					return;
+				}
+				if (e.key === "-" || e.key === "_") {
+					e.preventDefault();
+					setZoom((prev) =>
+						Math.max(0.5, Math.round((prev - 0.1) * 100) / 100),
+					);
+					return;
+				}
+				if (e.key === "0") {
+					e.preventDefault();
+					setZoom(1);
+					return;
+				}
+				if (e.key === "Home") {
+					e.preventDefault();
+					handleFitZoom();
+					return;
+				}
+				// Layer quick-cycle (Roll20 parity): `[` prev / `]` next
+				if ((e.key === "[" || e.key === "]") && isWarden) {
+					e.preventDefault();
+					const delta = e.key === "]" ? 1 : -1;
+					setCurrentLayer((prev) => {
+						const ids = LAYER_OPTIONS.map((l) => l.id);
+						const idx = ids.indexOf(prev);
+						const next = (idx + delta + ids.length) % ids.length;
+						return ids[next] ?? prev;
+					});
 					return;
 				}
 			}
@@ -2166,9 +2297,12 @@ const VTTEnhanced = () => {
 			activeTokenId,
 			currentScene?.tokens,
 			getGridPositionFromPoint,
+			handleFitZoom,
 			handleMapGridAction,
 			isWarden,
 			removeToken,
+			selectedTool,
+			setZoom,
 			updateToken,
 		],
 	);
@@ -2214,6 +2348,10 @@ const VTTEnhanced = () => {
 	);
 
 	const lastDmCursorBroadcast = useRef(0);
+	// Wheel zoom is handled directly on the map container by VttPixiStage
+	// (see src/components/vtt/VttPixiStage.tsx). No React-level onWheel is
+	// needed here.
+
 	const handleMapMouseMove = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			if (viewportPanActiveRef.current) return;
@@ -2249,6 +2387,10 @@ const VTTEnhanced = () => {
 
 			if (activeDrawing && selectedTool === "draw" && isWarden) {
 				scheduleDrawingPoint({ x: grid.x, y: grid.y });
+			}
+
+			if (selectedTool === "pointer") {
+				vttRealtime.broadcastPointer(grid.gridX, grid.gridY);
 			}
 
 			const now = Date.now();
@@ -2672,1745 +2814,1829 @@ const VTTEnhanced = () => {
 				</EmbeddedProvider>
 			) : (
 				<div className="vtt-shell relative w-full h-[100dvh] overflow-hidden">
-						{/* Floating top bar (absolute positioned via VTTTopBar internals). */}
-						<VTTTopBar
-							left={
-								<>
-									<Button
-										variant="ghost"
-										onClick={() => navigate(`/campaigns/${campaignId}`)}
-										size="sm"
-										className="shrink-0 h-8 px-2"
-										aria-label="Back to Campaign"
-									>
-										<ArrowLeft className="w-4 h-4" aria-hidden />
-										<span className="hidden md:inline ml-1.5 text-xs">
-											Back
-										</span>
-									</Button>
-									<div className="min-w-0 flex-1 truncate">
-										<RiftHeading
-											level={1}
-											variant="sovereign"
-											dimensional
-											className="leading-tight text-sm sm:text-base md:text-lg truncate"
-										>
-											VTT — {currentScene?.name || "No Scene"}
-										</RiftHeading>
-									</div>
-									<Badge
-										variant={
-											vttRealtime.isConnected ? "default" : "destructive"
-										}
-										className="text-[10px] inline-flex items-center gap-1 shrink-0"
-									>
-										{vttRealtime.isConnected ? (
-											<>
-												<Wifi className="w-3 h-3" aria-hidden />
-												<span className="hidden sm:inline">LIVE</span>
-											</>
-										) : (
-											<>
-												<WifiOff className="w-3 h-3" aria-hidden />
-												<span className="hidden sm:inline">OFFLINE</span>
-											</>
-										)}
-									</Badge>
-									{vttRealtime.activeUsers.length > 0 && (
-										<div className="hidden md:flex -space-x-1.5 shrink-0">
-											{vttRealtime.activeUsers.slice(0, 5).map((u) => (
-												<DynamicStyle
-													key={u.userId}
-													className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white border border-background vtt-user-avatar"
-													vars={{
-														"--vtt-user-color": u.color,
-													}}
-													title={`${u.userName} (${u.role})`}
-												>
-													{u.userName.charAt(0).toUpperCase()}
-												</DynamicStyle>
-											))}
-										</div>
-									)}
-								</>
-							}
-							right={
-								<>
-									{isActualWarden && (
-										<Button
-											data-testid="vtt-player-view-toggle"
-											variant="outline"
-											size="sm"
-											onClick={() => setSimulatePlayerView(!simulatePlayerView)}
-											className={cn(
-												"h-8 text-[11px] px-2",
-												simulatePlayerView
-													? "border-primary text-primary"
-													: "text-foreground/70",
-											)}
-										>
-											<span className="hidden md:inline">
-												{simulatePlayerView
-													? "Exit Player View"
-													: "Player View"}
-											</span>
-											<span className="md:hidden">
-												<Eye className="w-3.5 h-3.5" aria-hidden />
-											</span>
-										</Button>
-									)}
-									{isWarden && (
-										<>
-											<Button
-												onClick={saveScenes}
-												variant="outline"
-												size="sm"
-												className="h-8 px-2"
-												aria-label="Save scenes"
+					{/* Floating top bar (absolute positioned via VTTTopBar internals). */}
+					<VTTTopBar
+						left={
+							<>
+								<Button
+									variant="ghost"
+									onClick={() => navigate(`/campaigns/${campaignId}`)}
+									size="sm"
+									className="shrink-0 h-8 px-2"
+									aria-label="Back to Campaign"
+								>
+									<ArrowLeft className="w-4 h-4" aria-hidden />
+									<span className="hidden md:inline ml-1.5 text-xs">Back</span>
+								</Button>
+								<div className="min-w-0 flex-1">
+									<DropdownMenu>
+										<DropdownMenuTrigger asChild>
+											<button
+												type="button"
+												data-testid="vtt-scene-title"
+												className="inline-flex items-center gap-1 min-w-0 max-w-full truncate text-sm font-semibold text-primary/90 hover:text-primary transition-colors px-1.5 py-0.5 rounded hover:bg-muted/40"
+												title="Change scene"
 											>
-												<Save className="w-4 h-4" aria-hidden />
-												<span className="hidden lg:inline ml-1.5 text-xs">
-													Save
+												<span className="truncate">
+													{currentScene?.name || "No Scene"}
 												</span>
-											</Button>
-											<Button
-												data-testid="vtt-new-scene"
-												onClick={createNewScene}
-												variant="outline"
-												size="sm"
-												className="h-8 px-2"
-												aria-label="New scene"
-											>
-												<Plus className="w-4 h-4" aria-hidden />
-												<span className="hidden lg:inline ml-1.5 text-xs">
-													New
-												</span>
-											</Button>
-											<Button
-												variant="outline"
-												size="sm"
-												onClick={() => setIsMapExpanded((prev) => !prev)}
-												className="h-8 px-2"
-												aria-label={isMapExpanded ? "Exit Focus" : "Focus"}
-												title={isMapExpanded ? "Exit Focus mode" : "Focus mode"}
-											>
-												<Maximize2 className="w-4 h-4" aria-hidden />
-												<span className="hidden lg:inline ml-1.5 text-xs">
-													{isMapExpanded ? "Exit" : "Focus"}
-												</span>
-											</Button>
-											<Dialog>
-												<DialogTrigger asChild>
-													<Button
-														variant="ghost"
-														size="sm"
-														className="h-8 w-8 p-0 text-foreground/70 hover:text-foreground"
-														aria-label="Keyboard shortcuts"
-														title="Keyboard shortcuts"
+												<ChevronDown
+													className="w-3 h-3 opacity-60 shrink-0"
+													aria-hidden
+												/>
+											</button>
+										</DropdownMenuTrigger>
+										<DropdownMenuContent align="start" className="w-56">
+											<DropdownMenuLabel className="text-[10px] uppercase tracking-widest text-foreground/70">
+												Scenes
+											</DropdownMenuLabel>
+											<DropdownMenuSeparator />
+											{scenes.length === 0 ? (
+												<DropdownMenuItem disabled>
+													No scenes yet
+												</DropdownMenuItem>
+											) : (
+												scenes.map((scene) => (
+													<DropdownMenuItem
+														key={scene.id}
+														onClick={() => {
+															setCurrentScene(scene);
+														}}
+														className={cn(
+															"text-xs",
+															currentScene?.id === scene.id &&
+																"bg-primary/15 text-primary",
+														)}
 													>
-														?
-													</Button>
-												</DialogTrigger>
-												<DialogContent className="max-w-md w-[calc(100%-2rem)]">
-													<DialogHeader>
-														<DialogTitle>Keyboard Shortcuts</DialogTitle>
-														<DialogDescription>
-															Available when the map canvas is focused.
-														</DialogDescription>
-													</DialogHeader>
-													<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
-														<span className="text-foreground/70">Escape</span>
-														<span>Deselect token</span>
-														<span className="text-foreground/70">
-															Delete / Backspace
+														<span className="truncate flex-1">
+															{scene.name}
 														</span>
-														<span>Remove selected token</span>
-														<span className="text-foreground/70">
-															Arrow keys
-														</span>
-														<span>Nudge token 1 square</span>
-														<span className="text-foreground/70">L</span>
-														<span>Lock / unlock token</span>
-														<span className="text-foreground/70">O</span>
-														<span>Open character sheet</span>
-														<span className="text-foreground/70 font-semibold mt-2">
-															Tool Hotkeys
-														</span>
-														<span className="mt-2" />
-														<span className="text-foreground/70">S</span>
-														<span>Select tool</span>
-														<span className="text-foreground/70">F</span>
-														<span>Fog tool</span>
-														<span className="text-foreground/70">D</span>
-														<span>Draw tool</span>
-														<span className="text-foreground/70">E</span>
-														<span>Effect tool</span>
-														<span className="text-foreground/70">N</span>
-														<span>Note tool</span>
-														<span className="text-foreground/70">M</span>
-														<span>Measure tool</span>
-														<span className="text-foreground/70 font-semibold mt-2">
-															Asset Browser
-														</span>
-														<span className="mt-2" />
-														<span className="text-foreground/70">
-															Drag &amp; Drop
-														</span>
-														<span>Drag asset onto map</span>
-													</div>
-													<DialogFooter>
-														<AscendantText className="block text-xs text-foreground/70">
-															Click the map first to enable keyboard shortcuts.
-														</AscendantText>
-													</DialogFooter>
-												</DialogContent>
-											</Dialog>
+														{liveSceneId === scene.id && (
+															<span className="ml-2 text-[9px] font-bold uppercase text-amber-500">
+																Live
+															</span>
+														)}
+													</DropdownMenuItem>
+												))
+											)}
+											{isWarden && (
+												<>
+													<DropdownMenuSeparator />
+													<DropdownMenuItem
+														onClick={() => createNewScene()}
+														className="text-xs"
+													>
+														<Plus className="w-3 h-3 mr-2" />
+														New scene
+													</DropdownMenuItem>
+												</>
+											)}
+										</DropdownMenuContent>
+									</DropdownMenu>
+								</div>
+								<Badge
+									variant={vttRealtime.isConnected ? "default" : "destructive"}
+									className="text-[10px] inline-flex items-center gap-1 shrink-0"
+								>
+									{vttRealtime.isConnected ? (
+										<>
+											<Wifi className="w-3 h-3" aria-hidden />
+											<span className="hidden sm:inline">LIVE</span>
+										</>
+									) : (
+										<>
+											<WifiOff className="w-3 h-3" aria-hidden />
+											<span className="hidden sm:inline">OFFLINE</span>
 										</>
 									)}
-								</>
-							}
-						/>
-
-						{/* Content area: rails + canvas. Top-padding accommodates floating top bar. */}
-						<div
-							className={cn(
-								"vtt-content absolute inset-0 flex gap-2 sm:gap-3",
-								"pt-[52px] px-2 sm:px-3 pb-2",
-								isMobile && "pb-[64px]",
-							)}
-						>
-							{/* Always-visible left icon rail (Warden only, desktop). */}
-							{isWarden && !isMobile && !isMapExpanded && (
-								<VTTIconRail
-									side="left"
-									activeId={leftDrawerTab}
-									onSelect={(id) => setLeftDrawerTab(id as LeftDrawerTab)}
-									items={
-										[
-											{
-												id: "scenes",
-												icon: Layers,
-												label: "Scenes",
-												testId: "vtt-rail-left-scenes",
-											},
-											{
-												id: "toolbox",
-												icon: Wrench,
-												label: "Toolbox",
-												testId: "vtt-rail-left-toolbox",
-											},
-											{
-												id: "map",
-												icon: MapPin,
-												label: "Map Settings",
-												testId: "vtt-rail-left-map",
-											},
-											{
-												id: "tokens",
-												icon: Users,
-												label: "Tokens",
-												testId: "vtt-rail-left-tokens",
-											},
-										] as VTTIconRailItem[]
-									}
-								/>
-							)}
-							{/* Left drawer: overlay panel populated by the rail selection. */}
-							{isWarden && (
-								<VTTDrawer
-									side="left"
-									open={leftDrawerTab !== null}
-									onOpenChange={(o) => !o && setLeftDrawerTab(null)}
-									title={
-										leftDrawerTab === "scenes"
-											? "Scenes"
-											: leftDrawerTab === "toolbox"
-												? "Toolbox"
-												: leftDrawerTab === "map"
-													? "Map Settings"
-													: leftDrawerTab === "tokens"
-														? "Tokens"
-														: "Toolbox"
-									}
-								>
-									<Tabs
-										value={leftDrawerTab ?? "scenes"}
-										onValueChange={(v) =>
-											setLeftDrawerTab(v as LeftDrawerTab)
-										}
-										className="flex flex-col min-h-0 h-full"
+								</Badge>
+								{vttRealtime.activeUsers.length > 0 && (
+									<ConnectedPlayersPopover
+										campaignId={campaignId}
+										users={vttRealtime.activeUsers.map<ConnectedUser>((u) => ({
+											userId: u.userId,
+											userName: u.userName,
+											role: u.role,
+											color: u.color,
+										}))}
+										className="hidden md:inline-flex"
+									/>
+								)}
+							</>
+						}
+						right={
+							<>
+								{isActualWarden && (
+									<Button
+										data-testid="vtt-player-view-toggle"
+										variant="outline"
+										size="sm"
+										onClick={() => setSimulatePlayerView(!simulatePlayerView)}
+										className={cn(
+											"h-8 text-[11px] px-2",
+											simulatePlayerView
+												? "border-primary text-primary"
+												: "text-foreground/70",
+										)}
 									>
-										<TabsList className="grid w-full grid-cols-4 h-auto p-1 mb-2 shrink-0 bg-card border border-border rounded-lg shadow-sm">
-											<TabsTrigger
-												value="scenes"
-												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
-											>
-												Scenes
-											</TabsTrigger>
-											<TabsTrigger
-												value="toolbox"
-												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
-											>
-												Toolbox
-											</TabsTrigger>
-											<TabsTrigger
-												value="map"
-												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
-											>
-												Map
-											</TabsTrigger>
-											<TabsTrigger
-												value="tokens"
-												className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
-											>
-												Tokens
-											</TabsTrigger>
-										</TabsList>
+										<span className="hidden md:inline">
+											{simulatePlayerView ? "Exit Player View" : "Player View"}
+										</span>
+										<span className="md:hidden">
+											<Eye className="w-3.5 h-3.5" aria-hidden />
+										</span>
+									</Button>
+								)}
+								{isActualWarden && campaignId && (
+									<SessionControlsMenu
+										status={sessionStatus}
+										onSetState={(state) =>
+											setSessionState(state, null, user?.id)
+										}
+										mapLink={`${window.location.origin}/campaigns/${campaignId}/vtt${
+											currentScene?.id ? `?scene=${currentScene.id}` : ""
+										}`}
+										inviteLink={null}
+										spectatorLink={`${window.location.origin}/campaigns/${campaignId}/vtt/spectate`}
+									/>
+								)}
+								{isActualWarden && (
+									<GameSettingsDrawer
+										settings={vttSettings}
+										onChange={setVTTSettings}
+										disabled={!campaignId}
+									/>
+								)}
+								{isWarden && (
+									<>
+										<Button
+											onClick={saveScenes}
+											variant="outline"
+											size="sm"
+											className="h-8 px-2"
+											aria-label="Save scenes"
+										>
+											<Save className="w-4 h-4" aria-hidden />
+											<span className="hidden lg:inline ml-1.5 text-xs">
+												Save
+											</span>
+										</Button>
+										<Button
+											data-testid="vtt-new-scene"
+											onClick={createNewScene}
+											variant="outline"
+											size="sm"
+											className="h-8 px-2"
+											aria-label="New scene"
+										>
+											<Plus className="w-4 h-4" aria-hidden />
+											<span className="hidden lg:inline ml-1.5 text-xs">
+												New
+											</span>
+										</Button>
+										<Button
+											variant="outline"
+											size="sm"
+											onClick={() => setIsMapExpanded((prev) => !prev)}
+											className="h-8 px-2"
+											aria-label={isMapExpanded ? "Exit Focus" : "Focus"}
+											title={isMapExpanded ? "Exit Focus mode" : "Focus mode"}
+										>
+											<Maximize2 className="w-4 h-4" aria-hidden />
+											<span className="hidden lg:inline ml-1.5 text-xs">
+												{isMapExpanded ? "Exit" : "Focus"}
+											</span>
+										</Button>
+										<Dialog>
+											<DialogTrigger asChild>
+												<Button
+													variant="ghost"
+													size="sm"
+													className="h-8 w-8 p-0 text-foreground/70 hover:text-foreground"
+													aria-label="Keyboard shortcuts"
+													title="Keyboard shortcuts"
+												>
+													?
+												</Button>
+											</DialogTrigger>
+											<DialogContent className="max-w-md w-[calc(100%-2rem)]">
+												<DialogHeader>
+													<DialogTitle>Keyboard Shortcuts</DialogTitle>
+													<DialogDescription>
+														Available when the map canvas is focused.
+													</DialogDescription>
+												</DialogHeader>
+												<div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
+													<span className="text-foreground/70 font-semibold col-span-2 mt-1">
+														Selection & Movement
+													</span>
+													<span className="text-foreground/70">Escape</span>
+													<span>Deselect token</span>
+													<span className="text-foreground/70">
+														Delete / Backspace
+													</span>
+													<span>Remove selected token</span>
+													<span className="text-foreground/70">Arrow keys</span>
+													<span>Nudge token 1 square</span>
+													<span className="text-foreground/70">Shift+H</span>
+													<span>Hide / reveal token (Warden)</span>
+													<span className="text-foreground/70">Shift+L</span>
+													<span>Lock / unlock token</span>
+													<span className="text-foreground/70">Shift+G</span>
+													<span>Toggle group on selected token</span>
+													<span className="text-foreground/70">O</span>
+													<span>Open character sheet</span>
+													<span className="text-foreground/70 font-semibold col-span-2 mt-2">
+														Tool Hotkeys
+													</span>
+													<span className="text-foreground/70">S</span>
+													<span>Select tool</span>
+													<span className="text-foreground/70">F</span>
+													<span>Fog tool</span>
+													<span className="text-foreground/70">D</span>
+													<span>Draw tool</span>
+													<span className="text-foreground/70">E</span>
+													<span>Effect tool</span>
+													<span className="text-foreground/70">N</span>
+													<span>Note tool</span>
+													<span className="text-foreground/70">M / R</span>
+													<span>Measure / Ruler tool</span>
+													<span className="text-foreground/70">X</span>
+													<span>Pointer tool (trailing highlight)</span>
+													<span className="text-foreground/70 font-semibold col-span-2 mt-2">
+														Zoom
+													</span>
+													<span className="text-foreground/70">+ / =</span>
+													<span>Zoom in</span>
+													<span className="text-foreground/70">− / _</span>
+													<span>Zoom out</span>
+													<span className="text-foreground/70">0</span>
+													<span>Reset zoom to 100%</span>
+													<span className="text-foreground/70">Home</span>
+													<span>Zoom to fit scene</span>
+													<span className="text-foreground/70">
+														Wheel / Ctrl+Wheel
+													</span>
+													<span>Zoom (plain wheel is DDB/Foundry default)</span>
+													<span className="text-foreground/70 font-semibold col-span-2 mt-2">
+														Layers
+													</span>
+													<span className="text-foreground/70">[ / ]</span>
+													<span>Cycle active layer (Warden)</span>
+													<span className="text-foreground/70 font-semibold col-span-2 mt-2">
+														Assets &amp; Viewport
+													</span>
+													<span className="text-foreground/70">
+														Drag &amp; Drop
+													</span>
+													<span>Drag asset from browser onto map</span>
+													<span className="text-foreground/70">Space</span>
+													<span>Hold to pan viewport</span>
+												</div>
+												<DialogFooter>
+													<AscendantText className="block text-xs text-foreground/70">
+														Click the map first to enable keyboard shortcuts.
+													</AscendantText>
+												</DialogFooter>
+											</DialogContent>
+										</Dialog>
+									</>
+								)}
+							</>
+						}
+					/>
 
-										{/* Scene tab: Scenes list */}
-										<TabsContent
+					{/* Content area: rails + canvas. Top-padding accommodates
+						    the compact floating top bar (~36 px high). */}
+					<div
+						className={cn(
+							"vtt-content absolute inset-0 flex gap-2 sm:gap-3",
+							"pt-[44px] px-2 sm:px-3 pb-2",
+							isMobile && "pb-[64px]",
+						)}
+					>
+						{/* Always-visible left icon rail (Warden only, desktop). */}
+						{isWarden && !isMobile && !isMapExpanded && (
+							<VTTIconRail
+								side="left"
+								activeId={leftDrawerTab}
+								onSelect={(id) => setLeftDrawerTab(id as LeftDrawerTab)}
+								items={
+									[
+										{
+											id: "scenes",
+											icon: Layers,
+											label: "Scenes",
+											testId: "vtt-rail-left-scenes",
+										},
+										{
+											id: "toolbox",
+											icon: Wrench,
+											label: "Toolbox",
+											testId: "vtt-rail-left-toolbox",
+										},
+										{
+											id: "map",
+											icon: MapPin,
+											label: "Map Settings",
+											testId: "vtt-rail-left-map",
+										},
+										{
+											id: "tokens",
+											icon: Users,
+											label: "Tokens",
+											testId: "vtt-rail-left-tokens",
+										},
+									] as VTTIconRailItem[]
+								}
+							/>
+						)}
+						{/* Left drawer: overlay panel populated by the rail selection. */}
+						{isWarden && (
+							<VTTDrawer
+								side="left"
+								open={leftDrawerTab !== null}
+								onOpenChange={(o) => !o && setLeftDrawerTab(null)}
+								title={
+									leftDrawerTab === "scenes"
+										? "Scenes"
+										: leftDrawerTab === "toolbox"
+											? "Toolbox"
+											: leftDrawerTab === "map"
+												? "Map Settings"
+												: leftDrawerTab === "tokens"
+													? "Tokens"
+													: "Toolbox"
+								}
+							>
+								<Tabs
+									value={leftDrawerTab ?? "scenes"}
+									onValueChange={(v) => setLeftDrawerTab(v as LeftDrawerTab)}
+									className="flex flex-col min-h-0 h-full"
+								>
+									<TabsList className="grid w-full grid-cols-4 h-auto p-1 mb-2 shrink-0 bg-card border border-border rounded-lg shadow-sm">
+										<TabsTrigger
 											value="scenes"
-											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+											className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
 										>
-											<AscendantWindow title="SCENES" compact density="compact">
-												<div className="space-y-1 max-h-40 overflow-y-auto">
-													{scenes.map((scene) => (
-														<div
-															key={scene.id}
-															className={cn(
-																"flex items-center gap-1 rounded border transition-all",
-																currentScene?.id === scene.id
-																	? "bg-primary/20 border-primary"
-																	: "border-border hover:bg-muted/50",
-															)}
-														>
-															<button
-																type="button"
-																data-testid={`vtt-scene-select-${scene.name.replace(/\s+/g, "-").toLowerCase()}`}
-																onClick={() => {
-																	setCurrentScene(scene);
-																	if (!isWarden) {
-																		vttRealtime.broadcastSceneChange(scene.id);
-																	}
-																}}
-																className="flex-1 p-2 text-left text-xs truncate"
-															>
-																{scene.name}
-															</button>
-															{isWarden && (
-																<button
-																	type="button"
-																	title={
-																		liveSceneId === scene.id
-																			? "Live"
-																			: "Make Live for Players"
-																	}
-																	aria-label={
-																		liveSceneId === scene.id
-																			? "Live"
-																			: "Make Live for Players"
-																	}
-																	onClick={() => {
-																		setLiveSceneId(scene.id);
-																		vttRealtime.broadcastSceneChange(scene.id);
-																	}}
-																	className={cn(
-																		"p-1 rounded inline-flex items-center gap-1 text-[9px] font-bold uppercase mr-1",
-																		liveSceneId === scene.id
-																			? "bg-amber-500 text-black"
-																			: "bg-muted text-foreground/70 hover:bg-muted/80",
-																	)}
-																>
-																	{liveSceneId === scene.id ? (
-																		<>
-																			<Eye className="w-3 h-3" />
-																			Live
-																		</>
-																	) : (
-																		<>
-																			<Play className="w-3 h-3" />
-																			Go
-																		</>
-																	)}
-																</button>
-															)}
-															<div className="flex gap-0.5 pr-1">
-																<button
-																	type="button"
-																	onClick={() => {
-																		setCurrentScene(scene);
-																		const newName = window.prompt(
-																			"Scene name:",
-																			scene.name,
-																		);
-																		if (newName && newName !== scene.name) {
-																			updateScene({ name: newName } as never);
-																		}
-																	}}
-																	className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
-																	title="Rename scene"
-																	aria-label="Rename scene"
-																>
-																	<Pencil className="w-3 h-3" />
-																</button>
-																<button
-																	type="button"
-																	onClick={() => {
-																		const dup = duplicateVttScene(scene);
-																		setScenes((prev) => [...prev, dup]);
-																		setCurrentScene(dup);
-																	}}
-																	className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
-																	title="Duplicate scene"
-																	aria-label="Duplicate scene"
-																>
-																	<Copy className="w-3 h-3" />
-																</button>
-																<button
-																	type="button"
-																	onClick={() => {
-																		void handleDeleteScene(scene);
-																	}}
-																	className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
-																	title="Delete scene"
-																	aria-label="Delete scene"
-																>
-																	<X className="w-3 h-3" />
-																</button>
-															</div>
-														</div>
-													))}
-												</div>
-											</AscendantWindow>
-										</TabsContent>
-										<TabsContent
+											Scenes
+										</TabsTrigger>
+										<TabsTrigger
 											value="toolbox"
-											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0 max-h-[calc(100vh-280px)]"
+											className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
 										>
-											<AscendantWindow title="TOOLS" density="compact">
-												<div className="grid grid-cols-2 gap-2">
-													{(
-														[
-															{
-																key: "select",
-																label: "Select",
-																Icon: MousePointer2,
-															},
-															{ key: "fog", label: "Fog", Icon: Cloud },
-															{ key: "draw", label: "Draw", Icon: Pencil },
-															{
-																key: "effect",
-																label: "Effect",
-																Icon: Sparkles,
-															},
-															{ key: "note", label: "Note", Icon: FileText },
-															{ key: "measure", label: "Measure", Icon: Ruler },
-														] as const
-													).map((tool) =>
-														selectedTool === tool.key ? (
-															<button
-																type="button"
-																key={tool.key}
-																onClick={() => setSelectedTool(tool.key)}
-																className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 bg-primary/20 border-primary"
-																aria-label={`${tool.label} tool`}
-																aria-pressed="true"
-															>
-																<tool.Icon
-																	className="w-3.5 h-3.5 flex-shrink-0"
-																	aria-hidden
-																/>
-																<span className="flex-1">{tool.label}</span>
-															</button>
-														) : (
-															<button
-																type="button"
-																key={tool.key}
-																onClick={() => setSelectedTool(tool.key)}
-																className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 border-border hover:bg-muted/50"
-																aria-label={`${tool.label} tool`}
-																aria-pressed="false"
-															>
-																<tool.Icon
-																	className="w-3.5 h-3.5 flex-shrink-0"
-																	aria-hidden
-																/>
-																<span className="flex-1">{tool.label}</span>
-															</button>
-														),
-													)}
-												</div>
-												{selectedTool === "measure" && (
-													<div className="mt-3 pt-3 border-t border-border/50 space-y-2">
-														<Label className="text-xs">AoE Shape</Label>
-														<div className="grid grid-cols-4 gap-1">
-															{(
-																[
-																	{ key: "line", label: "Line", Icon: Minus },
-																	{
-																		key: "circle",
-																		label: "Circle",
-																		Icon: Circle,
-																	},
-																	{
-																		key: "cone",
-																		label: "Cone",
-																		Icon: Triangle,
-																	},
-																	{ key: "cube", label: "Cube", Icon: Square },
-																] as const
-															).map((shape) => (
-																<button
-																	type="button"
-																	key={shape.key}
-																	onClick={() => setMeasureShape(shape.key)}
-																	className={cn(
-																		"p-1.5 rounded border text-sm transition-all inline-flex items-center justify-center",
-																		measureShape === shape.key
-																			? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300"
-																			: "border-border/50 text-foreground/70 hover:bg-muted/30",
-																	)}
-																	title={shape.label}
-																	aria-label={`${shape.label} area of effect`}
-																>
-																	<shape.Icon
-																		className="w-3.5 h-3.5"
-																		aria-hidden
-																	/>
-																</button>
-															))}
-														</div>
-														{measureShape !== "line" && (
-															<div>
-																<Label className="text-xs">
-																	Radius: {measureRadius * 5}ft ({measureRadius}{" "}
-																	sq)
-																</Label>
-																<input
-																	type="range"
-																	min={1}
-																	max={12}
-																	value={measureRadius}
-																	onChange={(e) =>
-																		setMeasureRadius(Number(e.target.value))
-																	}
-																	className="w-full h-2 accent-cyan-500"
-																	aria-label="AoE radius in grid squares"
-																/>
-															</div>
-														)}
-													</div>
-												)}
-											</AscendantWindow>
+											Toolbox
+										</TabsTrigger>
+										<TabsTrigger
+											value="map"
+											className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+										>
+											Map
+										</TabsTrigger>
+										<TabsTrigger
+											value="tokens"
+											className="text-[10px] uppercase tracking-widest py-2 data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+										>
+											Tokens
+										</TabsTrigger>
+									</TabsList>
 
-											<AscendantWindow title="CONTROLS" density="compact">
-												<div className="space-y-3 overflow-y-auto max-h-[35vh]">
-													<div>
-														<Label className="text-xs">Zoom</Label>
-														<div className="flex items-center gap-1">
-															<Button
-																variant="outline"
-																size="sm"
-																onClick={() => handleRequestZoom(zoom - 0.1)}
-															>
-																<Minus className="w-3 h-3" />
-															</Button>
-															<span className="flex-1 text-center text-xs">
-																{Math.round(zoom * 100)}%
-															</span>
-															<Button
-																variant="outline"
-																size="sm"
-																onClick={() => handleRequestZoom(zoom + 0.1)}
-															>
-																<Plus className="w-3 h-3" />
-															</Button>
-															<Button
-																variant="outline"
-																size="sm"
-																title="Zoom to fit"
-																onClick={() => {
-																	if (!mapRef.current || !currentScene) return;
-																	const rect =
-																		mapRef.current.parentElement?.getBoundingClientRect();
-																	if (!rect) return;
-																	const sw =
-																		(currentScene.width ?? 20) * gridSize;
-																	const sh =
-																		(currentScene.height ?? 20) * gridSize;
-																	const fitZoom = Math.min(
-																		rect.width / sw,
-																		rect.height / sh,
-																		2,
-																	);
-																	handleRequestZoom(
-																		Math.round(fitZoom * 20) / 20,
-																	);
-																}}
-															>
-																<Maximize2 className="w-3 h-3" />
-															</Button>
-														</div>
-													</div>
-													<div className="flex items-center gap-2">
-														<input
-															type="checkbox"
-															id="gridSnap"
-															checked={gridSnap}
-															onChange={(e) => setGridSnap(e.target.checked)}
-															className="w-4 h-4"
-														/>
-														<label
-															htmlFor="gridSnap"
-															className="text-xs cursor-pointer"
-														>
-															Snap to Grid
-														</label>
-													</div>
-													<div className="flex items-center gap-2">
-														<input
-															type="checkbox"
-															id="showGrid"
-															checked={showGrid}
-															onChange={(e) => setShowGrid(e.target.checked)}
-															className="w-4 h-4"
-														/>
-														<label
-															htmlFor="showGrid"
-															className="text-xs cursor-pointer"
-														>
-															Grid
-														</label>
-													</div>
-													<div className="flex items-center gap-2">
-														<input
-															type="checkbox"
-															id="fogOfWar"
-															checked={fogOfWar}
-															onChange={(e) => {
-																const checked = e.target.checked;
-																setFogOfWar(checked);
-																if (!currentScene) return;
-																if (checked && !currentScene.fogData) {
-																	updateScene({
-																		fogOfWar: checked,
-																		fogData: buildFogData(currentScene, false),
-																	});
-																} else {
-																	updateScene({ fogOfWar: checked });
+									{/* Scene tab: Scenes list */}
+									<TabsContent
+										value="scenes"
+										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+									>
+										<AscendantWindow title="SCENES" compact density="compact">
+											<div className="space-y-1 max-h-40 overflow-y-auto">
+												{scenes.map((scene) => (
+													<div
+														key={scene.id}
+														className={cn(
+															"flex items-center gap-1 rounded border transition-all",
+															currentScene?.id === scene.id
+																? "bg-primary/20 border-primary"
+																: "border-border hover:bg-muted/50",
+														)}
+													>
+														<button
+															type="button"
+															data-testid={`vtt-scene-select-${scene.name.replace(/\s+/g, "-").toLowerCase()}`}
+															onClick={() => {
+																setCurrentScene(scene);
+																if (!isWarden) {
+																	vttRealtime.broadcastSceneChange(scene.id);
 																}
 															}}
-															className="w-4 h-4"
-														/>
-														<label
-															htmlFor="fogOfWar"
-															className="text-xs cursor-pointer"
+															className="flex-1 p-2 text-left text-xs truncate"
 														>
-															Fog of War
-														</label>
+															{scene.name}
+														</button>
+														{isWarden && (
+															<button
+																type="button"
+																title={
+																	liveSceneId === scene.id
+																		? "Live"
+																		: "Make Live for Players"
+																}
+																aria-label={
+																	liveSceneId === scene.id
+																		? "Live"
+																		: "Make Live for Players"
+																}
+																onClick={() => {
+																	setLiveSceneId(scene.id);
+																	vttRealtime.broadcastSceneChange(scene.id);
+																}}
+																className={cn(
+																	"p-1 rounded inline-flex items-center gap-1 text-[9px] font-bold uppercase mr-1",
+																	liveSceneId === scene.id
+																		? "bg-amber-500 text-black"
+																		: "bg-muted text-foreground/70 hover:bg-muted/80",
+																)}
+															>
+																{liveSceneId === scene.id ? (
+																	<>
+																		<Eye className="w-3 h-3" />
+																		Live
+																	</>
+																) : (
+																	<>
+																		<Play className="w-3 h-3" />
+																		Go
+																	</>
+																)}
+															</button>
+														)}
+														<div className="flex gap-0.5 pr-1">
+															<button
+																type="button"
+																onClick={() => {
+																	setCurrentScene(scene);
+																	const newName = window.prompt(
+																		"Scene name:",
+																		scene.name,
+																	);
+																	if (newName && newName !== scene.name) {
+																		updateScene({ name: newName } as never);
+																	}
+																}}
+																className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
+																title="Rename scene"
+																aria-label="Rename scene"
+															>
+																<Pencil className="w-3 h-3" />
+															</button>
+															<button
+																type="button"
+																onClick={() => {
+																	const dup = duplicateVttScene(scene);
+																	setScenes((prev) => [...prev, dup]);
+																	setCurrentScene(dup);
+																}}
+																className="p-1 rounded hover:bg-muted inline-flex items-center justify-center"
+																title="Duplicate scene"
+																aria-label="Duplicate scene"
+															>
+																<Copy className="w-3 h-3" />
+															</button>
+															<button
+																type="button"
+																onClick={() => {
+																	void handleDeleteScene(scene);
+																}}
+																className="p-1 rounded hover:bg-destructive/20 text-destructive inline-flex items-center justify-center"
+																title="Delete scene"
+																aria-label="Delete scene"
+															>
+																<X className="w-3 h-3" />
+															</button>
+														</div>
 													</div>
-													{fogOfWar && isWarden && currentScene && (
-														<div className="space-y-2 border-t border-border/50 pt-2">
-															<div>
-																<Label className="text-xs">Fog Mode</Label>
-																<div className="flex gap-2">
-																	<Button
-																		variant={
-																			fogMode === "reveal"
-																				? "default"
-																				: "outline"
-																		}
-																		size="sm"
-																		onClick={() => setFogMode("reveal")}
-																		className="flex-1"
-																	>
-																		Reveal
-																	</Button>
-																	<Button
-																		variant={
-																			fogMode === "hide" ? "default" : "outline"
-																		}
-																		size="sm"
-																		onClick={() => setFogMode("hide")}
-																		className="flex-1"
-																	>
-																		Hide
-																	</Button>
-																</div>
-															</div>
-															<div>
-																<Label className="text-xs">Brush Size</Label>
-																<input
-																	type="range"
-																	min={1}
-																	max={4}
-																	step={1}
-																	value={fogBrushSize}
-																	onChange={(e) =>
-																		setFogBrushSize(Number(e.target.value))
-																	}
-																	aria-label="Fog brush size"
-																	className="w-full"
+												))}
+											</div>
+										</AscendantWindow>
+									</TabsContent>
+									<TabsContent
+										value="toolbox"
+										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0 max-h-[calc(100vh-280px)]"
+									>
+										<AscendantWindow title="TOOLS" density="compact">
+											<div className="grid grid-cols-2 gap-2">
+												{(
+													[
+														{
+															key: "select",
+															label: "Select",
+															Icon: MousePointer2,
+														},
+														{ key: "fog", label: "Fog", Icon: Cloud },
+														{ key: "draw", label: "Draw", Icon: Pencil },
+														{
+															key: "effect",
+															label: "Effect",
+															Icon: Sparkles,
+														},
+														{ key: "note", label: "Note", Icon: FileText },
+														{ key: "measure", label: "Measure", Icon: Ruler },
+														{ key: "pointer", label: "Point", Icon: Radio },
+													] as const
+												).map((tool) =>
+													selectedTool === tool.key ? (
+														<button
+															type="button"
+															key={tool.key}
+															onClick={() => setSelectedTool(tool.key)}
+															className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 bg-primary/20 border-primary"
+															aria-label={`${tool.label} tool`}
+															aria-pressed="true"
+														>
+															<tool.Icon
+																className="w-3.5 h-3.5 flex-shrink-0"
+																aria-hidden
+															/>
+															<span className="flex-1">{tool.label}</span>
+														</button>
+													) : (
+														<button
+															type="button"
+															key={tool.key}
+															onClick={() => setSelectedTool(tool.key)}
+															className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 border-border hover:bg-muted/50"
+															aria-label={`${tool.label} tool`}
+															aria-pressed="false"
+														>
+															<tool.Icon
+																className="w-3.5 h-3.5 flex-shrink-0"
+																aria-hidden
+															/>
+															<span className="flex-1">{tool.label}</span>
+														</button>
+													),
+												)}
+											</div>
+											{selectedTool === "measure" && (
+												<div className="mt-3 pt-3 border-t border-border/50 space-y-2">
+													<Label className="text-xs">AoE Shape</Label>
+													<div className="grid grid-cols-4 gap-1">
+														{(
+															[
+																{ key: "line", label: "Line", Icon: Minus },
+																{
+																	key: "circle",
+																	label: "Circle",
+																	Icon: Circle,
+																},
+																{
+																	key: "cone",
+																	label: "Cone",
+																	Icon: Triangle,
+																},
+																{ key: "cube", label: "Cube", Icon: Square },
+															] as const
+														).map((shape) => (
+															<button
+																type="button"
+																key={shape.key}
+																onClick={() => setMeasureShape(shape.key)}
+																className={cn(
+																	"p-1.5 rounded border text-sm transition-all inline-flex items-center justify-center",
+																	measureShape === shape.key
+																		? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300"
+																		: "border-border/50 text-foreground/70 hover:bg-muted/30",
+																)}
+																title={shape.label}
+																aria-label={`${shape.label} area of effect`}
+															>
+																<shape.Icon
+																	className="w-3.5 h-3.5"
+																	aria-hidden
 																/>
-																<div className="text-[10px] text-foreground/70">
-																	Size: {fogBrushSize}
-																</div>
-															</div>
-															<div className="flex gap-2">
-																<Button
-																	variant="outline"
-																	size="sm"
-																	onClick={() =>
-																		updateScene({
-																			fogData: buildFogData(
-																				currentScene,
-																				false,
-																			),
-																		})
-																	}
-																	className="flex-1"
-																>
-																	Reset Fog
-																</Button>
-																<Button
-																	variant="outline"
-																	size="sm"
-																	onClick={() =>
-																		updateScene({
-																			fogData: buildFogData(currentScene, true),
-																		})
-																	}
-																	className="flex-1"
-																>
-																	Reveal All
-																</Button>
-															</div>
-														</div>
-													)}
-													{selectedTool === "draw" && isWarden && (
-														<div className="space-y-2 border-t border-border/50 pt-2">
-															<Label className="text-xs">Draw Mode</Label>
-															<div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-																{(
-																	[
-																		"freehand",
-																		"line",
-																		"rectangle",
-																		"circle",
-																	] as const
-																).map((mode) => (
-																	<Button
-																		key={mode}
-																		variant={
-																			drawingMode === mode
-																				? "default"
-																				: "outline"
-																		}
-																		size="sm"
-																		onClick={() => setDrawingMode(mode)}
-																		className="text-xs capitalize"
-																	>
-																		{mode}
-																	</Button>
-																))}
-															</div>
-															<div className="grid grid-cols-2 gap-2">
-																<div>
-																	<Label className="text-xs">Color</Label>
-																	<Input
-																		type="color"
-																		value={drawingColor}
-																		onChange={(e) =>
-																			setDrawingColor(e.target.value)
-																		}
-																		className="h-8"
-																	/>
-																</div>
-																<div>
-																	<Label className="text-xs">Width</Label>
-																	<Input
-																		type="number"
-																		min={1}
-																		max={10}
-																		value={drawingWidth}
-																		onChange={(e) =>
-																			setDrawingWidth(
-																				Number(e.target.value) || 1,
-																			)
-																		}
-																		className="h-8 text-xs"
-																	/>
-																</div>
-															</div>
-														</div>
-													)}
-													{selectedTool === "note" && isWarden && (
-														<div className="space-y-2 border-t border-border/50 pt-2">
-															<Label className="text-xs">Note Text</Label>
-															<Input
-																value={noteText}
-																onChange={(e) => setNoteText(e.target.value)}
-																placeholder="Enter map note..."
-																className="h-8 text-xs"
+															</button>
+														))}
+													</div>
+													{measureShape !== "line" && (
+														<div>
+															<Label className="text-xs">
+																Radius: {measureRadius * 5}ft ({measureRadius}{" "}
+																sq)
+															</Label>
+															<input
+																type="range"
+																min={1}
+																max={12}
+																value={measureRadius}
+																onChange={(e) =>
+																	setMeasureRadius(Number(e.target.value))
+																}
+																className="w-full h-2 accent-cyan-500"
+																aria-label="AoE radius in grid squares"
 															/>
 														</div>
 													)}
 												</div>
-											</AscendantWindow>
-											<AscendantWindow title="LAYERS" density="compact">
-												<div className="space-y-2 overflow-hidden">
-													<Label className="text-xs">Active Layer</Label>
-													<Select
-														value={String(currentLayer)}
-														onValueChange={(value) =>
-															setCurrentLayer(Number(value))
-														}
-													>
-														<SelectTrigger className="h-8 text-xs">
-															<SelectValue placeholder="Select layer" />
-														</SelectTrigger>
-														<SelectContent>
-															{LAYER_OPTIONS.filter(
-																(layer) => isWarden || layer.id !== 3,
-															).map((layer) => (
-																<SelectItem
-																	key={layer.id}
-																	value={String(layer.id)}
-																>
-																	{layer.label}
-																</SelectItem>
-															))}
-														</SelectContent>
-													</Select>
-													<div className="space-y-1">
-														{LAYER_OPTIONS.filter(
-															(layer) => isWarden || layer.id !== 3,
-														).map((layer) => {
-															const isVisible = !!visibleLayers[layer.id];
-															return (
-																<div
-																	key={layer.id}
-																	className="flex items-center justify-between gap-2"
-																>
-																	<button
-																		type="button"
-																		onClick={() => setCurrentLayer(layer.id)}
-																		className={cn(
-																			"flex-1 rounded border px-2 py-1 text-xs text-left",
-																			currentLayer === layer.id
-																				? "bg-primary/20 border-primary"
-																				: "border-border hover:bg-muted/50",
-																		)}
-																	>
-																		{layer.label}
-																	</button>
-																	<button
-																		type="button"
-																		onClick={() =>
-																			setVisibleLayers((prev) => ({
-																				...prev,
-																				[layer.id]: !prev[layer.id],
-																			}))
-																		}
-																		className="h-7 w-7 rounded border border-border flex items-center justify-center"
-																		aria-label={
-																			isVisible ? "Hide layer" : "Show layer"
-																		}
-																	>
-																		{isVisible ? (
-																			<Eye className="w-3 h-3" />
-																		) : (
-																			<EyeOff className="w-3 h-3" />
-																		)}
-																	</button>
-																</div>
-															);
-														})}
-													</div>
-												</div>
-											</AscendantWindow>
-										</TabsContent>
-										<TabsContent
-											value="map"
-											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
-										>
-											<AscendantWindow title="MAP SETTINGS" density="compact">
-												<div className="space-y-3">
+											)}
+										</AscendantWindow>
+
+										<AscendantWindow title="CONTROLS" density="compact">
+											<div className="space-y-3 overflow-y-auto max-h-[35vh]">
+												<p className="text-[10px] leading-snug text-foreground/60">
+													Zoom controls live on the floating HUD over the map
+													(+/−/0/Home hotkeys also supported).
+												</p>
+												<div className="flex items-center gap-2">
 													<input
-														ref={mapInputRef}
-														type="file"
-														accept="image/*"
-														aria-label="Upload map image"
-														onChange={(e) => {
-															const file = e.target.files?.[0];
-															if (file) {
-																void handleMapUpload(file);
-															}
-															e.currentTarget.value = "";
-														}}
-														className="hidden"
+														type="checkbox"
+														id="gridSnap"
+														checked={gridSnap}
+														onChange={(e) => setGridSnap(e.target.checked)}
+														className="w-4 h-4"
 													/>
-													<div className="flex gap-2">
-														<Button
-															variant="outline"
-															size="sm"
-															onClick={() => mapInputRef.current?.click()}
-															className="flex-1"
-															disabled={isUploadingMap}
-														>
-															<Upload className="w-3 h-3 mr-1" />
-															{isUploadingMap ? "Uploading" : "Upload"}
-														</Button>
-														{currentScene?.backgroundImage && (
+													<label
+														htmlFor="gridSnap"
+														className="text-xs cursor-pointer"
+													>
+														Snap to Grid
+													</label>
+												</div>
+												<div className="flex items-center gap-2">
+													<input
+														type="checkbox"
+														id="showGrid"
+														checked={showGrid}
+														onChange={(e) => setShowGrid(e.target.checked)}
+														className="w-4 h-4"
+													/>
+													<label
+														htmlFor="showGrid"
+														className="text-xs cursor-pointer"
+													>
+														Grid
+													</label>
+												</div>
+												<div className="flex items-center gap-2">
+													<input
+														type="checkbox"
+														id="fogOfWar"
+														checked={fogOfWar}
+														onChange={(e) => {
+															const checked = e.target.checked;
+															setFogOfWar(checked);
+															if (!currentScene) return;
+															if (checked && !currentScene.fogData) {
+																updateScene({
+																	fogOfWar: checked,
+																	fogData: buildFogData(currentScene, false),
+																});
+															} else {
+																updateScene({ fogOfWar: checked });
+															}
+														}}
+														className="w-4 h-4"
+													/>
+													<label
+														htmlFor="fogOfWar"
+														className="text-xs cursor-pointer"
+													>
+														Fog of War
+													</label>
+												</div>
+												{fogOfWar && isWarden && currentScene && (
+													<div className="space-y-2 border-t border-border/50 pt-2">
+														<div>
+															<Label className="text-xs">Fog Mode</Label>
+															<div className="flex gap-2">
+																<Button
+																	variant={
+																		fogMode === "reveal" ? "default" : "outline"
+																	}
+																	size="sm"
+																	onClick={() => setFogMode("reveal")}
+																	className="flex-1"
+																>
+																	Reveal
+																</Button>
+																<Button
+																	variant={
+																		fogMode === "hide" ? "default" : "outline"
+																	}
+																	size="sm"
+																	onClick={() => setFogMode("hide")}
+																	className="flex-1"
+																>
+																	Hide
+																</Button>
+															</div>
+														</div>
+														<div>
+															<Label className="text-xs">Brush Size</Label>
+															<input
+																type="range"
+																min={1}
+																max={4}
+																step={1}
+																value={fogBrushSize}
+																onChange={(e) =>
+																	setFogBrushSize(Number(e.target.value))
+																}
+																aria-label="Fog brush size"
+																className="w-full"
+															/>
+															<div className="text-[10px] text-foreground/70">
+																Size: {fogBrushSize}
+															</div>
+														</div>
+														<div className="flex gap-2">
 															<Button
 																variant="outline"
 																size="sm"
 																onClick={() =>
-																	void handleClearBackgroundImage()
+																	updateScene({
+																		fogData: buildFogData(currentScene, false),
+																	})
 																}
+																className="flex-1"
 															>
-																Clear
+																Reset Fog
 															</Button>
-														)}
-													</div>
-													<div className="grid grid-cols-2 gap-2">
-														<div>
-															<Label className="text-xs">Width (tiles)</Label>
-															<Input
-																type="number"
-																min={5}
-																max={100}
-																value={currentScene?.width ?? 20}
-																onChange={(e) => {
-																	const nextWidth = Math.max(
-																		5,
-																		Number(e.target.value) || 5,
-																	);
-																	resizeScene(
-																		nextWidth,
-																		currentScene?.height ?? 20,
-																	);
-																}}
-																className="h-8 text-xs"
-															/>
-														</div>
-														<div>
-															<Label className="text-xs">Height (tiles)</Label>
-															<Input
-																type="number"
-																min={5}
-																max={100}
-																value={currentScene?.height ?? 20}
-																onChange={(e) => {
-																	const nextHeight = Math.max(
-																		5,
-																		Number(e.target.value) || 5,
-																	);
-																	resizeScene(
-																		currentScene?.width ?? 20,
-																		nextHeight,
-																	);
-																}}
-																className="h-8 text-xs"
-															/>
-														</div>
-													</div>
-													<div>
-														<Label className="text-xs">Grid Size (px)</Label>
-														<Input
-															type="number"
-															min={20}
-															max={120}
-															value={gridSize}
-															onChange={(e) =>
-																updateScene({
-																	gridSize: Math.max(
-																		20,
-																		Number(e.target.value) ||
-																			DEFAULT_SCENE_SETTINGS.gridSize,
-																	),
-																})
-															}
-															className="h-8 text-xs"
-														/>
-													</div>
-													<div>
-														<Label className="text-xs">Grid Type</Label>
-														<Select
-															value={currentScene?.gridType ?? "square"}
-															onValueChange={(val: "square" | "hex") =>
-																updateScene({ gridType: val })
-															}
-														>
-															<SelectTrigger className="h-8 text-xs">
-																<SelectValue placeholder="Square" />
-															</SelectTrigger>
-															<SelectContent>
-																<SelectItem value="square">Square</SelectItem>
-																<SelectItem value="hex">Hex (Flat)</SelectItem>
-															</SelectContent>
-														</Select>
-													</div>
-													<div>
-														<Label className="text-xs">Weather</Label>
-														<Select
-															value={currentScene?.weather ?? "none"}
-															onValueChange={(val: WeatherType | "none") =>
-																updateScene({
-																	weather: val === "none" ? undefined : val,
-																})
-															}
-														>
-															<SelectTrigger className="h-8 text-xs">
-																<SelectValue placeholder="None" />
-															</SelectTrigger>
-															<SelectContent>
-																<SelectItem value="none">None</SelectItem>
-																{Object.keys(WEATHER_PRESETS).map((key) => (
-																	<SelectItem key={key} value={key}>
-																		{key
-																			.replace("_", " ")
-																			.replace(/\b\w/g, (l) => l.toUpperCase())}
-																	</SelectItem>
-																))}
-															</SelectContent>
-														</Select>
-													</div>
-													<div>
-														<Label className="text-xs">Background Scale</Label>
-														<Input
-															type="number"
-															min={0.4}
-															max={3}
-															step={0.05}
-															value={backgroundScale}
-															onChange={(e) =>
-																updateScene({
-																	backgroundScale: Math.max(
-																		0.4,
-																		Number(e.target.value) || 1,
-																	),
-																})
-															}
-															className="h-8 text-xs"
-														/>
-													</div>
-													<div className="grid grid-cols-2 gap-2">
-														<div>
-															<Label className="text-xs">Offset X</Label>
-															<Input
-																type="number"
-																value={backgroundOffsetX}
-																onChange={(e) =>
+															<Button
+																variant="outline"
+																size="sm"
+																onClick={() =>
 																	updateScene({
-																		backgroundOffsetX:
-																			Number(e.target.value) || 0,
+																		fogData: buildFogData(currentScene, true),
 																	})
 																}
-																className="h-8 text-xs"
-															/>
-														</div>
-														<div>
-															<Label className="text-xs">Offset Y</Label>
-															<Input
-																type="number"
-																value={backgroundOffsetY}
-																onChange={(e) =>
-																	updateScene({
-																		backgroundOffsetY:
-																			Number(e.target.value) || 0,
-																	})
-																}
-																className="h-8 text-xs"
-															/>
-														</div>
-													</div>
-													<div className="flex gap-2">
-														<Button
-															variant="outline"
-															size="sm"
-															className="flex-1"
-															onClick={() =>
-																updateScene({
-																	backgroundScale: 1,
-																	backgroundOffsetX: 0,
-																	backgroundOffsetY: 0,
-																})
-															}
-														>
-															Reset View
-														</Button>
-														<Button
-															variant="outline"
-															size="sm"
-															className="flex-1"
-															onClick={() => updateScene({ drawings: [] })}
-														>
-															Clear Drawings
-														</Button>
-													</div>
-												</div>
-											</AscendantWindow>
-											{PREMADE_MAPS.length > 0 && (
-												<AscendantWindow title="PREMADE MAPS" density="compact">
-													<div className="grid grid-cols-2 gap-2">
-														{PREMADE_MAPS.map((map) => (
-															<button
-																type="button"
-																key={map.id}
-																onClick={() => applyPremadeMap(map)}
-																className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
-																aria-label={`Use ${map.name} map`}
+																className="flex-1"
 															>
-																<div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
-																	<OptimizedImage
-																		src={map.thumbnail}
-																		alt={`${map.name} thumbnail`}
-																		className="w-full h-full object-cover"
-																		size="small"
-																	/>
-																</div>
-																<div className="mt-2 flex items-center justify-between gap-2">
-																	<span className="text-xs font-heading">
-																		{map.name}
-																	</span>
-																	<Badge
-																		variant="outline"
-																		className="text-[9px] uppercase tracking-wide"
-																	>
-																		{map.theme}
-																	</Badge>
-																</div>
-																<div className="text-[10px] text-foreground/70">
-																	{map.grid.width}x{map.grid.height} -{" "}
-																	{map.grid.size}px grid
-																</div>
-															</button>
-														))}
+																Reveal All
+															</Button>
+														</div>
 													</div>
-												</AscendantWindow>
-											)}
-										</TabsContent>
-										<TabsContent
-											value="tokens"
-											className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
-										>
-								<AscendantWindow title="TOKENS" density="compact">
-									<Tabs defaultValue="characters" className="w-full">
-										<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
-											<TabsTrigger
-												data-testid="vtt-tokens-tab-characters"
-												value="characters"
-												className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-											>
-												<Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-												<span className="hidden xs:inline">Characters</span>
-												<span className="xs:hidden">C</span>
-											</TabsTrigger>
-											<TabsTrigger
-												data-testid="vtt-tokens-tab-library"
-												value="library"
-												className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-											>
-												<ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-												<span className="hidden xs:inline">Library</span>
-												<span className="xs:hidden">L</span>
-											</TabsTrigger>
-										</TabsList>
-										<TabsContent value="characters" className="mt-3">
-											<div className="space-y-2 max-h-60 overflow-y-auto">
-												{resolvedCharacters.length === 0 && (
-													<AscendantText className="block text-xs text-foreground/70 text-center py-4">
-														No characters yet.
-													</AscendantText>
 												)}
-												{resolvedCharacters.map((char) => {
-													const portraitUrl =
-														typeof char.portrait_url === "string"
-															? char.portrait_url
-															: null;
-													return (
-														<button
-															type="button"
-															key={char.id}
-															onClick={() => {
-																setSelectedCharacterId(char.id);
-																setSelectedLibraryTokenId(null);
-																setSelectedTool("select");
-															}}
-															className={cn(
-																"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
-																selectedCharacterId === char.id
-																	? "bg-primary/20 border-primary"
-																	: "border-border hover:bg-muted/50",
-															)}
-														>
-															{portraitUrl && (
-																<OptimizedImage
-																	src={portraitUrl}
-																	alt={char.name}
-																	className="w-8 h-8 rounded-full object-cover border border-border"
-																	size="thumbnail"
+												{selectedTool === "draw" && isWarden && (
+													<div className="space-y-2 border-t border-border/50 pt-2">
+														<Label className="text-xs">Draw Mode</Label>
+														<div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+															{(
+																[
+																	"freehand",
+																	"line",
+																	"rectangle",
+																	"circle",
+																] as const
+															).map((mode) => (
+																<Button
+																	key={mode}
+																	variant={
+																		drawingMode === mode ? "default" : "outline"
+																	}
+																	size="sm"
+																	onClick={() => setDrawingMode(mode)}
+																	className="text-xs capitalize"
+																>
+																	{mode}
+																</Button>
+															))}
+														</div>
+														<div className="grid grid-cols-2 gap-2">
+															<div>
+																<Label className="text-xs">Color</Label>
+																<Input
+																	type="color"
+																	value={drawingColor}
+																	onChange={(e) =>
+																		setDrawingColor(e.target.value)
+																	}
+																	className="h-8"
 																/>
-															)}
-															<div className="flex-1 min-w-0">
-																<div className="font-semibold truncate">
-																	{char.name}
-																</div>
-																<div className="text-foreground/70">
-																	{char.hp_current || 0}/{char.hp_max || 0} HP |
-																	AC {char.armor_class || 10}
-																</div>
 															</div>
-														</button>
-													);
-												})}
+															<div>
+																<Label className="text-xs">Width</Label>
+																<Input
+																	type="number"
+																	min={1}
+																	max={10}
+																	value={drawingWidth}
+																	onChange={(e) =>
+																		setDrawingWidth(Number(e.target.value) || 1)
+																	}
+																	className="h-8 text-xs"
+																/>
+															</div>
+														</div>
+													</div>
+												)}
+												{selectedTool === "note" && isWarden && (
+													<div className="space-y-2 border-t border-border/50 pt-2">
+														<Label className="text-xs">Note Text</Label>
+														<Input
+															value={noteText}
+															onChange={(e) => setNoteText(e.target.value)}
+															placeholder="Enter map note..."
+															className="h-8 text-xs"
+														/>
+													</div>
+												)}
 											</div>
-										</TabsContent>
-										<TabsContent value="library" className="mt-3">
-											<div className="space-y-3">
-												<Input
-													value={tokenSearch}
-													onChange={(e) => setTokenSearch(e.target.value)}
-													placeholder="Search tokens..."
-													className="h-8 text-xs"
-												/>
-												<div className="space-y-2 max-h-60 overflow-y-auto">
-													{filteredLibraryTokens.length === 0 && (
-														<AscendantText className="block text-xs text-foreground/70 text-center py-4">
-															No tokens match.
-														</AscendantText>
-													)}
-													{filteredLibraryTokens.map((token) => {
-														const isOverlayPreview =
-															token.render?.mode === "overlay" ||
-															token.type === "effect" ||
-															token.type === "prop" ||
-															(!!token.imageUrl &&
-																(token.imageUrl.includes("/generated/props/") ||
-																	token.imageUrl.includes(
-																		"/generated/effects/",
-																	)));
-														return (
-															<button
-																type="button"
-																key={token.id}
-																onClick={() => {
-																	setSelectedLibraryTokenId(token.id);
-																	setSelectedCharacterId(null);
-																	setSelectedTool("select");
-																}}
-																className={cn(
-																	"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
-																	selectedLibraryTokenId === token.id
-																		? "bg-primary/20 border-primary"
-																		: "border-border hover:bg-muted/50",
-																)}
+										</AscendantWindow>
+										<AscendantWindow title="LAYERS" density="compact">
+											<div className="space-y-2 overflow-hidden">
+												<Label className="text-xs">Active Layer</Label>
+												<Select
+													value={String(currentLayer)}
+													onValueChange={(value) =>
+														setCurrentLayer(Number(value))
+													}
+												>
+													<SelectTrigger className="h-8 text-xs">
+														<SelectValue placeholder="Select layer" />
+													</SelectTrigger>
+													<SelectContent>
+														{LAYER_OPTIONS.filter(
+															(layer) => isWarden || layer.id !== 3,
+														).map((layer) => (
+															<SelectItem
+																key={layer.id}
+																value={String(layer.id)}
 															>
-																<div
+																{layer.label}
+															</SelectItem>
+														))}
+													</SelectContent>
+												</Select>
+												<div className="space-y-1">
+													{LAYER_OPTIONS.filter(
+														(layer) => isWarden || layer.id !== 3,
+													).map((layer) => {
+														const isVisible = !!visibleLayers[layer.id];
+														return (
+															<div
+																key={layer.id}
+																className="flex items-center justify-between gap-2"
+															>
+																<button
+																	type="button"
+																	onClick={() => setCurrentLayer(layer.id)}
 																	className={cn(
-																		"w-8 h-8 border border-border flex items-center justify-center overflow-hidden",
-																		isOverlayPreview
-																			? "rounded-md bg-transparent"
-																			: "rounded-full bg-muted/40",
+																		"flex-1 rounded border px-2 py-1 text-xs text-left",
+																		currentLayer === layer.id
+																			? "bg-primary/20 border-primary"
+																			: "border-border hover:bg-muted/50",
 																	)}
 																>
-																	{token.imageUrl ? (
-																		<OptimizedImage
-																			src={token.imageUrl}
-																			alt={token.name}
-																			className={cn(
-																				"w-full h-full",
-																				isOverlayPreview
-																					? "object-contain"
-																					: "object-cover rounded-full",
-																			)}
-																			size="thumbnail"
-																		/>
+																	{layer.label}
+																</button>
+																<button
+																	type="button"
+																	onClick={() =>
+																		setVisibleLayers((prev) => ({
+																			...prev,
+																			[layer.id]: !prev[layer.id],
+																		}))
+																	}
+																	className="h-7 w-7 rounded border border-border flex items-center justify-center"
+																	aria-label={
+																		isVisible ? "Hide layer" : "Show layer"
+																	}
+																>
+																	{isVisible ? (
+																		<Eye className="w-3 h-3" />
 																	) : (
-																		<span className="text-sm">
-																			{token.emoji || "@"}
-																		</span>
+																		<EyeOff className="w-3 h-3" />
 																	)}
-																</div>
-																<div className="flex-1 min-w-0">
-																	<div className="font-semibold truncate">
-																		{token.name}
-																	</div>
-																	<div className="text-foreground/70 capitalize">
-																		{token.category} | {token.size}
-																	</div>
-																</div>
-															</button>
+																</button>
+															</div>
 														);
 													})}
 												</div>
 											</div>
-										</TabsContent>
-									</Tabs>
-								</AscendantWindow>
-										</TabsContent>
-									</Tabs>
-								</VTTDrawer>
-							)}
+										</AscendantWindow>
+									</TabsContent>
+									<TabsContent
+										value="map"
+										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+									>
+										<AscendantWindow title="MAP SETTINGS" density="compact">
+											<div className="space-y-3">
+												<input
+													ref={mapInputRef}
+													type="file"
+													accept="image/*"
+													aria-label="Upload map image"
+													onChange={(e) => {
+														const file = e.target.files?.[0];
+														if (file) {
+															void handleMapUpload(file);
+														}
+														e.currentTarget.value = "";
+													}}
+													className="hidden"
+												/>
+												<div className="flex gap-2">
+													<Button
+														variant="outline"
+														size="sm"
+														onClick={() => mapInputRef.current?.click()}
+														className="flex-1"
+														disabled={isUploadingMap}
+													>
+														<Upload className="w-3 h-3 mr-1" />
+														{isUploadingMap ? "Uploading" : "Upload"}
+													</Button>
+													{currentScene?.backgroundImage && (
+														<Button
+															variant="outline"
+															size="sm"
+															onClick={() => void handleClearBackgroundImage()}
+														>
+															Clear
+														</Button>
+													)}
+												</div>
+												<div className="grid grid-cols-2 gap-2">
+													<div>
+														<Label className="text-xs">Width (tiles)</Label>
+														<Input
+															type="number"
+															min={5}
+															max={100}
+															value={currentScene?.width ?? 20}
+															onChange={(e) => {
+																const nextWidth = Math.max(
+																	5,
+																	Number(e.target.value) || 5,
+																);
+																resizeScene(
+																	nextWidth,
+																	currentScene?.height ?? 20,
+																);
+															}}
+															className="h-8 text-xs"
+														/>
+													</div>
+													<div>
+														<Label className="text-xs">Height (tiles)</Label>
+														<Input
+															type="number"
+															min={5}
+															max={100}
+															value={currentScene?.height ?? 20}
+															onChange={(e) => {
+																const nextHeight = Math.max(
+																	5,
+																	Number(e.target.value) || 5,
+																);
+																resizeScene(
+																	currentScene?.width ?? 20,
+																	nextHeight,
+																);
+															}}
+															className="h-8 text-xs"
+														/>
+													</div>
+												</div>
+												<div>
+													<Label className="text-xs">Grid Size (px)</Label>
+													<Input
+														type="number"
+														min={20}
+														max={120}
+														value={gridSize}
+														onChange={(e) =>
+															updateScene({
+																gridSize: Math.max(
+																	20,
+																	Number(e.target.value) ||
+																		DEFAULT_SCENE_SETTINGS.gridSize,
+																),
+															})
+														}
+														className="h-8 text-xs"
+													/>
+												</div>
+												<div>
+													<Label className="text-xs">Grid Type</Label>
+													<Select
+														value={currentScene?.gridType ?? "square"}
+														onValueChange={(val: "square" | "hex") =>
+															updateScene({ gridType: val })
+														}
+													>
+														<SelectTrigger className="h-8 text-xs">
+															<SelectValue placeholder="Square" />
+														</SelectTrigger>
+														<SelectContent>
+															<SelectItem value="square">Square</SelectItem>
+															<SelectItem value="hex">Hex (Flat)</SelectItem>
+														</SelectContent>
+													</Select>
+												</div>
+												<div>
+													<Label className="text-xs">Weather</Label>
+													<Select
+														value={currentScene?.weather ?? "none"}
+														onValueChange={(val: WeatherType | "none") =>
+															updateScene({
+																weather: val === "none" ? undefined : val,
+															})
+														}
+													>
+														<SelectTrigger className="h-8 text-xs">
+															<SelectValue placeholder="None" />
+														</SelectTrigger>
+														<SelectContent>
+															<SelectItem value="none">None</SelectItem>
+															{Object.keys(WEATHER_PRESETS).map((key) => (
+																<SelectItem key={key} value={key}>
+																	{key
+																		.replace("_", " ")
+																		.replace(/\b\w/g, (l) => l.toUpperCase())}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</div>
+												<div>
+													<Label className="text-xs">Background Scale</Label>
+													<Input
+														type="number"
+														min={0.4}
+														max={3}
+														step={0.05}
+														value={backgroundScale}
+														onChange={(e) =>
+															updateScene({
+																backgroundScale: Math.max(
+																	0.4,
+																	Number(e.target.value) || 1,
+																),
+															})
+														}
+														className="h-8 text-xs"
+													/>
+												</div>
+												<div className="grid grid-cols-2 gap-2">
+													<div>
+														<Label className="text-xs">Offset X</Label>
+														<Input
+															type="number"
+															value={backgroundOffsetX}
+															onChange={(e) =>
+																updateScene({
+																	backgroundOffsetX:
+																		Number(e.target.value) || 0,
+																})
+															}
+															className="h-8 text-xs"
+														/>
+													</div>
+													<div>
+														<Label className="text-xs">Offset Y</Label>
+														<Input
+															type="number"
+															value={backgroundOffsetY}
+															onChange={(e) =>
+																updateScene({
+																	backgroundOffsetY:
+																		Number(e.target.value) || 0,
+																})
+															}
+															className="h-8 text-xs"
+														/>
+													</div>
+												</div>
+												<div className="flex gap-2">
+													<Button
+														variant="outline"
+														size="sm"
+														className="flex-1"
+														onClick={() =>
+															updateScene({
+																backgroundScale: 1,
+																backgroundOffsetX: 0,
+																backgroundOffsetY: 0,
+															})
+														}
+													>
+														Reset View
+													</Button>
+													<Button
+														variant="outline"
+														size="sm"
+														className="flex-1"
+														onClick={() => updateScene({ drawings: [] })}
+													>
+														Clear Drawings
+													</Button>
+												</div>
+											</div>
+										</AscendantWindow>
+										{PREMADE_MAPS.length > 0 && (
+											<AscendantWindow title="PREMADE MAPS" density="compact">
+												<div className="grid grid-cols-2 gap-2">
+													{PREMADE_MAPS.map((map) => (
+														<button
+															type="button"
+															key={map.id}
+															onClick={() => applyPremadeMap(map)}
+															className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
+															aria-label={`Use ${map.name} map`}
+														>
+															<div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
+																<OptimizedImage
+																	src={map.thumbnail}
+																	alt={`${map.name} thumbnail`}
+																	className="w-full h-full object-cover"
+																	size="small"
+																/>
+															</div>
+															<div className="mt-2 flex items-center justify-between gap-2">
+																<span className="text-xs font-heading">
+																	{map.name}
+																</span>
+																<Badge
+																	variant="outline"
+																	className="text-[9px] uppercase tracking-wide"
+																>
+																	{map.theme}
+																</Badge>
+															</div>
+															<div className="text-[10px] text-foreground/70">
+																{map.grid.width}x{map.grid.height} -{" "}
+																{map.grid.size}px grid
+															</div>
+														</button>
+													))}
+												</div>
+											</AscendantWindow>
+										)}
+									</TabsContent>
+									<TabsContent
+										value="tokens"
+										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+									>
+										<AscendantWindow title="TOKENS" density="compact">
+											<Tabs defaultValue="characters" className="w-full">
+												<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+													<TabsTrigger
+														data-testid="vtt-tokens-tab-characters"
+														value="characters"
+														className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+													>
+														<Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+														<span className="hidden xs:inline">Characters</span>
+														<span className="xs:hidden">C</span>
+													</TabsTrigger>
+													<TabsTrigger
+														data-testid="vtt-tokens-tab-library"
+														value="library"
+														className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+													>
+														<ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+														<span className="hidden xs:inline">Library</span>
+														<span className="xs:hidden">L</span>
+													</TabsTrigger>
+												</TabsList>
+												<TabsContent value="characters" className="mt-3">
+													<div className="space-y-2 max-h-60 overflow-y-auto">
+														{resolvedCharacters.length === 0 && (
+															<AscendantText className="block text-xs text-foreground/70 text-center py-4">
+																No characters yet.
+															</AscendantText>
+														)}
+														{resolvedCharacters.map((char) => {
+															const portraitUrl =
+																typeof char.portrait_url === "string"
+																	? char.portrait_url
+																	: null;
+															return (
+																<button
+																	type="button"
+																	key={char.id}
+																	onClick={() => {
+																		setSelectedCharacterId(char.id);
+																		setSelectedLibraryTokenId(null);
+																		setSelectedTool("select");
+																	}}
+																	className={cn(
+																		"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
+																		selectedCharacterId === char.id
+																			? "bg-primary/20 border-primary"
+																			: "border-border hover:bg-muted/50",
+																	)}
+																>
+																	{portraitUrl && (
+																		<OptimizedImage
+																			src={portraitUrl}
+																			alt={char.name}
+																			className="w-8 h-8 rounded-full object-cover border border-border"
+																			size="thumbnail"
+																		/>
+																	)}
+																	<div className="flex-1 min-w-0">
+																		<div className="font-semibold truncate">
+																			{char.name}
+																		</div>
+																		<div className="text-foreground/70">
+																			{char.hp_current || 0}/{char.hp_max || 0}{" "}
+																			HP | AC {char.armor_class || 10}
+																		</div>
+																	</div>
+																</button>
+															);
+														})}
+													</div>
+												</TabsContent>
+												<TabsContent value="library" className="mt-3">
+													<div className="space-y-3">
+														<Input
+															value={tokenSearch}
+															onChange={(e) => setTokenSearch(e.target.value)}
+															placeholder="Search tokens..."
+															className="h-8 text-xs"
+														/>
+														<div className="space-y-2 max-h-60 overflow-y-auto">
+															{filteredLibraryTokens.length === 0 && (
+																<AscendantText className="block text-xs text-foreground/70 text-center py-4">
+																	No tokens match.
+																</AscendantText>
+															)}
+															{filteredLibraryTokens.map((token) => {
+																const isOverlayPreview =
+																	token.render?.mode === "overlay" ||
+																	token.type === "effect" ||
+																	token.type === "prop" ||
+																	(!!token.imageUrl &&
+																		(token.imageUrl.includes(
+																			"/generated/props/",
+																		) ||
+																			token.imageUrl.includes(
+																				"/generated/effects/",
+																			)));
+																return (
+																	<button
+																		type="button"
+																		key={token.id}
+																		onClick={() => {
+																			setSelectedLibraryTokenId(token.id);
+																			setSelectedCharacterId(null);
+																			setSelectedTool("select");
+																		}}
+																		className={cn(
+																			"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
+																			selectedLibraryTokenId === token.id
+																				? "bg-primary/20 border-primary"
+																				: "border-border hover:bg-muted/50",
+																		)}
+																	>
+																		<div
+																			className={cn(
+																				"w-8 h-8 border border-border flex items-center justify-center overflow-hidden",
+																				isOverlayPreview
+																					? "rounded-md bg-transparent"
+																					: "rounded-full bg-muted/40",
+																			)}
+																		>
+																			{token.imageUrl ? (
+																				<OptimizedImage
+																					src={token.imageUrl}
+																					alt={token.name}
+																					className={cn(
+																						"w-full h-full",
+																						isOverlayPreview
+																							? "object-contain"
+																							: "object-cover rounded-full",
+																					)}
+																					size="thumbnail"
+																				/>
+																			) : (
+																				<span className="text-sm">
+																					{token.emoji || "@"}
+																				</span>
+																			)}
+																		</div>
+																		<div className="flex-1 min-w-0">
+																			<div className="font-semibold truncate">
+																				{token.name}
+																			</div>
+																			<div className="text-foreground/70 capitalize">
+																				{token.category} | {token.size}
+																			</div>
+																		</div>
+																	</button>
+																);
+															})}
+														</div>
+													</div>
+												</TabsContent>
+											</Tabs>
+										</AscendantWindow>
+									</TabsContent>
+								</Tabs>
+							</VTTDrawer>
+						)}
 
-							{/* Main Map Area — fills remaining viewport. */}
+						{/* Main Map Area — fills remaining viewport. */}
+						<div
+							className={cn(
+								"vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden",
+							)}
+						>
+							{/* Floating layer quick-switch (Roll20 / Foundry parity). */}
+							{isWarden && (
+								<div className="absolute bottom-3 left-3 z-20">
+									<LayerQuickSwitch
+										layers={LAYER_OPTIONS}
+										currentLayer={currentLayer}
+										onSelectLayer={setCurrentLayer}
+										visibility={visibleLayers}
+										onToggleVisibility={(id) =>
+											setVisibleLayers((prev) => ({
+												...prev,
+												[id]: !prev[id],
+											}))
+										}
+									/>
+								</div>
+							)}
+							{/* Persistent floating zoom HUD (DDB/Foundry parity). */}
+							<VTTZoomHud
+								zoom={zoom}
+								onRequestZoom={handleRequestZoom}
+								onFit={handleFitZoom}
+								onRecenter={handleRecenter}
+							/>
+							{/* DDB "Point" trailing highlight from all connected users. */}
+							<VTTPointerOverlay
+								trails={vttRealtime.pointerTrails}
+								gridSize={gridSize}
+								zoom={zoom}
+							/>
+							{/* Floating token action bar when a token is selected. */}
+							{activeToken && currentScene && (
+								<TokenActionBar
+									token={activeToken}
+									anchor={{
+										x: activeToken.x * gridSize * zoom,
+										y: activeToken.y * gridSize * zoom,
+									}}
+									isWarden={isWarden}
+									onUpdate={(patch) => updateToken(activeToken.id, patch)}
+									onDelete={() => {
+										removeToken(activeToken.id);
+										setActiveTokenId(null);
+									}}
+									onOpenSheet={
+										activeToken.characterId
+											? () =>
+													window.open(
+														`/character/${activeToken.characterId}`,
+														"_blank",
+														"noopener",
+													)
+											: undefined
+									}
+									onClose={() => setActiveTokenId(null)}
+								/>
+							)}
 							<div
 								className={cn(
-									"vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden",
+									"h-full w-full flex flex-col min-h-0 overflow-hidden relative",
 								)}
 							>
-								{/* Floating layer badge (top-left over canvas). */}
-								<div className="absolute top-2 left-2 z-20 pointer-events-none">
-									<span className="px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded-full border border-primary/40 bg-card/80 backdrop-blur-sm text-primary/90 select-none">
-										Layer {currentLayer} Active
-									</span>
-								</div>
 								<div
+									role="application"
+									aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
+									data-testid="vtt-map"
+									ref={mapRef}
+									onDoubleClick={handleMapDoubleClick}
+									onMouseDown={handleMapMouseDown}
+									onMouseMove={handleMapMouseMove}
+									onMouseUp={handleMapMouseUp}
+									onMouseLeave={handleMapMouseUp}
+									onContextMenu={(e) => {
+										e.preventDefault();
+										// Find token at click position for right-click/long-press context menu
+										const rect = mapRef.current?.getBoundingClientRect();
+										if (!rect) return;
+										const mx = e.clientX - rect.left;
+										const my = e.clientY - rect.top;
+										const gx = Math.floor(mx / (gridSize * zoom));
+										const gy = Math.floor(my / (gridSize * zoom));
+										const token = visibleTokens.find(
+											(t) => t.x === gx && t.y === gy,
+										);
+										if (token) {
+											setContextMenu({
+												x: e.clientX,
+												y: e.clientY,
+												tokenId: token.id,
+											});
+										}
+									}}
 									className={cn(
-										"h-full w-full flex flex-col min-h-0 overflow-hidden relative",
+										"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
+										selectedTool !== "select" && "cursor-crosshair",
+										selectedTool === "select" &&
+											(selectedCharacterId || selectedLibraryTokenId) &&
+											"cursor-crosshair",
+										isViewportPanning && "cursor-grabbing select-none",
+										!isViewportPanning &&
+											isViewportPanModifierActive &&
+											"cursor-grab",
 									)}
 								>
 									<div
-										role="application"
-										aria-label="VTT map canvas. Click to place or interact with items, press Enter to act at center. Drop assets from the browser to place them."
-										data-testid="vtt-map"
-										ref={mapRef}
-										onDoubleClick={handleMapDoubleClick}
-										onMouseDown={handleMapMouseDown}
-										onMouseMove={handleMapMouseMove}
-										onMouseUp={handleMapMouseUp}
-										onMouseLeave={handleMapMouseUp}
-										onContextMenu={(e) => {
-											e.preventDefault();
-											// Find token at click position for right-click/long-press context menu
-											const rect = mapRef.current?.getBoundingClientRect();
-											if (!rect) return;
-											const mx = e.clientX - rect.left;
-											const my = e.clientY - rect.top;
-											const gx = Math.floor(mx / (gridSize * zoom));
-											const gy = Math.floor(my / (gridSize * zoom));
-											const token = visibleTokens.find(
-												(t) => t.x === gx && t.y === gy,
-											);
-											if (token) {
-												setContextMenu({
-													x: e.clientX,
-													y: e.clientY,
-													tokenId: token.id,
-												});
-											}
-										}}
 										className={cn(
-											"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
-											selectedTool !== "select" && "cursor-crosshair",
-											selectedTool === "select" &&
-												(selectedCharacterId || selectedLibraryTokenId) &&
-												"cursor-crosshair",
-											isViewportPanning && "cursor-grabbing select-none",
-											!isViewportPanning &&
-												isViewportPanModifierActive &&
-												"cursor-grab",
+											"vtt-scene-container min-h-0 overflow-auto",
+											sceneClass,
 										)}
 									>
-										<div
-											className={cn(
-												"vtt-scene-container min-h-0 overflow-auto",
-												sceneClass,
-											)}
-										>
-											<style>{overlayStyles}</style>
-											{!currentScene ? (
-												<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-void-black/80 backdrop-blur-sm z-50">
-													<MapPin className="w-12 h-12 text-primary/40 mb-4 animate-pulse" />
-													<AscendantText
-														variant="sovereign"
-														size="lg"
-														className="mb-2"
+										<style>{overlayStyles}</style>
+										{!currentScene ? (
+											<div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-void-black/80 backdrop-blur-sm z-50">
+												<MapPin className="w-12 h-12 text-primary/40 mb-4 animate-pulse" />
+												<AscendantText
+													variant="sovereign"
+													size="lg"
+													className="mb-2"
+												>
+													No Active Lattice Detected
+												</AscendantText>
+												<AscendantText className="text-sm text-foreground/70 max-w-md">
+													Select a scene from the Warden direct-link or drop a
+													map asset here to initialize the dimensional
+													projection.
+												</AscendantText>
+											</div>
+										) : (
+											<MemoizedVttPixiStage
+												containerRef={mapRef}
+												scene={currentScene}
+												tokens={visibleTokens}
+												walls={currentScene?.walls ?? EMPTY_ARRAY}
+												lightSources={currentScene?.lights ?? EMPTY_ARRAY}
+												gridConfig={memoizedGridConfig}
+												gridSize={gridSize}
+												zoom={zoom}
+												showGrid={showGrid}
+												isWarden={isWarden}
+												effectiveVisibleLayers={effectiveVisibleLayers}
+												activeTokenId={activeTokenId}
+												activeInitiativeTokenId={activeInitiativeTokenId}
+												setActiveTokenId={setActiveTokenId}
+												updateToken={updateToken}
+												onRequestZoom={handleRequestZoom}
+												viewportPanModifierActive={isViewportPanModifierActive}
+												onTokenDragStart={handlePixiTokenDragStart}
+												onTokenDragEnd={handlePixiTokenDragEnd}
+											/>
+										)}
+
+										{/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}
+										{/* Terrain overlay */}
+										{currentScene?.terrain &&
+											currentScene.terrain.length > 0 && (
+												<div className="absolute inset-0 pointer-events-none z-[1]">
+													<svg
+														className="absolute inset-0 w-full h-full overflow-visible"
+														role="img"
+														aria-label="Terrain overlay"
 													>
-														No Active Lattice Detected
-													</AscendantText>
-													<AscendantText className="text-sm text-foreground/70 max-w-md">
-														Select a scene from the Warden direct-link or drop a
-														map asset here to initialize the dimensional
-														projection.
-													</AscendantText>
-												</div>
-											) : (
-												<MemoizedVttPixiStage
-													containerRef={mapRef}
-													scene={currentScene}
-													tokens={visibleTokens}
-													walls={currentScene?.walls ?? EMPTY_ARRAY}
-													lightSources={currentScene?.lights ?? EMPTY_ARRAY}
-													gridConfig={memoizedGridConfig}
-													gridSize={gridSize}
-													zoom={zoom}
-													showGrid={showGrid}
-													isWarden={isWarden}
-													effectiveVisibleLayers={effectiveVisibleLayers}
-													activeTokenId={activeTokenId}
-													activeInitiativeTokenId={activeInitiativeTokenId}
-													setActiveTokenId={setActiveTokenId}
-													updateToken={updateToken}
-													onRequestZoom={handleRequestZoom}
-													viewportPanModifierActive={
-														isViewportPanModifierActive
-													}
-													onTokenDragStart={handlePixiTokenDragStart}
-													onTokenDragEnd={handlePixiTokenDragEnd}
-												/>
-											)}
-
-											{/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}
-											{/* Terrain overlay */}
-											{currentScene?.terrain &&
-												currentScene.terrain.length > 0 && (
-													<div className="absolute inset-0 pointer-events-none z-[1]">
-														<svg
-															className="absolute inset-0 w-full h-full overflow-visible"
-															role="img"
-															aria-label="Terrain overlay"
-														>
-															<title>Terrain zones</title>
-															{currentScene.terrain.map((zone) => {
-																if (!zone.visible && !isWarden) return null;
-																const gZoom = gridSize * zoom;
-																const pointsStr = zone.vertices
-																	.map(
-																		(v) =>
-																			`${(v.x + 0.5) * gZoom},${(v.y + 0.5) * gZoom}`,
-																	)
-																	.join(" ");
-																return (
-																	<polygon
-																		key={zone.id}
-																		points={pointsStr}
-																		fill={zone.fillColor}
-																		stroke={zone.fillColor.replace(
-																			/[\d.]+\)$/g,
-																			"1)",
-																		)} // Try to extract fully opaque stroke
-																		strokeWidth={2}
-																		opacity={zone.visible ? 1 : 0.4}
-																	/>
-																);
-															})}
-														</svg>
-													</div>
-												)}
-
-											{/* Ambient Sounds Warden Overlay */}
-											{isWarden &&
-												currentScene?.ambientSounds &&
-												currentScene.ambientSounds.length > 0 && (
-													<div className="absolute inset-0 pointer-events-none z-[1]">
-														<svg
-															className="absolute inset-0 w-full h-full overflow-visible"
-															role="img"
-															aria-label="Ambient sounds overlay"
-														>
-															<title>Ambient sound zones</title>
-															{currentScene.ambientSounds.map((zone) => {
-																const gZoom = gridSize * zoom;
-																const cx = (zone.x + 0.5) * gZoom;
-																const cy = (zone.y + 0.5) * gZoom;
-
-																if (zone.shape === "circle") {
-																	const r = zone.radius * gZoom;
-																	return (
-																		<circle
-																			key={zone.id}
-																			cx={cx}
-																			cy={cy}
-																			r={r}
-																			fill="rgba(0, 255, 128, 0.1)"
-																			stroke="rgba(0, 255, 128, 0.6)"
-																			strokeWidth={1}
-																			strokeDasharray="4 4"
-																		/>
-																	);
-																} else if (
-																	zone.shape === "rectangle" &&
-																	zone.width &&
-																	zone.height
-																) {
-																	const w = zone.width * gZoom;
-																	const h = zone.height * gZoom;
-																	return (
-																		<rect
-																			key={zone.id}
-																			x={cx - w / 2}
-																			y={cy - h / 2}
-																			width={w}
-																			height={h}
-																			fill="rgba(0, 255, 128, 0.1)"
-																			stroke="rgba(0, 255, 128, 0.6)"
-																			strokeWidth={1}
-																			strokeDasharray="4 4"
-																		/>
-																	);
-																}
-																return null;
-															})}
-														</svg>
-													</div>
-												)}
-
-											{drawingsToRender.length > 0 && (
-												<div className="absolute inset-0 pointer-events-none">
-													{drawingsToRender.map((drawing) => {
-														if (drawing.layer === "Warden" && !isWarden)
-															return null;
-
-														if (drawing.type === "freehand") {
-															// SVG freehand
+														<title>Terrain zones</title>
+														{currentScene.terrain.map((zone) => {
+															if (!zone.visible && !isWarden) return null;
 															const gZoom = gridSize * zoom;
-															const pointsStr = drawing.points
+															const pointsStr = zone.vertices
 																.map(
-																	(p) =>
-																		`${(p.x + 0.5) * gZoom},${(p.y + 0.5) * gZoom}`,
+																	(v) =>
+																		`${(v.x + 0.5) * gZoom},${(v.y + 0.5) * gZoom}`,
 																)
 																.join(" ");
 															return (
-																<svg
-																	key={drawing.id}
-																	className="absolute inset-0 w-full h-full overflow-visible"
-																	role="img"
-																	aria-label="Freehand drawing"
-																>
-																	<title>Freehand drawing</title>
-																	<polyline
-																		points={pointsStr}
-																		fill="none"
-																		stroke={drawing.color}
-																		strokeWidth={drawing.strokeWidth}
-																		strokeLinecap="round"
-																		strokeLinejoin="round"
-																		opacity={drawing.fillOpacity ?? 1}
-																	/>
-																</svg>
-															);
-														}
-
-														if (drawing.type === "line") {
-															return (
-																<div
-																	key={drawing.id}
-																	className={cn(
-																		"vtt-drawing-line absolute origin-left rounded-full",
-																		`vtt-drawing-line-${toSafeClassName(drawing.id)}`,
-																	)}
+																<polygon
+																	key={zone.id}
+																	points={pointsStr}
+																	fill={zone.fillColor}
+																	stroke={zone.fillColor.replace(
+																		/[\d.]+\)$/g,
+																		"1)",
+																	)} // Try to extract fully opaque stroke
+																	strokeWidth={2}
+																	opacity={zone.visible ? 1 : 0.4}
 																/>
 															);
-														}
+														})}
+													</svg>
+												</div>
+											)}
+
+										{/* Ambient Sounds Warden Overlay */}
+										{isWarden &&
+											currentScene?.ambientSounds &&
+											currentScene.ambientSounds.length > 0 && (
+												<div className="absolute inset-0 pointer-events-none z-[1]">
+													<svg
+														className="absolute inset-0 w-full h-full overflow-visible"
+														role="img"
+														aria-label="Ambient sounds overlay"
+													>
+														<title>Ambient sound zones</title>
+														{currentScene.ambientSounds.map((zone) => {
+															const gZoom = gridSize * zoom;
+															const cx = (zone.x + 0.5) * gZoom;
+															const cy = (zone.y + 0.5) * gZoom;
+
+															if (zone.shape === "circle") {
+																const r = zone.radius * gZoom;
+																return (
+																	<circle
+																		key={zone.id}
+																		cx={cx}
+																		cy={cy}
+																		r={r}
+																		fill="rgba(0, 255, 128, 0.1)"
+																		stroke="rgba(0, 255, 128, 0.6)"
+																		strokeWidth={1}
+																		strokeDasharray="4 4"
+																	/>
+																);
+															} else if (
+																zone.shape === "rectangle" &&
+																zone.width &&
+																zone.height
+															) {
+																const w = zone.width * gZoom;
+																const h = zone.height * gZoom;
+																return (
+																	<rect
+																		key={zone.id}
+																		x={cx - w / 2}
+																		y={cy - h / 2}
+																		width={w}
+																		height={h}
+																		fill="rgba(0, 255, 128, 0.1)"
+																		stroke="rgba(0, 255, 128, 0.6)"
+																		strokeWidth={1}
+																		strokeDasharray="4 4"
+																	/>
+																);
+															}
+															return null;
+														})}
+													</svg>
+												</div>
+											)}
+
+										{drawingsToRender.length > 0 && (
+											<div className="absolute inset-0 pointer-events-none">
+												{drawingsToRender.map((drawing) => {
+													if (drawing.layer === "Warden" && !isWarden)
+														return null;
+
+													if (drawing.type === "freehand") {
+														// SVG freehand
+														const gZoom = gridSize * zoom;
+														const pointsStr = drawing.points
+															.map(
+																(p) =>
+																	`${(p.x + 0.5) * gZoom},${(p.y + 0.5) * gZoom}`,
+															)
+															.join(" ");
+														return (
+															<svg
+																key={drawing.id}
+																className="absolute inset-0 w-full h-full overflow-visible"
+																role="img"
+																aria-label="Freehand drawing"
+															>
+																<title>Freehand drawing</title>
+																<polyline
+																	points={pointsStr}
+																	fill="none"
+																	stroke={drawing.color}
+																	strokeWidth={drawing.strokeWidth}
+																	strokeLinecap="round"
+																	strokeLinejoin="round"
+																	opacity={drawing.fillOpacity ?? 1}
+																/>
+															</svg>
+														);
+													}
+
+													if (drawing.type === "line") {
 														return (
 															<div
 																key={drawing.id}
 																className={cn(
-																	"vtt-drawing-shape absolute border-solid box-border",
-																	drawing.type === "circle" && "rounded-full",
-																	`vtt-drawing-shape-${toSafeClassName(drawing.id)}`,
+																	"vtt-drawing-line absolute origin-left rounded-full",
+																	`vtt-drawing-line-${toSafeClassName(drawing.id)}`,
 																)}
+															/>
+														);
+													}
+													return (
+														<div
+															key={drawing.id}
+															className={cn(
+																"vtt-drawing-shape absolute border-solid box-border",
+																drawing.type === "circle" && "rounded-full",
+																`vtt-drawing-shape-${toSafeClassName(drawing.id)}`,
+															)}
+														/>
+													);
+												})}
+											</div>
+										)}
+										{annotationsToRender.length > 0 && (
+											<div className="absolute inset-0">
+												{annotationsToRender.map((note) => {
+													if (!effectiveVisibleLayers[note.layer]) return null;
+													return (
+														<button
+															type="button"
+															key={note.id}
+															className={cn(
+																"vtt-annotation",
+																`vtt-annotation-${toSafeClassName(note.id)}`,
+															)}
+															onDoubleClick={(e) => {
+																if (!isWarden) return;
+																e.stopPropagation();
+																removeAnnotation(note.id);
+															}}
+															onKeyDown={(e) =>
+																handleAnnotationKeyDown(note.id, e)
+															}
+															tabIndex={isWarden ? 0 : -1}
+															aria-label={
+																isWarden
+																	? `Remove annotation ${note.text}`
+																	: `Annotation ${note.text}`
+															}
+														>
+															{note.text}
+														</button>
+													);
+												})}
+											</div>
+										)}
+										{selectedTool === "measure" &&
+											measurementStart &&
+											measurementEnd &&
+											(() => {
+												const dx = Math.abs(
+													measurementEnd.x - measurementStart.x,
+												);
+												const dy = Math.abs(
+													measurementEnd.y - measurementStart.y,
+												);
+												const distance =
+													measureShape === "line"
+														? Math.max(dx, dy) + Math.min(dx, dy) * 0.5
+														: measureRadius;
+												return (
+													<div className="vtt-measurement">
+														{measureShape === "line" && (
+															<div
+																className={cn(
+																	"vtt-measurement-line",
+																	"vtt-measurement-line-active",
+																)}
+															/>
+														)}
+														{measureShape === "circle" && (
+															<div className="vtt-aoe-circle" />
+														)}
+														{measureShape === "cone" && (
+															<div className="vtt-aoe-cone" />
+														)}
+														{measureShape === "cube" && (
+															<div className="vtt-aoe-cube" />
+														)}
+														<div
+															className={cn(
+																"vtt-measurement-label",
+																"vtt-measurement-label-active",
+															)}
+														>
+															{measureShape === "line"
+																? `${distance.toFixed(1)}u (${(distance * 5).toFixed(0)} ft)`
+																: `${measureShape} ${measureRadius * 5}ft`}
+														</div>
+													</div>
+												);
+											})()}
+
+										{/* Ping overlay */}
+										{vttRealtime.pings.length > 0 && (
+											<div className="absolute inset-0 pointer-events-none vtt-ping-layer">
+												{vttRealtime.pings.map((ping) => (
+													<DynamicStyle
+														key={ping.createdAt}
+														className="absolute animate-ping vtt-ping"
+														vars={{
+															"--vtt-ping-x": `${(ping.x + 0.5) * gridSize * zoom}px`,
+															"--vtt-ping-y": `${(ping.y + 0.5) * gridSize * zoom}px`,
+														}}
+													/>
+												))}
+											</div>
+										)}
+
+										{/* Weather overlay */}
+										{currentScene?.weather &&
+											weatherPreset &&
+											weatherParticles.length > 0 && (
+												<div
+													className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80"
+													data-testid="vtt-weather-overlay"
+												>
+													<style>{getWeatherCSSAnimation(weatherPreset)}</style>
+													{weatherParticles.map((particle) => {
+														return (
+															<DynamicStyle
+																key={particle.id}
+																className="absolute rounded-full vtt-weather-particle"
+																vars={{
+																	"--vtt-particle-size": `${particle.size}px`,
+																	"--vtt-particle-left": `${particle.left}%`,
+																	"--vtt-particle-top": `${particle.top}%`,
+																	"--vtt-particle-color":
+																		weatherPreset.particleColor,
+																	"--vtt-particle-animation": `weather-particle-${currentScene?.weather} ${particle.animationDuration}s linear infinite`,
+																	"--vtt-particle-delay": `${particle.delay}s`,
+																}}
 															/>
 														);
 													})}
 												</div>
 											)}
-											{annotationsToRender.length > 0 && (
-												<div className="absolute inset-0">
-													{annotationsToRender.map((note) => {
-														if (!effectiveVisibleLayers[note.layer])
-															return null;
-														return (
-															<button
-																type="button"
-																key={note.id}
-																className={cn(
-																	"vtt-annotation",
-																	`vtt-annotation-${toSafeClassName(note.id)}`,
-																)}
-																onDoubleClick={(e) => {
-																	if (!isWarden) return;
-																	e.stopPropagation();
-																	removeAnnotation(note.id);
-																}}
-																onKeyDown={(e) =>
-																	handleAnnotationKeyDown(note.id, e)
-																}
-																tabIndex={isWarden ? 0 : -1}
-																aria-label={
-																	isWarden
-																		? `Remove annotation ${note.text}`
-																		: `Annotation ${note.text}`
-																}
-															>
-																{note.text}
-															</button>
-														);
-													})}
-												</div>
-											)}
-											{selectedTool === "measure" &&
-												measurementStart &&
-												measurementEnd &&
-												(() => {
-													const dx = Math.abs(
-														measurementEnd.x - measurementStart.x,
-													);
-													const dy = Math.abs(
-														measurementEnd.y - measurementStart.y,
-													);
-													const distance =
-														measureShape === "line"
-															? Math.max(dx, dy) + Math.min(dx, dy) * 0.5
-															: measureRadius;
-													return (
-														<div className="vtt-measurement">
-															{measureShape === "line" && (
-																<div
-																	className={cn(
-																		"vtt-measurement-line",
-																		"vtt-measurement-line-active",
-																	)}
-																/>
-															)}
-															{measureShape === "circle" && (
-																<div className="vtt-aoe-circle" />
-															)}
-															{measureShape === "cone" && (
-																<div className="vtt-aoe-cone" />
-															)}
-															{measureShape === "cube" && (
-																<div className="vtt-aoe-cube" />
-															)}
-															<div
-																className={cn(
-																	"vtt-measurement-label",
-																	"vtt-measurement-label-active",
-																)}
-															>
-																{measureShape === "line"
-																	? `${distance.toFixed(1)}u (${(distance * 5).toFixed(0)} ft)`
-																	: `${measureShape} ${measureRadius * 5}ft`}
-															</div>
-														</div>
-													);
-												})()}
 
-											{/* Ping overlay */}
-											{vttRealtime.pings.length > 0 && (
-												<div className="absolute inset-0 pointer-events-none vtt-ping-layer">
-													{vttRealtime.pings.map((ping) => (
+										{/* Remote cursors overlay */}
+										{vttRealtime.activeUsers.filter((u) => u.cursor).length >
+											0 && (
+											<div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
+												{vttRealtime.activeUsers
+													.filter((u) => u.cursor)
+													.map((u) => (
 														<DynamicStyle
-															key={ping.createdAt}
-															className="absolute animate-ping vtt-ping"
+															key={u.userId}
+															className="absolute transition-all duration-100 vtt-cursor"
 															vars={{
-																"--vtt-ping-x": `${(ping.x + 0.5) * gridSize * zoom}px`,
-																"--vtt-ping-y": `${(ping.y + 0.5) * gridSize * zoom}px`,
+																"--vtt-cursor-x": `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
+																"--vtt-cursor-y": `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
 															}}
-														/>
-													))}
-												</div>
-											)}
-
-											{/* Weather overlay */}
-											{currentScene?.weather &&
-												weatherPreset &&
-												weatherParticles.length > 0 && (
-													<div
-														className="absolute inset-0 pointer-events-none z-[10] overflow-hidden mix-blend-screen opacity-80"
-														data-testid="vtt-weather-overlay"
-													>
-														<style>
-															{getWeatherCSSAnimation(weatherPreset)}
-														</style>
-														{weatherParticles.map((particle) => {
-															return (
-																<DynamicStyle
-																	key={particle.id}
-																	className="absolute rounded-full vtt-weather-particle"
-																	vars={{
-																		"--vtt-particle-size": `${particle.size}px`,
-																		"--vtt-particle-left": `${particle.left}%`,
-																		"--vtt-particle-top": `${particle.top}%`,
-																		"--vtt-particle-color":
-																			weatherPreset.particleColor,
-																		"--vtt-particle-animation": `weather-particle-${currentScene?.weather} ${particle.animationDuration}s linear infinite`,
-																		"--vtt-particle-delay": `${particle.delay}s`,
-																	}}
-																/>
-															);
-														})}
-													</div>
-												)}
-
-											{/* Remote cursors overlay */}
-											{vttRealtime.activeUsers.filter((u) => u.cursor).length >
-												0 && (
-												<div className="absolute inset-0 pointer-events-none vtt-cursor-layer">
-													{vttRealtime.activeUsers
-														.filter((u) => u.cursor)
-														.map((u) => (
+														>
 															<DynamicStyle
-																key={u.userId}
-																className="absolute transition-all duration-100 vtt-cursor"
+																className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
 																vars={{
-																	"--vtt-cursor-x": `${((u.cursor?.x ?? 0) + 0.5) * gridSize * zoom}px`,
-																	"--vtt-cursor-y": `${((u.cursor?.y ?? 0) + 0.5) * gridSize * zoom}px`,
+																	"--vtt-user-color": u.color,
+																}}
+															/>
+															<DynamicStyle
+																as="div"
+																className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
+																vars={{
+																	"--vtt-user-color": u.color,
 																}}
 															>
-																<DynamicStyle
-																	className="w-3 h-3 rounded-full border-2 border-white vtt-cursor-dot"
-																	vars={{
-																		"--vtt-user-color": u.color,
-																	}}
-																/>
-																<DynamicStyle
-																	as="div"
-																	className="absolute top-4 left-0 text-[10px] px-1 rounded text-white whitespace-nowrap vtt-cursor-label"
-																	vars={{
-																		"--vtt-user-color": u.color,
-																	}}
-																>
-																	{u.userName}
-																</DynamicStyle>
+																{u.userName}
 															</DynamicStyle>
-														))}
-												</div>
-											)}
-										</div>
+														</DynamicStyle>
+													))}
+											</div>
+										)}
 									</div>
 								</div>
 							</div>
+						</div>
 
-							{/* Always-visible right icon rail (Warden only, desktop). */}
-							{isWarden && !isMobile && !isMapExpanded && (
-								<VTTIconRail
-									side="right"
-									activeId={wardenToolsOpen ? "warden-tools" : rightDrawerTab}
-									onSelect={(id) => {
-										// The warden-tools rail item opens the existing Sheet
-										// instead of driving the drawer/inner-tab state.
-										if (id === "warden-tools") {
-											setWardenToolsOpen((prev) => !prev);
-											setRightDrawerTab(null);
-											return;
-										}
-										const next = id as RightDrawerTab;
-										setRightDrawerTab(next);
-										setWardenToolsOpen(false);
-										if (
-											next &&
-											next !== "token" &&
-											next !== null
-										) {
-											setRightInnerTab(
-												next as Exclude<RightDrawerTab, null | "token">,
-											);
-										}
-									}}
-									items={[
+						{/* Always-visible right icon rail (Warden only, desktop). */}
+						{isWarden && !isMobile && !isMapExpanded && (
+							<VTTIconRail
+								side="right"
+								activeId={wardenToolsOpen ? "warden-tools" : rightDrawerTab}
+								onSelect={(id) => {
+									// The warden-tools rail item opens the existing Sheet
+									// instead of driving the drawer/inner-tab state.
+									if (id === "warden-tools") {
+										setWardenToolsOpen((prev) => !prev);
+										setRightDrawerTab(null);
+										return;
+									}
+									const next = id as RightDrawerTab;
+									setRightDrawerTab(next);
+									setWardenToolsOpen(false);
+									if (next && next !== "token" && next !== null) {
+										setRightInnerTab(
+											next as Exclude<RightDrawerTab, null | "token">,
+										);
+									}
+								}}
+								items={
+									[
 										{
 											id: "token",
 											icon: User,
@@ -4460,410 +4686,392 @@ const VTTEnhanced = () => {
 											testId: "vtt-rail-right-ai",
 										},
 										{
+											id: "log",
+											icon: Dice6,
+											label: "Game Log",
+											testId: "vtt-rail-right-log",
+										},
+										{
 											id: "warden-tools",
 											icon: Wrench,
 											label: "Warden Tools",
 											testId: "vtt-rail-right-warden-tools",
 										},
-									] as VTTIconRailItem[]}
-								/>
-							)}
+									] as VTTIconRailItem[]
+								}
+							/>
+						)}
 
-							{/* Warden Tools Sheet (opened by rail "warden-tools" or top-bar button). */}
-							{isWarden && (
-								<Sheet
-									open={wardenToolsOpen}
-									onOpenChange={setWardenToolsOpen}
+						{/* Warden Tools Sheet (opened by rail "warden-tools" or top-bar button). */}
+						{isWarden && (
+							<Sheet open={wardenToolsOpen} onOpenChange={setWardenToolsOpen}>
+								<SheetContent
+									side="right"
+									className="w-[min(560px,95vw)] sm:max-w-[600px] p-0 flex flex-col bg-card border-l border-primary/30"
 								>
-									<SheetContent
-											side="right"
-											className="w-[min(560px,95vw)] sm:max-w-[600px] p-0 flex flex-col bg-card border-l border-primary/30"
-										>
-											<SheetHeader className="px-4 py-3 border-b border-border/60 shrink-0">
-												<SheetTitle className="text-sm font-heading tracking-[0.2em] uppercase text-primary inline-flex items-center gap-2">
-													<Wrench className="w-4 h-4" aria-hidden />
-													Warden Tools
-												</SheetTitle>
-												<SheetDescription className="text-xs text-foreground/70">
-													Macros, music, atmosphere, terrain, ambient sound, map
-													generator, encounters, and session audio.
-												</SheetDescription>
-											</SheetHeader>
-											{/* Session audio tracks — folded into the drawer so it is not
+									<SheetHeader className="px-4 py-3 border-b border-border/60 shrink-0">
+										<SheetTitle className="text-sm font-heading tracking-[0.2em] uppercase text-primary inline-flex items-center gap-2">
+											<Wrench className="w-4 h-4" aria-hidden />
+											Warden Tools
+										</SheetTitle>
+										<SheetDescription className="text-xs text-foreground/70">
+											Macros, music, atmosphere, terrain, ambient sound, map
+											generator, encounters, and session audio.
+										</SheetDescription>
+									</SheetHeader>
+									{/* Session audio tracks — folded into the drawer so it is not
 											    visually stacked behind the main sidebar. */}
-											{sessionId && (
-												<div className="px-4 pt-3 pb-1 border-b border-border/40 shrink-0">
-													<div className="flex items-center justify-between mb-2">
-														<span className="text-[11px] font-heading tracking-[0.2em] uppercase text-foreground/70">
-															Session Audio
-														</span>
-														<Button
-															variant="outline"
-															size="sm"
-															className="h-7 text-[11px]"
-															onClick={() => {
-																const url = window.prompt(
-																	"Enter valid audio URL (mp3/wav/ogg):",
-																);
-																const name = window.prompt("Enter track name:");
-																if (url && name) {
-																	createTrack({
-																		session_id: sessionId,
-																		name,
-																		url,
-																		type: "music",
-																		volume: 0.5,
-																		loop: true,
-																		is_playing: false,
-																		created_by: user?.id || "",
-																	});
-																}
-															}}
+									{sessionId && (
+										<div className="px-4 pt-3 pb-1 border-b border-border/40 shrink-0">
+											<div className="flex items-center justify-between mb-2">
+												<span className="text-[11px] font-heading tracking-[0.2em] uppercase text-foreground/70">
+													Session Audio
+												</span>
+												<Button
+													variant="outline"
+													size="sm"
+													className="h-7 text-[11px]"
+													onClick={() => {
+														const url = window.prompt(
+															"Enter valid audio URL (mp3/wav/ogg):",
+														);
+														const name = window.prompt("Enter track name:");
+														if (url && name) {
+															createTrack({
+																session_id: sessionId,
+																name,
+																url,
+																type: "music",
+																volume: 0.5,
+																loop: true,
+																is_playing: false,
+																created_by: user?.id || "",
+															});
+														}
+													}}
+												>
+													+ Track
+												</Button>
+											</div>
+											{audioTracks.length === 0 ? (
+												<AscendantText className="block text-xs text-foreground/70 py-1">
+													No tracks uploaded for this session yet.
+												</AscendantText>
+											) : (
+												<div className="space-y-1 max-h-40 overflow-y-auto pr-1">
+													{audioTracks.map((track) => (
+														<div
+															key={track.id}
+															className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20"
 														>
-															+ Track
-														</Button>
-													</div>
-													{audioTracks.length === 0 ? (
-														<AscendantText className="block text-xs text-foreground/70 py-1">
-															No tracks uploaded for this session yet.
-														</AscendantText>
-													) : (
-														<div className="space-y-1 max-h-40 overflow-y-auto pr-1">
-															{audioTracks.map((track) => (
-																<div
-																	key={track.id}
-																	className="flex items-center justify-between p-2 text-xs border border-border rounded bg-muted/20"
+															<span className="truncate flex-1 font-medium">
+																{track.name}
+															</span>
+															<div className="flex items-center gap-1">
+																<Button
+																	variant="ghost"
+																	size="sm"
+																	className="h-6 w-6 p-0"
+																	onClick={() => {
+																		if (track.is_playing) {
+																			vttAudioManager.stopTrack(track.id);
+																			updateTrack({
+																				track_id: track.id,
+																				session_id: sessionId,
+																				is_playing: false,
+																			});
+																		} else {
+																			vttAudioManager.playTrack(track);
+																			updateTrack({
+																				track_id: track.id,
+																				session_id: sessionId,
+																				is_playing: true,
+																			});
+																		}
+																	}}
 																>
-																	<span className="truncate flex-1 font-medium">
-																		{track.name}
-																	</span>
-																	<div className="flex items-center gap-1">
-																		<Button
-																			variant="ghost"
-																			size="sm"
-																			className="h-6 w-6 p-0"
-																			onClick={() => {
-																				if (track.is_playing) {
-																					vttAudioManager.stopTrack(track.id);
-																					updateTrack({
-																						track_id: track.id,
-																						session_id: sessionId,
-																						is_playing: false,
-																					});
-																				} else {
-																					vttAudioManager.playTrack(track);
-																					updateTrack({
-																						track_id: track.id,
-																						session_id: sessionId,
-																						is_playing: true,
-																					});
-																				}
-																			}}
-																		>
-																			{track.is_playing ? (
-																				<Pause
-																					className="w-3.5 h-3.5"
-																					aria-label="Pause track"
-																				/>
-																			) : (
-																				<Play
-																					className="w-3.5 h-3.5"
-																					aria-label="Play track"
-																				/>
-																			)}
-																		</Button>
-																		<Button
-																			variant="ghost"
-																			size="sm"
-																			className="h-6 w-6 p-0 text-destructive"
-																			onClick={() =>
-																				deleteTrack({
-																					trackId: track.id,
-																					sessionId,
-																				})
-																			}
-																		>
-																			<X
-																				className="w-3.5 h-3.5"
-																				aria-label="Delete"
-																			/>
-																		</Button>
-																	</div>
-																</div>
-															))}
+																	{track.is_playing ? (
+																		<Pause
+																			className="w-3.5 h-3.5"
+																			aria-label="Pause track"
+																		/>
+																	) : (
+																		<Play
+																			className="w-3.5 h-3.5"
+																			aria-label="Play track"
+																		/>
+																	)}
+																</Button>
+																<Button
+																	variant="ghost"
+																	size="sm"
+																	className="h-6 w-6 p-0 text-destructive"
+																	onClick={() =>
+																		deleteTrack({
+																			trackId: track.id,
+																			sessionId,
+																		})
+																	}
+																>
+																	<X
+																		className="w-3.5 h-3.5"
+																		aria-label="Delete"
+																	/>
+																</Button>
+															</div>
 														</div>
-													)}
+													))}
 												</div>
 											)}
-											<div className="flex-1 overflow-y-auto px-4 py-3">
-												<ProtocolWardenTools
-													campaignId={campaignId || ""}
-													onRoll={vttRealtime.rollAndBroadcast}
-													customAssets={customAssets}
-													onUploadAsset={uploadCustomAsset}
-													onDeleteAsset={deleteCustomAsset}
-													onChangeMap={(url, name) => {
-														if (currentScene) {
-															// Use the same field name the scene type + Pixi renderer read
-															// (VTTScene.backgroundImage). Reset scale/offset so the new
-															// map renders centered and unscaled, matching the upload path.
-															const nextScene: VTTScene = {
-																...currentScene,
-																backgroundImage: url,
-																backgroundScale:
-																	DEFAULT_SCENE_SETTINGS.backgroundScale,
-																backgroundOffsetX:
-																	DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
-																backgroundOffsetY:
-																	DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
-																name: name || currentScene.name,
-															};
-															updateScene(nextScene);
-															vttRealtime.broadcastSceneSync(
-																upsertVttScene(scenes, nextScene),
-																getPersistedSceneId(nextScene.id),
-															);
-														}
-													}}
-													onAddToken={(t: VTTTokenPayload) => {
-														if (currentScene) {
-															const newToken = {
-																...t,
-																id: t.id || createVttTokenInstanceId(),
-															} as PlacedToken;
-															updateScene({
-																tokens: [
-																	...(currentScene.tokens || []),
-																	newToken,
-																],
-															});
-															vttRealtime.broadcastTokenAdd(newToken);
-														}
-													}}
-													onAddEffect={(e: VTTEffectPayload) => {
-														if (!currentScene) return;
-														const cx = Math.floor(
-															(currentScene.width ?? 20) / 2,
-														);
-														const cy = Math.floor(
-															(currentScene.height ?? 20) / 2,
-														);
+										</div>
+									)}
+									<div className="flex-1 overflow-y-auto px-4 py-3">
+										<ProtocolWardenTools
+											campaignId={campaignId || ""}
+											onRoll={vttRealtime.rollAndBroadcast}
+											customAssets={customAssets}
+											onUploadAsset={uploadCustomAsset}
+											onDeleteAsset={deleteCustomAsset}
+											onChangeMap={(url, name) => {
+												if (currentScene) {
+													// Use the same field name the scene type + Pixi renderer read
+													// (VTTScene.backgroundImage). Reset scale/offset so the new
+													// map renders centered and unscaled, matching the upload path.
+													const nextScene: VTTScene = {
+														...currentScene,
+														backgroundImage: url,
+														backgroundScale:
+															DEFAULT_SCENE_SETTINGS.backgroundScale,
+														backgroundOffsetX:
+															DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
+														backgroundOffsetY:
+															DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
+														name: name || currentScene.name,
+													};
+													updateScene(nextScene);
+													vttRealtime.broadcastSceneSync(
+														upsertVttScene(scenes, nextScene),
+														getPersistedSceneId(nextScene.id),
+													);
+												}
+											}}
+											onAddToken={(t: VTTTokenPayload) => {
+												if (currentScene) {
+													const newToken = {
+														...t,
+														id: t.id || createVttTokenInstanceId(),
+													} as PlacedToken;
+													updateScene({
+														tokens: [...(currentScene.tokens || []), newToken],
+													});
+													vttRealtime.broadcastTokenAdd(newToken);
+												}
+											}}
+											onAddEffect={(e: VTTEffectPayload) => {
+												if (!currentScene) return;
+												const cx = Math.floor((currentScene.width ?? 20) / 2);
+												const cy = Math.floor((currentScene.height ?? 20) / 2);
 
-														if (e.type === "magic" || e.type === "image") {
-															const newToken = {
-																id: e.id || createVttTokenInstanceId(),
-																name: e.name || "Effect",
-																tokenType: "effect",
-																imageUrl: e.imageUrl,
-																x: e.x ?? cx,
-																y: e.y ?? cy,
-																size: "large",
-																color: e.color || "#ffffff",
-																rotation: 0,
-																layer: 2,
-																locked: false,
-																visible: true,
-																render: {
-																	mode: "overlay",
-																	blendMode: "screen",
-																	opacity: 0.8,
-																},
-															} as PlacedToken;
-															updateScene({
-																tokens: [
-																	...(currentScene.tokens || []),
-																	newToken,
-																],
-															});
-															vttRealtime.broadcastTokenAdd(newToken);
-														} else if (
-															e.type === "light" ||
-															e.type === "dark"
-														) {
-															const lightRadius = e.radius || 10;
-															const newLight: LightSource = {
-																id: e.id || `light-${Date.now()}`,
-																x: e.x ?? cx,
-																y: e.y ?? cy,
-																brightRadius: Math.floor(lightRadius * 0.6),
-																dimRadius: lightRadius,
-																color: e.color || "#ffffff",
-																intensity: e.type === "dark" ? 0 : 0.8,
-																type: e.type === "dark" ? "ambient" : "torch",
-															};
-															const nextScene = {
-																...currentScene,
-																lights: [
-																	...(currentScene.lights || []),
-																	newLight,
-																],
-															};
-															updateScene(nextScene);
-															vttRealtime.broadcastSceneSync(
-																upsertVttScene(scenes, nextScene),
-																getPersistedSceneId(nextScene.id),
-															);
-														} else if (e.type === "terrain") {
-															const terrainCenter = {
-																x: e.x ?? cx,
-																y: e.y ?? cy,
-															};
-															const terrainRadius = e.radius || 8;
-															const newTerrain: TerrainZone = {
-																id: e.id || `terrain-${Date.now()}`,
-																type: "difficult",
-																vertices: [
-																	{
-																		x: terrainCenter.x - terrainRadius,
-																		y: terrainCenter.y - terrainRadius,
-																	},
-																	{
-																		x: terrainCenter.x + terrainRadius,
-																		y: terrainCenter.y - terrainRadius,
-																	},
-																	{
-																		x: terrainCenter.x + terrainRadius,
-																		y: terrainCenter.y + terrainRadius,
-																	},
-																	{
-																		x: terrainCenter.x - terrainRadius,
-																		y: terrainCenter.y + terrainRadius,
-																	},
-																],
-																movementCost: 2,
-																fillColor: e.color || "rgba(139,90,43,0.25)",
-																label: e.name || "Difficult Terrain",
-																visible: true,
-															};
-															const nextScene = {
-																...currentScene,
-																terrain: [
-																	...(currentScene.terrain || []),
-																	newTerrain,
-																],
-															};
-															updateScene(nextScene);
-															vttRealtime.broadcastSceneSync(
-																upsertVttScene(scenes, nextScene),
-																getPersistedSceneId(nextScene.id),
-															);
-														} else if (e.type === "ambient") {
-															const newAmbient: AmbientSoundZone = {
-																id: e.id || `ambient-${Date.now()}`,
-																label: e.name || "Ambient",
-																audioUrl:
-																	"library:" +
-																	(e.name || "")
-																		.toLowerCase()
-																		.replace(/\s/g, "-"),
-																x: e.x ?? cx,
-																y: e.y ?? cy,
-																shape: "circle",
-																radius: e.radius || 10,
-																volume: 0.8,
-																loop: true,
-																enabled: true,
-																gmOnly: true,
-																walledOcclusion: false,
-																falloff: "linear",
-																category: "ambient",
-															};
-															const nextScene = {
-																...currentScene,
-																ambientSounds: [
-																	...(currentScene.ambientSounds || []),
-																	newAmbient,
-																],
-															};
-															updateScene(nextScene);
-															vttRealtime.broadcastSceneSync(
-																upsertVttScene(scenes, nextScene),
-																getPersistedSceneId(nextScene.id),
-															);
-														}
-													}}
-													onShareHandout={(url: string, name?: string) => {
-														vttRealtime.rollAndBroadcast(
-															`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
-															"wardenroll",
-														);
-													}}
-													onPlaySound={(soundId) => {
-														vttRealtime.broadcastAudioSync(
-															"play_sound",
-															soundId,
-														);
-														toast({
-															title: "Sound Played",
-															description: `Playing ${soundId} sound effect`,
-														});
-													}}
-													onMusicChange={(musicId) => {
-														if (musicId === "stop") {
-															syncLocalSceneMusic({
-																musicMood: null,
-																musicAutoplay: false,
-															});
-															updateScene({
-																musicMood: null,
-																musicAutoplay: false,
-															});
-															vttRealtime.broadcastAudioSync(
-																"music_stop",
-																"stop",
-															);
-															toast({ title: "Music Stopped" });
-														} else {
-															syncLocalSceneMusic({
-																musicMood: musicId as MusicMood,
-																musicAutoplay: true,
-															});
-															updateScene({
-																musicMood: musicId as MusicMood,
-																musicAutoplay: true,
-															});
-															vttRealtime.broadcastAudioSync(
-																"music_change",
-																musicId,
-															);
-															toast({
-																title: "Music Changed",
-																description: `Playing ${musicId} ambient music`,
-															});
-														}
-													}}
-												/>
-											</div>
-										</SheetContent>
-									</Sheet>
-								)}
+												if (e.type === "magic" || e.type === "image") {
+													const newToken = {
+														id: e.id || createVttTokenInstanceId(),
+														name: e.name || "Effect",
+														tokenType: "effect",
+														imageUrl: e.imageUrl,
+														x: e.x ?? cx,
+														y: e.y ?? cy,
+														size: "large",
+														color: e.color || "#ffffff",
+														rotation: 0,
+														layer: 2,
+														locked: false,
+														visible: true,
+														render: {
+															mode: "overlay",
+															blendMode: "screen",
+															opacity: 0.8,
+														},
+													} as PlacedToken;
+													updateScene({
+														tokens: [...(currentScene.tokens || []), newToken],
+													});
+													vttRealtime.broadcastTokenAdd(newToken);
+												} else if (e.type === "light" || e.type === "dark") {
+													const lightRadius = e.radius || 10;
+													const newLight: LightSource = {
+														id: e.id || `light-${Date.now()}`,
+														x: e.x ?? cx,
+														y: e.y ?? cy,
+														brightRadius: Math.floor(lightRadius * 0.6),
+														dimRadius: lightRadius,
+														color: e.color || "#ffffff",
+														intensity: e.type === "dark" ? 0 : 0.8,
+														type: e.type === "dark" ? "ambient" : "torch",
+													};
+													const nextScene = {
+														...currentScene,
+														lights: [...(currentScene.lights || []), newLight],
+													};
+													updateScene(nextScene);
+													vttRealtime.broadcastSceneSync(
+														upsertVttScene(scenes, nextScene),
+														getPersistedSceneId(nextScene.id),
+													);
+												} else if (e.type === "terrain") {
+													const terrainCenter = {
+														x: e.x ?? cx,
+														y: e.y ?? cy,
+													};
+													const terrainRadius = e.radius || 8;
+													const newTerrain: TerrainZone = {
+														id: e.id || `terrain-${Date.now()}`,
+														type: "difficult",
+														vertices: [
+															{
+																x: terrainCenter.x - terrainRadius,
+																y: terrainCenter.y - terrainRadius,
+															},
+															{
+																x: terrainCenter.x + terrainRadius,
+																y: terrainCenter.y - terrainRadius,
+															},
+															{
+																x: terrainCenter.x + terrainRadius,
+																y: terrainCenter.y + terrainRadius,
+															},
+															{
+																x: terrainCenter.x - terrainRadius,
+																y: terrainCenter.y + terrainRadius,
+															},
+														],
+														movementCost: 2,
+														fillColor: e.color || "rgba(139,90,43,0.25)",
+														label: e.name || "Difficult Terrain",
+														visible: true,
+													};
+													const nextScene = {
+														...currentScene,
+														terrain: [
+															...(currentScene.terrain || []),
+															newTerrain,
+														],
+													};
+													updateScene(nextScene);
+													vttRealtime.broadcastSceneSync(
+														upsertVttScene(scenes, nextScene),
+														getPersistedSceneId(nextScene.id),
+													);
+												} else if (e.type === "ambient") {
+													const newAmbient: AmbientSoundZone = {
+														id: e.id || `ambient-${Date.now()}`,
+														label: e.name || "Ambient",
+														audioUrl:
+															"library:" +
+															(e.name || "").toLowerCase().replace(/\s/g, "-"),
+														x: e.x ?? cx,
+														y: e.y ?? cy,
+														shape: "circle",
+														radius: e.radius || 10,
+														volume: 0.8,
+														loop: true,
+														enabled: true,
+														gmOnly: true,
+														walledOcclusion: false,
+														falloff: "linear",
+														category: "ambient",
+													};
+													const nextScene = {
+														...currentScene,
+														ambientSounds: [
+															...(currentScene.ambientSounds || []),
+															newAmbient,
+														],
+													};
+													updateScene(nextScene);
+													vttRealtime.broadcastSceneSync(
+														upsertVttScene(scenes, nextScene),
+														getPersistedSceneId(nextScene.id),
+													);
+												}
+											}}
+											onShareHandout={(url: string, name?: string) => {
+												vttRealtime.rollAndBroadcast(
+													`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
+													"wardenroll",
+												);
+											}}
+											onPlaySound={(soundId) => {
+												vttRealtime.broadcastAudioSync("play_sound", soundId);
+												toast({
+													title: "Sound Played",
+													description: `Playing ${soundId} sound effect`,
+												});
+											}}
+											onMusicChange={(musicId) => {
+												if (musicId === "stop") {
+													syncLocalSceneMusic({
+														musicMood: null,
+														musicAutoplay: false,
+													});
+													updateScene({
+														musicMood: null,
+														musicAutoplay: false,
+													});
+													vttRealtime.broadcastAudioSync("music_stop", "stop");
+													toast({ title: "Music Stopped" });
+												} else {
+													syncLocalSceneMusic({
+														musicMood: musicId as MusicMood,
+														musicAutoplay: true,
+													});
+													updateScene({
+														musicMood: musicId as MusicMood,
+														musicAutoplay: true,
+													});
+													vttRealtime.broadcastAudioSync(
+														"music_change",
+														musicId,
+													);
+													toast({
+														title: "Music Changed",
+														description: `Playing ${musicId} ambient music`,
+													});
+												}
+											}}
+										/>
+									</div>
+								</SheetContent>
+							</Sheet>
+						)}
 
-							{/* Right drawer — opens when a right-rail button selects a tab. */}
-							{isWarden && (
-								<VTTDrawer
-									side="right"
-									open={rightDrawerTab !== null}
-									onOpenChange={(o) => !o && setRightDrawerTab(null)}
-									title={
-										rightDrawerTab === "token"
-											? "Selected Token"
-											: rightDrawerTab === "initiative"
-												? "Initiative"
-												: rightDrawerTab === "chat"
-													? "Chat"
-													: rightDrawerTab === "dice"
-														? "Dice Roller"
-														: rightDrawerTab === "assets"
-															? "Asset Library"
-															: rightDrawerTab === "journal"
-																? "Journal"
-																: rightDrawerTab === "broadcast"
-																	? "Broadcast"
-																	: rightDrawerTab === "ai"
-																		? "AI Assistant"
+						{/* Right drawer — opens when a right-rail button selects a tab. */}
+						{isWarden && (
+							<VTTDrawer
+								side="right"
+								open={rightDrawerTab !== null}
+								onOpenChange={(o) => !o && setRightDrawerTab(null)}
+								title={
+									rightDrawerTab === "token"
+										? "Selected Token"
+										: rightDrawerTab === "initiative"
+											? "Initiative"
+											: rightDrawerTab === "chat"
+												? "Chat"
+												: rightDrawerTab === "dice"
+													? "Dice Roller"
+													: rightDrawerTab === "assets"
+														? "Asset Library"
+														: rightDrawerTab === "journal"
+															? "Journal"
+															: rightDrawerTab === "broadcast"
+																? "Broadcast"
+																: rightDrawerTab === "ai"
+																	? "AI Assistant"
+																	: rightDrawerTab === "log"
+																		? "Game Log"
 																		: "Panel"
-									}
-								>
+								}
+							>
 								{activeToken && (
 									<AscendantWindow title="ACTIVE TOKEN" density="compact">
 										<div className="space-y-3 text-xs">
@@ -5263,7 +5471,10 @@ const VTTEnhanced = () => {
 														setDamageMode(value)
 													}
 												>
-													<SelectTrigger id="damage-mode" className="col-span-3">
+													<SelectTrigger
+														id="damage-mode"
+														className="col-span-3"
+													>
 														<SelectValue />
 													</SelectTrigger>
 													<SelectContent>
@@ -5298,7 +5509,10 @@ const VTTEnhanced = () => {
 													}
 													disabled={damageMode === "raw"}
 												>
-													<SelectTrigger id="damage-type" className="col-span-3">
+													<SelectTrigger
+														id="damage-type"
+														className="col-span-3"
+													>
 														<SelectValue />
 													</SelectTrigger>
 													<SelectContent>
@@ -5320,23 +5534,25 @@ const VTTEnhanced = () => {
 												{activeCharacter && (
 													<>
 														<p>
-															Resistances: {activeCharacter.resistances?.join(", ") || "None"}
+															Resistances:{" "}
+															{activeCharacter.resistances?.join(", ") ||
+																"None"}
 														</p>
 														<p>
-															Immunities: {activeCharacter.immunities?.join(", ") || "None"}
+															Immunities:{" "}
+															{activeCharacter.immunities?.join(", ") || "None"}
 														</p>
 														<p>
-															Vulnerabilities: {activeCharacter.vulnerabilities?.join(", ") || "None"}
+															Vulnerabilities:{" "}
+															{activeCharacter.vulnerabilities?.join(", ") ||
+																"None"}
 														</p>
 													</>
 												)}
 											</div>
 										</div>
 										<DialogFooter>
-											<Button
-												variant="outline"
-												onClick={resetDamageDialog}
-											>
+											<Button variant="outline" onClick={resetDamageDialog}>
 												Cancel
 											</Button>
 											<Button onClick={applyDamageToActiveToken}>
@@ -5412,6 +5628,14 @@ const VTTEnhanced = () => {
 											<BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
 											<span className="hidden sm:inline">Journal</span>
 											<span className="sm:hidden">Journal</span>
+										</TabsTrigger>
+										<TabsTrigger
+											value="log"
+											className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+										>
+											<Dice6 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+											<span className="hidden sm:inline">Log</span>
+											<span className="sm:hidden">Log</span>
 										</TabsTrigger>
 									</TabsList>
 
@@ -6035,545 +6259,555 @@ const VTTEnhanced = () => {
 									<TabsContent value="ai" className="space-y-2">
 										<DirectiveLattice />
 									</TabsContent>
-								</Tabs>
-								</VTTDrawer>
-							)}
-						</div>
 
-						{/* Mobile bottom tab bar (Warden only). */}
-						{isMobile && isWarden && (
-							<>
-						<div className="vtt-mobile-toolbar">
-							{(
-								[
-									{ key: "select", label: "Select", Icon: MousePointer2 },
-									{ key: "fog", label: "Fog", Icon: Cloud },
-									{ key: "draw", label: "Draw", Icon: Pencil },
-									{ key: "measure", label: "Measure", Icon: Ruler },
-								] as const
-							).map((tool) =>
-								selectedTool === tool.key ? (
+									<TabsContent value="log" className="space-y-2">
+										{campaignId ? (
+											<CampaignRollFeed campaignId={campaignId} />
+										) : (
+											<AscendantWindow title="GAME LOG" density="compact">
+												<AscendantText className="block text-xs text-foreground/70">
+													Game Log is only available inside a campaign session.
+												</AscendantText>
+											</AscendantWindow>
+										)}
+									</TabsContent>
+								</Tabs>
+							</VTTDrawer>
+						)}
+					</div>
+
+					{/* Mobile bottom tab bar (Warden only). */}
+					{isMobile && isWarden && (
+						<>
+							<div className="vtt-mobile-toolbar">
+								{(
+									[
+										{ key: "select", label: "Select", Icon: MousePointer2 },
+										{ key: "fog", label: "Fog", Icon: Cloud },
+										{ key: "draw", label: "Draw", Icon: Pencil },
+										{ key: "measure", label: "Measure", Icon: Ruler },
+									] as const
+								).map((tool) =>
+									selectedTool === tool.key ? (
+										<button
+											type="button"
+											key={tool.key}
+											className="inline-flex items-center justify-center bg-primary/20 border-primary"
+											onClick={() => {
+												setSelectedTool(tool.key);
+												setMobilePanel(null);
+											}}
+											aria-label={`${tool.label} tool`}
+											aria-pressed="true"
+											title={tool.label}
+										>
+											<tool.Icon className="w-3.5 h-3.5" aria-hidden />
+											<span>{tool.label}</span>
+										</button>
+									) : (
+										<button
+											type="button"
+											key={tool.key}
+											className="inline-flex items-center justify-center border-border hover:bg-muted/50"
+											onClick={() => {
+												setSelectedTool(tool.key);
+												setMobilePanel(null);
+											}}
+											aria-label={`${tool.label} tool`}
+											aria-pressed="false"
+											title={tool.label}
+										>
+											<tool.Icon className="w-3.5 h-3.5" aria-hidden />
+											<span>{tool.label}</span>
+										</button>
+									),
+								)}
+								<div className="w-px h-8 bg-border/30 mx-1" />
+								{mobilePanel === "tools" ? (
 									<button
 										type="button"
-										key={tool.key}
-										className="inline-flex items-center justify-center bg-primary/20 border-primary"
-										onClick={() => {
-											setSelectedTool(tool.key);
-											setMobilePanel(null);
-										}}
-										aria-label={`${tool.label} tool`}
+										className="active"
+										onClick={() => setMobilePanel(null)}
 										aria-pressed="true"
-										title={tool.label}
 									>
-										<tool.Icon className="w-3.5 h-3.5" aria-hidden />
-										<span>{tool.label}</span>
+										Tools
 									</button>
 								) : (
 									<button
 										type="button"
-										key={tool.key}
-										className="inline-flex items-center justify-center border-border hover:bg-muted/50"
-										onClick={() => {
-											setSelectedTool(tool.key);
-											setMobilePanel(null);
-										}}
-										aria-label={`${tool.label} tool`}
+										className=""
+										onClick={() => setMobilePanel("tools")}
 										aria-pressed="false"
-										title={tool.label}
 									>
-										<tool.Icon className="w-3.5 h-3.5" aria-hidden />
-										<span>{tool.label}</span>
+										Tools
 									</button>
-								),
-							)}
-							<div className="w-px h-8 bg-border/30 mx-1" />
-							{mobilePanel === "tools" ? (
-								<button
-									type="button"
-									className="active"
-									onClick={() => setMobilePanel(null)}
-									aria-pressed="true"
-								>
-									Tools
-								</button>
-							) : (
-								<button
-									type="button"
-									className=""
-									onClick={() => setMobilePanel("tools")}
-									aria-pressed="false"
-								>
-									Tools
-								</button>
-							)}
-							{mobilePanel === "sidebar" ? (
-								<button
-									type="button"
-									className="active"
-									onClick={() => setMobilePanel(null)}
-									aria-pressed="true"
-								>
-									Panel
-								</button>
-							) : (
-								<button
-									type="button"
-									className=""
-									onClick={() => setMobilePanel("sidebar")}
-									aria-pressed="false"
-								>
-									Panel
-								</button>
-							)}
-							<div className="w-px h-8 bg-border/30 mx-1" />
-							<button
-								type="button"
-								onClick={() => handleRequestZoom(zoom - 0.15)}
-								aria-label="Zoom out"
-							>
-								−
-							</button>
-							<span className="text-[10px] text-foreground/70 min-w-[32px] text-center">
-								{Math.round(zoom * 100)}%
-							</span>
-							<button
-								type="button"
-								onClick={() => handleRequestZoom(zoom + 0.15)}
-							>
-								+
-							</button>
-						</div>
-
-						<div className={cn("vtt-bottom-sheet", mobilePanel && "open")}>
-							<div className="vtt-bottom-sheet-handle" />
-							<div className="vtt-bottom-sheet-content">
-								{mobilePanel === "tools" && (
-									<div className="space-y-3">
-										<h3 className="text-xs font-bold uppercase tracking-wider text-foreground/70">
-											Controls
-										</h3>
-										<div className="flex items-center gap-2">
-											<input
-												type="checkbox"
-												checked={showGrid}
-												onChange={(e) => setShowGrid(e.target.checked)}
-												className="w-5 h-5"
-												id="mobileGrid"
-											/>
-											<label htmlFor="mobileGrid" className="text-sm">
-												Grid
-											</label>
-											<input
-												type="checkbox"
-												checked={gridSnap}
-												onChange={(e) => setGridSnap(e.target.checked)}
-												className="w-5 h-5 ml-4"
-												id="mobileSnap"
-											/>
-											<label htmlFor="mobileSnap" className="text-sm">
-												Snap
-											</label>
-										</div>
-										{selectedTool === "measure" && (
-											<div className="space-y-2">
-												<h4 className="text-xs font-semibold text-foreground/70">
-													AoE Shape
-												</h4>
-												<div className="grid grid-cols-4 gap-2">
-													{(["line", "circle", "cone", "cube"] as const).map(
-														(s) => (
-															<button
-																type="button"
-																key={s}
-																onClick={() => setMeasureShape(s)}
-																className={cn(
-																	"p-2 rounded border text-center text-sm",
-																	measureShape === s
-																		? "bg-cyan-500/20 border-cyan-500"
-																		: "border-border",
-																)}
-															>
-																{s}
-															</button>
-														),
-													)}
-												</div>
-											</div>
-										)}
-										<div className="space-y-1">
-											<h4 className="text-xs font-semibold text-foreground/70">
-												Scenes
-											</h4>
-											{scenes.map((scene) => (
-												<div key={scene.id} className="flex items-center gap-2">
-													<button
-														type="button"
-														onClick={() => {
-															setCurrentScene(scene);
-															vttRealtime.broadcastSceneChange(scene.id);
-															setMobilePanel(null);
-														}}
-														className={cn(
-															"flex-1 text-left p-2 rounded text-sm",
-															currentScene?.id === scene.id
-																? "bg-primary/20 border border-primary"
-																: "border border-border",
-														)}
-													>
-														{scene.name}
-													</button>
-													<button
-														type="button"
-														onClick={() => {
-															void handleDeleteScene(scene);
-														}}
-														className="p-2 rounded border border-destructive/30 text-destructive hover:bg-destructive/10"
-														aria-label={`Delete ${scene.name}`}
-														title="Delete scene"
-													>
-														<X className="w-3.5 h-3.5" />
-													</button>
-												</div>
-											))}
-										</div>
-									</div>
 								)}
-								{mobilePanel === "sidebar" && (
-									<Tabs defaultValue="chat" className="w-full">
-										<TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-card border border-border rounded-lg shadow-sm mb-2">
-											<TabsTrigger
-												value="chat"
-												className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-											>
-												<MessageSquare className="w-3.5 h-3.5" />
-												<span className="hidden xs:inline">Chat</span>
-												<span className="xs:hidden">C</span>
-											</TabsTrigger>
-											<TabsTrigger
-												value="init"
-												className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-											>
-												<Clock className="w-3.5 h-3.5" />
-												<span className="hidden xs:inline">Init</span>
-												<span className="xs:hidden">I</span>
-											</TabsTrigger>
-											<TabsTrigger
-												value="dice"
-												className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-											>
-												<Dice6 className="w-3.5 h-3.5" />
-												<span className="hidden xs:inline">Dice</span>
-												<span className="xs:hidden">D</span>
-											</TabsTrigger>
-											<TabsTrigger
-												value="assets"
-												className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-											>
-												<ImageIcon className="w-3.5 h-3.5" />
-												<span className="hidden xs:inline">Assets</span>
-												<span className="xs:hidden">A</span>
-											</TabsTrigger>
-										</TabsList>
-										<TabsContent value="chat">
-											<div className="space-y-2 max-h-[40vh] overflow-y-auto">
-												{vttRealtime.chatMessages.slice(-20).map((msg) => (
-													<div
-														key={msg.id}
-														className="text-xs p-1.5 rounded border border-border/40 bg-muted/10"
-													>
-														<span className="font-semibold">
-															{msg.userName}:{" "}
-														</span>
-														{msg.diceDisplayText ? (
-															<span>
-																<DiceDisplayText text={msg.diceDisplayText} />
-															</span>
-														) : (
-															msg.message
-														)}
-													</div>
-												))}
-											</div>
-											<div className="flex gap-1 mt-2">
-												<Input
-													value={newMessage}
-													onChange={(e) => setNewMessage(e.target.value)}
-													placeholder="Type..."
-													className="h-9 text-sm"
-													onKeyPress={(e) => {
-														if (e.key === "Enter" && newMessage.trim()) {
-															vttRealtime.processChat(newMessage);
-															setNewMessage("");
-														}
-													}}
+								{mobilePanel === "sidebar" ? (
+									<button
+										type="button"
+										className="active"
+										onClick={() => setMobilePanel(null)}
+										aria-pressed="true"
+									>
+										Panel
+									</button>
+								) : (
+									<button
+										type="button"
+										className=""
+										onClick={() => setMobilePanel("sidebar")}
+										aria-pressed="false"
+									>
+										Panel
+									</button>
+								)}
+								<div className="w-px h-8 bg-border/30 mx-1" />
+								<button
+									type="button"
+									onClick={() => handleRequestZoom(zoom - 0.15)}
+									aria-label="Zoom out"
+								>
+									−
+								</button>
+								<span className="text-[10px] text-foreground/70 min-w-[32px] text-center">
+									{Math.round(zoom * 100)}%
+								</span>
+								<button
+									type="button"
+									onClick={() => handleRequestZoom(zoom + 0.15)}
+								>
+									+
+								</button>
+							</div>
+
+							<div className={cn("vtt-bottom-sheet", mobilePanel && "open")}>
+								<div className="vtt-bottom-sheet-handle" />
+								<div className="vtt-bottom-sheet-content">
+									{mobilePanel === "tools" && (
+										<div className="space-y-3">
+											<h3 className="text-xs font-bold uppercase tracking-wider text-foreground/70">
+												Controls
+											</h3>
+											<div className="flex items-center gap-2">
+												<input
+													type="checkbox"
+													checked={showGrid}
+													onChange={(e) => setShowGrid(e.target.checked)}
+													className="w-5 h-5"
+													id="mobileGrid"
 												/>
-												<Button
-													size="sm"
-													className="h-9 px-3"
-													onClick={() => {
-														if (newMessage.trim()) {
-															vttRealtime.processChat(newMessage);
-															setNewMessage("");
-														}
-													}}
-												>
-													Send
-												</Button>
+												<label htmlFor="mobileGrid" className="text-sm">
+													Grid
+												</label>
+												<input
+													type="checkbox"
+													checked={gridSnap}
+													onChange={(e) => setGridSnap(e.target.checked)}
+													className="w-5 h-5 ml-4"
+													id="mobileSnap"
+												/>
+												<label htmlFor="mobileSnap" className="text-sm">
+													Snap
+												</label>
 											</div>
-										</TabsContent>
-										<TabsContent value="init">
-											<div className="space-y-1 max-h-[40vh] overflow-y-auto">
-												{tokensInInitiative.map((token, idx) => (
-													<div
-														key={token.id}
-														className={cn(
-															"flex items-center gap-2 p-2 rounded text-sm",
-															idx ===
-																vttRealtime.initiativeState.currentTurnIndex
-																? "bg-amber-500/20 border border-amber-500"
-																: "border border-border/40",
+											{selectedTool === "measure" && (
+												<div className="space-y-2">
+													<h4 className="text-xs font-semibold text-foreground/70">
+														AoE Shape
+													</h4>
+													<div className="grid grid-cols-4 gap-2">
+														{(["line", "circle", "cone", "cube"] as const).map(
+															(s) => (
+																<button
+																	type="button"
+																	key={s}
+																	onClick={() => setMeasureShape(s)}
+																	className={cn(
+																		"p-2 rounded border text-center text-sm",
+																		measureShape === s
+																			? "bg-cyan-500/20 border-cyan-500"
+																			: "border-border",
+																	)}
+																>
+																	{s}
+																</button>
+															),
 														)}
+													</div>
+												</div>
+											)}
+											<div className="space-y-1">
+												<h4 className="text-xs font-semibold text-foreground/70">
+													Scenes
+												</h4>
+												{scenes.map((scene) => (
+													<div
+														key={scene.id}
+														className="flex items-center gap-2"
 													>
-														<span className="truncate flex-1">
-															{token.name}
-														</span>
-														<span className="font-bold">
-															{token.initiative}
-														</span>
+														<button
+															type="button"
+															onClick={() => {
+																setCurrentScene(scene);
+																vttRealtime.broadcastSceneChange(scene.id);
+																setMobilePanel(null);
+															}}
+															className={cn(
+																"flex-1 text-left p-2 rounded text-sm",
+																currentScene?.id === scene.id
+																	? "bg-primary/20 border border-primary"
+																	: "border border-border",
+															)}
+														>
+															{scene.name}
+														</button>
+														<button
+															type="button"
+															onClick={() => {
+																void handleDeleteScene(scene);
+															}}
+															className="p-2 rounded border border-destructive/30 text-destructive hover:bg-destructive/10"
+															aria-label={`Delete ${scene.name}`}
+															title="Delete scene"
+														>
+															<X className="w-3.5 h-3.5" />
+														</button>
 													</div>
 												))}
 											</div>
-										</TabsContent>
-										<TabsContent value="dice">
-											<div className="grid grid-cols-4 gap-2">
-												{[
-													"1d4",
-													"1d6",
-													"1d8",
-													"1d10",
-													"1d12",
-													"1d20",
-													"2d6",
-													"1d100",
-												].map((formula) => (
+										</div>
+									)}
+									{mobilePanel === "sidebar" && (
+										<Tabs defaultValue="chat" className="w-full">
+											<TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-card border border-border rounded-lg shadow-sm mb-2">
+												<TabsTrigger
+													value="chat"
+													className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+												>
+													<MessageSquare className="w-3.5 h-3.5" />
+													<span className="hidden xs:inline">Chat</span>
+													<span className="xs:hidden">C</span>
+												</TabsTrigger>
+												<TabsTrigger
+													value="init"
+													className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+												>
+													<Clock className="w-3.5 h-3.5" />
+													<span className="hidden xs:inline">Init</span>
+													<span className="xs:hidden">I</span>
+												</TabsTrigger>
+												<TabsTrigger
+													value="dice"
+													className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+												>
+													<Dice6 className="w-3.5 h-3.5" />
+													<span className="hidden xs:inline">Dice</span>
+													<span className="xs:hidden">D</span>
+												</TabsTrigger>
+												<TabsTrigger
+													value="assets"
+													className="gap-1.5 text-xs py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+												>
+													<ImageIcon className="w-3.5 h-3.5" />
+													<span className="hidden xs:inline">Assets</span>
+													<span className="xs:hidden">A</span>
+												</TabsTrigger>
+											</TabsList>
+											<TabsContent value="chat">
+												<div className="space-y-2 max-h-[40vh] overflow-y-auto">
+													{vttRealtime.chatMessages.slice(-20).map((msg) => (
+														<div
+															key={msg.id}
+															className="text-xs p-1.5 rounded border border-border/40 bg-muted/10"
+														>
+															<span className="font-semibold">
+																{msg.userName}:{" "}
+															</span>
+															{msg.diceDisplayText ? (
+																<span>
+																	<DiceDisplayText text={msg.diceDisplayText} />
+																</span>
+															) : (
+																msg.message
+															)}
+														</div>
+													))}
+												</div>
+												<div className="flex gap-1 mt-2">
+													<Input
+														value={newMessage}
+														onChange={(e) => setNewMessage(e.target.value)}
+														placeholder="Type..."
+														className="h-9 text-sm"
+														onKeyPress={(e) => {
+															if (e.key === "Enter" && newMessage.trim()) {
+																vttRealtime.processChat(newMessage);
+																setNewMessage("");
+															}
+														}}
+													/>
 													<Button
-														key={formula}
-														variant="outline"
 														size="sm"
-														className="text-xs"
-														onClick={() =>
-															vttRealtime.rollAndBroadcast(formula)
-														}
+														className="h-9 px-3"
+														onClick={() => {
+															if (newMessage.trim()) {
+																vttRealtime.processChat(newMessage);
+																setNewMessage("");
+															}
+														}}
 													>
-														{formula}
+														Send
 													</Button>
-												))}
-											</div>
-										</TabsContent>
-										<TabsContent value="assets">
-											<VTTAssetBrowser
-												campaignId={campaignId}
-												customAssets={customAssets}
-												onUploadAsset={uploadCustomAsset}
-												onDeleteAsset={deleteCustomAsset}
-												onUseAsMap={(imageUrl, name) => {
-													if (currentScene) {
-														updateScene({
-															backgroundImage: imageUrl,
-															name: name || currentScene.name,
+												</div>
+											</TabsContent>
+											<TabsContent value="init">
+												<div className="space-y-1 max-h-[40vh] overflow-y-auto">
+													{tokensInInitiative.map((token, idx) => (
+														<div
+															key={token.id}
+															className={cn(
+																"flex items-center gap-2 p-2 rounded text-sm",
+																idx ===
+																	vttRealtime.initiativeState.currentTurnIndex
+																	? "bg-amber-500/20 border border-amber-500"
+																	: "border border-border/40",
+															)}
+														>
+															<span className="truncate flex-1">
+																{token.name}
+															</span>
+															<span className="font-bold">
+																{token.initiative}
+															</span>
+														</div>
+													))}
+												</div>
+											</TabsContent>
+											<TabsContent value="dice">
+												<div className="grid grid-cols-4 gap-2">
+													{[
+														"1d4",
+														"1d6",
+														"1d8",
+														"1d10",
+														"1d12",
+														"1d20",
+														"2d6",
+														"1d100",
+													].map((formula) => (
+														<Button
+															key={formula}
+															variant="outline"
+															size="sm"
+															className="text-xs"
+															onClick={() =>
+																vttRealtime.rollAndBroadcast(formula)
+															}
+														>
+															{formula}
+														</Button>
+													))}
+												</div>
+											</TabsContent>
+											<TabsContent value="assets">
+												<VTTAssetBrowser
+													campaignId={campaignId}
+													customAssets={customAssets}
+													onUploadAsset={uploadCustomAsset}
+													onDeleteAsset={deleteCustomAsset}
+													onUseAsMap={(imageUrl, name) => {
+														if (currentScene) {
+															updateScene({
+																backgroundImage: imageUrl,
+																name: name || currentScene.name,
+															});
+															setMobilePanel(null);
+														}
+													}}
+													onUseAsToken={(imageUrl, name) => {
+														if (!currentScene) return;
+														appendToken({
+															id: createVttTokenInstanceId(),
+															name: name || "Token",
+															imageUrl,
+															size: "medium",
+															x: Math.floor((currentScene.width ?? 20) / 2),
+															y: Math.floor((currentScene.height ?? 20) / 2),
+															rotation: 0,
+															layer: 1,
+															locked: false,
+															visible: true,
 														});
 														setMobilePanel(null);
-													}
-												}}
-												onUseAsToken={(imageUrl, name) => {
-													if (!currentScene) return;
-													appendToken({
-														id: createVttTokenInstanceId(),
-														name: name || "Token",
-														imageUrl,
-														size: "medium",
-														x: Math.floor((currentScene.width ?? 20) / 2),
-														y: Math.floor((currentScene.height ?? 20) / 2),
-														rotation: 0,
-														layer: 1,
-														locked: false,
-														visible: true,
-													});
-													setMobilePanel(null);
-												}}
-												onUseAsEffect={(imageUrl, name) => {
-													if (!currentScene) return;
-													appendToken({
-														id: createVttTokenInstanceId(),
-														name: name || "Effect",
-														imageUrl,
-														size: "large",
-														tokenType: "effect",
-														render: {
-															mode: "overlay" as const,
-															blendMode: "screen" as const,
-															opacity: 0.9,
-														},
-														x: Math.floor((currentScene.width ?? 20) / 2),
-														y: Math.floor((currentScene.height ?? 20) / 2),
-														rotation: 0,
-														layer: 2,
-														locked: false,
-														visible: true,
-													});
-													setMobilePanel(null);
-												}}
-												onShareHandout={(imageUrl, name) => {
-													vttRealtime.shareHandout(name, imageUrl, "");
-													setMobilePanel(null);
-												}}
-											/>
-										</TabsContent>
-									</Tabs>
-								)}
+													}}
+													onUseAsEffect={(imageUrl, name) => {
+														if (!currentScene) return;
+														appendToken({
+															id: createVttTokenInstanceId(),
+															name: name || "Effect",
+															imageUrl,
+															size: "large",
+															tokenType: "effect",
+															render: {
+																mode: "overlay" as const,
+																blendMode: "screen" as const,
+																opacity: 0.9,
+															},
+															x: Math.floor((currentScene.width ?? 20) / 2),
+															y: Math.floor((currentScene.height ?? 20) / 2),
+															rotation: 0,
+															layer: 2,
+															locked: false,
+															visible: true,
+														});
+														setMobilePanel(null);
+													}}
+													onShareHandout={(imageUrl, name) => {
+														vttRealtime.shareHandout(name, imageUrl, "");
+														setMobilePanel(null);
+													}}
+												/>
+											</TabsContent>
+										</Tabs>
+									)}
+								</div>
 							</div>
-						</div>
-					</>
-				)}
+						</>
+					)}
 				</div>
 			)}
 
-				{/* Token Context Menu */}
-				{contextMenu &&
-					(() => {
-						const token = visibleTokens.find(
-							(t) => t.id === contextMenu.tokenId,
-						);
-						if (!token) return null;
-						return (
-							<>
+			{/* Token Context Menu */}
+			{contextMenu &&
+				(() => {
+					const token = visibleTokens.find((t) => t.id === contextMenu.tokenId);
+					if (!token) return null;
+					return (
+						<>
+							<button
+								type="button"
+								className="fixed inset-0 z-[99] appearance-none bg-transparent border-none cursor-default"
+								onClick={() => setContextMenu(null)}
+								aria-label="Close context menu"
+							/>
+							<DynamicStyle
+								className="vtt-context-menu"
+								vars={{
+									"--vtt-menu-x": `${contextMenu.x}px`,
+									"--vtt-menu-y": `${contextMenu.y}px`,
+								}}
+							>
 								<button
 									type="button"
-									className="fixed inset-0 z-[99] appearance-none bg-transparent border-none cursor-default"
-									onClick={() => setContextMenu(null)}
-									aria-label="Close context menu"
-								/>
-								<DynamicStyle
-									className="vtt-context-menu"
-									vars={{
-										"--vtt-menu-x": `${contextMenu.x}px`,
-										"--vtt-menu-y": `${contextMenu.y}px`,
+									onClick={() => {
+										setActiveTokenId(token.id);
+										setContextMenu(null);
 									}}
 								>
+									Select
+								</button>
+								{isWarden && (
 									<button
 										type="button"
 										onClick={() => {
-											setActiveTokenId(token.id);
+											updateToken(token.id, { locked: !token.locked });
 											setContextMenu(null);
 										}}
 									>
-										Select
+										{token.locked ? "Unlock" : "Lock"}
 									</button>
-									{isWarden && (
-										<button
-											type="button"
-											onClick={() => {
-												updateToken(token.id, { locked: !token.locked });
-												setContextMenu(null);
-											}}
-										>
-											{token.locked ? "Unlock" : "Lock"}
-										</button>
-									)}
-									{isWarden && (
-										<button
-											type="button"
-											onClick={() => {
-												updateToken(token.id, { visible: !token.visible });
-												setContextMenu(null);
-											}}
-										>
-											{token.visible ? "Hide" : "Show"}
-										</button>
-									)}
-									{token.characterId && (
-										<button
-											type="button"
-											onClick={() => {
-												window.open(
-													`/characters/${token.characterId}`,
-													"_blank",
-												);
-												setContextMenu(null);
-											}}
-										>
-											Open Sheet
-										</button>
-									)}
-									<div className="ctx-separator" />
-									{isWarden && (
-										<button
-											type="button"
-											className="ctx-danger"
-											onClick={() => {
-												removeToken(token.id);
-												setContextMenu(null);
-											}}
-										>
-											Delete
-										</button>
-									)}
-								</DynamicStyle>
-							</>
-						);
-					})()}
+								)}
+								{isWarden && (
+									<button
+										type="button"
+										onClick={() => {
+											updateToken(token.id, { visible: !token.visible });
+											setContextMenu(null);
+										}}
+									>
+										{token.visible ? "Hide" : "Show"}
+									</button>
+								)}
+								{token.characterId && (
+									<button
+										type="button"
+										onClick={() => {
+											window.open(`/characters/${token.characterId}`, "_blank");
+											setContextMenu(null);
+										}}
+									>
+										Open Sheet
+									</button>
+								)}
+								<div className="ctx-separator" />
+								{isWarden && (
+									<button
+										type="button"
+										className="ctx-danger"
+										onClick={() => {
+											removeToken(token.id);
+											setContextMenu(null);
+										}}
+									>
+										Delete
+									</button>
+								)}
+							</DynamicStyle>
+						</>
+					);
+				})()}
 
-				{/* Handout Share Popup Overlay */}
-				{vttRealtime.sharedHandout && (
-					<button
-						type="button"
-						className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm appearance-none border-none cursor-default w-full h-full"
-						onClick={vttRealtime.dismissHandout}
-						onKeyDown={(e) => {
-							if (e.key === "Escape") vttRealtime.dismissHandout();
-						}}
-						aria-label="Close handout"
+			{/* Handout Share Popup Overlay */}
+			{vttRealtime.sharedHandout && (
+				<button
+					type="button"
+					className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm appearance-none border-none cursor-default w-full h-full"
+					onClick={vttRealtime.dismissHandout}
+					onKeyDown={(e) => {
+						if (e.key === "Escape") vttRealtime.dismissHandout();
+					}}
+					aria-label="Close handout"
+				>
+					<div
+						className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full mx-4 p-6"
+						onClick={(e) => e.stopPropagation()}
+						onKeyDown={(e) => e.stopPropagation()}
+						role="dialog"
+						aria-label="Shared handout"
 					>
-						<div
-							className="bg-background border-2 border-primary rounded-lg shadow-2xl max-w-lg w-full mx-4 p-6"
-							onClick={(e) => e.stopPropagation()}
-							onKeyDown={(e) => e.stopPropagation()}
-							role="dialog"
-							aria-label="Shared handout"
-						>
-							<div className="flex items-center justify-between mb-4">
-								<h3 className="font-resurge text-lg font-bold gradient-text-shadow">
-									{vttRealtime.sharedHandout.title}
-								</h3>
-								<button
-									type="button"
-									onClick={vttRealtime.dismissHandout}
-									className="text-foreground/70 hover:text-foreground text-lg"
-								>
-									&times;
-								</button>
-							</div>
-							{vttRealtime.sharedHandout.imageUrl && (
-								<div className="mb-4 rounded-lg overflow-hidden border border-border">
-									<OptimizedImage
-										src={vttRealtime.sharedHandout.imageUrl}
-										alt={vttRealtime.sharedHandout.title}
-										className="w-full max-h-[400px] object-contain"
-										size="large"
-									/>
-								</div>
-							)}
-							{vttRealtime.sharedHandout.content && (
-								<div className="text-sm text-foreground/70 whitespace-pre-wrap max-h-48 overflow-y-auto">
-									{vttRealtime.sharedHandout.content}
-								</div>
-							)}
-							<div className="mt-3 text-xs text-foreground/70 text-right">
-								Shared by {vttRealtime.sharedHandout.sharedBy}
-							</div>
+						<div className="flex items-center justify-between mb-4">
+							<h3 className="font-resurge text-lg font-bold gradient-text-shadow">
+								{vttRealtime.sharedHandout.title}
+							</h3>
+							<button
+								type="button"
+								onClick={vttRealtime.dismissHandout}
+								className="text-foreground/70 hover:text-foreground text-lg"
+							>
+								&times;
+							</button>
 						</div>
-					</button>
-				)}
+						{vttRealtime.sharedHandout.imageUrl && (
+							<div className="mb-4 rounded-lg overflow-hidden border border-border">
+								<OptimizedImage
+									src={vttRealtime.sharedHandout.imageUrl}
+									alt={vttRealtime.sharedHandout.title}
+									className="w-full max-h-[400px] object-contain"
+									size="large"
+								/>
+							</div>
+						)}
+						{vttRealtime.sharedHandout.content && (
+							<div className="text-sm text-foreground/70 whitespace-pre-wrap max-h-48 overflow-y-auto">
+								{vttRealtime.sharedHandout.content}
+							</div>
+						)}
+						<div className="mt-3 text-xs text-foreground/70 text-right">
+							Shared by {vttRealtime.sharedHandout.sharedBy}
+						</div>
+					</div>
+				</button>
+			)}
 			{/* Shared 3D Dice Overlay (DDB parity) */}
 			<SharedDiceTray
 				roll={vttRealtime.sharedDiceRoll}

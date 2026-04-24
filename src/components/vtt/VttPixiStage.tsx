@@ -29,6 +29,10 @@ type PlacedToken = {
 	emoji?: string;
 	imageUrl?: string;
 	color?: string;
+	/** DDB-style explicit token border override (overrides owner default). */
+	borderColor?: string;
+	/** Shared group id used to move multiple tokens as a unit (Shift+G). */
+	groupId?: string;
 	size: "small" | "medium" | "large" | "huge";
 	x: number;
 	y: number;
@@ -36,6 +40,7 @@ type PlacedToken = {
 	layer: number;
 	locked: boolean;
 	visible: boolean;
+	characterId?: string;
 	hp?: number;
 	hp_current?: number;
 	maxHp?: number;
@@ -780,9 +785,14 @@ export function VttPixiStage({
 
 				const tokenBg = new Graphics();
 				if (!isOverlayToken) {
-					const borderColor = token.color
+					// DDB-style explicit border override wins over owner/default color.
+					const overrideBorderHex = token.borderColor
+						? Number(token.borderColor.replace("#", "0x"))
+						: null;
+					const ownerBorderHex = token.color
 						? Number(token.color.replace("#", "0x"))
 						: 0x3b82f6;
+					const borderColor = overrideBorderHex ?? ownerBorderHex;
 					tokenBg.circle(size / 2, size / 2, size / 2);
 					tokenBg.fill({
 						color: token.color
@@ -790,7 +800,11 @@ export function VttPixiStage({
 							: 0x000000,
 						alpha: token.color ? 0.25 : 0.12,
 					});
-					tokenBg.stroke({ width: 2, color: borderColor, alpha: 0.9 });
+					tokenBg.stroke({
+						width: overrideBorderHex !== null ? 3 : 2,
+						color: borderColor,
+						alpha: 0.9,
+					});
 					if (activeInitiativeTokenId === token.id) {
 						tokenBg.stroke({ width: 4, color: 0x10b981, alpha: 1 });
 						// Add a subtle glow for the active initiative token
@@ -1376,14 +1390,24 @@ export function VttPixiStage({
 		const handleWheel = (e: WheelEvent) => {
 			if (Math.abs(e.deltaY) < 1) return;
 
-			// Strictly restrict zoom to Ctrl+Wheel interactions
-			if (e.ctrlKey) {
-				e.preventDefault();
-				const direction = e.deltaY > 0 ? -1 : 1;
-				const nextZoom = Math.max(0.5, Math.min(2, zoom + direction * 0.1));
+			// Plain wheel zooms the canvas (DDB Maps / Foundry / pinch parity).
+			// Ctrl/Cmd+Wheel is also accepted for users used to the Roll20
+			// pattern. Panel scrolls are unaffected because this listener is
+			// scoped to the map container element.
+			e.preventDefault();
+			// deltaMode 0 = pixel, 1 = line, 2 = page. Normalize to a small
+			// per-notch zoom delta so trackpads and mice feel similar.
+			const normalized =
+				e.deltaMode === 0 ? e.deltaY / 100 : e.deltaMode === 1 ? e.deltaY / 3 : e.deltaY;
+			const direction = normalized > 0 ? -1 : 1;
+			const magnitude = e.ctrlKey || e.metaKey ? 0.2 : 0.1;
+			const nextZoom = Math.max(
+				0.5,
+				Math.min(2, zoom + direction * magnitude),
+			);
+			if (Math.abs(nextZoom - zoom) > 0.001) {
 				onRequestZoom(nextZoom);
 			}
-			// Otherwise standard behavior (allows scrolling if container is overflow-scroll)
 		};
 
 		container.addEventListener("wheel", handleWheel, { passive: false });

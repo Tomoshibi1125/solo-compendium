@@ -68,6 +68,10 @@ export interface VTTTokenInstance {
 	lightDimRadius?: number;
 	showNameplate?: boolean;
 	barVisibility?: string;
+	/** DDB-style token border color (overrides owner default). */
+	borderColor?: string;
+	/** Shared group id used to move multiple tokens together (Shift+G). */
+	groupId?: string;
 }
 
 export interface VTTAnnotation {

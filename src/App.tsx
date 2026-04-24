@@ -133,6 +133,9 @@ const AudioManagerWarden = lazy(
 );
 const VTTMap = lazy(() => import("./pages/warden-directives/VTTMap"));
 const VTTEnhanced = lazy(() => import("./pages/warden-directives/VTTEnhanced"));
+const VTTSpectator = lazy(
+	() => import("./pages/warden-directives/VTTSpectator"),
+);
 const VTTJournal = lazy(() => import("./pages/warden-directives/VTTJournal"));
 const PlayerMapView = lazy(() => import("./pages/player-tools/PlayerMapView"));
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
@@ -699,6 +702,14 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<VTTEnhanced />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/campaigns/:campaignId/vtt/spectate"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<VTTSpectator />
 						</Suspense>
 					}
 				/>

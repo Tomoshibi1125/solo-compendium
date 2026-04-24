@@ -7,15 +7,13 @@ import {
 	Dice6,
 	ImageIcon,
 	MessageSquare,
-	Minus,
-	Plus,
 	Send,
 	User as UserIcon,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { AscendantText, RiftHeading } from "@/components/ui/AscendantText";
+import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -31,12 +29,15 @@ import {
 	VTTIconRail,
 	type VTTIconRailItem,
 } from "@/components/vtt/VTTIconRail";
+import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
+import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
 import type { VTTAsset } from "@/data/vttAssetLibrary";
 import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useCampaignToolState } from "@/hooks/useToolState";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
+import { useVTTSettings } from "@/hooks/useVTTSettings";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
@@ -184,9 +185,7 @@ const PlayerMapView = ({
 	// overlay-drawer pattern. Opens by clicking a right-rail icon.
 	type PlayerDrawerTab = "sheet" | "chat" | "dice" | "init" | "assets" | null;
 	const [playerDrawerTab, setPlayerDrawerTab] = useState<PlayerDrawerTab>(
-		typeof window !== "undefined" && window.innerWidth >= 1280
-			? "sheet"
-			: null,
+		typeof window !== "undefined" && window.innerWidth >= 1280 ? "sheet" : null,
 	);
 	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
@@ -282,6 +281,13 @@ const PlayerMapView = ({
 		sessionId: effectiveSessionId || undefined,
 		isWarden: false,
 	});
+
+	// Warden-tunable player permissions + session gate (DDB parity).
+	const { settings: vttSettings, sessionStatus } = useVTTSettings(
+		effectiveCampaignId || null,
+	);
+	const sessionGated =
+		sessionStatus.state === "paused" || sessionStatus.state === "ended";
 
 	// Subscribe to campaign_tool_states for scene data from Warden
 	const toolKey = effectiveSessionId
@@ -491,15 +497,17 @@ const PlayerMapView = ({
 		[gridSize, zoom],
 	);
 
-	// Double-click to ping
+	// Double-click to ping (respect Warden-configured permission)
 	const handleMapDoubleClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (!vttSettings.allowPlayerPing) return;
+			if (sessionGated) return;
 			const pos = getGridPosition(e);
 			if (pos) {
 				vttRealtime.sendPing(pos.gx, pos.gy);
 			}
 		},
-		[getGridPosition, vttRealtime],
+		[getGridPosition, sessionGated, vttRealtime, vttSettings.allowPlayerPing],
 	);
 
 	const handleRequestZoom = useCallback((nextZoom: number) => {
@@ -508,6 +516,21 @@ const PlayerMapView = ({
 			if (Math.abs(prev - clamped) < 0.001) return prev;
 			return clamped;
 		});
+	}, []);
+	const handleFitZoom = useCallback(() => {
+		if (!mapRef.current || !currentScene) return;
+		const rect = mapRef.current.getBoundingClientRect();
+		if (!rect.width || !rect.height) return;
+		const sw = (currentScene.width ?? 20) * gridSize;
+		const sh = (currentScene.height ?? 20) * gridSize;
+		if (sw <= 0 || sh <= 0) return;
+		const fit = Math.min(rect.width / sw, rect.height / sh, 2);
+		handleRequestZoom(Math.max(0.5, Math.round(fit * 20) / 20));
+	}, [currentScene, gridSize, handleRequestZoom]);
+	const handleRecenter = useCallback(() => {
+		const el = mapRef.current;
+		if (!el) return;
+		el.scrollTo({ left: 0, top: 0, behavior: "smooth" });
 	}, []);
 
 	const clearViewportPan = useCallback(() => {
@@ -599,9 +622,19 @@ const PlayerMapView = ({
 
 	// Broadcast cursor position on mouse move (throttled)
 	const lastCursorBroadcast = useRef(0);
+	// Tracks the held-X pointer tool (DDB "Point" parity). Declared up here
+	// because `handleCursorMove` closes over it for the mouse-move broadcast.
+	const pointerPressedRef = useRef(false);
 	const handleCursorMove = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
 			if (viewportPanRef.current) return;
+			// Pointer-tool broadcast when the player is holding X.
+			if (pointerPressedRef.current) {
+				const pointerPos = getGridPosition(e);
+				if (pointerPos) {
+					vttRealtime.broadcastPointer(pointerPos.gx, pointerPos.gy);
+				}
+			}
 			const now = Date.now();
 			if (now - lastCursorBroadcast.current < 100) return; // throttle 100ms
 			lastCursorBroadcast.current = now;
@@ -618,10 +651,19 @@ const PlayerMapView = ({
 
 	const handleMapWheel = useCallback(
 		(e: React.WheelEvent<HTMLDivElement>) => {
-			if (!(e.ctrlKey || e.metaKey) || Math.abs(e.deltaY) < 1) return;
+			if (Math.abs(e.deltaY) < 1) return;
+			// Plain wheel zooms the canvas (DDB Maps / Foundry parity).
+			// Ctrl/Cmd+Wheel still works and uses a larger step.
 			e.preventDefault();
-			const direction = e.deltaY > 0 ? -1 : 1;
-			handleRequestZoom(zoom + direction * 0.1);
+			const normalized =
+				e.deltaMode === 0
+					? e.deltaY / 100
+					: e.deltaMode === 1
+						? e.deltaY / 3
+						: e.deltaY;
+			const direction = normalized > 0 ? -1 : 1;
+			const magnitude = e.ctrlKey || e.metaKey ? 0.2 : 0.1;
+			handleRequestZoom(zoom + direction * magnitude);
 		},
 		[handleRequestZoom, zoom],
 	);
@@ -658,18 +700,74 @@ const PlayerMapView = ({
 		touchRef.current = null;
 	}, []);
 
-	const handleMapKeyDown = useCallback((e: KeyboardEvent) => {
-		if (isPlayerMapShortcutTarget(e.target)) return;
-		if (e.code !== "Space") return;
-		spacePanPressedRef.current = true;
-		e.preventDefault();
-	}, []);
+	const handleMapKeyDown = useCallback(
+		(e: KeyboardEvent) => {
+			if (isPlayerMapShortcutTarget(e.target)) return;
+			if (e.code === "Space") {
+				spacePanPressedRef.current = true;
+				e.preventDefault();
+				return;
+			}
+			// Hold-X pointer (DDB "Point" parity, respects Warden permission).
+			if (
+				!e.ctrlKey &&
+				!e.metaKey &&
+				!e.altKey &&
+				e.key.toLowerCase() === "x" &&
+				vttSettings.allowPlayerPointer &&
+				!sessionGated
+			) {
+				e.preventDefault();
+				pointerPressedRef.current = true;
+				return;
+			}
+			// Zoom hotkeys (DDB/Foundry parity)
+			if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+				if (e.key === "+" || e.key === "=") {
+					e.preventDefault();
+					handleRequestZoom(zoom + 0.1);
+					return;
+				}
+				if (e.key === "-" || e.key === "_") {
+					e.preventDefault();
+					handleRequestZoom(zoom - 0.1);
+					return;
+				}
+				if (e.key === "0") {
+					e.preventDefault();
+					handleRequestZoom(1);
+					return;
+				}
+				if (e.key === "Home") {
+					e.preventDefault();
+					handleFitZoom();
+					return;
+				}
+			}
+		},
+		[
+			handleFitZoom,
+			handleRequestZoom,
+			sessionGated,
+			vttSettings.allowPlayerPointer,
+			zoom,
+		],
+	);
 
-	const handleMapKeyUp = useCallback((e: KeyboardEvent) => {
-		if (e.code !== "Space") return;
-		spacePanPressedRef.current = false;
-		e.preventDefault();
-	}, []);
+	const handleMapKeyUp = useCallback(
+		(e: KeyboardEvent) => {
+			if (e.code === "Space") {
+				spacePanPressedRef.current = false;
+				e.preventDefault();
+				return;
+			}
+			if (e.key.toLowerCase() === "x" && pointerPressedRef.current) {
+				pointerPressedRef.current = false;
+				vttRealtime.clearPointer();
+			}
+		},
+		[vttRealtime],
+	);
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;
@@ -793,15 +891,13 @@ const PlayerMapView = ({
 								<ArrowLeft className="w-4 h-4" aria-hidden />
 								<span className="hidden md:inline ml-1.5 text-xs">Back</span>
 							</Button>
-							<div className="min-w-0 flex-1 truncate">
-								<RiftHeading
-									level={1}
-									variant="sovereign"
-									dimensional
-									className="leading-tight text-sm sm:text-base md:text-lg truncate"
+							<div className="min-w-0 flex-1">
+								<span
+									data-testid="vtt-scene-title"
+									className="block text-sm font-semibold text-primary/90 truncate max-w-full px-1.5 py-0.5"
 								>
-									BATTLE MAP {currentScene ? `— ${currentScene.name}` : ""}
-								</RiftHeading>
+									{currentScene?.name || "No Scene"}
+								</span>
 							</div>
 							<Badge
 								variant={vttRealtime.isConnected ? "default" : "destructive"}
@@ -828,7 +924,7 @@ const PlayerMapView = ({
 				/>
 
 				{!effectiveCampaignId ? (
-					<div className="absolute inset-0 pt-[52px] px-4 flex items-center justify-center">
+					<div className="absolute inset-0 pt-[44px] px-4 flex items-center justify-center">
 						<AscendantWindow title="NO CAMPAIGN" variant="alert">
 							<AscendantText className="block text-sm text-muted-foreground">
 								Open this page from a campaign to view the shared map.
@@ -839,38 +935,53 @@ const PlayerMapView = ({
 					<div
 						className={cn(
 							"vtt-content absolute inset-0 flex gap-2 sm:gap-3",
-							"pt-[52px] px-2 sm:px-3 pb-2",
+							"pt-[44px] px-2 sm:px-3 pb-2",
 							isMobile && "pb-[64px]",
 						)}
 					>
 						{/* Main Map Area fills remaining viewport. */}
 						<div className="vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden">
+							{/* Session gate overlay (DDB parity): Warden paused / ended. */}
+							{sessionGated && (
+								<div className="absolute inset-0 z-40 flex items-center justify-center bg-background/70 backdrop-blur-sm">
+									<AscendantWindow
+										title={
+											sessionStatus.state === "ended"
+												? "SESSION ENDED"
+												: "SESSION PAUSED"
+										}
+										variant="alert"
+									>
+										<AscendantText className="block text-sm text-foreground/70 max-w-sm text-center">
+											{sessionStatus.message ??
+												(sessionStatus.state === "ended"
+													? "Your Warden has ended the session. Please stand by."
+													: "Your Warden has paused the session. Please stand by.")}
+										</AscendantText>
+									</AscendantWindow>
+								</div>
+							)}
 							<div
 								className={cn(
 									"h-full w-full flex flex-col min-h-0 overflow-hidden relative",
 								)}
 							>
-								{/* Controls */}
-								<div className="flex items-center gap-2 mb-2">
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={() => handleRequestZoom(zoom - 0.1)}
-									>
-										<Minus className="w-3 h-3" />
-									</Button>
-									<span className="text-xs w-12 text-center">
-										{Math.round(zoom * 100)}%
-									</span>
-									<Button
-										variant="outline"
-										size="sm"
-										onClick={() => handleRequestZoom(zoom + 0.1)}
-									>
-										<Plus className="w-3 h-3" />
-									</Button>
-									{!isMobile && (
-										<div className="flex items-center gap-1 ml-2">
+								{/* DDB "Point" trailing highlight rendered on top of canvas. */}
+								<VTTPointerOverlay
+									trails={vttRealtime.pointerTrails}
+									gridSize={gridSize}
+									zoom={zoom}
+								/>
+								{/* Persistent floating zoom HUD — bottom-right over canvas. */}
+								<VTTZoomHud
+									zoom={zoom}
+									onRequestZoom={handleRequestZoom}
+									onFit={handleFitZoom}
+									onRecenter={handleRecenter}
+								/>
+								{!isMobile && (
+									<div className="flex items-center justify-end gap-3 mb-2 text-xs text-muted-foreground">
+										<div className="flex items-center gap-1">
 											<input
 												type="checkbox"
 												checked={showGrid}
@@ -878,21 +989,16 @@ const PlayerMapView = ({
 												className="w-3 h-3"
 												id="playerGrid"
 											/>
-											<label
-												htmlFor="playerGrid"
-												className="text-xs cursor-pointer"
-											>
+											<label htmlFor="playerGrid" className="cursor-pointer">
 												Grid
 											</label>
 										</div>
-									)}
-									{!isMobile && (
-										<div className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
+										<div className="flex items-center gap-1">
 											<Crosshair className="w-3 h-3" />
 											Double-click to ping
 										</div>
-									)}
-								</div>
+									</div>
+								)}
 
 								{/* Map Canvas */}
 								<div
@@ -1312,9 +1418,7 @@ const PlayerMapView = ({
 							<VTTIconRail
 								side="right"
 								activeId={playerDrawerTab}
-								onSelect={(id) =>
-									setPlayerDrawerTab(id as PlayerDrawerTab)
-								}
+								onSelect={(id) => setPlayerDrawerTab(id as PlayerDrawerTab)}
 								items={
 									[
 										{
@@ -1356,9 +1460,7 @@ const PlayerMapView = ({
 						<VTTDrawer
 							side="right"
 							open={playerDrawerTab !== null}
-							onOpenChange={(o) =>
-								!o && setPlayerDrawerTab(null)
-							}
+							onOpenChange={(o) => !o && setPlayerDrawerTab(null)}
 							title={
 								playerDrawerTab === "sheet"
 									? "Character Sheet"
@@ -1399,9 +1501,7 @@ const PlayerMapView = ({
 
 							<Tabs
 								value={playerDrawerTab ?? "sheet"}
-								onValueChange={(v) =>
-									setPlayerDrawerTab(v as PlayerDrawerTab)
-								}
+								onValueChange={(v) => setPlayerDrawerTab(v as PlayerDrawerTab)}
 								className="w-full"
 							>
 								<TabsList className="grid w-full grid-cols-5">

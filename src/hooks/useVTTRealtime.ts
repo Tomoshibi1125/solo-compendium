@@ -201,7 +201,28 @@ type VTTBroadcastEvent =
 				volume?: number;
 				playedBy: string;
 			};
+	  }
+	| {
+			type: "pointer";
+			payload: {
+				userId: string;
+				userName: string;
+				color: string;
+				trail: Array<{ x: number; y: number; t: number }>;
+			};
 	  };
+
+/**
+ * Pointer trail broadcast by a user who has the Pointer tool active (DDB
+ * "Point" feature). Trails auto-expire client-side after ~2 s.
+ */
+export interface VTTPointerTrail {
+	userId: string;
+	userName: string;
+	color: string;
+	trail: Array<{ x: number; y: number; t: number }>;
+	updatedAt: number;
+}
 
 type PresencePayload = {
 	user_id?: string;
@@ -596,6 +617,14 @@ export function useVTTRealtime({
 	>(new Map());
 	const [chatMessages, setChatMessages] = useState<VTTChatMessage[]>([]);
 	const [pings, setPings] = useState<MapPing[]>([]);
+	// Keyed by userId — newest trail wins. Expired entries are pruned locally.
+	const [pointerTrails, setPointerTrails] = useState<
+		Map<string, VTTPointerTrail>
+	>(new Map());
+	const pointerBufferRef = useRef<Array<{ x: number; y: number; t: number }>>(
+		[],
+	);
+	const pointerThrottleRef = useRef(0);
 	const [initiativeState, setInitiativeState] = useState<VTTInitiativeState>({
 		order: [],
 		currentTurnIndex: 0,
@@ -1165,6 +1194,74 @@ export function useVTTRealtime({
 		[broadcast, userColor, userId, userName],
 	);
 
+	// Pointer (DDB "Point" tool — trailing highlight visible to everyone)
+	const broadcastPointer = useCallback(
+		(x: number, y: number) => {
+			const now = Date.now();
+			// Maintain a rolling buffer of up to ~8 samples over ~800 ms.
+			const buffer = pointerBufferRef.current.filter((p) => now - p.t < 800);
+			buffer.push({ x, y, t: now });
+			pointerBufferRef.current = buffer.slice(-8);
+
+			// Local echo so the sender also sees their trail.
+			setPointerTrails((prev) => {
+				const next = new Map(prev);
+				next.set(userId, {
+					userId,
+					userName,
+					color: userColor,
+					trail: [...pointerBufferRef.current],
+					updatedAt: now,
+				});
+				return next;
+			});
+
+			// Throttle broadcasts to ~10 Hz.
+			if (now - pointerThrottleRef.current < 100) return;
+			pointerThrottleRef.current = now;
+			broadcast({
+				type: "pointer",
+				payload: {
+					userId,
+					userName,
+					color: userColor,
+					trail: [...pointerBufferRef.current],
+				},
+			});
+		},
+		[broadcast, userColor, userId, userName],
+	);
+
+	const clearPointer = useCallback(() => {
+		pointerBufferRef.current = [];
+		setPointerTrails((prev) => {
+			if (!prev.has(userId)) return prev;
+			const next = new Map(prev);
+			next.delete(userId);
+			return next;
+		});
+	}, [userId]);
+
+	// Prune pointer trails that haven't been refreshed in >2 s.
+	useEffect(() => {
+		if (pointerTrails.size === 0) return;
+		const id = window.setInterval(() => {
+			setPointerTrails((prev) => {
+				const now = Date.now();
+				let changed = false;
+				const next = new Map(prev);
+				for (const [key, trail] of next.entries()) {
+					if (now - trail.updatedAt > 2000) {
+						next.delete(key);
+						changed = true;
+					}
+				}
+				return changed ? next : prev;
+			});
+		}, 500);
+		return () => window.clearInterval(id);
+	}, [pointerTrails.size]);
+
 	// Cursor presence
 	const updateCursor = useCallback(
 		(cursor: VTTCursorPosition) => {
@@ -1250,6 +1347,24 @@ export function useVTTRealtime({
 									prev.filter((p) => p.createdAt !== ping.createdAt),
 								);
 							}, 3000);
+							break;
+						}
+						case "pointer": {
+							const incoming = payload.payload as {
+								userId: string;
+								userName: string;
+								color: string;
+								trail: Array<{ x: number; y: number; t: number }>;
+							};
+							if (incoming.userId === userId) break; // self-echo safety
+							setPointerTrails((prev) => {
+								const next = new Map(prev);
+								next.set(incoming.userId, {
+									...incoming,
+									updatedAt: Date.now(),
+								});
+								return next;
+							});
 							break;
 						}
 						case "ruler": {
@@ -1437,6 +1552,11 @@ export function useVTTRealtime({
 		// Pings
 		pings,
 		sendPing,
+
+		// Pointer (DDB "Point" tool)
+		pointerTrails: Array.from(pointerTrails.values()),
+		broadcastPointer,
+		clearPointer,
 
 		// Cursor
 		updateCursor,
