@@ -20,6 +20,11 @@ type NetworkInfo = {
 type HardwareInfo = {
 	deviceMemory: number | null;
 	cpuCores: number | null;
+	coarsePointer: boolean;
+	hoverNone: boolean;
+	narrowViewport: boolean;
+	viewportWidth: number | null;
+	viewportHeight: number | null;
 };
 
 type PerformanceTier = "low" | "balanced" | "high" | "ultra";
@@ -80,7 +85,15 @@ const readNetworkInfo = (): NetworkInfo => {
 
 const readHardwareInfo = (): HardwareInfo => {
 	if (typeof navigator === "undefined") {
-		return { deviceMemory: null, cpuCores: null };
+		return {
+			deviceMemory: null,
+			cpuCores: null,
+			coarsePointer: false,
+			hoverNone: false,
+			narrowViewport: false,
+			viewportWidth: null,
+			viewportHeight: null,
+		};
 	}
 	const deviceMemory =
 		typeof (navigator as Navigator & { deviceMemory?: number }).deviceMemory ===
@@ -92,7 +105,22 @@ const readHardwareInfo = (): HardwareInfo => {
 		typeof navigator.hardwareConcurrency === "number"
 			? navigator.hardwareConcurrency
 			: null;
-	return { deviceMemory, cpuCores };
+	const canQueryViewport = typeof window !== "undefined";
+	const coarsePointer =
+		canQueryViewport && window.matchMedia("(pointer: coarse)").matches;
+	const hoverNone =
+		canQueryViewport && window.matchMedia("(hover: none)").matches;
+	const narrowViewport =
+		canQueryViewport && window.matchMedia("(max-width: 767px)").matches;
+	return {
+		deviceMemory,
+		cpuCores,
+		coarsePointer,
+		hoverNone,
+		narrowViewport,
+		viewportWidth: canQueryViewport ? window.innerWidth : null,
+		viewportHeight: canQueryViewport ? window.innerHeight : null,
+	};
 };
 
 const clamp = (value: number, min: number, max: number) =>
@@ -105,16 +133,26 @@ const buildProfile = (
 	override: PerformanceTier | "auto",
 ): PerformanceProfile => {
 	const forceTier = override !== "auto" ? override : null;
-	const memoryScore = hardware.deviceMemory ?? 8;
-	const coreScore = hardware.cpuCores ?? 8;
+	const mobileLike =
+		hardware.coarsePointer || hardware.hoverNone || hardware.narrowViewport;
+	const memoryScore = hardware.deviceMemory ?? (mobileLike ? 6 : 8);
+	const coreScore = hardware.cpuCores ?? (mobileLike ? 6 : 8);
 	const slowNetwork =
 		network.effectiveType === "slow-2g" || network.effectiveType === "2g";
 	const lowEnd =
 		network.saveData || slowNetwork || memoryScore <= 4 || coreScore <= 4;
 	const ultraReady =
-		memoryScore >= 12 && coreScore >= 12 && !network.saveData && !slowNetwork;
+		!mobileLike &&
+		memoryScore >= 12 &&
+		coreScore >= 12 &&
+		!network.saveData &&
+		!slowNetwork;
 	const highReady =
-		memoryScore >= 8 && coreScore >= 8 && !network.saveData && !slowNetwork;
+		!mobileLike &&
+		memoryScore >= 8 &&
+		coreScore >= 8 &&
+		!network.saveData &&
+		!slowNetwork;
 
 	let tier: PerformanceTier = "balanced";
 	if (reducedMotion || lowEnd) {
@@ -128,7 +166,7 @@ const buildProfile = (
 		tier = forceTier;
 	}
 
-	const dprMax =
+	const desktopDprMax =
 		tier === "ultra"
 			? 2.75
 			: tier === "high"
@@ -136,7 +174,9 @@ const buildProfile = (
 				: tier === "balanced"
 					? 1.6
 					: 1;
-	const particleCount =
+	const dprMax =
+		mobileLike && !forceTier ? Math.min(desktopDprMax, 1.35) : desktopDprMax;
+	const baseParticleCount =
 		tier === "ultra"
 			? 40
 			: tier === "high"
@@ -144,6 +184,10 @@ const buildProfile = (
 				: tier === "balanced"
 					? 18
 					: 10;
+	const particleCount =
+		mobileLike && !forceTier
+			? Math.min(baseParticleCount, 10)
+			: baseParticleCount;
 	const ambientOpacity =
 		tier === "ultra"
 			? 1
@@ -178,6 +222,7 @@ const buildProfile = (
 					: 0.65;
 	const enableEffects =
 		!reducedMotion && (!network.saveData || forceTier !== null);
+	const allowHeavyEffects = forceTier !== null || !mobileLike;
 
 	return {
 		tier,
@@ -192,12 +237,18 @@ const buildProfile = (
 			particleCount,
 			ambientOpacity,
 			enablePointerGlow: enableEffects && tier !== "low",
-			enableScanline: enableEffects && tier !== "low",
-			enableTsparticles: enableEffects && (tier === "high" || tier === "ultra"),
+			enableScanline: enableEffects && tier !== "low" && allowHeavyEffects,
+			enableTsparticles:
+				enableEffects &&
+				allowHeavyEffects &&
+				(tier === "high" || tier === "ultra"),
 		},
 		three: {
 			antialias: tier !== "low",
-			powerPreference: tier === "low" ? "low-power" : "high-performance",
+			powerPreference:
+				tier === "low" || (mobileLike && !forceTier)
+					? "low-power"
+					: "high-performance",
 			enableShadows: tier !== "low",
 			shadowMapSize,
 			enableContactShadows: tier === "high" || tier === "ultra",
@@ -213,7 +264,10 @@ const buildProfile = (
 			quality: imageQuality,
 			eagerHero: tier !== "low",
 		},
-		prefetch: forceTier !== null ? true : enableEffects && tier !== "low",
+		prefetch:
+			forceTier !== null
+				? true
+				: enableEffects && tier !== "low" && !mobileLike,
 	};
 };
 
@@ -222,7 +276,9 @@ export function PerformanceProvider({ children }: { children: ReactNode }) {
 	const [networkInfo, setNetworkInfo] = useState<NetworkInfo>(() =>
 		readNetworkInfo(),
 	);
-	const [hardwareInfo] = useState<HardwareInfo>(() => readHardwareInfo());
+	const [hardwareInfo, setHardwareInfo] = useState<HardwareInfo>(() =>
+		readHardwareInfo(),
+	);
 	const override = useMemo<PerformanceTier | "auto">(() => {
 		const raw = (import.meta.env.VITE_PERFORMANCE_MODE || "auto")
 			.toString()
@@ -251,6 +307,44 @@ export function PerformanceProvider({ children }: { children: ReactNode }) {
 		return () => {
 			if (typeof connection.removeEventListener !== "function") return;
 			connection.removeEventListener("change", handleChange);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		let frame = 0;
+		const updateHardwareInfo = () => {
+			if (frame !== 0) return;
+			frame = window.requestAnimationFrame(() => {
+				frame = 0;
+				setHardwareInfo(readHardwareInfo());
+			});
+		};
+		const mediaQueries = [
+			window.matchMedia("(pointer: coarse)"),
+			window.matchMedia("(hover: none)"),
+			window.matchMedia("(max-width: 767px)"),
+		];
+		window.addEventListener("resize", updateHardwareInfo, { passive: true });
+		for (const query of mediaQueries) {
+			if (typeof query.addEventListener === "function") {
+				query.addEventListener("change", updateHardwareInfo);
+			} else {
+				query.addListener(updateHardwareInfo);
+			}
+		}
+		return () => {
+			if (frame !== 0) {
+				window.cancelAnimationFrame(frame);
+			}
+			window.removeEventListener("resize", updateHardwareInfo);
+			for (const query of mediaQueries) {
+				if (typeof query.removeEventListener === "function") {
+					query.removeEventListener("change", updateHardwareInfo);
+				} else {
+					query.removeListener(updateHardwareInfo);
+				}
+			}
 		};
 	}, []);
 

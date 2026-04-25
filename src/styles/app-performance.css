@@ -316,6 +316,31 @@ img[loading="lazy"] {
 	}
 }
 
+html[data-performance-tier="low"] .ascendant-overlay-scanlines,
+html[data-performance-tier="low"] .ascendant-overlay-grain,
+html[data-performance-tier="low"] .ascendant-overlay-chromatic,
+html[data-performance-tier="low"] .rift-scan-line {
+	display: none;
+}
+
+@media (pointer: coarse), (max-width: 767px) {
+	html body .ascendant-overlay-scanlines,
+	html body .ascendant-overlay-grain,
+	html body .ascendant-overlay-chromatic,
+	html body .rift-scan-line {
+		display: none;
+	}
+
+	html body .ambient-glow-container {
+		opacity: 0.45;
+	}
+
+	html body [class*="backdrop-blur"] {
+		-webkit-backdrop-filter: blur(8px);
+		backdrop-filter: blur(8px);
+	}
+}
+
 /* ── 15. Print Optimization ──────────────────────────────────────────── */
 
 @media print {

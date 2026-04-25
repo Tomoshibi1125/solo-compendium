@@ -13,7 +13,7 @@ export function WardenAInstallPrompt({
 	}
 
 	return (
-		<div className="fixed bottom-4 right-4 p-4 bg-background border rounded-lg shadow-lg max-w-sm">
+		<div className="fixed left-4 right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-[70] p-4 bg-background border rounded-lg shadow-lg sm:left-auto sm:max-w-sm">
 			<div className="flex items-center space-x-3">
 				<div className="text-sm">
 					<p className="font-medium">Install Rift Ascendant</p>
@@ -48,7 +48,10 @@ export function OfflineStatus({
 	}
 
 	return (
-		<div className="fixed top-4 right-4 p-3 bg-background border rounded-lg shadow-lg max-w-xs">
+		<div
+			className="fixed left-4 right-4 top-[max(1rem,env(safe-area-inset-top))] z-[70] p-3 bg-background border rounded-lg shadow-lg sm:left-auto sm:max-w-xs"
+			aria-live="polite"
+		>
 			<div className="flex items-center space-x-2">
 				<div
 					className={`w-2 h-2 rounded-full ${

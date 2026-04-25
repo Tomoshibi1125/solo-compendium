@@ -38,18 +38,32 @@ export function isSmallViewport(): boolean {
 /**
  * Prevent zoom on double tap (iOS)
  */
+let doubleTapZoomGuardEnabled = false;
 export function preventDoubleTapZoom() {
+	if (doubleTapZoomGuardEnabled) return;
+	doubleTapZoomGuardEnabled = true;
 	let lastTouchEnd = 0;
 	document.addEventListener(
 		"touchend",
 		(event) => {
+			const target = event.target;
+			const shouldGuard =
+				typeof Element !== "undefined" &&
+				target instanceof Element &&
+				target.closest(
+					"button,a,[role='button'],[role='tab'],.vtt-shell,.vtt-map-container,.vtt-mobile-toolbar",
+				) !== null;
+			if (!shouldGuard) {
+				lastTouchEnd = Date.now();
+				return;
+			}
 			const now = Date.now();
-			if (now - lastTouchEnd <= 300) {
+			if (event.cancelable && now - lastTouchEnd <= 300) {
 				event.preventDefault();
 			}
 			lastTouchEnd = now;
 		},
-		false,
+		{ passive: false },
 	);
 }
 

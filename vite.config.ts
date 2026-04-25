@@ -205,7 +205,7 @@ export default defineConfig(({ mode: _mode }) => {
 				theme_color: "#9b6dff",
 				background_color: "#0a0a0a",
 				display: "standalone",
-				orientation: "portrait-primary",
+				orientation: "any",
 				categories: ["games", "entertainment"],
 				start_url: "/",
 				scope: "/",
