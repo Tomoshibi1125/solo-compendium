@@ -114,6 +114,7 @@ import {
 import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
+import { VttDomFallbackSurface } from "@/components/vtt/VttDomFallbackSurface";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import {
@@ -167,7 +168,6 @@ import {
 	calibrateVttBackgroundToGrid,
 	clampVttBackgroundScale,
 	clampVttGridOpacity,
-	getVttBackgroundTransform,
 	GRID_VISIBILITY_PRESETS,
 	resolveVttGridVisibilityPreset,
 	type VttCalibrationPoint,
@@ -210,7 +210,6 @@ import {
 	removeAssetFromVttScenes,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
-import { getTokenFootprintPx } from "@/lib/vtt/tokenSizing";
 import PlayerMapView from "@/pages/player-tools/PlayerMapView";
 import type {
 	VTTDrawing,
@@ -529,198 +528,6 @@ const GRID_VISIBILITY_OPTIONS: Array<{
 	{ value: "faded", label: "Faded", opacity: GRID_VISIBILITY_PRESETS.faded },
 	{ value: "hidden", label: "Hidden", opacity: GRID_VISIBILITY_PRESETS.hidden },
 ];
-
-type VttDomFallbackSurfaceProps = {
-	scene: VTTScene;
-	tokens: VTTTokenInstance[];
-	gridSize: number;
-	zoom: number;
-	showGrid: boolean;
-	activeTokenId: string | null;
-	activeInitiativeTokenId: string | null;
-	setActiveTokenId: (id: string | null) => void;
-};
-
-const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
-	scene,
-	tokens,
-	gridSize,
-	zoom,
-	showGrid,
-	activeTokenId,
-	activeInitiativeTokenId,
-	setActiveTokenId,
-}: VttDomFallbackSurfaceProps) {
-	const backgroundTransform = useMemo(
-		() =>
-			getVttBackgroundTransform({
-				sceneWidth: scene.width,
-				sceneHeight: scene.height,
-				gridSize,
-				zoom,
-				backgroundScale: scene.backgroundScale,
-				backgroundOffsetX: scene.backgroundOffsetX,
-				backgroundOffsetY: scene.backgroundOffsetY,
-			}),
-		[
-			scene.backgroundOffsetX,
-			scene.backgroundOffsetY,
-			scene.backgroundScale,
-			scene.height,
-			scene.width,
-			gridSize,
-			zoom,
-		],
-	);
-	const effectiveGridOpacity = useMemo(
-		() => (showGrid ? clampVttGridOpacity(scene.gridOpacity) : 0),
-		[scene.gridOpacity, showGrid],
-	);
-	const fogCells = useMemo(() => {
-		if (!scene.fogOfWar || !scene.fogData) return [];
-		return scene.fogData.flatMap((row, ry) =>
-			row
-				.map((revealed, rx) => ({ revealed, rx, ry }))
-				.filter((cell) => !cell.revealed),
-		);
-	}, [scene.fogData, scene.fogOfWar]);
-
-	return (
-		<div className="absolute inset-0">
-			{scene.backgroundImage && (
-				<DynamicStyle
-					className="absolute overflow-hidden pointer-events-none"
-					vars={{
-						left: `${backgroundTransform.offsetXPx}px`,
-						top: `${backgroundTransform.offsetYPx}px`,
-						width: `${backgroundTransform.imageWidthPx}px`,
-						height: `${backgroundTransform.imageHeightPx}px`,
-						zIndex: 0,
-					}}
-				>
-					<OptimizedImage
-						src={scene.backgroundImage}
-						alt="Map background"
-						className="w-full h-full max-w-none opacity-95"
-						size="large"
-					/>
-				</DynamicStyle>
-			)}
-			{effectiveGridOpacity > 0 && (
-				<DynamicStyle
-					className="absolute inset-0 pointer-events-none"
-					vars={{
-						backgroundImage:
-							"linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)",
-						backgroundSize: `${gridSize * zoom}px ${gridSize * zoom}px`,
-						opacity: effectiveGridOpacity,
-						zIndex: 1,
-					}}
-				/>
-			)}
-			{fogCells.length > 0 && (
-				<div className="absolute inset-0 pointer-events-none z-[2]">
-					{fogCells.map((cell) => (
-						<DynamicStyle
-							key={`fallback-fog-${cell.rx}-${cell.ry}`}
-							className="absolute bg-black/45"
-							vars={{
-								left: `${cell.rx * gridSize * zoom}px`,
-								top: `${cell.ry * gridSize * zoom}px`,
-								width: `${gridSize * zoom}px`,
-								height: `${gridSize * zoom}px`,
-							}}
-						/>
-					))}
-				</div>
-			)}
-			<div className="absolute inset-0 z-[3]">
-				{tokens.map((token) => {
-					const { width, height } = getTokenFootprintPx(
-						token.size,
-						gridSize,
-						zoom,
-						{ gridWidth: token.gridWidth, gridHeight: token.gridHeight },
-					);
-					const isOverlayToken =
-						token.render?.mode === "overlay" ||
-						token.tokenType === "effect" ||
-						token.tokenType === "prop";
-					const borderColor =
-						activeInitiativeTokenId === token.id
-							? "#10b981"
-							: activeTokenId === token.id
-								? "#fbbf24"
-								: token.borderColor || token.color || "hsl(var(--primary))";
-					const borderWidth =
-						activeInitiativeTokenId === token.id
-							? "4px"
-							: activeTokenId === token.id
-								? "3px"
-								: "2px";
-					const tokenBackground = isOverlayToken
-						? "transparent"
-						: token.color
-							? `${token.color}40`
-							: "rgba(0,0,0,0.18)";
-					return (
-						<DynamicStyle
-							as="button"
-							type="button"
-							key={token.id}
-							className="absolute bg-transparent border-none p-0 text-left"
-							vars={{
-								left: `${token.x * gridSize * zoom}px`,
-								top: `${token.y * gridSize * zoom}px`,
-								width: `${width}px`,
-								height: `${height}px`,
-								transform: `rotate(${token.rotation}deg)`,
-								zIndex: token.layer * 10 + 10,
-							}}
-							onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
-								event.stopPropagation();
-								setActiveTokenId(token.id);
-							}}
-							title={`${token.name}${token.hp !== undefined && token.maxHp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}`}
-						>
-							<DynamicStyle
-								className={cn(
-									"flex h-full w-full items-center justify-center text-white font-semibold overflow-hidden",
-									!isOverlayToken && "rounded-full border-solid",
-								)}
-								vars={{
-									backgroundColor: tokenBackground,
-									borderColor,
-									borderWidth: isOverlayToken ? 0 : borderWidth,
-									boxShadow:
-										activeTokenId === token.id || activeInitiativeTokenId === token.id
-											? `0 0 0 1px ${borderColor}`
-											: undefined,
-									opacity: token.render?.opacity ?? 1,
-									fontSize: `${Math.max(14, Math.round(Math.max(width, height) * 0.35))}px`,
-								}}
-							>
-								{token.imageUrl ? (
-									<OptimizedImage
-										src={token.imageUrl}
-										alt={token.name}
-										className={cn(
-											"h-full w-full",
-											isOverlayToken ? "object-contain" : "object-cover rounded-full",
-										)}
-										size="small"
-									/>
-								) : (
-									token.emoji || token.name.charAt(0).toUpperCase()
-								)}
-							</DynamicStyle>
-						</DynamicStyle>
-					);
-				})}
-			</div>
-		</div>
-	);
-});
 
 /** Stable memo wrapper – MUST live outside the component to avoid remount on every render */
 const MemoizedVttPixiStage = React.memo(VttPixiStage);
