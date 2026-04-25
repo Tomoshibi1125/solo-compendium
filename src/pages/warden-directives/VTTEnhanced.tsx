@@ -164,6 +164,16 @@ import { compressImage } from "@/lib/imageOptimization";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import {
+	calibrateVttBackgroundToGrid,
+	clampVttBackgroundScale,
+	clampVttGridOpacity,
+	getVttBackgroundTransform,
+	GRID_VISIBILITY_PRESETS,
+	resolveVttGridVisibilityPreset,
+	type VttCalibrationPoint,
+	type VttGridVisibilityPreset,
+} from "@/lib/vtt/backgroundTransform";
+import {
 	type AmbientSoundZone,
 	computeAllZoneStates,
 	computeZoneVolume,
@@ -200,6 +210,7 @@ import {
 	removeAssetFromVttScenes,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
+import { getTokenFootprintPx } from "@/lib/vtt/tokenSizing";
 import PlayerMapView from "@/pages/player-tools/PlayerMapView";
 import type {
 	VTTDrawing,
@@ -509,6 +520,208 @@ const normalizeCustomVttAssets = (value: unknown): VTTCampaignAsset[] =>
 				.filter((asset): asset is VTTCampaignAsset => asset !== null)
 		: [];
 
+const GRID_VISIBILITY_OPTIONS: Array<{
+	value: VttGridVisibilityPreset;
+	label: string;
+	opacity: number;
+}> = [
+	{ value: "visible", label: "Visible", opacity: GRID_VISIBILITY_PRESETS.visible },
+	{ value: "faded", label: "Faded", opacity: GRID_VISIBILITY_PRESETS.faded },
+	{ value: "hidden", label: "Hidden", opacity: GRID_VISIBILITY_PRESETS.hidden },
+];
+
+type VttDomFallbackSurfaceProps = {
+	scene: VTTScene;
+	tokens: VTTTokenInstance[];
+	gridSize: number;
+	zoom: number;
+	showGrid: boolean;
+	activeTokenId: string | null;
+	activeInitiativeTokenId: string | null;
+	setActiveTokenId: (id: string | null) => void;
+};
+
+const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
+	scene,
+	tokens,
+	gridSize,
+	zoom,
+	showGrid,
+	activeTokenId,
+	activeInitiativeTokenId,
+	setActiveTokenId,
+}: VttDomFallbackSurfaceProps) {
+	const backgroundTransform = useMemo(
+		() =>
+			getVttBackgroundTransform({
+				sceneWidth: scene.width,
+				sceneHeight: scene.height,
+				gridSize,
+				zoom,
+				backgroundScale: scene.backgroundScale,
+				backgroundOffsetX: scene.backgroundOffsetX,
+				backgroundOffsetY: scene.backgroundOffsetY,
+			}),
+		[
+			scene.backgroundOffsetX,
+			scene.backgroundOffsetY,
+			scene.backgroundScale,
+			scene.height,
+			scene.width,
+			gridSize,
+			zoom,
+		],
+	);
+	const effectiveGridOpacity = useMemo(
+		() => (showGrid ? clampVttGridOpacity(scene.gridOpacity) : 0),
+		[scene.gridOpacity, showGrid],
+	);
+	const fogCells = useMemo(() => {
+		if (!scene.fogOfWar || !scene.fogData) return [];
+		return scene.fogData.flatMap((row, ry) =>
+			row
+				.map((revealed, rx) => ({ revealed, rx, ry }))
+				.filter((cell) => !cell.revealed),
+		);
+	}, [scene.fogData, scene.fogOfWar]);
+
+	return (
+		<div className="absolute inset-0">
+			{scene.backgroundImage && (
+				<DynamicStyle
+					className="absolute overflow-hidden pointer-events-none"
+					vars={{
+						left: `${backgroundTransform.offsetXPx}px`,
+						top: `${backgroundTransform.offsetYPx}px`,
+						width: `${backgroundTransform.imageWidthPx}px`,
+						height: `${backgroundTransform.imageHeightPx}px`,
+						zIndex: 0,
+					}}
+				>
+					<OptimizedImage
+						src={scene.backgroundImage}
+						alt="Map background"
+						className="w-full h-full max-w-none opacity-95"
+						size="large"
+					/>
+				</DynamicStyle>
+			)}
+			{effectiveGridOpacity > 0 && (
+				<DynamicStyle
+					className="absolute inset-0 pointer-events-none"
+					vars={{
+						backgroundImage:
+							"linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)",
+						backgroundSize: `${gridSize * zoom}px ${gridSize * zoom}px`,
+						opacity: effectiveGridOpacity,
+						zIndex: 1,
+					}}
+				/>
+			)}
+			{fogCells.length > 0 && (
+				<div className="absolute inset-0 pointer-events-none z-[2]">
+					{fogCells.map((cell) => (
+						<DynamicStyle
+							key={`fallback-fog-${cell.rx}-${cell.ry}`}
+							className="absolute bg-black/45"
+							vars={{
+								left: `${cell.rx * gridSize * zoom}px`,
+								top: `${cell.ry * gridSize * zoom}px`,
+								width: `${gridSize * zoom}px`,
+								height: `${gridSize * zoom}px`,
+							}}
+						/>
+					))}
+				</div>
+			)}
+			<div className="absolute inset-0 z-[3]">
+				{tokens.map((token) => {
+					const { width, height } = getTokenFootprintPx(
+						token.size,
+						gridSize,
+						zoom,
+						{ gridWidth: token.gridWidth, gridHeight: token.gridHeight },
+					);
+					const isOverlayToken =
+						token.render?.mode === "overlay" ||
+						token.tokenType === "effect" ||
+						token.tokenType === "prop";
+					const borderColor =
+						activeInitiativeTokenId === token.id
+							? "#10b981"
+							: activeTokenId === token.id
+								? "#fbbf24"
+								: token.borderColor || token.color || "hsl(var(--primary))";
+					const borderWidth =
+						activeInitiativeTokenId === token.id
+							? "4px"
+							: activeTokenId === token.id
+								? "3px"
+								: "2px";
+					const tokenBackground = isOverlayToken
+						? "transparent"
+						: token.color
+							? `${token.color}40`
+							: "rgba(0,0,0,0.18)";
+					return (
+						<DynamicStyle
+							as="button"
+							type="button"
+							key={token.id}
+							className="absolute bg-transparent border-none p-0 text-left"
+							vars={{
+								left: `${token.x * gridSize * zoom}px`,
+								top: `${token.y * gridSize * zoom}px`,
+								width: `${width}px`,
+								height: `${height}px`,
+								transform: `rotate(${token.rotation}deg)`,
+								zIndex: token.layer * 10 + 10,
+							}}
+							onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
+								event.stopPropagation();
+								setActiveTokenId(token.id);
+							}}
+							title={`${token.name}${token.hp !== undefined && token.maxHp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}`}
+						>
+							<DynamicStyle
+								className={cn(
+									"flex h-full w-full items-center justify-center text-white font-semibold overflow-hidden",
+									!isOverlayToken && "rounded-full border-solid",
+								)}
+								vars={{
+									backgroundColor: tokenBackground,
+									borderColor,
+									borderWidth: isOverlayToken ? 0 : borderWidth,
+									boxShadow:
+										activeTokenId === token.id || activeInitiativeTokenId === token.id
+											? `0 0 0 1px ${borderColor}`
+											: undefined,
+									opacity: token.render?.opacity ?? 1,
+									fontSize: `${Math.max(14, Math.round(Math.max(width, height) * 0.35))}px`,
+								}}
+							>
+								{token.imageUrl ? (
+									<OptimizedImage
+										src={token.imageUrl}
+										alt={token.name}
+										className={cn(
+											"h-full w-full",
+											isOverlayToken ? "object-contain" : "object-cover rounded-full",
+										)}
+										size="small"
+									/>
+								) : (
+									token.emoji || token.name.charAt(0).toUpperCase()
+								)}
+							</DynamicStyle>
+						</DynamicStyle>
+					);
+				})}
+			</div>
+		</div>
+	);
+});
+
 /** Stable memo wrapper – MUST live outside the component to avoid remount on every render */
 const MemoizedVttPixiStage = React.memo(VttPixiStage);
 
@@ -551,6 +764,12 @@ const VTTEnhanced = () => {
 	const { fx } = usePerformanceProfile();
 	const [zoom, setZoom] = useState(1);
 	const [showGrid, setShowGrid] = useState(true);
+	const [pixiInitFailed, setPixiInitFailed] = useState(false);
+	const [isBackgroundCalibrating, setIsBackgroundCalibrating] =
+		useState(false);
+	const [backgroundCalibrationPoints, setBackgroundCalibrationPoints] = useState<
+		VttCalibrationPoint[]
+	>([]);
 	const [fogOfWar, setFogOfWar] = useState(false);
 	const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
 	const [fogBrushSize, setFogBrushSize] = useState(1);
@@ -847,12 +1066,15 @@ const VTTEnhanced = () => {
 		700,
 	);
 	const gridSize = currentScene?.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize;
+	const gridOpacity =
+		currentScene?.gridOpacity ?? DEFAULT_SCENE_SETTINGS.gridOpacity;
 	const backgroundScale =
 		currentScene?.backgroundScale ?? DEFAULT_SCENE_SETTINGS.backgroundScale;
 	const backgroundOffsetX =
 		currentScene?.backgroundOffsetX ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetX;
 	const backgroundOffsetY =
 		currentScene?.backgroundOffsetY ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetY;
+	const gridVisibilityPreset = resolveVttGridVisibilityPreset(gridOpacity);
 	const sceneWidth = currentScene?.width ?? 20;
 	const sceneHeight = currentScene?.height ?? 20;
 	const sceneClass = useMemo(
@@ -912,14 +1134,49 @@ const VTTEnhanced = () => {
 			behavior: "smooth",
 		});
 	}, []);
+	const cancelBackgroundCalibration = useCallback(() => {
+		setIsBackgroundCalibrating(false);
+		setBackgroundCalibrationPoints([]);
+	}, []);
+	const startBackgroundCalibration = useCallback(() => {
+		if (!currentScene?.backgroundImage) {
+			toast({
+				title: "Upload or choose a map first",
+				description: "Calibration needs a background image to align.",
+				variant: "destructive",
+			});
+			return;
+		}
+		setShowGrid(true);
+		setSelectedTool("select");
+		setSelectedCharacterId(null);
+		setSelectedLibraryTokenId(null);
+		setActiveTokenId(null);
+		setBackgroundCalibrationPoints([]);
+		setIsBackgroundCalibrating(true);
+		toast({
+			title: "Calibration started",
+			description:
+				"Click one corner of the embedded map grid, then click a second corner on the same square.",
+		});
+	}, [
+		currentScene?.backgroundImage,
+		toast,
+	]);
+	useEffect(() => {
+		setPixiInitFailed(false);
+		setIsBackgroundCalibrating(false);
+		setBackgroundCalibrationPoints([]);
+	}, [currentScene?.backgroundImage, currentScene?.id]);
 
 	const onPixiInitError = useCallback(
 		(err: unknown) => {
 			console.error("[VTT] Pixi init error surfaced:", err);
+			setPixiInitFailed(true);
 			toast({
 				title: "Map Renderer Error",
 				description:
-					"The VTT renderer failed to initialize. Your browser may not support WebGL, or the scene is too large. Try refreshing.",
+					"The Pixi renderer failed to initialize, so the Warden view switched to a DOM fallback. You can still align maps and inspect token placement.",
 				variant: "destructive",
 			});
 		},
@@ -1859,6 +2116,7 @@ const VTTEnhanced = () => {
 					backgroundScale: DEFAULT_SCENE_SETTINGS.backgroundScale,
 					backgroundOffsetX: DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
 					backgroundOffsetY: DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
+					gridOpacity: DEFAULT_SCENE_SETTINGS.gridOpacity,
 				});
 				toast({
 					title: "Map uploaded",
@@ -1907,6 +2165,7 @@ const VTTEnhanced = () => {
 			backgroundScale: DEFAULT_SCENE_SETTINGS.backgroundScale,
 			backgroundOffsetX: DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
 			backgroundOffsetY: DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
+			gridOpacity: DEFAULT_SCENE_SETTINGS.gridOpacity,
 		});
 	}, [
 		currentScene?.backgroundImage,
@@ -2013,6 +2272,7 @@ const VTTEnhanced = () => {
 				backgroundScale: 1,
 				backgroundOffsetX: 0,
 				backgroundOffsetY: 0,
+				gridOpacity: DEFAULT_SCENE_SETTINGS.gridOpacity,
 				gridSize: map.grid.size,
 			});
 		},
@@ -2022,6 +2282,56 @@ const VTTEnhanced = () => {
 	const handleMapGridAction = useCallback(
 		(grid: GridPosition) => {
 			if (!currentScene) return;
+			if (isBackgroundCalibrating && isWarden && currentScene.backgroundImage) {
+				const calibrationPoint = { x: grid.x, y: grid.y };
+				if (backgroundCalibrationPoints.length === 0) {
+					setBackgroundCalibrationPoints([calibrationPoint]);
+					toast({
+						title: "Calibration anchor placed",
+						description:
+							"Now click a second corner on the same printed map square.",
+					});
+					return;
+				}
+
+				const calibration = calibrateVttBackgroundToGrid({
+					anchorPoint: backgroundCalibrationPoints[0] as VttCalibrationPoint,
+					referencePoint: calibrationPoint,
+					gridSize,
+					zoom,
+					backgroundScale,
+					backgroundOffsetX,
+					backgroundOffsetY,
+				});
+
+				if (!calibration) {
+					setBackgroundCalibrationPoints([]);
+					toast({
+						title: "Calibration needs more space",
+						description:
+							"Pick two corners that span a full map square so the app grid can measure it.",
+						variant: "destructive",
+					});
+					return;
+				}
+
+				updateScene({
+					backgroundScale: calibration.backgroundScale,
+					backgroundOffsetX: calibration.backgroundOffsetX,
+					backgroundOffsetY: calibration.backgroundOffsetY,
+					gridOpacity: Math.min(
+						clampVttGridOpacity(currentScene.gridOpacity),
+						GRID_VISIBILITY_PRESETS.faded,
+					),
+				});
+				setBackgroundCalibrationPoints([]);
+				setIsBackgroundCalibrating(false);
+				toast({
+					title: "Map aligned to app grid",
+					description: `Embedded grid square measured ${calibration.measuredCellPx}px and was snapped to the ${calibration.targetCellPx}px app grid.`,
+				});
+				return;
+			}
 
 			if (selectedTool === "note" && isWarden) {
 				const text = noteText.trim();
@@ -2163,8 +2473,14 @@ const VTTEnhanced = () => {
 		},
 		[
 			appendToken,
+			backgroundCalibrationPoints,
+			backgroundOffsetX,
+			backgroundOffsetY,
+			backgroundScale,
 			currentLayer,
 			currentScene,
+			gridSize,
+			isBackgroundCalibrating,
 			isWarden,
 			libraryTokens,
 			measurementStart,
@@ -2176,6 +2492,7 @@ const VTTEnhanced = () => {
 			characterOwnerMap.get,
 			updateScene,
 			vttRealtime.userId,
+			zoom,
 			toast,
 		],
 	);
@@ -2216,6 +2533,9 @@ const VTTEnhanced = () => {
 		if (!currentScene) return;
 		const grid = getGridPosition(e);
 		if (!grid) return;
+		if (isBackgroundCalibrating) {
+			return;
+		}
 
 		if (selectedTool === "fog" && fogOfWar && isWarden) {
 			lastFogCellRef.current = `${grid.gridX},${grid.gridY}`;
@@ -2257,6 +2577,10 @@ const VTTEnhanced = () => {
 			// Escape: deselect everything
 			if (e.key === "Escape") {
 				e.preventDefault();
+				if (isBackgroundCalibrating) {
+					cancelBackgroundCalibration();
+					return;
+				}
 				setActiveTokenId(null);
 				return;
 			}
@@ -2411,10 +2735,12 @@ const VTTEnhanced = () => {
 		},
 		[
 			activeTokenId,
+			cancelBackgroundCalibration,
 			currentScene?.tokens,
 			getGridPositionFromPoint,
 			handleFitZoom,
 			handleMapGridAction,
+			isBackgroundCalibrating,
 			isWarden,
 			removeToken,
 			updateToken,
@@ -2563,12 +2889,13 @@ const VTTEnhanced = () => {
 
 	const handleMapDoubleClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
+			if (isBackgroundCalibrating) return;
 			const grid = getGridPosition(e);
 			if (grid) {
 				vttRealtime.sendPing(grid.gridX, grid.gridY);
 			}
 		},
-		[getGridPosition, vttRealtime],
+		[getGridPosition, isBackgroundCalibrating, vttRealtime],
 	);
 
 	const handleMapMouseUp = useCallback(
@@ -4013,14 +4340,13 @@ const VTTEnhanced = () => {
 													<Label className="text-xs">Background Scale</Label>
 													<Input
 														type="number"
-														min={0.4}
-														max={3}
+														min={0.1}
+														max={8}
 														step={0.05}
 														value={backgroundScale}
 														onChange={(e) =>
 															updateScene({
-																backgroundScale: Math.max(
-																	0.4,
+																backgroundScale: clampVttBackgroundScale(
 																	Number(e.target.value) || 1,
 																),
 															})
@@ -4058,7 +4384,46 @@ const VTTEnhanced = () => {
 														/>
 													</div>
 												</div>
+												<div>
+													<Label className="text-xs">App Grid Visibility</Label>
+													<Select
+														value={gridVisibilityPreset}
+														onValueChange={(value: VttGridVisibilityPreset) => {
+															const nextOpacity =
+																GRID_VISIBILITY_OPTIONS.find(
+																	(option) => option.value === value,
+																)?.opacity ?? DEFAULT_SCENE_SETTINGS.gridOpacity;
+															updateScene({ gridOpacity: nextOpacity });
+														}}
+													>
+														<SelectTrigger className="h-8 text-xs">
+															<SelectValue placeholder="Visible" />
+														</SelectTrigger>
+														<SelectContent>
+															{GRID_VISIBILITY_OPTIONS.map((option) => (
+																<SelectItem key={option.value} value={option.value}>
+																	{option.label}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												</div>
 												<div className="flex gap-2">
+													<Button
+														variant="outline"
+														size="sm"
+														className="flex-1"
+														onClick={() => {
+															if (isBackgroundCalibrating) {
+																cancelBackgroundCalibration();
+																return;
+															}
+															startBackgroundCalibration();
+														}}
+														disabled={!currentScene?.backgroundImage}
+													>
+														{isBackgroundCalibrating ? "Cancel Align" : "Align To App Grid"}
+													</Button>
 													<Button
 														variant="outline"
 														size="sm"
@@ -4073,6 +4438,16 @@ const VTTEnhanced = () => {
 													>
 														Reset View
 													</Button>
+												</div>
+												<div className="flex gap-2">
+													<Button
+														variant="outline"
+														size="sm"
+														className="flex-1"
+														onClick={() => setShowGrid((prev) => !prev)}
+													>
+														{showGrid ? "Hide App Grid" : "Show App Grid"}
+													</Button>
 													<Button
 														variant="outline"
 														size="sm"
@@ -4084,214 +4459,214 @@ const VTTEnhanced = () => {
 												</div>
 											</div>
 										</AscendantWindow>
-										{PREMADE_MAPS.length > 0 && (
-											<AscendantWindow title="PREMADE MAPS" density="compact">
-												<div className="grid grid-cols-2 gap-2">
-													{PREMADE_MAPS.map((map) => (
-														<button
-															type="button"
-															key={map.id}
-															onClick={() => applyPremadeMap(map)}
-															className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
-															aria-label={`Use ${map.name} map`}
-														>
-															<div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
-																<OptimizedImage
-																	src={map.thumbnail}
-																	alt={`${map.name} thumbnail`}
-																	className="w-full h-full object-cover"
-																	size="small"
-																/>
-															</div>
-															<div className="mt-2 flex items-center justify-between gap-2">
-																<span className="text-xs font-heading">
-																	{map.name}
-																</span>
-																<Badge
-																	variant="outline"
-																	className="text-[9px] uppercase tracking-wide"
-																>
-																	{map.theme}
-																</Badge>
-															</div>
-															<div className="text-[10px] text-foreground/70">
-																{map.grid.width}x{map.grid.height} -{" "}
-																{map.grid.size}px grid
-															</div>
-														</button>
-													))}
+									{PREMADE_MAPS.length > 0 && (
+										<AscendantWindow title="PREMADE MAPS" density="compact">
+											<div className="grid grid-cols-2 gap-2">
+												{PREMADE_MAPS.map((map) => (
+													<button
+														type="button"
+														key={map.id}
+														onClick={() => applyPremadeMap(map)}
+														className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
+														aria-label={`Use ${map.name} map`}
+													>
+														<div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
+															<OptimizedImage
+																src={map.thumbnail}
+																alt={`${map.name} thumbnail`}
+																className="w-full h-full object-cover"
+																size="small"
+															/>
+														</div>
+														<div className="mt-2 flex items-center justify-between gap-2">
+															<span className="text-xs font-heading">
+																{map.name}
+															</span>
+															<Badge
+																variant="outline"
+																className="text-[9px] uppercase tracking-wide"
+															>
+																{map.theme}
+															</Badge>
+														</div>
+														<div className="text-[10px] text-foreground/70">
+															{map.grid.width}x{map.grid.height} -{" "}
+															{map.grid.size}px grid
+														</div>
+													</button>
+												))}
+											</div>
+										</AscendantWindow>
+									)}
+								</TabsContent>
+								<TabsContent
+									value="tokens"
+									className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+								>
+									<AscendantWindow title="TOKENS" density="compact">
+										<Tabs defaultValue="characters" className="w-full">
+											<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+												<TabsTrigger
+													data-testid="vtt-tokens-tab-characters"
+													value="characters"
+													className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+												>
+													<Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+													<span className="hidden xs:inline">Characters</span>
+													<span className="xs:hidden">C</span>
+												</TabsTrigger>
+												<TabsTrigger
+													data-testid="vtt-tokens-tab-library"
+													value="library"
+													className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+												>
+													<ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+													<span className="hidden xs:inline">Library</span>
+													<span className="xs:hidden">L</span>
+												</TabsTrigger>
+											</TabsList>
+											<TabsContent value="characters" className="mt-3">
+												<div className="space-y-2 max-h-60 overflow-y-auto">
+													{resolvedCharacters.length === 0 && (
+														<AscendantText className="block text-xs text-foreground/70 text-center py-4">
+															No characters yet.
+														</AscendantText>
+													)}
+													{resolvedCharacters.map((char) => {
+														const portraitUrl =
+															typeof char.portrait_url === "string"
+																? char.portrait_url
+																: null;
+														return (
+															<button
+																type="button"
+																key={char.id}
+																onClick={() => {
+																	setSelectedCharacterId(char.id);
+																	setSelectedLibraryTokenId(null);
+																	setSelectedTool("select");
+																}}
+																className={cn(
+																	"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
+																	selectedCharacterId === char.id
+																		? "bg-primary/20 border-primary"
+																		: "border-border hover:bg-muted/50",
+																)}
+															>
+																{portraitUrl && (
+																	<OptimizedImage
+																		src={portraitUrl}
+																		alt={char.name}
+																		className="w-8 h-8 rounded-full object-cover border border-border"
+																		size="thumbnail"
+																	/>
+																)}
+																<div className="flex-1 min-w-0">
+																	<div className="font-semibold truncate">
+																		{char.name}
+																	</div>
+																	<div className="text-foreground/70">
+																		{char.hp_current || 0}/{char.hp_max || 0}{" "}
+																		HP | AC {char.armor_class || 10}
+																	</div>
+																</div>
+															</button>
+														);
+													})}
 												</div>
-											</AscendantWindow>
-										)}
-									</TabsContent>
-									<TabsContent
-										value="tokens"
-										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
-									>
-										<AscendantWindow title="TOKENS" density="compact">
-											<Tabs defaultValue="characters" className="w-full">
-												<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
-													<TabsTrigger
-														data-testid="vtt-tokens-tab-characters"
-														value="characters"
-														className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-													>
-														<Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-														<span className="hidden xs:inline">Characters</span>
-														<span className="xs:hidden">C</span>
-													</TabsTrigger>
-													<TabsTrigger
-														data-testid="vtt-tokens-tab-library"
-														value="library"
-														className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-													>
-														<ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-														<span className="hidden xs:inline">Library</span>
-														<span className="xs:hidden">L</span>
-													</TabsTrigger>
-												</TabsList>
-												<TabsContent value="characters" className="mt-3">
+											</TabsContent>
+											<TabsContent value="library" className="mt-3">
+												<div className="space-y-3">
+													<Input
+														value={tokenSearch}
+														onChange={(e) => setTokenSearch(e.target.value)}
+														placeholder="Search tokens..."
+														className="h-8 text-xs"
+													/>
 													<div className="space-y-2 max-h-60 overflow-y-auto">
-														{resolvedCharacters.length === 0 && (
+														{filteredLibraryTokens.length === 0 && (
 															<AscendantText className="block text-xs text-foreground/70 text-center py-4">
-																No characters yet.
+																No tokens match.
 															</AscendantText>
 														)}
-														{resolvedCharacters.map((char) => {
-															const portraitUrl =
-																typeof char.portrait_url === "string"
-																	? char.portrait_url
-																	: null;
+														{filteredLibraryTokens.map((token) => {
+															const isOverlayPreview =
+																token.render?.mode === "overlay" ||
+																token.type === "effect" ||
+																token.type === "prop" ||
+																(!!token.imageUrl &&
+																	(token.imageUrl.includes(
+																		"/generated/props/",
+																	) ||
+																		token.imageUrl.includes(
+																			"/generated/effects/",
+																		)));
 															return (
 																<button
 																	type="button"
-																	key={char.id}
+																	key={token.id}
 																	onClick={() => {
-																		setSelectedCharacterId(char.id);
-																		setSelectedLibraryTokenId(null);
+																		setSelectedLibraryTokenId(token.id);
+																		setSelectedCharacterId(null);
 																		setSelectedTool("select");
 																	}}
 																	className={cn(
 																		"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
-																		selectedCharacterId === char.id
+																		selectedLibraryTokenId === token.id
 																			? "bg-primary/20 border-primary"
 																			: "border-border hover:bg-muted/50",
 																	)}
 																>
-																	{portraitUrl && (
-																		<OptimizedImage
-																			src={portraitUrl}
-																			alt={char.name}
-																			className="w-8 h-8 rounded-full object-cover border border-border"
-																			size="thumbnail"
-																		/>
-																	)}
+																	<div
+																		className={cn(
+																			"w-8 h-8 border border-border flex items-center justify-center overflow-hidden",
+																			isOverlayPreview
+																				? "rounded-md bg-transparent"
+																				: "rounded-full bg-muted/40",
+																		)}
+																	>
+																		{token.imageUrl ? (
+																			<OptimizedImage
+																				src={token.imageUrl}
+																				alt={token.name}
+																				className={cn(
+																					"w-full h-full",
+																					isOverlayPreview
+																						? "object-contain"
+																						: "object-cover rounded-full",
+																				)}
+																				size="thumbnail"
+																			/>
+																		) : (
+																			<span className="text-sm">
+																				{token.emoji || "@"}
+																			</span>
+																		)}
+																	</div>
 																	<div className="flex-1 min-w-0">
 																		<div className="font-semibold truncate">
-																			{char.name}
+																			{token.name}
 																		</div>
-																		<div className="text-foreground/70">
-																			{char.hp_current || 0}/{char.hp_max || 0}{" "}
-																			HP | AC {char.armor_class || 10}
+																		<div className="text-foreground/70 capitalize">
+																			{token.category} | {token.size}
 																		</div>
 																	</div>
 																</button>
 															);
 														})}
 													</div>
-												</TabsContent>
-												<TabsContent value="library" className="mt-3">
-													<div className="space-y-3">
-														<Input
-															value={tokenSearch}
-															onChange={(e) => setTokenSearch(e.target.value)}
-															placeholder="Search tokens..."
-															className="h-8 text-xs"
-														/>
-														<div className="space-y-2 max-h-60 overflow-y-auto">
-															{filteredLibraryTokens.length === 0 && (
-																<AscendantText className="block text-xs text-foreground/70 text-center py-4">
-																	No tokens match.
-																</AscendantText>
-															)}
-															{filteredLibraryTokens.map((token) => {
-																const isOverlayPreview =
-																	token.render?.mode === "overlay" ||
-																	token.type === "effect" ||
-																	token.type === "prop" ||
-																	(!!token.imageUrl &&
-																		(token.imageUrl.includes(
-																			"/generated/props/",
-																		) ||
-																			token.imageUrl.includes(
-																				"/generated/effects/",
-																			)));
-																return (
-																	<button
-																		type="button"
-																		key={token.id}
-																		onClick={() => {
-																			setSelectedLibraryTokenId(token.id);
-																			setSelectedCharacterId(null);
-																			setSelectedTool("select");
-																		}}
-																		className={cn(
-																			"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
-																			selectedLibraryTokenId === token.id
-																				? "bg-primary/20 border-primary"
-																				: "border-border hover:bg-muted/50",
-																		)}
-																	>
-																		<div
-																			className={cn(
-																				"w-8 h-8 border border-border flex items-center justify-center overflow-hidden",
-																				isOverlayPreview
-																					? "rounded-md bg-transparent"
-																					: "rounded-full bg-muted/40",
-																			)}
-																		>
-																			{token.imageUrl ? (
-																				<OptimizedImage
-																					src={token.imageUrl}
-																					alt={token.name}
-																					className={cn(
-																						"w-full h-full",
-																						isOverlayPreview
-																							? "object-contain"
-																							: "object-cover rounded-full",
-																					)}
-																					size="thumbnail"
-																				/>
-																			) : (
-																				<span className="text-sm">
-																					{token.emoji || "@"}
-																				</span>
-																			)}
-																		</div>
-																		<div className="flex-1 min-w-0">
-																			<div className="font-semibold truncate">
-																				{token.name}
-																			</div>
-																			<div className="text-foreground/70 capitalize">
-																				{token.category} | {token.size}
-																			</div>
-																		</div>
-																	</button>
-																);
-															})}
-														</div>
-													</div>
-												</TabsContent>
-											</Tabs>
-										</AscendantWindow>
-									</TabsContent>
-								</Tabs>
-							</VTTDrawer>
-						)}
+												</div>
+											</TabsContent>
+										</Tabs>
+									</AscendantWindow>
+								</TabsContent>
+							</Tabs>
+						</VTTDrawer>
+					)}
 
-						{/* Main Map Area — fills remaining viewport. */}
-						<div
-							className={cn(
+								{/* Main Map Area — fills remaining viewport. */}
+								<div
+									className={cn(
 								"vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden",
 							)}
 						>
@@ -4429,6 +4804,17 @@ const VTTEnhanced = () => {
 													projection.
 												</AscendantText>
 											</div>
+										) : pixiInitFailed ? (
+											<VttDomFallbackSurface
+												scene={currentScene}
+												tokens={visibleTokens}
+												gridSize={gridSize}
+												zoom={zoom}
+												showGrid={showGrid}
+												activeTokenId={activeTokenId}
+												activeInitiativeTokenId={activeInitiativeTokenId}
+												setActiveTokenId={setActiveTokenId}
+											/>
 										) : (
 											<MemoizedVttPixiStage
 												containerRef={mapRef}
@@ -4452,6 +4838,51 @@ const VTTEnhanced = () => {
 												onTokenDragEnd={handlePixiTokenDragEnd}
 												onInitError={onPixiInitError}
 											/>
+										)}
+										{currentScene && pixiInitFailed && (
+											<div className="absolute top-3 right-3 z-[25] rounded-md border border-amber-500/40 bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+												<div className="flex items-center gap-2 text-xs font-semibold text-amber-500">
+													<ShieldAlert className="h-4 w-4" />
+													Renderer fallback active
+												</div>
+												<div className="mt-1 text-[11px] text-foreground/70">
+													Pixi failed to initialize, so this scene is using the DOM fallback.
+												</div>
+												<Button
+													variant="outline"
+													size="sm"
+													className="mt-2 h-7 text-[11px]"
+													onClick={() => setPixiInitFailed(false)}
+												>
+													Retry Pixi
+												</Button>
+											</div>
+										)}
+										{currentScene?.backgroundImage && isBackgroundCalibrating && (
+											<div className="absolute inset-0 pointer-events-none z-[24]">
+												<div className="absolute top-3 left-3 max-w-sm rounded-md border border-primary/40 bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+													<div className="text-xs font-semibold text-primary">
+														Map Calibration
+													</div>
+													<div className="mt-1 text-[11px] text-foreground/70">
+														{backgroundCalibrationPoints.length === 0
+															? "Click the first corner of one printed grid square on the map."
+															: "Click the second corner on that same square to snap it onto the app grid."}
+													</div>
+												</div>
+												{backgroundCalibrationPoints.map((point, index) => (
+													<DynamicStyle
+														key={`calibration-point-${index + 1}`}
+														className="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-primary bg-background text-[11px] font-semibold text-primary shadow-md"
+														vars={{
+															left: `${point.x}px`,
+															top: `${point.y}px`,
+														}}
+													>
+														{index + 1}
+													</DynamicStyle>
+												))}
+											</div>
 										)}
 
 										{/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}

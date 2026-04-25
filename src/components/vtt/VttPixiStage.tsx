@@ -11,6 +11,10 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { computeVisibilityPolygon, createHexGrid } from "@/lib/vtt";
+import {
+	clampVttGridOpacity,
+	getVttBackgroundTransform,
+} from "@/lib/vtt/backgroundTransform";
 import { getTokenFootprintPx, type TokenSize } from "@/lib/vtt/tokenSizing";
 
 type TokenBlendMode =
@@ -68,6 +72,7 @@ type SceneLike = {
 	backgroundScale?: number;
 	backgroundOffsetX?: number;
 	backgroundOffsetY?: number;
+	gridOpacity?: number;
 	fogOfWar: boolean;
 	fogData?: boolean[][];
 };
@@ -413,16 +418,20 @@ export function VttPixiStage({
 			try {
 				const texture = await Assets.load(scene.backgroundImage);
 				if (!bgActive) return;
+				const backgroundTransform = getVttBackgroundTransform({
+					sceneWidth: scene.width ?? 0,
+					sceneHeight: scene.height ?? 0,
+					gridSize,
+					zoom,
+					backgroundScale: scene.backgroundScale,
+					backgroundOffsetX: scene.backgroundOffsetX,
+					backgroundOffsetY: scene.backgroundOffsetY,
+				});
 				const sprite = Sprite.from(texture as never);
-				sprite.x = (scene.backgroundOffsetX ?? 0) * zoom;
-				sprite.y = (scene.backgroundOffsetY ?? 0) * zoom;
-				sprite.width = (scene.width ?? 0) * gridSize * zoom;
-				sprite.height = (scene.height ?? 0) * gridSize * zoom;
-				const bgScale = scene.backgroundScale ?? 1;
-				if (bgScale !== 1) {
-					sprite.scale.x *= bgScale;
-					sprite.scale.y *= bgScale;
-				}
+				sprite.x = backgroundTransform.offsetXPx;
+				sprite.y = backgroundTransform.offsetYPx;
+				sprite.width = backgroundTransform.imageWidthPx;
+				sprite.height = backgroundTransform.imageHeightPx;
 				sprite.alpha = 0.95;
 				bg.addChild(sprite);
 				if (canvasHostRef.current) {
@@ -640,10 +649,10 @@ export function VttPixiStage({
 
 		const renderGrid = () => {
 			grid.removeChildren();
-			if (!showGrid) return;
+			const gridOpacity = clampVttGridOpacity(scene?.gridOpacity);
+			if (!showGrid || gridOpacity <= 0) return;
 
 			const g = new Graphics();
-			g.alpha = 0.2;
 			const color = 0xffffff;
 			const step = gridSize * zoom;
 			const width = (scene?.width ?? 0) * step;
@@ -681,9 +690,7 @@ export function VttPixiStage({
 					g.lineTo(width, y);
 				}
 			}
-
-			g.stroke({ width: 1, color, alpha: 0.4 });
-
+			g.stroke({ width: 1, color, alpha: gridOpacity });
 			grid.addChild(g);
 		};
 

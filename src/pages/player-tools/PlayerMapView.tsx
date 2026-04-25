@@ -41,6 +41,10 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
+import {
+	clampVttGridOpacity,
+	getVttBackgroundTransform,
+} from "@/lib/vtt/backgroundTransform";
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import { getTokenSizePx } from "@/lib/vtt/tokenSizing";
 import "@/styles/vtt-player-map.css";
@@ -100,6 +104,7 @@ interface Scene {
 	backgroundOffsetX?: number;
 	backgroundOffsetY?: number;
 	gridSize?: number;
+	gridOpacity?: number;
 	tokens: PlacedToken[];
 	fogOfWar: boolean;
 	fogData?: boolean[][];
@@ -779,6 +784,31 @@ const PlayerMapView = ({
 
 	const sceneWidth = currentScene?.width ?? 20;
 	const sceneHeight = currentScene?.height ?? 20;
+	const backgroundTransform = useMemo(
+		() =>
+			getVttBackgroundTransform({
+				sceneWidth,
+				sceneHeight,
+				gridSize,
+				zoom,
+				backgroundScale: currentScene?.backgroundScale,
+				backgroundOffsetX: currentScene?.backgroundOffsetX,
+				backgroundOffsetY: currentScene?.backgroundOffsetY,
+			}),
+		[
+			currentScene?.backgroundOffsetX,
+			currentScene?.backgroundOffsetY,
+			currentScene?.backgroundScale,
+			gridSize,
+			sceneHeight,
+			sceneWidth,
+			zoom,
+		],
+	);
+	const effectiveGridOpacity = useMemo(
+		() => (showGrid ? clampVttGridOpacity(currentScene?.gridOpacity) : 0),
+		[currentScene?.gridOpacity, showGrid],
+	);
 	const ownCharacterId = useMemo(() => {
 		const ownToken = visibleTokens.find((t) => isOwnToken(t) && t.characterId);
 		return ownToken?.characterId || myCharacterId;
@@ -988,7 +1018,7 @@ const PlayerMapView = ({
 												id="playerGrid"
 											/>
 											<label htmlFor="playerGrid" className="cursor-pointer">
-												Grid
+												App Grid
 											</label>
 										</div>
 										<div className="flex items-center gap-1">
@@ -1030,30 +1060,33 @@ const PlayerMapView = ({
 										>
 											{/* Background image */}
 											{currentScene?.backgroundImage && (
-												<div className="absolute inset-0">
-													<DynamicStyle
-														vars={{
-															"--bg-scale": currentScene.backgroundScale ?? 1,
-														}}
-													>
-														<OptimizedImage
-															src={currentScene.backgroundImage}
-															alt="Map background"
-															className="w-full h-full object-cover vtt-background-image"
-															size="large"
-														/>
-													</DynamicStyle>
-												</div>
+												<DynamicStyle
+													className="absolute overflow-hidden pointer-events-none"
+													vars={{
+														left: `${backgroundTransform.offsetXPx}px`,
+														top: `${backgroundTransform.offsetYPx}px`,
+														width: `${backgroundTransform.imageWidthPx}px`,
+														height: `${backgroundTransform.imageHeightPx}px`,
+													}}
+												>
+													<OptimizedImage
+														src={currentScene.backgroundImage}
+														alt="Map background"
+														className="w-full h-full max-w-none vtt-background-image"
+														size="large"
+													/>
+												</DynamicStyle>
 											)}
 
 											{/* Grid overlay */}
-											{showGrid && (
+											{effectiveGridOpacity > 0 && (
 												<DynamicStyle
 													as="div"
 													className="vtt-grid-overlay"
 													vars={{
 														"--grid-bg-size": `${gridSize * zoom}px ${gridSize * zoom}px`,
 														"--grid-border-color": "hsl(var(--border))",
+														opacity: effectiveGridOpacity,
 													}}
 												/>
 											)}

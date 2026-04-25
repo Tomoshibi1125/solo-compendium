@@ -98,6 +98,7 @@ export interface VTTScene {
 	backgroundOffsetY?: number;
 	gridSize: number;
 	gridType: "square" | "hex";
+	gridOpacity?: number;
 	tokens: VTTTokenInstance[];
 	drawings: VTTDrawing[];
 	annotations: VTTAnnotation[];

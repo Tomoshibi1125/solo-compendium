@@ -103,7 +103,6 @@
 .vtt-background-image {
 	opacity: 0.95;
 	transform-origin: top left;
-	--bg-scale: 1;
 }
 
 /* Grid overlay */
@@ -244,10 +243,6 @@
 /* Apply CSS custom properties */
 .vtt-user-avatar {
 	background-color: var(--avatar-bg-color);
-}
-
-.vtt-background-image {
-	transform: scale(var(--bg-scale));
 }
 
 .vtt-grid-overlay {

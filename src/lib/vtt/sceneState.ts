@@ -1,7 +1,11 @@
+import {
+	DEFAULT_SCENE_GRID_OPACITY,
+} from "@/lib/vtt/backgroundTransform";
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
 
 export const DEFAULT_SCENE_SETTINGS = {
 	gridSize: 50,
+	gridOpacity: DEFAULT_SCENE_GRID_OPACITY,
 	backgroundScale: 1,
 	backgroundOffsetX: 0,
 	backgroundOffsetY: 0,
@@ -53,6 +57,7 @@ export const buildDefaultVttScene = ({
 	width,
 	height,
 	gridSize: DEFAULT_SCENE_SETTINGS.gridSize,
+	gridOpacity: DEFAULT_SCENE_SETTINGS.gridOpacity,
 	backgroundScale: DEFAULT_SCENE_SETTINGS.backgroundScale,
 	backgroundOffsetX: DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
 	backgroundOffsetY: DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
@@ -83,6 +88,7 @@ export const duplicateVttScene = (scene: VTTScene): VTTScene => ({
 export const normalizeVttScene = (scene: VTTScene): VTTScene => ({
 	...scene,
 	gridSize: scene.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize,
+	gridOpacity: scene.gridOpacity ?? DEFAULT_SCENE_SETTINGS.gridOpacity,
 	backgroundScale:
 		scene.backgroundScale ?? DEFAULT_SCENE_SETTINGS.backgroundScale,
 	backgroundOffsetX:
@@ -224,6 +230,9 @@ export const removeAssetFromVttScenes = (
 		return {
 			...scene,
 			backgroundImage: backgroundMatches ? undefined : scene.backgroundImage,
+			gridOpacity: backgroundMatches
+				? DEFAULT_SCENE_SETTINGS.gridOpacity
+				: scene.gridOpacity,
 			backgroundScale: backgroundMatches
 				? DEFAULT_SCENE_SETTINGS.backgroundScale
 				: scene.backgroundScale,

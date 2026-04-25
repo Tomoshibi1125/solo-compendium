@@ -73,6 +73,7 @@ describe("buildDefaultVttScene", () => {
 		expect(scene.width).toBe(20);
 		expect(scene.height).toBe(20);
 		expect(scene.gridSize).toBe(DEFAULT_SCENE_SETTINGS.gridSize);
+		expect(scene.gridOpacity).toBe(DEFAULT_SCENE_SETTINGS.gridOpacity);
 		expect(scene.backgroundScale).toBe(DEFAULT_SCENE_SETTINGS.backgroundScale);
 		expect(scene.tokens).toEqual([]);
 		expect(scene.drawings).toEqual([]);
@@ -152,6 +153,7 @@ describe("normalizeVttScene", () => {
 		const normalized = normalizeVttScene(rawScene);
 
 		expect(normalized.gridSize).toBe(DEFAULT_SCENE_SETTINGS.gridSize);
+		expect(normalized.gridOpacity).toBe(DEFAULT_SCENE_SETTINGS.gridOpacity);
 		expect(normalized.backgroundScale).toBe(
 			DEFAULT_SCENE_SETTINGS.backgroundScale,
 		);
@@ -176,11 +178,13 @@ describe("normalizeVttScene", () => {
 		const scene = buildDefaultVttScene({ name: "Scene" });
 		scene.gridSize = 80;
 		scene.gridType = "hex";
+		scene.gridOpacity = 0.04;
 		scene.musicMood = "boss-epic";
 		scene.musicAutoplay = true;
 		const normalized = normalizeVttScene(scene);
 		expect(normalized.gridSize).toBe(80);
 		expect(normalized.gridType).toBe("hex");
+		expect(normalized.gridOpacity).toBe(0.04);
 		expect(normalized.musicMood).toBe("boss-epic");
 		expect(normalized.musicAutoplay).toBe(true);
 	});
@@ -287,6 +291,7 @@ describe("removeAssetFromVttScenes", () => {
 		const sceneOne: VTTScene = {
 			...buildDefaultVttScene({ name: "one" }),
 			backgroundImage: assetUrl,
+			gridOpacity: 0,
 			backgroundScale: 1.4,
 			backgroundOffsetX: 3,
 			backgroundOffsetY: 4,
@@ -309,6 +314,9 @@ describe("removeAssetFromVttScenes", () => {
 		expect(result.removedBackgroundSceneIds).toEqual([sceneOne.id]);
 		expect(result.removedTokenIds).toEqual(["token-1", "token-3"]);
 		expect(result.scenes[0].backgroundImage).toBeUndefined();
+		expect(result.scenes[0].gridOpacity).toBe(
+			DEFAULT_SCENE_SETTINGS.gridOpacity,
+		);
 		expect(result.scenes[0].backgroundScale).toBe(
 			DEFAULT_SCENE_SETTINGS.backgroundScale,
 		);
