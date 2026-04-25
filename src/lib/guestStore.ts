@@ -906,9 +906,9 @@ export function addLocalRollHistory(
 	return record;
 }
 
-export type CampaignWikiArticleRow =
+type CampaignWikiArticleRow =
 	Database["public"]["Tables"]["campaign_wiki_articles"]["Row"];
-export type VttJournalEntryRow =
+type VttJournalEntryRow =
 	Database["public"]["Tables"]["vtt_journal_entries"]["Row"];
 
 export function readLocalWikiArticles(

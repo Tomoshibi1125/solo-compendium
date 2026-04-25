@@ -4,6 +4,7 @@ import { useBackgroundSync } from "@/hooks/useBackgroundSync";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { filterPersonalCharacters } from "@/lib/characterScope";
 import { isNotFoundError, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	createLocalCharacter,
@@ -67,15 +68,27 @@ type ExtendedDatabase = Omit<Database, "public"> & {
 
 const supabaseExtended = supabase as SupabaseClient<ExtendedDatabase>;
 
+export type CharacterListScope = "personal" | "all";
+
+type UseCharactersOptions = {
+	scope?: CharacterListScope;
+};
+
 // Fetch all characters for current user
-export const useCharacters = () => {
+export const useCharacters = (options: UseCharactersOptions = {}) => {
+	const scope = options.scope ?? "personal";
 	return useQuery({
-		queryKey: ["characters"],
+		queryKey: ["characters", scope],
 		queryFn: async () => {
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
-			if (!user) return listLocalCharacters(); // Guest-lite: local character(s)
+			if (!user) {
+				const localCharacters = listLocalCharacters();
+				return scope === "all"
+					? localCharacters
+					: filterPersonalCharacters(localCharacters);
+			}
 
 			const { data: characters, error } = await supabase
 				.from("characters")
@@ -87,7 +100,12 @@ export const useCharacters = () => {
 				logErrorWithContext(error, "useCharacters");
 				throw error;
 			}
-			return (characters || []).map(mapToCharacterWithAbilities);
+			const hydratedCharacters = (characters || []).map(
+				mapToCharacterWithAbilities,
+			);
+			return scope === "all"
+				? hydratedCharacters
+				: filterPersonalCharacters(hydratedCharacters);
 		},
 		retry: false, // Don't retry if not authenticated
 	});

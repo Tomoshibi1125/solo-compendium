@@ -1,9 +1,26 @@
+import {
+	getSandboxHubNpcIds,
+	getSandboxNpcPortraitUrl,
+	SHADOW_REGENT_TOKEN_IMAGE_URL,
+	SHADOW_SOLDIER_TOKEN_IMAGE_URL,
+} from "@/data/compendium/sandbox/sandbox-asset-resolver";
+import { sandboxRecruitableNPCs } from "@/data/compendium/sandbox-npcs";
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
 
 // ============================================================================
 // THE SHADOW OF THE REGENT — VTT SCENES
 // Map configurations and token placement for the Virtual Tabletop
 // ============================================================================
+
+type TokenOptions = {
+	imageOverride?: string;
+	portraitUrl?: string;
+	tokenType?: VTTTokenInstance["tokenType"];
+};
+
+const SANDBOX_NPC_BY_ID = new Map(
+	sandboxRecruitableNPCs.map((npc) => [npc.id, npc] as const),
+);
 
 function createToken(
 	id: string,
@@ -12,11 +29,15 @@ function createToken(
 	x: number,
 	y: number,
 	size: "small" | "medium" | "large" | "huge",
-	imageOverride?: string,
+	options?: TokenOptions,
 ): VTTTokenInstance {
+	const imageUrl =
+		options?.imageOverride ||
+		`/generated/compendium/anomalies/${anomalyId}.webp`;
+
 	return {
 		id,
-		tokenType: "Anomaly",
+		tokenType: options?.tokenType || "Anomaly",
 		name,
 		x,
 		y,
@@ -25,8 +46,8 @@ function createToken(
 		layer: 1,
 		locked: false,
 		visible: true,
-		imageUrl:
-			imageOverride || `/generated/compendium/anomalies/${anomalyId}.webp`,
+		imageUrl,
+		portrait_url: options?.portraitUrl || imageUrl,
 	};
 }
 
@@ -35,18 +56,42 @@ function getRandomAnomalyId() {
 	return `anomaly-${String(id).padStart(4, "0")}`;
 }
 
+const HUB_TOKEN_POSITIONS = [
+	{ x: 15, y: 15 },
+	{ x: 22, y: 20 },
+	{ x: 28, y: 15 },
+];
+
+function createSandboxNpcToken(
+	tokenId: string,
+	npcId: string,
+	x: number,
+	y: number,
+): VTTTokenInstance | null {
+	const npc = SANDBOX_NPC_BY_ID.get(npcId);
+	if (!npc) return null;
+
+	const portraitUrl = getSandboxNpcPortraitUrl(npc);
+
+	return createToken(tokenId, "anomaly-0001", npc.name, x, y, "medium", {
+		imageOverride: portraitUrl,
+		portraitUrl,
+		tokenType: "npc",
+	});
+}
+
 // Map configuration array — one per major location
 const mapConfigs = [
 	{
 		name: "Hub: Bureau District Headquarters",
 		image: "hub_map.png",
-		audio: "ambient_hub.mp3",
+		audio: "ambient_bunker.mp3",
 		type: "hub" as const,
 	},
 	{
 		name: "Hub: Vermillion Guild Hall & Bazaar",
 		image: "bazaar_map.png",
-		audio: "ambient_hub.mp3",
+		audio: "ambient_explore.mp3",
 		type: "hub" as const,
 	},
 	{
@@ -106,7 +151,7 @@ const mapConfigs = [
 	// ── Phase 3 Scenes (Memory-Care Wing, Bureau/Vermillion keyed, Awoko, Slums, Mana Veins, Megadungeon floors)
 	{
 		name: "Day Zero: Memory-Care Wing Exterior",
-		image: "hub_map.png",
+		image: "hospital_map.png",
 		audio: "ambient_explore.mp3",
 		type: "hub" as const,
 	},
@@ -118,20 +163,20 @@ const mapConfigs = [
 	},
 	{
 		name: "Hub: Bureau HQ — Briefing Hall (Ch. 29 R3)",
-		image: "hub_map.png",
-		audio: "ambient_hub.mp3",
+		image: "bunker_map.png",
+		audio: "ambient_bunker.mp3",
 		type: "hub" as const,
 	},
 	{
 		name: "Hub: Vermillion — Tattoo & Sigil Parlour (Ch. 30 R4-5)",
 		image: "bazaar_map.png",
-		audio: "ambient_hub.mp3",
+		audio: "ambient_explore.mp3",
 		type: "hub" as const,
 	},
 	{
 		name: "Outer Slums: Covered Market (Ch. 31 Location 2)",
-		image: "downtown_map.png",
-		audio: "ambient_hub.mp3",
+		image: "slums_map.png",
+		audio: "ambient_explore.mp3",
 		type: "hub" as const,
 	},
 	{
@@ -197,6 +242,11 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 						10 + Math.floor(Math.random() * 40),
 						10 + i * 5,
 						"medium",
+						{
+							imageOverride: SHADOW_SOLDIER_TOKEN_IMAGE_URL,
+							portraitUrl: SHADOW_SOLDIER_TOKEN_IMAGE_URL,
+							tokenType: "npc",
+						},
 					),
 				);
 			}
@@ -208,40 +258,28 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 					30,
 					30,
 					"huge",
+					{
+						imageOverride: SHADOW_REGENT_TOKEN_IMAGE_URL,
+						portraitUrl: SHADOW_REGENT_TOKEN_IMAGE_URL,
+					},
 				),
 			);
 		} else {
-			// Hub maps: friendly NPC tokens
-			tokens.push(
-				createToken(
-					`npc-${index}-commander`,
-					"anomaly-0010",
-					"Commander Park",
-					15,
-					15,
-					"medium",
-				),
-			);
-			tokens.push(
-				createToken(
-					`npc-${index}-merchant`,
-					"anomaly-0012",
-					"Quartermaster",
-					20,
-					20,
-					"medium",
-				),
-			);
-			tokens.push(
-				createToken(
-					`npc-${index}-scout`,
-					"anomaly-0014",
-					"Guild Envoy",
-					25,
-					15,
-					"medium",
-				),
-			);
+			getSandboxHubNpcIds(config.name).forEach((npcId, npcIndex) => {
+				const position =
+					HUB_TOKEN_POSITIONS[npcIndex] ||
+					HUB_TOKEN_POSITIONS[HUB_TOKEN_POSITIONS.length - 1];
+				const npcToken = createSandboxNpcToken(
+					`npc-${index}-${npcId}`,
+					npcId,
+					position.x,
+					position.y,
+				);
+
+				if (npcToken) {
+					tokens.push(npcToken);
+				}
+			});
 		}
 
 		return {

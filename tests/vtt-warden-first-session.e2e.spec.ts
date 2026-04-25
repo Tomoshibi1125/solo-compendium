@@ -54,17 +54,19 @@ test("guest warden first session: map renders in Warden view across scene/token 
 
 	// We must remain in Warden view the entire time — the bug only
 	// manifested when the Warden *hadn't* simulated player view.
-	await expect(playerViewToggle).toHaveText(/Simulate Player View/i);
+	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 
 	// ── Helpers ──────────────────────────────────────────────────────────
 	// The asset browser thumbnails + preview "Use as Map/Token" buttons
 	// let us apply maps and append tokens without ever needing to click
 	// the Pixi canvas (which is wrapped in overflow scroll containers
 	// that intercept Playwright's position-based clicks).
-	const openAssets = async () => {
-		await page.getByRole("tab", { name: /^Assets$/i }).first().click();
-	};
 	const assetSearch = page.getByPlaceholder(/Search .* assets/i).first();
+	const openAssets = async () => {
+		if (await assetSearch.isVisible().catch(() => false)) return;
+		await page.getByTestId("vtt-rail-right-assets").click();
+		await expect(assetSearch).toBeVisible({ timeout: 10_000 });
+	};
 
 	const applyAssetAs = async (
 		searchTerm: string,
@@ -72,7 +74,6 @@ test("guest warden first session: map renders in Warden view across scene/token 
 		action: "map" | "token",
 	) => {
 		await openAssets();
-		await expect(assetSearch).toBeVisible({ timeout: 10_000 });
 		await assetSearch.fill("");
 		await assetSearch.fill(searchTerm);
 		await page.getByRole("button", { name: buttonMatcher }).first().click();
@@ -92,7 +93,7 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 20_000,
 	});
-	await expect(playerViewToggle).toHaveText(/Simulate Player View/i);
+	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 
 	// ── 2. Mutate the scene via additional tokens (regression guard) ─────
 	// Appending tokens forces the Pixi main effect to tear down and
@@ -103,18 +104,19 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 15_000,
 	});
-	await expect(playerViewToggle).toHaveText(/Simulate Player View/i);
+	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 
 	await applyAssetAs("Boss Token", /Boss Token Frame/i, "token");
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 15_000,
 	});
-	await expect(playerViewToggle).toHaveText(/Simulate Player View/i);
+	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 
 	// ── 3. Create a second scene and apply a different map ───────────────
 	// A freshly created scene has no backgroundImage so the bg-loaded
 	// signal must be cleared, and applying a new map re-raises it.
-	await page.getByRole("tab", { name: /^Scene$/i }).click();
+	await page.keyboard.press("Escape");
+	await page.getByTestId("vtt-rail-left-scenes").click();
 	await page.getByTestId("vtt-new-scene").click();
 	await expect(pixiHost).not.toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 5_000,
@@ -129,7 +131,8 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	// Applying a map via Use as Map renames the active scene to the map's
 	// name, so the first scene is now "Rift Keep" and the second is
 	// "Shadow Crypt".
-	await page.getByRole("tab", { name: /^Scene$/i }).click();
+	await page.keyboard.press("Escape");
+	await page.getByTestId("vtt-rail-left-scenes").click();
 	await page.getByTestId("vtt-scene-select-rift-keep").click();
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 15_000,
@@ -141,6 +144,6 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	});
 
 	// ── Final sanity checks ──────────────────────────────────────────────
-	await expect(playerViewToggle).toHaveText(/Simulate Player View/i);
+	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 	expect(pageErrors, pageErrors.join("\n")).toEqual([]);
 });

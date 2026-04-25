@@ -1,9 +1,13 @@
 import React, { useMemo } from "react";
 import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
-import { clampVttGridOpacity, getVttBackgroundTransform } from "@/lib/vtt/backgroundTransform";
-import { getTokenFootprintPx } from "@/lib/vtt/tokenSizing";
 import { cn } from "@/lib/utils";
+import {
+	clampVttGridOpacity,
+	getVttBackgroundTransform,
+} from "@/lib/vtt/backgroundTransform";
+import { buildVttFogRects } from "@/lib/vtt/fogRects";
+import { getTokenFootprintPx } from "@/lib/vtt/tokenSizing";
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
 
 export type VttDomFallbackSurfaceProps = {
@@ -52,13 +56,9 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 		() => (showGrid ? clampVttGridOpacity(scene.gridOpacity) : 0),
 		[scene.gridOpacity, showGrid],
 	);
-	const fogCells = useMemo(() => {
+	const fogRects = useMemo(() => {
 		if (!scene.fogOfWar || !scene.fogData) return [];
-		return scene.fogData.flatMap((row, ry) =>
-			row
-				.map((revealed, rx) => ({ revealed, rx, ry }))
-				.filter((cell) => !cell.revealed),
-		);
+		return buildVttFogRects(scene.fogData);
 	}, [scene.fogData, scene.fogOfWar]);
 
 	return (
@@ -96,17 +96,20 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 					}}
 				/>
 			)}
-			{fogCells.length > 0 && (
-				<div className="absolute inset-0 pointer-events-none z-[2]" data-testid="vtt-dom-fallback-fog">
-					{fogCells.map((cell) => (
+			{fogRects.length > 0 && (
+				<div
+					className="absolute inset-0 pointer-events-none z-[2]"
+					data-testid="vtt-dom-fallback-fog"
+				>
+					{fogRects.map((rect) => (
 						<DynamicStyle
-							key={`fallback-fog-${cell.rx}-${cell.ry}`}
+							key={`fallback-fog-${rect.rx}-${rect.ry}-${rect.width}`}
 							className="absolute bg-black/45"
 							vars={{
-								left: `${cell.rx * gridSize * zoom}px`,
-								top: `${cell.ry * gridSize * zoom}px`,
-								width: `${gridSize * zoom}px`,
-								height: `${gridSize * zoom}px`,
+								left: `${rect.rx * gridSize * zoom}px`,
+								top: `${rect.ry * gridSize * zoom}px`,
+								width: `${rect.width * gridSize * zoom}px`,
+								height: `${rect.height * gridSize * zoom}px`,
 							}}
 						/>
 					))}
@@ -172,7 +175,8 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 									"border-color": borderColor,
 									"border-width": isOverlayToken ? 0 : borderWidth,
 									"box-shadow":
-										activeTokenId === token.id || activeInitiativeTokenId === token.id
+										activeTokenId === token.id ||
+										activeInitiativeTokenId === token.id
 											? `0 0 0 1px ${borderColor}`
 											: undefined,
 									opacity: token.render?.opacity ?? 1,
@@ -185,7 +189,9 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 										alt={token.name}
 										className={cn(
 											"h-full w-full",
-											isOverlayToken ? "object-contain" : "object-cover rounded-full",
+											isOverlayToken
+												? "object-contain"
+												: "object-cover rounded-full",
 										)}
 										size="small"
 									/>

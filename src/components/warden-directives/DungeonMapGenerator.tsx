@@ -31,6 +31,7 @@ import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { cn } from "@/lib/utils";
+import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
 import "./DungeonMapGenerator.css";
 
 // --- Types ---
@@ -60,6 +61,7 @@ export interface Room {
 	height: number;
 	type: CellType;
 	label: string;
+	notes?: RoomNotes;
 }
 
 export interface DungeonMap {
@@ -68,7 +70,45 @@ export interface DungeonMap {
 	cells: Map<string, Cell>;
 	rooms: Room[];
 	seed: number;
+	options: DungeonMapOptions;
 }
+
+export interface RoomNotes {
+	summary: string;
+	encounter?: string;
+	hazard?: string;
+	loot?: string;
+	lore?: string;
+	sourceRefs?: Array<{
+		id: string;
+		type: string;
+		name: string;
+	}>;
+}
+
+export interface DungeonMapOptions {
+	roomCount: number;
+	minRoomSize: number;
+	maxRoomSize: number;
+	treasureRooms: number;
+	trapRooms: number;
+	puzzleRooms: number;
+	secretRooms: number;
+	encounterRooms: number;
+	branching: number;
+}
+
+const DEFAULT_DUNGEON_OPTIONS: DungeonMapOptions = {
+	roomCount: 7,
+	minRoomSize: 2,
+	maxRoomSize: 5,
+	treasureRooms: 1,
+	trapRooms: 1,
+	puzzleRooms: 1,
+	secretRooms: 1,
+	encounterRooms: 3,
+	branching: 25,
+};
 
 export type SerializedCell = {
 	type: CellType;
@@ -82,6 +122,7 @@ export type SerializedDungeonMap = {
 	cells: Array<[string, SerializedCell]>;
 	rooms: Room[];
 	seed: number;
+	options?: DungeonMapOptions;
 };
 
 export type DungeonMapGeneratorState = {
@@ -90,6 +131,7 @@ export type DungeonMapGeneratorState = {
 	dungeonMap: SerializedDungeonMap | null;
 	selectedCellType: CellType;
 	zoom: number;
+	options: DungeonMapOptions;
 };
 
 // --- Serialization ---
@@ -104,6 +146,7 @@ const serializeDungeonMap = (
 		height: map.height,
 		seed: map.seed,
 		rooms: map.rooms,
+		options: map.options,
 		cells: Array.from(map.cells.entries()).map(([key, cell]) => [
 			key,
 			{
@@ -135,12 +178,30 @@ const deserializeDungeonMap = (
 		seed: map.seed,
 		rooms: map.rooms,
 		cells,
+		options: map.options ?? DEFAULT_DUNGEON_OPTIONS,
 	};
 };
 
 // --- Constants ---
 
 const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
+
+export interface DungeonRiftContext {
+	rank: string;
+	theme: string;
+	biome: string;
+	boss: string;
+	complications?: string[];
+	hazards?: string[];
+	rewards?: string[];
+	linkedContent?: {
+		boss?: WardenLinkedEntry | null;
+		encounters?: WardenLinkedEntry[];
+		hazards?: WardenLinkedEntry[];
+		loot?: WardenLinkedEntry[];
+		lore?: WardenLinkedEntry[];
+	};
+}
 
 interface CellTypeConfig {
 	type: CellType;
@@ -208,8 +269,95 @@ const CELL_TYPES: CellTypeConfig[] = [
 
 // --- Generation Logic ---
 
-function generateMap(width: number, height: number, rank: string): DungeonMap {
+function normalizeDungeonOptions(
+	options: DungeonMapOptions,
+	width: number,
+	height: number,
+): DungeonMapOptions {
+	const maxRoomSize = Math.max(
+		2,
+		Math.min(options.maxRoomSize, Math.max(2, Math.min(width, height) - 2)),
+	);
+	const minRoomSize = Math.max(2, Math.min(options.minRoomSize, maxRoomSize));
+	const roomCount = Math.max(2, Math.min(options.roomCount, 40));
+
+	return {
+		roomCount,
+		minRoomSize,
+		maxRoomSize,
+		treasureRooms: Math.max(0, Math.min(options.treasureRooms, roomCount - 2)),
+		trapRooms: Math.max(0, Math.min(options.trapRooms, roomCount - 2)),
+		puzzleRooms: Math.max(0, Math.min(options.puzzleRooms, roomCount - 2)),
+		secretRooms: Math.max(0, Math.min(options.secretRooms, roomCount - 2)),
+		encounterRooms: Math.max(0, Math.min(options.encounterRooms, roomCount)),
+		branching: Math.max(0, Math.min(options.branching, 100)),
+	};
+}
+
+function pickLinkedEntry(
+	entries: WardenLinkedEntry[] | undefined,
+	index: number,
+): WardenLinkedEntry | null {
+	if (!entries || entries.length === 0) return null;
+	return entries[index % entries.length];
+}
+
+function toSourceRef(entry: WardenLinkedEntry | null) {
+	if (!entry) return undefined;
+	return {
+		id: entry.id,
+		type: entry.type,
+		name: entry.name,
+	};
+}
+
+function buildRoomNotes(
+	roomType: CellType,
+	index: number,
+	rank: string,
+	context?: DungeonRiftContext,
+): RoomNotes {
+	const encounter =
+		roomType === "boss"
+			? (context?.linkedContent?.boss ?? null)
+			: pickLinkedEntry(context?.linkedContent?.encounters, index);
+	const hazard =
+		roomType === "trap"
+			? pickLinkedEntry(context?.linkedContent?.hazards, index)
+			: null;
+	const loot =
+		roomType === "treasure" || roomType === "secret"
+			? pickLinkedEntry(context?.linkedContent?.loot, index)
+			: null;
+	const lore = pickLinkedEntry(context?.linkedContent?.lore, index);
+	const refs = [encounter, hazard, loot, lore]
+		.map(toSourceRef)
+		.filter(Boolean) as RoomNotes["sourceRefs"];
+
+	return {
+		summary: `${roomType === "room" ? "Rift chamber" : CELL_TYPES.find((cellType) => cellType.type === roomType)?.label || "Rift chamber"} tuned for Rank ${rank}${context ? ` within ${context.biome}` : ""}.`,
+		encounter:
+			roomType === "boss"
+				? encounter?.name || context?.boss
+				: encounter?.name || undefined,
+		hazard:
+			hazard?.name || context?.hazards?.[index % (context.hazards.length || 1)],
+		loot:
+			loot?.name || context?.rewards?.[index % (context.rewards.length || 1)],
+		lore: lore?.name || context?.theme,
+		sourceRefs: refs && refs.length > 0 ? refs : undefined,
+	};
+}
+
+function generateMap(
+	width: number,
+	height: number,
+	rank: string,
+	options: DungeonMapOptions = DEFAULT_DUNGEON_OPTIONS,
+	context?: DungeonRiftContext,
+): DungeonMap {
 	const seed = Date.now();
+	const mapOptions = normalizeDungeonOptions(options, width, height);
 	const cells = new Map<string, Cell>();
 	const rooms: Room[] = [];
 
@@ -224,16 +372,7 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 		}
 	}
 
-	// Determine number of rooms based on rank
-	const roomCounts: Record<string, number> = {
-		E: 3 + Math.floor(Math.random() * 3),
-		D: 4 + Math.floor(Math.random() * 4),
-		C: 5 + Math.floor(Math.random() * 5),
-		B: 6 + Math.floor(Math.random() * 6),
-		A: 8 + Math.floor(Math.random() * 8),
-		S: 10 + Math.floor(Math.random() * 10),
-	};
-	const numRooms = roomCounts[rank] || 5;
+	const numRooms = mapOptions.roomCount;
 
 	// Generate rooms
 	const generatedRooms: {
@@ -243,9 +382,17 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 		height: number;
 	}[] = [];
 
-	for (let i = 0; i < numRooms * 2; i++) {
-		const roomWidth = 2 + Math.floor(Math.random() * 4);
-		const roomHeight = 2 + Math.floor(Math.random() * 4);
+	for (let i = 0; i < numRooms * 8; i++) {
+		const roomWidth =
+			mapOptions.minRoomSize +
+			Math.floor(
+				Math.random() * (mapOptions.maxRoomSize - mapOptions.minRoomSize + 1),
+			);
+		const roomHeight =
+			mapOptions.minRoomSize +
+			Math.floor(
+				Math.random() * (mapOptions.maxRoomSize - mapOptions.minRoomSize + 1),
+			);
 		const x = Math.floor(Math.random() * (width - roomWidth - 1)) + 1;
 		const y = Math.floor(Math.random() * (height - roomHeight - 1)) + 1;
 
@@ -269,7 +416,16 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 		}
 	}
 
-	// Place rooms
+	const specialRoomQueue: CellType[] = [
+		...Array.from(
+			{ length: mapOptions.treasureRooms },
+			() => "treasure" as const,
+		),
+		...Array.from({ length: mapOptions.trapRooms }, () => "trap" as const),
+		...Array.from({ length: mapOptions.puzzleRooms }, () => "puzzle" as const),
+		...Array.from({ length: mapOptions.secretRooms }, () => "secret" as const),
+	].sort(() => Math.random() - 0.5);
+
 	generatedRooms.forEach((room, index) => {
 		let roomType: CellType = "room";
 		let label = `Room ${index + 1}`;
@@ -281,19 +437,12 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 			roomType = "boss";
 			label = "Boss Chamber";
 		} else {
-			const rand = Math.random();
-			if (rand < 0.15 && rank >= "C") {
-				roomType = "treasure";
-				label = "Treasure Room";
-			} else if (rand < 0.25 && rank >= "D") {
-				roomType = "trap";
-				label = "Trap Room";
-			} else if (rand < 0.35 && rank >= "B") {
-				roomType = "puzzle";
-				label = "Puzzle Room";
-			} else if (rand < 0.45 && rank >= "C") {
-				roomType = "secret";
-				label = "Secret Room";
+			const nextSpecialType = specialRoomQueue.shift();
+			if (nextSpecialType) {
+				roomType = nextSpecialType;
+				label =
+					CELL_TYPES.find((cellType) => cellType.type === nextSpecialType)
+						?.label || `Room ${index + 1}`;
 			}
 		}
 
@@ -318,6 +467,7 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 			height: room.height,
 			type: roomType,
 			label,
+			notes: buildRoomNotes(roomType, index, rank, context),
 		});
 	});
 
@@ -352,7 +502,7 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 		}
 	}
 
-	return { width, height, cells, rooms, seed };
+	return { width, height, cells, rooms, seed, options: mapOptions };
 }
 
 // --- Component ---
@@ -360,7 +510,7 @@ function generateMap(width: number, height: number, rank: string): DungeonMap {
 export interface DungeonMapGeneratorProps {
 	entityId?: string;
 	className?: string;
-	riftContext?: { rank: string; theme: string; biome: string; boss: string };
+	riftContext?: DungeonRiftContext;
 }
 
 export function DungeonMapGenerator({
@@ -374,6 +524,9 @@ export function DungeonMapGenerator({
 	const [dungeonMap, setDungeonMap] = useState<DungeonMap | null>(null);
 	const [selectedCellType, setSelectedCellType] = useState<CellType>("room");
 	const [zoom, setZoom] = useState(1);
+	const [options, setOptions] = useState<DungeonMapOptions>(
+		DEFAULT_DUNGEON_OPTIONS,
+	);
 
 	const {
 		state: storedState,
@@ -386,6 +539,7 @@ export function DungeonMapGenerator({
 			dungeonMap: null,
 			selectedCellType: "room",
 			zoom: 1,
+			options: DEFAULT_DUNGEON_OPTIONS,
 		},
 		storageKey: `solo-compendium.Warden-tools.dungeon-map-generator.v1${entityId ? `.${entityId}` : ""}`,
 	});
@@ -400,6 +554,7 @@ export function DungeonMapGenerator({
 			dungeonMap: deserializeDungeonMap(storedState.dungeonMap ?? null),
 			selectedCellType: (storedState.selectedCellType as CellType) ?? "room",
 			zoom: typeof storedState.zoom === "number" ? storedState.zoom : 1,
+			options: storedState.options ?? DEFAULT_DUNGEON_OPTIONS,
 		};
 	}, [storedState]);
 
@@ -411,6 +566,7 @@ export function DungeonMapGenerator({
 		setDungeonMap(hydratedState.dungeonMap);
 		setSelectedCellType(hydratedState.selectedCellType);
 		setZoom(hydratedState.zoom);
+		setOptions(hydratedState.options);
 		hasHydratedRef.current = true;
 	}, [hydratedState, isLoading, riftContext?.rank]);
 
@@ -429,8 +585,9 @@ export function DungeonMapGenerator({
 				dungeonMap: serializeDungeonMap(dungeonMap),
 				selectedCellType,
 				zoom,
+				options,
 			}) satisfies DungeonMapGeneratorState,
-		[dungeonMap, mapSize, selectedCellType, selectedRank, zoom],
+		[dungeonMap, mapSize, options, selectedCellType, selectedRank, zoom],
 	);
 
 	const debouncedSavePayload = useDebounce(savePayload, 500);
@@ -443,7 +600,13 @@ export function DungeonMapGenerator({
 
 	const handleGenerate = () => {
 		clearEnhanced();
-		const newMap = generateMap(mapSize.width, mapSize.height, selectedRank);
+		const newMap = generateMap(
+			mapSize.width,
+			mapSize.height,
+			selectedRank,
+			options,
+			riftContext,
+		);
 		setDungeonMap(newMap);
 		toast({
 			title: "Map Generated!",
@@ -480,6 +643,8 @@ Room Layout: ${roomSummary}`;
 			rank: selectedRank,
 			width: dungeonMap.width,
 			height: dungeonMap.height,
+			options: dungeonMap.options,
+			riftContext,
 			rooms: dungeonMap.rooms,
 			generated: new Date().toISOString(),
 		};
@@ -497,7 +662,20 @@ Room Layout: ${roomSummary}`;
 
 	const handleCopy = () => {
 		if (!dungeonMap) return;
-		const text = `RIFT DUNGEON MAP\nRank: ${selectedRank}\nSize: ${mapSize.width}x${mapSize.height}\nRooms: ${dungeonMap.rooms.length}`;
+		const roomLines = dungeonMap.rooms
+			.map((room, index) => {
+				const details = [
+					room.notes?.encounter ? `Encounter: ${room.notes.encounter}` : null,
+					room.notes?.hazard ? `Hazard: ${room.notes.hazard}` : null,
+					room.notes?.loot ? `Loot: ${room.notes.loot}` : null,
+					room.notes?.lore ? `Lore: ${room.notes.lore}` : null,
+				]
+					.filter(Boolean)
+					.join("; ");
+				return `${index + 1}. ${room.label} (${room.width}x${room.height})${details ? ` — ${details}` : ""}`;
+			})
+			.join("\n");
+		const text = `RIFT DUNGEON MAP\nRank: ${selectedRank}\nSize: ${mapSize.width}x${mapSize.height}\nRooms: ${dungeonMap.rooms.length}\n\n${roomLines}`;
 		navigator.clipboard.writeText(text);
 		toast({
 			title: "Copied!",
@@ -508,6 +686,19 @@ Room Layout: ${roomSummary}`;
 	const getCellColor = (type: CellType) => {
 		const cellType = CELL_TYPES.find((ct) => ct.type === type);
 		return cellType?.color || "bg-background border-border";
+	};
+
+	const updateOption = <K extends keyof DungeonMapOptions>(
+		key: K,
+		value: number,
+	) => {
+		setOptions((current) =>
+			normalizeDungeonOptions(
+				{ ...current, [key]: value },
+				mapSize.width,
+				mapSize.height,
+			),
+		);
 	};
 
 	const cellSize = Math.max(
@@ -595,6 +786,109 @@ Room Layout: ${roomSummary}`;
 									max={50}
 								/>
 							</div>
+						</div>
+
+						<div className="grid grid-cols-2 gap-2">
+							<div>
+								<Label htmlFor="room-count">Rooms</Label>
+								<Input
+									id="room-count"
+									type="number"
+									value={options.roomCount}
+									onChange={(e) =>
+										updateOption(
+											"roomCount",
+											Number.parseInt(e.target.value, 10) || 2,
+										)
+									}
+									className="h-9"
+									min={2}
+									max={40}
+								/>
+							</div>
+							<div>
+								<Label htmlFor="encounter-rooms">Encounters</Label>
+								<Input
+									id="encounter-rooms"
+									type="number"
+									value={options.encounterRooms}
+									onChange={(e) =>
+										updateOption(
+											"encounterRooms",
+											Number.parseInt(e.target.value, 10) || 0,
+										)
+									}
+									className="h-9"
+									min={0}
+									max={40}
+								/>
+							</div>
+						</div>
+
+						<div className="grid grid-cols-2 gap-2">
+							<div>
+								<Label htmlFor="room-min-size">Min Room</Label>
+								<Input
+									id="room-min-size"
+									type="number"
+									value={options.minRoomSize}
+									onChange={(e) =>
+										updateOption(
+											"minRoomSize",
+											Number.parseInt(e.target.value, 10) || 2,
+										)
+									}
+									className="h-9"
+									min={2}
+									max={12}
+								/>
+							</div>
+							<div>
+								<Label htmlFor="room-max-size">Max Room</Label>
+								<Input
+									id="room-max-size"
+									type="number"
+									value={options.maxRoomSize}
+									onChange={(e) =>
+										updateOption(
+											"maxRoomSize",
+											Number.parseInt(e.target.value, 10) || 2,
+										)
+									}
+									className="h-9"
+									min={2}
+									max={12}
+								/>
+							</div>
+						</div>
+
+						<div className="grid grid-cols-2 gap-2">
+							{(
+								[
+									["treasureRooms", "Treasure"],
+									["trapRooms", "Hazards"],
+									["puzzleRooms", "Puzzles"],
+									["secretRooms", "Secrets"],
+								] as Array<[keyof DungeonMapOptions, string]>
+							).map(([key, label]) => (
+								<div key={key}>
+									<Label htmlFor={`option-${key}`}>{label}</Label>
+									<Input
+										id={`option-${key}`}
+										type="number"
+										value={options[key]}
+										onChange={(e) =>
+											updateOption(
+												key,
+												Number.parseInt(e.target.value, 10) || 0,
+											)
+										}
+										className="h-9"
+										min={0}
+										max={20}
+									/>
+								</div>
+							))}
 						</div>
 
 						<Button
@@ -751,6 +1045,57 @@ Room Layout: ${roomSummary}`;
 						</div>
 					)}
 				</div>
+
+				{dungeonMap && (
+					<AscendantWindow title="ROOM KEY">
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-72 overflow-y-auto">
+							{dungeonMap.rooms.map((room, index) => (
+								<div
+									key={room.id}
+									className="rounded border border-border/60 bg-muted/20 p-3 text-xs"
+								>
+									<div className="flex items-center justify-between gap-2 mb-1">
+										<span className="font-heading font-semibold">
+											{index + 1}. {room.label}
+										</span>
+										<span className="text-muted-foreground">
+											{room.width}x{room.height}
+										</span>
+									</div>
+									<p className="text-muted-foreground mb-2">
+										{room.notes?.summary}
+									</p>
+									<div className="space-y-1 text-muted-foreground">
+										{room.notes?.encounter && (
+											<p>
+												<span className="text-foreground">Encounter:</span>{" "}
+												{room.notes.encounter}
+											</p>
+										)}
+										{room.notes?.hazard && (
+											<p>
+												<span className="text-foreground">Hazard:</span>{" "}
+												{room.notes.hazard}
+											</p>
+										)}
+										{room.notes?.loot && (
+											<p>
+												<span className="text-foreground">Loot:</span>{" "}
+												{room.notes.loot}
+											</p>
+										)}
+										{room.notes?.lore && (
+											<p>
+												<span className="text-foreground">Lore:</span>{" "}
+												{room.notes.lore}
+											</p>
+										)}
+									</div>
+								</div>
+							))}
+						</div>
+					</AscendantWindow>
+				)}
 
 				<Alert className="bg-primary/5 border-primary/10">
 					<Sparkles className="w-4 h-4 text-primary" />

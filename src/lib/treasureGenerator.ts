@@ -11,6 +11,11 @@ import {
 } from "@/data/compendium/wardenToolConfig";
 import { listCanonicalEntriesBatch } from "@/lib/canonicalCompendium";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import {
+	toWardenLinkedEntry,
+	type WardenGenerationContextType,
+	type WardenLinkedEntry,
+} from "@/lib/wardenGenerationContext";
 
 export { GATE_RANKS, TREASURE_TABLES };
 
@@ -38,8 +43,10 @@ export interface TreasureResult {
 	ones: number; // $1 Bills (Silver)
 	dimes: number; // 10¢ Coins (Copper)
 	items: string[];
+	itemEntries: WardenLinkedEntry[];
 	materials: string[];
 	relics: string[];
+	relicEntries: WardenLinkedEntry[];
 	description: string;
 }
 
@@ -70,23 +77,31 @@ function filterEntriesByRarity(
 	);
 }
 
-function pickUniqueNames(
-	entries: StaticCompendiumEntry[],
+function pickUniqueLinkedEntries(
+	entries: WardenLinkedEntry[],
 	count: number,
-): string[] {
+): WardenLinkedEntry[] {
 	const pool = [...entries];
-	const selected: string[] = [];
+	const selected: WardenLinkedEntry[] = [];
+	const selectedNames = new Set<string>();
 
 	while (pool.length > 0 && selected.length < count) {
 		const index = Math.floor(Math.random() * pool.length);
 		const [entry] = pool.splice(index, 1);
-		const name = entry.display_name || entry.name;
-		if (!selected.includes(name)) {
-			selected.push(name);
+		if (!selectedNames.has(entry.name)) {
+			selectedNames.add(entry.name);
+			selected.push(entry);
 		}
 	}
 
 	return selected;
+}
+
+function linkEntries(
+	type: WardenGenerationContextType,
+	entries: StaticCompendiumEntry[],
+): WardenLinkedEntry[] {
+	return entries.map((entry) => toWardenLinkedEntry(type, entry));
 }
 
 function pickUniqueStrings(
@@ -117,8 +132,10 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 			ones: 0,
 			dimes: 0,
 			items: [],
+			itemEntries: [],
 			materials: [],
 			relics: [],
+			relicEntries: [],
 			description: `Invalid rank: ${rank}`,
 		};
 	}
@@ -147,21 +164,20 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 	const dimes =
 		Math.random() < table.dimeChance ? Math.floor(Math.random() * 50) + 10 : 0;
 
-	const itemCandidates = filterEntriesByRarity(
-		[
-			...(pools.get("equipment") || []),
-			...(pools.get("items") || []),
-			...(pools.get("tattoos") || []),
-			...(pools.get("sigils") || []),
-		],
-		TREASURE_ITEM_RARITIES[rank],
-	);
-	const fallbackItemCandidates = [
-		...(pools.get("equipment") || []),
-		...(pools.get("items") || []),
-		...(pools.get("tattoos") || []),
-		...(pools.get("sigils") || []),
+	const itemCandidateEntries = [
+		...linkEntries("equipment", pools.get("equipment") || []),
+		...linkEntries("items", pools.get("items") || []),
+		...linkEntries("tattoos", pools.get("tattoos") || []),
+		...linkEntries("sigils", pools.get("sigils") || []),
 	];
+	const itemCandidates = filterEntriesByRarity(
+		itemCandidateEntries.map((entry) => entry.entry),
+		TREASURE_ITEM_RARITIES[rank],
+	)
+		.map((entry) =>
+			itemCandidateEntries.find((linked) => linked.id === entry.id),
+		)
+		.filter(Boolean) as WardenLinkedEntry[];
 
 	const numItems =
 		Math.random() < table.itemChance
@@ -169,13 +185,14 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 				? 2 + Math.floor(Math.random() * 3)
 				: 1 + Math.floor(Math.random() * 2)
 			: 0;
-	const items =
+	const itemEntries =
 		numItems > 0
-			? pickUniqueNames(
-					itemCandidates.length > 0 ? itemCandidates : fallbackItemCandidates,
+			? pickUniqueLinkedEntries(
+					itemCandidates.length > 0 ? itemCandidates : itemCandidateEntries,
 					numItems,
 				)
 			: [];
+	const items = itemEntries.map((entry) => entry.name);
 
 	const numMaterials =
 		Math.random() < table.materialChance
@@ -186,24 +203,27 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 			? pickUniqueStrings(TREASURE_MATERIALS[rank], numMaterials)
 			: [];
 
-	const relicCandidates = filterEntriesByRarity(
-		[...(pools.get("relics") || []), ...(pools.get("artifacts") || [])],
-		TREASURE_RELIC_RARITIES[rank],
-	);
-	const fallbackRelicCandidates = [
-		...(pools.get("relics") || []),
-		...(pools.get("artifacts") || []),
+	const relicCandidateEntries = [
+		...linkEntries("relics", pools.get("relics") || []),
+		...linkEntries("artifacts", pools.get("artifacts") || []),
 	];
+	const relicCandidates = filterEntriesByRarity(
+		relicCandidateEntries.map((entry) => entry.entry),
+		TREASURE_RELIC_RARITIES[rank],
+	)
+		.map((entry) =>
+			relicCandidateEntries.find((linked) => linked.id === entry.id),
+		)
+		.filter(Boolean) as WardenLinkedEntry[];
 	const numRelics = Math.random() < table.relicChance ? 1 : 0;
-	const relics =
+	const relicEntries =
 		numRelics > 0
-			? pickUniqueNames(
-					relicCandidates.length > 0
-						? relicCandidates
-						: fallbackRelicCandidates,
+			? pickUniqueLinkedEntries(
+					relicCandidates.length > 0 ? relicCandidates : relicCandidateEntries,
 					numRelics,
 				)
 			: [];
+	const relics = relicEntries.map((entry) => entry.name);
 
 	const descriptions: string[] = [];
 	const displayItems = items.map(formatRegentVernacular);
@@ -244,8 +264,10 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 		ones,
 		dimes,
 		items: displayItems,
+		itemEntries,
 		materials: displayMaterials,
 		relics: displayRelics,
+		relicEntries,
 		description: formatRegentVernacular(descriptions.join(" ")),
 	};
 }

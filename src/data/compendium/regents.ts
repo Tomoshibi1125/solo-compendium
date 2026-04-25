@@ -1,4 +1,5 @@
-﻿import type { Regent } from "@/lib/regentTypes";
+﻿import { getRegentPortraitUrl } from "@/data/compendium/regentPortraits";
+import type { Regent } from "@/lib/regentTypes";
 
 export const regents: Regent[] = [
 	{
@@ -9,7 +10,7 @@ export const regents: Regent[] = [
 		description:
 			"The ultimate umbral manifestation Ascendant class overlay, sharing the ascendant power of Kael Voss, the Weaver of the Absolute. You embody mastery over the veil and the ability to 'Resurge' an infinite legion of Umbral Echoes. This is the highest tier veil-based Ascendant class, granting true Eternal-tier authority over the shadow realm to protect the timeline in the name of the Prime Eternal.",
 		rank: "S",
-		image: "/generated/compendium/Regents/umbral-regent.webp",
+		image: getRegentPortraitUrl("umbral_regent"),
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
@@ -491,7 +492,7 @@ export const regents: Regent[] = [
 		description:
 			"The ultimate manifestation of purification fire, sharing a fragment of Solara, the Brightest Fragment. You command the sacred 'Exarch's Authority' that incinerates corruption and illuminates the darkest depths of the realms. As a vessel of the Radiant Warden, you are tasked with stabilizing the gates and purging the void-noise from reality.",
 		rank: "S",
-		image: "/generated/compendium/Regents/white-flame-Regent.webp",
+		image: getRegentPortraitUrl("radiant_regent"),
 		type: "ascendant-class-overlay",
 		tags: ["regent", "radiant", "white-flames", "purification", "fire"],
 		created_at: "2026-01-13T22:03:39.601Z",
@@ -877,7 +878,7 @@ export const regents: Regent[] = [
 		description:
 			"Embodiment of absolute structural integrity, wielding the shared power of Golem, the Eternal of Giants. You are a foundational pillar of the Ascendant, a conceptually invulnerable entity that anchors the realms against the pull of the Void. Your iron will mirrors the Unyielding Wall, making containment of your presence fundamentally impossible.",
 		rank: "S",
-		image: "/generated/compendium/Regents/steel-flesh-Regent.webp",
+		image: getRegentPortraitUrl("steel_regent"),
 		type: "ascendant-class-overlay",
 		tags: ["regent", "iron_body", "tarnak", "invulnerable", "titan", "defense"],
 		created_at: "2026-01-13T22:03:39.601Z",
@@ -1266,7 +1267,7 @@ export const regents: Regent[] = [
 		description:
 			"Incarnation of primordial destruction, sharing the catastrophic power of Marthos, the Dragon-King of Void. You are the Ascendant's necessary delete-command, capable of transforming into the dragon of apocalypse whose breath erases corrupted reality. As the mortal anchor for the Void Weaver, you represent the inevitable end and the Next Beginning.",
 		rank: "S",
-		image: "/generated/compendium/Regents/destruction-Regent.webp",
+		image: getRegentPortraitUrl("destruction_regent"),
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
@@ -1680,7 +1681,7 @@ export const regents: Regent[] = [
 		description:
 			"Embodiment of tactical genius and absolute battlefield authority, wielding the power of the Regent of Command. You command the vanguard legions with unmatched supremacy, turning every conflict into a masterpiece of war. Your presence governs the flow of battle across dimensions, as you lead the charge of the eternal vanguard.",
 		rank: "S",
-		image: "/generated/compendium/Regents/shadow-command-Regent.webp",
+		image: getRegentPortraitUrl("war_regent"),
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
@@ -2076,7 +2077,7 @@ export const regents: Regent[] = [
 		description:
 			"Herald of eternal winter and absolute zero, wielding the power of the Regent of Frost. You command the biting winds, glacial shards, and the crystalline silence of the void. Your presence freezes the very soul of the world, turning landscapes into frozen wastes of pure order. The Ascendant Bureau classifies you as a Climate Catastrophe event, capable of bringing a global ice age.",
 		rank: "S",
-		image: "/generated/compendium/Regents/frost-Regent.webp",
+		image: getRegentPortraitUrl("frost_regent"),
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
@@ -2437,7 +2438,7 @@ export const regents: Regent[] = [
 		description:
 			"Avatar of primordial evolution and regent of the wild, wielding the power of the Regent of Beasts. All creatures recognize you as the ultimate alpha, and your roar can shatter the instincts of any living being. You embody the perfect predatory form, adaptive and unstoppable. The Ascendant Bureau classifies you as an Alpha-class biodiversity threat.",
 		rank: "S",
-		image: "/generated/compendium/Regents/beast-regent.webp",
+		image: getRegentPortraitUrl("beast_regent"),
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",
@@ -2783,7 +2784,7 @@ export const regents: Regent[] = [
 		description:
 			"Incarnation of plague and pestilence. Walking miasma apocalypse. the Ascendant Bureau tracks 47 unknown pathogens in your wake. The Ascendant Bureau classifies you as a Cataclysm-class entity. Insects obey your will, diseases are your art form, and quarantine zones form wherever you walk. Healing sanctuaries refuse your admittance, biohazard teams follow your movements, and the Grand Healer Guilds have a dedicated task force assigned to you.",
 		rank: "S",
-		image: "/generated/compendium/Regents/plague-regent.webp",
+		image: getRegentPortraitUrl("plague_regent"),
 		type: "ascendant-class-overlay",
 		tags: ["regent", "plague", "disease", "swarm", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
@@ -3179,7 +3180,7 @@ export const regents: Regent[] = [
 		description:
 			"Regent of the void and master of the dimensional weave. You reshape space, time, and distance with absolute authority. Your Cosmic Senses allow you to perceive the very fabric of the multiverse. The Ascendant Bureau classifies you as a Dimensional Regentty Threat. You collapse distances, create pocket dimensions, and place anchors that bypass the laws of physics.",
 		rank: "S",
-		image: "/generated/compendium/Regents/spatial-regent.webp",
+		image: getRegentPortraitUrl("spatial_regent"),
 		type: "ascendant-class-overlay",
 		tags: ["regent", "spatial", "dimensional", "void", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
@@ -3523,7 +3524,7 @@ export const regents: Regent[] = [
 		description:
 			"Embodiment of infinite forms. Copy anything â€” creatures, objects, concepts. No detection possible. The Ascendant Bureau has contradictory records on you because you appear as a different person in every database. DNA tests return different results each time. Your awakening unlocked the ability to become ANYTHING you observe, perfectly and undetectably, making you the ultimate infiltrator, spy, and adaptive combatant.",
 		rank: "S",
-		image: "/generated/compendium/Regents/mimic-regent.webp",
+		image: getRegentPortraitUrl("mimic_regent"),
 		type: "ascendant-class-overlay",
 		tags: ["regent", "mimic", "shapeshifting", "adaptation", "class-overlay"],
 		created_at: "2026-02-26T00:00:00.000Z",
@@ -3910,7 +3911,7 @@ export const regents: Regent[] = [
 		description:
 			"The ultimate authority of biological evolution and living mana-ichor, sharing the adaptive power of Lyra, the Queen of the Swarm. You control the fluid of life, turning it into a regent weapon that ignores the limitations of mortal biology. As a node of the Swarm-Heart, your presence accelerates the evolution of reality and cleanses the bloodlines of the world.",
 		rank: "S",
-		image: "/generated/compendium/Regents/blood-regent.webp",
+		image: getRegentPortraitUrl("blood_regent"),
 		type: "ascendant-class-overlay",
 		tags: ["regent", "blood", "hemomancy", "life", "eternal_of_blood"],
 		created_at: "2026-02-26T00:00:00.000Z",
@@ -4250,7 +4251,7 @@ export const regents: Regent[] = [
 		description:
 			"Vessel of fundamental attraction and universal authority, wielding the incalculable force of Kronos, the Fragment of the Absolute. You command the weight that binds the worlds and collapses the Void into stable geometry. Your will is the anchor of the Ascendant's physics, a universal singularity that dictates the path of all existence in the name of the Absolute Origin.",
 		rank: "S",
-		image: "/generated/compendium/Regents/gravity-regent.webp",
+		image: getRegentPortraitUrl("gravity_regent"),
 		type: "ascendant-class-overlay",
 		tags: [
 			"regent",

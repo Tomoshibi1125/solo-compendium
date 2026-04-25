@@ -45,6 +45,7 @@ import {
 	clampVttGridOpacity,
 	getVttBackgroundTransform,
 } from "@/lib/vtt/backgroundTransform";
+import { buildVttFogRects } from "@/lib/vtt/fogRects";
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import { getTokenSizePx } from "@/lib/vtt/tokenSizing";
 import "@/styles/vtt-player-map.css";
@@ -196,7 +197,6 @@ const PlayerMapView = ({
 		startLeft: number;
 		startTop: number;
 	} | null>(null);
-	const spacePanPressedRef = useRef(false);
 	const [isViewportPanning, setIsViewportPanning] = useState(false);
 	const musicEngineRef = useRef<VttMusicEngine | null>(null);
 	const syncPlayerSceneMusic = useCallback(
@@ -233,7 +233,6 @@ const PlayerMapView = ({
 			setIsViewportPanning(false);
 		};
 		const handleWindowBlur = () => {
-			spacePanPressedRef.current = false;
 			touchRef.current = null;
 			lastDraggedCellRef.current = null;
 			setDraggedTokenId(null);
@@ -425,7 +424,17 @@ const PlayerMapView = ({
 			if (payload.changedBy === vttRealtime.userId) return;
 			// Scene change handled by campaign_tool_states subscription
 		});
-		const unsub7 = vttRealtime.on("audio_sync", (payload) => {
+		const unsub7 = vttRealtime.on("fog_update", (payload) => {
+			if (payload.updatedBy === vttRealtime.userId) return;
+			setCurrentScene((prev) => {
+				if (!prev || prev.id !== payload.sceneId) return prev;
+				return {
+					...prev,
+					fogData: payload.fogData,
+				};
+			});
+		});
+		const unsub8 = vttRealtime.on("audio_sync", (payload) => {
 			if (payload.playedBy === vttRealtime.userId) return;
 			if (payload.action === "music_change" && payload.id) {
 				syncPlayerSceneMusic({
@@ -445,6 +454,7 @@ const PlayerMapView = ({
 			unsub5();
 			unsub6();
 			unsub7();
+			unsub8();
 		};
 	}, [effectiveCampaignId, syncPlayerSceneMusic, vttRealtime]);
 
@@ -543,10 +553,7 @@ const PlayerMapView = ({
 
 	const handleMapMouseDown = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
-			if (
-				(e.button === 1 || (e.button === 0 && spacePanPressedRef.current)) &&
-				mapRef.current
-			) {
+			if (e.button === 2 && mapRef.current) {
 				e.preventDefault();
 				viewportPanRef.current = {
 					startX: e.clientX,
@@ -563,7 +570,7 @@ const PlayerMapView = ({
 	// Token drag handlers — players can drag tokens they own
 	const handleTokenMouseDown = useCallback(
 		(token: PlacedToken, e: React.MouseEvent) => {
-			if (e.button === 1 || (e.button === 0 && spacePanPressedRef.current)) {
+			if (e.button !== 0) {
 				return;
 			}
 			if (token.locked || !isOwnToken(token)) return;
@@ -706,11 +713,6 @@ const PlayerMapView = ({
 	const handleMapKeyDown = useCallback(
 		(e: KeyboardEvent) => {
 			if (isPlayerMapShortcutTarget(e.target)) return;
-			if (e.code === "Space") {
-				spacePanPressedRef.current = true;
-				e.preventDefault();
-				return;
-			}
 			// Hold-X pointer (DDB "Point" parity, respects Warden permission).
 			if (
 				!e.ctrlKey &&
@@ -759,11 +761,6 @@ const PlayerMapView = ({
 
 	const handleMapKeyUp = useCallback(
 		(e: KeyboardEvent) => {
-			if (e.code === "Space") {
-				spacePanPressedRef.current = false;
-				e.preventDefault();
-				return;
-			}
 			if (e.key.toLowerCase() === "x" && pointerPressedRef.current) {
 				pointerPressedRef.current = false;
 				vttRealtime.clearPointer();
@@ -813,13 +810,9 @@ const PlayerMapView = ({
 		const ownToken = visibleTokens.find((t) => isOwnToken(t) && t.characterId);
 		return ownToken?.characterId || myCharacterId;
 	}, [isOwnToken, myCharacterId, visibleTokens]);
-	const fogCells = useMemo(() => {
+	const fogRects = useMemo(() => {
 		if (!currentScene?.fogOfWar || !currentScene.fogData) return [];
-		return currentScene.fogData.flatMap((row, ry) =>
-			row
-				.map((revealed, rx) => ({ revealed, rx, ry }))
-				.filter((cell) => !cell.revealed),
-		);
+		return buildVttFogRects(currentScene.fogData);
 	}, [currentScene?.fogData, currentScene?.fogOfWar]);
 	const auraTokens = useMemo(
 		() => visibleTokens.filter((t) => t.auraRadius && t.auraRadius > 0),
@@ -1033,6 +1026,7 @@ const PlayerMapView = ({
 									ref={mapRef}
 									className={cn(
 										"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto",
+										!isViewportPanning && "cursor-grab",
 										isViewportPanning && "cursor-grabbing select-none",
 									)}
 									onMouseDown={handleMapMouseDown}
@@ -1042,6 +1036,9 @@ const PlayerMapView = ({
 									}}
 									onMouseUp={handleMapMouseUp}
 									onMouseLeave={handleMapMouseUp}
+									onContextMenu={(e) => {
+										e.preventDefault();
+									}}
 									onDoubleClick={handleMapDoubleClick}
 									onWheel={handleMapWheel}
 									onTouchStart={handleMapTouchStart}
@@ -1094,15 +1091,15 @@ const PlayerMapView = ({
 											{/* Fog of war */}
 											{currentScene?.fogOfWar && currentScene.fogData && (
 												<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
-													{fogCells.map((cell) => (
+													{fogRects.map((rect) => (
 														<DynamicStyle
-															key={`fog-${cell.rx}-${cell.ry}`}
-															className="absolute vtt-fog-cell bg-black"
+															key={`fog-${rect.rx}-${rect.ry}-${rect.width}`}
+															className="absolute vtt-fog-cell"
 															vars={{
-																left: `${cell.rx * gridSize * zoom}px`,
-																top: `${cell.ry * gridSize * zoom}px`,
-																width: `${gridSize * zoom}px`,
-																height: `${gridSize * zoom}px`,
+																left: `${rect.rx * gridSize * zoom}px`,
+																top: `${rect.ry * gridSize * zoom}px`,
+																width: `${rect.width * gridSize * zoom}px`,
+																height: `${rect.height * gridSize * zoom}px`,
 																opacity: 0.9,
 															}}
 														/>

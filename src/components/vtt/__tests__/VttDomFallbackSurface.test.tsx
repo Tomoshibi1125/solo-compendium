@@ -63,7 +63,9 @@ const makeScene = (overrides: Partial<VTTScene> = {}): VTTScene => ({
 	...overrides,
 });
 
-const makeToken = (overrides: Partial<VTTTokenInstance> = {}): VTTTokenInstance => ({
+const makeToken = (
+	overrides: Partial<VTTTokenInstance> = {},
+): VTTTokenInstance => ({
 	id: "token-1",
 	name: "Hero",
 	size: "medium",
@@ -110,7 +112,9 @@ describe("VttDomFallbackSurface", () => {
 				setActiveTokenId={setActiveTokenId}
 			/>,
 		);
-		const root = container.querySelector('[data-testid="vtt-dom-fallback-surface"]');
+		const root = container.querySelector(
+			'[data-testid="vtt-dom-fallback-surface"]',
+		);
 		expect(root).toBeTruthy();
 		const background = container.querySelector<HTMLElement>(
 			'[data-testid="vtt-dom-fallback-background"]',
@@ -131,7 +135,9 @@ describe("VttDomFallbackSurface", () => {
 		);
 		expect(tokenButton?.title).toBe("Hero (12/20 HP)");
 		act(() => {
-			tokenButton?.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+			tokenButton?.dispatchEvent(
+				new MouseEvent("mousedown", { bubbles: true }),
+			);
 		});
 		expect(setActiveTokenId).toHaveBeenCalledWith("token-1");
 		unmount();
@@ -151,7 +157,9 @@ describe("VttDomFallbackSurface", () => {
 				setActiveTokenId={setActiveTokenId}
 			/>,
 		);
-		expect(container.querySelector('[data-testid="vtt-dom-fallback-grid"]')).toBeNull();
+		expect(
+			container.querySelector('[data-testid="vtt-dom-fallback-grid"]'),
+		).toBeNull();
 		unmount();
 	});
 });

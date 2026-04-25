@@ -165,15 +165,6 @@ import { compressImage } from "@/lib/imageOptimization";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import {
-	calibrateVttBackgroundToGrid,
-	clampVttBackgroundScale,
-	clampVttGridOpacity,
-	GRID_VISIBILITY_PRESETS,
-	resolveVttGridVisibilityPreset,
-	type VttCalibrationPoint,
-	type VttGridVisibilityPreset,
-} from "@/lib/vtt/backgroundTransform";
-import {
 	type AmbientSoundZone,
 	computeAllZoneStates,
 	computeZoneVolume,
@@ -196,6 +187,15 @@ import {
 	VttMusicEngine,
 	WEATHER_PRESETS,
 } from "@/lib/vtt";
+import {
+	calibrateVttBackgroundToGrid,
+	clampVttBackgroundScale,
+	clampVttGridOpacity,
+	GRID_VISIBILITY_PRESETS,
+	resolveVttGridVisibilityPreset,
+	type VttCalibrationPoint,
+	type VttGridVisibilityPreset,
+} from "@/lib/vtt/backgroundTransform";
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import {
 	buildDefaultVttScene,
@@ -524,13 +524,24 @@ const GRID_VISIBILITY_OPTIONS: Array<{
 	label: string;
 	opacity: number;
 }> = [
-	{ value: "visible", label: "Visible", opacity: GRID_VISIBILITY_PRESETS.visible },
+	{
+		value: "visible",
+		label: "Visible",
+		opacity: GRID_VISIBILITY_PRESETS.visible,
+	},
 	{ value: "faded", label: "Faded", opacity: GRID_VISIBILITY_PRESETS.faded },
 	{ value: "hidden", label: "Hidden", opacity: GRID_VISIBILITY_PRESETS.hidden },
 ];
 
 /** Stable memo wrapper – MUST live outside the component to avoid remount on every render */
 const MemoizedVttPixiStage = React.memo(VttPixiStage);
+
+const FOG_BRUSH_SIZE_LABELS: Record<number, string> = {
+	1: "Small",
+	2: "Medium",
+	3: "Large",
+	4: "Huge",
+};
 
 const VTTEnhanced = () => {
 	const { campaignId } = useParams<{ campaignId: string }>();
@@ -546,6 +557,7 @@ const VTTEnhanced = () => {
 	const suppressNextMapActionRef = useRef(false);
 	const pixiDraggingTokenIdRef = useRef<string | null>(null);
 	const currentSceneRef = useRef<VTTScene | null>(null);
+	const pendingFogSceneRef = useRef<VTTScene | null>(null);
 	// Tracks when an explicit save (delete, persist) last fired so the debounced
 	// auto-save effect can skip stale payloads that would overwrite the delete.
 	const lastExplicitSaveTimestampRef = useRef<number>(0);
@@ -564,6 +576,8 @@ const VTTEnhanced = () => {
 	const rightClickDragRef = useRef<{
 		startX: number;
 		startY: number;
+		startLeft: number;
+		startTop: number;
 		moved: boolean;
 	} | null>(null);
 	const pendingDrawingPointRef = useRef<{ x: number; y: number } | null>(null);
@@ -572,14 +586,16 @@ const VTTEnhanced = () => {
 	const [zoom, setZoom] = useState(1);
 	const [showGrid, setShowGrid] = useState(true);
 	const [pixiInitFailed, setPixiInitFailed] = useState(false);
-	const [isBackgroundCalibrating, setIsBackgroundCalibrating] =
-		useState(false);
-	const [backgroundCalibrationPoints, setBackgroundCalibrationPoints] = useState<
-		VttCalibrationPoint[]
-	>([]);
+	const [isBackgroundCalibrating, setIsBackgroundCalibrating] = useState(false);
+	const [backgroundCalibrationPoints, setBackgroundCalibrationPoints] =
+		useState<VttCalibrationPoint[]>([]);
+	const backgroundCalibrationTargetRef = useRef<string | null>(null);
 	const [fogOfWar, setFogOfWar] = useState(false);
 	const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
 	const [fogBrushSize, setFogBrushSize] = useState(1);
+	const [fogBrushShape, setFogBrushShape] = useState<"square" | "circle">(
+		"square",
+	);
 	const [isFogPainting, setIsFogPainting] = useState(false);
 	const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(
 		null,
@@ -717,8 +733,6 @@ const VTTEnhanced = () => {
 		null,
 	);
 	const [isMobile, setIsMobile] = useState(false);
-	const [isViewportPanModifierActive, setIsViewportPanModifierActive] =
-		useState(false);
 	const [isViewportPanning, setIsViewportPanning] = useState(false);
 	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
@@ -780,7 +794,6 @@ const VTTEnhanced = () => {
 			clearViewportPan();
 		};
 		const handleWindowBlur = () => {
-			setIsViewportPanModifierActive(false);
 			touchRef.current = null;
 			if (!viewportPanActiveRef.current) return;
 			clearViewportPan();
@@ -862,16 +875,6 @@ const VTTEnhanced = () => {
 		[isWarden, liveSceneId, currentScene?.id, mergedScenes],
 	);
 	const debouncedState = useDebounce(savePayload, 800);
-	const fogPublishPayload = useDebounce(
-		{
-			sceneId: currentScene?.id ?? null,
-			fogData: currentScene?.fogData ?? null,
-			tokens: currentScene?.tokens ?? [],
-			gridSize: currentScene?.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize,
-			backgroundUrl: currentScene?.backgroundImage ?? null,
-		},
-		700,
-	);
 	const gridSize = currentScene?.gridSize ?? DEFAULT_SCENE_SETTINGS.gridSize;
 	const gridOpacity =
 		currentScene?.gridOpacity ?? DEFAULT_SCENE_SETTINGS.gridOpacity;
@@ -966,11 +969,11 @@ const VTTEnhanced = () => {
 			description:
 				"Click one corner of the embedded map grid, then click a second corner on the same square.",
 		});
-	}, [
-		currentScene?.backgroundImage,
-		toast,
-	]);
+	}, [currentScene?.backgroundImage, toast]);
 	useEffect(() => {
+		const calibrationTarget = `${currentScene?.id ?? ""}:${currentScene?.backgroundImage ?? ""}`;
+		if (backgroundCalibrationTargetRef.current === calibrationTarget) return;
+		backgroundCalibrationTargetRef.current = calibrationTarget;
 		setPixiInitFailed(false);
 		setIsBackgroundCalibrating(false);
 		setBackgroundCalibrationPoints([]);
@@ -1403,44 +1406,6 @@ const VTTEnhanced = () => {
 		user?.id,
 	]);
 
-	useEffect(() => {
-		if (!campaignId) return;
-		if (!sessionId) return;
-		if (!isWarden) return;
-		if (!isAuthed) return;
-		if (!fogPublishPayload.sceneId) return;
-
-		const publish = async () => {
-			try {
-				const { error } = await supabase.from("vtt_fog_state").upsert(
-					{
-						campaign_id: campaignId,
-						session_id: sessionId,
-						scene_id: fogPublishPayload.sceneId as string,
-						fog_data: fogPublishPayload.fogData ?? [],
-						tokens: fogPublishPayload.tokens ?? [],
-						grid_size: fogPublishPayload.gridSize,
-						background_url: fogPublishPayload.backgroundUrl,
-						updated_by: user?.id ?? null,
-						updated_at: new Date().toISOString(),
-					},
-					{
-						onConflict: "campaign_id,session_id,scene_id",
-					},
-				);
-
-				if (error) {
-					// Best-effort publish; VTT still works via campaign_tool_states.
-					return;
-				}
-			} catch {
-				// Best-effort publish.
-			}
-		};
-
-		void publish();
-	}, [campaignId, fogPublishPayload, isAuthed, isWarden, sessionId, user?.id]);
-
 	const getPersistedSceneId = useCallback(
 		(
 			fallbackCurrentSceneId: string | null,
@@ -1470,6 +1435,48 @@ const VTTEnhanced = () => {
 		},
 		[getPersistedSceneId, isWarden, saveNow],
 	);
+
+	const commitScene = useCallback(
+		(
+			nextScene: VTTScene,
+			options: {
+				persist?: boolean;
+				broadcastSceneSync?: boolean;
+				broadcastFog?: boolean;
+			} = {},
+		) => {
+			currentSceneRef.current = nextScene;
+			setCurrentScene(nextScene);
+			setScenes((prevScenes) => {
+				const nextScenes = upsertVttScene(prevScenes, nextScene);
+				if (options.persist) {
+					persistSceneState(nextScenes, nextScene.id);
+				}
+				if (options.broadcastSceneSync) {
+					vttRealtime.broadcastSceneSync(
+						nextScenes,
+						getPersistedSceneId(nextScene.id),
+					);
+				}
+				return nextScenes;
+			});
+			if (options.broadcastFog && nextScene.fogData) {
+				vttRealtime.broadcastFogUpdate(nextScene.id, nextScene.fogData);
+			}
+		},
+		[getPersistedSceneId, persistSceneState, vttRealtime],
+	);
+
+	const finalizeFogStroke = useCallback(() => {
+		const pendingScene = pendingFogSceneRef.current;
+		if (!pendingScene) return;
+		pendingFogSceneRef.current = null;
+		setScenes((prevScenes) => {
+			const nextScenes = upsertVttScene(prevScenes, pendingScene);
+			persistSceneState(nextScenes, pendingScene.id);
+			return nextScenes;
+		});
+	}, [persistSceneState]);
 
 	const saveScenes = () => {
 		if (!isWarden) return;
@@ -1817,23 +1824,25 @@ const VTTEnhanced = () => {
 
 	const applyFogAt = useCallback(
 		(gridX: number, gridY: number) => {
-			if (!currentScene || !fogOfWar) return;
+			const scene = currentSceneRef.current;
+			if (!scene || !fogOfWar) return;
 			const radius = Math.max(0, Math.min(4, fogBrushSize));
 			const nextRevealed = fogMode === "reveal";
-			const fogData = currentScene.fogData
-				? currentScene.fogData.map((row) => [...row])
-				: buildFogData(currentScene, false);
+			const fogData = scene.fogData
+				? scene.fogData.map((row) => [...row])
+				: buildFogData(scene, false);
 			let didChange = false;
 			for (let dy = -radius; dy <= radius; dy += 1) {
 				for (let dx = -radius; dx <= radius; dx += 1) {
+					if (
+						fogBrushShape === "circle" &&
+						dx * dx + dy * dy > radius * radius
+					) {
+						continue;
+					}
 					const fx = gridX + dx;
 					const fy = gridY + dy;
-					if (
-						fx >= 0 &&
-						fx < currentScene.width &&
-						fy >= 0 &&
-						fy < currentScene.height
-					) {
+					if (fx >= 0 && fx < scene.width && fy >= 0 && fy < scene.height) {
 						if (fogData[fy][fx] !== nextRevealed) {
 							fogData[fy][fx] = nextRevealed;
 							didChange = true;
@@ -1842,9 +1851,14 @@ const VTTEnhanced = () => {
 				}
 			}
 			if (!didChange) return;
-			updateScene({ fogData });
+			const nextScene = {
+				...scene,
+				fogData,
+			};
+			pendingFogSceneRef.current = nextScene;
+			commitScene(nextScene, { broadcastFog: true });
 		},
-		[buildFogData, currentScene, fogBrushSize, fogMode, fogOfWar, updateScene],
+		[buildFogData, commitScene, fogBrushShape, fogBrushSize, fogMode, fogOfWar],
 	);
 
 	const applyPendingPointToDrawing = useCallback(
@@ -2013,15 +2027,6 @@ const VTTEnhanced = () => {
 				getPersistedSceneId(result.currentSceneId, result.liveSceneId),
 			);
 
-			if (campaignId && sessionId && isAuthed) {
-				void supabase
-					.from("vtt_fog_state")
-					.delete()
-					.eq("campaign_id", campaignId)
-					.eq("session_id", sessionId)
-					.eq("scene_id", result.deletedScene.id);
-			}
-
 			toast({
 				title: "Scene deleted",
 				description: result.createdReplacementScene
@@ -2030,15 +2035,12 @@ const VTTEnhanced = () => {
 			});
 		},
 		[
-			campaignId,
 			currentScene?.id,
 			getPersistedSceneId,
-			isAuthed,
 			isWarden,
 			liveSceneId,
 			mergedScenes,
 			persistSceneState,
-			sessionId,
 			toast,
 			vttRealtime,
 		],
@@ -2315,21 +2317,18 @@ const VTTEnhanced = () => {
 			e.stopPropagation();
 			return;
 		}
-		if (e.button === 1 || (e.button === 0 && isViewportPanModifierActive)) {
-			e.preventDefault();
-			suppressViewportPanClickRef.current = true;
-			viewportPanActiveRef.current = true;
-			setIsViewportPanning(true);
-			return;
-		}
 		if (e.button === 2) {
 			// Right-click: record the press so we can distinguish a simple
 			// right-click (open context menu) from a right-click-drag (pan
 			// the map, Foundry/Roll20 default). The actual pan is activated
 			// in `handleMapMouseMove` once the pointer crosses a threshold.
+			const map = mapRef.current;
+			if (!map) return;
 			rightClickDragRef.current = {
 				startX: e.clientX,
 				startY: e.clientY,
+				startLeft: map.scrollLeft,
+				startTop: map.scrollTop,
 				moved: false,
 			};
 			// Don't preventDefault here — we still want contextmenu to fire
@@ -2376,11 +2375,6 @@ const VTTEnhanced = () => {
 	const handleMapKeyDown = useCallback(
 		(e: KeyboardEvent) => {
 			if (isVttShortcutTarget(e.target)) return;
-			if (e.code === "Space") {
-				setIsViewportPanModifierActive(true);
-				e.preventDefault();
-				return;
-			}
 			// Escape: deselect everything
 			if (e.key === "Escape") {
 				e.preventDefault();
@@ -2554,21 +2548,13 @@ const VTTEnhanced = () => {
 		],
 	);
 
-	const handleMapKeyUp = useCallback((e: KeyboardEvent) => {
-		if (e.code !== "Space") return;
-		setIsViewportPanModifierActive(false);
-		e.preventDefault();
-	}, []);
-
 	useEffect(() => {
 		if (typeof window === "undefined") return;
 		window.addEventListener("keydown", handleMapKeyDown);
-		window.addEventListener("keyup", handleMapKeyUp);
 		return () => {
 			window.removeEventListener("keydown", handleMapKeyDown);
-			window.removeEventListener("keyup", handleMapKeyUp);
 		};
-	}, [handleMapKeyDown, handleMapKeyUp]);
+	}, [handleMapKeyDown]);
 
 	const removeAnnotation = useCallback(
 		(noteId: string) => {
@@ -2618,14 +2604,15 @@ const VTTEnhanced = () => {
 				}
 			}
 			if (viewportPanActiveRef.current) {
-				// Space/middle-mouse/right-click pan: scroll the container
-				// continuously while modifier is held. Using movement deltas
-				// keeps the pan 1:1 with the pointer regardless of scroll
-				// position. The container is `overflow:auto` so scrollLeft
-				// clamps automatically at the scene boundaries.
-				if (mapRef.current) {
-					mapRef.current.scrollLeft -= e.movementX;
-					mapRef.current.scrollTop -= e.movementY;
+				// Right-click-drag pan: scroll the container continuously while
+				// the gesture is active. Using the initial scroll offsets keeps
+				// the pan stable even when pointer events coalesce or frame rate dips.
+				// The container is `overflow:auto` so scrollLeft clamps at the
+				// scene boundaries automatically.
+				const map = mapRef.current;
+				if (map && rcd) {
+					map.scrollLeft = rcd.startLeft - (e.clientX - rcd.startX);
+					map.scrollTop = rcd.startTop - (e.clientY - rcd.startY);
 				}
 				return;
 			}
@@ -2737,6 +2724,7 @@ const VTTEnhanced = () => {
 			if (isFogPainting) {
 				setIsFogPainting(false);
 				lastFogCellRef.current = null;
+				finalizeFogStroke();
 			}
 			lastMeasureCellRef.current = null;
 			if (finalizedDrawing && currentScene) {
@@ -2769,6 +2757,7 @@ const VTTEnhanced = () => {
 			getGridPosition,
 			handleMapGridAction,
 			isFogPainting,
+			finalizeFogStroke,
 			updateScene,
 		],
 	);
@@ -3376,8 +3365,8 @@ const VTTEnhanced = () => {
 														Drag &amp; Drop
 													</span>
 													<span>Drag asset from browser onto map</span>
-													<span className="text-foreground/70">Space</span>
-													<span>Hold to pan viewport</span>
+													<span className="text-foreground/70">Right Drag</span>
+													<span>Pan viewport</span>
 												</div>
 												<DialogFooter>
 													<AscendantText className="block text-xs text-foreground/70">
@@ -3768,15 +3757,25 @@ const VTTEnhanced = () => {
 														onChange={(e) => {
 															const checked = e.target.checked;
 															setFogOfWar(checked);
-															if (!currentScene) return;
-															if (checked && !currentScene.fogData) {
-																updateScene({
-																	fogOfWar: checked,
-																	fogData: buildFogData(currentScene, false),
-																});
-															} else {
-																updateScene({ fogOfWar: checked });
-															}
+															const scene = currentSceneRef.current;
+															if (!scene) return;
+															pendingFogSceneRef.current = null;
+															const nextScene = checked
+																? {
+																		...scene,
+																		fogOfWar: true,
+																		fogData:
+																			scene.fogData ??
+																			buildFogData(scene, false),
+																	}
+																: {
+																		...scene,
+																		fogOfWar: false,
+																	};
+															commitScene(nextScene, {
+																persist: true,
+																broadcastSceneSync: true,
+															});
 														}}
 														className="w-4 h-4"
 													/>
@@ -3815,6 +3814,37 @@ const VTTEnhanced = () => {
 															</div>
 														</div>
 														<div>
+															<Label className="text-xs">Brush Shape</Label>
+															<div className="flex gap-2">
+																<Button
+																	variant={
+																		fogBrushShape === "square"
+																			? "default"
+																			: "outline"
+																	}
+																	size="sm"
+																	onClick={() => setFogBrushShape("square")}
+																	className="flex-1"
+																>
+																	<Square className="w-4 h-4 mr-2" />
+																	Square
+																</Button>
+																<Button
+																	variant={
+																		fogBrushShape === "circle"
+																			? "default"
+																			: "outline"
+																	}
+																	size="sm"
+																	onClick={() => setFogBrushShape("circle")}
+																	className="flex-1"
+																>
+																	<Circle className="w-4 h-4 mr-2" />
+																	Circle
+																</Button>
+															</div>
+														</div>
+														<div>
 															<Label className="text-xs">Brush Size</Label>
 															<input
 																type="range"
@@ -3829,30 +3859,52 @@ const VTTEnhanced = () => {
 																className="w-full"
 															/>
 															<div className="text-[10px] text-foreground/70">
-																Size: {fogBrushSize}
+																Size: {FOG_BRUSH_SIZE_LABELS[fogBrushSize]}
 															</div>
 														</div>
 														<div className="flex gap-2">
 															<Button
 																variant="outline"
 																size="sm"
-																onClick={() =>
-																	updateScene({
-																		fogData: buildFogData(currentScene, false),
-																	})
-																}
+																onClick={() => {
+																	const scene = currentSceneRef.current;
+																	if (!scene) return;
+																	pendingFogSceneRef.current = null;
+																	commitScene(
+																		{
+																			...scene,
+																			fogOfWar: true,
+																			fogData: buildFogData(scene, false),
+																		},
+																		{
+																			persist: true,
+																			broadcastSceneSync: true,
+																		},
+																	);
+																}}
 																className="flex-1"
 															>
-																Reset Fog
+																Cover All
 															</Button>
 															<Button
 																variant="outline"
 																size="sm"
-																onClick={() =>
-																	updateScene({
-																		fogData: buildFogData(currentScene, true),
-																	})
-																}
+																onClick={() => {
+																	const scene = currentSceneRef.current;
+																	if (!scene) return;
+																	pendingFogSceneRef.current = null;
+																	commitScene(
+																		{
+																			...scene,
+																			fogOfWar: true,
+																			fogData: buildFogData(scene, true),
+																		},
+																		{
+																			persist: true,
+																			broadcastSceneSync: true,
+																		},
+																	);
+																}}
 																className="flex-1"
 															>
 																Reveal All
@@ -4199,7 +4251,8 @@ const VTTEnhanced = () => {
 															const nextOpacity =
 																GRID_VISIBILITY_OPTIONS.find(
 																	(option) => option.value === value,
-																)?.opacity ?? DEFAULT_SCENE_SETTINGS.gridOpacity;
+																)?.opacity ??
+																DEFAULT_SCENE_SETTINGS.gridOpacity;
 															updateScene({ gridOpacity: nextOpacity });
 														}}
 													>
@@ -4208,7 +4261,10 @@ const VTTEnhanced = () => {
 														</SelectTrigger>
 														<SelectContent>
 															{GRID_VISIBILITY_OPTIONS.map((option) => (
-																<SelectItem key={option.value} value={option.value}>
+																<SelectItem
+																	key={option.value}
+																	value={option.value}
+																>
 																	{option.label}
 																</SelectItem>
 															))}
@@ -4229,7 +4285,9 @@ const VTTEnhanced = () => {
 														}}
 														disabled={!currentScene?.backgroundImage}
 													>
-														{isBackgroundCalibrating ? "Cancel Align" : "Align To App Grid"}
+														{isBackgroundCalibrating
+															? "Cancel Align"
+															: "Align To App Grid"}
 													</Button>
 													<Button
 														variant="outline"
@@ -4266,214 +4324,214 @@ const VTTEnhanced = () => {
 												</div>
 											</div>
 										</AscendantWindow>
-									{PREMADE_MAPS.length > 0 && (
-										<AscendantWindow title="PREMADE MAPS" density="compact">
-											<div className="grid grid-cols-2 gap-2">
-												{PREMADE_MAPS.map((map) => (
-													<button
-														type="button"
-														key={map.id}
-														onClick={() => applyPremadeMap(map)}
-														className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
-														aria-label={`Use ${map.name} map`}
-													>
-														<div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
-															<OptimizedImage
-																src={map.thumbnail}
-																alt={`${map.name} thumbnail`}
-																className="w-full h-full object-cover"
-																size="small"
-															/>
-														</div>
-														<div className="mt-2 flex items-center justify-between gap-2">
-															<span className="text-xs font-heading">
-																{map.name}
-															</span>
-															<Badge
-																variant="outline"
-																className="text-[9px] uppercase tracking-wide"
-															>
-																{map.theme}
-															</Badge>
-														</div>
-														<div className="text-[10px] text-foreground/70">
-															{map.grid.width}x{map.grid.height} -{" "}
-															{map.grid.size}px grid
-														</div>
-													</button>
-												))}
-											</div>
-										</AscendantWindow>
-									)}
-								</TabsContent>
-								<TabsContent
-									value="tokens"
-									className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
-								>
-									<AscendantWindow title="TOKENS" density="compact">
-										<Tabs defaultValue="characters" className="w-full">
-											<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
-												<TabsTrigger
-													data-testid="vtt-tokens-tab-characters"
-													value="characters"
-													className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-												>
-													<Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-													<span className="hidden xs:inline">Characters</span>
-													<span className="xs:hidden">C</span>
-												</TabsTrigger>
-												<TabsTrigger
-													data-testid="vtt-tokens-tab-library"
-													value="library"
-													className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
-												>
-													<ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-													<span className="hidden xs:inline">Library</span>
-													<span className="xs:hidden">L</span>
-												</TabsTrigger>
-											</TabsList>
-											<TabsContent value="characters" className="mt-3">
-												<div className="space-y-2 max-h-60 overflow-y-auto">
-													{resolvedCharacters.length === 0 && (
-														<AscendantText className="block text-xs text-foreground/70 text-center py-4">
-															No characters yet.
-														</AscendantText>
-													)}
-													{resolvedCharacters.map((char) => {
-														const portraitUrl =
-															typeof char.portrait_url === "string"
-																? char.portrait_url
-																: null;
-														return (
-															<button
-																type="button"
-																key={char.id}
-																onClick={() => {
-																	setSelectedCharacterId(char.id);
-																	setSelectedLibraryTokenId(null);
-																	setSelectedTool("select");
-																}}
-																className={cn(
-																	"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
-																	selectedCharacterId === char.id
-																		? "bg-primary/20 border-primary"
-																		: "border-border hover:bg-muted/50",
-																)}
-															>
-																{portraitUrl && (
-																	<OptimizedImage
-																		src={portraitUrl}
-																		alt={char.name}
-																		className="w-8 h-8 rounded-full object-cover border border-border"
-																		size="thumbnail"
-																	/>
-																)}
-																<div className="flex-1 min-w-0">
-																	<div className="font-semibold truncate">
-																		{char.name}
-																	</div>
-																	<div className="text-foreground/70">
-																		{char.hp_current || 0}/{char.hp_max || 0}{" "}
-																		HP | AC {char.armor_class || 10}
-																	</div>
-																</div>
-															</button>
-														);
-													})}
+										{PREMADE_MAPS.length > 0 && (
+											<AscendantWindow title="PREMADE MAPS" density="compact">
+												<div className="grid grid-cols-2 gap-2">
+													{PREMADE_MAPS.map((map) => (
+														<button
+															type="button"
+															key={map.id}
+															onClick={() => applyPremadeMap(map)}
+															className="group rounded-lg border border-border bg-muted/20 p-2 text-left transition-all hover:bg-muted/40"
+															aria-label={`Use ${map.name} map`}
+														>
+															<div className="h-20 w-full rounded-md border border-border/60 bg-muted/40 overflow-hidden">
+																<OptimizedImage
+																	src={map.thumbnail}
+																	alt={`${map.name} thumbnail`}
+																	className="w-full h-full object-cover"
+																	size="small"
+																/>
+															</div>
+															<div className="mt-2 flex items-center justify-between gap-2">
+																<span className="text-xs font-heading">
+																	{map.name}
+																</span>
+																<Badge
+																	variant="outline"
+																	className="text-[9px] uppercase tracking-wide"
+																>
+																	{map.theme}
+																</Badge>
+															</div>
+															<div className="text-[10px] text-foreground/70">
+																{map.grid.width}x{map.grid.height} -{" "}
+																{map.grid.size}px grid
+															</div>
+														</button>
+													))}
 												</div>
-											</TabsContent>
-											<TabsContent value="library" className="mt-3">
-												<div className="space-y-3">
-													<Input
-														value={tokenSearch}
-														onChange={(e) => setTokenSearch(e.target.value)}
-														placeholder="Search tokens..."
-														className="h-8 text-xs"
-													/>
+											</AscendantWindow>
+										)}
+									</TabsContent>
+									<TabsContent
+										value="tokens"
+										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
+									>
+										<AscendantWindow title="TOKENS" density="compact">
+											<Tabs defaultValue="characters" className="w-full">
+												<TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-card border border-border rounded-lg shadow-sm">
+													<TabsTrigger
+														data-testid="vtt-tokens-tab-characters"
+														value="characters"
+														className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+													>
+														<Users className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+														<span className="hidden xs:inline">Characters</span>
+														<span className="xs:hidden">C</span>
+													</TabsTrigger>
+													<TabsTrigger
+														data-testid="vtt-tokens-tab-library"
+														value="library"
+														className="gap-1.5 text-xs sm:text-sm py-2.5 data-[state=active]:bg-background data-[state=active]:shadow-sm data-[state=active]:border-primary/30"
+													>
+														<ImageIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+														<span className="hidden xs:inline">Library</span>
+														<span className="xs:hidden">L</span>
+													</TabsTrigger>
+												</TabsList>
+												<TabsContent value="characters" className="mt-3">
 													<div className="space-y-2 max-h-60 overflow-y-auto">
-														{filteredLibraryTokens.length === 0 && (
+														{resolvedCharacters.length === 0 && (
 															<AscendantText className="block text-xs text-foreground/70 text-center py-4">
-																No tokens match.
+																No characters yet.
 															</AscendantText>
 														)}
-														{filteredLibraryTokens.map((token) => {
-															const isOverlayPreview =
-																token.render?.mode === "overlay" ||
-																token.type === "effect" ||
-																token.type === "prop" ||
-																(!!token.imageUrl &&
-																	(token.imageUrl.includes(
-																		"/generated/props/",
-																	) ||
-																		token.imageUrl.includes(
-																			"/generated/effects/",
-																		)));
+														{resolvedCharacters.map((char) => {
+															const portraitUrl =
+																typeof char.portrait_url === "string"
+																	? char.portrait_url
+																	: null;
 															return (
 																<button
 																	type="button"
-																	key={token.id}
+																	key={char.id}
 																	onClick={() => {
-																		setSelectedLibraryTokenId(token.id);
-																		setSelectedCharacterId(null);
+																		setSelectedCharacterId(char.id);
+																		setSelectedLibraryTokenId(null);
 																		setSelectedTool("select");
 																	}}
 																	className={cn(
 																		"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
-																		selectedLibraryTokenId === token.id
+																		selectedCharacterId === char.id
 																			? "bg-primary/20 border-primary"
 																			: "border-border hover:bg-muted/50",
 																	)}
 																>
-																	<div
-																		className={cn(
-																			"w-8 h-8 border border-border flex items-center justify-center overflow-hidden",
-																			isOverlayPreview
-																				? "rounded-md bg-transparent"
-																				: "rounded-full bg-muted/40",
-																		)}
-																	>
-																		{token.imageUrl ? (
-																			<OptimizedImage
-																				src={token.imageUrl}
-																				alt={token.name}
-																				className={cn(
-																					"w-full h-full",
-																					isOverlayPreview
-																						? "object-contain"
-																						: "object-cover rounded-full",
-																				)}
-																				size="thumbnail"
-																			/>
-																		) : (
-																			<span className="text-sm">
-																				{token.emoji || "@"}
-																			</span>
-																		)}
-																	</div>
+																	{portraitUrl && (
+																		<OptimizedImage
+																			src={portraitUrl}
+																			alt={char.name}
+																			className="w-8 h-8 rounded-full object-cover border border-border"
+																			size="thumbnail"
+																		/>
+																	)}
 																	<div className="flex-1 min-w-0">
 																		<div className="font-semibold truncate">
-																			{token.name}
+																			{char.name}
 																		</div>
-																		<div className="text-foreground/70 capitalize">
-																			{token.category} | {token.size}
+																		<div className="text-foreground/70">
+																			{char.hp_current || 0}/{char.hp_max || 0}{" "}
+																			HP | AC {char.armor_class || 10}
 																		</div>
 																	</div>
 																</button>
 															);
 														})}
 													</div>
-												</div>
-											</TabsContent>
-										</Tabs>
-									</AscendantWindow>
-								</TabsContent>
-							</Tabs>
-						</VTTDrawer>
-					)}
+												</TabsContent>
+												<TabsContent value="library" className="mt-3">
+													<div className="space-y-3">
+														<Input
+															value={tokenSearch}
+															onChange={(e) => setTokenSearch(e.target.value)}
+															placeholder="Search tokens..."
+															className="h-8 text-xs"
+														/>
+														<div className="space-y-2 max-h-60 overflow-y-auto">
+															{filteredLibraryTokens.length === 0 && (
+																<AscendantText className="block text-xs text-foreground/70 text-center py-4">
+																	No tokens match.
+																</AscendantText>
+															)}
+															{filteredLibraryTokens.map((token) => {
+																const isOverlayPreview =
+																	token.render?.mode === "overlay" ||
+																	token.type === "effect" ||
+																	token.type === "prop" ||
+																	(!!token.imageUrl &&
+																		(token.imageUrl.includes(
+																			"/generated/props/",
+																		) ||
+																			token.imageUrl.includes(
+																				"/generated/effects/",
+																			)));
+																return (
+																	<button
+																		type="button"
+																		key={token.id}
+																		onClick={() => {
+																			setSelectedLibraryTokenId(token.id);
+																			setSelectedCharacterId(null);
+																			setSelectedTool("select");
+																		}}
+																		className={cn(
+																			"w-full p-2 rounded border text-left text-xs transition-all flex items-center gap-2",
+																			selectedLibraryTokenId === token.id
+																				? "bg-primary/20 border-primary"
+																				: "border-border hover:bg-muted/50",
+																		)}
+																	>
+																		<div
+																			className={cn(
+																				"w-8 h-8 border border-border flex items-center justify-center overflow-hidden",
+																				isOverlayPreview
+																					? "rounded-md bg-transparent"
+																					: "rounded-full bg-muted/40",
+																			)}
+																		>
+																			{token.imageUrl ? (
+																				<OptimizedImage
+																					src={token.imageUrl}
+																					alt={token.name}
+																					className={cn(
+																						"w-full h-full",
+																						isOverlayPreview
+																							? "object-contain"
+																							: "object-cover rounded-full",
+																					)}
+																					size="thumbnail"
+																				/>
+																			) : (
+																				<span className="text-sm">
+																					{token.emoji || "@"}
+																				</span>
+																			)}
+																		</div>
+																		<div className="flex-1 min-w-0">
+																			<div className="font-semibold truncate">
+																				{token.name}
+																			</div>
+																			<div className="text-foreground/70 capitalize">
+																				{token.category} | {token.size}
+																			</div>
+																		</div>
+																	</button>
+																);
+															})}
+														</div>
+													</div>
+												</TabsContent>
+											</Tabs>
+										</AscendantWindow>
+									</TabsContent>
+								</Tabs>
+							</VTTDrawer>
+						)}
 
-								{/* Main Map Area — fills remaining viewport. */}
-								<div
-									className={cn(
+						{/* Main Map Area — fills remaining viewport. */}
+						<div
+							className={cn(
 								"vtt-map-area relative flex-1 min-h-0 min-w-0 overflow-hidden",
 							)}
 						>
@@ -4559,10 +4617,11 @@ const VTTEnhanced = () => {
 										if (rcd?.moved) return;
 										// Find token at click position for right-click/long-press
 										// context menu (click-and-release without drag).
-										const rect = mapRef.current?.getBoundingClientRect();
-										if (!rect) return;
-										const mx = e.clientX - rect.left;
-										const my = e.clientY - rect.top;
+										const map = mapRef.current;
+										const rect = map?.getBoundingClientRect();
+										if (!rect || !map) return;
+										const mx = e.clientX - rect.left + map.scrollLeft;
+										const my = e.clientY - rect.top + map.scrollTop;
 										const gx = Math.floor(mx / (gridSize * zoom));
 										const gy = Math.floor(my / (gridSize * zoom));
 										const token = visibleTokens.find(
@@ -4583,16 +4642,13 @@ const VTTEnhanced = () => {
 											(selectedCharacterId || selectedLibraryTokenId) &&
 											"cursor-crosshair",
 										isViewportPanning && "cursor-grabbing select-none",
-										!isViewportPanning &&
-											isViewportPanModifierActive &&
+										selectedTool === "select" &&
+											!isViewportPanning &&
 											"cursor-grab",
 									)}
 								>
 									<div
-										className={cn(
-											"vtt-scene-container min-h-0 overflow-auto",
-											sceneClass,
-										)}
+										className={cn("vtt-scene-container min-h-0", sceneClass)}
 									>
 										<style>{overlayStyles}</style>
 										{!currentScene ? (
@@ -4640,7 +4696,7 @@ const VTTEnhanced = () => {
 												setActiveTokenId={setActiveTokenId}
 												updateToken={updateToken}
 												onRequestZoom={handleRequestZoom}
-												viewportPanModifierActive={isViewportPanModifierActive}
+												enableViewportPan={false}
 												onTokenDragStart={handlePixiTokenDragStart}
 												onTokenDragEnd={handlePixiTokenDragEnd}
 												onInitError={onPixiInitError}
@@ -4653,7 +4709,8 @@ const VTTEnhanced = () => {
 													Renderer fallback active
 												</div>
 												<div className="mt-1 text-[11px] text-foreground/70">
-													Pixi failed to initialize, so this scene is using the DOM fallback.
+													Pixi failed to initialize, so this scene is using the
+													DOM fallback.
 												</div>
 												<Button
 													variant="outline"
@@ -4665,32 +4722,33 @@ const VTTEnhanced = () => {
 												</Button>
 											</div>
 										)}
-										{currentScene?.backgroundImage && isBackgroundCalibrating && (
-											<div className="absolute inset-0 pointer-events-none z-[24]">
-												<div className="absolute top-3 left-3 max-w-sm rounded-md border border-primary/40 bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
-													<div className="text-xs font-semibold text-primary">
-														Map Calibration
+										{currentScene?.backgroundImage &&
+											isBackgroundCalibrating && (
+												<div className="absolute inset-0 pointer-events-none z-[24]">
+													<div className="absolute top-3 left-3 max-w-sm rounded-md border border-primary/40 bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
+														<div className="text-xs font-semibold text-primary">
+															Map Calibration
+														</div>
+														<div className="mt-1 text-[11px] text-foreground/70">
+															{backgroundCalibrationPoints.length === 0
+																? "Click the first corner of one printed grid square on the map."
+																: "Click the second corner on that same square to snap it onto the app grid."}
+														</div>
 													</div>
-													<div className="mt-1 text-[11px] text-foreground/70">
-														{backgroundCalibrationPoints.length === 0
-															? "Click the first corner of one printed grid square on the map."
-															: "Click the second corner on that same square to snap it onto the app grid."}
-													</div>
+													{backgroundCalibrationPoints.map((point, index) => (
+														<DynamicStyle
+															key={`calibration-point-${point.x}-${point.y}`}
+															className="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-primary bg-background text-[11px] font-semibold text-primary shadow-md"
+															vars={{
+																left: `${point.x}px`,
+																top: `${point.y}px`,
+															}}
+														>
+															{index + 1}
+														</DynamicStyle>
+													))}
 												</div>
-												{backgroundCalibrationPoints.map((point, index) => (
-													<DynamicStyle
-														key={`calibration-point-${index + 1}`}
-														className="absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-primary bg-background text-[11px] font-semibold text-primary shadow-md"
-														vars={{
-															left: `${point.x}px`,
-															top: `${point.y}px`,
-														}}
-													>
-														{index + 1}
-													</DynamicStyle>
-												))}
-											</div>
-										)}
+											)}
 
 										{/* TEMP: keep these DOM overlays until they are migrated to Pixi in follow-up commits */}
 										{/* Terrain overlay */}

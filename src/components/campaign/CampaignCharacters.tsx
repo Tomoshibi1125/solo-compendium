@@ -1,4 +1,11 @@
-import { Crown, ExternalLink, EyeOff, Loader2, Share2 } from "lucide-react";
+import {
+	Crown,
+	ExternalLink,
+	EyeOff,
+	Loader2,
+	PackagePlus,
+	Share2,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -19,6 +26,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import {
 	useCampaignSharedCharacters,
 	useShareCharacter,
@@ -27,6 +35,7 @@ import {
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import { useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCharacters } from "@/hooks/useCharacters";
+import { isSandboxNpcCharacter } from "@/lib/characterScope";
 import {
 	type LocalCharacterRow,
 	readLocalNpcCharacters,
@@ -41,6 +50,10 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 	const [shareDialogOpen, setShareDialogOpen] = useState(false);
 	const [selectedCharacter, setSelectedCharacter] = useState("");
 	const [showWardenNpcs, setShowWardenNpcs] = useState(true);
+	const [deliveryDialogOpen, setDeliveryDialogOpen] = useState(false);
+	const [deliveryCharacterId, setDeliveryCharacterId] = useState<string | null>(
+		null,
+	);
 
 	const { data: sharedCharacters = [], isLoading: loadingShared } =
 		useCampaignSharedCharacters(campaignId);
@@ -87,10 +100,7 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 	}, [campaignId, hasWardenAccess]);
 
 	const filteredWardenNpcs = useMemo(
-		() =>
-			wardenNpcs.filter((n) =>
-				typeof n.notes === "string" ? n.notes.includes("[SANDBOX_NPC]") : true,
-			),
+		() => wardenNpcs.filter((npc) => isSandboxNpcCharacter(npc)),
 		[wardenNpcs],
 	);
 
@@ -136,6 +146,11 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 				});
 			}
 		}
+	};
+
+	const openDeliveryDialog = (characterId: string) => {
+		setDeliveryCharacterId(characterId);
+		setDeliveryDialogOpen(true);
 	};
 
 	return (
@@ -244,6 +259,19 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 									</div>
 								</div>
 								<div className="flex items-center gap-2">
+									{hasWardenAccess && share.characters && (
+										<Button
+											variant="outline"
+											size="sm"
+											onClick={() => {
+												if (share.characters)
+													openDeliveryDialog(share.characters.id);
+											}}
+										>
+											<PackagePlus className="w-3 h-3 mr-1" />
+											Grant Item
+										</Button>
+									)}
 									{share.characters && (
 										<Link to={`/characters/${share.characters.id}`}>
 											<Button variant="outline" size="sm">
@@ -317,6 +345,15 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 					</DialogFooter>
 				</DialogContent>
 			</Dialog>
+			{hasWardenAccess && (
+				<WardenItemDeliveryDialog
+					open={deliveryDialogOpen}
+					onOpenChange={setDeliveryDialogOpen}
+					campaignId={campaignId}
+					initialCharacterId={deliveryCharacterId}
+					title="Grant or Assign Campaign Item"
+				/>
+			)}
 		</>
 	);
 }

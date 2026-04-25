@@ -98,14 +98,14 @@ export function getAvailableFavorOptions(level: number): RiftFavorOption[] {
 }
 
 // Aligned with unified engine: 3/4/5/6 by tier (Rift Ascendant canonical formula)
-export function getRiftFavorMax(level: number): number {
+function getRiftFavorMax(level: number): number {
 	if (level <= 4) return 3;
 	if (level <= 10) return 4;
 	if (level <= 16) return 5;
 	return 6;
 }
 
-export function getRiftFavorDie(level: number): number {
+function getRiftFavorDie(level: number): number {
 	if (level <= 4) return 4;
 	if (level <= 10) return 6;
 	if (level <= 16) return 8;

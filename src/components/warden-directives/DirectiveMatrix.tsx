@@ -23,6 +23,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import {
 	getRandomEquipment,
+	getRandomFeat,
 	getRandomRune,
 } from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -317,9 +318,10 @@ export function DirectiveLattice() {
 
 		// Integration: Pull real rewards
 		try {
-			const [realEquip, realRune] = await Promise.all([
+			const [realEquip, realRune, realFeat] = await Promise.all([
 				getRandomEquipment(baseDirective.rank),
 				getRandomRune(),
+				getRandomFeat(),
 			]);
 
 			if (realEquip) {
@@ -332,6 +334,12 @@ export function DirectiveLattice() {
 				baseDirective.rewards = [
 					...baseDirective.rewards,
 					`Rune: ${realRune.name}`,
+				];
+			}
+			if (realFeat) {
+				baseDirective.rewards = [
+					...baseDirective.rewards,
+					`Feat Training: ${realFeat.name}`,
 				];
 			}
 		} catch (e) {

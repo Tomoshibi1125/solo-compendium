@@ -2,6 +2,7 @@
 // All images are project-owned assets in /public/generated/
 // Total: 400+ images across all Roll20-equivalent categories
 
+import { REGENT_PORTRAITS_DATA } from "@/data/compendium/regentPortraits";
 import {
 	getStaticAnomalies,
 	getStaticItems,
@@ -794,24 +795,15 @@ export function getLocationVTTAssets(): VTTAsset[] {
 const toTitleCase = (s: string) =>
 	s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-export const REGENT_PORTRAITS: VTTAsset[] = [
-	"berserker-regent",
-	"blood-regent",
-	"destruction-regent",
-	"dragon-regent",
-	"ice-cold-regent",
-	"plague-regent",
-	"shadow-command-regent",
-	"steel-flesh-regent",
-	"umbral-sovereign",
-	"white-flame-regent",
-].map((fileName) => ({
-	id: `portrait-${fileName}`,
-	name: toTitleCase(fileName),
-	category: "portrait" as VTTAssetCategory,
-	imageUrl: `/generated/compendium/regents/${fileName}.webp`,
-	tags: ["portrait", "regent", "boss", "npc", fileName.split("-")[0]],
-}));
+export const REGENT_PORTRAITS: VTTAsset[] = REGENT_PORTRAITS_DATA.map(
+	({ regentId, name, imageUrl, tags }) => ({
+		id: `portrait-${regentId.replace(/_/g, "-")}`,
+		name,
+		category: "portrait" as VTTAssetCategory,
+		imageUrl,
+		tags: Array.from(new Set(["portrait", "regent", "boss", "npc", ...tags])),
+	}),
+);
 
 // ── Portraits — Jobs (class/archetype tokens) ───────────────────────────
 // Maps image filenames to SA job display names (files on disk keep original names)
@@ -848,7 +840,7 @@ export const BACKGROUND_PORTRAITS: VTTAsset[] = [
 	"bringer-of-dawn",
 	"champion-of-light",
 	"cosmic-wanderer",
-	"demon-ascendant",
+	"demon-hunter",
 	"dimensional-traveler",
 	"dragon-slayer",
 	"essence-user",
@@ -856,8 +848,8 @@ export const BACKGROUND_PORTRAITS: VTTAsset[] = [
 	"forgotten-king",
 	"gate-survivor",
 	"guild-master",
-	"ascendant-academy-graduate",
-	"regents-chosen",
+	"hunter-academy-graduate",
+	"monarchs-chosen",
 	"reality-bender",
 	"rune-master",
 	"shadow-realm-exile",

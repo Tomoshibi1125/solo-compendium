@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
 	calibrateVttBackgroundToGrid,
 	clampVttGridOpacity,
-	getVttBackgroundTransform,
 	GRID_VISIBILITY_PRESETS,
+	getVttBackgroundTransform,
 	resolveVttGridVisibilityPreset,
 } from "@/lib/vtt/backgroundTransform";
 

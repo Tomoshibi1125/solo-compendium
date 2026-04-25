@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { massiveSandboxModule } from "@/data/compendium/ascendant-sandbox-module";
+import { getSandboxNpcPortraitUrl } from "@/data/compendium/sandbox/sandbox-asset-resolver";
 import { useToast } from "@/hooks/use-toast";
 import {
 	saveCampaignToolState,
@@ -8,6 +9,7 @@ import {
 } from "@/hooks/useToolState";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { SANDBOX_NPC_MARKER } from "@/lib/characterScope";
 import {
 	type CampaignEncounterEntryRow,
 	type CampaignEncounterRow,
@@ -826,16 +828,15 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						progressString: `Binding NPC Roster to Warden (0/${npcs.length})...`,
 					});
 
-					const NPC_MARKER = "[SANDBOX_NPC]";
-
 					if (isLocalMode()) {
 						const existing = readLocalNpcCharacters(targetId);
 						for (const npc of npcs) {
 							if (existing.some((c) => c.name === npc.name)) continue;
 							const now = nowIso();
+							const portraitUrl = getSandboxNpcPortraitUrl(npc);
 							existing.push({
 								id: crypto.randomUUID(),
-								user_id: wardenId,
+								user_id: getLocalUserId(),
 								name: npc.name,
 								level: npc.level,
 								job: npc.job,
@@ -860,7 +861,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								exhaustion_level: 0,
 								languages: [],
 								notes: [
-									NPC_MARKER,
+									SANDBOX_NPC_MARKER,
 									`Faction: ${npc.faction}`,
 									`Location: ${npc.location}`,
 									"",
@@ -888,7 +889,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								int: null,
 								monarch_overlays: null,
 								path: null,
-								portrait_url: `/generated/compendium/anomalies/${npc.id.replace("npc-", "")}.webp`,
+								portrait_url: portraitUrl,
 								pre: null,
 								regent_overlays: null,
 								resistances: null,
@@ -921,6 +922,8 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								.maybeSingle();
 							if (existing) continue;
 
+							const portraitUrl = getSandboxNpcPortraitUrl(npc);
+
 							const { data: character, error } = await supabase
 								.from("characters")
 								.insert({
@@ -939,8 +942,9 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 									background: npc.title,
 									backstory: npc.backstory,
 									appearance: npc.description,
+									portrait_url: portraitUrl,
 									notes: [
-										NPC_MARKER,
+										SANDBOX_NPC_MARKER,
 										`Faction: ${npc.faction}`,
 										`Location: ${npc.location}`,
 										"",

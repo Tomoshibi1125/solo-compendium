@@ -8,7 +8,8 @@ import {
 	Text,
 	Ticker,
 } from "pixi.js";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { computeVisibilityPolygon, createHexGrid } from "@/lib/vtt";
 import {
@@ -94,7 +95,7 @@ type VttPixiStageProps = {
 	lightSources?: import("@/lib/vtt").LightSource[];
 	gridConfig?: { type: "square" | "hex"; size: number };
 	onRequestZoom: (nextZoom: number, cursor?: { x: number; y: number }) => void;
-	viewportPanModifierActive?: boolean;
+	enableViewportPan?: boolean;
 	onTokenDragStart?: (tokenId: string) => void;
 	onTokenDragEnd?: (tokenId: string) => void;
 	drawMode?: "none" | "ruler" | "cone" | "sphere" | "cube" | "wall";
@@ -128,6 +129,19 @@ const getMaxTextureSize = (): number => {
 // Cache once per page load so we don't create throwaway contexts repeatedly.
 const GPU_MAX_TEXTURE = getMaxTextureSize();
 
+type StageLayers = {
+	world: Container;
+	bg: Container;
+	weatherLayer: Container;
+	effectsLayer: Container;
+	gridLayer: Container;
+	wallsLayer: Container;
+	tokenLayer: Container;
+	nameplateLayer: Container;
+	snapGhostLayer: Container;
+	fogLayer: Container;
+};
+
 export function VttPixiStage({
 	containerRef,
 	scene,
@@ -145,7 +159,7 @@ export function VttPixiStage({
 	lightSources = [],
 	gridConfig = { type: "square", size: gridSize },
 	onRequestZoom,
-	viewportPanModifierActive = false,
+	enableViewportPan = true,
 	onTokenDragStart,
 	onTokenDragEnd,
 	drawMode = "none",
@@ -154,7 +168,7 @@ export function VttPixiStage({
 	onStageReady,
 	onInitError,
 }: VttPixiStageProps) {
-	const canvasHostRef = useRef<HTMLDivElement | null>(null);
+	const canvasHostRef = useRef<HTMLElement | null>(null);
 	const appRef = useRef<Application | null>(null);
 	const { dpr, fx } = usePerformanceProfile();
 	// Tracks whether the Pixi Application has finished its async init.
@@ -166,12 +180,19 @@ export function VttPixiStage({
 		timer: number;
 		pointerId: number;
 	} | null>(null);
+	const stageLayersRef = useRef<StageLayers | null>(null);
+	const tickerRef = useRef<Ticker | null>(null);
 
 	const worldSize = useMemo(() => {
 		const w = (scene?.width ?? 0) * gridSize * zoom;
 		const h = (scene?.height ?? 0) * gridSize * zoom;
 		return { w, h };
 	}, [gridSize, zoom, scene?.height, scene?.width]);
+	const worldSizeRef = useRef(worldSize);
+
+	useEffect(() => {
+		worldSizeRef.current = worldSize;
+	}, [worldSize]);
 
 	const dragStateRef = useRef<{ tokenId: string; pointerId: number } | null>(
 		null,
@@ -193,16 +214,6 @@ export function VttPixiStage({
 		centerClientY: number;
 	} | null>(null);
 
-	// Deferred left-click pan: stored on pointerdown, promoted to scrollDragRef
-	// once the pointer moves > 6px (avoids conflicting with token selection).
-	const pendingLeftPanRef = useRef<{
-		pointerId: number;
-		startX: number;
-		startY: number;
-		startLeft: number;
-		startTop: number;
-	} | null>(null);
-
 	// Drawing state
 	const drawingRef = useRef<{
 		startX: number;
@@ -215,26 +226,90 @@ export function VttPixiStage({
 
 	// Weather state
 	const weatherEmitterRef = useRef<Emitter | null>(null);
-	const rootContainerRef = useRef<Container | null>(null);
+	const worldContainerRef = useRef<Container | null>(null);
 	// Snap-to-grid ghost overlay shown while dragging a token. Populated by
 	// the stage-init effect and consumed by pointer handlers in a separate
 	// effect, so we share it via a ref rather than nested closure scope.
 	const snapGhostLayerRef = useRef<Container | null>(null);
+	const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
+
+	const syncWorldTransform = useCallback(() => {
+		const world = worldContainerRef.current;
+		if (!world) return;
+		const container = containerRef.current;
+		world.position.set(
+			-(container?.scrollLeft ?? 0),
+			-(container?.scrollTop ?? 0),
+		);
+	}, [containerRef]);
+
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		const updateViewportSize = () => {
+			const nextWidth = Math.max(1, Math.floor(container.clientWidth));
+			const nextHeight = Math.max(1, Math.floor(container.clientHeight));
+			setViewportSize((prev) =>
+				prev.width === nextWidth && prev.height === nextHeight
+					? prev
+					: { width: nextWidth, height: nextHeight },
+			);
+		};
+
+		updateViewportSize();
+
+		if (typeof ResizeObserver === "undefined") {
+			window.addEventListener("resize", updateViewportSize);
+			return () => {
+				window.removeEventListener("resize", updateViewportSize);
+			};
+		}
+
+		const observer = new ResizeObserver(() => {
+			updateViewportSize();
+		});
+		observer.observe(container);
+		return () => {
+			observer.disconnect();
+		};
+	}, [containerRef]);
+
+	useEffect(() => {
+		const container = containerRef.current;
+		if (!container) return;
+
+		let frame = 0;
+		const handleScroll = () => {
+			if (frame !== 0) return;
+			frame = window.requestAnimationFrame(() => {
+				frame = 0;
+				syncWorldTransform();
+			});
+		};
+
+		handleScroll();
+		container.addEventListener("scroll", handleScroll, { passive: true });
+		return () => {
+			if (frame !== 0) {
+				window.cancelAnimationFrame(frame);
+			}
+			container.removeEventListener("scroll", handleScroll);
+		};
+	}, [containerRef, syncWorldTransform]);
 
 	useEffect(() => {
 		if (!canvasHostRef.current) return;
 		if (appRef.current) return;
+		if (viewportSize.width <= 0 || viewportSize.height <= 0) return;
 
 		let destroyed = false;
 
-		const canvasW = Math.max(1, Math.floor(worldSize.w));
-		const canvasH = Math.max(1, Math.floor(worldSize.h));
+		const canvasW = Math.max(1, Math.floor(viewportSize.width));
+		const canvasH = Math.max(1, Math.floor(viewportSize.height));
 
 		(async () => {
 			const desiredRes = Math.min(window.devicePixelRatio || 1, dpr[1]);
-			// Clamp resolution so the actual pixel buffer never exceeds the
-			// GPU's max texture dimension. Sandbox scenes at 60×70 = 4200px
-			// × DPR 2 = 8400 which overflows the common 8192 limit.
 			const maxDim = Math.max(canvasW, canvasH);
 			const safeResolution =
 				maxDim * desiredRes > GPU_MAX_TEXTURE
@@ -296,6 +371,14 @@ export function VttPixiStage({
 				console.error(
 					"[VTT Pixi] All init attempts failed. GPU_MAX_TEXTURE =",
 					GPU_MAX_TEXTURE,
+					"viewport =",
+					canvasW,
+					"×",
+					canvasH,
+					"world =",
+					Math.max(1, Math.floor(worldSizeRef.current.w)),
+					"×",
+					Math.max(1, Math.floor(worldSizeRef.current.h)),
 					"canvas =",
 					canvasW,
 					"×",
@@ -320,6 +403,10 @@ export function VttPixiStage({
 			app.canvas.style.touchAction = "none";
 
 			canvasHostRef.current?.appendChild(app.canvas);
+			if (canvasHostRef.current) {
+				canvasHostRef.current.dataset.rendererWidth = String(canvasW);
+				canvasHostRef.current.dataset.rendererHeight = String(canvasH);
+			}
 			// Only set the ref AFTER successful init so the guard at the
 			// top of this effect doesn't block future re-init if init had
 			// previously failed.
@@ -340,80 +427,129 @@ export function VttPixiStage({
 			}
 			setAppReady(false);
 		};
-	}, [worldSize.h, worldSize.w, dpr[1], onInitError]);
+	}, [viewportSize.height, viewportSize.width, dpr[1], onInitError]);
 
 	useEffect(() => {
 		const app = appRef.current;
 		if (!app?.renderer) return;
+		if (viewportSize.width <= 0 || viewportSize.height <= 0) return;
 		app.renderer.resize(
-			Math.max(1, Math.floor(worldSize.w)),
-			Math.max(1, Math.floor(worldSize.h)),
+			Math.max(1, Math.floor(viewportSize.width)),
+			Math.max(1, Math.floor(viewportSize.height)),
 		);
-	}, [worldSize.h, worldSize.w]);
+		if (canvasHostRef.current) {
+			canvasHostRef.current.dataset.rendererWidth = String(
+				Math.max(1, Math.floor(viewportSize.width)),
+			);
+			canvasHostRef.current.dataset.rendererHeight = String(
+				Math.max(1, Math.floor(viewportSize.height)),
+			);
+		}
+	}, [viewportSize.height, viewportSize.width]);
 
 	useEffect(() => {
 		const app = appRef.current;
-		// Wait until the async Pixi Application init has completed before wiring
-		// the render graph. appReady flips to true once init resolves, and is a
-		// reactive signal that re-triggers this effect at the right moment.
 		if (!app || !appReady) return;
 
 		const stage = app.stage;
 		stage.removeChildren();
 
-		const root = new Container();
-		rootContainerRef.current = root;
-		stage.addChild(root);
-
+		const world = new Container();
 		const bg = new Container();
 		const weatherLayer = new Container();
-		const effectsLayer = new Container(); // Spell/combat particle effects
-		const grid = new Container();
+		const effectsLayer = new Container();
+		const gridLayer = new Container();
 		const wallsLayer = new Container();
-		const drawings = new Container();
 		const tokenLayer = new Container();
-		const nameplateLayer = new Container(); // Always-visible token nameplates (Foundry parity)
-		const snapGhostLayer = new Container(); // Snap-to-grid ghost cell during drag
-		snapGhostLayerRef.current = snapGhostLayer;
-		const fog = new Container();
-
-		root.addChild(bg);
-		root.addChild(weatherLayer);
-		root.addChild(effectsLayer);
-		root.addChild(grid);
-		root.addChild(wallsLayer);
-		root.addChild(drawings);
-		root.addChild(tokenLayer);
-		root.addChild(snapGhostLayer);
-		root.addChild(nameplateLayer);
-		root.addChild(fog);
-
-		// Expose the app + effects container so parent components can trigger particle presets
-		onStageReady?.(app, effectsLayer);
-
-		// Persist drawing graphics instance outside of render loops
+		const nameplateLayer = new Container();
+		const snapGhostLayer = new Container();
+		const fogLayer = new Container();
 		if (!drawingGraphicsRef.current) {
 			drawingGraphicsRef.current = new Graphics();
 		}
 		const drawOverlay = drawingGraphicsRef.current;
+		drawOverlay.clear();
 		drawOverlay.zIndex = 1000;
-		root.addChild(drawOverlay);
 
-		// ── Background rendering ──────────────────────────────────────────────
-		// Rendered inline because this effect tears down and rebuilds the
-		// bg container on every scene/tokens change. Keeping the texture
-		// load here (Pixi Assets.load caches by URL, so the repeat cost is
-		// negligible) guarantees the map is visible for both Warden and
-		// player views without relying on a secondary effect's dep diff.
-		// `bgActive` is a closure flag so stale async loads are ignored
-		// when cleanup runs before the texture finishes loading.
+		worldContainerRef.current = world;
+		snapGhostLayerRef.current = snapGhostLayer;
+		stageLayersRef.current = {
+			world,
+			bg,
+			weatherLayer,
+			effectsLayer,
+			gridLayer,
+			wallsLayer,
+			tokenLayer,
+			nameplateLayer,
+			snapGhostLayer,
+			fogLayer,
+		};
+
+		stage.addChild(world);
+		world.addChild(bg);
+		world.addChild(weatherLayer);
+		world.addChild(effectsLayer);
+		world.addChild(gridLayer);
+		world.addChild(wallsLayer);
+		world.addChild(tokenLayer);
+		world.addChild(snapGhostLayer);
+		world.addChild(nameplateLayer);
+		world.addChild(fogLayer);
+		world.addChild(drawOverlay);
+		syncWorldTransform();
+
+		onStageReady?.(app, effectsLayer);
+
+		const ticker = new Ticker();
+		ticker.add((tick) => {
+			if (weatherEmitterRef.current) {
+				weatherEmitterRef.current.update(tick.deltaMS * 0.001);
+			}
+		});
+		ticker.start();
+		tickerRef.current = ticker;
+
+		return () => {
+			if (tickerRef.current === ticker) {
+				ticker.stop();
+				ticker.destroy();
+				tickerRef.current = null;
+			}
+			if (weatherEmitterRef.current) {
+				weatherEmitterRef.current.destroy();
+				weatherEmitterRef.current = null;
+			}
+			drawOverlay.clear();
+			stage.removeChildren();
+			stageLayersRef.current = null;
+			worldContainerRef.current = null;
+			snapGhostLayerRef.current = null;
+		};
+	}, [appReady, onStageReady, syncWorldTransform]);
+
+	useEffect(() => {
+		const app = appRef.current;
+		const layers = stageLayersRef.current;
+		if (!app || !appReady || !layers) return;
+
+		const {
+			bg,
+			weatherLayer,
+			gridLayer: grid,
+			wallsLayer,
+			tokenLayer,
+			nameplateLayer,
+			fogLayer: fog,
+		} = layers;
+
 		let bgActive = true;
-		// Reset the instrumentation attr every time the stage rebuilds so stale
-		// "bg-loaded" signals don't persist across scene swaps or Pixi resets.
 		if (canvasHostRef.current) {
 			delete canvasHostRef.current.dataset.bgLoaded;
 		}
+
 		const renderBackground = async () => {
+			bg.removeChildren();
 			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
 			try {
 				const texture = await Assets.load(scene.backgroundImage);
@@ -443,7 +579,6 @@ export function VttPixiStage({
 		};
 
 		const renderWeather = () => {
-			// Clean up previous emitter
 			if (weatherEmitterRef.current) {
 				weatherEmitterRef.current.destroy();
 				weatherEmitterRef.current = null;
@@ -1101,7 +1236,7 @@ export function VttPixiStage({
 				}
 
 				container.on("pointerdown", (e) => {
-					if (viewportPanModifierActive || e.button === 1) {
+					if (e.pointerType === "mouse" && e.button !== 0) {
 						return;
 					}
 					e.stopPropagation();
@@ -1145,24 +1280,8 @@ export function VttPixiStage({
 		void renderLighting();
 		void renderTokens();
 
-		const tickerObj = new Ticker();
-		tickerObj.add((tick) => {
-			// Emitter expects seconds (DeltaMS / 1000)
-			if (weatherEmitterRef.current) {
-				weatherEmitterRef.current.update(tick.deltaMS * 0.001);
-			}
-		});
-		tickerObj.start();
-
 		return () => {
 			bgActive = false;
-			tickerObj.stop();
-			tickerObj.destroy();
-			if (weatherEmitterRef.current) {
-				weatherEmitterRef.current.destroy();
-			}
-			stage.removeChildren();
-			rootContainerRef.current = null;
 		};
 	}, [
 		activeTokenId,
@@ -1179,10 +1298,8 @@ export function VttPixiStage({
 		lightSources,
 		weather,
 		gridConfig?.type,
-		onStageReady,
 		onTokenDragStart,
 		updateToken,
-		viewportPanModifierActive,
 		zoom,
 		fx.particleCount,
 	]);
@@ -1191,6 +1308,14 @@ export function VttPixiStage({
 		const host = canvasHostRef.current;
 		const app = appRef.current;
 		if (!host || !app) return;
+		const getWorldPointerPosition = (clientX: number, clientY: number) => {
+			const viewport = containerRef.current ?? host;
+			const rect = viewport.getBoundingClientRect();
+			return {
+				x: clientX - rect.left + (containerRef.current?.scrollLeft ?? 0),
+				y: clientY - rect.top + (containerRef.current?.scrollTop ?? 0),
+			};
+		};
 
 		const renderDrawingTemplate = (
 			x1: number,
@@ -1297,9 +1422,7 @@ export function VttPixiStage({
 		};
 
 		const handlePointerMove = (e: PointerEvent) => {
-			const rect = host.getBoundingClientRect();
-			const x = e.clientX - rect.left;
-			const y = e.clientY - rect.top;
+			const { x, y } = getWorldPointerPosition(e.clientX, e.clientY);
 
 			if (drawMode !== "none" && drawingRef.current?.active) {
 				drawingRef.current.currentX = x;
@@ -1313,34 +1436,8 @@ export function VttPixiStage({
 				return;
 			}
 
-			// Promote pending left-click pan to active scroll-drag once the
-			// pointer has moved more than 6px.  If a Pixi token drag is
-			// already active (dragStateRef), discard the pending pan.
-			const pending = pendingLeftPanRef.current;
-			if (pending && pending.pointerId === e.pointerId) {
-				if (dragStateRef.current) {
-					// A token drag owns this pointer — cancel the pending pan.
-					pendingLeftPanRef.current = null;
-				} else {
-					const pdx = e.clientX - pending.startX;
-					const pdy = e.clientY - pending.startY;
-					if (pdx * pdx + pdy * pdy > 36) {
-						scrollDragRef.current = {
-							pointerId: pending.pointerId,
-							startX: pending.startX,
-							startY: pending.startY,
-							startLeft: pending.startLeft,
-							startTop: pending.startTop,
-						};
-						pendingLeftPanRef.current = null;
-					}
-				}
-			}
-
 			const dragState = dragStateRef.current;
 			if (dragState && dragState.pointerId === e.pointerId) {
-				// A token drag started — discard any pending left-pan.
-				pendingLeftPanRef.current = null;
 				if (
 					longPressRef.current &&
 					longPressRef.current.pointerId === e.pointerId
@@ -1354,9 +1451,7 @@ export function VttPixiStage({
 				) {
 					scrollDragRef.current = null;
 				}
-				const rr = host.getBoundingClientRect();
-				const px = e.clientX - rr.left;
-				const py = e.clientY - rr.top;
+				const { x: px, y: py } = getWorldPointerPosition(e.clientX, e.clientY);
 				const gx = Math.floor(px / (gridSize * zoom));
 				const gy = Math.floor(py / (gridSize * zoom));
 				// Show snap-to-grid ghost cell via the shared layer ref so both
@@ -1401,14 +1496,6 @@ export function VttPixiStage({
 		};
 
 		const handlePointerUp = (e: PointerEvent) => {
-			// Always clear pending left-pan on pointer release.
-			if (
-				pendingLeftPanRef.current &&
-				pendingLeftPanRef.current.pointerId === e.pointerId
-			) {
-				pendingLeftPanRef.current = null;
-			}
-
 			if (drawingRef.current?.active) {
 				if (drawMode === "wall" && onWallCreated) {
 					onWallCreated(
@@ -1454,9 +1541,10 @@ export function VttPixiStage({
 
 		const handlePointerDown = (e: PointerEvent) => {
 			if (
+				enableViewportPan &&
 				containerRef.current &&
-				(e.button === 1 ||
-					(e.pointerType === "mouse" && viewportPanModifierActive))
+				e.pointerType === "mouse" &&
+				e.button === 2
 			) {
 				e.preventDefault();
 				scrollDragRef.current = {
@@ -1470,32 +1558,13 @@ export function VttPixiStage({
 			}
 
 			if (drawMode !== "none") {
-				const rect = host.getBoundingClientRect();
-				const x = e.clientX - rect.left;
-				const y = e.clientY - rect.top;
+				const { x, y } = getWorldPointerPosition(e.clientX, e.clientY);
 				drawingRef.current = {
 					startX: x,
 					startY: y,
 					currentX: x,
 					currentY: y,
 					active: true,
-				};
-				return;
-			}
-
-			// Left-click on empty canvas → deferred pan (Foundry/Roll20 parity).
-			// We don't activate immediately because the same pointerdown fires
-			// for token clicks. Instead, record a pending pan; it promotes to
-			// an active scroll-drag in handlePointerMove once the pointer moves
-			// more than 6px. If a token drag starts first (dragStateRef is set
-			// by the Pixi token handler), the pending pan is ignored.
-			if (e.button === 0 && e.pointerType === "mouse" && containerRef.current) {
-				pendingLeftPanRef.current = {
-					pointerId: e.pointerId,
-					startX: e.clientX,
-					startY: e.clientY,
-					startLeft: containerRef.current.scrollLeft,
-					startTop: containerRef.current.scrollTop,
 				};
 				return;
 			}
@@ -1515,20 +1584,6 @@ export function VttPixiStage({
 					centerClientY: (a.clientY + b.clientY) / 2,
 				};
 				return;
-			}
-
-			if (
-				containerRef.current &&
-				e.pointerType !== "mouse" &&
-				pointersRef.current.size >= 2
-			) {
-				scrollDragRef.current = {
-					pointerId: e.pointerId,
-					startX: e.clientX,
-					startY: e.clientY,
-					startLeft: containerRef.current.scrollLeft,
-					startTop: containerRef.current.scrollTop,
-				};
 			}
 		};
 
@@ -1557,7 +1612,7 @@ export function VttPixiStage({
 		onRequestZoom,
 		onTokenDragEnd,
 		updateToken,
-		viewportPanModifierActive,
+		enableViewportPan,
 		zoom,
 		drawMode,
 		onWallCreated,
@@ -1619,10 +1674,31 @@ export function VttPixiStage({
 	}, []);
 
 	return (
-		<div
+		<DynamicStyle
 			ref={canvasHostRef}
 			data-testid="vtt-pixi-host"
-			className="w-full h-full relative min-h-[400px] touch-none"
+			data-renderer-width={
+				viewportSize.width > 0 ? String(viewportSize.width) : undefined
+			}
+			data-renderer-height={
+				viewportSize.height > 0 ? String(viewportSize.height) : undefined
+			}
+			className="relative touch-none"
+			vars={{
+				position: "sticky",
+				top: 0,
+				left: 0,
+				width:
+					viewportSize.width > 0
+						? `min(100%, ${viewportSize.width}px)`
+						: "100%",
+				height:
+					viewportSize.height > 0
+						? `min(100%, ${viewportSize.height}px)`
+						: "100%",
+				overflow: "hidden",
+				"z-index": 1,
+			}}
 		/>
 	);
 }

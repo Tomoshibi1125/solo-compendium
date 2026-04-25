@@ -17,12 +17,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import {
-	getRandomEquipment,
-	getRandomFeat,
-} from "@/lib/compendiumAutopopulate";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import {
+	loadWardenGenerationContext,
+	type WardenLinkedEntry,
+} from "@/lib/wardenGenerationContext";
 
 // --- Constants ---
 
@@ -39,6 +39,13 @@ export interface GeneratedNPC {
 	description: string;
 	equipment: string[];
 	features: string[];
+	linkedContent?: {
+		equipment?: WardenLinkedEntry[];
+		features?: WardenLinkedEntry[];
+		background?: WardenLinkedEntry | null;
+		location?: WardenLinkedEntry | null;
+		regent?: WardenLinkedEntry | null;
+	};
 }
 
 export interface NPCGeneratorProps {
@@ -116,17 +123,49 @@ export function NPCGenerator({ entityId, className }: NPCGeneratorProps) {
 		clearEnhanced();
 		const baseNPC = generateNPCBase();
 
-		const [realEquip, realFeat] = await Promise.all([
-			getRandomEquipment(baseNPC.rank),
-			getRandomFeat(),
-		]);
+		const generationContext = await loadWardenGenerationContext({
+			types: [
+				"equipment",
+				"items",
+				"feats",
+				"backgrounds",
+				"locations",
+				"regents",
+				"conditions",
+			],
+		});
+		const equipment = [
+			...generationContext.pickMany("equipment", 1, { rank: baseNPC.rank }),
+			...generationContext.pickMany("items", 1, { rank: baseNPC.rank }),
+		].slice(0, 2);
+		const features = generationContext.pickMany("feats", 1, {
+			rank: baseNPC.rank,
+		});
+		const background = generationContext.pickOne("backgrounds", {
+			theme: baseNPC.role,
+		});
+		const location = generationContext.pickOne("locations", {
+			theme: baseNPC.motivation,
+		});
+		const regent = generationContext.pickOne("regents", {
+			theme: baseNPC.secret,
+		});
 
-		if (realEquip) {
-			baseNPC.equipment = [realEquip.name];
+		if (equipment.length > 0) {
+			baseNPC.equipment = equipment.map((entry) => entry.name);
 		}
-		if (realFeat) {
-			baseNPC.features = [realFeat.name];
+		if (features.length > 0) {
+			baseNPC.features = features.map((entry) => entry.name);
 		}
+		baseNPC.linkedContent = {
+			equipment,
+			features,
+			background,
+			location,
+			regent,
+		};
+		baseNPC.description =
+			`${baseNPC.description} ${background ? `Background: ${background.name}.` : ""} ${location ? `Known location: ${location.name}.` : ""} ${regent ? `Regent vector: ${regent.name}.` : ""}`.trim();
 
 		setNpc(baseNPC);
 		toast({

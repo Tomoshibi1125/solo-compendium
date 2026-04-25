@@ -28,12 +28,17 @@ import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import {
+	loadWardenGenerationContext,
+	type WardenLinkedEntry,
+} from "@/lib/wardenGenerationContext";
 
 interface GeneratedEvent {
 	type: "world" | "encounter" | "complication";
 	title: string;
 	description: string;
 	impact: string;
+	linkedContent?: WardenLinkedEntry[];
 }
 
 function generateEvent(
@@ -111,14 +116,62 @@ const RandomEventGenerator = () => {
 		void saveNow(debouncedPayload);
 	}, [debouncedPayload, isLoading, saveNow]);
 
-	const handleGenerate = () => {
+	const handleGenerate = async () => {
 		const result = generateEvent(eventType);
+		const generationContext = await loadWardenGenerationContext({
+			types: [
+				"locations",
+				"anomalies",
+				"conditions",
+				"items",
+				"equipment",
+				"relics",
+				"regents",
+			],
+		});
+		const linkedContent =
+			eventType === "world"
+				? [
+						...generationContext.pickMany("locations", 1, {
+							theme: result.description,
+						}),
+						...generationContext.pickMany("regents", 1, {
+							theme: result.impact,
+						}),
+					]
+				: eventType === "encounter"
+					? [
+							...generationContext.pickMany("anomalies", 1, {
+								theme: result.description,
+							}),
+							...generationContext.pickMany("equipment", 1, {
+								theme: result.impact,
+							}),
+						]
+					: [
+							...generationContext.pickMany("conditions", 1, {
+								theme: result.description,
+							}),
+							...generationContext.pickMany("items", 1, {
+								theme: result.impact,
+							}),
+							...generationContext.pickMany("relics", 1, {
+								theme: result.impact,
+							}),
+						].slice(0, 2);
+		result.linkedContent = linkedContent.slice(0, 3);
+		if (result.linkedContent.length > 0) {
+			result.description = `${result.description} Linked compendium signals: ${result.linkedContent.map((entry) => entry.name).join(", ")}.`;
+		}
 		setEvent(result);
 	};
 
 	const handleCopy = () => {
 		if (!event) return;
-		const text = `${event.title}: ${event.description}\n\nImpact: ${event.impact}`;
+		const linked =
+			event.linkedContent?.map((entry) => `${entry.name} (${entry.type})`) ||
+			[];
+		const text = `${event.title}: ${event.description}\n\nImpact: ${event.impact}${linked.length > 0 ? `\n\nLinked Content: ${linked.join(", ")}` : ""}`;
 		navigator.clipboard.writeText(text);
 		toast({
 			title: "Copied!",
@@ -196,7 +249,7 @@ const RandomEventGenerator = () => {
 						<Button
 							onClick={() => {
 								clearEnhanced();
-								handleGenerate();
+								void handleGenerate();
 							}}
 							className="w-full btn-umbral"
 							size="lg"
@@ -220,6 +273,7 @@ SEED DATA:
 - Title: ${event.title}
 - Description: ${event.description}
 - Impact: ${event.impact}
+- Linked Content: ${event.linkedContent?.map((entry) => `${entry.name} (${entry.type})`).join("; ") || "None"}
 
 Provide ALL of the following sections with full detail:
 
@@ -272,6 +326,25 @@ Provide ALL of the following sections with full detail:
 								</div>
 							</div>
 
+							{event.linkedContent && event.linkedContent.length > 0 && (
+								<div className="pt-2">
+									<h4 className="font-heading font-semibold mb-2">
+										Linked Compendium Signals
+									</h4>
+									<div className="flex flex-wrap gap-2">
+										{event.linkedContent.map((entry) => (
+											<Badge
+												key={`${entry.type}:${entry.id}`}
+												variant="outline"
+												className="text-xs"
+											>
+												{entry.name} · {entry.type}
+											</Badge>
+										))}
+									</div>
+								</div>
+							)}
+
 							{enhancedText && (
 								<div className="pt-4 border-t border-primary/30">
 									<div className="flex items-center gap-2 mb-2">
@@ -298,7 +371,7 @@ Provide ALL of the following sections with full detail:
 								<Button
 									onClick={() => {
 										clearEnhanced();
-										handleGenerate();
+										void handleGenerate();
 									}}
 									variant="outline"
 									className="flex-1"

@@ -24,8 +24,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import {
+	loadWardenGenerationContext,
+	rankToTreasureRarities,
+	type WardenLinkedEntry,
+} from "@/lib/wardenGenerationContext";
 
 interface GeneratedRift {
 	rank: string;
@@ -33,6 +37,15 @@ interface GeneratedRift {
 	biome: string;
 	boss: string;
 	complications: string[];
+	hazards: string[];
+	rewards: string[];
+	linkedContent?: {
+		boss?: WardenLinkedEntry | null;
+		encounters?: WardenLinkedEntry[];
+		hazards?: WardenLinkedEntry[];
+		loot?: WardenLinkedEntry[];
+		lore?: WardenLinkedEntry[];
+	};
 	description: string;
 }
 
@@ -69,6 +82,8 @@ function generateRift(rank?: string): GeneratedRift {
 		biome,
 		boss,
 		complications,
+		hazards: [],
+		rewards: [],
 		description,
 	};
 }
@@ -131,17 +146,83 @@ const GateGenerator = () => {
 		userInteractedRef.current = true;
 
 		const baseRift = generateRift(selectedRank || undefined);
+		const generationContext = await loadWardenGenerationContext({
+			types: [
+				"anomalies",
+				"conditions",
+				"equipment",
+				"items",
+				"relics",
+				"runes",
+				"sigils",
+				"artifacts",
+				"locations",
+				"regents",
+				"rollable-tables",
+			],
+		});
+		const boss =
+			generationContext.pickOne("anomalies", {
+				rank: baseRift.rank,
+				bossOnly: true,
+			}) || generationContext.pickOne("anomalies", { rank: baseRift.rank });
+		const encounters = generationContext.pickMany("anomalies", 4, {
+			rank: baseRift.rank,
+			theme: baseRift.theme,
+			biome: baseRift.biome,
+		});
+		const hazards = generationContext.pickMany("conditions", 3, {
+			theme: baseRift.theme,
+			biome: baseRift.biome,
+		});
+		const treasureRarities = rankToTreasureRarities(baseRift.rank);
+		const loot = [
+			...generationContext.pickMany("equipment", 2, {
+				rank: baseRift.rank,
+				rarities: treasureRarities,
+			}),
+			...generationContext.pickMany("items", 2, {
+				rarities: treasureRarities,
+			}),
+			...generationContext.pickMany("relics", 1, {
+				rank: baseRift.rank,
+				rarities: treasureRarities,
+			}),
+			...generationContext.pickMany("runes", 1, { rank: baseRift.rank }),
+			...generationContext.pickMany("sigils", 1, { rank: baseRift.rank }),
+			...generationContext.pickMany("artifacts", 1, {
+				rank: baseRift.rank,
+				rarities: treasureRarities,
+			}),
+		].slice(0, 8);
+		const lore = [
+			...generationContext.pickMany("locations", 2, {
+				theme: baseRift.theme,
+				biome: baseRift.biome,
+			}),
+			...generationContext.pickMany("regents", 1, { theme: baseRift.theme }),
+			...generationContext.pickMany("rollable-tables", 1, {
+				theme: baseRift.theme,
+			}),
+		];
 
-		// 100% Automation: Pull real boss from compendium
-		const realBoss = await getRandomAnomaly(selectedRank || baseRift.rank);
-		if (realBoss) {
-			const boss = realBoss as { name: string };
+		if (boss) {
 			baseRift.boss = boss.name;
 			baseRift.description = baseRift.description.replace(
 				/protected by [^.]+/,
 				`protected by ${boss.name}`,
 			);
 		}
+		baseRift.hazards = hazards.map((entry) => entry.name);
+		baseRift.rewards = loot.map((entry) => entry.name);
+		baseRift.linkedContent = {
+			boss,
+			encounters,
+			hazards,
+			loot,
+			lore,
+		};
+		baseRift.description = `${baseRift.description} Linked encounters: ${encounters.map((entry) => entry.name).join(", ") || "none"}. Rewards indexed: ${loot.map((entry) => entry.name).join(", ") || "none"}.`;
 
 		setRift(baseRift);
 		void saveNow({ selectedRank, rift: baseRift });
@@ -161,6 +242,8 @@ SEED DATA:
 - Biome: ${rift.biome}
 - Boss: ${rift.boss}
 - Complications: ${rift.complications.join("; ") || "None"}
+- Hazards: ${rift.hazards.join("; ") || "None"}
+- Rewards: ${rift.rewards.join("; ") || "None"}
 - Description: ${rift.description}
 
 Provide ALL of the following sections with full detail:
@@ -388,6 +471,36 @@ READ-ALOUD ENTRY:
 											</div>
 										)}
 
+										{rift.hazards.length > 0 && (
+											<div>
+												<span className="text-xs font-display text-muted-foreground">
+													HAZARDS
+												</span>
+												<div className="flex flex-wrap gap-2 mt-2">
+													{rift.hazards.map((hazard) => (
+														<Badge key={hazard} variant="outline">
+															{hazard}
+														</Badge>
+													))}
+												</div>
+											</div>
+										)}
+
+										{rift.rewards.length > 0 && (
+											<div>
+												<span className="text-xs font-display text-muted-foreground">
+													INDEXED REWARDS
+												</span>
+												<div className="flex flex-wrap gap-2 mt-2">
+													{rift.rewards.map((reward) => (
+														<Badge key={reward} variant="secondary">
+															{reward}
+														</Badge>
+													))}
+												</div>
+											</div>
+										)}
+
 										<div className="pt-4 border-t border-border">
 											<span className="text-xs font-display text-muted-foreground">
 												DESCRIPTION
@@ -433,14 +546,7 @@ READ-ALOUD ENTRY:
 								{rift && (
 									<div className="pt-8">
 										<AscendantWindow title="RIFT MAP GENERATOR">
-											<DungeonMapGenerator
-												riftContext={{
-													rank: rift.rank,
-													theme: rift.theme,
-													biome: rift.biome,
-													boss: rift.boss,
-												}}
-											/>
+											<DungeonMapGenerator riftContext={rift} />
 										</AscendantWindow>
 									</div>
 								)}

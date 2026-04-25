@@ -53,9 +53,9 @@ describe("campaignNoteContent", () => {
 		);
 
 		expect(segments).toEqual([
-			{ kind: "text", content: "Alpha\n" },
-			{ kind: "secret", label: "GM Only", content: "Bravo" },
-			{ kind: "text", content: "\nCharlie" },
+			{ kind: "text", content: "Alpha\n", id: "text-0" },
+			{ kind: "secret", label: "GM Only", content: "Bravo", id: "secret-1" },
+			{ kind: "text", content: "\nCharlie", id: "text-2" },
 		]);
 	});
 });

@@ -1106,9 +1106,29 @@ export const useUpdateCampaignMemberRole = () => {
 			role: "ascendant" | "co-warden";
 		}) => {
 			if (isLocalMode()) {
+				const userId = getLocalUserId();
+				const campaign = loadLocalCampaigns().find(
+					(entry) => entry.id === campaignId,
+				);
+				if (!campaign) throw new AppError("Campaign not found", "NOT_FOUND");
+				if (campaign.warden_id !== userId) {
+					throw new AppError(
+						"Only the primary Warden can manage roles",
+						"FORBIDDEN" as AppErrorCode,
+					);
+				}
 				const members = loadLocalMembers();
 				const idx = members.findIndex((m) => m.id === memberId);
 				if (idx === -1) throw new AppError("Member not found", "NOT_FOUND");
+				if (
+					members[idx].user_id === campaign.warden_id ||
+					members[idx].role === "warden"
+				) {
+					throw new AppError(
+						"The primary Warden role cannot be changed",
+						"FORBIDDEN" as AppErrorCode,
+					);
+				}
 				members[idx] = { ...members[idx], role };
 				saveLocalMembers(members);
 				return;
@@ -1119,9 +1139,29 @@ export const useUpdateCampaignMemberRole = () => {
 			} = await supabase.auth.getUser();
 			if (!user) {
 				if (guestEnabled) {
+					const userId = getLocalUserId();
+					const campaign = loadLocalCampaigns().find(
+						(entry) => entry.id === campaignId,
+					);
+					if (!campaign) throw new AppError("Campaign not found", "NOT_FOUND");
+					if (campaign.warden_id !== userId) {
+						throw new AppError(
+							"Only the primary Warden can manage roles",
+							"FORBIDDEN" as AppErrorCode,
+						);
+					}
 					const members = loadLocalMembers();
 					const idx = members.findIndex((m) => m.id === memberId);
 					if (idx === -1) throw new AppError("Member not found", "NOT_FOUND");
+					if (
+						members[idx].user_id === campaign.warden_id ||
+						members[idx].role === "warden"
+					) {
+						throw new AppError(
+							"The primary Warden role cannot be changed",
+							"FORBIDDEN" as AppErrorCode,
+						);
+					}
 					members[idx] = { ...members[idx], role };
 					saveLocalMembers(members);
 					return;
@@ -1140,7 +1180,24 @@ export const useUpdateCampaignMemberRole = () => {
 				throw new AppError("Campaign not found", "NOT_FOUND");
 			if (campaign.warden_id !== user.id) {
 				throw new AppError(
-					"Only the Warden can manage roles",
+					"Only the primary Warden can manage roles",
+					"FORBIDDEN" as AppErrorCode,
+				);
+			}
+
+			const { data: member, error: memberError } = await supabase
+				.from("campaign_members")
+				.select("user_id, role")
+				.eq("id", memberId)
+				.eq("campaign_id", campaignId)
+				.maybeSingle();
+
+			if (memberError || !member) {
+				throw new AppError("Member not found", "NOT_FOUND");
+			}
+			if (member.user_id === campaign.warden_id || member.role === "warden") {
+				throw new AppError(
+					"The primary Warden role cannot be changed",
 					"FORBIDDEN" as AppErrorCode,
 				);
 			}
@@ -1168,6 +1225,11 @@ export const useUpdateCampaignMemberRole = () => {
 			queryClient.invalidateQueries({
 				queryKey: ["campaigns", variables.campaignId, "role"],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["campaigns", variables.campaignId, "has-warden-access"],
+			});
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
+			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			toast({
 				title: "Role Updated",
 				description: `Member role has been changed to ${variables.role}.`,

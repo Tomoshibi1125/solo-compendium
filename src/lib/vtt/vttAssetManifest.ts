@@ -328,6 +328,16 @@ export const MAP_ASSETS: VTTAsset[] = [
 		attribution: "AI Generated — Rift Ascendant",
 	},
 	{
+		id: "map-sandbox-bunker",
+		name: "Bureau Briefing Hall",
+		category: "map",
+		path: "/generated/compendium/sandbox_assets/bunker_map.png",
+		tags: ["sandbox", "bunker", "briefing", "bureau", "hq", "campaign"],
+		tier: "E",
+		format: "png",
+		attribution: "AI Generated — Rift Ascendant",
+	},
+	{
 		id: "map-sandbox-subway",
 		name: "The Hollow Subway",
 		category: "map",

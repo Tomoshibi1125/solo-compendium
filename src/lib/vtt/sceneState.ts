@@ -1,6 +1,4 @@
-import {
-	DEFAULT_SCENE_GRID_OPACITY,
-} from "@/lib/vtt/backgroundTransform";
+import { DEFAULT_SCENE_GRID_OPACITY } from "@/lib/vtt/backgroundTransform";
 import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
 
 export const DEFAULT_SCENE_SETTINGS = {

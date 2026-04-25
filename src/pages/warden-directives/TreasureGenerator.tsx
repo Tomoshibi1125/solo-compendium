@@ -4,6 +4,7 @@ import {
 	Copy,
 	Gem,
 	Loader2,
+	PackagePlus,
 	RefreshCw,
 	Sparkles,
 } from "lucide-react";
@@ -27,14 +28,20 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
 import {
 	GATE_RANKS,
 	TREASURE_TABLES,
 } from "@/data/compendium/wardenToolConfig";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
+import { useMyCampaigns } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import {
+	linkedEntryToDeliverableItem,
+	type WardenDeliverableItem,
+} from "@/hooks/useWardenItemDelivery";
 import { generateTreasure, type TreasureResult } from "@/lib/treasureGenerator";
 import { cn } from "@/lib/utils";
 
@@ -59,6 +66,11 @@ const TreasureGenerator = () => {
 	const [selectedRank, setSelectedRank] = useState<string>("C");
 	const [treasure, setTreasure] = useState<TreasureResult | null>(null);
 	const [isGenerating, setIsGenerating] = useState(false);
+	const [selectedCampaignId, setSelectedCampaignId] = useState<string>("");
+	const [deliveryItem, setDeliveryItem] =
+		useState<WardenDeliverableItem | null>(null);
+	const [deliveryOpen, setDeliveryOpen] = useState(false);
+	const { data: campaigns = [] } = useMyCampaigns();
 
 	const hydrated = useMemo(() => {
 		return {
@@ -236,6 +248,11 @@ READ-ALOUD DISCOVERY:
 		});
 	};
 
+	const openDelivery = (item: WardenDeliverableItem) => {
+		setDeliveryItem(item);
+		setDeliveryOpen(true);
+	};
+
 	const getRankColor = (rank: string) => {
 		const colors: Record<string, string> = {
 			E: "text-green-400 border-green-400/30 bg-green-400/10",
@@ -303,6 +320,30 @@ READ-ALOUD DISCOVERY:
 							</Select>
 						</div>
 
+						<div>
+							<Label htmlFor="campaign-delivery" className="mb-2 block">
+								Campaign Delivery Target
+							</Label>
+							<Select
+								value={selectedCampaignId || "none"}
+								onValueChange={(value) =>
+									setSelectedCampaignId(value === "none" ? "" : value)
+								}
+							>
+								<SelectTrigger id="campaign-delivery">
+									<SelectValue placeholder="Select campaign for delivery" />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="none">No campaign selected</SelectItem>
+									{campaigns.map((campaign) => (
+										<SelectItem key={campaign.id} value={campaign.id}>
+											{campaign.name}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						</div>
+
 						<Button
 							onClick={handleGenerate}
 							className="w-full btn-umbral"
@@ -362,15 +403,35 @@ READ-ALOUD DISCOVERY:
 										Items ({treasure.items.length})
 									</h3>
 									<div className="flex flex-wrap gap-2">
-										{treasure.items.map((item) => (
-											<Badge
-												key={`treasure-item-${item}`}
-												variant="outline"
-												className="text-sm"
-											>
-												{item}
-											</Badge>
-										))}
+										{treasure.items.map((item, index) => {
+											const linkedEntry = treasure.itemEntries[index];
+											return (
+												<div
+													key={`treasure-item-${item}`}
+													className="flex items-center gap-1"
+												>
+													<Badge variant="outline" className="text-sm">
+														{item}
+													</Badge>
+													{selectedCampaignId && linkedEntry && (
+														<Button
+															type="button"
+															variant="ghost"
+															size="sm"
+															className="h-7 px-2"
+															onClick={() =>
+																openDelivery(
+																	linkedEntryToDeliverableItem(linkedEntry),
+																)
+															}
+														>
+															<PackagePlus className="w-3 h-3 mr-1" />
+															Deliver
+														</Button>
+													)}
+												</div>
+											);
+										})}
 									</div>
 								</div>
 							)}
@@ -402,15 +463,38 @@ READ-ALOUD DISCOVERY:
 										Relics ({treasure.relics.length})
 									</h3>
 									<div className="flex flex-wrap gap-2">
-										{treasure.relics.map((relic) => (
-											<Badge
-												key={`treasure-relic-${relic}`}
-												variant="outline"
-												className="text-sm bg-purple-400/20 border-purple-400/50 text-purple-300"
-											>
-												{relic}
-											</Badge>
-										))}
+										{treasure.relics.map((relic, index) => {
+											const linkedEntry = treasure.relicEntries[index];
+											return (
+												<div
+													key={`treasure-relic-${relic}`}
+													className="flex items-center gap-1"
+												>
+													<Badge
+														variant="outline"
+														className="text-sm bg-purple-400/20 border-purple-400/50 text-purple-300"
+													>
+														{relic}
+													</Badge>
+													{selectedCampaignId && linkedEntry && (
+														<Button
+															type="button"
+															variant="ghost"
+															size="sm"
+															className="h-7 px-2"
+															onClick={() =>
+																openDelivery(
+																	linkedEntryToDeliverableItem(linkedEntry),
+																)
+															}
+														>
+															<PackagePlus className="w-3 h-3 mr-1" />
+															Deliver
+														</Button>
+													)}
+												</div>
+											);
+										})}
 									</div>
 								</div>
 							)}
@@ -488,6 +572,15 @@ READ-ALOUD DISCOVERY:
 						</div>
 					</div>
 				</AscendantWindow>
+				{selectedCampaignId && (
+					<WardenItemDeliveryDialog
+						open={deliveryOpen}
+						onOpenChange={setDeliveryOpen}
+						campaignId={selectedCampaignId}
+						initialItem={deliveryItem}
+						title="Deliver Generated Treasure"
+					/>
+				)}
 			</div>
 		</Layout>
 	);

@@ -33,6 +33,16 @@ import {
 	RiftHeading,
 } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -53,11 +63,14 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import {
+	type CampaignRoleMode,
+	useCampaignRoleMode,
+} from "@/hooks/useCampaignRoleMode";
+import {
 	type Campaign,
 	useCampaign,
 	useCampaignMembers,
 	useCampaignRole,
-	useHasWardenAccess,
 	useLinkCampaignCharacter,
 	useUpdateCampaignMemberRole,
 } from "@/hooks/useCampaigns";
@@ -65,6 +78,18 @@ import { useCharacters } from "@/hooks/useCharacters";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { formatRegentVernacular } from "@/lib/vernacular";
+
+type ManagedCampaignRole = "ascendant" | "co-warden";
+
+type PendingRoleChange = {
+	memberId: string;
+	memberName: string;
+	currentRole: ManagedCampaignRole;
+	nextRole: ManagedCampaignRole;
+};
+
+const formatManagedCampaignRole = (role: ManagedCampaignRole) =>
+	role === "co-warden" ? "Co-Warden" : "Ascendant";
 
 const CampaignDetail = () => {
 	const { id } = useParams<{ id: string }>();
@@ -75,6 +100,8 @@ const CampaignDetail = () => {
 	const [selectedCharacterToAttach, setSelectedCharacterToAttach] =
 		useState("");
 	const [loadingTimedOut, setLoadingTimedOut] = useState(false);
+	const [pendingRoleChange, setPendingRoleChange] =
+		useState<PendingRoleChange | null>(null);
 
 	const { user, loading } = useAuth();
 	const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
@@ -94,8 +121,16 @@ const CampaignDetail = () => {
 	const { data: members = [], isLoading: loadingMembers } = useCampaignMembers(
 		id || "",
 	);
-	const { data: hasWardenAccess = false } = useHasWardenAccess(id || "");
 	const { data: userRole, isLoading: loadingRole } = useCampaignRole(id || "");
+	const isPrimaryWarden =
+		!!campaign && !!user && campaign.warden_id === user.id;
+	const effectiveUserRole = isPrimaryWarden ? "warden" : (userRole ?? null);
+	const {
+		currentMode,
+		canActAsWarden: hasWardenAccess,
+		canChooseWardenMode,
+		setCurrentMode,
+	} = useCampaignRoleMode(id || "", effectiveUserRole);
 
 	const { data: myCharacters = [] } = useCharacters();
 	const linkCharacter = useLinkCampaignCharacter();
@@ -117,6 +152,34 @@ const CampaignDetail = () => {
 		}
 		setAttachDialogOpen(false);
 		setSelectedCharacterToAttach("");
+	};
+
+	const handleRoleModeChange = (mode: CampaignRoleMode) => {
+		setCurrentMode(mode);
+	};
+
+	const handlePendingRoleChange = () => {
+		if (!pendingRoleChange || !id) return;
+		updateMemberRole.mutate(
+			{
+				campaignId: id,
+				memberId: pendingRoleChange.memberId,
+				role: pendingRoleChange.nextRole,
+			},
+			{
+				onSettled: () => setPendingRoleChange(null),
+			},
+		);
+	};
+
+	const queueRoleChange = ({
+		memberId,
+		memberName,
+		currentRole,
+		nextRole,
+	}: PendingRoleChange) => {
+		if (currentRole === nextRole) return;
+		setPendingRoleChange({ memberId, memberName, currentRole, nextRole });
 	};
 
 	// Real-time updates for campaign members
@@ -147,6 +210,13 @@ const CampaignDetail = () => {
 			supabase.removeChannel(channel);
 		};
 	}, [id, loading, queryClient, user]);
+
+	useEffect(() => {
+		if (hasWardenAccess) return;
+		if (activeTab === "settings" || activeTab === "oversight") {
+			setActiveTab("overview");
+		}
+	}, [activeTab, hasWardenAccess]);
 
 	if ((loadingCampaign || (!campaign && id)) && !loadingTimedOut) {
 		return (
@@ -212,7 +282,30 @@ const CampaignDetail = () => {
 								>
 									{campaign.name.toUpperCase()}
 								</RiftHeading>
-								{!loadingRole && userRole && <RoleBadge role={userRole} />}
+								{(!loadingRole || isPrimaryWarden) && effectiveUserRole && (
+									<RoleBadge role={effectiveUserRole} />
+								)}
+								{canChooseWardenMode && (
+									<div className="flex items-center gap-2 rounded-lg border border-border bg-muted/30 px-3 py-2">
+										<span className="text-[10px] font-display uppercase tracking-widest text-foreground/70">
+											Acting as
+										</span>
+										<Select
+											value={currentMode}
+											onValueChange={(value) =>
+												handleRoleModeChange(value as CampaignRoleMode)
+											}
+										>
+											<SelectTrigger className="h-8 w-[145px] text-[11px]">
+												<SelectValue />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="ascendant">Ascendant</SelectItem>
+												<SelectItem value="warden">Co-Warden</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+								)}
 							</div>
 							{hasWardenAccess && (
 								<Button
@@ -456,6 +549,12 @@ const CampaignDetail = () => {
 												// Check if this member is the Rift (Warden)
 												const isWarden = campaign.warden_id === member.user_id;
 												const isMe = member.user_id === user?.id;
+												const memberName =
+													member.characters?.name || "No Ascendant linked";
+												const managedRole: ManagedCampaignRole =
+													member.role === "co-warden"
+														? "co-warden"
+														: "ascendant";
 												return (
 													<div
 														key={member.id}
@@ -470,8 +569,7 @@ const CampaignDetail = () => {
 															)}
 															<div>
 																<p className="font-heading font-semibold">
-																	{member.characters?.name ||
-																		"No Ascendant linked"}
+																	{memberName}
 																</p>
 																{member.characters && (
 																	<AscendantText className="block text-xs text-foreground/70">
@@ -493,20 +591,23 @@ const CampaignDetail = () => {
 																)}
 															</div>
 														</div>
-														{hasWardenAccess && !isWarden && (
+														{isPrimaryWarden && !isWarden && (
 															<Select
-																value={member.role}
-																onValueChange={(
-																	value: "ascendant" | "co-warden",
-																) =>
-																	updateMemberRole.mutate({
-																		campaignId: id || "",
+																value={managedRole}
+																onValueChange={(value) =>
+																	queueRoleChange({
 																		memberId: member.id,
-																		role: value,
+																		memberName,
+																		currentRole: managedRole,
+																		nextRole: value as ManagedCampaignRole,
 																	})
 																}
+																disabled={updateMemberRole.isPending}
 															>
-																<SelectTrigger className="w-[120px] h-8 text-[11px]">
+																<SelectTrigger
+																	className="w-[120px] h-8 text-[11px]"
+																	aria-label={`Change ${memberName} campaign role`}
+																>
 																	<SelectValue />
 																</SelectTrigger>
 																<SelectContent>
@@ -519,7 +620,7 @@ const CampaignDetail = () => {
 																</SelectContent>
 															</Select>
 														)}
-														{!hasWardenAccess || isWarden ? (
+														{!isPrimaryWarden || isWarden ? (
 															<span className="text-xs font-display text-foreground/70">
 																{isWarden || member.role === "warden"
 																	? "Warden"
@@ -628,6 +729,35 @@ const CampaignDetail = () => {
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
+
+				<AlertDialog
+					open={!!pendingRoleChange}
+					onOpenChange={(open) => {
+						if (!open) setPendingRoleChange(null);
+					}}
+				>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Confirm Role Change</AlertDialogTitle>
+							<AlertDialogDescription>
+								{pendingRoleChange
+									? `Change ${pendingRoleChange.memberName} from ${formatManagedCampaignRole(pendingRoleChange.currentRole)} to ${formatManagedCampaignRole(pendingRoleChange.nextRole)} for this campaign?`
+									: ""}
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel disabled={updateMemberRole.isPending}>
+								Cancel
+							</AlertDialogCancel>
+							<AlertDialogAction
+								onClick={handlePendingRoleChange}
+								disabled={updateMemberRole.isPending}
+							>
+								{updateMemberRole.isPending ? "Updating..." : "Confirm"}
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			</Layout>
 
 			{campaign && (

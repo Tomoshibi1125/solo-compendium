@@ -207,7 +207,7 @@ export const GATE_THEMES = [
 	"Post-Reset Fragment",
 ] as const;
 
-export const GATE_BIOMES = RIFT_BIOMES;
+export const GATE_BIOMES = [...RIFT_BIOMES] as const;
 
 export const TREASURE_TIERS = {
 	"E-Rank": [

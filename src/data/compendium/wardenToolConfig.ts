@@ -154,7 +154,7 @@ export const TREASURE_MATERIALS: Record<GateRank, readonly string[]> = {
 	],
 };
 
-export const RELIC_RANKS = GATE_RANKS;
+export const RELIC_RANKS = [...GATE_RANKS] as const;
 export const RELIC_TYPES = ["weapon", "armor", "accessory", "tool"] as const;
 export type RelicType = (typeof RELIC_TYPES)[number];
 

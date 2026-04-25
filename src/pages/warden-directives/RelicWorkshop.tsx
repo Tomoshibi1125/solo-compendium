@@ -47,12 +47,27 @@ import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
 import { MONARCH_LABEL } from "@/lib/vernacular";
+import { loadWardenGenerationContext } from "@/lib/wardenGenerationContext";
 
 interface RelicProperty {
 	id: string;
 	name: string;
 	description: string;
 	type: RelicPropertyType;
+}
+
+function resolveRelicType(itemType?: string | null): RelicType {
+	const normalized = (itemType || "").toLowerCase();
+	if (normalized.includes("armor") || normalized === "shield") return "armor";
+	if (normalized.includes("tool")) return "tool";
+	if (
+		normalized.includes("weapon") ||
+		normalized.includes("melee") ||
+		normalized.includes("ranged")
+	) {
+		return "weapon";
+	}
+	return "accessory";
 }
 
 export interface Relic {
@@ -279,6 +294,86 @@ READ-ALOUD DISCOVERY:
 		});
 	};
 
+	const handleSeedFromCompendium = async () => {
+		const context = await loadWardenGenerationContext({
+			types: ["relics", "artifacts", "sigils", "runes", "regents"],
+		});
+		const inspiration =
+			context.pickOne("relics", { rank: currentRelic.rank }) ||
+			context.pickOne("artifacts", { rank: currentRelic.rank });
+		if (!inspiration) {
+			toast({
+				title: "No compendium seed found",
+				description: "No relic or artifact entries were available.",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		const sigil = context.pickOne("sigils", { theme: inspiration.name });
+		const rune = context.pickOne("runes", { theme: inspiration.name });
+		const regent = context.pickOne("regents", { theme: inspiration.name });
+		const rarity =
+			inspiration.rarity &&
+			RELIC_RARITY_LEVELS.includes(inspiration.rarity as RelicRarity)
+				? (inspiration.rarity as RelicRarity)
+				: currentRelic.rarity;
+		const type = resolveRelicType(inspiration.entry.item_type);
+		const seededProperties: RelicProperty[] = [
+			{
+				id: `${Date.now()}-seed-origin`,
+				name: `${inspiration.name} Pattern`,
+				description:
+					inspiration.description ||
+					`A canonical ${inspiration.type} pattern recovered from the compendium.`,
+				type: "passive",
+			},
+			...(sigil
+				? [
+						{
+							id: `${Date.now()}-seed-sigil`,
+							name: `${sigil.name} Inscription`,
+							description:
+								sigil.description ||
+								"Sigil logic braided into the relic's activation matrix.",
+							type: "active" as const,
+						},
+					]
+				: []),
+			...(rune
+				? [
+						{
+							id: `${Date.now()}-seed-rune`,
+							name: `${rune.name} Rune Echo`,
+							description:
+								rune.description ||
+								"Rune resonance stabilizes the relic's System interface.",
+							type: "bonus" as const,
+						},
+					]
+				: []),
+		];
+
+		setCurrentRelic({
+			...currentRelic,
+			name: currentRelic.name || inspiration.name,
+			type,
+			rarity,
+			description: [
+				currentRelic.description,
+				`Compendium seed: ${inspiration.name}${regent ? `, aligned to ${regent.name}` : ""}.`,
+				inspiration.description,
+			]
+				.filter(Boolean)
+				.join("\n\n"),
+			properties: [...currentRelic.properties, ...seededProperties],
+		});
+		toast({
+			title: "Compendium seed applied",
+			description: `${inspiration.name} linked into the relic draft.`,
+		});
+	};
+
 	const getTypeIcon = (type: string) => {
 		switch (type) {
 			case "weapon":
@@ -348,6 +443,15 @@ READ-ALOUD DISCOVERY:
 					<div className="lg:col-span-2 space-y-6">
 						<AscendantWindow title="RELIC DESIGN">
 							<div className="space-y-4">
+								<Button
+									type="button"
+									variant="outline"
+									className="w-full gap-2"
+									onClick={() => void handleSeedFromCompendium()}
+								>
+									<Sparkles className="w-4 h-4" />
+									Seed From Compendium
+								</Button>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<div>
 										<Label htmlFor="name">Relic Name</Label>
