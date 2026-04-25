@@ -95,6 +95,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		let timelineCount = 0;
 		let assetCount = 0;
 		let audioCount = 0;
+		let failedInserts = 0;
 
 		/**
 		 * Stable, non-null author/user id used for guest-mode writes. Cloud
@@ -196,6 +197,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								});
 
 							if (wikiError) {
+								failedInserts++;
 								console.error(
 									"[SandboxInjector] Wiki insert failed:",
 									chapter.title,
@@ -384,13 +386,14 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 										is_public: true,
 									});
 
-								if (npcError)
+								if (npcError) {
+									failedInserts++;
 									console.error(
 										"[SandboxInjector] NPC insert failed:",
 										npc.name,
 										npcError,
 									);
-								else npcCount++;
+								} else npcCount++;
 							}
 
 							if (i % 10 === 0) {
@@ -464,13 +467,14 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 										category: h.category,
 									});
 
-								if (handoutError)
+								if (handoutError) {
+									failedInserts++;
 									console.error(
 										"[SandboxInjector] Handout insert failed:",
 										h.title,
 										handoutError,
 									);
-								else handoutCount++;
+								} else handoutCount++;
 							}
 						}
 					}
@@ -578,6 +582,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 									.select("id")
 									.single();
 								if (error) {
+									failedInserts++;
 									console.error(
 										"[SandboxInjector] Session insert failed:",
 										s.title,
@@ -617,6 +622,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 											is_player_visible: log.isPlayerVisible,
 										});
 									if (logErr) {
+										failedInserts++;
 										console.error(
 											"[SandboxInjector] Session log insert failed:",
 											log.title,
@@ -729,6 +735,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 									is_player_visible: false,
 								});
 							if (error) {
+								failedInserts++;
 								console.error(
 									"[SandboxInjector] Timeline insert failed:",
 									title,
@@ -789,6 +796,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								is_shared: false,
 							});
 							if (error) {
+								failedInserts++;
 								console.error(
 									"[SandboxInjector] Note insert failed:",
 									note.title,
@@ -950,6 +958,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								.single();
 
 							if (error) {
+								failedInserts++;
 								console.error(
 									"[SandboxInjector] NPC character insert failed:",
 									npc.name,
@@ -1074,6 +1083,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 									.select("id")
 									.single();
 								if (error) {
+									failedInserts++;
 									console.error(
 										"[SandboxInjector] Encounter insert failed:",
 										enc.name,
@@ -1106,6 +1116,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 										stats: { hp: m.hp, ac: m.ac, initiative: m.initiative },
 									});
 								if (entryErr) {
+									failedInserts++;
 									console.error(
 										"[SandboxInjector] Encounter entry insert failed:",
 										m.name,
@@ -1186,6 +1197,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 								is_public: true,
 							});
 						if (error) {
+							failedInserts++;
 							console.error(
 								"[SandboxInjector] wiki-collection insert failed:",
 								title,
@@ -1381,9 +1393,20 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				.join(", ");
 
 			if (summary) {
+				const failSuffix =
+					failedInserts > 0
+						? ` ${failedInserts} insert(s) failed — check console.`
+						: "";
 				toast({
 					title: "Module Import Complete ✦ The Shadow of the Regent",
-					description: `${summary}. All content is now available in the Wiki, Handouts, and VTT tabs.`,
+					description: `${summary}. All content is now available in the Wiki, Handouts, and VTT tabs.${failSuffix}`,
+					variant: failedInserts > 0 ? "destructive" : undefined,
+				});
+			} else if (failedInserts > 0) {
+				toast({
+					title: "Module Import Failed",
+					description: `All ${failedInserts} insert(s) failed — RLS permissions may be blocking writes. Check the console for details.`,
+					variant: "destructive",
 				});
 			} else {
 				toast({

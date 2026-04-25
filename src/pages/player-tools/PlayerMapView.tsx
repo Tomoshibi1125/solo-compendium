@@ -500,7 +500,7 @@ const PlayerMapView = ({
 
 	const handleRequestZoom = useCallback((nextZoom: number) => {
 		setZoom((prev) => {
-			const clamped = Math.max(0.5, Math.min(2, nextZoom));
+			const clamped = Math.max(0.1, Math.min(3, nextZoom));
 			if (Math.abs(prev - clamped) < 0.001) return prev;
 			return clamped;
 		});
@@ -512,14 +512,24 @@ const PlayerMapView = ({
 		const sw = (currentScene.width ?? 20) * gridSize;
 		const sh = (currentScene.height ?? 20) * gridSize;
 		if (sw <= 0 || sh <= 0) return;
-		const fit = Math.min(rect.width / sw, rect.height / sh, 2);
-		handleRequestZoom(Math.max(0.5, Math.round(fit * 20) / 20));
+		const fit = Math.min(rect.width / sw, rect.height / sh, 3);
+		handleRequestZoom(Math.max(0.1, Math.round(fit * 20) / 20));
 	}, [currentScene, gridSize, handleRequestZoom]);
 	const handleRecenter = useCallback(() => {
 		const el = mapRef.current;
 		if (!el) return;
 		el.scrollTo({ left: 0, top: 0, behavior: "smooth" });
 	}, []);
+
+	// Auto-fit zoom when the active scene changes.
+	const prevPlayerSceneIdRef = useRef<string | null>(null);
+	useEffect(() => {
+		const id = currentScene?.id ?? null;
+		if (id && id !== prevPlayerSceneIdRef.current) {
+			prevPlayerSceneIdRef.current = id;
+			requestAnimationFrame(() => handleFitZoom());
+		}
+	}, [currentScene?.id, handleFitZoom]);
 
 	const clearViewportPan = useCallback(() => {
 		viewportPanRef.current = null;

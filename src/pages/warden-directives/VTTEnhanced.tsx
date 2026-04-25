@@ -863,7 +863,7 @@ const VTTEnhanced = () => {
 	const handleRequestZoom = useCallback(
 		(nextZoom: number, cursor?: { x: number; y: number }) => {
 			setZoom((prev) => {
-				const clamped = Math.max(0.5, Math.min(2, nextZoom));
+				const clamped = Math.max(0.1, Math.min(3, nextZoom));
 				if (Math.abs(prev - clamped) < 0.001) return prev;
 				// Foundry/ZoomPanOptions parity: keep the world-point under the
 				// cursor stationary by adjusting the map container's scroll so
@@ -900,8 +900,8 @@ const VTTEnhanced = () => {
 		const sw = (currentSceneRef.current.width ?? 20) * gridSize;
 		const sh = (currentSceneRef.current.height ?? 20) * gridSize;
 		if (sw <= 0 || sh <= 0) return;
-		const fitZoom = Math.min(rect.width / sw, rect.height / sh, 2);
-		handleRequestZoom(Math.max(0.5, Math.round(fitZoom * 20) / 20));
+		const fitZoom = Math.min(rect.width / sw, rect.height / sh, 3);
+		handleRequestZoom(Math.max(0.1, Math.round(fitZoom * 20) / 20));
 	}, [gridSize, handleRequestZoom]);
 	const handleRecenter = useCallback(() => {
 		const el = mapRef.current;
@@ -912,6 +912,31 @@ const VTTEnhanced = () => {
 			behavior: "smooth",
 		});
 	}, []);
+
+	const onPixiInitError = useCallback(
+		(err: unknown) => {
+			console.error("[VTT] Pixi init error surfaced:", err);
+			toast({
+				title: "Map Renderer Error",
+				description:
+					"The VTT renderer failed to initialize. Your browser may not support WebGL, or the scene is too large. Try refreshing.",
+				variant: "destructive",
+			});
+		},
+		[toast],
+	);
+
+	// Auto-fit zoom when the active scene changes so large maps are
+	// immediately visible instead of showing a zoomed-in corner.
+	const prevSceneIdRef = useRef<string | null>(null);
+	useEffect(() => {
+		const id = currentScene?.id ?? null;
+		if (id && id !== prevSceneIdRef.current) {
+			prevSceneIdRef.current = id;
+			// Wait one frame for the Pixi canvas & CSS vars to settle.
+			requestAnimationFrame(() => handleFitZoom());
+		}
+	}, [currentScene?.id, handleFitZoom]);
 	const {
 		state: libraryTokens,
 		isLoading: libraryLoading,
@@ -4425,6 +4450,7 @@ const VTTEnhanced = () => {
 												viewportPanModifierActive={isViewportPanModifierActive}
 												onTokenDragStart={handlePixiTokenDragStart}
 												onTokenDragEnd={handlePixiTokenDragEnd}
+												onInitError={onPixiInitError}
 											/>
 										)}
 

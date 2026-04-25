@@ -97,9 +97,31 @@ type VttPixiStageProps = {
 	weather?: "none" | "rain" | "snow" | "embers" | "gas";
 	/** Called when the PixiJS stage is ready, exposing the app and effects container for particle effects */
 	onStageReady?: (app: Application, effectsContainer: Container) => void;
+	/** Called when Pixi fails to initialize after all retry attempts */
+	onInitError?: (err: unknown) => void;
 };
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
+
+/** Query the GPU's max texture size via a throwaway WebGL context. */
+const getMaxTextureSize = (): number => {
+	try {
+		const c = document.createElement("canvas");
+		const gl = c.getContext("webgl2") ?? c.getContext("webgl");
+		if (gl) {
+			const max = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
+			// Lose the context immediately so we don't hog a GPU slot.
+			gl.getExtension("WEBGL_lose_context")?.loseContext();
+			return max;
+		}
+	} catch {
+		// Swallow — fall through to safe default.
+	}
+	return 4096;
+};
+
+// Cache once per page load so we don't create throwaway contexts repeatedly.
+const GPU_MAX_TEXTURE = getMaxTextureSize();
 
 export function VttPixiStage({
 	containerRef,
@@ -125,6 +147,7 @@ export function VttPixiStage({
 	onWallCreated,
 	weather = "none",
 	onStageReady,
+	onInitError,
 }: VttPixiStageProps) {
 	const canvasHostRef = useRef<HTMLDivElement | null>(null);
 	const appRef = useRef<Application | null>(null);
@@ -165,6 +188,16 @@ export function VttPixiStage({
 		centerClientY: number;
 	} | null>(null);
 
+	// Deferred left-click pan: stored on pointerdown, promoted to scrollDragRef
+	// once the pointer moves > 6px (avoids conflicting with token selection).
+	const pendingLeftPanRef = useRef<{
+		pointerId: number;
+		startX: number;
+		startY: number;
+		startLeft: number;
+		startTop: number;
+	} | null>(null);
+
 	// Drawing state
 	const drawingRef = useRef<{
 		startX: number;
@@ -187,28 +220,89 @@ export function VttPixiStage({
 		if (!canvasHostRef.current) return;
 		if (appRef.current) return;
 
-		const app = new Application();
-		appRef.current = app;
-
 		let destroyed = false;
 
+		const canvasW = Math.max(1, Math.floor(worldSize.w));
+		const canvasH = Math.max(1, Math.floor(worldSize.h));
+
 		(async () => {
-			try {
-				await app.init({
-					backgroundAlpha: 0,
-					antialias: true,
-					resolution: Math.min(window.devicePixelRatio || 1, dpr[1]),
-					autoDensity: true,
-					width: Math.max(1, Math.floor(worldSize.w)),
-					height: Math.max(1, Math.floor(worldSize.h)),
-				});
-			} catch {
+			const desiredRes = Math.min(window.devicePixelRatio || 1, dpr[1]);
+			// Clamp resolution so the actual pixel buffer never exceeds the
+			// GPU's max texture dimension. Sandbox scenes at 60×70 = 4200px
+			// × DPR 2 = 8400 which overflows the common 8192 limit.
+			const maxDim = Math.max(canvasW, canvasH);
+			const safeResolution =
+				maxDim * desiredRes > GPU_MAX_TEXTURE
+					? Math.floor((GPU_MAX_TEXTURE / maxDim) * 100) / 100
+					: desiredRes;
+
+			// Attempt init with progressively lower settings on failure.
+			const attempts: Array<{
+				resolution: number;
+				width: number;
+				height: number;
+			}> = [
+				{ resolution: safeResolution, width: canvasW, height: canvasH },
+				{ resolution: 1, width: canvasW, height: canvasH },
+				{
+					resolution: 1,
+					width: Math.ceil(canvasW / 2),
+					height: Math.ceil(canvasH / 2),
+				},
+			];
+
+			let app: Application | null = null;
+
+			for (let i = 0; i < attempts.length; i++) {
+				if (destroyed) return;
+				const cfg = attempts[i];
+				const candidate = new Application();
+				try {
+					await candidate.init({
+						backgroundAlpha: 0,
+						antialias: i === 0, // drop AA on retries for perf
+						resolution: cfg.resolution,
+						autoDensity: true,
+						width: cfg.width,
+						height: cfg.height,
+					});
+					app = candidate;
+					if (i > 0) {
+						console.warn(
+							`[VTT Pixi] Initialized on attempt ${i + 1} with resolution=${cfg.resolution}, size=${cfg.width}×${cfg.height}`,
+						);
+					}
+					break;
+				} catch (err) {
+					console.error(
+						`[VTT Pixi] Init attempt ${i + 1}/${attempts.length} failed:`,
+						err,
+						{ ...cfg },
+					);
+					try {
+						candidate.destroy(true);
+					} catch {
+						// ignore cleanup errors
+					}
+				}
+			}
+
+			if (!app) {
+				console.error(
+					"[VTT Pixi] All init attempts failed. GPU_MAX_TEXTURE =",
+					GPU_MAX_TEXTURE,
+					"canvas =",
+					canvasW,
+					"×",
+					canvasH,
+				);
+				onInitError?.(new Error("Pixi init failed after all retries"));
 				return;
 			}
 
 			if (destroyed) {
 				try {
-					app.destroy();
+					app.destroy(true);
 				} catch {
 					// ignore
 				}
@@ -221,6 +315,10 @@ export function VttPixiStage({
 			app.canvas.style.touchAction = "none";
 
 			canvasHostRef.current?.appendChild(app.canvas);
+			// Only set the ref AFTER successful init so the guard at the
+			// top of this effect doesn't block future re-init if init had
+			// previously failed.
+			appRef.current = app;
 			// Signal that the app is ready so the render effect can run.
 			setAppReady(true);
 		})();
@@ -237,7 +335,7 @@ export function VttPixiStage({
 			}
 			setAppReady(false);
 		};
-	}, [worldSize.h, worldSize.w, dpr[1]]);
+	}, [worldSize.h, worldSize.w, dpr[1], onInitError]);
 
 	useEffect(() => {
 		const app = appRef.current;
@@ -1208,8 +1306,34 @@ export function VttPixiStage({
 				return;
 			}
 
+			// Promote pending left-click pan to active scroll-drag once the
+			// pointer has moved more than 6px.  If a Pixi token drag is
+			// already active (dragStateRef), discard the pending pan.
+			const pending = pendingLeftPanRef.current;
+			if (pending && pending.pointerId === e.pointerId) {
+				if (dragStateRef.current) {
+					// A token drag owns this pointer — cancel the pending pan.
+					pendingLeftPanRef.current = null;
+				} else {
+					const pdx = e.clientX - pending.startX;
+					const pdy = e.clientY - pending.startY;
+					if (pdx * pdx + pdy * pdy > 36) {
+						scrollDragRef.current = {
+							pointerId: pending.pointerId,
+							startX: pending.startX,
+							startY: pending.startY,
+							startLeft: pending.startLeft,
+							startTop: pending.startTop,
+						};
+						pendingLeftPanRef.current = null;
+					}
+				}
+			}
+
 			const dragState = dragStateRef.current;
 			if (dragState && dragState.pointerId === e.pointerId) {
+				// A token drag started — discard any pending left-pan.
+				pendingLeftPanRef.current = null;
 				if (
 					longPressRef.current &&
 					longPressRef.current.pointerId === e.pointerId
@@ -1264,12 +1388,20 @@ export function VttPixiStage({
 				const dist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
 				if (pinch.startDist <= 0) return;
 				const ratio = dist / pinch.startDist;
-				const nextZoom = Math.max(0.5, Math.min(2, pinch.startZoom * ratio));
+				const nextZoom = Math.max(0.1, Math.min(3, pinch.startZoom * ratio));
 				onRequestZoom(nextZoom);
 			}
 		};
 
 		const handlePointerUp = (e: PointerEvent) => {
+			// Always clear pending left-pan on pointer release.
+			if (
+				pendingLeftPanRef.current &&
+				pendingLeftPanRef.current.pointerId === e.pointerId
+			) {
+				pendingLeftPanRef.current = null;
+			}
+
 			if (drawingRef.current?.active) {
 				if (drawMode === "wall" && onWallCreated) {
 					onWallCreated(
@@ -1340,6 +1472,23 @@ export function VttPixiStage({
 					currentX: x,
 					currentY: y,
 					active: true,
+				};
+				return;
+			}
+
+			// Left-click on empty canvas → deferred pan (Foundry/Roll20 parity).
+			// We don't activate immediately because the same pointerdown fires
+			// for token clicks. Instead, record a pending pan; it promotes to
+			// an active scroll-drag in handlePointerMove once the pointer moves
+			// more than 6px. If a token drag starts first (dragStateRef is set
+			// by the Pixi token handler), the pending pan is ignored.
+			if (e.button === 0 && e.pointerType === "mouse" && containerRef.current) {
+				pendingLeftPanRef.current = {
+					pointerId: e.pointerId,
+					startX: e.clientX,
+					startY: e.clientY,
+					startLeft: containerRef.current.scrollLeft,
+					startTop: containerRef.current.scrollTop,
 				};
 				return;
 			}
@@ -1429,7 +1578,7 @@ export function VttPixiStage({
 						: e.deltaY;
 			const direction = normalized > 0 ? -1 : 1;
 			const magnitude = e.ctrlKey || e.metaKey ? 0.2 : 0.1;
-			const nextZoom = Math.max(0.5, Math.min(2, zoom + direction * magnitude));
+			const nextZoom = Math.max(0.1, Math.min(3, zoom + direction * magnitude));
 			if (Math.abs(nextZoom - zoom) > 0.001) {
 				// Foundry-parity zoom-at-cursor: pass the wheel event's
 				// container-relative offset so scroll adjusts to keep the
