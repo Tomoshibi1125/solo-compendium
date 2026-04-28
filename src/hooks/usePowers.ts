@@ -6,7 +6,7 @@ import {
 	type CanonicalCastableEntry,
 	type CanonicalCastableType,
 	findCanonicalCastableByName,
-	listCanonicalCastables,
+	listCanonicalPowers,
 } from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
@@ -58,12 +58,9 @@ const writeCachedPowers = (key: string, powers: Power[]) => {
 };
 
 const getPreferredCastableTypes = (
-	source: string | null | undefined,
+	_source: string | null | undefined,
 ): readonly CanonicalCastableType[] => {
-	const normalizedSource = source?.toLowerCase() ?? "";
-	if (normalizedSource.includes("spell")) return ["spells", "powers"];
-	if (normalizedSource.includes("power")) return ["powers", "spells"];
-	return ["powers", "spells"];
+	return ["powers"];
 };
 
 const selectCanonicalCastable = (
@@ -72,18 +69,22 @@ const selectCanonicalCastable = (
 ): CanonicalCastableEntry | undefined => {
 	if (entries.length === 0) return undefined;
 	const preferredTypes = getPreferredCastableTypes(powerRow.source);
+	const preferredEntries = entries.filter((entry) =>
+		preferredTypes.includes(entry.canonical_type),
+	);
+	if (preferredEntries.length === 0) return undefined;
 	const level = powerRow.power_level ?? 0;
 	const rankType = (entry: CanonicalCastableEntry) => {
 		const index = preferredTypes.indexOf(entry.canonical_type);
 		return index === -1 ? preferredTypes.length : index;
 	};
 
-	const exactLevelMatch = entries
+	const exactLevelMatch = preferredEntries
 		.filter((entry) => entry.power_level === level)
 		.sort((a, b) => rankType(a) - rankType(b))[0];
 	if (exactLevelMatch) return exactLevelMatch;
 
-	return [...entries].sort((a, b) => rankType(a) - rankType(b))[0];
+	return [...preferredEntries].sort((a, b) => rankType(a) - rankType(b))[0];
 };
 
 export const usePowers = (characterId: string) => {
@@ -140,8 +141,8 @@ export const usePowers = (characterId: string) => {
 			const campaignId = await getCharacterCampaignId(characterId);
 			const [allCanonicalCastables, accessibleCanonicalCastables] =
 				await Promise.all([
-					listCanonicalCastables(),
-					listCanonicalCastables(undefined, { campaignId }),
+					listCanonicalPowers(),
+					listCanonicalPowers(undefined, { campaignId }),
 				]);
 
 			const allByName = new Map<string, CanonicalCastableEntry[]>();
@@ -238,7 +239,7 @@ export const usePowers = (characterId: string) => {
 			const canonicalEntry = await findCanonicalCastableByName(
 				power.name,
 				undefined,
-				getPreferredCastableTypes(power.source),
+				["powers"],
 			);
 
 			if (

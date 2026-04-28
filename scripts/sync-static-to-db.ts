@@ -140,7 +140,12 @@ async function syncAnomalies() {
 			creature_type: m.creature_type || "monstrosity",
 			size: m.size || "Medium",
 			alignment: m.alignment || null,
-			armor_class: m.armor_class || 10,
+			armor_class:
+				typeof m.armor_class === "number"
+					? m.armor_class
+					: m.armor_class
+						? parseInt(String(m.armor_class), 10) || 10
+						: 10,
 			armor_type: m.armor_type || null,
 			hit_points_average: m.hit_points_average || 10,
 			hit_points_formula: m.hit_points_formula || "1d8",
@@ -643,7 +648,12 @@ async function syncShadowSoldiers() {
 			rank: castToString(m.rank) || "Infantry",
 			title: m.title || "Shadow Soldier",
 			hit_points: m.hit_points || 10,
-			armor_class: m.armor_class || 10,
+			armor_class:
+				typeof m.armor_class === "number"
+					? m.armor_class
+					: m.armor_class
+						? parseInt(String(m.armor_class), 10) || 10
+						: 10,
 			speed: m.speed || 30,
 			str: m.str || 10,
 			agi: m.agi || 10,

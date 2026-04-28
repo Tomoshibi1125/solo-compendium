@@ -5,7 +5,7 @@ export interface Token {
 	id: string;
 	name: string;
 	description: string;
-	type: "player" | "Anomaly" | "boss" | "npc" | "merchant" | "guard";
+	type: "ascendant" | "Anomaly" | "boss" | "npc" | "merchant" | "guard";
 	image: string;
 	stats?: {
 		health?: number;
@@ -23,7 +23,7 @@ const tokensCompendium: Token[] = [
 		name: "Umbral Ascendant",
 		description:
 			"Elite warrior trained in umbral arts. Master of stealth and precision strikes.",
-		type: "player",
+		type: "ascendant",
 		image: "/generated/tokens/player-token.webp",
 		stats: { health: 150, attack: 80, defense: 60, speed: 75 },
 		abilities: ["Umbral Strike", "Stealth", "Critical Hit"],

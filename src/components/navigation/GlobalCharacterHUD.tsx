@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
+import { useCanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
 import {
 	useCharacterResources,
@@ -19,6 +20,7 @@ export function GlobalCharacterHUD() {
 	const charId = character?.id || "";
 
 	const { equipment } = useEquipment(charId);
+	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(charId);
 
 	const { data: sigils } = useSigils(charId);
 	const { state: sheetState } = useCharacterSheetState(charId);
@@ -29,6 +31,7 @@ export function GlobalCharacterHUD() {
 
 		sigils || [],
 		sheetState?.customModifiers || [],
+		canonicalEquipmentMap,
 	);
 
 	const [characterResources] = useCharacterResources(charId);

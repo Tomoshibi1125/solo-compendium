@@ -88,7 +88,7 @@ test.describe
 				test("1.1 DM signs in as Warden", async () => {
 					const auth = new AuthPage(dmPage);
 					await auth.continueAsGuest("dm");
-					await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
+					await expect(dmPage.getByTestId("warden-tools")).toBeVisible({
 						timeout: 15_000,
 					});
 					await dismissAnalytics(dmPage);
@@ -284,7 +284,9 @@ test.describe
 				test("3.1 Player signs in", async () => {
 					const auth = new AuthPage(playerPage);
 					await auth.continueAsGuest("player");
-					await playerPage.waitForURL(/\/player-tools/, { timeout: 15_000 });
+					await playerPage.waitForURL(/\/(ascendant|player)-tools/, {
+						timeout: 15_000,
+					});
 					await dismissAnalytics(playerPage);
 				});
 

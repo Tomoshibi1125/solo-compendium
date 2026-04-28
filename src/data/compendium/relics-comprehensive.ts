@@ -94,10 +94,10 @@ export const comprehensiveRelics: Relic[] = [
 				"First Regent",
 				"Various Umbral Regents",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -158,18 +158,19 @@ export const comprehensiveRelics: Relic[] = [
 			},
 		],
 		lore: {
-			origin: "Created by a fiend lord from the blood of thousands of victims",
+			origin:
+				"Created by a regent of dread from the blood of thousands of victims",
 			history:
 				"This cursed weapon grants immense power but slowly corrupts its wielder, driving them to seek ever greater carnage.",
 			priorOwners: [
-				"Fiend Lord Malgorath",
+				"Regent of Dread Malgorath",
 				"Warlord Kael",
 				"Countless fallen warriors",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -233,12 +234,16 @@ export const comprehensiveRelics: Relic[] = [
 		lore: {
 			origin: "Forged in the heart of a storm by a legendary weaponsmith",
 			history:
-				"This blade was wielded by the Storm King, who could command the very weather with its power.",
-			priorOwners: ["Storm King", "Lightning Warrior", "Tempest Knight"],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+				"This blade was wielded by the Storm-Class Regent, who could command the very weather with its power.",
+			priorOwners: [
+				"Storm-Class Regent",
+				"Storm-Class Hunter",
+				"Tempest-Class Hunter",
+			],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -303,11 +308,15 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Carved from the heart of an ancient glacier by frost giants",
 			history:
 				"This axe has been passed down through generations of winter warriors, each adding to its icy power.",
-			priorOwners: ["Frost Giant King", "Winter Warrior", "Ice Berserker"],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			priorOwners: [
+				"Frost-Class Regent",
+				"Frost-Class Hunter",
+				"Frost-Class Hunter",
+			],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -383,10 +392,10 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This gauntlet represents the pinnacle of shadow power, containing the authority to command all shadows and reshape reality itself.",
 			currentOwner: "Current Umbral Regent",
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -452,14 +461,14 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This armor has protected many powerful shadow warriors throughout the ages, each adding their own essence to its power.",
 			priorOwners: [
-				"Shadow Knight Commander",
-				"Dark Herald Vorlag",
-				"Shadow Warlord Zara",
+				"Shadow-Class Vanguard",
+				"Umbral Herald Vorlag",
+				"Shadow-Class Warlord Zara",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -479,10 +488,10 @@ export const comprehensiveRelics: Relic[] = [
 		},
 	},
 	{
-		id: "dragon-scale-mail",
-		name: "Dragon Scale Mail",
+		id: "lattice-scale-mail",
+		name: "Lattice-Scale Mail",
 		description:
-			"Armor crafted from the scales of an ancient dragon, offering exceptional protection and dragon-like abilities.",
+			"Armor crafted from the scales of an ancient anomaly, offering exceptional protection and anomaly-like abilities.",
 		type: "armor",
 		armor_class: 16,
 		armor_type: "heavy",
@@ -498,20 +507,20 @@ export const comprehensiveRelics: Relic[] = [
 		},
 		abilities: [
 			{
-				name: "Dragon Resistance",
+				name: "anomaly Resistance",
 				description:
-					"Resistance to the damage type of the dragon whose scales were used.",
+					"Resistance to the damage type of the anomaly whose scales were used.",
 				type: "passive",
 			},
 			{
-				name: "Dragon Breath",
-				description: "Once per day, breathe a cone of dragon energy.",
+				name: "anomaly Breath",
+				description: "Once per day, breathe a cone of anomaly energy.",
 				type: "command",
 				frequency: "once-per-day",
 				action: "action",
 			},
 			{
-				name: "Dragon Frightful Presence",
+				name: "anomaly Frightful Presence",
 				description:
 					"Creatures within 30 feet must make Sense check or be frightened.",
 				type: "passive",
@@ -519,14 +528,14 @@ export const comprehensiveRelics: Relic[] = [
 		],
 		lore: {
 			origin:
-				"Crafted from the scales of the ancient dragon Ignis by master dwarven smiths",
+				"Crafted from the scales of the ancient Ignis-Class Anomaly by master pre-gate smiths",
 			history:
-				"This armor was worn by the Dragon Knight who defeated Ignis, inheriting its power.",
-			priorOwners: ["Dragon Knight", "Dragon Slayer", "Scale Lord"],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+				"This armor was worn by the Anomaly Slayer who defeated Ignis, inheriting its power.",
+			priorOwners: ["Anomaly Slayer", "Anomaly Slayer", "Scale-Forged Regent"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -599,13 +608,13 @@ export const comprehensiveRelics: Relic[] = [
 				"This artifact represents the right to rule, containing the essence of leadership and command that all Regents must possess.",
 			priorOwners: [
 				"First Umbral Regent",
-				"Queen of Shadows",
-				"Emperor of Night",
+				"Regent of Shadows",
+				"Regent of Night",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -671,14 +680,14 @@ export const comprehensiveRelics: Relic[] = [
 			history:
 				"This amulet has saved countless shadow users from falling to shadow madness, allowing them to harness shadow power safely.",
 			priorOwners: [
-				"Shadow Archmage Theron",
-				"Dark Sage Marina",
-				"Shadow Cultist Kael",
+				"Shadow-Class Esper Theron",
+				"Umbral Sage Marina",
+				"Umbral Cultist Kael",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -743,13 +752,13 @@ export const comprehensiveRelics: Relic[] = [
 				"This compass has guided countless adventurers through dangerous dimensional journeys, its needle always pointing toward safety or adventure.",
 			priorOwners: [
 				"Dimensional Explorer Alara",
-				"Rift Tracker Marcus",
-				"Shadow Walker Lena",
+				"Gate-Tracker Marcus",
+				"Umbral Walker Lena",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -820,13 +829,13 @@ export const comprehensiveRelics: Relic[] = [
 				"This crown contains the accumulated sense of countless rulers and scholars who have worn it.",
 			priorOwners: [
 				"Sage King Solomon",
-				"Wise Emperor Marcus",
-				"Oracle Queen Elena",
+				"Regent of Wisdom Marcus",
+				"Regent-Oracle Elena",
 			],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -892,11 +901,15 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Created by shadow mages as a portable source of shadow energy",
 			history:
 				"This orb has been used by countless shadow users who needed portable power.",
-			priorOwners: ["Shadow Archmage", "Dark Esper", "Shadow Warlock"],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			priorOwners: [
+				"Shadow-Class Esper",
+				"Umbral Esper",
+				"Shadow-Class Caster",
+			],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -967,11 +980,15 @@ export const comprehensiveRelics: Relic[] = [
 				"Created by a time mage who discovered the secrets of temporal manipulation",
 			history:
 				"This device is one of the few objects that can truly affect the flow of time.",
-			priorOwners: ["Time Master Chronos", "Temporal Mage", "Hourglass Keeper"],
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			priorOwners: [
+				"Lattice Chronomancer Chronos",
+				"Lattice Chronomancer",
+				"Lattice Keeper",
+			],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1013,10 +1030,10 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Brewed by shadow alchemists using extracted life essence",
 			history:
 				"These potions are highly valued by shadow users for their healing and enhancing properties.",
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1057,10 +1074,10 @@ export const comprehensiveRelics: Relic[] = [
 			origin: "Created by shadow alchemists from pure shadow essence",
 			history:
 				"These elixirs are used by those who wish to temporarily gain shadow powers.",
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1080,8 +1097,8 @@ export const comprehensiveRelics: Relic[] = [
 		},
 	},
 	{
-		id: "dragon-blood-potion",
-		name: "Dragon Blood Potion",
+		id: "anomaly-blood-potion",
+		name: "anomaly Blood Potion",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to siphon reality. It allows the wielder to manifest a sanguine field that can clot any proximity-based dimensional distortion.",
 		type: "consumable",
@@ -1091,21 +1108,21 @@ export const comprehensiveRelics: Relic[] = [
 		},
 		abilities: [
 			{
-				name: "Draconic Power",
+				name: "regent-tier Power",
 				description:
-					"Drink to gain dragon breath weapon and resistance for 1 hour.",
+					"Drink to gain anomaly breath weapon and resistance for 1 hour.",
 				type: "consumable",
 				action: "action",
 			},
 		],
 		lore: {
-			origin: "Brewed from the blood of an ancient dragon",
+			origin: "Brewed from the blood of an ancient anomaly",
 			history:
-				"These potions are extremely rare and grant the drinker temporary draconic powers.",
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+				"These potions are extremely rare and grant the drinker temporary regent-tier powers.",
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1159,10 +1176,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Created by a shadow mage who wanted to see what others could not",
 			history:
 				"This lens has helped many adventurers discover hidden dangers and secrets.",
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {
@@ -1218,10 +1235,10 @@ export const comprehensiveRelics: Relic[] = [
 				"Invented by a shadow scientist who wanted to harness the power of life essence",
 			history:
 				"This device has revolutionized the way shadow users collect and use essence.",
-			curse: "Slowly drains ambient stamina from the wielder.",
-			personality: "Silent, waiting.",
-			current_owner: "Held by the Vanguard Guild.",
-			prior_owners: ["A rogue Awakened"],
+			curse: "",
+			personality: "",
+			current_owner: "",
+			prior_owners: [],
 		},
 		mechanics: {
 			stat_bonuses: {

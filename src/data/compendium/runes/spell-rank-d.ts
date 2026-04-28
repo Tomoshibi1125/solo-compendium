@@ -55,7 +55,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Recovered from the shard-field left behind when a Class-B Beast anomaly evaporated during Bureau extraction.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0289.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -110,7 +110,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Bureau record locates the first verified rune in the rubble of the Seoul Third Wall collapse.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0454.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -164,7 +164,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Forged at the Icheon containment site and released to general circulation once Bureau verified no storm-side bleed.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0415.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -219,7 +219,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Reverse-engineered from the memory lattice of a captured Void-rank infiltrator; Bureau Cognition Cell Lambda release.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0956.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -275,7 +275,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Issued to second-generation Awakened in Bureau-chartered legacy orders.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0389.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -330,7 +330,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Standard-issue at Hunter Academy as of the third post-Awakening class; most rune-breaking occurs during training exercises.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0818.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -384,7 +384,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Derived from Bureau autopsy notes on a Glacier-Class anomaly recovered in the Urals.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0395.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -440,7 +440,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Attached to the standard Bureau demolition kit since the Fifth Wall Incident; typical field shelf-life is one clearing assignment.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0856.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -495,7 +495,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Released through Bureau divination-track training after three confined caster trials produced compatible casting notes.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0177.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -550,7 +550,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Entered Bureau circulation through an unnamed Void-touched broker; subsequent provenance is considered settled.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0513.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -604,7 +604,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Distributed broadly to Bureau close-combat specialists; the Fourth Wall runs monthly calibration drills using unclaimed runes.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0872.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -659,7 +659,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Released from Bureau hold only after a three-month confinement trial cleared the spell of compulsion side-effects.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0591.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -714,7 +714,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Attached to Bureau solar-flare response kits; unused runes are returned at shift change.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0718.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -769,7 +769,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"A grounded variant of the Shadow Legion's mid-tier discharge; cleared for Bureau medics and close-combat specialists.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0293.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -824,7 +824,7 @@ export const spell_rank_d_runes: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Taught as the companion rune to Arctic Lance in Hunter Academy's cold-track curriculum.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0724.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:

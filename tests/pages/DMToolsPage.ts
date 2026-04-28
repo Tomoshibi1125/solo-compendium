@@ -35,11 +35,11 @@ export class DMToolsPage {
 
 	/** Navigate to hub and verify all tool cards render. */
 	async verifyHub() {
-		await this.page.goto("/dm-tools");
-		await expect(this.page.getByTestId("dm-tools")).toBeVisible({
+		await this.page.goto("/warden-directives");
+		await expect(this.page.getByTestId("warden-tools")).toBeVisible({
 			timeout: 15_000,
 		});
-		await expect(this.page.getByTestId("dm-tools-heading")).toBeVisible();
+		await expect(this.page.getByTestId("warden-tools-heading")).toBeVisible();
 
 		// Verify a sampling of key tool links exist
 		const expectedTools = [
@@ -70,7 +70,7 @@ export class DMToolsPage {
 	// ─── Encounter Builder ─────────────────────────────────────────
 
 	async testEncounterBuilder() {
-		await this.page.goto("/dm-tools/encounter-builder");
+		await this.page.goto("/warden-directives/encounter-builder");
 		// Page heading
 		await expect(
 			this.page.getByText("ENCOUNTER BUILDER", { exact: false }).first(),
@@ -106,7 +106,7 @@ export class DMToolsPage {
 	// ─── Initiative Tracker ────────────────────────────────────────
 
 	async testInitiativeTracker() {
-		await this.page.goto("/dm-tools/initiative-tracker");
+		await this.page.goto("/warden-directives/initiative-tracker");
 		await expect(this.page.getByTestId("initiative-tracker")).toBeVisible({
 			timeout: 15_000,
 		});
@@ -148,7 +148,7 @@ export class DMToolsPage {
 	// ─── Rollable Tables ──────────────────────────────────────────
 
 	async testRollableTables() {
-		await this.page.goto("/dm-tools/rollable-tables");
+		await this.page.goto("/warden-directives/rollable-tables");
 		await expect(
 			this.page.getByText("PROTOCOL WARDEN TABLES", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -202,7 +202,7 @@ export class DMToolsPage {
 	// ─── Rift Generator ───────────────────────────────────────────
 
 	async testRiftGenerator() {
-		await this.page.goto("/dm-tools/gate-generator");
+		await this.page.goto("/warden-directives/gate-generator");
 		await expect(
 			this.page.getByText("RIFT GENERATOR", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -225,7 +225,7 @@ export class DMToolsPage {
 	// ─── NPC Generator ────────────────────────────────────────────
 
 	async testNPCGenerator() {
-		await this.page.goto("/dm-tools/npc-generator");
+		await this.page.goto("/warden-directives/npc-generator");
 		await expect(
 			this.page.getByText("NPC GENERATOR", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -247,7 +247,7 @@ export class DMToolsPage {
 	// ─── Treasure Generator ───────────────────────────────────────
 
 	async testTreasureGenerator() {
-		await this.page.goto("/dm-tools/treasure-generator");
+		await this.page.goto("/warden-directives/treasure-generator");
 		await expect(
 			this.page.getByText("TREASURE GENERATOR", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -283,7 +283,7 @@ export class DMToolsPage {
 	// ─── Quest Generator ──────────────────────────────────────────
 
 	async testQuestGenerator() {
-		await this.page.goto("/dm-tools/quest-generator");
+		await this.page.goto("/warden-directives/quest-generator");
 		await expect(
 			this.page.getByText("QUEST GENERATOR", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -320,7 +320,7 @@ export class DMToolsPage {
 	// ─── Session Planner ──────────────────────────────────────────
 
 	async testSessionPlanner() {
-		await this.page.goto("/dm-tools/session-planner");
+		await this.page.goto("/warden-directives/session-planner");
 		await expect(
 			this.page.getByText("SESSION PLANNER", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -356,7 +356,7 @@ export class DMToolsPage {
 	// ─── Random Event Generator ───────────────────────────────────
 
 	async testRandomEventGenerator() {
-		await this.page.goto("/dm-tools/random-event-generator");
+		await this.page.goto("/warden-directives/random-event-generator");
 		await expect(
 			this.page.getByText("RANDOM EVENT", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -389,7 +389,7 @@ export class DMToolsPage {
 	// ─── Relic Workshop ───────────────────────────────────────────
 
 	async testRelicWorkshop() {
-		await this.page.goto("/dm-tools/relic-workshop");
+		await this.page.goto("/warden-directives/relic-workshop");
 		await expect(
 			this.page.getByText("RELIC WORKSHOP", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -441,7 +441,7 @@ export class DMToolsPage {
 	// ─── Party Tracker ────────────────────────────────────────────
 
 	async testPartyTracker() {
-		await this.page.goto("/dm-tools/party-tracker");
+		await this.page.goto("/warden-directives/party-tracker");
 		await expect(
 			this.page.getByText("PARTY TRACKER", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -467,7 +467,7 @@ export class DMToolsPage {
 	// ─── Dungeon Map Generator ────────────────────────────────────
 
 	async testDungeonMapGenerator() {
-		await this.page.goto("/dm-tools/dungeon-map-generator");
+		await this.page.goto("/warden-directives/dungeon-map-generator");
 		await expect(
 			this.page.getByText("DUNGEON MAP", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -497,7 +497,7 @@ export class DMToolsPage {
 	// ─── Token Library ────────────────────────────────────────────
 
 	async testTokenLibrary() {
-		await this.page.goto("/dm-tools/token-library");
+		await this.page.goto("/warden-directives/token-library");
 		await expect(
 			this.page.getByText("TOKEN LIBRARY", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -538,7 +538,7 @@ export class DMToolsPage {
 	// ─── Art Generator ────────────────────────────────────────────
 
 	async testArtGenerator() {
-		await this.page.goto("/dm-tools/art-generator");
+		await this.page.goto("/warden-directives/art-generator");
 		await expect(
 			this.page.getByText("ART GENERATOR", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -559,7 +559,7 @@ export class DMToolsPage {
 	// ─── Audio Manager ────────────────────────────────────────────
 
 	async testAudioManager() {
-		await this.page.goto("/dm-tools/audio-manager");
+		await this.page.goto("/warden-directives/audio-manager");
 		await expect(
 			this.page.getByText("AUDIO", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -578,7 +578,7 @@ export class DMToolsPage {
 	// ─── VTT Map ──────────────────────────────────────────────────
 
 	async testVTTMap() {
-		await this.page.goto("/dm-tools/vtt-map");
+		await this.page.goto("/warden-directives/vtt-map");
 		await expect(
 			this.page.getByText("VTT", { exact: false }).first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -614,7 +614,7 @@ export class DMToolsPage {
 	// ─── Rift Console (Admin) ───────────────────────────────────
 
 	async testSystemConsole() {
-		await this.page.goto("/dm-tools/system-console");
+		await this.page.goto("/warden-directives/system-console");
 		// Should load without access denied
 		await this.page.waitForTimeout(2_000);
 		// Check for admin-related content
@@ -625,7 +625,7 @@ export class DMToolsPage {
 	// ─── Content Audit ────────────────────────────────────────────
 
 	async testContentAudit() {
-		await this.page.goto("/dm-tools/content-audit");
+		await this.page.goto("/warden-directives/content-audit");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page
 			.getByText(/CONTENT AUDIT|AUDIT|DATABASE/i)
@@ -636,7 +636,7 @@ export class DMToolsPage {
 	// ─── Art Generation (Admin) ─────────────────────────────────
 
 	async testArtGenerationAdmin() {
-		await this.page.goto("/dm-tools/art-generation");
+		await this.page.goto("/warden-directives/art-generation");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page.getByText(/ART GENERATION|ART|GENERATE/i).first();
 		await expect(heading).toBeVisible({ timeout: 15_000 });
@@ -685,7 +685,7 @@ export class DMToolsPage {
 		},
 	): Promise<void> {
 		// Navigate to VTT for this session
-		await this.page.goto(`/dm-tools/vtt/${sessionId}`);
+		await this.page.goto(`/warden-directives/vtt/${sessionId}`);
 
 		// Wait for VTT interface to load
 		await this.page.waitForTimeout(5_000);

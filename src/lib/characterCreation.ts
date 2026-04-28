@@ -10,8 +10,10 @@ import {
 	addLocalEquipment,
 	addLocalFeature,
 	addLocalPower,
+	addLocalSpell,
 	isLocalCharacterId,
 	listLocalFeatures,
+	listLocalSpells,
 	updateLocalFeature,
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
@@ -3368,7 +3370,7 @@ export async function addJobAwakeningBenefitsForLevel(
 
 /**
  * Insert any innate channeling spells (RA racial spellcasting) that unlock at
- * the given level into the character's power list. Idempotent: re-running at
+ * the given level into the character's spell list. Idempotent: re-running at
  * the same level skips spells already present.
  */
 export async function addInnateChannelingForLevel(
@@ -3387,6 +3389,14 @@ export async function addInnateChannelingForLevel(
 
 	for (const spell of unlocked) {
 		const sourceLabel = `Racial Channeling: ${jobName}`;
+		const { findCanonicalCastableByName } = await import(
+			"@/lib/canonicalCompendium"
+		);
+		const canonicalSpell = await findCanonicalCastableByName(
+			spell.name,
+			undefined,
+			["spells"],
+		);
 		const usesMax =
 			spell.uses && spell.uses !== "at-will" ? spell.uses.value : null;
 		const usesCurrent = usesMax;
@@ -3398,48 +3408,61 @@ export async function addInnateChannelingForLevel(
 					: null;
 
 		if (isLocalCharacterId(characterId)) {
-			const { addLocalPower, listLocalPowers } = await import(
-				"@/lib/guestStore"
-			);
-			const existingPowers = listLocalPowers(characterId);
+			const existingSpells = listLocalSpells(characterId);
 			if (
-				existingPowers.some(
+				existingSpells.some(
 					(p) => p?.name === spell.name && p?.source === sourceLabel,
 				)
 			)
 				continue;
-			addLocalPower(characterId, {
+			addLocalSpell(characterId, {
+				spell_id: canonicalSpell?.id ?? null,
 				name: spell.name,
 				source: sourceLabel,
-				level: spell.level,
-				prepared: true,
-				known: true,
-				description: spell.description ?? null,
-				recharge: recharge as never,
+				spell_level: spell.level,
+				is_prepared: true,
+				is_known: true,
+				counts_against_limit: false,
+				description: spell.description ?? canonicalSpell?.description ?? null,
+				higher_levels: canonicalSpell?.higher_levels ?? null,
+				casting_time: canonicalSpell?.casting_time ?? null,
+				range: canonicalSpell?.range ?? null,
+				duration: canonicalSpell?.duration ?? null,
+				concentration: canonicalSpell?.concentration ?? false,
+				ritual: canonicalSpell?.ritual ?? false,
+				recharge,
 				uses_max: usesMax,
 				uses_current: usesCurrent,
-			} as never);
+			});
 			continue;
 		}
 
-		const { data: existingPowers } = await supabase
-			.from("character_powers")
+		const { data: existingSpells } = await supabase
+			.from("character_spells")
 			.select("id, name, source")
 			.eq("character_id", characterId)
 			.eq("name", spell.name)
 			.eq("source", sourceLabel)
 			.limit(1);
-		if (existingPowers && existingPowers.length > 0) continue;
+		if (existingSpells && existingSpells.length > 0) continue;
 
-		await supabase.from("character_powers").insert({
+		await supabase.from("character_spells").insert({
 			character_id: characterId,
+			spell_id: canonicalSpell?.id ?? null,
 			name: spell.name,
 			source: sourceLabel,
-			level: spell.level,
-			prepared: true,
-			known: true,
-			description: spell.description ?? null,
-			recharge: recharge as never,
+			spell_level: spell.level,
+			is_prepared: true,
+			is_known: true,
+			counts_against_limit: false,
+			description: spell.description ?? canonicalSpell?.description ?? null,
+			higher_levels: canonicalSpell?.higher_levels ?? null,
+			casting_time: canonicalSpell?.casting_time ?? null,
+			range: canonicalSpell?.range ?? null,
+			duration: canonicalSpell?.duration ?? null,
+			concentration: canonicalSpell?.concentration ?? false,
+			ritual: canonicalSpell?.ritual ?? false,
+			recharge,
 			uses_max: usesMax,
 			uses_current: usesCurrent,
 		});
@@ -3714,13 +3737,10 @@ export async function addStartingPowers(
 	const jobName = typeof job === "string" ? job : job?.name;
 	const campaignId = await getCharacterCampaignId(characterId);
 
-	const maxPowerLevel = getMaxPowerLevelForJobAtLevel(job, 1);
-
-	const { listLearnableCastables } = await import("@/lib/canonicalCompendium");
-	const accessiblePowers = await listLearnableCastables({
+	const { listLearnablePowers } = await import("@/lib/canonicalCompendium");
+	const accessiblePowers = await listLearnablePowers({
 		accessContext: { campaignId },
 		jobName: jobName ?? null,
-		maxPowerLevel,
 	});
 
 	if (accessiblePowers.length > 0) {
@@ -3730,10 +3750,7 @@ export async function addStartingPowers(
 			const range = power.range || null;
 			const duration = power.duration || null;
 			const higherLevels = power.higher_levels ?? null;
-			const source =
-				power.canonical_type === "spells"
-					? `Job Spell: ${jobName}`
-					: `Job Power: ${jobName}`;
+			const source = `Job Power: ${jobName}`;
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalPower(characterId, {
@@ -3746,7 +3763,7 @@ export async function addStartingPowers(
 					concentration: power.concentration ?? false,
 					description: power.description || null,
 					higher_levels: higherLevels,
-					is_prepared: powerLevel === 0, // Auto-prepare cantrips
+					is_prepared: false,
 					is_known: true,
 				});
 			} else {
@@ -3761,7 +3778,7 @@ export async function addStartingPowers(
 					concentration: power.concentration ?? false,
 					description: power.description || null,
 					higher_levels: higherLevels,
-					is_prepared: powerLevel === 0,
+					is_prepared: false,
 					is_known: true,
 				});
 			}

@@ -1,6 +1,6 @@
 /**
- * Integrated Player Tools Panel for VTT
- * Provides all essential player tools without leaving the VTT interface
+ * Integrated Ascendant Tools Panel for VTT
+ * Provides all essential Ascendant tools without leaving the VTT interface
  */
 
 import {
@@ -35,7 +35,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { cn } from "@/lib/utils";
 
-interface PlayerToolsPanelProps {
+interface AscendantToolsPanelProps {
 	characterId?: string;
 	onRollDice?: (formula: string) => void;
 	onSendMessage?: (message: string, type?: string) => void;
@@ -45,7 +45,7 @@ interface PlayerToolsPanelProps {
 	className?: string;
 }
 
-export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
+export const AscendantToolsPanel: React.FC<AscendantToolsPanelProps> = ({
 	characterId,
 	onRollDice,
 	onSendMessage,
@@ -289,8 +289,8 @@ export const PlayerToolsPanel: React.FC<PlayerToolsPanelProps> = ({
 				</div>
 			</AscendantWindow>
 
-			{/* Full Player Tools */}
-			<AscendantWindow title="PLAYER TOOLS">
+			{/* Full Ascendant Tools */}
+			<AscendantWindow title="ASCENDANT TOOLS">
 				<Tabs
 					value={activeTool}
 					onValueChange={setActiveTool}

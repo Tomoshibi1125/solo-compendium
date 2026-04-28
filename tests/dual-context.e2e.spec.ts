@@ -53,7 +53,7 @@ test.describe("Dual-context: DM + Player campaign flow", () => {
 			// Step 1: DM signs in
 			const dmAuth = new AuthPage(dmPage);
 			await dmAuth.continueAsGuest("dm");
-			await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
+			await expect(dmPage.getByTestId("warden-tools")).toBeVisible({
 				timeout: 15_000,
 			});
 

@@ -103,11 +103,6 @@ const buildFallbackUser = (authUser: User): AuthUser => {
 		user_metadata: metadata,
 	};
 };
-const toProfileRole = (role: UserRole): "dm" | "player" => {
-	if (role === "warden") return "dm";
-	if (role === "ascendant") return "player";
-	return "player"; // fallback
-};
 
 const isEmailRateLimitError = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;
@@ -328,14 +323,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			}
 
 			if (data.user) {
-				const expectedRole = toProfileRole(role);
-
 				// Existing users logging in already have a profile due to the handle_new_user trigger.
 				// We use .update() instead of .upsert() to avoid strict INSERT RLS check violations for existing rows.
 				const { error: upsertError } = await supabase
 					.from("profiles")
 					.update({
-						role: expectedRole,
+						role,
 						updated_at: new Date().toISOString(),
 					})
 					.eq("id", data.user.id);
@@ -349,7 +342,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 				// Keep metadata updated so it stays in sync
 				await supabase.auth.updateUser({
-					data: { role: expectedRole },
+					data: { role },
 				});
 			}
 
@@ -420,7 +413,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					{
 						id: data.user.id,
 						email: data.user.email ?? email,
-						role: toProfileRole(role),
+						role,
 						updated_at: new Date().toISOString(),
 					},
 					{ onConflict: "id" },
@@ -466,7 +459,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 				updated_at: new Date().toISOString(),
 			};
 			if (updates.role) {
-				dbUpdates.role = toProfileRole(updates.role);
+				dbUpdates.role = updates.role;
 			}
 
 			const { error } = await supabase

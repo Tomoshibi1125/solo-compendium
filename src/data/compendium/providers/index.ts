@@ -126,7 +126,7 @@ export interface StaticCompendiumEntry {
 	lore?: string | Record<string, Json> | null;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
-	charges?: Record<string, Json> | null;
+	charges?: number | Record<string, Json> | null;
 	stats?: Record<string, Json> | null;
 	source?: string | null;
 	role?: string | null;
@@ -136,7 +136,7 @@ export interface StaticCompendiumEntry {
 	size?: string | null;
 	creature_type?: string | null;
 	alignment?: string | null;
-	armor_class?: number | null;
+	armor_class?: string | number | null;
 	armor_type?: string | null;
 	hit_points_average?: number | null;
 	hit_points_formula?: string | null;
@@ -360,6 +360,10 @@ export interface StaticCompendiumEntry {
 	table_category?: string | null;
 	table_group?: string | null;
 	rollable_entries?: string[] | null;
+	// Equipment structured fields preserved through canonical hydration.
+	weapon_type?: string | null;
+	stealth_disadvantage?: boolean | null;
+	strength_requirement?: number | null;
 }
 
 interface StaticDataProvider {
@@ -450,20 +454,32 @@ type StaticItemSource = {
 	name: string;
 	description: string;
 	type?: string;
+	item_type?: string;
 	rarity?: string;
 	image?: string;
 	requirements?: Record<string, Json>;
-	properties?: Record<string, Json>;
+	properties?: Record<string, Json> | string[];
 	effects?: Record<string, Json>;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
-	charges?: Record<string, Json>;
+	charges?: number | Record<string, Json>;
 	stats?: Record<string, Json>;
 	effect?: string;
 	value?: number;
 	weight?: number;
 	source?: string;
 	sigil_slots_base?: number | null;
+	// Structured equipment fields surfaced through canonical hydration so
+	// downstream consumers (useEquipment, useCombatActions, AC calc) don't
+	// have to regex-parse description / properties strings.
+	armor_class?: string | number | null;
+	armor_type?: string | null;
+	damage?: string | number | null;
+	damage_type?: string | null;
+	weapon_type?: string | null;
+	range?: string | null;
+	stealth_disadvantage?: boolean | null;
+	strength_requirement?: number | null;
 };
 
 type StaticJobSource = {
@@ -1020,6 +1036,7 @@ function deriveItemProperties(
 }
 
 function transformItem(item: StaticItemSource): StaticCompendiumEntry {
+	const itemType = item.item_type || item.type;
 	return {
 		id: item.id || item.name.toLowerCase().replace(/\s+/g, "-"),
 		name: item.name,
@@ -1032,10 +1049,13 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		source_book: "Rift Ascendant Homebrew",
 		image_url: item.image,
 		image: item.image,
-		equipment_type: item.type,
-		item_type: item.type,
+		equipment_type: itemType,
+		item_type: itemType,
 		requirements: item.requirements ?? null,
-		properties: Array.isArray(item.properties) ? item.properties : [],
+		properties: Array.isArray(item.properties)
+			? item.properties
+			: ((item.properties as string[] | Record<string, Json> | undefined) ??
+				[]),
 		item_properties: deriveItemProperties(item),
 		effects: item.effects ?? null,
 		attunement: item.attunement ?? null,
@@ -1051,11 +1071,20 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		sigil_slots_base:
 			item.sigil_slots_base ??
 			getDefaultSigilSlotsBaseForEquipment({
-				item_type: item.type,
+				item_type: itemType,
 				properties: Array.isArray(item.properties) ? item.properties : [],
 				name: item.name,
 			}),
 		level: undefined,
+		// Canonical structured fields preserved for hydration consumers.
+		armor_class: item.armor_class ?? null,
+		armor_type: item.armor_type ?? null,
+		damage: item.damage ?? null,
+		damage_type: item.damage_type ?? null,
+		weapon_type: item.weapon_type ?? null,
+		range: item.range ?? null,
+		stealth_disadvantage: item.stealth_disadvantage ?? null,
+		strength_requirement: item.strength_requirement ?? null,
 	};
 }
 

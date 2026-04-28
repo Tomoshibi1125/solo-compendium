@@ -6,6 +6,10 @@ import { Label } from "@/components/ui/label";
 import { SortableList } from "@/components/ui/SortableList";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
+import {
+	findCanonicalForRow,
+	useCanonicalEquipmentMap,
+} from "@/hooks/useCanonicalEquipmentMap";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useEncumbranceSettings } from "@/hooks/useEncumbranceSettings";
 import { useEquipment } from "@/hooks/useEquipment";
@@ -77,6 +81,7 @@ export function EquipmentList({
 	const ascendantTools = useAscendantTools();
 	const { data: sigilInscriptions = [] } =
 		useCharacterSigilInscriptions(characterId);
+	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(characterId);
 
 	// Weight is now managed inside EncumbranceWidget; keep these for the DDB
 	// encumbrance-condition-change side effect below.
@@ -380,6 +385,10 @@ export function EquipmentList({
 														<EquipmentItem
 															key={item.id}
 															item={item}
+															canonical={findCanonicalForRow(
+																canonicalEquipmentMap,
+																item.name,
+															)}
 															onToggleEquipped={handleToggleEquipped}
 															onToggleAttuned={handleToggleAttuned}
 															onRemove={handleRemove}
@@ -445,6 +454,10 @@ export function EquipmentList({
 													<EquipmentItem
 														key={item.id}
 														item={item}
+														canonical={findCanonicalForRow(
+															canonicalEquipmentMap,
+															item.name,
+														)}
 														onToggleEquipped={handleToggleEquipped}
 														onToggleAttuned={handleToggleAttuned}
 														onRemove={handleRemove}

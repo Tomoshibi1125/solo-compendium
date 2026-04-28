@@ -1,6 +1,6 @@
 /**
- * Enhanced Warden Directives Page - D&D Beyond Style Layout
- * Professional protocol warden tools with Rift Ascendant theme
+ * Enhanced Warden Directives Page
+ * Professional Warden tools with Rift Ascendant theme
  */
 
 import {
@@ -84,7 +84,10 @@ const WardenProtocols = () => {
 
 	return (
 		<Layout>
-			<div className="warden-directives-container relative">
+			<div
+				data-testid="warden-tools"
+				className="warden-directives-container relative"
+			>
 				{/* Ascendant UI Background Effects */}
 				<div className="absolute inset-0 hex-grid-overlay opacity-20 pointer-events-none" />
 				<div className="absolute inset-0 bg-gradient-to-b from-amethyst-purple/5 via-transparent to-obsidian-deep pointer-events-none" />

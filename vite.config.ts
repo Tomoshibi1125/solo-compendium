@@ -284,8 +284,6 @@ export default defineConfig(({ mode: _mode }) => {
 						// Split vendor chunks for better caching while avoiding circular deps.
 						const normalizedId = normalizeId(id);
 
-
-
 						if (
 							normalizedId.includes("/src/components/dice/Dice3DScene") ||
 							normalizedId.includes("/src/components/dice/Dice3D") ||

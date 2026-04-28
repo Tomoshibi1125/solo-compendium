@@ -197,7 +197,7 @@ Description: ${currentRelic.description || "None provided"}
 Properties: ${currentRelic.properties.map((p) => `${p.name} (${p.type}): ${p.description}`).join("; ") || "None"}
 
 ---
-D&D BEYOND STYLE RELIC STAT BLOCK:
+RELIC STAT BLOCK:
 
 STATS:
 • Type: ${currentRelic.type}

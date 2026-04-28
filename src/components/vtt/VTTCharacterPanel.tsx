@@ -6,7 +6,7 @@
  * the VTT realtime chat so every connected user sees them.
  *
  * Used by:
- *   - PlayerMapView (player's own character)
+ *   - AscendantMapView (Ascendant's own character)
  *   - VTTEnhanced (Warden clicks a token with characterId)
  */
 

@@ -139,7 +139,7 @@ export default function Profile() {
 				if (newRole === "warden") {
 					navigate("/warden-directives");
 				} else {
-					navigate("/player-tools");
+					navigate("/ascendant-tools");
 				}
 			}, 300);
 		}

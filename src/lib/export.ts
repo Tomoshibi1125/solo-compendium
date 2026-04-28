@@ -19,6 +19,8 @@ interface ExportOptions {
 	includeEquipment?: boolean;
 	includeFeatures?: boolean;
 	includePowers?: boolean;
+	includeSpells?: boolean;
+	includeTechniques?: boolean;
 	includeNotes?: boolean;
 	format?: "json" | "pdf" | "markdown" | "html";
 }
@@ -97,6 +99,22 @@ export async function exportCharacter(
 			.select("*, power:compendium_powers(*)")
 			.eq("character_id", characterId);
 		exportData.powers = powers || [];
+	}
+
+	if (options.includeSpells) {
+		const { data: spells } = await supabase
+			.from("character_spells")
+			.select("*")
+			.eq("character_id", characterId);
+		exportData.spells = spells || [];
+	}
+
+	if (options.includeTechniques) {
+		const { data: techniques } = await supabase
+			.from("character_techniques")
+			.select("*, technique:compendium_techniques(*)")
+			.eq("character_id", characterId);
+		exportData.techniques = techniques || [];
 	}
 
 	return formatRegentVernacular(JSON.stringify(exportData, null, 2));
@@ -193,6 +211,8 @@ export async function downloadCharacterJSON(
 		includeEquipment: true,
 		includeFeatures: true,
 		includePowers: true,
+		includeSpells: true,
+		includeTechniques: true,
 		includeNotes: true,
 	});
 	downloadFile(

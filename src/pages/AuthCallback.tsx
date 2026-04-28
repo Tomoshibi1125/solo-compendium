@@ -83,11 +83,10 @@ export default function AuthCallback() {
 				}
 
 				if (pendingRole) {
-					const dbRole = pendingRole === "warden" ? "dm" : "player";
 					const { error: roleError } = await supabase
 						.from("profiles")
 						.update({
-							role: dbRole,
+							role: pendingRole,
 							updated_at: new Date().toISOString(),
 						})
 						.eq("id", user.id);
@@ -99,7 +98,7 @@ export default function AuthCallback() {
 
 						supabase.auth
 							.updateUser({
-								data: { role: dbRole },
+								data: { role: pendingRole },
 							})
 							.catch((err) =>
 								logger.error("Error updating user metadata role:", err),
@@ -130,7 +129,7 @@ export default function AuthCallback() {
 					return;
 				}
 
-				navigate(role === "warden" ? "/warden-directives" : "/player-tools");
+				navigate(role === "warden" ? "/warden-directives" : "/ascendant-tools");
 			} catch (error) {
 				logger.error("Error completing auth callback:", error);
 				navigate(`/login?error=${encodeURIComponent("Authentication failed")}`);

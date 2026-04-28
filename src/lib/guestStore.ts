@@ -24,6 +24,9 @@ type EquipmentUpdate =
 type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
 type PowerInsert = Database["public"]["Tables"]["character_powers"]["Insert"];
 type PowerUpdate = Database["public"]["Tables"]["character_powers"]["Update"];
+type SpellRow = Database["public"]["Tables"]["character_spells"]["Row"];
+type SpellInsert = Database["public"]["Tables"]["character_spells"]["Insert"];
+type SpellUpdate = Database["public"]["Tables"]["character_spells"]["Update"];
 type FeatureRow = Database["public"]["Tables"]["character_features"]["Row"];
 type FeatureInsert =
 	Database["public"]["Tables"]["character_features"]["Insert"];
@@ -49,6 +52,7 @@ interface GuestCharacterState {
 	abilities: Record<AbilityScore, number>;
 	equipment: EquipmentRow[];
 	powers: PowerRow[];
+	spells: SpellRow[];
 	features: FeatureRow[];
 	spellSlots: SpellSlotRow[];
 	techniques: TechniqueRow[];
@@ -185,6 +189,12 @@ export function getLocalCharacterState(
 	const state = loadGuestState();
 	const entry = state.characters[characterId] || null;
 	if (!entry) return null;
+	if (!entry.spells) {
+		entry.spells = [];
+		state.characters[characterId] = entry;
+		state.updatedAt = nowIso();
+		saveGuestState(state);
+	}
 	if (!entry.sheetState) {
 		entry.sheetState = createDefaultCharacterSheetState();
 		state.characters[characterId] = entry;
@@ -217,6 +227,7 @@ function upsertLocalCharacter(
 		abilities: abilities || existing?.abilities || defaultAbilities(),
 		equipment: existing?.equipment || [],
 		powers: existing?.powers || [],
+		spells: existing?.spells || [],
 		features: existing?.features || [],
 		spellSlots: existing?.spellSlots || [],
 		techniques: existing?.techniques || [],
@@ -588,6 +599,108 @@ export function removeLocalPower(powerId: string): void {
 	}
 
 	throw new AppError("Power not found", "NOT_FOUND");
+}
+
+export function listLocalSpells(characterId: string): SpellRow[] {
+	const entry = getLocalCharacterState(characterId);
+	return entry?.spells || [];
+}
+
+export function addLocalSpell(
+	characterId: string,
+	spell: Omit<SpellInsert, "character_id">,
+): SpellRow {
+	const entry = getLocalCharacterState(characterId);
+	if (!entry) throw new AppError("Local character not found", "NOT_FOUND");
+
+	const now = nowIso();
+	const next: SpellRow = {
+		id: createLocalId("local_spell"),
+		character_id: characterId,
+		created_at: now,
+		updated_at: now,
+		learned_at: spell.learned_at ?? now,
+		display_order: spell.display_order ?? entry.spells.length,
+		spell_id: spell.spell_id ?? null,
+		name: spell.name,
+		spell_level: spell.spell_level ?? 0,
+		source: spell.source || "Manual Spell",
+		description: spell.description ?? null,
+		higher_levels: spell.higher_levels ?? null,
+		casting_time: spell.casting_time ?? null,
+		range: spell.range ?? null,
+		duration: spell.duration ?? null,
+		concentration: spell.concentration ?? false,
+		ritual: spell.ritual ?? false,
+		is_prepared: spell.is_prepared ?? false,
+		is_known: spell.is_known ?? true,
+		counts_against_limit: spell.counts_against_limit ?? true,
+		uses_max: spell.uses_max ?? null,
+		uses_current: spell.uses_current ?? null,
+		recharge: spell.recharge ?? null,
+	};
+
+	const state = loadGuestState();
+	state.characters[characterId] = {
+		...state.characters[characterId],
+		spells: [...entry.spells, next],
+		character: { ...entry.character, updated_at: now },
+	};
+	state.updatedAt = now;
+	saveGuestState(state);
+
+	return next;
+}
+
+export function updateLocalSpell(spellId: string, updates: SpellUpdate): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const idx = (entry.spells || []).findIndex((s) => s.id === spellId);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextSpells = [...(entry.spells || [])];
+		nextSpells[idx] = { ...nextSpells[idx], ...updates, updated_at: now };
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			spells: nextSpells,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Spell not found", "NOT_FOUND");
+}
+
+export function removeLocalSpell(spellId: string): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const idx = (entry.spells || []).findIndex((s) => s.id === spellId);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextSpells = (entry.spells || []).filter((s) => s.id !== spellId);
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			spells: nextSpells,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Spell not found", "NOT_FOUND");
 }
 
 // Features helpers (needed for builder automation)

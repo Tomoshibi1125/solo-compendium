@@ -60,16 +60,28 @@ function CompendiumLink({
 	);
 }
 
+interface PowersListFilter {
+	/** When provided, locks the level filter ("all" or "0"."9") and hides the inline Select. */
+	level?: string;
+	/** When provided, locks the prepared filter and hides the inline Select. */
+	prepared?: "all" | "prepared" | "unprepared";
+}
+
 export function PowersList({
 	characterId,
 	spellCasting,
 	campaignId,
 	onSelectDetail,
+	filter,
+	hideHeader = false,
 }: {
 	characterId: string;
 	spellCasting?: ReturnType<typeof useSpellCasting>;
 	campaignId?: string;
 	onSelectDetail?: (detail: DetailData) => void;
+	filter?: PowersListFilter;
+	/** When true, render without the AscendantWindow chrome (used inside AbilitiesPanel). */
+	hideHeader?: boolean;
 }) {
 	const {
 		powers: rawPowers,
@@ -92,14 +104,24 @@ export function PowersList({
 	const { rollInCampaign } = ascendantTools;
 
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
-	const [filterLevel, setFilterLevel] = useState<string>("all");
-	const [filterPrepared, setFilterPrepared] = useState<string>("all");
+	const [filterLevel, setFilterLevel] = useState<string>(
+		filter?.level ?? "all",
+	);
+	const [filterPrepared, setFilterPrepared] = useState<string>(
+		filter?.prepared ?? "all",
+	);
+
+	const effectiveLevel = filter?.level ?? filterLevel;
+	const effectivePrepared = filter?.prepared ?? filterPrepared;
 
 	const filteredPowers = powers.filter((power) => {
-		if (filterLevel !== "all" && power.power_level.toString() !== filterLevel)
+		if (
+			effectiveLevel !== "all" &&
+			power.power_level.toString() !== effectiveLevel
+		)
 			return false;
-		if (filterPrepared === "prepared" && !power.is_prepared) return false;
-		if (filterPrepared === "unprepared" && power.is_prepared) return false;
+		if (effectivePrepared === "prepared" && !power.is_prepared) return false;
+		if (effectivePrepared === "unprepared" && power.is_prepared) return false;
 		return true;
 	});
 
@@ -324,8 +346,8 @@ export function PowersList({
 		}
 	};
 
-	return (
-		<AscendantWindow title="POWERS">
+	const body = (
+		<>
 			<div className="space-y-4">
 				{/* Spell Limits Display */}
 				{(spellsPreparedLimit !== null ||
@@ -417,30 +439,34 @@ export function PowersList({
 
 				<div className="flex items-center justify-between gap-2">
 					<div className="flex items-center gap-2">
-						<Select value={filterLevel} onValueChange={setFilterLevel}>
-							<SelectTrigger className="w-[120px]">
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="all">All Levels</SelectItem>
-								<SelectItem value="0">Cantrip</SelectItem>
-								{[1, 2, 3, 4, 5, 6, 7, 8, 9].map((level) => (
-									<SelectItem key={level} value={level.toString()}>
-										Level {level}
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-						<Select value={filterPrepared} onValueChange={setFilterPrepared}>
-							<SelectTrigger className="w-[140px]">
-								<SelectValue />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="all">All</SelectItem>
-								<SelectItem value="prepared">Prepared</SelectItem>
-								<SelectItem value="unprepared">Unprepared</SelectItem>
-							</SelectContent>
-						</Select>
+						{filter?.level === undefined && (
+							<Select value={filterLevel} onValueChange={setFilterLevel}>
+								<SelectTrigger className="w-[120px]">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">All Levels</SelectItem>
+									<SelectItem value="0">Cantrip</SelectItem>
+									{[1, 2, 3, 4, 5, 6, 7, 8, 9].map((level) => (
+										<SelectItem key={level} value={level.toString()}>
+											Level {level}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						)}
+						{filter?.prepared === undefined && (
+							<Select value={filterPrepared} onValueChange={setFilterPrepared}>
+								<SelectTrigger className="w-[140px]">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="all">All</SelectItem>
+									<SelectItem value="prepared">Prepared</SelectItem>
+									<SelectItem value="unprepared">Unprepared</SelectItem>
+								</SelectContent>
+							</Select>
+						)}
 					</div>
 					<Button
 						onClick={() => setAddDialogOpen(true)}
@@ -625,6 +651,9 @@ export function PowersList({
 				onOpenChange={setAddDialogOpen}
 				characterId={characterId}
 			/>
-		</AscendantWindow>
+		</>
 	);
+
+	if (hideHeader) return body;
+	return <AscendantWindow title="POWERS">{body}</AscendantWindow>;
 }

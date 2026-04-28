@@ -30,7 +30,7 @@ import {
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import { QuestLog } from "@/pages/player-tools/QuestLog";
+import { QuestLog } from "@/pages/ascendant-tools/QuestLog";
 
 const TOOL_TITLES: Record<string, { title: string; subtitle: string }> = {
 	"character-sheet": {
@@ -99,7 +99,7 @@ const requiresCharacter = (toolId: string) =>
 		"regent-status",
 	].includes(toolId);
 
-export default function PlayerToolDetail() {
+export default function AscendantToolDetail() {
 	const navigate = useNavigate();
 	const { toolId } = useParams<{ toolId: string }>();
 	const {
@@ -131,7 +131,7 @@ export default function PlayerToolDetail() {
 	}
 
 	if (!tool || !toolId) {
-		return <Navigate to="/player-tools" replace />;
+		return <Navigate to="/ascendant-tools" replace />;
 	}
 
 	const showCharacterSelector =
@@ -150,7 +150,7 @@ export default function PlayerToolDetail() {
 			return (
 				<AscendantWindow title="NO ACTIVE ASCENDANT">
 					<div className="space-y-3 text-sm text-muted-foreground">
-						<p>Create an ascendant to unlock player tools.</p>
+						<p>Create an ascendant to unlock Ascendant Tools.</p>
 						<Button onClick={() => navigate("/characters/new")}>
 							Create Ascendant
 						</Button>
@@ -250,11 +250,11 @@ export default function PlayerToolDetail() {
 				<div className="flex items-center gap-4">
 					<Button
 						variant="ghost"
-						onClick={() => navigate("/player-tools")}
+						onClick={() => navigate("/ascendant-tools")}
 						className="gap-2"
 					>
 						<ArrowLeft className="w-4 h-4" />
-						Back to Player Tools
+						Back to Ascendant Tools
 					</Button>
 					<div className="flex-1">
 						<RiftHeading

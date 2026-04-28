@@ -5,7 +5,7 @@ export const sigils: CompendiumSigil[] = [
 		id: "sigil-sharpness-1",
 		name: "Sigil of the Razor Wind",
 		description:
-			"An ancient dwarven rune that sharpens a blade continuously with ambient wind mana.",
+			"An Bureau-engraved sigil that sharpens a blade continuously with ambient wind mana.",
 		rarity: "common",
 		can_inscribe_on: ["weapon"],
 		effect_description:
@@ -15,7 +15,8 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Entered into the Bureau's dermal-inscription registry after initial trials.",
-			history: "Catalogued in the Artificer Guild's closed-reference volume.",
+			history:
+				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality:
 				"Binds cleanly to an authorized socket on first inscription.",
@@ -61,7 +62,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d6 physical or magical damage on hit.",
 			secondary:
@@ -153,8 +154,8 @@ export const sigils: CompendiumSigil[] = [
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
-			current_owner: "Available through Bureau-licensed artificer studios.",
-			prior_owners: ["An unknown rogue Awakened"],
+			current_owner: "Available through Bureau-licensed Technomancer studios.",
+			prior_owners: ["An unknown Assassin Awakened"],
 		},
 		flavor: "They won't stop bleeding.",
 		mechanics: {
@@ -216,7 +217,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
-				"Refined from the ashes of a Fire Drake's heart extracted during a massive raid in Johannesburg.",
+				"Refined from the ashes of a Fire-Class Anomaly's heart extracted during a massive raid in Johannesburg.",
 			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Proud and unyielding.",
@@ -287,7 +288,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Dormant and silent.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "The chill of the grave.",
@@ -350,7 +351,8 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "A traditional shamanic rune adapted by modern Guild enchanters.",
-			history: "Catalogued in the Artificer Guild's closed-reference volume.",
+			history:
+				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -411,7 +413,7 @@ export const sigils: CompendiumSigil[] = [
 		rarity: "rare",
 		can_inscribe_on: ["weapon"],
 		effect_description:
-			"Passive: Against Undead or Shadow-type anomalies, the weapon's damage die increases by one step (e.g., 1d6 becomes 1d8).",
+			"Passive: Against Anomaly or Shadow-type anomalies, the weapon's damage die increases by one step (e.g., 1d6 becomes 1d8).",
 		tags: ["sigil", "weapon", "radiant"],
 		source_book: "Holylight Cathedral",
 		lore: {
@@ -529,7 +531,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 1d12 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d12 physical or magical damage on hit.",
 			secondary:
@@ -549,12 +551,13 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Standard issue for Guild operatives facing goblin archers and magical artillery.",
-			history: "Catalogued in the Artificer Guild's closed-reference volume.",
+				"Standard issue for Guild operatives facing Anomaly archers and magical artillery.",
+			history:
+				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
-			prior_owners: ["An unknown rogue Awakened"],
+			prior_owners: ["An unknown Assassin Awakened"],
 		},
 		flavor: "The shield holds.",
 		mechanics: {
@@ -662,7 +665,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 2d8 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 2d8 physical or magical damage on hit.",
 			secondary:
@@ -813,7 +816,7 @@ export const sigils: CompendiumSigil[] = [
 		tags: ["sigil", "armor", "protection"],
 		source_book: "Ascendant Bureau Armory",
 		lore: {
-			origin: "Built by reverse-engineering the scales of the Storm Wyvern.",
+			origin: "Built by reverse-engineering the scales of the Storm anomaly.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Proud and unyielding.",
@@ -1013,8 +1016,9 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
-				"An essential component for Ranger-class Hunters defending the Safe Zones.",
-			history: "Catalogued in the Artificer Guild's closed-reference volume.",
+				"An essential component for Stalker-class Hunters defending the Safe Zones.",
+			history:
+				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -1085,7 +1089,7 @@ export const sigils: CompendiumSigil[] = [
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Requires a calibrated socket to stabilize.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
 		},
 		flavor: "Strike first.",
@@ -1148,7 +1152,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
-				"Used by Vanguard Hunters to physically wrestle dungeon bosses to the ground.",
+				"Used by Holy Knights to physically wrestle dungeon bosses to the ground.",
 			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Dormant and silent.",
@@ -1219,7 +1223,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Dormant and silent.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["The Obsidian Vanguard"],
 		},
 		flavor: "Bow before authority.",
@@ -1286,7 +1290,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Resonates only with lattice-compatible host items.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
 		},
 		flavor: "An unending well of power.",
@@ -1421,7 +1425,7 @@ export const sigils: CompendiumSigil[] = [
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Currently unaccounted for.",
-			prior_owners: ["An unknown rogue Awakened"],
+			prior_owners: ["An unknown Assassin Awakened"],
 		},
 		flavor: "Refuse to fall.",
 		mechanics: {
@@ -1462,7 +1466,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 1d12 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d12 physical or magical damage on hit.",
 			secondary:
@@ -1472,7 +1476,7 @@ export const sigils: CompendiumSigil[] = [
 	},
 	{
 		id: "sigil-res-fire-2",
-		name: "Sigil of the Dragon's Scale",
+		name: "Sigil of the anomaly's Scale",
 		description:
 			"An advanced ward that completely neutralizes ambient thermal magic.",
 		rarity: "rare",
@@ -1618,11 +1622,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Carved into the shields of Vanguard Hunters facing storm-elemental bosses.",
+				"Carved into the shields of Holy Knights facing storm-elemental bosses.",
 			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Coldly analytical.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["Bureau Shared-Materiel Archive"],
 		},
 		flavor: "The storm ignored.",
@@ -1664,7 +1668,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d6 physical or magical damage on hit.",
 			secondary:
@@ -1689,7 +1693,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Resonates only with lattice-compatible host items.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor: "Nothing sticks.",
@@ -1756,8 +1760,8 @@ export const sigils: CompendiumSigil[] = [
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Aggressive and volatile.",
-			current_owner: "Available through Bureau-licensed artificer studios.",
-			prior_owners: ["An unknown rogue Awakened"],
+			current_owner: "Available through Bureau-licensed Technomancer studios.",
+			prior_owners: ["An unknown Assassin Awakened"],
 		},
 		flavor: "A pure heart.",
 		mechanics: {
@@ -1819,7 +1823,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Favored by operatives exploring dwarven ruin-gates where sound triggers traps.",
+				"Favored by operatives exploring pre-gate ruin-gates where sound triggers traps.",
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Aggressive and volatile.",
@@ -1890,7 +1894,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "Unbreakable presence.",
@@ -1954,10 +1958,11 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Constructed after an Illithid-variant gate resulted in hundreds of mind-controlled casualties.",
-			history: "Catalogued in the Artificer Guild's closed-reference volume.",
+			history:
+				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "My thoughts are my own.",
@@ -2066,7 +2071,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 3d12 + 6 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
 			secondary:
@@ -2087,11 +2092,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Built for Vanguard hunters dealing with heavily armored stone golems.",
+				"Built for Holy Knights dealing with heavily armored stone golems.",
 			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor: "Shatter their foundations.",
@@ -2143,7 +2148,7 @@ export const sigils: CompendiumSigil[] = [
 	},
 	{
 		id: "sigil-mastery-bow",
-		name: "Sigil of the Ranger's Eye",
+		name: "Sigil of the Stalker's Eye",
 		description: "Guides projectiles with subtle bursts of wind magic.",
 		rarity: "very_rare",
 		can_inscribe_on: ["weapon"],
@@ -2156,7 +2161,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["Hunter Academy Reference Collection"],
 		},
 		flavor: "There's nowhere to hide.",
@@ -2198,7 +2203,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
 			secondary:
@@ -2222,7 +2227,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Aggressive and volatile.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "Distance is safety.",
@@ -2421,7 +2426,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Coldly analytical.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["Archmage Valerius"],
 		},
 		flavor: "Refuse to yield.",
@@ -2487,7 +2492,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Dormant and silent.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
 		},
 		flavor: "Catch me if you can.",
@@ -2595,7 +2600,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 2d8 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 2d8 physical or magical damage on hit.",
 			secondary:
@@ -2619,7 +2624,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Documented in the Hunter Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Resonates only with lattice-compatible host items.",
-			current_owner: "Wielded by Vanguard Hunters.",
+			current_owner: "Wielded by Holy Knights.",
 			prior_owners: ["The Obsidian Vanguard"],
 		},
 		flavor: "Like hitting a mountain.",
@@ -2661,7 +2666,7 @@ export const sigils: CompendiumSigil[] = [
 			effect: "Enhances the wielder's resilience.",
 			combat_advantage: "Deals 4d10 physical or magical damage on hit.",
 		},
-		discovery_lore: "Traded for thirty vials of wyvern blood.",
+		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 4d10 physical or magical damage on hit.",
 			secondary:
@@ -2682,10 +2687,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Bypasses the cloaking mechanisms of Class-A stalker anomalies.",
-			history: "Catalogued in the Artificer Guild's closed-reference volume.",
+			history:
+				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Coldly analytical.",
-			current_owner: "Held by a rogue guild.",
+			current_owner: "Held by a Assassin guild.",
 			prior_owners: ["Guild Historical Registry"],
 		},
 		flavor: "Nothing remains hidden.",

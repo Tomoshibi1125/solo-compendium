@@ -76,7 +76,9 @@ export default function Login() {
 				if (safeNext) {
 					navigate(safeNext);
 				} else {
-					navigate(role === "warden" ? "/warden-directives" : "/player-tools");
+					navigate(
+						role === "warden" ? "/warden-directives" : "/ascendant-tools",
+					);
 				}
 			}
 		} catch {
@@ -107,7 +109,7 @@ export default function Login() {
 			localStorage.removeItem("pending-auth-next");
 		}
 		setLocalGuestRole(role);
-		navigate(role === "warden" ? "/warden-directives" : "/player-tools");
+		navigate(role === "warden" ? "/warden-directives" : "/ascendant-tools");
 	};
 
 	return (

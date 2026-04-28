@@ -753,7 +753,7 @@ const TOKEN_TEMPLATES: VTTAsset[] = [
 		name: "Player Token Frame",
 		category: "token",
 		imageUrl: "/generated/tokens/player-token.webp",
-		tags: ["token", "player", "character", "frame"],
+		tags: ["token", "ascendant", "character", "frame"],
 	},
 ];
 
@@ -829,7 +829,7 @@ export const JOB_PORTRAITS: VTTAsset[] = JOB_PORTRAIT_MAP.map(
 		name: display,
 		category: "portrait" as VTTAssetCategory,
 		imageUrl: `/generated/compendium/jobs/${file}.webp`,
-		tags: ["portrait", "job", "ascendant", "player", display.toLowerCase()],
+		tags: ["portrait", "job", "ascendant", display.toLowerCase()],
 	}),
 );
 

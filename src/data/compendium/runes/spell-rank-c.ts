@@ -49,7 +49,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-1031.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -103,7 +103,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0960.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -157,7 +157,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0785.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -211,7 +211,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0434.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -265,7 +265,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0891.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -319,7 +319,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0060.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -373,7 +373,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0493.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -427,7 +427,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-1022.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -481,7 +481,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0527.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -535,7 +535,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0003.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -589,7 +589,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0082.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -643,7 +643,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0653.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -697,7 +697,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0884.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -751,7 +751,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
-		image: "/generated/effects/arcane-sigil.webp",
+		image: "/generated/compendium/items/item-0679.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:
@@ -805,7 +805,7 @@ export const runes_c: CompendiumRune[] = [
 		},
 		discovery_lore:
 			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
-		image: "/generated/effects/darkness-shroud.webp",
+		image: "/generated/compendium/items/item-0126.webp",
 		uses_per_rest: "One-time use (destroyed after absorption)",
 		recharge: "N/A — consumable",
 		higher_levels:

@@ -1887,6 +1887,99 @@ export type Database = {
 					},
 				];
 			};
+			character_spells: {
+				Row: {
+					casting_time: string | null;
+					character_id: string;
+					concentration: boolean;
+					counts_against_limit: boolean;
+					created_at: string;
+					description: string | null;
+					display_order: number | null;
+					duration: string | null;
+					higher_levels: string | null;
+					id: string;
+					is_known: boolean;
+					is_prepared: boolean;
+					learned_at: string;
+					name: string;
+					range: string | null;
+					recharge: string | null;
+					ritual: boolean;
+					source: string;
+					spell_id: string | null;
+					spell_level: number;
+					updated_at: string;
+					uses_current: number | null;
+					uses_max: number | null;
+				};
+				Insert: {
+					casting_time?: string | null;
+					character_id: string;
+					concentration?: boolean;
+					counts_against_limit?: boolean;
+					created_at?: string;
+					description?: string | null;
+					display_order?: number | null;
+					duration?: string | null;
+					higher_levels?: string | null;
+					id?: string;
+					is_known?: boolean;
+					is_prepared?: boolean;
+					learned_at?: string;
+					name: string;
+					range?: string | null;
+					recharge?: string | null;
+					ritual?: boolean;
+					source?: string;
+					spell_id?: string | null;
+					spell_level?: number;
+					updated_at?: string;
+					uses_current?: number | null;
+					uses_max?: number | null;
+				};
+				Update: {
+					casting_time?: string | null;
+					character_id?: string;
+					concentration?: boolean;
+					counts_against_limit?: boolean;
+					created_at?: string;
+					description?: string | null;
+					display_order?: number | null;
+					duration?: string | null;
+					higher_levels?: string | null;
+					id?: string;
+					is_known?: boolean;
+					is_prepared?: boolean;
+					learned_at?: string;
+					name?: string;
+					range?: string | null;
+					recharge?: string | null;
+					ritual?: boolean;
+					source?: string;
+					spell_id?: string | null;
+					spell_level?: number;
+					updated_at?: string;
+					uses_current?: number | null;
+					uses_max?: number | null;
+				};
+				Relationships: [
+					{
+						foreignKeyName: "character_spells_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "characters";
+						referencedColumns: ["id"];
+					},
+					{
+						foreignKeyName: "character_spells_character_id_fkey";
+						columns: ["character_id"];
+						isOneToOne: false;
+						referencedRelation: "user_characters";
+						referencedColumns: ["id"];
+					},
+				];
+			};
 			character_backups: {
 				Row: {
 					backup_data: Json;
@@ -7470,7 +7563,7 @@ export type Database = {
 				Row: {
 					character_id: string | null;
 					id: string;
-					is_dm: boolean;
+					is_warden: boolean;
 					joined_at: string | null;
 					session_id: string;
 					user_id: string;
@@ -7478,7 +7571,7 @@ export type Database = {
 				Insert: {
 					character_id?: string | null;
 					id?: string;
-					is_dm?: boolean;
+					is_warden?: boolean;
 					joined_at?: string | null;
 					session_id: string;
 					user_id: string;
@@ -7486,7 +7579,7 @@ export type Database = {
 				Update: {
 					character_id?: string | null;
 					id?: string;
-					is_dm?: boolean;
+					is_warden?: boolean;
 					joined_at?: string | null;
 					session_id?: string;
 					user_id?: string;
@@ -8145,7 +8238,7 @@ export type Database = {
 					created_by: string;
 					id: string;
 					image_url: string | null;
-					is_dm_token: boolean;
+					is_warden_token: boolean;
 					layer: number;
 					locked: boolean;
 					name: string;
@@ -8166,7 +8259,7 @@ export type Database = {
 					created_by: string;
 					id?: string;
 					image_url?: string | null;
-					is_dm_token?: boolean;
+					is_warden_token?: boolean;
 					layer?: number;
 					locked?: boolean;
 					name: string;
@@ -8187,7 +8280,7 @@ export type Database = {
 					created_by?: string;
 					id?: string;
 					image_url?: string | null;
-					is_dm_token?: boolean;
+					is_warden_token?: boolean;
 					layer?: number;
 					locked?: boolean;
 					name?: string;
@@ -8227,6 +8320,9 @@ export type Database = {
 					settings: Json | null;
 					share_code: string | null;
 					updated_at: string | null;
+					warden_email: string | null;
+					warden_id: string | null;
+					warden_name: string | null;
 				};
 				Relationships: [];
 			};
@@ -8325,6 +8421,14 @@ export type Database = {
 					p_metadata?: Json;
 					p_session_id?: string;
 					p_title?: string;
+				};
+				Returns: string;
+			};
+			add_ascendant_character_to_campaign: {
+				Args: {
+					p_campaign_id: string;
+					p_character_id: string;
+					p_invite_token?: string;
 				};
 				Returns: string;
 			};
@@ -8468,7 +8572,7 @@ export type Database = {
 				Args: {
 					p_color?: string;
 					p_image_url?: string;
-					p_is_dm_token?: boolean;
+					p_is_warden_token?: boolean;
 					p_name: string;
 					p_owned_by_user_id?: string;
 					p_session_id: string;
@@ -8633,7 +8737,12 @@ export type Database = {
 				Args: { p_campaign_id: string; p_user_id?: string };
 				Returns: boolean;
 			};
+			is_campaign_warden: {
+				Args: { p_campaign_id: string; p_user_id?: string };
+				Returns: boolean;
+			};
 			is_dm_or_admin: { Args: { p_user_id?: string }; Returns: boolean };
+			is_warden_or_admin: { Args: { p_user_id?: string }; Returns: boolean };
 			join_campaign_by_code: {
 				Args: { p_character_id?: string; p_code: string };
 				Returns: string;

@@ -147,7 +147,7 @@ ${treasure.hundreds > 0 ? `$100 Bills: ${treasure.hundreds}\n` : ""}${treasure.f
 ${treasure.description}
 
 ---
-D&D BEYOND STYLE TREASURE HOARD:
+TREASURE HOARD:
 
 ITEMS:
 ${

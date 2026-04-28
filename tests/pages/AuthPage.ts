@@ -1,6 +1,12 @@
 import type { Page } from "@playwright/test";
 
-export type Role = "dm" | "player";
+// Canonical roles plus legacy aliases ("dm"/"player") that older specs still use.
+export type Role = "warden" | "ascendant" | "dm" | "player";
+
+function normalizeRole(role: Role): "warden" | "ascendant" {
+	if (role === "warden" || role === "dm") return "warden";
+	return "ascendant";
+}
 
 /**
  * Page Object Model for the Login page.
@@ -33,11 +39,12 @@ export class AuthPage {
 
 	/** Continue as guest with the chosen role (no Supabase account required). */
 	async continueAsGuest(role: Role) {
+		const canonical = normalizeRole(role);
 		await this.dismissAnalytics();
 		await this.goto();
 
 		// Select role (this sets the role state in Login.tsx)
-		if (role === "dm") {
+		if (canonical === "warden") {
 			await this.page
 				.getByRole("button", { name: /Select Warden role/i })
 				.click();
@@ -48,15 +55,17 @@ export class AuthPage {
 		}
 
 		// Click the specific guest button
-		const buttonText = `Continue as Guest (${role === "dm" ? "Warden" : "Ascendant"})`;
+		const buttonText = `Continue as Guest (${canonical === "warden" ? "Warden" : "Ascendant"})`;
 		await this.page
 			.getByRole("button", { name: buttonText, exact: true })
 			.click();
 
+		// Accept either the new /ascendant-tools route or the legacy /player-tools
+		// redirect target while the rename rolls out across specs.
 		const expectedUrl =
-			role === "dm"
+			canonical === "warden"
 				? /\/warden-(protocols|directives)/
-				: /\/player-tools/;
+				: /\/(ascendant|player)-tools/;
 		await this.page.waitForURL(expectedUrl, { timeout: 15_000 });
 	}
 }

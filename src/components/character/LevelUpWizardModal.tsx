@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	Crown,
 	Heart,
@@ -30,6 +30,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
@@ -40,7 +41,12 @@ import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { getLevelingMode } from "@/lib/campaignSettings";
-import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import {
+	type CanonicalCastableEntry,
+	listCanonicalEntries,
+	listLearnablePowers,
+	listLearnableTechniques,
+} from "@/lib/canonicalCompendium";
 import {
 	addJobAwakeningBenefitsForLevel,
 	applyJobAwakeningTraitsToCharacter,
@@ -53,6 +59,13 @@ import {
 	type CharacterLevelUpEvent,
 	DomainEventBus,
 } from "@/lib/domainEvents";
+import {
+	addLocalPower,
+	addLocalTechnique,
+	isLocalCharacterId,
+	listLocalPowers,
+	listLocalTechniques,
+} from "@/lib/guestStore";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
 import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
@@ -134,6 +147,7 @@ export const LevelUpWizardModal = ({
 	characterId,
 }: LevelUpWizardModalProps) => {
 	const { toast } = useToast();
+	const queryClient = useQueryClient();
 	const { data: character, isLoading } = useCharacter(characterId || "");
 	const { data: characterCampaign } = useCampaignByCharacterId(
 		characterId || "",
@@ -151,6 +165,10 @@ export const LevelUpWizardModal = ({
 	const [selectedPath, setSelectedPath] = useState<string>("");
 	const [asiChoices, setAsiChoices] = useState<Record<string, number>>({});
 	const [selectedFeats, setSelectedFeats] = useState<string[]>([]);
+	const [selectedPowerIds, setSelectedPowerIds] = useState<string[]>([]);
+	const [selectedTechniqueIds, setSelectedTechniqueIds] = useState<string[]>(
+		[],
+	);
 	const { data: staticJobs, isLoading: jobsLoading } = useStaticJobs();
 
 	// Calculate available choices at the new level (including job awakening features and traits)
@@ -186,12 +204,62 @@ export const LevelUpWizardModal = ({
 		const enhancedJobData = {
 			name: character.job ?? undefined,
 			skill_choice_count: 0, // Not relevant for level-up
-			awakeningFeatures: staticJob.awakeningFeatures || [],
-			jobTraits: staticJob.jobTraits || [],
+			awakening_features: staticJob.awakeningFeatures || [],
+			job_traits: staticJob.jobTraits || [],
 		};
 
 		return calculateTotalChoices(enhancedJobData, null, [], newLevel);
 	}, [character, newLevel, staticJobs]);
+
+	const previousChoices = useMemo(() => {
+		if (!character || !staticJobs)
+			return {
+				feats: 0,
+				skills: 0,
+				powers: 0,
+				techniques: 0,
+				runes: 0,
+				items: 0,
+				tools: 0,
+				languages: 0,
+				expertise: 0,
+			};
+
+		const staticJob = staticJobs.find((job) => job.name === character.job);
+		if (!staticJob)
+			return {
+				feats: 0,
+				skills: 0,
+				powers: 0,
+				techniques: 0,
+				runes: 0,
+				items: 0,
+				tools: 0,
+				languages: 0,
+				expertise: 0,
+			};
+
+		return calculateTotalChoices(
+			{
+				name: character.job ?? undefined,
+				skill_choice_count: 0,
+				awakening_features: staticJob.awakeningFeatures || [],
+				job_traits: staticJob.jobTraits || [],
+			},
+			null,
+			[],
+			character.level,
+		);
+	}, [character, staticJobs]);
+
+	const requiredPowerChoices = Math.max(
+		0,
+		availableChoices.powers - previousChoices.powers,
+	);
+	const requiredTechniqueChoices = Math.max(
+		0,
+		availableChoices.techniques - previousChoices.techniques,
+	);
 
 	// Level progression logic
 	const currentExperience = character?.experience ?? 0;
@@ -289,6 +357,47 @@ export const LevelUpWizardModal = ({
 	const showASISection =
 		!!character && isASILevel(newLevel, jobObj || character.job);
 	const showFeatSelection = showASISection && availableChoices.feats > 0;
+
+	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: [
+			"level-up-powers",
+			character?.job,
+			effectivePathName,
+			newLevel,
+			requiredPowerChoices,
+			campaignId,
+		],
+		queryFn: async () => {
+			if (!character?.job || requiredPowerChoices <= 0) return [];
+			return listLearnablePowers({
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+			});
+		},
+		enabled: !!character?.job && requiredPowerChoices > 0,
+	});
+
+	const { data: availableTechniques = [] } = useQuery<StaticCompendiumEntry[]>({
+		queryKey: [
+			"level-up-techniques",
+			character?.job,
+			effectivePathName,
+			newLevel,
+			requiredTechniqueChoices,
+			campaignId,
+		],
+		queryFn: async () => {
+			if (!character?.job || requiredTechniqueChoices <= 0) return [];
+			return listLearnableTechniques({
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+				maxLevel: newLevel,
+			});
+		},
+		enabled: !!character?.job && requiredTechniqueChoices > 0,
+	});
 
 	// Regent progression: show new regent features unlocked at this level
 	const { unlocks: regentUnlocks } = useRegentUnlocks(characterId || "");
@@ -409,6 +518,24 @@ export const LevelUpWizardModal = ({
 		}
 	}, [character]);
 
+	useEffect(() => {
+		setSelectedPowerIds((current) => {
+			const next = current.filter((id) =>
+				availablePowers.some((power) => power.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availablePowers]);
+
+	useEffect(() => {
+		setSelectedTechniqueIds((current) => {
+			const next = current.filter((id) =>
+				availableTechniques.some((technique) => technique.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableTechniques]);
+
 	if (isLoading || jobsLoading || !character || !staticJobs) {
 		return (
 			<Dialog open={isOpen} onOpenChange={onClose}>
@@ -493,6 +620,24 @@ export const LevelUpWizardModal = ({
 			toast({
 				title: "Path selection required",
 				description: "Choose a path before completing this level up.",
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (selectedPowerIds.length < requiredPowerChoices) {
+			toast({
+				title: "Power selection required",
+				description: `Choose ${requiredPowerChoices} power${requiredPowerChoices === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (selectedTechniqueIds.length < requiredTechniqueChoices) {
+			toast({
+				title: "Technique selection required",
+				description: `Choose ${requiredTechniqueChoices} technique${requiredTechniqueChoices === 1 ? "" : "s"} before completing this level up.`,
 				variant: "destructive",
 			});
 			return;
@@ -592,6 +737,82 @@ export const LevelUpWizardModal = ({
 						.from("character_features")
 						.insert(featFeatures as never[]);
 				}
+			}
+
+			const selectedPowerEntries = availablePowers.filter((power) =>
+				selectedPowerIds.includes(power.id),
+			);
+			for (const power of selectedPowerEntries) {
+				const powerPayload = {
+					name: power.name,
+					power_level: power.power_level,
+					source: `Level ${newLevel} Power Choice`,
+					casting_time: power.casting_time || null,
+					range: power.range || null,
+					duration: power.duration || null,
+					concentration: power.concentration || false,
+					description: power.description || null,
+					higher_levels: power.higher_levels || null,
+					is_prepared: false,
+					is_known: true,
+				};
+
+				if (isLocalCharacterId(character.id)) {
+					const existingPowers = listLocalPowers(character.id);
+					if (existingPowers.some((existing) => existing.name === power.name))
+						continue;
+
+					addLocalPower(character.id, powerPayload);
+					continue;
+				}
+
+				const { data: existingPower } = await supabase
+					.from("character_powers")
+					.select("id")
+					.eq("character_id", character.id)
+					.eq("name", power.name)
+					.limit(1);
+				if ((existingPower?.length ?? 0) > 0) continue;
+
+				await supabase.from("character_powers").insert({
+					character_id: character.id,
+					...powerPayload,
+				});
+			}
+
+			const selectedTechniqueEntries = availableTechniques.filter((technique) =>
+				selectedTechniqueIds.includes(technique.id),
+			);
+			for (const technique of selectedTechniqueEntries) {
+				if (isLocalCharacterId(character.id)) {
+					const existingTechniques = listLocalTechniques(character.id);
+					if (
+						existingTechniques.some(
+							(existing) => existing.technique_id === technique.id,
+						)
+					)
+						continue;
+
+					addLocalTechnique(character.id, {
+						technique_id: technique.id,
+						source: `Level ${newLevel} Technique Choice`,
+					});
+					continue;
+				}
+
+				const { data: existingTechnique } = await supabase
+					.from("character_techniques")
+					.select("id")
+					.eq("character_id", character.id)
+					.eq("technique_id", technique.id)
+					.limit(1);
+				if ((existingTechnique?.length ?? 0) > 0) continue;
+
+				await supabase.from("character_techniques").insert({
+					character_id: character.id,
+					technique_id: technique.id,
+					source: `Level ${newLevel} Technique Choice`,
+				});
 			}
 
 			if (!isMilestone) {
@@ -762,6 +983,19 @@ export const LevelUpWizardModal = ({
 					{ skipBroadcast: true },
 				)
 				.catch(console.error);
+
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: ["powers", character.id] }),
+				queryClient.invalidateQueries({
+					queryKey: ["character-techniques", character.id],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["character", character.id],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["combat-actions", character.id],
+				}),
+			]);
 
 			onClose();
 		} catch {
@@ -1194,6 +1428,181 @@ export const LevelUpWizardModal = ({
 									</div>
 								)}
 
+								{requiredPowerChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
+										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
+											<Sparkles className="w-4 h-4" />
+											SYSTEM POWER IMPRINTS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {requiredPowerChoices} power
+											{requiredPowerChoices === 1 ? "" : "s"} unlocked by this
+											level.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availablePowers.map((power) => {
+												const isSelected = selectedPowerIds.includes(power.id);
+												return (
+													<div
+														key={power.id}
+														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-cyan-500/10"
+													>
+														<input
+															type="checkbox"
+															id={`level-power-${power.id}`}
+															checked={isSelected}
+															onChange={(e) => {
+																if (e.target.checked) {
+																	if (
+																		selectedPowerIds.length <
+																		requiredPowerChoices
+																	) {
+																		setSelectedPowerIds([
+																			...selectedPowerIds,
+																			power.id,
+																		]);
+																	}
+																} else {
+																	setSelectedPowerIds(
+																		selectedPowerIds.filter(
+																			(id) => id !== power.id,
+																		),
+																	);
+																}
+															}}
+															disabled={
+																!isSelected &&
+																selectedPowerIds.length >= requiredPowerChoices
+															}
+															className="mt-1 rounded border-cyan-500/30"
+														/>
+														<label
+															htmlFor={`level-power-${power.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-resurge text-sm text-cyan-400">
+																	{formatRegentVernacular(power.name)}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Level {power.power_level}
+																</Badge>
+																{power.power_type && (
+																	<Badge variant="outline" className="text-xs">
+																		{formatRegentVernacular(power.power_type)}
+																	</Badge>
+																)}
+															</div>
+															{power.description && (
+																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	{formatRegentVernacular(power.description)}
+																</p>
+															)}
+														</label>
+													</div>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedPowerIds.length}/{requiredPowerChoices}
+										</p>
+									</div>
+								)}
+
+								{requiredTechniqueChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-orange-500/10 to-transparent border border-orange-500/20">
+										<Label className="font-resurge text-orange-400 tracking-wide flex items-center gap-2 mb-4">
+											<Swords className="w-4 h-4" />
+											COMBAT TECHNIQUE PROTOCOLS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {requiredTechniqueChoices} technique
+											{requiredTechniqueChoices === 1 ? "" : "s"} unlocked by
+											this level.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availableTechniques.map((technique) => {
+												const isSelected = selectedTechniqueIds.includes(
+													technique.id,
+												);
+												return (
+													<div
+														key={technique.id}
+														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-orange-500/10"
+													>
+														<input
+															type="checkbox"
+															id={`level-technique-${technique.id}`}
+															checked={isSelected}
+															onChange={(e) => {
+																if (e.target.checked) {
+																	if (
+																		selectedTechniqueIds.length <
+																		requiredTechniqueChoices
+																	) {
+																		setSelectedTechniqueIds([
+																			...selectedTechniqueIds,
+																			technique.id,
+																		]);
+																	}
+																} else {
+																	setSelectedTechniqueIds(
+																		selectedTechniqueIds.filter(
+																			(id) => id !== technique.id,
+																		),
+																	);
+																}
+															}}
+															disabled={
+																!isSelected &&
+																selectedTechniqueIds.length >=
+																	requiredTechniqueChoices
+															}
+															className="mt-1 rounded border-orange-500/30"
+														/>
+														<label
+															htmlFor={`level-technique-${technique.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-resurge text-sm text-orange-400">
+																	{formatRegentVernacular(technique.name)}
+																</span>
+																{technique.level_requirement && (
+																	<Badge
+																		variant="secondary"
+																		className="text-xs"
+																	>
+																		Level {technique.level_requirement}
+																	</Badge>
+																)}
+																{technique.technique_type && (
+																	<Badge variant="outline" className="text-xs">
+																		{formatRegentVernacular(
+																			technique.technique_type,
+																		)}
+																	</Badge>
+																)}
+															</div>
+															{technique.description && (
+																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	{formatRegentVernacular(
+																		technique.description,
+																	)}
+																</p>
+															)}
+														</label>
+													</div>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedTechniqueIds.length}/
+											{requiredTechniqueChoices}
+										</p>
+									</div>
+								)}
+
 								{/* New Features */}
 								{newFeatures.length > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
@@ -1394,7 +1803,9 @@ export const LevelUpWizardModal = ({
 									hpIncrease === null ||
 									newLevel <= character.level ||
 									(!isMilestone && !canLevelUp) ||
-									(showPathSelection && !selectedPathRow)
+									(showPathSelection && !selectedPathRow) ||
+									selectedPowerIds.length < requiredPowerChoices ||
+									selectedTechniqueIds.length < requiredTechniqueChoices
 								}
 								className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
 							>

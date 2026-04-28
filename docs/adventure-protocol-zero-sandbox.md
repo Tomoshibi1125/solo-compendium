@@ -12,7 +12,7 @@ The Protocol Zero campaign has been expanded into a fully realized Sandbox. Draw
 ---
 
 ## The Sandbox: Neo-Seoul Districts
-The mid-game of this campaign (Levels 3–8) takes place across various districts and safehouses. The DM can use these locations to run a point-crawl or open-world exploration.
+The mid-game of this campaign (Levels 3–8) takes place across various districts and safehouses. The Warden can use these locations to run a point-crawl or open-world exploration.
 
 ### Mythic Celestial Palace
 **Type:** Dungeon | **Threat Level:** S-Rank
@@ -334,7 +334,7 @@ A device that can manipulate time in limited ways.
 
 ## Procedural Appendix B: The Grand Bestiary
 
-A complete catalog of the Anomalies that populate Neo-Seoul's Gates. DM's should roll on random encounter tables referencing these horrors.
+A complete catalog of the Anomalies that populate Neo-Seoul's Gates. Warden's should roll on random encounter tables referencing these horrors.
 
 ### Infernal Demonic Warlord (A-Rank Undead)
 *Medium Aberration, Unaligned*

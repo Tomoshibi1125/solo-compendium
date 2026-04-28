@@ -120,20 +120,3 @@ export const useTechniques = (characterId: string) => {
 		removeTechnique,
 	};
 };
-
-/**
- * Hook to browse all techniques in the compendium
- */
-export const useCompendiumTechniques = () => {
-	return useQuery({
-		queryKey: ["compendium-techniques"],
-		queryFn: async () => {
-			const entries = await listCanonicalEntries("techniques");
-			return entries
-				.slice()
-				.sort((a, b) =>
-					a.name.localeCompare(b.name),
-				) as unknown as CompendiumTechnique[];
-		},
-	});
-};

@@ -11,23 +11,24 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
-import { useStaticJobs } from "@/hooks/useStaticJobs";
+import {
+	isRuneGranted,
+	useRuneGrantedAbilities,
+} from "@/hooks/useRuneGrantedAbilities";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
-import type { CanonicalCastableEntry } from "@/lib/canonicalCompendium";
 import {
+	type CanonicalCastableEntry,
 	listCanonicalEntries,
-	listLearnableCastables,
+	listCanonicalPowers,
+	listLearnablePowers,
 } from "@/lib/canonicalCompendium";
-import {
-	getCantripsKnownLimit,
-	getSpellsKnownLimit,
-} from "@/lib/characterCalculations";
-import { getMaxPowerLevelForJobAtLevel } from "@/lib/characterCreation";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -45,29 +46,37 @@ export function AddPowerDialog({
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [levelTab, setLevelTab] = useState<string>("all");
-	const {
-		addPower,
-		removePower,
-		powers: characterPowers,
-	} = usePowers(characterId);
+	const [showAll, setShowAll] = useState(false);
+	const { addPower } = usePowers(characterId);
 	const { toast } = useToast();
 	const { data: character } = useCharacter(characterId);
 	const ascendantTools = useAscendantTools();
-	const { data: staticJobs } = useStaticJobs();
-	const jobObj = useMemo(
-		() => staticJobs?.find((j) => j.name === character?.job),
-		[staticJobs, character?.job],
-	);
+	const { grantedAbilityNames } = useRuneGrantedAbilities(characterId);
 
-	const [replaceTarget, setReplaceTarget] = useState<null | {
-		powerToLearn: CanonicalCastableEntry;
-		kind: "cantrip" | "known";
-		limit: number;
-	}>(null);
-
-	const maxPowerLevel = character
-		? getMaxPowerLevelForJobAtLevel(jobObj || character.job, character.level)
-		: 0;
+	const { data: regentNamesList = [] } = useQuery<string[]>({
+		queryKey: [
+			"add-power-regent-names",
+			characterId,
+			(character as CharacterExtended | undefined)?.regent_overlays,
+		],
+		queryFn: async () => {
+			const overlayIds = Array.isArray(
+				(character as CharacterExtended).regent_overlays,
+			)
+				? ((character as CharacterExtended).regent_overlays as string[])
+				: [];
+			if (overlayIds.length === 0) return [];
+			const regents = await listCanonicalEntries("regents");
+			const overlaySet = new Set(overlayIds);
+			return regents
+				.filter((r) => overlaySet.has(r.id))
+				.map((r) => r.name)
+				.filter(
+					(name): name is string => typeof name === "string" && name.length > 0,
+				);
+		},
+		enabled: open && !!character,
+	});
 
 	const { data: powers = [], isLoading } = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
@@ -76,48 +85,68 @@ export function AddPowerDialog({
 			searchQuery,
 			character?.job,
 			character?.level,
+			showAll,
 		],
 		queryFn: async () => {
 			if (!character?.job) return [];
 
-			const maxPowerLevel = getMaxPowerLevelForJobAtLevel(
-				character.job,
-				character.level || 1,
-			);
-
-			const regentOverlayIds = Array.isArray(
-				(character as CharacterExtended).regent_overlays,
-			)
-				? ((character as CharacterExtended).regent_overlays as string[])
-				: [];
-			let regentNames: string[] = [];
-			if (regentOverlayIds.length > 0) {
-				const regents = await listCanonicalEntries("regents");
-				const overlaySet = new Set(regentOverlayIds);
-				regentNames = regents
-					.filter((r) => overlaySet.has(r.id))
-					.map((r) => r.name)
-					.filter(
-						(name): name is string =>
-							typeof name === "string" && name.length > 0,
-					);
-			}
-
 			const campaignId = await getCharacterCampaignId(characterId);
 			const trimmedQuery = searchQuery.trim();
-			return listLearnableCastables({
-				search: trimmedQuery
-					? normalizeRegentSearch(trimmedQuery).toLowerCase()
-					: undefined,
+			const search = trimmedQuery
+				? normalizeRegentSearch(trimmedQuery).toLowerCase()
+				: undefined;
+
+			if (showAll) {
+				return listCanonicalPowers(search, { campaignId });
+			}
+
+			return listLearnablePowers({
+				search,
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: character.path ?? null,
-				regentNames,
-				maxPowerLevel,
+				regentNames: regentNamesList,
 			});
 		},
 		enabled: open && !!character?.job,
 	});
+
+	// Compute access sources (Job / Path / Regent / Rune) for each entry shown.
+	const accessByEntryId = useMemo(() => {
+		const job = (character?.job ?? "").trim().toLowerCase();
+		const path = (character?.path ?? "").trim().toLowerCase();
+		const regents = new Set(
+			regentNamesList.map((n) => n.trim().toLowerCase()).filter(Boolean),
+		);
+		const result = new Map<string, string[]>();
+		for (const entry of powers) {
+			const sources: string[] = [];
+			const tagSet = new Set(
+				entry.tags
+					.map((t) => t.trim().toLowerCase())
+					.filter((t) => t.length > 0),
+			);
+			if (job && tagSet.has(job)) sources.push("Job");
+			if (path && tagSet.has(path)) sources.push("Path");
+			for (const regent of regents) {
+				if (tagSet.has(regent)) {
+					sources.push("Regent");
+					break;
+				}
+			}
+			if (isRuneGranted(entry.name, grantedAbilityNames)) {
+				sources.push("Rune");
+			}
+			result.set(entry.id, sources);
+		}
+		return result;
+	}, [
+		powers,
+		character?.job,
+		character?.path,
+		regentNamesList,
+		grantedAbilityNames,
+	]);
 
 	const sortedPowers = useMemo(() => {
 		return [...powers].sort(
@@ -140,77 +169,10 @@ export function AddPowerDialog({
 		return Array.from(set).sort((a, b) => a - b);
 	}, [sortedPowers]);
 
-	const knownNonCantripCount = useMemo(
-		() => characterPowers.filter((p) => (p.power_level ?? 0) > 0).length,
-		[characterPowers],
-	);
-	const knownCantripCount = useMemo(
-		() => characterPowers.filter((p) => (p.power_level ?? 0) === 0).length,
-		[characterPowers],
-	);
-
-	const replaceEligiblePowers = useMemo(() => {
-		if (!replaceTarget) return [];
-		const wantedLevel = replaceTarget.kind === "cantrip" ? 0 : 1;
-		return characterPowers
-			.filter((p) => {
-				const level = p.power_level ?? 0;
-				return wantedLevel === 0 ? level === 0 : level > 0;
-			})
-			.sort(
-				(a, b) =>
-					(a.power_level ?? 0) - (b.power_level ?? 0) ||
-					a.name.localeCompare(b.name),
-			);
-	}, [characterPowers, replaceTarget]);
-
 	const handleAdd = async (power: (typeof powers)[0]) => {
 		const displayName = formatRegentVernacular(power.name);
-		const source =
-			power.canonical_type === "spells"
-				? "Compendium Spell"
-				: "Compendium Power";
+		const source = "Compendium Power";
 		try {
-			if (character?.job) {
-				if (power.power_level === 0) {
-					const cantripLimit = getCantripsKnownLimit(
-						character.job,
-						character.level,
-					);
-					if (cantripLimit !== null && knownCantripCount >= cantripLimit) {
-						setReplaceTarget({
-							powerToLearn: power,
-							kind: "cantrip",
-							limit: cantripLimit,
-						});
-						toast({
-							title: "Cantrip Limit Reached",
-							description: `You can only know ${cantripLimit} cantrips. Replace one to learn ${displayName}.`,
-							variant: "destructive",
-						});
-						return;
-					}
-				} else {
-					const knownLimit = getSpellsKnownLimit(
-						character.job,
-						character.level,
-					);
-					if (knownLimit !== null && knownNonCantripCount >= knownLimit) {
-						setReplaceTarget({
-							powerToLearn: power,
-							kind: "known",
-							limit: knownLimit,
-						});
-						toast({
-							title: "Known Limit Reached",
-							description: `You can only know ${knownLimit} powers at this level. Replace one to learn ${displayName}.`,
-							variant: "destructive",
-						});
-						return;
-					}
-				}
-			}
-
 			await addPower({
 				character_id: characterId,
 				name: power.name,
@@ -242,65 +204,10 @@ export function AddPowerDialog({
 
 			onOpenChange(false);
 			setSearchQuery("");
-			setReplaceTarget(null);
 		} catch {
 			toast({
 				title: "Error",
 				description: "Failed to add power.",
-				variant: "destructive",
-			});
-		}
-	};
-
-	const handleReplace = async (existingPowerId: string) => {
-		if (!replaceTarget) return;
-
-		const { powerToLearn } = replaceTarget;
-		const displayName = formatRegentVernacular(powerToLearn.name);
-		const source =
-			powerToLearn.canonical_type === "spells"
-				? "Compendium Spell"
-				: "Compendium Power";
-
-		try {
-			await removePower(existingPowerId);
-
-			await addPower({
-				character_id: characterId,
-				name: powerToLearn.name,
-				power_level: powerToLearn.power_level,
-				source,
-				casting_time: powerToLearn.casting_time || null,
-				range: powerToLearn.range || null,
-				duration: powerToLearn.duration || null,
-				concentration: powerToLearn.concentration || false,
-				description: powerToLearn.description || null,
-				higher_levels: powerToLearn.higher_levels || null,
-				is_prepared: false,
-				is_known: true,
-			});
-
-			toast({
-				title: "Power replaced",
-				description: `${displayName} has been learned.`,
-			});
-
-			ascendantTools
-				.trackCustomFeatureUsage(
-					characterId,
-					`Learned: ${displayName}`,
-					"Replaced Power",
-					"SA",
-				)
-				.catch(console.error);
-
-			setReplaceTarget(null);
-			onOpenChange(false);
-			setSearchQuery("");
-		} catch {
-			toast({
-				title: "Error",
-				description: "Failed to replace power.",
 				variant: "destructive",
 			});
 		}
@@ -317,72 +224,29 @@ export function AddPowerDialog({
 				</DialogHeader>
 
 				<div className="space-y-4 flex-1 overflow-hidden flex flex-col">
-					{replaceTarget && (
-						<div className="p-3 rounded-lg border bg-muted/30">
-							<div className="flex items-start justify-between gap-2">
-								<div className="flex-1">
-									<div className="font-heading font-semibold">
-										Replace a{" "}
-										{replaceTarget.kind === "cantrip"
-											? "Cantrip"
-											: "Known Power"}
-									</div>
-									<div className="text-xs text-muted-foreground mt-1">
-										Limit: {replaceTarget.limit}. Select one to replace with{" "}
-										{formatRegentVernacular(replaceTarget.powerToLearn.name)}.
-									</div>
-								</div>
-								<Button
-									variant="outline"
-									size="sm"
-									onClick={() => setReplaceTarget(null)}
-								>
-									Cancel
-								</Button>
-							</div>
-
-							<div className="mt-3 space-y-2 max-h-[180px] overflow-y-auto">
-								{replaceEligiblePowers.length === 0 ? (
-									<div className="text-xs text-muted-foreground">
-										No eligible powers to replace.
-									</div>
-								) : (
-									replaceEligiblePowers.map((p) => (
-										<button
-											key={p.id}
-											type="button"
-											className="w-full text-left p-2 rounded-md border bg-background/40 hover:bg-background/70 transition-colors"
-											onClick={() => handleReplace(p.id)}
-										>
-											<div className="flex items-center justify-between gap-2">
-												<div className="text-sm font-heading font-semibold">
-													{formatRegentVernacular(p.name)}
-												</div>
-												{(p.power_level ?? 0) > 0 ? (
-													<Badge variant="secondary" className="text-xs">
-														Level {p.power_level}
-													</Badge>
-												) : (
-													<Badge variant="outline" className="text-xs">
-														Cantrip
-													</Badge>
-												)}
-											</div>
-										</button>
-									))
-								)}
-							</div>
+					<div className="flex items-center gap-3">
+						<div className="relative flex-1">
+							<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+							<Input
+								placeholder="Search powers..."
+								value={searchQuery}
+								onChange={(e) => setSearchQuery(e.target.value)}
+								className="pl-10"
+							/>
 						</div>
-					)}
-
-					<div className="relative">
-						<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-						<Input
-							placeholder="Search powers..."
-							value={searchQuery}
-							onChange={(e) => setSearchQuery(e.target.value)}
-							className="pl-10"
-						/>
+						<div className="flex items-center gap-2 shrink-0">
+							<Switch
+								id="add-power-show-all"
+								checked={showAll}
+								onCheckedChange={setShowAll}
+							/>
+							<Label
+								htmlFor="add-power-show-all"
+								className="text-xs cursor-pointer"
+							>
+								Show all
+							</Label>
+						</div>
 					</div>
 
 					<Tabs value={levelTab} onValueChange={setLevelTab}>
@@ -390,7 +254,7 @@ export function AddPowerDialog({
 							<TabsTrigger value="all">All</TabsTrigger>
 							{availableLevels.map((lvl) => (
 								<TabsTrigger key={lvl} value={String(lvl)}>
-									{lvl === 0 ? "Cantrips" : `Lvl ${lvl}`}
+									{`Lvl ${lvl}`}
 								</TabsTrigger>
 							))}
 						</TabsList>
@@ -405,11 +269,9 @@ export function AddPowerDialog({
 								</div>
 							) : visiblePowers.length === 0 ? (
 								<div className="text-center py-8 text-muted-foreground">
-									{maxPowerLevel === 0
-										? "This job has no spellcasting progression. Powers cannot be added."
-										: searchQuery
-											? "No powers found matching your search."
-											: "No powers available for this job at your current level."}
+									{searchQuery
+										? "No powers found matching your search."
+										: "No lore-matched powers available for this job."}
 								</div>
 							) : (
 								visiblePowers.map((power) => (
@@ -429,7 +291,7 @@ export function AddPowerDialog({
 														</Badge>
 													) : (
 														<Badge variant="outline" className="text-xs">
-															Cantrip
+															Level 0
 														</Badge>
 													)}
 													{power.school && (
@@ -442,6 +304,15 @@ export function AddPowerDialog({
 															Concentration
 														</Badge>
 													)}
+													{(accessByEntryId.get(power.id) ?? []).map((src) => (
+														<Badge
+															key={src}
+															variant={src === "Rune" ? "default" : "outline"}
+															className="text-[10px] uppercase tracking-wider"
+														>
+															{src}
+														</Badge>
+													))}
 												</div>
 												{power.description && (
 													<p className="text-xs text-muted-foreground line-clamp-2">

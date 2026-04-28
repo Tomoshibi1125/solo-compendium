@@ -1,14 +1,20 @@
-import { type BrowserContext, expect, type Page, test } from "@playwright/test";
+import {
+	type Browser,
+	type BrowserContext,
+	expect,
+	type Page,
+	test,
+} from "@playwright/test";
 import { AuthPage } from "./pages/AuthPage";
 
 const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 
 test.describe
-	.serial("Player persistence: reload restores state", () => {
+	.serial("Ascendant persistence: reload restores state", () => {
 		let playerContext: BrowserContext;
 		let playerPage: Page;
 
-		const createAuthedPlayerPage = async (browser: any) => {
+		const createAuthedPlayerPage = async (browser: Browser) => {
 			const context = await browser.newContext();
 			const page = await context.newPage();
 			const auth = new AuthPage(page);

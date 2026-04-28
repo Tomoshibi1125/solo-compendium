@@ -71,6 +71,27 @@ export async function executeShortRest(characterId: string): Promise<void> {
 		// Continue even if spell slot recovery fails
 	}
 
+	try {
+		const { data: spells } = await supabase
+			.from("character_spells")
+			.select("*")
+			.eq("character_id", characterId)
+			.eq("recharge", "short-rest");
+
+		if (spells && spells.length > 0) {
+			for (const spell of spells) {
+				if (spell.uses_max !== null) {
+					await supabase
+						.from("character_spells")
+						.update({ uses_current: spell.uses_max })
+						.eq("id", spell.id);
+				}
+			}
+		}
+	} catch (error) {
+		logger.error("Failed to recover spell uses:", error);
+	}
+
 	// Emit domain event
 	try {
 		const shortRestEvent: RestShortEvent = {
@@ -194,6 +215,27 @@ export async function executeLongRest(
 	} catch (error) {
 		logger.error("Failed to recover spell slots:", error);
 		// Continue even if spell slot recovery fails
+	}
+
+	try {
+		const { data: spells } = await supabase
+			.from("character_spells")
+			.select("*")
+			.eq("character_id", characterId)
+			.in("recharge", ["long-rest", "short-rest"]);
+
+		if (spells && spells.length > 0) {
+			for (const spell of spells) {
+				if (spell.uses_max !== null) {
+					await supabase
+						.from("character_spells")
+						.update({ uses_current: spell.uses_max })
+						.eq("id", spell.id);
+				}
+			}
+		}
+	} catch (error) {
+		logger.error("Failed to recover spell uses:", error);
 	}
 
 	// Assign daily quests after long rest (if enabled)

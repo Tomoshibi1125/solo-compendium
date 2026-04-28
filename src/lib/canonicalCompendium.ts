@@ -3,6 +3,18 @@ import type {
 	StaticDataProvider,
 } from "@/data/compendium/providers/types";
 import type { Json } from "@/integrations/supabase/types";
+import {
+	entryHasAccessToken,
+	getDerivedPowerTags,
+	getDerivedTechniqueTags,
+	getPowerAccessTokens,
+	getSpellAccessTokens,
+	getTechniqueAccessTokens,
+	jobCanLearnPowers,
+	jobCanLearnSpells,
+	jobCanLearnTechniques,
+	normalizeJobAccessToken,
+} from "@/lib/jobAbilityAccess";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 
 export const staticCanonicalEntryTypes = [
@@ -194,6 +206,8 @@ type LearnableCastableOptions = {
 };
 
 const canonicalCastableTypes = ["powers", "spells"] as const;
+const canonicalPowerTypes = ["powers"] as const;
+const canonicalSpellTypes = ["spells"] as const;
 
 function isJsonRecord(value: unknown): value is Record<string, Json> {
 	return !!value && typeof value === "object" && !Array.isArray(value);
@@ -390,6 +404,8 @@ function normalizeCastableEntry(
 					typeof tag === "string" && tag.trim().length > 0,
 			)
 		: [];
+	const derivedTags =
+		canonicalType === "powers" ? getDerivedPowerTags(entry) : [];
 	const saveAbility =
 		getNonEmptyString((entry as { save_ability?: unknown }).save_ability) ??
 		getNonEmptyString(
@@ -443,12 +459,12 @@ function normalizeCastableEntry(
 			getNonEmptyString((entry as { target?: unknown }).target) ??
 			getNonEmptyString(mechanics?.target),
 		mechanics,
-		tags: Array.from(new Set(rawTags)),
+		tags: Array.from(new Set([...rawTags, ...derivedTags])),
 	};
 }
 
 function normalizeEligibilityToken(value: string | null | undefined): string {
-	return value?.trim().toLowerCase() ?? "";
+	return normalizeJobAccessToken(value);
 }
 
 function matchesCastableEligibility(
@@ -479,6 +495,27 @@ function matchesCastableEligibility(
 	return requestedTokens.some((token) => entryTokens.has(token));
 }
 
+function matchesTokenEligibility(
+	entry: StaticCompendiumEntry,
+	tokens: readonly string[],
+): boolean {
+	if (tokens.length === 0) return false;
+	const entryTags = Array.isArray(entry.tags) ? entry.tags : [];
+	return entryHasAccessToken(entryTags, tokens);
+}
+
+function matchesTechniqueTokenEligibility(
+	entry: StaticCompendiumEntry,
+	tokens: readonly string[],
+): boolean {
+	if (tokens.length === 0) return false;
+	const rawTags = Array.isArray(entry.tags) ? entry.tags : [];
+	return entryHasAccessToken(
+		[...rawTags, ...getDerivedTechniqueTags(entry)],
+		tokens,
+	);
+}
+
 function preferSpellForLearnableList(
 	existing: CanonicalCastableEntry,
 	next: CanonicalCastableEntry,
@@ -497,16 +534,46 @@ export async function listCanonicalCastables(
 	search?: string,
 	accessContext?: { campaignId?: string | null },
 ): Promise<CanonicalCastableEntry[]> {
-	const results = await listCanonicalEntriesBatch(
+	return listCanonicalCastablesByType(
 		canonicalCastableTypes,
 		search,
 		accessContext,
 	);
+}
 
-	return canonicalCastableTypes.flatMap((type) =>
+async function listCanonicalCastablesByType(
+	types: readonly CanonicalCastableType[],
+	search?: string,
+	accessContext?: { campaignId?: string | null },
+): Promise<CanonicalCastableEntry[]> {
+	const results = await listCanonicalEntriesBatch(types, search, accessContext);
+
+	return types.flatMap((type) =>
 		(results.get(type) ?? []).map((entry) =>
 			normalizeCastableEntry(entry, type),
 		),
+	);
+}
+
+export async function listCanonicalPowers(
+	search?: string,
+	accessContext?: { campaignId?: string | null },
+): Promise<CanonicalCastableEntry[]> {
+	return listCanonicalCastablesByType(
+		canonicalPowerTypes,
+		search,
+		accessContext,
+	);
+}
+
+export async function listCanonicalSpells(
+	search?: string,
+	accessContext?: { campaignId?: string | null },
+): Promise<CanonicalCastableEntry[]> {
+	return listCanonicalCastablesByType(
+		canonicalSpellTypes,
+		search,
+		accessContext,
 	);
 }
 
@@ -566,4 +633,121 @@ export async function listLearnableCastables(
 	return Array.from(dedupedByName.values()).sort(
 		(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),
 	);
+}
+
+export async function listLearnableSpells(
+	options: LearnableCastableOptions = {},
+): Promise<CanonicalCastableEntry[]> {
+	if (options.jobName && !jobCanLearnSpells(options.jobName)) return [];
+	const spells = await listCanonicalSpells(
+		options.search,
+		options.accessContext,
+	);
+	const accessTokens = getSpellAccessTokens(
+		options.jobName,
+		options.pathName,
+		options.regentNames,
+	);
+
+	return spells
+		.filter((entry) => {
+			if (
+				typeof options.maxPowerLevel === "number" &&
+				entry.power_level > options.maxPowerLevel
+			) {
+				return false;
+			}
+
+			if (accessTokens.length === 0) return true;
+			if (!Array.isArray(entry.tags) || entry.tags.length === 0) return true;
+			return matchesTokenEligibility(entry, accessTokens);
+		})
+		.sort(
+			(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),
+		);
+}
+
+export async function listLearnablePowers(
+	options: LearnableCastableOptions = {},
+): Promise<CanonicalCastableEntry[]> {
+	if (options.jobName && !jobCanLearnPowers(options.jobName)) return [];
+	const powers = await listCanonicalPowers(
+		options.search,
+		options.accessContext,
+	);
+	const accessTokens = getPowerAccessTokens(
+		options.jobName,
+		options.pathName,
+		options.regentNames,
+	);
+
+	return powers
+		.filter((entry) => matchesTokenEligibility(entry, accessTokens))
+		.sort(
+			(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),
+		);
+}
+
+type LearnableTechniqueOptions = {
+	search?: string;
+	accessContext?: { campaignId?: string | null };
+	maxLevel?: number | null;
+	jobName?: string | null;
+	pathName?: string | null;
+	regentNames?: string[] | null;
+};
+
+function getTechniqueLevelRequirement(entry: StaticCompendiumEntry): number {
+	const direct =
+		(entry as { level_requirement?: unknown }).level_requirement ??
+		(entry as { requires_level?: unknown }).requires_level ??
+		entry.level;
+	return typeof direct === "number" ? direct : 0;
+}
+
+function getTechniqueClassRequirement(
+	entry: StaticCompendiumEntry,
+): string | null {
+	const direct = (entry as { class_requirement?: unknown }).class_requirement;
+	return typeof direct === "string" && direct.trim().length > 0 ? direct : null;
+}
+
+export async function listLearnableTechniques(
+	options: LearnableTechniqueOptions = {},
+): Promise<StaticCompendiumEntry[]> {
+	if (options.jobName && !jobCanLearnTechniques(options.jobName)) return [];
+	const techniques = await listCanonicalEntries(
+		"techniques",
+		options.search,
+		options.accessContext,
+	);
+	const accessTokens = getTechniqueAccessTokens(
+		options.jobName,
+		options.pathName,
+		options.regentNames,
+	);
+
+	return techniques
+		.filter((entry) => {
+			if (
+				typeof options.maxLevel === "number" &&
+				getTechniqueLevelRequirement(entry) > options.maxLevel
+			) {
+				return false;
+			}
+
+			const classRequirement = getTechniqueClassRequirement(entry);
+			if (classRequirement) {
+				return accessTokens.includes(
+					normalizeEligibilityToken(classRequirement),
+				);
+			}
+
+			return matchesTechniqueTokenEligibility(entry, accessTokens);
+		})
+		.sort(
+			(a, b) =>
+				getTechniqueLevelRequirement(a) - getTechniqueLevelRequirement(b) ||
+				a.name.localeCompare(b.name),
+		);
 }

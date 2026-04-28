@@ -1,6 +1,7 @@
 import { useMemo } from "react";
-
 import { type ACBreakdown, calculateAC } from "@/hooks/useArmorClass";
+import type { CanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
+import { findCanonicalForRow } from "@/hooks/useCanonicalEquipmentMap";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { EquipmentRow } from "@/hooks/useEquipment";
 import type { CharacterSigilInscriptionRow, SigilRow } from "@/hooks/useSigils";
@@ -102,6 +103,7 @@ export function useCharacterDerivedStats(
 
 	activeSigils: CharacterSigilInscriptionRow[],
 	customModifiers: CustomModifier[],
+	canonicalEquipmentMap?: CanonicalEquipmentMap,
 ) {
 	return useMemo(() => {
 		if (!character) return null;
@@ -381,45 +383,98 @@ export function useCharacterDerivedStats(
 			});
 		});
 
-		// AC Breakdown Replacement using authoritative calculateAC
+		// AC Breakdown Replacement using authoritative calculateAC.
+		// Prefer canonical compendium fields (armor_type, armor_class) when the
+		// row name matches a canonical entry — falls back to row-property regex
+		// parsing for homebrew/freeform items.
+		const isArmorRow = (e: EquipmentRow): boolean => {
+			if (e.item_type === "armor") return true;
+			const rowProps = (e.properties || []).map((p) => p.toLowerCase());
+			if (rowProps.some((p) => ["light", "medium", "heavy"].includes(p)))
+				return true;
+			if (canonicalEquipmentMap) {
+				const canonical = findCanonicalForRow(canonicalEquipmentMap, e.name);
+				const canonItemType = canonical?.item_type?.toLowerCase();
+				if (canonItemType === "armor") return true;
+				const canonArmorType = canonical?.armor_type?.toLowerCase();
+				if (
+					canonArmorType &&
+					["light", "medium", "heavy"].includes(canonArmorType)
+				)
+					return true;
+			}
+			return false;
+		};
+
 		const armorItem = (equipment || []).find(
 			(e) =>
 				e.is_equipped &&
 				(!e.requires_attunement || e.is_attuned) &&
-				(e.properties || []).some((p) =>
-					["light", "medium", "heavy"].includes(p.toLowerCase()),
-				),
+				isArmorRow(e),
 		);
-		const shieldItem = (equipment || []).find(
-			(e) =>
-				e.is_equipped &&
-				(!e.requires_attunement || e.is_attuned) &&
-				(e.properties || []).some((p) => p.toLowerCase() === "shield"),
-		);
+		const shieldItem = (equipment || []).find((e) => {
+			if (!e.is_equipped) return false;
+			if (e.requires_attunement && !e.is_attuned) return false;
+			const rowProps = (e.properties || []).map((p) => p.toLowerCase());
+			if (rowProps.includes("shield")) return true;
+			if (canonicalEquipmentMap) {
+				const canonical = findCanonicalForRow(canonicalEquipmentMap, e.name);
+				const canonItemType = canonical?.item_type?.toLowerCase();
+				if (canonItemType === "shield") return true;
+			}
+			return false;
+		});
+
+		const canonicalArmor = armorItem
+			? findCanonicalForRow(canonicalEquipmentMap ?? new Map(), armorItem.name)
+			: null;
+
+		/** Extract a numeric AC from canonical formula text or row properties. */
+		const extractArmorBaseAC = (): number => {
+			if (canonicalArmor) {
+				const raw = canonicalArmor.armor_class;
+				if (typeof raw === "number") return raw;
+				if (typeof raw === "string") {
+					const m = raw.match(/\d+/);
+					if (m) return parseInt(m[0], 10);
+				}
+			}
+			const fromRow = armorItem?.properties
+				?.find((p) => p.toLowerCase().startsWith("ac "))
+				?.match(/\d+/)?.[0];
+			return fromRow ? parseInt(fromRow, 10) : 10;
+		};
+
+		const extractArmorCategory = (): "none" | "light" | "medium" | "heavy" => {
+			const canonCategory = canonicalArmor?.armor_type?.toLowerCase();
+			if (
+				canonCategory &&
+				["light", "medium", "heavy"].includes(canonCategory)
+			) {
+				return canonCategory as "light" | "medium" | "heavy";
+			}
+			const rowCategory = armorItem?.properties
+				?.find((p) => ["light", "medium", "heavy"].includes(p.toLowerCase()))
+				?.toLowerCase();
+			return (rowCategory as "light" | "medium" | "heavy") ?? "none";
+		};
 
 		const armorClassDetail = calculateAC(
 			finalAbilities.AGI,
 			armorItem
 				? {
 						name: armorItem.name,
-						baseAC: parseInt(
-							armorItem.properties
-								?.find((p) => p.toLowerCase().startsWith("ac "))
-								?.match(/\d+/)?.[0] || "10",
-							10,
-						),
-						category:
-							(armorItem.properties
-								?.find((p) =>
-									["light", "medium", "heavy"].includes(p.toLowerCase()),
-								)
-								?.toLowerCase() as "none" | "light" | "medium" | "heavy") ||
-							"none",
+						baseAC: extractArmorBaseAC(),
+						category: extractArmorCategory(),
 						magicalBonus: armorItem.properties?.some((p) =>
 							p.toLowerCase().includes("magic"),
 						)
 							? 1
 							: 0, // heuristic
+						stealthDisadvantage:
+							canonicalArmor?.stealth_disadvantage ?? undefined,
+						strengthRequirement:
+							canonicalArmor?.strength_requirement ?? undefined,
 					}
 				: null,
 			shieldItem
@@ -566,5 +621,11 @@ export function useCharacterDerivedStats(
 			protocolConcentration,
 			armorClassDetail,
 		};
-	}, [character, equipment, activeSigils, customModifiers]);
+	}, [
+		character,
+		equipment,
+		activeSigils,
+		customModifiers,
+		canonicalEquipmentMap,
+	]);
 }

@@ -2,7 +2,7 @@
  * useVTTRealtime — Supabase Realtime channel for multi-user VTT collaboration.
  *
  * Provides broadcast + presence primitives scoped to a campaign+session pair.
- * Warden (Warden) and players share:
+ * Wardens and Ascendants share:
  *   - token moves / updates
  *   - scene switches
  *   - fog changes
@@ -926,12 +926,12 @@ export function useVTTRealtime({
 			).map((u) => ({
 				id: u.userId,
 				name: u.userName,
-				role: u.role as "Warden" | "player",
+				role: u.role as "warden" | "ascendant",
 			}));
 			participants.push({
 				id: userId,
 				name: userName,
-				role: isWarden ? "Warden" : "player",
+				role: isWarden ? "warden" : "ascendant",
 			});
 
 			const whisperCmd = parseWhisperCommand(input, participants, userId);
@@ -1270,7 +1270,7 @@ export function useVTTRealtime({
 			ch.track({
 				user_id: userId,
 				user_name: userName,
-				role: isWarden ? "warden" : "player",
+				role: isWarden ? "warden" : "ascendant",
 				cursor,
 				color: userColor,
 			});
@@ -1437,7 +1437,7 @@ export function useVTTRealtime({
 					ch.track({
 						user_id: userId,
 						user_name: userName,
-						role: isWarden ? "warden" : "player",
+						role: isWarden ? "warden" : "ascendant",
 						color: userColor,
 					});
 				}

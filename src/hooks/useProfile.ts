@@ -4,12 +4,32 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 
+type ProfileRole = "warden" | "ascendant" | "admin";
+
 interface Profile {
 	id: string;
-	role: "Warden" | "player";
+	role: ProfileRole;
 	created_at: string;
 	updated_at: string;
 }
+
+const normalizeProfileRole = (
+	value: string | null | undefined,
+): ProfileRole => {
+	switch (value) {
+		case "warden":
+		case "Warden":
+		case "dm":
+			return "warden";
+		case "ascendant":
+		case "player":
+			return "ascendant";
+		case "admin":
+			return "admin";
+		default:
+			return "ascendant";
+	}
+};
 
 // Fetch current user's profile
 export const useProfile = () => {
@@ -38,8 +58,10 @@ export const useProfile = () => {
 				throw error;
 			}
 			if (!data) return null;
-			const normalizedRole = data.role === "admin" ? "Warden" : data.role;
-			return { ...data, role: normalizedRole } as Profile;
+			return {
+				...data,
+				role: normalizeProfileRole(data.role),
+			} as Profile;
 		},
 		retry: false,
 		enabled: isSupabaseConfigured && !isE2E,
@@ -53,7 +75,7 @@ export const useUpdateProfile = () => {
 	const { toast } = useToast();
 
 	return useMutation({
-		mutationFn: async ({ role }: { role: "Warden" | "player" }) => {
+		mutationFn: async ({ role }: { role: "warden" | "ascendant" }) => {
 			const isE2E = import.meta.env.VITE_E2E === "true";
 			if (!isSupabaseConfigured || isE2E) {
 				throw new AppError("Supabase is not configured", "CONFIG");
@@ -96,7 +118,7 @@ export const useUpdateProfile = () => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["profile"] });
-			queryClient.invalidateQueries({ queryKey: ["user", "is-Warden"] });
+			queryClient.invalidateQueries({ queryKey: ["user", "is-warden"] });
 			toast({
 				title: "Profile updated",
 				description: "Your role has been updated.",

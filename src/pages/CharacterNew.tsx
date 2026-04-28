@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AttributesStep } from "@/components/character-engine/AttributesStep";
 import { BackgroundStep } from "@/components/character-engine/BackgroundStep";
@@ -15,7 +15,10 @@ import { JobStep } from "@/components/character-engine/JobStep";
 import { PathStep } from "@/components/character-engine/PathStep";
 import { ReviewStep } from "@/components/character-engine/ReviewStep";
 import { Layout } from "@/components/layout/Layout";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateCharacter } from "@/hooks/useCharacters";
 import {
@@ -28,17 +31,26 @@ import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
+import {
+	type CanonicalCastableEntry,
+	listLearnablePowers,
+	listLearnableTechniques,
+} from "@/lib/canonicalCompendium";
 import { calculateHPMax } from "@/lib/characterCalculations";
 import {
 	addJobAwakeningBenefitsForLevel,
 	addLevel1Features,
 	addStartingEquipment,
-	addStartingPowers,
 	applyJobAwakeningTraitsToCharacter,
 	getJobASI,
 } from "@/lib/characterCreation";
 import { calculateTotalChoices } from "@/lib/choiceCalculations";
-import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
+import {
+	addLocalPower,
+	addLocalTechnique,
+	isLocalCharacterId,
+	setLocalAbilities,
+} from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
 import {
 	getStaticBackgroundsAll,
@@ -75,6 +87,7 @@ type Step =
 	| "path"
 	| "background"
 	| "equipment"
+	| "imprints"
 	| "review";
 
 const ABILITY_COSTS: Record<number, number> = {
@@ -137,6 +150,10 @@ const CharacterNew = () => {
 	const [equipmentChoices, setEquipmentChoices] = useState<
 		Record<number, string>
 	>({});
+	const [selectedPowerIds, setSelectedPowerIds] = useState<string[]>([]);
+	const [selectedTechniqueIds, setSelectedTechniqueIds] = useState<string[]>(
+		[],
+	);
 
 	const getPointBuyCost = (score: number) => ABILITY_COSTS[score] ?? 0;
 
@@ -155,6 +172,8 @@ const CharacterNew = () => {
 		setSelectedSkills([]);
 		setSelectedLanguages([]);
 		setEquipmentChoices({});
+		setSelectedPowerIds([]);
+		setSelectedTechniqueIds([]);
 	};
 
 	const { data: jobs = [] } = useQuery({
@@ -329,7 +348,21 @@ const CharacterNew = () => {
 				? pathsAvailableAtCreation.find((p: Path) => p.id === selectedPath)
 				: null;
 		const combinedJobData =
-			jobData || staticJobData ? { ...jobData, ...staticJobData } : null;
+			jobData || staticJobData
+				? {
+						...jobData,
+						...staticJobData,
+						awakening_features:
+							staticJobData?.awakeningFeatures ??
+							(jobData as { awakening_features?: [] } | undefined)
+								?.awakening_features ??
+							[],
+						job_traits:
+							staticJobData?.jobTraits ??
+							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
+							[],
+					}
+				: null;
 		return calculateTotalChoices(
 			combinedJobData as Parameters<typeof calculateTotalChoices>[0],
 			selectedPathRow,
@@ -337,6 +370,69 @@ const CharacterNew = () => {
 			1,
 		);
 	}, [jobData, staticJobData, selectedPath, pathsAvailableAtCreation]);
+
+	const selectedPathName = useMemo(() => {
+		if (!selectedPath || selectedPath === "none") return null;
+		return paths.find((path) => path.id === selectedPath)?.name ?? null;
+	}, [paths, selectedPath]);
+
+	const requiredPowerChoices = Math.max(0, totalChoices.powers);
+	const requiredTechniqueChoices = Math.max(0, totalChoices.techniques);
+	const showImprintStep =
+		requiredPowerChoices > 0 || requiredTechniqueChoices > 0;
+
+	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: [
+			"creation-powers",
+			selectedJob,
+			selectedPathName,
+			requiredPowerChoices,
+		],
+		queryFn: async () => {
+			if (!jobData?.name || requiredPowerChoices <= 0) return [];
+			return listLearnablePowers({
+				jobName: jobData.name,
+				pathName: selectedPathName,
+			});
+		},
+		enabled: !!jobData?.name && requiredPowerChoices > 0,
+	});
+
+	const { data: availableTechniques = [] } = useQuery<StaticCompendiumEntry[]>({
+		queryKey: [
+			"creation-techniques",
+			selectedJob,
+			selectedPathName,
+			requiredTechniqueChoices,
+		],
+		queryFn: async () => {
+			if (!jobData?.name || requiredTechniqueChoices <= 0) return [];
+			return listLearnableTechniques({
+				jobName: jobData.name,
+				pathName: selectedPathName,
+				maxLevel: 1,
+			});
+		},
+		enabled: !!jobData?.name && requiredTechniqueChoices > 0,
+	});
+
+	useEffect(() => {
+		setSelectedPowerIds((current) => {
+			const next = current.filter((id) =>
+				availablePowers.some((power) => power.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availablePowers]);
+
+	useEffect(() => {
+		setSelectedTechniqueIds((current) => {
+			const next = current.filter((id) =>
+				availableTechniques.some((technique) => technique.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableTechniques]);
 
 	const handleApplyTemplate = (
 		template: CharacterTemplate & {
@@ -375,6 +471,9 @@ const CharacterNew = () => {
 			: []),
 		{ id: "background", name: "Background" },
 		{ id: "equipment", name: "Equipment" },
+		...(showImprintStep
+			? ([{ id: "imprints", name: "Imprints" }] as const)
+			: []),
 		{ id: "review", name: "Review" },
 	];
 
@@ -438,6 +537,22 @@ const CharacterNew = () => {
 		}
 		if (!selectedJob || !selectedBackground) {
 			toast({ title: "Job and Background required", variant: "destructive" });
+			return;
+		}
+		if (selectedPowerIds.length < requiredPowerChoices) {
+			toast({
+				title: "Power imprint required",
+				description: `Select ${requiredPowerChoices} power${requiredPowerChoices === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (selectedTechniqueIds.length < requiredTechniqueChoices) {
+			toast({
+				title: "Technique protocol required",
+				description: `Select ${requiredTechniqueChoices} technique${requiredTechniqueChoices === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
 			return;
 		}
 
@@ -534,7 +649,50 @@ const CharacterNew = () => {
 				selectedSkills,
 				equipmentChoices,
 			);
-			await addStartingPowers(character.id, job);
+			const selectedPowerEntries = availablePowers.filter((power) =>
+				selectedPowerIds.includes(power.id),
+			);
+			for (const power of selectedPowerEntries) {
+				const payload = {
+					name: power.name,
+					power_level: power.power_level,
+					source: "Creation Power Imprint",
+					casting_time: power.casting_time || null,
+					range: power.range || null,
+					duration: power.duration || null,
+					concentration: power.concentration || false,
+					description: power.description || null,
+					higher_levels: power.higher_levels || null,
+					is_prepared: false,
+					is_known: true,
+				};
+				if (isLocalCharacterId(character.id)) {
+					addLocalPower(character.id, payload);
+				} else {
+					await supabase.from("character_powers").insert({
+						character_id: character.id,
+						...payload,
+					});
+				}
+			}
+
+			const selectedTechniqueEntries = availableTechniques.filter((technique) =>
+				selectedTechniqueIds.includes(technique.id),
+			);
+			for (const technique of selectedTechniqueEntries) {
+				if (isLocalCharacterId(character.id)) {
+					addLocalTechnique(character.id, {
+						technique_id: technique.id,
+						source: "Creation Technique Protocol",
+					});
+				} else {
+					await supabase.from("character_techniques").insert({
+						character_id: character.id,
+						technique_id: technique.id,
+						source: "Creation Technique Protocol",
+					});
+				}
+			}
 			await addJobAwakeningBenefitsForLevel(character.id, job, 1);
 			// Rift Ascendant: Jobs serve as both race and class, so their innate senses,
 			// resistances, and immunities must flow onto the character row at creation.
@@ -579,6 +737,11 @@ const CharacterNew = () => {
 				return !isPathRequiredAtCreation || selectedPath.length > 0;
 			case "background":
 				return selectedBackground.length > 0;
+			case "imprints":
+				return (
+					selectedPowerIds.length === requiredPowerChoices &&
+					selectedTechniqueIds.length === requiredTechniqueChoices
+				);
 			default:
 				return true;
 		}
@@ -690,6 +853,175 @@ const CharacterNew = () => {
 							equipmentChoices={equipmentChoices}
 							setEquipmentChoices={setEquipmentChoices}
 						/>
+					)}
+
+					{currentStep === "imprints" && (
+						<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+							<div className="p-6 rounded-lg bg-black/40 border border-primary/10 space-y-6">
+								<div>
+									<h2 className="font-heading text-2xl font-bold tracking-tight">
+										Awakening Imprints
+									</h2>
+									<p className="text-sm text-muted-foreground mt-2">
+										Bind only the powers and techniques granted by your job at
+										creation.
+									</p>
+								</div>
+
+								{requiredPowerChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Power Imprints ({selectedPowerIds.length}/
+											{requiredPowerChoices})
+										</Label>
+										{availablePowers.length === 0 ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												No lore-matched powers are available for this job.
+											</div>
+										) : (
+											<div className="grid gap-3">
+												{availablePowers.map((power) => {
+													const isSelected = selectedPowerIds.includes(
+														power.id,
+													);
+													return (
+														<button
+															key={power.id}
+															type="button"
+															data-testid="creation-power-imprint-option"
+															onClick={() => {
+																if (isSelected) {
+																	setSelectedPowerIds(
+																		selectedPowerIds.filter(
+																			(id) => id !== power.id,
+																		),
+																	);
+																} else if (
+																	selectedPowerIds.length < requiredPowerChoices
+																) {
+																	setSelectedPowerIds([
+																		...selectedPowerIds,
+																		power.id,
+																	]);
+																}
+															}}
+															disabled={
+																!isSelected &&
+																selectedPowerIds.length >= requiredPowerChoices
+															}
+															className={`text-left p-4 rounded-lg border transition-colors ${
+																isSelected
+																	? "border-primary bg-primary/10"
+																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+															}`}
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-heading font-semibold">
+																	{power.name}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Level {power.power_level}
+																</Badge>
+																{power.power_type && (
+																	<Badge variant="outline" className="text-xs">
+																		{power.power_type}
+																	</Badge>
+																)}
+															</div>
+															{power.description && (
+																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+																	{power.description}
+																</p>
+															)}
+														</button>
+													);
+												})}
+											</div>
+										)}
+									</div>
+								)}
+
+								{requiredTechniqueChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Technique Protocols ({selectedTechniqueIds.length}/
+											{requiredTechniqueChoices})
+										</Label>
+										{availableTechniques.length === 0 ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												No lore-matched techniques are available for this job.
+											</div>
+										) : (
+											<div className="grid gap-3">
+												{availableTechniques.map((technique) => {
+													const isSelected = selectedTechniqueIds.includes(
+														technique.id,
+													);
+													return (
+														<button
+															key={technique.id}
+															type="button"
+															data-testid="creation-technique-imprint-option"
+															onClick={() => {
+																if (isSelected) {
+																	setSelectedTechniqueIds(
+																		selectedTechniqueIds.filter(
+																			(id) => id !== technique.id,
+																		),
+																	);
+																} else if (
+																	selectedTechniqueIds.length <
+																	requiredTechniqueChoices
+																) {
+																	setSelectedTechniqueIds([
+																		...selectedTechniqueIds,
+																		technique.id,
+																	]);
+																}
+															}}
+															disabled={
+																!isSelected &&
+																selectedTechniqueIds.length >=
+																	requiredTechniqueChoices
+															}
+															className={`text-left p-4 rounded-lg border transition-colors ${
+																isSelected
+																	? "border-primary bg-primary/10"
+																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+															}`}
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-heading font-semibold">
+																	{technique.name}
+																</span>
+																{technique.level_requirement && (
+																	<Badge
+																		variant="secondary"
+																		className="text-xs"
+																	>
+																		Level {technique.level_requirement}
+																	</Badge>
+																)}
+																{technique.technique_type && (
+																	<Badge variant="outline" className="text-xs">
+																		{technique.technique_type}
+																	</Badge>
+																)}
+															</div>
+															{technique.description && (
+																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+																	{technique.description}
+																</p>
+															)}
+														</button>
+													);
+												})}
+											</div>
+										)}
+									</div>
+								)}
+							</div>
+						</div>
 					)}
 
 					{currentStep === "review" && (

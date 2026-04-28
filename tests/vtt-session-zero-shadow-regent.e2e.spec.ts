@@ -55,9 +55,7 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 		timeout: 5_000,
 	});
 
-	await page
-		.getByRole("button", { name: /^Establish Campaign$/i })
-		.click();
+	await page.getByRole("button", { name: /^Establish Campaign$/i }).click();
 
 	// Navigate to detail page; capture campaign id from URL.
 	await page.waitForURL(/\/campaigns\/[a-z0-9-]+/i, { timeout: 20_000 });
@@ -147,9 +145,9 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	await sharedPage.dismissAnalyticsBanner();
 	await page.getByRole("tab", { name: /^Overview$/i }).click();
 	// Warden-only "Settings" tab visibility is the fastest proof we're DM.
-	await expect(
-		page.getByRole("tab", { name: /^Settings$/i }),
-	).toBeVisible({ timeout: 10_000 });
+	await expect(page.getByRole("tab", { name: /^Settings$/i })).toBeVisible({
+		timeout: 10_000,
+	});
 
 	// ── 5. Wiki tab: 37+ lore chapters + faction/quest/loot + NPC articles ──
 	await page.getByRole("tab", { name: /^Wiki$/i }).click();
@@ -213,7 +211,11 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	// token-sizing regression guard.
 	await page.getByTestId("vtt-scene-title").click();
 	await expect(
-		page.getByRole("menuitem", { name: /Regent's Domain|Hollow Subway|Bureau District/i }).first(),
+		page
+			.getByRole("menuitem", {
+				name: /Regent's Domain|Hollow Subway|Bureau District/i,
+			})
+			.first(),
 	).toBeVisible({ timeout: 10_000 });
 	// Pick any scene that loads cleanly — prefer the Bureau District hub
 	// (no fog of war + known geometry, friendly for background assertions).

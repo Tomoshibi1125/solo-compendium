@@ -565,7 +565,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		name: "Player (Generic)",
 		category: "token",
 		path: "/generated/tokens/player-token.webp",
-		tags: ["player", "generic", "pc"],
+		tags: ["ascendant", "generic", "pc"],
 		format: "webp",
 	},
 	{

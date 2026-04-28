@@ -29,7 +29,7 @@ This runbook documents the secure campaign invite lifecycle implemented in the a
   - invite revocation RPC
   - invite audit feed
   - character attachment to existing campaign members
-- Updated DM settings invite panel:
+- Updated Warden settings invite panel:
   - email invite input
   - join code copy
   - status badges and lifecycle messaging
@@ -63,9 +63,9 @@ The email invite API route requires:
 
 ## Validation checklist
 
-1. DM creates invite from campaign settings.
-2. DM sees generated join code and invite status.
-3. DM revokes invite and sees audit entry.
+1. Warden creates invite from campaign settings.
+2. Warden sees generated join code and invite status.
+3. Warden revokes invite and sees audit entry.
 4. Join page shows revoked/expired/used state messaging.
 5. Logged-in existing member can re-open used-up invite to attach another character.
 6. Email invite path returns invite link and email delivery status.

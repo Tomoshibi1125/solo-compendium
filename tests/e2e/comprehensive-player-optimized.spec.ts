@@ -133,7 +133,7 @@ test.describe("Optimized Player Complete Test", () => {
 						// Verify successful auth
 						const currentUrl = page.url();
 						if (
-							currentUrl.includes("/player-tools") ||
+							currentUrl.includes("/ascendant-tools") ||
 							currentUrl.includes("/characters") ||
 							currentUrl !== "http://localhost:8080/"
 						) {
@@ -208,7 +208,7 @@ test.describe("Optimized Player Complete Test", () => {
 
 			if (
 				await safeNavigate(
-					"http://localhost:8080/player-tools",
+					"http://localhost:8080/ascendant-tools",
 					"Player Tools Dashboard",
 				)
 			) {
@@ -240,7 +240,7 @@ test.describe("Optimized Player Complete Test", () => {
 						}
 
 						// Go back to player tools
-						await page.goto("http://localhost:8080/player-tools", {
+						await page.goto("http://localhost:8080/ascendant-tools", {
 							timeout: 15000,
 						});
 						await page.waitForTimeout(1000);
@@ -365,7 +365,7 @@ test.describe("Optimized Player Complete Test", () => {
 			console.log("🚨 PHASE 7: ERROR HANDLING");
 
 			// Test a few invalid URLs
-			const invalidUrls = ["/invalid-page", "/player-tools/nonexistent"];
+			const invalidUrls = ["/invalid-page", "/ascendant-tools/nonexistent"];
 			let errorHandlingWorking = false;
 
 			for (const url of invalidUrls) {

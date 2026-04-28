@@ -95,7 +95,7 @@ const BASE_TYPE_MAP: Record<
 		tag: string;
 	}
 > = {
-	player: {
+	ascendant: {
 		type: "character",
 		category: "ascendant",
 		size: "medium",

@@ -290,7 +290,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 
 		// Test player tools page
 		try {
-			await page.goto("http://localhost:8080/player-tools");
+			await page.goto("http://localhost:8080/ascendant-tools");
 			await page.waitForTimeout(2000);
 
 			// Test all player tools
@@ -366,8 +366,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 					}
 				}
 
-				(playerToolsTests as any)[tool.name.toLowerCase().replace(" ", "_")] =
-					true;
+				playerToolsTests[tool.name.toLowerCase().replace(" ", "_")] = true;
 			} catch (toolError) {
 				console.log(
 					`  ❌ ${tool.name} test failed: ${(toolError as Error).message}`,
@@ -753,7 +752,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 
 		try {
 			// Test page load times
-			const pages = ["/", "/character/new", "/compendium", "/player-tools"];
+			const pages = ["/", "/character/new", "/compendium", "/ascendant-tools"];
 
 			let performancePassed = true;
 
@@ -858,7 +857,7 @@ test.describe("Comprehensive Player Complete Test", () => {
 		let totalTests = 0;
 		let passedTests = 0;
 
-		const results = testResults as Record<string, any>;
+		const results = testResults;
 
 		for (const [category, result] of Object.entries(results)) {
 			totalTests++;

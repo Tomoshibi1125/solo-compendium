@@ -210,7 +210,7 @@ import {
 	removeAssetFromVttScenes,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
-import PlayerMapView from "@/pages/player-tools/PlayerMapView";
+import AscendantMapView from "@/pages/ascendant-tools/AscendantMapView";
 import type {
 	VTTDrawing,
 	VTTScene,
@@ -2580,7 +2580,7 @@ const VTTEnhanced = () => {
 		[isWarden, removeAnnotation],
 	);
 
-	const lastDmCursorBroadcast = useRef(0);
+	const lastWardenCursorBroadcast = useRef(0);
 	// Wheel zoom is handled directly on the map container by VttPixiStage
 	// (see src/components/vtt/VttPixiStage.tsx). No React-level onWheel is
 	// needed here.
@@ -2658,9 +2658,9 @@ const VTTEnhanced = () => {
 			const cursorCellKey = `${grid.gridX},${grid.gridY}`;
 			if (
 				cursorCellKey !== lastCursorCellRef.current &&
-				now - lastDmCursorBroadcast.current > 100
+				now - lastWardenCursorBroadcast.current > 100
 			) {
-				lastDmCursorBroadcast.current = now;
+				lastWardenCursorBroadcast.current = now;
 				lastCursorCellRef.current = cursorCellKey;
 				vttRealtime.updateCursor({ x: grid.gridX, y: grid.gridY });
 			}
@@ -3079,7 +3079,7 @@ const VTTEnhanced = () => {
 
 			{!isWarden ? (
 				<EmbeddedProvider>
-					<PlayerMapView
+					<AscendantMapView
 						campaignId={campaignId || ""}
 						sessionId={sessionId || undefined}
 					/>

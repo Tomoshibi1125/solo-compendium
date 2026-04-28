@@ -68,14 +68,20 @@ const readJsonBody = (req) => {
 };
 
 function slugify(s) {
-	return String(s || "audio")
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/^-+|-+$/g, "")
-		.slice(0, 40) || "audio";
+	return (
+		String(s || "audio")
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, "-")
+			.replace(/^-+|-+$/g, "")
+			.slice(0, 40) || "audio"
+	);
 }
 
-async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
+async function fetchWithTimeout(
+	url,
+	options = {},
+	timeoutMs = REQUEST_TIMEOUT_MS,
+) {
 	const controller = new AbortController();
 	const timer = setTimeout(() => controller.abort(), timeoutMs);
 	try {
@@ -99,7 +105,10 @@ function detectAudioMimeType(contentType, audioBuffer) {
 	) {
 		return "audio/wav";
 	}
-	if (audioBuffer.length >= 3 && audioBuffer.toString("ascii", 0, 3) === "ID3") {
+	if (
+		audioBuffer.length >= 3 &&
+		audioBuffer.toString("ascii", 0, 3) === "ID3"
+	) {
 		return "audio/mpeg";
 	}
 	return "application/octet-stream";
@@ -130,7 +139,9 @@ function decodeWavSample(view, offset, audioFormat, bitsPerSample) {
 
 function clampToInt16(sample) {
 	const clamped = Math.max(-1, Math.min(1, sample));
-	return clamped < 0 ? Math.round(clamped * 32768) : Math.round(clamped * 32767);
+	return clamped < 0
+		? Math.round(clamped * 32768)
+		: Math.round(clamped * 32767);
 }
 
 function parseWavToPcm16(audioBuffer) {
@@ -216,7 +227,10 @@ function transcodeWavToMp3(audioBuffer) {
 		const left = channelData[0].subarray(offset, offset + frameSize);
 		const encoded =
 			channelCount === 2
-				? encoder.encodeBuffer(left, channelData[1].subarray(offset, offset + frameSize))
+				? encoder.encodeBuffer(
+						left,
+						channelData[1].subarray(offset, offset + frameSize),
+					)
 				: encoder.encodeBuffer(left);
 		if (encoded.length > 0) chunks.push(Buffer.from(encoded));
 	}
@@ -275,11 +289,19 @@ export default async function handler(req, res) {
 	}
 
 	const adminClient = createClient(supabaseUrl, serviceKey, {
-		auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+		auth: {
+			persistSession: false,
+			autoRefreshToken: false,
+			detectSessionInUrl: false,
+		},
 	});
 	const userClient = createClient(supabaseUrl, anonKey, {
 		global: { headers: { Authorization: `Bearer ${accessToken}` } },
-		auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+		auth: {
+			persistSession: false,
+			autoRefreshToken: false,
+			detectSessionInUrl: false,
+		},
 	});
 
 	const { data: userData, error: userErr } =
@@ -340,9 +362,7 @@ export default async function handler(req, res) {
 			.maybeSingle();
 
 		if (memberErr) {
-			return res
-				.status(403)
-				.json({ error: "Unable to verify campaign role" });
+			return res.status(403).json({ error: "Unable to verify campaign role" });
 		}
 
 		let role = memberRow?.role ?? null;
@@ -463,7 +483,12 @@ export default async function handler(req, res) {
 
 	let audioBuffer = Buffer.from(audioArrayBuffer);
 	let mimeType = detectAudioMimeType(contentType, audioBuffer);
-	let extension = mimeType === "audio/mpeg" ? "mp3" : mimeType === "audio/wav" ? "wav" : "bin";
+	let extension =
+		mimeType === "audio/mpeg"
+			? "mp3"
+			: mimeType === "audio/wav"
+				? "wav"
+				: "bin";
 
 	if (mimeType === "audio/wav") {
 		try {

@@ -1,6 +1,6 @@
 /**
- * Enhanced Player Tools Page - D&D Beyond Style Layout
- * Role-based tools for players in Rift Ascendant
+ * Enhanced Ascendant Tools Page
+ * Role-based tools for Ascendants in Rift Ascendant
  */
 
 import {
@@ -45,12 +45,12 @@ import {
 } from "@/data/toolCatalogs";
 import { useActiveCharacter } from "@/hooks/useActiveCharacter";
 import { cn } from "@/lib/utils";
-import "./PlayerTools.css";
+import "./AscendantTools.css";
 
-const playerTools = PLAYER_TOOLS;
+const ascendantTools = PLAYER_TOOLS;
 const categories = PLAYER_TOOL_CATEGORIES;
 
-const PlayerTools = () => {
+const AscendantTools = () => {
 	const navigate = useNavigate();
 	const { activeCharacter, isLoading: characterLoading } = useActiveCharacter();
 	const [searchQuery, setSearchQuery] = useState("");
@@ -59,7 +59,7 @@ const PlayerTools = () => {
 
 	// Filter tools based on search and category
 	const filteredTools = useMemo(() => {
-		return playerTools.filter((tool) => {
+		return ascendantTools.filter((tool) => {
 			const matchesSearch =
 				tool.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
 				tool.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -78,7 +78,7 @@ const PlayerTools = () => {
 				);
 				return acc;
 			},
-			{} as Record<string, typeof playerTools>,
+			{} as Record<string, typeof ascendantTools>,
 		);
 		return grouped;
 	}, [filteredTools]);
@@ -86,7 +86,7 @@ const PlayerTools = () => {
 	if (characterLoading) {
 		return (
 			<Layout>
-				<div className="player-tools-loading">
+				<div data-testid="ascendant-tools" className="ascendant-tools-loading">
 					<div className="animate-pulse space-y-4">
 						<div className="h-8 bg-muted rounded w-1/3"></div>
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -106,7 +106,10 @@ const PlayerTools = () => {
 	if (!activeCharacter) {
 		return (
 			<Layout>
-				<div className="player-tools-container">
+				<div
+					data-testid="ascendant-tools"
+					className="ascendant-tools-container"
+				>
 					<div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center">
 						<User className="w-16 h-16 text-muted-foreground/50" />
 						<div>
@@ -114,7 +117,7 @@ const PlayerTools = () => {
 								No Character Found
 							</RiftHeading>
 							<ManaFlowText variant="rift" speed="slow" className="max-w-md">
-								You need to create a character before accessing Player Tools.
+								You need to create a character before accessing Ascendant Tools.
 								Build your Ascendant and start your journey through the Rift.
 							</ManaFlowText>
 						</div>
@@ -130,23 +133,23 @@ const PlayerTools = () => {
 
 	return (
 		<Layout>
-			<div className="player-tools-container">
+			<div data-testid="ascendant-tools" className="ascendant-tools-container">
 				{/* Header */}
-				<div className="player-tools-header">
+				<div className="ascendant-tools-header">
 					<div className="flex items-center justify-between">
 						<div>
 							<RiftHeading
 								level={1}
 								variant="sovereign"
 								dimensional
-								className="player-tools-title"
+								className="ascendant-tools-title"
 							>
-								Player Tools
+								Ascendant Tools
 							</RiftHeading>
 							<ManaFlowText
 								variant="rift"
 								speed="slow"
-								className="player-tools-subtitle"
+								className="ascendant-tools-subtitle"
 							>
 								Manage your Ascendant's journey through the Rift
 							</ManaFlowText>
@@ -216,7 +219,7 @@ const PlayerTools = () => {
 				</div>
 
 				{/* Search and Filters */}
-				<div className="player-tools-filters">
+				<div className="ascendant-tools-filters">
 					<div className="search-bar">
 						<Search className="w-5 h-5 text-muted-foreground" />
 						<Input
@@ -270,7 +273,7 @@ const PlayerTools = () => {
 				</div>
 
 				{/* Tools Content */}
-				<div className="player-tools-content">
+				<div className="ascendant-tools-content">
 					{selectedCategory === "all" ? (
 						// Categorized view
 						<div className="space-y-8">
@@ -333,7 +336,7 @@ const PlayerTools = () => {
 				</div>
 
 				{/* Quick Actions */}
-				<div className="player-tools-quick-actions">
+				<div className="ascendant-tools-quick-actions">
 					<Card>
 						<CardHeader>
 							<CardTitle className="flex items-center gap-2">
@@ -407,7 +410,7 @@ const ToolCard = ({
 
 	if (viewMode === "list") {
 		return (
-			<Link to={`/player-tools/${tool.id}`} className="block">
+			<Link to={`/ascendant-tools/${tool.id}`} className="block">
 				<div
 					className={cn(
 						"rounded-[2px] p-4 transition-all duration-300 group relative overflow-hidden backdrop-blur-md",
@@ -488,7 +491,7 @@ const ToolCard = ({
 
 	return (
 		<Link
-			to={`/player-tools/${tool.id}`}
+			to={`/ascendant-tools/${tool.id}`}
 			className="block h-full transition-transform"
 		>
 			<div
@@ -581,4 +584,4 @@ const ToolCard = ({
 	);
 };
 
-export default PlayerTools;
+export default AscendantTools;

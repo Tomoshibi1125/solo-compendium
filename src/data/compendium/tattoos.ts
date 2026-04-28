@@ -23,7 +23,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Pins the cast's result to one deterministic branch. The line between Hunter and monster.",
@@ -122,7 +122,7 @@ export const tattoos: CompendiumTattoo[] = [
 		rarity: "common",
 		attunement: true,
 		body_part: "Spine",
-		ink_type: "Wyvern Bone Dust",
+		ink_type: "anomaly Bone Dust",
 		active_veins: ["Spine"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
 		source_book: "Modern Urban Fantasy Core",
@@ -133,7 +133,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Devours the concept of distance. Proof that some things cannot be survived.",
@@ -238,7 +238,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Inverts the dimensional barrier. A testament to what Hunters have become.",
@@ -346,7 +346,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Ignites the last defense of the unprepared. The breaking point of all resistance.",
@@ -454,7 +454,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor: "Warps the laws of physics. A whisper from the edge of oblivion.",
 		discovery_lore:
@@ -548,7 +548,7 @@ export const tattoos: CompendiumTattoo[] = [
 		rarity: "uncommon",
 		attunement: true,
 		body_part: "Around Eyes",
-		ink_type: "Drake Eye Fluid",
+		ink_type: "Anomaly Eye Fluid",
 		active_veins: ["Around Eyes"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
 		source_book: "Modern Urban Fantasy Core",
@@ -559,7 +559,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Purges the chains of mortality. Evolution compressed into a single, violent instant.",
@@ -665,7 +665,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Mirrors the threshold of human potential. A whisper from the edge of oblivion.",
@@ -775,7 +775,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Erases the boundary between life and death. The reason S-Rank Gates are feared.",
@@ -884,7 +884,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Absorbs the threshold of human potential. The breaking point of all resistance.",
@@ -990,7 +990,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Warps the dimensional barrier. Evolution compressed into a single, violent instant.",
@@ -1095,7 +1095,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Dissolves the silence between heartbeats. A whisper from the edge of oblivion.",
@@ -1202,7 +1202,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Rends the certainty of outcomes. A testament to what Hunters have become.",
@@ -1310,7 +1310,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Purges the concept of distance. Proof that some things cannot be survived.",
@@ -1417,7 +1417,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Erases the chains of mortality. A whisper from the edge of oblivion.",
@@ -1524,7 +1524,7 @@ export const tattoos: CompendiumTattoo[] = [
 				"The user becomes unable to dream, replaced by visions of the void between Gates.",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Purges the chains of mortality. A whisper from the edge of oblivion.",
@@ -1635,7 +1635,7 @@ export const tattoos: CompendiumTattoo[] = [
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Corrodes the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
@@ -1743,7 +1743,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Eclipses the illusion of safety. A beautiful catastrophe measured in milliseconds.",
@@ -1853,7 +1853,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Reclaims the illusion of safety. A testament to what Hunters have become.",
@@ -1961,7 +1961,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Binds the silence between heartbeats. Evolution compressed into a single, violent instant.",
@@ -2067,7 +2067,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Warps the architect's design. The breaking point of all resistance.",
@@ -2175,7 +2175,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Crushes the architecture of the soul. Evolution compressed into a single, violent instant.",
@@ -2281,7 +2281,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Inverts the boundary between life and death. Evolution compressed into a single, violent instant.",
@@ -2387,7 +2387,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Ignites the laws of physics. The death of hesitation, made manifest.",
@@ -2478,14 +2478,14 @@ export const tattoos: CompendiumTattoo[] = [
 	},
 	{
 		id: "tattoo_24",
-		name: "Dragon's Breath",
-		display_name: "Dragon's Breath",
+		name: "anomaly's Breath",
+		display_name: "anomaly's Breath",
 		description:
 			"Breathe out a cloud of choking, magical exhaust. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "rare",
 		attunement: true,
 		body_part: "Lungs",
-		ink_type: "Green Dragon Bile",
+		ink_type: "Green anomaly Bile",
 		active_veins: ["Lungs"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
 		source_book: "Modern Urban Fantasy Core",
@@ -2498,7 +2498,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Reclaims the laws of physics. Proof that some things cannot be survived.",
@@ -2610,7 +2610,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Corrodes the fabric of reality. The last thing many anomalies ever see.",
@@ -2705,7 +2705,7 @@ export const tattoos: CompendiumTattoo[] = [
 		rarity: "rare",
 		attunement: true,
 		body_part: "Heart",
-		ink_type: "Shadow Fiend Essence",
+		ink_type: "Umbral Anomaly Essence",
 		active_veins: ["Heart"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
 		source_book: "Modern Urban Fantasy Core",
@@ -2716,7 +2716,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Rends the flow of causality. The breaking point of all resistance.",
@@ -2823,7 +2823,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Silences the last defense of the unprepared. Evolution compressed into a single, violent instant.",
@@ -2930,7 +2930,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Dissolves the remnants of a dead world. The death of hesitation, made manifest.",
@@ -3037,7 +3037,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Shatters the remnants of a dead world. A testament to what Hunters have become.",
@@ -3143,7 +3143,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor: "Rends the laws of physics. The line between Hunter and monster.",
 		discovery_lore:
@@ -3251,7 +3251,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Purges the dimensional barrier. A whisper from the edge of oblivion.",
@@ -3357,7 +3357,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Warps the remnants of a dead world. A testament to what Hunters have become.",
@@ -3463,7 +3463,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Annihilates the threshold of human potential. The death of hesitation, made manifest.",
@@ -3571,7 +3571,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Inverts the last defense of the unprepared. A beautiful catastrophe measured in milliseconds.",
@@ -3678,7 +3678,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Shatters the remnants of a dead world. The breaking point of all resistance.",
@@ -3788,7 +3788,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Rends the illusion of safety. Evolution compressed into a single, violent instant.",
@@ -3892,7 +3892,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Mirrors the flow of causality. The breaking point of all resistance.",
@@ -4000,7 +4000,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Annihilates the threshold of human potential. A testament to what Hunters have become.",
@@ -4107,7 +4107,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Mirrors the illusion of safety. The last thing many anomalies ever see.",
@@ -4217,7 +4217,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Eclipses the architect's design. A testament to what Hunters have become.",
@@ -4325,7 +4325,7 @@ export const tattoos: CompendiumTattoo[] = [
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Erases the boundary between life and death. A whisper from the edge of oblivion.",
@@ -4412,14 +4412,14 @@ export const tattoos: CompendiumTattoo[] = [
 	},
 	{
 		id: "tattoo_42",
-		name: "Dragon's Ascendancy",
-		display_name: "Dragon's Ascendancy",
+		name: "anomaly's Ascendancy",
+		display_name: "anomaly's Ascendancy",
 		description:
-			"Sprout ethereal dragon wings of pure mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Sprout ethereal anomaly wings of pure mana. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Shoulder Blades",
-		ink_type: "Ancient Dragon Blood",
+		ink_type: "Ancient anomaly Blood",
 		active_veins: ["Shoulder Blades"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
 		source_book: "Modern Urban Fantasy Core",
@@ -4432,7 +4432,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Corrodes the architecture of the soul. The last thing many anomalies ever see.",
@@ -4543,7 +4543,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Eclipses the threshold of human potential. The breaking point of all resistance.",
@@ -4648,7 +4648,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Devours the dimensional barrier. Evolution compressed into a single, violent instant.",
@@ -4743,7 +4743,7 @@ export const tattoos: CompendiumTattoo[] = [
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Heart",
-		ink_type: "Angel-Class Fiend Essence",
+		ink_type: "Angel-Class Anomaly Essence",
 		active_veins: ["Heart"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
 		source_book: "Modern Urban Fantasy Core",
@@ -4754,7 +4754,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Condemns the fabric of reality. The breaking point of all resistance.",
@@ -4842,8 +4842,8 @@ export const tattoos: CompendiumTattoo[] = [
 	},
 	{
 		id: "tattoo_46",
-		name: "Demon Lord's Fury",
-		display_name: "Demon Lord's Fury",
+		name: "Regent of Dread's Fury",
+		display_name: "Regent of Dread's Fury",
 		description:
 			"Enter an uncontrollable rage offering immense strength. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "legendary",
@@ -4861,7 +4861,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Sanctifies the silence between heartbeats. The last thing many anomalies ever see.",
@@ -4968,7 +4968,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Inverts the silence between heartbeats. The reason S-Rank Gates are feared.",
@@ -5076,7 +5076,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Shatters the certainty of outcomes. The last thing many anomalies ever see.",
@@ -5184,7 +5184,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Rends the chains of mortality. The reason S-Rank Gates are feared.",
@@ -5290,7 +5290,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor: "Rends the illusion of safety. The reason S-Rank Gates are feared.",
 		discovery_lore:
@@ -5395,7 +5395,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Erases the flow of causality. Proof that some things cannot be survived.",
@@ -5501,7 +5501,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Rogue Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
 		},
 		flavor:
 			"Mirrors the boundary between life and death. The last thing many anomalies ever see.",

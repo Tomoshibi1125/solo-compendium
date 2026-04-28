@@ -435,93 +435,93 @@
 }
 
 /* ========================================
-   PLAYER TOOLS MOBILE STYLES
+   ASCENDANT TOOLS MOBILE STYLES
    ======================================== */
 
 @media (max-width: 640px) {
-	.player-tools-container {
+	.ascendant-tools-container {
 		padding: 1rem;
 	}
 
-	.player-tools-header {
+	.ascendant-tools-header {
 		flex-direction: column;
 		gap: 0.75rem;
 	}
 
-	.player-tools-title {
+	.ascendant-tools-title {
 		font-size: 1.25rem;
 	}
 
-	.player-tools-tabs {
+	.ascendant-tools-tabs {
 		overflow-x: auto;
 	}
 
 	@supports (scrollbar-width: none) {
-		.player-tools-tabs {
+		.ascendant-tools-tabs {
 			scrollbar-width: none;
 			-ms-overflow-style: none;
 		}
 	}
 
-	.player-tools-tabs::-webkit-scrollbar {
+	.ascendant-tools-tabs::-webkit-scrollbar {
 		display: none;
 	}
 
-	.player-tools-tab-list {
+	.ascendant-tools-tab-list {
 		width: max-content;
 		min-width: 100%;
 	}
 
-	.player-tools-tab-trigger {
+	.ascendant-tools-tab-trigger {
 		padding: 0.5rem;
 		font-size: 0.75rem;
 		min-height: 44px;
 	}
 
-	.player-tools-dice-grid {
+	.ascendant-tools-dice-grid {
 		grid-template-columns: repeat(3, 1fr);
 		gap: 0.5rem;
 	}
 
-	.player-tools-dice-button {
+	.ascendant-tools-dice-button {
 		padding: 1rem;
 		font-size: 0.75rem;
 		min-height: 60px;
 	}
 
-	.player-tools-initiative-list {
+	.ascendant-tools-initiative-list {
 		gap: 0.5rem;
 	}
 
-	.player-tools-initiative-item {
+	.ascendant-tools-initiative-item {
 		padding: 0.75rem;
 		font-size: 0.875rem;
 	}
 
-	.player-tools-chat-container {
+	.ascendant-tools-chat-container {
 		height: 12rem;
 	}
 
-	.player-tools-chat-input {
+	.ascendant-tools-chat-input {
 		font-size: 1rem;
 		padding: 0.75rem;
 	}
 
-	.player-tools-character-sheet {
+	.ascendant-tools-character-sheet {
 		padding: 1rem;
 	}
 
-	.player-tools-character-stats {
+	.ascendant-tools-character-stats {
 		grid-template-columns: repeat(2, 1fr);
 		gap: 0.75rem;
 	}
 
-	.player-tools-assets-grid {
+	.ascendant-tools-assets-grid {
 		grid-template-columns: repeat(2, 1fr);
 		gap: 0.75rem;
 	}
 
-	.player-tools-asset-card {
+	.ascendant-tools-asset-card {
 		padding: 0.75rem;
 	}
 }
@@ -1604,7 +1604,7 @@
 		padding: 0.5rem;
 	}
 
-	.player-tools-container {
+	.ascendant-tools-container {
 		padding: 0.5rem;
 	}
 

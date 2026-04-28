@@ -33,6 +33,7 @@ export interface StaticCompendiumEntry {
 	item_type?: string | null;
 	artifact_type?: string | null;
 	technique_type?: string | null;
+	class_requirement?: string | null;
 	spell_type?: string | null;
 	location_type?: string | null;
 	rank?: string | null;
@@ -233,6 +234,23 @@ export interface StaticCompendiumEntry {
 	table_category?: string | null;
 	table_group?: string | null;
 	rollable_entries?: string[] | null;
+	// Equipment structured fields preserved through canonical hydration so
+	// downstream AC / combat-action computation can consume them directly
+	// instead of regex-parsing description text.
+	armor_class?: string | number | null;
+	armor_type?: string | null;
+	damage_type?: string | null;
+	weapon_type?: string | null;
+	stealth_disadvantage?: boolean | null;
+	strength_requirement?: number | null;
+	charges?: number | Record<string, Json> | null;
+	cursed?: boolean | null;
+	stats?: Record<string, Json> | null;
+	value?: number | null;
+	cost_credits?: number | null;
+	source?: string | null;
+	image?: string | null;
+	item_properties?: Record<string, Json> | null;
 }
 
 export interface StaticDataProvider {

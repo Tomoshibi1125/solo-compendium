@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
 	listCanonicalCastables,
 	listCanonicalEntries,
+	listLearnablePowers,
+	listLearnableSpells,
+	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
 
 describe("canonicalCompendium resolver", () => {
@@ -124,5 +127,30 @@ describe("canonicalCompendium resolver", () => {
 			withFlavor.length,
 			"Tattoos should expose flavor via the enriched provider transform.",
 		).toBeGreaterThan(tattoos.length / 2);
+	});
+
+	it("keeps learnable spell, power, and technique lists separated by job access", async () => {
+		const [magePowers, mageTechniques, destroyerSpells] = await Promise.all([
+			listLearnablePowers({ jobName: "Mage" }),
+			listLearnableTechniques({ jobName: "Mage" }),
+			listLearnableSpells({ jobName: "Destroyer" }),
+		]);
+
+		expect(magePowers).toHaveLength(0);
+		expect(mageTechniques).toHaveLength(0);
+		expect(destroyerSpells).toHaveLength(0);
+	});
+
+	it("returns martial powers and techniques through their own canonical list APIs", async () => {
+		const [destroyerPowers, destroyerTechniques] = await Promise.all([
+			listLearnablePowers({ jobName: "Destroyer" }),
+			listLearnableTechniques({ jobName: "Destroyer", maxLevel: 1 }),
+		]);
+
+		expect(destroyerPowers.length).toBeGreaterThan(0);
+		expect(destroyerTechniques.length).toBeGreaterThan(0);
+		expect(
+			destroyerPowers.every((entry) => entry.canonical_type === "powers"),
+		).toBe(true);
 	});
 });

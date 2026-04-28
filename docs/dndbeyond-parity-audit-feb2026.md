@@ -5,7 +5,7 @@
 
 ---
 
-## Section 1 — Canonical D&D Beyond Feature Inventory (DM + Player)
+## Section 1 — Canonical D&D Beyond Feature Inventory (Warden + Player)
 
 ### 1.1 Character Management (Player)
 
@@ -26,7 +26,7 @@
 | C13 | Multiple Characters | Create and manage multiple characters per account |
 | C14 | Character Comparison | Side-by-side comparison of characters |
 
-### 1.2 Campaign Management (DM + Player)
+### 1.2 Campaign Management (Warden + Player)
 
 | # | Feature | Description |
 |---|---------|-------------|
@@ -38,10 +38,10 @@
 | K6 | Campaign Notes | Per-user and shared notes within a campaign, categories |
 | K7 | Session Scheduling | Plan sessions with date/time, location, status tracking |
 | K8 | Session Logs / Recaps | Session-linked logs (recap, loot, events), player visibility control |
-| K9 | Character Sharing in Campaign | Share characters into campaign for DM and party visibility |
-| K10 | Campaign Leave/Disband | Players can leave; DM can archive/deactivate campaign |
+| K9 | Character Sharing in Campaign | Share characters into campaign for Warden and party visibility |
+| K10 | Campaign Leave/Disband | Players can leave; Warden can archive/deactivate campaign |
 
-### 1.3 Encounter & Combat (DM)
+### 1.3 Encounter & Combat (Warden)
 
 | # | Feature | Description |
 |---|---------|-------------|
@@ -51,7 +51,7 @@
 | E4 | Encounter → Initiative Handoff | Deploy built encounter directly into initiative tracker |
 | E5 | XP/Reward Distribution | Award XP, loot, and rewards after encounter resolution |
 
-### 1.4 Virtual Tabletop / Maps (DM)
+### 1.4 Virtual Tabletop / Maps (Warden)
 
 | # | Feature | Description |
 |---|---------|-------------|
@@ -111,7 +111,7 @@
 | P7 | Background Sync | Sync queued mutations when connectivity restored |
 | P8 | Network Status Indicator | Show online/offline status and pending sync count |
 
-### 1.10 DM Toolbox (Beyond D&D Beyond — System Ascendant Extras)
+### 1.10 Warden Toolbox (Beyond D&D Beyond — System Ascendant Extras)
 
 | # | Feature | Description |
 |---|---------|-------------|
@@ -187,10 +187,10 @@
 
 | # | Feature | Status | Evidence |
 |---|---------|--------|----------|
-| V1 | Map Display / VTT Canvas | ✅ | `VTTMap.tsx` (DM standalone), `VTTEnhanced.tsx` (campaign-scoped at `/campaigns/:id/vtt`) |
+| V1 | Map Display / VTT Canvas | ✅ | `VTTMap.tsx` (Warden standalone), `VTTEnhanced.tsx` (campaign-scoped at `/campaigns/:id/vtt`) |
 | V2 | Token Management | ✅ | `TokenLibrary.tsx` for asset management |
 | V3 | Campaign-Scoped VTT | ✅ | `/campaigns/:campaignId/vtt` route with campaign context |
-| V4 | Player Map View | ⚠️ | VTT routes exist but player-side real-time map view (shared fog-of-war state) is not evidenced as a separate player route; VTT appears DM-centric |
+| V4 | Player Map View | ⚠️ | VTT routes exist but player-side real-time map view (shared fog-of-war state) is not evidenced as a separate player route; VTT appears Warden-centric |
 
 ### 2.5 Compendium & Sourcebooks
 
@@ -243,11 +243,11 @@
 | P7 | Background Sync | ⚠️ | `useOfflineSyncStatus.ts` processes queue when online, but does not use the Background Sync API (`navigator.serviceWorker.ready.then(reg => reg.sync.register(...))`); sync only triggers on React re-render when `isOnline` changes |
 | P8 | Network Status Indicator | ✅ | `OfflineIndicator`, `OfflineStatus` components in `App.tsx`, `useOfflineSyncStatus` exposes `isOnline` + `queueLength` |
 
-### 2.10 DM Toolbox (Extras)
+### 2.10 Warden Toolbox (Extras)
 
 | # | Feature | Status | Evidence |
 |---|---------|--------|----------|
-| X1–X13 | All DM Generator Tools | ✅ | All routes exist under `/dm-tools/*` with `ProtectedRoute requireDM` |
+| X1–X13 | All Warden Generator Tools | ✅ | All routes exist under `/dm-tools/*` with `ProtectedRoute requireDM` |
 | X14 | Daily Quest System | ✅ | `QuestLog.tsx`, `useDailyQuests`, `on_long_rest_assign_quests` RPC, config/templates/instances |
 
 ---
@@ -314,18 +314,18 @@
 
 ### GAP-V4: Player Map View (Partial)
 
-**Current state:** VTT routes exist at `/campaigns/:campaignId/vtt` but appear DM-centric. No evidence of a read-only player view with shared fog-of-war state synced in real-time.
+**Current state:** VTT routes exist at `/campaigns/:campaignId/vtt` but appear Warden-centric. No evidence of a read-only player view with shared fog-of-war state synced in real-time.
 
 **Missing behavior:**
-- Player-facing map view that shows only DM-revealed areas
-- Real-time token position sync from DM → players
+- Player-facing map view that shows only Warden-revealed areas
+- Real-time token position sync from Warden → players
 - Player can move their own token
 
 **Implementation proposal:**
 1. Create `VTTPlayerView` component that subscribes to VTT state via Supabase realtime
-2. Filter token visibility based on fog-of-war mask set by DM
+2. Filter token visibility based on fog-of-war mask set by Warden
 3. Allow player to drag their own token, broadcasting position via realtime channel
-4. Route: `/campaigns/:campaignId/vtt` with role-based rendering (DM gets full controls, player gets view)
+4. Route: `/campaigns/:campaignId/vtt` with role-based rendering (Warden gets full controls, player gets view)
 
 **Complexity:** XL | **Dependencies:** V1, V3, K5
 
@@ -521,7 +521,7 @@ See **GAP-C10** — same gap from the dice perspective. Character sheet needs co
 | Marketplace | 3 | 2 | 0 | 5 |
 | Dice & Rolls | 3 | 2 | 0 | 5 |
 | Offline / PWA / Mobile | 4 | 2 | 1 | 7* |
-| DM Toolbox (Extras) | 14 | 0 | 0 | 14 |
+| Warden Toolbox (Extras) | 14 | 0 | 0 | 14 |
 | **TOTAL** | **59** | **11** | **2** | **72** |
 
 *P8 (Network Status) counted under Implemented.

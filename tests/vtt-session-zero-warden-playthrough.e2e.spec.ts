@@ -83,9 +83,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 			timeout: 5_000,
 		});
 		await shot("create-dialog-ready");
-		await page
-			.getByRole("button", { name: /^Establish Campaign$/i })
-			.click();
+		await page.getByRole("button", { name: /^Establish Campaign$/i }).click();
 		await page.waitForURL(/\/campaigns\/[a-z0-9-]+/i, { timeout: 20_000 });
 		campaignId = new URL(page.url()).pathname.split("/").pop() ?? "";
 		expect(campaignId).toBeTruthy();
@@ -144,18 +142,16 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await page.goto(`/campaigns/${campaignId}`);
 		await sharedPage.dismissAnalyticsBanner();
 		// Warden-only Settings tab is the fastest proof we're DM.
-		await expect(
-			page.getByRole("tab", { name: /^Settings$/i }),
-		).toBeVisible({ timeout: 10_000 });
+		await expect(page.getByRole("tab", { name: /^Settings$/i })).toBeVisible({
+			timeout: 10_000,
+		});
 		await shot("overview");
 	});
 
 	await test.step("Phase 5 — Sessions tab + verify Session 0 visible", async () => {
 		await page.getByRole("tab", { name: /^Sessions$/i }).click();
 		await expect(
-			page
-				.getByText(/Session 0.*Day Zero|Day Zero.*Memory-Care/i)
-				.first(),
+			page.getByText(/Session 0.*Day Zero|Day Zero.*Memory-Care/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		// Also verify the recap log preview somewhere on the page — the
 		// sandbox seeds a player-facing recap with "woke in a place that
@@ -186,9 +182,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 	await test.step("Phase 7 — Wiki tab (lore + faction + quest)", async () => {
 		await page.getByRole("tab", { name: /^Wiki$/i }).click();
 		await expect(
-			page
-				.getByText(/Day Zero|Gate Cascade|Bureau|Vermillion|Awoko/i)
-				.first(),
+			page.getByText(/Day Zero|Gate Cascade|Bureau|Vermillion|Awoko/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("wiki-lore");
 	});
@@ -233,13 +227,10 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await page.getByTestId("vtt-scene-title").click();
 		const dayZeroItem = page
 			.getByRole("menuitem", {
-				name:
-					/Day Zero.*Diagnosed|Memory-Care Wing Exterior|Bureau District/i,
+				name: /Day Zero.*Diagnosed|Memory-Care Wing Exterior|Bureau District/i,
 			})
 			.first();
-		if (
-			await dayZeroItem.isVisible({ timeout: 5_000 }).catch(() => false)
-		) {
+		if (await dayZeroItem.isVisible({ timeout: 5_000 }).catch(() => false)) {
 			await dayZeroItem.click();
 		} else {
 			await page.getByRole("menuitem").first().click();
@@ -326,38 +317,22 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 
 	await test.step("Phase 14 — Warden adds a library token via Assets drawer", async () => {
 		// Open Assets tab in the right drawer if present (VTTEnhanced layout).
-		const assetsTab = page
-			.getByRole("tab", { name: /^Assets$/i })
-			.first();
-		if (
-			await assetsTab.isVisible({ timeout: 3_000 }).catch(() => false)
-		) {
+		const assetsTab = page.getByRole("tab", { name: /^Assets$/i }).first();
+		if (await assetsTab.isVisible({ timeout: 3_000 }).catch(() => false)) {
 			await assetsTab.click();
-			const searchInput = page
-				.getByPlaceholder(/Search .* assets/i)
-				.first();
-			if (
-				await searchInput
-					.isVisible({ timeout: 3_000 })
-					.catch(() => false)
-			) {
+			const searchInput = page.getByPlaceholder(/Search .* assets/i).first();
+			if (await searchInput.isVisible({ timeout: 3_000 }).catch(() => false)) {
 				await searchInput.fill("");
 				await searchInput.fill("Guard Token");
 				const assetBtn = page
 					.getByRole("button", { name: /Guard Token Frame|Guard Token/i })
 					.first();
-				if (
-					await assetBtn.isVisible({ timeout: 3_000 }).catch(() => false)
-				) {
+				if (await assetBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
 					await assetBtn.click();
 					const placeBtn = page
 						.getByRole("button", { name: /^Place Token$/i })
 						.first();
-					if (
-						await placeBtn
-							.isVisible({ timeout: 3_000 })
-							.catch(() => false)
-					) {
+					if (await placeBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
 						await placeBtn.click();
 						await page.waitForTimeout(600);
 					}
@@ -387,15 +362,9 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 			.getByPlaceholder(/Content|Recap|Notes|Details|Log content/i)
 			.first();
 		let logged = false;
-		if (
-			await titleInput.isVisible({ timeout: 3_000 }).catch(() => false)
-		) {
+		if (await titleInput.isVisible({ timeout: 3_000 }).catch(() => false)) {
 			await titleInput.fill("Session 0 — Prep Complete");
-			if (
-				await contentInput
-					.isVisible({ timeout: 2_000 })
-					.catch(() => false)
-			) {
+			if (await contentInput.isVisible({ timeout: 2_000 }).catch(() => false)) {
 				await contentInput.fill(
 					"Warden playthrough smoketest: lore reviewed, NPCs loaded, map ready. Ascendants may now awaken in the Memory-Care Wing.",
 				);
@@ -405,9 +374,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 					name: /^(Add Log|Save Log|Add Entry|Log|Add)$/i,
 				})
 				.first();
-			if (
-				await addBtn.isVisible({ timeout: 2_000 }).catch(() => false)
-			) {
+			if (await addBtn.isVisible({ timeout: 2_000 }).catch(() => false)) {
 				await addBtn.click();
 				await page.waitForTimeout(800);
 				logged = true;
@@ -432,9 +399,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 			// the PlayerMapView inside an embedded shell that re-parents the
 			// toggle, so we guard with a short timeout + catch.
 			const toggleBack = page.getByTestId("vtt-player-view-toggle");
-			if (
-				await toggleBack.isVisible({ timeout: 3_000 }).catch(() => false)
-			) {
+			if (await toggleBack.isVisible({ timeout: 3_000 }).catch(() => false)) {
 				await toggleBack.click({ timeout: 3_000 }).catch(() => {});
 				await page.waitForTimeout(400);
 			}

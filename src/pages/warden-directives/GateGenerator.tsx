@@ -264,7 +264,7 @@ Provide ALL of the following sections with full detail:
 		const text = `RIFT DETAILS\nRank: ${rift.rank}\nTheme: ${rift.theme}\nBiome: ${rift.biome}\nBoss: ${rift.boss}\nComplications: ${rift.complications.join(", ")}\n\n${rift.description}
 
 ---
-D&D BEYOND STYLE RIFT DOSSIER:
+RIFT DOSSIER:
 
 DESCRIPTION:
 ${rift.description}

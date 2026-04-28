@@ -209,10 +209,10 @@ function parseJobTraitEffects(trait, jobLevel): Effect[] {
 **What It Replaces:** Standard subclasses
 
 **How It Works:**
-- **Regent** = Sovereign-level subclass unlocked via quest/DM gate (NOT automatic at level 3)
+- **Regent** = Sovereign-level subclass unlocked via quest/Warden gate (NOT automatic at level 3)
 - **Gemini Protocol** = Fusion of TWO Regents for hybrid abilities (DBZ-style fusion)
 - **Stat-based** - Regent type determined by highest ability score
-- **Auto-integrated** - `characterEngine.ts` loads regent/gemini features when DM unlocks
+- **Auto-integrated** - `characterEngine.ts` loads regent/gemini features when Warden unlocks
 
 **Regent Types:**
 ```typescript
@@ -228,7 +228,7 @@ enum RegentType {
 
 **Key Mechanic:**
 - Regents are **NOT level-gated** (advisory only)
-- Require **quest completion** or **DM approval**
+- Require **quest completion** or **Warden approval**
 - Grant **unique features, spells, and stat bonuses**
 - Can be **fused** into Gemini Sovereigns (fusion quality: Perfect/Good/Average)
 
@@ -258,7 +258,7 @@ enum RegentType {
 interface CharacterJob {
   job: string;
   path?: string; // Standard path (level 3 automatic)
-  regent?: string; // Regent (quest-gated, DM unlocks)
+  regent?: string; // Regent (quest-gated, Warden unlocks)
   gemini?: {
     regent1Id: string;
     regent2Id: string;
@@ -388,7 +388,7 @@ interface Power {
 
 4. ✅ **Regent/Gemini System** - Quest-gated subclasses
    - Implemented in `characterEngine.ts:469-662`
-   - Auto-loads regent features when DM unlocks
+   - Auto-loads regent features when Warden unlocks
 
 5. ✅ **Rank System** - Thematic only, no mechanical effect
    - Can be displayed in UI but doesn't affect calculations

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
+import { useCanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
 import { useAutoBackup } from "@/hooks/useCharacterBackup";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
 import {
@@ -246,12 +247,17 @@ export function useCharacterPageModel() {
 		return () => window.clearTimeout(timer);
 	}, [isPrintMode, isLoading, character?.id]);
 
+	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(
+		character?.id,
+	);
+
 	const memoizedStats = useCharacterDerivedStats(
 		character as CharacterWithAbilities | null,
 		equipment,
 
 		activeSigilInscriptions,
 		customModifiers,
+		canonicalEquipmentMap,
 	);
 
 	const applyRestResourceUpdates = useCallback(

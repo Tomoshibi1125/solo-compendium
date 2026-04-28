@@ -4,7 +4,7 @@ import { AuthPage } from "./pages/AuthPage";
 const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
 test.describe
-	.serial("DM tools persistence: reload restores state", () => {
+	.serial("Warden tools persistence: reload restores state", () => {
 		let dmContext: BrowserContext;
 		let dmPage: Page;
 
@@ -14,7 +14,7 @@ test.describe
 
 			const auth = new AuthPage(dmPage);
 			await auth.continueAsGuest("dm");
-			await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
+			await expect(dmPage.getByTestId("warden-tools")).toBeVisible({
 				timeout: 15_000,
 			});
 		});
@@ -24,7 +24,7 @@ test.describe
 		});
 
 		test("rollable tables: tab + last roll persist after reload", async () => {
-			await dmPage.goto("/dm-tools/rollable-tables");
+			await dmPage.goto("/warden-directives/rollable-tables");
 			await expect(
 				dmPage.getByText("PROTOCOL WARDEN TABLES", { exact: false }).first(),
 			).toBeVisible({ timeout: 15_000 });
@@ -109,7 +109,7 @@ test.describe
 		});
 
 		test("rift generator: selected rank + last rift persist after reload", async () => {
-			await dmPage.goto("/dm-tools/gate-generator");
+			await dmPage.goto("/warden-directives/gate-generator");
 			await expect(
 				dmPage.getByText("RIFT GENERATOR", { exact: false }).first(),
 			).toBeVisible({ timeout: 15_000 });
@@ -185,7 +185,7 @@ test.describe
 		});
 
 		test("treasure generator: selected rank + last treasure persist after reload", async () => {
-			await dmPage.goto("/dm-tools/treasure-generator");
+			await dmPage.goto("/warden-directives/treasure-generator");
 			await expect(
 				dmPage.getByText("TREASURE GENERATOR", { exact: false }).first(),
 			).toBeVisible({ timeout: 15_000 });

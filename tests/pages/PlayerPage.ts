@@ -225,8 +225,7 @@ export class PlayerPage {
 		 */
 		const satisfyCheckboxRequirements = async (maxTicks = 8) => {
 			const nextBtn = nextButton();
-			if (await nextBtn.isEnabled({ timeout: 500 }).catch(() => false))
-				return;
+			if (await nextBtn.isEnabled({ timeout: 500 }).catch(() => false)) return;
 
 			const checkboxes = this.page.getByRole("checkbox");
 			const count = await checkboxes.count();
@@ -253,9 +252,7 @@ export class PlayerPage {
 				await this.page.waitForTimeout(100);
 				ticked += 1;
 
-				if (
-					await nextBtn.isEnabled({ timeout: 500 }).catch(() => false)
-				) {
+				if (await nextBtn.isEnabled({ timeout: 500 }).catch(() => false)) {
 					return;
 				}
 			}
@@ -273,6 +270,7 @@ export class PlayerPage {
 			background: /MODEL ORIGIN: BACKGROUND BINDING/i,
 			equipmentAuto: /MODEL EQUIPMENT: AUTOMATED PROVISIONING/i,
 			equipmentManual: /MODEL EQUIPMENT: LOADOUT SELECTION/i,
+			imprints: /Awakening Imprints/i,
 			review: /FINAL AUTHORIZATION: ENTITY AWAKENING/i,
 		} as const;
 
@@ -334,9 +332,7 @@ export class PlayerPage {
 					name: /Standard Array/i,
 				});
 				if (
-					await stdArrayBtn
-						.isVisible({ timeout: 5_000 })
-						.catch(() => false)
+					await stdArrayBtn.isVisible({ timeout: 5_000 }).catch(() => false)
 				) {
 					await stdArrayBtn.click();
 					await this.page.waitForTimeout(300);
@@ -360,9 +356,7 @@ export class PlayerPage {
 			} else if (step === "background") {
 				const bgSelected = await selectFirstOption(8);
 				if (!bgSelected) {
-					console.warn(
-						"[PlayerPage] char-wizard: background option not found",
-					);
+					console.warn("[PlayerPage] char-wizard: background option not found");
 					try {
 						await this.page.screenshot({
 							path: "test-results/player-session-zero/char-wizard-bg-fail.png",
@@ -379,21 +373,15 @@ export class PlayerPage {
 			} else if (step === "equipmentManual") {
 				// Pick a first-available package for every radix select, then
 				// satisfy any checkbox-gated choices.
-				const equipmentSelects = this.page.locator(
-					'button[role="combobox"]',
-				);
+				const equipmentSelects = this.page.locator('button[role="combobox"]');
 				const selectCount = await equipmentSelects.count();
 				for (let i = 0; i < selectCount; i += 1) {
 					const sel = equipmentSelects.nth(i);
-					if (
-						await sel.isVisible({ timeout: 300 }).catch(() => false)
-					) {
+					if (await sel.isVisible({ timeout: 300 }).catch(() => false)) {
 						await sel.click().catch(() => {});
 						const firstOpt = this.page.getByRole("option").first();
 						if (
-							await firstOpt
-								.isVisible({ timeout: 1_000 })
-								.catch(() => false)
+							await firstOpt.isVisible({ timeout: 1_000 }).catch(() => false)
 						) {
 							await firstOpt.click().catch(() => {});
 							await this.page.waitForTimeout(200);
@@ -427,6 +415,25 @@ export class PlayerPage {
 
 				await satisfyCheckboxRequirements();
 				await clickNext(20_000);
+			} else if (step === "imprints") {
+				const imprintOptions = this.page
+					.getByTestId("creation-power-imprint-option")
+					.or(this.page.getByTestId("creation-technique-imprint-option"));
+				const count = await imprintOptions.count();
+				for (let i = 0; i < count; i += 1) {
+					if (
+						await nextButton()
+							.isEnabled({ timeout: 300 })
+							.catch(() => false)
+					)
+						break;
+					const option = imprintOptions.nth(i);
+					if (!(await option.isEnabled({ timeout: 300 }).catch(() => false)))
+						continue;
+					await option.click();
+					await this.page.waitForTimeout(150);
+				}
+				await clickNext(20_000);
 			} else if (step === "review") {
 				break;
 			}
@@ -451,9 +458,7 @@ export class PlayerPage {
 		// and hyphens.
 		await this.page.waitForURL(
 			(url) => {
-				const match = url.pathname.match(
-					/^\/characters\/([a-z0-9_-]+)$/i,
-				);
+				const match = url.pathname.match(/^\/characters\/([a-z0-9_-]+)$/i);
 				if (!match) return false;
 				const id = match[1].toLowerCase();
 				return id !== "new" && id !== "compare";
@@ -470,7 +475,7 @@ export class PlayerPage {
 
 	/** Verify the player tools hub page loaded with tool cards. */
 	async verifyPlayerToolsHub() {
-		await this.page.goto("/player-tools");
+		await this.page.goto("/ascendant-tools");
 
 		// Page may render three variants depending on character state:
 		//  • full hub ("Player Tools" heading)
@@ -572,7 +577,7 @@ export class PlayerPage {
 
 	/** Navigate to a player tool detail page and verify it loads. */
 	async gotoPlayerTool(toolId: string) {
-		await this.page.goto(`/player-tools/${toolId}`);
+		await this.page.goto(`/ascendant-tools/${toolId}`);
 		await this.page.waitForTimeout(2_000);
 
 		// Some tools redirect (compendium-viewer → /compendium, dice-roller → /dice)
@@ -588,7 +593,7 @@ export class PlayerPage {
 
 	/** Verify the inventory tool detail renders equipment/currency sections. */
 	async verifyInventoryTool() {
-		await this.page.goto("/player-tools/inventory");
+		await this.page.goto("/ascendant-tools/inventory");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page
 			.getByText(/Inventory|Equipment|Currency/i)
@@ -598,7 +603,7 @@ export class PlayerPage {
 
 	/** Verify the abilities tool detail renders actions/powers sections. */
 	async verifyAbilitiesTool() {
-		await this.page.goto("/player-tools/abilities");
+		await this.page.goto("/ascendant-tools/abilities");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page
 			.getByText(/Abilities|Actions|Powers|Skills/i)
@@ -608,7 +613,7 @@ export class PlayerPage {
 
 	/** Verify the quest log tool detail renders. */
 	async verifyQuestLogTool() {
-		await this.page.goto("/player-tools/quest-log");
+		await this.page.goto("/ascendant-tools/quest-log");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page.getByText(/Quest|Log|Daily/i).first();
 		await expect(heading).toBeVisible({ timeout: 10_000 });
@@ -618,7 +623,7 @@ export class PlayerPage {
 
 	/** Verify the player map view page loads with zoom/grid controls. */
 	async verifyPlayerMapView() {
-		await this.page.goto("/player-tools/map");
+		await this.page.goto("/ascendant-tools/map");
 		await this.page.waitForTimeout(3_000);
 		// Page should render heading, "NO CAMPAIGN" state, map area, or back button
 		const heading = this.page
@@ -745,7 +750,7 @@ export class PlayerPage {
 
 	/** Verify character art generator tool loads. */
 	async verifyCharacterArtTool() {
-		await this.page.goto("/player-tools/character-art");
+		await this.page.goto("/ascendant-tools/character-art");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page
 			.getByText(
@@ -757,7 +762,7 @@ export class PlayerPage {
 
 	/** Verify party view tool loads. */
 	async verifyPartyViewTool() {
-		await this.page.goto("/player-tools/party-view");
+		await this.page.goto("/ascendant-tools/party-view");
 		await this.page.waitForTimeout(2_000);
 		const heading = this.page
 			.getByText(/Party|Members|View|NO ACTIVE ASCENDANT/i)
@@ -1182,10 +1187,32 @@ export class PlayerPage {
 			}
 		}
 
-		// Complete level up
 		const completeBtn = this.page
 			.getByRole("button", { name: /Complete Level Up|Level Up|Finish/i })
 			.first();
+		const imprintOptions = this.page.locator(
+			'input[id^="level-power-"], input[id^="level-technique-"]',
+		);
+		const imprintCount = await imprintOptions.count();
+		for (let index = 0; index < imprintCount; index += 1) {
+			if (await completeBtn.isEnabled({ timeout: 300 }).catch(() => false)) {
+				break;
+			}
+			const option = imprintOptions.nth(index);
+			if (!(await option.isVisible({ timeout: 300 }).catch(() => false)))
+				continue;
+			if (await option.isChecked().catch(() => false)) continue;
+			if (!(await option.isEnabled({ timeout: 300 }).catch(() => false)))
+				continue;
+
+			await option.scrollIntoViewIfNeeded().catch(() => {});
+			await option.check({ force: true }).catch(async () => {
+				await option.click({ force: true }).catch(() => {});
+			});
+			await this.page.waitForTimeout(150);
+		}
+
+		// Complete level up
 		if (await completeBtn.isVisible({ timeout: 10_000 }).catch(() => false)) {
 			await completeBtn.click();
 		}

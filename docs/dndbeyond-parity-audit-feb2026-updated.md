@@ -19,7 +19,7 @@
 
 ---
 
-## Section 1 — Complete D&D Beyond Feature Inventory (DM + Player)
+## Section 1 — Complete D&D Beyond Feature Inventory (Warden + Player)
 
 ### 1.1 Character Management (Player)
 
@@ -40,7 +40,7 @@
 | C13 | Multiple Characters | ✅ | `useCharacters` — full character management |
 | C14 | Character Comparison | ✅ | `CharacterCompare.tsx` at `/characters/compare` |
 
-### 1.2 Campaign Management (DM + Player)
+### 1.2 Campaign Management (Warden + Player)
 
 | # | Feature | Status | Implementation |
 |---|---------|--------|----------------|
@@ -55,7 +55,7 @@
 | K9 | Character Sharing in Campaign | ✅ | `useCampaignCharacters.ts` — permissions |
 | K10 | Campaign Leave/Disband | ✅ | `useLeaveCampaign` + deactivation |
 
-### 1.3 Encounter & Combat (DM)
+### 1.3 Encounter & Combat (Warden)
 
 | # | Feature | Status | Implementation |
 |---|---------|--------|----------------|
@@ -65,7 +65,7 @@
 | E4 | Encounter → Initiative Handoff | ✅ | Direct session creation + navigation |
 | E5 | XP/Reward Distribution | ✅ | `useEncounterRewards.ts` — auto-calc + distribution |
 
-### 1.4 Virtual Tabletop / Maps (DM)
+### 1.4 Virtual Tabletop / Maps (Warden)
 
 | # | Feature | Status | Implementation |
 |---|---------|--------|----------------|
@@ -125,11 +125,11 @@
 | P7 | Background Sync | ✅ | `useBackgroundSync.ts` — Background Sync API |
 | P8 | Network Status Indicator | ✅ | `OfflineIndicator` + status display |
 
-### 1.10 DM Toolbox (Beyond D&D Beyond — System Ascendant Extras)
+### 1.10 Warden Toolbox (Beyond D&D Beyond — System Ascendant Extras)
 
 | # | Feature | Status | Implementation |
 |---|---------|--------|----------------|
-| X1–X13 | All DM Generator Tools | ✅ | Complete `/dm-tools/*` routes |
+| X1–X13 | All Warden Generator Tools | ✅ | Complete `/dm-tools/*` routes |
 | X14 | Daily Quest System | ✅ | `QuestLog.tsx` + automation |
 
 ---
@@ -216,8 +216,8 @@
 ```typescript
 // Unified D&D Beyond interface
 - useCharacterSheetEnhancements(characterId) → All character features
-- useDMToolsEnhancements(campaignId) → All DM tools
-- usePlayerToolsEnhancements() → All player tools
+- useDMToolsEnhancements(campaignId) → All Warden tools
+- usePlayerToolsEnhancements() → All Ascendant Tools
 - verifyDDBeyondParity() → 100% parity verification
 ```
 
@@ -303,7 +303,7 @@
 
 ### 3.3 VTT Integration
 
-#### **VTTEnhanced** - Full DM VTT with asset library
+#### **VTTEnhanced** - Full Warden VTT with asset library
 #### **PlayerMapView** - Read-only player view with real-time sync
 #### **VTTAssetBrowser** - 400+ assets with drag-drop placement
 #### **TokenLibrary** - Asset management + custom uploads
@@ -351,7 +351,7 @@
 | **Marketplace** | ✅ **Complete** | 100% |
 | **Dice & Rolls** | ✅ **Complete** | 100% |
 | **Offline / PWA / Mobile** | ✅ **Complete** | 100% |
-| **DM Toolbox (Extras)** | ✅ **Complete** | 100% |
+| **Warden Toolbox (Extras)** | ✅ **Complete** | 100% |
 
 ### Overall Parity Score: **100%** (72/72 features implemented)
 

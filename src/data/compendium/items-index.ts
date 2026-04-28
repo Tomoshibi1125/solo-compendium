@@ -1,5 +1,6 @@
 import { artifacts as artifactItems } from "./artifacts";
 import { baseEquipment } from "./items-base-equipment";
+import { items_gap_fill as itemsGapFill } from "./items-gap-fill";
 import { items_part1 as itemsPart1 } from "./items-part1";
 import { items_part2 as itemsPart2 } from "./items-part2";
 import { items_part3 as itemsPart3 } from "./items-part3";
@@ -23,6 +24,7 @@ export const allItems = Array.from(
 			...itemsPart7,
 			...itemsPart8,
 			...itemsPart9,
+			...itemsGapFill,
 			...artifactItems,
 		].map((item) => [item.name.toLowerCase().trim(), item]),
 	).values(),

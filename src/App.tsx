@@ -3,7 +3,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ThemeProvider } from "next-themes";
 import { lazy, Suspense, useEffect, useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+	BrowserRouter,
+	Navigate,
+	Route,
+	Routes,
+	useParams,
+} from "react-router-dom";
 import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -44,7 +50,7 @@ import { getRuntimeEnvValue, normalizeBasePath } from "@/lib/runtimeEnv";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
 
 const Login = lazy(() => import("./pages/Login"));
-const PlayerTools = lazy(() => import("./pages/PlayerTools"));
+const AscendantTools = lazy(() => import("./pages/AscendantTools"));
 const TestUserSetup = lazy(() => import("./pages/TestUserSetup"));
 
 // Validate environment variables on app startup (non-blocking; setup mode is supported)
@@ -140,7 +146,9 @@ const VTTSpectator = lazy(
 	() => import("./pages/warden-directives/VTTSpectator"),
 );
 const VTTJournal = lazy(() => import("./pages/warden-directives/VTTJournal"));
-const PlayerMapView = lazy(() => import("./pages/player-tools/PlayerMapView"));
+const AscendantMapView = lazy(
+	() => import("./pages/ascendant-tools/AscendantMapView"),
+);
 const DiceRoller = lazy(() => import("./pages/DiceRoller"));
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Campaigns = lazy(() => import("./pages/Campaigns"));
@@ -177,7 +185,17 @@ const CatchAllRedirect = () => {
 
 	return <Navigate to="/login" replace />;
 };
-const PlayerToolDetail = lazy(() => import("./pages/PlayerToolDetail"));
+const AscendantToolDetail = lazy(() => import("./pages/AscendantToolDetail"));
+
+const LegacyPlayerToolsRedirect = () => {
+	const { toolId } = useParams<{ toolId: string }>();
+	return (
+		<Navigate
+			to={toolId ? `/ascendant-tools/${toolId}` : "/ascendant-tools"}
+			replace
+		/>
+	);
+};
 
 // Configure React Query with better caching and error handling
 const queryClient = new QueryClient({
@@ -328,28 +346,41 @@ const AppContent = () => {
 					}
 				/>
 				<Route
-					path="/player-tools"
+					path="/ascendant-tools"
 					element={
 						<Suspense fallback={<PageLoader />}>
-							<PlayerTools />
+							<AscendantTools />
 						</Suspense>
 					}
+				/>
+				<Route
+					path="/ascendant-tools/map"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<AscendantMapView />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/ascendant-tools/:toolId"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<AscendantToolDetail />
+						</Suspense>
+					}
+				/>
+				{/* Legacy /player-tools/* redirects for bookmarked URLs. */}
+				<Route
+					path="/player-tools"
+					element={<Navigate to="/ascendant-tools" replace />}
 				/>
 				<Route
 					path="/player-tools/map"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<PlayerMapView />
-						</Suspense>
-					}
+					element={<Navigate to="/ascendant-tools/map" replace />}
 				/>
 				<Route
 					path="/player-tools/:toolId"
-					element={
-						<Suspense fallback={<PageLoader />}>
-							<PlayerToolDetail />
-						</Suspense>
-					}
+					element={<LegacyPlayerToolsRedirect />}
 				/>
 				<Route
 					path="/compendium"

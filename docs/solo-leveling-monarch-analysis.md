@@ -141,7 +141,7 @@ To match the **power level and theme** of Solo Leveling Monarchs while fitting o
 
 Instead of fantasy monsters, Regents are:
 - **System-granted sovereign powers** unlocked through gate trials
-- **Protocol Warden-verified** achievements (DM approval)
+- **Protocol Warden-verified** achievements (Warden approval)
 - **Thematically modern**: HUD overlays, smartphone integration, social media impact
 - **Lore tie-in**: Each Regent is tied to a specific **gate dungeon** or **dimensional rift**
 

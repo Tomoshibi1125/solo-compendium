@@ -90,10 +90,7 @@ test("player session zero playthrough — character creation through first sessi
 			})
 			.first()
 			.click();
-		await page.fill(
-			"#campaign-name",
-			`Player Session 0 ${Date.now()}`,
-		);
+		await page.fill("#campaign-name", `Player Session 0 ${Date.now()}`);
 		await page.fill(
 			"#campaign-description",
 			"Player-perspective playthrough smoketest: character to session 0.",
@@ -103,9 +100,7 @@ test("player session zero playthrough — character creation through first sessi
 		await expect(importCheckbox).toHaveAttribute("data-state", "checked", {
 			timeout: 5_000,
 		});
-		await page
-			.getByRole("button", { name: /^Establish Campaign$/i })
-			.click();
+		await page.getByRole("button", { name: /^Establish Campaign$/i }).click();
 		await page.waitForURL(/\/campaigns\/[a-z0-9-]+/i, { timeout: 20_000 });
 		campaignId = new URL(page.url()).pathname.split("/").pop() ?? "";
 		expect(campaignId).toBeTruthy();
@@ -193,36 +188,24 @@ test("player session zero playthrough — character creation through first sessi
 		const shareBtn = page
 			.getByRole("button", { name: /Share Character/i })
 			.first();
-		if (
-			await shareBtn.isVisible({ timeout: 3_000 }).catch(() => false)
-		) {
+		if (await shareBtn.isVisible({ timeout: 3_000 }).catch(() => false)) {
 			const enabled = await shareBtn.isEnabled().catch(() => false);
 			if (enabled) {
 				await shareBtn.click();
 				// Radix Select in the share dialog — pick first available.
-				const combobox = page
-					.locator('button[role="combobox"]')
-					.first();
-				if (
-					await combobox
-						.isVisible({ timeout: 3_000 })
-						.catch(() => false)
-				) {
+				const combobox = page.locator('button[role="combobox"]').first();
+				if (await combobox.isVisible({ timeout: 3_000 }).catch(() => false)) {
 					await combobox.click();
 					const firstOption = page.getByRole("option").first();
 					if (
-						await firstOption
-							.isVisible({ timeout: 3_000 })
-							.catch(() => false)
+						await firstOption.isVisible({ timeout: 3_000 }).catch(() => false)
 					) {
 						await firstOption.click();
 						const confirmBtn = page
 							.getByRole("button", { name: /^Share$/i })
 							.first();
 						if (
-							await confirmBtn
-								.isVisible({ timeout: 3_000 })
-								.catch(() => false)
+							await confirmBtn.isVisible({ timeout: 3_000 }).catch(() => false)
 						) {
 							await confirmBtn.click();
 							await page.waitForTimeout(800);
@@ -239,17 +222,13 @@ test("player session zero playthrough — character creation through first sessi
 		await sharedPage.dismissAnalyticsBanner();
 		await page.getByRole("tab", { name: /^Sessions$/i }).click();
 		await expect(
-			page
-				.getByText(/Session 0.*Day Zero|Day Zero.*Memory-Care/i)
-				.first(),
+			page.getByText(/Session 0.*Day Zero|Day Zero.*Memory-Care/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("player-sessions-tab");
 
 		await page.getByRole("tab", { name: /^Wiki$/i }).click();
 		await expect(
-			page
-				.getByText(/Day Zero|Gate Cascade|Bureau|Vermillion|Awoko/i)
-				.first(),
+			page.getByText(/Day Zero|Gate Cascade|Bureau|Vermillion|Awoko/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("player-wiki-tab");
 
@@ -274,13 +253,10 @@ test("player session zero playthrough — character creation through first sessi
 		await page.getByTestId("vtt-scene-title").click();
 		const dayZero = page
 			.getByRole("menuitem", {
-				name:
-					/Day Zero.*Diagnosed|Memory-Care Wing Exterior|Bureau District/i,
+				name: /Day Zero.*Diagnosed|Memory-Care Wing Exterior|Bureau District/i,
 			})
 			.first();
-		if (
-			await dayZero.isVisible({ timeout: 5_000 }).catch(() => false)
-		) {
+		if (await dayZero.isVisible({ timeout: 5_000 }).catch(() => false)) {
 			await dayZero.click();
 		} else {
 			await page.getByRole("menuitem").first().click();
@@ -340,9 +316,7 @@ test("player session zero playthrough — character creation through first sessi
 		const diePicker = page
 			.getByRole("button", { name: /^d20$|Add d20|Roll d20/i })
 			.first();
-		if (
-			await diePicker.isVisible({ timeout: 3_000 }).catch(() => false)
-		) {
+		if (await diePicker.isVisible({ timeout: 3_000 }).catch(() => false)) {
 			await diePicker.click().catch(() => {});
 			await page.waitForTimeout(300);
 		}
@@ -355,11 +329,7 @@ test("player session zero playthrough — character creation through first sessi
 				}),
 			)
 			.first();
-		if (
-			await rollBtn
-				.isVisible({ timeout: 5_000 })
-				.catch(() => false)
-		) {
+		if (await rollBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
 			const enabled = await rollBtn
 				.isEnabled({ timeout: 1_000 })
 				.catch(() => false);

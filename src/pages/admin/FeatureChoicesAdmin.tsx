@@ -463,7 +463,7 @@ export default function FeatureChoicesAdmin() {
 								speed="slow"
 								className="text-muted-foreground"
 							>
-								Configure D&D Beyond-style class feature choice points
+								Configure job feature choice points
 							</ManaFlowText>
 						</div>
 

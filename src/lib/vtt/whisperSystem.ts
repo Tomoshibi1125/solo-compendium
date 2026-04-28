@@ -1,7 +1,7 @@
 /**
  * VTT Whisper / Private Message System
  *
- * Handles private messages between Warden (Warden) and players in the VTT chat.
+ * Handles private messages between Wardens and Ascendants in the VTT chat.
  * Whispers are only visible to sender and recipient(s).
  */
 
@@ -25,7 +25,7 @@ export interface WhisperMessage {
 export interface ChatParticipant {
 	id: string;
 	name: string;
-	role: "Warden" | "player" | "co-warden";
+	role: "warden" | "ascendant" | "co-warden";
 	characterName?: string;
 }
 
@@ -57,7 +57,7 @@ export function parseWhisperCommand(
 	const gmMatch = trimmed.match(/^\/Warden\s+(.+)/i);
 	if (gmMatch) {
 		const gms = participants.filter(
-			(p) => p.role === "Warden" || p.role === "co-warden",
+			(p) => p.role === "warden" || p.role === "co-warden",
 		);
 		return {
 			isWhisper: true,
@@ -97,7 +97,7 @@ export function parseWhisperCommand(
 	const gmrollMatch = trimmed.match(/^\/wardenroll\s+(.+)/i);
 	if (gmrollMatch) {
 		const gms = participants.filter(
-			(p) => p.role === "Warden" || p.role === "co-warden",
+			(p) => p.role === "warden" || p.role === "co-warden",
 		);
 		return {
 			isWhisper: true,

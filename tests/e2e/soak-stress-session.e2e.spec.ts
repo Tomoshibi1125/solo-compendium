@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { type BrowserContext, expect, type Page, test } from "@playwright/test";
 import { AuthPage } from "../pages/AuthPage";
 import { DMPage } from "../pages/DMPage";
 import { PlayerPage } from "../pages/PlayerPage";
@@ -8,10 +8,10 @@ const _DM_PASSWORD = process.env.E2E_DM_PASSWORD ?? "test1234";
 
 const _PLAYER_PASSWORD = process.env.E2E_PLAYER_PASSWORD ?? "test1234";
 
-let dmContext: any;
-let dmPage: any;
-let playerContext: any;
-let playerPage: any;
+let dmContext: BrowserContext;
+let dmPage: Page;
+let playerContext: BrowserContext;
+let playerPage: Page;
 
 let campaignId = "";
 let shareCode = "";
@@ -31,7 +31,7 @@ const buildInitiativeTrackerUrl = (
 	return sessionIdValue ? `${base}&sessionId=${sessionIdValue}` : base;
 };
 
-const dismissAnalyticsIfPresent = async (page: any) => {
+const dismissAnalyticsIfPresent = async (page: Page) => {
 	const dismissBtn = page
 		.getByRole("button", { name: /No Thanks|Dismiss/i })
 		.first();
@@ -41,7 +41,7 @@ const dismissAnalyticsIfPresent = async (page: any) => {
 	}
 };
 
-const isOnLogin = async (page: any) => {
+const isOnLogin = async (page: Page) => {
 	const enterShadowRealm = page
 		.getByRole("button", { name: /Enter Shadow Realm/i })
 		.first();
@@ -53,26 +53,28 @@ const isOnLogin = async (page: any) => {
 	return await emailBox.isVisible({ timeout: 1_000 }).catch(() => false);
 };
 
-const ensureDmAuthed = async (page: any) => {
+const ensureDmAuthed = async (page: Page) => {
 	if (!(await isOnLogin(page))) return;
 	const auth = new AuthPage(page);
 	await auth.continueAsGuest("dm");
-	await expect(page.getByTestId("dm-tools")).toBeVisible({ timeout: 20_000 });
+	await expect(page.getByTestId("warden-tools")).toBeVisible({
+		timeout: 20_000,
+	});
 };
 
-const ensurePlayerAuthed = async (page: any) => {
+const ensurePlayerAuthed = async (page: Page) => {
 	if (!(await isOnLogin(page))) return;
 	const auth = new AuthPage(page);
 	await auth.continueAsGuest("player");
-	await expect(page.getByTestId("player-tools")).toBeVisible({
+	await expect(page.getByTestId("ascendant-tools")).toBeVisible({
 		timeout: 20_000,
 	});
 };
 
 const ensureCampaignVttLoaded = async (
-	page: any,
+	page: Page,
 	campaignIdValue: string,
-	ensureAuthed: (targetPage: any) => Promise<void>,
+	ensureAuthed: (targetPage: Page) => Promise<void>,
 ) => {
 	await ensureAuthed(page);
 	await page.goto(`/campaigns/${campaignIdValue}/vtt`);
@@ -100,7 +102,7 @@ const ensureCampaignVttLoaded = async (
 	await expect(vttInterface).toBeVisible({ timeout: 20_000 });
 };
 
-const waitForCharacterSheetLoaded = async (page: any, characterId: string) => {
+const waitForCharacterSheetLoaded = async (page: Page, characterId: string) => {
 	const expectedPath = new RegExp(`/characters/${characterId}$`, "i");
 	const currentPath = new URL(page.url()).pathname;
 	if (!expectedPath.test(currentPath)) {
@@ -139,7 +141,7 @@ const waitForCharacterSheetLoaded = async (page: any, characterId: string) => {
 	expect(fallbackVisible).toBe(true);
 };
 
-const performShortRest = async (page: any, characterId: string) => {
+const performShortRest = async (page: Page, characterId: string) => {
 	await waitForCharacterSheetLoaded(page, characterId);
 	const btn = page.locator("button", { hasText: "Short Rest" }).first();
 	if (await btn.isVisible({ timeout: 2_000 }).catch(() => false)) {
@@ -150,7 +152,7 @@ const performShortRest = async (page: any, characterId: string) => {
 	await page.keyboard.press("Control+r");
 };
 
-const performLongRest = async (page: any, characterId: string) => {
+const performLongRest = async (page: Page, characterId: string) => {
 	await waitForCharacterSheetLoaded(page, characterId);
 	const btn = page.locator("button", { hasText: "Long Rest" }).first();
 	if (await btn.isVisible({ timeout: 2_000 }).catch(() => false)) {
@@ -181,13 +183,13 @@ test.describe
 
 			const dmAuth = new AuthPage(dmPage);
 			await dmAuth.continueAsGuest("dm");
-			await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
+			await expect(dmPage.getByTestId("warden-tools")).toBeVisible({
 				timeout: 20_000,
 			});
 
 			const playerAuth = new AuthPage(playerPage);
 			await playerAuth.continueAsGuest("player");
-			await expect(playerPage.getByTestId("player-tools")).toBeVisible({
+			await expect(playerPage.getByTestId("ascendant-tools")).toBeVisible({
 				timeout: 20_000,
 			});
 

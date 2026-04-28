@@ -142,11 +142,16 @@ export function useCharacterSheetState(characterId: string) {
 				writeCachedSheetState(cacheKey, state);
 			}
 
+			const resourcesWithUi = {
+				...state.resources,
+				ui: state.ui,
+			};
+
 			const payload: Database["public"]["Tables"]["character_sheet_state"]["Insert"] =
 				{
 					character_id: characterId,
 					user_id: user?.id ?? "",
-					resources: JSON.parse(JSON.stringify(state.resources)),
+					resources: JSON.parse(JSON.stringify(resourcesWithUi)),
 					custom_modifiers: JSON.parse(JSON.stringify(state.customModifiers)),
 				};
 
@@ -188,6 +193,7 @@ export function useCharacterSheetState(characterId: string) {
 				customModifiers: updates.customModifiers ?? current.customModifiers,
 				ui: updates.ui ?? current.ui,
 			};
+			queryClient.setQueryData(["character-sheet-state", characterId], next);
 			return updateSheetState.mutateAsync(next);
 		},
 		[characterId, queryClient, updateSheetState],

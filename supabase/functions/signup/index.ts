@@ -1,6 +1,6 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.90.1";
 
-type SignupRole = "dm" | "player";
+type SignupRole = "warden" | "ascendant";
 
 type SignupRequestBody = {
 	email?: unknown;
@@ -32,8 +32,14 @@ const json = (status: number, body: unknown, origin: string | null) =>
 const asString = (value: unknown): string | undefined =>
 	typeof value === "string" ? value : undefined;
 
-const normalizeRole = (value: unknown): SignupRole =>
-	value === "dm" ? "dm" : "player";
+const normalizeRole = (value: unknown): SignupRole => {
+	if (typeof value !== "string") return "ascendant";
+	const lower = value.trim().toLowerCase();
+	if (lower === "warden" || lower === "dm" || lower === "admin") {
+		return "warden";
+	}
+	return "ascendant";
+};
 
 Deno.serve(async (req) => {
 	const origin = req.headers.get("origin");

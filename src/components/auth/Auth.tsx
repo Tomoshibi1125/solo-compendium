@@ -21,9 +21,9 @@ export function Auth() {
 	const navigate = useNavigate();
 	const [authView, setAuthView] = useState<"sign_up" | "sign_in">("sign_in");
 	const [showRoleSelection, setShowRoleSelection] = useState(false);
-	const [selectedRole, setSelectedRole] = useState<"Warden" | "player" | null>(
-		null,
-	);
+	const [selectedRole, setSelectedRole] = useState<
+		"warden" | "ascendant" | null
+	>(null);
 	const [isSignup, setIsSignup] = useState(false);
 	const updateProfile = useUpdateProfile();
 	const { data: profile, isLoading: profileLoading } = useProfile();
@@ -63,7 +63,9 @@ export function Auth() {
 						if (changeRole) {
 							// User wants to change role - show role selection with current role pre-selected
 							setShowRoleSelection(true);
-							setSelectedRole(profile.role);
+							setSelectedRole(
+								profile.role === "warden" ? "warden" : "ascendant",
+							);
 							setIsSignup(false);
 						} else {
 							// User has profile and doesn't want to change - redirect to home
@@ -248,22 +250,22 @@ export function Auth() {
 							<RadioGroup
 								value={selectedRole ?? ""}
 								onValueChange={(value) =>
-									setSelectedRole(value as "Warden" | "player")
+									setSelectedRole(value as "warden" | "ascendant")
 								}
 								className="space-y-4"
 							>
 								<Label
-									htmlFor="role-player"
+									htmlFor="role-ascendant"
 									className={cn(
 										"flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
-										selectedRole === "player"
+										selectedRole === "ascendant"
 											? "border-primary bg-primary/10"
 											: "border-border hover:border-primary/50",
 									)}
 								>
 									<RadioGroupItem
-										value="player"
-										id="role-player"
+										value="ascendant"
+										id="role-ascendant"
 										className="mt-0"
 									/>
 									<div className="flex items-center gap-3 flex-1">
@@ -272,7 +274,7 @@ export function Auth() {
 										</div>
 										<div className="text-left">
 											<div className="font-heading font-semibold">
-												Ascendant (Player)
+												Ascendant
 											</div>
 											<div className="text-sm text-muted-foreground">
 												Join campaigns and create characters
@@ -282,17 +284,17 @@ export function Auth() {
 								</Label>
 
 								<Label
-									htmlFor="role-Warden"
+									htmlFor="role-warden"
 									className={cn(
 										"flex items-center gap-4 p-4 rounded-lg border-2 cursor-pointer transition-all",
-										selectedRole === "Warden"
+										selectedRole === "warden"
 											? "border-primary bg-primary/10"
 											: "border-border hover:border-primary/50",
 									)}
 								>
 									<RadioGroupItem
-										value="Warden"
-										id="role-Warden"
+										value="warden"
+										id="role-warden"
 										className="mt-0"
 									/>
 									<div className="flex items-center gap-3 flex-1">

@@ -11,9 +11,9 @@ This document tracks what state is persisted, where it lives (account-backed, ca
 
 ## State Buckets
 
-### DM tools (campaign operations)
+### Warden tools (campaign operations)
 
-- **Campaign tool state (generic DM tool UIs)**
+- **Campaign tool state (generic Warden tool UIs)**
   - **Scope**: Campaign-backed
   - **Remote**: `campaign_tool_states` (Supabase)
   - **Local mirror**: Yes (`localStorage` via `useCampaignToolState`)

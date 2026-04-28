@@ -3,6 +3,10 @@ import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
+import {
+	findCanonicalForRow,
+	useCanonicalEquipmentMap,
+} from "./useCanonicalEquipmentMap";
 import { useCharacterDerivedStats } from "./useCharacterDerivedStats";
 import { useCharacterSheetState } from "./useCharacterSheetState";
 import { type CharacterWithAbilities, useCharacters } from "./useCharacters";
@@ -72,6 +76,7 @@ export const useCombatActions = (characterId: string) => {
 	const { powers, isLoading: powersLoading } = usePowers(characterId);
 	const { techniques, isLoading: techniquesLoading } =
 		useTechniques(characterId);
+	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(characterId);
 
 	const { data: sigils, isLoading: sigilsLoading } = useSigils(
 		characterId || "",
@@ -84,6 +89,7 @@ export const useCombatActions = (characterId: string) => {
 
 		sigils || [],
 		sheetState.customModifiers || [],
+		canonicalEquipmentMap,
 	);
 
 	const isLoading =
@@ -176,10 +182,21 @@ export const useCombatActions = (characterId: string) => {
 		);
 
 		weapons.forEach((w) => {
-			const props =
-				(w.properties as string[])?.map((p) => p.toLowerCase()) || [];
+			const canonical = findCanonicalForRow(canonicalEquipmentMap, w.name);
+			const canonicalProps =
+				canonical && Array.isArray(canonical.properties)
+					? (canonical.properties as string[])
+					: [];
+			const rowProps = (w.properties as string[]) || [];
+			const props = [...rowProps, ...canonicalProps].map((p) =>
+				p.toLowerCase(),
+			);
 			const isFinesse = props.includes("finesse");
-			const isRanged = props.includes("ranged");
+			const weaponType = canonical?.weapon_type?.toLowerCase() ?? "";
+			const isRanged =
+				props.includes("ranged") ||
+				weaponType === "ranged" ||
+				weaponType.includes("ranged");
 
 			// Determine which ability to use
 			let ability: AbilityScore = isRanged ? "AGI" : "STR";
@@ -193,14 +210,28 @@ export const useCombatActions = (characterId: string) => {
 			const hasProf = isProficient(w);
 			const attackBonus = abiMod + (hasProf ? profBonus : 0);
 
-			// Basic damage roll parsing
-			const damageMatch = w.description?.match(/(\d+d\d+)/);
-			const damageRoll = damageMatch
-				? `${damageMatch[1]}+${abiMod}`
+			// Prefer canonical damage formula; fall back to description-regex parse.
+			const canonicalDamage =
+				typeof canonical?.damage === "string"
+					? canonical.damage
+					: typeof canonical?.damage === "number"
+						? String(canonical.damage)
+						: null;
+			const damageDice =
+				canonicalDamage?.match(/(\d+d\d+)/)?.[1] ??
+				w.description?.match(/(\d+d\d+)/)?.[1] ??
+				null;
+			const damageRoll = damageDice
+				? `${damageDice}+${abiMod}`
 				: `1d4+${abiMod}`;
 
-			const damageType = detectDamageType(w);
-			const range = parseRange(w);
+			const damageType =
+				canonical?.damage_type?.toLowerCase() || detectDamageType(w);
+			const canonicalRange =
+				typeof canonical?.range === "string" && canonical.range.length > 0
+					? canonical.range
+					: null;
+			const range = canonicalRange ?? parseRange(w);
 
 			result.push({
 				id: `weapon-${w.id}`,
@@ -401,7 +432,15 @@ export const useCombatActions = (characterId: string) => {
 		});
 
 		return result;
-	}, [character, derivedStats, equipment, powers, techniques, sigils]);
+	}, [
+		character,
+		derivedStats,
+		equipment,
+		powers,
+		techniques,
+		sigils,
+		canonicalEquipmentMap,
+	]);
 
 	return {
 		actions,

@@ -134,7 +134,7 @@ test.describe("Optimized DM Complete Test", () => {
 						const currentUrl = page.url();
 						if (
 							currentUrl.includes("/dm-tools") ||
-							currentUrl.includes("/player-tools") ||
+							currentUrl.includes("/ascendant-tools") ||
 							currentUrl !== "http://localhost:8080/"
 						) {
 							authSuccess = true;

@@ -22,7 +22,9 @@ const Landing = () => {
 
 	const handleEnterSystem = () => {
 		if (user) {
-			navigate(user.role === "warden" ? "/warden-directives" : "/player-tools");
+			navigate(
+				user.role === "warden" ? "/warden-directives" : "/ascendant-tools",
+			);
 		} else {
 			navigate("/login");
 		}

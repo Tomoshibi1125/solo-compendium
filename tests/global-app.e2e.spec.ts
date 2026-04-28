@@ -57,7 +57,7 @@ test.describe
 				test("1. DM signs in and lands on /dm-tools", async () => {
 					const auth = new AuthPage(dmPage);
 					await auth.continueAsGuest("dm");
-					await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
+					await expect(dmPage.getByTestId("warden-tools")).toBeVisible({
 						timeout: 15_000,
 					});
 				});
@@ -376,7 +376,9 @@ test.describe
 					const auth = new AuthPage(playerPage);
 					await auth.continueAsGuest("player");
 					// Player should land on /player-tools
-					await playerPage.waitForURL(/\/player-tools/, { timeout: 15_000 });
+					await playerPage.waitForURL(/\/(ascendant|player)-tools/, {
+						timeout: 15_000,
+					});
 				});
 
 				// ── 33. Player Tools Hub ────────────────────────────────────
@@ -563,7 +565,9 @@ test.describe
 					playerPage = await playerContext.newPage();
 					const auth = new AuthPage(playerPage);
 					await auth.continueAsGuest("player");
-					await playerPage.waitForURL(/\/player-tools/, { timeout: 15_000 });
+					await playerPage.waitForURL(/\/(ascendant|player)-tools/, {
+						timeout: 15_000,
+					});
 				});
 
 				test.afterAll(async () => {
@@ -618,7 +622,7 @@ test.describe
 					dmPage = await dmContext.newPage();
 					const auth = new AuthPage(dmPage);
 					await auth.continueAsGuest("dm");
-					await expect(dmPage.getByTestId("dm-tools")).toBeVisible({
+					await expect(dmPage.getByTestId("warden-tools")).toBeVisible({
 						timeout: 15_000,
 					});
 				});

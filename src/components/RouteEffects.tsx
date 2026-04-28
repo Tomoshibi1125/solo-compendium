@@ -42,7 +42,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	npcs: "NPCs",
 };
 
-const PLAYER_TOOL_LABELS: Record<string, string> = {
+const ASCENDANT_TOOL_LABELS: Record<string, string> = {
 	"character-sheet": "Character Sheet",
 	inventory: "Inventory",
 	abilities: "Abilities & Skills",
@@ -53,7 +53,7 @@ const PLAYER_TOOL_LABELS: Record<string, string> = {
 	"dice-roller": "Dice Roller",
 };
 
-const PLAYER_TOOLS_WITH_CHARACTER = new Set([
+const ASCENDANT_TOOLS_WITH_CHARACTER = new Set([
 	"character-sheet",
 	"inventory",
 	"abilities",
@@ -92,13 +92,13 @@ const resolveTitle = (pathname: string) => {
 	if (pathname.startsWith("/landing")) {
 		return `${BASE_TITLE} - Landing`;
 	}
-	if (pathname.startsWith("/player-tools")) {
+	if (pathname.startsWith("/ascendant-tools")) {
 		const segments = pathname.split("/").filter(Boolean);
 		const toolId = segments[1];
-		if (toolId && PLAYER_TOOL_LABELS[toolId]) {
-			return `${BASE_TITLE} - Player Tools: ${PLAYER_TOOL_LABELS[toolId]}`;
+		if (toolId && ASCENDANT_TOOL_LABELS[toolId]) {
+			return `${BASE_TITLE} - Ascendant Tools: ${ASCENDANT_TOOL_LABELS[toolId]}`;
 		}
-		return `${BASE_TITLE} - Player Tools`;
+		return `${BASE_TITLE} - Ascendant Tools`;
 	}
 	if (pathname.startsWith("/compendium")) {
 		return `${BASE_TITLE} - Compendium`;
@@ -174,9 +174,9 @@ export function RouteEffects() {
 		const detail = segments[2] || null;
 		return { id, detail };
 	}, [pathname]);
-	const playerToolMatch = useMemo(() => {
+	const ascendantToolMatch = useMemo(() => {
 		const segments = pathname.split("/").filter(Boolean);
-		if (segments[0] !== "player-tools" || segments.length < 2) return null;
+		if (segments[0] !== "ascendant-tools" || segments.length < 2) return null;
 		const toolId = segments[1];
 		return { toolId };
 	}, [pathname]);
@@ -257,15 +257,15 @@ export function RouteEffects() {
 
 	useEffect(() => {
 		let active = true;
-		if (!playerToolMatch) return undefined;
+		if (!ascendantToolMatch) return undefined;
 
-		const { toolId } = playerToolMatch;
-		const label = toolId ? PLAYER_TOOL_LABELS[toolId] : null;
+		const { toolId } = ascendantToolMatch;
+		const label = toolId ? ASCENDANT_TOOL_LABELS[toolId] : null;
 		if (!label) return undefined;
 
 		const updateTitle = async () => {
-			if (!PLAYER_TOOLS_WITH_CHARACTER.has(toolId)) {
-				setDynamicTitle(`${BASE_TITLE} - Player Tools: ${label}`);
+			if (!ASCENDANT_TOOLS_WITH_CHARACTER.has(toolId)) {
+				setDynamicTitle(`${BASE_TITLE} - Ascendant Tools: ${label}`);
 				return;
 			}
 
@@ -274,7 +274,7 @@ export function RouteEffects() {
 					? window.localStorage.getItem(ACTIVE_CHARACTER_STORAGE_KEY)
 					: null;
 			if (!activeId) {
-				setDynamicTitle(`${BASE_TITLE} - Player Tools: ${label}`);
+				setDynamicTitle(`${BASE_TITLE} - Ascendant Tools: ${label}`);
 				return;
 			}
 
@@ -293,7 +293,7 @@ export function RouteEffects() {
 			}
 			if (!active) return;
 			const suffix = name ? `: ${name}` : "";
-			setDynamicTitle(`${BASE_TITLE} - Player Tools: ${label}${suffix}`);
+			setDynamicTitle(`${BASE_TITLE} - Ascendant Tools: ${label}${suffix}`);
 		};
 
 		void updateTitle();
@@ -301,7 +301,7 @@ export function RouteEffects() {
 		return () => {
 			active = false;
 		};
-	}, [playerToolMatch]);
+	}, [ascendantToolMatch]);
 
 	useEffect(() => {
 		let active = true;

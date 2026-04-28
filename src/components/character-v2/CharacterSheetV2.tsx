@@ -29,13 +29,13 @@ import { FeaturesList } from "@/components/character/FeaturesList";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
 import { JournalPanel } from "@/components/character/JournalPanel";
 import { LevelUpWizardModal } from "@/components/character/LevelUpWizardModal";
-import { PowersList } from "@/components/character/PowersList";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
 import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
 import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
 import { RunesList } from "@/components/character/RunesList";
 import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
+import { AbilitiesPanel } from "@/components/character-v2/AbilitiesPanel";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
 import { AscendantText } from "@/components/ui/AscendantText";
@@ -71,7 +71,7 @@ import {
 } from "@/lib/conditionSystem";
 import { getXPProgress, type LevelingType } from "@/lib/experience";
 import { cn } from "@/lib/utils";
-import { QuestLog } from "@/pages/player-tools/QuestLog";
+import { QuestLog } from "@/pages/ascendant-tools/QuestLog";
 import type { DetailData } from "@/types/character";
 import type { AbilityScore } from "@/types/core-rules";
 import { AbilityScoreStrip } from "./AbilityScoreStrip";
@@ -495,11 +495,13 @@ export default function CharacterSheetV2() {
 		/>
 	);
 	const powers = (
-		<PowersList
+		<AbilitiesPanel
 			characterId={character.id}
 			spellCasting={spellCasting}
 			campaignId={campaignId ?? undefined}
-			onSelectDetail={(detail) => onSelectDetail(detail, "Power", Wand2)}
+			onSelectDetail={(detail, type) =>
+				onSelectDetail(detail, type ?? "Ability", Wand2)
+			}
 		/>
 	);
 	const inventory = (
@@ -868,7 +870,7 @@ export default function CharacterSheetV2() {
 									value="powers"
 									className="data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full px-1 uppercase font-mono text-xs tracking-widest transition-all hover:text-primary/70"
 								>
-									Powers
+									Abilities
 								</TabsTrigger>
 								<TabsTrigger
 									value="inventory"
@@ -981,7 +983,7 @@ export default function CharacterSheetV2() {
 								value="powers"
 								className="text-[11px] uppercase font-mono tracking-wider data-[state=active]:bg-transparent data-[state=active]:text-primary border-b-2 border-transparent data-[state=active]:border-primary rounded-none h-full transition-all"
 							>
-								Spells
+								Abilities
 							</TabsTrigger>
 							<TabsTrigger
 								value="inventory"

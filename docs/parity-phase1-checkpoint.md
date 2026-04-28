@@ -47,7 +47,7 @@
 
 - `public.get_accessible_sourcebooks(p_campaign_id uuid default null, p_user_id uuid default auth.uid()) -> table(sourcebook_id text, access_type text, shared_by uuid, expires_at timestamptz)`
   - Returns merged free/owned/campaign-share sourcebook set.
-  - Behavior: admin/DM can query another target `p_user_id`; otherwise caller scope.
+  - Behavior: admin/Warden can query another target `p_user_id`; otherwise caller scope.
 
 - `public.upsert_user_sourcebook_entitlement(p_user_id uuid, p_sourcebook_id text, p_entitlement_type text default 'grant', p_expires_at timestamptz default null) -> uuid`
   - Upserts one user entitlement record.
@@ -123,30 +123,30 @@
 
 ### RLS - Sourcebooks
 
-- `sourcebook_catalog`: public read; DM/admin manage.
-- `user_sourcebook_entitlements`: owner read + DM/admin oversight; DM/admin manage writes.
-- `campaign_sourcebook_shares`: campaign member/DM read; campaign system/DM write.
+- `sourcebook_catalog`: public read; Warden/admin manage.
+- `user_sourcebook_entitlements`: owner read + Warden/admin oversight; Warden/admin manage writes.
+- `campaign_sourcebook_shares`: campaign member/Warden read; campaign system/Warden write.
 - Entitlement/share mutation RPCs run as `SECURITY DEFINER` + explicit auth/role checks.
 
 ### RLS - Homebrew
 
-- `homebrew_content` policies replaced with explicit ownership/DM/public/campaign-scoped checks.
+- `homebrew_content` policies replaced with explicit ownership/Warden/public/campaign-scoped checks.
 - Campaign-scoped visibility requires `status='published'` and campaign association.
 - `homebrew_content_versions` RLS delegates to `can_view_homebrew_content` / `can_manage_homebrew_content`.
 - Version snapshots trigger before update; publish state normalizes `is_public` from status/scope.
 
 ### RLS - Marketplace
 
-- `marketplace_items`: listed read + author/DM visibility; author/DM write.
-- `marketplace_reviews`: open read; owner/DM manage.
-- `marketplace_downloads`: owner read + item author/DM visibility.
-- `user_marketplace_entitlements`: owner read + DM/admin manage.
+- `marketplace_items`: listed read + author/Warden visibility; author/Warden write.
+- `marketplace_reviews`: open read; owner/Warden manage.
+- `marketplace_downloads`: owner read + item author/Warden visibility.
+- `user_marketplace_entitlements`: owner read + Warden/admin manage.
 - Download/review RPCs perform explicit entitlement/validation guards.
 
 ### RLS - Sessions/logs
 
-- `campaign_sessions`: campaign members/DM read; campaign system/DM manage.
-- `campaign_session_logs`: campaign members/DM read with `is_player_visible` gate; author/system/DM update/delete.
+- `campaign_sessions`: campaign members/Warden read; campaign system/Warden manage.
+- `campaign_session_logs`: campaign members/Warden read with `is_player_visible` gate; author/system/Warden update/delete.
 - Session/log write RPCs enforce campaign-role checks and input validation.
 
 ## Test evidence

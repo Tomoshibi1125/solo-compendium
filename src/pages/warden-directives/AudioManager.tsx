@@ -37,15 +37,20 @@ export default function AcousticResonanceManager() {
 		isLoading,
 		saveNow,
 	} = useUserToolState<{ activeTab: string }>("audio_manager", {
-		initialState: { activeTab: "player" },
+		initialState: { activeTab: "playback" },
 		storageKey: "solo-compendium.Warden-tools.audio-manager.v1",
 	});
 
-	const [activeTab, setActiveTab] = useState("player");
+	const [activeTab, setActiveTab] = useState("playback");
 	const [libraryRefreshKey, setLibraryRefreshKey] = useState(0);
 
 	const hydrated = useMemo(
-		() => ({ activeTab: storedState.activeTab ?? "player" }),
+		() => ({
+			activeTab:
+				storedState.activeTab === "player"
+					? "playback"
+					: (storedState.activeTab ?? "playback"),
+		}),
 		[storedState.activeTab],
 	);
 	const hydratedRef = useRef(false);
@@ -261,9 +266,9 @@ export default function AcousticResonanceManager() {
 
 				<Tabs value={activeTab} onValueChange={setActiveTab}>
 					<TabsList className="grid w-full grid-cols-4">
-						<TabsTrigger value="player" className="flex items-center gap-2">
+						<TabsTrigger value="playback" className="flex items-center gap-2">
 							<PlayCircle className="w-4 h-4" />
-							Player
+							Playback
 						</TabsTrigger>
 						<TabsTrigger value="library" className="flex items-center gap-2">
 							<Music className="w-4 h-4" />
@@ -279,7 +284,7 @@ export default function AcousticResonanceManager() {
 						</TabsTrigger>
 					</TabsList>
 
-					<TabsContent value="player" className="space-y-4">
+					<TabsContent value="playback" className="space-y-4">
 						<AudioPlayer />
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">

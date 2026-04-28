@@ -59,7 +59,7 @@ function useSAZone(): string {
 	if (path.startsWith("/campaigns")) return "campaign";
 	if (path.startsWith("/compendium") || path.startsWith("/favorites"))
 		return "compendium";
-	if (path.startsWith("/player-tools") || path.startsWith("/dice"))
+	if (path.startsWith("/ascendant-tools") || path.startsWith("/dice"))
 		return "player";
 	if (path.startsWith("/characters")) return "character";
 	if (path.startsWith("/auth") || path.startsWith("/login")) return "auth";

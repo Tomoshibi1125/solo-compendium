@@ -19,8 +19,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AscendantToolsPanel } from "@/components/vtt/AscendantToolsPanel";
 import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
-import { PlayerToolsPanel } from "@/components/vtt/PlayerToolsPanel";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
 import { VTTDrawer } from "@/components/vtt/VTTDrawer";
@@ -50,7 +50,7 @@ import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import { getTokenSizePx } from "@/lib/vtt/tokenSizing";
 import "@/styles/vtt-player-map.css";
 import "@/styles/vtt-performance.css";
-import "./PlayerMapView.css";
+import "./AscendantMapView.css";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import type { LibraryToken } from "@/data/tokenLibraryDefaults";
@@ -138,7 +138,7 @@ const isPlayerMapShortcutTarget = (target: EventTarget | null) => {
 	);
 };
 
-const PlayerMapView = ({
+const AscendantMapView = ({
 	campaignId,
 	sessionId,
 }: {
@@ -904,10 +904,10 @@ const PlayerMapView = ({
 						<>
 							<Button
 								variant="ghost"
-								onClick={() => navigate("/player-tools")}
+								onClick={() => navigate("/ascendant-tools")}
 								size="sm"
 								className="shrink-0 h-8 px-2"
-								aria-label="Back to Player Tools"
+								aria-label="Back to Ascendant Tools"
 							>
 								<ArrowLeft className="w-4 h-4" aria-hidden />
 								<span className="hidden md:inline ml-1.5 text-xs">Back</span>
@@ -1508,8 +1508,8 @@ const PlayerMapView = ({
 													: "Panel"
 							}
 						>
-							{/* Player Tools Panel */}
-							<PlayerToolsPanel
+							{/* Ascendant Tools Panel */}
+							<AscendantToolsPanel
 								characterId={myCharacterId || undefined}
 								onRollDice={(formula) => vttRealtime.rollAndBroadcast(formula)}
 								onSendMessage={(message, type) =>
@@ -2193,4 +2193,4 @@ const PlayerMapView = ({
 	);
 };
 
-export default PlayerMapView;
+export default AscendantMapView;

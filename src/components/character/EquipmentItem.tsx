@@ -10,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import type { Database } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -29,6 +30,7 @@ function isEquipableInventoryType(
 
 interface EquipmentItemProps {
 	item: Equipment;
+	canonical?: StaticCompendiumEntry | null;
 	onToggleEquipped: (item: Equipment) => void;
 	onToggleAttuned: (item: Equipment) => void;
 	onRemove: (item: Equipment) => void;
@@ -43,6 +45,7 @@ interface EquipmentItemProps {
 
 function EquipmentItemComponent({
 	item,
+	canonical,
 	onToggleEquipped,
 	onToggleAttuned,
 	onRemove,
@@ -59,6 +62,23 @@ function EquipmentItemComponent({
 		? formatRegentVernacular(item.rarity)
 		: null;
 	const canEquip = isEquipableInventoryType(item.item_type);
+
+	// Canonical-derived badges. Each is rendered only when the canonical entry
+	// has the corresponding structured field — homebrew/freeform rows simply
+	// fall back to existing description-based rendering.
+	const canonicalDamage =
+		typeof canonical?.damage === "string" ||
+		typeof canonical?.damage === "number"
+			? String(canonical.damage)
+			: null;
+	const canonicalDamageType = canonical?.damage_type ?? null;
+	const canonicalWeaponType = canonical?.weapon_type ?? null;
+	const canonicalArmorClass =
+		typeof canonical?.armor_class === "string" ||
+		typeof canonical?.armor_class === "number"
+			? String(canonical.armor_class)
+			: null;
+	const canonicalStealthDisadvantage = canonical?.stealth_disadvantage === true;
 
 	return (
 		<div
@@ -90,6 +110,27 @@ function EquipmentItemComponent({
 						{item.is_attuned && (
 							<Badge variant="destructive" className="text-xs">
 								Attuned
+							</Badge>
+						)}
+						{canonicalDamage && (
+							<Badge variant="outline" className="text-xs">
+								{canonicalDamage}
+								{canonicalDamageType ? ` ${canonicalDamageType}` : ""}
+							</Badge>
+						)}
+						{canonicalArmorClass && (
+							<Badge variant="outline" className="text-xs">
+								AC {canonicalArmorClass}
+							</Badge>
+						)}
+						{canonicalWeaponType && !canonicalDamage && (
+							<Badge variant="outline" className="text-xs capitalize">
+								{canonicalWeaponType}
+							</Badge>
+						)}
+						{canonicalStealthDisadvantage && (
+							<Badge variant="outline" className="text-xs">
+								Stealth Disadv.
 							</Badge>
 						)}
 					</div>
@@ -233,6 +274,7 @@ export const EquipmentItem = memo(
 			prevProps.item.container_id === nextProps.item.container_id &&
 			prevProps.canAttune === nextProps.canAttune &&
 			prevProps.onSelect === nextProps.onSelect &&
+			prevProps.canonical?.id === nextProps.canonical?.id &&
 			prevProps.item.properties?.length === nextProps.item.properties?.length &&
 			prevProps.nestedItems?.length === nextProps.nestedItems?.length &&
 			prevProps.containers?.length === nextProps.containers?.length

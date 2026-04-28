@@ -86,7 +86,7 @@ img[loading="lazy"] {
 .mobile-scroll-x,
 .vtt-tabs,
 .character-sheet-tabs,
-.player-tools-tabs {
+.ascendant-tools-tabs {
 	@supports (overscroll-behavior: contain) {
 		overscroll-behavior: contain;
 	}
@@ -97,13 +97,13 @@ img[loading="lazy"] {
 
 /* Scroll snap for horizontal carousels / tab lists */
 .vtt-tab-list,
-.player-tools-tab-list,
+.ascendant-tools-tab-list,
 .character-sheet-tab-list {
 	scroll-snap-type: x mandatory;
 }
 
 .vtt-tab-trigger,
-.player-tools-tab-trigger,
+.ascendant-tools-tab-trigger,
 .character-sheet-tab-trigger {
 	scroll-snap-align: start;
 }

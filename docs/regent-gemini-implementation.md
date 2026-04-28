@@ -15,7 +15,7 @@ This implementation adds **Regent and Gemini Protocol** mechanics to the central
 export interface CharacterJob {
   job: string;
   path?: string; // Standard path (level 3, automatic)
-  regent?: string; // Regent path ID (quest-gated, DM unlocks)
+  regent?: string; // Regent path ID (quest-gated, Warden unlocks)
   gemini?: {
     regent1Id: string;
     regent2Id: string;
@@ -28,7 +28,7 @@ export interface CharacterJob {
 ```
 
 **Added Functions:**
-- `aggregateRegentFeatures()` - Loads regent features when DM unlocks regent for character
+- `aggregateRegentFeatures()` - Loads regent features when Warden unlocks regent for character
 - `parseRegentFeatureEffects()` - Parses regent feature descriptions into Effect[] (AC, attack, speed bonuses - **NO stat bonuses**)
 - `aggregateGeminiFeatures()` - Loads Gemini Protocol fusion features (merged abilities from both regents)
 - `aggregateAwakeningFeatures()` - Loads awakening features from jobs compendium
@@ -46,11 +46,11 @@ export interface CharacterJob {
 
 ### Regent System (Quest-Gated Cosmic Overlays)
 
-**Definition:** Regents are cosmic power overlays inspired by Solo Leveling's Nine Monarchs that are **quest-gated** and require **DM approval** after completing specific quests. Players can have a **maximum of 2 regents**.
+**Definition:** Regents are cosmic power overlays inspired by Solo Leveling's Nine Monarchs that are **quest-gated** and require **Warden approval** after completing specific quests. Players can have a **maximum of 2 regents**.
 
 **Key Differences from Standard Subclasses:**
 - **5e Subclass**: Automatic at level 3, predetermined progression
-- **SA Regent**: Earned through quests, DM manually unlocks, cosmic/reality-warping powers
+- **SA Regent**: Earned through quests, Warden manually unlocks, cosmic/reality-warping powers
 
 **CRITICAL MECHANICS:**
 - **NO STAT BONUSES**: Regents grant mechanical bonuses (AC, attack, speed, initiative, spell DC, regeneration) but **NO direct ability score increases** (STR, AGI, VIT, INT, SENSE, PRE)
@@ -59,7 +59,7 @@ export interface CharacterJob {
 - **Adaptation System**: Martial jobs selecting caster-heavy regents get martial adaptations (spells → techniques); caster jobs selecting martial-heavy regents get magical versions
 
 **Implementation Flow:**
-1. DM marks regent quest as complete
+1. Warden marks regent quest as complete
 2. AI presents 3 regent choices with reasoning and adaptation notes
 3. Player picks ONE regent
 4. `aggregateRegentFeatures()` loads regent data from `NINE_REGENTS` database
@@ -106,7 +106,7 @@ Each regent is designed to be **completely distinct** from all 14 job themes wit
 
 **Regent Selection Flow:**
 1. Player completes regent quest in-game
-2. DM marks quest as complete
+2. Warden marks quest as complete
 3. AI analyzes character (stats, job type, playstyle) and presents 3 regent choices
 4. Each choice includes:
    - Regent description and features
@@ -352,7 +352,7 @@ CREATE TABLE regent_quests (
   quest_id TEXT NOT NULL,
   regent_unlock TEXT NOT NULL, -- Regent ID that this quest unlocks
   completed BOOLEAN DEFAULT FALSE,
-  completed_by TEXT, -- DM/Protocol Warden ID
+  completed_by TEXT, -- Warden/Protocol Warden ID
   completed_at TIMESTAMP,
   UNIQUE(character_id, quest_id)
 );
@@ -372,7 +372,7 @@ CREATE TABLE regent_quests (
 - [ ] **All 81 Combinations** - All 9×9 regent pairings should work for fusion
 - [ ] **NO Stat Bonuses** - Verify regents and sovereigns grant AC/attack/speed but NOT ability scores
 - [ ] **Merged Regent Features** - Gemini fusion should include features from BOTH regents
-- [ ] **Quest-Gated Unlocking** - Regent should only apply after DM completes quest
+- [ ] **Quest-Gated Unlocking** - Regent should only apply after Warden completes quest
 - [ ] **UI Display** - Regent/Gemini status should show in active effects list
 - [ ] **Multiclass with Regent** - Each job can have its own regent/gemini independently
 
@@ -442,4 +442,4 @@ interface TripleGemini {
 ✅ **Graceful Degradation** - Handles missing/malformed data without crashing
 ✅ **Database Schema** - Documented schema requirements for regent/gemini storage
 
-**Status:** Regent and Gemini Protocol mechanics are now fully integrated into the centralized character calculation engine. The engine automatically applies regent features (with NO stat bonuses) and Gemini fusion merged abilities when DM unlocks them. The AI selection system with adaptation is ready for UI integration.
+**Status:** Regent and Gemini Protocol mechanics are now fully integrated into the centralized character calculation engine. The engine automatically applies regent features (with NO stat bonuses) and Gemini fusion merged abilities when Warden unlocks them. The AI selection system with adaptation is ready for UI integration.

@@ -262,7 +262,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						scenes,
 						currentSceneId: scenes[0].id,
 					};
-					// Canonical tool key — MUST match what VTTEnhanced.tsx and PlayerMapView.tsx
+					// Canonical tool key — MUST match what VTTEnhanced.tsx and AscendantMapView.tsx
 					// read via useCampaignToolState. Using "vtt-scenes" (hyphen) would be a silent
 					// no-op; the consumer reads "vtt_scenes" (underscore) without any session id.
 					const VTT_SCENES_TOOL_KEY = "vtt_scenes";

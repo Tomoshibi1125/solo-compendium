@@ -178,7 +178,7 @@ export function useVTTManager() {
 						color: "#ffffff",
 						x: 0,
 						y: 0,
-						is_dm_token: false,
+						is_warden_token: false,
 					})
 					.select()
 					.single();

@@ -188,8 +188,8 @@ export const navigationConfig: NavItemConfig[] = [
 		title: "Tools",
 		items: [
 			{
-				title: "Player Tools",
-				href: "/player-tools",
+				title: "Ascendant Tools",
+				href: "/ascendant-tools",
 				description: "Tools for ascendant gameplay.",
 				icon: Sparkles,
 			},
