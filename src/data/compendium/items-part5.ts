@@ -1,4 +1,4 @@
-import type { Item } from "./items";
+﻿import type { Item } from "./items";
 
 export const items_part5: Item[] = [
 	{
@@ -58,7 +58,7 @@ export const items_part5: Item[] = [
 		id: "item_p5_1",
 		name: "Abyssal Whip",
 		description:
-			"A finesse reach weapon — surprising on first contact, devastating with practice.",
+			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0021.webp",
@@ -800,7 +800,7 @@ export const items_part5: Item[] = [
 		id: "item_p5_18",
 		name: "Aetheric Warhammer",
 		description:
-			"A reinforced sledge — for when an obstacle needs to stop being one.",
+			"A reinforced sledge â€” for when an obstacle needs to stop being one.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0629.webp",
@@ -1042,7 +1042,6 @@ export const items_part5: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1203,7 +1202,6 @@ export const items_part5: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1233,7 +1231,7 @@ export const items_part5: Item[] = [
 		id: "item_p5_28",
 		name: "Shattered Longsword",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0812.webp",
@@ -1453,7 +1451,6 @@ export const items_part5: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1719,7 +1716,6 @@ export const items_part5: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -2023,7 +2019,7 @@ export const items_part5: Item[] = [
 		id: "item_p5_46",
 		name: "Hunter's Katana",
 		description:
-			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
+			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0284.webp",

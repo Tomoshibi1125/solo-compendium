@@ -1,4 +1,4 @@
-import type { Item } from "./items";
+﻿import type { Item } from "./items";
 
 export const items_part9: Item[] = [
 	{
@@ -195,7 +195,7 @@ export const items_part9: Item[] = [
 		id: "item_p9_4",
 		name: "Void Warhammer",
 		description:
-			"A reinforced sledge — for when an obstacle needs to stop being one.",
+			"A reinforced sledge â€” for when an obstacle needs to stop being one.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0416.webp",
@@ -335,7 +335,6 @@ export const items_part9: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -419,7 +418,6 @@ export const items_part9: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -576,7 +574,7 @@ export const items_part9: Item[] = [
 		id: "item_p9_13",
 		name: "Aetheric Longsword",
 		description:
-			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
+			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0890.webp",
@@ -1492,7 +1490,7 @@ export const items_part9: Item[] = [
 		id: "item_p9_34",
 		name: "Mana-Infused Spear",
 		description:
-			"A two-handed reach weapon — good against fast, low-ground anomalies.",
+			"A two-handed reach weapon â€” good against fast, low-ground anomalies.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0939.webp",
@@ -1895,7 +1893,6 @@ export const items_part9: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {

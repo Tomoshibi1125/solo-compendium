@@ -79,6 +79,21 @@ function EquipmentItemComponent({
 			? String(canonical.armor_class)
 			: null;
 	const canonicalStealthDisadvantage = canonical?.stealth_disadvantage === true;
+	const canonicalTagProperties = [
+		...(Array.isArray(canonical?.properties)
+			? (canonical.properties as string[])
+			: []),
+		...(Array.isArray(canonical?.simple_properties)
+			? canonical.simple_properties
+			: []),
+	];
+	const displayProperties = Array.from(
+		new Map(
+			[...((item.properties as string[]) || []), ...canonicalTagProperties]
+				.filter((prop) => typeof prop === "string" && prop.trim().length > 0)
+				.map((prop) => [prop.toLowerCase(), prop] as const),
+		).values(),
+	);
 
 	return (
 		<div
@@ -139,9 +154,9 @@ function EquipmentItemComponent({
 							<AutoLinkText text={item.description} />
 						</div>
 					)}
-					{item.properties && item.properties.length > 0 && (
+					{displayProperties.length > 0 && (
 						<div className="flex flex-wrap gap-1 mt-1">
-							{item.properties.slice(0, 3).map((prop, _i) => (
+							{displayProperties.slice(0, 3).map((prop) => (
 								<Badge
 									key={JSON.stringify(prop)}
 									variant="outline"

@@ -1,4 +1,4 @@
-import type { Item } from "./items";
+﻿import type { Item } from "./items";
 
 export const items_part8: Item[] = [
 	{
@@ -15,12 +15,11 @@ export const items_part8: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Resistance to necrotic damage.",
 				"On a kill with this item, gain 1d4 temporary HP.",
 			],
@@ -191,7 +190,6 @@ export const items_part8: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -577,7 +575,7 @@ export const items_part8: Item[] = [
 		id: "item_p8_13",
 		name: "Hunter's Katana",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0366.webp",
@@ -1341,7 +1339,6 @@ export const items_part8: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -1391,12 +1388,11 @@ export const items_part8: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Resistance to necrotic damage.",
 				"Crit on 19-20 against gate-spawned creatures.",
 			],
@@ -1623,7 +1619,7 @@ export const items_part8: Item[] = [
 		id: "item_p8_37",
 		name: "Shattered Spear",
 		description:
-			"A two-handed reach weapon — good against fast, low-ground anomalies.",
+			"A two-handed reach weapon â€” good against fast, low-ground anomalies.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0480.webp",
@@ -1677,7 +1673,6 @@ export const items_part8: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1812,7 +1807,7 @@ export const items_part8: Item[] = [
 		id: "item_p8_41",
 		name: "Void Halberd",
 		description:
-			"A two-handed reach weapon — good against fast, low-ground anomalies.",
+			"A two-handed reach weapon â€” good against fast, low-ground anomalies.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0827.webp",

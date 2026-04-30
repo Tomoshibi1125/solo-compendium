@@ -1,4 +1,4 @@
-import type { Item } from "./items";
+﻿import type { Item } from "./items";
 
 export const items_part3: Item[] = [
 	{
@@ -1096,7 +1096,7 @@ export const items_part3: Item[] = [
 		id: "item_p3_24",
 		name: "Mana-Infused Longsword",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0392.webp",
@@ -1239,7 +1239,6 @@ export const items_part3: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1373,7 +1372,6 @@ export const items_part3: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1690,7 +1688,6 @@ export const items_part3: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -2038,12 +2035,11 @@ export const items_part3: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Once per short rest, end one condition affecting you (charmed, frightened, poisoned).",
 			],
 		},

@@ -381,6 +381,26 @@ type VTTScenesState = {
 	savedAt?: string;
 };
 
+type CampaignAudioTrackState = {
+	id: string;
+	scene_id?: string;
+	session_id?: string;
+	name: string;
+	url: string;
+	type: "music" | "ambient" | "sfx";
+	volume: number;
+	loop: boolean;
+	is_playing: boolean;
+	created_by: string;
+	created_at: string;
+	updated_at: string;
+};
+
+type DisplayAudioTrack = CampaignAudioTrackState & {
+	session_id: string;
+	isCampaignLibrary?: boolean;
+};
+
 type CharacterSummary = {
 	id: string;
 	name: string;
@@ -814,6 +834,9 @@ const VTTEnhanced = () => {
 	const legacyAssetsStorageKey = campaignId
 		? `vtt-assets-${campaignId}${sessionId ? `-${sessionId}` : ""}`
 		: "vtt-assets";
+	const legacyAudioStorageKey = campaignId
+		? `vtt-audio-${campaignId}`
+		: "vtt-audio";
 	// Role determination (must come before savePayload memo)
 	const isStandalone = !campaignId;
 	const guestRole = searchParams.get("role")?.toLowerCase();
@@ -852,6 +875,18 @@ const VTTEnhanced = () => {
 	const customAssets = useMemo(
 		() => normalizeCustomVttAssets(customAssetsState),
 		[customAssetsState],
+	);
+	const {
+		state: campaignAudioTracks,
+		setState: setCampaignAudioTracks,
+		saveNow: saveCampaignAudioNow,
+	} = useCampaignToolState<CampaignAudioTrackState[]>(
+		campaignId || null,
+		"vtt_audio",
+		{
+			initialState: [],
+			storageKey: legacyAudioStorageKey,
+		},
 	);
 	const mergedScenes = useMemo(() => {
 		if (!currentScene) return scenes;
@@ -2307,10 +2342,43 @@ const VTTEnhanced = () => {
 	);
 
 	// Audio Hooks
-	const { data: audioTracks = [] } = useVTTAudioTracks(sessionId || "");
+	const { data: sessionAudioTracks = [] } = useVTTAudioTracks(sessionId || "");
 	const { mutate: createTrack } = useCreateVTTAudioTrack();
 	const { mutate: updateTrack } = useUpdateVTTAudioTrack();
 	const { mutate: deleteTrack } = useDeleteVTTAudioTrack();
+	const audioTracks = useMemo<DisplayAudioTrack[]>(() => {
+		const sessionTracks = sessionAudioTracks.map((track) => ({
+			...track,
+			isCampaignLibrary: false,
+		}));
+		const sessionTrackIds = new Set(sessionTracks.map((track) => track.id));
+		const libraryTracks = campaignAudioTracks
+			.filter((track) => !sessionTrackIds.has(track.id))
+			.map((track) => ({
+				...track,
+				session_id: track.session_id ?? sessionId ?? "campaign-library",
+				isCampaignLibrary: true,
+			}));
+		return [...sessionTracks, ...libraryTracks];
+	}, [campaignAudioTracks, sessionAudioTracks, sessionId]);
+	const setCampaignLibraryTrackPlaying = useCallback(
+		(trackId: string, isPlaying: boolean) => {
+			setCampaignAudioTracks((current) => {
+				const next = current.map((track) =>
+					track.id === trackId
+						? {
+								...track,
+								is_playing: isPlaying,
+								updated_at: new Date().toISOString(),
+							}
+						: track,
+				);
+				void saveCampaignAudioNow(next);
+				return next;
+			});
+		},
+		[saveCampaignAudioNow, setCampaignAudioTracks],
+	);
 
 	const handleMapMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
 		if (suppressNextMapActionRef.current) {
@@ -5231,18 +5299,32 @@ const VTTEnhanced = () => {
 																	onClick={() => {
 																		if (track.is_playing) {
 																			vttAudioManager.stopTrack(track.id);
-																			updateTrack({
-																				track_id: track.id,
-																				session_id: sessionId,
-																				is_playing: false,
-																			});
+																			if (track.isCampaignLibrary) {
+																				setCampaignLibraryTrackPlaying(
+																					track.id,
+																					false,
+																				);
+																			} else {
+																				updateTrack({
+																					track_id: track.id,
+																					session_id: sessionId,
+																					is_playing: false,
+																				});
+																			}
 																		} else {
 																			vttAudioManager.playTrack(track);
-																			updateTrack({
-																				track_id: track.id,
-																				session_id: sessionId,
-																				is_playing: true,
-																			});
+																			if (track.isCampaignLibrary) {
+																				setCampaignLibraryTrackPlaying(
+																					track.id,
+																					true,
+																				);
+																			} else {
+																				updateTrack({
+																					track_id: track.id,
+																					session_id: sessionId,
+																					is_playing: true,
+																				});
+																			}
 																		}
 																	}}
 																>
@@ -5258,22 +5340,24 @@ const VTTEnhanced = () => {
 																		/>
 																	)}
 																</Button>
-																<Button
-																	variant="ghost"
-																	size="sm"
-																	className="h-6 w-6 p-0 text-destructive"
-																	onClick={() =>
-																		deleteTrack({
-																			trackId: track.id,
-																			sessionId,
-																		})
-																	}
-																>
-																	<X
-																		className="w-3.5 h-3.5"
-																		aria-label="Delete"
-																	/>
-																</Button>
+																{!track.isCampaignLibrary && (
+																	<Button
+																		variant="ghost"
+																		size="sm"
+																		className="h-6 w-6 p-0 text-destructive"
+																		onClick={() =>
+																			deleteTrack({
+																				trackId: track.id,
+																				sessionId,
+																			})
+																		}
+																	>
+																		<X
+																			className="w-3.5 h-3.5"
+																			aria-label="Delete"
+																		/>
+																	</Button>
+																)}
 															</div>
 														</div>
 													))}

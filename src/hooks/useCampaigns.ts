@@ -1187,7 +1187,7 @@ export const useUpdateCampaignMemberRole = () => {
 
 			const { data: member, error: memberError } = await supabase
 				.from("campaign_members")
-				.select("user_id, role")
+				.select("id, user_id, role")
 				.eq("id", memberId)
 				.eq("campaign_id", campaignId)
 				.maybeSingle();
@@ -1209,6 +1209,27 @@ export const useUpdateCampaignMemberRole = () => {
 				.eq("campaign_id", campaignId);
 
 			if (error) throw error;
+
+			const { error: auditError } = await supabase
+				.from("campaign_invite_audit_logs")
+				.insert({
+					campaign_id: campaignId,
+					actor_id: user.id,
+					invite_id: null,
+					action: "member_role_updated",
+					details: {
+						member_id: member.id,
+						target_user_id: member.user_id,
+						previous_role: member.role,
+						next_role: role,
+					},
+				});
+			if (auditError) {
+				console.warn(
+					"[useUpdateCampaignMemberRole] Audit log failed:",
+					auditError,
+				);
+			}
 
 			// Sync local cache
 			const members = loadLocalMembers();

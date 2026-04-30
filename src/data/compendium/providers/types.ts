@@ -20,6 +20,7 @@ export interface StaticCompendiumEntry {
 	equipment_type?: string | null;
 	ability?: string | null;
 	properties?: string[] | Record<string, Json> | null;
+	simple_properties?: string[] | null;
 	weight?: number | null;
 	rune_type?: string | null;
 	rune_category?: string | null;

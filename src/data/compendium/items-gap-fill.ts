@@ -1,4 +1,4 @@
-import type { Item } from "./items";
+﻿import type { Item } from "./items";
 
 // Auto-generated gap-fill items. Source: scripts/loot/generate-gapfill.mjs
 // To regenerate, run: node scripts/loot/generate-gapfill.mjs
@@ -963,7 +963,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"While attuned, you have advantage on saves against being Charmed.",
-				"Immunity to environmental cold below 0°C.",
+				"Immunity to environmental cold below 0Â°C.",
 				"+1d4 damage against creatures of the Anomaly tag.",
 			],
 		},
@@ -6030,7 +6030,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Once per long rest, you may misty-step up to 30 ft. as a bonus action.",
-				"Immunity to environmental cold below 0°C.",
+				"Immunity to environmental cold below 0Â°C.",
 				"+1d4 damage against creatures with the Construct or Anomaly tag.",
 			],
 		},
@@ -8531,7 +8531,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"While worn, your unarmed strikes deal 1d4 bludgeoning damage.",
-				"Immunity to environmental cold below 0°C.",
+				"Immunity to environmental cold below 0Â°C.",
 				"While attuned, gain +1 to one ability score (max 20).",
 			],
 		},
@@ -10359,7 +10359,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Medical kit. +2 to Medicine checks; can be used to stabilize a creature without expending a Hit Die.",
-				"Immunity to environmental cold below 0°C.",
+				"Immunity to environmental cold below 0Â°C.",
 				"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
 			],
 		},
@@ -19098,7 +19098,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Acts as an arcane focus. +1 to spell attack rolls.",
-				"Immunity to environmental cold below 0°C.",
+				"Immunity to environmental cold below 0Â°C.",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 		},
@@ -23930,7 +23930,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_heavy_uncommon_3",
 		name: "Reclaimed Zweihander",
 		description:
-			"A reinforced two-handed blade — chosen by tanks who hit before they get hit.",
+			"A reinforced two-handed blade â€” chosen by tanks who hit before they get hit.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0169.webp",
@@ -24645,7 +24645,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_heavy_legendary_0",
 		name: "Regent's Two-Hander",
 		description:
-			"A reinforced two-handed blade — chosen by tanks who hit before they get hit.",
+			"A reinforced two-handed blade â€” chosen by tanks who hit before they get hit.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0863.webp",
@@ -25112,7 +25112,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_versatile_rare_2",
 		name: "Wraithtouched Katana",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0556.webp",
@@ -25686,7 +25686,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_finesse_rare_1",
 		name: "Toxic Combat Knife",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0583.webp",
@@ -26136,7 +26136,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_polearm_uncommon_2",
 		name: "Refit Reach Spear",
 		description:
-			"A two-handed reach weapon — good against fast, low-ground anomalies.",
+			"A two-handed reach weapon â€” good against fast, low-ground anomalies.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0162.webp",
@@ -27434,7 +27434,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_bludgeon_heavy_uncommon_1",
 		name: "Adept's Bludgeon",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0661.webp",
@@ -27578,7 +27578,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_bludgeon_heavy_rare_1",
 		name: "Voidtouched Greatmaul",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-1003.webp",
@@ -29789,7 +29789,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_axe_legendary_0",
 		name: "Dawnbringer's Greataxe",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-1017.webp",
@@ -30452,7 +30452,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_whip_rare_0",
 		name: "Wraithtouched Kusarigama",
 		description:
-			"A finesse reach weapon — surprising on first contact, devastating with practice.",
+			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0042.webp",
@@ -30507,7 +30507,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_whip_rare_1",
 		name: "Ember Combat Whip",
 		description:
-			"A finesse reach weapon — surprising on first contact, devastating with practice.",
+			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0123.webp",
@@ -31646,7 +31646,7 @@ export const items_gap_fill: Item[] = [
 			passive: [
 				"Provides AC 15 + AGI (max +2).",
 				"Reinforced medium armor with Bureau-stamped joints.",
-				"Immunity to environmental cold below 0°C.",
+				"Immunity to environmental cold below 0Â°C.",
 				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
 			],
 		},
@@ -31975,7 +31975,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -32014,12 +32013,11 @@ export const items_gap_fill: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 			],
 		},
 		source: "Gap-Fill Catalog",
@@ -32087,12 +32085,11 @@ export const items_gap_fill: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Crit on 19-20 against gate-spawned creatures.",
 			],
 		},
@@ -32127,7 +32124,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -32167,7 +32163,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -32207,7 +32202,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -32258,7 +32252,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "18",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -32273,7 +32266,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Provides AC 18. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"When you take damage, regain 1d4 HP at the start of your next turn (1/short rest).",
 				"Critical hits with this item ignore resistance to its damage type.",
 			],
@@ -32309,7 +32302,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -32361,7 +32353,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -32413,7 +32404,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "18",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -32465,7 +32455,6 @@ export const items_gap_fill: Item[] = [
 		armor_class: "20",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -32480,7 +32469,7 @@ export const items_gap_fill: Item[] = [
 			],
 			passive: [
 				"Provides AC 20. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Once per long rest, gain immunity to a single damage type until the end of your next turn.",
 			],
 		},
@@ -34203,7 +34192,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_pistol_common_3",
 		name: "Service Magnum",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0333.webp",
@@ -35291,7 +35280,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_rifle_uncommon_3",
 		name: "Frontier Bullpup",
 		description:
-			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
+			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0235.webp",
@@ -35825,7 +35814,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_shotgun_common_0",
 		name: "Reinforced Sawed-Off",
 		description:
-			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
+			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0697.webp",
@@ -36280,7 +36269,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_shotgun_rare_1",
 		name: "Hexbound Sawed-Off",
 		description:
-			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
+			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0727.webp",
@@ -36392,7 +36381,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_shotgun_epic_0",
 		name: "Holy Pump-Action",
 		description:
-			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
+			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "epic",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0273.webp",
@@ -36972,7 +36961,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_smg_epic_0",
 		name: "Worldbreaker's PDW",
 		description:
-			"A reliable mid-weight blade — the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
 		rarity: "epic",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0714.webp",

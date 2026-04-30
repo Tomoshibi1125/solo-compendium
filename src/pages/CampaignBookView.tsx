@@ -19,8 +19,13 @@ import { RiftHeading } from "@/components/ui/AscendantText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useCampaignEncounters } from "@/hooks/useCampaignEncounters";
 import { useCampaignHandouts } from "@/hooks/useCampaignHandouts";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
+import {
+	useCampaignSessionLogs,
+	useCampaignSessions,
+} from "@/hooks/useCampaignSessions";
 import { useCampaign, useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCampaignWiki } from "@/hooks/useCampaignWiki";
 import { useCampaignToolState } from "@/hooks/useToolState";
@@ -31,9 +36,41 @@ import ReactMarkdown from "react-markdown";
 type SectionType = {
 	id: string;
 	title: string;
-	type: "static" | "wiki" | "handout" | "scene" | "npc-roster";
+	type:
+		| "static"
+		| "wiki"
+		| "handout"
+		| "scene"
+		| "npc-roster"
+		| "session"
+		| "encounter"
+		| "quest"
+		| "faction"
+		| "loot"
+		| "audio";
 	content?: string;
 	meta?: Record<string, unknown>;
+};
+
+type SandboxLootTableState = {
+	id: string;
+	rank: string;
+	title: string;
+	description: string;
+	entries: Array<{
+		name: string;
+		rarity: string;
+		weight: number;
+		description: string;
+	}>;
+};
+
+type SandboxAudioTrackState = {
+	id: string;
+	scene_id?: string;
+	name: string;
+	url: string;
+	type: "music" | "ambient" | "sfx";
 };
 
 const CampaignBookView = () => {
@@ -45,6 +82,9 @@ const CampaignBookView = () => {
 		useHasWardenAccess(id || "");
 	const { articles: wikiPages = [] } = useCampaignWiki(id || "");
 	const { entries: handoutEntries = [] } = useCampaignHandouts(id || "");
+	const { data: sessions = [] } = useCampaignSessions(id || "");
+	const { data: sessionLogs = [] } = useCampaignSessionLogs(id || "");
+	const { data: encounters = [] } = useCampaignEncounters(id || "");
 
 	// VTT Scenes from campaign_tool_states
 	const { state: vttState } = useCampaignToolState<{
@@ -55,6 +95,18 @@ const CampaignBookView = () => {
 		storageKey: `vtt-scenes-${id}`,
 	});
 	const vttScenes = vttState?.scenes ?? [];
+	const { state: lootTables = [] } = useCampaignToolState<
+		SandboxLootTableState[]
+	>(id || null, "sandbox_loot_tables", {
+		initialState: [],
+		storageKey: `sandbox-loot-tables-${id}`,
+	});
+	const { state: audioTracks = [] } = useCampaignToolState<
+		SandboxAudioTrackState[]
+	>(id || null, "vtt_audio", {
+		initialState: [],
+		storageKey: `vtt-audio-${id}`,
+	});
 	const { injectSandbox, isInjecting, progressString } =
 		useCampaignSandboxInjector(id || null);
 
@@ -65,9 +117,28 @@ const CampaignBookView = () => {
 		() => wikiPages.filter((p) => p.category === "npc"),
 		[wikiPages],
 	);
-	const loreArticles = useMemo(
-		() => wikiPages.filter((p) => p.category !== "npc"),
+	const questArticles = useMemo(
+		() => wikiPages.filter((p) => p.category === "quest"),
 		[wikiPages],
+	);
+	const factionArticles = useMemo(
+		() => wikiPages.filter((p) => p.category === "faction"),
+		[wikiPages],
+	);
+	const lootArticles = useMemo(
+		() => wikiPages.filter((p) => p.category === "loot"),
+		[wikiPages],
+	);
+	const loreArticles = useMemo(
+		() =>
+			wikiPages.filter(
+				(p) => !["npc", "quest", "faction", "loot"].includes(p.category),
+			),
+		[wikiPages],
+	);
+	const timelineLogs = useMemo(
+		() => sessionLogs.filter((log) => log.log_type === "event"),
+		[sessionLogs],
 	);
 
 	if (loadingCampaign || loadingAccess) {
@@ -135,6 +206,110 @@ const CampaignBookView = () => {
 			type: "handout" as const,
 			meta: { visibleToPlayers: h.visibleToPlayers, category: h.category },
 		})),
+		...sessions.map((session) => {
+			const logs = sessionLogs.filter((log) => log.session_id === session.id);
+			return {
+				id: `session-${session.id}`,
+				title: session.title,
+				content: [
+					`**Status:** ${session.status}`,
+					session.scheduled_for
+						? `**Scheduled:** ${new Date(session.scheduled_for).toLocaleString()}`
+						: "",
+					session.description ?? "",
+					logs.length > 0 ? "\n### Session Logs" : "",
+					...logs.map(
+						(log) =>
+							`#### ${log.title}\n\n${log.content}\n\n_${log.log_type}${log.is_player_visible ? " · player-visible" : " · Warden-only"}_`,
+					),
+				]
+					.filter(Boolean)
+					.join("\n\n"),
+				type: "session" as const,
+				meta: { status: session.status, logCount: logs.length },
+			};
+		}),
+		...(timelineLogs.length > 0
+			? [
+					{
+						id: "timeline-events",
+						title: "District Timeline",
+						content: timelineLogs
+							.map((log) => `### ${log.title}\n\n${log.content}`)
+							.join("\n\n"),
+						type: "session" as const,
+						meta: { logCount: timelineLogs.length },
+					},
+				]
+			: []),
+		...encounters.map((encounter) => ({
+			id: `encounter-${encounter.id}`,
+			title: encounter.name,
+			content: [
+				encounter.description ?? "",
+				encounter.difficulty
+					? `### Difficulty\n\n\`\`\`json\n${JSON.stringify(encounter.difficulty, null, 2)}\n\`\`\``
+					: "",
+				encounter.loot_summary
+					? `### Loot\n\n\`\`\`json\n${JSON.stringify(encounter.loot_summary, null, 2)}\n\`\`\``
+					: "",
+			]
+				.filter(Boolean)
+				.join("\n\n"),
+			type: "encounter" as const,
+		})),
+		...questArticles.map((page) => ({
+			id: `quest-${page.id}`,
+			title: page.title,
+			content: page.content,
+			type: "quest" as const,
+		})),
+		...factionArticles.map((page) => ({
+			id: `faction-${page.id}`,
+			title: page.title,
+			content: page.content,
+			type: "faction" as const,
+		})),
+		...(lootTables.length > 0
+			? lootTables.map((table) => ({
+					id: `loot-table-${table.id}`,
+					title: table.title,
+					content: [
+						`**Rank:** ${table.rank}`,
+						"",
+						table.description,
+						"",
+						"### Drop Table",
+						...table.entries.map(
+							(entry) =>
+								`- **${entry.name}** (${entry.rarity}, w${entry.weight}): ${entry.description}`,
+						),
+					].join("\n"),
+					type: "loot" as const,
+				}))
+			: lootArticles.map((page) => ({
+					id: `loot-${page.id}`,
+					title: page.title,
+					content: page.content,
+					type: "loot" as const,
+				}))),
+		...audioTracks.map((track) => {
+			const sceneName =
+				vttScenes.find((scene) => scene.id === track.scene_id)?.name ??
+				track.scene_id ??
+				"Campaign";
+			return {
+				id: `audio-${track.id}`,
+				title: track.name,
+				content: [
+					`**Type:** ${track.type}`,
+					`**Scene:** ${sceneName}`,
+					`**URL:** ${track.url}`,
+				].join("\n\n"),
+				type: "audio" as const,
+				meta: { type: track.type, sceneId: track.scene_id },
+			};
+		}),
 		// NPC Roster
 		...(npcArticles.length > 0
 			? [{ id: "npc-roster", title: "NPC Roster", type: "npc-roster" as const }]
@@ -156,6 +331,20 @@ const CampaignBookView = () => {
 
 	const activeSection =
 		sections.find((s) => s.id === activeSectionId) || sections[0];
+	const sessionSections = sections.filter((s) => s.type === "session");
+	const encounterSections = sections.filter((s) => s.type === "encounter");
+	const questSections = sections.filter((s) => s.type === "quest");
+	const factionSections = sections.filter((s) => s.type === "faction");
+	const lootSections = sections.filter((s) => s.type === "loot");
+	const audioSections = sections.filter((s) => s.type === "audio");
+	const managementSections = [
+		...sessionSections,
+		...encounterSections,
+		...questSections,
+		...factionSections,
+		...lootSections,
+		...audioSections,
+	];
 
 	const handleAutoPopulate = async () => {
 		await injectSandbox();
@@ -239,6 +428,31 @@ const CampaignBookView = () => {
 								))}
 						</div>
 					</div>
+
+					{managementSections.length > 0 && (
+						<div className="space-y-2">
+							<h3 className="px-2 text-[10px] font-bold text-violet-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+								<ShieldAlert className="w-3 h-3" />
+								Campaign Management ({managementSections.length})
+							</h3>
+							<div className="space-y-1">
+								{managementSections.map((section) => (
+									<button
+										key={section.id}
+										type="button"
+										onClick={() => setActiveSectionId(section.id)}
+										className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
+											activeSectionId === section.id
+												? "bg-violet-500/10 border-l-2 border-violet-500 text-white shadow-inner"
+												: "text-slate-500 hover:bg-violet-500/5 hover:text-violet-300"
+										}`}
+									>
+										<span className="truncate">{section.title}</span>
+									</button>
+								))}
+							</div>
+						</div>
+					)}
 
 					{/* Handouts */}
 					{handoutEntries.length > 0 && (
@@ -515,6 +729,51 @@ const CampaignBookView = () => {
 							</div>
 						</div>
 					)}
+
+					{activeSection &&
+						[
+							"session",
+							"encounter",
+							"quest",
+							"faction",
+							"loot",
+							"audio",
+						].includes(activeSection.type) && (
+							<div className="space-y-6">
+								<div className="flex items-center justify-between">
+									<div className="flex-1">
+										<Badge
+											variant="outline"
+											className="mb-3 text-violet-400 border-violet-500/30 text-[10px]"
+										>
+											{activeSection.type.toUpperCase()}
+										</Badge>
+										<h1 className="text-4xl font-display text-white uppercase tracking-wider border-b border-violet-500/20 pb-4">
+											{activeSection.title}
+										</h1>
+									</div>
+									<Button
+										variant="ghost"
+										size="sm"
+										className="gap-1 text-xs text-violet-400 hover:text-white shrink-0 ml-4"
+										onClick={() =>
+											handleSendToVTT(
+												activeSection.title,
+												activeSection.content || "",
+											)
+										}
+									>
+										<Send className="w-3 h-3" />
+										Send to VTT
+									</Button>
+								</div>
+								<div className="font-serif text-lg leading-loose">
+									<ReactMarkdown>
+										{activeSection.content || "*No content recorded.*"}
+									</ReactMarkdown>
+								</div>
+							</div>
+						)}
 
 					{/* Handout Renderer */}
 					{activeSection?.type === "handout" && (

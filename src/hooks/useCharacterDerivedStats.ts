@@ -9,6 +9,7 @@ import {
 	type CalculatedStats,
 	calculateCharacterStats,
 } from "@/lib/characterCalculations";
+import { buildItemProperties } from "@/lib/characterCreation";
 import {
 	type CharacterBaseData,
 	computeEncumbrance,
@@ -128,14 +129,35 @@ export function useCharacterDerivedStats(
 			speed: character.speed,
 		});
 
+		const getEquipmentProperties = (item: EquipmentRow): string[] => {
+			const rowProperties = (item.properties || []).filter(
+				(prop): prop is string => typeof prop === "string",
+			);
+			const canonical = canonicalEquipmentMap
+				? findCanonicalForRow(canonicalEquipmentMap, item.name)
+				: null;
+			const canonicalProperties = canonical
+				? buildItemProperties(
+						canonical as unknown as Parameters<typeof buildItemProperties>[0],
+					)
+				: [];
+			return Array.from(
+				new Map(
+					[...rowProperties, ...canonicalProperties].map(
+						(prop) => [prop.toLowerCase(), prop] as const,
+					),
+				).values(),
+			);
+		};
+
 		const equippedArmor = (equipment || []).some((item) => {
-			const props = (item.properties || []).map((p: string) => p.toLowerCase());
+			const props = getEquipmentProperties(item).map((p) => p.toLowerCase());
 			if (!item.is_equipped) return false;
 			if (item.requires_attunement && !item.is_attuned) return false;
 			return (
-				props.includes("light") ||
-				props.includes("medium") ||
-				props.includes("heavy")
+				props.some((p) => p.includes("light")) ||
+				props.some((p) => p.includes("medium")) ||
+				props.some((p) => p.includes("heavy"))
 			);
 		});
 
@@ -150,7 +172,7 @@ export function useCharacterDerivedStats(
 			character.abilities,
 			(equipment || []).map((item) => ({
 				...item,
-				properties: item.properties || undefined,
+				properties: getEquipmentProperties(item),
 				is_equipped: item.is_equipped || false,
 				is_attuned: item.is_attuned || false,
 				requires_attunement: item.requires_attunement || false,
@@ -316,7 +338,7 @@ export function useCharacterDerivedStats(
 		const otherSpeeds: Record<string, number> = {};
 		(equipment || []).forEach((item) => {
 			if (!item.is_equipped) return;
-			(item.properties || []).forEach((prop) => {
+			getEquipmentProperties(item).forEach((prop) => {
 				const lower = prop.toLowerCase();
 				const flyMatch = lower.match(/fly\s+(\d+)ft/i);
 				if (flyMatch)
@@ -345,8 +367,12 @@ export function useCharacterDerivedStats(
 		// parsing for homebrew/freeform items.
 		const isArmorRow = (e: EquipmentRow): boolean => {
 			if (e.item_type === "armor") return true;
-			const rowProps = (e.properties || []).map((p) => p.toLowerCase());
-			if (rowProps.some((p) => ["light", "medium", "heavy"].includes(p)))
+			const rowProps = getEquipmentProperties(e).map((p) => p.toLowerCase());
+			if (
+				rowProps.some((p) =>
+					["light", "medium", "heavy"].some((tag) => p.includes(tag)),
+				)
+			)
 				return true;
 			if (canonicalEquipmentMap) {
 				const canonical = findCanonicalForRow(canonicalEquipmentMap, e.name);
@@ -371,8 +397,8 @@ export function useCharacterDerivedStats(
 		const shieldItem = (equipment || []).find((e) => {
 			if (!e.is_equipped) return false;
 			if (e.requires_attunement && !e.is_attuned) return false;
-			const rowProps = (e.properties || []).map((p) => p.toLowerCase());
-			if (rowProps.includes("shield")) return true;
+			const rowProps = getEquipmentProperties(e).map((p) => p.toLowerCase());
+			if (rowProps.some((p) => p.includes("shield"))) return true;
 			if (canonicalEquipmentMap) {
 				const canonical = findCanonicalForRow(canonicalEquipmentMap, e.name);
 				const canonItemType = canonical?.item_type?.toLowerCase();
@@ -395,9 +421,11 @@ export function useCharacterDerivedStats(
 					if (m) return parseInt(m[0], 10);
 				}
 			}
-			const fromRow = armorItem?.properties
-				?.find((p) => p.toLowerCase().startsWith("ac "))
-				?.match(/\d+/)?.[0];
+			const fromRow = armorItem
+				? getEquipmentProperties(armorItem)
+						.find((p) => p.toLowerCase().startsWith("ac "))
+						?.match(/\d+/)?.[0]
+				: undefined;
 			return fromRow ? parseInt(fromRow, 10) : 10;
 		};
 
@@ -409,9 +437,15 @@ export function useCharacterDerivedStats(
 			) {
 				return canonCategory as "light" | "medium" | "heavy";
 			}
-			const rowCategory = armorItem?.properties
-				?.find((p) => ["light", "medium", "heavy"].includes(p.toLowerCase()))
-				?.toLowerCase();
+			const rowCategory = armorItem
+				? getEquipmentProperties(armorItem)
+						.find((p) =>
+							["light", "medium", "heavy"].some((tag) =>
+								p.toLowerCase().includes(tag),
+							),
+						)
+						?.toLowerCase()
+				: undefined;
 			return (rowCategory as "light" | "medium" | "heavy") ?? "none";
 		};
 
@@ -422,7 +456,7 @@ export function useCharacterDerivedStats(
 						name: armorItem.name,
 						baseAC: extractArmorBaseAC(),
 						category: extractArmorCategory(),
-						magicalBonus: armorItem.properties?.some((p) =>
+						magicalBonus: getEquipmentProperties(armorItem).some((p) =>
 							p.toLowerCase().includes("magic"),
 						)
 							? 1

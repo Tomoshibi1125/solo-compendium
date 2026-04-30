@@ -326,13 +326,10 @@ export const baseEquipment: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {
-			passive: [
-				"Provides AC 16. Requires STR 13+. Stealth checks made with disadvantage.",
-			],
+			passive: ["Provides AC 16. Stealth checks made with disadvantage."],
 		},
 		lore: {
 			current_owner: "",
@@ -364,13 +361,10 @@ export const baseEquipment: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {
-			passive: [
-				"Provides AC 17. Requires STR 15+. Stealth checks made with disadvantage.",
-			],
+			passive: ["Provides AC 17. Stealth checks made with disadvantage."],
 		},
 		lore: {
 			current_owner: "",
@@ -402,13 +396,10 @@ export const baseEquipment: Item[] = [
 		armor_class: "18",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		sigil_slots_base: 0,
 		properties: {},
 		effects: {
-			passive: [
-				"Provides AC 18. Requires STR 15+. Stealth checks made with disadvantage.",
-			],
+			passive: ["Provides AC 18. Stealth checks made with disadvantage."],
 		},
 		lore: {
 			current_owner: "",

@@ -4,6 +4,7 @@ import { massiveSandboxModule } from "@/data/compendium/ascendant-sandbox-module
 import { getSandboxNpcPortraitUrl } from "@/data/compendium/sandbox/sandbox-asset-resolver";
 import { useToast } from "@/hooks/use-toast";
 import {
+	readLocalToolState,
 	saveCampaignToolState,
 	writeLocalToolState,
 } from "@/hooks/useToolState";
@@ -36,6 +37,56 @@ import {
 	saveLocalWikiArticles,
 } from "@/lib/guestStore";
 import type { VTTScene } from "@/types/vtt";
+
+const SANDBOX_MANIFEST_TOOL_KEY = "sandbox_manifest";
+const SANDBOX_AUDIO_TOOL_KEY = "vtt_audio";
+const SANDBOX_LOOT_TOOL_KEY = "sandbox_loot_tables";
+
+const sandboxSectionKeys = [
+	"wiki",
+	"vtt_scenes",
+	"npcs",
+	"handouts",
+	"sessions",
+	"timeline",
+	"warden_notes",
+	"npc_characters",
+	"encounters",
+	"quests",
+	"factions",
+	"loot",
+	"assets",
+	"audio",
+] as const;
+
+type SandboxSectionKey = (typeof sandboxSectionKeys)[number];
+
+type SandboxManifest = {
+	module_id: string;
+	version: number;
+	last_run_at: string;
+	completed_sections: Partial<
+		Record<
+			SandboxSectionKey,
+			{ completed_at: string; counts: Record<string, number> }
+		>
+	>;
+	failed_inserts: number;
+};
+
+type SandboxAudioTrackState = {
+	id: string;
+	scene_id?: string;
+	name: string;
+	url: string;
+	type: "music" | "ambient" | "sfx";
+	volume: number;
+	loop: boolean;
+	is_playing: boolean;
+	created_by: string;
+	created_at: string;
+	updated_at: string;
+};
 
 /**
  * "Local mode" here means "write to localStorage, not Supabase". It fires
@@ -97,6 +148,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		let timelineCount = 0;
 		let assetCount = 0;
 		let audioCount = 0;
+		let lootItemCount = 0;
 		let failedInserts = 0;
 
 		/**
@@ -106,6 +158,60 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 		 */
 		const wardenId = user?.id || getLocalUserId();
 		const nowIso = () => new Date().toISOString();
+		const manifestStorageKey = `sandbox-manifest-${targetId}`;
+		const createManifest = (): SandboxManifest => ({
+			module_id: massiveSandboxModule.id,
+			version: massiveSandboxModule.version,
+			last_run_at: nowIso(),
+			completed_sections: {},
+			failed_inserts: 0,
+		});
+		const loadSandboxManifest = async (): Promise<SandboxManifest> => {
+			const localManifest =
+				readLocalToolState<SandboxManifest>(manifestStorageKey);
+			if (isLocalMode()) return localManifest ?? createManifest();
+			const { data, error } = await supabase
+				.from("campaign_tool_states")
+				.select("state")
+				.eq("campaign_id", targetId)
+				.eq("tool_key", SANDBOX_MANIFEST_TOOL_KEY)
+				.maybeSingle();
+			if (error) {
+				console.warn("[SandboxInjector] Manifest load failed:", error);
+			}
+			return (
+				(data?.state as SandboxManifest | null) ??
+				localManifest ??
+				createManifest()
+			);
+		};
+		let manifest = await loadSandboxManifest();
+		const manifestMatches =
+			manifest.module_id === massiveSandboxModule.id &&
+			manifest.version === massiveSandboxModule.version;
+		if (!manifestMatches) manifest = createManifest();
+		const shouldRunSection = (section: SandboxSectionKey) =>
+			!manifest.completed_sections[section];
+		const persistManifest = async () => {
+			writeLocalToolState(manifestStorageKey, manifest);
+			if (!isLocalMode()) {
+				await saveCampaignToolState(
+					targetId,
+					wardenId,
+					SANDBOX_MANIFEST_TOOL_KEY,
+					manifest,
+				);
+			}
+		};
+		if (sandboxSectionKeys.every((section) => !shouldRunSection(section))) {
+			setInjectionState({ isInjecting: false, progressString: "" });
+			toast({
+				title: "Sandbox Already Imported",
+				description:
+					"The current module version is already fully imported. Bump the module version to force a refresh.",
+			});
+			return;
+		}
 
 		try {
 			// 0. Verify RLS and propagation are settled before injecting in cloud mode
@@ -1297,6 +1403,79 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				console.error("[SandboxInjector] Loot section error:", lErr);
 			}
 
+			try {
+				const lootTables = massiveSandboxModule.loot ?? [];
+				if (lootTables.length > 0) {
+					const structuredLoot = lootTables.map((table) => ({
+						id: table.id,
+						rank: table.rank,
+						title: table.title,
+						description: table.description,
+						entries: table.entries.map((entry) => ({
+							name: entry.name,
+							rarity: entry.rarity,
+							weight: entry.weight,
+							description: entry.description,
+						})),
+					}));
+					writeLocalToolState(
+						`sandbox-loot-tables-${targetId}`,
+						structuredLoot,
+					);
+					if (!isLocalMode()) {
+						await saveCampaignToolState(
+							targetId,
+							wardenId,
+							SANDBOX_LOOT_TOOL_KEY,
+							structuredLoot,
+						);
+						for (const table of lootTables) {
+							for (const entry of table.entries) {
+								const { data: existing } = await supabase
+									.from("campaign_inventory")
+									.select("id")
+									.eq("campaign_id", targetId)
+									.eq("name", entry.name)
+									.maybeSingle();
+								if (existing) continue;
+								const { error } = await supabase
+									.from("campaign_inventory")
+									.insert({
+										campaign_id: targetId,
+										added_by: wardenId,
+										name: entry.name,
+										description: `[${table.title}] ${entry.description}`,
+										item_type: "loot",
+										quantity: 1,
+										weight: null,
+										is_identified: true,
+									});
+								if (error) {
+									failedInserts++;
+									console.error(
+										"[SandboxInjector] Loot inventory insert failed:",
+										entry.name,
+										error,
+									);
+								} else {
+									lootItemCount++;
+								}
+							}
+						}
+					} else {
+						lootItemCount = lootTables.reduce(
+							(total, table) => total + table.entries.length,
+							0,
+						);
+					}
+				}
+			} catch (structuredLootErr) {
+				console.error(
+					"[SandboxInjector] Structured loot section error:",
+					structuredLootErr,
+				);
+			}
+
 			// 11. Inject VTT custom assets — pin the 20 sandbox maps in the
 			// campaign's vtt_assets so they surface in a "Module Maps"
 			// section of the asset drawer.
@@ -1342,40 +1521,90 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			// per scene; previously dropped. Now they surface in the Audio
 			// drawer once the warden opens a session.
 			//
-			// Guest mode: store per-campaign under a localStorage key so the
-			// Audio drawer can hydrate when no real session_id exists.
-			// Cloud: skipped here because vtt_audio_tracks requires a valid
-			// active_sessions FK; the Warden can promote them once a live
-			// session starts (follow-up item).
+			// Persist per-campaign audio under campaign_tool_states so the Audio
+			// drawer can hydrate even before a live session creates vtt_audio_tracks.
 			try {
 				const scenes = massiveSandboxModule.scenes ?? [];
-				const audioRows: {
-					id: string;
-					scene_id?: string;
-					name: string;
-					url: string;
-					type: "music" | "ambient" | "sfx";
-				}[] = [];
+				const audioRows: SandboxAudioTrackState[] = [];
 				for (const s of scenes) {
 					for (const track of s.audioTracks ?? []) {
+						const now = nowIso();
 						audioRows.push({
-							id: crypto.randomUUID(),
+							id: `sandbox-audio-${s.id}-${track.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`,
 							scene_id: s.id,
 							name: track.name,
 							url: track.url,
 							type: track.name.toLowerCase().includes("music")
 								? "music"
 								: "ambient",
+							volume: 0.8,
+							loop: true,
+							is_playing: false,
+							created_by: wardenId,
+							created_at: now,
+							updated_at: now,
 						});
 					}
 				}
 				if (audioRows.length > 0) {
 					writeLocalToolState(`vtt-audio-${targetId}`, audioRows);
+					if (!isLocalMode()) {
+						await saveCampaignToolState(
+							targetId,
+							wardenId,
+							SANDBOX_AUDIO_TOOL_KEY,
+							audioRows,
+						);
+					}
 					audioCount = audioRows.length;
 				}
 			} catch (audioErr) {
 				console.error("[SandboxInjector] Audio section error:", audioErr);
 			}
+
+			if (failedInserts === 0) {
+				manifest = {
+					...manifest,
+					last_run_at: nowIso(),
+					failed_inserts: failedInserts,
+					completed_sections: {
+						...manifest.completed_sections,
+						wiki: { completed_at: nowIso(), counts: { wikiCount } },
+						vtt_scenes: { completed_at: nowIso(), counts: { sceneCount } },
+						npcs: { completed_at: nowIso(), counts: { npcCount } },
+						handouts: { completed_at: nowIso(), counts: { handoutCount } },
+						sessions: {
+							completed_at: nowIso(),
+							counts: { sessionCount, sessionLogCount },
+						},
+						timeline: { completed_at: nowIso(), counts: { timelineCount } },
+						warden_notes: {
+							completed_at: nowIso(),
+							counts: { wardenNoteCount },
+						},
+						npc_characters: {
+							completed_at: nowIso(),
+							counts: { npcCharacterCount },
+						},
+						encounters: { completed_at: nowIso(), counts: { encounterCount } },
+						quests: { completed_at: nowIso(), counts: { questCount } },
+						factions: { completed_at: nowIso(), counts: { factionCount } },
+						loot: {
+							completed_at: nowIso(),
+							counts: { lootCount, lootItemCount },
+						},
+						assets: { completed_at: nowIso(), counts: { assetCount } },
+						audio: { completed_at: nowIso(), counts: { audioCount } },
+					},
+				};
+			} else {
+				manifest = {
+					...manifest,
+					last_run_at: nowIso(),
+					failed_inserts: failedInserts,
+				};
+			}
+			await persistManifest();
 
 			const summary = [
 				wikiCount > 0 ? `${wikiCount} wiki chapters` : null,
@@ -1392,6 +1621,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 				questCount > 0 ? `${questCount} quests` : null,
 				factionCount > 0 ? `${factionCount} factions` : null,
 				lootCount > 0 ? `${lootCount} loot tables` : null,
+				lootItemCount > 0 ? `${lootItemCount} loot items` : null,
 				timelineCount > 0 ? `${timelineCount} timeline events` : null,
 				assetCount > 0 ? `${assetCount} pinned maps` : null,
 				audioCount > 0 ? `${audioCount} audio tracks` : null,
@@ -1435,6 +1665,9 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["campaign_tool_states", targetId],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["campaign_inventory", targetId],
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["campaigns", "sessions", targetId],

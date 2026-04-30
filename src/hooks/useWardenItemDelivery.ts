@@ -3,6 +3,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useAssignCampaignLoot } from "@/hooks/useCampaignRewards";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import { buildItemProperties } from "@/lib/characterCreation";
+import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
 
 export type WardenDeliveryMode = "direct" | "loot" | "stash";
@@ -19,6 +21,7 @@ export interface WardenDeliverableItem {
 	properties?: string[] | null;
 	requiresAttunement?: boolean;
 	sourceBook?: string | null;
+	sigilSlotsBase?: number | null;
 }
 
 interface WardenItemDeliveryInput {
@@ -39,11 +42,16 @@ type Rarity = Database["public"]["Enums"]["rarity"];
 export function linkedEntryToDeliverableItem(
 	entry: WardenLinkedEntry,
 ): WardenDeliverableItem {
+	const type =
+		entry.entry.equipment_type || entry.entry.item_type || entry.type;
+	const properties = buildItemProperties(
+		entry.entry as unknown as Parameters<typeof buildItemProperties>[0],
+	);
 	return {
 		id: entry.id,
 		name: entry.name,
 		description: entry.description,
-		type: entry.type,
+		type,
 		rarity: entry.rarity,
 		weight: entry.entry.weight ?? null,
 		valueCredits:
@@ -55,10 +63,21 @@ export function linkedEntryToDeliverableItem(
 			).value_credits ??
 			(entry.entry as { cost_credits?: number | null }).cost_credits ??
 			null,
-		properties: normalizeProperties(entry.entry.properties),
+		properties:
+			properties.length > 0
+				? properties
+				: normalizeProperties(entry.entry.properties),
 		requiresAttunement:
 			(entry.entry as { attunement?: boolean | null }).attunement ?? false,
 		sourceBook: entry.sourceBook,
+		sigilSlotsBase:
+			entry.entry.sigil_slots_base ??
+			getDefaultSigilSlotsBaseForEquipment({
+				item_type: normalizeInventoryType(type),
+				properties,
+				name: entry.name,
+				rarity: entry.rarity,
+			}),
 	};
 }
 
@@ -208,13 +227,15 @@ function buildEquipmentInsert(
 	item: WardenDeliverableItem,
 	quantity?: number,
 ): CharacterEquipmentInsert {
+	const inventoryType = normalizeInventoryType(item.type);
+	const properties = item.properties ?? [];
 	return {
 		character_id: characterId,
 		item_id: item.id ?? null,
 		name: item.name,
-		item_type: normalizeInventoryType(item.type),
+		item_type: inventoryType,
 		description: item.description ?? null,
-		properties: item.properties ?? null,
+		properties,
 		weight: item.weight ?? null,
 		value_credits: item.valueCredits ?? null,
 		quantity: quantity ?? item.quantity ?? 1,
@@ -222,6 +243,14 @@ function buildEquipmentInsert(
 		is_attuned: false,
 		requires_attunement: item.requiresAttunement ?? false,
 		rarity: normalizeRarityForDb(item.rarity),
+		sigil_slots_base:
+			item.sigilSlotsBase ??
+			getDefaultSigilSlotsBaseForEquipment({
+				item_type: inventoryType,
+				properties,
+				name: item.name,
+				rarity: item.rarity ?? null,
+			}),
 		relic_tier: null,
 		charges_current: null,
 		charges_max: null,

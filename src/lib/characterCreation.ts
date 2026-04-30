@@ -135,42 +135,118 @@ export function findStaticJobByName(
  */
 export function buildItemProperties(item: StaticItem): string[] {
 	const props: string[] = [];
+	const seen = new Set<string>();
+	const sanitizeProperty = (value: string) =>
+		value
+			.replace(/\s*Requires\s+(?:STR|Strength)\s+\d+\+?\.?/gi, "")
+			.replace(/\s{2,}/g, " ")
+			.trim();
+	const pushProperty = (value: unknown) => {
+		if (typeof value !== "string") return;
+		const trimmed = sanitizeProperty(value);
+		if (!trimmed) return;
+		const key = trimmed.toLowerCase();
+		if (seen.has(key)) return;
+		seen.add(key);
+		props.push(trimmed);
+	};
+	const structuredProperties =
+		item.properties &&
+		!Array.isArray(item.properties) &&
+		typeof item.properties === "object"
+			? (item.properties as Record<string, unknown>)
+			: null;
+	const weaponProperties = structuredProperties?.weapon as
+		| Record<string, unknown>
+		| undefined;
+	const armorProperties = structuredProperties?.armor as
+		| Record<string, unknown>
+		| undefined;
+	const magicalProperties = structuredProperties?.magical as
+		| Record<string, unknown>
+		| undefined;
+	const magicalBonus = magicalProperties?.bonus as
+		| Record<string, unknown>
+		| undefined;
+
+	if (Array.isArray(item.properties)) {
+		for (const prop of item.properties) pushProperty(prop);
+	}
 
 	// Armor: emit "AC <value>" so the modifier parser picks it up
 	if (item.armor_class) {
 		if (item.armor_type === "Shield") {
-			props.push("+2 AC");
+			pushProperty("+2 AC");
 		} else {
 			// e.g. "16" from "16", or "14 + Dex modifier (max 2)" → extract leading number
 			const acNum = parseInt(String(item.armor_class), 10);
 			if (!Number.isNaN(acNum) && acNum > 10) {
-				props.push(`AC ${acNum}`);
+				pushProperty(`AC ${acNum}`);
 			}
 		}
-		if (item.armor_type) props.push(item.armor_type);
+		if (item.armor_type) pushProperty(item.armor_type);
 	}
-	if (item.stealth_disadvantage) props.push("Stealth disadvantage");
-	if (item.strength_requirement)
-		props.push(`Requires STR ${item.strength_requirement}`);
+	if (!item.armor_class && armorProperties) {
+		const baseAC = armorProperties.baseAC ?? armorProperties.base_ac;
+		if (typeof baseAC === "number" || typeof baseAC === "string") {
+			const acNum = parseInt(String(baseAC), 10);
+			if (!Number.isNaN(acNum) && acNum > 10) pushProperty(`AC ${acNum}`);
+		}
+		pushProperty(armorProperties.type);
+	}
+	if (item.stealth_disadvantage) pushProperty("Stealth disadvantage");
 
 	// Weapon: damage string
 	if (item.damage && item.damage_type) {
-		props.push(`${item.damage} ${item.damage_type}`);
+		pushProperty(`${item.damage} ${item.damage_type}`);
 	}
-	if (item.weapon_type) props.push(item.weapon_type);
+	if (!item.damage && weaponProperties) {
+		const damage = weaponProperties.damage;
+		const damageType =
+			weaponProperties.damageType ?? weaponProperties.damage_type;
+		if (
+			(typeof damage === "string" || typeof damage === "number") &&
+			typeof damageType === "string"
+		) {
+			pushProperty(`${damage} ${damageType}`);
+		}
+		if (weaponProperties.finesse === true) pushProperty("finesse");
+		if (weaponProperties.isSimple === true) pushProperty("simple");
+		if (weaponProperties.isMartial === true) pushProperty("martial");
+		if (weaponProperties.isFirearm === true) pushProperty("firearm");
+	}
+	if (item.weapon_type) pushProperty(item.weapon_type);
 	if (item.simple_properties) {
-		props.push(...item.simple_properties);
+		for (const prop of item.simple_properties) pushProperty(prop);
 	}
-	if (item.range && item.range !== "Melee") props.push(`Range ${item.range}`);
+	if (item.range && item.range !== "Melee") pushProperty(`Range ${item.range}`);
+	if (typeof magicalBonus?.armorClass === "number") {
+		pushProperty(
+			`${magicalBonus.armorClass >= 0 ? "+" : ""}${magicalBonus.armorClass} AC`,
+		);
+	}
+	if (typeof magicalBonus?.armor_class_migrated === "number") {
+		pushProperty(
+			`${magicalBonus.armor_class_migrated >= 0 ? "+" : ""}${magicalBonus.armor_class_migrated} AC`,
+		);
+	}
+	if (typeof magicalBonus?.attack === "number" && magicalBonus.attack !== 0) {
+		pushProperty(
+			`${magicalBonus.attack >= 0 ? "+" : ""}${magicalBonus.attack} to attack`,
+		);
+	}
+	if (typeof magicalBonus?.damage === "number" && magicalBonus.damage !== 0) {
+		pushProperty(
+			`${magicalBonus.damage >= 0 ? "+" : ""}${magicalBonus.damage} to damage`,
+		);
+	}
 
 	const passive = Array.isArray(item.effects)
 		? item.effects
 		: (item.effects as { passive?: string[] })?.passive;
 	if (Array.isArray(passive)) {
 		for (const line of passive) {
-			if (typeof line === "string" && line.trim().length > 0) {
-				props.push(line.trim());
-			}
+			pushProperty(line);
 		}
 	}
 

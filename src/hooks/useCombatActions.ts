@@ -1,10 +1,9 @@
 import { useMemo } from "react";
 import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
-import {
-	calculateAttackModifier,
-	chooseWeaponAttackAbility,
-} from "@/lib/derivedStats";
+import { buildItemProperties } from "@/lib/characterCreation";
+import { calculateAttackModifier } from "@/lib/derivedStats";
+import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 import {
@@ -31,14 +30,6 @@ interface ActiveFeature {
 	uses_max?: number;
 	damage?: string;
 	resolution?: string;
-}
-
-function appendDamageBonus(baseRoll: string, bonus: string): string {
-	const normalized = bonus.trim();
-	if (!normalized) return baseRoll;
-	return /^[+-]/.test(normalized)
-		? `${baseRoll}${normalized}`
-		: `${baseRoll}+${normalized}`;
 }
 
 export type CombatActionType =
@@ -129,12 +120,12 @@ export const useCombatActions = (characterId: string) => {
 
 			// Category match
 			if (
-				itemProps.includes("simple") &&
+				itemProps.some((p) => p.includes("simple")) &&
 				profs.some((p) => p.includes("simple"))
 			)
 				return true;
 			if (
-				itemProps.includes("martial") &&
+				itemProps.some((p) => p.includes("martial")) &&
 				profs.some((p) => p.includes("martial"))
 			)
 				return true;
@@ -184,21 +175,37 @@ export const useCombatActions = (characterId: string) => {
 		};
 
 		// 1. Weapon Actions
-		const weapons = (equipment || []).filter(
-			(e) =>
-				e.is_equipped &&
-				(e.item_type === "weapon" ||
-					(e.properties as string[])?.some((p) =>
-						["simple", "martial", "weapon"].includes(p.toLowerCase()),
-					)),
-		);
+		const weapons = (equipment || []).filter((e) => {
+			if (!e.is_equipped) return false;
+			if (e.item_type === "weapon") return true;
+			const canonical = findCanonicalForRow(canonicalEquipmentMap, e.name);
+			const canonicalType = (
+				canonical?.item_type ||
+				canonical?.equipment_type ||
+				""
+			).toLowerCase();
+			if (canonicalType === "weapon") return true;
+			const canonicalProps = canonical
+				? buildItemProperties(
+						canonical as unknown as Parameters<typeof buildItemProperties>[0],
+					)
+				: [];
+			const props = [
+				...((e.properties as string[]) || []),
+				...canonicalProps,
+			].map((p) => p.toLowerCase());
+			return props.some((p) =>
+				["simple", "martial", "weapon"].some((tag) => p.includes(tag)),
+			);
+		});
 
 		weapons.forEach((w) => {
 			const canonical = findCanonicalForRow(canonicalEquipmentMap, w.name);
-			const canonicalProps =
-				canonical && Array.isArray(canonical.properties)
-					? (canonical.properties as string[])
-					: [];
+			const canonicalProps = canonical
+				? buildItemProperties(
+						canonical as unknown as Parameters<typeof buildItemProperties>[0],
+					)
+				: [];
 			const rowProps = (w.properties as string[]) || [];
 			const props = [...rowProps, ...canonicalProps].map((p) =>
 				p.toLowerCase(),
@@ -206,25 +213,11 @@ export const useCombatActions = (characterId: string) => {
 			const isFinesse = props.includes("finesse");
 			const weaponType = canonical?.weapon_type?.toLowerCase() ?? "";
 			const isRanged =
-				props.includes("ranged") ||
+				props.some((p) => p.includes("ranged")) ||
 				weaponType === "ranged" ||
 				weaponType.includes("ranged");
 
-			// Determine which ability to use
-			const ability = chooseWeaponAttackAbility({
-				abilities: derivedStats.finalAbilities,
-				isRanged,
-				isFinesse,
-			});
-
-			const abiMod = getAbilityModifier(derivedStats.finalAbilities[ability]);
-			const hasProf = isProficient(w);
-			const attackBonus = calculateAttackModifier({
-				abilityModifier: abiMod,
-				proficiencyBonus: profBonus,
-				proficient: hasProf,
-				bonus: derivedStats.sigilBonuses.attackBonus,
-			});
+			const hasProf = isProficient({ name: w.name, properties: props });
 
 			// Prefer canonical damage formula; fall back to description-regex parse.
 			const canonicalDamage =
@@ -237,15 +230,16 @@ export const useCombatActions = (characterId: string) => {
 				canonicalDamage?.match(/(\d+d\d+)/)?.[1] ??
 				w.description?.match(/(\d+d\d+)/)?.[1] ??
 				null;
-			const damageRoll = damageDice
-				? appendDamageBonus(
-						`${damageDice}+${abiMod}`,
-						derivedStats.sigilBonuses.damageBonus,
-					)
-				: appendDamageBonus(
-						`1d4+${abiMod}`,
-						derivedStats.sigilBonuses.damageBonus,
-					);
+			const formula = resolveWeaponActionFormula({
+				abilities: derivedStats.finalAbilities,
+				proficiencyBonus: profBonus,
+				proficient: hasProf,
+				isRanged,
+				isFinesse,
+				damageDice,
+				attackBonus: derivedStats.sigilBonuses.attackBonus,
+				damageBonus: derivedStats.sigilBonuses.damageBonus,
+			});
 
 			const damageType =
 				canonical?.damage_type?.toLowerCase() || detectDamageType(w);
@@ -263,8 +257,8 @@ export const useCombatActions = (characterId: string) => {
 				activation: "1 action",
 				range,
 				target: "One creature",
-				attackBonus,
-				damageRoll,
+				attackBonus: formula.attackBonus,
+				damageRoll: formula.damageRoll,
 				damageType,
 				equipmentId: w.id,
 				payload: {
@@ -273,8 +267,8 @@ export const useCombatActions = (characterId: string) => {
 					name: w.name,
 					source: { type: "item", entryId: w.id },
 					kind: "attack",
-					attack: { roll: `1d20+${attackBonus}` },
-					damage: { roll: damageRoll, type: damageType },
+					attack: { roll: formula.attackRoll },
+					damage: { roll: formula.damageRoll, type: damageType },
 				},
 				sourceId: w.id,
 			});

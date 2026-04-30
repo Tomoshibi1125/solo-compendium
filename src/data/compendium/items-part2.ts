@@ -195,12 +195,11 @@ export const items_part2: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 		},

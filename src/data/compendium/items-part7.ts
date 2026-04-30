@@ -1,4 +1,4 @@
-import type { Item } from "./items";
+﻿import type { Item } from "./items";
 
 export const items_part7: Item[] = [
 	{
@@ -212,7 +212,6 @@ export const items_part7: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1034,7 +1033,6 @@ export const items_part7: Item[] = [
 		armor_class: "15",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		properties: {},
 		effects: {
 			passive: [
@@ -1577,12 +1575,11 @@ export const items_part7: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Crit on 19-20 against gate-spawned creatures.",
 			],
 		},
@@ -1618,7 +1615,6 @@ export const items_part7: Item[] = [
 		armor_class: "16",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 13,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -2097,7 +2093,6 @@ export const items_part7: Item[] = [
 		armor_class: "18",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
-		strength_requirement: 15,
 		requires_attunement: true,
 		properties: {},
 		effects: {
@@ -2112,7 +2107,7 @@ export const items_part7: Item[] = [
 			],
 			passive: [
 				"Provides AC 18. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage.",
 				"Once per long rest, cast a 2nd-level spell (player choice) without expending a spell slot.",
 			],
 		},

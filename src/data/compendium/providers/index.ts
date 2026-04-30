@@ -361,6 +361,7 @@ export interface StaticCompendiumEntry {
 	table_group?: string | null;
 	rollable_entries?: string[] | null;
 	// Equipment structured fields preserved through canonical hydration.
+	simple_properties?: string[] | null;
 	weapon_type?: string | null;
 	stealth_disadvantage?: boolean | null;
 	strength_requirement?: number | null;
@@ -459,6 +460,7 @@ type StaticItemSource = {
 	image?: string;
 	requirements?: Record<string, Json>;
 	properties?: Record<string, Json> | string[];
+	simple_properties?: string[] | null;
 	effects?: Record<string, Json>;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
@@ -1056,6 +1058,7 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 			? item.properties
 			: ((item.properties as string[] | Record<string, Json> | undefined) ??
 				[]),
+		simple_properties: item.simple_properties ?? null,
 		item_properties: deriveItemProperties(item),
 		effects: item.effects ?? null,
 		attunement: item.attunement ?? null,

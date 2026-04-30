@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import { buildItemProperties } from "@/lib/characterCreation";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -97,98 +98,29 @@ export function AddEquipmentDialog({
 					description: item.description,
 					equipment_type:
 						item.equipment_type || item.item_type || ("gear" as const),
-					properties: (() => {
-						if (Array.isArray(item.properties)) return item.properties;
-						const props: string[] = [];
-
-						const effects = item.effects as { passive?: string[] } | null;
-						const passiveEffects = effects?.passive;
-						if (Array.isArray(passiveEffects)) {
-							for (const line of passiveEffects) {
-								if (typeof line === "string" && line.trim().length > 0) {
-									props.push(line.trim());
-								}
-							}
-						}
-						const itemProps = item.properties as {
-							weapon?: {
-								isSimple?: boolean;
-								isMartial?: boolean;
-								isFirearm?: boolean;
-								damage?: string;
-								damageType?: string;
-								finesse?: boolean;
-							};
-							armor?: { baseAC?: number; type?: string };
-							magical?: {
-								bonus?: {
-									armorClass?: number;
-									attack?: number;
-									damage?: number;
-								};
-							};
-						} | null;
-
-						const weapon = itemProps?.weapon;
-						if (weapon) {
-							if (
-								typeof weapon.damage === "string" &&
-								typeof weapon.damageType === "string"
-							) {
-								props.push(`${weapon.damage} ${weapon.damageType}`);
-							}
-							if (weapon.finesse === true) props.push("finesse");
-						}
-
-						const armor = itemProps?.armor;
-						if (armor) {
-							if (typeof armor.baseAC === "number")
-								props.push(`AC ${armor.baseAC}`);
-							if (typeof armor.type === "string") props.push(armor.type);
-						}
-
-						const magical = itemProps?.magical;
-						if (
-							magical?.bonus?.armorClass &&
-							typeof magical.bonus.armorClass === "number"
-						) {
-							props.push(
-								`${magical.bonus.armorClass >= 0 ? "+" : ""}${magical.bonus.armorClass} AC`,
-							);
-						}
-						if (
-							magical?.bonus?.attack &&
-							typeof magical.bonus.attack === "number" &&
-							magical.bonus.attack !== 0
-						) {
-							props.push(
-								`${magical.bonus.attack >= 0 ? "+" : ""}${magical.bonus.attack} to attack`,
-							);
-						}
-						if (
-							magical?.bonus?.damage &&
-							typeof magical.bonus.damage === "number" &&
-							magical.bonus.damage !== 0
-						) {
-							props.push(
-								`${magical.bonus.damage >= 0 ? "+" : ""}${magical.bonus.damage} to damage`,
-							);
-						}
-
-						return props;
-					})(),
+					properties: buildItemProperties(
+						item as unknown as Parameters<typeof buildItemProperties>[0],
+					),
 					weight: item.weight ?? null,
 					source_book: item.source_book ?? null,
 					rarity: item.rarity ?? null,
 					damage:
-						(item.properties as { weapon?: { damage?: string } })?.weapon
-							?.damage ?? null,
+						typeof item.damage === "string" || typeof item.damage === "number"
+							? String(item.damage)
+							: ((item.properties as { weapon?: { damage?: string } })?.weapon
+									?.damage ?? null),
 					damage_type:
+						item.damage_type ??
 						(item.properties as { weapon?: { damageType?: string } })?.weapon
-							?.damageType ?? null,
+							?.damageType ??
+						(item.properties as { weapon?: { damage_type?: string } })?.weapon
+							?.damage_type ??
+						null,
 					armor_class:
+						item.armor_class ??
 						(item.properties as { armor?: { baseAC?: number } })?.armor
-							?.baseAC ?? null,
+							?.baseAC ??
+						null,
 					requires_attunement: item.attunement ?? false,
 				}));
 		},
