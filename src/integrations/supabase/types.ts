@@ -2038,6 +2038,7 @@ export type Database = {
 					description: string | null;
 					display_order: number | null;
 					id: string;
+					item_id: string | null;
 					ignore_contents_weight: boolean | null;
 					is_active: boolean | null;
 					is_attuned: boolean;
@@ -2066,6 +2067,7 @@ export type Database = {
 					description?: string | null;
 					display_order?: number | null;
 					id?: string;
+					item_id?: string | null;
 					ignore_contents_weight?: boolean | null;
 					is_active?: boolean | null;
 					is_attuned?: boolean;
@@ -2094,6 +2096,7 @@ export type Database = {
 					description?: string | null;
 					display_order?: number | null;
 					id?: string;
+					item_id?: string | null;
 					ignore_contents_weight?: boolean | null;
 					is_active?: boolean | null;
 					is_attuned?: boolean;
@@ -2277,6 +2280,8 @@ export type Database = {
 					created_at: string;
 					description: string | null;
 					display_order: number | null;
+					feat_id: string | null;
+					feature_id: string | null;
 					homebrew_id: string | null;
 					id: string;
 					is_active: boolean;
@@ -2294,6 +2299,8 @@ export type Database = {
 					created_at?: string;
 					description?: string | null;
 					display_order?: number | null;
+					feat_id?: string | null;
+					feature_id?: string | null;
 					homebrew_id?: string | null;
 					id?: string;
 					is_active?: boolean;
@@ -2311,6 +2318,8 @@ export type Database = {
 					created_at?: string;
 					description?: string | null;
 					display_order?: number | null;
+					feat_id?: string | null;
+					feature_id?: string | null;
 					homebrew_id?: string | null;
 					id?: string;
 					is_active?: boolean;
@@ -2453,6 +2462,7 @@ export type Database = {
 					is_known: boolean;
 					is_prepared: boolean;
 					name: string;
+					power_id: string | null;
 					power_level: number;
 					range: string | null;
 					source: string | null;
@@ -2470,6 +2480,7 @@ export type Database = {
 					is_known?: boolean;
 					is_prepared?: boolean;
 					name: string;
+					power_id?: string | null;
 					power_level?: number;
 					range?: string | null;
 					source?: string | null;
@@ -2487,6 +2498,7 @@ export type Database = {
 					is_known?: boolean;
 					is_prepared?: boolean;
 					name?: string;
+					power_id?: string | null;
 					power_level?: number;
 					range?: string | null;
 					source?: string | null;
@@ -3150,6 +3162,7 @@ export type Database = {
 					armor_class: number;
 					armor_proficiencies: string[] | null;
 					background: string | null;
+					background_id: string | null;
 					backstory: string | null;
 					base_class: string | null;
 					condition_immunities: string[] | null;
@@ -3171,12 +3184,14 @@ export type Database = {
 					initiative: number;
 					int: number | null;
 					job: string | null;
+					job_id: string | null;
 					languages: string[];
 					level: number;
 					monarch_overlays: string[] | null;
 					name: string;
 					notes: string | null;
 					path: string | null;
+					path_id: string | null;
 					portrait_url: string | null;
 					pre: number | null;
 					proficiency_bonus: number;
@@ -3213,6 +3228,7 @@ export type Database = {
 					armor_class?: number;
 					armor_proficiencies?: string[] | null;
 					background?: string | null;
+					background_id?: string | null;
 					backstory?: string | null;
 					base_class?: string | null;
 					condition_immunities?: string[] | null;
@@ -3234,12 +3250,14 @@ export type Database = {
 					initiative?: number;
 					int?: number | null;
 					job?: string | null;
+					job_id?: string | null;
 					languages?: string[];
 					level?: number;
 					monarch_overlays?: string[] | null;
 					name: string;
 					notes?: string | null;
 					path?: string | null;
+					path_id?: string | null;
 					portrait_url?: string | null;
 					pre?: number | null;
 					proficiency_bonus?: number;
@@ -3276,6 +3294,7 @@ export type Database = {
 					armor_class?: number;
 					armor_proficiencies?: string[] | null;
 					background?: string | null;
+					background_id?: string | null;
 					backstory?: string | null;
 					base_class?: string | null;
 					condition_immunities?: string[] | null;
@@ -3297,12 +3316,14 @@ export type Database = {
 					initiative?: number;
 					int?: number | null;
 					job?: string | null;
+					job_id?: string | null;
 					languages?: string[];
 					level?: number;
 					monarch_overlays?: string[] | null;
 					name?: string;
 					notes?: string | null;
 					path?: string | null;
+					path_id?: string | null;
 					portrait_url?: string | null;
 					pre?: number | null;
 					proficiency_bonus?: number;
