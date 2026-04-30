@@ -3,9 +3,20 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import {
-	findCanonicalEntryByName,
+	canAttuneItem as canAttuneItemRules,
+	canUnattuneItem as canUnattuneItemRules,
+	MAX_ATTUNEMENT_SLOTS,
+} from "@/lib/attunementRules";
+import {
+	isCanonicalEntryAccessible,
 	listCanonicalEntries,
+	resolveCanonicalReference,
 } from "@/lib/canonicalCompendium";
+import {
+	buildCorePayload,
+	DomainEventBus,
+	type ItemAttuneEvent,
+} from "@/lib/domainEvents";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalEquipment,
@@ -17,7 +28,6 @@ import {
 import {
 	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
-	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
 
 export type EquipmentRow =
@@ -98,7 +108,12 @@ export const useEquipment = (characterId: string) => {
 			const uniqueNames = new Set(
 				equipment.map((item) => item.name).filter(Boolean),
 			);
-			if (uniqueNames.size === 0) {
+			const uniqueItemIds = new Set(
+				equipment
+					.map((item) => item.item_id)
+					.filter((id): id is string => Boolean(id)),
+			);
+			if (uniqueNames.size === 0 && uniqueItemIds.size === 0) {
 				return equipment;
 			}
 
@@ -110,29 +125,41 @@ export const useEquipment = (characterId: string) => {
 				{ campaignId },
 			);
 
-			const sourceBookByName = new Map<string, string | null>();
+			const allById = new Map<string, string | null>();
+			const allByName = new Map<string, string | null>();
 			for (const entry of allCanonicalEquipment) {
+				if (uniqueItemIds.has(entry.id)) {
+					allById.set(entry.id, entry.source_book ?? null);
+				}
 				if (uniqueNames.has(entry.name)) {
-					sourceBookByName.set(entry.name, entry.source_book ?? null);
+					allByName.set(entry.name, entry.source_book ?? null);
 				}
 			}
 
-			if (sourceBookByName.size === 0) {
+			if (allByName.size === 0 && allById.size === 0) {
 				if (cacheKey) {
 					writeCachedEquipment(cacheKey, equipment);
 				}
 				return equipment;
 			}
 
+			const accessibleIds = new Set(
+				accessibleCanonicalEquipment.map((entry) => entry.id),
+			);
 			const accessibleNames = new Set(
 				accessibleCanonicalEquipment.map((entry) => entry.name),
 			);
 
 			const filtered = equipment.filter((item) => {
-				if (!sourceBookByName.has(item.name)) {
+				const hasCanonicalById = !!item.item_id && allById.has(item.item_id);
+				const hasCanonicalByName = allByName.has(item.name);
+				if (!hasCanonicalById && !hasCanonicalByName) {
 					return true;
 				}
 
+				if (item.item_id && accessibleIds.has(item.item_id)) {
+					return true;
+				}
 				return accessibleNames.has(item.name);
 			});
 
@@ -147,10 +174,20 @@ export const useEquipment = (characterId: string) => {
 
 	const addEquipment = useMutation({
 		mutationFn: async (item: EquipmentRowInsert) => {
+			const canonicalResolution = await resolveCanonicalReference("equipment", {
+				id: item.item_id,
+				name: item.name,
+			});
+			const canonicalEntry = canonicalResolution.entry;
+			const itemWithCanonicalId: EquipmentRowInsert = {
+				...item,
+				item_id: canonicalEntry?.id ?? item.item_id ?? null,
+			};
+
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(
 					characterId,
-					item as Omit<EquipmentRowInsert, "character_id">,
+					itemWithCanonicalId as Omit<EquipmentRowInsert, "character_id">,
 				);
 				return null;
 			}
@@ -170,51 +207,54 @@ export const useEquipment = (characterId: string) => {
 						character_id: characterId,
 						created_at: now,
 						display_order: cached.length,
-						name: item.name,
-						item_type: item.item_type,
-						quantity: item.quantity ?? 1,
-						is_equipped: item.is_equipped ?? false,
-						is_attuned: item.is_attuned ?? false,
-						requires_attunement: item.requires_attunement ?? false,
-						description: item.description ?? null,
-						properties: item.properties ?? null,
-						weight: item.weight ?? null,
-						value_credits: item.value_credits ?? null,
-						rarity: item.rarity ?? null,
-						relic_tier: item.relic_tier ?? null,
-						charges_current: item.charges_current ?? null,
-						charges_max: item.charges_max ?? null,
-						container_id: item.container_id ?? null,
-						sigil_slots_base: 0,
-						is_container: item.is_container ?? false,
-						capacity_weight: item.capacity_weight ?? null,
-						capacity_volume: item.capacity_volume ?? null,
-						is_active: item.is_active ?? true,
-						ignore_contents_weight: item.ignore_contents_weight ?? false,
-						custom_modifiers: item.custom_modifiers ?? null,
+						name: itemWithCanonicalId.name,
+						item_id: itemWithCanonicalId.item_id ?? null,
+						item_type: itemWithCanonicalId.item_type,
+						quantity: itemWithCanonicalId.quantity ?? 1,
+						is_equipped: itemWithCanonicalId.is_equipped ?? false,
+						is_attuned: itemWithCanonicalId.is_attuned ?? false,
+						requires_attunement:
+							itemWithCanonicalId.requires_attunement ?? false,
+						description: itemWithCanonicalId.description ?? null,
+						properties: itemWithCanonicalId.properties ?? null,
+						weight: itemWithCanonicalId.weight ?? null,
+						value_credits: itemWithCanonicalId.value_credits ?? null,
+						rarity: itemWithCanonicalId.rarity ?? null,
+						relic_tier: itemWithCanonicalId.relic_tier ?? null,
+						charges_current: itemWithCanonicalId.charges_current ?? null,
+						charges_max: itemWithCanonicalId.charges_max ?? null,
+						container_id: itemWithCanonicalId.container_id ?? null,
+						sigil_slots_base: itemWithCanonicalId.sigil_slots_base ?? 0,
+						is_container: itemWithCanonicalId.is_container ?? false,
+						capacity_weight: itemWithCanonicalId.capacity_weight ?? null,
+						capacity_volume: itemWithCanonicalId.capacity_volume ?? null,
+						is_active: itemWithCanonicalId.is_active ?? true,
+						ignore_contents_weight:
+							itemWithCanonicalId.ignore_contents_weight ?? false,
+						custom_modifiers: itemWithCanonicalId.custom_modifiers ?? null,
 					};
 					writeCachedEquipment(cacheKey, [...cached, optimistic]);
 				}
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const canonicalEntry = await findCanonicalEntryByName(
-				"equipment",
-				item.name,
-			);
 
 			if (
-				canonicalEntry &&
-				!(await isSourcebookAccessible(canonicalEntry.source_book, {
-					campaignId,
-				}))
+				itemWithCanonicalId.item_id &&
+				!(await isCanonicalEntryAccessible(
+					"equipment",
+					itemWithCanonicalId.item_id,
+					{
+						campaignId,
+					},
+				))
 			) {
 				throw new Error("This equipment requires sourcebook access.");
 			}
 
 			const { data, error } = await supabase
 				.from("character_equipment")
-				.insert({ ...item, character_id: characterId });
+				.insert({ ...itemWithCanonicalId, character_id: characterId });
 			if (error) {
 				logErrorWithContext(error, "useEquipment.addEquipment");
 				throw error;
@@ -246,38 +286,89 @@ export const useEquipment = (characterId: string) => {
 			id: string;
 			updates: EquipmentRowUpdate;
 		}) => {
-			if (isLocalCharacterId(characterId)) {
-				updateLocalEquipment(id, updates);
-				return null;
-			}
-
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			const cacheKey = user?.id
-				? buildEquipmentCacheKey(user.id, characterId)
-				: null;
-			if (cacheKey) {
-				const cached = readCachedEquipment(cacheKey);
-				if (cached) {
-					writeCachedEquipment(
-						cacheKey,
-						cached.map((row) =>
-							row.id === id ? ({ ...row, ...updates } as EquipmentRow) : row,
-						),
-					);
+			// D&D Beyond parity: validate attunement transitions before they hit
+			// the DB. Catches both "exceeded slot cap" and "item doesn't require
+			// attunement" — and lets us emit the item:attune domain event with
+			// accurate before/after slot counts.
+			const beforeRow = equipment.find((row) => row.id === id);
+			const isAttuneFlip =
+				beforeRow !== undefined &&
+				typeof updates.is_attuned === "boolean" &&
+				updates.is_attuned !== beforeRow.is_attuned;
+			if (isAttuneFlip && beforeRow) {
+				const itemRef = {
+					id: beforeRow.id,
+					name: beforeRow.name,
+					requiresAttunement: beforeRow.requires_attunement === true,
+					isAttuned: beforeRow.is_attuned === true,
+				};
+				const validation = updates.is_attuned
+					? canAttuneItemRules(itemRef, attunedCount)
+					: canUnattuneItemRules(itemRef);
+				if (!validation.allowed) {
+					throw new Error(validation.reason);
 				}
 			}
 
-			const { data, error } = await supabase
-				.from("character_equipment")
-				.update(updates)
-				.eq("id", id);
-			if (error) {
-				logErrorWithContext(error, "useEquipment.updateEquipment");
-				throw error;
+			if (isLocalCharacterId(characterId)) {
+				updateLocalEquipment(id, updates);
+			} else {
+				const {
+					data: { user },
+				} = await supabase.auth.getUser();
+				const cacheKey = user?.id
+					? buildEquipmentCacheKey(user.id, characterId)
+					: null;
+				if (cacheKey) {
+					const cached = readCachedEquipment(cacheKey);
+					if (cached) {
+						writeCachedEquipment(
+							cacheKey,
+							cached.map((row) =>
+								row.id === id ? ({ ...row, ...updates } as EquipmentRow) : row,
+							),
+						);
+					}
+				}
+
+				const { error } = await supabase
+					.from("character_equipment")
+					.update(updates)
+					.eq("id", id);
+				if (error) {
+					logErrorWithContext(error, "useEquipment.updateEquipment");
+					throw error;
+				}
 			}
-			return data;
+
+			// Best-effort domain event for attunement transitions. Listeners
+			// (analytics, derived stats invalidation, etc.) react to this.
+			if (isAttuneFlip && beforeRow) {
+				try {
+					const nextAttunedCount = updates.is_attuned
+						? attunedCount + 1
+						: attunedCount - 1;
+					const event: ItemAttuneEvent = {
+						...buildCorePayload({
+							characterId,
+							characterName: beforeRow.name,
+							className: null,
+							level: 0,
+							campaignId: null,
+						}),
+						type: "item:attune",
+						itemId: beforeRow.id,
+						itemName: beforeRow.name,
+						action: updates.is_attuned ? "attune" : "unattune",
+						currentAttunementCount: nextAttunedCount,
+						maxAttunementSlots: MAX_ATTUNEMENT_SLOTS,
+					};
+					DomainEventBus.emit(event);
+				} catch {
+					// Best-effort
+				}
+			}
+			return null;
 		},
 		onSuccess: async () => {
 			queryClient.invalidateQueries({ queryKey: ["equipment", characterId] });
@@ -407,9 +498,9 @@ export const useEquipment = (characterId: string) => {
 		},
 	});
 
-	// Check attunement limit (base max 6 for SA)
+	// Attunement limit comes from @/lib/attunementRules (single source of truth).
 	const attunedCount = equipment.filter((e) => e.is_attuned).length;
-	const canAttune = attunedCount < 6;
+	const canAttune = attunedCount < MAX_ATTUNEMENT_SLOTS;
 
 	return {
 		equipment,

@@ -15,17 +15,19 @@ import {
 	maintainConcentration,
 } from "@/lib/characterEngine";
 import { getActiveConditionEffects } from "@/lib/conditions";
+import { type CustomModifier, sumCustomModifiers } from "@/lib/customModifiers";
 import {
-	type CustomModifier,
-	resolveAdvantageFromCustomModifiers,
-	sumCustomModifiers,
-} from "@/lib/customModifiers";
+	calculateArmorClassStack,
+	calculateInitiativeBreakdown,
+	calculateSavingThrows,
+} from "@/lib/derivedStats";
 import {
 	calculateCarryingCapacity,
 	calculateEncumbrance,
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
 import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
+import { computeAttacksPerAction } from "@/lib/featEffectParser";
 import {
 	applySigilBonuses,
 	type SigilBonusResult,
@@ -36,11 +38,7 @@ import {
 	type SkillDefinition,
 } from "@/lib/skills";
 import { getUnarmoredDefenseBaseAC } from "@/lib/unarmoredDefense";
-import {
-	ABILITY_NAMES,
-	type AbilityScore,
-	getAbilityModifier,
-} from "@/types/core-rules";
+import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
 
@@ -95,7 +93,16 @@ export type DerivedStats = {
 	protocolEncumbranceDetail: ReturnType<typeof calculateEncumbrance>;
 	protocolConcentration: boolean;
 	armorClassDetail: ACBreakdown;
+	/** D&D Beyond parity: number of attacks granted per Attack action. */
+	attacksPerAction: number;
 };
+
+interface UseCharacterDerivedStatsOptions {
+	/** Whether the character has any feature/feat that grants Extra Attack. */
+	hasExtraAttackFeature?: boolean;
+	/** Active regent IDs (Steel/Titan grant bonus attacks). */
+	regentIds?: string[];
+}
 
 export function useCharacterDerivedStats(
 	character: CharacterWithAbilities | null | undefined,
@@ -104,7 +111,10 @@ export function useCharacterDerivedStats(
 	activeSigils: CharacterSigilInscriptionRow[],
 	customModifiers: CustomModifier[],
 	canonicalEquipmentMap?: CanonicalEquipmentMap,
+	options?: UseCharacterDerivedStatsOptions,
 ) {
+	const hasExtraAttackFeature = options?.hasExtraAttackFeature ?? false;
+	const regentIds = options?.regentIds ?? [];
 	return useMemo(() => {
 		if (!character) return null;
 
@@ -228,72 +238,23 @@ export function useCharacterDerivedStats(
 			}
 		});
 
-		const initiativeAdvantage = resolveAdvantageFromCustomModifiers(
+		const initiativeBreakdown = calculateInitiativeBreakdown({
+			agilityScore: finalAbilities.AGI,
+			baseInitiative: baseStats.initiative,
 			customModifiers,
-			["initiative", "initiative_advantage"],
-		);
-		const initiativeBonus =
-			sumCustomModifiers(customModifiers, "initiative_bonus") +
-			sumCustomModifiers(customModifiers, "initiative");
-		const finalInitiative =
-			getAbilityModifier(finalAbilities.AGI) + initiativeBonus;
-
-		const featureACBonus = sumCustomModifiers(customModifiers, "ac_bonus");
-		const baseACValue = sumCustomModifiers(customModifiers, "ac_base");
-		let finalAC = baseStats.armorClass + featureACBonus;
-		if (baseACValue > 0) {
-			finalAC = Math.max(
-				finalAC,
-				baseACValue + getAbilityModifier(finalAbilities.AGI) + featureACBonus,
-			);
-		}
-
-		const customSaveBonuses = ABILITY_KEYS.reduce(
-			(acc, ability) => {
-				acc[ability] = sumCustomModifiers(customModifiers, "save", ability);
-				return acc;
-			},
-			{} as Record<AbilityScore, number>,
-		);
-
-		const finalSavingThrows: Record<AbilityScore, number> = {
-			STR:
-				getAbilityModifier(finalAbilities.STR) +
-				(character.saving_throw_proficiencies?.includes("STR")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.STR,
-			AGI:
-				getAbilityModifier(finalAbilities.AGI) +
-				(character.saving_throw_proficiencies?.includes("AGI")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.AGI,
-			VIT:
-				getAbilityModifier(finalAbilities.VIT) +
-				(character.saving_throw_proficiencies?.includes("VIT")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.VIT,
-			INT:
-				getAbilityModifier(finalAbilities.INT) +
-				(character.saving_throw_proficiencies?.includes("INT")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.INT,
-			SENSE:
-				getAbilityModifier(finalAbilities.SENSE) +
-				(character.saving_throw_proficiencies?.includes("SENSE")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.SENSE,
-			PRE:
-				getAbilityModifier(finalAbilities.PRE) +
-				(character.saving_throw_proficiencies?.includes("PRE")
-					? baseStats.proficiencyBonus
-					: 0) +
-				customSaveBonuses.PRE,
-		};
+		});
+		const armorClassStack = calculateArmorClassStack({
+			baseArmorClass: baseStats.armorClass,
+			agilityScore: finalAbilities.AGI,
+			sigilArmorClass: sigilBonuses.ac,
+			customModifiers,
+		});
+		const finalSavingThrows = calculateSavingThrows({
+			abilities: finalAbilities,
+			savingThrowProficiencies: character.saving_throw_proficiencies,
+			proficiencyBonus: baseStats.proficiencyBonus,
+			customModifiers,
+		});
 
 		const totalWeight = calculateTotalWeight(equipment);
 		const carryingCapacity = calculateCarryingCapacity(finalAbilities.STR);
@@ -315,19 +276,14 @@ export function useCharacterDerivedStats(
 			finalSpeed = Math.max(0, finalSpeed + conditionEffects.speedModifier);
 		}
 
-		const customAcBonus = sumCustomModifiers(customModifiers, "ac");
 		const customSpeedBonus = sumCustomModifiers(customModifiers, "speed");
-		const customInitiativeBonus = sumCustomModifiers(
-			customModifiers,
-			"initiative",
-		);
 		const customHpMaxBonus = sumCustomModifiers(customModifiers, "hp-max");
 
 		const calculatedStats = {
 			...baseStats,
-			initiative: baseStats.initiative + customInitiativeBonus,
+			initiative: initiativeBreakdown.calculatedStatsInitiative,
 			savingThrows: finalSavingThrows,
-			armorClass: sigilBonuses.ac + customAcBonus,
+			armorClass: armorClassStack.displayedArmorClass,
 			speed: Math.max(0, finalSpeed + customSpeedBonus),
 			hpMax: Math.max(1, (character.hp_max ?? 1) + customHpMaxBonus),
 			encumbrance,
@@ -483,7 +439,7 @@ export function useCharacterDerivedStats(
 						acBonus: 2, // Standard
 					}
 				: null,
-			customAcBonus +
+			armorClassStack.customAcBonus +
 				sigilBonuses.ac -
 				(sigilBonuses.ac === baseStats.armorClass
 					? baseStats.armorClass
@@ -594,6 +550,15 @@ export function useCharacterDerivedStats(
 			"Passive Protocol",
 		);
 
+		// D&D Beyond / Foundry parity: number of attacks per Attack action,
+		// computed from Job + level + Regents + Extra-Attack features.
+		const attacksPerAction = computeAttacksPerAction(
+			character.job ?? null,
+			character.level ?? 1,
+			regentIds,
+			hasExtraAttackFeature,
+		);
+
 		return {
 			calculatedStats,
 			skills,
@@ -606,8 +571,8 @@ export function useCharacterDerivedStats(
 			sigilBonuses,
 			finalSpeed: calculatedStats.speed,
 			otherSpeeds,
-			finalInitiative,
-			initiativeAdvantage,
+			finalInitiative: initiativeBreakdown.finalInitiative,
+			initiativeAdvantage: initiativeBreakdown.advantage,
 			baseStats,
 			finalTraits: sigilBonuses.traits,
 			senses,
@@ -620,6 +585,7 @@ export function useCharacterDerivedStats(
 			protocolEncumbranceDetail,
 			protocolConcentration,
 			armorClassDetail,
+			attacksPerAction,
 		};
 	}, [
 		character,
@@ -627,5 +593,7 @@ export function useCharacterDerivedStats(
 		activeSigils,
 		customModifiers,
 		canonicalEquipmentMap,
+		hasExtraAttackFeature,
+		regentIds,
 	]);
 }

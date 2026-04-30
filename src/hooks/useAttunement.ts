@@ -1,15 +1,25 @@
 /**
  * Attunement Slot Management Hook
  *
- * D&D Beyond parity:
- *  - Maximum 3 attuned items (SRD 5e standard)
- *  - Validates attunement requirements before attuning
- *  - Emits item:attune domain events
- *  - Persists attunement state to Supabase
+ * Local stateful client of the shared attunement rules in
+ * `@/lib/attunementRules`. Useful for staging an attunement workflow client-side
+ * (e.g. a wizard, a simulation, or the Warden Directive Matrix) without hitting
+ * the DB on every interaction.
+ *
+ * For the live character-sheet flow, prefer `useEquipment()` — it owns Supabase
+ * persistence, optimistic cache updates, and emits the `item:attune` domain
+ * event from the shared rules module. This hook intentionally mirrors that
+ * validation logic so behavior stays identical.
  */
 
 import { useCallback, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+	type AttunableItemRef,
+	canAttuneItem as canAttuneItemRules,
+	canUnattuneItem as canUnattuneItemRules,
+	MAX_ATTUNEMENT_SLOTS,
+} from "@/lib/attunementRules";
 import {
 	buildCorePayload,
 	DomainEventBus,
@@ -17,18 +27,15 @@ import {
 } from "@/lib/domainEvents";
 import { isLocalCharacterId } from "@/lib/guestStore";
 
+// Re-export so existing consumers keep their import path stable.
+export { MAX_ATTUNEMENT_SLOTS } from "@/lib/attunementRules";
+
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-export const MAX_ATTUNEMENT_SLOTS = 6;
-
-export interface AttunableItem {
-	id: string;
-	name: string;
-	requiresAttunement: boolean;
+export interface AttunableItem extends AttunableItemRef {
 	attunementRequirements?: string | null;
-	isAttuned: boolean;
 }
 
 export interface AttuneResult {
@@ -77,30 +84,13 @@ export function useAttunement(
 	const canAttune = slotsRemaining > 0;
 
 	const canAttuneItem = useCallback(
-		(item: AttunableItem): { allowed: boolean; reason: string } => {
-			if (!item.requiresAttunement) {
-				return {
-					allowed: false,
-					reason: `${item.name} does not require attunement.`,
-				};
-			}
-			if (item.isAttuned) {
-				return { allowed: false, reason: `${item.name} is already attuned.` };
-			}
-			if (attunedCount >= MAX_ATTUNEMENT_SLOTS) {
-				return {
-					allowed: false,
-					reason: `Attunement limit reached (${MAX_ATTUNEMENT_SLOTS}/${MAX_ATTUNEMENT_SLOTS}).`,
-				};
-			}
-			return { allowed: true, reason: `Can attune ${item.name}.` };
-		},
+		(item: AttunableItem) => canAttuneItemRules(item, attunedCount),
 		[attunedCount],
 	);
 
 	const attune = useCallback(
 		(item: AttunableItem): AttuneResult => {
-			const check = canAttuneItem(item);
+			const check = canAttuneItemRules(item, attunedCount);
 			if (!check.allowed) {
 				return { success: false, message: check.reason, attunedCount };
 			}
@@ -115,7 +105,7 @@ export function useAttunement(
 				attunedCount: attunedCount + 1,
 			};
 		},
-		[canAttuneItem, attunedCount],
+		[attunedCount],
 	);
 
 	const unattune = useCallback(
@@ -124,12 +114,9 @@ export function useAttunement(
 			if (!item) {
 				return { success: false, message: "Item not found.", attunedCount };
 			}
-			if (!item.isAttuned) {
-				return {
-					success: false,
-					message: `${item.name} is not attuned.`,
-					attunedCount,
-				};
+			const check = canUnattuneItemRules(item);
+			if (!check.allowed) {
+				return { success: false, message: check.reason, attunedCount };
 			}
 
 			setItems((prev) =>

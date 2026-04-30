@@ -15,7 +15,10 @@ import {
 	jobCanLearnTechniques,
 	normalizeJobAccessToken,
 } from "@/lib/jobAbilityAccess";
-import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import {
+	filterRowsBySourcebookAccess,
+	isSourcebookAccessible,
+} from "@/lib/sourcebookAccess";
 
 export const staticCanonicalEntryTypes = [
 	"jobs",
@@ -150,6 +153,53 @@ export async function findCanonicalEntryByName(
 		return null;
 	if (match && type === "items" && isEquipmentLikeEntry(match)) return null;
 	return match ?? null;
+}
+
+export async function findCanonicalEntryById(
+	type: StaticCanonicalEntryType,
+	id: string | null | undefined,
+	accessContext?: { campaignId?: string | null },
+): Promise<StaticCompendiumEntry | null> {
+	if (!id) return null;
+	const entries = await listCanonicalEntries(type, undefined, accessContext);
+	return entries.find((entry) => entry.id === id) ?? null;
+}
+
+export interface CanonicalCharacterRefInput {
+	job?: string | null;
+	path?: string | null;
+	background?: string | null;
+	job_id?: string | null;
+	path_id?: string | null;
+	background_id?: string | null;
+}
+
+export async function resolveCharacterCanonicalIds<
+	T extends CanonicalCharacterRefInput,
+>(data: T): Promise<T> {
+	const hasJob = Object.hasOwn(data, "job");
+	const hasPath = Object.hasOwn(data, "path");
+	const hasBackground = Object.hasOwn(data, "background");
+	const [jobEntry, pathEntry, backgroundEntry] = await Promise.all([
+		data.job && !data.job_id
+			? findCanonicalEntryByName("jobs", data.job)
+			: Promise.resolve(null),
+		data.path && !data.path_id
+			? findCanonicalEntryByName("paths", data.path)
+			: Promise.resolve(null),
+		data.background && !data.background_id
+			? findCanonicalEntryByName("backgrounds", data.background)
+			: Promise.resolve(null),
+	]);
+
+	return {
+		...data,
+		...(hasJob ? { job_id: data.job_id ?? jobEntry?.id ?? null } : {}),
+		...(hasPath ? { path_id: data.path_id ?? pathEntry?.id ?? null } : {}),
+		...(hasBackground
+			? { background_id: data.background_id ?? backgroundEntry?.id ?? null }
+			: {}),
+	} as T;
 }
 
 export async function listCanonicalEntriesBatch(
@@ -600,6 +650,121 @@ export async function findCanonicalCastableByName(
 	return null;
 }
 
+export async function findCanonicalCastableById(
+	id: string | null | undefined,
+	accessContext?: { campaignId?: string | null },
+	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
+): Promise<CanonicalCastableEntry | null> {
+	if (!id) return null;
+	const results = await listCanonicalEntriesBatch(
+		preferredTypes,
+		undefined,
+		accessContext,
+	);
+
+	for (const type of preferredTypes) {
+		const match = (results.get(type) ?? []).find((entry) => entry.id === id);
+		if (match) return normalizeCastableEntry(match, type);
+	}
+
+	return null;
+}
+
+export interface CanonicalReferenceLookup {
+	id?: string | null;
+	name?: string | null;
+}
+
+export type CanonicalReferenceResolution<T> =
+	| { matchedBy: "id"; entry: T }
+	| { matchedBy: "name"; entry: T }
+	| { matchedBy: "none"; entry: null };
+
+/**
+ * ID-first canonical reference resolver. Looks up an entry by static slug ID
+ * first, falls back to a case-insensitive name match, and returns a
+ * resolution object with a `matchedBy` discriminator so callers can
+ * distinguish ID hits, legacy name hits, and unresolved (custom) entries.
+ */
+export async function resolveCanonicalReference(
+	type: StaticCanonicalEntryType,
+	ref: CanonicalReferenceLookup,
+	accessContext?: { campaignId?: string | null },
+): Promise<CanonicalReferenceResolution<StaticCompendiumEntry>> {
+	if (ref.id) {
+		const byId = await findCanonicalEntryById(type, ref.id, accessContext);
+		if (byId) return { matchedBy: "id", entry: byId };
+	}
+	if (ref.name) {
+		const byName = await findCanonicalEntryByName(type, ref.name);
+		if (byName) return { matchedBy: "name", entry: byName };
+	}
+	return { matchedBy: "none", entry: null };
+}
+
+/**
+ * Castable variant of `resolveCanonicalReference`. Tries each preferred
+ * castable type (powers/spells) for an ID match before falling back to a
+ * case-insensitive name match across the same set, returning a
+ * `CanonicalCastableEntry` when found.
+ */
+export async function resolveCanonicalCastableReference(
+	ref: CanonicalReferenceLookup,
+	accessContext?: { campaignId?: string | null },
+	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
+): Promise<CanonicalReferenceResolution<CanonicalCastableEntry>> {
+	if (ref.id) {
+		const byId = await findCanonicalCastableById(
+			ref.id,
+			accessContext,
+			preferredTypes,
+		);
+		if (byId) return { matchedBy: "id", entry: byId };
+	}
+	if (ref.name) {
+		const byName = await findCanonicalCastableByName(
+			ref.name,
+			accessContext,
+			preferredTypes,
+		);
+		if (byName) return { matchedBy: "name", entry: byName };
+	}
+	return { matchedBy: "none", entry: null };
+}
+
+/**
+ * Sourcebook accessibility check that operates by canonical ID first. When an
+ * ID is provided we resolve the entry, then verify its `source_book` is
+ * accessible. Custom (unresolved) entries are treated as accessible because
+ * they are user-authored and not gated by sourcebook entitlements.
+ */
+export async function isCanonicalEntryAccessible(
+	type: StaticCanonicalEntryType,
+	id: string | null | undefined,
+	accessContext?: { campaignId?: string | null },
+): Promise<boolean> {
+	const entry = await findCanonicalEntryById(type, id, accessContext);
+	if (!entry) {
+		// Either no id supplied, or the id is unknown (custom entry). Custom
+		// entries are not gated by sourcebook entitlements.
+		return true;
+	}
+	return isSourcebookAccessible(entry.source_book, accessContext);
+}
+
+export async function isCanonicalCastableAccessible(
+	id: string | null | undefined,
+	accessContext?: { campaignId?: string | null },
+	preferredTypes: readonly CanonicalCastableType[] = canonicalCastableTypes,
+): Promise<boolean> {
+	const entry = await findCanonicalCastableById(
+		id,
+		accessContext,
+		preferredTypes,
+	);
+	if (!entry) return true;
+	return isSourcebookAccessible(entry.source_book, accessContext);
+}
 export async function listLearnableCastables(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {

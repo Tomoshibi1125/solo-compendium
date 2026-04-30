@@ -75,6 +75,18 @@ export function maintainConcentration(
 	};
 }
 
+/**
+ * Compute the concentration save DC for a single damage instance.
+ *
+ * SRD 5e / DDB parity: DC = max(10, floor(damage / 2)) — per-hit, not
+ * cumulative across the round. Damage of 0 still floors to 10 (the rule
+ * only applies when concentration is active and damage was taken; the
+ * caller is responsible for that gate).
+ */
+export function calculateConcentrationDC(damage: number): number {
+	return Math.max(10, Math.floor(Math.max(0, damage) / 2));
+}
+
 // Take damage while concentrating (SRD 5e: sets the DC for a required Vitality save)
 export function takeConcentrationDamage(
 	state: ConcentrationState,
@@ -85,8 +97,7 @@ export function takeConcentrationDamage(
 	}
 
 	const totalDamage = state.damageTakenThisRound + damage;
-	// SRD 5e: DC = max(10, floor(damage / 2)) — per-hit, not cumulative
-	const dc = Math.max(10, Math.floor(damage / 2));
+	const dc = calculateConcentrationDC(damage);
 
 	return {
 		...state,

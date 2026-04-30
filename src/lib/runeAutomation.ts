@@ -1,6 +1,13 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { logger } from "./logger";
+import { logger } from "@/lib/logger";
+import { type RegentGrantKind, regentGrantsAbility } from "@/lib/regentGrants";
+import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
+import {
+	jobCanLearnPowers,
+	jobCanLearnSpells,
+	jobCanLearnTechniques,
+} from "./jobAbilityAccess";
 
 export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 
@@ -47,7 +54,7 @@ export async function autoLearnRunes(
 // Rift Ascendant Rune Absorption — cross-type resolution
 // ---------------------------------------------------------------------------
 
-const FULL_CASTERS = [
+export const FULL_CASTERS = [
 	"Mage",
 	"Esper",
 	"Herald",
@@ -57,16 +64,20 @@ const FULL_CASTERS = [
 	"Summoner",
 	"Idol",
 ];
-const HALF_CASTERS = ["Holy Knight", "Stalker"];
-const MARTIAL_JOBS = ["Assassin", "Berserker", "Destroyer", "Striker"];
+export const HALF_CASTERS = ["Holy Knight", "Stalker"];
+export const MARTIAL_JOBS = ["Assassin", "Berserker", "Destroyer", "Striker"];
 
-const _CASTER_JOBS = [...FULL_CASTERS, ...HALF_CASTERS];
+export type RuneRecharge =
+	| "at-will"
+	| "short-rest"
+	| "long-rest"
+	| "once-per-day";
 
 export type RuneAbsorptionResult = {
 	/** True if the character's archetype doesn't match the rune type */
 	isCrossType: boolean;
 	/** Recharge cadence for the learned ability */
-	recharge: "at-will" | "short-rest" | "long-rest";
+	recharge: RuneRecharge;
 	/** Max uses per rest period (null = unlimited / at-will) */
 	usesMax: number | null;
 	/** Description of how the ability was adapted */
@@ -75,106 +86,247 @@ export type RuneAbsorptionResult = {
 	actionType: "action" | "bonus-action" | "reaction" | "passive";
 	/** Prefix to prepend to the ability description when cross-type */
 	descriptionPrefix: string;
+	abilityKind: RegentGrantKind;
+	isNativeViaJob: boolean;
+	isNativeViaRegent: boolean;
+	isCrossClassAdaptation: boolean;
 };
 
+export type RuneAbsorptionInput = {
+	abilityKind: RegentGrantKind;
+	usesPerRest?: string | null;
+	characterJob?: string | null;
+	characterLevel: number;
+	proficiencyBonus: number;
+	primaryStatModifier?: number;
+	runeRarity?: string | null;
+	unlockedRegents?: Array<string | null | undefined>;
+	nativeRecharge?: string | null;
+	regentFrequency?: string | null;
+};
+
+export type RuneAbilityScores = Partial<Record<AbilityScore, number>>;
+
 /**
- * Determine how a rune's ability should be adapted when absorbed.
+ * Canonical Cross-Class Adaptation description used in every rune entry.
+ * Mirrors the locked formula in `resolveRuneAbsorptionFromInput`:
+ *   uses_per_rest = max(1, proficiency_bonus + primary_stat_modifier + rune_rarity_bonus)
  */
+export const RUNE_CROSS_CLASS_DESCRIPTION =
+	"Cross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.";
+
+const PRIMARY_ABILITIES_BY_JOB: Record<string, AbilityScore[]> = {
+	assassin: ["AGI", "STR"],
+	berserker: ["STR", "VIT"],
+	contractor: ["PRE", "INT"],
+	destroyer: ["STR", "VIT"],
+	esper: ["SENSE", "PRE"],
+	herald: ["PRE", "SENSE"],
+	"holy knight": ["STR", "PRE"],
+	idol: ["PRE", "SENSE"],
+	mage: ["INT", "SENSE"],
+	revenant: ["PRE", "VIT"],
+	stalker: ["AGI", "SENSE"],
+	striker: ["STR", "AGI"],
+	summoner: ["SENSE", "INT"],
+	technomancer: ["INT", "AGI"],
+};
+
+export function getRunePrimaryStatModifier(
+	jobName: string | null | undefined,
+	abilities: RuneAbilityScores,
+): number {
+	const job = (jobName ?? "").trim().toLowerCase();
+	const candidates = PRIMARY_ABILITIES_BY_JOB[job] ?? [
+		"STR",
+		"AGI",
+		"VIT",
+		"INT",
+		"SENSE",
+		"PRE",
+	];
+	return Math.max(
+		...candidates.map((ability) =>
+			getAbilityModifier(abilities[ability] ?? 10),
+		),
+	);
+}
+
+export function getRuneRarityBonus(rarity: string | null | undefined): number {
+	switch ((rarity || "uncommon").toLowerCase()) {
+		case "rare":
+			return 1;
+		case "very_rare":
+		case "very rare":
+			return 2;
+		case "legendary":
+			return 3;
+		default:
+			return 0;
+	}
+}
+
+function normalizeRuneRecharge(
+	value: string | null | undefined,
+	fallback: RuneRecharge,
+): RuneRecharge {
+	const normalized = (value ?? "").trim().toLowerCase().replace(/\s+/g, "-");
+	if (!normalized) return fallback;
+	if (normalized.includes("at-will")) return "at-will";
+	if (normalized.includes("short")) return "short-rest";
+	if (normalized.includes("long")) return "long-rest";
+	if (normalized.includes("once-per-day") || normalized.includes("daily")) {
+		return "once-per-day";
+	}
+	return fallback;
+}
+
+function jobGrantsAbility(
+	jobName: string | null | undefined,
+	abilityKind: RegentGrantKind,
+): boolean {
+	if (abilityKind === "spell") return jobCanLearnSpells(jobName);
+	if (abilityKind === "power") return jobCanLearnPowers(jobName);
+	return jobCanLearnTechniques(jobName);
+}
+
+function inferLegacyAbilityKind(runeType: string | null): RegentGrantKind {
+	const normalized = (runeType ?? "").trim().toLowerCase();
+	if (normalized === "caster" || normalized === "spell") return "spell";
+	if (normalized === "power") return "power";
+	return "technique";
+}
+
+export function inferRuneAbilityKind(rune: {
+	teaches?: { kind?: string | null } | null;
+	rank?: string | null;
+	tags?: string[] | null;
+	name?: string | null;
+	id?: string | null;
+}): RegentGrantKind {
+	if (rune.teaches?.kind === "spell") return "spell";
+	if (rune.teaches?.kind === "power") return "power";
+	if (rune.teaches?.kind === "technique") return "technique";
+	const text = [rune.rank, rune.id, rune.name, ...(rune.tags ?? [])]
+		.filter((value): value is string => typeof value === "string")
+		.join(" ")
+		.toLowerCase();
+	if (text.includes("power")) return "power";
+	if (text.includes("technique")) return "technique";
+	return "spell";
+}
+
+export function buildRuneFeatureModifiers(
+	absorption: RuneAbsorptionResult,
+	teaches?: { kind: "spell" | "power" | "technique"; ref: string } | null,
+): Record<string, boolean | string | Record<string, string> | null> {
+	return {
+		acquired_via: "rune",
+		ability_kind: absorption.abilityKind,
+		is_cross_class_adaptation: absorption.isCrossClassAdaptation,
+		is_native_via_job: absorption.isNativeViaJob,
+		is_native_via_regent: absorption.isNativeViaRegent,
+		teaches: teaches ?? null,
+	};
+}
+
+function resolveRuneAbsorptionFromInput(
+	input: RuneAbsorptionInput,
+): RuneAbsorptionResult {
+	const isNativeViaJob = jobGrantsAbility(
+		input.characterJob,
+		input.abilityKind,
+	);
+	const regentMatch = (input.unlockedRegents ?? []).find((regent) =>
+		regentGrantsAbility(regent, input.abilityKind),
+	);
+	const isNativeViaRegent = Boolean(regentMatch);
+	const isCrossClassAdaptation = !isNativeViaJob && !isNativeViaRegent;
+
+	if (isCrossClassAdaptation) {
+		const usesMax = Math.max(
+			1,
+			input.proficiencyBonus +
+				(input.primaryStatModifier ?? 0) +
+				getRuneRarityBonus(input.runeRarity),
+		);
+		const descriptionPrefix = `[Cross-Class Adaptation] Uses per rest = proficiency bonus + primary stat modifier + rune rarity bonus (${usesMax} uses per Long Rest).`;
+
+		return {
+			isCrossType: true,
+			recharge: "long-rest",
+			usesMax,
+			adaptationNote: `Cross-class adaptation: ${input.abilityKind} rune (${usesMax} uses).`,
+			actionType: "action",
+			descriptionPrefix,
+			abilityKind: input.abilityKind,
+			isNativeViaJob,
+			isNativeViaRegent,
+			isCrossClassAdaptation,
+		};
+	}
+
+	const nativeUsesBase = calculateRuneMaxUses(
+		input.usesPerRest,
+		input.characterLevel,
+		input.proficiencyBonus,
+	);
+	const usesMax = nativeUsesBase === -1 ? null : nativeUsesBase;
+	const recharge =
+		isNativeViaRegent && !isNativeViaJob
+			? normalizeRuneRecharge(input.regentFrequency, "long-rest")
+			: normalizeRuneRecharge(
+					input.nativeRecharge ?? input.usesPerRest,
+					"long-rest",
+				);
+
+	return {
+		isCrossType: false,
+		recharge: usesMax === null ? "at-will" : recharge,
+		usesMax,
+		adaptationNote:
+			usesMax === null
+				? "Native absorption: at-will"
+				: `Native absorption: ${usesMax} uses per ${recharge}`,
+		actionType: "action",
+		descriptionPrefix: "",
+		abilityKind: input.abilityKind,
+		isNativeViaJob,
+		isNativeViaRegent,
+		isCrossClassAdaptation,
+	};
+}
+
+export function resolveRuneAbsorption(
+	input: RuneAbsorptionInput,
+): RuneAbsorptionResult;
 export function resolveRuneAbsorption(
 	runeType: string | null,
 	runeUsesPerRest: string | null | undefined,
 	characterJob: string | null,
 	characterLevel: number,
 	proficiencyBonus: number,
-	runeRarity: string = "uncommon",
+	runeRarity?: string | null,
+): RuneAbsorptionResult;
+export function resolveRuneAbsorption(
+	inputOrRuneType: RuneAbsorptionInput | string | null,
+	runeUsesPerRest?: string | null,
+	characterJob?: string | null,
+	characterLevel?: number,
+	proficiencyBonus?: number,
+	runeRarity?: string | null,
 ): RuneAbsorptionResult {
-	const job = characterJob || "";
-	const isCaster = FULL_CASTERS.includes(job) || HALF_CASTERS.includes(job);
-	const isMartial = MARTIAL_JOBS.includes(job);
-	const isHalfCaster = HALF_CASTERS.includes(job);
-	const isHybrid = !isCaster && !isMartial;
-
-	const runeIsMartial =
-		runeType === "martial" ||
-		runeType === "offensive" ||
-		runeType === "defensive";
-	const runeIsCaster = runeType === "caster";
-
-	// Determine if adaptation is needed.
-	const isCrossType =
-		!isHybrid &&
-		!isHalfCaster &&
-		((isCaster && (runeIsMartial || runeType === "martial")) ||
-			(isMartial && (runeIsCaster || runeType === "caster")));
-
-	if (isCrossType) {
-		// Calculate uses based on rarity
-		let rarityBonus = 0;
-		if (runeRarity === "rare") rarityBonus = 1;
-		else if (runeRarity === "very_rare") rarityBonus = 2;
-		else if (runeRarity === "legendary") rarityBonus = 3;
-
-		const usesMax = proficiencyBonus + rarityBonus;
-
-		// Job-specific flavor and stat adaptation
-		let descriptionPrefix = "";
-		if (isMartial) {
-			const flavor =
-				job === "Striker" || job === "Assassin"
-					? "channeled through your lightning-fast strikes and focused breath"
-					: "manifested as a raw physical technique channeled through your weapons";
-			descriptionPrefix = `[Adapted Technique] You have adapted this energy into your martial repertoire. It is now ${flavor}. This ability now uses your STR or AGI modifier for checks and saves. (${usesMax} uses per Long Rest)`;
-		} else {
-			descriptionPrefix = `[Arcane Adaptation] You manifest this physical technique through a magical construct, telekinetic force, or aura projection. This ability now uses your spellcasting modifier (INT, SENSE, or PRE) instead of a physical stat. (${usesMax} uses per Long Rest)`;
-		}
-
-		return {
-			isCrossType: true,
-			recharge: "long-rest",
-			usesMax,
-			adaptationNote: isMartial
-				? `Cross-type: Spell adapted as martial technique (${usesMax} uses).`
-				: `Cross-type: Martial ability adapted as magical construct (${usesMax} uses).`,
-			actionType: "action",
-			descriptionPrefix,
-		};
+	if (typeof inputOrRuneType === "object" && inputOrRuneType !== null) {
+		return resolveRuneAbsorptionFromInput(inputOrRuneType);
 	}
-
-	// Natural absorption: use the rune's native cadence
-	const usesModifier = isHalfCaster || isHybrid ? 1 : 0;
-	const nativeUsesBase = calculateRuneMaxUses(
-		runeUsesPerRest,
-		characterLevel,
-		proficiencyBonus,
-	);
-
-	const usesMax = nativeUsesBase === -1 ? null : nativeUsesBase + usesModifier;
-
-	if (usesMax === null) {
-		return {
-			isCrossType: false,
-			recharge: "at-will",
-			usesMax: null,
-			adaptationNote: "Natural absorption: at-will",
-			actionType: "action",
-			descriptionPrefix: "",
-		};
-	}
-
-	const recharge: "short-rest" | "long-rest" = runeUsesPerRest
-		?.toLowerCase()
-		.includes("short")
-		? "short-rest"
-		: "long-rest";
-
-	return {
-		isCrossType: false,
-		recharge,
-		usesMax,
-		adaptationNote: `Natural absorption: ${usesMax} uses per ${recharge}`,
-		actionType: "action",
-		descriptionPrefix: "",
-	};
+	return resolveRuneAbsorptionFromInput({
+		abilityKind: inferLegacyAbilityKind(inputOrRuneType),
+		usesPerRest: runeUsesPerRest,
+		characterJob,
+		characterLevel: characterLevel ?? 1,
+		proficiencyBonus: proficiencyBonus ?? 2,
+		runeRarity,
+	});
 }
 
 /**

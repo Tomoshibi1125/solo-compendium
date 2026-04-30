@@ -130,6 +130,10 @@ import {
 import type { DerivedStats } from "@/hooks/useCharacterDerivedStats";
 import type { Character as CharacterHook } from "@/hooks/useCharacters";
 import { mapToCharacterWithAbilities } from "@/hooks/useCharacters";
+import type {
+	ConcentrationLostReason,
+	ConcentrationSaveMode,
+} from "@/hooks/useConcentration";
 import { clearPersistedFilters } from "@/hooks/useFilterPersistence";
 import { useHomebrewCharacterIntegration } from "@/hooks/useHomebrewContent";
 import { useMarketplaceReviews } from "@/hooks/useMarketplaceData";
@@ -206,6 +210,7 @@ import {
 	trackEvent,
 } from "@/lib/analytics";
 import { AppError } from "@/lib/appError";
+import type { AttunementValidation } from "@/lib/attunementRules";
 import { useAudioShortcuts } from "@/lib/audio/hooks";
 import {
 	AUDIO_SOURCES,
@@ -302,6 +307,8 @@ import {
 } from "@/lib/conditionSystem";
 import { getAllConditions, getCondition } from "@/lib/conditions";
 import { parseYAMLContent } from "@/lib/contentImporter";
+import type { ArmorClassStack } from "@/lib/derivedStats/armorClass";
+import type { InitiativeBreakdown } from "@/lib/derivedStats/initiative";
 import { DiceAudioEngine } from "@/lib/dice/audio";
 import {
 	calculatePushDragLift,
@@ -331,8 +338,10 @@ import {
 } from "@/lib/experience";
 import type { Character as CharacterExportLib } from "@/lib/export";
 import {
+	downloadCharacterJSON,
 	downloadFile,
 	exportCharacter,
+	exportCharacterMarkdown,
 	exportCharacterToMarkdown,
 	exportCompendiumEntries,
 	printCharacterSheet,
@@ -368,17 +377,26 @@ import {
 	getShortcutsByCategory,
 	showShortcutsHelp,
 } from "@/lib/globalShortcuts";
+import type {
+	HpDamageInput,
+	HpDamageResult,
+	HpHealInput,
+	HpHealResult,
+	TempHpResult,
+} from "@/lib/hpAdjustments";
 import {
 	getImageDimensions,
 	preloadImage,
 	supportsAVIF,
 	supportsWebP,
 } from "@/lib/imageOptimization";
+import type { ImportVersionStatus } from "@/lib/importValidation";
 import {
 	filterAccessibleFeatures,
 	getSpellsKnown,
 	getSpellsPrepared,
 } from "@/lib/levelGating";
+import type { LevelUpScalarBumps } from "@/lib/levelUpCalculations";
 // 2. Logging & Diagnostics
 import { debug, logAndToastError } from "@/lib/logger";
 import {
@@ -423,12 +441,24 @@ import {
 	getStaticTechniques,
 	isProtocolDataReady,
 } from "@/lib/ProtocolDataManager";
+import type {
+	AbilityKind,
+	PerRestCharacterContext,
+	PerRestChargePool,
+	PerRestChargeProfile,
+} from "@/lib/perRestCharges";
+import type { DedupeResult } from "@/lib/proficiencyDedup";
 import { getRapier, init as initRapier } from "@/lib/rapierCompat";
 import type { AbilityScore } from "@/lib/regentGeminiSystem";
 import {
 	RegentGeminiSystem,
 	RegentQuestManager,
 } from "@/lib/regentGeminiSystem";
+import {
+	getRegentGrants,
+	REGENT_GRANT_IDS,
+	type RegentGrantId,
+} from "@/lib/regentGrants";
 import { RegentType } from "@/lib/regentTypes";
 import {
 	formatRollResult,
@@ -455,6 +485,14 @@ import {
 } from "@/lib/rollEngine";
 // Legacy rune automation imports removed.
 import {
+	autoLearnRunes,
+	FULL_CASTERS,
+	HALF_CASTERS,
+	MARTIAL_JOBS,
+	type RuneAbilityScores,
+	type RuneAbsorptionInput,
+} from "@/lib/runeAutomation";
+import {
 	sanitizeHTML,
 	sanitizeNumber,
 	sanitizeObjectKeys,
@@ -472,6 +510,7 @@ import {
 	getKnownSpellEffects,
 	spellEffectsToEngineEffects,
 } from "@/lib/spellEffectPipeline";
+import type { NormalizedSpellReference } from "@/lib/spellReference";
 import {
 	maintainConcentration,
 	makeConcentrationSave,
@@ -966,6 +1005,8 @@ export const WardenWiringSeal = {
 		export: {
 			char: exportCharacter,
 			md: exportCharacterToMarkdown,
+			mdDownload: exportCharacterMarkdown,
+			jsonDownload: downloadCharacterJSON,
 			compendium: exportCompendiumEntries,
 			download: downloadFile,
 			print: printCharacterSheet,
@@ -994,7 +1035,16 @@ export const WardenWiringSeal = {
 			filter: filterReadableNotes,
 		},
 		sync: { unregister: unregisterOfflineSyncProcessor },
-		runes: {},
+		runes: {
+			autoLearn: autoLearnRunes,
+			fullCasters: FULL_CASTERS,
+			halfCasters: HALF_CASTERS,
+			martialJobs: MARTIAL_JOBS,
+		},
+		regentGrants: {
+			get: getRegentGrants,
+			ids: REGENT_GRANT_IDS,
+		},
 		sanitize: {
 			html: sanitizeHTML,
 			text: sanitizeText,
@@ -1149,6 +1199,27 @@ export const MasterArchitecturalWitness = {
 		null as AmbientSoundStateLib | null,
 		null as AmbientSoundZoneLib | null,
 		null as AmbientSoundStateVTT | null,
+		null as RuneAbsorptionInput | null,
+		null as RuneAbilityScores | null,
+		null as ConcentrationLostReason | null,
+		null as ConcentrationSaveMode | null,
+		null as AttunementValidation | null,
+		null as ArmorClassStack | null,
+		null as InitiativeBreakdown | null,
+		null as LevelUpScalarBumps | null,
+		null as AbilityKind | null,
+		null as PerRestCharacterContext | null,
+		null as PerRestChargePool | null,
+		null as PerRestChargeProfile | null,
+		null as DedupeResult | null,
+		null as ImportVersionStatus | null,
+		null as NormalizedSpellReference | null,
+		null as RegentGrantId | null,
+		null as HpDamageInput | null,
+		null as HpDamageResult | null,
+		null as HpHealInput | null,
+		null as HpHealResult | null,
+		null as TempHpResult | null,
 	],
 	// 2. Class Method Reification (Satisfies Member Usage)
 	members: {

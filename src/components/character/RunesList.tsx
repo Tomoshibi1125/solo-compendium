@@ -18,9 +18,14 @@ import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useAbsorbRune, useCharacterRuneKnowledge } from "@/hooks/useRunes";
-import { resolveRuneAbsorption } from "@/lib/runeAutomation";
+import {
+	getRunePrimaryStatModifier,
+	inferRuneAbilityKind,
+	resolveRuneAbsorption,
+} from "@/lib/runeAutomation";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
@@ -60,6 +65,7 @@ export function RunesList({
 	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
 	const { data: character } = useCharacter(characterId);
 	const { features = [] } = useFeatures(characterId);
+	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(characterId);
 	const absorbRune = useAbsorbRune();
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
@@ -81,21 +87,44 @@ export function RunesList({
 		if (!character) return {};
 		const level = character.level ?? 1;
 		const profBonus = getProficiencyBonus(level);
+		const unlockedRegents = regentUnlocks.map((unlock) => unlock.regent_id);
+		const primaryStatModifier = getRunePrimaryStatModifier(character.job, {
+			STR: character.str ?? 10,
+			AGI: character.agi ?? 10,
+			VIT: character.vit ?? 10,
+			INT: character.int ?? 10,
+			SENSE: character.sense ?? 10,
+			PRE: character.pre ?? 10,
+		});
 		const previews: Record<
 			string,
 			ReturnType<typeof resolveRuneAbsorption>
 		> = {};
 		for (const rk of unabsorbedRunes) {
-			previews[rk.rune_id] = resolveRuneAbsorption(
-				rk.rune.rune_type,
-				rk.rune.uses_per_rest,
-				character.job,
-				level,
-				profBonus,
-			);
+			const canonicalRune = rk.rune as unknown as {
+				teaches?: { kind: "spell" | "power" | "technique"; ref: string };
+				rank?: string | null;
+			};
+			previews[rk.rune_id] = resolveRuneAbsorption({
+				abilityKind: inferRuneAbilityKind({
+					teaches: canonicalRune.teaches,
+					rank: canonicalRune.rank ?? null,
+					tags: rk.rune.tags,
+					name: rk.rune.name,
+					id: rk.rune.id,
+				}),
+				usesPerRest: rk.rune.uses_per_rest,
+				characterJob: character.job,
+				characterLevel: level,
+				proficiencyBonus: profBonus,
+				primaryStatModifier,
+				runeRarity: rk.rune.rarity,
+				unlockedRegents,
+				nativeRecharge: rk.rune.recharge,
+			});
 		}
 		return previews;
-	}, [character, unabsorbedRunes]);
+	}, [character, unabsorbedRunes, regentUnlocks]);
 
 	const handleAbsorb = async (runeId: string, runeName: string) => {
 		const displayName = formatRegentVernacular(runeName);

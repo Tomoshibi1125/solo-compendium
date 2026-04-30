@@ -4,6 +4,7 @@
  */
 
 import { supabase } from "@/integrations/supabase/client";
+import { normalizeGeminiState } from "@/lib/characterOverlayValidation";
 import {
 	buildCorePayload,
 	DomainEventBus,
@@ -138,6 +139,10 @@ export async function executeLongRest(
 	const characterState =
 		(character.gemini_state as Record<string, unknown>) || {};
 	const { clearConditionsOnLongRest } = await import("@/lib/conditionSystem");
+	const geminiState = await normalizeGeminiState({
+		...characterState,
+		conditions: clearConditionsOnLongRest(),
+	});
 
 	await supabase
 		.from("characters")
@@ -151,10 +156,7 @@ export async function executeLongRest(
 			rift_favor_current: character.rift_favor_max,
 			exhaustion_level: Math.max(0, character.exhaustion_level - 1),
 			conditions: [], // Legacy sync
-			gemini_state: {
-				...characterState,
-				conditions: clearConditionsOnLongRest(),
-			} as never,
+			gemini_state: geminiState as never,
 			death_save_successes: 0,
 			death_save_failures: 0,
 			stable: false,

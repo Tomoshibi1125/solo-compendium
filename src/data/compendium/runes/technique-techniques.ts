@@ -5,8 +5,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-umbral-strike",
 		name: "Rune of Umbral Strike",
 		display_name: "Rune of Umbral Strike",
+		teaches: { kind: "technique", ref: "umbral-strike" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Agility save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Agility save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Calibrated to finish the exchange in a single pass.",
 		tags: [
 			"awakened",
@@ -36,7 +37,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60 feet",
@@ -50,8 +50,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
 		image: "/generated/compendium/items/item-0446.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -59,8 +57,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-dragon-fist",
 		name: "Rune of Dragon Fist",
 		display_name: "Rune of Dragon Fist",
+		teaches: { kind: "technique", ref: "dragon-fist" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Reserved for moments past negotiation.",
 		tags: [
 			"awakened",
@@ -90,7 +89,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "20-foot radius burst",
@@ -104,8 +102,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0334.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -113,8 +109,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-void-slash",
 		name: "Rune of Void Slash",
 		display_name: "Rune of Void Slash",
+		teaches: { kind: "technique", ref: "void-slash" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A high-throughput expression of the caster's lattice.",
 		tags: [
 			"awakened",
@@ -144,7 +141,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "Touch",
@@ -158,8 +154,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
 		image: "/generated/compendium/items/item-0130.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -167,8 +161,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-multi-shot",
 		name: "Rune of Multi-Shot",
 		display_name: "Rune of Multi-Shot",
+		teaches: { kind: "technique", ref: "multi-shot" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Agility save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Agility save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Guild-certified casting.",
 		tags: [
 			"awakened",
@@ -198,7 +193,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "60 feet",
@@ -212,8 +206,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
 		image: "/generated/compendium/items/item-0580.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -221,8 +213,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-whirlwind-strike",
 		name: "Rune of Whirlwind Strike",
 		display_name: "Rune of Whirlwind Strike",
+		teaches: { kind: "technique", ref: "whirlwind-strike" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Iterated to completion during frontline breach ops.",
 		tags: [
 			"awakened",
@@ -252,7 +245,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "120 feet",
@@ -266,8 +258,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0381.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -275,8 +265,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-umbral-dodge",
 		name: "Rune of Umbral Dodge",
 		display_name: "Rune of Umbral Dodge",
+		teaches: { kind: "technique", ref: "umbral-dodge" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Used when subtler instruments are out of reach.",
 		tags: [
 			"awakened",
@@ -306,7 +297,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "Sight",
@@ -320,8 +310,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
 		image: "/generated/compendium/items/item-0963.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -329,8 +317,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-iron-wall",
 		name: "Rune of Iron Wall",
 		display_name: "Rune of Iron Wall",
+		teaches: { kind: "technique", ref: "iron-wall" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Spare in gesture, decisive in outcome.",
 		tags: [
 			"awakened",
@@ -360,7 +349,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "60-foot line",
@@ -374,8 +362,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0425.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -383,8 +369,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-counter-strike",
 		name: "Rune of Counter Strike",
 		display_name: "Rune of Counter Strike",
+		teaches: { kind: "technique", ref: "counter-strike" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -414,7 +401,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "Touch",
@@ -428,8 +414,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
 		image: "/generated/compendium/items/item-0559.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -437,8 +421,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-deflect-arrows",
 		name: "Rune of Deflect Arrows",
 		display_name: "Rune of Deflect Arrows",
+		teaches: { kind: "technique", ref: "deflect-arrows" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A high-throughput expression of the caster's lattice.",
 		tags: [
 			"awakened",
@@ -468,7 +453,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "60-foot line",
@@ -482,8 +466,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0376.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -491,6 +473,7 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-guardian-stance",
 		name: "Rune of Guardian Stance",
 		display_name: "Rune of Guardian Stance",
+		teaches: { kind: "technique", ref: "guardian-stance" },
 		description:
 			"Drops the caster into a defensive stance that channels incoming blows into their Stamina pool. Grants 2d10 + 4 temporary HP to the caster. Lasts 1 minute or until struck at 0 HP.",
 		flavor: "A standardized Bureau-issued casting pattern.",
@@ -522,7 +505,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "self-heal",
 			range: "30-foot cone",
@@ -542,8 +524,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
 		image: "/generated/compendium/items/item-1004.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -551,8 +531,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-wind-dash",
 		name: "Rune of Wind Dash",
 		display_name: "Rune of Wind Dash",
+		teaches: { kind: "technique", ref: "wind-dash" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A direct answer in place of a verbal one.",
 		tags: [
 			"awakened",
@@ -582,7 +563,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60 feet",
@@ -596,8 +576,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
 		image: "/generated/compendium/items/item-0225.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -605,8 +583,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-wall-run",
 		name: "Rune of Wall Run",
 		display_name: "Rune of Wall Run",
+		teaches: { kind: "technique", ref: "wall-run" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Local resonance briefly spikes.",
 		tags: [
 			"awakened",
@@ -636,7 +615,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "Touch",
@@ -650,8 +628,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
 		image: "/generated/compendium/items/item-0968.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -659,6 +635,7 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-phase-walk",
 		name: "Rune of Phase Walk",
 		display_name: "Rune of Phase Walk",
+		teaches: { kind: "technique", ref: "phase-walk" },
 		description:
 			"The caster ghost-steps 30 feet through interposing terrain, ignoring difficult-terrain penalties. A creature within 5 feet of the path fails a DC 15 Agility save and cannot trigger opportunity-attacks on the walk. A creature within 5 feet of the path succeeds and retains its reaction.",
 		flavor: "The air takes on a measurable weight.",
@@ -690,7 +667,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "20-foot radius burst",
@@ -704,8 +680,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0561.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -713,8 +687,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-leap-strike",
 		name: "Rune of Leap Strike",
 		display_name: "Rune of Leap Strike",
+		teaches: { kind: "technique", ref: "leap-strike" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Presence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Presence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Reality registers the strike as an event.",
 		tags: [
 			"awakened",
@@ -744,7 +719,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "Sight",
@@ -758,8 +732,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0443.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -767,8 +739,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-umbral-bind",
 		name: "Rune of Umbral Bind",
 		display_name: "Rune of Umbral Bind",
+		teaches: { kind: "technique", ref: "umbral-bind" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The fallback when diplomacy has already failed.",
 		tags: [
 			"awakened",
@@ -798,7 +771,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "Sight",
@@ -812,8 +784,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0765.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -821,8 +791,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-disarming-strike",
 		name: "Rune of Disarming Strike",
 		display_name: "Rune of Disarming Strike",
+		teaches: { kind: "technique", ref: "disarming-strike" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Developed under live Gate-incursion conditions.",
 		tags: [
 			"awakened",
@@ -852,7 +823,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "120 feet",
@@ -866,8 +836,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
 		image: "/generated/compendium/items/item-0349.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -875,8 +843,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-trip-attack",
 		name: "Rune of Trip Attack",
 		display_name: "Rune of Trip Attack",
+		teaches: { kind: "technique", ref: "trip-attack" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Agility save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Agility save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -906,7 +875,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "120 feet",
@@ -920,8 +888,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
 		image: "/generated/compendium/items/item-0780.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -929,8 +895,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-grappling-strike",
 		name: "Rune of Grappling Strike",
 		display_name: "Rune of Grappling Strike",
+		teaches: { kind: "technique", ref: "grappling-strike" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The lattice flexes around the cast.",
 		tags: [
 			"awakened",
@@ -960,7 +927,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "60 feet",
@@ -974,8 +940,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0203.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -983,8 +947,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-intimidating-presence",
 		name: "Rune of Intimidating Presence",
 		display_name: "Rune of Intimidating Presence",
+		teaches: { kind: "technique", ref: "intimidating-presence" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Agility save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Agility save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Local resonance briefly spikes.",
 		tags: [
 			"awakened",
@@ -1014,7 +979,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60 feet",
@@ -1028,8 +992,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
 		image: "/generated/compendium/items/item-0185.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -1037,8 +999,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-umbral-termination",
 		name: "Rune of Umbral Termination",
 		display_name: "Rune of Umbral Termination",
+		teaches: { kind: "technique", ref: "umbral-termination" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The fallback when diplomacy has already failed.",
 		tags: [
 			"awakened",
@@ -1068,7 +1031,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "120 feet",
@@ -1082,8 +1044,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
 		image: "/generated/compendium/items/item-0400.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -1091,8 +1051,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-dragon-slaying-blow",
 		name: "Rune of Dragon-Slaying Blow",
 		display_name: "Rune of Dragon-Slaying Blow",
+		teaches: { kind: "technique", ref: "dragon-slaying-blow" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Sense save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Sense save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Calibrated to finish the exchange in a single pass.",
 		tags: [
 			"awakened",
@@ -1122,7 +1083,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "120 feet",
@@ -1136,8 +1096,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0342.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -1145,8 +1103,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-void-annihilation",
 		name: "Rune of Void Annihilation",
 		display_name: "Rune of Void Annihilation",
+		teaches: { kind: "technique", ref: "void-annihilation" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "An entry in the Hunter Bureau's approved catalog.",
 		tags: [
 			"awakened",
@@ -1176,7 +1135,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "Self",
@@ -1190,8 +1148,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Won in a high-stakes Hunter tournament organized by the top five Korean Guilds.",
 		image: "/generated/compendium/items/item-0153.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -1199,8 +1155,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-divine-execution",
 		name: "Rune of Divine Execution",
 		display_name: "Rune of Divine Execution",
+		teaches: { kind: "technique", ref: "divine-execution" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A direct answer in place of a verbal one.",
 		tags: [
 			"awakened",
@@ -1230,7 +1187,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "Touch",
@@ -1244,8 +1200,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0500.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -1253,8 +1207,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-arcane-overload",
 		name: "Rune of Arcane Overload",
 		display_name: "Rune of Arcane Overload",
+		teaches: { kind: "technique", ref: "arcane-overload" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -1284,7 +1239,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "20-foot radius burst",
@@ -1298,8 +1252,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
 		image: "/generated/compendium/items/item-0923.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -1307,8 +1259,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-meteor-strike",
 		name: "Rune of Meteor Strike",
 		display_name: "Rune of Meteor Strike",
+		teaches: { kind: "technique", ref: "meteor-strike" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Guild-certified casting.",
 		tags: [
 			"awakened",
@@ -1338,7 +1291,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "60 feet",
@@ -1352,8 +1304,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
 		image: "/generated/compendium/items/item-0265.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -1361,8 +1311,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-phantom-step",
 		name: "Rune of Phantom Step",
 		display_name: "Rune of Phantom Step",
+		teaches: { kind: "technique", ref: "phantom-step" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -1392,7 +1343,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "120 feet",
@@ -1406,8 +1356,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
 		image: "/generated/compendium/items/item-0298.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -1415,8 +1363,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-thousand-cuts",
 		name: "Rune of Thousand Cuts",
 		display_name: "Rune of Thousand Cuts",
+		teaches: { kind: "technique", ref: "thousand-cuts" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Calibrated to finish the exchange in a single pass.",
 		tags: [
 			"awakened",
@@ -1446,7 +1395,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "120 feet",
@@ -1460,8 +1408,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
 		image: "/generated/compendium/items/item-0330.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -1469,8 +1415,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-absolute-defense",
 		name: "Rune of Absolute Defense",
 		display_name: "Rune of Absolute Defense",
+		teaches: { kind: "technique", ref: "absolute-defense" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Used when subtler instruments are out of reach.",
 		tags: [
 			"awakened",
@@ -1500,7 +1447,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "20-foot radius burst",
@@ -1514,8 +1460,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
 		image: "/generated/compendium/items/item-0864.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -1523,8 +1467,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-gravity-bind",
 		name: "Rune of Gravity Bind",
 		display_name: "Rune of Gravity Bind",
+		teaches: { kind: "technique", ref: "gravity-bind" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -1554,7 +1499,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60 feet",
@@ -1568,8 +1512,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0002.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -1577,8 +1519,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-sonic-boom",
 		name: "Rune of Sonic Boom",
 		display_name: "Rune of Sonic Boom",
+		teaches: { kind: "technique", ref: "sonic-boom" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Economy of action as a design goal.",
 		tags: [
 			"awakened",
@@ -1608,7 +1551,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "Sight",
@@ -1622,8 +1564,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0648.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -1631,8 +1571,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-infinite-riposte",
 		name: "Rune of Infinite Riposte",
 		display_name: "Rune of Infinite Riposte",
+		teaches: { kind: "technique", ref: "infinite-riposte" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Developed under live Gate-incursion conditions.",
 		tags: [
 			"awakened",
@@ -1662,7 +1603,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "20-foot radius burst",
@@ -1676,8 +1616,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0897.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -1685,8 +1623,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-dragon-ascent",
 		name: "Rune of Dragon Ascent",
 		display_name: "Rune of Dragon Ascent",
+		teaches: { kind: "technique", ref: "dragon-ascent" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A Bureau-validated combat pattern.",
 		tags: [
 			"awakened",
@@ -1716,7 +1655,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60 feet",
@@ -1730,8 +1668,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
 		image: "/generated/compendium/items/item-1002.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -1739,8 +1675,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-nerve-strike",
 		name: "Rune of Nerve Strike",
 		display_name: "Rune of Nerve Strike",
+		teaches: { kind: "technique", ref: "nerve-strike" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -1770,7 +1707,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "30-foot cone",
@@ -1784,8 +1720,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
 		image: "/generated/compendium/items/item-0347.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -1793,8 +1727,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-bladeshim-storm",
 		name: "Rune of Bladeshim Storm",
 		display_name: "Rune of Bladeshim Storm",
+		teaches: { kind: "technique", ref: "bladeshim-storm" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Presence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Presence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -1824,7 +1759,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "20-foot radius burst",
@@ -1838,8 +1772,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
 		image: "/generated/compendium/items/item-0279.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -1847,8 +1779,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-immovable-object",
 		name: "Rune of Immovable Object",
 		display_name: "Rune of Immovable Object",
+		teaches: { kind: "technique", ref: "immovable-object" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Sense save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Sense save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Documented only after sustained Gate contact.",
 		tags: [
 			"awakened",
@@ -1878,7 +1811,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "30-foot cone",
@@ -1892,8 +1824,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
 		image: "/generated/compendium/items/item-0552.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -1901,8 +1831,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-echo-step",
 		name: "Rune of Echo Step",
 		display_name: "Rune of Echo Step",
+		teaches: { kind: "technique", ref: "echo-step" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Agility save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Agility save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -1932,7 +1863,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "120 feet",
@@ -1946,8 +1876,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0624.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -1955,8 +1883,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-vortex-pull",
 		name: "Rune of Vortex Pull",
 		display_name: "Rune of Vortex Pull",
+		teaches: { kind: "technique", ref: "vortex-pull" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "An entry in the Hunter Bureau's approved catalog.",
 		tags: [
 			"awakened",
@@ -1986,7 +1915,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "30-foot cone",
@@ -2000,8 +1928,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Created by a rune-smith who sacrificed their own Awakened abilities to forge it.",
 		image: "/generated/compendium/items/item-0658.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -2009,8 +1935,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-blood-tithe",
 		name: "Rune of Blood Tithe",
 		display_name: "Rune of Blood Tithe",
+		teaches: { kind: "technique", ref: "blood-tithe" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Nearby mana instruments drift out of calibration.",
 		tags: [
 			"awakened",
@@ -2040,7 +1967,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "Sight",
@@ -2054,8 +1980,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Extracted from a mana crystal cluster that had been growing undisturbed for decades underground.",
 		image: "/generated/compendium/items/item-0623.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -2063,8 +1987,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-quaking-stomp",
 		name: "Rune of Quaking Stomp",
 		display_name: "Rune of Quaking Stomp",
+		teaches: { kind: "technique", ref: "quaking-stomp" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -2094,7 +2019,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "60 feet",
@@ -2108,8 +2032,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
 		image: "/generated/compendium/items/item-0280.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -2117,8 +2039,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-blade-dance",
 		name: "Rune of Blade Dance",
 		display_name: "Rune of Blade Dance",
+		teaches: { kind: "technique", ref: "blade-dance" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -2148,7 +2071,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "30-foot cone",
@@ -2162,8 +2084,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
 		image: "/generated/compendium/items/item-0466.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -2171,8 +2091,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-grand-slam",
 		name: "Rune of Grand Slam",
 		display_name: "Rune of Grand Slam",
+		teaches: { kind: "technique", ref: "grand-slam" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -2202,7 +2123,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "30-foot cone",
@@ -2216,8 +2136,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0116.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -2225,8 +2143,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-sky-piercer",
 		name: "Rune of Sky Piercer",
 		display_name: "Rune of Sky Piercer",
+		teaches: { kind: "technique", ref: "sky-piercer" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -2256,7 +2175,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "60-foot line",
@@ -2270,8 +2188,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-1000.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -2279,8 +2195,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-unbreakable-will",
 		name: "Rune of Unbreakable Will",
 		display_name: "Rune of Unbreakable Will",
+		teaches: { kind: "technique", ref: "unbreakable-will" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Deployed where communication has broken down.",
 		tags: [
 			"awakened",
@@ -2310,7 +2227,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "Touch",
@@ -2324,8 +2240,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0491.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -2333,8 +2247,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-finishing-blast",
 		name: "Rune of Final Reckoning",
 		display_name: "Rune of Final Reckoning",
+		teaches: { kind: "technique", ref: "final-reckoning" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -2364,7 +2279,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "30-foot cone",
@@ -2378,8 +2292,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0428.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -2387,8 +2299,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-dimensional-step",
 		name: "Rune of Dimensional Step",
 		display_name: "Rune of Dimensional Step",
+		teaches: { kind: "technique", ref: "dimensional-step" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Strength save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Documented only after sustained Gate contact.",
 		tags: [
 			"awakened",
@@ -2418,7 +2331,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60-foot line",
@@ -2432,8 +2344,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
 		image: "/generated/compendium/items/item-0862.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -2441,8 +2351,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-execute",
 		name: "Rune of Execution Strike",
 		display_name: "Rune of Execution Strike",
+		teaches: { kind: "technique", ref: "execution-strike" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A clean resolution in one beat.",
 		tags: [
 			"awakened",
@@ -2472,7 +2383,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "60 feet",
@@ -2486,8 +2396,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0003.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -2495,8 +2403,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-iron-wall-stance",
 		name: "Rune of Iron Wall Stance",
 		display_name: "Rune of Iron Wall Stance",
+		teaches: { kind: "technique", ref: "iron-wall-stance" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Presence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Presence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Pressure-tested inside active Red-Gate deployments.",
 		tags: [
 			"awakened",
@@ -2526,7 +2435,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "Touch",
@@ -2540,8 +2448,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-1016.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -2549,8 +2455,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-whirlwind-slash",
 		name: "Rune of Whirlwind Slash",
 		display_name: "Rune of Whirlwind Slash",
+		teaches: { kind: "technique", ref: "whirlwind-slash" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Sense save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Reserved for moments past negotiation.",
 		tags: [
 			"awakened",
@@ -2580,7 +2487,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "60 feet",
@@ -2594,8 +2500,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0768.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -2603,8 +2507,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-zen-archery",
 		name: "Rune of Zen Archery",
 		display_name: "Rune of Zen Archery",
+		teaches: { kind: "technique", ref: "zen-archery" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -2634,7 +2539,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "Sight",
@@ -2648,8 +2552,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
 		image: "/generated/compendium/items/item-0384.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -2657,8 +2559,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-disarming-flourish",
 		name: "Rune of Disarming Flourish",
 		display_name: "Rune of Disarming Flourish",
+		teaches: { kind: "technique", ref: "disarming-flourish" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -2688,7 +2591,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "20-foot radius burst",
@@ -2702,8 +2604,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Manifested in the user's hand after a near-death experience inside a Red Gate.",
 		image: "/generated/compendium/items/item-0827.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -2711,8 +2611,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-fist-of-the-north-star",
 		name: "Rune of Seven Star Strike",
 		display_name: "Rune of Seven Star Strike",
+		teaches: { kind: "technique", ref: "seven-star-strike" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Presence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Presence save the target takes full damage and becomes Incapacitated, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Deployed where communication has broken down.",
 		tags: [
 			"awakened",
@@ -2742,7 +2643,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "20-foot radius burst",
@@ -2756,8 +2656,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found floating in the spatial void between two Gates that briefly overlapped.",
 		image: "/generated/compendium/items/item-0641.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -2765,8 +2663,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-dragons-tail-sweep",
 		name: "Rune of Dragon's Tail Sweep",
 		display_name: "Rune of Dragon's Tail Sweep",
+		teaches: { kind: "technique", ref: "dragon-s-tail-sweep" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -2796,7 +2695,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "20-foot radius burst",
@@ -2810,8 +2708,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0516.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -2819,8 +2715,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-heavenly-piercing-arrow",
 		name: "Rune of Heaven-Piercer",
 		display_name: "Rune of Heaven-Piercer",
+		teaches: { kind: "technique", ref: "heaven-piercer" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Sense save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Sense save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Spare in gesture, decisive in outcome.",
 		tags: [
 			"awakened",
@@ -2850,7 +2747,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "20-foot radius burst",
@@ -2864,8 +2760,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0486.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -2873,8 +2767,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-mirror-shield-parry",
 		name: "Rune of Mirror Parry",
 		display_name: "Rune of Mirror Parry",
+		teaches: { kind: "technique", ref: "mirror-parry" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -2904,7 +2799,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "20-foot radius burst",
@@ -2918,8 +2812,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0498.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -2927,8 +2819,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-vipers-kiss",
 		name: "Rune of Viper's Kiss",
 		display_name: "Rune of Viper's Kiss",
+		teaches: { kind: "technique", ref: "viper-s-kiss" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Used when subtler instruments are out of reach.",
 		tags: [
 			"awakened",
@@ -2958,7 +2851,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "Sight",
@@ -2972,8 +2864,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
 		image: "/generated/compendium/items/item-0596.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -2981,8 +2871,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-mountain-breaker",
 		name: "Rune of Mountain Breaker",
 		display_name: "Rune of Mountain Breaker",
+		teaches: { kind: "technique", ref: "mountain-breaker" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Strength save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Developed under live Gate-incursion conditions.",
 		tags: [
 			"awakened",
@@ -3012,7 +2903,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "20-foot radius burst",
@@ -3026,8 +2916,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
 		image: "/generated/compendium/items/item-0554.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -3035,8 +2923,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-blade-storm",
 		name: "Rune of Blade Barrage",
 		display_name: "Rune of Blade Barrage",
+		teaches: { kind: "technique", ref: "blade-barrage" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -3066,7 +2955,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "Self",
@@ -3080,8 +2968,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
 		image: "/generated/compendium/items/item-0624.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -3089,6 +2975,7 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-guardians-rebuke",
 		name: "Rune of Guardian's Rebuke",
 		display_name: "Rune of Guardian's Rebuke",
+		teaches: { kind: "technique", ref: "guardian-s-rebuke" },
 		description:
 			"Interposes the caster in front of a melee strike targeting an ally within 5 feet. The attacker fails a DC 15 Strength save and has disadvantage on its next attack roll this turn. The attacker succeeds and resolves its attack normally against the original target.",
 		flavor: "Developed under live Gate-incursion conditions.",
@@ -3120,7 +3007,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "Sight",
@@ -3134,8 +3020,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0721.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -3143,8 +3027,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-gravity-stomp",
 		name: "Rune of Gravity Stomp",
 		display_name: "Rune of Gravity Stomp",
+		teaches: { kind: "technique", ref: "gravity-stomp" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Reality registers the strike as an event.",
 		tags: [
 			"awakened",
@@ -3174,7 +3059,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "Touch",
@@ -3188,8 +3072,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Discovered in a hidden treasure room after solving an ancient puzzle mechanism in a B-Rank Gate.",
 		image: "/generated/compendium/items/item-0084.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -3197,8 +3079,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-eagles-eye",
 		name: "Rune of Eagle's Eye",
 		display_name: "Rune of Eagle's Eye",
+		teaches: { kind: "technique", ref: "eagle-s-eye" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Documented only after sustained Gate contact.",
 		tags: [
 			"awakened",
@@ -3228,7 +3111,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "30-foot cone",
@@ -3242,8 +3124,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
 		image: "/generated/compendium/items/item-0743.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -3251,8 +3131,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-dragon-claw-rend",
 		name: "Rune of Dragon Claw Rend",
 		display_name: "Rune of Dragon Claw Rend",
+		teaches: { kind: "technique", ref: "dragon-claw-rend" },
 		description:
-			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d10 + 4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -3282,7 +3163,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 + 4",
 			range: "20-foot radius burst",
@@ -3296,8 +3176,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0273.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -3305,8 +3183,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-temporal-feint",
 		name: "Rune of Temporal Feint",
 		display_name: "Rune of Temporal Feint",
+		teaches: { kind: "technique", ref: "temporal-feint" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Strength save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: [
 			"awakened",
@@ -3336,7 +3215,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "Sight",
@@ -3350,8 +3228,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Crystallized from the mana-blood of a Gate Boss as it dissolved back into dimensional energy.",
 		image: "/generated/compendium/items/item-0295.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},
@@ -3359,8 +3235,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-titan-slam",
 		name: "Rune of Titan Slam",
 		display_name: "Rune of Titan Slam",
+		teaches: { kind: "technique", ref: "titan-slam" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Prone, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Economy of action as a design goal.",
 		tags: [
 			"awakened",
@@ -3390,7 +3267,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "20-foot radius burst",
@@ -3404,8 +3280,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Traded by a mysterious figure who appeared at the Gate entrance and vanished after the exchange.",
 		image: "/generated/compendium/items/item-0744.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -3413,8 +3287,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-ice-path-skate",
 		name: "Rune of Frost Runner",
 		display_name: "Rune of Frost Runner",
+		teaches: { kind: "technique", ref: "frost-runner" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Used when subtler instruments are out of reach.",
 		tags: [
 			"awakened",
@@ -3444,7 +3319,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "60 feet",
@@ -3458,8 +3332,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Found embedded in the walls of a dungeon that the System flagged as 'anomalous' during mapping.",
 		image: "/generated/compendium/items/item-0826.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -3467,8 +3339,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-venom-spray-technique",
 		name: "Rune of Venom Spray",
 		display_name: "Rune of Venom Spray",
+		teaches: { kind: "technique", ref: "venom-spray" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Restrained, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Documented only after sustained Gate contact.",
 		tags: [
 			"awakened",
@@ -3498,7 +3371,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "20-foot radius burst",
@@ -3512,8 +3384,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Awarded by the Hunter Bureau as compensation for completing a classified solo operation.",
 		image: "/generated/compendium/items/item-0568.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -3521,8 +3391,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-blood-boil-strike",
 		name: "Rune of Blood-Boil Strike",
 		display_name: "Rune of Blood-Boil Strike",
+		teaches: { kind: "technique", ref: "blood-boil-strike" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Frightened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A blunt demonstration of channel capacity.",
 		tags: [
 			"awakened",
@@ -3552,7 +3423,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "60-foot line",
@@ -3566,8 +3436,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Condensed from ambient mana during a rare celestial alignment observed by the Astronomer's Guild.",
 		image: "/generated/compendium/items/item-0788.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Each additional rune of the same ability category consumed increases the ability's rank by one tier.",
 	},
@@ -3575,8 +3443,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-ancient-hebrew-strings-step-technique",
 		name: "Rune of Ancient Hebrew Strings Step",
 		display_name: "Rune of Ancient Hebrew Strings Step",
+		teaches: { kind: "technique", ref: "ancient-hebrew-strings-step" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Presence save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "An entry in the Hunter Bureau's approved catalog.",
 		tags: [
 			"awakened",
@@ -3606,7 +3475,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "Self",
@@ -3620,8 +3488,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Purchased from a black-market rune dealer operating in the shadow district of Neo-Seoul.",
 		image: "/generated/compendium/items/item-1011.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -3629,8 +3495,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-infinity-slash",
 		name: "Rune of Infinity Slash",
 		display_name: "Rune of Infinity Slash",
+		teaches: { kind: "technique", ref: "infinity-slash" },
 		description:
-			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 3d8 damage; on a failed DC 15 Agility save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A blunt demonstration of channel capacity.",
 		tags: [
 			"awakened",
@@ -3660,7 +3527,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8",
 			range: "60 feet",
@@ -3674,8 +3540,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Recovered from the personal effects of a retired S-Rank Hunter's estate sale.",
 		image: "/generated/compendium/items/item-0560.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The ability's damage/healing scales with the user's primary casting stat, regardless of the original class requirement.",
 	},
@@ -3683,8 +3547,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-bone-breaker-lock",
 		name: "Rune of Bone Breaker",
 		display_name: "Rune of Bone Breaker",
+		teaches: { kind: "technique", ref: "bone-breaker" },
 		description:
-			"Strikes for 2d12 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 2d12 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Deafened, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "Spare in gesture, decisive in outcome.",
 		tags: [
 			"awakened",
@@ -3714,7 +3579,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12",
 			range: "20-foot radius burst",
@@ -3728,8 +3592,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
 		image: "/generated/compendium/items/item-0757.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"The taught ability scales with character level. At levels 5, 11, and 17, the effect improves as detailed in the ability description.",
 	},
@@ -3737,8 +3599,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-gale-force-kick",
 		name: "Rune of Gale-Force Kick",
 		display_name: "Rune of Gale-Force Kick",
+		teaches: { kind: "technique", ref: "gale-force-kick" },
 		description:
-			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 4d6 damage; on a failed DC 15 Vitality save the target takes full damage and becomes Stunned, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "A tuned release of accumulated resonance.",
 		tags: [
 			"awakened",
@@ -3768,7 +3631,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6",
 			range: "Sight",
@@ -3782,8 +3644,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Gifted by a sentient dungeon as a reward for clearing it without destroying any architecture.",
 		image: "/generated/compendium/items/item-0108.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"Cross-class users can improve this ability by investing downtime (8 hours per improvement tier) to deepen their understanding.",
 	},
@@ -3791,8 +3651,9 @@ export const technique_runes: CompendiumRune[] = [
 		id: "rune-void-touch-manual",
 		name: "Rune of Void Touch",
 		display_name: "Rune of Void Touch",
+		teaches: { kind: "technique", ref: "void-touch" },
 		description:
-			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned spell is outside the character's native Job, uses per rest = Proficiency Modifier + Job's Primary Stat Modifier. Native-class abilities use the normal class resource system.",
+			"Strikes for 5d4 damage; on a failed DC 15 Intelligence save the target takes full damage and becomes Blinded, or half damage and no condition on a success.\n\nCross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.",
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: [
 			"awakened",
@@ -3822,7 +3683,6 @@ export const technique_runes: CompendiumRune[] = [
 		rune_level: 5,
 		rank: "TECHNIQUE",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d4",
 			range: "60-foot line",
@@ -3836,8 +3696,6 @@ export const technique_runes: CompendiumRune[] = [
 		discovery_lore:
 			"Dropped by a rare variant monster that displayed intelligence beyond its rank classification.",
 		image: "/generated/compendium/items/item-0597.webp",
-		uses_per_rest: "One-time use (destroyed after absorption)",
-		recharge: "N/A — consumable",
 		higher_levels:
 			"At higher proficiency tiers, the ability gains additional uses per rest and its effects intensify.",
 	},

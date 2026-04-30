@@ -1,6 +1,10 @@
 import { useMemo } from "react";
 import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
+import {
+	calculateAttackModifier,
+	chooseWeaponAttackAbility,
+} from "@/lib/derivedStats";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 import {
@@ -27,6 +31,14 @@ interface ActiveFeature {
 	uses_max?: number;
 	damage?: string;
 	resolution?: string;
+}
+
+function appendDamageBonus(baseRoll: string, bonus: string): string {
+	const normalized = bonus.trim();
+	if (!normalized) return baseRoll;
+	return /^[+-]/.test(normalized)
+		? `${baseRoll}${normalized}`
+		: `${baseRoll}+${normalized}`;
 }
 
 export type CombatActionType =
@@ -199,16 +211,20 @@ export const useCombatActions = (characterId: string) => {
 				weaponType.includes("ranged");
 
 			// Determine which ability to use
-			let ability: AbilityScore = isRanged ? "AGI" : "STR";
-			if (isFinesse) {
-				const strMod = getAbilityModifier(character.abilities.STR);
-				const agiMod = getAbilityModifier(character.abilities.AGI);
-				if (agiMod > strMod) ability = "AGI";
-			}
+			const ability = chooseWeaponAttackAbility({
+				abilities: derivedStats.finalAbilities,
+				isRanged,
+				isFinesse,
+			});
 
-			const abiMod = getAbilityModifier(character.abilities[ability]);
+			const abiMod = getAbilityModifier(derivedStats.finalAbilities[ability]);
 			const hasProf = isProficient(w);
-			const attackBonus = abiMod + (hasProf ? profBonus : 0);
+			const attackBonus = calculateAttackModifier({
+				abilityModifier: abiMod,
+				proficiencyBonus: profBonus,
+				proficient: hasProf,
+				bonus: derivedStats.sigilBonuses.attackBonus,
+			});
 
 			// Prefer canonical damage formula; fall back to description-regex parse.
 			const canonicalDamage =
@@ -222,8 +238,14 @@ export const useCombatActions = (characterId: string) => {
 				w.description?.match(/(\d+d\d+)/)?.[1] ??
 				null;
 			const damageRoll = damageDice
-				? `${damageDice}+${abiMod}`
-				: `1d4+${abiMod}`;
+				? appendDamageBonus(
+						`${damageDice}+${abiMod}`,
+						derivedStats.sigilBonuses.damageBonus,
+					)
+				: appendDamageBonus(
+						`1d4+${abiMod}`,
+						derivedStats.sigilBonuses.damageBonus,
+					);
 
 			const damageType =
 				canonical?.damage_type?.toLowerCase() || detectDamageType(w);
@@ -265,7 +287,11 @@ export const useCombatActions = (characterId: string) => {
 
 			const castingAbility = character.job === "Technomancer" ? "INT" : "SENSE";
 			const abiMod = getAbilityModifier(character.abilities[castingAbility]);
-			const attackBonus = abiMod + profBonus;
+			const attackBonus = calculateAttackModifier({
+				abilityModifier: abiMod,
+				proficiencyBonus: profBonus,
+				proficient: true,
+			});
 			const saveDC = 8 + abiMod + profBonus;
 
 			const mechanics = (powerData.mechanics as unknown as JsonMechanics) || {};

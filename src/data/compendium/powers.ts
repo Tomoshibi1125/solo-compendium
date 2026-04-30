@@ -37,13 +37,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "",
 		mechanics: {
-			action_type: "Bonus Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "60 feet",
 			type: "innate",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Ambient mana absorption",
 			saving_throw: {
 				ability: "Presence",
@@ -98,13 +95,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 lightning",
 			range: "Touch",
 			type: "class",
-			frequency: "3/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "lightning",
@@ -170,13 +164,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "self-heal",
 			range: "30-foot cone",
 			type: "divine",
-			frequency: "At will",
-			action: "1 action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "radiant",
@@ -248,13 +239,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "Self",
 			type: "awakening",
-			frequency: "1/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "acid",
@@ -316,13 +304,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "necrotic",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8 necrotic",
 			range: "120 feet",
 			type: "class",
-			frequency: "Proficiency/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "necrotic",
@@ -384,13 +369,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 psychic",
 			range: "Self",
 			type: "awakening",
-			frequency: "At will",
-			action: "1 action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "psychic",
@@ -452,13 +434,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "20-foot radius burst",
 			type: "awakening",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "force",
@@ -521,13 +500,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "self-heal",
 			range: "Self",
 			type: "monstrous",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "necrotic",
@@ -596,13 +572,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 fire",
 			range: "Touch",
 			type: "innate",
-			frequency: "2/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "fire",
@@ -664,13 +637,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 force",
 			range: "30-foot cone",
 			type: "class",
-			frequency: "1/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "force",
@@ -733,13 +703,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d6 psychic",
 			range: "60 feet",
 			type: "monstrous",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "psychic",
@@ -802,13 +769,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "radiant",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d8 radiant",
 			range: "Sight",
 			type: "divine",
-			frequency: "2/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "radiant",
@@ -871,13 +835,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 psychic",
 			range: "Self",
 			type: "monstrous",
-			frequency: "Proficiency/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "psychic",
@@ -943,13 +904,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "self-heal",
 			range: "120 feet",
 			type: "awakening",
-			frequency: "At will",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "force",
@@ -1017,13 +975,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 psychic",
 			range: "Self",
 			type: "class",
-			frequency: "1/short rest",
-			action: "1 action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "psychic",
@@ -1086,13 +1041,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6 thunder",
 			range: "20-foot radius burst",
 			type: "divine",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "thunder",
@@ -1154,13 +1106,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "120 feet",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "cold",
@@ -1223,13 +1172,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "120 feet",
 			type: "innate",
-			frequency: "2/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "thunder",
@@ -1294,13 +1240,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "20-foot radius burst",
 			type: "awakening",
-			frequency: "2/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "psychic",
@@ -1363,13 +1306,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "—",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "utility",
 			range: "120 feet",
 			type: "awakening",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "acid",
@@ -1434,13 +1374,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 acid",
 			range: "20-foot radius burst",
 			type: "awakening",
-			frequency: "1/short rest",
-			action: "1 action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "acid",
@@ -1504,13 +1441,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 radiant",
 			range: "20-foot radius burst",
 			type: "innate",
-			frequency: "2/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "radiant",
@@ -1572,13 +1506,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 lightning",
 			range: "Touch",
 			type: "innate",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "lightning",
@@ -1640,13 +1571,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 cold",
 			range: "30-foot cone",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "cold",
@@ -1708,13 +1636,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 force",
 			range: "20-foot radius burst",
 			type: "innate",
-			frequency: "1/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "force",
@@ -1776,13 +1701,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "necrotic",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 psychic",
 			range: "Touch",
 			type: "class",
-			frequency: "3/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "psychic",
@@ -1844,13 +1766,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6 necrotic",
 			range: "30-foot cone",
 			type: "divine",
-			frequency: "1/short rest",
-			action: "1 action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "necrotic",
@@ -1912,13 +1831,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 force",
 			range: "60 feet",
 			type: "awakening",
-			frequency: "3/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "force",
@@ -1983,13 +1899,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8 necrotic",
 			range: "Sight",
 			type: "monstrous",
-			frequency: "3/long rest",
-			action: "1 action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "necrotic",
@@ -2052,13 +1965,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 thunder",
 			range: "Self",
 			type: "innate",
-			frequency: "3/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "thunder",
@@ -2121,13 +2031,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "radiant",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 radiant",
 			range: "120 feet",
 			type: "divine",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "radiant",
@@ -2189,13 +2096,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 psychic",
 			range: "60-foot line",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "psychic",
@@ -2260,13 +2164,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "poison",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8 poison",
 			range: "Touch",
 			type: "awakening",
-			frequency: "3/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "poison",
@@ -2329,13 +2230,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d8 poison",
 			range: "60-foot line",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "poison",
@@ -2400,13 +2298,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8 psychic",
 			range: "120 feet",
 			type: "class",
-			frequency: "Proficiency/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "psychic",
@@ -2468,13 +2363,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 lightning",
 			range: "120 feet",
 			type: "awakening",
-			frequency: "At will",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "lightning",
@@ -2536,13 +2428,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "radiant",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 fire",
 			range: "20-foot radius burst",
 			type: "monstrous",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "fire",
@@ -2604,13 +2493,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 psychic",
 			range: "Touch",
 			type: "innate",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "psychic",
@@ -2672,13 +2558,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 poison",
 			range: "20-foot radius burst",
 			type: "awakening",
-			frequency: "3/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "poison",
@@ -2741,13 +2624,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 force",
 			range: "20-foot radius burst",
 			type: "class",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "force",
@@ -2810,13 +2690,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 poison",
 			range: "60 feet",
 			type: "awakening",
-			frequency: "Proficiency/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "poison",
@@ -2879,13 +2756,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 poison",
 			range: "Self",
 			type: "monstrous",
-			frequency: "3/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "poison",
@@ -2950,13 +2824,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "lightning",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 lightning",
 			range: "Touch",
 			type: "divine",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "lightning",
@@ -3022,13 +2893,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "poison",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 poison",
 			range: "30-foot cone",
 			type: "class",
-			frequency: "3/long rest",
-			action: "1 action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "poison",
@@ -3091,13 +2959,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d6 cold",
 			range: "60-foot line",
 			type: "class",
-			frequency: "2/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "cold",
@@ -3163,13 +3028,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 radiant",
 			range: "30-foot cone",
 			type: "divine",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "radiant",
@@ -3234,13 +3096,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "radiant",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 radiant",
 			range: "Sight",
 			type: "awakening",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "radiant",
@@ -3303,13 +3162,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "necrotic",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 cold",
 			range: "60-foot line",
 			type: "awakening",
-			frequency: "2/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "cold",
@@ -3372,13 +3228,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6 thunder",
 			range: "60 feet",
 			type: "innate",
-			frequency: "2/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "thunder",
@@ -3443,13 +3296,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 fire",
 			range: "20-foot radius burst",
 			type: "class",
-			frequency: "At will",
-			action: "1 action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "fire",
@@ -3511,13 +3361,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 necrotic",
 			range: "30-foot cone",
 			type: "innate",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "necrotic",
@@ -3580,13 +3427,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6 lightning",
 			range: "20-foot radius burst",
 			type: "divine",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "lightning",
@@ -3651,13 +3495,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 force",
 			range: "Self",
 			type: "innate",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "force",
@@ -3721,13 +3562,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 acid",
 			range: "60-foot line",
 			type: "divine",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "acid",
@@ -3789,13 +3627,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d6 force",
 			range: "Touch",
 			type: "class",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "force",
@@ -3859,13 +3694,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d6 force",
 			range: "60-foot line",
 			type: "divine",
-			frequency: "Proficiency/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "force",
@@ -3927,13 +3759,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "6d6 psychic",
 			range: "Touch",
 			type: "awakening",
-			frequency: "1/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "psychic",
@@ -3996,13 +3825,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 lightning",
 			range: "60 feet",
 			type: "awakening",
-			frequency: "1/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "lightning",
@@ -4064,13 +3890,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8 fire",
 			range: "Sight",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "fire",
@@ -4132,13 +3955,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 lightning",
 			range: "Sight",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "lightning",
@@ -4200,13 +4020,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 acid",
 			range: "20-foot radius burst",
 			type: "monstrous",
-			frequency: "1/short rest",
-			action: "1 action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "acid",
@@ -4272,13 +4089,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 radiant",
 			range: "30-foot cone",
 			type: "class",
-			frequency: "At will",
-			action: "1 action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "radiant",
@@ -4340,13 +4154,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d6 thunder",
 			range: "Self",
 			type: "monstrous",
-			frequency: "Proficiency/long rest",
-			action: "1 action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "thunder",
@@ -4408,13 +4219,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "necrotic",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 necrotic",
 			range: "30-foot cone",
 			type: "innate",
-			frequency: "At will",
-			action: "1 action",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "necrotic",
@@ -4477,13 +4285,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 fire",
 			range: "30-foot cone",
 			type: "innate",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "fire",
@@ -4545,13 +4350,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "necrotic",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 necrotic",
 			range: "Touch",
 			type: "class",
-			frequency: "3/long rest",
-			action: "1 bonus action",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "necrotic",
@@ -4613,13 +4415,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "5d6 poison",
 			range: "120 feet",
 			type: "class",
-			frequency: "1/short rest",
-			action: "1 action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "poison",
@@ -4684,13 +4483,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 necrotic",
 			range: "60-foot line",
 			type: "divine",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "necrotic",
@@ -4755,13 +4551,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 cold",
 			range: "60-foot line",
 			type: "innate",
-			frequency: "1/short rest",
-			action: "1 reaction",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "cold",
@@ -4823,13 +4616,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d12",
 		damage_type: "fire",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d8 fire",
 			range: "60 feet",
 			type: "awakening",
-			frequency: "At will",
-			action: "1 bonus action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "fire",
@@ -4891,13 +4681,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 cold",
 			range: "Sight",
 			type: "innate",
-			frequency: "At will",
-			action: "1 action",
 			lattice_interaction: "Direct mana circuit injection",
 			attack: {
 				type: "cold",
@@ -4959,13 +4746,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 radiant",
 			range: "Self",
 			type: "monstrous",
-			frequency: "Proficiency/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Resonance amplification",
 			attack: {
 				type: "radiant",
@@ -5028,13 +4812,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "4d6",
 		damage_type: "necrotic",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d12 necrotic",
 			range: "20-foot radius burst",
 			type: "innate",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Standard channel",
 			attack: {
 				type: "necrotic",
@@ -5098,13 +4879,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "5d4",
 		damage_type: "cold",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "4d8 cold",
 			range: "60 feet",
 			type: "monstrous",
-			frequency: "3/long rest",
-			action: "1 reaction",
 			lattice_interaction: "Ambient mana absorption",
 			attack: {
 				type: "cold",
@@ -5170,13 +4948,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "3d8",
 		damage_type: "force",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "3d10 necrotic",
 			range: "Sight",
 			type: "awakening",
-			frequency: "1/short rest",
-			action: "1 bonus action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "necrotic",
@@ -5239,13 +5014,10 @@ export const powers: CompendiumPower[] = [
 		damage_roll: "2d10 + 4",
 		damage_type: "lightning",
 		mechanics: {
-			action_type: "Action",
 			duration: "Instant",
 			damage_profile: "2d10 lightning",
 			range: "120 feet",
 			type: "awakening",
-			frequency: "2/short rest",
-			action: "1 action",
 			lattice_interaction: "Lattice bypass — raw power",
 			attack: {
 				type: "lightning",

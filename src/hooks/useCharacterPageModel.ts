@@ -4,6 +4,12 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
+import {
+	activeSpellsToCustomModifiers,
+	useCharacterActiveSpells,
+	useRemoveActiveSpellByName,
+	useRemoveConcentrationSpells,
+} from "@/hooks/useCharacterActiveSpells";
 import { useAutoBackup } from "@/hooks/useCharacterBackup";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
 import {
@@ -21,23 +27,23 @@ import { useCharacterUndoRedo } from "@/hooks/useCharacterUndoRedo";
 import { useConcentration } from "@/hooks/useConcentration";
 import { useDeathSaves } from "@/hooks/useDeathSaves";
 import { useEquipment } from "@/hooks/useEquipment";
-import {
-	useAscendantTools,
-	useCharacterSheetEnhancements,
-} from "@/hooks/useGlobalDDBeyondIntegration";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 
 import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
-import { findCanonicalEntryByName } from "@/lib/canonicalCompendium";
+import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
 import { addTemporaryHP, applyResourceRest } from "@/lib/characterResources";
-import { normalizeCustomModifiers } from "@/lib/customModifiers";
+import {
+	normalizeCustomModifiers,
+	resolveAdvantageFromCustomModifiers,
+} from "@/lib/customModifiers";
 import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
-import { autoLearnRunes } from "@/lib/runeAutomation";
 import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -54,17 +60,11 @@ export function useCharacterPageModel() {
 	const isReadOnly = !!shareToken;
 	const { data: character, isLoading } = useCharacter(id || "", shareToken);
 
-	useEffect(() => {
-		const syncAutoRunes = async () => {
-			if (character) {
-				const learned = await autoLearnRunes(character);
-				if (learned.length > 0) {
-					console.log("[Warden] Auto-Learned Runes:", learned);
-				}
-			}
-		};
-		void syncAutoRunes();
-	}, [character]);
+	// Note: prior code ran an `autoLearnRunes(character)` effect on every
+	// character refresh, but the underlying helper short-circuits to `[]`
+	// when called without explicit rune IDs (no level/job heuristic ever
+	// existed). Removed the no-op effect — call sites that explicitly pass
+	// runeIds (e.g. quest rewards, rune absorption) still work normally.
 
 	const isLocal = !!character && isLocalCharacterId(character.id);
 	const { data: characterCampaign } = useCampaignByCharacterId(
@@ -79,16 +79,20 @@ export function useCharacterPageModel() {
 	);
 	const { broadcastDiceRoll, isConnected: isCampaignConnected } =
 		useRealtimeCollaboration(campaignId || "");
-	const _ddbEnhancements = useCharacterSheetEnhancements(character?.id || "");
 	const ascendantTools = useAscendantTools();
 
 	// Compendium Display Rows for Vernacular — backed by canonical static.
 	const resolveDisplayRow = async (
 		type: "jobs" | "paths" | "backgrounds",
+		id: string | null | undefined,
 		name: string | null | undefined,
 	) => {
-		if (!name) return null;
-		const entry = await findCanonicalEntryByName(type, name);
+		if (!id && !name) return null;
+		const { entry } = await resolveCanonicalReference(
+			type,
+			{ id, name },
+			{ campaignId },
+		);
 		if (!entry) return null;
 		if (!(await isSourcebookAccessible(entry.source_book, { campaignId }))) {
 			return null;
@@ -100,25 +104,51 @@ export function useCharacterPageModel() {
 	};
 
 	const { data: jobDisplayRow } = useQuery({
-		queryKey: ["compendium-display-job", character?.job, campaignId],
-		queryFn: () => resolveDisplayRow("jobs", character?.job),
-		enabled: isSupabaseConfigured && Boolean(character?.job) && !isLocal,
+		queryKey: [
+			"compendium-display-job",
+			character?.job_id,
+			character?.job,
+			campaignId,
+		],
+		queryFn: () => resolveDisplayRow("jobs", character?.job_id, character?.job),
+		enabled:
+			isSupabaseConfigured &&
+			Boolean(character?.job_id || character?.job) &&
+			!isLocal,
 	});
 
 	const { data: pathDisplayRow } = useQuery({
-		queryKey: ["compendium-display-path", character?.path, campaignId],
-		queryFn: () => resolveDisplayRow("paths", character?.path),
-		enabled: isSupabaseConfigured && Boolean(character?.path) && !isLocal,
+		queryKey: [
+			"compendium-display-path",
+			character?.path_id,
+			character?.path,
+			campaignId,
+		],
+		queryFn: () =>
+			resolveDisplayRow("paths", character?.path_id, character?.path),
+		enabled:
+			isSupabaseConfigured &&
+			Boolean(character?.path_id || character?.path) &&
+			!isLocal,
 	});
 
 	const { data: backgroundDisplayRow } = useQuery({
 		queryKey: [
 			"compendium-display-background",
+			character?.background_id,
 			character?.background,
 			campaignId,
 		],
-		queryFn: () => resolveDisplayRow("backgrounds", character?.background),
-		enabled: isSupabaseConfigured && Boolean(character?.background) && !isLocal,
+		queryFn: () =>
+			resolveDisplayRow(
+				"backgrounds",
+				character?.background_id,
+				character?.background,
+			),
+		enabled:
+			isSupabaseConfigured &&
+			Boolean(character?.background_id || character?.background) &&
+			!isLocal,
 	});
 
 	const jobDisplayNameRaw = jobDisplayRow?.display_name || character?.job;
@@ -143,13 +173,20 @@ export function useCharacterPageModel() {
 	const sheetController = useCharacterSheetState(character?.id || "");
 	const { state: sheetState } = sheetController;
 	const { data: charFeatures = [] } = useCharacterFeatures(character?.id || "");
+	const { data: characterActiveSpells = [] } = useCharacterActiveSpells(
+		character?.id,
+	);
 
 	const customModifiers = useMemo(
 		() => [
 			...normalizeCustomModifiers(sheetState.customModifiers),
 			...featureModifiersToCustomModifiers(charFeatures),
+			// D&D Beyond parity: persisted active spells (Bless, Shield of
+			// Faith, Haste, …) project into customModifiers so derived stats
+			// pick up their bonuses without the engine knowing about spells.
+			...activeSpellsToCustomModifiers(characterActiveSpells),
 		],
-		[sheetState.customModifiers, charFeatures],
+		[sheetState.customModifiers, charFeatures, characterActiveSpells],
 	);
 
 	const undoRedo = useCharacterUndoRedo(character ?? null);
@@ -157,17 +194,78 @@ export function useCharacterPageModel() {
 	const { data: activeSigilInscriptions = [] } = useCharacterSigilInscriptions(
 		character?.id,
 	);
-	const concentration = useConcentration(
+
+	// D&D Beyond parity: concentration saves apply advantage/disadvantage from
+	// feats (War Caster) and conditions (Resilient CON, Bear Totem rage, etc.).
+	const concentrationSaveMode = useMemo(
+		() =>
+			resolveAdvantageFromCustomModifiers(customModifiers, [
+				"concentration_save",
+				"concentration",
+				"save:vit",
+				"vit_save",
+			]),
+		[customModifiers],
+	);
+
+	const removeActiveSpellByName = useRemoveActiveSpellByName();
+	const removeConcentrationSpells = useRemoveConcentrationSpells();
+
+	const rawConcentration = useConcentration(
 		character?.abilities?.VIT ?? 10,
 		character?.level ?? 1,
 		character?.saving_throw_proficiencies ?? [],
+		{
+			// Single source of truth for analytics on any concentration loss
+			// (drop, replaced, broken-by-damage, expired). Keeps the spell-casting
+			// onConcentrationDrop callback as a pure state transition.
+			onConcentrationLost: (spellName) => {
+				const cid = character?.id;
+				if (!cid) return;
+
+				// Clean up the persisted active-spell row so its mechanical
+				// effects stop applying to derived stats (DDB parity).
+				removeActiveSpellByName
+					.mutateAsync({ characterId: cid, spellName })
+					.catch(console.error);
+
+				if (campaignId && isCampaignConnected) {
+					ascendantTools
+						.trackConditionChange(
+							cid,
+							`Concentrating on ${spellName}`,
+							"remove",
+						)
+						.catch(console.error);
+				}
+			},
+		},
 	);
+
+	// Wrap takeDamage so callers don't have to know about advantage targets —
+	// the page model owns custom-modifier resolution.
+	const concentration = useMemo(
+		() => ({
+			...rawConcentration,
+			takeDamage: (
+				damage: number,
+				mode?: "normal" | "advantage" | "disadvantage",
+			) => rawConcentration.takeDamage(damage, mode ?? concentrationSaveMode),
+		}),
+		[rawConcentration, concentrationSaveMode],
+	);
+
 	const { equipment } = useEquipment(character?.id || "");
 	const deathSaves = useDeathSaves(
 		character?.death_save_successes || 0,
 		character?.death_save_failures || 0,
 	);
 
+	// Persist death save state to Supabase whenever it changes (DDB parity:
+	// auto-saves successes/failures/stable). `deathSaves.persist` is wrapped
+	// in `useCallback([state])` so its identity changes whenever any state
+	// field flips — that's enough to refire this effect on every relevant
+	// state transition without listing each field explicitly.
 	useEffect(() => {
 		if (character?.id && !isReadOnly) deathSaves.persist(character.id);
 	}, [character?.id, isReadOnly, deathSaves.persist]);
@@ -193,17 +291,9 @@ export function useCharacterPageModel() {
 					.catch(console.error);
 		},
 		() => {
-			const activeSpell = concentration.state.currentEffect?.name;
+			// Drop only: the useConcentration hook fires onConcentrationLost which
+			// emits the analytics "remove" event (single source of truth).
 			concentration.drop();
-			if (campaignId && isCampaignConnected && activeSpell) {
-				ascendantTools
-					.trackConditionChange(
-						character?.id || "",
-						`Concentrating on ${activeSpell}`,
-						"remove",
-					)
-					.catch(console.error);
-			}
 		},
 	);
 
@@ -251,6 +341,18 @@ export function useCharacterPageModel() {
 		character?.id,
 	);
 
+	// D&D Beyond parity inputs for Extra Attack detection.
+	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(character?.id || "");
+	const regentIds = useMemo(
+		() => regentUnlocks.map((u) => u.regent_id),
+		[regentUnlocks],
+	);
+	const hasExtraAttackFeature = useMemo(
+		() =>
+			charFeatures.some((f) => f.name?.toLowerCase().includes("extra attack")),
+		[charFeatures],
+	);
+
 	const memoizedStats = useCharacterDerivedStats(
 		character as CharacterWithAbilities | null,
 		equipment,
@@ -258,6 +360,7 @@ export function useCharacterPageModel() {
 		activeSigilInscriptions,
 		customModifiers,
 		canonicalEquipmentMap,
+		{ hasExtraAttackFeature, regentIds },
 	);
 
 	const applyRestResourceUpdates = useCallback(
@@ -314,6 +417,18 @@ export function useCharacterPageModel() {
 
 	const handleLongRest = async () => {
 		if (!character) return;
+
+		// D&D Beyond / RAW parity: a full long rest (8 hours of sleep) drops
+		// any active concentration. This is the single orchestration point —
+		// page model owns concentration/active-spell state, so cleanup runs
+		// here in addition to whatever sheetController.handleLongRest does.
+		if (concentration.state.isConcentrating) {
+			concentration.drop();
+		}
+		// Clean up any remaining concentration rows in the DB regardless of
+		// in-memory state (defensive; long rest = clean slate).
+		removeConcentrationSpells.mutateAsync(character.id).catch(console.error);
+
 		await sheetController.handleLongRest(
 			character.id,
 			queryClient,

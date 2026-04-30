@@ -4,7 +4,13 @@ import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { isLocalCharacterId } from "@/lib/guestStore";
-import { resolveRuneAbsorption } from "@/lib/runeAutomation";
+import {
+	autoLearnRunes,
+	buildRuneFeatureModifiers,
+	getRunePrimaryStatModifier,
+	inferRuneAbilityKind,
+	resolveRuneAbsorption,
+} from "@/lib/runeAutomation";
 import {
 	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
@@ -185,24 +191,11 @@ export function useLearnRune() {
 				});
 			}
 
-			const { data, error } = await supabase
-				.from("character_rune_knowledge")
-				.upsert(
-					{
-						character_id: characterId,
-						rune_id: runeId,
-						mastery_level: isMastered ? 5 : 1,
-						can_teach: isMastered,
-					},
-					{
-						onConflict: "character_id,rune_id",
-					},
-				)
-				.select()
-				.single();
-
-			if (error) throw error;
-			return data;
+			return autoLearnRunes(
+				{ id: characterId, level: 1 },
+				[runeId],
+				isMastered,
+			);
 		},
 		onSuccess: (_, variables) => {
 			queryClient.invalidateQueries({
@@ -230,14 +223,23 @@ export function useAbsorbRune() {
 				throw new AppError("Sign in required to absorb runes", "AUTH_REQUIRED");
 			}
 
-			// Get character
+			// Get character (incl. ability scores so cross-class formula is exact)
 			const { data: character, error: charError } = await supabase
 				.from("characters")
-				.select("id, job, level, skill_proficiencies, skill_expertise")
+				.select(
+					"id, job, level, str, agi, vit, int, sense, pre, skill_proficiencies, skill_expertise",
+				)
 				.eq("id", characterId)
 				.single();
 			if (charError || !character)
 				throw new AppError("Character not found", "NOT_FOUND");
+
+			// Pull unlocked regents for native-via-Regent detection
+			const { data: regentRows } = await supabase
+				.from("character_regent_unlocks")
+				.select("regent_id")
+				.eq("character_id", characterId);
+			const unlockedRegents = (regentRows ?? []).map((row) => row.regent_id);
 
 			// Get rune from canonical static layer
 			const campaignId = await getCharacterCampaignId(characterId);
@@ -268,22 +270,46 @@ export function useAbsorbRune() {
 				);
 			}
 
-			// Resolve cross-type adaptation
+			// Resolve absorption with the Regent-aware locked formula
 			const profBonus = getProficiencyBonus(character.level);
-			const absorption = resolveRuneAbsorption(
-				rune.rune_type,
-				rune.uses_per_rest,
-				character.job,
-				character.level,
-				profBonus,
-				rune.rarity,
-			);
+			const canonicalRune = rune as unknown as {
+				teaches?: { kind: "spell" | "power" | "technique"; ref: string };
+				rank?: string | null;
+			};
+			const abilityKind = inferRuneAbilityKind({
+				teaches: canonicalRune.teaches,
+				rank: canonicalRune.rank ?? null,
+				tags: rune.tags,
+				name: rune.name,
+				id: rune.id,
+			});
+			const primaryStatModifier = getRunePrimaryStatModifier(character.job, {
+				STR: character.str ?? 10,
+				AGI: character.agi ?? 10,
+				VIT: character.vit ?? 10,
+				INT: character.int ?? 10,
+				SENSE: character.sense ?? 10,
+				PRE: character.pre ?? 10,
+			});
+			const absorption = resolveRuneAbsorption({
+				abilityKind,
+				usesPerRest: rune.uses_per_rest,
+				characterJob: character.job,
+				characterLevel: character.level,
+				proficiencyBonus: profBonus,
+				primaryStatModifier,
+				runeRarity: rune.rarity,
+				unlockedRegents,
+				nativeRecharge: rune.recharge,
+			});
 
-			// Build adapted description: cross-type absorptions prepend adaptation context
+			// Build adapted description: cross-class absorptions prepend adaptation context
 			const baseDescription = rune.effect_description || rune.description || "";
 			const fullDescription = absorption.descriptionPrefix
 				? `${absorption.descriptionPrefix}\n\n${baseDescription}`
 				: baseDescription;
+
+			const teaches = canonicalRune.teaches;
 
 			// Create permanent character feature
 			const featurePayload = {
@@ -297,6 +323,7 @@ export function useAbsorbRune() {
 				uses_max: absorption.usesMax,
 				uses_current: absorption.usesMax,
 				recharge: absorption.usesMax !== null ? absorption.recharge : null,
+				modifiers: buildRuneFeatureModifiers(absorption, teaches ?? null),
 			};
 
 			const { error: insertError } = await supabase

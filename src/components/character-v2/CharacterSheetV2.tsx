@@ -70,6 +70,7 @@ import {
 	migrateLegacyConditions,
 } from "@/lib/conditionSystem";
 import { getXPProgress, type LevelingType } from "@/lib/experience";
+import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { cn } from "@/lib/utils";
 import { QuestLog } from "@/pages/ascendant-tools/QuestLog";
 import type { DetailData } from "@/types/character";
@@ -287,14 +288,18 @@ export default function CharacterSheetV2() {
 			modifier: stats.finalInitiative,
 		});
 
-	const onRollHitDice = () =>
+	const onRollHitDice = () => {
+		// DDB parity: use the character's actual hit die size, not a
+		// hardcoded d8. Destroyer = d12, Mage = d6, etc.
+		const dieSize = character.hit_dice_size || 8;
 		rollAndRecord({
 			title: "Hit Dice",
-			formula: "1d8",
+			formula: `1d${dieSize}`,
 			rollType: "hit_dice",
 			context: "Hit Dice roll",
 			modifier: getAbilityModifier(stats.finalAbilities.VIT),
 		});
+	};
 
 	const onHPClick = () => sheetController.setModal("health", true);
 	const onACClick = () => sheetController.setModal("defenses", true);
@@ -307,52 +312,89 @@ export default function CharacterSheetV2() {
 	) => handleResourceAdjust(field, delta);
 
 	const handleTakeDamage = (amount: number) => {
-		const newHp = Math.max(0, character.hp_current - amount);
+		if (amount <= 0) return;
+
+		// Pure-logic damage resolution (THP-aware, massive-damage aware).
+		// Note: tempHp here is intentionally 0 — the THP pool is tracked in
+		// `character_sheet_state.resources.temp_hp_sources` and is consumed
+		// by the HealthDialog component via `addTemporaryHP`. The page-level
+		// damage button doesn't read it; UI parity with the existing flow.
+		const result = applyDamage({
+			hpCurrent: character.hp_current,
+			hpMax: character.hp_max,
+			tempHp: 0,
+			damage: amount,
+		});
+
 		updateCharacter.mutate({
 			id: character.id,
-			data: { hp_current: newHp },
+			data: { hp_current: result.newHp },
 		});
 
 		ascendantTools
 			.trackHealthChange(character.id, amount, "damage")
 			.catch(console.error);
 
-		// Process concentration check
-		const result = concentration.takeDamage(amount);
-		if (result?.concentrationLost) {
-			// Actually drop the condition
-			onRemoveCondition(
-				characterConditions.find((c) => c.conditionName === "Concentration")
-					?.id || "",
-			);
-			// We can trigger a toast to notify
+		// D&D Beyond parity for downed/dying characters:
+		//  - Damage while AT 0 HP: 1 death save failure per hit (or instant
+		//    death on massive damage = damage >= max HP).
+		//  - Damage going FROM positive to 0: only triggers instant death if
+		//    overflow >= max HP (RAW massive-damage rule). Otherwise the
+		//    character is simply unconscious — no failure yet.
+		if (result.wasAtZero) {
+			deathSaves.takeDamageAtZero(amount, character.hp_max);
+		} else if (result.massiveDamage) {
+			deathSaves.takeDamageAtZero(result.overflowDamage, character.hp_max);
+		}
+
+		// Process concentration check (advantage/disadvantage applied by
+		// useCharacterPageModel from custom-modifier resolution).
+		const concentrationResult = concentration.takeDamage(amount);
+		if (concentrationResult?.concentrationLost) {
+			// Note: useConcentration auto-clears in-memory state and fires the
+			// onConcentrationLost analytics event. The ConcentrationBanner
+			// re-renders from concentration.state.isConcentrating.
 			import("@/hooks/use-toast").then(({ toast }) => {
 				toast({
 					title: "Concentration Lost!",
-					description: `Failed VIT save (${result.total} vs DC ${result.dc}). ${result.spellName} dropped.`,
+					description: `Failed VIT save (${concentrationResult.total} vs DC ${concentrationResult.dc}). ${concentrationResult.spellName} dropped.`,
 					variant: "destructive",
 				});
 			});
-		} else if (result && !result.concentrationLost) {
+		} else if (concentrationResult && !concentrationResult.concentrationLost) {
 			import("@/hooks/use-toast").then(({ toast }) => {
 				toast({
 					title: "Concentration Maintained",
-					description: `Succeeded VIT save (${result.total} vs DC ${result.dc}).`,
+					description: `Succeeded VIT save (${concentrationResult.total} vs DC ${concentrationResult.dc}).`,
 				});
 			});
 		}
 	};
 
 	const handleHeal = (amount: number) => {
-		const newHp = Math.min(character.hp_max, character.hp_current + amount);
+		if (amount <= 0) return;
+
+		const result = applyHealing({
+			hpCurrent: character.hp_current,
+			hpMax: character.hp_max,
+			heal: amount,
+		});
+
 		updateCharacter.mutate({
 			id: character.id,
-			data: { hp_current: newHp },
+			data: { hp_current: result.newHp },
 		});
 
 		ascendantTools
 			.trackHealthChange(character.id, amount, "healing")
 			.catch(console.error);
+
+		// D&D Beyond parity: any healing while at 0 HP restores consciousness
+		// and resets death saves (RAW: "If a healing spell or similar effect
+		// first restores you to 1 or more hit points...").
+		if (result.wasAtZero && result.newHp > 0) {
+			deathSaves.receiveHealing();
+		}
 	};
 
 	function isConditionEntryArray(val: Json): val is ConditionEntry[] {
@@ -492,6 +534,7 @@ export default function CharacterSheetV2() {
 			characterId={character.id}
 			campaignId={campaignId ?? undefined}
 			onSelectDetail={(detail) => onSelectDetail(detail, "Action", Swords)}
+			attacksPerAction={stats.attacksPerAction}
 		/>
 	);
 	const powers = (

@@ -78,10 +78,23 @@ export function BulkActionsBar({
 					description: `Leveled up ${result.success} characters. ${result.failed} failed.`,
 					variant: "destructive",
 				});
-			} else {
+			} else if (result.success > 0) {
 				toast({
 					title: "Characters leveled up",
 					description: `Successfully leveled up ${result.success} character${result.success > 1 ? "s" : ""}.`,
+				});
+			}
+			// DDB parity: surface ASI/Feat-tier characters that were skipped
+			// so the user knows to advance them manually through the wizard.
+			if (result.skipped.length > 0) {
+				const previewLevels = Array.from(
+					new Set(result.skipped.map((s) => s.newLevel)),
+				)
+					.slice(0, 3)
+					.join(", ");
+				toast({
+					title: `${result.skipped.length} skipped (choice required)`,
+					description: `Level ${previewLevels} require ASI/Feat decisions. Use the level-up wizard for those characters.`,
 				});
 			}
 			queryClient.invalidateQueries({ queryKey: ["characters"] });

@@ -11,6 +11,7 @@
 
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { useAddActiveSpell } from "@/hooks/useCharacterActiveSpells";
 import type { SpellSlotData } from "@/hooks/useSpellSlots";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -77,6 +78,7 @@ export function useSpellCasting(
 	onConcentrationDrop?: () => void,
 ) {
 	const queryClient = useQueryClient();
+	const addActiveSpell = useAddActiveSpell();
 
 	const canCast = useCallback(
 		(
@@ -134,9 +136,33 @@ export function useSpellCasting(
 			} = params;
 			const castAtLevel = requestedLevel ?? spell.level;
 
+			/**
+			 * D&D Beyond / Foundry parity: when a spell with known mechanical
+			 * effects is cast, persist an `character_active_spells` row so the
+			 * derived-stats pipeline auto-applies its bonuses (Bless, Haste,
+			 * Shield of Faith, …). Fire-and-forget — UX should not block on DB.
+			 */
+			const persistKnownEffects = (durationRounds: number | null) => {
+				if (!hasKnownEffects(spell.name)) return;
+				const entry = createActiveSpellEffect(
+					spell.name,
+					characterId,
+					characterId,
+					spell.isConcentration,
+					durationRounds,
+				);
+				addActiveSpell
+					.mutateAsync({ characterId, entry, castAtLevel })
+					.catch(console.error);
+			};
+
 			// Cantrips
 			if (spell.level === 0) {
 				emitCastEvent(params, castAtLevel, false);
+				// Cantrips with known effects (Guidance, Resistance) are
+				// instantaneous — persist with null duration so they roll off
+				// on the next round/rest pass via the pipeline.
+				persistKnownEffects(null);
 				return {
 					success: true,
 					slotExpended: false,
@@ -152,6 +178,7 @@ export function useSpellCasting(
 					onConcentrationStart?.(spell.name, 600); // 10 minutes = ~100 rounds
 				}
 				emitCastEvent(params, castAtLevel, false, true);
+				persistKnownEffects(spell.isConcentration ? 600 : null);
 				return {
 					success: true,
 					slotExpended: false,
@@ -218,6 +245,9 @@ export function useSpellCasting(
 			}
 
 			emitCastEvent(params, castAtLevel, true);
+			// Concentration spells default to 10 rounds (1 minute). Other buffs
+			// without explicit duration metadata stay null (until-dispelled).
+			persistKnownEffects(spell.isConcentration ? 100 : null);
 
 			const upcastNote =
 				castAtLevel > spell.level ? ` (upcast at level ${castAtLevel})` : "";
@@ -228,7 +258,13 @@ export function useSpellCasting(
 				message: `Cast ${spell.name}${upcastNote}. Level ${castAtLevel} slot consumed.`,
 			};
 		},
-		[canCast, queryClient, onConcentrationStart, onConcentrationDrop],
+		[
+			canCast,
+			queryClient,
+			onConcentrationStart,
+			onConcentrationDrop,
+			addActiveSpell,
+		],
 	);
 
 	/**

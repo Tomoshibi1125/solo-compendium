@@ -201,11 +201,6 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 									)}
 								</span>
 							</div>
-							{typeof activation === "object" && activation.cost && (
-								<span className="text-xs text-muted-foreground">
-									{formatRegentVernacular(String(activation.cost))}
-								</span>
-							)}
 						</AscendantWindow>
 					)}
 					{duration && (

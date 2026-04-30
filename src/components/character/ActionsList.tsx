@@ -14,10 +14,13 @@ export function ActionsList({
 	characterId,
 	campaignId,
 	onSelectDetail,
+	attacksPerAction,
 }: {
 	characterId: string;
 	campaignId?: string;
 	onSelectDetail?: (detail: DetailData) => void;
+	/** D&D Beyond parity: shows an Extra Attack indicator when > 1. */
+	attacksPerAction?: number;
 }) {
 	const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
 	const { actions, isLoading } = useCombatActions(characterId);
@@ -72,6 +75,17 @@ export function ActionsList({
 
 	return (
 		<div className="space-y-4">
+			{attacksPerAction !== undefined && attacksPerAction > 1 && (
+				<div className="flex items-center gap-2 px-3 py-2 rounded-md border border-primary/20 bg-primary/5 text-xs">
+					<span className="font-mono uppercase tracking-widest text-primary/70">
+						Extra Attack
+					</span>
+					<span className="font-display font-bold text-primary">
+						{attacksPerAction} attacks per Attack action
+					</span>
+				</div>
+			)}
+
 			<TrackedResourcesList resources={resources} onChange={setResources} />
 
 			<Tabs defaultValue="all" className="w-full">

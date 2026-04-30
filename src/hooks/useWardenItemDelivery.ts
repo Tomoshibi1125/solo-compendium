@@ -210,6 +210,7 @@ function buildEquipmentInsert(
 ): CharacterEquipmentInsert {
 	return {
 		character_id: characterId,
+		item_id: item.id ?? null,
 		name: item.name,
 		item_type: normalizeInventoryType(item.type),
 		description: item.description ?? null,

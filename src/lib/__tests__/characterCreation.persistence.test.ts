@@ -45,6 +45,13 @@ vi.mock("@/lib/canonicalCompendium", async (importOriginal) => {
 	};
 });
 
+vi.mock("@/lib/spellReference", () => ({
+	normalizeSpellReference: vi.fn(async ({ name }: { name: string }) => ({
+		spell_id: `spell-${name.toLowerCase().replace(/\s+/g, "-")}`,
+		matchedBy: "name",
+	})),
+}));
+
 function innateJob(): StaticJob {
 	return {
 		id: "test-job",
@@ -80,6 +87,7 @@ describe("character creation persistence boundaries", () => {
 				character_id: "character-id",
 				name: "Signal Flare",
 				spell_level: 1,
+				spell_id: "spell-signal-flare",
 				is_prepared: true,
 				is_known: true,
 				counts_against_limit: false,

@@ -30,7 +30,11 @@ export function ExportDialog({
 	};
 
 	const handleExportPDF = () => {
-		exportCharacterPDF(character);
+		// D&D Beyond parity: real PDF via the browser print dialog. Threads
+		// the share token (when present) so read-only viewers can also print.
+		exportCharacterPDF(character.id, {
+			shareToken: character.share_token ?? null,
+		});
 		onOpenChange(false);
 	};
 

@@ -27,6 +27,7 @@ import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
+import { normalizeSpellReference } from "@/lib/spellReference";
 import type {
 	Background as DbBackground,
 	Job as DbJob,
@@ -350,6 +351,8 @@ export async function insertCharacterFeature(
 ): Promise<void> {
 	if (isLocalCharacterId(characterId)) {
 		addLocalFeature(characterId, {
+			feat_id: payload.feat_id ?? null,
+			feature_id: payload.feature_id ?? null,
 			name: payload.name,
 			source: payload.source ?? undefined,
 			level_acquired: payload.level_acquired ?? undefined,
@@ -3397,6 +3400,9 @@ export async function addInnateChannelingForLevel(
 			undefined,
 			["spells"],
 		);
+		const normalizedSpellReference = await normalizeSpellReference({
+			name: spell.name,
+		});
 		const usesMax =
 			spell.uses && spell.uses !== "at-will" ? spell.uses.value : null;
 		const usesCurrent = usesMax;
@@ -3416,7 +3422,7 @@ export async function addInnateChannelingForLevel(
 			)
 				continue;
 			addLocalSpell(characterId, {
-				spell_id: canonicalSpell?.id ?? null,
+				spell_id: normalizedSpellReference.spell_id,
 				name: spell.name,
 				source: sourceLabel,
 				spell_level: spell.level,
@@ -3448,7 +3454,7 @@ export async function addInnateChannelingForLevel(
 
 		await supabase.from("character_spells").insert({
 			character_id: characterId,
-			spell_id: canonicalSpell?.id ?? null,
+			spell_id: normalizedSpellReference.spell_id,
 			name: spell.name,
 			source: sourceLabel,
 			spell_level: spell.level,
@@ -3620,6 +3626,7 @@ export async function addStartingEquipment(
 			const shouldAutoEquip = ["armor", "shield", "weapon"].includes(itemType);
 			const equipData = normalizedItem
 				? {
+						item_id: normalizedItem.id ?? null,
 						name: normalizedItem.name,
 						item_type: itemType,
 						weight:
@@ -3641,6 +3648,7 @@ export async function addStartingEquipment(
 							: 1,
 					}
 				: {
+						item_id: null,
 						name: itemName,
 						item_type: "gear",
 						quantity: 1,
@@ -3687,6 +3695,7 @@ export async function addStartingEquipment(
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(characterId, {
+					item_id: normalizedItem.id ?? null,
 					name: normalizedItem.name,
 					item_type: itemType,
 					description: normalizedItem.description || null,
@@ -3704,6 +3713,7 @@ export async function addStartingEquipment(
 			} else {
 				await supabase.from("character_equipment").insert({
 					character_id: characterId,
+					item_id: normalizedItem.id ?? null,
 					name: normalizedItem.name,
 					item_type: itemType,
 					description: normalizedItem.description || null,
@@ -3754,6 +3764,7 @@ export async function addStartingPowers(
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalPower(characterId, {
+					power_id: power.id,
 					name: power.name,
 					power_level: powerLevel,
 					source,
@@ -3769,6 +3780,7 @@ export async function addStartingPowers(
 			} else {
 				await supabase.from("character_powers").insert({
 					character_id: characterId,
+					power_id: power.id,
 					name: power.name,
 					power_level: powerLevel,
 					source,

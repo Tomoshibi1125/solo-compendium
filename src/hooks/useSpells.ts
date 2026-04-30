@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import {
 	type CanonicalCastableEntry,
-	findCanonicalCastableByName,
+	isCanonicalCastableAccessible,
 	listCanonicalSpells,
 } from "@/lib/canonicalCompendium";
 import {
@@ -13,10 +13,8 @@ import {
 	removeLocalSpell,
 	updateLocalSpell,
 } from "@/lib/guestStore";
-import {
-	getCharacterCampaignId,
-	isSourcebookAccessible,
-} from "@/lib/sourcebookAccess";
+import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
+import { normalizeSpellReference } from "@/lib/spellReference";
 
 type SpellRow = Database["public"]["Tables"]["character_spells"]["Row"];
 type SpellInsert = Database["public"]["Tables"]["character_spells"]["Insert"];
@@ -33,24 +31,41 @@ async function hydrateCharacterSpells(
 	if (rows.length === 0) return [];
 
 	const names = new Set(rows.map((row) => row.name).filter(Boolean));
+	const spellIds = new Set(
+		rows.map((row) => row.spell_id).filter((id): id is string => Boolean(id)),
+	);
 	const [allSpells, accessibleSpells] = await Promise.all([
 		listCanonicalSpells(),
 		listCanonicalSpells(undefined, { campaignId }),
 	]);
+
+	const allById = new Map<string, CanonicalCastableEntry>();
 	const allByName = new Map<string, CanonicalCastableEntry>();
 	for (const entry of allSpells) {
+		if (spellIds.has(entry.id)) allById.set(entry.id, entry);
 		if (names.has(entry.name)) allByName.set(entry.name, entry);
 	}
+
+	const accessibleById = new Map<string, CanonicalCastableEntry>();
 	const accessibleByName = new Map<string, CanonicalCastableEntry>();
 	for (const entry of accessibleSpells) {
+		if (spellIds.has(entry.id)) accessibleById.set(entry.id, entry);
 		if (names.has(entry.name)) accessibleByName.set(entry.name, entry);
 	}
 
 	return rows
-		.filter((row) => !allByName.has(row.name) || accessibleByName.has(row.name))
+		.filter((row) => {
+			const hasCanonicalById = !!row.spell_id && allById.has(row.spell_id);
+			const hasCanonicalByName = allByName.has(row.name);
+			if (!hasCanonicalById && !hasCanonicalByName) return true;
+			if (row.spell_id && accessibleById.has(row.spell_id)) return true;
+			return accessibleByName.has(row.name);
+		})
 		.map((row) => ({
 			...row,
-			spell: accessibleByName.get(row.name),
+			spell:
+				(row.spell_id ? accessibleById.get(row.spell_id) : undefined) ??
+				accessibleByName.get(row.name),
 		}));
 }
 
@@ -81,29 +96,35 @@ export const useSpells = (characterId: string) => {
 
 	const addSpell = useMutation({
 		mutationFn: async (spell: SpellInsert) => {
+			const canonicalReference = await normalizeSpellReference({
+				id: spell.spell_id,
+				name: spell.name,
+			});
+			const spellWithCanonicalId: SpellInsert = {
+				...spell,
+				spell_id: canonicalReference.spell_id,
+			};
+
 			if (isLocalCharacterId(characterId)) {
-				return addLocalSpell(characterId, spell);
+				return addLocalSpell(characterId, spellWithCanonicalId);
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const canonicalEntry = await findCanonicalCastableByName(
-				spell.name,
-				undefined,
-				["spells"],
-			);
 
 			if (
-				canonicalEntry &&
-				!(await isSourcebookAccessible(canonicalEntry.source_book, {
-					campaignId,
-				}))
+				spellWithCanonicalId.spell_id &&
+				!(await isCanonicalCastableAccessible(
+					spellWithCanonicalId.spell_id,
+					{ campaignId },
+					["spells"],
+				))
 			) {
 				throw new Error("This spell requires sourcebook access.");
 			}
 
 			const { data, error } = await supabase
 				.from("character_spells")
-				.insert({ ...spell, character_id: characterId })
+				.insert({ ...spellWithCanonicalId, character_id: characterId })
 				.select()
 				.single();
 

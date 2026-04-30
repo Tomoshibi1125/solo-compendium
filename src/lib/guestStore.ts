@@ -43,6 +43,10 @@ type TechniqueInsert =
 	Database["public"]["Tables"]["character_techniques"]["Insert"];
 type RuneInscriptionRow =
 	Database["public"]["Tables"]["character_rune_inscriptions"]["Row"];
+type SigilInscriptionRow =
+	Database["public"]["Tables"]["character_sigil_inscriptions"]["Row"];
+type SigilInscriptionInsert =
+	Database["public"]["Tables"]["character_sigil_inscriptions"]["Insert"];
 type RuneKnowledgeRow =
 	Database["public"]["Tables"]["character_rune_knowledge"]["Row"];
 type RollHistoryRow = Database["public"]["Tables"]["roll_history"]["Row"];
@@ -57,6 +61,7 @@ interface GuestCharacterState {
 	spellSlots: SpellSlotRow[];
 	techniques: TechniqueRow[];
 	runeInscriptions: RuneInscriptionRow[];
+	sigilInscriptions: SigilInscriptionRow[];
 	runeKnowledge: RuneKnowledgeRow[];
 	rollHistory: RollHistoryRow[];
 	sheetState: CharacterSheetState;
@@ -195,6 +200,12 @@ export function getLocalCharacterState(
 		state.updatedAt = nowIso();
 		saveGuestState(state);
 	}
+	if (!entry.sigilInscriptions) {
+		entry.sigilInscriptions = [];
+		state.characters[characterId] = entry;
+		state.updatedAt = nowIso();
+		saveGuestState(state);
+	}
 	if (!entry.sheetState) {
 		entry.sheetState = createDefaultCharacterSheetState();
 		state.characters[characterId] = entry;
@@ -232,6 +243,7 @@ function upsertLocalCharacter(
 		spellSlots: existing?.spellSlots || [],
 		techniques: existing?.techniques || [],
 		runeInscriptions: existing?.runeInscriptions || [],
+		sigilInscriptions: existing?.sigilInscriptions || [],
 		runeKnowledge: existing?.runeKnowledge || [],
 		rollHistory: existing?.rollHistory || [],
 		sheetState: existing?.sheetState || createDefaultCharacterSheetState(),
@@ -265,8 +277,11 @@ export function createLocalCharacter(
 		sense: data.sense ?? 10,
 		pre: data.pre ?? 10,
 		job: data.job ?? null,
+		job_id: data.job_id ?? null,
 		path: data.path ?? null,
+		path_id: data.path_id ?? null,
 		background: data.background ?? null,
+		background_id: data.background_id ?? null,
 		appearance: data.appearance ?? null,
 		backstory: data.backstory ?? null,
 		notes: data.notes ?? null,
@@ -407,6 +422,7 @@ export function addLocalEquipment(
 	const now = nowIso();
 	const next: EquipmentRow = {
 		id: createLocalId("local_eq"),
+		item_id: item.item_id ?? null,
 		character_id: characterId,
 		created_at: now,
 		display_order: entry.equipment.length,
@@ -519,6 +535,7 @@ export function addLocalPower(
 	const now = nowIso();
 	const next: PowerRow = {
 		id: createLocalId("local_power"),
+		power_id: power.power_id ?? null,
 		character_id: characterId,
 		created_at: now,
 		display_order: entry.powers.length,
@@ -722,6 +739,8 @@ export function addLocalFeature(
 		character_id: characterId,
 		created_at: now,
 		display_order: entry.features.length,
+		feat_id: feature.feat_id ?? null,
+		feature_id: feature.feature_id ?? null,
 		name: feature.name,
 		source: feature.source,
 		description: feature.description ?? null,
@@ -765,6 +784,31 @@ export function updateLocalFeature(
 		const characterId = entry.character.id;
 		const nextFeatures = [...entry.features];
 		nextFeatures[idx] = { ...nextFeatures[idx], ...updates };
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			features: nextFeatures,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Feature not found", "NOT_FOUND");
+}
+
+export function removeLocalFeature(featureId: string): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const idx = entry.features.findIndex((f) => f.id === featureId);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextFeatures = entry.features.filter((f) => f.id !== featureId);
 
 		state.characters[characterId] = {
 			...state.characters[characterId],
@@ -967,6 +1011,89 @@ export function addLocalRuneKnowledge(
 	saveGuestState(state);
 
 	return row;
+}
+
+// Sigil inscription helpers
+export function listLocalSigilInscriptions(
+	characterId: string,
+): SigilInscriptionRow[] {
+	const entry = getLocalCharacterState(characterId);
+	return entry?.sigilInscriptions || [];
+}
+
+export function addLocalSigilInscription(
+	characterId: string,
+	inscription: Omit<SigilInscriptionInsert, "character_id">,
+): SigilInscriptionRow {
+	const entry = getLocalCharacterState(characterId);
+	if (!entry) throw new AppError("Local character not found", "NOT_FOUND");
+
+	const now = nowIso();
+	const row: SigilInscriptionRow = {
+		id: inscription.id ?? createLocalId("local_sigil_inscription"),
+		character_id: characterId,
+		created_at: inscription.created_at ?? now,
+		equipment_id: inscription.equipment_id,
+		inscribed_by: inscription.inscribed_by ?? null,
+		inscription_date: inscription.inscription_date ?? now,
+		inscription_quality: inscription.inscription_quality ?? null,
+		is_active: inscription.is_active ?? true,
+		sigil_id: inscription.sigil_id,
+		slot_index: inscription.slot_index ?? 0,
+	};
+
+	const nextInscriptions = [
+		...entry.sigilInscriptions.filter(
+			(existing) =>
+				!(
+					existing.equipment_id === row.equipment_id &&
+					existing.slot_index === row.slot_index &&
+					existing.is_active
+				),
+		),
+		row,
+	];
+
+	const state = loadGuestState();
+	state.characters[characterId] = {
+		...state.characters[characterId],
+		sigilInscriptions: nextInscriptions,
+		character: { ...entry.character, updated_at: now },
+	};
+	state.updatedAt = now;
+	saveGuestState(state);
+
+	return row;
+}
+
+export function removeLocalSigilInscription(inscriptionId: string): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const sigilInscriptions = entry.sigilInscriptions ?? [];
+		const idx = sigilInscriptions.findIndex(
+			(inscription) => inscription.id === inscriptionId,
+		);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextInscriptions = sigilInscriptions.filter(
+			(inscription) => inscription.id !== inscriptionId,
+		);
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			sigilInscriptions: nextInscriptions,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Sigil inscription not found", "NOT_FOUND");
 }
 
 // Roll history (optional in guest mode)

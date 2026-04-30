@@ -1476,7 +1476,7 @@ export const sigils: CompendiumSigil[] = [
 	},
 	{
 		id: "sigil-res-fire-2",
-		name: "Sigil of the anomaly's Scale",
+		name: "Sigil of the Anomaly's Scale",
 		description:
 			"An advanced ward that completely neutralizes ambient thermal magic.",
 		rarity: "rare",

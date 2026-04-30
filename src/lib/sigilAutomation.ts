@@ -11,6 +11,21 @@ export interface SigilBonusResult {
 
 export type EquipmentRow =
 	Database["public"]["Tables"]["character_equipment"]["Row"];
+type SigilInscriptionRow =
+	Database["public"]["Tables"]["character_sigil_inscriptions"]["Row"];
+
+type SigilCompatibleEquipment = {
+	id: string;
+	item_type: string | null | undefined;
+	properties: string[] | null;
+	name: string;
+	rarity?: string | null | undefined;
+	sigil_slots_base?: number | null;
+};
+
+type SigilCompatibleEntry = {
+	can_inscribe_on?: string[] | null;
+};
 
 export type SigilRarity =
 	| "common"
@@ -74,10 +89,12 @@ export function getEquipmentSigilCategory(equipment: {
 	).map((p) => String(p).toLowerCase());
 
 	if (itemType === "weapon") return "weapon";
-	if (itemType === "armor") {
-		if (name.includes("shield") || props.includes("shield")) return "shield";
-		return "armor";
-	}
+	if (
+		name.includes("shield") ||
+		props.includes("shield") ||
+		itemType === "shield"
+	)
+		return "shield";
 
 	if (
 		name.includes("boots") ||
@@ -130,6 +147,13 @@ export function getEquipmentSigilCategory(equipment: {
 	)
 		return "bracers";
 	if (
+		name.includes("goggle") ||
+		name.includes("glasses") ||
+		props.includes("goggles") ||
+		props.includes("glasses")
+	)
+		return "goggles";
+	if (
 		name.includes("helm") ||
 		name.includes("helmet") ||
 		name.includes("hood") ||
@@ -139,7 +163,99 @@ export function getEquipmentSigilCategory(equipment: {
 	)
 		return "headwear";
 
+	if (itemType === "armor") return "armor";
+
 	return "accessory";
+}
+
+function normalizeSigilCategory(category: string): string {
+	return category
+		.trim()
+		.toLowerCase()
+		.replace(/[\s-]+/g, "_");
+}
+
+function getEquipmentSigilCategoryAliases(category: string): Set<string> {
+	const normalized = normalizeSigilCategory(category);
+	const aliases = new Set([normalized]);
+	if (normalized === "headwear" || normalized === "helmet") {
+		aliases.add("headwear");
+		aliases.add("helmet");
+		aliases.add("helm");
+		aliases.add("hood");
+	}
+	if (
+		[
+			"ring",
+			"amulet",
+			"cloak",
+			"belt",
+			"gloves",
+			"bracers",
+			"boots",
+			"headwear",
+			"helmet",
+			"goggles",
+			"accessory",
+		].includes(normalized)
+	) {
+		aliases.add("accessory");
+	}
+	return aliases;
+}
+
+export function isSigilCompatibleWithEquipment(
+	sigil: SigilCompatibleEntry,
+	equipment: {
+		item_type: string | null | undefined;
+		properties: string[] | null;
+		name: string;
+	},
+): boolean {
+	const allowed = Array.isArray(sigil.can_inscribe_on)
+		? sigil.can_inscribe_on.map(normalizeSigilCategory)
+		: [];
+	if (allowed.length === 0) return false;
+	const equipmentCategory = getEquipmentSigilCategory(equipment);
+	const aliases = getEquipmentSigilCategoryAliases(equipmentCategory);
+	return allowed.some((category) => aliases.has(category));
+}
+
+export function validateSigilInscription(input: {
+	equipment: SigilCompatibleEquipment;
+	sigil: SigilCompatibleEntry;
+	slotIndex: number;
+	existingInscriptions?: Array<
+		Pick<SigilInscriptionRow, "equipment_id" | "slot_index" | "is_active">
+	>;
+}): { allowed: true } | { allowed: false; reason: string } {
+	const effectiveSlots = getEffectiveSigilSlots(input.equipment);
+	if (effectiveSlots <= 0) {
+		return { allowed: false, reason: "This equipment has no sigil slots" };
+	}
+	if (
+		!Number.isInteger(input.slotIndex) ||
+		input.slotIndex < 0 ||
+		input.slotIndex >= effectiveSlots
+	) {
+		return { allowed: false, reason: "Invalid slot" };
+	}
+	const slotOccupied = (input.existingInscriptions ?? []).some(
+		(inscription) =>
+			inscription.is_active !== false &&
+			inscription.equipment_id === input.equipment.id &&
+			inscription.slot_index === input.slotIndex,
+	);
+	if (slotOccupied) {
+		return { allowed: false, reason: "Slot already occupied" };
+	}
+	if (!isSigilCompatibleWithEquipment(input.sigil, input.equipment)) {
+		return {
+			allowed: false,
+			reason: "Sigil cannot be inscribed on this equipment",
+		};
+	}
+	return { allowed: true };
 }
 
 /**

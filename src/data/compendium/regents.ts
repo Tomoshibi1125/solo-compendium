@@ -463,6 +463,12 @@ export const regents: Regent[] = [
 			quest_completion: "Complete the Umbral Regent Ascension quest series",
 			warden_approval: true,
 		},
+		requirements: {
+			quest_completion: "Complete the Umbral Regent Ascension quest series",
+			warden_verification: true,
+			prerequisite_job: "Any base job",
+			power_level: 5,
+		},
 		mechanics: {
 			stat_bonuses: {
 				strength: 4,

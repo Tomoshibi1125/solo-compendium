@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalFeature,
@@ -11,6 +12,8 @@ import {
 } from "@/lib/guestStore";
 
 type Feature = Database["public"]["Tables"]["character_features"]["Row"];
+type FeatureInsert =
+	Database["public"]["Tables"]["character_features"]["Insert"];
 type FeatureUpdate =
 	Database["public"]["Tables"]["character_features"]["Update"];
 
@@ -38,6 +41,23 @@ const writeCachedFeatures = (key: string, features: Feature[]) => {
 		// ignore
 	}
 };
+
+async function resolveFeatureCanonicalIds(
+	feature: FeatureInsert,
+): Promise<FeatureInsert> {
+	const isFeatSource = feature.source.toLowerCase().includes("feat");
+	if (!isFeatSource) return feature;
+
+	const canonicalResolution = await resolveCanonicalReference("feats", {
+		id: feature.feat_id,
+		name: feature.name,
+	});
+	const canonicalFeat = canonicalResolution.entry;
+	return {
+		...feature,
+		feat_id: canonicalFeat?.id ?? feature.feat_id ?? null,
+	};
+}
 
 export const useFeatures = (characterId: string) => {
 	const queryClient = useQueryClient();
@@ -83,16 +103,16 @@ export const useFeatures = (characterId: string) => {
 	});
 
 	const addFeature = useMutation({
-		mutationFn: async (
-			feature: Database["public"]["Tables"]["character_features"]["Insert"],
-		) => {
+		mutationFn: async (feature: FeatureInsert) => {
+			const featureWithCanonicalIds = await resolveFeatureCanonicalIds(feature);
+
 			if (isLocalCharacterId(characterId)) {
-				return addLocalFeature(characterId, feature);
+				return addLocalFeature(characterId, featureWithCanonicalIds);
 			}
 
 			const { data, error } = await supabase
 				.from("character_features")
-				.insert({ ...feature, character_id: characterId })
+				.insert({ ...featureWithCanonicalIds, character_id: characterId })
 				.select()
 				.single();
 

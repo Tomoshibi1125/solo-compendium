@@ -3,6 +3,7 @@ import {
 	Heart,
 	Package,
 	Plus,
+	Search,
 	Settings,
 	Shield,
 	Skull,
@@ -34,11 +35,23 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacters, useDeleteCharacter } from "@/hooks/useCharacters";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+
+type CharacterSortKey = "updated" | "name" | "level-desc" | "level-asc";
+
+const ALL_FILTER = "__all__";
 
 const Characters = () => {
 	const navigate = useNavigate();
@@ -52,6 +65,64 @@ const Characters = () => {
 	const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 	const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 	const [importDialogOpen, setImportDialogOpen] = useState(false);
+	const [searchTerm, setSearchTerm] = useState("");
+	const [jobFilter, setJobFilter] = useState<string>(ALL_FILTER);
+	const [sortKey, setSortKey] = useState<CharacterSortKey>("updated");
+
+	const jobOptions = useMemo(() => {
+		const jobs = new Set<string>();
+		for (const character of characters) {
+			const job = character.job?.trim();
+			if (job) jobs.add(job);
+		}
+		return Array.from(jobs).sort((a, b) => a.localeCompare(b));
+	}, [characters]);
+
+	const filteredCharacters = useMemo(() => {
+		const lookup = searchTerm.trim().toLowerCase();
+		const filtered = characters.filter((character) => {
+			if (jobFilter !== ALL_FILTER && (character.job ?? "") !== jobFilter) {
+				return false;
+			}
+			if (!lookup) return true;
+			const haystacks = [
+				character.name,
+				character.job,
+				character.path,
+				character.background,
+			]
+				.filter((v): v is string => Boolean(v))
+				.map((v) => v.toLowerCase());
+			return haystacks.some((value) => value.includes(lookup));
+		});
+
+		const sorted = [...filtered];
+		switch (sortKey) {
+			case "name":
+				sorted.sort((a, b) => a.name.localeCompare(b.name));
+				break;
+			case "level-desc":
+				sorted.sort(
+					(a, b) => b.level - a.level || a.name.localeCompare(b.name),
+				);
+				break;
+			case "level-asc":
+				sorted.sort(
+					(a, b) => a.level - b.level || a.name.localeCompare(b.name),
+				);
+				break;
+			default:
+				sorted.sort((a, b) => {
+					const aTime = new Date(a.updated_at ?? 0).getTime();
+					const bTime = new Date(b.updated_at ?? 0).getTime();
+					return bTime - aTime || a.name.localeCompare(b.name);
+				});
+				break;
+		}
+		return sorted;
+	}, [characters, searchTerm, jobFilter, sortKey]);
+
+	const hasActiveFilters = searchTerm.trim() !== "" || jobFilter !== ALL_FILTER;
 
 	const handleDelete = async () => {
 		if (!deleteTarget) return;
@@ -221,9 +292,105 @@ const Characters = () => {
 					</AscendantWindow>
 				) : (
 					<>
+						{/* Search / Filter / Sort */}
+						<div
+							className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4"
+							data-testid="character-manager-controls"
+						>
+							<div className="relative flex-1 min-w-0">
+								<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+								<Input
+									type="search"
+									value={searchTerm}
+									onChange={(event) => setSearchTerm(event.target.value)}
+									placeholder="Search by name, job, path, or background"
+									className="pl-9"
+									aria-label="Search Ascendants"
+								/>
+							</div>
+							<div className="flex gap-2 sm:flex-shrink-0">
+								<Select
+									value={jobFilter}
+									onValueChange={(value) => setJobFilter(value)}
+								>
+									<SelectTrigger
+										className="w-full sm:w-44"
+										aria-label="Filter by job"
+									>
+										<SelectValue placeholder="All Jobs" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value={ALL_FILTER}>All Jobs</SelectItem>
+										{jobOptions.map((job) => (
+											<SelectItem key={job} value={job}>
+												{formatRegentVernacular(job)}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+								<Select
+									value={sortKey}
+									onValueChange={(value) =>
+										setSortKey(value as CharacterSortKey)
+									}
+								>
+									<SelectTrigger
+										className="w-full sm:w-48"
+										aria-label="Sort Ascendants"
+									>
+										<SelectValue placeholder="Sort" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="updated">Recently updated</SelectItem>
+										<SelectItem value="name">Name (A → Z)</SelectItem>
+										<SelectItem value="level-desc">
+											Level (high → low)
+										</SelectItem>
+										<SelectItem value="level-asc">
+											Level (low → high)
+										</SelectItem>
+									</SelectContent>
+								</Select>
+								{hasActiveFilters && (
+									<Button
+										type="button"
+										variant="ghost"
+										onClick={() => {
+											setSearchTerm("");
+											setJobFilter(ALL_FILTER);
+										}}
+										className="font-heading"
+									>
+										Clear
+									</Button>
+								)}
+							</div>
+						</div>
+
+						{/* Result Counter */}
+						{hasActiveFilters && (
+							<AscendantText className="block text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3">
+								Showing {filteredCharacters.length} of {characters.length}{" "}
+								Ascendants
+							</AscendantText>
+						)}
+
+						{filteredCharacters.length === 0 ? (
+							<AscendantWindow
+								title="NO MATCHING ASCENDANTS"
+								variant="alert"
+								className="max-w-lg mx-auto text-center py-8 mb-6"
+							>
+								<AscendantText className="block text-muted-foreground">
+									No Ascendants match the current filters. Adjust the search or
+									clear filters to view your full roster.
+								</AscendantText>
+							</AscendantWindow>
+						) : null}
+
 						{/* Character Grid */}
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-							{characters.map((character) => {
+							{filteredCharacters.map((character) => {
 								const rankInfo = getHunterRank(character.level);
 								const hpPercent =
 									(character.hp_current / character.hp_max) * 100;

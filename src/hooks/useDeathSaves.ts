@@ -14,15 +14,17 @@
 
 import { useCallback, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+	applyDamageAtZero,
+	applyDeathSaveRoll,
+	applyHealingAtZero,
+	applyReset,
+	applyStabilize,
+	type DeathSaveState,
+	INITIAL_DEATH_SAVE_STATE,
+} from "@/lib/deathSaveRules";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { rollCheck } from "@/lib/rollEngine";
-
-interface DeathSaveState {
-	successes: number;
-	failures: number;
-	isStable: boolean;
-	isDead: boolean;
-}
 
 interface DeathSaveRollResult {
 	roll: number;
@@ -49,19 +51,12 @@ interface UseDeathSavesReturn {
 	persist: (characterId: string) => Promise<void>;
 }
 
-const INITIAL_STATE: DeathSaveState = {
-	successes: 0,
-	failures: 0,
-	isStable: false,
-	isDead: false,
-};
-
 export function useDeathSaves(
 	initialSuccesses = 0,
 	initialFailures = 0,
 ): UseDeathSavesReturn {
 	const [state, setState] = useState<DeathSaveState>({
-		...INITIAL_STATE,
+		...INITIAL_DEATH_SAVE_STATE,
 		successes: initialSuccesses,
 		failures: initialFailures,
 	});
@@ -69,74 +64,21 @@ export function useDeathSaves(
 	const rollDeathSave = useCallback((): DeathSaveRollResult => {
 		const result = rollCheck(0, "normal");
 		const roll = result.rolls[0] ?? 0;
-		const isNat20 = roll === 20;
-		const isNat1 = roll === 1;
-
-		let newState: DeathSaveState;
-		let message: string;
-		let success: boolean;
-
-		if (isNat20) {
-			// Nat 20: regain 1 HP, reset death saves
-			newState = { ...INITIAL_STATE };
-			message = "Natural 20! You regain 1 HP and are conscious.";
-			success = true;
-		} else if (isNat1) {
-			// Nat 1: 2 failures
-			const newFailures = Math.min(3, state.failures + 2);
-			const isDead = newFailures >= 3;
-			newState = { ...state, failures: newFailures, isDead };
-			message = isDead
-				? "Natural 1! Two death save failures. You have died."
-				: `Natural 1! Two failures (${newFailures}/3).`;
-			success = false;
-		} else if (roll >= 10) {
-			// Success
-			const newSuccesses = Math.min(3, state.successes + 1);
-			const isStable = newSuccesses >= 3;
-			newState = { ...state, successes: newSuccesses, isStable };
-			message = isStable
-				? `Success! You are stable (${newSuccesses}/3 successes).`
-				: `Success (${newSuccesses}/3).`;
-			success = true;
-		} else {
-			// Failure
-			const newFailures = Math.min(3, state.failures + 1);
-			const isDead = newFailures >= 3;
-			newState = { ...state, failures: newFailures, isDead };
-			message = isDead
-				? `Failure. Three failures. You have died.`
-				: `Failure (${newFailures}/3).`;
-			success = false;
-		}
-
-		setState(newState);
-		return { roll, isNat20, isNat1, success, newState, message };
+		const transition = applyDeathSaveRoll(state, roll);
+		setState(transition.newState);
+		return {
+			roll,
+			isNat20: transition.isNat20,
+			isNat1: transition.isNat1,
+			success: transition.success,
+			newState: transition.newState,
+			message: transition.message,
+		};
 	}, [state]);
 
 	const takeDamageAtZero = useCallback(
 		(damage: number, hpMax: number): DeathSaveState => {
-			// Massive damage: instant death if damage >= hpMax
-			if (damage >= hpMax) {
-				const dead: DeathSaveState = {
-					successes: 0,
-					failures: 3,
-					isStable: false,
-					isDead: true,
-				};
-				setState(dead);
-				return dead;
-			}
-
-			// Otherwise: 1 auto-failure per hit
-			const newFailures = Math.min(3, state.failures + 1);
-			const isDead = newFailures >= 3;
-			const next: DeathSaveState = {
-				...state,
-				failures: newFailures,
-				isDead,
-				isStable: false,
-			};
+			const next = applyDamageAtZero(state, damage, hpMax);
 			setState(next);
 			return next;
 		},
@@ -144,15 +86,15 @@ export function useDeathSaves(
 	);
 
 	const receiveHealing = useCallback(() => {
-		setState({ ...INITIAL_STATE });
+		setState(applyHealingAtZero());
 	}, []);
 
 	const stabilize = useCallback(() => {
-		setState((prev) => ({ ...prev, isStable: true }));
+		setState((prev) => applyStabilize(prev));
 	}, []);
 
 	const reset = useCallback(() => {
-		setState({ ...INITIAL_STATE });
+		setState(applyReset());
 	}, []);
 
 	const persist = useCallback(

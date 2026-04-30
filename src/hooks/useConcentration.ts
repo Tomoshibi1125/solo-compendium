@@ -6,9 +6,9 @@
  *
  * D&D Beyond parity:
  *  - Tracks active concentration spell name + remaining rounds
- *  - Auto-prompts for VIT save when damage is taken
+ *  - Auto-prompts for VIT save when damage is taken (with advantage/disadvantage)
  *  - Drops concentration when a new concentration spell is cast
- *  - Persists concentration status in character conditions
+ *  - Fires onConcentrationLost so analytics/condition cleanup can react in one place
  */
 
 import { useCallback, useMemo, useState } from "react";
@@ -16,6 +16,7 @@ import { rollCheck } from "@/lib/rollEngine";
 import {
 	type ConcentrationEffect,
 	type ConcentrationState,
+	calculateConcentrationDC,
 	endConcentration,
 	getConcentrationStatus,
 	initializeConcentration,
@@ -27,14 +28,35 @@ import { getAbilityModifier, getProficiencyBonus } from "@/types/core-rules";
 // Types
 // ---------------------------------------------------------------------------
 
+export type ConcentrationSaveMode = "normal" | "advantage" | "disadvantage";
+
+export type ConcentrationLostReason =
+	| "drop"
+	| "replaced"
+	| "damage"
+	| "expired";
+
 interface ConcentrationCheckResult {
 	success: boolean;
 	roll: number;
 	dc: number;
 	modifier: number;
 	total: number;
+	mode: ConcentrationSaveMode;
 	spellName: string | null;
 	concentrationLost: boolean;
+}
+
+interface UseConcentrationOptions {
+	/**
+	 * Fired whenever an active concentration is lost for any reason
+	 * (voluntary drop, replaced by a new spell, broken by damage, expired).
+	 * Use this hook point for analytics, condition cleanup, etc.
+	 */
+	onConcentrationLost?: (
+		spellName: string,
+		reason: ConcentrationLostReason,
+	) => void;
 }
 
 interface UseConcentrationReturn {
@@ -46,8 +68,15 @@ interface UseConcentrationReturn {
 	concentrate: (effect: Omit<ConcentrationEffect, "remainingRounds">) => void;
 	/** Voluntarily drop concentration */
 	drop: () => void;
-	/** Process damage taken — returns the concentration check result */
-	takeDamage: (damage: number) => ConcentrationCheckResult | null;
+	/**
+	 * Process damage taken — returns the concentration check result.
+	 * `mode` defaults to "normal"; pass "advantage"/"disadvantage" when feats
+	 * (War Caster, Resilient) or condition modifiers apply.
+	 */
+	takeDamage: (
+		damage: number,
+		mode?: ConcentrationSaveMode,
+	) => ConcentrationCheckResult | null;
 	/** Advance one round (decrement remaining duration) */
 	advanceRound: () => void;
 }
@@ -60,6 +89,7 @@ export function useConcentration(
 	vitScore: number,
 	characterLevel: number,
 	saveProficiencies: string[],
+	options?: UseConcentrationOptions,
 ): UseConcentrationReturn {
 	const [state, setState] = useState<ConcentrationState>(
 		initializeConcentration,
@@ -75,28 +105,54 @@ export function useConcentration(
 
 	const status = useMemo(() => getConcentrationStatus(state), [state]);
 
+	const onConcentrationLost = options?.onConcentrationLost;
+
 	const concentrate = useCallback(
 		(effect: Omit<ConcentrationEffect, "remainingRounds">) => {
-			setState((prev) => startConcentration(prev, effect));
+			setState((prev) => {
+				// If we are replacing an active, different concentration, fire the
+				// loss callback so listeners can clean up before the new one starts.
+				if (
+					prev.isConcentrating &&
+					prev.currentEffect &&
+					prev.currentEffect.id !== effect.id &&
+					onConcentrationLost
+				) {
+					onConcentrationLost(prev.currentEffect.name, "replaced");
+				}
+				return startConcentration(prev, effect);
+			});
 		},
-		[],
+		[onConcentrationLost],
 	);
 
 	const drop = useCallback(() => {
-		setState((prev) => endConcentration(prev));
-	}, []);
+		setState((prev) => {
+			if (prev.isConcentrating && prev.currentEffect && onConcentrationLost) {
+				onConcentrationLost(prev.currentEffect.name, "drop");
+			}
+			return endConcentration(prev);
+		});
+	}, [onConcentrationLost]);
 
 	const takeDamage = useCallback(
-		(damage: number): ConcentrationCheckResult | null => {
+		(
+			damage: number,
+			mode: ConcentrationSaveMode = "normal",
+		): ConcentrationCheckResult | null => {
 			if (!state.isConcentrating || !state.currentEffect) return null;
 
-			const dc = Math.max(10, Math.floor(damage / 2));
-			const roll = rollCheck(0, "normal").rolls[0] ?? 0;
+			const dc = calculateConcentrationDC(damage);
+			const rollResult = rollCheck(0, mode);
+			const roll = rollResult.rolls[0] ?? 0;
 			const total = roll + saveModifier;
 			const success = total >= dc;
 
+			const spellName = state.currentEffect.name;
+
 			if (!success) {
 				setState((prev) => endConcentration(prev));
+				if (onConcentrationLost) onConcentrationLost(spellName, "damage");
 			}
 
 			return {
@@ -105,11 +161,12 @@ export function useConcentration(
 				dc,
 				modifier: saveModifier,
 				total,
-				spellName: state.currentEffect.name,
+				mode,
+				spellName,
 				concentrationLost: !success,
 			};
 		},
-		[state, saveModifier],
+		[state, saveModifier, onConcentrationLost],
 	);
 
 	const advanceRound = useCallback(() => {
@@ -117,6 +174,9 @@ export function useConcentration(
 			if (!prev.isConcentrating || !prev.currentEffect) return prev;
 			const remaining = prev.currentEffect.remainingRounds - 1;
 			if (remaining <= 0) {
+				if (onConcentrationLost) {
+					onConcentrationLost(prev.currentEffect.name, "expired");
+				}
 				return {
 					...prev,
 					isConcentrating: false,
@@ -130,7 +190,7 @@ export function useConcentration(
 				damageTakenThisRound: 0,
 			};
 		});
-	}, []);
+	}, [onConcentrationLost]);
 
 	return { state, status, concentrate, drop, takeDamage, advanceRound };
 }

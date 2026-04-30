@@ -223,27 +223,47 @@ export async function downloadCharacterJSON(
 }
 
 /**
- * Export character as PDF (using markdown for now, can be enhanced with PDF library)
+ * Export character as a printable / print-to-PDF page.
+ *
+ * Opens the live character sheet in a new tab in print mode and triggers
+ * the browser's native print dialog. Users get the standard "Save as PDF"
+ * option from any modern browser — a true PDF without bundling jsPDF/pdfkit.
  */
-export function exportCharacterPDF(character: Character): void {
+export function exportCharacterPDF(
+	characterId: string,
+	options: { shareToken?: string | null } = {},
+): void {
+	printCharacterSheet(characterId, options);
+}
+
+/**
+ * Legacy markdown export (kept for callers that still want a `.md` file).
+ * Prefer {@link exportCharacterPDF} for true PDF output.
+ */
+export function exportCharacterMarkdown(character: Character): void {
 	const markdown = exportCharacterToMarkdown(character);
 	downloadFile(
 		markdown,
 		`${character.name.replace(/[^a-z0-9]/gi, "_")}_character.md`,
 		"text/markdown",
 	);
-
-	// For actual PDF, you would use a library like jsPDF or pdfkit
-	// For now, we export as markdown which can be converted to PDF
 }
 
 /**
- * Print character sheet
+ * Print character sheet (or save as PDF via the browser's print dialog).
+ *
+ * D&D Beyond parity (#17): threads the share token so read-only viewers
+ * with a share link can also print/PDF the sheet.
  */
-export function printCharacterSheet(characterId: string): void {
-	// Open character sheet in new window for printing
+export function printCharacterSheet(
+	characterId: string,
+	options: { shareToken?: string | null } = {},
+): void {
+	const params = new URLSearchParams();
+	params.set("print", "true");
+	if (options.shareToken) params.set("token", options.shareToken);
 	const printWindow = window.open(
-		`/characters/${characterId}?print=true`,
+		`/characters/${characterId}?${params.toString()}`,
 		"_blank",
 	);
 	if (printWindow) {

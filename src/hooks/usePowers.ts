@@ -5,8 +5,9 @@ import type { Database } from "@/integrations/supabase/types";
 import {
 	type CanonicalCastableEntry,
 	type CanonicalCastableType,
-	findCanonicalCastableByName,
+	isCanonicalCastableAccessible,
 	listCanonicalPowers,
+	resolveCanonicalCastableReference,
 } from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
@@ -16,10 +17,7 @@ import {
 	removeLocalPower,
 	updateLocalPower,
 } from "@/lib/guestStore";
-import {
-	getCharacterCampaignId,
-	isSourcebookAccessible,
-} from "@/lib/sourcebookAccess";
+import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 
 export type PowerRow = Database["public"]["Tables"]["character_powers"]["Row"];
 export type CompendiumPower = CanonicalCastableEntry;
@@ -133,11 +131,19 @@ export const usePowers = (characterId: string) => {
 			const uniqueNames = Array.from(
 				new Set(powers.map((power) => power.name).filter(Boolean)),
 			);
-			if (uniqueNames.length === 0) {
+			const uniquePowerIds = Array.from(
+				new Set(
+					powers
+						.map((power) => power.power_id)
+						.filter((id): id is string => Boolean(id)),
+				),
+			);
+			if (uniqueNames.length === 0 && uniquePowerIds.length === 0) {
 				return powers;
 			}
 
 			const uniqueNameSet = new Set(uniqueNames);
+			const uniquePowerIdSet = new Set(uniquePowerIds);
 			const campaignId = await getCharacterCampaignId(characterId);
 			const [allCanonicalCastables, accessibleCanonicalCastables] =
 				await Promise.all([
@@ -145,16 +151,24 @@ export const usePowers = (characterId: string) => {
 					listCanonicalPowers(undefined, { campaignId }),
 				]);
 
+			const allById = new Map<string, CanonicalCastableEntry>();
 			const allByName = new Map<string, CanonicalCastableEntry[]>();
 			for (const entry of allCanonicalCastables) {
+				if (uniquePowerIdSet.has(entry.id)) {
+					allById.set(entry.id, entry);
+				}
 				if (uniqueNameSet.has(entry.name)) {
 					const existing = allByName.get(entry.name) || [];
 					existing.push(entry);
 					allByName.set(entry.name, existing);
 				}
 			}
+			const accessibleById = new Map<string, CanonicalCastableEntry>();
 			const accessibleByName = new Map<string, CanonicalCastableEntry[]>();
 			for (const entry of accessibleCanonicalCastables) {
+				if (uniquePowerIdSet.has(entry.id)) {
+					accessibleById.set(entry.id, entry);
+				}
 				if (uniqueNameSet.has(entry.name)) {
 					const existing = accessibleByName.get(entry.name) || [];
 					existing.push(entry);
@@ -162,7 +176,7 @@ export const usePowers = (characterId: string) => {
 				}
 			}
 
-			if (allByName.size === 0) {
+			if (allByName.size === 0 && allById.size === 0) {
 				if (cacheKey) {
 					writeCachedPowers(cacheKey, powers);
 				}
@@ -171,18 +185,26 @@ export const usePowers = (characterId: string) => {
 
 			const filtered = powers
 				.filter((power) => {
-					if (!allByName.has(power.name)) {
+					const hasCanonicalById =
+						!!power.power_id && allById.has(power.power_id);
+					const hasCanonicalByName = allByName.has(power.name);
+					if (!hasCanonicalById && !hasCanonicalByName) {
 						return true;
 					}
 
+					if (power.power_id && accessibleById.has(power.power_id)) {
+						return true;
+					}
 					return (accessibleByName.get(power.name)?.length ?? 0) > 0;
 				})
 				.map((power) => ({
 					...power,
-					power: selectCanonicalCastable(
-						accessibleByName.get(power.name) || [],
-						power,
-					),
+					power:
+						(power.power_id ? accessibleById.get(power.power_id) : undefined) ??
+						selectCanonicalCastable(
+							accessibleByName.get(power.name) || [],
+							power,
+						),
 				}));
 
 			if (cacheKey) {
@@ -199,8 +221,22 @@ export const usePowers = (characterId: string) => {
 
 	const addPower = useMutation({
 		mutationFn: async (power: PowerInsert) => {
+			const canonicalResolution = await resolveCanonicalCastableReference(
+				{ id: power.power_id, name: power.name },
+				undefined,
+				["powers"],
+			);
+			const canonicalEntry = canonicalResolution.entry;
+			const powerWithCanonicalId: PowerInsert = {
+				...power,
+				power_id: canonicalEntry?.id ?? power.power_id ?? null,
+			};
+
 			if (isLocalCharacterId(characterId)) {
-				addLocalPower(characterId, power as Omit<PowerInsert, "character_id">);
+				addLocalPower(
+					characterId,
+					powerWithCanonicalId as Omit<PowerInsert, "character_id">,
+				);
 				return null;
 			}
 
@@ -219,41 +255,38 @@ export const usePowers = (characterId: string) => {
 						character_id: characterId,
 						created_at: now,
 						display_order: cached.length,
-						name: power.name,
-						power_level: power.power_level ?? 0,
-						source: power.source ?? null,
-						description: power.description ?? null,
-						higher_levels: power.higher_levels ?? null,
-						casting_time: power.casting_time ?? null,
-						range: power.range ?? null,
-						duration: power.duration ?? null,
-						concentration: power.concentration ?? false,
-						is_prepared: power.is_prepared ?? false,
-						is_known: power.is_known ?? true,
+						name: powerWithCanonicalId.name,
+						power_id: powerWithCanonicalId.power_id ?? null,
+						power_level: powerWithCanonicalId.power_level ?? 0,
+						source: powerWithCanonicalId.source ?? null,
+						description: powerWithCanonicalId.description ?? null,
+						higher_levels: powerWithCanonicalId.higher_levels ?? null,
+						casting_time: powerWithCanonicalId.casting_time ?? null,
+						range: powerWithCanonicalId.range ?? null,
+						duration: powerWithCanonicalId.duration ?? null,
+						concentration: powerWithCanonicalId.concentration ?? false,
+						is_prepared: powerWithCanonicalId.is_prepared ?? false,
+						is_known: powerWithCanonicalId.is_known ?? true,
 					};
 					writeCachedPowers(cacheKey, [...cached, optimistic]);
 				}
 			}
 
 			const campaignId = await getCharacterCampaignId(characterId);
-			const canonicalEntry = await findCanonicalCastableByName(
-				power.name,
-				undefined,
-				["powers"],
-			);
-
 			if (
-				canonicalEntry &&
-				!(await isSourcebookAccessible(canonicalEntry.source_book, {
-					campaignId,
-				}))
+				powerWithCanonicalId.power_id &&
+				!(await isCanonicalCastableAccessible(
+					powerWithCanonicalId.power_id,
+					{ campaignId },
+					["powers"],
+				))
 			) {
 				throw new Error("This power requires sourcebook access.");
 			}
 
 			const { data, error } = await supabase
 				.from("character_powers")
-				.insert({ ...power, character_id: characterId });
+				.insert({ ...powerWithCanonicalId, character_id: characterId });
 			if (error) {
 				logErrorWithContext(error, "usePowers.addPower");
 				throw error;
@@ -309,7 +342,7 @@ export const usePowers = (characterId: string) => {
 				const { data: existingPower, error: existingPowerError } =
 					await supabase
 						.from("character_powers")
-						.select("name, source")
+						.select("name, power_id, source")
 						.eq("id", id)
 						.maybeSingle();
 
@@ -321,17 +354,26 @@ export const usePowers = (characterId: string) => {
 				}
 
 				if (existingPower?.name) {
-					const canonicalEntry = await findCanonicalCastableByName(
-						existingPower.name,
-						undefined,
-						getPreferredCastableTypes(existingPower.source),
+					const preferredTypes = getPreferredCastableTypes(
+						existingPower.source,
 					);
+					const canonicalResolution = await resolveCanonicalCastableReference(
+						{
+							id: existingPower.power_id,
+							name: existingPower.name,
+						},
+						undefined,
+						preferredTypes,
+					);
+					const canonicalEntry = canonicalResolution.entry;
 
 					if (
 						canonicalEntry &&
-						!(await isSourcebookAccessible(canonicalEntry.source_book, {
-							campaignId,
-						}))
+						!(await isCanonicalCastableAccessible(
+							canonicalEntry.id,
+							{ campaignId },
+							preferredTypes,
+						))
 					) {
 						throw new Error("This power requires sourcebook access.");
 					}

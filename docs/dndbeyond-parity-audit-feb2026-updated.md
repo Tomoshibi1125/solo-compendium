@@ -3,6 +3,7 @@
 **Audit Date:** February 2026 (targeting Feb 2026 D&D Beyond feature set)
 **Codebase:** `solo-compendium` (System Ascendant)
 **Status:** 100% D&D Beyond Parity Achieved ✅
+**Apr 2026 persistence addendum:** Character-owned persistence now uses canonical ID dual-write paths and v2.4 export/import coverage across the full character package. RA remains intentionally single-Job by design; DDB-style multiclass is treated as not applicable rather than deferred.
 
 ---
 
@@ -28,7 +29,7 @@
 | C1 | Character Creation Wizard | ✅ | `CharacterNew.tsx` — full step-by-step flow |
 | C2 | Level-Up Flow | ✅ | `CharacterLevelUp.tsx` — guided progression |
 | C3 | Character Sheet (View/Edit) | ✅ | `CharacterSheet5e.tsx` — full interactive sheet |
-| C4 | Multiclass Support | ✅ | Multiclass in creation and level-up flows |
+| C4 | Multiclass Support | N/A | RA single-Job design; not deferred |
 | C5 | Short Rest Automation | ✅ | `restSystem.ts:executeShortRest` |
 | C6 | Long Rest Automation | ✅ | `restSystem.ts:executeLongRest` |
 | C7 | Spell Slot Tracking | ✅ | `character_spell_slots` table + automation |
@@ -36,8 +37,8 @@
 | C9 | Equipment & Inventory | ✅ | `useEquipment` hook + currency management |
 | C10 | Dice Roller (Inline) | ✅ | `CharacterRollsPanel.tsx` + `InlineRollButton.tsx` |
 | C11 | Character Sharing | ✅ | `get_character_by_share_token` RPC |
-| C12 | Character Export/Import | ✅ | `useCharacterExportImport.ts` — JSON/PDF export/import |
-| C13 | Multiple Characters | ✅ | `useCharacters` — full character management |
+| C12 | Character Export/Import | ✅ | `useCharacterExportImport.ts` — JSON/PDF export/import; JSON v2.4 covers full character package |
+| C13 | Multiple Characters | ✅ | `useCharacters` + `Characters.tsx` — full character management with search/filter/sort |
 | C14 | Character Comparison | ✅ | `CharacterCompare.tsx` at `/characters/compare` |
 
 ### 1.2 Campaign Management (Warden + Player)

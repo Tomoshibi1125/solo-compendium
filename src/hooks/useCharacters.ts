@@ -4,6 +4,8 @@ import { useBackgroundSync } from "@/hooks/useBackgroundSync";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
+import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidation";
 import { filterPersonalCharacters } from "@/lib/characterScope";
 import { isNotFoundError, logErrorWithContext } from "@/lib/errorHandling";
 import {
@@ -231,13 +233,16 @@ export const useCreateCharacter = () => {
 			const {
 				data: { user },
 			} = await supabase.auth.getUser();
+			const dataWithCanonicalIds = await normalizeCharacterOverlayFields(
+				await resolveCharacterCanonicalIds(data),
+			);
 			if (!user) {
-				return createLocalCharacter(data);
+				return createLocalCharacter(dataWithCanonicalIds);
 			}
 
 			const { data: character, error } = await supabase
 				.from("characters")
-				.insert({ ...data, user_id: user.id })
+				.insert({ ...dataWithCanonicalIds, user_id: user.id })
 				.select()
 				.single();
 
@@ -294,8 +299,11 @@ export const useUpdateCharacter = () => {
 	>(
 		(variables) => ["character", variables.id, undefined],
 		async ({ id, data }: { id: string; data: CharacterUpdate }) => {
+			const dataWithCanonicalIds = await normalizeCharacterOverlayFields(
+				await resolveCharacterCanonicalIds(data),
+			);
 			if (isLocalCharacterId(id)) {
-				const updated = updateLocalCharacter(id, data);
+				const updated = updateLocalCharacter(id, dataWithCanonicalIds);
 				if (!updated) throw new AppError("Ascendant not found", "NOT_FOUND");
 				return updated;
 			}
@@ -307,7 +315,10 @@ export const useUpdateCharacter = () => {
 
 			const { data: character, error } = await supabase
 				.from("characters")
-				.update({ ...data, updated_at: new Date().toISOString() })
+				.update({
+					...dataWithCanonicalIds,
+					updated_at: new Date().toISOString(),
+				})
 				.eq("id", id)
 				.eq("user_id", user.id)
 				.select()

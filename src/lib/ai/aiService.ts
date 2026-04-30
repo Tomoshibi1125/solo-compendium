@@ -3,6 +3,12 @@
  * Handles AI integrations for audio and art enhancement
  */
 
+import {
+	type ChatResponseExt,
+	type Message as PollinationsMessage,
+	chat as pollinationsChat,
+	configure as pollinationsConfigure,
+} from "@pollinations_ai/sdk";
 import { supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { logger } from "@/lib/logger";
@@ -948,15 +954,23 @@ export class AIServiceManager {
 	): AIService[] {
 		const scoreService = (service: AIService): number => {
 			// Lower score = higher priority
-			if (service.type === "ollama") return 0; // Local fallback first
-			if (service.type === "gemini-native") return 1;
-			if (service.type === "custom") return 2;
-			return 3;
+			// Pollinations is the authoritative architectural fallback for
+			// Gemini-native — the SDK works in unauthenticated mode without
+			// requiring a key, so it precedes the local Ollama floor.
+			if (service.type === "pollinations") return 0;
+			if (service.type === "ollama") return 1;
+			if (service.type === "gemini-native") return 2;
+			if (service.type === "custom") return 3;
+			return 4;
 		};
 
 		return this.config.services
 			.filter((service) => service.id !== primaryServiceId)
-			.filter((service) => service.enabled)
+			.filter(
+				// Pollinations is allowed in the fallback chain even when its
+				// `enabled` flag is false: it's the architectural fallback layer.
+				(service) => service.enabled || service.type === "pollinations",
+			)
 			.filter((service) => service.capabilities.includes(capability))
 			.sort((a, b) => scoreService(a) - scoreService(b));
 	}
@@ -1004,7 +1018,9 @@ export class AIServiceManager {
 			case "gemini-native":
 				return this.callGeminiNative(service, request);
 			case "pollinations":
-				return this.callPollinations(service, request);
+				return this.hasPollinationsCredentials(service)
+					? this.callPollinationsSDK(service, request)
+					: this.callPollinations(service, request);
 			case "ollama":
 				return this.callOllama(service, request);
 			case "custom":
@@ -1012,6 +1028,15 @@ export class AIServiceManager {
 			default:
 				return this.callGeminiNative(service, request);
 		}
+	}
+
+	private hasPollinationsCredentials(service: AIService): boolean {
+		if (service.apiKey?.trim()) return true;
+		const envApiKey =
+			typeof import.meta !== "undefined" && import.meta.env
+				? (import.meta.env.VITE_POLLINATIONS_API_KEY as string | undefined)
+				: undefined;
+		return Boolean(envApiKey?.trim());
 	}
 
 	private async callGeminiNative(
@@ -1089,6 +1114,115 @@ export class AIServiceManager {
 			return {
 				success: false,
 				error: error instanceof Error ? error.message : "Gemini proxy error",
+			};
+		}
+	}
+
+	private pollinationsConfigured = false;
+
+	private ensurePollinationsConfigured(service: AIService): void {
+		if (this.pollinationsConfigured) return;
+		const envApiKey =
+			typeof import.meta !== "undefined" && import.meta.env
+				? (import.meta.env.VITE_POLLINATIONS_API_KEY as string | undefined)
+				: undefined;
+		const apiKey = service.apiKey?.trim() || envApiKey?.trim();
+		const baseUrl = (
+			service.endpoint || "https://text.pollinations.ai"
+		).replace(/\/+$/, "");
+		pollinationsConfigure({
+			...(apiKey ? { apiKey } : {}),
+			baseUrl,
+		});
+		this.pollinationsConfigured = true;
+	}
+
+	private extractPollinationsText(
+		response: ChatResponseExt | ChatResponseExt[],
+	): string {
+		const single = Array.isArray(response) ? response[0] : response;
+		if (!single) return "";
+		if (typeof single.text === "string" && single.text.trim()) {
+			return single.text;
+		}
+		const choiceContent = single.choices?.[0]?.message?.content;
+		return typeof choiceContent === "string" ? choiceContent : "";
+	}
+
+	private async callPollinationsSDK(
+		service: AIService,
+		request: AIRequest,
+	): Promise<AIResponse> {
+		try {
+			this.ensurePollinationsConfigured(service);
+
+			const prompt = this.formatInput(request);
+			const systemPrompt = this.getSystemPrompt(request.type);
+			const messages: PollinationsMessage[] = [
+				{ role: "system", content: systemPrompt },
+				{ role: "user", content: prompt },
+			];
+
+			const modelAttempts = this.dedupeStrings([
+				service.model,
+				...(service.fallbackModels || []),
+			]);
+			if (modelAttempts.length === 0) modelAttempts.push("openai");
+
+			const errors: string[] = [];
+
+			for (const model of modelAttempts) {
+				const controller = new AbortController();
+				const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+				try {
+					const response = (await pollinationsChat(messages, {
+						model,
+						temperature: service.temperature,
+						maxTokens: service.maxTokens,
+						signal: controller.signal,
+					})) as ChatResponseExt | ChatResponseExt[];
+					clearTimeout(timer);
+
+					const text = this.extractPollinationsText(response);
+					if (!text.trim()) {
+						errors.push(`${model}:empty response`);
+						continue;
+					}
+
+					const usage = Array.isArray(response)
+						? response[0]?.usage
+						: response.usage;
+					return {
+						success: true,
+						data: text,
+						metadata: { model, provider: "pollinations-sdk" },
+						...(usage
+							? {
+									usage: {
+										promptTokens: usage.prompt_tokens,
+										completionTokens: usage.completion_tokens,
+										totalTokens: usage.total_tokens,
+									},
+								}
+							: {}),
+					};
+				} catch (error) {
+					clearTimeout(timer);
+					errors.push(
+						`${model}:${error instanceof Error ? error.message : "request error"}`,
+					);
+				}
+			}
+
+			return {
+				success: false,
+				error: `Pollinations SDK request failed: ${errors.join(", ")}`,
+			};
+		} catch (error) {
+			return {
+				success: false,
+				error:
+					error instanceof Error ? error.message : "Pollinations SDK error",
 			};
 		}
 	}

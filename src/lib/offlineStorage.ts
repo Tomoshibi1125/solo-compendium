@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
 import { logger } from "@/lib/logger";
 
 type CompendiumCacheItem = {
@@ -512,9 +513,19 @@ export class BackgroundSyncManager {
 							.delete()
 							.eq("id", item.data.id as string);
 					} else {
+						const resolved = await resolveCharacterCanonicalIds(
+							item.data as Record<string, unknown> & {
+								job?: string | null;
+								path?: string | null;
+								background?: string | null;
+								job_id?: string | null;
+								path_id?: string | null;
+								background_id?: string | null;
+							},
+						);
 						result = await supabase
 							.from("characters")
-							.upsert(item.data as never);
+							.upsert(resolved as never);
 					}
 					break;
 				}

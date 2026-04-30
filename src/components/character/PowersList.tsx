@@ -17,14 +17,14 @@ import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
 import { useRecordRoll } from "@/hooks/useRollHistory";
-import type { useSpellCasting } from "@/hooks/useSpellCasting";
+import { useSpellCasting } from "@/hooks/useSpellCasting";
 import type { Database } from "@/integrations/supabase/types";
 import type { DetailData } from "@/types/character";
 
 export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
-import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
+import { useSpellSlots } from "@/hooks/useSpellSlots";
 import {
 	getAbilityModifier,
 	getCantripsKnownLimit,
@@ -97,11 +97,18 @@ export function PowersList({
 		character?.job || null,
 		character?.level || 1,
 	);
-	const updateSpellSlot = useUpdateSpellSlot();
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
 	const ascendantTools = useAscendantTools();
 	const { rollInCampaign } = ascendantTools;
+
+	// D&D Beyond parity (#12): when used outside the main character sheet
+	// (e.g. AscendantToolDetail), instantiate a local useSpellCasting so power
+	// activation still flows through the unified pipeline — slot consumption,
+	// active-spell persistence, spell:cast events. Live concentration tracking
+	// is only available when the page model passes its own instance.
+	const fallbackSpellCasting = useSpellCasting(spellSlots);
+	const effectiveSpellCasting = spellCasting ?? fallbackSpellCasting;
 
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
 	const [filterLevel, setFilterLevel] = useState<string>(
@@ -217,89 +224,55 @@ export function PowersList({
 	const handleCastSpell = async (power: Power) => {
 		const displayName = formatRegentVernacular(power.name);
 
-		if (spellCasting) {
-			const result = await spellCasting.castSpell({
-				spell: {
-					id: power.id,
-					name: power.name,
-					level: power.power_level,
-					isRitual: false,
-					isConcentration: power.concentration ?? false,
-					castingTime: power.casting_time,
-					range: power.range,
-					duration: power.duration,
-					description: power.description,
-					higherLevels: null,
-				},
-				characterId,
-				characterName: character?.name || "Character",
-				jobName: character?.job || null,
-				pathName: character?.path || null,
-				level: character?.level || 1,
-				campaignId: null,
-			});
+		// Always go through the unified spellCasting pipeline (DDB parity #12).
+		// Slot consumption, active-spell persistence, and spell:cast events
+		// happen there. Concentration in-memory state only updates if the
+		// caller passed their own spellCasting instance.
+		const result = await effectiveSpellCasting.castSpell({
+			spell: {
+				id: power.id,
+				name: power.name,
+				level: power.power_level,
+				isRitual: false,
+				isConcentration: power.concentration ?? false,
+				castingTime: power.casting_time,
+				range: power.range,
+				duration: power.duration,
+				description: power.description,
+				higherLevels: null,
+			},
+			characterId,
+			characterName: character?.name || "Character",
+			jobName: character?.job || null,
+			pathName: character?.path || null,
+			level: character?.level || 1,
+			campaignId: campaignId ?? null,
+		});
 
-			if (!result.success) {
-				toast({
-					title: "Cast Failed",
-					description: result.message,
-					variant: "destructive",
-				});
-				return;
-			}
-
-			ascendantTools
-				.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
-				.catch(console.error);
-
+		if (!result.success) {
 			toast({
-				title: "Spell Cast",
+				title: "Cast Failed",
 				description: result.message,
-			});
-			return;
-		}
-
-		if (power.power_level === 0) {
-			ascendantTools
-				.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
-				.catch(console.error);
-			toast({
-				title: "Cantrip Cast",
-				description: `${displayName} is activated without using a power slot.`,
-			});
-			return;
-		}
-
-		const slot = spellSlots.find(
-			(s) => s.level === power.power_level && s.current > 0,
-		);
-		if (!slot) {
-			toast({
-				title: "No Power Slots Available",
-				description: `You don't have any Tier ${power.power_level} power slots available.`,
 				variant: "destructive",
 			});
 			return;
 		}
 
-		try {
-			await updateSpellSlot.mutateAsync({
-				characterId,
-				spellLevel: power.power_level,
-				current: slot.current - 1,
+		ascendantTools
+			.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
+			.catch(console.error);
+
+		// Optional campaign roll log (kept from legacy path so DM/party views
+		// still see a "power used" entry in the dice log).
+		if (campaignId && power.power_level > 0) {
+			rollInCampaign(campaignId, {
+				dice_formula: "0",
+				result: 0,
+				rolls: [],
+				roll_type: "ability",
+				context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+				character_id: characterId,
 			});
-
-			if (campaignId) {
-				rollInCampaign(campaignId, {
-					dice_formula: "0",
-					result: 0,
-					rolls: [],
-					roll_type: "ability",
-					context: `Activates Power: ${displayName} (Level ${power.power_level})`,
-					character_id: characterId,
-				});
-			}
-
 			recordRoll.mutate({
 				dice_formula: "0",
 				result: 0,
@@ -309,22 +282,12 @@ export function PowersList({
 				campaign_id: campaignId ?? null,
 				character_id: characterId,
 			});
-
-			ascendantTools
-				.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
-				.catch(console.error);
-
-			toast({
-				title: "Power Used",
-				description: `${displayName} activated! Used 1 Tier ${power.power_level} power slot.`,
-			});
-		} catch {
-			toast({
-				title: "Error",
-				description: "Failed to use power slot.",
-				variant: "destructive",
-			});
 		}
+
+		toast({
+			title: power.power_level === 0 ? "Cantrip Cast" : "Power Used",
+			description: result.message,
+		});
 	};
 
 	const handleRemove = async (power: Power) => {

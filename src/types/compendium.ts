@@ -333,7 +333,8 @@ export interface CompendiumTechnique extends BaseCompendiumItem {
 	type: string;
 	style: string;
 	level_requirement?: number;
-	activation?: { type?: string; cost?: string | number } | string;
+	uses_per_rest_formula?: string;
+	activation?: { type?: string } | string;
 	range?:
 		| {
 				type?: string;
@@ -368,6 +369,10 @@ export interface CompendiumTechnique extends BaseCompendiumItem {
 export interface CompendiumRune extends BaseCompendiumItem {
 	effect_description: string;
 	aliases?: string[];
+	teaches?: {
+		kind: "spell" | "power" | "technique";
+		ref: string;
+	};
 	rune_type: string;
 	rune_category?: string;
 	effect_type?: "active" | "passive" | "both";

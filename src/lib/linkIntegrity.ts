@@ -6,7 +6,10 @@
  */
 
 import { supabase } from "@/integrations/supabase/client";
-import { findCanonicalEntryByName } from "./canonicalCompendium";
+import {
+	findCanonicalEntryByName,
+	resolveCanonicalReference,
+} from "./canonicalCompendium";
 import { resolveRef } from "./compendiumResolver";
 
 interface BrokenLink {
@@ -32,7 +35,7 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 	// Fetch character data
 	const { data: character, error: charError } = await supabase
 		.from("characters")
-		.select("id, name, job, path, background")
+		.select("id, name, job, path, background, job_id, path_id, background_id")
 		.eq("id", characterId)
 		.single();
 
@@ -49,56 +52,67 @@ async function checkLinkIntegrity(characterId: string): Promise<BrokenLink[]> {
 		];
 	}
 
-	// Check job reference (name-based) via canonical static
-	if (character.job) {
-		const job = await findCanonicalEntryByName("jobs", character.job);
+	// Check job reference via canonical static
+	if (character.job || character.job_id) {
+		const job = await resolveCanonicalReference("jobs", {
+			id: character.job_id,
+			name: character.job,
+		});
 
-		if (!job) {
+		if (!job.entry) {
 			brokenLinks.push({
 				characterId: character.id,
 				characterName: character.name,
 				referenceType: "job",
-				referenceName: character.job,
-				location: "characters.job",
+				referenceId: character.job_id ?? undefined,
+				referenceName: character.job ?? undefined,
+				location: character.job_id ? "characters.job_id" : "characters.job",
 				severity: "error",
-				message: `Job "${character.job}" not found in compendium`,
+				message: `Job reference "${character.job_id ?? character.job}" not found in compendium`,
 			});
 		}
 	}
 
-	// Check path reference (name-based) via canonical static
-	if (character.path) {
-		const path = await findCanonicalEntryByName("paths", character.path);
+	// Check path reference via canonical static
+	if (character.path || character.path_id) {
+		const path = await resolveCanonicalReference("paths", {
+			id: character.path_id,
+			name: character.path,
+		});
 
-		if (!path) {
+		if (!path.entry) {
 			brokenLinks.push({
 				characterId: character.id,
 				characterName: character.name,
 				referenceType: "path",
-				referenceName: character.path,
-				location: "characters.path",
+				referenceId: character.path_id ?? undefined,
+				referenceName: character.path ?? undefined,
+				location: character.path_id ? "characters.path_id" : "characters.path",
 				severity: "error",
-				message: `Path "${character.path}" not found in compendium`,
+				message: `Path reference "${character.path_id ?? character.path}" not found in compendium`,
 			});
 		}
 	}
 
-	// Check background reference (name-based) via canonical static
-	if (character.background) {
-		const background = await findCanonicalEntryByName(
-			"backgrounds",
-			character.background,
-		);
+	// Check background reference via canonical static
+	if (character.background || character.background_id) {
+		const background = await resolveCanonicalReference("backgrounds", {
+			id: character.background_id,
+			name: character.background,
+		});
 
-		if (!background) {
+		if (!background.entry) {
 			brokenLinks.push({
 				characterId: character.id,
 				characterName: character.name,
 				referenceType: "background",
-				referenceName: character.background,
-				location: "characters.background",
+				referenceId: character.background_id ?? undefined,
+				referenceName: character.background ?? undefined,
+				location: character.background_id
+					? "characters.background_id"
+					: "characters.background",
 				severity: "error",
-				message: `Background "${character.background}" not found in compendium`,
+				message: `Background reference "${character.background_id ?? character.background}" not found in compendium`,
 			});
 		}
 	}

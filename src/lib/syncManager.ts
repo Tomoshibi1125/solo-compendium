@@ -1,6 +1,8 @@
 import { get, set } from "idb-keyval";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
+import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidation";
 import { logger } from "@/lib/logger";
 
 export type SyncItemType =
@@ -74,19 +76,23 @@ const processItem = async (item: SyncItem) => {
 	switch (type) {
 		case "character":
 			if (action === "create") {
-				const { error } = await supabase
-					.from("characters")
-					.insert([
+				const resolved = await normalizeCharacterOverlayFields(
+					await resolveCharacterCanonicalIds(
 						data as Database["public"]["Tables"]["characters"]["Insert"],
-					]);
+					),
+				);
+				const { error } = await supabase.from("characters").insert([resolved]);
 				if (error) throw error;
 			} else if (action === "update") {
 				const { id, ...updateData } = data;
+				const resolved = await normalizeCharacterOverlayFields(
+					await resolveCharacterCanonicalIds(
+						updateData as Database["public"]["Tables"]["characters"]["Update"],
+					),
+				);
 				const { error } = await supabase
 					.from("characters")
-					.update(
-						updateData as Database["public"]["Tables"]["characters"]["Update"],
-					)
+					.update(resolved)
 					.eq("id", id as string);
 				if (error) throw error;
 			} else if (action === "delete") {

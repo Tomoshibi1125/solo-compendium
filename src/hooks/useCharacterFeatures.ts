@@ -3,7 +3,12 @@ import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import type { CustomModifier, CustomModifierType } from "@/lib/customModifiers";
-import { isLocalCharacterId } from "@/lib/guestStore";
+import {
+	addLocalFeature,
+	isLocalCharacterId,
+	listLocalFeatures,
+	removeLocalFeature,
+} from "@/lib/guestStore";
 
 export interface CharacterFeature {
 	id: string;
@@ -64,10 +69,7 @@ export const useCharacterFeatures = (characterId: string) => {
 			if (!characterId) return [];
 
 			if (isLocalCharacterId(characterId)) {
-				const raw = window.localStorage.getItem("character-features");
-				if (!raw) return [];
-				const local = JSON.parse(raw) as Record<string, CharacterFeature[]>;
-				return local[characterId] || [];
+				return listLocalFeatures(characterId) as unknown as CharacterFeature[];
 			}
 
 			if (!isSupabaseConfigured || (!user && !authLoading)) {
@@ -133,19 +135,17 @@ export const useApplyHomebrewFeature = () => {
 			};
 
 			if (isLocalCharacterId(params.characterId)) {
-				const raw = window.localStorage.getItem("character-features");
-				const local = raw
-					? (JSON.parse(raw) as Record<string, CharacterFeature[]>)
-					: {};
-				local[params.characterId] = [
-					...(local[params.characterId] || []),
-					feature,
-				];
-				window.localStorage.setItem(
-					"character-features",
-					JSON.stringify(local),
-				);
-				return feature;
+				const stored = addLocalFeature(params.characterId, {
+					name: params.name,
+					source: `Homebrew: ${params.name}`,
+					level_acquired: 1,
+					description: params.description,
+					action_type: "passive",
+					is_active: true,
+					modifiers: params.modifiers as never,
+					homebrew_id: params.homebrewId ?? null,
+				});
+				return stored as unknown as CharacterFeature;
 			}
 
 			const cacheKey = user?.id
@@ -202,17 +202,7 @@ export const useRemoveCharacterFeature = () => {
 	return useMutation({
 		mutationFn: async (params: { featureId: string; characterId: string }) => {
 			if (isLocalCharacterId(params.characterId)) {
-				const raw = window.localStorage.getItem("character-features");
-				const local = raw
-					? (JSON.parse(raw) as Record<string, CharacterFeature[]>)
-					: {};
-				local[params.characterId] = (local[params.characterId] || []).filter(
-					(f) => f.id !== params.featureId,
-				);
-				window.localStorage.setItem(
-					"character-features",
-					JSON.stringify(local),
-				);
+				removeLocalFeature(params.featureId);
 				return;
 			}
 

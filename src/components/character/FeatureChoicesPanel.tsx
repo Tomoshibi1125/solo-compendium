@@ -648,6 +648,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 						await supabase.from("character_features").insert({
 							character_id: characterId,
+							feat_id: featRow?.id ?? null,
 							name: featName,
 							source: `Feat (Choice: ${group.choice_key})`,
 							level_acquired: (character?.level as number) || 1,
@@ -761,6 +762,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 						await supabase.from("character_powers").insert({
 							character_id: characterId,
+							power_id: powerRow.id ?? null,
 							name: powerRow.name,
 							power_level: powerRow.power_level ?? 0,
 							source: powerSource,
@@ -789,6 +791,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						if (equipRow?.name) {
 							await supabase.from("character_equipment").insert({
 								character_id: characterId,
+								item_id: equipRow.id ?? null,
 								name: equipRow.name,
 								item_type:
 									(equipRow.equipment_type as never) ||
@@ -808,6 +811,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 						await supabase.from("character_equipment").insert({
 							character_id: characterId,
+							item_id: relicRow.id ?? null,
 							name: relicRow.name,
 							item_type: "relic",
 							rarity: relicRow.rarity as never,

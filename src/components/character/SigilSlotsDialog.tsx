@@ -28,6 +28,7 @@ import {
 	getEffectiveSigilSlots,
 	getEquipmentSigilCategory,
 	getSigilSlotBonusForRarity,
+	isSigilCompatibleWithEquipment,
 } from "@/lib/sigilAutomation";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -97,15 +98,10 @@ export function SigilSlotsDialog({
 	}, [equipmentInscriptions]);
 
 	const compatibleSigils = useMemo(() => {
-		return (sigils as SigilRow[]).filter((s) => {
-			const allowed = Array.isArray(s.can_inscribe_on)
-				? (s.can_inscribe_on as string[])
-				: [];
-			return (
-				allowed.includes(equipmentCategory) || allowed.includes("accessory")
-			);
-		});
-	}, [sigils, equipmentCategory]);
+		return (sigils as SigilRow[]).filter((s) =>
+			isSigilCompatibleWithEquipment(s, equipment),
+		);
+	}, [sigils, equipment]);
 
 	const handleInscribe = async () => {
 		const slotIndex = parseInt(selectedSlot, 10);

@@ -13,6 +13,8 @@ dotenvConfig();
  * Vite dev middleware plugin that mimics the Vercel serverless function
  * at /api/ai so AI features work during local development.
  */
+const DEV_GEMINI_MODEL = "gemini-2.0-flash";
+const DEV_GEMINI_TIMEOUT_MS = 30_000;
 function devAIProxy(): Plugin {
 	return {
 		name: "dev-ai-proxy",
@@ -80,8 +82,14 @@ function devAIProxy(): Plugin {
 					return;
 				}
 
-				const geminiModel = "gemini-2.5-flash";
+				const geminiModel = DEV_GEMINI_MODEL;
 				const ai = new GoogleGenAI({ apiKey });
+
+				const controller = new AbortController();
+				const timer = setTimeout(
+					() => controller.abort(),
+					DEV_GEMINI_TIMEOUT_MS,
+				);
 
 				try {
 					const response = await ai.models.generateContent({
@@ -91,8 +99,10 @@ function devAIProxy(): Plugin {
 							systemInstruction: systemPrompt,
 							maxOutputTokens: Math.min((maxTokens as number) || 4096, 4096),
 							temperature: 0.8,
+							abortSignal: controller.signal,
 						},
 					});
+					clearTimeout(timer);
 
 					const text = response.text || "";
 
@@ -122,6 +132,7 @@ function devAIProxy(): Plugin {
 						}),
 					);
 				} catch (err: unknown) {
+					clearTimeout(timer);
 					if (err instanceof Error && err.name === "AbortError") {
 						res.statusCode = 504;
 						res.end(
@@ -265,6 +276,14 @@ export default defineConfig(({ mode: _mode }) => {
 		resolve: {
 			alias: {
 				"@": path.resolve(__dirname, "./src"),
+				// Force the ESM entry of @pollinations_ai/sdk in the browser build:
+				// the package's `browser` export is an IIFE bundle whose named
+				// exports (configure, chat, etc.) are not statically analyzable
+				// by Rollup. Using the ESM entry preserves tree-shakeable exports.
+				"@pollinations_ai/sdk": path.resolve(
+					__dirname,
+					"./node_modules/@pollinations_ai/sdk/dist/index.js",
+				),
 			},
 			dedupe: ["react", "react-dom", "three"],
 		},

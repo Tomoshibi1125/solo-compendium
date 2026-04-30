@@ -26,6 +26,7 @@ import {
 	useCharacterTemplates,
 } from "@/hooks/useCharacterTemplates";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
@@ -56,6 +57,10 @@ import {
 	getStaticBackgroundsAll,
 	initializeProtocolData,
 } from "@/lib/ProtocolDataManager";
+import {
+	dedupeProficiencies,
+	formatDuplicatesSummary,
+} from "@/lib/proficiencyDedup";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import type {
 	Background,
@@ -116,6 +121,7 @@ const CharacterNew = () => {
 	const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
 	const { toast } = useToast();
 	const createCharacterMutation = useCreateCharacter();
+	const initializeSpellSlots = useInitializeSpellSlots();
 
 	const { data: templates } = useCharacterTemplates();
 	const { data: staticJobCatalog = [] } = useStaticJobs();
@@ -579,6 +585,40 @@ const CharacterNew = () => {
 			const vitModifier = Math.floor((effectiveAbilities.VIT - 10) / 2);
 			const hpMax = calculateHPMax(level, dbJob.hit_die, vitModifier);
 
+			// D&D Beyond Quickbuilder parity (#11): detect duplicate proficiency
+			// grants between Job and Background and de-dupe before persisting.
+			// Surface a toast so the user knows their picks overlapped.
+			const skillsResult = dedupeProficiencies([
+				...selectedSkills,
+				...(bgData.skill_proficiencies || []),
+			]);
+			const toolsResult = dedupeProficiencies([
+				...(job.tool_proficiencies || job.toolProficiencies || []),
+				...(bgData.tool_proficiencies || bgData.toolProficiencies || []),
+			]);
+			const weaponsResult = dedupeProficiencies([
+				...(job.weaponProficiencies || job.weapon_proficiencies || []),
+				...(bgData.weaponProficiencies || bgData.weapon_proficiencies || []),
+			]);
+			const armorsResult = dedupeProficiencies([
+				...(job.armorProficiencies || job.armor_proficiencies || []),
+				...(bgData.armorProficiencies || bgData.armor_proficiencies || []),
+			]);
+
+			const allDuplicates = [
+				...skillsResult.duplicates,
+				...toolsResult.duplicates,
+				...weaponsResult.duplicates,
+				...armorsResult.duplicates,
+			];
+			const dupSummary = formatDuplicatesSummary(allDuplicates);
+			if (dupSummary) {
+				toast({
+					title: "Duplicate proficiencies detected",
+					description: `Job + Background both grant: ${dupSummary}. Stored once each.`,
+				});
+			}
+
 			const character = await createCharacterMutation.mutateAsync({
 				name: name.trim(),
 				level: 1,
@@ -596,25 +636,13 @@ const CharacterNew = () => {
 				hit_dice_current: 1,
 				hit_dice_max: 1,
 				hit_dice_size: dbJob.hit_die,
-				skill_proficiencies: [
-					...selectedSkills,
-					...(bgData.skill_proficiencies || []),
-				],
-				tool_proficiencies: [
-					...(job.tool_proficiencies || job.toolProficiencies || []),
-					...(bgData.tool_proficiencies || bgData.toolProficiencies || []),
-				],
+				skill_proficiencies: skillsResult.unique,
+				tool_proficiencies: toolsResult.unique,
 				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
 					job.savingThrows ||
 					[]) as AbilityScore[],
-				weapon_proficiencies: [
-					...(job.weaponProficiencies || job.weapon_proficiencies || []),
-					...(bgData.weaponProficiencies || bgData.weapon_proficiencies || []),
-				],
-				armor_proficiencies: [
-					...(job.armorProficiencies || job.armor_proficiencies || []),
-					...(bgData.armorProficiencies || bgData.armor_proficiencies || []),
-				],
+				weapon_proficiencies: weaponsResult.unique,
+				armor_proficiencies: armorsResult.unique,
 				speed: job.speed ?? 30,
 			});
 
@@ -654,6 +682,7 @@ const CharacterNew = () => {
 			);
 			for (const power of selectedPowerEntries) {
 				const payload = {
+					power_id: power.id,
 					name: power.name,
 					power_level: power.power_level,
 					source: "Creation Power Imprint",
@@ -701,6 +730,19 @@ const CharacterNew = () => {
 				job,
 				selectedLanguages,
 			);
+
+			// D&D Beyond parity (#11): eagerly seed spell slot rows at creation
+			// so the spells panel doesn't need to lazy-create them on first
+			// render. Best-effort — failure here doesn't block character setup.
+			try {
+				await initializeSpellSlots.mutateAsync({
+					characterId: character.id,
+					job: dbJob.name,
+					level: 1,
+				});
+			} catch (slotError) {
+				console.error("Failed to seed spell slots at creation:", slotError);
+			}
 
 			ascendantTools
 				.trackCustomFeatureUsage(

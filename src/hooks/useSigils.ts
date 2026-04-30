@@ -10,7 +10,14 @@ export type { CharacterSigilInscriptionRow, ExtendedDatabase, SigilRow };
 
 // Type-safe client for sigil-related operations is now same as base supabase client
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
-import { isLocalCharacterId } from "@/lib/guestStore";
+import {
+	addLocalSigilInscription,
+	isLocalCharacterId,
+	listLocalEquipment,
+	listLocalSigilInscriptions,
+	removeLocalSigilInscription,
+} from "@/lib/guestStore";
+import { validateSigilInscription } from "@/lib/sigilAutomation";
 import {
 	filterRowsBySourcebookAccess,
 	getCharacterCampaignId,
@@ -41,7 +48,32 @@ export function useCharacterSigilInscriptions(characterId: string | undefined) {
 		queryKey: ["character-sigil-inscriptions", characterId],
 		queryFn: async () => {
 			if (!characterId) return [];
-			if (isLocalCharacterId(characterId)) return [];
+			if (isLocalCharacterId(characterId)) {
+				const rows = listLocalSigilInscriptions(characterId).filter(
+					(row) => row.is_active,
+				);
+				if (rows.length === 0)
+					return rows as Array<
+						CharacterSigilInscriptionRow & {
+							sigil?: SigilRow;
+							equipment?: unknown;
+						}
+					>;
+
+				const canonicalSigils = await listCanonicalEntries("sigils");
+				const sigilById = new Map(
+					canonicalSigils.map((entry) => [entry.id, entry]),
+				);
+				const equipmentById = new Map(
+					listLocalEquipment(characterId).map((entry) => [entry.id, entry]),
+				);
+
+				return rows.map((row) => ({
+					...row,
+					sigil: sigilById.get(row.sigil_id) as unknown as SigilRow | undefined,
+					equipment: equipmentById.get(row.equipment_id),
+				}));
+			}
 
 			const { data, error } = await supabase
 				.from("character_sigil_inscriptions")
@@ -97,6 +129,60 @@ export function useInscribeSigil() {
 			sigilId: string;
 			slotIndex: number;
 		}) => {
+			if (isLocalCharacterId(input.characterId)) {
+				const equipment = listLocalEquipment(input.characterId).find(
+					(row) => row.id === input.equipmentId,
+				);
+				if (!equipment) throw new Error("Equipment not found");
+				const sigil = (await listCanonicalEntries("sigils")).find(
+					(entry) => entry.id === input.sigilId,
+				);
+				if (!sigil) throw new Error("Sigil not found");
+				const validation = validateSigilInscription({
+					equipment,
+					sigil,
+					slotIndex: input.slotIndex,
+					existingInscriptions: listLocalSigilInscriptions(input.characterId),
+				});
+				if (!validation.allowed) throw new Error(validation.reason);
+				addLocalSigilInscription(input.characterId, {
+					equipment_id: input.equipmentId,
+					sigil_id: input.sigilId,
+					slot_index: input.slotIndex,
+					is_active: true,
+				});
+				return;
+			}
+
+			const campaignId = await getCharacterCampaignId(input.characterId);
+			const { data: equipment, error: equipmentError } = await supabase
+				.from("character_equipment")
+				.select("*")
+				.eq("character_id", input.characterId)
+				.eq("id", input.equipmentId)
+				.maybeSingle();
+			if (equipmentError) throw equipmentError;
+			if (!equipment) throw new Error("Equipment not found");
+			const { data: existingInscriptions, error: inscriptionsError } =
+				await supabase
+					.from("character_sigil_inscriptions")
+					.select("equipment_id, slot_index, is_active")
+					.eq("character_id", input.characterId)
+					.eq("equipment_id", input.equipmentId)
+					.eq("is_active", true);
+			if (inscriptionsError) throw inscriptionsError;
+			const sigil = (
+				await listCanonicalEntries("sigils", undefined, { campaignId })
+			).find((entry) => entry.id === input.sigilId);
+			if (!sigil) throw new Error("Sigil not found");
+			const validation = validateSigilInscription({
+				equipment,
+				sigil,
+				slotIndex: input.slotIndex,
+				existingInscriptions: existingInscriptions ?? [],
+			});
+			if (!validation.allowed) throw new Error(validation.reason);
+
 			const { error } = await supabase
 				.from("character_sigil_inscriptions")
 				.insert({
@@ -126,6 +212,11 @@ export function useRemoveSigil() {
 			characterId: string;
 			inscriptionId: string;
 		}) => {
+			if (isLocalCharacterId(input.characterId)) {
+				removeLocalSigilInscription(input.inscriptionId);
+				return;
+			}
+
 			const { error } = await supabase
 				.from("character_sigil_inscriptions")
 				.delete()

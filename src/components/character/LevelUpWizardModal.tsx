@@ -67,6 +67,14 @@ import {
 	listLocalTechniques,
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
+import {
+	calculateAverageHPGain,
+	calculateMaxHPGain,
+	calculateMinHPGain,
+	calculateProficiencyBonusForLevel,
+	calculateRiftFavorDie,
+	calculateRiftFavorMax,
+} from "@/lib/levelUpCalculations";
 import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
@@ -582,11 +590,12 @@ export const LevelUpWizardModal = ({
 		);
 	}
 
-	// Calculate HP increase
+	// Calculate HP increase (DDB / 5e parity — see levelUpCalculations.ts).
 	const vitModifier = Math.floor((character.abilities.VIT - 10) / 2);
 	const hitDieSize = character.hit_dice_size;
-	const averageHP = Math.floor(hitDieSize / 2) + 1 + vitModifier;
-	const maxHP = hitDieSize + vitModifier;
+	const averageHP = calculateAverageHPGain(hitDieSize, vitModifier);
+	const maxHP = calculateMaxHPGain(hitDieSize, vitModifier);
+	const minHP = calculateMinHPGain(vitModifier);
 
 	const handleLevelUp = async () => {
 		if (newLevel <= character.level) {
@@ -646,11 +655,9 @@ export const LevelUpWizardModal = ({
 		setLoading(true);
 		try {
 			// Calculate new stats
-			const newProficiencyBonus = Math.ceil(newLevel / 4) + 1;
-			const newRiftFavorDie =
-				newLevel <= 4 ? 4 : newLevel <= 10 ? 6 : newLevel <= 16 ? 8 : 10;
-			const newRiftFavorMax =
-				newLevel <= 4 ? 3 : newLevel <= 10 ? 4 : newLevel <= 16 ? 5 : 6;
+			const newProficiencyBonus = calculateProficiencyBonusForLevel(newLevel);
+			const newRiftFavorDie = calculateRiftFavorDie(newLevel);
+			const newRiftFavorMax = calculateRiftFavorMax(newLevel);
 			const newHP = character.hp_max + hpIncrease;
 			const newHitDiceMax = newLevel;
 
@@ -716,6 +723,7 @@ export const LevelUpWizardModal = ({
 
 						return {
 							character_id: character.id,
+							feat_id: featId,
 							name: feat.name || "Unknown Feat",
 							source: "Feat Selection",
 							level_acquired: newLevel,
@@ -744,6 +752,7 @@ export const LevelUpWizardModal = ({
 			);
 			for (const power of selectedPowerEntries) {
 				const powerPayload = {
+					power_id: power.id,
 					name: power.name,
 					power_level: power.power_level,
 					source: `Level ${newLevel} Power Choice`,
@@ -759,19 +768,30 @@ export const LevelUpWizardModal = ({
 
 				if (isLocalCharacterId(character.id)) {
 					const existingPowers = listLocalPowers(character.id);
-					if (existingPowers.some((existing) => existing.name === power.name))
+					if (
+						existingPowers.some(
+							(existing) =>
+								(power.id && existing.power_id === power.id) ||
+								existing.name === power.name,
+						)
+					)
 						continue;
 
 					addLocalPower(character.id, powerPayload);
 					continue;
 				}
 
-				const { data: existingPower } = await supabase
+				// Canonical ID first, name second: prefer ID-based dedup so renames
+				// or near-duplicate names don't double-insert. Fall back to name
+				// only when the canonical ID is missing.
+				const dedupQuery = supabase
 					.from("character_powers")
 					.select("id")
 					.eq("character_id", character.id)
-					.eq("name", power.name)
 					.limit(1);
+				const { data: existingPower } = power.id
+					? await dedupQuery.eq("power_id", power.id)
+					: await dedupQuery.eq("name", power.name);
 				if ((existingPower?.length ?? 0) > 0) continue;
 
 				await supabase.from("character_powers").insert({
@@ -858,6 +878,7 @@ export const LevelUpWizardModal = ({
 
 				await supabase.from("character_features").insert({
 					character_id: character.id,
+					feature_id: _feature.id ?? null,
 					name: feature.name || "Unknown Feature",
 					source: feature.is_path_feature
 						? `Path: ${characterUpdates.path || effectivePathName || "Unknown"}`
@@ -1171,8 +1192,7 @@ export const LevelUpWizardModal = ({
 											</div>
 											<p className="text-xs text-muted-foreground mt-2 font-heading">
 												Roll d{hitDieSize} {vitModifier >= 0 ? "+" : ""}
-												{vitModifier} (VIT) | Range:{" "}
-												{Math.max(1, 1 + vitModifier)} - {maxHP}
+												{vitModifier} (VIT) | Range: {minHP} - {maxHP}
 											</p>
 										</div>
 										<Button
