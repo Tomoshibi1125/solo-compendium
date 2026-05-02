@@ -1,5 +1,20 @@
-import { ArrowLeft, Copy, Loader2, RefreshCw, Sparkles } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+	AlertTriangle,
+	ArrowLeft,
+	BookOpen,
+	Copy,
+	Crosshair,
+	Loader2,
+	Map,
+	RefreshCw,
+	ScrollText,
+	Shield,
+	Sparkles,
+	Swords,
+	Target,
+	Trophy,
+} from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
@@ -13,80 +28,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { DungeonMapGenerator } from "@/components/warden-directives/DungeonMapGenerator";
-import {
-	RIFT_BIOMES,
-	RIFT_BOSS_TYPES,
-	RIFT_COMPLICATIONS,
-	RIFT_THEMES,
-	WARDEN_RANKS,
-} from "@/data/wardenGeneratorContent";
+import { WARDEN_RANKS } from "@/data/wardenGeneratorContent";
 import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
-import { formatRegentVernacular } from "@/lib/vernacular";
 import {
-	loadWardenGenerationContext,
-	rankToTreasureRarities,
-	type WardenLinkedEntry,
-} from "@/lib/wardenGenerationContext";
-
-interface GeneratedRift {
-	rank: string;
-	theme: string;
-	biome: string;
-	boss: string;
-	complications: string[];
-	hazards: string[];
-	rewards: string[];
-	linkedContent?: {
-		boss?: WardenLinkedEntry | null;
-		encounters?: WardenLinkedEntry[];
-		hazards?: WardenLinkedEntry[];
-		loot?: WardenLinkedEntry[];
-		lore?: WardenLinkedEntry[];
-	};
-	description: string;
-}
-
-function generateRift(rank?: string): GeneratedRift {
-	const selectedRank =
-		rank || WARDEN_RANKS[Math.floor(Math.random() * WARDEN_RANKS.length)];
-	const theme = formatRegentVernacular(
-		RIFT_THEMES[Math.floor(Math.random() * RIFT_THEMES.length)],
-	);
-	const biome = RIFT_BIOMES[Math.floor(Math.random() * RIFT_BIOMES.length)];
-	const boss = formatRegentVernacular(
-		RIFT_BOSS_TYPES[Math.floor(Math.random() * RIFT_BOSS_TYPES.length)],
-	);
-	const numComplications = Math.floor(Math.random() * 3) + 1;
-	const complications = [
-		...new Set(
-			Array.from(
-				{ length: numComplications },
-				() =>
-					RIFT_COMPLICATIONS[
-						Math.floor(Math.random() * RIFT_COMPLICATIONS.length)
-					],
-			),
-		),
-	].map(formatRegentVernacular);
-
-	const description = formatRegentVernacular(
-		`A ${selectedRank}-Rank Rift manifesting as ${biome} within the ${theme}. The Rift's core is protected by ${boss}. ${complications.length > 0 ? `Complications: ${complications.join(", ")}.` : ""}`,
-	);
-
-	return {
-		rank: selectedRank,
-		theme,
-		biome,
-		boss,
-		complications,
-		hazards: [],
-		rewards: [],
-		description,
-	};
-}
+	buildAISeed,
+	generateFullRift,
+	packetToLegacyRift,
+	packetToTextDossier,
+	type GeneratedRiftPacket,
+} from "@/lib/riftGenerator";
 
 const GateGenerator = () => {
 	const navigate = useNavigate();
@@ -97,17 +50,19 @@ const GateGenerator = () => {
 		saveNow,
 	} = useUserToolState<{
 		selectedRank: string;
-		rift: GeneratedRift | null;
+		rift: GeneratedRiftPacket | null;
 	}>("gate_generator", {
 		initialState: {
 			selectedRank: "",
 			rift: null,
 		},
-		storageKey: "solo-compendium.warden-directives.gate-generator.v1",
+		storageKey: "solo-compendium.warden-directives.gate-generator.v2",
 	});
 
 	const [selectedRank, setSelectedRank] = useState<string>("");
-	const [rift, setRift] = useState<GeneratedRift | null>(null);
+	const [rift, setRift] = useState<GeneratedRiftPacket | null>(null);
+	const [isGenerating, setIsGenerating] = useState(false);
+	const [expandedSection, setExpandedSection] = useState<string | null>(null);
 	const userInteractedRef = useRef(false);
 
 	const hydrated = useMemo(() => {
@@ -139,208 +94,98 @@ const GateGenerator = () => {
 		void saveNow(debouncedPayload);
 	}, [debouncedPayload, isLoading, saveNow]);
 
-	const { isEnhancing, enhancedText, enhance, clearEnhanced } = useAIEnhance();
+	const { isEnhancing, enhance, clearEnhanced } = useAIEnhance();
+	const [enhancingSection, setEnhancingSection] = useState<string | null>(null);
 
 	const handleGenerate = async () => {
 		clearEnhanced();
 		userInteractedRef.current = true;
+		setIsGenerating(true);
 
-		const baseRift = generateRift(selectedRank || undefined);
-		const generationContext = await loadWardenGenerationContext({
-			types: [
-				"anomalies",
-				"conditions",
-				"equipment",
-				"items",
-				"relics",
-				"runes",
-				"sigils",
-				"artifacts",
-				"locations",
-				"regents",
-				"rollable-tables",
-			],
-		});
-		const boss =
-			generationContext.pickOne("anomalies", {
-				rank: baseRift.rank,
-				bossOnly: true,
-			}) || generationContext.pickOne("anomalies", { rank: baseRift.rank });
-		const encounters = generationContext.pickMany("anomalies", 4, {
-			rank: baseRift.rank,
-			theme: baseRift.theme,
-			biome: baseRift.biome,
-		});
-		const hazards = generationContext.pickMany("conditions", 3, {
-			theme: baseRift.theme,
-			biome: baseRift.biome,
-		});
-		const treasureRarities = rankToTreasureRarities(baseRift.rank);
-		const loot = [
-			...generationContext.pickMany("equipment", 2, {
-				rank: baseRift.rank,
-				rarities: treasureRarities,
-			}),
-			...generationContext.pickMany("items", 2, {
-				rarities: treasureRarities,
-			}),
-			...generationContext.pickMany("relics", 1, {
-				rank: baseRift.rank,
-				rarities: treasureRarities,
-			}),
-			...generationContext.pickMany("runes", 1, { rank: baseRift.rank }),
-			...generationContext.pickMany("sigils", 1, { rank: baseRift.rank }),
-			...generationContext.pickMany("artifacts", 1, {
-				rank: baseRift.rank,
-				rarities: treasureRarities,
-			}),
-		].slice(0, 8);
-		const lore = [
-			...generationContext.pickMany("locations", 2, {
-				theme: baseRift.theme,
-				biome: baseRift.biome,
-			}),
-			...generationContext.pickMany("regents", 1, { theme: baseRift.theme }),
-			...generationContext.pickMany("rollable-tables", 1, {
-				theme: baseRift.theme,
-			}),
-		];
-
-		if (boss) {
-			baseRift.boss = boss.name;
-			baseRift.description = baseRift.description.replace(
-				/protected by [^.]+/,
-				`protected by ${boss.name}`,
-			);
+		try {
+			const packet = await generateFullRift(selectedRank || undefined);
+			setRift(packet);
+			void saveNow({ selectedRank, rift: packet });
+			toast({
+				title: "Rift Generated",
+				description: `Generated a ${packet.rank}-Rank Rift with ${packet.roomKeys.length} rooms, ${packet.encounters.length} encounters, and ${packet.hazards.length} hazards.`,
+			});
+		} catch (error) {
+			toast({
+				title: "Generation Failed",
+				description: error instanceof Error ? error.message : "Unknown error",
+				variant: "destructive",
+			});
+		} finally {
+			setIsGenerating(false);
 		}
-		baseRift.hazards = hazards.map((entry) => entry.name);
-		baseRift.rewards = loot.map((entry) => entry.name);
-		baseRift.linkedContent = {
-			boss,
-			encounters,
-			hazards,
-			loot,
-			lore,
-		};
-		baseRift.description = `${baseRift.description} Linked encounters: ${encounters.map((entry) => entry.name).join(", ") || "none"}. Rewards indexed: ${loot.map((entry) => entry.name).join(", ") || "none"}.`;
-
-		setRift(baseRift);
-		void saveNow({ selectedRank, rift: baseRift });
-		toast({
-			title: "Rift Generated",
-			description: `Generated a ${baseRift.rank}-Rank Rift.`,
-		});
 	};
 
-	const handleAIEnhance = async () => {
-		if (!rift) return;
-		const seed = `Generate a complete, detailed Rift dossier for a Rift Ascendant TTRPG campaign.
-
-SEED DATA:
-- Rank: ${rift.rank}
-- Theme: ${rift.theme}
-- Biome: ${rift.biome}
-- Boss: ${rift.boss}
-- Complications: ${rift.complications.join("; ") || "None"}
-- Hazards: ${rift.hazards.join("; ") || "None"}
-- Rewards: ${rift.rewards.join("; ") || "None"}
-- Description: ${rift.description}
-
-Provide ALL of the following sections with full detail:
-
-1. DESCRIPTION: Rift appearance, sensory details (sight/sound/smell), entry conditions, environmental hazards
-2. ANOMALIES: 3-5 anomalies with CR, type, HP, key abilities, tactical behavior
-3. BOSS: Full stat block for ${rift.boss} (AC, HP, abilities, legendary actions, lair actions, tactics)
-4. ENVIRONMENT: Terrain features, traps (DCs, damage, triggers), hazard zones, cover positions
-5. LORE: Rift origin, which Regent domain it connects to, System classification, historical significance
-6. REWARDS: Rift cores, materials, XP, rare drops with full item stats
-7. MAP NOTES: Room/area descriptions for Warden to populate on VTT
-8. READ-ALOUD: Boxed text for when players enter the Rift`;
-		await enhance("rift", seed);
-	};
+	const handleSectionEnhance = useCallback(
+		async (section: "overview" | "rooms" | "encounters" | "hazards") => {
+			if (!rift) return;
+			setEnhancingSection(section);
+			const seed = buildAISeed(rift, section);
+			const result = await enhance("rift", seed,
+				`You are a Rift Ascendant TTRPG Warden assistant. Enrich the ${section} section with vivid prose, tactical notes, and Rift Ascendant lore. Keep all mechanical data (DCs, damage, CR) intact. Use Rift Ascendant terminology. Return plain text only.`,
+			);
+			if (result) {
+				setRift((prev) => {
+					if (!prev) return prev;
+					return {
+						...prev,
+						aiEnhanced: {
+							...prev.aiEnhanced,
+							[section]: result,
+						},
+					};
+				});
+			}
+			setEnhancingSection(null);
+		},
+		[rift, enhance],
+	);
 
 	const handleCopy = () => {
 		if (!rift) return;
-		const text = `RIFT DETAILS\nRank: ${rift.rank}\nTheme: ${rift.theme}\nBiome: ${rift.biome}\nBoss: ${rift.boss}\nComplications: ${rift.complications.join(", ")}\n\n${rift.description}
-
----
-RIFT DOSSIER:
-
-DESCRIPTION:
-${rift.description}
-
-APPEARANCE:
-• Visual Features: [Sensory details of Rift entrance and interior]
-• Sounds: [Audio cues - humming, crackling, anomaly sounds]
-• Smells: [Olfactory sensations - ozone, decay, magic]
-• Entry Conditions: [Requirements to enter the Rift]
-• Environmental Hazards: [Immediate dangers upon entry]
-
-ANOMALIES:
-${rift.complications
-	.map(
-		(_complication, i) => `${i + 1}. [Anomaly type related to ${rift.theme}]
-   • Challenge Rating: [Appropriate to ${rift.rank} Rank]
-   • Armor Class: [${rift.rank} Rank appropriate]
-   • Hit Points: [${rift.rank} Rank appropriate]
-   • Key Abilities: [Special attacks or powers]
-   • Tactical Behavior: [Combat preferences and strategies]`,
-	)
-	.join("\n\n")}
-
-BOSS: ${rift.boss}
-• Armor Class: [${rift.rank} Rank boss appropriate]
-• Hit Points: [${rift.rank} Rank boss appropriate]
-• Speed: [Movement type and speed]
-• Saving Throws: [Primary saves with bonuses]
-• Skills: [Key skills with expertise]
-• Attacks: [Primary and secondary attacks with to-hit and damage]
-• Special Abilities: [Unique boss mechanics]
-• Legendary Actions: [1-3 legendary actions per round]
-• Lair Actions: [Environmental effects on initiative count 20]
-• Tactics: [How the boss fights and uses its abilities]
-• Weaknesses: [Exploitable vulnerabilities]
-
-ENVIRONMENT:
-• Terrain Features: [${rift.biome} characteristics]
-• Traps: [${rift.complications.length} traps with DCs, damage, triggers, and reset conditions]
-• Hazard Zones: [Areas of special danger]
-• Cover Positions: [Strategic locations for combat]
-• Visibility: [Lighting conditions and sight lines]
-• Acoustics: [Sound propagation and stealth implications]
-
-LORE:
-• Rift Origin: [How this Rift formed and why]
-• Regent Domain Connection: [Which Regent domain this connects to]
-• System Classification: [Official System designation]
-• Historical Significance: [Past events involving this Rift]
-• Local Impact: [Effect on surrounding area]
-• Discovery: [How the Rift was found]
-
-REWARDS:
-• Rift Cores: [${rift.rank} Rank appropriate number and quality]
-• Materials: [${rift.rank} Rank appropriate materials]
-• Experience Points: [${rift.rank} Rank appropriate XP per player]
-• Rare Drops: [${rift.rank} Rank appropriate items with full stats]
-• Special Rewards: [Unique items or components]
-
-MAP NOTES:
-• Room 1: [Entrance area description and features]
-• Room 2: [First chamber contents and encounters]
-• Room 3: [Central area with boss positioning]
-• Room 4: [Treasure location and guardians]
-• Room 5: [Secret areas and hidden passages]
-• [Additional rooms as appropriate to ${rift.rank} Rank complexity]
-
-READ-ALOUD ENTRY:
-"[Detailed description of what players see, hear, and smell as they first approach and enter the Rift, setting the tone and atmosphere for the adventure within]"`;
-
-		navigator.clipboard.writeText(text);
+		navigator.clipboard.writeText(packetToTextDossier(rift));
 		toast({
 			title: "Copied",
 			description: "Complete Rift dossier copied to clipboard.",
 		});
 	};
+
+	const toggleSection = (section: string) => {
+		setExpandedSection((prev) => (prev === section ? null : section));
+	};
+
+	const legacyRiftContext = useMemo(
+		() => (rift ? packetToLegacyRift(rift) : null),
+		[rift],
+	);
+
+	const SectionEnhanceButton = ({
+		section,
+		label,
+	}: {
+		section: "overview" | "rooms" | "encounters" | "hazards";
+		label: string;
+	}) => (
+		<Button
+			variant="ghost"
+			size="sm"
+			className="gap-1 text-xs h-7"
+			disabled={isEnhancing}
+			onClick={() => handleSectionEnhance(section)}
+		>
+			{enhancingSection === section ? (
+				<Loader2 className="w-3 h-3 animate-spin" />
+			) : (
+				<Sparkles className="w-3 h-3" />
+			)}
+			{enhancingSection === section ? "Enhancing..." : label}
+		</Button>
+	);
 
 	return (
 		<Layout>
@@ -401,160 +246,346 @@ READ-ALOUD ENTRY:
 									onClick={handleGenerate}
 									className="w-full gap-2"
 									size="lg"
+									disabled={isGenerating}
 								>
-									<RefreshCw className="w-4 h-4" />
-									Generate Rift
+									{isGenerating ? (
+										<Loader2 className="w-4 h-4 animate-spin" />
+									) : (
+										<RefreshCw className="w-4 h-4" />
+									)}
+									{isGenerating ? "Generating..." : "Generate Rift"}
 								</Button>
-								{rift && (
-									<Button
-										onClick={handleAIEnhance}
-										className="w-full gap-2 mt-2 btn-umbral"
-										size="lg"
-										disabled={isEnhancing}
-									>
-										{isEnhancing ? (
-											<Loader2 className="w-4 h-4 animate-spin" />
-										) : (
-											<Sparkles className="w-4 h-4" />
-										)}
-										{isEnhancing ? "Enhancing..." : "Enhance with AI"}
-									</Button>
-								)}
 							</div>
 						</AscendantWindow>
+
+						{rift && (
+							<AscendantWindow title="RIFT SUMMARY" className="mt-4">
+								<div className="space-y-3 text-sm">
+									<div className="grid grid-cols-2 gap-2">
+										<div>
+											<span className="text-xs font-display text-muted-foreground">RANK</span>
+											<Badge className="mt-1 block w-fit">{rift.rank}</Badge>
+										</div>
+										<div>
+											<span className="text-xs font-display text-muted-foreground">ROOMS</span>
+											<p className="font-heading">{rift.roomKeys.length}</p>
+										</div>
+										<div>
+											<span className="text-xs font-display text-muted-foreground">ENCOUNTERS</span>
+											<p className="font-heading">{rift.encounters.length}</p>
+										</div>
+										<div>
+											<span className="text-xs font-display text-muted-foreground">HAZARDS</span>
+											<p className="font-heading">{rift.hazards.length}</p>
+										</div>
+									</div>
+									<div>
+										<span className="text-xs font-display text-muted-foreground">TOTAL XP</span>
+										<p className="font-heading">{rift.rewards.totalXP.toLocaleString()}</p>
+									</div>
+									<div className="flex flex-wrap gap-2 pt-2 border-t border-border">
+										<Button variant="outline" size="sm" onClick={handleCopy} className="gap-1">
+											<Copy className="w-3 h-3" />
+											Copy Dossier
+										</Button>
+										<Button variant="outline" size="sm" onClick={handleGenerate} className="gap-1" disabled={isGenerating}>
+											<RefreshCw className="w-3 h-3" />
+											Regenerate
+										</Button>
+									</div>
+								</div>
+							</AscendantWindow>
+						)}
 					</div>
 
 					<div className="lg:col-span-2">
 						{rift ? (
 							<div className="space-y-4">
-								<AscendantWindow title={`${rift.rank}-RANK RIFT`}>
+								{/* Overview */}
+								<AscendantWindow title={`${rift.rank}-RANK RIFT — ${rift.theme.toUpperCase()}`}>
 									<div className="space-y-4">
 										<div className="grid grid-cols-2 gap-4">
 											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													THEME
-												</span>
+												<span className="text-xs font-display text-muted-foreground">THEME</span>
 												<p className="font-heading text-lg">{rift.theme}</p>
 											</div>
 											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													BIOME
-												</span>
+												<span className="text-xs font-display text-muted-foreground">BIOME</span>
 												<p className="font-heading text-lg">{rift.biome}</p>
 											</div>
 											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													BOSS
-												</span>
+												<span className="text-xs font-display text-muted-foreground">BOSS</span>
 												<p className="font-heading text-lg">{rift.boss}</p>
 											</div>
 											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													RANK
-												</span>
+												<span className="text-xs font-display text-muted-foreground">RANK</span>
 												<Badge className="mt-1">{rift.rank}</Badge>
 											</div>
 										</div>
 
 										{rift.complications.length > 0 && (
 											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													COMPLICATIONS
-												</span>
+												<span className="text-xs font-display text-muted-foreground">COMPLICATIONS</span>
 												<div className="flex flex-wrap gap-2 mt-2">
-													{rift.complications.map((comp, _i) => (
-														<Badge key={comp} variant="destructive">
-															{comp}
-														</Badge>
-													))}
-												</div>
-											</div>
-										)}
-
-										{rift.hazards.length > 0 && (
-											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													HAZARDS
-												</span>
-												<div className="flex flex-wrap gap-2 mt-2">
-													{rift.hazards.map((hazard) => (
-														<Badge key={hazard} variant="outline">
-															{hazard}
-														</Badge>
-													))}
-												</div>
-											</div>
-										)}
-
-										{rift.rewards.length > 0 && (
-											<div>
-												<span className="text-xs font-display text-muted-foreground">
-													INDEXED REWARDS
-												</span>
-												<div className="flex flex-wrap gap-2 mt-2">
-													{rift.rewards.map((reward) => (
-														<Badge key={reward} variant="secondary">
-															{reward}
-														</Badge>
+													{rift.complications.map((comp) => (
+														<Badge key={comp} variant="destructive">{comp}</Badge>
 													))}
 												</div>
 											</div>
 										)}
 
 										<div className="pt-4 border-t border-border">
-											<span className="text-xs font-display text-muted-foreground">
-												DESCRIPTION
-											</span>
-											<div className="block text-sm text-muted-foreground mt-2">
-												<AutoLinkText text={rift.description} />
+											<div className="flex items-center justify-between mb-2">
+												<span className="text-xs font-display text-muted-foreground">OVERVIEW</span>
+												<SectionEnhanceButton section="overview" label="Enhance" />
+											</div>
+											<div className="text-sm text-muted-foreground">
+												<AutoLinkText text={rift.aiEnhanced?.overview || rift.overview} />
 											</div>
 										</div>
 
 										<div className="pt-4 border-t border-primary/30">
 											<div className="flex items-center gap-2 mb-2">
-												<Sparkles className="w-4 h-4 text-primary" />
-												<span className="text-xs font-display text-primary">
-													AI-ENHANCED DOSSIER
-												</span>
+												<ScrollText className="w-4 h-4 text-primary" />
+												<span className="text-xs font-display text-primary">READ-ALOUD ENTRY</span>
 											</div>
-											<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-												<AutoLinkText text={enhancedText || ""} />
+											<div className="text-sm italic text-muted-foreground bg-primary/5 rounded-lg p-4">
+												<AutoLinkText text={rift.readAloudEntry} />
 											</div>
-										</div>
-
-										<div className="flex gap-2 pt-4 border-t border-border">
-											<Button
-												variant="outline"
-												onClick={handleCopy}
-												className="gap-2"
-											>
-												<Copy className="w-4 h-4" />
-												Copy Details
-											</Button>
-											<Button
-												variant="outline"
-												onClick={handleGenerate}
-												className="gap-2"
-											>
-												<RefreshCw className="w-4 h-4" />
-												Regenerate
-											</Button>
 										</div>
 									</div>
 								</AscendantWindow>
 
-								{rift && (
-									<div className="pt-8">
-										<AscendantWindow title="RIFT MAP GENERATOR">
-											<DungeonMapGenerator riftContext={rift} />
-										</AscendantWindow>
+								{/* Objective */}
+								<AscendantWindow title="OBJECTIVE">
+									<div className="space-y-2 text-sm">
+										<div className="flex items-start gap-2">
+											<Target className="w-4 h-4 mt-0.5 text-red-400 shrink-0" />
+											<div>
+												<span className="text-xs font-display text-muted-foreground">PRIMARY</span>
+												<p>{rift.objective.primary}</p>
+											</div>
+										</div>
+										{rift.objective.secondary.map((sec, i) => (
+											<div key={`sec-${i}`} className="flex items-start gap-2 pl-6">
+												<Crosshair className="w-3 h-3 mt-0.5 text-muted-foreground shrink-0" />
+												<p className="text-muted-foreground">{sec}</p>
+											</div>
+										))}
+										<div className="pt-2 border-t border-border text-xs text-destructive">
+											<strong>Failure:</strong> {rift.objective.failureCondition}
+										</div>
 									</div>
+								</AscendantWindow>
+
+								{/* Room Keys */}
+								<AscendantWindow title="KEYED AREAS">
+									<div className="space-y-1">
+										<div className="flex items-center justify-between mb-2">
+											<span className="text-xs font-display text-muted-foreground">{rift.roomKeys.length} ROOMS</span>
+											<SectionEnhanceButton section="rooms" label="Enhance Rooms" />
+										</div>
+										{rift.roomKeys.map((room) => (
+											<div
+												key={room.roomId}
+												className="border border-border rounded-lg overflow-hidden"
+											>
+												<button
+													type="button"
+													className="w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-muted/50 transition-colors"
+													onClick={() => toggleSection(room.roomId)}
+												>
+													<Map className="w-4 h-4 shrink-0 text-muted-foreground" />
+													<span className="font-heading text-sm flex-1">{room.label}</span>
+													<Badge variant="outline" className="text-xs">{room.type}</Badge>
+												</button>
+												{expandedSection === room.roomId && (
+													<div className="px-3 pb-3 space-y-2 text-sm border-t border-border">
+														<div className="pt-2 italic text-muted-foreground bg-primary/5 rounded p-2 mt-2">
+															<AutoLinkText text={room.readAloud} />
+														</div>
+														<p className="text-muted-foreground">{room.description}</p>
+														{room.encounter && (
+															<div className="flex items-start gap-2 text-red-400">
+																<Swords className="w-4 h-4 mt-0.5 shrink-0" />
+																<span>{room.encounter.name} (CR {room.encounter.cr}, x{room.encounter.count})</span>
+															</div>
+														)}
+														{room.hazard && (
+															<div className="flex items-start gap-2 text-orange-400">
+																<AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
+																<span>{room.hazard.name} — DC {room.hazard.dc}, {room.hazard.damage}</span>
+															</div>
+														)}
+														{room.loot.length > 0 && (
+															<div className="flex items-start gap-2 text-yellow-400">
+																<Trophy className="w-4 h-4 mt-0.5 shrink-0" />
+																<span>{room.loot.join(", ")}</span>
+															</div>
+														)}
+														{room.lore && (
+															<div className="flex items-start gap-2 text-blue-400">
+																<BookOpen className="w-4 h-4 mt-0.5 shrink-0" />
+																<span>{room.lore}</span>
+															</div>
+														)}
+													</div>
+												)}
+											</div>
+										))}
+									</div>
+								</AscendantWindow>
+
+								{/* Encounters */}
+								<AscendantWindow title="ENCOUNTERS">
+									<div className="space-y-3">
+										<div className="flex items-center justify-between">
+											<span className="text-xs font-display text-muted-foreground">{rift.encounters.length} ENCOUNTER(S)</span>
+											<SectionEnhanceButton section="encounters" label="Enhance Tactics" />
+										</div>
+										{rift.aiEnhanced?.encounters && (
+											<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-3">
+												<AutoLinkText text={rift.aiEnhanced.encounters || ""} />
+											</div>
+										)}
+										{rift.encounters.map((enc) => (
+											<div key={enc.id} className="border border-border rounded-lg p-3 space-y-1">
+												<div className="flex items-center justify-between">
+													<div className="flex items-center gap-2">
+														<Swords className="w-4 h-4 text-red-400" />
+														<span className="font-heading text-sm">{enc.name}</span>
+													</div>
+													<div className="flex items-center gap-2">
+														<Badge variant={enc.role === "boss" ? "destructive" : enc.role === "elite" ? "default" : "secondary"}>
+															{enc.role}
+														</Badge>
+														<Badge variant="outline">CR {enc.cr}</Badge>
+													</div>
+												</div>
+												<p className="text-xs text-muted-foreground">
+													x{enc.count} — {enc.xpTotal.toLocaleString()} XP
+												</p>
+												<p className="text-xs text-muted-foreground italic">{enc.tactics}</p>
+											</div>
+										))}
+										<div className="text-xs font-display text-muted-foreground pt-2 border-t border-border">
+											TOTAL XP: {rift.rewards.totalXP.toLocaleString()}
+										</div>
+									</div>
+								</AscendantWindow>
+
+								{/* Hazards */}
+								{rift.hazards.length > 0 && (
+									<AscendantWindow title="HAZARDS">
+										<div className="space-y-3">
+											<div className="flex items-center justify-between">
+												<span className="text-xs font-display text-muted-foreground">{rift.hazards.length} HAZARD(S)</span>
+												<SectionEnhanceButton section="hazards" label="Enhance Hazards" />
+											</div>
+											{rift.aiEnhanced?.hazards && (
+												<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-3">
+													<AutoLinkText text={rift.aiEnhanced.hazards || ""} />
+												</div>
+											)}
+											{rift.hazards.map((haz) => (
+												<div key={haz.id} className="border border-border rounded-lg p-3 space-y-1">
+													<div className="flex items-center gap-2">
+														<AlertTriangle className="w-4 h-4 text-orange-400" />
+														<span className="font-heading text-sm">{haz.name}</span>
+													</div>
+													<p className="text-xs text-muted-foreground">
+														DC {haz.dc} — {haz.damage} damage
+													</p>
+													<p className="text-xs text-muted-foreground">{haz.trigger}</p>
+													<p className="text-xs text-muted-foreground italic">{haz.effect}</p>
+												</div>
+											))}
+										</div>
+									</AscendantWindow>
 								)}
+
+								{/* Rewards */}
+								<AscendantWindow title="REWARDS">
+									<div className="space-y-3 text-sm">
+										<div className="flex items-center gap-2">
+											<Trophy className="w-4 h-4 text-yellow-400" />
+											<span>Total XP: {rift.rewards.totalXP.toLocaleString()}</span>
+										</div>
+										{rift.rewards.treasure && (
+											<div className="space-y-1">
+												{(rift.rewards.treasure.hundreds > 0 || rift.rewards.treasure.tens > 0) && (
+													<p className="text-muted-foreground">
+														Currency: {[
+															rift.rewards.treasure.hundreds > 0 ? `$${rift.rewards.treasure.hundreds * 100}` : "",
+															rift.rewards.treasure.tens > 0 ? `$${rift.rewards.treasure.tens * 10}` : "",
+														].filter(Boolean).join(" + ")}
+													</p>
+												)}
+												{rift.rewards.treasure.items.length > 0 && (
+													<div className="flex flex-wrap gap-1">
+														{rift.rewards.treasure.items.map((item: string, i: number) => (
+															<Badge key={`item-${i}`} variant="secondary">{item}</Badge>
+														))}
+													</div>
+												)}
+												{rift.rewards.treasure.relics.length > 0 && (
+													<div className="flex flex-wrap gap-1">
+														{rift.rewards.treasure.relics.map((relic: string, i: number) => (
+															<Badge key={`relic-${i}`} variant="default">{relic}</Badge>
+														))}
+													</div>
+												)}
+											</div>
+										)}
+										{rift.rewards.bonusRewards.length > 0 && (
+											<div>
+												<span className="text-xs font-display text-muted-foreground">BONUS</span>
+												<div className="flex flex-wrap gap-1 mt-1">
+													{rift.rewards.bonusRewards.map((bonus, i) => (
+														<Badge key={`bonus-${i}`} variant="outline">{bonus}</Badge>
+													))}
+												</div>
+											</div>
+										)}
+									</div>
+								</AscendantWindow>
+
+								{/* Lore & Warden Tips */}
+								<AscendantWindow title="LORE & WARDEN TIPS">
+									<div className="space-y-3 text-sm">
+										<div>
+											<span className="text-xs font-display text-muted-foreground">LORE NOTES</span>
+											{rift.loreNotes.map((note, i) => (
+												<p key={`lore-${i}`} className="text-muted-foreground mt-1">
+													<AutoLinkText text={note} />
+												</p>
+											))}
+										</div>
+										<div className="pt-2 border-t border-border">
+											<div className="flex items-center gap-2 mb-1">
+												<Shield className="w-4 h-4 text-primary" />
+												<span className="text-xs font-display text-primary">WARDEN TIPS</span>
+											</div>
+											{rift.wardenTips.map((tip, i) => (
+												<p key={`tip-${i}`} className="text-muted-foreground text-xs mt-1">
+													{tip}
+												</p>
+											))}
+										</div>
+									</div>
+								</AscendantWindow>
+
+								{/* Map */}
+								<div className="pt-4">
+									<AscendantWindow title="RIFT MAP GENERATOR">
+										<DungeonMapGenerator riftContext={legacyRiftContext!} />
+									</AscendantWindow>
+								</div>
 							</div>
 						) : (
 							<AscendantWindow title="NO RIFT GENERATED">
 								<div className="text-center py-12 text-muted-foreground">
-									<p>Click "Generate Rift" to create a random Rift</p>
+									<p>Click "Generate Rift" to create a full Warden-ready adventure packet</p>
 								</div>
 							</AscendantWindow>
 						)}

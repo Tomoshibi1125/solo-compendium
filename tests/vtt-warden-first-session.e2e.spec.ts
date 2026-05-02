@@ -24,9 +24,19 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	const authPage = new AuthPage(page);
 	const sharedPage = new SharedPage(page);
 	const pageErrors: string[] = [];
+	const pixiInitErrors: string[] = [];
 
 	page.on("pageerror", (error) => {
 		pageErrors.push(error.message);
+	});
+	page.on("console", (message) => {
+		const text = message.text();
+		if (
+			message.type() === "error" &&
+			text.includes("[VTT Pixi] All init attempts failed")
+		) {
+			pixiInitErrors.push(text);
+		}
 	});
 
 	await authPage.continueAsGuest("dm");
@@ -47,10 +57,16 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	const canvas = map.locator("canvas").first();
 	const pixiHost = page.getByTestId("vtt-pixi-host");
 	const playerViewToggle = page.getByTestId("vtt-player-view-toggle");
+	const rendererFallback = page.getByText("Renderer fallback active");
+	const radixOverlay = page.locator('[data-state="open"][aria-hidden="true"]');
 
 	await expect(map).toBeVisible({ timeout: 20_000 });
 	await expect(canvas).toBeVisible({ timeout: 20_000 });
 	await expect(pixiHost).toBeAttached({ timeout: 20_000 });
+	await expect(pixiHost).toHaveAttribute("data-renderer-status", "ready", {
+		timeout: 20_000,
+	});
+	await expect(rendererFallback).toBeHidden();
 
 	// We must remain in Warden view the entire time — the bug only
 	// manifested when the Warden *hadn't* simulated player view.
@@ -62,6 +78,14 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	// the Pixi canvas (which is wrapped in overflow scroll containers
 	// that intercept Playwright's position-based clicks).
 	const assetSearch = page.getByPlaceholder(/Search .* assets/i).first();
+	const closeTransientOverlays = async () => {
+		for (let i = 0; i < 3; i++) {
+			if ((await radixOverlay.count()) === 0) return;
+			await page.keyboard.press("Escape");
+			await page.waitForTimeout(150);
+		}
+		await expect(radixOverlay).toHaveCount(0, { timeout: 5_000 });
+	};
 	const openAssets = async () => {
 		if (await assetSearch.isVisible().catch(() => false)) return;
 		await page.getByTestId("vtt-rail-right-assets").click();
@@ -84,6 +108,7 @@ test("guest warden first session: map renders in Warden view across scene/token 
 			.first();
 		await expect(actionBtn).toBeVisible({ timeout: 10_000 });
 		await actionBtn.click();
+		await closeTransientOverlays();
 	};
 
 	// ── 1. Apply a library map to Scene 1 ────────────────────────────────
@@ -94,6 +119,7 @@ test("guest warden first session: map renders in Warden view across scene/token 
 		timeout: 20_000,
 	});
 	await expect(playerViewToggle).toHaveText(/^Player View$/i);
+	await expect(rendererFallback).toBeHidden();
 
 	// ── 2. Mutate the scene via additional tokens (regression guard) ─────
 	// Appending tokens forces the Pixi main effect to tear down and
@@ -105,18 +131,19 @@ test("guest warden first session: map renders in Warden view across scene/token 
 		timeout: 15_000,
 	});
 	await expect(playerViewToggle).toHaveText(/^Player View$/i);
+	await expect(rendererFallback).toBeHidden();
 
 	await applyAssetAs("Boss Token", /Boss Token Frame/i, "token");
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 15_000,
 	});
 	await expect(playerViewToggle).toHaveText(/^Player View$/i);
+	await expect(rendererFallback).toBeHidden();
 
 	// ── 3. Create a second scene and apply a different map ───────────────
 	// A freshly created scene has no backgroundImage so the bg-loaded
 	// signal must be cleared, and applying a new map re-raises it.
-	await page.keyboard.press("Escape");
-	await page.getByTestId("vtt-rail-left-scenes").click();
+	await closeTransientOverlays();
 	await page.getByTestId("vtt-new-scene").click();
 	await expect(pixiHost).not.toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 5_000,
@@ -126,24 +153,28 @@ test("guest warden first session: map renders in Warden view across scene/token 
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 20_000,
 	});
+	await expect(rendererFallback).toBeHidden();
 
 	// ── 4. Switch back to Scene 1 — background must still be present ─────
 	// Applying a map via Use as Map renames the active scene to the map's
 	// name, so the first scene is now "Rift Keep" and the second is
 	// "Shadow Crypt".
-	await page.keyboard.press("Escape");
+	await closeTransientOverlays();
 	await page.getByTestId("vtt-rail-left-scenes").click();
 	await page.getByTestId("vtt-scene-select-rift-keep").click();
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 15_000,
 	});
+	await expect(rendererFallback).toBeHidden();
 
 	await page.getByTestId("vtt-scene-select-shadow-crypt").click();
 	await expect(pixiHost).toHaveAttribute("data-bg-loaded", "true", {
 		timeout: 15_000,
 	});
+	await expect(rendererFallback).toBeHidden();
 
 	// ── Final sanity checks ──────────────────────────────────────────────
 	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 	expect(pageErrors, pageErrors.join("\n")).toEqual([]);
+	expect(pixiInitErrors, pixiInitErrors.join("\n")).toEqual([]);
 });

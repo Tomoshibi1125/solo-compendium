@@ -1599,6 +1599,13 @@ export const staticDataProvider: StaticDataProvider = {
 			mechanics?: Record<string, Json> | null;
 			source?: string;
 			image?: string;
+			damage?: string | number | null;
+			damage_type?: string | null;
+			weapon_type?: string | null;
+			armor_class?: string | number | null;
+			armor_type?: string | null;
+			charges?: number | Record<string, Json> | null;
+			effects?: Record<string, Json> | null;
 		}>("comprehensiveRelics");
 		const filtered = filterBySearch(comprehensiveRelics, search, [
 			"name",
@@ -1623,6 +1630,13 @@ export const staticDataProvider: StaticDataProvider = {
 			abilities: relic.abilities ?? null,
 			lore: relic.lore ?? null,
 			mechanics: relic.mechanics ?? null,
+			damage: relic.damage ?? null,
+			damage_type: relic.damage_type ?? null,
+			weapon_type: relic.weapon_type ?? null,
+			armor_class: relic.armor_class ?? null,
+			armor_type: relic.armor_type ?? null,
+			charges: relic.charges ?? null,
+			effects: relic.effects ?? null,
 			flavor: (relic.lore as { description?: string })?.description || null,
 		}));
 	},

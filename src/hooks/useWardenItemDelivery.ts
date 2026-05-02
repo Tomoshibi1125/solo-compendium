@@ -22,6 +22,8 @@ export interface WardenDeliverableItem {
 	requiresAttunement?: boolean;
 	sourceBook?: string | null;
 	sigilSlotsBase?: number | null;
+	chargesCurrent?: number | null;
+	chargesMax?: number | null;
 }
 
 interface WardenItemDeliveryInput {
@@ -78,6 +80,14 @@ export function linkedEntryToDeliverableItem(
 				name: entry.name,
 				rarity: entry.rarity,
 			}),
+		chargesCurrent:
+			typeof (entry.entry as { charges?: unknown }).charges === "number"
+				? ((entry.entry as { charges: number }).charges as number)
+				: null,
+		chargesMax:
+			typeof (entry.entry as { charges?: unknown }).charges === "number"
+				? ((entry.entry as { charges: number }).charges as number)
+				: null,
 	};
 }
 
@@ -252,8 +262,8 @@ function buildEquipmentInsert(
 				rarity: item.rarity ?? null,
 			}),
 		relic_tier: null,
-		charges_current: null,
-		charges_max: null,
+		charges_current: item.chargesCurrent ?? null,
+		charges_max: item.chargesMax ?? null,
 	};
 }
 

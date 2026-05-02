@@ -23,11 +23,18 @@ export interface AuditEntry {
 	name: string;
 	description?: string | null;
 	source_book?: string | null;
+	item_type?: unknown;
+	equipment_type?: unknown;
 	mechanics?: unknown;
 	effects?: unknown;
 	properties?: unknown;
 	weight?: number | null;
 	damage?: unknown;
+	damage_type?: unknown;
+	armor_class?: unknown;
+	armor_type?: unknown;
+	weapon_type?: unknown;
+	charges?: unknown;
 }
 
 type AuditProvider = {
@@ -528,6 +535,76 @@ function hasDamageRoll(entry: AuditEntry): boolean {
 	return false;
 }
 
+function getEquipmentKind(entry: AuditEntry): string {
+	const raw = entry.item_type ?? entry.equipment_type ?? "";
+	return typeof raw === "string" ? raw.toLowerCase().trim() : "";
+}
+
+function hasDiceNotation(value: unknown): boolean {
+	const formula = getFormulaString(value);
+	return Boolean(formula && /\d+d\d+/i.test(formula));
+}
+
+function getNestedRecord(value: unknown, key: string): Record<string, Json> | null {
+	if (!isRecord(value)) return null;
+	const nested = value[key];
+	return isRecord(nested) ? nested : null;
+}
+
+function hasWeaponDamage(entry: AuditEntry): boolean {
+	if (hasDiceNotation(entry.damage)) return true;
+	const weapon = getNestedRecord(entry.properties, "weapon");
+	return hasDiceNotation(weapon?.damage);
+}
+
+function hasWeaponDamageType(entry: AuditEntry): boolean {
+	if (getString(entry.damage_type)) return true;
+	const weapon = getNestedRecord(entry.properties, "weapon");
+	return Boolean(
+		getString(weapon?.damage_type) ||
+			getString(weapon?.damageType) ||
+			getString(weapon?.type),
+	);
+}
+
+function hasWeaponType(entry: AuditEntry): boolean {
+	if (getString(entry.weapon_type)) return true;
+	const propertiesText = collectTextFragments(entry.properties).join(" ");
+	return /\b(simple|martial|melee|ranged|weapon)\b/i.test(propertiesText);
+}
+
+function hasArmorClass(entry: AuditEntry): boolean {
+	if (typeof entry.armor_class === "number") return true;
+	if (getString(entry.armor_class)) return true;
+	const armor = getNestedRecord(entry.properties, "armor");
+	return Boolean(armor && (typeof armor.baseAC === "number" || getString(armor.baseAC)));
+}
+
+function hasArmorType(entry: AuditEntry): boolean {
+	if (getString(entry.armor_type)) return true;
+	const kind = getEquipmentKind(entry);
+	if (kind === "shield") return true;
+	const armor = getNestedRecord(entry.properties, "armor");
+	return Boolean(
+		getString(armor?.type) ||
+			/\b(light|medium|heavy|shield)\b/i.test(
+				collectTextFragments(entry.properties).join(" "),
+			),
+	);
+}
+
+function hasValidCharges(entry: AuditEntry): boolean {
+	if (entry.charges == null) return true;
+	if (typeof entry.charges === "number") return entry.charges > 0;
+	if (!isRecord(entry.charges)) return false;
+	const max = entry.charges.max;
+	const current = entry.charges.current;
+	return (
+		(typeof max === "number" && max > 0) ||
+		(typeof current === "number" && current >= 0)
+	);
+}
+
 function auditNamingCase(
 	dataset: string,
 	entry: AuditEntry,
@@ -613,12 +690,82 @@ function auditUtilityWithDamage(
 }
 
 function auditEquipmentEntry(
+	dataset: string,
 	entry: AuditEntry,
 	issues: CompendiumAuditIssue[],
 ) {
+	const kind = getEquipmentKind(entry);
+	if (kind === "weapon") {
+		if (!hasWeaponType(entry)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_weapon_type",
+				message: "Weapon entry lacks weapon_type or simple/martial/ranged/melee metadata.",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+		if (!hasWeaponDamage(entry)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_weapon_damage",
+				message: "Weapon entry lacks parseable damage dice.",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+		if (!hasWeaponDamageType(entry)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_weapon_damage_type",
+				message: "Weapon entry lacks damage_type metadata.",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+
+	if (kind === "armor" || kind === "shield") {
+		if (!hasArmorClass(entry)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_armor_class",
+				message: "Armor or shield entry lacks armor_class metadata.",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+		if (!hasArmorType(entry)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_armor_type",
+				message: "Armor or shield entry lacks armor_type metadata.",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+
+	if (!hasValidCharges(entry)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "invalid_charges",
+			message: "Entry has charges metadata but no positive max/current charge payload.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
 	const mechanicalSignals = [
 		Array.isArray(entry.properties) ? entry.properties.length > 0 : false,
 		isRecord((entry as { item_properties?: unknown }).item_properties),
+		isRecord(entry.mechanics),
 		isRecord(entry.effects),
 		Boolean(getString(entry.damage)),
 		Boolean(getString((entry as { armor_class?: unknown }).armor_class)),
@@ -628,7 +775,7 @@ function auditEquipmentEntry(
 
 	addIssue(issues, {
 		severity: "warning",
-		dataset: "equipment",
+		dataset,
 		code: "mechanically_thin_equipment",
 		message:
 			"Equipment entry lacks explicit mechanics, properties, effects, or numeric payload.",
@@ -658,8 +805,8 @@ export async function runCompendiumAudit(
 			if (templatedLanguageDatasets.has(dataset)) {
 				auditTemplatedLanguage(dataset, entry, issues);
 			}
-			if (dataset === "equipment") {
-				auditEquipmentEntry(entry, issues);
+			if (dataset === "equipment" || dataset === "relics") {
+				auditEquipmentEntry(dataset, entry, issues);
 			}
 		}
 	}

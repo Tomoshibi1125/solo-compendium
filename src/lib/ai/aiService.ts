@@ -954,12 +954,11 @@ export class AIServiceManager {
 	): AIService[] {
 		const scoreService = (service: AIService): number => {
 			// Lower score = higher priority
-			// Pollinations is the authoritative architectural fallback for
-			// Gemini-native — the SDK works in unauthenticated mode without
-			// requiring a key, so it precedes the local Ollama floor.
-			if (service.type === "pollinations") return 0;
-			if (service.type === "ollama") return 1;
-			if (service.type === "gemini-native") return 2;
+			// Gemini is the primary provider; Pollinations is the hosted
+			// fallback that works without a key; Ollama is the local floor.
+			if (service.type === "gemini-native") return 0;
+			if (service.type === "pollinations") return 1;
+			if (service.type === "ollama") return 2;
 			if (service.type === "custom") return 3;
 			return 4;
 		};
@@ -1046,7 +1045,7 @@ export class AIServiceManager {
 		try {
 			// ── Route through the server-side proxy (/api/ai) so the API key
 			// never appears in client-side bundles or network requests.
-			const systemPrompt = this.getSystemPrompt(request.type);
+			const systemPrompt = this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined);
 			const prompt = this.formatInput(request);
 
 			const proxyResponse = await this.fetchWithTimeout(
@@ -1157,7 +1156,7 @@ export class AIServiceManager {
 			this.ensurePollinationsConfigured(service);
 
 			const prompt = this.formatInput(request);
-			const systemPrompt = this.getSystemPrompt(request.type);
+			const systemPrompt = this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined);
 			const messages: PollinationsMessage[] = [
 				{ role: "system", content: systemPrompt },
 				{ role: "user", content: prompt },
@@ -1260,7 +1259,7 @@ export class AIServiceManager {
 								messages: [
 									{
 										role: "rift",
-										content: this.getSystemPrompt(request.type),
+										content: this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined),
 									},
 									{ role: "user", content: prompt },
 								],
@@ -1311,7 +1310,7 @@ export class AIServiceManager {
 		request: AIRequest,
 	): Promise<AIResponse> {
 		try {
-			const prompt = `${this.getSystemPrompt(request.type)}\n\n${this.formatInput(request)}`;
+			const prompt = `${this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined)}\n\n${this.formatInput(request)}`;
 			const endpoint = (service.endpoint || OLLAMA_FALLBACK_ENDPOINT).replace(
 				/\/+$/,
 				"",
@@ -1473,7 +1472,7 @@ export class AIServiceManager {
 					body: JSON.stringify({
 						model,
 						messages: [
-							{ role: "rift", content: this.getSystemPrompt(request.type) },
+							{ role: "rift", content: this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined) },
 							{ role: "user", content: this.formatInput(request) },
 						],
 						temperature: service.temperature,
@@ -1509,7 +1508,17 @@ export class AIServiceManager {
 		}
 	}
 
-	private getSystemPrompt(type: string): string {
+	private getSystemPrompt(
+		type: string,
+		context?: Record<string, unknown>,
+	): string {
+		if (
+			context?.customSystemPrompt &&
+			typeof context.customSystemPrompt === "string"
+		) {
+			return context.customSystemPrompt;
+		}
+
 		const jsonInstruction =
 			"Return ONLY valid JSON. Do not wrap in Markdown or code fences. Use double quotes for all keys and strings.";
 		const prompts: Record<string, string> = {

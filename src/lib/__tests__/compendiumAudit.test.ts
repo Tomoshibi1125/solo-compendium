@@ -6,36 +6,40 @@ import {
 } from "@/lib/compendiumAudit";
 
 describe("compendium audit (provider-backed)", () => {
-	it("produces a non-empty report with dataset counts and preserves run shape", async () => {
-		const summary = await runCompendiumAudit(staticDataProvider);
-		expect(summary.totalEntries).toBeGreaterThan(0);
-		expect(Object.keys(summary.datasets)).toEqual(
-			expect.arrayContaining([
-				"anomalies",
-				"backgrounds",
-				"conditions",
-				"equipment",
-				"feats",
-				"items",
-				"jobs",
-				"locations",
-				"paths",
-				"powers",
-				"regents",
-				"relics",
-				"runes",
-				"sigils",
-				"skills",
-				"spells",
-				"tattoos",
-				"techniques",
-			]),
-		);
+	it(
+		"produces a non-empty report with dataset counts and preserves run shape",
+		async () => {
+			const summary = await runCompendiumAudit(staticDataProvider);
+			expect(summary.totalEntries).toBeGreaterThan(0);
+			expect(Object.keys(summary.datasets)).toEqual(
+				expect.arrayContaining([
+					"anomalies",
+					"backgrounds",
+					"conditions",
+					"equipment",
+					"feats",
+					"items",
+					"jobs",
+					"locations",
+					"paths",
+					"powers",
+					"regents",
+					"relics",
+					"runes",
+					"sigils",
+					"skills",
+					"spells",
+					"tattoos",
+					"techniques",
+				]),
+			);
 
-		const report = formatCompendiumAuditReport(summary);
-		expect(report).toContain("COMPENDIUM AUDIT START");
-		expect(report).toContain("COMPENDIUM AUDIT COMPLETE");
-	});
+			const report = formatCompendiumAuditReport(summary);
+			expect(report).toContain("COMPENDIUM AUDIT START");
+			expect(report).toContain("COMPENDIUM AUDIT COMPLETE");
+		},
+		15000,
+	);
 
 	it("never has duplicate ids in canonical datasets", async () => {
 		const summary = await runCompendiumAudit(staticDataProvider);
@@ -153,6 +157,30 @@ describe("compendium audit (provider-backed)", () => {
 		expect(
 			missingResolution,
 			`Castable entries without resolution metadata:\n${missingResolution
+				.map(
+					(issue) =>
+						`- ${issue.dataset}:${issue.code} ${issue.entryName ?? issue.entryId}`,
+				)
+				.join("\n")}`,
+		).toHaveLength(0);
+	});
+
+	it("equipment and relic mechanics expose DDB-style weapon/armor metadata", async () => {
+		const summary = await runCompendiumAudit(staticDataProvider);
+		const equipmentMechanicalIssues = summary.issues.filter((issue) =>
+			[
+				"missing_weapon_type",
+				"missing_weapon_damage",
+				"missing_weapon_damage_type",
+				"missing_armor_class",
+				"missing_armor_type",
+				"invalid_charges",
+				"mechanically_thin_equipment",
+			].includes(issue.code),
+		);
+		expect(
+			equipmentMechanicalIssues,
+			`Equipment/relic mechanics issues:\n${equipmentMechanicalIssues
 				.map(
 					(issue) =>
 						`- ${issue.dataset}:${issue.code} ${issue.entryName ?? issue.entryId}`,

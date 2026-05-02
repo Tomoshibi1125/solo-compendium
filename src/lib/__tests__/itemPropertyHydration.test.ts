@@ -1,7 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { staticDataProvider } from "@/data/compendium/providers";
 import { linkedEntryToDeliverableItem } from "@/hooks/useWardenItemDelivery";
 import { buildItemProperties } from "@/lib/characterCreation";
-import { parseModifiers } from "@/lib/equipmentModifiers";
+import {
+	applyEquipmentModifiers,
+	parseModifiers,
+} from "@/lib/equipmentModifiers";
 import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
 import type { CompendiumItem } from "@/types/compendium";
 
@@ -131,6 +135,125 @@ describe("canonical item property hydration", () => {
 				"heavy",
 				"Range 150/600",
 			]),
+		);
+	});
+
+	it("emits resistance and immunity strings from mechanics fields", () => {
+		const item = {
+			id: "test-relic-cloak",
+			name: "Test Relic Cloak",
+			description: "A cloak of shadows.",
+			item_type: "gear",
+			mechanics: {
+				stat_bonuses: { Intelligence: 1 },
+				resistance: ["necrotic"],
+				immunity: ["poison"],
+				vulnerability: ["radiant"],
+				condition_immunity: ["frightened"],
+			},
+		} as unknown as CompendiumItem;
+
+		const properties = buildItemProperties(item);
+
+		expect(properties).toEqual(
+			expect.arrayContaining([
+				"+1 Intelligence",
+				"Resistance: necrotic",
+				"Immunity: poison",
+				"Vulnerability: radiant",
+				"Condition immunity: frightened",
+			]),
+		);
+
+		const modifiers = parseModifiers(properties);
+		expect(modifiers.resistances).toEqual(["necrotic"]);
+		expect(modifiers.immunities).toEqual(["poison"]);
+		expect(modifiers.vulnerabilities).toEqual(["radiant"]);
+		expect(modifiers.conditionImmunities).toEqual(["frightened"]);
+	});
+
+	it("applyEquipmentModifiers returns defense arrays from equipped items", () => {
+		const result = applyEquipmentModifiers(
+			10,
+			30,
+			{ STR: 10, AGI: 10, VIT: 10, INT: 10, SENSE: 10, PRE: 10 },
+			[
+				{
+					is_equipped: true,
+					is_attuned: false,
+					requires_attunement: false,
+					properties: ["Resistance: fire, cold", "Immunity: poison"],
+				},
+			],
+		);
+
+		expect(result.resistances).toEqual(expect.arrayContaining(["fire", "cold"]));
+		expect(result.immunities).toEqual(["poison"]);
+		expect(result.vulnerabilities).toEqual([]);
+		expect(result.conditionImmunities).toEqual([]);
+	});
+
+	it("emits structured effects.primary/secondary as properties", () => {
+		const item = {
+			id: "test-effects-item",
+			name: "Test Effects Item",
+			description: "An item with structured effects.",
+			item_type: "gear",
+			effects: {
+				primary: "Grants darkvision 60 ft",
+				secondary: "Emits faint light in 5 ft radius",
+			},
+		} as unknown as CompendiumItem;
+
+		const properties = buildItemProperties(item);
+		expect(properties).toEqual(
+			expect.arrayContaining([
+				"Grants darkvision 60 ft",
+				"Emits faint light in 5 ft radius",
+			]),
+		);
+	});
+
+	it("emits protocol_enhanced bonus block as properties", () => {
+		const item = {
+			id: "test-protocol-blade",
+			name: "Test Protocol Blade",
+			description: "An enhanced blade.",
+			item_type: "weapon",
+			damage: "1d8",
+			damage_type: "slashing",
+			properties: {
+				protocol_enhanced: {
+					bonus: { attack: 2, damage: 1, armorClass: 1 },
+				},
+			},
+		} as unknown as CompendiumItem;
+
+		const properties = buildItemProperties(item);
+		expect(properties).toEqual(
+			expect.arrayContaining([
+				"+2 to attack",
+				"+1 to damage",
+				"+1 AC",
+			]),
+		);
+
+		const modifiers = parseModifiers(properties);
+		expect(modifiers.attack).toBe(2);
+		expect(modifiers.damage).toBe(1);
+	});
+
+	it("preserves relic weapon mechanics through the static provider", async () => {
+		const relics = await staticDataProvider.getRelics("Regent's Shadow Dagger");
+		const dagger = relics.find((relic) => relic.name === "Regent's Shadow Dagger");
+
+		expect(dagger).toBeDefined();
+		expect(dagger?.item_type).toBe("weapon");
+		expect(dagger?.weapon_type).toBe("simple melee");
+		expect(dagger?.damage).toBe("2d8");
+		expect(dagger?.damage_type).toBe("necrotic");
+		expect(buildItemProperties(dagger as CompendiumItem)).toEqual(
+			expect.arrayContaining(["2d8 necrotic", "simple melee"]),
 		);
 	});
 });

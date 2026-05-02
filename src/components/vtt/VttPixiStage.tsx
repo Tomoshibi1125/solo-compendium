@@ -109,6 +109,29 @@ type VttPixiStageProps = {
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
 
+type PixiRendererStatus = "waiting-for-layout" | "initializing" | "ready" | "failed";
+
+const VTT_MAX_RENDER_RESOLUTION = 1.5;
+const VTT_INIT_STABLE_FRAME_COUNT = 2;
+const VTT_INIT_MAX_LAYOUT_FRAMES = 12;
+
+const formatPixiError = (err: unknown) =>
+	err instanceof Error
+		? err.message
+		: typeof err === "string"
+			? err
+			: "Unknown Pixi error";
+
+const waitForAnimationFrame = () =>
+	new Promise<void>((resolve) => {
+		window.requestAnimationFrame(() => resolve());
+	});
+
+const measureViewport = (container: HTMLElement | null) => ({
+	width: Math.max(0, Math.floor(container?.clientWidth ?? 0)),
+	height: Math.max(0, Math.floor(container?.clientHeight ?? 0)),
+});
+
 /** Query the GPU's max texture size via a throwaway WebGL context. */
 const getMaxTextureSize = (): number => {
 	try {
@@ -171,6 +194,9 @@ export function VttPixiStage({
 	const canvasHostRef = useRef<HTMLElement | null>(null);
 	const appRef = useRef<Application | null>(null);
 	const { dpr, fx } = usePerformanceProfile();
+	const [rendererStatus, setRendererStatus] =
+		useState<PixiRendererStatus>("waiting-for-layout");
+	const [rendererError, setRendererError] = useState<string | null>(null);
 	// Tracks whether the Pixi Application has finished its async init.
 	// The render effect depends on this so it re-fires once the app is ready.
 	const [appReady, setAppReady] = useState(false);
@@ -248,8 +274,8 @@ export function VttPixiStage({
 		if (!container) return;
 
 		const updateViewportSize = () => {
-			const nextWidth = Math.max(1, Math.floor(container.clientWidth));
-			const nextHeight = Math.max(1, Math.floor(container.clientHeight));
+			const { width: nextWidth, height: nextHeight } =
+				measureViewport(container);
 			setViewportSize((prev) =>
 				prev.width === nextWidth && prev.height === nextHeight
 					? prev
@@ -258,10 +284,30 @@ export function VttPixiStage({
 		};
 
 		updateViewportSize();
+		let frame = 0;
+		let attempts = 0;
+		const retryUntilSized = () => {
+			if (attempts >= VTT_INIT_MAX_LAYOUT_FRAMES) return;
+			attempts += 1;
+			frame = window.requestAnimationFrame(() => {
+				frame = 0;
+				updateViewportSize();
+				const next = measureViewport(container);
+				if (next.width <= 0 || next.height <= 0) {
+					retryUntilSized();
+				}
+			});
+		};
+		if (container.clientWidth <= 0 || container.clientHeight <= 0) {
+			retryUntilSized();
+		}
 
 		if (typeof ResizeObserver === "undefined") {
 			window.addEventListener("resize", updateViewportSize);
 			return () => {
+				if (frame !== 0) {
+					window.cancelAnimationFrame(frame);
+				}
 				window.removeEventListener("resize", updateViewportSize);
 			};
 		}
@@ -271,6 +317,9 @@ export function VttPixiStage({
 		});
 		observer.observe(container);
 		return () => {
+			if (frame !== 0) {
+				window.cancelAnimationFrame(frame);
+			}
 			observer.disconnect();
 		};
 	}, [containerRef]);
@@ -298,22 +347,59 @@ export function VttPixiStage({
 		};
 	}, [containerRef, syncWorldTransform]);
 
+	const viewportReady = viewportSize.width > 0 && viewportSize.height > 0;
+
 	useEffect(() => {
 		if (!canvasHostRef.current) return;
 		if (appRef.current) return;
-		if (viewportSize.width <= 0 || viewportSize.height <= 0) return;
+		if (!viewportReady) {
+			setRendererStatus("waiting-for-layout");
+			return;
+		}
 
 		let destroyed = false;
 
-		const canvasW = Math.max(1, Math.floor(viewportSize.width));
-		const canvasH = Math.max(1, Math.floor(viewportSize.height));
-
 		(async () => {
-			const desiredRes = Math.min(window.devicePixelRatio || 1, dpr[1]);
+			setRendererStatus("initializing");
+			setRendererError(null);
+			let stableFrames = 0;
+			let measured = measureViewport(containerRef.current);
+			for (let i = 0; i < VTT_INIT_MAX_LAYOUT_FRAMES; i++) {
+				if (destroyed) return;
+				await waitForAnimationFrame();
+				const next = measureViewport(containerRef.current);
+				if (next.width <= 0 || next.height <= 0) {
+					stableFrames = 0;
+					measured = next;
+					continue;
+				}
+				const isStable =
+					Math.abs(next.width - measured.width) <= 1 &&
+					Math.abs(next.height - measured.height) <= 1;
+				stableFrames = isStable ? stableFrames + 1 : 0;
+				measured = next;
+				if (stableFrames >= VTT_INIT_STABLE_FRAME_COUNT) break;
+			}
+			if (destroyed) return;
+			if (measured.width <= 0 || measured.height <= 0) {
+				setRendererStatus("waiting-for-layout");
+				return;
+			}
+
+			const canvasW = Math.max(1, measured.width);
+			const canvasH = Math.max(1, measured.height);
+			const desiredRes = Math.min(
+				window.devicePixelRatio || 1,
+				dpr[1],
+				VTT_MAX_RENDER_RESOLUTION,
+			);
 			const maxDim = Math.max(canvasW, canvasH);
 			const safeResolution =
 				maxDim * desiredRes > GPU_MAX_TEXTURE
-					? Math.floor((GPU_MAX_TEXTURE / maxDim) * 100) / 100
+					? Math.max(
+							0.5,
+							Math.floor((GPU_MAX_TEXTURE / maxDim) * 100) / 100,
+						)
 					: desiredRes;
 
 			// Attempt init with progressively lower settings on failure.
@@ -321,17 +407,37 @@ export function VttPixiStage({
 				resolution: number;
 				width: number;
 				height: number;
+				antialias: boolean;
 			}> = [
-				{ resolution: safeResolution, width: canvasW, height: canvasH },
-				{ resolution: 1, width: canvasW, height: canvasH },
+				{
+					resolution: safeResolution,
+					width: canvasW,
+					height: canvasH,
+					antialias: false,
+				},
+				{
+					resolution: safeResolution,
+					width: canvasW,
+					height: canvasH,
+					antialias: true,
+				},
+				{ resolution: 1, width: canvasW, height: canvasH, antialias: false },
+				{
+					resolution: 0.75,
+					width: canvasW,
+					height: canvasH,
+					antialias: false,
+				},
 				{
 					resolution: 1,
 					width: Math.ceil(canvasW / 2),
 					height: Math.ceil(canvasH / 2),
+					antialias: false,
 				},
 			];
 
 			let app: Application | null = null;
+			let lastError: unknown = null;
 
 			for (let i = 0; i < attempts.length; i++) {
 				if (destroyed) return;
@@ -340,11 +446,13 @@ export function VttPixiStage({
 				try {
 					await candidate.init({
 						backgroundAlpha: 0,
-						antialias: i === 0, // drop AA on retries for perf
+						antialias: cfg.antialias,
 						resolution: cfg.resolution,
 						autoDensity: true,
 						width: cfg.width,
 						height: cfg.height,
+						preference: "webgl",
+						powerPreference: "high-performance",
 					});
 					app = candidate;
 					if (i > 0) {
@@ -354,6 +462,7 @@ export function VttPixiStage({
 					}
 					break;
 				} catch (err) {
+					lastError = err;
 					console.error(
 						`[VTT Pixi] Init attempt ${i + 1}/${attempts.length} failed:`,
 						err,
@@ -368,6 +477,9 @@ export function VttPixiStage({
 			}
 
 			if (!app) {
+				const message = `Pixi init failed after all retries: ${formatPixiError(lastError)}`;
+				setRendererStatus("failed");
+				setRendererError(message);
 				console.error(
 					"[VTT Pixi] All init attempts failed. GPU_MAX_TEXTURE =",
 					GPU_MAX_TEXTURE,
@@ -384,7 +496,7 @@ export function VttPixiStage({
 					"×",
 					canvasH,
 				);
-				onInitError?.(new Error("Pixi init failed after all retries"));
+				onInitError?.(new Error(message));
 				return;
 			}
 
@@ -412,6 +524,7 @@ export function VttPixiStage({
 			// previously failed.
 			appRef.current = app;
 			// Signal that the app is ready so the render effect can run.
+			setRendererStatus("ready");
 			setAppReady(true);
 		})();
 
@@ -426,17 +539,26 @@ export function VttPixiStage({
 				appRef.current = null;
 			}
 			setAppReady(false);
+			setRendererStatus("waiting-for-layout");
 		};
-	}, [viewportSize.height, viewportSize.width, dpr[1], onInitError]);
+	}, [containerRef, dpr[1], onInitError, viewportReady]);
 
 	useEffect(() => {
 		const app = appRef.current;
 		if (!app?.renderer) return;
 		if (viewportSize.width <= 0 || viewportSize.height <= 0) return;
-		app.renderer.resize(
-			Math.max(1, Math.floor(viewportSize.width)),
-			Math.max(1, Math.floor(viewportSize.height)),
-		);
+		try {
+			app.renderer.resize(
+				Math.max(1, Math.floor(viewportSize.width)),
+				Math.max(1, Math.floor(viewportSize.height)),
+			);
+		} catch (err) {
+			const message = `Pixi resize failed: ${formatPixiError(err)}`;
+			setRendererStatus("failed");
+			setRendererError(message);
+			onInitError?.(new Error(message));
+			return;
+		}
 		if (canvasHostRef.current) {
 			canvasHostRef.current.dataset.rendererWidth = String(
 				Math.max(1, Math.floor(viewportSize.width)),
@@ -445,7 +567,7 @@ export function VttPixiStage({
 				Math.max(1, Math.floor(viewportSize.height)),
 			);
 		}
-	}, [viewportSize.height, viewportSize.width]);
+	}, [onInitError, viewportSize.height, viewportSize.width]);
 
 	useEffect(() => {
 		const app = appRef.current;
@@ -1677,6 +1799,9 @@ export function VttPixiStage({
 		<DynamicStyle
 			ref={canvasHostRef}
 			data-testid="vtt-pixi-host"
+			data-renderer-status={rendererStatus}
+			data-renderer-error={rendererError ?? undefined}
+			data-renderer-preference="webgl"
 			data-renderer-width={
 				viewportSize.width > 0 ? String(viewportSize.width) : undefined
 			}

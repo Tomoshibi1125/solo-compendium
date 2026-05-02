@@ -6,6 +6,10 @@ interface EquipmentModifiers {
 	ac?: number;
 	attack?: number;
 	damage?: number;
+	resistances?: string[];
+	immunities?: string[];
+	vulnerabilities?: string[];
+	conditionImmunities?: string[];
 	str?: number;
 	agi?: number;
 	vit?: number;
@@ -53,6 +57,13 @@ function parseArmorBaseAc(properties: string[]): number | null {
 	return null;
 }
 
+function parseDelimitedList(value: string): string[] {
+	return value
+		.split(/,|\band\b/i)
+		.map((part) => part.trim())
+		.filter(Boolean);
+}
+
 /**
  * Parse equipment properties into modifiers
  */
@@ -93,6 +104,46 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 		if (damageMatch) {
 			const value = parseInt(damageMatch[1] || damageMatch[2] || "0", 10);
 			modifiers.damage = (modifiers.damage || 0) + value;
+		}
+
+		const resistanceMatch = prop.match(
+			/^(?:resistance|resistant to)\s*:?\s*(.+)$/i,
+		);
+		if (resistanceMatch?.[1]) {
+			modifiers.resistances = [
+				...(modifiers.resistances || []),
+				...parseDelimitedList(resistanceMatch[1]),
+			];
+		}
+
+		const immunityMatch = prop.match(
+			/^(?:immunity|immune to)\s*:?\s*(.+)$/i,
+		);
+		if (immunityMatch?.[1]) {
+			modifiers.immunities = [
+				...(modifiers.immunities || []),
+				...parseDelimitedList(immunityMatch[1]),
+			];
+		}
+
+		const vulnerabilityMatch = prop.match(
+			/^(?:vulnerability|vulnerable to)\s*:?\s*(.+)$/i,
+		);
+		if (vulnerabilityMatch?.[1]) {
+			modifiers.vulnerabilities = [
+				...(modifiers.vulnerabilities || []),
+				...parseDelimitedList(vulnerabilityMatch[1]),
+			];
+		}
+
+		const conditionImmunityMatch = prop.match(
+			/^(?:condition immunity|immune to condition)\s*:?\s*(.+)$/i,
+		);
+		if (conditionImmunityMatch?.[1]) {
+			modifiers.conditionImmunities = [
+				...(modifiers.conditionImmunities || []),
+				...parseDelimitedList(conditionImmunityMatch[1]),
+			];
 		}
 
 		// Ability score modifiers: "+2 Strength", "+1 to STR"
@@ -274,6 +325,15 @@ function combineModifiers(
 							subValue;
 					},
 				);
+			} else if (
+				key === "resistances" ||
+				key === "immunities" ||
+				key === "vulnerabilities" ||
+				key === "conditionImmunities"
+			) {
+				combined[key] = Array.from(
+					new Set([...(combined[key] || []), ...(value as string[])]),
+				);
 			} else if (typeof value === "number") {
 				(
 					combined as Record<
@@ -310,6 +370,10 @@ export function applyEquipmentModifiers(
 	damageBonus: number;
 	savingThrowBonuses: Record<string, number>;
 	skillBonuses: Record<string, number>;
+	resistances: string[];
+	immunities: string[];
+	vulnerabilities: string[];
+	conditionImmunities: string[];
 } {
 	const equipped = equipment.filter(
 		(e) => e.is_equipped && (!e.requires_attunement || e.is_attuned),
@@ -393,5 +457,9 @@ export function applyEquipmentModifiers(
 		damageBonus: allModifiers.damage || 0,
 		savingThrowBonuses: allModifiers.savingThrows || {},
 		skillBonuses: allModifiers.skills || {},
+		resistances: allModifiers.resistances || [],
+		immunities: allModifiers.immunities || [],
+		vulnerabilities: allModifiers.vulnerabilities || [],
+		conditionImmunities: allModifiers.conditionImmunities || [],
 	};
 }

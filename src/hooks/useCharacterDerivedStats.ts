@@ -51,6 +51,10 @@ interface EquipmentModifierResult {
 	damageBonus: number;
 	savingThrowBonuses: Record<string, number>;
 	skillBonuses: Record<string, number>;
+	resistances: string[];
+	immunities: string[];
+	vulnerabilities: string[];
+	conditionImmunities: string[];
 }
 
 export type DerivedStats = {
@@ -313,10 +317,24 @@ export function useCharacterDerivedStats(
 
 		// 100% Parity Data Extraction
 		const senseStrings = character.senses || [];
-		const resistances = character.resistances || [];
-		const immunities = character.immunities || [];
-		const vulnerabilities = character.vulnerabilities || [];
-		const conditionImmunities = character.condition_immunities || [];
+		const resistances = Array.from(
+			new Set([...(character.resistances || []), ...equipmentMods.resistances]),
+		);
+		const immunities = Array.from(
+			new Set([...(character.immunities || []), ...equipmentMods.immunities]),
+		);
+		const vulnerabilities = Array.from(
+			new Set([
+				...(character.vulnerabilities || []),
+				...equipmentMods.vulnerabilities,
+			]),
+		);
+		const conditionImmunities = Array.from(
+			new Set([
+				...(character.condition_immunities || []),
+				...equipmentMods.conditionImmunities,
+			]),
+		);
 
 		const parseSense = (name: string): number => {
 			const sense = senseStrings.find((s) =>

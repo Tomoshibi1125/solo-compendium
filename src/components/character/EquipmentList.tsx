@@ -10,6 +10,7 @@ import {
 	findCanonicalForRow,
 	useCanonicalEquipmentMap,
 } from "@/hooks/useCanonicalEquipmentMap";
+import { useCombatActions } from "@/hooks/useCombatActions";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useEncumbranceSettings } from "@/hooks/useEncumbranceSettings";
 import { useEquipment } from "@/hooks/useEquipment";
@@ -79,6 +80,7 @@ export function EquipmentList({
 	const { ignoreCurrencyWeight, setIgnoreCurrencyWeight, isLoaded } =
 		useEncumbranceSettings(characterId);
 	const ascendantTools = useAscendantTools();
+	const { actions } = useCombatActions(characterId);
 	const { data: sigilInscriptions = [] } =
 		useCharacterSigilInscriptions(characterId);
 	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(characterId);
@@ -152,6 +154,11 @@ export function EquipmentList({
 			([type]) => !EQUIPABLE_ITEM_TYPES.has(type),
 		),
 	) as Record<string, Equipment[]>;
+	const actionsByEquipmentId = new Map(
+		actions
+			.filter((action) => action.equipmentId)
+			.map((action) => [action.equipmentId as string, action]),
+	);
 
 	const handleReorderGroup = useCallback(
 		async (_type: string, newOrder: Equipment[]) => {
@@ -398,6 +405,7 @@ export function EquipmentList({
 															)}
 															canAttune={canAttune}
 															nestedItems={equipmentByContainer[item.id] || []}
+															computedAction={actionsByEquipmentId.get(item.id) ?? null}
 															onSelect={() =>
 																onSelectDetail?.({
 																	title: item.name,
@@ -467,6 +475,7 @@ export function EquipmentList({
 														)}
 														canAttune={canAttune}
 														nestedItems={equipmentByContainer[item.id] || []}
+														computedAction={actionsByEquipmentId.get(item.id) ?? null}
 														onSelect={() =>
 															onSelectDetail?.({
 																title: item.name,

@@ -606,6 +606,9 @@ const VTTEnhanced = () => {
 	const [zoom, setZoom] = useState(1);
 	const [showGrid, setShowGrid] = useState(true);
 	const [pixiInitFailed, setPixiInitFailed] = useState(false);
+	const [pixiRetryKey, setPixiRetryKey] = useState(0);
+	const pixiAutoRetryCountRef = useRef(0);
+	const pixiRetryTimerRef = useRef<number | null>(null);
 	const [isBackgroundCalibrating, setIsBackgroundCalibrating] = useState(false);
 	const [backgroundCalibrationPoints, setBackgroundCalibrationPoints] =
 		useState<VttCalibrationPoint[]>([]);
@@ -1010,6 +1013,12 @@ const VTTEnhanced = () => {
 		if (backgroundCalibrationTargetRef.current === calibrationTarget) return;
 		backgroundCalibrationTargetRef.current = calibrationTarget;
 		setPixiInitFailed(false);
+		setPixiRetryKey((key) => key + 1);
+		pixiAutoRetryCountRef.current = 0;
+		if (pixiRetryTimerRef.current !== null) {
+			window.clearTimeout(pixiRetryTimerRef.current);
+			pixiRetryTimerRef.current = null;
+		}
 		setIsBackgroundCalibrating(false);
 		setBackgroundCalibrationPoints([]);
 	}, [currentScene?.backgroundImage, currentScene?.id]);
@@ -1018,15 +1027,36 @@ const VTTEnhanced = () => {
 		(err: unknown) => {
 			console.error("[VTT] Pixi init error surfaced:", err);
 			setPixiInitFailed(true);
+			if (pixiAutoRetryCountRef.current < 2) {
+				pixiAutoRetryCountRef.current += 1;
+				const delay = pixiAutoRetryCountRef.current === 1 ? 900 : 2200;
+				if (pixiRetryTimerRef.current !== null) {
+					window.clearTimeout(pixiRetryTimerRef.current);
+				}
+				pixiRetryTimerRef.current = window.setTimeout(() => {
+					pixiRetryTimerRef.current = null;
+					setPixiInitFailed(false);
+					setPixiRetryKey((key) => key + 1);
+				}, delay);
+			}
 			toast({
 				title: "Map Renderer Error",
 				description:
-					"The Pixi renderer failed to initialize, so the Warden view switched to a DOM fallback. You can still align maps and inspect token placement.",
+					"The Pixi renderer failed to initialize, so the Warden view switched to a DOM fallback while an automatic retry is prepared.",
 				variant: "destructive",
 			});
 		},
 		[toast],
 	);
+
+	useEffect(() => {
+		return () => {
+			if (pixiRetryTimerRef.current !== null) {
+				window.clearTimeout(pixiRetryTimerRef.current);
+				pixiRetryTimerRef.current = null;
+			}
+		};
+	}, []);
 
 	// Auto-fit zoom when the active scene changes so large maps are
 	// immediately visible instead of showing a zoomed-in corner.
@@ -4748,6 +4778,7 @@ const VTTEnhanced = () => {
 											/>
 										) : (
 											<MemoizedVttPixiStage
+												key={`pixi-${currentScene.id}-${pixiRetryKey}`}
 												containerRef={mapRef}
 												scene={currentScene}
 												tokens={visibleTokens}
@@ -4784,7 +4815,15 @@ const VTTEnhanced = () => {
 													variant="outline"
 													size="sm"
 													className="mt-2 h-7 text-[11px]"
-													onClick={() => setPixiInitFailed(false)}
+													onClick={() => {
+														if (pixiRetryTimerRef.current !== null) {
+															window.clearTimeout(pixiRetryTimerRef.current);
+															pixiRetryTimerRef.current = null;
+														}
+														pixiAutoRetryCountRef.current = 0;
+														setPixiInitFailed(false);
+														setPixiRetryKey((key) => key + 1);
+													}}
 												>
 													Retry Pixi
 												</Button>
@@ -5613,6 +5652,10 @@ const VTTEnhanced = () => {
 								}
 							>
 								{activeToken && (
+								<div
+									data-testid="vtt-active-token-panel"
+									data-active-token-pos={`${activeToken.x},${activeToken.y}`}
+								>
 									<AscendantWindow title="ACTIVE TOKEN" density="compact">
 										<div className="space-y-3 text-xs">
 											<div>
@@ -5969,6 +6012,7 @@ const VTTEnhanced = () => {
 											)}
 										</div>
 									</AscendantWindow>
+								</div>
 								)}
 								{/* Character Sheet Panel: shown when active token has a characterId */}
 								{activeToken?.characterId && (

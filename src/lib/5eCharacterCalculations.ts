@@ -447,6 +447,46 @@ export function getSpellcastingAbility(
 	return jobAbilityMap[jobName] || null;
 }
 
+/**
+ * Canonical primary ability for each of the 14 Rift Ascendant jobs.
+ *
+ * Used as the authoritative ability for innate / job-granted powers and
+ * abilities, including for non-casters whose powers are martial or
+ * physical in nature. Casters' primary ability matches their spellcasting
+ * ability; martial classes use STR or AGI per their archetype.
+ *
+ *   STR:   Destroyer, Berserker
+ *   AGI:   Assassin, Striker
+ *   INT:   Mage, Revenant, Technomancer
+ *   SENSE: Herald, Summoner, Stalker
+ *   PRE:   Esper, Contractor, Holy Knight, Idol
+ */
+export function getJobPrimaryAbility(
+	job: string | { name: string } | null | undefined,
+): AbilityScore | null {
+	const jobName = typeof job === "string" ? job : job?.name;
+	if (!jobName) return null;
+
+	const jobPrimaryAbilityMap: Record<string, AbilityScore> = {
+		Destroyer: "STR",
+		Berserker: "STR",
+		Assassin: "AGI",
+		Striker: "AGI",
+		Mage: "INT",
+		Revenant: "INT",
+		Technomancer: "INT",
+		Herald: "SENSE",
+		Summoner: "SENSE",
+		Stalker: "SENSE",
+		Esper: "PRE",
+		Contractor: "PRE",
+		"Holy Knight": "PRE",
+		Idol: "PRE",
+	};
+
+	return jobPrimaryAbilityMap[jobName] || null;
+}
+
 // Calculate spells known limit (standard 5e)
 export function getSpellsKnownLimit(
 	job: string | { name: string } | null | undefined,

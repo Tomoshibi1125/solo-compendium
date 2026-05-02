@@ -122,6 +122,8 @@ export function AddEquipmentDialog({
 							?.baseAC ??
 						null,
 					requires_attunement: item.attunement ?? false,
+					charges:
+						typeof item.charges === "number" ? item.charges : null,
 				}));
 		},
 		enabled: open,
@@ -157,6 +159,8 @@ export function AddEquipmentDialog({
 					/backpack|pouch|sack|bag|chest|barrel|basket|bucket|case|flask|jug|pitcher|pot|vial|waterskin/i.test(
 						item.name || "",
 					),
+				charges_current: item.charges ?? null,
+				charges_max: item.charges ?? null,
 			});
 
 			toast({

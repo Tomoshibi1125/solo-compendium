@@ -84,4 +84,22 @@ describe("weapon action formulas", () => {
 		expect(formula.attackBonus).toBe(6);
 		expect(formula.damageRoll).toBe("1d8+5");
 	});
+
+	it("uses dice formulas for low-damage weapons like blowguns", () => {
+		const formula = resolveWeaponActionFormula({
+			abilities: {
+				...baseAbilities,
+				AGI: 16,
+			},
+			proficiencyBonus: 2,
+			proficient: true,
+			isRanged: true,
+			isFinesse: false,
+			damageDice: "1d4",
+		});
+
+		expect(formula.ability).toBe("AGI");
+		expect(formula.attackBonus).toBe(5);
+		expect(formula.damageRoll).toBe("1d4+3");
+	});
 });

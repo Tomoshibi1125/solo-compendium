@@ -1808,14 +1808,14 @@ export const baseEquipment: Item[] = [
 		value: 10,
 		item_type: "weapon",
 		weapon_type: "martial ranged",
-		damage: "1",
+		damage: "1d4",
 		damage_type: "piercing",
 		simple_properties: ["ammunition", "loading"],
 		range: "25/100",
 		sigil_slots_base: 0,
 		properties: {
 			weapon: {
-				damage: "1",
+				damage: "1d4",
 				damage_type: "piercing",
 				range: 25,
 				finesse: false,

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import type { Database } from "@/integrations/supabase/types";
+import type { CombatAction } from "@/hooks/useCombatActions";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -40,6 +41,7 @@ interface EquipmentItemProps {
 	onChangeContainer?: (item: Equipment, containerId: string | null) => void;
 	onToggleActive?: (item: Equipment) => void;
 	sigilControl?: React.ReactNode;
+	computedAction?: CombatAction | null;
 	onSelect?: () => void;
 }
 
@@ -55,6 +57,7 @@ function EquipmentItemComponent({
 	onChangeContainer,
 	onToggleActive,
 	sigilControl,
+	computedAction,
 	onSelect,
 }: EquipmentItemProps) {
 	const displayName = formatRegentVernacular(item.name);
@@ -94,6 +97,9 @@ function EquipmentItemComponent({
 				.map((prop) => [prop.toLowerCase(), prop] as const),
 		).values(),
 	);
+	const itemChargesCurrent = item.charges_current ?? computedAction?.resourceCurrent;
+	const itemChargesMax = item.charges_max ?? computedAction?.resourceMax;
+	const hasCharges = itemChargesCurrent != null || itemChargesMax != null;
 
 	return (
 		<div
@@ -148,7 +154,44 @@ function EquipmentItemComponent({
 								Stealth Disadv.
 							</Badge>
 						)}
+						{computedAction?.attackBonus !== undefined && (
+							<Badge variant="outline" className="text-xs">
+								Attack {computedAction.attackBonus >= 0 ? "+" : ""}
+								{computedAction.attackBonus}
+							</Badge>
+						)}
+						{computedAction?.saveDC !== undefined && (
+							<Badge variant="outline" className="text-xs">
+								DC {computedAction.saveDC}
+							</Badge>
+						)}
+						{hasCharges && (
+							<Badge variant="outline" className="text-xs">
+								Charges {itemChargesCurrent ?? "—"}/{itemChargesMax ?? "—"}
+							</Badge>
+						)}
 					</div>
+					{(computedAction?.damageRoll ||
+						computedAction?.range ||
+						item.is_container) && (
+						<div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground mb-1">
+							{computedAction?.damageRoll && (
+								<span>
+									Damage: {computedAction.damageRoll}
+									{computedAction.damageType
+										? ` ${computedAction.damageType}`
+										: ""}
+								</span>
+							)}
+							{computedAction?.range && <span>Range: {computedAction.range}</span>}
+							{item.is_container && (
+								<span>
+									Container: {item.is_active === false ? "inactive" : "active"}
+									{item.ignore_contents_weight ? ", ignores contents weight" : ""}
+								</span>
+							)}
+						</div>
+					)}
 					{item.description && (
 						<div className="text-xs text-muted-foreground line-clamp-3">
 							<AutoLinkText text={item.description} />
@@ -208,6 +251,7 @@ function EquipmentItemComponent({
 									onChangeContainer={onChangeContainer}
 									onToggleActive={onToggleActive}
 									containers={containers?.filter((c) => c.id !== nestedItem.id)}
+									computedAction={null}
 									onSelect={
 										() => onSelect?.() // Or handle recursively if needed, but usually just triggers the same detail
 									}
@@ -290,6 +334,12 @@ export const EquipmentItem = memo(
 			prevProps.canAttune === nextProps.canAttune &&
 			prevProps.onSelect === nextProps.onSelect &&
 			prevProps.canonical?.id === nextProps.canonical?.id &&
+			prevProps.computedAction?.id === nextProps.computedAction?.id &&
+			prevProps.computedAction?.attackBonus ===
+				nextProps.computedAction?.attackBonus &&
+			prevProps.computedAction?.damageRoll ===
+				nextProps.computedAction?.damageRoll &&
+			prevProps.computedAction?.saveDC === nextProps.computedAction?.saveDC &&
 			prevProps.item.properties?.length === nextProps.item.properties?.length &&
 			prevProps.nestedItems?.length === nextProps.nestedItems?.length &&
 			prevProps.containers?.length === nextProps.containers?.length

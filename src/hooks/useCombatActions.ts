@@ -2,7 +2,8 @@ import { useMemo } from "react";
 import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
 import { buildItemProperties } from "@/lib/characterCreation";
-import { calculateAttackModifier } from "@/lib/derivedStats";
+import { sumCustomModifiers } from "@/lib/customModifiers";
+import { resolvePowerActionFormula } from "@/lib/powerActionFormulas";
 import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
@@ -103,6 +104,19 @@ export const useCombatActions = (characterId: string) => {
 
 		const profBonus = getProficiencyBonus(character.level);
 		const result: CombatAction[] = [];
+		const customModifiers = sheetState.customModifiers || [];
+
+		// Sheet-level custom modifiers that apply to every weapon attack/damage.
+		// Per-target custom modifiers (e.g. "+1 to Stealth") are handled by the
+		// derived-stats pipeline, not here. Both `attack`/`damage` and the
+		// `attack_bonus`/`damage_bonus` aliases are summed for parity with how
+		// custom modifiers are entered on the sheet UI.
+		const customWeaponAttackBonus =
+			sumCustomModifiers(customModifiers, "attack") +
+			sumCustomModifiers(customModifiers, "attack_bonus");
+		const customWeaponDamageBonus =
+			sumCustomModifiers(customModifiers, "damage") +
+			sumCustomModifiers(customModifiers, "damage_bonus");
 
 		// Helper: Check proficiency
 		const isProficient = (item: {
@@ -230,6 +244,18 @@ export const useCombatActions = (characterId: string) => {
 				canonicalDamage?.match(/(\d+d\d+)/)?.[1] ??
 				w.description?.match(/(\d+d\d+)/)?.[1] ??
 				null;
+			// `sigilBonuses` is seeded from `equipmentMods` upstream, so it already
+			// folds equipment + sigil contributions. Custom-modifier attack/damage
+			// bonuses are added here so sheet-level adjustments reach weapon rolls.
+			const totalAttackBonus =
+				derivedStats.sigilBonuses.attackBonus + customWeaponAttackBonus;
+			const sigilDamageBonus = derivedStats.sigilBonuses.damageBonus;
+			const totalDamageBonus =
+				typeof sigilDamageBonus === "string" && sigilDamageBonus.length > 0
+					? customWeaponDamageBonus !== 0
+						? `${sigilDamageBonus}${customWeaponDamageBonus > 0 ? "+" : ""}${customWeaponDamageBonus}`
+						: sigilDamageBonus
+					: customWeaponDamageBonus;
 			const formula = resolveWeaponActionFormula({
 				abilities: derivedStats.finalAbilities,
 				proficiencyBonus: profBonus,
@@ -237,8 +263,8 @@ export const useCombatActions = (characterId: string) => {
 				isRanged,
 				isFinesse,
 				damageDice,
-				attackBonus: derivedStats.sigilBonuses.attackBonus,
-				damageBonus: derivedStats.sigilBonuses.damageBonus,
+				attackBonus: totalAttackBonus,
+				damageBonus: totalDamageBonus,
 			});
 
 			const damageType =
@@ -274,19 +300,26 @@ export const useCombatActions = (characterId: string) => {
 			});
 		});
 
+		// Sheet-level custom modifiers that apply to every spell/power action.
+		const customPowerAttackBonus =
+			sumCustomModifiers(customModifiers, "attack") +
+			sumCustomModifiers(customModifiers, "attack_bonus");
+		const customPowerDcBonus = sumCustomModifiers(customModifiers, "save_bonus");
+
 		// 2. Spell/Power Actions
 		(powers || []).forEach((p) => {
 			const powerData = p.power as unknown as CompendiumPower;
 			if (!powerData) return;
 
-			const castingAbility = character.job === "Technomancer" ? "INT" : "SENSE";
-			const abiMod = getAbilityModifier(character.abilities[castingAbility]);
-			const attackBonus = calculateAttackModifier({
-				abilityModifier: abiMod,
+			const powerFormula = resolvePowerActionFormula({
+				job: character.job,
+				abilities: derivedStats.finalAbilities,
 				proficiencyBonus: profBonus,
-				proficient: true,
+				attackBonus: customPowerAttackBonus,
+				dcBonus: customPowerDcBonus,
 			});
-			const saveDC = 8 + abiMod + profBonus;
+			const attackBonus = powerFormula.attackBonus;
+			const saveDC = powerFormula.saveDC;
 
 			const mechanics = (powerData.mechanics as unknown as JsonMechanics) || {};
 			const target = powerData.target || (mechanics.target as string) || "";
@@ -344,10 +377,10 @@ export const useCombatActions = (characterId: string) => {
 			const techData = t.technique as unknown as CompendiumTechnique;
 			if (!techData) return;
 
-			const strMod = getAbilityModifier(character.abilities.STR);
-			const agiMod = getAbilityModifier(character.abilities.AGI);
+			const strMod = getAbilityModifier(derivedStats.finalAbilities.STR);
+			const agiMod = getAbilityModifier(derivedStats.finalAbilities.AGI);
 			const abiMod = Math.max(strMod, agiMod);
-			const saveDC = 8 + abiMod + profBonus;
+			const saveDC = 8 + abiMod + profBonus + customPowerDcBonus;
 
 			const mechanics = (techData.mechanics as unknown as JsonMechanics) || {};
 
@@ -460,6 +493,7 @@ export const useCombatActions = (characterId: string) => {
 		techniques,
 		sigils,
 		canonicalEquipmentMap,
+		sheetState.customModifiers,
 	]);
 
 	return {

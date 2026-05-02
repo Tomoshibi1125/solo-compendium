@@ -25,6 +25,7 @@ export interface Relic {
 	flavor: string;
 	damage?: string;
 	damage_type?: string;
+	weapon_type?: string;
 	armor_class?: number;
 	armor_type?: string;
 	requirements?: Record<string, string | number>;
@@ -39,6 +40,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged shard of the First Singularity, wreathed in flickering black mana. It does not cut flesh; it deletes the spatial coordinates of whatever it touches.",
 		type: "weapon",
+		weapon_type: "simple melee",
 		damage: "2d8",
 		damage_type: "necrotic",
 		rarity: "legendary",
@@ -122,6 +124,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A jagged black slab of iron that hums with the rhythm of a heartbeat. It does not just cut; it drinks.",
 		type: "weapon",
+		weapon_type: "martial melee",
 		damage: "2d8",
 		damage_type: "necrotic",
 		rarity: "very_rare",
@@ -195,6 +198,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"A rapier forged from a solidified lightning strike, vibrating with ultra-high frequency mana.",
 		type: "weapon",
+		weapon_type: "martial melee",
 		damage: "2d8",
 		damage_type: "radiant",
 		rarity: "legendary",
@@ -268,6 +272,7 @@ export const comprehensiveRelics: Relic[] = [
 		description:
 			"This Legendary-Rank artifact vibrates with the power to freeze reality. It allows the wielder to manifest a cryogenic field that can shatter any proximity-based dimensional distortion.",
 		type: "weapon",
+		weapon_type: "martial melee",
 		damage: "2d8",
 		damage_type: "cold",
 		rarity: "very_rare",

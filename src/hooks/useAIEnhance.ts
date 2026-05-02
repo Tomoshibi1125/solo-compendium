@@ -1,6 +1,6 @@
 /**
  * Shared hook for AI-enhanced content generation across all Warden (Warden) tools.
- * Uses Google Gemini 2.0 Flash via the server proxy as primary provider.
+ * Uses the user's configured default AI provider (Gemini primary, Pollinations fallback).
  */
 
 import { useCallback, useState } from "react";
@@ -28,7 +28,7 @@ export function useAIEnhance() {
 
 			try {
 				const response = await aiService.processRequest({
-					service: "gemini-native",
+					service: aiService.getConfiguration().defaultService,
 					type: "generate-content",
 					input: seedData,
 					context: {

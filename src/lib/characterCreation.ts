@@ -150,6 +150,33 @@ export function buildItemProperties(item: StaticItem): string[] {
 		seen.add(key);
 		props.push(trimmed);
 	};
+	const pushNumericPropertyBonus = (value: unknown, label: string) => {
+		if (typeof value !== "number" || value === 0) return;
+		pushProperty(`${value >= 0 ? "+" : ""}${value} ${label}`);
+	};
+	const pushDelimitedProperty = (label: string, value: unknown) => {
+		const values = Array.isArray(value)
+			? value.filter((entry): entry is string => typeof entry === "string")
+			: typeof value === "string"
+				? [value]
+				: [];
+		if (values.length === 0) return;
+		pushProperty(`${label}: ${values.join(", ")}`);
+	};
+	const pushAbilityBonuses = (value: unknown) => {
+		if (!value || typeof value !== "object" || Array.isArray(value)) return;
+		for (const [ability, bonus] of Object.entries(value as Record<string, unknown>)) {
+			pushNumericPropertyBonus(bonus, ability);
+		}
+	};
+	const pushStructuredBonusBlock = (value: unknown) => {
+		if (!value || typeof value !== "object" || Array.isArray(value)) return;
+		const bonus = value as Record<string, unknown>;
+		pushNumericPropertyBonus(bonus.attack, "to attack");
+		pushNumericPropertyBonus(bonus.damage, "to damage");
+		pushNumericPropertyBonus(bonus.armorClass ?? bonus.armor_class, "AC");
+		pushAbilityBonuses(bonus.abilityScores ?? bonus.ability_scores);
+	};
 	const structuredProperties =
 		item.properties &&
 		!Array.isArray(item.properties) &&
@@ -168,6 +195,18 @@ export function buildItemProperties(item: StaticItem): string[] {
 	const magicalBonus = magicalProperties?.bonus as
 		| Record<string, unknown>
 		| undefined;
+	const protocolProperties = structuredProperties?.protocol_enhanced as
+		| Record<string, unknown>
+		| undefined;
+	const protocolBonus = protocolProperties?.bonus as
+		| Record<string, unknown>
+		| undefined;
+	const mechanicsProperties =
+		item.mechanics &&
+		typeof item.mechanics === "object" &&
+		!Array.isArray(item.mechanics)
+			? (item.mechanics as Record<string, unknown>)
+			: null;
 
 	if (Array.isArray(item.properties)) {
 		for (const prop of item.properties) pushProperty(prop);
@@ -241,6 +280,12 @@ export function buildItemProperties(item: StaticItem): string[] {
 		);
 	}
 
+	pushStructuredBonusBlock(protocolBonus);
+	pushAbilityBonuses(mechanicsProperties?.stat_bonuses);
+	pushDelimitedProperty("Resistance", mechanicsProperties?.resistance);
+	pushDelimitedProperty("Immunity", mechanicsProperties?.immunity);
+	pushDelimitedProperty("Vulnerability", mechanicsProperties?.vulnerability);
+	pushDelimitedProperty("Condition immunity", mechanicsProperties?.condition_immunity);
 	const passive = Array.isArray(item.effects)
 		? item.effects
 		: (item.effects as { passive?: string[] })?.passive;
@@ -250,6 +295,14 @@ export function buildItemProperties(item: StaticItem): string[] {
 		}
 	}
 
+	if (!Array.isArray(item.effects) && item.effects && typeof item.effects === "object") {
+		const effects = item.effects as Record<string, unknown>;
+		pushProperty(effects.primary);
+		pushProperty(effects.secondary);
+		pushProperty(effects.tertiary);
+		pushProperty(effects.primaryEffect);
+		pushProperty(effects.secondaryEffect);
+	}
 	return props;
 }
 
