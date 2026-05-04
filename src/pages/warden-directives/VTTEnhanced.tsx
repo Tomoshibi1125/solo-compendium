@@ -4,6 +4,7 @@ import {
 	ArrowRight,
 	BookOpen,
 	Bot,
+	BrickWall,
 	ChevronDown,
 	Circle,
 	Clock,
@@ -15,6 +16,7 @@ import {
 	FileText,
 	Image as ImageIcon,
 	Layers,
+	Lightbulb,
 	MapPin,
 	Maximize2,
 	MessageSquare,
@@ -30,6 +32,7 @@ import {
 	ShieldAlert,
 	Sparkles,
 	Square,
+	Target,
 	Triangle,
 	Upload,
 	User,
@@ -102,6 +105,10 @@ import {
 import { SharedDiceTray } from "@/components/vtt/dice/SharedDiceTray";
 import { GameSettingsDrawer } from "@/components/vtt/GameSettingsDrawer";
 import { LayerQuickSwitch } from "@/components/vtt/LayerQuickSwitch";
+import {
+	LightSourceConfigDialog,
+	type LightSourceConfigDialogProps,
+} from "@/components/vtt/LightSourceConfigDialog";
 import { SessionControlsMenu } from "@/components/vtt/SessionControlsMenu";
 import { TokenActionBar } from "@/components/vtt/TokenActionBar";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
@@ -112,6 +119,7 @@ import {
 	type VTTIconRailItem,
 } from "@/components/vtt/VTTIconRail";
 import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
+import { VTTSceneLibrary } from "@/components/vtt/VTTSceneLibrary";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
 import { VttDomFallbackSurface } from "@/components/vtt/VttDomFallbackSurface";
@@ -142,6 +150,10 @@ import {
 import { useDebounce } from "@/hooks/useDebounce";
 import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
+	type TargetedApplyResult,
+	useTargetedDamageApply,
+} from "@/hooks/useTargetedDamageApply";
+import {
 	readLocalToolState,
 	useCampaignToolState,
 	useUserToolState,
@@ -151,11 +163,13 @@ import {
 	useDeleteVTTAudioTrack,
 	useUpdateVTTAudioTrack,
 	useVTTAudioTracks,
+	useVTTPlaylistState,
 	vttAudioManager,
 } from "@/hooks/useVTTAudio";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { useVTTSettings } from "@/hooks/useVTTSettings";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import type { Playlist } from "@/lib/audio/types";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	applyDamageMitigation,
@@ -166,9 +180,12 @@ import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import {
 	type AmbientSoundZone,
+	applyTokenVisionToFog,
 	computeAllZoneStates,
 	computeZoneVolume,
 	createAmbientSoundZone,
+	createAoeFromMeasurement,
+	createAoeFromSpellTemplate,
 	createDrawing,
 	createTerrainZone,
 	distanceToZone,
@@ -184,6 +201,7 @@ import {
 	SFX_ASSET_MAP,
 	snapToHexCenter,
 	type TerrainZone,
+	VTT_SPELL_TEMPLATE_MIME,
 	VttMusicEngine,
 	WEATHER_PRESETS,
 } from "@/lib/vtt";
@@ -198,9 +216,13 @@ import {
 } from "@/lib/vtt/backgroundTransform";
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import {
+	addLightToScene,
+	addWallToScene,
 	buildDefaultVttScene,
 	computeVttHydration,
+	createVttLightSourceId,
 	createVttTokenInstanceId,
+	createVttWallId,
 	DEFAULT_SCENE_SETTINGS,
 	deleteVttScene,
 	duplicateVttScene,
@@ -208,13 +230,22 @@ import {
 	type LegacyVttScenesStateShape,
 	normalizeVttScene,
 	removeAssetFromVttScenes,
+	removeLightFromScene,
+	removeWallFromScene,
+	updateLightInScene,
+	updateWallInScene,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
+import { getTokenFootprintPx } from "@/lib/vtt/tokenSizing";
 import AscendantMapView from "@/pages/ascendant-tools/AscendantMapView";
 import type {
 	VTTDrawing,
 	VTTScene,
+	VTTTokenBar,
 	VTTTokenInstance,
+	WallDirection,
+	WallSegment,
+	WallState,
 	WeatherType,
 } from "@/types/vtt";
 import "@/styles/vtt-enhanced-dynamic.css";
@@ -356,6 +387,41 @@ function DiceDisplayText({ text }: { text: string }) {
 // Removed redundant VTTAnnotation/Scene aliases to fulfill module resolution
 // PlacedToken is maintained as a local character engine bridge
 type PlacedToken = VTTTokenInstance;
+
+type SelectionMarquee = {
+	startX: number;
+	startY: number;
+	currentX: number;
+	currentY: number;
+	additive: boolean;
+};
+
+const TOKEN_BAR_PRESETS: VTTTokenBar[] = [
+	{
+		id: "hp",
+		label: "HP",
+		current: 10,
+		max: 10,
+		color: "#22c55e",
+		visible: "all",
+	},
+	{
+		id: "resource",
+		label: "Resource",
+		current: 3,
+		max: 3,
+		color: "#3b82f6",
+		visible: "controllers",
+	},
+	{
+		id: "focus",
+		label: "Focus",
+		current: 1,
+		max: 1,
+		color: "#eab308",
+		visible: "gm",
+	},
+];
 
 interface DiceRoll {
 	id: string;
@@ -614,6 +680,7 @@ const VTTEnhanced = () => {
 		useState<VttCalibrationPoint[]>([]);
 	const backgroundCalibrationTargetRef = useRef<string | null>(null);
 	const [fogOfWar, setFogOfWar] = useState(false);
+	const [tokenVisionRevealsFog, setTokenVisionRevealsFog] = useState(false);
 	const [fogMode, setFogMode] = useState<"reveal" | "hide">("reveal");
 	const [fogBrushSize, setFogBrushSize] = useState(1);
 	const [fogBrushShape, setFogBrushShape] = useState<"square" | "circle">(
@@ -672,11 +739,62 @@ const VTTEnhanced = () => {
 		return token?.id ?? null;
 	}, [combatData, currentScene]);
 
-	const [activeTokenId, setActiveTokenId] = useState<string | null>(null);
+	const [activeTokenIds, setActiveTokenIds] = useState<string[]>([]);
+	const [selectedTargetIds, setSelectedTargetIds] = useState<string[]>([]);
+	const [selectionMarquee, setSelectionMarquee] =
+		useState<SelectionMarquee | null>(null);
+	const activeTokenId =
+		activeTokenIds.length > 0
+			? activeTokenIds[activeTokenIds.length - 1]
+			: null;
+	const setActiveTokenId = useCallback((tokenId: string | null) => {
+		setActiveTokenIds(tokenId ? [tokenId] : []);
+	}, []);
+	const toggleActiveTokenSelection = useCallback((tokenId: string) => {
+		setActiveTokenIds((prev) =>
+			prev.includes(tokenId)
+				? prev.filter((id) => id !== tokenId)
+				: [...prev, tokenId],
+		);
+	}, []);
+	const handleTokenPointerSelect = useCallback(
+		(tokenId: string, additive: boolean) => {
+			if (additive) {
+				toggleActiveTokenSelection(tokenId);
+				return;
+			}
+			setActiveTokenId(tokenId);
+		},
+		[setActiveTokenId, toggleActiveTokenSelection],
+	);
 	const activeToken = useMemo(
 		() => currentScene?.tokens.find((t) => t.id === activeTokenId) ?? null,
 		[currentScene?.tokens, activeTokenId],
 	);
+	const selectedTokens = useMemo(
+		() =>
+			(currentScene?.tokens ?? EMPTY_ARRAY).filter((token) =>
+				activeTokenIds.includes(token.id),
+			),
+		[currentScene?.tokens, activeTokenIds],
+	);
+	const selectedTargetTokens = useMemo(
+		() =>
+			(currentScene?.tokens ?? EMPTY_ARRAY).filter((token) =>
+				selectedTargetIds.includes(token.id),
+			),
+		[currentScene?.tokens, selectedTargetIds],
+	);
+	const selectionMarqueeRect = useMemo(() => {
+		if (!selectionMarquee) return null;
+		const left = Math.min(selectionMarquee.startX, selectionMarquee.currentX);
+		const top = Math.min(selectionMarquee.startY, selectionMarquee.currentY);
+		const width = Math.abs(selectionMarquee.currentX - selectionMarquee.startX);
+		const height = Math.abs(
+			selectionMarquee.currentY - selectionMarquee.startY,
+		);
+		return { left, top, width, height };
+	}, [selectionMarquee]);
 
 	const [scenes, setScenes] = useState<VTTScene[]>([]);
 	const [draggedToken, setDraggedToken] = useState<VTTTokenInstance | null>(
@@ -692,8 +810,41 @@ const VTTEnhanced = () => {
 
 	const { saveVTTScene } = useWardenToolsEnhancements(campaignId);
 	const [selectedTool, setSelectedTool] = useState<
-		"select" | "fog" | "measure" | "draw" | "effect" | "note" | "pointer"
+		| "select"
+		| "fog"
+		| "measure"
+		| "draw"
+		| "effect"
+		| "note"
+		| "pointer"
+		| "light"
+		| "wall"
 	>("select");
+	// Light authoring dialog state. When `lightDialogTargetId` is null we're
+	// creating a new light at `lightDialogSeed`; otherwise we're editing the
+	// scene light with that id.
+	const [lightDialogOpen, setLightDialogOpen] = useState(false);
+	const [lightDialogTargetId, setLightDialogTargetId] = useState<string | null>(
+		null,
+	);
+	const [lightDialogSeed, setLightDialogSeed] = useState<{
+		x: number;
+		y: number;
+	}>({ x: 0, y: 0 });
+	// Wall authoring: click-drag anchor (grid-corner snapped), currently
+	// selected wall type (radio), and live drag-end for ghost preview.
+	const [wallType, setWallType] = useState<WallSegment["type"]>("wall");
+	const [wallDoorState, setWallDoorState] = useState<WallState>("closed");
+	const [wallDirection, setWallDirection] = useState<WallDirection>("left");
+	const wallDragStartRef = useRef<{ gridX: number; gridY: number } | null>(
+		null,
+	);
+	const [wallPreview, setWallPreview] = useState<{
+		x1: number;
+		y1: number;
+		x2: number;
+		y2: number;
+	} | null>(null);
 	const [drawingMode, setDrawingMode] =
 		useState<VTTDrawing["type"]>("freehand");
 	const [drawingColor, setDrawingColor] = useState("#38bdf8");
@@ -1007,7 +1158,7 @@ const VTTEnhanced = () => {
 			description:
 				"Click one corner of the embedded map grid, then click a second corner on the same square.",
 		});
-	}, [currentScene?.backgroundImage, toast]);
+	}, [currentScene?.backgroundImage, setActiveTokenId, toast]);
 	useEffect(() => {
 		const calibrationTarget = `${currentScene?.id ?? ""}:${currentScene?.backgroundImage ?? ""}`;
 		if (backgroundCalibrationTargetRef.current === calibrationTarget) return;
@@ -1084,6 +1235,32 @@ const VTTEnhanced = () => {
 		sessionId: isStandalone ? null : sessionId,
 		isWarden,
 	});
+	const commitTargetIds = useCallback(
+		(targetIds: string[]) => {
+			const sceneTokenIds = new Set(
+				(currentScene?.tokens ?? EMPTY_ARRAY).map((token) => token.id),
+			);
+			const nextTargetIds = Array.from(new Set(targetIds)).filter((tokenId) =>
+				sceneTokenIds.has(tokenId),
+			);
+			setSelectedTargetIds(nextTargetIds);
+			vttRealtime.broadcastTargetSet(nextTargetIds, currentScene?.id ?? null);
+		},
+		[currentScene?.id, currentScene?.tokens, vttRealtime],
+	);
+	const toggleTargetToken = useCallback(
+		(tokenId: string) => {
+			commitTargetIds(
+				selectedTargetIds.includes(tokenId)
+					? selectedTargetIds.filter((id) => id !== tokenId)
+					: [...selectedTargetIds, tokenId],
+			);
+		},
+		[commitTargetIds, selectedTargetIds],
+	);
+	const clearTargetTokens = useCallback(() => {
+		commitTargetIds([]);
+	}, [commitTargetIds]);
 
 	// --- Warden-controlled VTT game settings + session status (DDB parity) ---
 	const {
@@ -1246,6 +1423,7 @@ const VTTEnhanced = () => {
 	useEffect(() => {
 		if (!currentScene) return;
 		setFogOfWar(currentScene.fogOfWar ?? false);
+		setTokenVisionRevealsFog(currentScene.tokenVisionRevealsFog ?? false);
 	}, [currentScene]);
 	useEffect(() => {
 		syncLocalSceneMusic(currentScene);
@@ -1263,23 +1441,35 @@ const VTTEnhanced = () => {
 	}, [currentScene]);
 
 	useEffect(() => {
-		const nextActiveTokenId = getValidActiveTokenId(
-			activeTokenId,
-			currentScene?.tokens ?? EMPTY_ARRAY,
+		const tokens = currentScene?.tokens ?? [];
+		const nextActiveTokenIds = activeTokenIds.filter((tokenId) =>
+			getValidActiveTokenId(tokenId, tokens),
 		);
-		if (nextActiveTokenId) return;
-		if (activeTokenId) {
-			setActiveTokenId(null);
+		if (nextActiveTokenIds.length !== activeTokenIds.length) {
+			setActiveTokenIds(nextActiveTokenIds);
+			if (nextActiveTokenIds.length > 0) return;
+		} else if (nextActiveTokenIds.length > 0) {
+			return;
 		}
 		if (damageDialogOpen) {
 			resetDamageDialog();
 		}
 	}, [
-		activeTokenId,
+		activeTokenIds,
 		currentScene?.tokens,
 		damageDialogOpen,
 		resetDamageDialog,
 	]);
+
+	useEffect(() => {
+		const tokens = currentScene?.tokens ?? [];
+		const nextTargetIds = selectedTargetIds.filter((tokenId) =>
+			getValidActiveTokenId(tokenId, tokens),
+		);
+		if (nextTargetIds.length !== selectedTargetIds.length) {
+			setSelectedTargetIds(nextTargetIds);
+		}
+	}, [currentScene?.tokens, selectedTargetIds]);
 
 	useEffect(() => {
 		const handler = () => {
@@ -1704,6 +1894,251 @@ const VTTEnhanced = () => {
 		});
 	}, []);
 
+	const handleSaveLightFromDialog = useCallback(
+		(draft: LightSource) => {
+			if (!currentScene) return;
+			const isEdit = Boolean(lightDialogTargetId);
+			const lightId = lightDialogTargetId ?? createVttLightSourceId();
+			const finalLight: LightSource = {
+				...draft,
+				id: lightId,
+			};
+			const nextScene = isEdit
+				? updateLightInScene(currentScene, lightId, finalLight)
+				: addLightToScene(currentScene, finalLight);
+			// updateLightInScene returns the same reference when the id is
+			// missing (e.g. concurrent deletion); skip the broadcast.
+			if (nextScene === currentScene) {
+				setLightDialogOpen(false);
+				return;
+			}
+			updateScene(nextScene);
+			vttRealtime.broadcastSceneSync(
+				upsertVttScene(scenes, nextScene),
+				getPersistedSceneId(nextScene.id),
+			);
+			setLightDialogOpen(false);
+			setLightDialogTargetId(null);
+			toast({
+				title: isEdit ? "Light Updated" : "Light Placed",
+				description: `${finalLight.name?.trim() || "Light"} \u2014 (${finalLight.x.toFixed(0)}, ${finalLight.y.toFixed(0)})`,
+			});
+		},
+		[
+			currentScene,
+			getPersistedSceneId,
+			lightDialogTargetId,
+			scenes,
+			toast,
+			updateScene,
+			vttRealtime,
+		],
+	);
+
+	const handleDeleteLightFromDialog = useCallback(
+		(lightId: string) => {
+			if (!currentScene) return;
+			const nextScene = removeLightFromScene(currentScene, lightId);
+			if (nextScene === currentScene) {
+				setLightDialogOpen(false);
+				return;
+			}
+			updateScene(nextScene);
+			vttRealtime.broadcastSceneSync(
+				upsertVttScene(scenes, nextScene),
+				getPersistedSceneId(nextScene.id),
+			);
+			setLightDialogOpen(false);
+			setLightDialogTargetId(null);
+			toast({
+				title: "Light Removed",
+				description: "The light source has been deleted from the scene.",
+			});
+		},
+		[
+			currentScene,
+			getPersistedSceneId,
+			scenes,
+			toast,
+			updateScene,
+			vttRealtime,
+		],
+	);
+
+	const lightBeingEdited = useMemo(() => {
+		if (!currentScene || !lightDialogTargetId) return null;
+		return (
+			currentScene.lights?.find((l) => l.id === lightDialogTargetId) ?? null
+		);
+	}, [currentScene, lightDialogTargetId]);
+	const lightDialogProps: LightSourceConfigDialogProps = {
+		open: lightDialogOpen,
+		onOpenChange: (open) => {
+			setLightDialogOpen(open);
+			if (!open) setLightDialogTargetId(null);
+		},
+		light: lightBeingEdited,
+		defaultPosition: lightDialogSeed,
+		onSave: handleSaveLightFromDialog,
+		onDelete: handleDeleteLightFromDialog,
+	};
+
+	// ── Wall authoring (P1-2) ─────────────────────────────────────────────
+	const handleAddWallToScene = useCallback(
+		(wall: WallSegment) => {
+			if (!currentScene) return;
+			const nextScene = addWallToScene(currentScene, wall);
+			updateScene(nextScene);
+			vttRealtime.broadcastSceneSync(
+				upsertVttScene(scenes, nextScene),
+				getPersistedSceneId(nextScene.id),
+			);
+			toast({
+				title: "Wall Placed",
+				description: `${wall.type} segment at (${wall.x1},${wall.y1}) \u2192 (${wall.x2},${wall.y2})`,
+			});
+		},
+		[
+			currentScene,
+			getPersistedSceneId,
+			scenes,
+			toast,
+			updateScene,
+			vttRealtime,
+		],
+	);
+
+	const handleDeleteWall = useCallback(
+		(wallId: string) => {
+			if (!currentScene) return;
+			const nextScene = removeWallFromScene(currentScene, wallId);
+			if (nextScene === currentScene) return;
+			updateScene(nextScene);
+			vttRealtime.broadcastSceneSync(
+				upsertVttScene(scenes, nextScene),
+				getPersistedSceneId(nextScene.id),
+			);
+		},
+		[currentScene, getPersistedSceneId, scenes, updateScene, vttRealtime],
+	);
+
+	const handleUpdateWall = useCallback(
+		(wallId: string, updates: Partial<WallSegment>) => {
+			if (!currentScene) return;
+			const nextScene = updateWallInScene(currentScene, wallId, updates);
+			if (nextScene === currentScene) return;
+			updateScene(nextScene);
+			vttRealtime.broadcastSceneSync(
+				upsertVttScene(scenes, nextScene),
+				getPersistedSceneId(nextScene.id),
+			);
+		},
+		[currentScene, getPersistedSceneId, scenes, updateScene, vttRealtime],
+	);
+
+	const handleToggleWallDoorState = useCallback(
+		(wall: WallSegment) => {
+			const isOpen = wall.state === "open" || wall.doorOpen === true;
+			const nextState = isOpen ? "closed" : "open";
+			handleUpdateWall(wall.id, {
+				state: nextState,
+				doorOpen: nextState === "open",
+			});
+		},
+		[handleUpdateWall],
+	);
+
+	const handleClearAllWalls = useCallback(() => {
+		if (!currentScene) return;
+		const walls = currentScene.walls ?? [];
+		if (walls.length === 0) return;
+		const nextScene: VTTScene = { ...currentScene, walls: [] };
+		updateScene(nextScene);
+		vttRealtime.broadcastSceneSync(
+			upsertVttScene(scenes, nextScene),
+			getPersistedSceneId(nextScene.id),
+		);
+		toast({
+			title: "Walls Cleared",
+			description: `Removed ${walls.length} wall segment${walls.length === 1 ? "" : "s"}.`,
+		});
+	}, [
+		currentScene,
+		getPersistedSceneId,
+		scenes,
+		toast,
+		updateScene,
+		vttRealtime,
+	]);
+
+	// ── AoE template pinning (P1-4) ───────────────────────────────────────
+	const handlePinMeasurement = useCallback(() => {
+		if (!currentScene) return;
+		// We need both endpoints set; the measure HUD only renders when both
+		// exist, but defensive guards keep the call site simple.
+		if (!measurementStart || !measurementEnd) return;
+		const aoe = createAoeFromMeasurement(
+			measurementStart,
+			measurementEnd,
+			measureShape,
+			measureRadius,
+			"#22d3ee", // matches the live-measure cyan tint
+			vttRealtime.userId,
+		);
+		const nextScene: VTTScene = {
+			...currentScene,
+			drawings: [...(currentScene.drawings ?? []), aoe],
+		};
+		updateScene(nextScene);
+		vttRealtime.broadcastSceneSync(
+			upsertVttScene(scenes, nextScene),
+			getPersistedSceneId(nextScene.id),
+		);
+		// Reset the measure HUD so the user can start a fresh measurement.
+		setMeasurementStart(null);
+		setMeasurementEnd(null);
+		lastMeasureCellRef.current = null;
+		toast({
+			title: "AoE Pinned",
+			description: `${measureShape} template (${measureShape === "line" ? "line" : `${measureRadius * 5}ft radius`}) saved to scene.`,
+		});
+	}, [
+		currentScene,
+		getPersistedSceneId,
+		measureRadius,
+		measureShape,
+		measurementEnd,
+		measurementStart,
+		scenes,
+		toast,
+		updateScene,
+		vttRealtime,
+	]);
+
+	const handleClearAoeTemplates = useCallback(() => {
+		if (!currentScene) return;
+		const drawings = currentScene.drawings ?? [];
+		const remaining = drawings.filter((d) => d.kind !== "aoe");
+		if (remaining.length === drawings.length) return;
+		const nextScene: VTTScene = { ...currentScene, drawings: remaining };
+		updateScene(nextScene);
+		vttRealtime.broadcastSceneSync(
+			upsertVttScene(scenes, nextScene),
+			getPersistedSceneId(nextScene.id),
+		);
+		toast({
+			title: "AoE Templates Cleared",
+			description: `Removed ${drawings.length - remaining.length} pinned template${drawings.length - remaining.length === 1 ? "" : "s"}.`,
+		});
+	}, [
+		currentScene,
+		getPersistedSceneId,
+		scenes,
+		toast,
+		updateScene,
+		vttRealtime,
+	]);
+
 	const appendToken = useCallback(
 		(placed: import("@/types/vtt").VTTTokenInstance) => {
 			setCurrentScene(
@@ -1728,6 +2163,23 @@ const VTTEnhanced = () => {
 		[persistSceneState, vttRealtime],
 	);
 
+	const applyAutoExploreFogForToken = useCallback(
+		(
+			scene: VTTScene,
+			tokenId: string,
+		): { scene: VTTScene; changed: boolean } => {
+			if (!isWarden || !scene.fogOfWar || !scene.tokenVisionRevealsFog) {
+				return { scene, changed: false };
+			}
+			const result = applyTokenVisionToFog(scene, { tokenId });
+			return {
+				scene: result.scene as VTTScene,
+				changed: result.changed,
+			};
+		},
+		[isWarden],
+	);
+
 	const updateToken = useCallback(
 		(tokenId: string, updates: Partial<VTTTokenInstance>) => {
 			setCurrentScene((prev) => {
@@ -1744,21 +2196,129 @@ const VTTEnhanced = () => {
 				if (!hasChanges) return prev;
 				const nextTokens = [...prev.tokens];
 				nextTokens[tokenIndex] = { ...currentToken, ...updates };
-				const next = { ...prev, tokens: nextTokens };
+				const isTokenPositionUpdate =
+					typeof updates.x === "number" || typeof updates.y === "number";
+				const isDraggingToken =
+					(draggedToken && draggedToken.id === tokenId) ||
+					pixiDraggingTokenIdRef.current === tokenId;
+				const autoExploreResult =
+					isTokenPositionUpdate && !isDraggingToken
+						? applyAutoExploreFogForToken(
+								{ ...prev, tokens: nextTokens },
+								tokenId,
+							)
+						: { scene: { ...prev, tokens: nextTokens }, changed: false };
+				const next = autoExploreResult.scene;
+				currentSceneRef.current = next;
 				setScenes((prevScenes) => {
 					const nextScenes = upsertVttScene(prevScenes, next);
-					const isDraggingToken =
-						(draggedToken && draggedToken.id === tokenId) ||
-						pixiDraggingTokenIdRef.current === tokenId;
 					if (!isDraggingToken) {
 						persistSceneState(nextScenes, next.id);
 					}
 					return nextScenes;
 				});
+				if (autoExploreResult.changed && next.fogData) {
+					vttRealtime.broadcastFogUpdate(next.id, next.fogData);
+				}
 				return next;
 			});
 		},
-		[draggedToken, persistSceneState],
+		[applyAutoExploreFogForToken, draggedToken, persistSceneState, vttRealtime],
+	);
+
+	const updateTokenBar = useCallback(
+		(tokenId: string, barIndex: number, updates: Partial<VTTTokenBar>) => {
+			const token = currentSceneRef.current?.tokens.find(
+				(t) => t.id === tokenId,
+			);
+			if (!token) return;
+			const bars =
+				token.bars && token.bars.length > 0
+					? token.bars.slice(0, 3)
+					: [
+							{
+								id: "hp",
+								label: "HP",
+								current: token.hp ?? token.hp_current ?? 0,
+								max: token.maxHp ?? token.hp_max ?? 1,
+								color: "#22c55e",
+								visible: "all" as const,
+							},
+						];
+			const existing = bars[barIndex];
+			if (!existing) return;
+			const nextBars = bars.map((bar, index) =>
+				index === barIndex
+					? {
+							...bar,
+							...updates,
+							id: bar.id,
+							max: Math.max(1, updates.max ?? bar.max),
+							current: Math.max(0, updates.current ?? bar.current),
+						}
+					: bar,
+			);
+			const hpBar = nextBars.find((bar) => bar.id === "hp");
+			updateToken(tokenId, {
+				bars: nextBars,
+				...(hpBar
+					? {
+							hp: hpBar.current,
+							maxHp: hpBar.max,
+							hp_current: hpBar.current,
+							hp_max: hpBar.max,
+						}
+					: {}),
+			});
+		},
+		[updateToken],
+	);
+
+	const addTokenBar = useCallback(
+		(tokenId: string) => {
+			const token = currentSceneRef.current?.tokens.find(
+				(t) => t.id === tokenId,
+			);
+			if (!token) return;
+			const bars =
+				token.bars && token.bars.length > 0
+					? token.bars.slice(0, 3)
+					: [
+							{
+								id: "hp",
+								label: "HP",
+								current: token.hp ?? token.hp_current ?? 0,
+								max: token.maxHp ?? token.hp_max ?? 1,
+								color: "#22c55e",
+								visible: "all" as const,
+							},
+						];
+			if (bars.length >= 3) return;
+			const preset = TOKEN_BAR_PRESETS[bars.length];
+			updateToken(tokenId, {
+				bars: [
+					...bars,
+					{
+						...preset,
+						id: `${preset.id}-${Date.now().toString(36)}`,
+					},
+				],
+			});
+		},
+		[updateToken],
+	);
+
+	const removeTokenBar = useCallback(
+		(tokenId: string, barIndex: number) => {
+			const token = currentSceneRef.current?.tokens.find(
+				(t) => t.id === tokenId,
+			);
+			if (!token?.bars) return;
+			updateToken(tokenId, {
+				bars: token.bars.filter((_, index) => index !== barIndex).slice(0, 3),
+			});
+		},
+		[updateToken],
 	);
 
 	const handlePixiTokenDragStart = useCallback((tokenId: string) => {
@@ -1776,13 +2336,20 @@ const VTTEnhanced = () => {
 			if (token) {
 				vttRealtime.broadcastTokenMove(tokenId, token.x, token.y);
 			}
+			const autoExploreResult = applyAutoExploreFogForToken(scene, tokenId);
+			const nextScene = autoExploreResult.scene;
+			currentSceneRef.current = nextScene;
+			setCurrentScene(nextScene);
 			setScenes((prevScenes) => {
-				const nextScenes = upsertVttScene(prevScenes, scene);
-				persistSceneState(nextScenes, scene.id);
+				const nextScenes = upsertVttScene(prevScenes, nextScene);
+				persistSceneState(nextScenes, nextScene.id);
 				return nextScenes;
 			});
+			if (autoExploreResult.changed && nextScene.fogData) {
+				vttRealtime.broadcastFogUpdate(nextScene.id, nextScene.fogData);
+			}
 		},
-		[persistSceneState, vttRealtime],
+		[applyAutoExploreFogForToken, persistSceneState, vttRealtime],
 	);
 
 	const removeToken = useCallback(
@@ -1799,11 +2366,140 @@ const VTTEnhanced = () => {
 				return next;
 			});
 			vttRealtime.broadcastTokenRemove(tokenId);
-			if (activeTokenId === tokenId) {
-				setActiveTokenId(null);
+			setActiveTokenIds((prev) => prev.filter((id) => id !== tokenId));
+		},
+		[persistSceneState, vttRealtime],
+	);
+
+	const removeSelectedTokens = useCallback(
+		(tokenIds = activeTokenIds) => {
+			if (tokenIds.length === 0) return;
+			const uniqueTokenIds = [...new Set(tokenIds)];
+			setCurrentScene((prev) => {
+				if (!prev) return prev;
+				const nextTokens = prev.tokens.filter(
+					(token) => !uniqueTokenIds.includes(token.id),
+				);
+				if (nextTokens.length === prev.tokens.length) return prev;
+				const next = { ...prev, tokens: nextTokens };
+				setScenes((prevScenes) => {
+					const nextScenes = upsertVttScene(prevScenes, next);
+					persistSceneState(nextScenes, next.id);
+					return nextScenes;
+				});
+				return next;
+			});
+			for (const tokenId of uniqueTokenIds) {
+				vttRealtime.broadcastTokenRemove(tokenId);
+			}
+			setActiveTokenIds((prev) =>
+				prev.filter((tokenId) => !uniqueTokenIds.includes(tokenId)),
+			);
+		},
+		[activeTokenIds, persistSceneState, vttRealtime],
+	);
+
+	const nudgeSelectedTokens = useCallback(
+		(dx: number, dy: number) => {
+			const selectedIds = activeTokenIds.length > 0 ? activeTokenIds : [];
+			if (selectedIds.length === 0) return;
+			const tokensById = new Map(
+				(currentSceneRef.current?.tokens ?? []).map((token) => [
+					token.id,
+					token,
+				]),
+			);
+			for (const tokenId of selectedIds) {
+				const token = tokensById.get(tokenId);
+				if (!token || token.locked) continue;
+				const nextX = token.x + dx;
+				const nextY = token.y + dy;
+				updateToken(tokenId, { x: nextX, y: nextY });
+				vttRealtime.broadcastTokenMove(tokenId, nextX, nextY);
 			}
 		},
-		[activeTokenId, persistSceneState, vttRealtime],
+		[activeTokenIds, updateToken, vttRealtime],
+	);
+
+	const toggleSelectedTokenPatch = useCallback(
+		(field: "visible" | "locked") => {
+			const selectedIds = activeTokenIds.length > 0 ? activeTokenIds : [];
+			if (selectedIds.length === 0) return;
+			const tokensById = new Map(
+				(currentSceneRef.current?.tokens ?? []).map((token) => [
+					token.id,
+					token,
+				]),
+			);
+			for (const tokenId of selectedIds) {
+				const token = tokensById.get(tokenId);
+				if (!token) continue;
+				const patch: Partial<VTTTokenInstance> = { [field]: !token[field] };
+				updateToken(tokenId, patch);
+				vttRealtime.broadcastTokenUpdate(tokenId, patch);
+			}
+		},
+		[activeTokenIds, updateToken, vttRealtime],
+	);
+
+	const groupSelectedTokens = useCallback(() => {
+		const selectedIds = activeTokenIds.length > 0 ? activeTokenIds : [];
+		if (selectedIds.length === 0) return;
+		const tokensById = new Map(
+			(currentSceneRef.current?.tokens ?? []).map((token) => [token.id, token]),
+		);
+		if (selectedIds.length === 1) {
+			const token = tokensById.get(selectedIds[0]);
+			if (!token) return;
+			const patch = {
+				groupId: token.groupId ? undefined : `grp-${Date.now()}`,
+			};
+			updateToken(token.id, patch);
+			vttRealtime.broadcastTokenUpdate(token.id, patch);
+			return;
+		}
+		const nextGroupId = `grp-${Date.now()}`;
+		for (const tokenId of selectedIds) {
+			if (tokensById.has(tokenId)) {
+				const patch = { groupId: nextGroupId };
+				updateToken(tokenId, patch);
+				vttRealtime.broadcastTokenUpdate(tokenId, patch);
+			}
+		}
+	}, [activeTokenIds, updateToken, vttRealtime]);
+
+	const selectTokensInMarquee = useCallback(
+		(marquee: SelectionMarquee) => {
+			const scene = currentSceneRef.current;
+			if (!scene) return;
+			const left = Math.min(marquee.startX, marquee.currentX);
+			const right = Math.max(marquee.startX, marquee.currentX);
+			const top = Math.min(marquee.startY, marquee.currentY);
+			const bottom = Math.max(marquee.startY, marquee.currentY);
+			const step = gridSize * zoom;
+			const tokenIds = scene.tokens
+				.filter((token) => effectiveVisibleLayers[token.layer])
+				.filter((token) => isWarden || token.visible)
+				.filter((token) => {
+					const footprint = getTokenFootprintPx(token.size, gridSize, zoom, {
+						gridWidth: token.gridWidth,
+						gridHeight: token.gridHeight,
+					});
+					const centerX = token.x * step + footprint.width / 2;
+					const centerY = token.y * step + footprint.height / 2;
+					return (
+						centerX >= left &&
+						centerX <= right &&
+						centerY >= top &&
+						centerY <= bottom
+					);
+				})
+				.map((token) => token.id);
+			setActiveTokenIds((prev) =>
+				marquee.additive ? [...new Set([...prev, ...tokenIds])] : tokenIds,
+			);
+		},
+		[effectiveVisibleLayers, gridSize, isWarden, zoom],
 	);
 
 	// --- Realtime event handlers: receive remote token moves from players ---
@@ -1836,11 +2532,35 @@ const VTTEnhanced = () => {
 				null;
 			setCurrentScene(selected);
 		});
+		const unsub5 = vttRealtime.on("target_set", (payload) => {
+			if (payload.updatedBy === vttRealtime.userId) return;
+			if (payload.sceneId && payload.sceneId !== currentSceneRef.current?.id) {
+				return;
+			}
+			const sceneTokenIds = new Set(
+				(currentSceneRef.current?.tokens ?? []).map((token) => token.id),
+			);
+			setSelectedTargetIds(
+				payload.targetIds.filter((tokenId) => sceneTokenIds.has(tokenId)),
+			);
+		});
+		const unsub6 = vttRealtime.on("fog_update", (payload) => {
+			if (payload.updatedBy === vttRealtime.userId) return;
+			setCurrentScene((prev) => {
+				if (!prev || prev.id !== payload.sceneId) return prev;
+				const next = { ...prev, fogData: payload.fogData };
+				currentSceneRef.current = next;
+				setScenes((prevScenes) => upsertVttScene(prevScenes, next));
+				return next;
+			});
+		});
 		return () => {
 			unsub1();
 			unsub2();
 			unsub3();
 			unsub4();
+			unsub5();
+			unsub6();
 		};
 	}, [campaignId, scenes, updateToken, vttRealtime]);
 
@@ -1879,6 +2599,75 @@ const VTTEnhanced = () => {
 		(e: React.MouseEvent<HTMLDivElement>) =>
 			getGridPositionFromPoint(e.clientX, e.clientY),
 		[getGridPositionFromPoint],
+	);
+
+	const handleMapDragOver = useCallback(
+		(e: React.DragEvent<HTMLDivElement>) => {
+			const types = Array.from(e.dataTransfer.types);
+			if (
+				types.includes(VTT_SPELL_TEMPLATE_MIME) ||
+				types.includes("application/vtt-asset")
+			) {
+				e.preventDefault();
+				e.dataTransfer.dropEffect = "copy";
+			}
+		},
+		[],
+	);
+
+	const handleMapDrop = useCallback(
+		(e: React.DragEvent<HTMLDivElement>) => {
+			if (!currentScene) return;
+			const rawSpell = e.dataTransfer.getData(VTT_SPELL_TEMPLATE_MIME);
+			if (!rawSpell) return;
+			e.preventDefault();
+			const grid = getGridPositionFromPoint(e.clientX, e.clientY);
+			if (!grid) return;
+			try {
+				const spell = JSON.parse(rawSpell);
+				const aoe = createAoeFromSpellTemplate(
+					spell,
+					{ x: grid.gridX, y: grid.gridY },
+					vttRealtime.userId,
+				);
+				if (!aoe) {
+					toast({
+						title: "No AoE Template Detected",
+						description:
+							"That spell does not include a cone, line, cube, or radius shape.",
+					});
+					return;
+				}
+				const nextScene: VTTScene = {
+					...currentScene,
+					drawings: [...(currentScene.drawings ?? []), aoe],
+				};
+				updateScene(nextScene);
+				vttRealtime.broadcastSceneSync(
+					upsertVttScene(scenes, nextScene),
+					getPersistedSceneId(nextScene.id),
+				);
+				toast({
+					title: "Spell Template Pinned",
+					description: `${spell.name ?? "Spell"} AoE template added to the map.`,
+				});
+			} catch {
+				toast({
+					title: "Spell Drop Failed",
+					description: "The dropped spell payload could not be read.",
+					variant: "destructive",
+				});
+			}
+		},
+		[
+			currentScene,
+			getGridPositionFromPoint,
+			getPersistedSceneId,
+			scenes,
+			toast,
+			updateScene,
+			vttRealtime,
+		],
 	);
 
 	const buildFogData = useCallback((scene: VTTScene, revealed = false) => {
@@ -2207,6 +2996,16 @@ const VTTEnhanced = () => {
 				return;
 			}
 
+			if (selectedTool === "light" && isWarden) {
+				// Click-to-place: open the configuration dialog seeded with the
+				// grid coordinate the Warden tapped. Actual mutation happens on
+				// dialog Save (see handleSaveLightFromDialog).
+				setLightDialogTargetId(null);
+				setLightDialogSeed({ x: grid.gridX, y: grid.gridY });
+				setLightDialogOpen(true);
+				return;
+			}
+
 			if (selectedTool === "note" && isWarden) {
 				const text = noteText.trim();
 				if (!text) {
@@ -2363,6 +3162,7 @@ const VTTEnhanced = () => {
 			selectedCharacterId,
 			selectedLibraryTokenId,
 			selectedTool,
+			setActiveTokenId,
 			characterOwnerMap.get,
 			updateScene,
 			vttRealtime.userId,
@@ -2376,6 +3176,7 @@ const VTTEnhanced = () => {
 	const { mutate: createTrack } = useCreateVTTAudioTrack();
 	const { mutate: updateTrack } = useUpdateVTTAudioTrack();
 	const { mutate: deleteTrack } = useDeleteVTTAudioTrack();
+	const audioPlaylistState = useVTTPlaylistState();
 	const audioTracks = useMemo<DisplayAudioTrack[]>(() => {
 		const sessionTracks = sessionAudioTracks.map((track) => ({
 			...track,
@@ -2391,6 +3192,100 @@ const VTTEnhanced = () => {
 			}));
 		return [...sessionTracks, ...libraryTracks];
 	}, [campaignAudioTracks, sessionAudioTracks, sessionId]);
+	const playableAudioTracks = useMemo(
+		() => audioTracks.filter((track) => !!track.url),
+		[audioTracks],
+	);
+	const currentQueuedAudioTrack =
+		audioPlaylistState.currentTrackId !== null
+			? (audioPlaylistState.queue.find(
+					(track) => track.id === audioPlaylistState.currentTrackId,
+				) ?? null)
+			: null;
+	const updateSceneAudioMetadata = useCallback(
+		(
+			musicPlaylistId: string | null,
+			musicTrackId: string | null,
+			musicAutoplay: boolean,
+		) => {
+			if (!currentScene) return;
+			if (
+				currentScene.musicPlaylistId === musicPlaylistId &&
+				currentScene.musicTrackId === musicTrackId &&
+				currentScene.musicAutoplay === musicAutoplay &&
+				currentScene.musicMood === null
+			) {
+				return;
+			}
+			const nextScene: VTTScene = {
+				...currentScene,
+				musicMood: null,
+				musicAutoplay,
+				musicPlaylistId,
+				musicTrackId,
+			};
+			updateScene(nextScene);
+			vttRealtime.broadcastSceneSync(
+				upsertVttScene(scenes, nextScene),
+				getPersistedSceneId(nextScene.id),
+			);
+		},
+		[currentScene, getPersistedSceneId, scenes, updateScene, vttRealtime],
+	);
+	const playAudioQueue = useCallback(
+		(startIndex = 0) => {
+			if (playableAudioTracks.length === 0) {
+				toast({
+					title: "No Audio Queue",
+					description: "Add at least one session audio track first.",
+					variant: "destructive",
+				});
+				return;
+			}
+			const boundedStartIndex = Math.max(
+				0,
+				Math.min(startIndex, playableAudioTracks.length - 1),
+			);
+			const now = new Date().toISOString();
+			const playlist: Playlist = {
+				id: `vtt-session-audio-${sessionId ?? "local"}-${Date.now()}`,
+				name: "Session Audio Queue",
+				description: "VTT session audio queue",
+				tracks: playableAudioTracks.map((track) => track.id),
+				category: "custom",
+				autoPlay: true,
+				shuffle: false,
+				repeat: "all",
+				crossfade: 2,
+				volume: 0.7,
+				createdAt: now,
+				updatedAt: now,
+			};
+			const startingTrack = playableAudioTracks[boundedStartIndex] ?? null;
+			updateSceneAudioMetadata(playlist.id, startingTrack?.id ?? null, true);
+			void vttAudioManager.playPlaylist(
+				playlist,
+				playableAudioTracks,
+				boundedStartIndex,
+			);
+		},
+		[playableAudioTracks, sessionId, toast, updateSceneAudioMetadata],
+	);
+	useEffect(() => {
+		if (!audioPlaylistState.playlist || !audioPlaylistState.currentTrackId) {
+			return;
+		}
+		updateSceneAudioMetadata(
+			audioPlaylistState.playlist.id,
+			audioPlaylistState.currentTrackId,
+			audioPlaylistState.isPlaying,
+		);
+	}, [
+		audioPlaylistState.currentTrackId,
+		audioPlaylistState.isPlaying,
+		audioPlaylistState.playlist,
+		updateSceneAudioMetadata,
+	]);
 	const setCampaignLibraryTrackPlaying = useCallback(
 		(trackId: string, isPlaying: boolean) => {
 			setCampaignAudioTracks((current) => {
@@ -2441,6 +3336,21 @@ const VTTEnhanced = () => {
 			return;
 		}
 
+		if (
+			selectedTool === "select" &&
+			!selectedCharacterId &&
+			!selectedLibraryTokenId
+		) {
+			setSelectionMarquee({
+				startX: grid.x,
+				startY: grid.y,
+				currentX: grid.x,
+				currentY: grid.y,
+				additive: e.shiftKey || e.ctrlKey || e.metaKey,
+			});
+			return;
+		}
+
 		if (selectedTool === "fog" && fogOfWar && isWarden) {
 			lastFogCellRef.current = `${grid.gridX},${grid.gridY}`;
 			setIsFogPainting(true);
@@ -2468,6 +3378,25 @@ const VTTEnhanced = () => {
 			}
 			setActiveDrawing(drawing);
 		}
+
+		if (selectedTool === "wall" && isWarden) {
+			// Snap the anchor to the nearest grid corner. We use Math.round so
+			// the starting corner is whichever cell boundary the click is
+			// closest to, matching Foundry's wall-snap UX.
+			const cellX = grid.x / (gridSize * zoom);
+			const cellY = grid.y / (gridSize * zoom);
+			const anchor = {
+				gridX: Math.round(cellX),
+				gridY: Math.round(cellY),
+			};
+			wallDragStartRef.current = anchor;
+			setWallPreview({
+				x1: anchor.gridX,
+				y1: anchor.gridY,
+				x2: anchor.gridX,
+				y2: anchor.gridY,
+			});
+		}
 	};
 
 	const handleMapKeyDown = useCallback(
@@ -2486,65 +3415,41 @@ const VTTEnhanced = () => {
 			// Delete/Backspace: remove active token (Warden only)
 			if (
 				(e.key === "Delete" || e.key === "Backspace") &&
-				activeTokenId &&
+				activeTokenIds.length > 0 &&
 				isWarden
 			) {
 				e.preventDefault();
-				removeToken(activeTokenId);
-				setActiveTokenId(null);
+				removeSelectedTokens();
 				return;
 			}
-			// Arrow keys: nudge active token by 1 grid square
+			// Arrow keys: nudge selected tokens by 1 grid square
 			if (
 				["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key) &&
-				activeTokenId &&
+				activeTokenIds.length > 0 &&
 				isWarden
 			) {
 				e.preventDefault();
-				const token = (currentScene?.tokens ?? []).find(
-					(t: VTTTokenInstance) => t.id === activeTokenId,
-				);
-				if (token && !token.locked) {
-					const dx =
-						e.key === "ArrowLeft" ? -1 : e.key === "ArrowRight" ? 1 : 0;
-					const dy = e.key === "ArrowUp" ? -1 : e.key === "ArrowDown" ? 1 : 0;
-					updateToken(activeTokenId, { x: token.x + dx, y: token.y + dy });
-				}
+				const dx = e.key === "ArrowLeft" ? -1 : e.key === "ArrowRight" ? 1 : 0;
+				const dy = e.key === "ArrowUp" ? -1 : e.key === "ArrowDown" ? 1 : 0;
+				nudgeSelectedTokens(dx, dy);
 				return;
 			}
 			// Shift+H / Shift+L / Shift+G — DDB token hotkeys
 			if (e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey) {
 				const key = e.key.toLowerCase();
-				if (key === "h" && activeTokenId && isWarden) {
+				if (key === "h" && activeTokenIds.length > 0 && isWarden) {
 					e.preventDefault();
-					const token = (currentScene?.tokens ?? []).find(
-						(t: VTTTokenInstance) => t.id === activeTokenId,
-					);
-					if (token) {
-						updateToken(activeTokenId, { visible: !token.visible });
-					}
+					toggleSelectedTokenPatch("visible");
 					return;
 				}
-				if (key === "l" && activeTokenId && isWarden) {
+				if (key === "l" && activeTokenIds.length > 0 && isWarden) {
 					e.preventDefault();
-					const token = (currentScene?.tokens ?? []).find(
-						(t: VTTTokenInstance) => t.id === activeTokenId,
-					);
-					if (token) {
-						updateToken(activeTokenId, { locked: !token.locked });
-					}
+					toggleSelectedTokenPatch("locked");
 					return;
 				}
-				if (key === "g" && activeTokenId && isWarden) {
+				if (key === "g" && activeTokenIds.length > 0 && isWarden) {
 					e.preventDefault();
-					const token = (currentScene?.tokens ?? []).find(
-						(t: VTTTokenInstance) => t.id === activeTokenId,
-					);
-					if (token) {
-						// Generate a shared groupId (or clear existing one if already grouped).
-						const nextGroupId = token.groupId ? undefined : `grp-${Date.now()}`;
-						updateToken(activeTokenId, { groupId: nextGroupId });
-					}
+					groupSelectedTokens();
 					return;
 				}
 			}
@@ -2556,6 +3461,8 @@ const VTTEnhanced = () => {
 					d: "draw",
 					e: "effect",
 					n: "note",
+					l: "light", // Foundry-parity light authoring tool
+					w: "wall", // Foundry-parity wall authoring tool
 					m: "measure",
 					r: "measure", // Ruler alias (DDB/Roll20 parity)
 					x: "pointer", // DDB "Point & Ping" parity
@@ -2633,16 +3540,18 @@ const VTTEnhanced = () => {
 			}
 		},
 		[
-			activeTokenId,
+			activeTokenIds,
 			cancelBackgroundCalibration,
-			currentScene?.tokens,
 			getGridPositionFromPoint,
 			handleFitZoom,
 			handleMapGridAction,
 			isBackgroundCalibrating,
 			isWarden,
-			removeToken,
-			updateToken,
+			groupSelectedTokens,
+			nudgeSelectedTokens,
+			removeSelectedTokens,
+			setActiveTokenId,
+			toggleSelectedTokenPatch,
 		],
 	);
 
@@ -2717,6 +3626,13 @@ const VTTEnhanced = () => {
 			const grid = getGridPosition(e);
 			if (!grid) return;
 
+			if (selectionMarquee && selectedTool === "select") {
+				setSelectionMarquee((prev) =>
+					prev ? { ...prev, currentX: grid.x, currentY: grid.y } : prev,
+				);
+				return;
+			}
+
 			if (
 				draggedToken &&
 				(draggedToken.x !== grid.gridX || draggedToken.y !== grid.gridY)
@@ -2748,6 +3664,32 @@ const VTTEnhanced = () => {
 				scheduleDrawingPoint({ x: grid.x, y: grid.y });
 			}
 
+			if (
+				selectedTool === "wall" &&
+				isWarden &&
+				wallDragStartRef.current !== null
+			) {
+				const cellX = grid.x / (gridSize * zoom);
+				const cellY = grid.y / (gridSize * zoom);
+				const endX = Math.round(cellX);
+				const endY = Math.round(cellY);
+				const start = wallDragStartRef.current;
+				setWallPreview((prev) =>
+					prev &&
+					prev.x1 === start.gridX &&
+					prev.y1 === start.gridY &&
+					prev.x2 === endX &&
+					prev.y2 === endY
+						? prev
+						: {
+								x1: start.gridX,
+								y1: start.gridY,
+								x2: endX,
+								y2: endY,
+							},
+				);
+			}
+
 			if (selectedTool === "pointer") {
 				vttRealtime.broadcastPointer(grid.gridX, grid.gridY);
 			}
@@ -2769,13 +3711,16 @@ const VTTEnhanced = () => {
 			draggedToken,
 			fogOfWar,
 			getGridPosition,
+			gridSize,
 			isFogPainting,
 			isWarden,
 			measurementStart,
 			scheduleDrawingPoint,
+			selectionMarquee,
 			selectedTool,
 			updateToken,
 			vttRealtime,
+			zoom,
 		],
 	);
 
@@ -2807,6 +3752,27 @@ const VTTEnhanced = () => {
 				clearViewportPan();
 				return;
 			}
+			if (selectionMarquee && selectedTool === "select") {
+				let finalMarquee = selectionMarquee;
+				if (e) {
+					const grid = getGridPosition(e);
+					if (grid) {
+						finalMarquee = {
+							...selectionMarquee,
+							currentX: grid.x,
+							currentY: grid.y,
+						};
+					}
+				}
+				setSelectionMarquee(null);
+				const moved =
+					Math.abs(finalMarquee.currentX - finalMarquee.startX) > 8 ||
+					Math.abs(finalMarquee.currentY - finalMarquee.startY) > 8;
+				if (moved) {
+					selectTokensInMarquee(finalMarquee);
+					return;
+				}
+			}
 			if (drawingFrameRef.current !== null) {
 				window.cancelAnimationFrame(drawingFrameRef.current);
 				drawingFrameRef.current = null;
@@ -2832,6 +3798,51 @@ const VTTEnhanced = () => {
 				setActiveDrawing(null);
 				return;
 			}
+
+			// Wall click-drag finalization. We always clear the anchor + preview
+			// here so a click-without-drag (zero-length segment) is silently
+			// discarded rather than leaving phantom state around.
+			if (
+				selectedTool === "wall" &&
+				isWarden &&
+				wallDragStartRef.current !== null
+			) {
+				const anchor = wallDragStartRef.current;
+				wallDragStartRef.current = null;
+				setWallPreview(null);
+				if (e && currentScene) {
+					const grid = getGridPosition(e);
+					if (grid) {
+						const cellX = grid.x / (gridSize * zoom);
+						const cellY = grid.y / (gridSize * zoom);
+						const endX = Math.round(cellX);
+						const endY = Math.round(cellY);
+						if (endX !== anchor.gridX || endY !== anchor.gridY) {
+							handleAddWallToScene({
+								id: createVttWallId(),
+								x1: anchor.gridX,
+								y1: anchor.gridY,
+								x2: endX,
+								y2: endY,
+								type: wallType,
+								...(wallType === "door"
+									? {
+											state: wallDoorState,
+											doorOpen: wallDoorState === "open",
+										}
+									: {}),
+								...(wallType === "oneway"
+									? {
+											oneWay: true,
+											direction: wallDirection,
+										}
+									: {}),
+							});
+						}
+					}
+				}
+				return;
+			}
 			if (
 				e?.type === "mouseup" &&
 				e.button === 0 &&
@@ -2853,10 +3864,20 @@ const VTTEnhanced = () => {
 			currentScene,
 			draggedToken,
 			getGridPosition,
+			gridSize,
+			handleAddWallToScene,
 			handleMapGridAction,
 			isFogPainting,
+			isWarden,
 			finalizeFogStroke,
+			selectTokensInMarquee,
+			selectionMarquee,
+			selectedTool,
 			updateScene,
+			wallDirection,
+			wallDoorState,
+			wallType,
+			zoom,
 		],
 	);
 
@@ -2878,6 +3899,42 @@ const VTTEnhanced = () => {
 		},
 		[],
 	);
+	const getCharacterForToken = useCallback(
+		(token: VTTTokenInstance) =>
+			token.characterId
+				? (resolvedCharacters.find(
+						(character) => character.id === token.characterId,
+					) ?? null)
+				: null,
+		[resolvedCharacters],
+	);
+	const handleTargetsApplied = useCallback(
+		(results: TargetedApplyResult[]) => {
+			if (results.length === 0) return;
+			toast({
+				title: "Applied to Targets",
+				description: `${results.length} target${results.length === 1 ? "" : "s"} resolved.`,
+			});
+		},
+		[toast],
+	);
+	const { applyPendingResolutionToTargets } = useTargetedDamageApply({
+		selectedTargetIds,
+		tokens: currentScene?.tokens ?? EMPTY_ARRAY,
+		getCharacterForToken,
+		updateToken,
+		syncCharacterHP,
+		onApplied: handleTargetsApplied,
+	});
+	const handleApplyPendingResolutionToTargets = useCallback(() => {
+		const results = applyPendingResolutionToTargets();
+		if (results.length === 0) {
+			toast({
+				title: "No Target Resolution",
+				description: "Select targets and queue an action before applying.",
+			});
+		}
+	}, [applyPendingResolutionToTargets, toast]);
 	const applyDamageToActiveToken = useCallback(() => {
 		if (!activeToken || !damageAmount) {
 			resetDamageDialog();
@@ -3065,6 +4122,29 @@ const VTTEnhanced = () => {
 
 				parts.push(
 					`.vtt-drawing-shape-${safeId} { left: ${x1}px; top: ${y1}px; width: ${width}px; height: ${height}px; border-color: ${drawing.color}; border-width: ${drawing.strokeWidth}px; background-color: ${fill}; opacity: ${drawing.fillOpacity ?? 0.18}; }`,
+				);
+			}
+
+			// Pinned AoE cone (P1-4). Mirrors the live measure-preview cone
+			// CSS but scoped per drawing id so multiple cones coexist.
+			if (drawing.type === "cone") {
+				const apex = drawing.points[0];
+				const far = drawing.points[1] ?? apex;
+				const apexX = (apex.x + 0.5) * gridSize * zoom;
+				const apexY = (apex.y + 0.5) * gridSize * zoom;
+				const farX = (far.x + 0.5) * gridSize * zoom;
+				const farY = (far.y + 0.5) * gridSize * zoom;
+				const r = Math.hypot(farX - apexX, farY - apexY);
+				const angle = Math.atan2(farY - apexY, farX - apexX);
+				const halfAngle = Math.PI / 6; // 60deg cone
+				const p1x = apexX + r * Math.cos(angle - halfAngle);
+				const p1y = apexY + r * Math.sin(angle - halfAngle);
+				const p2x = apexX + r * Math.cos(angle + halfAngle);
+				const p2y = apexY + r * Math.sin(angle + halfAngle);
+				const fill = drawing.fillColor ?? drawing.color;
+				const opacity = drawing.fillOpacity ?? 0.22;
+				parts.push(
+					`.vtt-drawing-cone-${safeId} { position: absolute; left: 0; top: 0; width: ${(sceneWidth ?? 20) * gridSize * zoom}px; height: ${(sceneHeight ?? 20) * gridSize * zoom}px; background-color: ${fill}; opacity: ${opacity}; clip-path: polygon(${apexX}px ${apexY}px, ${p1x}px ${p1y}px, ${p2x}px ${p2y}px); border: 0; }`,
 				);
 			}
 		});
@@ -3432,6 +4512,10 @@ const VTTEnhanced = () => {
 													<span>Effect tool</span>
 													<span className="text-foreground/70">N</span>
 													<span>Note tool</span>
+													<span className="text-foreground/70">L</span>
+													<span>Light tool</span>
+													<span className="text-foreground/70">W</span>
+													<span>Wall tool</span>
 													<span className="text-foreground/70">M / R</span>
 													<span>Measure / Ruler tool</span>
 													<span className="text-foreground/70">X</span>
@@ -3579,6 +4663,35 @@ const VTTEnhanced = () => {
 										value="scenes"
 										className="flex flex-col gap-4 overflow-y-auto min-h-0 flex-1 mt-0"
 									>
+										<AscendantWindow
+											title="SCENE LIBRARY"
+											compact
+											density="compact"
+										>
+											<VTTSceneLibrary
+												scenes={scenes}
+												currentSceneId={currentScene?.id}
+												liveSceneId={liveSceneId}
+												isWarden={isWarden}
+												onSelectScene={(scene) => {
+													setCurrentScene(scene);
+													if (!isWarden) {
+														vttRealtime.broadcastSceneChange(scene.id);
+													}
+												}}
+												onMakeLiveScene={(scene) => {
+													setLiveSceneId(scene.id);
+													vttRealtime.broadcastSceneChange(scene.id);
+												}}
+												onReorderScenes={(nextScenes) => {
+													setScenes(nextScenes);
+													persistSceneState(
+														nextScenes,
+														currentScene?.id ?? null,
+													);
+												}}
+											/>
+										</AscendantWindow>
 										<AscendantWindow title="SCENES" compact density="compact">
 											<div className="space-y-1 max-h-40 overflow-y-auto">
 												{scenes.map((scene) => (
@@ -3711,6 +4824,8 @@ const VTTEnhanced = () => {
 															Icon: Sparkles,
 														},
 														{ key: "note", label: "Note", Icon: FileText },
+														{ key: "light", label: "Light", Icon: Lightbulb },
+														{ key: "wall", label: "Wall", Icon: BrickWall },
 														{ key: "measure", label: "Measure", Icon: Ruler },
 														{ key: "pointer", label: "Point", Icon: Radio },
 													] as const
@@ -3719,6 +4834,7 @@ const VTTEnhanced = () => {
 														<button
 															type="button"
 															key={tool.key}
+															data-testid={`vtt-tool-${tool.key}`}
 															onClick={() => setSelectedTool(tool.key)}
 															className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 bg-primary/20 border-primary"
 															aria-label={`${tool.label} tool`}
@@ -3734,6 +4850,7 @@ const VTTEnhanced = () => {
 														<button
 															type="button"
 															key={tool.key}
+															data-testid={`vtt-tool-${tool.key}`}
 															onClick={() => setSelectedTool(tool.key)}
 															className="w-full p-2 rounded border text-xs uppercase tracking-wide transition-all inline-flex items-center justify-center gap-1.5 border-border hover:bg-muted/50"
 															aria-label={`${tool.label} tool`}
@@ -3807,6 +4924,32 @@ const VTTEnhanced = () => {
 															/>
 														</div>
 													)}
+													{(() => {
+														const pinnedCount =
+															currentScene?.drawings?.filter(
+																(d) => d.kind === "aoe",
+															).length ?? 0;
+														return (
+															<div className="pt-2 border-t border-border/40 space-y-1">
+																<p className="text-[10px] text-foreground/60 leading-snug">
+																	While measuring, click <strong>Pin</strong> on
+																	the HUD to leave the template on the scene.
+																</p>
+																<Button
+																	type="button"
+																	size="sm"
+																	variant="outline"
+																	className="w-full h-7 text-[10px]"
+																	data-testid="warden-tools-clear-aoe-templates"
+																	onClick={handleClearAoeTemplates}
+																	disabled={pinnedCount === 0}
+																	aria-label={`Clear ${pinnedCount} pinned AoE templates`}
+																>
+																	Clear AoE Templates ({pinnedCount})
+																</Button>
+															</div>
+														);
+													})()}
 												</div>
 											)}
 										</AscendantWindow>
@@ -3855,6 +4998,7 @@ const VTTEnhanced = () => {
 														onChange={(e) => {
 															const checked = e.target.checked;
 															setFogOfWar(checked);
+															if (!checked) setTokenVisionRevealsFog(false);
 															const scene = currentSceneRef.current;
 															if (!scene) return;
 															pendingFogSceneRef.current = null;
@@ -3862,6 +5006,8 @@ const VTTEnhanced = () => {
 																? {
 																		...scene,
 																		fogOfWar: true,
+																		tokenVisionRevealsFog:
+																			scene.tokenVisionRevealsFog ?? false,
 																		fogData:
 																			scene.fogData ??
 																			buildFogData(scene, false),
@@ -3869,6 +5015,7 @@ const VTTEnhanced = () => {
 																: {
 																		...scene,
 																		fogOfWar: false,
+																		tokenVisionRevealsFog: false,
 																	};
 															commitScene(nextScene, {
 																persist: true,
@@ -3884,6 +5031,52 @@ const VTTEnhanced = () => {
 														Fog of War
 													</label>
 												</div>
+												{isWarden && (
+													<div className="flex items-start gap-2">
+														<input
+															type="checkbox"
+															id="tokenVisionRevealsFog"
+															checked={tokenVisionRevealsFog}
+															disabled={!fogOfWar}
+															onChange={(e) => {
+																const checked = e.target.checked;
+																setTokenVisionRevealsFog(checked);
+																const scene = currentSceneRef.current;
+																if (!scene) return;
+																pendingFogSceneRef.current = null;
+																commitScene(
+																	{
+																		...scene,
+																		fogOfWar: checked ? true : scene.fogOfWar,
+																		tokenVisionRevealsFog: checked,
+																		fogData: checked
+																			? (scene.fogData ??
+																				buildFogData(scene, false))
+																			: scene.fogData,
+																	},
+																	{
+																		persist: true,
+																		broadcastSceneSync: true,
+																	},
+																);
+															}}
+															className="mt-0.5 w-4 h-4"
+														/>
+														<label
+															htmlFor="tokenVisionRevealsFog"
+															className={cn(
+																"text-xs cursor-pointer leading-snug",
+																!fogOfWar && "text-muted-foreground",
+															)}
+														>
+															Token vision reveals fog
+															<span className="block text-[10px] text-foreground/60">
+																When enabled, token movement reveals visible
+																cells.
+															</span>
+														</label>
+													</div>
+												)}
 												{fogOfWar && isWarden && currentScene && (
 													<div className="space-y-2 border-t border-border/50 pt-2">
 														<div>
@@ -3977,6 +5170,7 @@ const VTTEnhanced = () => {
 																		{
 																			persist: true,
 																			broadcastSceneSync: true,
+																			broadcastFog: true,
 																		},
 																	);
 																}}
@@ -4000,6 +5194,7 @@ const VTTEnhanced = () => {
 																		{
 																			persist: true,
 																			broadcastSceneSync: true,
+																			broadcastFog: true,
 																		},
 																	);
 																}}
@@ -4072,6 +5267,290 @@ const VTTEnhanced = () => {
 															placeholder="Enter map note..."
 															className="h-8 text-xs"
 														/>
+													</div>
+												)}
+												{selectedTool === "wall" && isWarden && (
+													<div
+														className="space-y-2 border-t border-border/50 pt-2"
+														data-testid="warden-tools-wall-panel"
+													>
+														<Label className="text-xs">Wall Authoring</Label>
+														<p className="text-[10px] text-foreground/60 leading-snug">
+															Click &amp; drag on the map to draw a wall between
+															two grid corners.
+														</p>
+														<div
+															className="grid grid-cols-3 gap-1"
+															role="radiogroup"
+															aria-label="Wall type"
+														>
+															{(
+																[
+																	{ value: "wall", label: "Wall" },
+																	{ value: "door", label: "Door" },
+																	{ value: "window", label: "Window" },
+																	{ value: "terrain", label: "Terrain" },
+																	{ value: "ethereal", label: "Ethereal" },
+																	{ value: "oneway", label: "One-Way" },
+																] as const
+															).map((opt) => (
+																<label
+																	key={opt.value}
+																	data-testid={`warden-tools-wall-type-${opt.value}`}
+																	className={cn(
+																		"px-2 py-1 text-[10px] uppercase tracking-wide rounded border transition-colors cursor-pointer text-center",
+																		wallType === opt.value
+																			? "bg-primary/20 border-primary text-primary"
+																			: "bg-muted/10 border-border/40 hover:bg-muted/20",
+																	)}
+																>
+																	<input
+																		type="radio"
+																		name="vtt-wall-type"
+																		value={opt.value}
+																		checked={wallType === opt.value}
+																		onChange={() => setWallType(opt.value)}
+																		className="sr-only"
+																	/>
+																	{opt.label}
+																</label>
+															))}
+														</div>
+														{wallType === "door" && (
+															<div
+																className="grid grid-cols-2 gap-1"
+																role="radiogroup"
+																aria-label="New door state"
+															>
+																{(["closed", "open"] as const).map((state) => (
+																	<label
+																		key={state}
+																		data-testid={`warden-tools-wall-door-state-${state}`}
+																		className={cn(
+																			"px-2 py-1 text-[10px] uppercase tracking-wide rounded border transition-colors cursor-pointer text-center",
+																			wallDoorState === state
+																				? "bg-primary/20 border-primary text-primary"
+																				: "bg-muted/10 border-border/40 hover:bg-muted/20",
+																		)}
+																	>
+																		<input
+																			type="radio"
+																			name="vtt-wall-door-state"
+																			value={state}
+																			checked={wallDoorState === state}
+																			onChange={() => setWallDoorState(state)}
+																			className="sr-only"
+																		/>
+																		{state}
+																	</label>
+																))}
+															</div>
+														)}
+														{wallType === "oneway" && (
+															<div
+																className="grid grid-cols-3 gap-1"
+																role="radiogroup"
+																aria-label="One-way wall direction"
+															>
+																{(["left", "right", "both"] as const).map(
+																	(direction) => (
+																		<label
+																			key={direction}
+																			data-testid={`warden-tools-wall-direction-${direction}`}
+																			className={cn(
+																				"px-2 py-1 text-[10px] uppercase tracking-wide rounded border transition-colors cursor-pointer text-center",
+																				wallDirection === direction
+																					? "bg-primary/20 border-primary text-primary"
+																					: "bg-muted/10 border-border/40 hover:bg-muted/20",
+																			)}
+																		>
+																			<input
+																				type="radio"
+																				name="vtt-wall-direction"
+																				value={direction}
+																				checked={wallDirection === direction}
+																				onChange={() =>
+																					setWallDirection(direction)
+																				}
+																				className="sr-only"
+																			/>
+																			{direction}
+																		</label>
+																	),
+																)}
+															</div>
+														)}
+														{currentScene?.walls &&
+														currentScene.walls.length > 0 ? (
+															<>
+																<div className="space-y-1 max-h-40 overflow-y-auto pr-1">
+																	{currentScene.walls.map((wall, idx) => (
+																		<div
+																			key={wall.id}
+																			data-testid={`warden-tools-placed-wall-${wall.id}`}
+																			className="flex items-center justify-between gap-1.5 rounded border border-border/50 bg-muted/20 px-2 py-1"
+																		>
+																			<div className="flex items-center gap-1.5 min-w-0 flex-1">
+																				<span className="text-[10px] text-foreground/50 font-mono flex-shrink-0">
+																					#{idx + 1}
+																				</span>
+																				<span className="truncate text-[11px] font-medium capitalize">
+																					{wall.type}
+																				</span>
+																				{wall.type === "door" && (
+																					<span className="text-[10px] text-foreground/50 flex-shrink-0 capitalize">
+																						{wall.state ??
+																							(wall.doorOpen
+																								? "open"
+																								: "closed")}
+																					</span>
+																				)}
+																				{(wall.type === "oneway" ||
+																					wall.oneWay) && (
+																					<span className="text-[10px] text-foreground/50 flex-shrink-0 capitalize">
+																						{typeof wall.direction === "string"
+																							? wall.direction
+																							: "left"}
+																					</span>
+																				)}
+																				<span className="text-[10px] text-foreground/50 flex-shrink-0">
+																					({wall.x1},{wall.y1})&rarr;({wall.x2},
+																					{wall.y2})
+																				</span>
+																			</div>
+																			{wall.type === "door" && (
+																				<Button
+																					type="button"
+																					size="sm"
+																					variant="ghost"
+																					className="h-6 px-2 text-[10px] flex-shrink-0"
+																					data-testid={`warden-tools-toggle-door-${wall.id}`}
+																					onClick={() =>
+																						handleToggleWallDoorState(wall)
+																					}
+																					aria-label={`Toggle door ${idx + 1}`}
+																				>
+																					{wall.state === "open" ||
+																					wall.doorOpen
+																						? "Close"
+																						: "Open"}
+																				</Button>
+																			)}
+																			<Button
+																				type="button"
+																				size="sm"
+																				variant="ghost"
+																				className="h-6 px-2 text-[10px] text-destructive hover:bg-destructive/10 flex-shrink-0"
+																				data-testid={`warden-tools-delete-wall-${wall.id}`}
+																				onClick={() =>
+																					handleDeleteWall(wall.id)
+																				}
+																				aria-label={`Delete wall ${idx + 1}`}
+																			>
+																				Del
+																			</Button>
+																		</div>
+																	))}
+																</div>
+																<Button
+																	type="button"
+																	size="sm"
+																	variant="outline"
+																	className="w-full h-7 text-[10px]"
+																	data-testid="warden-tools-clear-all-walls"
+																	onClick={handleClearAllWalls}
+																>
+																	Clear All Walls
+																</Button>
+															</>
+														) : (
+															<p className="text-[10px] italic text-foreground/40 text-center py-2">
+																No walls placed yet.
+															</p>
+														)}
+													</div>
+												)}
+												{selectedTool === "light" && isWarden && (
+													<div
+														className="space-y-2 border-t border-border/50 pt-2"
+														data-testid="warden-tools-light-panel"
+													>
+														<Label className="text-xs">Light Authoring</Label>
+														<p className="text-[10px] text-foreground/60 leading-snug">
+															Click the map to place a configurable light at
+															that grid square.
+														</p>
+														{currentScene?.lights &&
+														currentScene.lights.length > 0 ? (
+															<div className="space-y-1 max-h-40 overflow-y-auto pr-1">
+																{currentScene.lights.map((light) => (
+																	<div
+																		key={light.id}
+																		data-testid={`warden-tools-placed-light-${light.id}`}
+																		className="flex items-center justify-between gap-1.5 rounded border border-border/50 bg-muted/20 px-2 py-1"
+																	>
+																		<div className="flex items-center gap-1.5 min-w-0 flex-1">
+																			<svg
+																				className="w-2.5 h-2.5 flex-shrink-0 text-border/40"
+																				viewBox="0 0 10 10"
+																				role="img"
+																			>
+																				<title>
+																					{`${light.name?.trim() || "Light"} color`}
+																				</title>
+																				<circle
+																					cx="5"
+																					cy="5"
+																					r="4.5"
+																					fill={light.color}
+																					stroke="currentColor"
+																				/>
+																			</svg>
+																			<span className="truncate text-[11px] font-medium">
+																				{light.name?.trim() || "Light"}
+																			</span>
+																			<span className="text-[10px] text-foreground/50 flex-shrink-0">
+																				({light.x.toFixed(0)},{" "}
+																				{light.y.toFixed(0)})
+																			</span>
+																		</div>
+																		<div className="flex gap-1 flex-shrink-0">
+																			<Button
+																				type="button"
+																				size="sm"
+																				variant="ghost"
+																				className="h-6 px-2 text-[10px]"
+																				data-testid={`warden-tools-edit-light-${light.id}`}
+																				onClick={() => {
+																					setLightDialogTargetId(light.id);
+																					setLightDialogOpen(true);
+																				}}
+																				aria-label={`Edit light ${light.name || light.id}`}
+																			>
+																				Edit
+																			</Button>
+																			<Button
+																				type="button"
+																				size="sm"
+																				variant="ghost"
+																				className="h-6 px-2 text-[10px] text-destructive hover:bg-destructive/10"
+																				data-testid={`warden-tools-delete-light-${light.id}`}
+																				onClick={() =>
+																					handleDeleteLightFromDialog(light.id)
+																				}
+																				aria-label={`Delete light ${light.name || light.id}`}
+																			>
+																				Del
+																			</Button>
+																		</div>
+																	</div>
+																))}
+															</div>
+														) : (
+															<p className="text-[10px] italic text-foreground/40 text-center py-2">
+																No lights placed yet.
+															</p>
+														)}
 													</div>
 												)}
 											</div>
@@ -4663,6 +6142,28 @@ const VTTEnhanced = () => {
 								gridSize={gridSize}
 								zoom={zoom}
 							/>
+							{/* P1-2 wall authoring: live drag-preview ghost line. */}
+							{selectedTool === "wall" && isWarden && wallPreview && (
+								<svg
+									data-testid="vtt-wall-preview"
+									className="absolute top-0 left-0 pointer-events-none"
+									width={(currentScene?.width ?? 20) * gridSize * zoom}
+									height={(currentScene?.height ?? 20) * gridSize * zoom}
+								>
+									<title>Wall drag preview</title>
+									<line
+										x1={wallPreview.x1 * gridSize * zoom}
+										y1={wallPreview.y1 * gridSize * zoom}
+										x2={wallPreview.x2 * gridSize * zoom}
+										y2={wallPreview.y2 * gridSize * zoom}
+										stroke="#f59e0b"
+										strokeWidth={3}
+										strokeDasharray="6 4"
+										strokeLinecap="round"
+										opacity={0.85}
+									/>
+								</svg>
+							)}
 							{/* Floating token action bar when a token is selected. */}
 							{activeToken && currentScene && (
 								<TokenActionBar
@@ -4674,9 +6175,15 @@ const VTTEnhanced = () => {
 									isWarden={isWarden}
 									onUpdate={(patch) => updateToken(activeToken.id, patch)}
 									onDelete={() => {
-										removeToken(activeToken.id);
-										setActiveTokenId(null);
+										if (activeTokenIds.length > 1) {
+											removeSelectedTokens();
+										} else {
+											removeToken(activeToken.id);
+										}
 									}}
+									onAddToGroup={isWarden ? groupSelectedTokens : undefined}
+									onToggleTarget={() => toggleTargetToken(activeToken.id)}
+									isTargeted={selectedTargetIds.includes(activeToken.id)}
 									onOpenSheet={
 										activeToken.characterId
 											? () =>
@@ -4689,6 +6196,49 @@ const VTTEnhanced = () => {
 									}
 									onClose={() => setActiveTokenId(null)}
 								/>
+							)}
+							{selectedTargetTokens.length > 0 && (
+								<div
+									className="absolute top-3 left-3 z-30 max-w-xs rounded-md border border-red-500/40 bg-card/90 p-2 text-xs shadow-lg backdrop-blur-md"
+									data-testid="vtt-target-hud"
+								>
+									<div className="flex items-center justify-between gap-2">
+										<div className="min-w-0">
+											<div className="flex items-center gap-1.5 font-semibold text-red-300">
+												<Target className="h-3.5 w-3.5" aria-hidden />
+												<span>
+													{selectedTargetTokens.length} target
+													{selectedTargetTokens.length === 1 ? "" : "s"}
+												</span>
+											</div>
+											<div className="mt-1 truncate text-[10px] text-muted-foreground">
+												{selectedTargetTokens
+													.map((token) => token.name)
+													.join(", ")}
+											</div>
+										</div>
+										<Button
+											type="button"
+											size="sm"
+											variant="ghost"
+											className="h-7 px-2 text-[10px]"
+											onClick={clearTargetTokens}
+										>
+											Clear
+										</Button>
+									</div>
+									{isWarden && (
+										<Button
+											type="button"
+											size="sm"
+											variant="outline"
+											className="mt-2 h-7 w-full text-[10px]"
+											onClick={handleApplyPendingResolutionToTargets}
+										>
+											Apply Pending Action
+										</Button>
+									)}
+								</div>
 							)}
 							<div
 								className={cn(
@@ -4705,6 +6255,8 @@ const VTTEnhanced = () => {
 									onMouseMove={handleMapMouseMove}
 									onMouseUp={handleMapMouseUp}
 									onMouseLeave={handleMapMouseUp}
+									onDragOver={handleMapDragOver}
+									onDrop={handleMapDrop}
 									onContextMenu={(e) => {
 										e.preventDefault();
 										// Suppress the context menu if the user just finished a
@@ -4773,7 +6325,10 @@ const VTTEnhanced = () => {
 												zoom={zoom}
 												showGrid={showGrid}
 												activeTokenId={activeTokenId}
+												activeTokenIds={activeTokenIds}
+												targetedTokenIds={selectedTargetIds}
 												activeInitiativeTokenId={activeInitiativeTokenId}
+												onTokenPointerSelect={handleTokenPointerSelect}
 												setActiveTokenId={setActiveTokenId}
 											/>
 										) : (
@@ -4791,7 +6346,11 @@ const VTTEnhanced = () => {
 												isWarden={isWarden}
 												effectiveVisibleLayers={effectiveVisibleLayers}
 												activeTokenId={activeTokenId}
+												activeTokenIds={activeTokenIds}
+												targetedTokenIds={selectedTargetIds}
 												activeInitiativeTokenId={activeInitiativeTokenId}
+												currentUserId={user?.id ?? null}
+												onTokenPointerSelect={handleTokenPointerSelect}
 												setActiveTokenId={setActiveTokenId}
 												updateToken={updateToken}
 												onRequestZoom={handleRequestZoom}
@@ -4801,6 +6360,20 @@ const VTTEnhanced = () => {
 												onInitError={onPixiInitError}
 											/>
 										)}
+										{selectionMarqueeRect &&
+											(selectionMarqueeRect.width > 2 ||
+												selectionMarqueeRect.height > 2) && (
+												<DynamicStyle
+													data-testid="vtt-selection-marquee"
+													className="absolute pointer-events-none z-[30] border border-primary bg-primary/15"
+													vars={{
+														left: `${selectionMarqueeRect.left}px`,
+														top: `${selectionMarqueeRect.top}px`,
+														width: `${selectionMarqueeRect.width}px`,
+														height: `${selectionMarqueeRect.height}px`,
+													}}
+												/>
+											)}
 										{currentScene && pixiInitFailed && (
 											<div className="absolute top-3 right-3 z-[25] rounded-md border border-amber-500/40 bg-background/95 px-3 py-2 shadow-lg backdrop-blur-sm">
 												<div className="flex items-center gap-2 text-xs font-semibold text-amber-500">
@@ -4999,9 +6572,24 @@ const VTTEnhanced = () => {
 															/>
 														);
 													}
+													if (drawing.type === "cone") {
+														return (
+															<div
+																key={drawing.id}
+																data-aoe-id={drawing.id}
+																className={cn(
+																	"vtt-drawing-cone",
+																	`vtt-drawing-cone-${toSafeClassName(drawing.id)}`,
+																)}
+															/>
+														);
+													}
 													return (
 														<div
 															key={drawing.id}
+															data-aoe-id={
+																drawing.kind === "aoe" ? drawing.id : undefined
+															}
 															className={cn(
 																"vtt-drawing-shape absolute border-solid box-border",
 																drawing.type === "circle" && "rounded-full",
@@ -5088,6 +6676,23 @@ const VTTEnhanced = () => {
 																? `${distance.toFixed(1)}u (${(distance * 5).toFixed(0)} ft)`
 																: `${measureShape} ${measureRadius * 5}ft`}
 														</div>
+														{isWarden && (
+															<button
+																type="button"
+																data-testid="vtt-pin-measurement"
+																onClick={(e) => {
+																	e.stopPropagation();
+																	handlePinMeasurement();
+																}}
+																className={cn(
+																	"vtt-measurement-pin",
+																	"vtt-measurement-label-active",
+																)}
+																aria-label="Pin AoE template to scene"
+															>
+																Pin
+															</button>
+														)}
 													</div>
 												);
 											})()}
@@ -5316,6 +6921,101 @@ const VTTEnhanced = () => {
 													+ Track
 												</Button>
 											</div>
+											{audioTracks.length > 0 && (
+												<div
+													className="mb-2 rounded-md border border-primary/30 bg-primary/10 p-2"
+													data-testid="vtt-audio-queue"
+												>
+													<div className="flex items-center justify-between gap-2">
+														<div className="min-w-0">
+															<div className="text-[11px] font-semibold text-primary">
+																Queue
+															</div>
+															<div className="truncate text-[10px] text-foreground/70">
+																{currentQueuedAudioTrack
+																	? `Now playing: ${currentQueuedAudioTrack.name}`
+																	: `${playableAudioTracks.length} track${playableAudioTracks.length === 1 ? "" : "s"} ready`}
+															</div>
+														</div>
+														<div className="flex items-center gap-1">
+															<Button
+																variant="ghost"
+																size="sm"
+																className="h-7 w-7 p-0"
+																disabled={audioPlaylistState.queue.length === 0}
+																onClick={() =>
+																	void vttAudioManager.playPrevious()
+																}
+																aria-label="Previous queued audio track"
+															>
+																<ArrowLeft
+																	className="h-3.5 w-3.5"
+																	aria-hidden
+																/>
+															</Button>
+															<Button
+																variant="outline"
+																size="sm"
+																className="h-7 w-7 p-0"
+																disabled={playableAudioTracks.length === 0}
+																onClick={() => {
+																	if (audioPlaylistState.isPlaying) {
+																		void vttAudioManager.pausePlaylist();
+																		return;
+																	}
+																	if (audioPlaylistState.currentTrackId) {
+																		void vttAudioManager.resumePlaylist();
+																		return;
+																	}
+																	playAudioQueue(0);
+																}}
+																aria-label={
+																	audioPlaylistState.isPlaying
+																		? "Pause audio queue"
+																		: "Play audio queue"
+																}
+															>
+																{audioPlaylistState.isPlaying ? (
+																	<Pause className="h-3.5 w-3.5" aria-hidden />
+																) : (
+																	<Play className="h-3.5 w-3.5" aria-hidden />
+																)}
+															</Button>
+															<Button
+																variant="ghost"
+																size="sm"
+																className="h-7 w-7 p-0"
+																disabled={audioPlaylistState.queue.length === 0}
+																onClick={() => {
+																	void vttAudioManager.stopPlaylist();
+																	updateSceneAudioMetadata(null, null, false);
+																}}
+																aria-label="Stop audio queue"
+															>
+																<Square className="h-3.5 w-3.5" aria-hidden />
+															</Button>
+															<Button
+																variant="ghost"
+																size="sm"
+																className="h-7 w-7 p-0"
+																disabled={audioPlaylistState.queue.length === 0}
+																onClick={() => void vttAudioManager.playNext()}
+																aria-label="Next queued audio track"
+															>
+																<ArrowRight
+																	className="h-3.5 w-3.5"
+																	aria-hidden
+																/>
+															</Button>
+														</div>
+													</div>
+													{audioPlaylistState.error && (
+														<div className="mt-1 text-[10px] text-destructive">
+															{audioPlaylistState.error}
+														</div>
+													)}
+												</div>
+											)}
 											{audioTracks.length === 0 ? (
 												<AscendantText className="block text-xs text-foreground/70 py-1">
 													No tracks uploaded for this session yet.
@@ -5335,9 +7035,38 @@ const VTTEnhanced = () => {
 																	variant="ghost"
 																	size="sm"
 																	className="h-6 w-6 p-0"
+																	disabled={!track.url}
+																	onClick={() =>
+																		playAudioQueue(
+																			playableAudioTracks.findIndex(
+																				(item) => item.id === track.id,
+																			),
+																		)
+																	}
+																	aria-label={`Start queue at ${track.name}`}
+																	title="Start queue here"
+																>
+																	<ArrowRight
+																		className="w-3.5 h-3.5"
+																		aria-hidden
+																	/>
+																</Button>
+																<Button
+																	variant="ghost"
+																	size="sm"
+																	className="h-6 w-6 p-0"
 																	onClick={() => {
 																		if (track.is_playing) {
 																			vttAudioManager.stopTrack(track.id);
+																			if (
+																				currentScene?.musicTrackId === track.id
+																			) {
+																				updateSceneAudioMetadata(
+																					null,
+																					null,
+																					false,
+																				);
+																			}
 																			if (track.isCampaignLibrary) {
 																				setCampaignLibraryTrackPlaying(
 																					track.id,
@@ -5352,6 +7081,11 @@ const VTTEnhanced = () => {
 																			}
 																		} else {
 																			vttAudioManager.playTrack(track);
+																			updateSceneAudioMetadata(
+																				null,
+																				track.id,
+																				true,
+																			);
 																			if (track.isCampaignLibrary) {
 																				setCampaignLibraryTrackPlaying(
 																					track.id,
@@ -5407,6 +7141,7 @@ const VTTEnhanced = () => {
 									<div className="flex-1 overflow-y-auto px-4 py-3">
 										<ProtocolWardenTools
 											campaignId={campaignId || ""}
+											isMobile={isMobile}
 											onRoll={vttRealtime.rollAndBroadcast}
 											customAssets={customAssets}
 											onUploadAsset={uploadCustomAsset}
@@ -5573,6 +7308,18 @@ const VTTEnhanced = () => {
 													);
 												}
 											}}
+											onWeatherChange={(w) => {
+												if (!currentScene) return;
+												const nextScene = {
+													...currentScene,
+													weather: w ?? undefined,
+												};
+												updateScene(nextScene);
+												vttRealtime.broadcastSceneSync(
+													upsertVttScene(scenes, nextScene),
+													getPersistedSceneId(nextScene.id),
+												);
+											}}
 											onShareHandout={(url: string, name?: string) => {
 												vttRealtime.rollAndBroadcast(
 													`[Handout] Warden Shared: ${name || "Asset"}\n[URL](${url})`,
@@ -5595,6 +7342,8 @@ const VTTEnhanced = () => {
 													updateScene({
 														musicMood: null,
 														musicAutoplay: false,
+														musicPlaylistId: null,
+														musicTrackId: null,
 													});
 													vttRealtime.broadcastAudioSync("music_stop", "stop");
 													toast({ title: "Music Stopped" });
@@ -5606,6 +7355,8 @@ const VTTEnhanced = () => {
 													updateScene({
 														musicMood: musicId as MusicMood,
 														musicAutoplay: true,
+														musicPlaylistId: null,
+														musicTrackId: null,
 													});
 													vttRealtime.broadcastAudioSync(
 														"music_change",
@@ -5652,367 +7403,665 @@ const VTTEnhanced = () => {
 								}
 							>
 								{activeToken && (
-								<div
-									data-testid="vtt-active-token-panel"
-									data-active-token-pos={`${activeToken.x},${activeToken.y}`}
-								>
-									<AscendantWindow title="ACTIVE TOKEN" density="compact">
-										<div className="space-y-3 text-xs">
-											<div>
-												<Label className="text-xs">Name</Label>
-												{isWarden ? (
-													<Input
-														value={activeToken.name}
-														onChange={(e) =>
-															updateToken(activeToken.id, {
-																name: e.target.value,
-															})
-														}
-														className="h-8 text-xs"
-													/>
-												) : (
-													<p className="mt-1 text-sm">{activeToken.name}</p>
-												)}
-											</div>
-											<div className="grid grid-cols-2 gap-2">
-												<div>
-													<Label className="text-xs">Size</Label>
-													<Select
-														value={activeToken.size}
-														onValueChange={(value) =>
-															updateToken(activeToken.id, {
-																size: value as PlacedToken["size"],
-															})
-														}
-														disabled={!isWarden}
+									<div
+										data-testid="vtt-active-token-panel"
+										data-active-token-pos={`${activeToken.x},${activeToken.y}`}
+									>
+										<AscendantWindow title="ACTIVE TOKEN" density="compact">
+											<div className="space-y-3 text-xs">
+												{selectedTokens.length > 1 && (
+													<div
+														className="rounded-md border border-primary/30 bg-primary/10 p-2 space-y-2"
+														data-testid="vtt-multi-token-summary"
 													>
-														<SelectTrigger className="h-8 text-xs">
-															<SelectValue placeholder="Size" />
-														</SelectTrigger>
-														<SelectContent>
-															<SelectItem value="small">Small</SelectItem>
-															<SelectItem value="medium">Medium</SelectItem>
-															<SelectItem value="large">Large</SelectItem>
-															<SelectItem value="huge">Huge</SelectItem>
-														</SelectContent>
-													</Select>
-												</div>
-												<div>
-													<Label className="text-xs">Layer</Label>
-													<Select
-														value={String(activeToken.layer)}
-														onValueChange={(value) =>
-															updateToken(activeToken.id, {
-																layer: Number(value),
-															})
-														}
-														disabled={!isWarden}
-													>
-														<SelectTrigger className="h-8 text-xs">
-															<SelectValue placeholder="Layer" />
-														</SelectTrigger>
-														<SelectContent>
-															{LAYER_OPTIONS.filter(
-																(layer) => isWarden || layer.id !== 3,
-															).map((layer) => (
-																<SelectItem
-																	key={layer.id}
-																	value={String(layer.id)}
-																>
-																	{layer.label}
-																</SelectItem>
-															))}
-														</SelectContent>
-													</Select>
-												</div>
-											</div>
-											{isWarden && (
-												<div className="grid grid-cols-3 gap-2">
-													<div>
-														<Label className="text-xs">HP</Label>
-														<Input
-															type="number"
-															value={activeToken.hp ?? 0}
-															onChange={(e) => {
-																const v = Number(e.target.value) || 0;
-																updateToken(activeToken.id, { hp: v });
-																syncCharacterHP(activeToken.characterId, v);
-															}}
-															aria-label="Hit points"
-															className="h-8 text-xs"
-														/>
-													</div>
-													<div>
-														<Label className="text-xs">Max</Label>
-														<Input
-															type="number"
-															value={activeToken.maxHp ?? 0}
-															onChange={(e) =>
-																updateToken(activeToken.id, {
-																	maxHp: Number(e.target.value) || 0,
-																})
-															}
-															aria-label="Max hit points"
-															className="h-8 text-xs"
-														/>
-													</div>
-													<div>
-														<Label className="text-xs">AC</Label>
-														<Input
-															type="number"
-															value={activeToken.ac ?? 10}
-															onChange={(e) =>
-																updateToken(activeToken.id, {
-																	ac: Number(e.target.value) || 10,
-																})
-															}
-															aria-label="Armor class"
-															className="h-8 text-xs"
-														/>
-													</div>
-												</div>
-											)}
-											<div className="grid grid-cols-2 gap-2">
-												<div className="flex items-center gap-2">
-													<input
-														type="checkbox"
-														checked={activeToken.visible}
-														onChange={(e) =>
-															updateToken(activeToken.id, {
-																visible: e.target.checked,
-															})
-														}
-														aria-label="Toggle token visibility"
-														className="w-4 h-4"
-														disabled={!isWarden}
-													/>
-													<span>Visible</span>
-												</div>
-												<div className="flex items-center gap-2">
-													<input
-														type="checkbox"
-														checked={activeToken.locked}
-														onChange={(e) =>
-															updateToken(activeToken.id, {
-																locked: e.target.checked,
-															})
-														}
-														aria-label="Toggle token lock"
-														className="w-4 h-4"
-														disabled={!isWarden}
-													/>
-													<span>Locked</span>
-												</div>
-											</div>
-											{isWarden && (
-												<div className="space-y-2 border-t border-border/50 pt-2">
-													<Label className="text-xs font-semibold">
-														Conditions
-													</Label>
-													<div className="flex flex-wrap gap-1">
-														{(
-															[
-																"Blinded",
-																"Charmed",
-																"Deafened",
-																"Frightened",
-																"Grappled",
-																"Incapacitated",
-																"Invisible",
-																"Paralyzed",
-																"Petrified",
-																"Poisoned",
-																"Prone",
-																"Restrained",
-																"Stunned",
-																"Unconscious",
-																"Concentrating",
-																"Exhaustion",
-															] as const
-														).map((cond) => {
-															const active =
-																activeToken.conditions?.includes(cond);
-															return (
-																<button
+														<div className="flex items-center justify-between gap-2">
+															<div>
+																<div className="text-xs font-semibold">
+																	{selectedTokens.length} tokens selected
+																</div>
+																<div className="text-[10px] text-muted-foreground">
+																	Shift-click tokens to add or remove them.
+																</div>
+															</div>
+															<Button
+																type="button"
+																size="sm"
+																variant="ghost"
+																className="h-7 text-[10px]"
+																onClick={() => setActiveTokenId(null)}
+															>
+																Clear
+															</Button>
+														</div>
+														{isWarden && (
+															<div className="grid grid-cols-2 gap-1">
+																<Button
 																	type="button"
-																	key={cond}
-																	onClick={() => {
-																		const current =
-																			activeToken.conditions || [];
-																		const next = active
-																			? current.filter((c) => c !== cond)
-																			: [...current, cond];
-																		updateToken(activeToken.id, {
-																			conditions: next,
-																		});
-																	}}
-																	className={cn(
-																		"text-[9px] px-1.5 py-0.5 rounded-full border transition-all",
-																		active
-																			? "bg-amber-500/30 border-amber-500 text-amber-300"
-																			: "border-border/50 text-foreground/70 hover:bg-muted/50",
-																	)}
+																	size="sm"
+																	variant="outline"
+																	className="h-7 text-[10px]"
+																	onClick={() => groupSelectedTokens()}
 																>
-																	{cond}
-																</button>
-															);
-														})}
+																	Group
+																</Button>
+																<Button
+																	type="button"
+																	size="sm"
+																	variant="outline"
+																	className="h-7 text-[10px]"
+																	onClick={() =>
+																		toggleSelectedTokenPatch("visible")
+																	}
+																>
+																	Toggle Visibility
+																</Button>
+																<Button
+																	type="button"
+																	size="sm"
+																	variant="outline"
+																	className="h-7 text-[10px]"
+																	onClick={() =>
+																		toggleSelectedTokenPatch("locked")
+																	}
+																>
+																	Toggle Lock
+																</Button>
+																<Button
+																	type="button"
+																	size="sm"
+																	variant="destructive"
+																	className="h-7 text-[10px]"
+																	onClick={() => removeSelectedTokens()}
+																>
+																	Delete
+																</Button>
+															</div>
+														)}
 													</div>
+												)}
+												{selectedTargetTokens.length > 0 && (
+													<div
+														className="rounded-md border border-red-500/30 bg-red-500/10 p-2 space-y-2"
+														data-testid="vtt-target-summary"
+													>
+														<div className="flex items-center justify-between gap-2">
+															<div className="min-w-0">
+																<div className="flex items-center gap-1.5 text-xs font-semibold text-red-300">
+																	<Target className="h-3.5 w-3.5" aria-hidden />
+																	<span>
+																		{selectedTargetTokens.length} target
+																		{selectedTargetTokens.length === 1
+																			? ""
+																			: "s"}
+																	</span>
+																</div>
+																<div className="mt-1 truncate text-[10px] text-muted-foreground">
+																	{selectedTargetTokens
+																		.map((token) => token.name)
+																		.join(", ")}
+																</div>
+															</div>
+															<Button
+																type="button"
+																size="sm"
+																variant="ghost"
+																className="h-7 text-[10px]"
+																onClick={clearTargetTokens}
+															>
+																Clear
+															</Button>
+														</div>
+														{isWarden && (
+															<Button
+																type="button"
+																size="sm"
+																variant="outline"
+																className="h-7 w-full text-[10px]"
+																onClick={handleApplyPendingResolutionToTargets}
+															>
+																Apply Pending Action
+															</Button>
+														)}
+													</div>
+												)}
+												<div>
+													<Label className="text-xs">Name</Label>
+													{isWarden ? (
+														<Input
+															value={activeToken.name}
+															onChange={(e) =>
+																updateToken(activeToken.id, {
+																	name: e.target.value,
+																})
+															}
+															className="h-8 text-xs"
+														/>
+													) : (
+														<p className="mt-1 text-sm">{activeToken.name}</p>
+													)}
 												</div>
-											)}
-											{isWarden && (
-												<div className="grid grid-cols-2 gap-2 border-t border-border/50 pt-2">
+												<div className="grid grid-cols-2 gap-2">
 													<div>
-														<Label className="text-xs">Aura (sq)</Label>
-														<Input
-															type="number"
-															min={0}
-															max={20}
-															value={activeToken.auraRadius ?? 0}
-															onChange={(e) =>
-																updateToken(activeToken.id, {
-																	auraRadius: Number(e.target.value) || 0,
-																})
-															}
-															className="h-7 text-xs"
-														/>
-													</div>
-													<div>
-														<Label className="text-xs">Aura Color</Label>
-														<Input
-															type="color"
-															value={activeToken.auraColor || "#3b82f6"}
-															onChange={(e) =>
-																updateToken(activeToken.id, {
-																	auraColor: e.target.value,
-																})
-															}
-															className="h-7"
-														/>
-													</div>
-													<div>
-														<Label className="text-xs">Light (sq)</Label>
-														<Input
-															type="number"
-															min={0}
-															max={24}
-															value={activeToken.lightRadius ?? 0}
-															onChange={(e) =>
-																updateToken(activeToken.id, {
-																	lightRadius: Number(e.target.value) || 0,
-																})
-															}
-															className="h-7 text-xs"
-														/>
-													</div>
-													<div>
-														<Label className="text-xs">Bar Vis</Label>
+														<Label className="text-xs">Size</Label>
 														<Select
-															value={activeToken.barVisibility || "always"}
-															onValueChange={(v) =>
+															value={activeToken.size}
+															onValueChange={(value) =>
 																updateToken(activeToken.id, {
-																	barVisibility:
-																		v as PlacedToken["barVisibility"],
+																	size: value as PlacedToken["size"],
 																})
 															}
+															disabled={!isWarden}
 														>
-															<SelectTrigger className="h-7 text-xs">
-																<SelectValue />
+															<SelectTrigger className="h-8 text-xs">
+																<SelectValue placeholder="Size" />
 															</SelectTrigger>
 															<SelectContent>
-																<SelectItem value="always">Everyone</SelectItem>
-																<SelectItem value="owner">
-																	Owner Only
-																</SelectItem>
-																<SelectItem value="Warden">
-																	Warden Only
-																</SelectItem>
+																<SelectItem value="small">Small</SelectItem>
+																<SelectItem value="medium">Medium</SelectItem>
+																<SelectItem value="large">Large</SelectItem>
+																<SelectItem value="huge">Huge</SelectItem>
+															</SelectContent>
+														</Select>
+													</div>
+													<div>
+														<Label className="text-xs">Layer</Label>
+														<Select
+															value={String(activeToken.layer)}
+															onValueChange={(value) =>
+																updateToken(activeToken.id, {
+																	layer: Number(value),
+																})
+															}
+															disabled={!isWarden}
+														>
+															<SelectTrigger className="h-8 text-xs">
+																<SelectValue placeholder="Layer" />
+															</SelectTrigger>
+															<SelectContent>
+																{LAYER_OPTIONS.filter(
+																	(layer) => isWarden || layer.id !== 3,
+																).map((layer) => (
+																	<SelectItem
+																		key={layer.id}
+																		value={String(layer.id)}
+																	>
+																		{layer.label}
+																	</SelectItem>
+																))}
 															</SelectContent>
 														</Select>
 													</div>
 												</div>
-											)}
-											{isWarden && (
-												<div className="flex items-center gap-2">
-													<input
-														type="checkbox"
-														checked={activeToken.showNameplate ?? true}
+												{isWarden && (
+													<div className="grid grid-cols-3 gap-2">
+														<div>
+															<Label className="text-xs">HP</Label>
+															<Input
+																type="number"
+																value={activeToken.hp ?? 0}
+																onChange={(e) => {
+																	const v = Number(e.target.value) || 0;
+																	const bars = activeToken.bars?.map((bar) =>
+																		bar.id === "hp"
+																			? { ...bar, current: Math.max(0, v) }
+																			: bar,
+																	);
+																	updateToken(activeToken.id, {
+																		hp: v,
+																		hp_current: v,
+																		...(bars ? { bars } : {}),
+																	});
+																	syncCharacterHP(activeToken.characterId, v);
+																}}
+																aria-label="Hit points"
+																className="h-8 text-xs"
+															/>
+														</div>
+														<div>
+															<Label className="text-xs">Max</Label>
+															<Input
+																type="number"
+																value={activeToken.maxHp ?? 0}
+																onChange={(e) => {
+																	const v = Number(e.target.value) || 0;
+																	const bars = activeToken.bars?.map((bar) =>
+																		bar.id === "hp"
+																			? { ...bar, max: Math.max(1, v) }
+																			: bar,
+																	);
+																	updateToken(activeToken.id, {
+																		maxHp: v,
+																		hp_max: v,
+																		...(bars ? { bars } : {}),
+																	});
+																}}
+																aria-label="Max hit points"
+																className="h-8 text-xs"
+															/>
+														</div>
+														<div>
+															<Label className="text-xs">AC</Label>
+															<Input
+																type="number"
+																value={activeToken.ac ?? 10}
+																onChange={(e) =>
+																	updateToken(activeToken.id, {
+																		ac: Number(e.target.value) || 10,
+																	})
+																}
+																aria-label="Armor class"
+																className="h-8 text-xs"
+															/>
+														</div>
+													</div>
+												)}
+												{isWarden && (
+													<div
+														className="space-y-2 border-t border-border/50 pt-2"
+														data-testid="vtt-token-bars-panel"
+													>
+														<div className="flex items-center justify-between gap-2">
+															<Label className="text-xs font-semibold">
+																Bars
+															</Label>
+															<Button
+																type="button"
+																size="sm"
+																variant="outline"
+																className="h-7 text-[10px]"
+																onClick={() => addTokenBar(activeToken.id)}
+																disabled={(activeToken.bars?.length ?? 0) >= 3}
+																data-testid="vtt-token-add-bar"
+															>
+																<Plus className="h-3 w-3 mr-1" aria-hidden />
+																Add Bar
+															</Button>
+														</div>
+														{(
+															activeToken.bars ??
+															(activeToken.maxHp || activeToken.hp
+																? [
+																		{
+																			id: "hp",
+																			label: "HP",
+																			current: activeToken.hp ?? 0,
+																			max: activeToken.maxHp ?? 1,
+																			color: "#22c55e",
+																			visible: "all" as const,
+																		},
+																	]
+																: [])
+														)
+															.slice(0, 3)
+															.map((bar, barIndex) => (
+																<div
+																	key={bar.id}
+																	className="rounded-md border border-border/50 p-2 space-y-2"
+																	data-testid={`vtt-token-bar-${barIndex}`}
+																>
+																	<div className="grid grid-cols-[1fr_64px_64px] gap-1">
+																		<Input
+																			value={bar.label}
+																			onChange={(e) =>
+																				updateTokenBar(
+																					activeToken.id,
+																					barIndex,
+																					{
+																						label: e.target.value.slice(0, 24),
+																					},
+																				)
+																			}
+																			aria-label={`Bar ${barIndex + 1} label`}
+																			className="h-7 text-xs"
+																		/>
+																		<Input
+																			type="number"
+																			min={0}
+																			value={bar.current}
+																			onChange={(e) =>
+																				updateTokenBar(
+																					activeToken.id,
+																					barIndex,
+																					{
+																						current:
+																							Number(e.target.value) || 0,
+																					},
+																				)
+																			}
+																			aria-label={`Bar ${barIndex + 1} current`}
+																			className="h-7 text-xs"
+																		/>
+																		<Input
+																			type="number"
+																			min={1}
+																			value={bar.max}
+																			onChange={(e) =>
+																				updateTokenBar(
+																					activeToken.id,
+																					barIndex,
+																					{
+																						max: Number(e.target.value) || 1,
+																					},
+																				)
+																			}
+																			aria-label={`Bar ${barIndex + 1} max`}
+																			className="h-7 text-xs"
+																		/>
+																	</div>
+																	<div className="grid grid-cols-[44px_1fr_auto] gap-1 items-center">
+																		<Input
+																			type="color"
+																			value={bar.color}
+																			onChange={(e) =>
+																				updateTokenBar(
+																					activeToken.id,
+																					barIndex,
+																					{
+																						color: e.target.value,
+																					},
+																				)
+																			}
+																			aria-label={`Bar ${barIndex + 1} color`}
+																			className="h-7 p-1"
+																		/>
+																		<Select
+																			value={bar.visible}
+																			onValueChange={(value) =>
+																				updateTokenBar(
+																					activeToken.id,
+																					barIndex,
+																					{
+																						visible:
+																							value as VTTTokenBar["visible"],
+																					},
+																				)
+																			}
+																		>
+																			<SelectTrigger className="h-7 text-xs">
+																				<SelectValue />
+																			</SelectTrigger>
+																			<SelectContent>
+																				<SelectItem value="all">All</SelectItem>
+																				<SelectItem value="controllers">
+																					Controllers
+																				</SelectItem>
+																				<SelectItem value="gm">
+																					GM Only
+																				</SelectItem>
+																			</SelectContent>
+																		</Select>
+																		<Button
+																			type="button"
+																			size="icon"
+																			variant="ghost"
+																			className="h-7 w-7 text-destructive"
+																			onClick={() =>
+																				removeTokenBar(activeToken.id, barIndex)
+																			}
+																			aria-label={`Remove bar ${barIndex + 1}`}
+																			disabled={
+																				bar.id === "hp" &&
+																				(activeToken.bars?.length ?? 0) <= 1
+																			}
+																		>
+																			<X className="h-3.5 w-3.5" aria-hidden />
+																		</Button>
+																	</div>
+																</div>
+															))}
+														{(activeToken.bars?.length ?? 0) === 0 &&
+															!activeToken.hp &&
+															!activeToken.maxHp && (
+																<p className="text-[10px] text-muted-foreground">
+																	Add up to 3 token bars for HP, mana, or custom
+																	resources.
+																</p>
+															)}
+													</div>
+												)}
+												<div className="grid grid-cols-2 gap-2">
+													<div className="flex items-center gap-2">
+														<input
+															type="checkbox"
+															checked={activeToken.visible}
+															onChange={(e) =>
+																updateToken(activeToken.id, {
+																	visible: e.target.checked,
+																})
+															}
+															aria-label="Toggle token visibility"
+															className="w-4 h-4"
+															disabled={!isWarden}
+														/>
+														<span>Visible</span>
+													</div>
+													<div className="flex items-center gap-2">
+														<input
+															type="checkbox"
+															checked={activeToken.locked}
+															onChange={(e) =>
+																updateToken(activeToken.id, {
+																	locked: e.target.checked,
+																})
+															}
+															aria-label="Toggle token lock"
+															className="w-4 h-4"
+															disabled={!isWarden}
+														/>
+														<span>Locked</span>
+													</div>
+												</div>
+												{isWarden && (
+													<div className="space-y-2 border-t border-border/50 pt-2">
+														<Label className="text-xs font-semibold">
+															Conditions
+														</Label>
+														<div className="flex flex-wrap gap-1">
+															{(
+																[
+																	"Blinded",
+																	"Charmed",
+																	"Deafened",
+																	"Frightened",
+																	"Grappled",
+																	"Incapacitated",
+																	"Invisible",
+																	"Paralyzed",
+																	"Petrified",
+																	"Poisoned",
+																	"Prone",
+																	"Restrained",
+																	"Stunned",
+																	"Unconscious",
+																	"Concentrating",
+																	"Exhaustion",
+																] as const
+															).map((cond) => {
+																const active =
+																	activeToken.conditions?.includes(cond);
+																return (
+																	<button
+																		type="button"
+																		key={cond}
+																		onClick={() => {
+																			const current =
+																				activeToken.conditions || [];
+																			const next = active
+																				? current.filter((c) => c !== cond)
+																				: [...current, cond];
+																			updateToken(activeToken.id, {
+																				conditions: next,
+																			});
+																		}}
+																		className={cn(
+																			"text-[9px] px-1.5 py-0.5 rounded-full border transition-all",
+																			active
+																				? "bg-amber-500/30 border-amber-500 text-amber-300"
+																				: "border-border/50 text-foreground/70 hover:bg-muted/50",
+																		)}
+																	>
+																		{cond}
+																	</button>
+																);
+															})}
+														</div>
+													</div>
+												)}
+												{isWarden && (
+													<div className="grid grid-cols-2 gap-2 border-t border-border/50 pt-2">
+														<div>
+															<Label className="text-xs">Aura (sq)</Label>
+															<Input
+																type="number"
+																min={0}
+																max={20}
+																value={activeToken.auraRadius ?? 0}
+																onChange={(e) =>
+																	updateToken(activeToken.id, {
+																		auraRadius: Number(e.target.value) || 0,
+																	})
+																}
+																className="h-7 text-xs"
+															/>
+														</div>
+														<div>
+															<Label className="text-xs">Aura Color</Label>
+															<Input
+																type="color"
+																value={activeToken.auraColor || "#3b82f6"}
+																onChange={(e) =>
+																	updateToken(activeToken.id, {
+																		auraColor: e.target.value,
+																	})
+																}
+																className="h-7"
+															/>
+														</div>
+														<div>
+															<Label className="text-xs">Light (sq)</Label>
+															<Input
+																type="number"
+																min={0}
+																max={24}
+																value={activeToken.lightRadius ?? 0}
+																onChange={(e) =>
+																	updateToken(activeToken.id, {
+																		lightRadius: Number(e.target.value) || 0,
+																	})
+																}
+																className="h-7 text-xs"
+															/>
+														</div>
+														<div>
+															<Label className="text-xs">Bar Vis</Label>
+															<Select
+																value={activeToken.barVisibility || "always"}
+																onValueChange={(v) =>
+																	updateToken(activeToken.id, {
+																		barVisibility:
+																			v as PlacedToken["barVisibility"],
+																	})
+																}
+															>
+																<SelectTrigger className="h-7 text-xs">
+																	<SelectValue />
+																</SelectTrigger>
+																<SelectContent>
+																	<SelectItem value="always">
+																		Everyone
+																	</SelectItem>
+																	<SelectItem value="owner">
+																		Owner Only
+																	</SelectItem>
+																	<SelectItem value="Warden">
+																		Warden Only
+																	</SelectItem>
+																</SelectContent>
+															</Select>
+														</div>
+													</div>
+												)}
+												{isWarden && (
+													<div className="flex items-center gap-2">
+														<input
+															type="checkbox"
+															checked={activeToken.showNameplate ?? true}
+															onChange={(e) =>
+																updateToken(activeToken.id, {
+																	showNameplate: e.target.checked,
+																})
+															}
+															aria-label="Show nameplate"
+															className="w-3 h-3"
+														/>
+														<span className="text-xs">Show Nameplate</span>
+													</div>
+												)}
+												<div>
+													<Label className="text-xs">Rotation</Label>
+													<Input
+														type="number"
+														value={activeToken.rotation}
 														onChange={(e) =>
 															updateToken(activeToken.id, {
-																showNameplate: e.target.checked,
+																rotation: Number(e.target.value) || 0,
 															})
 														}
-														aria-label="Show nameplate"
-														className="w-3 h-3"
+														className="h-8 text-xs"
+														disabled={!isWarden}
 													/>
-													<span className="text-xs">Show Nameplate</span>
 												</div>
-											)}
-											<div>
-												<Label className="text-xs">Rotation</Label>
-												<Input
-													type="number"
-													value={activeToken.rotation}
-													onChange={(e) =>
-														updateToken(activeToken.id, {
-															rotation: Number(e.target.value) || 0,
-														})
-													}
-													className="h-8 text-xs"
-													disabled={!isWarden}
-												/>
+												{activeToken.characterId && (
+													<Button
+														variant="outline"
+														size="sm"
+														className="w-full"
+														onClick={() =>
+															window.open(
+																`/characters/${activeToken.characterId}`,
+																"_blank",
+															)
+														}
+													>
+														Open Character Sheet
+													</Button>
+												)}
+												{isWarden && (
+													<div className="flex gap-2">
+														<Button
+															variant="outline"
+															size="sm"
+															className="flex-1"
+															onClick={() => removeToken(activeToken.id)}
+														>
+															Remove
+														</Button>
+														<Button
+															variant="outline"
+															size="sm"
+															className="flex-1"
+															onClick={() => setDamageDialogOpen(true)}
+														>
+															Damage
+														</Button>
+														<Button
+															variant="outline"
+															size="sm"
+															className="flex-1"
+															onClick={() => {
+																const v =
+																	activeToken.maxHp ?? activeToken.hp ?? 0;
+																updateToken(activeToken.id, { hp: v });
+																syncCharacterHP(activeToken.characterId, v);
+															}}
+														>
+															Heal
+														</Button>
+													</div>
+												)}
 											</div>
-											{activeToken.characterId && (
-												<Button
-													variant="outline"
-													size="sm"
-													className="w-full"
-													onClick={() =>
-														window.open(
-															`/characters/${activeToken.characterId}`,
-															"_blank",
-														)
-													}
-												>
-													Open Character Sheet
-												</Button>
-											)}
-											{isWarden && (
-												<div className="flex gap-2">
-													<Button
-														variant="outline"
-														size="sm"
-														className="flex-1"
-														onClick={() => removeToken(activeToken.id)}
-													>
-														Remove
-													</Button>
-													<Button
-														variant="outline"
-														size="sm"
-														className="flex-1"
-														onClick={() => setDamageDialogOpen(true)}
-													>
-														Damage
-													</Button>
-													<Button
-														variant="outline"
-														size="sm"
-														className="flex-1"
-														onClick={() => {
-															const v =
-																activeToken.maxHp ?? activeToken.hp ?? 0;
-															updateToken(activeToken.id, { hp: v });
-															syncCharacterHP(activeToken.characterId, v);
-														}}
-													>
-														Heal
-													</Button>
-												</div>
-											)}
-										</div>
-									</AscendantWindow>
-								</div>
+										</AscendantWindow>
+									</div>
 								)}
 								{/* Character Sheet Panel: shown when active token has a characterId */}
 								{activeToken?.characterId && (
@@ -7266,6 +9315,7 @@ const VTTEnhanced = () => {
 				(() => {
 					const token = visibleTokens.find((t) => t.id === contextMenu.tokenId);
 					if (!token) return null;
+					const isTokenTargeted = selectedTargetIds.includes(token.id);
 					return (
 						<>
 							<button
@@ -7289,6 +9339,15 @@ const VTTEnhanced = () => {
 									}}
 								>
 									Select
+								</button>
+								<button
+									type="button"
+									onClick={() => {
+										toggleTargetToken(token.id);
+										setContextMenu(null);
+									}}
+								>
+									{isTokenTargeted ? "Remove Target" : "Target"}
 								</button>
 								{isWarden && (
 									<button
@@ -7397,6 +9456,8 @@ const VTTEnhanced = () => {
 				roll={vttRealtime.sharedDiceRoll}
 				onDismiss={() => vttRealtime.setSharedDiceRoll(null)}
 			/>
+			{/* Configurable light authoring dialog (P1-1, Foundry parity) */}
+			{isWarden && <LightSourceConfigDialog {...lightDialogProps} />}
 		</Layout>
 	);
 };

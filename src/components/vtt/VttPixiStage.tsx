@@ -16,7 +16,9 @@ import {
 	clampVttGridOpacity,
 	getVttBackgroundTransform,
 } from "@/lib/vtt/backgroundTransform";
+import { buildVttFogRects } from "@/lib/vtt/fogRects";
 import { getTokenFootprintPx, type TokenSize } from "@/lib/vtt/tokenSizing";
+import type { VTTTokenBar } from "@/types/vtt";
 
 type TokenBlendMode =
 	| "normal"
@@ -56,9 +58,12 @@ type PlacedToken = {
 	hp_current?: number;
 	maxHp?: number;
 	hp_max?: number;
+	bars?: VTTTokenBar[];
 	ac?: number;
 	armor_class?: number;
 	conditions?: string[];
+	ownerId?: string;
+	barVisibility?: string;
 	render?: {
 		mode?: "token" | "overlay";
 		opacity?: number;
@@ -88,8 +93,12 @@ type VttPixiStageProps = {
 	isWarden: boolean;
 	effectiveVisibleLayers: Record<number, boolean>;
 	activeTokenId: string | null;
+	activeTokenIds?: string[];
+	targetedTokenIds?: string[];
 	activeInitiativeTokenId?: string | null;
+	currentUserId?: string | null;
 	setActiveTokenId: (id: string | null) => void;
+	onTokenPointerSelect?: (tokenId: string, additive: boolean) => void;
 	updateToken: (tokenId: string, updates: Partial<PlacedToken>) => void;
 	walls?: import("@/lib/vtt").WallSegment[];
 	lightSources?: import("@/lib/vtt").LightSource[];
@@ -109,7 +118,23 @@ type VttPixiStageProps = {
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
 
-type PixiRendererStatus = "waiting-for-layout" | "initializing" | "ready" | "failed";
+const hexToPixiColor = (color: string, fallback = 0x22c55e) => {
+	const normalized = color.trim().replace(/^#/, "");
+	if (!/^[0-9a-f]{6}$/i.test(normalized)) return fallback;
+	return Number.parseInt(normalized, 16);
+};
+
+const isAdditivePointerSelection = (event: {
+	shiftKey?: boolean;
+	ctrlKey?: boolean;
+	metaKey?: boolean;
+}) => Boolean(event.shiftKey || event.ctrlKey || event.metaKey);
+
+type PixiRendererStatus =
+	| "waiting-for-layout"
+	| "initializing"
+	| "ready"
+	| "failed";
 
 const VTT_MAX_RENDER_RESOLUTION = 1.5;
 const VTT_INIT_STABLE_FRAME_COUNT = 2;
@@ -175,8 +200,12 @@ export function VttPixiStage({
 	isWarden,
 	effectiveVisibleLayers,
 	activeTokenId = null,
+	activeTokenIds = [],
+	targetedTokenIds = [],
 	activeInitiativeTokenId = null,
+	currentUserId = null,
 	setActiveTokenId,
+	onTokenPointerSelect,
 	updateToken,
 	walls = [],
 	lightSources = [],
@@ -396,10 +425,7 @@ export function VttPixiStage({
 			const maxDim = Math.max(canvasW, canvasH);
 			const safeResolution =
 				maxDim * desiredRes > GPU_MAX_TEXTURE
-					? Math.max(
-							0.5,
-							Math.floor((GPU_MAX_TEXTURE / maxDim) * 100) / 100,
-						)
+					? Math.max(0.5, Math.floor((GPU_MAX_TEXTURE / maxDim) * 100) / 100)
 					: desiredRes;
 
 			// Attempt init with progressively lower settings on failure.
@@ -984,13 +1010,13 @@ export function VttPixiStage({
 			const fg = new Graphics();
 			fg.alpha = isWarden ? 0.5 : 0.85;
 			const step = gridSize * zoom;
-			for (let y = 0; y < scene.fogData.length; y += 1) {
-				const row = scene.fogData[y];
-				if (!row) continue;
-				for (let x = 0; x < row.length; x += 1) {
-					if (row[x]) continue;
-					fg.rect(x * step, y * step, step, step);
-				}
+			for (const rect of buildVttFogRects(scene.fogData)) {
+				fg.rect(
+					rect.rx * step,
+					rect.ry * step,
+					rect.width * step,
+					rect.height * step,
+				);
 			}
 
 			fg.fill({ color: 0x000000, alpha: 0.8 });
@@ -1147,6 +1173,9 @@ export function VttPixiStage({
 					(!!token.imageUrl &&
 						(token.imageUrl.includes("/generated/props/") ||
 							token.imageUrl.includes("/generated/effects/")));
+				const isSelected =
+					activeTokenId === token.id || activeTokenIds.includes(token.id);
+				const isTargeted = targetedTokenIds.includes(token.id);
 
 				const container = new Container();
 				container.x = token.x * gridSize * zoom;
@@ -1187,11 +1216,22 @@ export function VttPixiStage({
 						glow.circle(size / 2, size / 2, size / 2 + 4);
 						glow.fill({ color: 0x10b981, alpha: 0.3 });
 						container.addChild(glow);
-					} else if (activeTokenId === token.id) {
+					} else if (isSelected) {
 						tokenBg.stroke({ width: 3, color: 0xfbbf24, alpha: 0.9 });
 					}
 				}
 				container.addChild(tokenBg);
+				if (isTargeted) {
+					const targetRing = new Graphics();
+					targetRing.circle(size / 2, size / 2, size / 2 + 7);
+					targetRing.stroke({ width: 3, color: 0xef4444, alpha: 0.95 });
+					targetRing.moveTo(size / 2 - 8, size / 2);
+					targetRing.lineTo(size / 2 + 8, size / 2);
+					targetRing.moveTo(size / 2, size / 2 - 8);
+					targetRing.lineTo(size / 2, size / 2 + 8);
+					targetRing.stroke({ width: 2, color: 0xef4444, alpha: 0.95 });
+					container.addChild(targetRing);
+				}
 
 				if (token.imageUrl) {
 					try {
@@ -1244,10 +1284,21 @@ export function VttPixiStage({
 
 				// Draw Status Bars (HP, AC, etc)
 				if (!isOverlayToken) {
-					const isSelected =
-						activeTokenId === token.id || activeInitiativeTokenId === token.id;
+					const showSelectedBars =
+						isSelected || activeInitiativeTokenId === token.id;
 					// Only show bars if token is selected/hovered (or always if Warden config dictates, but for now selected)
-					if (isSelected || isWarden) {
+					const globalBarVisible =
+						isWarden ||
+						token.barVisibility === "always" ||
+						(token.barVisibility === "owner" &&
+							token.ownerId === currentUserId) ||
+						!token.barVisibility;
+					if (
+						(showSelectedBars ||
+							isWarden ||
+							token.barVisibility === "always") &&
+						globalBarVisible
+					) {
 						let barOffset = 0;
 						const drawBar = (current: number, max: number, color: number) => {
 							const barWidth = size * 0.8;
@@ -1278,28 +1329,41 @@ export function VttPixiStage({
 							barOffset += barHeight + 2;
 						};
 
-						// HP Bar
-						const hp = token.hp ?? token.hp_current;
-						const maxHp = token.maxHp ?? token.hp_max;
-						if (
-							typeof hp === "number" &&
-							typeof maxHp === "number" &&
-							maxHp > 0
-						) {
-							const hpPercent = hp / maxHp;
-							const barColor =
-								hpPercent > 0.5
-									? 0x22c55e
-									: hpPercent > 0.2
-										? 0xeab308
-										: 0xef4444;
-							drawBar(hp, maxHp, barColor);
-						}
+						const explicitBars = Array.isArray(token.bars) ? token.bars : [];
+						if (explicitBars.length > 0) {
+							for (const bar of explicitBars.slice(0, 3)) {
+								const visible =
+									isWarden ||
+									bar.visible === "all" ||
+									(bar.visible === "controllers" &&
+										token.ownerId === currentUserId);
+								if (!visible || bar.max <= 0) continue;
+								drawBar(bar.current, bar.max, hexToPixiColor(bar.color));
+							}
+						} else {
+							// HP Bar
+							const hp = token.hp ?? token.hp_current;
+							const maxHp = token.maxHp ?? token.hp_max;
+							if (
+								typeof hp === "number" &&
+								typeof maxHp === "number" &&
+								maxHp > 0
+							) {
+								const hpPercent = hp / maxHp;
+								const barColor =
+									hpPercent > 0.5
+										? 0x22c55e
+										: hpPercent > 0.2
+											? 0xeab308
+											: 0xef4444;
+								drawBar(hp, maxHp, barColor);
+							}
 
-						// AC Bar (using arbitrary max of 30 for visualization)
-						const ac = token.ac ?? token.armor_class;
-						if (typeof ac === "number") {
-							drawBar(ac, 30, 0x3b82f6); // Blue AC bar
+							// AC Bar (using arbitrary max of 30 for visualization)
+							const ac = token.ac ?? token.armor_class;
+							if (typeof ac === "number") {
+								drawBar(ac, 30, 0x3b82f6); // Blue AC bar
+							}
 						}
 					}
 				}
@@ -1351,7 +1415,7 @@ export function VttPixiStage({
 					// Highlight nameplate if token is active initiative token
 					if (activeInitiativeTokenId === token.id) {
 						label.style.fill = 0x10b981;
-					} else if (activeTokenId === token.id) {
+					} else if (isSelected) {
 						label.style.fill = 0xfbbf24;
 					}
 					nameplateLayer.addChild(label);
@@ -1362,13 +1426,22 @@ export function VttPixiStage({
 						return;
 					}
 					e.stopPropagation();
-					setActiveTokenId(token.id);
+					const additive = isAdditivePointerSelection(e);
+					if (onTokenPointerSelect) {
+						onTokenPointerSelect(token.id, additive);
+					} else {
+						setActiveTokenId(token.id);
+					}
 					window.dispatchEvent(
 						new CustomEvent("vtt:token-pointerdown", {
-							detail: { tokenId: token.id, pointerType: e.pointerType },
+							detail: {
+								tokenId: token.id,
+								pointerType: e.pointerType,
+								additive,
+							},
 						}),
 					);
-					if (token.locked) return;
+					if (token.locked || additive) return;
 
 					if (e.pointerType === "touch") {
 						if (longPressRef.current) {
@@ -1407,11 +1480,15 @@ export function VttPixiStage({
 		};
 	}, [
 		activeTokenId,
+		activeTokenIds,
+		targetedTokenIds,
 		activeInitiativeTokenId,
 		appReady,
+		currentUserId,
 		effectiveVisibleLayers,
 		gridSize,
 		isWarden,
+		onTokenPointerSelect,
 		scene,
 		setActiveTokenId,
 		showGrid,

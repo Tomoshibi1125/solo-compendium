@@ -29,6 +29,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { WardenItemDeliveryDialog } from "@/components/warden-directives/WardenItemDeliveryDialog";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	GATE_RANKS,
 	TREASURE_TABLES,
@@ -47,6 +48,7 @@ import { cn } from "@/lib/utils";
 
 const TreasureGenerator = () => {
 	const navigate = useNavigate();
+	const embedded = useEmbedded();
 	const { toast } = useToast();
 	const {
 		state: storedState,
@@ -265,9 +267,11 @@ READ-ALOUD DISCOVERY:
 		return colors[rank] || colors.C;
 	};
 
-	return (
-		<Layout>
-			<div className="container mx-auto px-4 py-8 max-w-4xl">
+	const content = (
+		<div
+			className={embedded ? "w-full" : "container mx-auto px-4 py-8 max-w-4xl"}
+		>
+			{!embedded && (
 				<div className="mb-6">
 					<Button
 						variant="ghost"
@@ -291,299 +295,293 @@ READ-ALOUD DISCOVERY:
 						Rift Rank.
 					</ManaFlowText>
 				</div>
+			)}
 
-				<AscendantWindow title="GENERATE TREASURE" className="mb-6">
-					<div className="space-y-4">
-						<div>
-							<Label htmlFor="rank" className="mb-2 block">
-								Rift Rank
-							</Label>
-							<Select
-								value={selectedRank}
-								onValueChange={(value) => {
-									setSelectedRank(value);
-									if (!isLoading) {
-										void saveNow({ selectedRank: value, treasure });
-									}
-								}}
-							>
-								<SelectTrigger id="rank">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									{GATE_RANKS.map((rank) => (
-										<SelectItem key={rank} value={rank}>
-											Rank {rank}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-
-						<div>
-							<Label htmlFor="campaign-delivery" className="mb-2 block">
-								Campaign Delivery Target
-							</Label>
-							<Select
-								value={selectedCampaignId || "none"}
-								onValueChange={(value) =>
-									setSelectedCampaignId(value === "none" ? "" : value)
+			<AscendantWindow title="GENERATE TREASURE" className="mb-6">
+				<div className="space-y-4">
+					<div>
+						<Label htmlFor="rank" className="mb-2 block">
+							Rift Rank
+						</Label>
+						<Select
+							value={selectedRank}
+							onValueChange={(value) => {
+								setSelectedRank(value);
+								if (!isLoading) {
+									void saveNow({ selectedRank: value, treasure });
 								}
-							>
-								<SelectTrigger id="campaign-delivery">
-									<SelectValue placeholder="Select campaign for delivery" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="none">No campaign selected</SelectItem>
-									{campaigns.map((campaign) => (
-										<SelectItem key={campaign.id} value={campaign.id}>
-											{campaign.name}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-
-						<Button
-							onClick={handleGenerate}
-							className="w-full btn-umbral"
-							size="lg"
-							disabled={isGenerating}
+							}}
 						>
-							{isGenerating ? (
-								<Loader2 className="w-4 h-4 mr-2 animate-spin" />
-							) : (
-								<Sparkles className="w-4 h-4 mr-2" />
-							)}
-							{isGenerating ? "Generating..." : "Generate Treasure"}
-						</Button>
-						{treasure && (
-							<Button
-								onClick={handleAIEnhance}
-								className="w-full gap-2 mt-2"
-								variant="outline"
-								size="lg"
-								disabled={isEnhancing || isGenerating}
-							>
-								{isEnhancing ? (
-									<Loader2 className="w-4 h-4 animate-spin" />
-								) : (
-									<Sparkles className="w-4 h-4" />
-								)}
-								{isEnhancing ? "Enhancing..." : "Enhance with AI"}
-							</Button>
-						)}
+							<SelectTrigger id="rank">
+								<SelectValue />
+							</SelectTrigger>
+							<SelectContent>
+								{GATE_RANKS.map((rank) => (
+									<SelectItem key={rank} value={rank}>
+										Rank {rank}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
 					</div>
-				</AscendantWindow>
 
-				{treasure && (
-					<AscendantWindow
-						title={`RANK ${treasure.rank} TREASURE`}
-						className="mb-6"
+					<div>
+						<Label htmlFor="campaign-delivery" className="mb-2 block">
+							Campaign Delivery Target
+						</Label>
+						<Select
+							value={selectedCampaignId || "none"}
+							onValueChange={(value) =>
+								setSelectedCampaignId(value === "none" ? "" : value)
+							}
+						>
+							<SelectTrigger id="campaign-delivery">
+								<SelectValue placeholder="Select campaign for delivery" />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectItem value="none">No campaign selected</SelectItem>
+								{campaigns.map((campaign) => (
+									<SelectItem key={campaign.id} value={campaign.id}>
+										{campaign.name}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
+					</div>
+
+					<Button
+						onClick={handleGenerate}
+						className="w-full btn-umbral"
+						size="lg"
+						disabled={isGenerating}
 					>
-						<div className="space-y-4">
-							<div className="flex items-center justify-between">
-								<Badge
-									className={cn(
-										"text-lg px-4 py-2",
-										getRankColor(treasure.rank),
-									)}
-								>
-									Rank {treasure.rank}
-								</Badge>
-								<div className="flex items-center gap-2 text-2xl font-resurge text-emerald-400">
-									<Coins className="w-6 h-6" />${treasure.tens * 10} USD
-								</div>
-							</div>
-
-							{treasure.items.length > 0 && (
-								<div>
-									<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
-										<Gem className="w-4 h-4 text-primary" />
-										Items ({treasure.items.length})
-									</h3>
-									<div className="flex flex-wrap gap-2">
-										{treasure.items.map((item, index) => {
-											const linkedEntry = treasure.itemEntries[index];
-											return (
-												<div
-													key={`treasure-item-${item}`}
-													className="flex items-center gap-1"
-												>
-													<Badge variant="outline" className="text-sm">
-														{item}
-													</Badge>
-													{selectedCampaignId && linkedEntry && (
-														<Button
-															type="button"
-															variant="ghost"
-															size="sm"
-															className="h-7 px-2"
-															onClick={() =>
-																openDelivery(
-																	linkedEntryToDeliverableItem(linkedEntry),
-																)
-															}
-														>
-															<PackagePlus className="w-3 h-3 mr-1" />
-															Deliver
-														</Button>
-													)}
-												</div>
-											);
-										})}
-									</div>
-								</div>
+						{isGenerating ? (
+							<Loader2 className="w-4 h-4 mr-2 animate-spin" />
+						) : (
+							<Sparkles className="w-4 h-4 mr-2" />
+						)}
+						{isGenerating ? "Generating..." : "Generate Treasure"}
+					</Button>
+					{treasure && (
+						<Button
+							onClick={handleAIEnhance}
+							className="w-full gap-2 mt-2"
+							variant="outline"
+							size="lg"
+							disabled={isEnhancing || isGenerating}
+						>
+							{isEnhancing ? (
+								<Loader2 className="w-4 h-4 animate-spin" />
+							) : (
+								<Sparkles className="w-4 h-4" />
 							)}
+							{isEnhancing ? "Enhancing..." : "Enhance with AI"}
+						</Button>
+					)}
+				</div>
+			</AscendantWindow>
 
-							{treasure.materials.length > 0 && (
-								<div>
-									<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
-										<Sparkles className="w-4 h-4 text-blue-400" />
-										Materials ({treasure.materials.length})
-									</h3>
-									<div className="flex flex-wrap gap-2">
-										{treasure.materials.map((material) => (
-											<Badge
-												key={`treasure-material-${material}`}
-												variant="outline"
-												className="text-sm bg-blue-400/10 border-blue-400/30"
-											>
-												{material}
-											</Badge>
-										))}
-									</div>
-								</div>
-							)}
-
-							{treasure.relics.length > 0 && (
-								<div>
-									<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
-										<Sparkles className="w-4 h-4 text-purple-400" />
-										Relics ({treasure.relics.length})
-									</h3>
-									<div className="flex flex-wrap gap-2">
-										{treasure.relics.map((relic, index) => {
-											const linkedEntry = treasure.relicEntries[index];
-											return (
-												<div
-													key={`treasure-relic-${relic}`}
-													className="flex items-center gap-1"
-												>
-													<Badge
-														variant="outline"
-														className="text-sm bg-purple-400/20 border-purple-400/50 text-purple-300"
-													>
-														{relic}
-													</Badge>
-													{selectedCampaignId && linkedEntry && (
-														<Button
-															type="button"
-															variant="ghost"
-															size="sm"
-															className="h-7 px-2"
-															onClick={() =>
-																openDelivery(
-																	linkedEntryToDeliverableItem(linkedEntry),
-																)
-															}
-														>
-															<PackagePlus className="w-3 h-3 mr-1" />
-															Deliver
-														</Button>
-													)}
-												</div>
-											);
-										})}
-									</div>
-								</div>
-							)}
-
-							<div className="pt-4 border-t border-border">
-								<AscendantText className="block text-muted-foreground font-heading leading-relaxed">
-									<AutoLinkText text={treasure.description} />
-								</AscendantText>
-							</div>
-
-							{enhancedText && (
-								<div className="pt-4 border-t border-primary/30">
-									<div className="flex items-center gap-2 mb-2">
-										<Sparkles className="w-4 h-4 text-primary" />
-										<span className="text-xs font-display text-primary">
-											AI-ENHANCED DETAILS
-										</span>
-									</div>
-									<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-										<AutoLinkText text={enhancedText} />
-									</div>
-								</div>
-							)}
-
-							<div className="flex gap-2 pt-2">
-								<Button
-									onClick={handleCopy}
-									variant="outline"
-									className="flex-1"
-								>
-									<Copy className="w-4 h-4 mr-2" />
-									Copy Details
-								</Button>
-								<Button
-									onClick={handleGenerate}
-									variant="outline"
-									className="flex-1"
-									disabled={isGenerating}
-								>
-									<RefreshCw className="w-4 h-4 mr-2" />
-									Regenerate
-								</Button>
+			{treasure && (
+				<AscendantWindow
+					title={`RANK ${treasure.rank} TREASURE`}
+					className="mb-6"
+				>
+					<div className="space-y-4">
+						<div className="flex items-center justify-between">
+							<Badge
+								className={cn("text-lg px-4 py-2", getRankColor(treasure.rank))}
+							>
+								Rank {treasure.rank}
+							</Badge>
+							<div className="flex items-center gap-2 text-2xl font-resurge text-emerald-400">
+								<Coins className="w-6 h-6" />${treasure.tens * 10} USD
 							</div>
 						</div>
-					</AscendantWindow>
-				)}
 
-				<AscendantWindow title="TREASURE GUIDE" variant="quest">
-					<div className="space-y-4 text-sm">
-						<AscendantText className="block text-muted-foreground font-heading">
-							Treasure generation follows the Rift Rank system. Higher ranks
-							yield significantly more valuable rewards.
-						</AscendantText>
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							{GATE_RANKS.map((rank) => {
-								const table = TREASURE_TABLES[rank];
-								return (
-									<div
-										key={rank}
-										className={cn("p-3 rounded-lg border", getRankColor(rank))}
-									>
-										<div className="font-heading font-semibold mb-1">
-											Rank {rank}
-										</div>
-										<div className="text-xs text-muted-foreground">
-											Value Range ($10s): {table.tenRange[0]}-
-											{table.tenRange[1]} | Items:{" "}
-											{Math.round(table.itemChance * 100)}% | Materials:{" "}
-											{Math.round(table.materialChance * 100)}% | Relics:{" "}
-											{Math.round(table.relicChance * 100)}%
-										</div>
-									</div>
-								);
-							})}
+						{treasure.items.length > 0 && (
+							<div>
+								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
+									<Gem className="w-4 h-4 text-primary" />
+									Items ({treasure.items.length})
+								</h3>
+								<div className="flex flex-wrap gap-2">
+									{treasure.items.map((item, index) => {
+										const linkedEntry = treasure.itemEntries[index];
+										return (
+											<div
+												key={`treasure-item-${item}`}
+												className="flex items-center gap-1"
+											>
+												<Badge variant="outline" className="text-sm">
+													{item}
+												</Badge>
+												{selectedCampaignId && linkedEntry && (
+													<Button
+														type="button"
+														variant="ghost"
+														size="sm"
+														className="h-7 px-2"
+														onClick={() =>
+															openDelivery(
+																linkedEntryToDeliverableItem(linkedEntry),
+															)
+														}
+													>
+														<PackagePlus className="w-3 h-3 mr-1" />
+														Deliver
+													</Button>
+												)}
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						)}
+
+						{treasure.materials.length > 0 && (
+							<div>
+								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
+									<Sparkles className="w-4 h-4 text-blue-400" />
+									Materials ({treasure.materials.length})
+								</h3>
+								<div className="flex flex-wrap gap-2">
+									{treasure.materials.map((material) => (
+										<Badge
+											key={`treasure-material-${material}`}
+											variant="outline"
+											className="text-sm bg-blue-400/10 border-blue-400/30"
+										>
+											{material}
+										</Badge>
+									))}
+								</div>
+							</div>
+						)}
+
+						{treasure.relics.length > 0 && (
+							<div>
+								<h3 className="font-heading font-semibold mb-2 flex items-center gap-2">
+									<Sparkles className="w-4 h-4 text-purple-400" />
+									Relics ({treasure.relics.length})
+								</h3>
+								<div className="flex flex-wrap gap-2">
+									{treasure.relics.map((relic, index) => {
+										const linkedEntry = treasure.relicEntries[index];
+										return (
+											<div
+												key={`treasure-relic-${relic}`}
+												className="flex items-center gap-1"
+											>
+												<Badge
+													variant="outline"
+													className="text-sm bg-purple-400/20 border-purple-400/50 text-purple-300"
+												>
+													{relic}
+												</Badge>
+												{selectedCampaignId && linkedEntry && (
+													<Button
+														type="button"
+														variant="ghost"
+														size="sm"
+														className="h-7 px-2"
+														onClick={() =>
+															openDelivery(
+																linkedEntryToDeliverableItem(linkedEntry),
+															)
+														}
+													>
+														<PackagePlus className="w-3 h-3 mr-1" />
+														Deliver
+													</Button>
+												)}
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						)}
+
+						<div className="pt-4 border-t border-border">
+							<AscendantText className="block text-muted-foreground font-heading leading-relaxed">
+								<AutoLinkText text={treasure.description} />
+							</AscendantText>
+						</div>
+
+						{enhancedText && (
+							<div className="pt-4 border-t border-primary/30">
+								<div className="flex items-center gap-2 mb-2">
+									<Sparkles className="w-4 h-4 text-primary" />
+									<span className="text-xs font-display text-primary">
+										AI-ENHANCED DETAILS
+									</span>
+								</div>
+								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+									<AutoLinkText text={enhancedText} />
+								</div>
+							</div>
+						)}
+
+						<div className="flex gap-2 pt-2">
+							<Button onClick={handleCopy} variant="outline" className="flex-1">
+								<Copy className="w-4 h-4 mr-2" />
+								Copy Details
+							</Button>
+							<Button
+								onClick={handleGenerate}
+								variant="outline"
+								className="flex-1"
+								disabled={isGenerating}
+							>
+								<RefreshCw className="w-4 h-4 mr-2" />
+								Regenerate
+							</Button>
 						</div>
 					</div>
 				</AscendantWindow>
-				{selectedCampaignId && (
-					<WardenItemDeliveryDialog
-						open={deliveryOpen}
-						onOpenChange={setDeliveryOpen}
-						campaignId={selectedCampaignId}
-						initialItem={deliveryItem}
-						title="Deliver Generated Treasure"
-					/>
-				)}
-			</div>
-		</Layout>
+			)}
+
+			<AscendantWindow title="TREASURE GUIDE" variant="quest">
+				<div className="space-y-4 text-sm">
+					<AscendantText className="block text-muted-foreground font-heading">
+						Treasure generation follows the Rift Rank system. Higher ranks yield
+						significantly more valuable rewards.
+					</AscendantText>
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						{GATE_RANKS.map((rank) => {
+							const table = TREASURE_TABLES[rank];
+							return (
+								<div
+									key={rank}
+									className={cn("p-3 rounded-lg border", getRankColor(rank))}
+								>
+									<div className="font-heading font-semibold mb-1">
+										Rank {rank}
+									</div>
+									<div className="text-xs text-muted-foreground">
+										Value Range ($10s): {table.tenRange[0]}-{table.tenRange[1]}{" "}
+										| Items: {Math.round(table.itemChance * 100)}% | Materials:{" "}
+										{Math.round(table.materialChance * 100)}% | Relics:{" "}
+										{Math.round(table.relicChance * 100)}%
+									</div>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			</AscendantWindow>
+			{selectedCampaignId && (
+				<WardenItemDeliveryDialog
+					open={deliveryOpen}
+					onOpenChange={setDeliveryOpen}
+					campaignId={selectedCampaignId}
+					initialItem={deliveryItem}
+					title="Deliver Generated Treasure"
+				/>
+			)}
+		</div>
 	);
+
+	return embedded ? content : <Layout>{content}</Layout>;
 };
 
 export default TreasureGenerator;

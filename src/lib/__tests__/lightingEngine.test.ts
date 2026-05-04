@@ -22,14 +22,25 @@ describe("VTT Lighting Engine", () => {
 		it("creates a door that can be toggled", () => {
 			const door = createWall(0, 0, 50, 0, "door");
 			expect(door.type).toBe("door");
+			expect(door.state).toBe("closed");
 			expect(door.doorOpen).toBe(false);
 
 			const walls = [door];
 			const toggled = toggleDoor(walls, door.id);
+			expect(toggled[0].state).toBe("open");
 			expect(toggled[0].doorOpen).toBe(true);
 
 			const toggledAgain = toggleDoor(toggled, door.id);
+			expect(toggledAgain[0].state).toBe("closed");
 			expect(toggledAgain[0].doorOpen).toBe(false);
+		});
+
+		it("creates one-way walls with a side direction", () => {
+			const wall = createWall(100, 0, 100, 100, "oneway", {
+				direction: "left",
+			});
+			expect(wall.type).toBe("oneway");
+			expect(wall.direction).toBe("left");
 		});
 	});
 
@@ -73,6 +84,25 @@ describe("VTT Lighting Engine", () => {
 
 			const hitOpen = rayWallIntersection(25, 0, 0, 1, openWalls);
 			expect(hitOpen).toBeNull();
+		});
+
+		it("does not block vision through windows", () => {
+			const hit = rayWallIntersection(0, 50, 1, 0, [
+				createWall(100, 0, 100, 100, "window"),
+			]);
+			expect(hit).toBeNull();
+		});
+
+		it("blocks one-way walls from the configured side only", () => {
+			const walls = [
+				createWall(100, 0, 100, 100, "oneway", { direction: "left" }),
+			];
+			const blockedFromLeft = rayWallIntersection(0, 50, 1, 0, walls);
+			expect(blockedFromLeft).not.toBeNull();
+			expect(blockedFromLeft?.x).toBe(100);
+
+			const visibleFromRight = rayWallIntersection(200, 50, -1, 0, walls);
+			expect(visibleFromRight).toBeNull();
 		});
 	});
 

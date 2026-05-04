@@ -545,7 +545,10 @@ function hasDiceNotation(value: unknown): boolean {
 	return Boolean(formula && /\d+d\d+/i.test(formula));
 }
 
-function getNestedRecord(value: unknown, key: string): Record<string, Json> | null {
+function getNestedRecord(
+	value: unknown,
+	key: string,
+): Record<string, Json> | null {
 	if (!isRecord(value)) return null;
 	const nested = value[key];
 	return isRecord(nested) ? nested : null;
@@ -577,7 +580,9 @@ function hasArmorClass(entry: AuditEntry): boolean {
 	if (typeof entry.armor_class === "number") return true;
 	if (getString(entry.armor_class)) return true;
 	const armor = getNestedRecord(entry.properties, "armor");
-	return Boolean(armor && (typeof armor.baseAC === "number" || getString(armor.baseAC)));
+	return Boolean(
+		armor && (typeof armor.baseAC === "number" || getString(armor.baseAC)),
+	);
 }
 
 function hasArmorType(entry: AuditEntry): boolean {
@@ -701,7 +706,8 @@ function auditEquipmentEntry(
 				severity: "error",
 				dataset,
 				code: "missing_weapon_type",
-				message: "Weapon entry lacks weapon_type or simple/martial/ranged/melee metadata.",
+				message:
+					"Weapon entry lacks weapon_type or simple/martial/ranged/melee metadata.",
 				entryId: entry.id,
 				entryName: entry.name,
 			});
@@ -756,7 +762,8 @@ function auditEquipmentEntry(
 			severity: "error",
 			dataset,
 			code: "invalid_charges",
-			message: "Entry has charges metadata but no positive max/current charge payload.",
+			message:
+				"Entry has charges metadata but no positive max/current charge payload.",
 			entryId: entry.id,
 			entryName: entry.name,
 		});

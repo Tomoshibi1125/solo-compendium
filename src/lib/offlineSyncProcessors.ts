@@ -1,5 +1,7 @@
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
+import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidation";
 import { logger } from "@/lib/logger";
 import type { SyncQueueItem } from "@/lib/offlineStorage";
 import {
@@ -31,6 +33,36 @@ const handleHomebrewCreate = async (item: SyncQueueItem) => {
 		.insert(
 			payload as Database["public"]["Tables"]["homebrew_content"]["Insert"],
 		);
+
+	if (error) throw error;
+};
+
+const handleCharacterUpdate = async (item: SyncQueueItem) => {
+	const userId = await ensureUserContext();
+	const data = item.data as Record<string, Json>;
+	const id = typeof data.id === "string" ? data.id : null;
+	if (!id) throw new Error("CHARACTER_ID_REQUIRED");
+
+	const {
+		id: _removedId,
+		user_id: _removedUserId,
+		created_at: _removedCreatedAt,
+		...rawUpdates
+	} = data;
+	const updates = await normalizeCharacterOverlayFields(
+		await resolveCharacterCanonicalIds(
+			rawUpdates as Database["public"]["Tables"]["characters"]["Update"],
+		),
+	);
+
+	const { error } = await supabase
+		.from("characters")
+		.update({
+			...(updates as Database["public"]["Tables"]["characters"]["Update"]),
+			updated_at: new Date().toISOString(),
+		})
+		.eq("id", id)
+		.eq("user_id", userId);
 
 	if (error) throw error;
 };
@@ -366,6 +398,8 @@ export const ensureOfflineSyncProcessors = () => {
 	if (initialized || !isSupabaseConfigured) {
 		return;
 	}
+
+	register("character", "update", handleCharacterUpdate);
 
 	register("homebrew", "create", handleHomebrewCreate);
 	register("homebrew", "update", handleHomebrewUpdate);

@@ -6,6 +6,7 @@ import {
 	LockOpen,
 	Palette,
 	Pencil,
+	Target,
 	Trash2,
 	UserCircle2,
 	Users as UsersIcon,
@@ -48,6 +49,8 @@ export interface TokenActionBarProps {
 	onDelete: () => void;
 	onOpenSheet?: () => void;
 	onAddToGroup?: () => void;
+	onToggleTarget?: () => void;
+	isTargeted?: boolean;
 	onClose: () => void;
 	className?: string;
 }
@@ -66,6 +69,8 @@ export function TokenActionBar({
 	onDelete,
 	onOpenSheet,
 	onAddToGroup,
+	onToggleTarget,
+	isTargeted = false,
 	onClose,
 	className,
 }: TokenActionBarProps) {
@@ -263,6 +268,21 @@ export function TokenActionBar({
 							title="Group with selection (Shift+G)"
 						>
 							<UsersIcon className="w-3.5 h-3.5" aria-hidden />
+						</Button>
+					)}
+					{onToggleTarget && (
+						<Button
+							variant="ghost"
+							size="sm"
+							className={cn(
+								"h-7 w-7 p-0",
+								isTargeted && "text-red-400 bg-red-500/10",
+							)}
+							onClick={onToggleTarget}
+							aria-label={isTargeted ? "Remove target" : "Target token"}
+							title={isTargeted ? "Remove target" : "Target"}
+						>
+							<Target className="w-3.5 h-3.5" aria-hidden />
 						</Button>
 					)}
 					{isWarden && (

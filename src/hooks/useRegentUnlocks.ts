@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { REGENT_LABEL } from "@/lib/vernacular";
 
 export interface RegentUnlock {
@@ -250,9 +251,6 @@ export function useAvailableRegents(characterId: string) {
 			);
 
 			// Get all regents from canonical static, filter out already-unlocked.
-			const { listCanonicalEntries } = await import(
-				"@/lib/canonicalCompendium"
-			);
 			const entries = await listCanonicalEntries("regents");
 			return entries
 				.filter((regent) => !unlockedRegentIds.has(regent.id))

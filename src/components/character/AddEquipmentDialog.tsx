@@ -7,7 +7,7 @@ import {
 	Shield,
 	Swords,
 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,8 +21,15 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
+import type { Json } from "@/integrations/supabase/types";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { buildItemProperties } from "@/lib/characterCreation";
+import {
+	filterPublishedHomebrewRecords,
+	type HomebrewRuntimeItem,
+	mapHomebrewItemForRuntime,
+} from "@/lib/homebrewRuntime";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -76,22 +83,42 @@ export function AddEquipmentDialog({
 	const { addEquipment } = useEquipment(characterId);
 	const { toast } = useToast();
 	const ascendantTools = useAscendantTools();
+	const { data: campaignId = null } = useQuery<string | null>({
+		queryKey: ["add-equipment-campaign-id", characterId],
+		queryFn: () => getCharacterCampaignId(characterId),
+		enabled: open && !!characterId,
+	});
+	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
+		"item",
+		campaignId,
+	);
+	const homebrewItems = useMemo<HomebrewRuntimeItem[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "item").map(
+				mapHomebrewItemForRuntime,
+			),
+		[publishedHomebrew],
+	);
 
 	const { data: equipment = [], isLoading } = useQuery({
-		queryKey: ["compendium-equipment", characterId, searchQuery],
+		queryKey: [
+			"compendium-equipment",
+			characterId,
+			searchQuery,
+			campaignId,
+			homebrewItems.map((item) => item.id).join(","),
+		],
 		queryFn: async () => {
 			const trimmedQuery = searchQuery.trim();
-			const campaignId = await getCharacterCampaignId(characterId);
 			const staticItems = await listCanonicalEntries(
 				"equipment",
 				trimmedQuery || undefined,
 				{ campaignId },
 			);
-			return staticItems
+			const mappedStatic = staticItems
 				.filter((item) =>
 					isEquipableCompendiumItemType(item.equipment_type || item.item_type),
 				)
-				.slice(0, 20)
 				.map((item) => ({
 					id: item.id,
 					name: item.name,
@@ -122,9 +149,22 @@ export function AddEquipmentDialog({
 							?.baseAC ??
 						null,
 					requires_attunement: item.attunement ?? false,
-					charges:
-						typeof item.charges === "number" ? item.charges : null,
+					charges: typeof item.charges === "number" ? item.charges : null,
 				}));
+			const searchKey = trimmedQuery.toLowerCase();
+			const matchingHomebrew = homebrewItems.filter((item) => {
+				if (
+					!isEquipableCompendiumItemType(item.equipment_type || item.item_type)
+				) {
+					return false;
+				}
+				if (!searchKey) return true;
+				return (
+					item.name.toLowerCase().includes(searchKey) ||
+					(item.description ?? "").toLowerCase().includes(searchKey)
+				);
+			});
+			return [...mappedStatic, ...matchingHomebrew].slice(0, 20);
 		},
 		enabled: open,
 	});
@@ -161,6 +201,12 @@ export function AddEquipmentDialog({
 					),
 				charges_current: item.charges ?? null,
 				charges_max: item.charges ?? null,
+				custom_modifiers: (
+					item as { custom_modifiers?: Record<string, unknown> }
+				).custom_modifiers
+					? ((item as { custom_modifiers?: Record<string, unknown> })
+							.custom_modifiers as Json)
+					: null,
 			});
 
 			toast({

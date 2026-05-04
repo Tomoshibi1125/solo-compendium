@@ -174,14 +174,25 @@ export const useEquipment = (characterId: string) => {
 
 	const addEquipment = useMutation({
 		mutationFn: async (item: EquipmentRowInsert) => {
-			const canonicalResolution = await resolveCanonicalReference("equipment", {
-				id: item.item_id,
-				name: item.name,
-			});
+			const itemModifiers =
+				item.custom_modifiers &&
+				typeof item.custom_modifiers === "object" &&
+				!Array.isArray(item.custom_modifiers)
+					? (item.custom_modifiers as Record<string, unknown>)
+					: null;
+			const isHomebrewItem = itemModifiers?.source === "homebrew";
+			const canonicalResolution = isHomebrewItem
+				? { entry: null }
+				: await resolveCanonicalReference("equipment", {
+						id: item.item_id,
+						name: item.name,
+					});
 			const canonicalEntry = canonicalResolution.entry;
 			const itemWithCanonicalId: EquipmentRowInsert = {
 				...item,
-				item_id: canonicalEntry?.id ?? item.item_id ?? null,
+				item_id: isHomebrewItem
+					? null
+					: (canonicalEntry?.id ?? item.item_id ?? null),
 			};
 
 			if (isLocalCharacterId(characterId)) {

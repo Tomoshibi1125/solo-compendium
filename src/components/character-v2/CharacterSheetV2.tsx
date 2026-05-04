@@ -35,6 +35,7 @@ import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
 import { RunesList } from "@/components/character/RunesList";
 import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
+import { TattoosList } from "@/components/character/TattoosList";
 import { AbilitiesPanel } from "@/components/character-v2/AbilitiesPanel";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
@@ -552,6 +553,10 @@ export default function CharacterSheetV2() {
 			<EquipmentList
 				characterId={character.id}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Item", Shield)}
+			/>
+			<TattoosList
+				characterId={character.id}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Tattoo", Sparkles)}
 			/>
 			<CurrencyManager characterId={character.id} />
 		</div>

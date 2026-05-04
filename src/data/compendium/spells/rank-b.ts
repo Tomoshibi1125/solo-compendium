@@ -354,7 +354,7 @@ export const spells_b: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered from a gate-lattice reward chamber after a hidden trial resolved.",
 		theme_tags: ["elite-tier", "classified", "urban-combat"],
 	},
 	{
@@ -444,7 +444,7 @@ export const spells_b: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
-		theme_tags: ["dungeon-core", "monarch-era", "experimental"],
+		theme_tags: ["dungeon-core", "regent-era", "experimental"],
 	},
 	{
 		id: "spell-b-6",
@@ -888,7 +888,7 @@ export const spells_b: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered from a gate-lattice reward chamber after a hidden trial resolved.",
 		theme_tags: ["gate-zone", "modern-warfare", "urban-combat"],
 	},
 	{
@@ -1245,7 +1245,7 @@ export const spells_b: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
-		theme_tags: ["post-awakening", "system-glitch"],
+		theme_tags: ["post-awakening", "lattice-anomaly"],
 	},
 	{
 		id: "spell-b-15",

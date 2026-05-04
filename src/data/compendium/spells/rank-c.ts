@@ -88,7 +88,7 @@ export const spells_c: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
-		theme_tags: ["classified", "system-glitch", "experimental"],
+		theme_tags: ["classified", "lattice-anomaly", "experimental"],
 	},
 	{
 		id: "spell-c-2",
@@ -354,7 +354,7 @@ export const spells_c: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered from a gate-lattice reward chamber after a hidden trial resolved.",
 		theme_tags: ["gate-zone", "experimental"],
 	},
 	{
@@ -457,7 +457,7 @@ export const spells_c: CompendiumSpell[] = [
 			history:
 				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse:
-				"Leaves a faint mark on the soul visible to Monarchs and entities of comparable power.",
+				"Leaves a faint mark on the soul visible to Regents and entities of comparable power.",
 			personality: "Neutral in personality profile.",
 			current_owner:
 				"Available to Bureau-certified casters at the appropriate rank.",
@@ -712,7 +712,7 @@ export const spells_c: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["modern-warfare", "system-glitch"],
+		theme_tags: ["modern-warfare", "lattice-anomaly"],
 	},
 	{
 		id: "spell-c-9",
@@ -978,8 +978,8 @@ export const spells_c: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
-		theme_tags: ["monarch-era", "elite-tier"],
+			"Recovered from a gate-lattice reward chamber after a hidden trial resolved.",
+		theme_tags: ["regent-era", "elite-tier"],
 	},
 	{
 		id: "spell-c-12",
@@ -1158,7 +1158,7 @@ export const spells_c: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Dropped by a mini-boss that shouldn't have existed according to the Gate's difficulty rating.",
-		theme_tags: ["monarch-era", "black-market"],
+		theme_tags: ["regent-era", "black-market"],
 	},
 	{
 		id: "spell-c-14",

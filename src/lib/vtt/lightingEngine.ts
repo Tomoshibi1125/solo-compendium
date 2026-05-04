@@ -16,14 +16,33 @@ export interface WallSegment {
 	y1: number;
 	x2: number;
 	y2: number;
-	type: "wall" | "door" | "window" | "terrain";
+	/**
+	 * - "wall" — standard opaque wall (blocks movement + vision).
+	 * - "door" — togglable (see `doorOpen`); blocks when closed.
+	 * - "window" — blocks movement, allows vision.
+	 * - "terrain" — blocks vision, allows movement (e.g. dense smoke).
+	 * - "ethereal" — blocks vision for incorporeal-tagged tokens only
+	 *   (authoring-time label; LoS engine treats it the same as "wall"
+	 *   until Foundry-class incorporeal gating lands in P2-8).
+	 */
+	type: "wall" | "door" | "window" | "terrain" | "ethereal" | "oneway";
+	state?: WallState;
 	doorOpen?: boolean;
 	oneWay?: boolean; // blocks vision from one side only
-	direction?: number; // angle for one-way walls
+	direction?: WallDirection | number; // angle for one-way walls
 }
+
+export type WallDirection = "both" | "left" | "right";
+export type WallState = "open" | "closed";
 
 export interface LightSource {
 	id: string;
+	/**
+	 * Optional human-readable label assigned by the Warden during light
+	 * authoring. Persisted with scene state and round-tripped through the
+	 * realtime sync; rendering ignores it.
+	 */
+	name?: string;
 	x: number;
 	y: number;
 	brightRadius: number; // in grid squares
@@ -63,8 +82,7 @@ export function rayWallIntersection(
 	let nearest: { x: number; y: number; dist: number } | null = null;
 
 	for (const wall of walls) {
-		// Skip open doors
-		if (wall.type === "door" && wall.doorOpen) continue;
+		if (!wallBlocksVision(wall, ox, oy, dx, dy)) continue;
 
 		const intersection = lineSegmentIntersection(
 			ox,
@@ -88,6 +106,40 @@ export function rayWallIntersection(
 	}
 
 	return nearest;
+}
+
+function wallBlocksVision(
+	wall: WallSegment,
+	ox: number,
+	oy: number,
+	_dx: number,
+	_dy: number,
+): boolean {
+	if (wall.type === "window") return false;
+	if (wall.type === "door") return !isDoorOpen(wall);
+	if (wall.type === "oneway" || wall.oneWay) {
+		const direction =
+			typeof wall.direction === "string" ? wall.direction : "left";
+		if (direction === "both") return true;
+		const side = getOriginSideOfWall(wall, ox, oy);
+		return side === "both" || side === direction;
+	}
+	return true;
+}
+
+function isDoorOpen(wall: WallSegment): boolean {
+	return wall.state === "open" || wall.doorOpen === true;
+}
+
+function getOriginSideOfWall(
+	wall: WallSegment,
+	ox: number,
+	oy: number,
+): WallDirection {
+	const cross =
+		(wall.x2 - wall.x1) * (oy - wall.y1) - (wall.y2 - wall.y1) * (ox - wall.x1);
+	if (Math.abs(cross) < 1e-10) return "both";
+	return cross > 0 ? "left" : "right";
 }
 
 /**
@@ -236,7 +288,9 @@ export function createWall(
 	x2: number,
 	y2: number,
 	type: WallSegment["type"] = "wall",
+	options: Partial<Pick<WallSegment, "direction" | "state">> = {},
 ): WallSegment {
+	const state = type === "door" ? (options.state ?? "closed") : undefined;
 	return {
 		id: `wall-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
 		x1,
@@ -244,7 +298,10 @@ export function createWall(
 		x2,
 		y2,
 		type,
-		doorOpen: type === "door" ? false : undefined,
+		state,
+		doorOpen: type === "door" ? state === "open" : undefined,
+		direction:
+			type === "oneway" ? (options.direction ?? "left") : options.direction,
 	};
 }
 
@@ -256,7 +313,13 @@ export function toggleDoor(
 	wallId: string,
 ): WallSegment[] {
 	return walls.map((w) =>
-		w.id === wallId && w.type === "door" ? { ...w, doorOpen: !w.doorOpen } : w,
+		w.id === wallId && w.type === "door"
+			? {
+					...w,
+					state: isDoorOpen(w) ? "closed" : "open",
+					doorOpen: !isDoorOpen(w),
+				}
+			: w,
 	);
 }
 

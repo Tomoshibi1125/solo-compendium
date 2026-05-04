@@ -10,14 +10,14 @@
 | Layer | Score | Notes |
 |---|---|---|
 | **Standalone Warden tools** | **17 / 18 fully wired**, 1 partial | All 18 routes resolve to real components with persistence and role guards. Session Planner is "thin wrapper around `CampaignSessionsPanel`" (intentional, not a bug). |
-| **VTT Warden surfaces** | **22 / 25 wired**, 2 partial, 1 missing-UI | Engine + rendering layer is rich (Pixi + DOM fallback, walls/lights data path, fog rects, terrain/ambient zones, weather, calibration, layers, atmospheric audio). Authoring UI is missing for two engine-supported features (walls + named light sources). |
+| **VTT Warden surfaces** | **22 / 27 wired**, 3 partial, 2 missing-UI | Engine + rendering layer is rich (Pixi + DOM fallback, walls/lights data path, fog rects, terrain/ambient zones, weather, calibration, layers, atmospheric audio). Light placement exists as 3 hard-coded presets in `WardenToolsPanel`; full configurable light + walls authoring UIs are absent. |
 | **DDB Maps parity** | **High** — encounter→initiative→map flow matches; inline rolls + character integration matches; we add Warden-only broadcast, AI assistant, more generators. |
 | **Roll20 parity** | **Medium-High** — macros (local-only, no remote sync), rollable tables, GM layer (3), turn tracker, jukebox-equivalent, dynamic lighting (engine only — no Warden authoring UI). Token multi-bar missing. |
 | **Foundry parity** | **Medium** — Pixi stage, fog of war, lighting engine, walls type, scene library, journal, playlists-equivalent (audio manager) all present. **Authoring UX for walls / light placement / vision modes is absent**. Active-effects-on-token model is informal. Multi-token select absent. |
 
 **Top 5 P0 risks** (correctness, not gap):
 
-1. `WardenToolsPanel` "Effect → Lighting" buttons (Bright / Dim / Darkness) emit one-shot `onAddEffect` payloads with hard-coded `id: "bright" | "dim" | "darkness"`. Placing a second one of the same type silently no-ops or stomps state, depending on consumer. (Evidence: `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\WardenToolsPanel.tsx:870-915`.)
+1. `WardenToolsPanel` "Effect → Lighting" buttons (Bright / Dim / Darkness) emit `onAddEffect` payloads with hard-coded `id: "bright" | "dim" | "darkness"`. The consumer at `@c:\Users\jjcal\Documents\solo-compendium\src\pages\warden-directives\VTTEnhanced.tsx:5478-5498` correctly appends a real `LightSource` to `currentScene.lights`, but it falls back to `\`light-${Date.now()}\`` only when `e.id` is falsy. Since `"bright"` is truthy, every press appends a *duplicate-id* LightSource — breaking React keys and any future `lights.find(l => l.id === ...)` lookup. (Evidence: `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\WardenToolsPanel.tsx:870-915`.)
 2. `WardenToolsPanel` "Atmosphere → Weather" buttons play SFX only; they do **not** mutate `currentScene.weather`. So weather *audio* changes but the **canvas weather overlay does not update**. (Evidence: `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\WardenToolsPanel.tsx:919-953`.)
 3. `Quick Roll` in `WardenToolsPanel` shows `Result: …` only on the offline path; when wired into VTT, the result lands in chat but the local UI silently shows nothing (intentional but undocumented). Low-grade UX bug, easy fix.
 4. `WardenToolsPanel` "External Systems" buttons open Warden Journal / Party Tracker / Session Planner via `window.open(...)` — these break PWA / embedded contexts. (Evidence: `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\WardenToolsPanel.tsx:817-859`.)
@@ -26,7 +26,7 @@
 **Top 5 P1 gaps** (real feature deltas vs Foundry / Roll20):
 
 1. **No Warden-facing wall authoring UI.** The engine renders `currentScene.walls` and the spectator + Pixi stage consume them, but `selectedTool` has no `walls` mode and no walls drawer in the left rail.
-2. **No light-source placement UI.** `currentScene.lights` is consumed by `VttPixiStage` and `VTTSpectator`, but the Warden has no way to drop a configurable `LightSource` (radius, color, animation) on the scene. The "Lighting" buttons in `WardenToolsPanel` push generic effect tokens, not real light sources.
+2. **No configurable light-source placement UI.** `currentScene.lights` is consumed by `VttPixiStage` and `VTTSpectator`, and the "Lighting" buttons in `WardenToolsPanel` *do* append real `LightSource` records (verified at `VTTEnhanced.tsx:5478-5498`), but only as 3 hard-coded presets centered on the scene. The Warden has no way to drop a configurable light (custom radius / color / animation / wall-blocking flag) at a chosen location on the canvas, and cannot edit or remove placed lights once added.
 3. **No multi-token select / bulk move / bulk delete.** Roll20 + Foundry both support shift-click + marquee select; we only support one `activeTokenId`.
 4. **No persistent AoE templates.** Measure-tool drops are interactive only — we cannot drop-and-leave a fireball circle pinned to the map.
 5. **No token multi-bar.** Roll20 supports 3 bars (HP / Mana / custom). We have `hp / maxHp` only — no AC bar, no resource bar.
@@ -96,7 +96,7 @@ Status legend: ✅ wired (real component + persistence + role guard) · 🟡 par
 | V24 | In-canvas Pixi stage | `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\VttPixiStage.tsx` | ✅ | Renders walls + lights + drawings + tokens + fog + grid. Memory `1561aab2` documents viewport sizing fix. |
 | V25 | DOM fallback surface | `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\VttDomFallbackSurface.tsx` | ✅ | Component-tested in `VttDomFallbackSurface.test.tsx`. Renderer fallback path. |
 | V26 | Wall authoring UI | — | ❌ **missing** | Engine consumes `currentScene.walls`, no `selectedTool === 'walls'` mode and no walls drawer. **P1 gap vs Foundry.** |
-| V27 | Light source authoring UI | — | ❌ **missing-UI** | `currentScene.lights` is consumed by `VttPixiStage` and `VTTSpectator`. No Warden tool to drop a configurable `LightSource` (radius/color/animation/wall-blocking). **P1 gap vs Foundry.** |
+| V27 | Light source authoring UI | `WardenToolsPanel.tsx:863-915` + `VTTEnhanced.tsx:5478-5498` | 🟡 **partial** | 3 hard-coded preset buttons (Bright / Dim / Darkness) append `LightSource` records — but with non-unique ids, always centered on scene, no radius / color / animation picker, and no edit / delete UI for placed lights. **P1 gap vs Foundry.** |
 
 ## Cross-cutting health
 
@@ -155,7 +155,7 @@ Legend: ✅ full · 🟡 partial / authoring missing · ❌ absent.
 | 32 | Wall authoring UI (Warden) | ❌ | ❌ | ✅ | ✅ | **Gap vs Roll20 + Foundry.** |
 | 33 | Door / window / one-way walls | ❌ | ❌ | ✅ | ✅ | Foundry-class. |
 | 34 | Light source data + render | ✅ | ❌ | ✅ | ✅ | `currentScene.lights` consumed. |
-| 35 | Light source authoring UI | ❌ | ❌ | ✅ | ✅ | **Gap.** Lighting buttons in `WardenToolsPanel` push generic effect tokens, not configured lights. |
+| 35 | Light source authoring UI | 🟡 | ❌ | ✅ | ✅ | **Partial.** 3 preset buttons append real `LightSource` records, but no configurable placement, no edit / delete, duplicate ids. See R2 + V27. |
 | 36 | Dynamic vision (token sees what light reaches) | 🟡 | ❌ | ✅ | ✅ | Engine functions exist; not consumed by Warden authoring UI. |
 | 37 | Fog of war (manual) | ✅ | ✅ | ✅ | ✅ | Brush + Cover All / Reveal All. |
 | 38 | Auto-explored fog (vision-driven) | ❌ | ❌ | 🟡 | ✅ | Foundry exclusive at full fidelity. |
@@ -200,7 +200,7 @@ Legend: ✅ full · 🟡 partial / authoring missing · ❌ absent.
 | 70 | AI Warden assistant | ✅ | ❌ | ❌ | 🟡 (modules only) | `WardenChatbot`. |
 
 **Score** (counting full ✅ = 1, 🟡 = 0.5, ❌ = 0, normalized over 70):
-- Ours: **53.0 / 70 = 76 %**
+- Ours: **53.5 / 70 = 76 %** (capability #35 reclassified 🟡 partial)
 - DDB Maps: 27.5 / 70 = 39 %
 - Roll20: 56.5 / 70 = 81 %
 - Foundry: 67.5 / 70 = 96 %
@@ -214,7 +214,7 @@ These items are evidence-backed, ranked by user-visible severity:
 | ID | Severity | Surface | Issue | Evidence |
 |---|---|---|---|---|
 | R1 | High | Warden Tools Atmosphere | "Weather" buttons play SFX only; do not mutate `currentScene.weather`, so canvas overlay does not change. | `WardenToolsPanel.tsx:919-953` |
-| R2 | High | Warden Tools Atmosphere | "Lighting" buttons emit `onAddEffect` with hard-coded ids `bright`/`dim`/`darkness`; second click of same kind stomps or dedupes. | `WardenToolsPanel.tsx:870-915` |
+| R2 | High | Warden Tools Atmosphere | "Lighting" buttons emit `onAddEffect` with hard-coded ids `bright`/`dim`/`darkness`. Consumer correctly creates a real `LightSource`, but every press inserts a **duplicate-id** light into `currentScene.lights`, breaking React keys and id-based lookups. | `WardenToolsPanel.tsx:870-915` + `VTTEnhanced.tsx:5478-5498` |
 | R3 | Medium | Warden Tools Quick Roll | When `onRoll` is wired, local `Result:` UI shows nothing — confusing UX. | `WardenToolsPanel.tsx:262-269` |
 | R4 | Medium | Warden Broadcast | Target list shows `user_id.split("-")[0]+"…"` instead of resolved display name. | `WardenBroadcastPanel.tsx:165-178` |
 | R5 | Medium | Warden Tools External Systems | `window.open(...)` breaks in PWA / embedded contexts. | `WardenToolsPanel.tsx:817-859` |
@@ -231,6 +231,6 @@ These items are evidence-backed, ranked by user-visible severity:
 
 ## Conclusion
 
-The Warden tool surface is **substantially more complete than the audit's prior verbal claims of 100 % parity** — it is genuinely 76 % feature-equivalent against the Foundry/Roll20/DDB-Maps benchmark, with the Foundry-class gap concentrated in **two engine-supported but UI-missing systems (walls + lights)** and a handful of bug-shaped issues in `WardenToolsPanel`'s atmosphere section. Closing R1 + R2 + R9 + V26 + V27 alone moves us above 85 %.
+The Warden tool surface is **substantially more complete than the audit's prior verbal claims of 100 % parity** — it is genuinely 76 % feature-equivalent against the Foundry/Roll20/DDB-Maps benchmark, with the Foundry-class gap concentrated in **one engine-supported but UI-missing system (walls)** plus **one engine-supported but UI-thin system (lights)** and a handful of bug-shaped issues in `WardenToolsPanel`'s atmosphere section. Closing R1 + R2 + R9 + V26 + V27 alone moves us above 85 %.
 
 See companion document `docs/warden-tools-vtt-fix-plan.md` for the prioritized remediation plan.

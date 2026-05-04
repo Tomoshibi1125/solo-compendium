@@ -1,6 +1,8 @@
-// Techniques Compendium - Authoritative System Ascendant Content
+import { techniques_supplemental } from "./techniques-supplemental";
+
+// Techniques Compendium - Authoritative Rift Ascendant Content
 // Combat maneuvers and martial techniques
-// Based on System Ascendant mechanics
+// Based on Rift Ascendant mechanics
 // Deduplicated and Lore-Enriched
 
 export const techniques = [
@@ -116,7 +118,7 @@ export const techniques = [
 			frequency: "At will",
 			action: "1 bonus action",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "lightning",
 				mode: "both",
@@ -208,7 +210,7 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["experimental", "dungeon-core", "guild-ops"],
 	},
 	{
@@ -500,7 +502,7 @@ export const techniques = [
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor:
-			"Commands the last defense of the unprepared. A reminder that the System has no mercy.",
+			"Commands the last defense of the unprepared. A reminder that the gate lattice shows no mercy.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -679,7 +681,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
-		theme_tags: ["system-glitch", "post-awakening", "rift-energy"],
+		theme_tags: ["resonance-anomaly", "post-awakening", "rift-energy"],
 	},
 	{
 		id: "wind-dash",
@@ -1200,7 +1202,7 @@ export const techniques = [
 			frequency: "1/short rest",
 			action: "1 bonus action",
 			ability: "Strength",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "force",
 				mode: "both",
@@ -1292,7 +1294,7 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["mana-overflow", "hunter-bureau", "shadow-domain"],
 	},
 	{
@@ -1429,7 +1431,7 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["dimensional-bleed", "hunter-bureau"],
 	},
 	{
@@ -1474,7 +1476,7 @@ export const techniques = [
 			frequency: "1/long rest",
 			action: "1 bonus action",
 			ability: "Intelligence",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "necrotic",
 				mode: "melee",
@@ -1542,7 +1544,7 @@ export const techniques = [
 			frequency: "3/long rest",
 			action: "1 action",
 			ability: "Intelligence",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "radiant",
 				mode: "ranged",
@@ -1566,7 +1568,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
-		theme_tags: ["monarch-era", "rift-energy"],
+		theme_tags: ["regent-era", "rift-energy"],
 	},
 	{
 		id: "arcane-overload",
@@ -1611,7 +1613,7 @@ export const techniques = [
 			frequency: "Proficiency bonus/long rest",
 			action: "1 action",
 			ability: "Intelligence",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "force",
 				mode: "ranged",
@@ -1703,7 +1705,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
-		theme_tags: ["hunter-bureau", "monarch-era", "urban-combat"],
+		theme_tags: ["hunter-bureau", "regent-era", "urban-combat"],
 	},
 	{
 		id: "phantom-step",
@@ -1908,8 +1910,8 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
-		theme_tags: ["system-glitch", "elite-tier", "shadow-domain"],
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
+		theme_tags: ["resonance-anomaly", "elite-tier", "shadow-domain"],
 	},
 	{
 		id: "gravity-bind",
@@ -1954,7 +1956,7 @@ export const techniques = [
 			frequency: "3/long rest",
 			action: "Movement action",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "slashing",
 				mode: "both",
@@ -2022,7 +2024,7 @@ export const techniques = [
 			frequency: "2/short rest",
 			action: "Movement action",
 			ability: "Vitality",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "cold",
 				mode: "melee",
@@ -2045,7 +2047,7 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["guild-ops", "dimensional-bleed", "ancient-power"],
 	},
 	{
@@ -2158,7 +2160,7 @@ export const techniques = [
 			frequency: "Proficiency bonus/long rest",
 			action: "1 reaction",
 			ability: "Intelligence",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "piercing",
 				mode: "both",
@@ -2182,7 +2184,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["dimensional-bleed", "monarch-era"],
+		theme_tags: ["dimensional-bleed", "regent-era"],
 	},
 	{
 		id: "nerve-strike",
@@ -2227,7 +2229,7 @@ export const techniques = [
 			frequency: "Proficiency bonus/long rest",
 			action: "1 reaction",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "cold",
 				mode: "melee",
@@ -2592,8 +2594,8 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
-		theme_tags: ["monarch-era", "gate-zone"],
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
+		theme_tags: ["regent-era", "gate-zone"],
 	},
 	{
 		id: "quaking-stomp",
@@ -2706,7 +2708,7 @@ export const techniques = [
 			frequency: "3/long rest",
 			action: "Movement action",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "fire",
 				mode: "ranged",
@@ -2774,7 +2776,7 @@ export const techniques = [
 			frequency: "1/long rest",
 			action: "1 action",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "slashing",
 				mode: "both",
@@ -2910,7 +2912,7 @@ export const techniques = [
 			frequency: "1/short rest",
 			action: "Part of an attack",
 			ability: "Strength",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "piercing",
 				mode: "both",
@@ -3003,7 +3005,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
-		theme_tags: ["system-glitch", "survival"],
+		theme_tags: ["resonance-anomaly", "survival"],
 	},
 	{
 		id: "dimensional-step",
@@ -3070,7 +3072,7 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["dungeon-core", "survival"],
 	},
 	{
@@ -3276,7 +3278,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Entered into the Hunter's inventory via standard requisition.",
-		theme_tags: ["monarch-era", "urban-combat"],
+		theme_tags: ["regent-era", "urban-combat"],
 	},
 	{
 		id: "zen-archery",
@@ -3550,7 +3552,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["ancient-power", "system-glitch", "black-market"],
+		theme_tags: ["ancient-power", "resonance-anomaly", "black-market"],
 	},
 	{
 		id: "heavenly-piercing-arrow",
@@ -3619,7 +3621,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
-		theme_tags: ["dimensional-bleed", "gate-zone", "monarch-era"],
+		theme_tags: ["dimensional-bleed", "gate-zone", "regent-era"],
 	},
 	{
 		id: "mirror-shield-parry",
@@ -3687,8 +3689,8 @@ export const techniques = [
 			conditions: ["Requires a melee weapon"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
-		theme_tags: ["rift-energy", "monarch-era", "dimensional-bleed"],
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
+		theme_tags: ["rift-energy", "regent-era", "dimensional-bleed"],
 	},
 	{
 		id: "vipers-kiss",
@@ -3801,7 +3803,7 @@ export const techniques = [
 			frequency: "1/long rest",
 			action: "1 reaction",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "radiant",
 				mode: "ranged",
@@ -3870,7 +3872,7 @@ export const techniques = [
 			frequency: "2/short rest",
 			action: "1 bonus action",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "slashing",
 				mode: "ranged",
@@ -4168,7 +4170,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["elite-tier", "system-glitch"],
+		theme_tags: ["elite-tier", "resonance-anomaly"],
 	},
 	{
 		id: "temporal-feint",
@@ -4553,7 +4555,7 @@ export const techniques = [
 			frequency: "2/short rest",
 			action: "1 bonus action",
 			ability: "Agility",
-			lattice_interaction: "Raw muscle enhanced by System buffs",
+			lattice_interaction: "Raw muscle enhanced by mana-circuit reinforcement",
 			attack: {
 				type: "cold",
 				mode: "both",
@@ -4714,7 +4716,7 @@ export const techniques = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["gate-zone", "monarch-era", "system-glitch"],
+		theme_tags: ["gate-zone", "regent-era", "resonance-anomaly"],
 	},
 	{
 		id: "gale-force-kick",
@@ -4801,7 +4803,7 @@ export const techniques = [
 			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
 		},
 		flavor:
-			"Fractures the threshold of human potential. A reminder that the System has no mercy.",
+			"Fractures the threshold of human potential. A reminder that the gate lattice shows no mercy.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -4853,4 +4855,5 @@ export const techniques = [
 			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		theme_tags: ["shadow-domain", "experimental", "ancient-power"],
 	},
+	...techniques_supplemental,
 ];

@@ -1,4 +1,5 @@
 import type { CompendiumPower } from "../../types/compendium";
+import { powers_supplemental } from "./powers-supplemental";
 
 export const powers: CompendiumPower[] = [
 	{
@@ -123,7 +124,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Found in a hidden compartment of a relic weapon that had been in Guild storage for years.",
-		theme_tags: ["elite-tier", "monarch-era"],
+		theme_tags: ["elite-tier", "regent-era"],
 	},
 	{
 		id: "regeneration",
@@ -396,7 +397,7 @@ export const powers: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["black-market", "classified", "post-awakening"],
 	},
 	{
@@ -534,7 +535,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["forbidden", "monarch-era", "elite-tier"],
+		theme_tags: ["forbidden", "regent-era", "elite-tier"],
 	},
 	{
 		id: "assassin-luck",
@@ -731,7 +732,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
-		theme_tags: ["dungeon-core", "monarch-era"],
+		theme_tags: ["dungeon-core", "regent-era"],
 	},
 	{
 		id: "divine-smite",
@@ -797,7 +798,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Logged by the Bureau's issue-desk after a scheduled handover.",
-		theme_tags: ["system-glitch", "ancient-power"],
+		theme_tags: ["resonance-anomaly", "ancient-power"],
 	},
 	{
 		id: "wild-shape",
@@ -1002,7 +1003,7 @@ export const powers: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["guild-ops", "gate-zone", "mana-overflow"],
 	},
 	{
@@ -1141,7 +1142,7 @@ export const powers: CompendiumPower[] = [
 		name: "Gaze of Petrification",
 		display_name: "Gaze of Petrification",
 		description:
-			"Meets the eyes of one creature within 30 feet; if held, the gaze calcifies the target's nervous system. Target fails a DC 15 Strength save and is Paralyzed for 1 minute (save at end of each turn to end). Target succeeds and is immune to this power for 24 hours.",
+			"Meets the eyes of one creature within 30 feet; if held, the gaze calcifies the target's nerve lattice. Target fails a DC 15 Strength save and is Paralyzed for 1 minute (save at end of each turn to end). Target succeeds and is immune to this power for 24 hours.",
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history:
@@ -1415,7 +1416,7 @@ export const powers: CompendiumPower[] = [
 			history:
 				"Catalogued in the Bureau's standard rank-appropriate compendium.",
 			curse:
-				"Leaves a faint mark on the soul visible to Monarchs and entities of comparable power.",
+				"Leaves a faint mark on the soul visible to Regents and entities of comparable power.",
 			personality: "Inert until intentionally engaged.",
 			current_owner:
 				"Available to Bureau-certified casters at the appropriate rank.",
@@ -1469,7 +1470,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
-		theme_tags: ["monarch-era", "gate-zone", "mana-overflow"],
+		theme_tags: ["regent-era", "gate-zone", "mana-overflow"],
 	},
 	{
 		id: "holy-aura",
@@ -1599,7 +1600,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Transferred to the Hunter's kit by routine Bureau allotment.",
-		theme_tags: ["system-glitch", "hunter-bureau", "ancient-power"],
+		theme_tags: ["resonance-anomaly", "hunter-bureau", "ancient-power"],
 	},
 	{
 		id: "arcane-ascension",
@@ -1993,7 +1994,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["elite-tier", "monarch-era"],
+		theme_tags: ["elite-tier", "regent-era"],
 	},
 	{
 		id: "aegis-of-light",
@@ -2258,7 +2259,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
-		theme_tags: ["guild-ops", "system-glitch"],
+		theme_tags: ["guild-ops", "resonance-anomaly"],
 	},
 	{
 		id: "kinetic-absorption",
@@ -2325,7 +2326,7 @@ export const powers: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["black-market", "dimensional-bleed"],
 	},
 	{
@@ -2586,7 +2587,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
-		theme_tags: ["modern-warfare", "system-glitch", "post-awakening"],
+		theme_tags: ["modern-warfare", "resonance-anomaly", "post-awakening"],
 	},
 	{
 		id: "life-transfer",
@@ -2651,7 +2652,7 @@ export const powers: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered after a gate-lattice resonance surge during a hidden Bureau investigation.",
 		theme_tags: ["dimensional-bleed", "gate-zone", "experimental"],
 	},
 	{
@@ -3009,7 +3010,7 @@ export const powers: CompendiumPower[] = [
 			],
 		},
 		flavor:
-			"Annihilates the laws of physics. A reminder that the System has no mercy.",
+			"Annihilates the laws of physics. A reminder that the gate lattice shows no mercy.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -3056,7 +3057,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
-		theme_tags: ["monarch-era", "dimensional-bleed"],
+		theme_tags: ["regent-era", "dimensional-bleed"],
 	},
 	{
 		id: "solar-flare",
@@ -3455,7 +3456,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["monarch-era", "black-market", "experimental"],
+		theme_tags: ["regent-era", "black-market", "experimental"],
 	},
 	{
 		id: "supernova-blast",
@@ -3590,7 +3591,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
-		theme_tags: ["hunter-bureau", "system-glitch"],
+		theme_tags: ["hunter-bureau", "resonance-anomaly"],
 	},
 	{
 		id: "titan-strength",
@@ -4182,7 +4183,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
-		theme_tags: ["monarch-era", "experimental"],
+		theme_tags: ["regent-era", "experimental"],
 	},
 	{
 		id: "entropy-field",
@@ -4774,7 +4775,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Purchased from a black-market auction in the underground district of Neo-Seoul for an undisclosed sum.",
-		theme_tags: ["post-awakening", "dimensional-bleed", "system-glitch"],
+		theme_tags: ["post-awakening", "dimensional-bleed", "resonance-anomaly"],
 	},
 	{
 		id: "necrotic-tether",
@@ -4840,7 +4841,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["dimensional-bleed", "system-glitch", "dungeon-core"],
+		theme_tags: ["dimensional-bleed", "resonance-anomaly", "dungeon-core"],
 	},
 	{
 		id: "glacial-fortress",
@@ -4976,7 +4977,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["mana-overflow", "hunter-bureau", "monarch-era"],
+		theme_tags: ["mana-overflow", "hunter-bureau", "regent-era"],
 	},
 	{
 		id: "omega-pulse",
@@ -5042,6 +5043,7 @@ export const powers: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
-		theme_tags: ["monarch-era", "experimental", "survival"],
+		theme_tags: ["regent-era", "experimental", "survival"],
 	},
+	...powers_supplemental,
 ];

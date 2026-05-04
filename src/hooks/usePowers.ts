@@ -185,6 +185,11 @@ export const usePowers = (characterId: string) => {
 
 			const filtered = powers
 				.filter((power) => {
+					const isHomebrewPower = power.source
+						?.toLowerCase()
+						.includes("homebrew");
+					if (isHomebrewPower) return true;
+
 					const hasCanonicalById =
 						!!power.power_id && allById.has(power.power_id);
 					const hasCanonicalByName = allByName.has(power.name);
@@ -199,12 +204,15 @@ export const usePowers = (characterId: string) => {
 				})
 				.map((power) => ({
 					...power,
-					power:
-						(power.power_id ? accessibleById.get(power.power_id) : undefined) ??
-						selectCanonicalCastable(
-							accessibleByName.get(power.name) || [],
-							power,
-						),
+					power: power.source?.toLowerCase().includes("homebrew")
+						? undefined
+						: ((power.power_id
+								? accessibleById.get(power.power_id)
+								: undefined) ??
+							selectCanonicalCastable(
+								accessibleByName.get(power.name) || [],
+								power,
+							)),
 				}));
 
 			if (cacheKey) {
@@ -221,15 +229,20 @@ export const usePowers = (characterId: string) => {
 
 	const addPower = useMutation({
 		mutationFn: async (power: PowerInsert) => {
-			const canonicalResolution = await resolveCanonicalCastableReference(
-				{ id: power.power_id, name: power.name },
-				undefined,
-				["powers"],
-			);
+			const isHomebrewPower = power.source?.toLowerCase().includes("homebrew");
+			const canonicalResolution = isHomebrewPower
+				? { entry: null }
+				: await resolveCanonicalCastableReference(
+						{ id: power.power_id, name: power.name },
+						undefined,
+						["powers"],
+					);
 			const canonicalEntry = canonicalResolution.entry;
 			const powerWithCanonicalId: PowerInsert = {
 				...power,
-				power_id: canonicalEntry?.id ?? power.power_id ?? null,
+				power_id: isHomebrewPower
+					? null
+					: (canonicalEntry?.id ?? power.power_id ?? null),
 			};
 
 			if (isLocalCharacterId(characterId)) {

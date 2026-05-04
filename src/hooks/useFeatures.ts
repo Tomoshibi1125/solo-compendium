@@ -2,7 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
+import {
+	listCanonicalEntries,
+	resolveCanonicalReference,
+} from "@/lib/canonicalCompendium";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalFeature,
@@ -45,6 +48,17 @@ const writeCachedFeatures = (key: string, features: Feature[]) => {
 async function resolveFeatureCanonicalIds(
 	feature: FeatureInsert,
 ): Promise<FeatureInsert> {
+	const isHomebrewFeature =
+		feature.source.toLowerCase().includes("homebrew") ||
+		Boolean(feature.homebrew_id);
+	if (isHomebrewFeature) {
+		return {
+			...feature,
+			feat_id: null,
+			feature_id: null,
+		};
+	}
+
 	const isFeatSource = feature.source.toLowerCase().includes("feat");
 	if (!isFeatSource) return feature;
 
@@ -270,9 +284,6 @@ export const useCompendiumFeats = () => {
 	return useQuery({
 		queryKey: ["compendium-feats"],
 		queryFn: async () => {
-			const { listCanonicalEntries } = await import(
-				"@/lib/canonicalCompendium"
-			);
 			const entries = await listCanonicalEntries("feats");
 			return entries.slice().sort((a, b) => a.name.localeCompare(b.name));
 		},

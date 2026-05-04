@@ -445,7 +445,7 @@ export const spells_s: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
-		theme_tags: ["black-market", "monarch-era", "forbidden"],
+		theme_tags: ["black-market", "regent-era", "forbidden"],
 	},
 	{
 		id: "spell-s-6",
@@ -622,7 +622,7 @@ export const spells_s: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered from a gate-lattice reward chamber after a hidden trial resolved.",
 		theme_tags: ["dimensional-bleed", "ancient-power"],
 	},
 	{
@@ -712,7 +712,7 @@ export const spells_s: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["gate-zone", "urban-combat", "monarch-era"],
+		theme_tags: ["gate-zone", "urban-combat", "regent-era"],
 	},
 	{
 		id: "spell-s-9",
@@ -800,7 +800,7 @@ export const spells_s: CompendiumSpell[] = [
 			scaling: "Scales with spell slot rank",
 		},
 		discovery_lore:
-			"Gifted by the System itself as a reward for completing a hidden quest chain.",
+			"Recovered from a gate-lattice reward chamber after a hidden trial resolved.",
 		theme_tags: ["shadow-domain", "ancient-power"],
 	},
 	{
@@ -890,7 +890,7 @@ export const spells_s: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["system-glitch", "modern-warfare", "classified"],
+		theme_tags: ["lattice-anomaly", "modern-warfare", "classified"],
 	},
 	{
 		id: "spell-s-11",
@@ -1157,7 +1157,7 @@ export const spells_s: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
-		theme_tags: ["system-glitch", "classified"],
+		theme_tags: ["lattice-anomaly", "classified"],
 	},
 	{
 		id: "spell-s-14",

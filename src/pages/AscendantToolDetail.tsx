@@ -16,6 +16,7 @@ import { EquipmentList } from "@/components/character/EquipmentList";
 import { FeaturesList } from "@/components/character/FeaturesList";
 import { PowersList } from "@/components/character/PowersList";
 import { RunesList } from "@/components/character/RunesList";
+import { TattoosList } from "@/components/character/TattoosList";
 import { Layout } from "@/components/layout/Layout";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -194,6 +195,7 @@ export default function AscendantToolDetail() {
 							characterId={activeCharacter.id}
 							campaignId={campaignId}
 						/>
+						<TattoosList characterId={activeCharacter.id} />
 					</div>
 				) : null;
 			case "potions":

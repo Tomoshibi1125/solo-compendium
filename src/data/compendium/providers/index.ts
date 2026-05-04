@@ -359,6 +359,7 @@ export interface StaticCompendiumEntry {
 	area_of_effect?: Record<string, Json> | null;
 	table_category?: string | null;
 	table_group?: string | null;
+	dice_formula?: string | null;
 	rollable_entries?: string[] | null;
 	// Equipment structured fields preserved through canonical hydration.
 	simple_properties?: string[] | null;
@@ -397,6 +398,7 @@ type StaticRollableTableSource = {
 	description: string;
 	category: string;
 	group: string;
+	diceFormula: string;
 	entries: string[];
 	rank?: string;
 	source_book: string;
@@ -594,6 +596,7 @@ type StaticSpellSource = {
 	concentration?: boolean;
 	ritual?: boolean;
 	classes?: string[];
+	source_book?: string;
 	saving_throw?: Record<string, Json>;
 	attack?: Record<string, Json>;
 	savingThrow?: Record<string, Json>;
@@ -1209,7 +1212,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 			school,
 			...classes,
 		].filter(Boolean) as string[],
-		source_book: "Rift Ascendant Homebrew",
+		source_book: spell.source_book ?? "Rift Ascendant Homebrew",
 		image_url: spell.image,
 		spell_type: spell.type,
 		power_type: "Spell",
@@ -1219,7 +1222,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		effect: spell.effect,
 		range: rangeValue,
 		school: school,
-		classes,
+		classes: spell.classes ?? null,
 		casting_time: castingTime,
 		concentration,
 		ritual,
@@ -1861,6 +1864,7 @@ export const staticDataProvider: StaticDataProvider = {
 			flavor?: string;
 			element?: string;
 			tags?: string[] | null;
+			classes?: string[] | null;
 			theme_tags?: string[] | null;
 			power_type?: string | null;
 			school?: string | null;
@@ -1913,6 +1917,8 @@ export const staticDataProvider: StaticDataProvider = {
 						),
 					),
 				),
+				classes: Array.isArray(power.classes) ? power.classes : null,
+				theme_tags: themeTags,
 				source_book: power.source || "Rift Ascendant Canon",
 				image_url: power.image,
 				// Power level: use canonical power_level field first, then derive from type
@@ -1968,6 +1974,7 @@ export const staticDataProvider: StaticDataProvider = {
 			image?: string;
 			source?: string;
 			prerequisites?: { level?: number } | null;
+			level_requirement?: number | null;
 			activation?: Record<string, Json> | null;
 			duration?: Record<string, Json> | null;
 			range?: Record<string, Json> | null;
@@ -1977,6 +1984,9 @@ export const staticDataProvider: StaticDataProvider = {
 			limitations?: Record<string, Json> | null;
 			element?: string | null;
 			flavor?: string | null;
+			tags?: string[] | null;
+			classes?: string[] | null;
+			theme_tags?: string[] | null;
 		}>("techniques");
 		const filtered = filterBySearch(techniques, search, [
 			"name",
@@ -1984,53 +1994,76 @@ export const staticDataProvider: StaticDataProvider = {
 			"type",
 			"style",
 		]);
-		return filtered.map((technique) => ({
-			id: technique.id,
-			name: technique.name,
-			display_name: technique.name,
-			description: technique.description,
-			created_at: new Date().toISOString(),
-			tags: ["technique", technique.type, technique.style].filter(
-				Boolean,
-			) as string[],
-			source_book: technique.source || "Rift Ascendant Canon",
-			image_url: technique.image,
-			type: technique.type,
-			technique_type: technique.type,
-			style: technique.style,
-			element: technique.element || null,
-			prerequisites: technique.prerequisites || null,
-			activation: (technique.activation as Record<string, Json>) || null,
-			duration: (technique.duration as Record<string, Json>) || null,
-			range: (technique.range as Record<string, Json>) || null,
-			components: (technique.components as Record<string, Json>) || null,
-			effects: (technique.effects as Record<string, Json>) || null,
-			mechanics: (technique.mechanics as Record<string, Json>) || null,
-			limitations: (technique.limitations as Record<string, Json>) || null,
-			flavor: technique.flavor,
-			source: technique.source,
-			power_level:
-				technique.type === "finishing"
-					? 9
-					: technique.type === "offensive"
-						? 7
-						: 5,
-			school: technique.type,
-			title: technique.type,
-			theme: technique.style,
-			rarity:
-				technique.type === "finishing"
-					? "legendary"
-					: technique.type === "offensive"
-						? "rare"
-						: "uncommon",
-			level: technique.prerequisites?.level,
-			level_requirement: technique.prerequisites?.level ?? null,
-			saving_throw:
-				(technique.mechanics?.saving_throw as Record<string, Json>) || null,
-			attack: (technique.mechanics?.attack as Record<string, Json>) || null,
-			movement: (technique.mechanics?.movement as Record<string, Json>) || null,
-		}));
+		return filtered.map((technique) => {
+			const rawTags = Array.isArray(technique.tags) ? technique.tags : [];
+			const themeTags = Array.isArray(technique.theme_tags)
+				? technique.theme_tags
+				: [];
+			const levelRequirement =
+				technique.level_requirement ?? technique.prerequisites?.level ?? null;
+
+			return {
+				id: technique.id,
+				name: technique.name,
+				display_name: technique.name,
+				description: technique.description,
+				created_at: new Date().toISOString(),
+				tags: Array.from(
+					new Set(
+						[
+							...rawTags,
+							...themeTags,
+							"technique",
+							technique.type,
+							technique.style,
+						].filter(
+							(value): value is string =>
+								typeof value === "string" && value.trim().length > 0,
+						),
+					),
+				),
+				classes: Array.isArray(technique.classes) ? technique.classes : null,
+				theme_tags: themeTags,
+				source_book: technique.source || "Rift Ascendant Canon",
+				image_url: technique.image,
+				type: technique.type,
+				technique_type: technique.type,
+				style: technique.style,
+				element: technique.element || null,
+				prerequisites: technique.prerequisites || null,
+				activation: (technique.activation as Record<string, Json>) || null,
+				duration: (technique.duration as Record<string, Json>) || null,
+				range: (technique.range as Record<string, Json>) || null,
+				components: (technique.components as Record<string, Json>) || null,
+				effects: (technique.effects as Record<string, Json>) || null,
+				mechanics: (technique.mechanics as Record<string, Json>) || null,
+				limitations: (technique.limitations as Record<string, Json>) || null,
+				flavor: technique.flavor,
+				source: technique.source,
+				power_level:
+					technique.type === "finishing"
+						? 9
+						: technique.type === "offensive"
+							? 7
+							: 5,
+				school: technique.type,
+				title: technique.type,
+				theme: technique.style,
+				rarity:
+					technique.type === "finishing"
+						? "legendary"
+						: technique.type === "offensive"
+							? "rare"
+							: "uncommon",
+				level: levelRequirement,
+				level_requirement: levelRequirement,
+				saving_throw:
+					(technique.mechanics?.saving_throw as Record<string, Json>) || null,
+				attack: (technique.mechanics?.attack as Record<string, Json>) || null,
+				movement:
+					(technique.mechanics?.movement as Record<string, Json>) || null,
+			};
+		});
 	},
 
 	getArtifacts: async (search?: string) => {
@@ -2248,6 +2281,7 @@ export const staticDataProvider: StaticDataProvider = {
 			source_book: table.source_book,
 			table_category: table.category,
 			table_group: table.group,
+			dice_formula: table.diceFormula,
 			rollable_entries: table.entries,
 			rank: table.rank ?? null,
 		}));

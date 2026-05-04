@@ -5,6 +5,7 @@ import { findCanonicalForRow } from "@/hooks/useCanonicalEquipmentMap";
 import type { CharacterWithAbilities } from "@/hooks/useCharacters";
 import type { EquipmentRow } from "@/hooks/useEquipment";
 import type { CharacterSigilInscriptionRow, SigilRow } from "@/hooks/useSigils";
+import type { CharacterTattoo } from "@/hooks/useTattoos";
 import {
 	type CalculatedStats,
 	calculateCharacterStats,
@@ -13,6 +14,7 @@ import { buildItemProperties } from "@/lib/characterCreation";
 import {
 	type CharacterBaseData,
 	computeEncumbrance,
+	type Effect,
 	maintainConcentration,
 } from "@/lib/characterEngine";
 import { getActiveConditionEffects } from "@/lib/conditions";
@@ -39,6 +41,13 @@ import {
 	type SkillDefinition,
 } from "@/lib/skills";
 import { getUnarmoredDefenseBaseAC } from "@/lib/unarmoredDefense";
+import {
+	bridgeRelicEffects,
+	bridgeRuneEffects,
+	bridgeSigilEffects,
+	bridgeTattooEffects,
+	type UnifiedEffectEntry,
+} from "@/lib/unifiedEffectSystem";
 import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
 
 const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
@@ -94,6 +103,7 @@ export type DerivedStats = {
 	immunities: string[];
 	vulnerabilities: string[];
 	conditionImmunities: string[];
+	unifiedEffects: Effect[];
 	protocolEncumbrance: ReturnType<typeof computeEncumbrance>;
 	protocolEncumbranceDetail: ReturnType<typeof calculateEncumbrance>;
 	protocolConcentration: boolean;
@@ -107,6 +117,11 @@ interface UseCharacterDerivedStatsOptions {
 	hasExtraAttackFeature?: boolean;
 	/** Active regent IDs (Steel/Titan grant bonus attacks). */
 	regentIds?: string[];
+	runeKnowledge?: Array<{
+		mastery_level?: number | null;
+		rune?: UnifiedEffectEntry | null;
+	}>;
+	tattoos?: CharacterTattoo[];
 }
 
 export function useCharacterDerivedStats(
@@ -120,6 +135,8 @@ export function useCharacterDerivedStats(
 ) {
 	const hasExtraAttackFeature = options?.hasExtraAttackFeature ?? false;
 	const regentIds = options?.regentIds ?? [];
+	const runeKnowledge = options?.runeKnowledge ?? [];
+	const tattoos = options?.tattoos ?? [];
 	return useMemo(() => {
 		if (!character) return null;
 
@@ -211,6 +228,47 @@ export function useCharacterDerivedStats(
 					si.is_active
 				),
 		);
+		const activeTattoos = tattoos.filter(
+			(tattoo) =>
+				tattoo.is_active && (!tattoo.requires_attunement || tattoo.is_attuned),
+		);
+		const unifiedEffects = [
+			...(equipment || [])
+				.filter(
+					(item) =>
+						item.is_equipped &&
+						(!item.requires_attunement || item.is_attuned) &&
+						!!canonicalEquipmentMap,
+				)
+				.flatMap((item) => {
+					const canonical = findCanonicalForRow(
+						canonicalEquipmentMap ?? new Map(),
+						item.name,
+					);
+					if (!canonical) return [];
+					return bridgeRelicEffects({
+						...(canonical as UnifiedEffectEntry),
+						properties: getEquipmentProperties(item),
+					});
+				}),
+			...equippedActiveSigils.flatMap((si) =>
+				bridgeSigilEffects(si.sigil as unknown as UnifiedEffectEntry),
+			),
+			...runeKnowledge
+				.filter((entry) => (entry.mastery_level ?? 0) >= 5 && entry.rune)
+				.flatMap((entry) =>
+					bridgeRuneEffects(entry.rune as UnifiedEffectEntry),
+				),
+			...activeTattoos.flatMap((tattoo) =>
+				bridgeTattooEffects({
+					...((tattoo.tattoo ?? {}) as UnifiedEffectEntry),
+					id: tattoo.tattoo_id ?? tattoo.id,
+					name: tattoo.name,
+					description: tattoo.tattoo?.description ?? tattoo.notes,
+					effects: tattoo.custom_effects ?? tattoo.tattoo?.effects,
+				}),
+			),
+		];
 
 		const sigilBonuses = applySigilBonuses(
 			{
@@ -581,7 +639,21 @@ export function useCharacterDerivedStats(
 				isEquipped: !!item.is_equipped,
 				weight: item.weight || 0,
 			})),
-			tattoos: [],
+			tattoos: activeTattoos.map((tattoo) => ({
+				id: tattoo.id,
+				name: tattoo.name,
+				isActive: tattoo.is_active,
+				bodyPart: tattoo.body_part ?? "Unknown",
+				requiresAttunement: tattoo.requires_attunement,
+				isAttuned: tattoo.is_attuned,
+				effects: bridgeTattooEffects({
+					...((tattoo.tattoo ?? {}) as UnifiedEffectEntry),
+					id: tattoo.tattoo_id ?? tattoo.id,
+					name: tattoo.name,
+					description: tattoo.tattoo?.description ?? tattoo.notes,
+					effects: tattoo.custom_effects ?? tattoo.tattoo?.effects,
+				}),
+			})),
 			activeConditions: [],
 			activeSpells: [],
 			features: [],
@@ -633,6 +705,7 @@ export function useCharacterDerivedStats(
 			immunities,
 			vulnerabilities,
 			conditionImmunities,
+			unifiedEffects,
 			protocolEncumbrance,
 			protocolEncumbranceDetail,
 			protocolConcentration,
@@ -647,5 +720,7 @@ export function useCharacterDerivedStats(
 		canonicalEquipmentMap,
 		hasExtraAttackFeature,
 		regentIds,
+		runeKnowledge,
+		tattoos,
 	]);
 }

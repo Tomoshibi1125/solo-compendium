@@ -5,6 +5,9 @@
  * Persisted via localStorage + Supabase tool state.
  */
 
+import { useCallback, useEffect, useRef } from "react";
+import { useUserToolState } from "@/hooks/useToolState";
+
 // ─── Types ──────────────────────────────────────────────────
 export interface RollMacro {
 	id: string;
@@ -34,6 +37,7 @@ export interface MacroBar {
 
 // ─── Constants ──────────────────────────────────────────────
 export const MACRO_STORAGE_KEY = "solo-compendium.macros.v1";
+export const MACRO_TOOL_KEY = "warden_macros";
 export const DEFAULT_MAX_SLOTS = 10;
 
 export const CATEGORY_ICONS: Record<MacroCategory, string> = {
@@ -167,6 +171,68 @@ export function loadMacrosFromLocal(): RollMacro[] {
 		console.warn("[Macros] Failed to load from localStorage:", e);
 		return [];
 	}
+}
+
+export function createDefaultMacros(
+	createdAt = new Date().toISOString(),
+): RollMacro[] {
+	return [
+		{
+			id: "default-d20",
+			name: "d20",
+			formula: "1d20",
+			category: "custom",
+			createdAt,
+		},
+	];
+}
+
+export function useMacros() {
+	const defaultMacrosRef = useRef<RollMacro[] | null>(null);
+	if (!defaultMacrosRef.current) {
+		defaultMacrosRef.current = createDefaultMacros();
+	}
+
+	const {
+		state: macros,
+		setState,
+		isLoading,
+		saveNow,
+		isAuthed,
+	} = useUserToolState<RollMacro[]>(MACRO_TOOL_KEY, {
+		initialState: defaultMacrosRef.current,
+		storageKey: MACRO_STORAGE_KEY,
+	});
+	const seededRef = useRef(false);
+
+	const setMacros = useCallback(
+		(next: RollMacro[] | ((current: RollMacro[]) => RollMacro[])) => {
+			setState((current) => {
+				const resolved = typeof next === "function" ? next(current) : next;
+				void saveNow(resolved);
+				return resolved;
+			});
+		},
+		[saveNow, setState],
+	);
+
+	useEffect(() => {
+		if (isLoading || seededRef.current) return;
+		seededRef.current = true;
+		if (macros.length === 0) {
+			setMacros(defaultMacrosRef.current ?? createDefaultMacros());
+			return;
+		}
+		void saveNow(macros);
+	}, [isLoading, macros, saveNow, setMacros]);
+
+	return {
+		macros,
+		setMacros,
+		isLoading,
+		isAuthed,
+		saveMacros: setMacros,
+	};
 }
 
 /**

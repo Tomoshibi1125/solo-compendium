@@ -152,7 +152,18 @@ export class PlayerPage {
 				.getByRole("button", { name: /Advance Protocol|^Next$/i })
 				.first();
 
+		const dismissAnalyticsBanner = async () => {
+			const bannerButton = this.page
+				.getByRole("button", { name: /No Thanks|Dismiss/i })
+				.first();
+			if (await bannerButton.isVisible({ timeout: 500 }).catch(() => false)) {
+				await bannerButton.click().catch(() => {});
+				await this.page.waitForTimeout(200);
+			}
+		};
+
 		const clickNext = async (timeoutMs = 15_000) => {
+			await dismissAnalyticsBanner();
 			const btn = nextButton();
 			await expect(btn).toBeEnabled({ timeout: timeoutMs });
 			await btn.click();
@@ -268,6 +279,7 @@ export class PlayerPage {
 			abilities: /MODEL CALIBRATION: ATTRIBUTE ALLOCATION/i,
 			path: /MODEL EVOLUTION: PATH BRANCHING/i,
 			background: /MODEL ORIGIN: BACKGROUND BINDING/i,
+			persona: /PERSONA MATRIX: PROTOCOL ALIGNMENT/i,
 			equipmentAuto: /MODEL EQUIPMENT: AUTOMATED PROVISIONING/i,
 			equipmentManual: /MODEL EQUIPMENT: LOADOUT SELECTION/i,
 			imprints: /Awakening Imprints/i,
@@ -296,6 +308,7 @@ export class PlayerPage {
 		let lastStep: StepKey | null = null;
 
 		for (let iter = 0; iter < maxStepsExecuted; iter += 1) {
+			await dismissAnalyticsBanner();
 			const step = await detectStep();
 			if (!step) {
 				console.warn(
@@ -367,6 +380,8 @@ export class PlayerPage {
 				}
 				await satisfyCheckboxRequirements();
 				await clickNext();
+			} else if (step === "persona") {
+				await clickNext();
 			} else if (step === "equipmentAuto") {
 				// No manual provisions; Next should already be enabled.
 				await clickNext();
@@ -418,7 +433,13 @@ export class PlayerPage {
 			} else if (step === "imprints") {
 				const imprintOptions = this.page
 					.getByTestId("creation-power-imprint-option")
-					.or(this.page.getByTestId("creation-technique-imprint-option"));
+					.or(this.page.getByTestId("creation-technique-imprint-option"))
+					.or(this.page.getByTestId("creation-cantrip-imprint-option"))
+					.or(this.page.getByTestId("creation-spell-imprint-option"))
+					.or(this.page.getByTestId("creation-spellbook-imprint-option"))
+					.or(this.page.getByTestId("creation-fighting-style-option"))
+					.or(this.page.getByTestId("creation-specialist-training-option"))
+					.or(this.page.getByTestId("creation-favored-terrain-option"));
 				const count = await imprintOptions.count();
 				for (let i = 0; i < count; i += 1) {
 					if (

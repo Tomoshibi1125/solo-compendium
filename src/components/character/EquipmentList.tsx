@@ -10,8 +10,8 @@ import {
 	findCanonicalForRow,
 	useCanonicalEquipmentMap,
 } from "@/hooks/useCanonicalEquipmentMap";
-import { useCombatActions } from "@/hooks/useCombatActions";
 import { useCharacter } from "@/hooks/useCharacters";
+import { useCombatActions } from "@/hooks/useCombatActions";
 import { useEncumbranceSettings } from "@/hooks/useEncumbranceSettings";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
@@ -405,7 +405,9 @@ export function EquipmentList({
 															)}
 															canAttune={canAttune}
 															nestedItems={equipmentByContainer[item.id] || []}
-															computedAction={actionsByEquipmentId.get(item.id) ?? null}
+															computedAction={
+																actionsByEquipmentId.get(item.id) ?? null
+															}
 															onSelect={() =>
 																onSelectDetail?.({
 																	title: item.name,
@@ -475,7 +477,9 @@ export function EquipmentList({
 														)}
 														canAttune={canAttune}
 														nestedItems={equipmentByContainer[item.id] || []}
-														computedAction={actionsByEquipmentId.get(item.id) ?? null}
+														computedAction={
+															actionsByEquipmentId.get(item.id) ?? null
+														}
 														onSelect={() =>
 															onSelectDetail?.({
 																title: item.name,

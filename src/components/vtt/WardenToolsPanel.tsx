@@ -31,6 +31,7 @@ import {
 	useMemo,
 	useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import {
@@ -53,13 +54,12 @@ import { useWardenAudio } from "@/hooks/useWardenAudio";
 import { validateDiceString } from "@/lib/advancedDiceEngine";
 import { MOOD_TAGS, SOUND_CATEGORIES } from "@/lib/audio/types";
 import { cn } from "@/lib/utils";
-import { AMBIENT_SOUND_PRESETS, TERRAIN_PRESETS } from "@/lib/vtt";
 import {
-	createDefaultMacroBar,
-	loadMacrosFromLocal,
-	type RollMacro,
-	saveMacrosToLocal,
-} from "@/lib/vtt/rollMacros";
+	AMBIENT_SOUND_PRESETS,
+	TERRAIN_PRESETS,
+	type WeatherType,
+} from "@/lib/vtt";
+import { useMacros } from "@/lib/vtt/rollMacros";
 import { createVttTokenInstanceId } from "@/lib/vtt/sceneState";
 import { PartyDashboardPanel } from "./PartyDashboardPanel";
 import { VTTAssetBrowser } from "./VTTAssetBrowser";
@@ -72,8 +72,10 @@ const EncounterBuilder = lazy(() =>
 const GateGenerator = lazy(
 	() => import("@/pages/warden-directives/GateGenerator"),
 );
-const NPCGenerator = lazy(
-	() => import("@/pages/warden-directives/NPCGenerator"),
+const NPCGenerator = lazy(() =>
+	import("@/components/warden-directives/NPCGenerator").then((m) => ({
+		default: m.NPCGenerator,
+	})),
 );
 const RandomEventGenerator = lazy(
 	() => import("@/pages/warden-directives/RandomEventGenerator"),
@@ -100,6 +102,32 @@ const AIEnhancedArtGenerator = lazy(() =>
 		default: m.AIEnhancedArtGenerator,
 	})),
 );
+
+const SECTION_PANEL_IDS = {
+	macros: "warden-tools-macros-panel",
+	music: "warden-tools-music-panel",
+	atmosphereTerrain: "warden-tools-terrain-panel",
+	atmosphereAmbient: "warden-tools-ambient-panel",
+} as const;
+
+type OpenSectionKey =
+	| "macros"
+	| "music"
+	| "atmosphereLighting"
+	| "atmosphereWeather"
+	| "atmosphereTerrain"
+	| "atmosphereAmbient";
+
+const createInitialOpenSections = (
+	isMobile: boolean,
+): Record<OpenSectionKey, boolean> => ({
+	macros: !isMobile,
+	music: false,
+	atmosphereLighting: !isMobile,
+	atmosphereWeather: !isMobile,
+	atmosphereTerrain: false,
+	atmosphereAmbient: false,
+});
 
 export interface VTTTokenPayload {
 	name: string;
@@ -128,6 +156,8 @@ interface WardenToolsPanelProps {
 	onAddEffect?: (effect: VTTEffectPayload) => void;
 	onPlaySound?: (soundId: string) => void;
 	onMusicChange?: (musicId: string) => void;
+	/** Mutates `currentScene.weather`; pass `null` to clear. */
+	onWeatherChange?: (weather: WeatherType | null) => void;
 	onChangeMap?: (imageUrl: string, name?: string) => void;
 	onShareHandout?: (imageUrl: string, name?: string) => void;
 	customAssets?: VTTAsset[];
@@ -136,6 +166,7 @@ interface WardenToolsPanelProps {
 		usage: "map" | "token",
 	) => Promise<VTTAsset | null>;
 	onDeleteAsset?: (asset: VTTAsset) => Promise<boolean>;
+	isMobile?: boolean;
 	className?: string;
 }
 
@@ -146,15 +177,18 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 	onAddEffect,
 	onPlaySound,
 	onMusicChange,
+	onWeatherChange,
 	onChangeMap,
 	onShareHandout,
 	customAssets,
 	onUploadAsset,
 	onDeleteAsset,
+	isMobile = false,
 	className,
 }) => {
 	const { toast } = useToast();
 	const ascendantTools = useAscendantTools();
+	const navigate = useNavigate();
 
 	// Internal audio engine — provides live playback whenever parent doesn't
 	// supply onPlaySound / onMusicChange callbacks.
@@ -164,16 +198,17 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 	const [activeTool, setActiveTool] = useState<string>("encounter");
 	const [quickRollValue, setQuickRollValue] = useState("1d20");
 	const [quickRollResult, setQuickRollResult] = useState<number | null>(null);
-	const [macros, setMacros] = useState<RollMacro[]>([]);
-	const [openSections, setOpenSections] = useState<Record<string, boolean>>({
-		macros: true,
-		music: false,
-		atmosphereLighting: true,
-		atmosphereWeather: true,
-		atmosphereTerrain: false,
-		atmosphereAmbient: false,
-	});
-	const toggleSection = (key: string) =>
+	// Transient confirmation shown after a VTT-wired roll, since the numeric
+	// result appears in chat rather than locally. Cleared after 1500 ms.
+	const [quickRollSent, setQuickRollSent] = useState(false);
+	const { macros } = useMacros();
+	const [openSections, setOpenSections] = useState<
+		Record<OpenSectionKey, boolean>
+	>(() => createInitialOpenSections(isMobile));
+	useEffect(() => {
+		setOpenSections(createInitialOpenSections(isMobile));
+	}, [isMobile]);
+	const toggleSection = (key: OpenSectionKey) =>
 		setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
 
 	// Session Notes — React-controlled with localStorage persistence
@@ -217,26 +252,6 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 		};
 	}, [members]);
 
-	useEffect(() => {
-		const loadedMacros = loadMacrosFromLocal();
-		if (loadedMacros.length === 0) {
-			// Initialize with some defaults if empty (e.g., standard d20)
-			const defaultMacro = {
-				id: "default-d20",
-				name: "d20",
-				formula: "1d20",
-				category: "custom" as const,
-				createdAt: new Date().toISOString(),
-			};
-			const initialMacros = [defaultMacro];
-			createDefaultMacroBar(initialMacros);
-			saveMacrosToLocal(initialMacros);
-			setMacros(initialMacros);
-		} else {
-			setMacros(loadedMacros);
-		}
-	}, []);
-
 	const logWardenMacro = (macroName: string, detail: string) => {
 		ascendantTools
 			.trackCustomFeatureUsage(
@@ -264,8 +279,11 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 				// Use VTT engine (Roll20-class: kh/kl, exploding, multi-term, crit detection)
 				onRoll(quickRollValue, "dice");
 				logWardenMacro("Quick Roll", quickRollValue);
-				// We don't have the result here; it will appear in VTT chat
+				// The numeric result appears in VTT chat; show a transient local
+				// confirmation so the user knows the button did something.
 				setQuickRollResult(null);
+				setQuickRollSent(true);
+				window.setTimeout(() => setQuickRollSent(false), 1500);
 			} else {
 				// Offline fallback: simple local parser
 				const match = quickRollValue.match(/(\d+)d(\d+)/);
@@ -317,10 +335,25 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 			mood,
 		})),
 	];
+	const sectionToggleClassName = cn(
+		"flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground",
+		isMobile ? "min-h-11 py-2 text-sm" : "py-1",
+	);
+	const compactActionClassName = isMobile ? "min-h-11 min-w-11 text-sm" : "";
+	const compactTextButtonClassName = isMobile ? "min-h-11 text-sm" : "";
+	const protocolTabTriggerClassName = cn(
+		"flex-col gap-1",
+		isMobile ? "min-w-[72px] p-3" : "p-2 min-w-[56px]",
+	);
+	const generatorActionClassName = cn(
+		"h-auto py-3 flex-col gap-1.5",
+		isMobile && "min-h-16",
+	);
 
 	return (
 		<EmbeddedProvider>
 			<div
+				data-mobile={isMobile ? "true" : "false"}
 				className={cn(
 					"flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-4rem)] pr-0.5",
 					className,
@@ -337,9 +370,13 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									value={quickRollValue}
 									onChange={(e) => setQuickRollValue(e.target.value)}
 									placeholder="1d20"
-									className="h-8 text-xs"
+									className={cn("h-8 text-xs", isMobile && "h-11 text-sm")}
 								/>
-								<Button size="sm" onClick={handleQuickRoll} className="h-8">
+								<Button
+									size="sm"
+									onClick={handleQuickRoll}
+									className={cn("h-8", compactActionClassName)}
+								>
 									<Dice1 className="w-3 h-3" />
 								</Button>
 							</div>
@@ -347,6 +384,15 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								<div className="text-center text-xs font-bold text-primary">
 									Result: {quickRollResult}
 								</div>
+							)}
+							{quickRollSent && (
+								<output
+									data-testid="warden-tools-quick-roll-sent-confirm"
+									className="text-center text-[11px] text-primary/80"
+									aria-live="polite"
+								>
+									Sent to chat — see Chat tab
+								</output>
 							)}
 						</div>
 						<div className="space-y-2">
@@ -363,7 +409,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 											resolvedPlaySound(sound.id);
 											logWardenMacro("Sound Effect", sound.name);
 										}}
-										className="h-8 text-xs p-1"
+										className={cn("h-8 text-xs p-1", compactActionClassName)}
 										title={sound.name}
 									>
 										{sound.icon}
@@ -378,8 +424,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 						<div className="pt-2 border-t border-border/50">
 							<button
 								type="button"
-								className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+								className={sectionToggleClassName}
 								onClick={() => toggleSection("macros")}
+								aria-expanded={openSections.macros}
+								aria-controls={SECTION_PANEL_IDS.macros}
 							>
 								<Label className="text-xs cursor-pointer">
 									Saved Macros ({macros.length})
@@ -391,26 +439,31 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									)}
 								/>
 							</button>
-							{openSections.macros && (
-								<div className="flex gap-1 overflow-x-auto pb-1 pt-1">
-									{macros.map((macro) => (
-										<Button
-											key={macro.id}
-											size="sm"
-											variant="secondary"
-											onClick={() => {
-												onRoll?.(macro.formula, "dice");
-												logWardenMacro("Custom Macro", macro.name);
-											}}
-											className="h-8 text-[10px] px-2 shrink-0"
-											style={{ borderColor: macro.color }}
-											title={`${macro.name}: ${macro.formula}`}
-										>
-											{macro.name.slice(0, 8)}
-										</Button>
-									))}
-								</div>
-							)}
+							<div
+								id={SECTION_PANEL_IDS.macros}
+								hidden={!openSections.macros}
+								className="flex gap-1 overflow-x-auto pb-1 pt-1"
+							>
+								{macros.map((macro) => (
+									<Button
+										key={macro.id}
+										size="sm"
+										variant="secondary"
+										onClick={() => {
+											onRoll?.(macro.formula, "dice");
+											logWardenMacro("Custom Macro", macro.name);
+										}}
+										className={cn(
+											"h-8 text-[10px] px-2 shrink-0",
+											isMobile && "h-11 px-3 text-xs",
+										)}
+										style={{ borderColor: macro.color }}
+										title={`${macro.name}: ${macro.formula}`}
+									>
+										{macro.name.slice(0, 8)}
+									</Button>
+								))}
+							</div>
 						</div>
 					)}
 
@@ -418,8 +471,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 					<div className="pt-2 border-t border-border/50">
 						<button
 							type="button"
-							className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+							className={sectionToggleClassName}
 							onClick={() => toggleSection("music")}
+							aria-expanded={openSections.music}
+							aria-controls={SECTION_PANEL_IDS.music}
 						>
 							<Label className="text-xs cursor-pointer">
 								Ambient Music (Procedural)
@@ -431,24 +486,29 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								)}
 							/>
 						</button>
-						{openSections.music && (
-							<div className="grid grid-cols-3 gap-1 max-h-40 overflow-y-auto pt-1">
-								{quickMusic.map((music) => (
-									<Button
-										key={music.id}
-										size="sm"
-										variant={music.id === "stop" ? "destructive" : "outline"}
-										onClick={() => {
-											resolvedMusicChange(music.id);
-											logWardenMacro("Music Change", music.name);
-										}}
-										className="h-7 text-[10px] px-1 truncate"
-									>
-										{music.name}
-									</Button>
-								))}
-							</div>
-						)}
+						<div
+							id={SECTION_PANEL_IDS.music}
+							hidden={!openSections.music}
+							className="grid grid-cols-3 gap-1 max-h-40 overflow-y-auto pt-1"
+						>
+							{quickMusic.map((music) => (
+								<Button
+									key={music.id}
+									size="sm"
+									variant={music.id === "stop" ? "destructive" : "outline"}
+									onClick={() => {
+										resolvedMusicChange(music.id);
+										logWardenMacro("Music Change", music.name);
+									}}
+									className={cn(
+										"h-7 text-[10px] px-1 truncate",
+										isMobile && "h-11 text-xs px-2",
+									)}
+								>
+									{music.name}
+								</Button>
+							))}
+						</div>
 					</div>
 				</AscendantWindow>
 
@@ -473,35 +533,35 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								<TabsList className="flex flex-nowrap w-max min-w-full gap-1 h-auto p-1">
 									<TabsTrigger
 										value="encounter"
-										className="flex-col gap-1 p-2 min-w-[56px]"
+										className={protocolTabTriggerClassName}
 									>
 										<Sword className="w-4 h-4" />
 										<span className="text-[10px]">Encounter</span>
 									</TabsTrigger>
 									<TabsTrigger
 										value="generators"
-										className="flex-col gap-1 p-2 min-w-[56px]"
+										className={protocolTabTriggerClassName}
 									>
 										<Sparkles className="w-4 h-4" />
 										<span className="text-[10px]">Generate</span>
 									</TabsTrigger>
 									<TabsTrigger
 										value="assets"
-										className="flex-col gap-1 p-2 min-w-[56px]"
+										className={protocolTabTriggerClassName}
 									>
 										<BookOpen className="w-4 h-4" />
 										<span className="text-[10px]">Assets</span>
 									</TabsTrigger>
 									<TabsTrigger
 										value="tables"
-										className="flex-col gap-1 p-2 min-w-[56px]"
+										className={protocolTabTriggerClassName}
 									>
 										<Coins className="w-4 h-4" />
 										<span className="text-[10px]">Tables</span>
 									</TabsTrigger>
 									<TabsTrigger
 										value="tools"
-										className="flex-col gap-1 p-2 min-w-[56px]"
+										className={protocolTabTriggerClassName}
 									>
 										<Settings className="w-4 h-4" />
 										<span className="text-[10px]">Tools</span>
@@ -563,7 +623,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<Users className="w-4 h-4" />
 												<span className="text-xs">NPC</span>
@@ -581,7 +641,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<DoorOpen className="w-4 h-4" />
 												<span className="text-xs">Rift</span>
@@ -599,7 +659,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<Coins className="w-4 h-4" />
 												<span className="text-xs">Treasure</span>
@@ -617,7 +677,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<Skull className="w-4 h-4" />
 												<span className="text-xs">Random</span>
@@ -635,7 +695,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<Heart className="w-4 h-4" />
 												<span className="text-xs">Relic</span>
@@ -653,7 +713,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5 border-fuchsia-500/30"
+												className={cn(
+													"h-auto py-3 flex-col gap-1.5 border-fuchsia-500/30",
+													isMobile && "min-h-16",
+												)}
 											>
 												<MapIcon className="w-4 h-4 text-fuchsia-400" />
 												<span className="text-xs text-fuchsia-400">
@@ -673,7 +736,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5 border-blue-500/30"
+												className={cn(
+													"h-auto py-3 flex-col gap-1.5 border-blue-500/30",
+													isMobile && "min-h-16",
+												)}
 											>
 												<Image className="w-4 h-4 text-blue-400" />
 												<span className="text-xs text-blue-400">Art AI</span>
@@ -693,7 +759,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<BookOpen className="w-4 h-4" />
 												<span className="text-xs">Directives</span>
@@ -711,7 +777,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<DialogTrigger asChild>
 											<Button
 												variant="outline"
-												className="h-auto py-3 flex-col gap-1.5"
+												className={generatorActionClassName}
 											>
 												<Sparkles className="w-4 h-4" />
 												<span className="text-xs">Effect</span>
@@ -754,7 +820,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 																	description: `${effect} effect placed on map`,
 																});
 															}}
-															className="h-10 text-xs"
+															className={cn(
+																"h-10 text-xs",
+																isMobile && "min-h-11 text-sm",
+															)}
 														>
 															{effect}
 														</Button>
@@ -773,7 +842,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 							<TabsContent value="tools" className="space-y-4 mt-3">
 								<AscendantWindow title="SESSION NOTES" compact>
 									<textarea
-										className="w-full h-32 p-2 text-xs bg-background border border-border rounded resize-none"
+										className={cn(
+											"w-full h-32 p-2 text-xs bg-background border border-border rounded resize-none",
+											isMobile && "min-h-40 text-sm",
+										)}
 										placeholder="Jot down key moments, NPC reactions, player decisions..."
 										value={sessionNotes}
 										onChange={(e) => setSessionNotes(e.target.value)}
@@ -781,7 +853,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									<div className="flex gap-2 mt-2">
 										<Button
 											size="sm"
-											className="flex-1"
+											className={cn("flex-1", compactTextButtonClassName)}
 											onClick={handleSaveNotes}
 											disabled={!sessionNotes.trim()}
 										>
@@ -790,6 +862,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<Button
 											size="sm"
 											variant="outline"
+											className={compactTextButtonClassName}
 											onClick={handleClearNotes}
 											disabled={!sessionNotes}
 										>
@@ -803,10 +876,12 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									<div className="mt-4 pt-4 border-t border-border/50">
 										<Button
 											variant="secondary"
-											className="w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10"
-											onClick={() =>
-												window.open("/source-book/module", "_blank")
-											}
+											className={cn(
+												"w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10",
+												compactTextButtonClassName,
+											)}
+											aria-label="Open the Regent's Shadow module book"
+											onClick={() => navigate("/source-book/module")}
 										>
 											<BookOpen className="w-4 h-4" />
 											Read Module Book
@@ -818,39 +893,53 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 									<div className="space-y-2">
 										<Button
 											variant="outline"
-											className="w-full justify-between h-9 text-xs"
-											onClick={() =>
-												window.open(
-													`/party-tracker?campaignId=${campaignId}`,
-													"_blank",
-												)
-											}
+											className={cn(
+												"w-full justify-between h-9 text-xs",
+												compactTextButtonClassName,
+											)}
+											aria-label="Open Party Tracker"
+											onClick={() => {
+												const target = campaignId
+													? `/warden-directives/party-tracker?campaignId=${campaignId}`
+													: "/warden-directives/party-tracker";
+												navigate(target);
+											}}
 										>
 											Open Party Tracker
 											<ExternalLink className="w-3 h-3 ml-2" />
 										</Button>
 										<Button
 											variant="outline"
-											className="w-full justify-between h-9 text-xs"
-											onClick={() =>
-												window.open(
-													`/session-planner?campaignId=${campaignId}`,
-													"_blank",
-												)
-											}
+											className={cn(
+												"w-full justify-between h-9 text-xs",
+												compactTextButtonClassName,
+											)}
+											aria-label="Open Session Planner"
+											onClick={() => {
+												const target = campaignId
+													? `/warden-directives/session-planner?campaignId=${campaignId}`
+													: "/warden-directives/session-planner";
+												navigate(target);
+											}}
 										>
 											Open Session Planner
 											<ExternalLink className="w-3 h-3 ml-2" />
 										</Button>
 										<Button
 											variant="outline"
-											className="w-full justify-between h-9 text-xs"
-											onClick={() =>
-												window.open(
-													`/warden-journal?campaignId=${campaignId}`,
-													"_blank",
-												)
-											}
+											className={cn(
+												"w-full justify-between h-9 text-xs",
+												compactTextButtonClassName,
+											)}
+											aria-label="Open Warden Journal"
+											onClick={() => {
+												// Campaign-scoped route when we have an id, otherwise
+												// the standalone Warden-directives journal surface.
+												const target = campaignId
+													? `/campaigns/${campaignId}/journal`
+													: "/warden-directives/vtt-journal";
+												navigate(target);
+											}}
 										>
 											Open Warden Journal
 											<ExternalLink className="w-3 h-3 ml-2" />
@@ -867,9 +956,11 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												<Button
 													size="sm"
 													variant="outline"
+													className={compactActionClassName}
+													aria-label="Place a bright light source on the scene"
 													onClick={() => {
 														onAddEffect?.({
-															id: "bright",
+															id: createVttTokenInstanceId(),
 															name: "Bright Light",
 															type: "light",
 															radius: 10,
@@ -883,9 +974,11 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												<Button
 													size="sm"
 													variant="outline"
+													className={compactActionClassName}
+													aria-label="Place a dim light source on the scene"
 													onClick={() => {
 														onAddEffect?.({
-															id: "dim",
+															id: createVttTokenInstanceId(),
 															name: "Dim Light",
 															type: "light",
 															radius: 5,
@@ -899,9 +992,11 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												<Button
 													size="sm"
 													variant="outline"
+													className={compactActionClassName}
+													aria-label="Place a darkness source on the scene"
 													onClick={() => {
 														onAddEffect?.({
-															id: "darkness",
+															id: createVttTokenInstanceId(),
 															name: "Darkness",
 															type: "dark",
 															radius: 8,
@@ -915,15 +1010,20 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 											</div>
 										</div>
 
-										{/* Weather — always visible, just 3 buttons */}
+										{/* Weather — plays SFX AND mutates currentScene.weather so the
+										     canvas overlay updates. Clear button removes the overlay. */}
 										<div>
 											<Label className="text-xs">Weather</Label>
 											<div className="flex gap-2 mt-1">
 												<Button
 													size="sm"
 													variant="outline"
+													className={compactActionClassName}
+													aria-label="Set weather to rain"
+													title="Rain"
 													onClick={() => {
 														resolvedPlaySound("rain");
+														onWeatherChange?.("rain");
 														logWardenMacro("Weather", "Rain");
 													}}
 												>
@@ -932,8 +1032,12 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												<Button
 													size="sm"
 													variant="outline"
+													className={compactActionClassName}
+													aria-label="Set weather to thunderstorm"
+													title="Thunderstorm"
 													onClick={() => {
 														resolvedPlaySound("thunder");
+														onWeatherChange?.("thunderstorm");
 														logWardenMacro("Weather", "Thunder");
 													}}
 												>
@@ -942,12 +1046,29 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												<Button
 													size="sm"
 													variant="outline"
+													className={compactActionClassName}
+													aria-label="Set weather to wind"
+													title="Wind"
 													onClick={() => {
 														resolvedPlaySound("wind");
+														onWeatherChange?.("wind");
 														logWardenMacro("Weather", "Wind");
 													}}
 												>
 													💨
+												</Button>
+												<Button
+													size="sm"
+													variant="ghost"
+													aria-label="Clear weather"
+													title="Clear"
+													className={cn("text-xs", compactActionClassName)}
+													onClick={() => {
+														onWeatherChange?.(null);
+														logWardenMacro("Weather", "Clear");
+													}}
+												>
+													Clear
 												</Button>
 											</div>
 										</div>
@@ -956,8 +1077,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 										<div className="pt-2 border-t border-border/50">
 											<button
 												type="button"
-												className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+												className={sectionToggleClassName}
 												onClick={() => toggleSection("atmosphereTerrain")}
+												aria-expanded={openSections.atmosphereTerrain}
+												aria-controls={SECTION_PANEL_IDS.atmosphereTerrain}
 											>
 												<Label className="text-xs cursor-pointer">
 													Terrain Effects
@@ -969,38 +1092,45 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 													)}
 												/>
 											</button>
-											{openSections.atmosphereTerrain && (
-												<div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1">
-													{Object.entries(TERRAIN_PRESETS).map(([id, t]) => (
-														<Button
-															key={id}
-															size="sm"
-															variant="outline"
-															className="text-[10px] h-7 px-2 border-primary/20 hover:border-primary/50"
-															onClick={() => {
-																onAddEffect?.({
-																	id: `terrain-${Date.now()}`,
-																	name: t.label || id,
-																	type: "terrain",
-																	radius: 8,
-																	color: t.fillColor,
-																});
-																logWardenMacro("Terrain", t.label || id);
-															}}
-														>
-															{t.label || id}
-														</Button>
-													))}
-												</div>
-											)}
+											<div
+												id={SECTION_PANEL_IDS.atmosphereTerrain}
+												hidden={!openSections.atmosphereTerrain}
+												className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1"
+											>
+												{Object.entries(TERRAIN_PRESETS).map(([id, t]) => (
+													<Button
+														key={id}
+														size="sm"
+														variant="outline"
+														className={cn(
+															"text-[10px] h-7 px-2 border-primary/20 hover:border-primary/50",
+															isMobile && "h-11 text-xs px-3",
+														)}
+														onClick={() => {
+															onAddEffect?.({
+																id: `terrain-${Date.now()}`,
+																name: t.label || id,
+																type: "terrain",
+																radius: 8,
+																color: t.fillColor,
+															});
+															logWardenMacro("Terrain", t.label || id);
+														}}
+													>
+														{t.label || id}
+													</Button>
+												))}
+											</div>
 										</div>
 
 										{/* Ambient Audio Zones — collapsible + scrollable */}
 										<div className="pt-2 border-t border-border/50">
 											<button
 												type="button"
-												className="flex w-full items-center justify-between text-xs text-foreground/70 hover:text-foreground py-1"
+												className={sectionToggleClassName}
 												onClick={() => toggleSection("atmosphereAmbient")}
+												aria-expanded={openSections.atmosphereAmbient}
+												aria-controls={SECTION_PANEL_IDS.atmosphereAmbient}
 											>
 												<Label className="text-xs cursor-pointer">
 													Ambient Audio Zones
@@ -1012,32 +1142,37 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 													)}
 												/>
 											</button>
-											{openSections.atmosphereAmbient && (
-												<div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1">
-													{Object.entries(AMBIENT_SOUND_PRESETS).map(
-														([id, s]) => (
-															<Button
-																key={id}
-																size="sm"
-																variant="outline"
-																className="text-[10px] h-7 px-2 border-indigo-500/30 text-indigo-300 hover:border-indigo-400"
-																onClick={() => {
-																	onAddEffect?.({
-																		id: `ambient-${Date.now()}`,
-																		name: s.label || id,
-																		type: "ambient",
-																		radius: Math.floor((s.radius || 10) / 5),
-																		color: "#6366f1",
-																	});
-																	logWardenMacro("Ambient Zone", s.label || id);
-																}}
-															>
-																{s.label || id}
-															</Button>
-														),
-													)}
-												</div>
-											)}
+											<div
+												id={SECTION_PANEL_IDS.atmosphereAmbient}
+												hidden={!openSections.atmosphereAmbient}
+												className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pt-1"
+											>
+												{Object.entries(AMBIENT_SOUND_PRESETS).map(
+													([id, s]) => (
+														<Button
+															key={id}
+															size="sm"
+															variant="outline"
+															className={cn(
+																"text-[10px] h-7 px-2 border-indigo-500/30 text-indigo-300 hover:border-indigo-400",
+																isMobile && "h-11 text-xs px-3",
+															)}
+															onClick={() => {
+																onAddEffect?.({
+																	id: `ambient-${Date.now()}`,
+																	name: s.label || id,
+																	type: "ambient",
+																	radius: Math.floor((s.radius || 10) / 5),
+																	color: "#6366f1",
+																});
+																logWardenMacro("Ambient Zone", s.label || id);
+															}}
+														>
+															{s.label || id}
+														</Button>
+													),
+												)}
+											</div>
 										</div>
 									</div>
 								</AscendantWindow>

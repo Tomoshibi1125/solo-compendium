@@ -72,6 +72,12 @@ interface VTTTokenMove {
 	movedBy: string;
 }
 
+export interface VTTTargetSet {
+	sceneId: string | null;
+	targetIds: string[];
+	updatedBy: string;
+}
+
 interface VTTSceneChange {
 	sceneId: string;
 	changedBy: string;
@@ -167,6 +173,7 @@ type VTTBroadcastEvent =
 			};
 	  }
 	| { type: "token_remove"; payload: { tokenId: string; removedBy: string } }
+	| { type: "target_set"; payload: VTTTargetSet }
 	| { type: "scene_change"; payload: VTTSceneChange }
 	| { type: "fog_update"; payload: VTTFogUpdate }
 	| { type: "chat_message"; payload: VTTChatMessage }
@@ -734,6 +741,16 @@ export function useVTTRealtime({
 			broadcast({
 				type: "token_remove",
 				payload: { tokenId, removedBy: userId },
+			});
+		},
+		[broadcast, userId],
+	);
+
+	const broadcastTargetSet = useCallback(
+		(targetIds: string[], sceneId: string | null = null) => {
+			broadcast({
+				type: "target_set",
+				payload: { sceneId, targetIds, updatedBy: userId },
 			});
 		},
 		[broadcast, userId],
@@ -1514,6 +1531,7 @@ export function useVTTRealtime({
 		broadcastTokenUpdate,
 		broadcastTokenAdd,
 		broadcastTokenRemove,
+		broadcastTargetSet,
 
 		// Scene broadcasts
 		broadcastSceneChange,

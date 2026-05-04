@@ -145,14 +145,12 @@ describe("AI Custom System Prompt Passthrough", () => {
 	});
 
 	it("passes customSystemPrompt through context to the AI request", async () => {
-		const fetchMock = vi
-			.fn<typeof fetch>()
-			.mockResolvedValueOnce(
-				new Response("enhanced-text", {
-					status: 200,
-					headers: { "Content-Type": "text/plain" },
-				}),
-			);
+		const fetchMock = vi.fn<typeof fetch>().mockResolvedValueOnce(
+			new Response("enhanced-text", {
+				status: 200,
+				headers: { "Content-Type": "text/plain" },
+			}),
+		);
 
 		vi.stubGlobal("fetch", fetchMock);
 
@@ -160,7 +158,8 @@ describe("AI Custom System Prompt Passthrough", () => {
 			buildConfig([pollinationsService], "pollinations"),
 		);
 
-		const customPrompt = "You are a Rift Ascendant Warden assistant. Be dramatic.";
+		const customPrompt =
+			"You are a Rift Ascendant Warden assistant. Be dramatic.";
 
 		const response = await manager.processRequest({
 			service: "pollinations",

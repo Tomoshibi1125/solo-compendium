@@ -13,11 +13,13 @@ import { EquipmentStep } from "@/components/character-engine/EquipmentStep";
 import { IdentityStep } from "@/components/character-engine/IdentityStep";
 import { JobStep } from "@/components/character-engine/JobStep";
 import { PathStep } from "@/components/character-engine/PathStep";
+import { PersonaStep } from "@/components/character-engine/PersonaStep";
 import { ReviewStep } from "@/components/character-engine/ReviewStep";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { getFightingStylesForJob } from "@/data/compendium/fightingStyles";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateCharacter } from "@/hooks/useCharacters";
@@ -26,8 +28,8 @@ import {
 	useCharacterTemplates,
 } from "@/hooks/useCharacterTemplates";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
-
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
@@ -35,6 +37,7 @@ import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import {
 	type CanonicalCastableEntry,
 	listLearnablePowers,
+	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
 import { calculateHPMax } from "@/lib/characterCalculations";
@@ -44,14 +47,31 @@ import {
 	addStartingEquipment,
 	applyJobAwakeningTraitsToCharacter,
 	getJobASI,
+	insertCharacterFeature,
 } from "@/lib/characterCreation";
-import { calculateTotalChoices } from "@/lib/choiceCalculations";
+import {
+	calculateTotalChoices,
+	type LedgerChoice,
+} from "@/lib/choiceCalculations";
 import {
 	addLocalPower,
+	addLocalSpell,
 	addLocalTechnique,
 	isLocalCharacterId,
 	setLocalAbilities,
 } from "@/lib/guestStore";
+import {
+	filterPublishedHomebrewRecords,
+	type HomebrewRuntimeFeature,
+	type HomebrewRuntimeJob,
+	type HomebrewRuntimePath,
+	type HomebrewRuntimeSpell,
+	mapHomebrewJobForRuntime,
+	mapHomebrewPathForRuntime,
+	mapHomebrewSpellForRuntime,
+	runtimePathMatchesJob,
+	runtimeSpellMatchesCharacter,
+} from "@/lib/homebrewRuntime";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
 import {
 	getStaticBackgroundsAll,
@@ -91,6 +111,7 @@ type Step =
 	| "job"
 	| "path"
 	| "background"
+	| "persona"
 	| "equipment"
 	| "imprints"
 	| "review";
@@ -108,23 +129,118 @@ const ABILITY_COSTS: Record<number, number> = {
 
 const POINT_BUY_TOTAL = 27;
 
+const STALKER_FAVORED_TERRAINS = [
+	"Urban Ruins",
+	"Crystalline Caverns",
+	"Overgrown Gatewilds",
+	"Void-Scarred Wastes",
+	"Flooded Substructure",
+	"Volcanic Riftfield",
+	"Frozen Breach",
+	"Gravitic Labyrinth",
+];
+
 const normalizeCompendiumKey = (value?: string | null) =>
 	value
 		?.trim()
 		.toLowerCase()
 		.replace(/[-\s]+/g, "") ?? "";
 
+const asStringArray = (value: unknown): string[] =>
+	Array.isArray(value)
+		? value.filter((item): item is string => typeof item === "string")
+		: [];
+
+const appendUnique = (current: string[], value: string) => {
+	if (!value) return current;
+	return current.includes(value) ? current : [...current, value];
+};
+
+const toggleLimitedSelection = (
+	current: string[],
+	value: string,
+	limit: number,
+) => {
+	if (current.includes(value)) {
+		return current.filter((entry) => entry !== value);
+	}
+	if (current.length >= limit) {
+		return current;
+	}
+	return appendUnique(current, value);
+};
+
+const insertHomebrewRuntimeFeatures = async (
+	characterId: string,
+	features: HomebrewRuntimeFeature[],
+	level: number,
+	source: string,
+) => {
+	for (const feature of features.filter((entry) => entry.level === level)) {
+		await insertCharacterFeature(characterId, {
+			name: feature.name,
+			source,
+			level_acquired: level,
+			description: feature.description,
+			action_type: feature.action_type,
+			uses_max: null,
+			uses_current: null,
+			recharge: feature.recharge,
+			is_active: true,
+			modifiers: feature.modifiers ? (feature.modifiers as Json) : null,
+			homebrew_id: feature.homebrew_id,
+		});
+	}
+};
+
+const buildCreatorProfileNotes = (profile: {
+	alignment: string;
+	personalityTrait: string;
+	ideal: string;
+	bond: string;
+	flaw: string;
+}): string | null => {
+	const rows = [
+		["Protocol Alignment", profile.alignment],
+		["Personality Signal", profile.personalityTrait],
+		["Core Drive", profile.ideal],
+		["Anchor / Bond", profile.bond],
+		["Fault Line", profile.flaw],
+	].filter(([, value]) => value.trim().length > 0);
+	if (rows.length === 0) return null;
+	return [
+		"[Creator Profile]",
+		...rows.map(([label, value]) => `${label}: ${value.trim()}`),
+	].join("\n");
+};
+
+type StaticJobCreationLedger = StaticJob & {
+	levelChoices?: LedgerChoice[];
+	powersKnown?: number[];
+	techniquesKnown?: number[];
+	spellbook?: { atCreation: number; perLevel: number; label: string };
+};
+
 const CharacterNew = () => {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 	const requestedNext = searchParams.get("next");
 	const safeNext = isSafeNextPath(requestedNext) ? requestedNext : null;
+	const queryCampaignId =
+		searchParams.get("campaignId") ?? searchParams.get("campaign_id");
+	const nextCampaignId =
+		safeNext?.match(/^\/campaigns\/([^/?#]+)/)?.[1] ?? null;
+	const homebrewCampaignId = queryCampaignId ?? nextCampaignId;
 	const { toast } = useToast();
 	const createCharacterMutation = useCreateCharacter();
 	const initializeSpellSlots = useInitializeSpellSlots();
 
 	const { data: templates } = useCharacterTemplates();
 	const { data: staticJobCatalog = [] } = useStaticJobs();
+	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
+		["job", "path", "spell"],
+		homebrewCampaignId,
+	);
 	const ascendantTools = useAscendantTools();
 
 	const [currentStep, setCurrentStep] = useState<Step>("concept");
@@ -160,6 +276,25 @@ const CharacterNew = () => {
 	const [selectedTechniqueIds, setSelectedTechniqueIds] = useState<string[]>(
 		[],
 	);
+	const [selectedSpellIds, setSelectedSpellIds] = useState<string[]>([]);
+	const [selectedSpellbookIds, setSelectedSpellbookIds] = useState<string[]>(
+		[],
+	);
+	const [selectedCantripIds, setSelectedCantripIds] = useState<string[]>([]);
+	const [selectedFightingStyleIds, setSelectedFightingStyleIds] = useState<
+		string[]
+	>([]);
+	const [selectedSpecialistTraining, setSelectedSpecialistTraining] = useState<
+		string[]
+	>([]);
+	const [selectedFavoredTerrains, setSelectedFavoredTerrains] = useState<
+		string[]
+	>([]);
+	const [alignment, setAlignment] = useState("");
+	const [personalityTrait, setPersonalityTrait] = useState("");
+	const [ideal, setIdeal] = useState("");
+	const [bond, setBond] = useState("");
+	const [flaw, setFlaw] = useState("");
 
 	const getPointBuyCost = (score: number) => ABILITY_COSTS[score] ?? 0;
 
@@ -180,6 +315,12 @@ const CharacterNew = () => {
 		setEquipmentChoices({});
 		setSelectedPowerIds([]);
 		setSelectedTechniqueIds([]);
+		setSelectedSpellIds([]);
+		setSelectedSpellbookIds([]);
+		setSelectedCantripIds([]);
+		setSelectedFightingStyleIds([]);
+		setSelectedSpecialistTraining([]);
+		setSelectedFavoredTerrains([]);
 	};
 
 	const { data: jobs = [] } = useQuery({
@@ -237,12 +378,45 @@ const CharacterNew = () => {
 		},
 	});
 
+	const homebrewJobs = useMemo<HomebrewRuntimeJob[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "job").map(
+				mapHomebrewJobForRuntime,
+			),
+		[publishedHomebrew],
+	);
+	const homebrewPaths = useMemo<HomebrewRuntimePath[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "path").map(
+				mapHomebrewPathForRuntime,
+			),
+		[publishedHomebrew],
+	);
+	const homebrewSpells = useMemo<HomebrewRuntimeSpell[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "spell").map(
+				mapHomebrewSpellForRuntime,
+			),
+		[publishedHomebrew],
+	);
+	const allJobs: (Job & { _homebrew?: boolean })[] = useMemo(
+		() => [
+			...jobs,
+			...(homebrewJobs as unknown as (Job & { _homebrew?: boolean })[]),
+		],
+		[jobs, homebrewJobs],
+	);
+	const selectedHomebrewJob = useMemo(
+		() => homebrewJobs.find((job) => job.id === selectedJob),
+		[homebrewJobs, selectedJob],
+	);
+
 	const jobASI = useMemo(() => {
 		if (!selectedJob) return {} as Record<AbilityScore, number>;
-		const dbJob = jobs.find((j) => j.id === selectedJob);
+		const dbJob = allJobs.find((j) => j.id === selectedJob);
 		if (!dbJob) return {} as Record<AbilityScore, number>;
 		return getJobASI(dbJob.name, 1) as Record<AbilityScore, number>;
-	}, [jobs, selectedJob]);
+	}, [allJobs, selectedJob]);
 
 	const effectiveAbilities = useMemo(() => {
 		const next = { ...abilities };
@@ -254,11 +428,16 @@ const CharacterNew = () => {
 	}, [abilities, jobASI]);
 
 	const staticJobData = useMemo<StaticJob | undefined>(() => {
+		if (selectedHomebrewJob) return selectedHomebrewJob as unknown as StaticJob;
 		if (!selectedJob) return undefined;
-		const jobName = jobs.find((j) => j.id === selectedJob)?.name;
+		const jobName = allJobs.find((j) => j.id === selectedJob)?.name;
 		if (!jobName) return undefined;
 		return staticJobCatalog.find((j) => j.name === jobName);
-	}, [selectedJob, jobs, staticJobCatalog]);
+	}, [selectedHomebrewJob, selectedJob, allJobs, staticJobCatalog]);
+
+	const staticJobLedgerData = staticJobData as
+		| StaticJobCreationLedger
+		| undefined;
 
 	const jobAwakeningAtCreation = useMemo(() => {
 		if (!staticJobData?.awakeningFeatures) return [];
@@ -271,16 +450,20 @@ const CharacterNew = () => {
 	}, [staticJobData]);
 
 	const { data: paths = [] } = useQuery({
-		queryKey: ["paths", selectedJob],
+		queryKey: [
+			"paths",
+			selectedJob,
+			homebrewPaths.map((path) => path.id).join(","),
+		],
 		queryFn: async () => {
 			if (!selectedJob) return [];
 
-			const jobName = jobs.find((job) => job.id === selectedJob)?.name ?? "";
+			const jobName = allJobs.find((job) => job.id === selectedJob)?.name ?? "";
 			const selectedJobKey = normalizeCompendiumKey(jobName);
 			const staticPathSource = ((await import("@/data/compendium/paths"))
 				.paths ?? []) as unknown as StaticPathSource[];
 
-			const mapped = staticPathSource
+			const staticMapped = staticPathSource
 				.filter((path) => {
 					const pathKeys = [path.jobId, path.jobName]
 						.map((value) => normalizeCompendiumKey(value))
@@ -294,6 +477,16 @@ const CharacterNew = () => {
 					path_level: getStaticPathUnlockLevel(path),
 					source_book: path.source ?? "Rift Ascendant Canon",
 				})) as unknown as Path[];
+			const homebrewMapped = homebrewPaths
+				.filter((path) => runtimePathMatchesJob(path, selectedJob, jobName))
+				.map((path) => ({
+					...(path as unknown as Path),
+					display_name: path.display_name || path.name,
+					job_id: path.job_id ?? path.jobId ?? selectedJob,
+					path_level: path.path_level,
+					source_book: path.source_book,
+				})) as unknown as Path[];
+			const mapped = [...staticMapped, ...homebrewMapped];
 
 			// Respect sourcebook entitlements (returns all rows when the user has
 			// no accessible set configured — i.e. they see canon content).
@@ -342,11 +535,12 @@ const CharacterNew = () => {
 		},
 	});
 
-	const allJobs: Job[] = [...jobs];
-
 	const allBackgrounds: Background[] = [...backgrounds];
 
 	const jobData = allJobs.find((j) => j.id === selectedJob);
+	const selectedBackgroundData = allBackgrounds.find(
+		(background) => background.id === selectedBackground,
+	);
 
 	const totalChoices = useMemo(() => {
 		const selectedPathRow =
@@ -367,6 +561,12 @@ const CharacterNew = () => {
 							staticJobData?.jobTraits ??
 							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
 							[],
+						level_choices: staticJobLedgerData?.levelChoices,
+						cantrips_known: staticJobData?.spellcasting?.cantripsKnown,
+						spells_known: staticJobData?.spellcasting?.spellsKnown,
+						powers_known: staticJobLedgerData?.powersKnown,
+						techniques_known: staticJobLedgerData?.techniquesKnown,
+						spellbook: staticJobLedgerData?.spellbook,
 					}
 				: null;
 		return calculateTotalChoices(
@@ -375,7 +575,13 @@ const CharacterNew = () => {
 			[],
 			1,
 		);
-	}, [jobData, staticJobData, selectedPath, pathsAvailableAtCreation]);
+	}, [
+		jobData,
+		staticJobData,
+		staticJobLedgerData,
+		selectedPath,
+		pathsAvailableAtCreation,
+	]);
 
 	const selectedPathName = useMemo(() => {
 		if (!selectedPath || selectedPath === "none") return null;
@@ -384,8 +590,87 @@ const CharacterNew = () => {
 
 	const requiredPowerChoices = Math.max(0, totalChoices.powers);
 	const requiredTechniqueChoices = Math.max(0, totalChoices.techniques);
+	const requiredCantripChoices = Math.max(0, totalChoices.cantrips);
+	const requiredSpellChoices = Math.max(0, totalChoices.spells);
+	const requiredSpellbookInscriptions = Math.max(
+		0,
+		totalChoices.spellbookInscriptions,
+	);
+	const requiredFightingStyleChoices = Math.max(0, totalChoices.fightingStyles);
+	const requiredSpecialistTrainingChoices = Math.max(0, totalChoices.expertise);
+	const requiredFavoredTerrainChoices = Math.max(
+		0,
+		totalChoices.favoredTerrains,
+	);
 	const showImprintStep =
-		requiredPowerChoices > 0 || requiredTechniqueChoices > 0;
+		requiredPowerChoices > 0 ||
+		requiredTechniqueChoices > 0 ||
+		requiredCantripChoices > 0 ||
+		requiredSpellChoices > 0 ||
+		requiredSpellbookInscriptions > 0 ||
+		requiredFightingStyleChoices > 0 ||
+		requiredSpecialistTrainingChoices > 0 ||
+		requiredFavoredTerrainChoices > 0;
+
+	const creationLedgerChoices = useMemo(
+		() =>
+			(staticJobLedgerData?.levelChoices ?? []).filter(
+				(choice) => choice.level === 1,
+			),
+		[staticJobLedgerData?.levelChoices],
+	);
+
+	const fightingStyleLedger = creationLedgerChoices.find(
+		(choice) => choice.type === "fighting-style",
+	);
+
+	const availableFightingStyles = useMemo(() => {
+		const armorProficiencies =
+			staticJobData?.armorProficiencies ?? staticJobData?.armor_proficiencies;
+		const gated = getFightingStylesForJob(armorProficiencies);
+		const allowedIds = new Set(fightingStyleLedger?.options ?? []);
+		return allowedIds.size > 0
+			? gated.filter((style) => allowedIds.has(style.id))
+			: gated;
+	}, [
+		fightingStyleLedger?.options,
+		staticJobData?.armorProficiencies,
+		staticJobData?.armor_proficiencies,
+	]);
+
+	const specialistTrainingOptions = useMemo(() => {
+		if (requiredSpecialistTrainingChoices <= 0) return [];
+		const skillOptions = selectedSkills.map((skill) => ({
+			id: skill,
+			label: skill,
+			kind: "skill",
+		}));
+		const toolOptions = [
+			...(staticJobData?.toolProficiencies ??
+				staticJobData?.tool_proficiencies ??
+				[]),
+		].map((tool) => ({ id: tool, label: tool, kind: "tool" }));
+		return [...skillOptions, ...toolOptions];
+	}, [
+		requiredSpecialistTrainingChoices,
+		selectedSkills,
+		staticJobData?.toolProficiencies,
+		staticJobData?.tool_proficiencies,
+	]);
+
+	const personalityOptions = asStringArray(
+		(selectedBackgroundData as { personality_traits?: unknown } | undefined)
+			?.personality_traits,
+	);
+	const idealOptions = asStringArray(
+		(selectedBackgroundData as { ideals?: unknown } | undefined)?.ideals,
+	);
+	const bondOptions = asStringArray(
+		(selectedBackgroundData as { bonds?: unknown } | undefined)?.bonds,
+	);
+	const flawOptions = asStringArray(
+		(selectedBackgroundData as { flaws?: unknown } | undefined)?.flaws,
+	);
 
 	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
@@ -422,6 +707,100 @@ const CharacterNew = () => {
 		enabled: !!jobData?.name && requiredTechniqueChoices > 0,
 	});
 
+	const { data: availableCantrips = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: [
+			"creation-cantrips",
+			selectedJob,
+			selectedPathName,
+			requiredCantripChoices,
+			homebrewCampaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
+		],
+		queryFn: async () => {
+			if (!jobData?.name || requiredCantripChoices <= 0) return [];
+			const spells = await listLearnableSpells({
+				accessContext: { campaignId: homebrewCampaignId },
+				jobName: jobData.name,
+				pathName: selectedPathName,
+				maxPowerLevel: 0,
+			});
+			const matchingHomebrew = homebrewSpells.filter(
+				(spell) =>
+					spell.power_level === 0 &&
+					runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
+			);
+			return [
+				...spells.filter((spell) => spell.power_level === 0),
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
+		},
+		enabled: !!jobData?.name && requiredCantripChoices > 0,
+	});
+
+	const { data: availableSpells = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: [
+			"creation-spells",
+			selectedJob,
+			selectedPathName,
+			requiredSpellChoices,
+			homebrewCampaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
+		],
+		queryFn: async () => {
+			if (!jobData?.name || requiredSpellChoices <= 0) return [];
+			const spells = await listLearnableSpells({
+				accessContext: { campaignId: homebrewCampaignId },
+				jobName: jobData.name,
+				pathName: selectedPathName,
+				maxPowerLevel: 1,
+			});
+			const matchingHomebrew = homebrewSpells.filter(
+				(spell) =>
+					spell.power_level > 0 &&
+					spell.power_level <= 1 &&
+					runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
+			);
+			return [
+				...spells.filter((spell) => spell.power_level > 0),
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
+		},
+		enabled: !!jobData?.name && requiredSpellChoices > 0,
+	});
+
+	const { data: availableSpellbookSpells = [] } = useQuery<
+		CanonicalCastableEntry[]
+	>({
+		queryKey: [
+			"creation-spellbook",
+			selectedJob,
+			selectedPathName,
+			requiredSpellbookInscriptions,
+			homebrewCampaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
+		],
+		queryFn: async () => {
+			if (!jobData?.name || requiredSpellbookInscriptions <= 0) return [];
+			const spells = await listLearnableSpells({
+				accessContext: { campaignId: homebrewCampaignId },
+				jobName: jobData.name,
+				pathName: selectedPathName,
+				maxPowerLevel: 1,
+			});
+			const matchingHomebrew = homebrewSpells.filter(
+				(spell) =>
+					spell.power_level > 0 &&
+					spell.power_level <= 1 &&
+					runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
+			);
+			return [
+				...spells.filter((spell) => spell.power_level > 0),
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
+		},
+		enabled: !!jobData?.name && requiredSpellbookInscriptions > 0,
+	});
+
 	useEffect(() => {
 		setSelectedPowerIds((current) => {
 			const next = current.filter((id) =>
@@ -439,6 +818,52 @@ const CharacterNew = () => {
 			return next.length === current.length ? current : next;
 		});
 	}, [availableTechniques]);
+
+	useEffect(() => {
+		setSelectedCantripIds((current) => {
+			const next = current.filter((id) =>
+				availableCantrips.some((cantrip) => cantrip.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableCantrips]);
+
+	useEffect(() => {
+		setSelectedSpellIds((current) => {
+			const next = current.filter((id) =>
+				availableSpells.some((spell) => spell.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableSpells]);
+
+	useEffect(() => {
+		setSelectedSpellbookIds((current) => {
+			const next = current.filter((id) =>
+				availableSpellbookSpells.some((spell) => spell.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableSpellbookSpells]);
+
+	useEffect(() => {
+		setSelectedFightingStyleIds((current) => {
+			const next = current.filter((id) =>
+				availableFightingStyles.some((style) => style.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableFightingStyles]);
+
+	useEffect(() => {
+		const optionIds = new Set(
+			specialistTrainingOptions.map((option) => option.id),
+		);
+		setSelectedSpecialistTraining((current) => {
+			const next = current.filter((id) => optionIds.has(id));
+			return next.length === current.length ? current : next;
+		});
+	}, [specialistTrainingOptions]);
 
 	const handleApplyTemplate = (
 		template: CharacterTemplate & {
@@ -471,15 +896,16 @@ const CharacterNew = () => {
 	const steps: { id: Step; name: string }[] = [
 		{ id: "concept", name: "Concept" },
 		{ id: "job", name: "Job" },
-		{ id: "abilities", name: "Abilities" },
 		...(isPathRequiredAtCreation
 			? ([{ id: "path", name: "Path" }] as const)
 			: []),
-		{ id: "background", name: "Background" },
-		{ id: "equipment", name: "Equipment" },
 		...(showImprintStep
 			? ([{ id: "imprints", name: "Imprints" }] as const)
 			: []),
+		{ id: "abilities", name: "Abilities" },
+		{ id: "background", name: "Background" },
+		{ id: "persona", name: "Persona" },
+		{ id: "equipment", name: "Equipment" },
 		{ id: "review", name: "Review" },
 	];
 
@@ -561,10 +987,58 @@ const CharacterNew = () => {
 			});
 			return;
 		}
+		if (selectedCantripIds.length < requiredCantripChoices) {
+			toast({
+				title: "Cantrip alignment required",
+				description: `Select ${requiredCantripChoices} cantrip${requiredCantripChoices === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (selectedSpellIds.length < requiredSpellChoices) {
+			toast({
+				title: "Power inscription required",
+				description: `Select ${requiredSpellChoices} power inscription${requiredSpellChoices === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (selectedSpellbookIds.length < requiredSpellbookInscriptions) {
+			toast({
+				title: "Spellbook inscription required",
+				description: `Select ${requiredSpellbookInscriptions} spellbook inscription${requiredSpellbookInscriptions === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (selectedFightingStyleIds.length < requiredFightingStyleChoices) {
+			toast({
+				title: "Fighting Style required",
+				description: `Select ${requiredFightingStyleChoices} Fighting Style${requiredFightingStyleChoices === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (selectedSpecialistTraining.length < requiredSpecialistTrainingChoices) {
+			toast({
+				title: "Specialist Training required",
+				description: `Select ${requiredSpecialistTrainingChoices} training focus${requiredSpecialistTrainingChoices === 1 ? "" : "es"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		if (selectedFavoredTerrains.length < requiredFavoredTerrainChoices) {
+			toast({
+				title: "Favored Terrain required",
+				description: `Select ${requiredFavoredTerrainChoices} gate terrain${requiredFavoredTerrainChoices === 1 ? "" : "s"} before awakening.`,
+				variant: "destructive",
+			});
+			return;
+		}
 
 		setLoading(true);
 		try {
-			const dbJob = jobs.find((j) => j.id === selectedJob);
+			const dbJob = allJobs.find((j) => j.id === selectedJob);
 			const dbBg = backgrounds.find((b) => b.id === selectedBackground);
 			if (!dbJob || !dbBg) throw new Error("Job or Background missing");
 
@@ -574,7 +1048,9 @@ const CharacterNew = () => {
 					? staticJobCatalog
 					: ((await import("@/data/compendium/jobs"))
 							.jobs as unknown as StaticJob[]);
-			const job = staticJobSource.find((j: StaticJob) => j.name === dbJob.name);
+			const job =
+				selectedHomebrewJob ??
+				staticJobSource.find((j: StaticJob) => j.name === dbJob.name);
 			const bgData = (
 				getStaticBackgroundsAll() as unknown as StaticBackground[]
 			).find((b: StaticBackground) => b.name === dbBg.name);
@@ -583,7 +1059,19 @@ const CharacterNew = () => {
 
 			const level = 1;
 			const vitModifier = Math.floor((effectiveAbilities.VIT - 10) / 2);
-			const hpMax = calculateHPMax(level, dbJob.hit_die, vitModifier);
+			const hitDieSize =
+				typeof dbJob.hit_die === "number" && Number.isFinite(dbJob.hit_die)
+					? dbJob.hit_die
+					: 8;
+			const jobImage =
+				typeof job.image === "string" && job.image.trim().length > 0
+					? job.image
+					: null;
+			const jobSpeed =
+				typeof job.speed === "number" && Number.isFinite(job.speed)
+					? job.speed
+					: 30;
+			const hpMax = calculateHPMax(level, hitDieSize, vitModifier);
 
 			// D&D Beyond Quickbuilder parity (#11): detect duplicate proficiency
 			// grants between Job and Background and de-dupe before persisting.
@@ -596,6 +1084,11 @@ const CharacterNew = () => {
 				...(job.tool_proficiencies || job.toolProficiencies || []),
 				...(bgData.tool_proficiencies || bgData.toolProficiencies || []),
 			]);
+			const skillExpertiseResult = dedupeProficiencies(
+				selectedSpecialistTraining.filter((selection) =>
+					skillsResult.unique.includes(selection),
+				),
+			);
 			const weaponsResult = dedupeProficiencies([
 				...(job.weaponProficiencies || job.weapon_proficiencies || []),
 				...(bgData.weaponProficiencies || bgData.weapon_proficiencies || []),
@@ -619,31 +1112,41 @@ const CharacterNew = () => {
 				});
 			}
 
+			const creatorProfileNotes = buildCreatorProfileNotes({
+				alignment,
+				personalityTrait,
+				ideal,
+				bond,
+				flaw,
+			});
+
 			const character = await createCharacterMutation.mutateAsync({
 				name: name.trim(),
 				level: 1,
 				job: dbJob.name,
 				base_class: dbJob.name,
-				portrait_url: job.image || dbJob.image_url || null,
+				portrait_url: jobImage || dbJob.image_url || null,
 				path: paths.find((p) => p.id === selectedPath)?.name || null,
 				background: dbBg.name,
 				appearance: appearance.trim() || null,
 				backstory: backstory.trim() || null,
+				notes: creatorProfileNotes,
 				proficiency_bonus: 2,
 				armor_class: 10 + Math.floor((effectiveAbilities.AGI - 10) / 2),
 				hp_current: hpMax,
 				hp_max: hpMax,
 				hit_dice_current: 1,
 				hit_dice_max: 1,
-				hit_dice_size: dbJob.hit_die,
+				hit_dice_size: hitDieSize,
 				skill_proficiencies: skillsResult.unique,
+				skill_expertise: skillExpertiseResult.unique,
 				tool_proficiencies: toolsResult.unique,
 				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
 					job.savingThrows ||
 					[]) as AbilityScore[],
 				weapon_proficiencies: weaponsResult.unique,
 				armor_proficiencies: armorsResult.unique,
-				speed: job.speed ?? 30,
+				speed: jobSpeed,
 			});
 
 			const finalAbilities = { ...abilities };
@@ -669,7 +1172,39 @@ const CharacterNew = () => {
 					.upsert(updates, { onConflict: "character_id,ability" });
 			}
 
-			await addLevel1Features(character.id, job, bgData);
+			if (selectedHomebrewJob) {
+				await insertHomebrewRuntimeFeatures(
+					character.id,
+					selectedHomebrewJob.classFeatures,
+					1,
+					`Homebrew Job: ${selectedHomebrewJob.name}`,
+				);
+				await insertHomebrewRuntimeFeatures(
+					character.id,
+					selectedHomebrewJob.awakeningFeatures,
+					1,
+					`Homebrew Awakening: ${selectedHomebrewJob.name}`,
+				);
+				await insertHomebrewRuntimeFeatures(
+					character.id,
+					selectedHomebrewJob.jobTraits,
+					1,
+					`Homebrew Trait: ${selectedHomebrewJob.name}`,
+				);
+			} else {
+				await addLevel1Features(character.id, job, bgData);
+			}
+			const selectedHomebrewPath = homebrewPaths.find(
+				(path) => path.id === selectedPath,
+			);
+			if (selectedHomebrewPath) {
+				await insertHomebrewRuntimeFeatures(
+					character.id,
+					selectedHomebrewPath.features,
+					1,
+					`Homebrew Path: ${selectedHomebrewPath.name}`,
+				);
+			}
 			await addStartingEquipment(
 				character.id,
 				job,
@@ -721,6 +1256,94 @@ const CharacterNew = () => {
 						source: "Creation Technique Protocol",
 					});
 				}
+			}
+
+			const selectedCantripEntries = availableCantrips.filter((cantrip) =>
+				selectedCantripIds.includes(cantrip.id),
+			);
+			const selectedSpellEntries = availableSpells.filter((spell) =>
+				selectedSpellIds.includes(spell.id),
+			);
+			const selectedSpellbookEntries = availableSpellbookSpells.filter(
+				(spell) => selectedSpellbookIds.includes(spell.id),
+			);
+			for (const spell of [
+				...selectedCantripEntries.map((entry) => ({
+					entry,
+					source: "Creation Cantrip Alignment",
+					countsAgainstLimit: true,
+				})),
+				...selectedSpellEntries.map((entry) => ({
+					entry,
+					source: "Creation Power Inscription",
+					countsAgainstLimit: true,
+				})),
+				...selectedSpellbookEntries.map((entry) => ({
+					entry,
+					source: "Creation Spellbook Inscription",
+					countsAgainstLimit: false,
+				})),
+			]) {
+				const isHomebrewSpell = (spell.entry as { _homebrew?: boolean })
+					._homebrew;
+				const payload = {
+					spell_id: isHomebrewSpell ? null : spell.entry.id,
+					name: spell.entry.name,
+					spell_level: spell.entry.power_level,
+					source: isHomebrewSpell ? `${spell.source} (Homebrew)` : spell.source,
+					casting_time: spell.entry.casting_time || null,
+					range: spell.entry.range || null,
+					duration: spell.entry.duration || null,
+					concentration: spell.entry.concentration || false,
+					ritual: spell.entry.ritual || false,
+					description: spell.entry.description || null,
+					higher_levels: spell.entry.higher_levels || null,
+					is_prepared: false,
+					is_known: true,
+					counts_against_limit: spell.countsAgainstLimit,
+				};
+				if (isLocalCharacterId(character.id)) {
+					addLocalSpell(character.id, payload);
+				} else {
+					await supabase.from("character_spells").insert({
+						character_id: character.id,
+						...payload,
+					});
+				}
+			}
+
+			const selectedFightingStyles = availableFightingStyles.filter((style) =>
+				selectedFightingStyleIds.includes(style.id),
+			);
+			for (const style of selectedFightingStyles) {
+				await insertCharacterFeature(character.id, {
+					name: `Fighting Style: ${style.name}`,
+					source: "Creation Fighting Style",
+					level_acquired: 1,
+					description: style.description,
+					is_active: true,
+					modifiers: style.modifiers ? (style.modifiers as Json) : null,
+				});
+			}
+
+			for (const selection of selectedSpecialistTraining) {
+				await insertCharacterFeature(character.id, {
+					name: `Specialist Training: ${selection}`,
+					source: "Creation Specialist Training",
+					level_acquired: 1,
+					description: `Doubled proficiency for ${selection}.`,
+					is_active: true,
+				});
+			}
+
+			for (const terrain of selectedFavoredTerrains) {
+				await insertCharacterFeature(character.id, {
+					name: `Favored Terrain: ${terrain}`,
+					source: "Creation Favored Terrain",
+					level_acquired: 1,
+					description: `Starting gate biome imprint: ${terrain}.`,
+					is_active: true,
+				});
 			}
 			await addJobAwakeningBenefitsForLevel(character.id, job, 1);
 			// Rift Ascendant: Jobs serve as both race and class, so their innate senses,
@@ -782,7 +1405,14 @@ const CharacterNew = () => {
 			case "imprints":
 				return (
 					selectedPowerIds.length === requiredPowerChoices &&
-					selectedTechniqueIds.length === requiredTechniqueChoices
+					selectedTechniqueIds.length === requiredTechniqueChoices &&
+					selectedCantripIds.length === requiredCantripChoices &&
+					selectedSpellIds.length === requiredSpellChoices &&
+					selectedSpellbookIds.length === requiredSpellbookInscriptions &&
+					selectedFightingStyleIds.length === requiredFightingStyleChoices &&
+					selectedSpecialistTraining.length ===
+						requiredSpecialistTrainingChoices &&
+					selectedFavoredTerrains.length === requiredFavoredTerrainChoices
 				);
 			default:
 				return true;
@@ -793,6 +1423,62 @@ const CharacterNew = () => {
 		id: s.id,
 		name: s.name,
 	}));
+
+	const reviewImprintSelections = useMemo(() => {
+		const powerNames = availablePowers
+			.filter((power) => selectedPowerIds.includes(power.id))
+			.map((power) => `Power: ${power.name}`);
+		const techniqueNames = availableTechniques
+			.filter((technique) => selectedTechniqueIds.includes(technique.id))
+			.map((technique) => `Technique: ${technique.name}`);
+		const cantripNames = availableCantrips
+			.filter((cantrip) => selectedCantripIds.includes(cantrip.id))
+			.map((cantrip) => `Cantrip: ${cantrip.name}`);
+		const spellNames = availableSpells
+			.filter((spell) => selectedSpellIds.includes(spell.id))
+			.map((spell) => `Power Inscription: ${spell.name}`);
+		const spellbookNames = availableSpellbookSpells
+			.filter((spell) => selectedSpellbookIds.includes(spell.id))
+			.map(
+				(spell) =>
+					`${staticJobLedgerData?.spellbook?.label ?? "Spellbook"}: ${spell.name}`,
+			);
+		const styleNames = availableFightingStyles
+			.filter((style) => selectedFightingStyleIds.includes(style.id))
+			.map((style) => `Fighting Style: ${style.name}`);
+		const trainingNames = selectedSpecialistTraining.map(
+			(selection) => `Specialist Training: ${selection}`,
+		);
+		const terrainNames = selectedFavoredTerrains.map(
+			(terrain) => `Favored Terrain: ${terrain}`,
+		);
+		return [
+			...cantripNames,
+			...spellNames,
+			...spellbookNames,
+			...powerNames,
+			...techniqueNames,
+			...styleNames,
+			...trainingNames,
+			...terrainNames,
+		];
+	}, [
+		availableCantrips,
+		availableFightingStyles,
+		availablePowers,
+		availableSpellbookSpells,
+		availableSpells,
+		availableTechniques,
+		selectedCantripIds,
+		selectedFavoredTerrains,
+		selectedFightingStyleIds,
+		selectedPowerIds,
+		selectedSpecialistTraining,
+		selectedSpellbookIds,
+		selectedSpellIds,
+		selectedTechniqueIds,
+		staticJobLedgerData?.spellbook?.label,
+	]);
 
 	return (
 		<Layout>
@@ -889,6 +1575,25 @@ const CharacterNew = () => {
 						/>
 					)}
 
+					{currentStep === "persona" && (
+						<PersonaStep
+							alignment={alignment}
+							onAlignmentChange={setAlignment}
+							personalityTrait={personalityTrait}
+							onPersonalityTraitChange={setPersonalityTrait}
+							ideal={ideal}
+							onIdealChange={setIdeal}
+							bond={bond}
+							onBondChange={setBond}
+							flaw={flaw}
+							onFlawChange={setFlaw}
+							personalityOptions={personalityOptions}
+							idealOptions={idealOptions}
+							bondOptions={bondOptions}
+							flawOptions={flawOptions}
+						/>
+					)}
+
 					{currentStep === "equipment" && staticJobData && (
 						<EquipmentStep
 							staticJobData={staticJobData}
@@ -905,10 +1610,208 @@ const CharacterNew = () => {
 										Awakening Imprints
 									</h2>
 									<p className="text-sm text-muted-foreground mt-2">
-										Bind only the powers and techniques granted by your job at
-										creation.
+										Bind only the powers, techniques, casting choices, and
+										combat protocols granted by your job at creation.
 									</p>
 								</div>
+
+								{requiredCantripChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Cantrip Alignments ({selectedCantripIds.length}/
+											{requiredCantripChoices})
+										</Label>
+										{availableCantrips.length === 0 ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												No lore-matched cantrips are available for this job.
+											</div>
+										) : (
+											<div className="grid gap-3">
+												{availableCantrips.map((cantrip) => {
+													const isSelected = selectedCantripIds.includes(
+														cantrip.id,
+													);
+													return (
+														<button
+															key={cantrip.id}
+															type="button"
+															data-testid="creation-cantrip-imprint-option"
+															onClick={() =>
+																setSelectedCantripIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		cantrip.id,
+																		requiredCantripChoices,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedCantripIds.length >=
+																	requiredCantripChoices
+															}
+															className={`text-left p-4 rounded-lg border transition-colors ${
+																isSelected
+																	? "border-primary bg-primary/10"
+																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+															}`}
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-heading font-semibold">
+																	{cantrip.name}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Cantrip
+																</Badge>
+															</div>
+															{cantrip.description && (
+																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+																	{cantrip.description}
+																</p>
+															)}
+														</button>
+													);
+												})}
+											</div>
+										)}
+									</div>
+								)}
+
+								{requiredSpellChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Power Inscriptions ({selectedSpellIds.length}/
+											{requiredSpellChoices})
+										</Label>
+										{availableSpells.length === 0 ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												No lore-matched power inscriptions are available for
+												this job.
+											</div>
+										) : (
+											<div className="grid gap-3">
+												{availableSpells.map((spell) => {
+													const isSelected = selectedSpellIds.includes(
+														spell.id,
+													);
+													return (
+														<button
+															key={spell.id}
+															type="button"
+															data-testid="creation-spell-imprint-option"
+															onClick={() =>
+																setSelectedSpellIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		spell.id,
+																		requiredSpellChoices,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedSpellIds.length >= requiredSpellChoices
+															}
+															className={`text-left p-4 rounded-lg border transition-colors ${
+																isSelected
+																	? "border-primary bg-primary/10"
+																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+															}`}
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-heading font-semibold">
+																	{spell.name}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Level {spell.power_level}
+																</Badge>
+																{spell.power_type && (
+																	<Badge variant="outline" className="text-xs">
+																		{spell.power_type}
+																	</Badge>
+																)}
+															</div>
+															{spell.description && (
+																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+																	{spell.description}
+																</p>
+															)}
+														</button>
+													);
+												})}
+											</div>
+										)}
+									</div>
+								)}
+
+								{requiredSpellbookInscriptions > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											{staticJobLedgerData?.spellbook?.label ?? "Spellbook"}{" "}
+											Inscriptions ({selectedSpellbookIds.length}/
+											{requiredSpellbookInscriptions})
+										</Label>
+										{availableSpellbookSpells.length === 0 ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												No lore-matched spellbook inscriptions are available for
+												this job.
+											</div>
+										) : (
+											<div className="grid gap-3">
+												{availableSpellbookSpells.map((spell) => {
+													const isSelected = selectedSpellbookIds.includes(
+														spell.id,
+													);
+													return (
+														<button
+															key={spell.id}
+															type="button"
+															data-testid="creation-spellbook-imprint-option"
+															onClick={() =>
+																setSelectedSpellbookIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		spell.id,
+																		requiredSpellbookInscriptions,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedSpellbookIds.length >=
+																	requiredSpellbookInscriptions
+															}
+															className={`text-left p-4 rounded-lg border transition-colors ${
+																isSelected
+																	? "border-primary bg-primary/10"
+																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+															}`}
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-heading font-semibold">
+																	{spell.name}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Level {spell.power_level}
+																</Badge>
+																{spell.power_type && (
+																	<Badge variant="outline" className="text-xs">
+																		{spell.power_type}
+																	</Badge>
+																)}
+															</div>
+															{spell.description && (
+																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+																	{spell.description}
+																</p>
+															)}
+														</button>
+													);
+												})}
+											</div>
+										)}
+									</div>
+								)}
 
 								{requiredPowerChoices > 0 && (
 									<div className="space-y-3">
@@ -1062,6 +1965,164 @@ const CharacterNew = () => {
 										)}
 									</div>
 								)}
+
+								{requiredFightingStyleChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Fighting Styles ({selectedFightingStyleIds.length}/
+											{requiredFightingStyleChoices})
+										</Label>
+										<div className="grid gap-3">
+											{availableFightingStyles.map((style) => {
+												const isSelected = selectedFightingStyleIds.includes(
+													style.id,
+												);
+												return (
+													<button
+														key={style.id}
+														type="button"
+														data-testid="creation-fighting-style-option"
+														onClick={() =>
+															setSelectedFightingStyleIds((current) =>
+																toggleLimitedSelection(
+																	current,
+																	style.id,
+																	requiredFightingStyleChoices,
+																),
+															)
+														}
+														disabled={
+															!isSelected &&
+															selectedFightingStyleIds.length >=
+																requiredFightingStyleChoices
+														}
+														className={`text-left p-4 rounded-lg border transition-colors ${
+															isSelected
+																? "border-primary bg-primary/10"
+																: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+														}`}
+													>
+														<div className="flex items-center gap-2 flex-wrap">
+															<span className="font-heading font-semibold">
+																{style.name}
+															</span>
+															<Badge variant="outline" className="text-xs">
+																{style.source === "ra-native"
+																	? "RA-native"
+																	: "Baseline"}
+															</Badge>
+														</div>
+														<p className="text-xs text-muted-foreground mt-2">
+															{style.description}
+														</p>
+													</button>
+												);
+											})}
+										</div>
+									</div>
+								)}
+
+								{requiredSpecialistTrainingChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Specialist Training ({selectedSpecialistTraining.length}/
+											{requiredSpecialistTrainingChoices})
+										</Label>
+										{specialistTrainingOptions.length === 0 ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												Select job skills first to unlock Specialist Training
+												options.
+											</div>
+										) : (
+											<div className="grid gap-3">
+												{specialistTrainingOptions.map((option) => {
+													const isSelected =
+														selectedSpecialistTraining.includes(option.id);
+													return (
+														<button
+															key={`${option.kind}-${option.id}`}
+															type="button"
+															data-testid="creation-specialist-training-option"
+															onClick={() =>
+																setSelectedSpecialistTraining((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		option.id,
+																		requiredSpecialistTrainingChoices,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedSpecialistTraining.length >=
+																	requiredSpecialistTrainingChoices
+															}
+															className={`text-left p-4 rounded-lg border transition-colors ${
+																isSelected
+																	? "border-primary bg-primary/10"
+																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+															}`}
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-heading font-semibold">
+																	{option.label}
+																</span>
+																<Badge variant="outline" className="text-xs">
+																	{option.kind}
+																</Badge>
+															</div>
+														</button>
+													);
+												})}
+											</div>
+										)}
+									</div>
+								)}
+
+								{requiredFavoredTerrainChoices > 0 && (
+									<div className="space-y-3">
+										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
+											Favored Terrain ({selectedFavoredTerrains.length}/
+											{requiredFavoredTerrainChoices})
+										</Label>
+										<div className="grid gap-3">
+											{STALKER_FAVORED_TERRAINS.map((terrain) => {
+												const isSelected =
+													selectedFavoredTerrains.includes(terrain);
+												return (
+													<button
+														key={terrain}
+														type="button"
+														data-testid="creation-favored-terrain-option"
+														onClick={() =>
+															setSelectedFavoredTerrains((current) =>
+																toggleLimitedSelection(
+																	current,
+																	terrain,
+																	requiredFavoredTerrainChoices,
+																),
+															)
+														}
+														disabled={
+															!isSelected &&
+															selectedFavoredTerrains.length >=
+																requiredFavoredTerrainChoices
+														}
+														className={`text-left p-4 rounded-lg border transition-colors ${
+															isSelected
+																? "border-primary bg-primary/10"
+																: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
+														}`}
+													>
+														<span className="font-heading font-semibold">
+															{terrain}
+														</span>
+													</button>
+												);
+											})}
+										</div>
+									</div>
+								)}
 							</div>
 						</div>
 					)}
@@ -1095,6 +2156,12 @@ const CharacterNew = () => {
 							staticJobData={staticJobData || null}
 							jobAwakeningAtCreation={jobAwakeningAtCreation}
 							jobTraitsAtCreation={jobTraitsAtCreation}
+							alignment={alignment}
+							personalityTrait={personalityTrait}
+							ideal={ideal}
+							bond={bond}
+							flaw={flaw}
+							imprintSelections={reviewImprintSelections}
 						/>
 					)}
 				</CharacterWizard>

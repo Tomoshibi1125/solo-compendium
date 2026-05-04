@@ -11,6 +11,7 @@
 import {
 	ChevronDown,
 	ChevronUp,
+	Dices,
 	Minus,
 	Plus,
 	RotateCcw,
@@ -20,6 +21,7 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import {
 	type Combatant as CombatantRow,
 	useCampaignCombatSession,
@@ -29,6 +31,7 @@ import {
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import type { Json } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
+import { rollMonsterInitiative } from "@/lib/vtt/initiative";
 
 // ── Types ──────────────────────────────────────────────────────────────
 
@@ -66,6 +69,8 @@ interface TrackerEntry {
 	conditions: ConditionWithDuration[];
 	isHunter: boolean;
 	characterId?: string;
+	/** Dex modifier used for auto-rolled initiative (P1-6). */
+	dexMod?: number;
 }
 
 interface VTTInitiativePanelProps {
@@ -81,6 +86,7 @@ interface VTTInitiativePanelProps {
 function rowToEntry(row: CombatantRow): TrackerEntry {
 	const stats = (row.stats ?? {}) as Record<string, unknown>;
 	const conds = row.conditions;
+	const rawDex = stats.dex_mod ?? stats.dexMod;
 	return {
 		id: row.id,
 		name: row.name,
@@ -91,6 +97,7 @@ function rowToEntry(row: CombatantRow): TrackerEntry {
 		conditions: normalizeConditions(conds),
 		isHunter: Boolean((row.flags as Record<string, unknown>)?.isHunter),
 		characterId: row.member_id ?? undefined,
+		dexMod: typeof rawDex === "number" ? rawDex : undefined,
 	};
 }
 
@@ -123,6 +130,7 @@ export function VTTInitiativePanel({
 	const updateSession = useUpdateCombatSession();
 	const upsertCombatants = useUpsertCombatants();
 	const ascendantTools = useAscendantTools();
+	const { toast } = useToast();
 
 	const session = data?.session;
 	const combatants = (data?.combatants ?? []).map(rowToEntry);
@@ -136,6 +144,11 @@ export function VTTInitiativePanel({
 	const [expandedId, setExpandedId] = useState<string | null>(null);
 	const [hpDelta, setHpDelta] = useState<Record<string, string>>({});
 	const listRef = useRef<HTMLDivElement>(null);
+
+	// P1-6: track combatant ids we've already auto-rolled so we don't
+	// re-roll on every refetch. Cleared whenever the session id changes.
+	const autoRolledIdsRef = useRef<Set<string>>(new Set());
+	const lastAutoRollSessionIdRef = useRef<string | null | undefined>(undefined);
 
 	// Auto-scroll active combatant into view when the turn advances.
 	useEffect(() => {
@@ -248,6 +261,91 @@ export function VTTInitiativePanel({
 		});
 	}, [campaignId, activeSessionId, updateSession]);
 
+	// P1-6: shared path for both the auto-roll effect (first-sight only)
+	// and the Re-roll All button (forces every monster).
+	const rollMonsters = useCallback(
+		(rerollAll: boolean) => {
+			if (!activeSessionId || !isWarden) return;
+			const target = rerollAll
+				? combatants.filter((c) => !c.isHunter)
+				: combatants.filter(
+						(c) => !c.isHunter && !autoRolledIdsRef.current.has(c.id),
+					);
+			const rolls = rollMonsterInitiative(target, { rerollAll });
+			if (rolls.length === 0) return;
+
+			// Map roll results back onto the live combatants so we can persist
+			// the full row (upsertCombatants expects every non-pk field).
+			const byId = new Map(rolls.map((r) => [r.combatantId, r]));
+			const payload = combatants
+				.filter((c) => byId.has(c.id))
+				.map((entry) => {
+					const roll = byId.get(entry.id);
+					if (!roll) return null;
+					return {
+						id: entry.id,
+						name: entry.name,
+						initiative: roll.total,
+						stats: {
+							hp: entry.hp,
+							maxHp: entry.maxHp,
+							ac: entry.ac,
+							dex_mod: entry.dexMod,
+						},
+						conditions: entry.conditions as unknown as Json,
+						flags: { isHunter: entry.isHunter },
+					};
+				})
+				.filter((p): p is NonNullable<typeof p> => p !== null);
+			if (payload.length === 0) return;
+
+			for (const roll of rolls) autoRolledIdsRef.current.add(roll.combatantId);
+			upsertCombatants.mutate({
+				campaignId,
+				sessionId: activeSessionId,
+				combatants: payload,
+			});
+			if (rerollAll) {
+				toast({
+					title: "Monster initiative re-rolled",
+					description: `Rolled ${rolls.length} monster${rolls.length === 1 ? "" : "s"} (1d20 + Dex).`,
+				});
+			}
+		},
+		[
+			activeSessionId,
+			campaignId,
+			combatants,
+			isWarden,
+			toast,
+			upsertCombatants,
+		],
+	);
+
+	// Auto-roll effect: fires when new monster combatants arrive with no
+	// initiative set. Uses the ref-based dedupe so refetches don't trigger
+	// another roll. Warden-only.
+	useEffect(() => {
+		if (!isWarden || !activeSessionId) return;
+		const hasUnrolledMonsters = combatants.some(
+			(c) =>
+				!c.isHunter &&
+				c.initiative === 0 &&
+				!autoRolledIdsRef.current.has(c.id),
+		);
+		if (hasUnrolledMonsters) {
+			rollMonsters(false);
+		}
+	}, [activeSessionId, combatants, isWarden, rollMonsters]);
+
+	// Reset the dedupe set whenever the combat session changes so a new
+	// encounter auto-rolls its fresh monsters.
+	useEffect(() => {
+		if (lastAutoRollSessionIdRef.current === activeSessionId) return;
+		autoRolledIdsRef.current = new Set();
+		lastAutoRollSessionIdRef.current = activeSessionId;
+	}, [activeSessionId]);
+
 	// Keyboard shortcut: N = next turn (when panel list is focused).
 	// Declared here (below nextTurn) so the callback is already in TDZ-safe scope.
 	useEffect(() => {
@@ -324,6 +422,20 @@ export function VTTInitiativePanel({
 					Round {round}
 				</span>
 				<div className="flex gap-1">
+					{isWarden && (
+						<Button
+							variant="ghost"
+							size="icon"
+							className="h-8 w-8"
+							onClick={() => rollMonsters(true)}
+							disabled={!combatants.some((c) => !c.isHunter)}
+							title="Re-roll all monster initiative (1d20 + Dex)"
+							aria-label="Re-roll all monster initiative"
+							data-testid="vtt-initiative-reroll-monsters"
+						>
+							<Dices className="h-4 w-4" />
+						</Button>
+					)}
 					<Button
 						variant="ghost"
 						size="icon"

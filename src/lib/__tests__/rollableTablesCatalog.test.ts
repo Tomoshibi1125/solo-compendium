@@ -12,6 +12,7 @@ describe("canonical rollable tables", () => {
 		for (const table of tables) {
 			expect(typeof table.id).toBe("string");
 			expect(typeof table.name).toBe("string");
+			expect(table.dice_formula).toMatch(/^1d\d+$/);
 			expect(Array.isArray(table.rollable_entries)).toBe(true);
 			expect(table.rollable_entries?.length ?? 0).toBeGreaterThan(0);
 		}

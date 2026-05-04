@@ -12,11 +12,8 @@ import {
 	RIFT_BOSS_TYPES,
 	RIFT_COMPLICATIONS,
 	RIFT_THEMES,
-	TREASURE_TIERS,
 	WARDEN_RANKS,
-	type WardenEventTableEntry,
 	WORLD_EVENTS,
-	EVENT_COMPLICATIONS,
 } from "@/data/wardenGeneratorContent";
 import { getCRXP } from "@/lib/experience";
 import { generateTreasure, type TreasureResult } from "@/lib/treasureGenerator";
@@ -42,7 +39,10 @@ const RANK_LEVEL_RANGE: Record<string, { min: number; max: number }> = {
 };
 
 /** CR strings appropriate per rank */
-const RANK_CR_BUDGET: Record<string, { minion: string; elite: string; boss: string }> = {
+const RANK_CR_BUDGET: Record<
+	string,
+	{ minion: string; elite: string; boss: string }
+> = {
 	E: { minion: "1/4", elite: "1", boss: "2" },
 	D: { minion: "1/2", elite: "2", boss: "4" },
 	C: { minion: "1", elite: "4", boss: "7" },
@@ -235,7 +235,14 @@ function rankDamage(rank: string): string {
 //  Room type assignment
 // ──────────────────────────────────────────────
 
-type RoomType = "entrance" | "boss" | "treasure" | "trap" | "puzzle" | "secret" | "room";
+type RoomType =
+	| "entrance"
+	| "boss"
+	| "treasure"
+	| "trap"
+	| "puzzle"
+	| "secret"
+	| "room";
 
 function assignRoomTypes(roomCount: number, rank: string): RoomType[] {
 	const types: RoomType[] = new Array(roomCount).fill("room");
@@ -309,7 +316,8 @@ function generateRoomDescription(
 	rank: string,
 	biome: string,
 ): string {
-	const size = index === 0 ? "30 × 30 ft" : `${20 + index * 5} × ${20 + index * 5} ft`;
+	const size =
+		index === 0 ? "30 × 30 ft" : `${20 + index * 5} × ${20 + index * 5} ft`;
 	const features: Record<string, string> = {
 		entrance: `${size}. Entry point with clear sight lines. Rift energy emanates from the threshold behind the party. One exit leading deeper.`,
 		boss: `${size}. Open arena with environmental features suitable for ${rank}-Rank combat. Elevated terrain or cover at edges. Boss positioning at center or far end.`,
@@ -356,12 +364,17 @@ function buildEncounters(
 			// Only some generic rooms get encounters
 			const encounterCount = RANK_ENCOUNTER_COUNT[rank] ?? 3;
 			const roomEncounterChance = type === "entrance" ? 0.3 : 0.6;
-			if (encounters.filter((e) => e.role !== "boss").length < encounterCount && Math.random() < roomEncounterChance) {
+			if (
+				encounters.filter((e) => e.role !== "boss").length < encounterCount &&
+				Math.random() < roomEncounterChance
+			) {
 				const role = Math.random() < 0.3 ? "elite" : "minion";
 				const cr = role === "elite" ? budget.elite : budget.minion;
 				const count = role === "elite" ? 1 : Math.floor(Math.random() * 2) + 2;
 				const xpEach = getCRXP(cr);
-				const linked = encounterEntries[entryIdx % Math.max(1, encounterEntries.length)] ?? null;
+				const linked =
+					encounterEntries[entryIdx % Math.max(1, encounterEntries.length)] ??
+					null;
 				entryIdx++;
 				encounters.push({
 					id: `enc-${i}`,
@@ -373,9 +386,10 @@ function buildEncounters(
 					xpEach,
 					xpTotal: xpEach * count,
 					linkedEntry: linked,
-					tactics: role === "elite"
-						? `Fights defensively, using terrain for advantage. Calls for reinforcements if reduced below 50% HP.`
-						: `Attacks in groups, attempting to flank. Retreats if more than half are defeated.`,
+					tactics:
+						role === "elite"
+							? `Fights defensively, using terrain for advantage. Calls for reinforcements if reduced below 50% HP.`
+							: `Attacks in groups, attempting to flank. Retreats if more than half are defeated.`,
 				});
 			}
 		}
@@ -401,7 +415,8 @@ function buildHazards(
 		if (hazards.length >= maxHazards) break;
 		const type = roomTypes[i];
 		if (type === "trap" || (type === "room" && Math.random() < 0.3)) {
-			const linked = hazardEntries[entryIdx % Math.max(1, hazardEntries.length)] ?? null;
+			const linked =
+				hazardEntries[entryIdx % Math.max(1, hazardEntries.length)] ?? null;
 			entryIdx++;
 			const hazardName = linked?.name ?? pick(GATE_HAZARDS);
 			hazards.push({
@@ -410,9 +425,10 @@ function buildHazards(
 				name: hazardName,
 				dc: rankDC(rank),
 				damage: rankDamage(rank),
-				trigger: type === "trap"
-					? "Pressure plate or tripwire activated when a creature enters the trigger zone."
-					: "Proximity trigger — activates when a creature moves within 10 ft.",
+				trigger:
+					type === "trap"
+						? "Pressure plate or tripwire activated when a creature enters the trigger zone."
+						: "Proximity trigger — activates when a creature moves within 10 ft.",
 				effect: `${hazardName}. DC ${rankDC(rank)} Agility save or take ${rankDamage(rank)} damage. On success, half damage.`,
 				linkedEntry: linked,
 			});
@@ -471,13 +487,19 @@ function buildRoomKeys(
 		if (hazard?.linkedEntry) linkedEntries.push(hazard.linkedEntry);
 
 		const label =
-			type === "entrance" ? "Entrance" :
-			type === "boss" ? "Boss Chamber" :
-			type === "treasure" ? "Treasure Room" :
-			type === "trap" ? "Trap Room" :
-			type === "puzzle" ? "Puzzle Room" :
-			type === "secret" ? "Secret Room" :
-			`Room ${i + 1}`;
+			type === "entrance"
+				? "Entrance"
+				: type === "boss"
+					? "Boss Chamber"
+					: type === "treasure"
+						? "Treasure Room"
+						: type === "trap"
+							? "Trap Room"
+							: type === "puzzle"
+								? "Puzzle Room"
+								: type === "secret"
+									? "Secret Room"
+									: `Room ${i + 1}`;
 
 		return {
 			roomId,
@@ -498,7 +520,11 @@ function buildRoomKeys(
 //  Objective generator
 // ──────────────────────────────────────────────
 
-function generateObjective(rank: string, boss: string, theme: string): RiftObjective {
+function generateObjective(
+	rank: string,
+	boss: string,
+	theme: string,
+): RiftObjective {
 	const primaries = [
 		`Defeat ${boss} and extract the Rift Core before the breach destabilizes.`,
 		`Neutralize ${boss} and secure the ${theme} nexus point.`,
@@ -523,7 +549,11 @@ function generateObjective(rank: string, boss: string, theme: string): RiftObjec
 //  Warden tips
 // ──────────────────────────────────────────────
 
-function generateWardenTips(rank: string, encounters: RiftEncounter[], hazards: RiftHazard[]): string[] {
+function generateWardenTips(
+	rank: string,
+	encounters: RiftEncounter[],
+	hazards: RiftHazard[],
+): string[] {
 	const tips = [
 		`This Rift is calibrated for ${rank}-Rank Ascendants (levels ${RANK_LEVEL_RANGE[rank]?.min ?? 1}–${RANK_LEVEL_RANGE[rank]?.max ?? 5}). Adjust encounter counts if the party is stronger or weaker.`,
 		`Total encounter XP: ${encounters.reduce((sum, e) => sum + e.xpTotal, 0).toLocaleString()}. Distribute short rests between the ${encounters.length} encounters as appropriate.`,
@@ -552,7 +582,12 @@ function generateWardenTips(rank: string, encounters: RiftEncounter[], hazards: 
 //  Lore notes
 // ──────────────────────────────────────────────
 
-function generateLoreNotes(theme: string, biome: string, rank: string, loreEntries: WardenLinkedEntry[]): string[] {
+function generateLoreNotes(
+	theme: string,
+	biome: string,
+	rank: string,
+	loreEntries: WardenLinkedEntry[],
+): string[] {
 	const notes: string[] = [
 		`This Rift manifests within the ${theme}, an area classified as ${rank}-Rank by the Awakened Council. The terrain presents as ${biome}, though the actual topography is a construct of the Rift's mana signature.`,
 	];
@@ -564,7 +599,9 @@ function generateLoreNotes(theme: string, biome: string, rank: string, loreEntri
 	}
 
 	const event = pick(WORLD_EVENTS);
-	notes.push(`Possible world event tie-in: ${event.description} (${event.impact})`);
+	notes.push(
+		`Possible world event tie-in: ${event.description} (${event.impact})`,
+	);
 
 	return notes;
 }
@@ -573,7 +610,7 @@ function generateLoreNotes(theme: string, biome: string, rank: string, loreEntri
 //  Map parameter calculation
 // ──────────────────────────────────────────────
 
-function calculateMapParams(rank: string, roomCount: number, roomTypes: RoomType[]) {
+function calculateMapParams(roomCount: number, roomTypes: RoomType[]) {
 	const gridSize = Math.max(20, 15 + roomCount * 2);
 	return {
 		width: gridSize,
@@ -637,12 +674,21 @@ export async function generateFullRift(
 	});
 	const treasureRarities = rankToTreasureRarities(rank);
 	const lootEntries = [
-		...generationContext.pickMany("equipment", 2, { rank, rarities: treasureRarities }),
+		...generationContext.pickMany("equipment", 2, {
+			rank,
+			rarities: treasureRarities,
+		}),
 		...generationContext.pickMany("items", 2, { rarities: treasureRarities }),
-		...generationContext.pickMany("relics", 1, { rank, rarities: treasureRarities }),
+		...generationContext.pickMany("relics", 1, {
+			rank,
+			rarities: treasureRarities,
+		}),
 		...generationContext.pickMany("runes", 1, { rank }),
 		...generationContext.pickMany("sigils", 1, { rank }),
-		...generationContext.pickMany("artifacts", 1, { rank, rarities: treasureRarities }),
+		...generationContext.pickMany("artifacts", 1, {
+			rank,
+			rarities: treasureRarities,
+		}),
 	].slice(0, 8);
 	const loreEntries = [
 		...generationContext.pickMany("locations", 2, { theme, biome }),
@@ -703,7 +749,7 @@ export async function generateFullRift(
 	const readAloudEntry = generateReadAloud(biome, theme, rank);
 	const loreNotes = generateLoreNotes(theme, biome, rank, loreEntries);
 	const wardenTips = generateWardenTips(rank, encounters, hazards);
-	const mapParams = calculateMapParams(rank, roomCount, roomTypes);
+	const mapParams = calculateMapParams(roomCount, roomTypes);
 
 	return {
 		id: generateId(),
@@ -792,7 +838,9 @@ export function packetToTextDossier(packet: GeneratedRiftPacket): string {
 		lines.push(`  Read-Aloud: "${room.readAloud}"`);
 		lines.push(`  ${room.description}`);
 		if (room.encounter) {
-			lines.push(`  Encounter: ${room.encounter.name} (CR ${room.encounter.cr}, ×${room.encounter.count}) — ${room.encounter.tactics}`);
+			lines.push(
+				`  Encounter: ${room.encounter.name} (CR ${room.encounter.cr}, ×${room.encounter.count}) — ${room.encounter.tactics}`,
+			);
 		}
 		if (room.hazard) {
 			lines.push(`  Hazard: ${room.hazard.name} — ${room.hazard.effect}`);
@@ -808,7 +856,9 @@ export function packetToTextDossier(packet: GeneratedRiftPacket): string {
 
 	lines.push("── ENCOUNTERS ──");
 	for (const enc of packet.encounters) {
-		lines.push(`• ${enc.name} (CR ${enc.cr}, ${enc.role}, ×${enc.count}) — ${enc.xpTotal} XP`);
+		lines.push(
+			`• ${enc.name} (CR ${enc.cr}, ${enc.role}, ×${enc.count}) — ${enc.xpTotal} XP`,
+		);
 		lines.push(`  Tactics: ${enc.tactics}`);
 	}
 	lines.push(`Total Encounter XP: ${packet.rewards.totalXP.toLocaleString()}`);
@@ -833,11 +883,14 @@ export function packetToTextDossier(packet: GeneratedRiftPacket): string {
 		const currency = [
 			t.hundreds > 0 ? `$${t.hundreds * 100}` : "",
 			t.tens > 0 ? `$${t.tens * 10}` : "",
-		].filter(Boolean).join(" + ");
+		]
+			.filter(Boolean)
+			.join(" + ");
 		if (currency) lines.push(`Currency: ${currency}`);
 		if (t.items.length > 0) lines.push(`Items: ${t.items.join(", ")}`);
 		if (t.relics.length > 0) lines.push(`Relics: ${t.relics.join(", ")}`);
-		if (t.materials.length > 0) lines.push(`Materials: ${t.materials.join(", ")}`);
+		if (t.materials.length > 0)
+			lines.push(`Materials: ${t.materials.join(", ")}`);
 	}
 	if (packet.rewards.bonusRewards.length > 0) {
 		lines.push(`Bonus: ${packet.rewards.bonusRewards.join(", ")}`);

@@ -3,7 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
-import { isLocalCharacterId } from "@/lib/guestStore";
+import {
+	addLocalRuneKnowledge,
+	isLocalCharacterId,
+	listLocalRuneKnowledge,
+} from "@/lib/guestStore";
 import {
 	autoLearnRunes,
 	buildRuneFeatureModifiers,
@@ -105,7 +109,6 @@ export function useCharacterRuneKnowledge(characterId: string | undefined) {
 		queryFn: async () => {
 			if (!characterId) return [];
 			if (isLocalCharacterId(characterId)) {
-				const { listLocalRuneKnowledge } = await import("@/lib/guestStore");
 				const localEntries = listLocalRuneKnowledge(characterId);
 				const byId = await hydrateRunesById(localEntries.map((e) => e.rune_id));
 				return localEntries.map((e) => ({
@@ -183,7 +186,6 @@ export function useLearnRune() {
 			isMastered?: boolean;
 		}) => {
 			if (isLocalCharacterId(characterId)) {
-				const { addLocalRuneKnowledge } = await import("@/lib/guestStore");
 				return addLocalRuneKnowledge(characterId, {
 					rune_id: runeId,
 					mastery_level: isMastered ? 5 : 1,

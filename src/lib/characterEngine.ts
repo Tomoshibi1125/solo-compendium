@@ -78,7 +78,12 @@ export type EffectTarget =
 	| "advantage"
 	| "disadvantage"
 	| "reroll"
-	| "minimum_roll";
+	| "minimum_roll"
+	| "tattoo_attunement"
+	| "damage_resistance"
+	| "damage_immunity"
+	| "damage_vulnerability"
+	| "condition_immunity";
 
 export interface EffectSource {
 	sourceType:
@@ -93,7 +98,9 @@ export interface EffectSource {
 		| "trait"
 		| "feat"
 		| "race"
-		| "item";
+		| "item"
+		| "sigil"
+		| "tattoo";
 	sourceId: string;
 	sourceName?: string;
 }
@@ -1844,6 +1851,27 @@ export function buildEffectsSummary(
 					value: effect.value,
 					displayText: formatEffectDisplay(effect, feature.name),
 					priority: effect.priority ?? 180,
+				});
+			}
+		}
+	}
+
+	for (const tattoo of base.tattoos || []) {
+		if (!tattoo.isActive || (tattoo.requiresAttunement && !tattoo.isAttuned)) {
+			continue;
+		}
+		if (tattoo.effects) {
+			for (const effect of tattoo.effects) {
+				computed.push({
+					source: {
+						sourceType: "tattoo",
+						sourceId: tattoo.id,
+						sourceName: tattoo.name,
+					},
+					target: effect.target,
+					value: effect.value,
+					displayText: formatEffectDisplay(effect, tattoo.name),
+					priority: effect.priority ?? 140,
 				});
 			}
 		}

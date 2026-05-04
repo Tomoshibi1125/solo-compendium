@@ -32,6 +32,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	RELIC_BALANCE_GUIDELINES,
 	RELIC_PROPERTY_TYPES,
@@ -83,6 +84,7 @@ export interface Relic {
 
 const RelicWorkshop = () => {
 	const navigate = useNavigate();
+	const embedded = useEmbedded();
 	const { toast } = useToast();
 	const hydratedRef = useRef(false);
 	const [relics, setRelics] = useState<Relic[]>([]);
@@ -413,9 +415,11 @@ READ-ALOUD DISCOVERY:
 
 	const guideline = RELIC_BALANCE_GUIDELINES[currentRelic.rarity];
 
-	return (
-		<Layout>
-			<div className="container mx-auto px-4 py-8 max-w-6xl">
+	const content = (
+		<div
+			className={embedded ? "w-full" : "container mx-auto px-4 py-8 max-w-6xl"}
+		>
+			{!embedded && (
 				<div className="mb-6">
 					<Button
 						variant="ghost"
@@ -438,357 +442,359 @@ READ-ALOUD DISCOVERY:
 						outside normative System constraints.
 					</ManaFlowText>
 				</div>
+			)}
 
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-					<div className="lg:col-span-2 space-y-6">
-						<AscendantWindow title="RELIC DESIGN">
-							<div className="space-y-4">
-								<Button
-									type="button"
-									variant="outline"
-									className="w-full gap-2"
-									onClick={() => void handleSeedFromCompendium()}
-								>
-									<Sparkles className="w-4 h-4" />
-									Seed From Compendium
-								</Button>
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									<div>
-										<Label htmlFor="name">Relic Name</Label>
-										<Input
-											id="name"
-											value={currentRelic.name || ""}
-											onChange={(e) =>
-												setCurrentRelic({
-													...currentRelic,
-													name: e.target.value,
-												})
-											}
-											placeholder={`e.g., Umbral ${MONARCH_LABEL}'s Dagger`}
-										/>
-									</div>
-									<div>
-										<Label htmlFor="rank">Rift Rank</Label>
-										<Select
-											value={currentRelic.rank || ""}
-											onValueChange={(value) =>
-												setCurrentRelic({ ...currentRelic, rank: value })
-											}
-										>
-											<SelectTrigger id="rank">
-												<SelectValue />
-											</SelectTrigger>
-											<SelectContent>
-												{RELIC_RANKS.map((rank) => (
-													<SelectItem key={rank} value={rank}>
-														Rank {rank}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-									</div>
-								</div>
-
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									<div>
-										<Label htmlFor="type">Relic Type</Label>
-										<Select
-											value={currentRelic.type || ""}
-											onValueChange={(value: Relic["type"]) =>
-												setCurrentRelic({ ...currentRelic, type: value })
-											}
-										>
-											<SelectTrigger id="type">
-												<SelectValue />
-											</SelectTrigger>
-											<SelectContent>
-												{RELIC_TYPES.map((type) => (
-													<SelectItem key={type} value={type}>
-														{type.charAt(0).toUpperCase() + type.slice(1)}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-									</div>
-									<div>
-										<Label htmlFor="rarity">Rarity</Label>
-										<Select
-											value={currentRelic.rarity || ""}
-											onValueChange={(value: Relic["rarity"]) =>
-												setCurrentRelic({ ...currentRelic, rarity: value })
-											}
-										>
-											<SelectTrigger id="rarity">
-												<SelectValue />
-											</SelectTrigger>
-											<SelectContent>
-												{RELIC_RARITY_LEVELS.map((rarity) => (
-													<SelectItem key={rarity} value={rarity}>
-														{rarity.charAt(0).toUpperCase() +
-															rarity.slice(1).replace("-", " ")}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-									</div>
-								</div>
-
-								<div>
-									<Label htmlFor="description">Description</Label>
-									<Textarea
-										id="description"
-										value={currentRelic.description || ""}
-										onChange={(e) =>
-											setCurrentRelic({
-												...currentRelic,
-												description: e.target.value,
-											})
-										}
-										placeholder="Describe the relic's appearance, history, and lore..."
-										rows={4}
-									/>
-								</div>
-
-								<div className="flex items-center gap-2">
-									<input
-										type="checkbox"
-										id="attunement"
-										checked={currentRelic.attunement}
-										onChange={(e) =>
-											setCurrentRelic({
-												...currentRelic,
-												attunement: e.target.checked,
-											})
-										}
-										className="w-4 h-4"
-										aria-label="Requires Attunement"
-									/>
-									<Label htmlFor="attunement" className="cursor-pointer">
-										Requires Attunement
-									</Label>
-								</div>
-							</div>
-						</AscendantWindow>
-
-						<AscendantWindow title="ADD PROPERTY">
-							<div className="space-y-4">
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									<div>
-										<Label htmlFor="prop-name">Property Name</Label>
-										<Input
-											id="prop-name"
-											value={newProperty.name || ""}
-											onChange={(e) =>
-												setNewProperty({ ...newProperty, name: e.target.value })
-											}
-											placeholder="e.g., +1 Attack Bonus"
-										/>
-									</div>
-									<div>
-										<Label htmlFor="prop-type">Type</Label>
-										<Select
-											value={newProperty.type || ""}
-											onValueChange={(value: RelicProperty["type"]) =>
-												setNewProperty({ ...newProperty, type: value })
-											}
-										>
-											<SelectTrigger id="prop-type">
-												<SelectValue />
-											</SelectTrigger>
-											<SelectContent>
-												{RELIC_PROPERTY_TYPES.map((type) => (
-													<SelectItem key={type} value={type}>
-														{type.charAt(0).toUpperCase() + type.slice(1)}
-													</SelectItem>
-												))}
-											</SelectContent>
-										</Select>
-									</div>
-								</div>
-								<div>
-									<Label htmlFor="prop-desc">Property Description</Label>
-									<Textarea
-										id="prop-desc"
-										value={newProperty.description || ""}
-										onChange={(e) =>
-											setNewProperty({
-												...newProperty,
-												description: e.target.value,
-											})
-										}
-										placeholder="Describe what this property does..."
-										rows={3}
-									/>
-								</div>
-								<Button onClick={addProperty} className="w-full">
-									<Plus className="w-4 h-4 mr-2" />
-									Add Property
-								</Button>
-							</div>
-						</AscendantWindow>
-
-						<AscendantWindow title="PROPERTIES">
-							{currentRelic.properties.length === 0 ? (
-								<AscendantText className="block text-muted-foreground text-center py-4">
-									No properties yet. Add properties to define the relic's
-									abilities.
-								</AscendantText>
-							) : (
-								<div className="space-y-2">
-									{currentRelic.properties.map((prop) => (
-										<div
-											key={prop.id}
-											className="p-3 rounded-lg border border-border bg-muted/30 flex items-start justify-between"
-										>
-											<div className="flex-1">
-												<div className="flex items-center gap-2 mb-1">
-													<Badge variant="outline">{prop.type}</Badge>
-													<span className="font-heading font-semibold">
-														{prop.name}
-													</span>
-												</div>
-												<div className="block text-sm text-muted-foreground">
-													<AutoLinkText text={prop.description} />
-												</div>
-											</div>
-											<Button
-												variant="ghost"
-												size="sm"
-												onClick={() => removeProperty(prop.id)}
-											>
-												<Trash2 className="w-4 h-4" />
-											</Button>
-										</div>
-									))}
-								</div>
-							)}
-						</AscendantWindow>
-					</div>
-
-					<div className="space-y-6">
-						<AscendantWindow title="BALANCE GUIDE" variant="quest">
-							<div className="space-y-4">
-								<Badge className={getRarityColor(currentRelic.rarity)}>
-									{currentRelic.rarity.toUpperCase().replace("-", " ")}
-								</Badge>
-								<AscendantText className="block text-sm text-muted-foreground">
-									{guideline.description}
-								</AscendantText>
-								<div className="space-y-2 text-xs">
-									<div>
-										Properties:{" "}
-										{typeof guideline.properties === "number"
-											? guideline.properties
-											: `${guideline.properties[0]}-${guideline.properties[1]}`}
-									</div>
-									<div>Max Bonus: +{guideline.maxBonus}</div>
-								</div>
-							</div>
-						</AscendantWindow>
-
-						<AscendantWindow title="RELIC PREVIEW">
-							{currentRelic.name ? (
-								<div className="space-y-3">
-									<div className="flex items-center justify-between">
-										<div className="flex items-center gap-2">
-											{(() => {
-												const Icon = getTypeIcon(currentRelic.type);
-												return <Icon className="w-5 h-5 text-primary" />;
-											})()}
-											<h3 className="font-heading font-semibold">
-												{currentRelic.name}
-											</h3>
-										</div>
-										<Badge className={getRarityColor(currentRelic.rarity)}>
-											{currentRelic.rarity}
-										</Badge>
-									</div>
-									<div className="text-xs text-muted-foreground">
-										Rank {currentRelic.rank} • {currentRelic.type}
-										{currentRelic.attunement && " • Requires Attunement"}
-									</div>
-									{currentRelic.description && (
-										<div className="block text-sm text-muted-foreground">
-											<AutoLinkText text={currentRelic.description} />
-										</div>
-									)}
-									{currentRelic.properties.length > 0 && (
-										<div className="space-y-2 pt-2 border-t border-border">
-											<div className="text-xs font-heading font-semibold">
-												Properties:
-											</div>
-											{currentRelic.properties.map((prop) => (
-												<div key={prop.id} className="text-xs">
-													<Badge variant="outline" className="text-xs mr-2">
-														{prop.type}
-													</Badge>
-													<span className="font-semibold">{prop.name}:</span>{" "}
-													<span className="text-muted-foreground">
-														<AutoLinkText text={prop.description} />
-													</span>
-												</div>
-											))}
-										</div>
-									)}
-								</div>
-							) : (
-								<AscendantText className="block text-muted-foreground text-sm text-center py-4">
-									Relic preview will appear here
-								</AscendantText>
-							)}
-						</AscendantWindow>
-					</div>
-				</div>
-
-				<div className="mt-6 space-y-2">
-					<Button onClick={saveRelic} className="w-full btn-umbral" size="lg">
-						<Save className="w-4 h-4 mr-2" />
-						Save Relic
-					</Button>
-					{currentRelic.name && (
-						<Button
-							onClick={handleCopy}
-							variant="outline"
-							className="w-full"
-							size="lg"
-						>
-							<Copy className="w-4 h-4 mr-2" />
-							Copy Relic Stats
-						</Button>
-					)}
-					{currentRelic.name && (
-						<Button
-							onClick={handleAIEnhance}
-							className="w-full gap-2"
-							variant="outline"
-							size="lg"
-							disabled={isEnhancing}
-						>
-							{isEnhancing ? (
-								<Loader2 className="w-4 h-4 animate-spin" />
-							) : (
+			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+				<div className="lg:col-span-2 space-y-6">
+					<AscendantWindow title="RELIC DESIGN">
+						<div className="space-y-4">
+							<Button
+								type="button"
+								variant="outline"
+								className="w-full gap-2"
+								onClick={() => void handleSeedFromCompendium()}
+							>
 								<Sparkles className="w-4 h-4" />
-							)}
-							{isEnhancing ? "Enhancing..." : "Enhance with AI"}
-						</Button>
-					)}
-					{enhancedText && (
-						<div className="pt-4 border-t border-primary/30">
-							<div className="flex items-center gap-2 mb-2">
-								<Sparkles className="w-4 h-4 text-primary" />
-								<span className="text-xs font-display text-primary">
-									AI-ENHANCED RELIC DETAILS
-								</span>
+								Seed From Compendium
+							</Button>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div>
+									<Label htmlFor="name">Relic Name</Label>
+									<Input
+										id="name"
+										value={currentRelic.name || ""}
+										onChange={(e) =>
+											setCurrentRelic({
+												...currentRelic,
+												name: e.target.value,
+											})
+										}
+										placeholder={`e.g., Umbral ${MONARCH_LABEL}'s Dagger`}
+									/>
+								</div>
+								<div>
+									<Label htmlFor="rank">Rift Rank</Label>
+									<Select
+										value={currentRelic.rank || ""}
+										onValueChange={(value) =>
+											setCurrentRelic({ ...currentRelic, rank: value })
+										}
+									>
+										<SelectTrigger id="rank">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											{RELIC_RANKS.map((rank) => (
+												<SelectItem key={rank} value={rank}>
+													Rank {rank}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</div>
 							</div>
-							<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-								<AutoLinkText text={enhancedText || ""} />
+
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div>
+									<Label htmlFor="type">Relic Type</Label>
+									<Select
+										value={currentRelic.type || ""}
+										onValueChange={(value: Relic["type"]) =>
+											setCurrentRelic({ ...currentRelic, type: value })
+										}
+									>
+										<SelectTrigger id="type">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											{RELIC_TYPES.map((type) => (
+												<SelectItem key={type} value={type}>
+													{type.charAt(0).toUpperCase() + type.slice(1)}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</div>
+								<div>
+									<Label htmlFor="rarity">Rarity</Label>
+									<Select
+										value={currentRelic.rarity || ""}
+										onValueChange={(value: Relic["rarity"]) =>
+											setCurrentRelic({ ...currentRelic, rarity: value })
+										}
+									>
+										<SelectTrigger id="rarity">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											{RELIC_RARITY_LEVELS.map((rarity) => (
+												<SelectItem key={rarity} value={rarity}>
+													{rarity.charAt(0).toUpperCase() +
+														rarity.slice(1).replace("-", " ")}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</div>
+							</div>
+
+							<div>
+								<Label htmlFor="description">Description</Label>
+								<Textarea
+									id="description"
+									value={currentRelic.description || ""}
+									onChange={(e) =>
+										setCurrentRelic({
+											...currentRelic,
+											description: e.target.value,
+										})
+									}
+									placeholder="Describe the relic's appearance, history, and lore..."
+									rows={4}
+								/>
+							</div>
+
+							<div className="flex items-center gap-2">
+								<input
+									type="checkbox"
+									id="attunement"
+									checked={currentRelic.attunement}
+									onChange={(e) =>
+										setCurrentRelic({
+											...currentRelic,
+											attunement: e.target.checked,
+										})
+									}
+									className="w-4 h-4"
+									aria-label="Requires Attunement"
+								/>
+								<Label htmlFor="attunement" className="cursor-pointer">
+									Requires Attunement
+								</Label>
 							</div>
 						</div>
-					)}
+					</AscendantWindow>
+
+					<AscendantWindow title="ADD PROPERTY">
+						<div className="space-y-4">
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div>
+									<Label htmlFor="prop-name">Property Name</Label>
+									<Input
+										id="prop-name"
+										value={newProperty.name || ""}
+										onChange={(e) =>
+											setNewProperty({ ...newProperty, name: e.target.value })
+										}
+										placeholder="e.g., +1 Attack Bonus"
+									/>
+								</div>
+								<div>
+									<Label htmlFor="prop-type">Type</Label>
+									<Select
+										value={newProperty.type || ""}
+										onValueChange={(value: RelicProperty["type"]) =>
+											setNewProperty({ ...newProperty, type: value })
+										}
+									>
+										<SelectTrigger id="prop-type">
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											{RELIC_PROPERTY_TYPES.map((type) => (
+												<SelectItem key={type} value={type}>
+													{type.charAt(0).toUpperCase() + type.slice(1)}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								</div>
+							</div>
+							<div>
+								<Label htmlFor="prop-desc">Property Description</Label>
+								<Textarea
+									id="prop-desc"
+									value={newProperty.description || ""}
+									onChange={(e) =>
+										setNewProperty({
+											...newProperty,
+											description: e.target.value,
+										})
+									}
+									placeholder="Describe what this property does..."
+									rows={3}
+								/>
+							</div>
+							<Button onClick={addProperty} className="w-full">
+								<Plus className="w-4 h-4 mr-2" />
+								Add Property
+							</Button>
+						</div>
+					</AscendantWindow>
+
+					<AscendantWindow title="PROPERTIES">
+						{currentRelic.properties.length === 0 ? (
+							<AscendantText className="block text-muted-foreground text-center py-4">
+								No properties yet. Add properties to define the relic's
+								abilities.
+							</AscendantText>
+						) : (
+							<div className="space-y-2">
+								{currentRelic.properties.map((prop) => (
+									<div
+										key={prop.id}
+										className="p-3 rounded-lg border border-border bg-muted/30 flex items-start justify-between"
+									>
+										<div className="flex-1">
+											<div className="flex items-center gap-2 mb-1">
+												<Badge variant="outline">{prop.type}</Badge>
+												<span className="font-heading font-semibold">
+													{prop.name}
+												</span>
+											</div>
+											<div className="block text-sm text-muted-foreground">
+												<AutoLinkText text={prop.description} />
+											</div>
+										</div>
+										<Button
+											variant="ghost"
+											size="sm"
+											onClick={() => removeProperty(prop.id)}
+										>
+											<Trash2 className="w-4 h-4" />
+										</Button>
+									</div>
+								))}
+							</div>
+						)}
+					</AscendantWindow>
+				</div>
+
+				<div className="space-y-6">
+					<AscendantWindow title="BALANCE GUIDE" variant="quest">
+						<div className="space-y-4">
+							<Badge className={getRarityColor(currentRelic.rarity)}>
+								{currentRelic.rarity.toUpperCase().replace("-", " ")}
+							</Badge>
+							<AscendantText className="block text-sm text-muted-foreground">
+								{guideline.description}
+							</AscendantText>
+							<div className="space-y-2 text-xs">
+								<div>
+									Properties:{" "}
+									{typeof guideline.properties === "number"
+										? guideline.properties
+										: `${guideline.properties[0]}-${guideline.properties[1]}`}
+								</div>
+								<div>Max Bonus: +{guideline.maxBonus}</div>
+							</div>
+						</div>
+					</AscendantWindow>
+
+					<AscendantWindow title="RELIC PREVIEW">
+						{currentRelic.name ? (
+							<div className="space-y-3">
+								<div className="flex items-center justify-between">
+									<div className="flex items-center gap-2">
+										{(() => {
+											const Icon = getTypeIcon(currentRelic.type);
+											return <Icon className="w-5 h-5 text-primary" />;
+										})()}
+										<h3 className="font-heading font-semibold">
+											{currentRelic.name}
+										</h3>
+									</div>
+									<Badge className={getRarityColor(currentRelic.rarity)}>
+										{currentRelic.rarity}
+									</Badge>
+								</div>
+								<div className="text-xs text-muted-foreground">
+									Rank {currentRelic.rank} • {currentRelic.type}
+									{currentRelic.attunement && " • Requires Attunement"}
+								</div>
+								{currentRelic.description && (
+									<div className="block text-sm text-muted-foreground">
+										<AutoLinkText text={currentRelic.description} />
+									</div>
+								)}
+								{currentRelic.properties.length > 0 && (
+									<div className="space-y-2 pt-2 border-t border-border">
+										<div className="text-xs font-heading font-semibold">
+											Properties:
+										</div>
+										{currentRelic.properties.map((prop) => (
+											<div key={prop.id} className="text-xs">
+												<Badge variant="outline" className="text-xs mr-2">
+													{prop.type}
+												</Badge>
+												<span className="font-semibold">{prop.name}:</span>{" "}
+												<span className="text-muted-foreground">
+													<AutoLinkText text={prop.description} />
+												</span>
+											</div>
+										))}
+									</div>
+								)}
+							</div>
+						) : (
+							<AscendantText className="block text-muted-foreground text-sm text-center py-4">
+								Relic preview will appear here
+							</AscendantText>
+						)}
+					</AscendantWindow>
 				</div>
 			</div>
-		</Layout>
+
+			<div className="mt-6 space-y-2">
+				<Button onClick={saveRelic} className="w-full btn-umbral" size="lg">
+					<Save className="w-4 h-4 mr-2" />
+					Save Relic
+				</Button>
+				{currentRelic.name && (
+					<Button
+						onClick={handleCopy}
+						variant="outline"
+						className="w-full"
+						size="lg"
+					>
+						<Copy className="w-4 h-4 mr-2" />
+						Copy Relic Stats
+					</Button>
+				)}
+				{currentRelic.name && (
+					<Button
+						onClick={handleAIEnhance}
+						className="w-full gap-2"
+						variant="outline"
+						size="lg"
+						disabled={isEnhancing}
+					>
+						{isEnhancing ? (
+							<Loader2 className="w-4 h-4 animate-spin" />
+						) : (
+							<Sparkles className="w-4 h-4" />
+						)}
+						{isEnhancing ? "Enhancing..." : "Enhance with AI"}
+					</Button>
+				)}
+				{enhancedText && (
+					<div className="pt-4 border-t border-primary/30">
+						<div className="flex items-center gap-2 mb-2">
+							<Sparkles className="w-4 h-4 text-primary" />
+							<span className="text-xs font-display text-primary">
+								AI-ENHANCED RELIC DETAILS
+							</span>
+						</div>
+						<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+							<AutoLinkText text={enhancedText || ""} />
+						</div>
+					</div>
+				)}
+			</div>
+		</div>
 	);
+
+	return embedded ? content : <Layout>{content}</Layout>;
 };
 
 export default RelicWorkshop;

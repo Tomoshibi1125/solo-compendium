@@ -5,15 +5,21 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
+import {
+	findCanonicalCastableByName,
+	listLearnablePowers,
+} from "@/lib/canonicalCompendium";
 import { calculateFeatureUses } from "@/lib/characterEngine";
 import {
 	addLocalEquipment,
 	addLocalFeature,
 	addLocalPower,
 	addLocalSpell,
+	getLocalCharacterWithAbilities,
 	isLocalCharacterId,
 	listLocalFeatures,
 	listLocalSpells,
+	updateLocalCharacter,
 	updateLocalFeature,
 } from "@/lib/guestStore";
 import { getStaticPathUnlockLevel } from "@/lib/levelGating";
@@ -165,7 +171,9 @@ export function buildItemProperties(item: StaticItem): string[] {
 	};
 	const pushAbilityBonuses = (value: unknown) => {
 		if (!value || typeof value !== "object" || Array.isArray(value)) return;
-		for (const [ability, bonus] of Object.entries(value as Record<string, unknown>)) {
+		for (const [ability, bonus] of Object.entries(
+			value as Record<string, unknown>,
+		)) {
 			pushNumericPropertyBonus(bonus, ability);
 		}
 	};
@@ -285,7 +293,10 @@ export function buildItemProperties(item: StaticItem): string[] {
 	pushDelimitedProperty("Resistance", mechanicsProperties?.resistance);
 	pushDelimitedProperty("Immunity", mechanicsProperties?.immunity);
 	pushDelimitedProperty("Vulnerability", mechanicsProperties?.vulnerability);
-	pushDelimitedProperty("Condition immunity", mechanicsProperties?.condition_immunity);
+	pushDelimitedProperty(
+		"Condition immunity",
+		mechanicsProperties?.condition_immunity,
+	);
 	const passive = Array.isArray(item.effects)
 		? item.effects
 		: (item.effects as { passive?: string[] })?.passive;
@@ -295,7 +306,11 @@ export function buildItemProperties(item: StaticItem): string[] {
 		}
 	}
 
-	if (!Array.isArray(item.effects) && item.effects && typeof item.effects === "object") {
+	if (
+		!Array.isArray(item.effects) &&
+		item.effects &&
+		typeof item.effects === "object"
+	) {
 		const effects = item.effects as Record<string, unknown>;
 		pushProperty(effects.primary);
 		pushProperty(effects.secondary);
@@ -3090,11 +3105,6 @@ export async function applyJobAwakeningTraitsToCharacter(
 	// characters this goes through updateLocalCharacter; for Supabase we read
 	// the current row and write back a merged update.
 	if (isLocalCharacterId(characterId)) {
-		const {
-			getLocalCharacterWithAbilities,
-			updateLocalCharacter,
-			listLocalFeatures,
-		} = await import("@/lib/guestStore");
 		const existing = getLocalCharacterWithAbilities(characterId);
 		if (!existing) return;
 
@@ -3521,9 +3531,6 @@ export async function addInnateChannelingForLevel(
 
 	for (const spell of unlocked) {
 		const sourceLabel = `Racial Channeling: ${jobName}`;
-		const { findCanonicalCastableByName } = await import(
-			"@/lib/canonicalCompendium"
-		);
 		const canonicalSpell = await findCanonicalCastableByName(
 			spell.name,
 			undefined,
@@ -3876,7 +3883,6 @@ export async function addStartingPowers(
 	const jobName = typeof job === "string" ? job : job?.name;
 	const campaignId = await getCharacterCampaignId(characterId);
 
-	const { listLearnablePowers } = await import("@/lib/canonicalCompendium");
 	const accessiblePowers = await listLearnablePowers({
 		accessContext: { campaignId },
 		jobName: jobName ?? null,

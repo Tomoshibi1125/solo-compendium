@@ -46,6 +46,8 @@ const CONTENT_TYPES: HomebrewContentType[] = [
 	"path",
 	"relic",
 	"spell",
+	"power",
+	"feat",
 	"item",
 ];
 

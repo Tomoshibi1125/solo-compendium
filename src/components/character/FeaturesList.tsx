@@ -1,4 +1,12 @@
-import { Minus, Plus, Power, PowerOff, Star, Zap } from "lucide-react";
+import {
+	AlertTriangle,
+	Minus,
+	Plus,
+	Power,
+	PowerOff,
+	Star,
+	Zap,
+} from "lucide-react";
 import { useCallback, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -55,6 +63,17 @@ export function FeaturesList({
 			return false;
 		return true;
 	});
+
+	const pendingChoiceFeatures = features.filter(
+		(feature) =>
+			feature.name.startsWith("Pending Choice:") ||
+			feature.source.includes("Pending Choice"),
+	);
+	const frequencyMasteryFeatures = features.filter(
+		(feature) =>
+			feature.name.includes("Frequency Mastery") ||
+			feature.source.includes("Frequency Mastery"),
+	);
 
 	const groupedFeatures = filteredFeatures.reduce(
 		(acc, feature) => {
@@ -205,6 +224,59 @@ export function FeaturesList({
 						Add Feat
 					</Button>
 				</div>
+
+				{pendingChoiceFeatures.length > 0 && (
+					<div className="p-3 rounded-lg border border-amber-500/30 bg-amber-500/10">
+						<div className="flex items-start gap-2">
+							<AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5" />
+							<div className="space-y-2">
+								<div>
+									<h4 className="font-heading font-semibold text-amber-400">
+										Pending Selection Protocols
+									</h4>
+									<p className="text-xs text-muted-foreground">
+										Complete these ledger choices when their dedicated catalog
+										panel is available.
+									</p>
+								</div>
+								<div className="flex flex-wrap gap-1">
+									{pendingChoiceFeatures.map((feature) => (
+										<Badge
+											key={feature.id}
+											variant="outline"
+											className="text-xs"
+										>
+											{formatRegentVernacular(
+												feature.name.replace(/^Pending Choice:\s*/, ""),
+											)}
+										</Badge>
+									))}
+								</div>
+							</div>
+						</div>
+					</div>
+				)}
+
+				{frequencyMasteryFeatures.length > 0 && (
+					<div className="p-3 rounded-lg border border-violet-500/20 bg-violet-500/10">
+						<h4 className="font-heading font-semibold text-violet-400">
+							Frequency Mastery
+						</h4>
+						<p className="text-xs text-muted-foreground mt-1">
+							Your tuned skills stabilize low signal rolls. Track the mastered
+							skills below.
+						</p>
+						<div className="flex flex-wrap gap-1 mt-2">
+							{frequencyMasteryFeatures.map((feature) => (
+								<Badge key={feature.id} variant="secondary" className="text-xs">
+									{formatRegentVernacular(
+										feature.name.replace(/^Frequency Mastery:\s*/, ""),
+									)}
+								</Badge>
+							))}
+						</div>
+					</div>
+				)}
 
 				{features.length === 0 ? (
 					<div className="text-center py-8 text-muted-foreground">

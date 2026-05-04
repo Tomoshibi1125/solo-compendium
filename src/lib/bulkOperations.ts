@@ -6,6 +6,7 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
 	addJobAwakeningBenefitsForLevel,
 	autoUpdateFeatureUses,
@@ -50,6 +51,19 @@ const CHOICE_LABELS: Record<ChoiceKind, string> = {
 	tools: "tool choice",
 	languages: "language choice",
 	expertise: "expertise choice",
+	cantrips: "cantrip choice",
+	fightingStyles: "Fighting Style choice",
+	favoredTerrains: "Favored Terrain choice",
+	realitySculptings: "Reality Sculpting choice",
+	contractInvocations: "Contract Invocation choice",
+	absoluteInfusions: "Absolute Infusion choice",
+	pactBoons: "Pact Boon choice",
+	frequencyMasteries: "Frequency Mastery choice",
+	crossFrequencyAccesses: "Cross-Frequency Access choice",
+	channelAbsolutes: "Channel Absolute choice",
+	permanentTunings: "Permanent Tuning choice",
+	permanentReapings: "Permanent Reaping choice",
+	spellbookInscriptions: "spellbook inscription",
 };
 
 function normalizeJobKey(value: string): string {
@@ -59,14 +73,52 @@ function normalizeJobKey(value: string): string {
 		.replace(/[-\s]+/g, "");
 }
 
+// Narrowed indexer for the extended Job type (jobs.ts) so we can safely read
+// the new ledger + progression + spellbook fields without importing the Job
+// interface directly (it lives in `src/data/compendium/jobs.ts`, outside the
+// lib boundary — StaticJob in @/types/character has a compatible shape).
+type StaticJobWithLedger = StaticJob & {
+	levelChoices?: unknown;
+	powersKnown?: number[];
+	techniquesKnown?: number[];
+	spellbook?: { atCreation: number; perLevel: number; label: string };
+	spellcasting?: {
+		ability: string;
+		focus?: string;
+		cantripsKnown?: number[];
+		spellsKnown?: number[];
+		spellSlots?: Record<string, number[]>;
+	};
+};
+
 function toChoiceSourceData(job: StaticJob): ChoiceSourceData {
+	const extended = job as StaticJobWithLedger;
 	return {
 		name: job.name,
 		skill_choice_count: 0,
 		awakening_features: job.awakeningFeatures ?? [],
 		job_traits: job.jobTraits ?? [],
+		level_choices: Array.isArray(extended.levelChoices)
+			? (extended.levelChoices as ChoiceSourceData["level_choices"])
+			: undefined,
+		cantrips_known: extended.spellcasting?.cantripsKnown,
+		spells_known: extended.spellcasting?.spellsKnown,
+		powers_known: extended.powersKnown,
+		techniques_known: extended.techniquesKnown,
+		spellbook: extended.spellbook,
 	};
 }
+
+// Buckets that should NOT block bulk level-up. These represent auto-learnable
+// content — new cantrips, new known spells, and new spellbook inscriptions
+// surface automatically on the sheet and the player can edit picks via the
+// cantrip / spellbook panels later. Mirrors DDB's behavior where a Wizard
+// bulk-levels without being gated by the "inscribe 2 new spells" step.
+const NON_BLOCKING_CHOICE_KINDS: ReadonlySet<ChoiceKind> = new Set<ChoiceKind>([
+	"cantrips",
+	"spells",
+	"spellbookInscriptions",
+]);
 
 function getChoiceDeltas(
 	currentLevel: number,
@@ -88,6 +140,7 @@ function getChoiceDeltas(
 	const next = calculateTotalChoices(source, null, [], newLevel);
 	const deltas: Partial<Record<ChoiceKind, number>> = {};
 	for (const key of Object.keys(CHOICE_LABELS) as ChoiceKind[]) {
+		if (NON_BLOCKING_CHOICE_KINDS.has(key)) continue;
 		const delta = next[key] - previous[key];
 		if (delta > 0) deltas[key] = delta;
 	}
@@ -193,7 +246,6 @@ export async function bulkAddEquipment(
 
 	const resolveEquipment = async (): Promise<CompendiumEquipment | null> => {
 		// Canonical static is the source of truth for built-in equipment.
-		const { listCanonicalEntries } = await import("@/lib/canonicalCompendium");
 		const entries = await listCanonicalEntries("equipment");
 		const byId = entries.find((entry) => entry.id === equipmentId);
 		if (byId) return byId as unknown as CompendiumEquipment;

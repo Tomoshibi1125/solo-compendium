@@ -14,6 +14,7 @@ import { spells_b } from "@/data/compendium/spells/rank-b";
 import { spells_c } from "@/data/compendium/spells/rank-c";
 import { spells_d } from "@/data/compendium/spells/rank-d";
 import { spells_s } from "@/data/compendium/spells/rank-s";
+import { spells_supplemental } from "@/data/compendium/spells/supplemental";
 
 const CANONICAL_SCHOOLS = new Set([
 	"Abjuration",
@@ -39,14 +40,43 @@ const RANK_LEVEL_BAND: Record<string, [number, number]> = {
 	S: [8, 9],
 };
 
+const RANK_PARITY_MINIMUMS: Record<string, number> = {
+	D: 140,
+	C: 100,
+	B: 80,
+	A: 55,
+	S: 40,
+};
+
+const LEVEL_PARITY_MINIMUMS: Record<number, number> = {
+	0: 20,
+	1: 50,
+	2: 50,
+	3: 50,
+	4: 35,
+	5: 50,
+	6: 25,
+	7: 30,
+	8: 20,
+	9: 30,
+};
+
+const FORBIDDEN_SPELL_TERMS = [/system/i, /monarch/i, /\bdm\b/i, /\bplayer\b/i];
+
 describe("Spell catalog — coverage", () => {
-	it("contains exactly 75 spells (15 per rank across D/C/B/A/S)", () => {
+	it("contains the legacy rank files plus the expanded parity catalog", () => {
 		expect(spells_d).toHaveLength(15);
 		expect(spells_c).toHaveLength(15);
 		expect(spells_b).toHaveLength(15);
 		expect(spells_a).toHaveLength(15);
 		expect(spells_s).toHaveLength(15);
-		expect(spells).toHaveLength(75);
+		expect(spells.length).toBeGreaterThanOrEqual(450);
+		for (const [rank, minimum] of Object.entries(RANK_PARITY_MINIMUMS)) {
+			expect(
+				spells.filter((spell) => spell.rank === rank).length,
+				`Rank ${rank} spell coverage`,
+			).toBeGreaterThanOrEqual(minimum);
+		}
 	});
 
 	it("every spell id is unique and follows the canonical spell-{rank}-{n} pattern", () => {
@@ -68,6 +98,26 @@ describe("Spell catalog — coverage", () => {
 			expect(spell.rank, `Spell ${id} missing rank`).toBeDefined();
 			expect(spell.rank).toBe(idRank);
 		}
+	});
+
+	it("has enough coverage at every spell level", () => {
+		for (const [level, minimum] of Object.entries(LEVEL_PARITY_MINIMUMS)) {
+			expect(
+				spells.filter((spell) => spell.level === Number(level)).length,
+				`Level ${level} spell coverage`,
+			).toBeGreaterThanOrEqual(minimum);
+		}
+	});
+
+	it("does not duplicate spell names", () => {
+		const seen = new Set<string>();
+		const duplicates: string[] = [];
+		for (const spell of spells) {
+			const key = spell.name.toLowerCase();
+			if (seen.has(key)) duplicates.push(spell.name);
+			seen.add(key);
+		}
+		expect(duplicates).toEqual([]);
 	});
 });
 
@@ -142,6 +192,22 @@ describe("Spell catalog — required fields", () => {
 		for (const spell of spells) {
 			expect(CANONICAL_SOURCE_BOOKS.has(spell.source_book ?? "")).toBe(true);
 		}
+	});
+
+	it("does not use forbidden source or role terminology", () => {
+		const offenders = spells.filter((spell) =>
+			FORBIDDEN_SPELL_TERMS.some((pattern) =>
+				pattern.test(JSON.stringify(spell)),
+			),
+		);
+		expect(offenders.map((spell) => spell.id)).toEqual([]);
+	});
+
+	it("every supplemental spell declares explicit class eligibility", () => {
+		const missingClasses = spells_supplemental.filter(
+			(spell) => !Array.isArray(spell.classes) || spell.classes.length === 0,
+		);
+		expect(missingClasses.map((spell) => spell.id)).toEqual([]);
 	});
 
 	it("every spell's components object declares verbal/somatic/material booleans", () => {

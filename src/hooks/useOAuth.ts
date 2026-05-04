@@ -2,7 +2,7 @@ import type { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { isSafeNextPath } from "@/lib/campaignInviteUtils";
+import { buildAuthCallbackUrl } from "@/lib/authRedirect";
 import { logger } from "@/lib/logger";
 
 export interface OAuthProvider {
@@ -108,16 +108,12 @@ export function useOAuth(): UseOAuthReturn {
 				typeof window !== "undefined"
 					? window.localStorage.getItem("pending-auth-next")
 					: null;
-			const safeNext = isSafeNextPath(pendingNext) ? pendingNext : null;
-			const redirectUrl = new URL(`${window.location.origin}/auth/callback`);
-			if (safeNext) {
-				redirectUrl.searchParams.set("next", safeNext);
-			}
+			const redirectTo = buildAuthCallbackUrl({ next: pendingNext });
 
 			const { error } = await supabase.auth.signInWithOAuth({
 				provider: provider.id,
 				options: {
-					redirectTo: redirectUrl.toString(),
+					redirectTo,
 					...(providerOptions?.queryParams
 						? { queryParams: providerOptions.queryParams }
 						: {}),

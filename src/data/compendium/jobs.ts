@@ -59,6 +59,47 @@ export interface Job extends AuthoritativeStaticJob {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	// RA-canonical choice ledger (level-up + creator pickers). Transcribed from
+	// existing classFeatures "Choose ..." prose. See §2 of the DDB parity plan.
+	levelChoices?: Array<{
+		level: number; // job-level when the choice fires
+		type:
+			| "cantrip"
+			| "spell"
+			| "power"
+			| "technique"
+			| "specialist-training"
+			| "frequency-mastery"
+			| "fighting-style"
+			| "favored-terrain"
+			| "reality-sculpting"
+			| "contract-invocation"
+			| "absolute-infusion"
+			| "pact-boon"
+			| "permanent-tuning"
+			| "permanent-reaping"
+			| "channel-absolute"
+			| "cross-frequency-access"
+			| "expertise"
+			| "language"
+			| "skill"
+			| "tool";
+		count: number;
+		source: string; // RA-canonical feature name (e.g. "Reality Sculpting")
+		options?: string[]; // explicit option list when finite
+		filter?: {
+			maxPowerLevel?: number;
+			maxLevel?: number;
+			restrictTo?: "job-list" | "any-list";
+		};
+	}>;
+	// Mage / Revenant only: RA-themed spellbook (Arcane Codex / Reaper's Ledger).
+	spellbook?: { atCreation: number; perLevel: number; label: string };
+	// Martial + hybrid job known counts per level (index = characterLevel - 1).
+	// Populated for: Destroyer, Berserker, Assassin, Striker, Holy Knight,
+	// Technomancer, Stalker.
+	powersKnown?: number[];
+	techniquesKnown?: number[];
 	classFeatures?: { level: number; name: string; description: string }[];
 	abilities: string[];
 	stats: {
@@ -205,6 +246,12 @@ export const jobs: Job[] = [
 					"When you reduce a creature to 0 HP, you harvest the residual mana of the fallen. As an Ascendant of the modern era, your smartphone interface registers this influx as a [MANA ABSORBED] alert. Regain HP equal to your Destroyer level + VIT mod. Once per short rest.",
 			},
 			{
+				level: 1,
+				name: "Fighting Style",
+				description:
+					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Hunter, Lattice-Infused Striking, Striker Stance).",
+			},
+			{
 				level: 2,
 				name: "Unfettered Release",
 				description:
@@ -298,6 +345,33 @@ export const jobs: Job[] = [
 			"Vulnerability Resonance",
 			"Aetheric Realignment",
 			"Destruction Path",
+		],
+		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+			{
+				level: 1,
+				type: "fighting-style",
+				count: 1,
+				source: "Fighting Style",
+				options: [
+					"defense",
+					"dueling",
+					"great-weapon-fighting",
+					"protection",
+					"two-weapon-fighting",
+					"gunslinger",
+					"suppressive-fire",
+					"burst-discipline",
+					"anomaly-hunter",
+					"lattice-infused-striking",
+					"striker-stance",
+				],
+			},
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
 		image: "/generated/compendium/jobs/warrior.webp",
 		stats: {
@@ -541,6 +615,14 @@ export const jobs: Job[] = [
 			"Mana Shockwave",
 			"Overload Path",
 		],
+		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
+		],
 		image: "/generated/compendium/jobs/berserker.webp",
 		stats: {
 			strength: 15,
@@ -777,6 +859,26 @@ export const jobs: Job[] = [
 			"Reflex Burst",
 			"Dimensional Slip",
 			"Umbral Discipline",
+		],
+		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+			{
+				level: 1,
+				type: "specialist-training",
+				count: 2,
+				source: "Specialist Training",
+			},
+			{
+				level: 6,
+				type: "specialist-training",
+				count: 2,
+				source: "Specialist Training",
+			},
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
 		image: "/generated/compendium/jobs/assassin.webp",
 		stats: {
@@ -1029,6 +1131,14 @@ export const jobs: Job[] = [
 			"Combat Doctrine",
 			"Nerve Strike",
 		],
+		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
+		],
 		image: "/generated/compendium/jobs/monk.webp",
 		stats: {
 			strength: 13,
@@ -1236,6 +1346,23 @@ export const jobs: Job[] = [
 			"Permanent Cache",
 			"Specialization Rite",
 		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 3,
+				source: "Resonance Alignment",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 18,
+				type: "permanent-tuning",
+				count: 2,
+				source: "Permanent Tuning",
+				filter: { maxLevel: 2 },
+			},
+		],
+		spellbook: { atCreation: 6, perLevel: 2, label: "Arcane Codex" },
 		image: "/generated/compendium/jobs/mage.webp",
 		stats: {
 			strength: 8,
@@ -1451,6 +1578,43 @@ export const jobs: Job[] = [
 			"Reality Sculpting",
 			"Mana Feedback Loop",
 		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 4,
+				source: "Innate Channeling",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 1,
+				type: "spell",
+				count: 2,
+				source: "Innate Channeling",
+				filter: { maxLevel: 1, restrictTo: "job-list" },
+			},
+			{
+				level: 3,
+				type: "reality-sculpting",
+				count: 2,
+				source: "Reality Sculpting",
+				options: ["warp", "bend", "fork"],
+			},
+			{
+				level: 10,
+				type: "reality-sculpting",
+				count: 1,
+				source: "Reality Sculpting",
+				options: ["warp", "bend", "fork"],
+			},
+			{
+				level: 17,
+				type: "reality-sculpting",
+				count: 1,
+				source: "Reality Sculpting",
+				options: ["warp", "bend", "fork"],
+			},
+		],
 		image: "/generated/compendium/jobs/tank.webp",
 		stats: {
 			strength: 8,
@@ -1662,6 +1826,23 @@ export const jobs: Job[] = [
 			"Decay Field",
 			"Death's Door",
 		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 3,
+				source: "Rite of Dissolution",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 18,
+				type: "permanent-reaping",
+				count: 2,
+				source: "Permanent Reaping",
+				filter: { maxLevel: 2 },
+			},
+		],
+		spellbook: { atCreation: 6, perLevel: 2, label: "Reaper's Ledger" },
 		image: "/generated/compendium/jobs/necromancer.webp",
 		stats: {
 			strength: 8,
@@ -1893,6 +2074,15 @@ export const jobs: Job[] = [
 			"Affinity Circle",
 			"Hybrid Casting",
 		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 2,
+				source: "Primal Channeling",
+				filter: { restrictTo: "job-list" },
+			},
+		],
 		image: "/generated/compendium/jobs/summoner.webp",
 		stats: {
 			strength: 10,
@@ -2023,6 +2213,12 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 2,
+				name: "Fighting Style",
+				description:
+					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Hunter, Lattice-Infused Striking, Striker Stance).",
+			},
+			{
+				level: 2,
 				name: "Covenant Strike",
 				description:
 					"On melee hit, channel your oath's power through the weapon â€” it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs undead/fiends. Target's speed reduced by 10 ft until your next turn. Gate-raid streamers' audiences go wild for Covenant Strike clips.",
@@ -2133,6 +2329,33 @@ export const jobs: Job[] = [
 			"Sworn Oath",
 			"Oath Ward",
 			"Covenant Assault",
+		],
+		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+			{
+				level: 2,
+				type: "fighting-style",
+				count: 1,
+				source: "Fighting Style",
+				options: [
+					"defense",
+					"dueling",
+					"great-weapon-fighting",
+					"protection",
+					"two-weapon-fighting",
+					"gunslinger",
+					"suppressive-fire",
+					"burst-discipline",
+					"anomaly-hunter",
+					"lattice-infused-striking",
+					"striker-stance",
+				],
+			},
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
 		image: "/generated/compendium/jobs/paladin.webp",
 		stats: {
@@ -2403,6 +2626,27 @@ export const jobs: Job[] = [
 			"Absolute Assist",
 			"Spell Capacitor",
 		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 2,
+				source: "Technical Casting",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 2,
+				type: "absolute-infusion",
+				count: 4,
+				source: "Absolute Infusion",
+			},
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
+		],
 		image: "/generated/compendium/jobs/artificer.webp",
 		stats: {
 			strength: 10,
@@ -2501,9 +2745,9 @@ export const jobs: Job[] = [
 				frequency: "short-rest",
 			},
 			{
-				name: "Specialist Training",
+				name: "Frequency Mastery",
 				description:
-					"Double proficiency on two chosen skill proficiencies. Two more at 10th level.",
+					"Choose two skills you are proficient in: when you make an ability check using one of those skills, you treat any d20 roll of 9 or lower as 10. Choose two more at 10th level. Mechanically distinct from the Assassin's Specialist Training (doubled proficiency).",
 				type: "passive",
 			},
 		],
@@ -2564,9 +2808,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 3,
-				name: "Specialist Training",
+				name: "Frequency Mastery",
 				description:
-					"Double proficiency on two skill proficiencies. Two more at 10th level.",
+					"Choose two skills you are proficient in. When you make an ability check using one of those skills, treat any d20 roll of 9 or lower as 10 \u2014 your tuned frequencies smooth out the noise floor. Choose two more skills at 10th level. (Distinct from the Assassin's Specialist Training, which doubles proficiency bonus instead.)",
 			},
 			{
 				level: 3,
@@ -2682,6 +2926,55 @@ export const jobs: Job[] = [
 			"Frequency Restoration",
 			"Resonance Path",
 			"Cross-Frequency Access",
+		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 2,
+				source: "Frequency Casting",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 1,
+				type: "spell",
+				count: 4,
+				source: "Frequency Casting",
+				filter: { maxLevel: 1, restrictTo: "job-list" },
+			},
+			{
+				level: 3,
+				type: "frequency-mastery",
+				count: 2,
+				source: "Frequency Mastery",
+			},
+			{
+				level: 10,
+				type: "frequency-mastery",
+				count: 2,
+				source: "Frequency Mastery",
+			},
+			{
+				level: 10,
+				type: "cross-frequency-access",
+				count: 2,
+				source: "Cross-Frequency Access",
+				filter: { restrictTo: "any-list" },
+			},
+			{
+				level: 14,
+				type: "cross-frequency-access",
+				count: 2,
+				source: "Cross-Frequency Access",
+				filter: { restrictTo: "any-list" },
+			},
+			{
+				level: 18,
+				type: "cross-frequency-access",
+				count: 2,
+				source: "Cross-Frequency Access",
+				filter: { restrictTo: "any-list" },
+			},
 		],
 		image: "/generated/compendium/jobs/bard.webp",
 		stats: {
@@ -2803,10 +3096,10 @@ export const jobs: Job[] = [
 					"Once per short rest, invoke the Absolute's authority for a chosen effect (Turn Unholy, Restorative Pulse, or Radiant Ignition). Additional uses and effects unlock at higher levels.",
 			},
 			{
-				level: 3,
+				level: 1,
 				name: "Mandate",
 				description:
-					"Choose a Mandate — your specialty of Absolute transmission. Mandate features at 3rd, 6th, 8th, and 17th level.",
+					"Choose a Mandate — your specialty of Absolute transmission. Mandate features at 1st, 6th, 8th, and 17th level.",
 			},
 			{
 				level: 4,
@@ -2887,6 +3180,22 @@ export const jobs: Job[] = [
 			"Mandate",
 			"Broadcast Undead",
 			"Absolute Intervention",
+		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 3,
+				source: "Absolute Channeling",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 2,
+				type: "channel-absolute",
+				count: 1,
+				source: "Channel Absolute",
+				options: ["turn-unholy", "restorative-pulse", "radiant-ignition"],
+			},
 		],
 		image: "/generated/compendium/jobs/healer.webp",
 		stats: {
@@ -2992,6 +3301,9 @@ export const jobs: Job[] = [
 			cantripsKnown: [
 				2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
 			],
+			spellsKnown: [
+				2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 15, 15, 15,
+			],
 			spellSlots: PACT_CASTER_SLOTS,
 		},
 		classFeatures: [
@@ -3085,6 +3397,71 @@ export const jobs: Job[] = [
 			"Pact Boon",
 			"Mystic Arcanum",
 			"Patron's Shield",
+		],
+		levelChoices: [
+			{
+				level: 1,
+				type: "cantrip",
+				count: 2,
+				source: "Pact Casting",
+				filter: { restrictTo: "job-list" },
+			},
+			{
+				level: 1,
+				type: "spell",
+				count: 2,
+				source: "Pact Casting",
+				filter: { maxLevel: 1, restrictTo: "job-list" },
+			},
+			{
+				level: 2,
+				type: "contract-invocation",
+				count: 2,
+				source: "Contract Invocations",
+			},
+			{
+				level: 3,
+				type: "pact-boon",
+				count: 1,
+				source: "Pact Boon",
+				options: ["pact-of-the-blade", "pact-of-the-tome", "pact-of-the-chain"],
+			},
+			{
+				level: 5,
+				type: "contract-invocation",
+				count: 1,
+				source: "Contract Invocations",
+			},
+			{
+				level: 7,
+				type: "contract-invocation",
+				count: 1,
+				source: "Contract Invocations",
+			},
+			{
+				level: 9,
+				type: "contract-invocation",
+				count: 1,
+				source: "Contract Invocations",
+			},
+			{
+				level: 12,
+				type: "contract-invocation",
+				count: 1,
+				source: "Contract Invocations",
+			},
+			{
+				level: 15,
+				type: "contract-invocation",
+				count: 1,
+				source: "Contract Invocations",
+			},
+			{
+				level: 18,
+				type: "contract-invocation",
+				count: 1,
+				source: "Contract Invocations",
+			},
 		],
 		image: "/generated/compendium/jobs/warlock.webp",
 		stats: {
@@ -3212,7 +3589,7 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Fighting Style",
 				description:
-					"Choose a fighting style: Archery, Defense, Dueling, Two-Weapon Fighting, or Natural Explorer.",
+					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Hunter, Lattice-Infused Striking, Striker Stance).",
 			},
 			{
 				level: 3,
@@ -3283,6 +3660,51 @@ export const jobs: Job[] = [
 			"Ambush Tactics",
 			"Pursuit Strike",
 			"Pursuit Path",
+		],
+		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Power Selection" },
+			{ level: 1, type: "technique", count: 2, source: "Technique Selection" },
+			{
+				level: 1,
+				type: "favored-terrain",
+				count: 1,
+				source: "Favored Terrain",
+			},
+			{
+				level: 6,
+				type: "favored-terrain",
+				count: 1,
+				source: "Favored Terrain",
+			},
+			{
+				level: 10,
+				type: "favored-terrain",
+				count: 1,
+				source: "Favored Terrain",
+			},
+			{
+				level: 2,
+				type: "fighting-style",
+				count: 1,
+				source: "Fighting Style",
+				options: [
+					"defense",
+					"dueling",
+					"great-weapon-fighting",
+					"protection",
+					"two-weapon-fighting",
+					"gunslinger",
+					"suppressive-fire",
+					"burst-discipline",
+					"anomaly-hunter",
+					"lattice-infused-striking",
+					"striker-stance",
+				],
+			},
+		],
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
 		image: "/generated/compendium/jobs/ranger.webp",
 		stats: {

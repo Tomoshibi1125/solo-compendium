@@ -385,7 +385,7 @@ export const spells_d: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"One caster reports she can only cast it successfully when it is already raining; Bureau researchers do not know why.",
-		theme_tags: ["monarch-era", "urban-combat", "cognition-track"],
+		theme_tags: ["regent-era", "urban-combat", "cognition-track"],
 	},
 	{
 		id: "spell-d-5",

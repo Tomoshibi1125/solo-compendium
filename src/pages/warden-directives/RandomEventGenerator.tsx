@@ -17,6 +17,7 @@ import {
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useEmbedded } from "@/contexts/EmbeddedContext";
 import {
 	EVENT_COMPLICATIONS,
 	NPC_ENCOUNTERS,
@@ -72,6 +73,7 @@ function generateEvent(
 
 const RandomEventGenerator = () => {
 	const navigate = useNavigate();
+	const embedded = useEmbedded();
 	const { toast } = useToast();
 	const {
 		state: storedState,
@@ -194,9 +196,11 @@ const RandomEventGenerator = () => {
 		}
 	};
 
-	return (
-		<Layout>
-			<div className="container mx-auto px-4 py-8 max-w-4xl">
+	const content = (
+		<div
+			className={embedded ? "w-full" : "container mx-auto px-4 py-8 max-w-4xl"}
+		>
+			{!embedded && (
 				<div className="mb-6">
 					<Button
 						variant="ghost"
@@ -219,54 +223,55 @@ const RandomEventGenerator = () => {
 						and localized destabilization protocols into active regions.
 					</ManaFlowText>
 				</div>
+			)}
 
-				<AscendantWindow title="GENERATE EVENT" className="mb-6">
-					<div className="space-y-4">
-						<div className="grid grid-cols-3 gap-2">
-							<Button
-								variant={eventType === "world" ? "default" : "outline"}
-								onClick={() => setEventType("world")}
-								className="flex-1"
-							>
-								World Event
-							</Button>
-							<Button
-								variant={eventType === "encounter" ? "default" : "outline"}
-								onClick={() => setEventType("encounter")}
-								className="flex-1"
-							>
-								NPC Encounter
-							</Button>
-							<Button
-								variant={eventType === "complication" ? "default" : "outline"}
-								onClick={() => setEventType("complication")}
-								className="flex-1"
-							>
-								Complication
-							</Button>
-						</div>
-
+			<AscendantWindow title="GENERATE EVENT" className="mb-6">
+				<div className="space-y-4">
+					<div className="grid grid-cols-3 gap-2">
 						<Button
-							onClick={() => {
-								clearEnhanced();
-								void handleGenerate();
-							}}
-							className="w-full btn-umbral"
-							size="lg"
+							variant={eventType === "world" ? "default" : "outline"}
+							onClick={() => setEventType("world")}
+							className="flex-1"
 						>
-							<Sparkles className="w-4 h-4 mr-2" />
-							Generate{" "}
-							{eventType === "world"
-								? "World Event"
-								: eventType === "encounter"
-									? "NPC Encounter"
-									: "Complication"}
+							World Event
 						</Button>
-						{event && (
-							<Button
-								onClick={async () => {
-									if (!event) return;
-									const seed = `Generate a complete, detailed random event for a Rift Ascendant TTRPG campaign.
+						<Button
+							variant={eventType === "encounter" ? "default" : "outline"}
+							onClick={() => setEventType("encounter")}
+							className="flex-1"
+						>
+							NPC Encounter
+						</Button>
+						<Button
+							variant={eventType === "complication" ? "default" : "outline"}
+							onClick={() => setEventType("complication")}
+							className="flex-1"
+						>
+							Complication
+						</Button>
+					</div>
+
+					<Button
+						onClick={() => {
+							clearEnhanced();
+							void handleGenerate();
+						}}
+						className="w-full btn-umbral"
+						size="lg"
+					>
+						<Sparkles className="w-4 h-4 mr-2" />
+						Generate{" "}
+						{eventType === "world"
+							? "World Event"
+							: eventType === "encounter"
+								? "NPC Encounter"
+								: "Complication"}
+					</Button>
+					{event && (
+						<Button
+							onClick={async () => {
+								if (!event) return;
+								const seed = `Generate a complete, detailed random event for a Rift Ascendant TTRPG campaign.
 
 SEED DATA:
 - Type: ${event.type}
@@ -284,142 +289,137 @@ Provide ALL of the following sections with full detail:
 5. LORE: How the event ties to Rift activity, Regent domains, Rift anomalies
 6. FOLLOW-UP: 2-3 sequel hooks this event creates for future sessions
 7. TACTICAL OPTIONS: What clever players might do, alternative approaches`;
-									await enhance("event", seed);
-								}}
-								className="w-full gap-2 mt-2"
-								variant="outline"
-								size="lg"
-								disabled={isEnhancing}
-							>
-								{isEnhancing ? (
-									<Loader2 className="w-4 h-4 animate-spin" />
-								) : (
-									<Sparkles className="w-4 h-4" />
-								)}
-								{isEnhancing ? "Enhancing..." : "Enhance with AI"}
-							</Button>
-						)}
-					</div>
-				</AscendantWindow>
+								await enhance("event", seed);
+							}}
+							className="w-full gap-2 mt-2"
+							variant="outline"
+							size="lg"
+							disabled={isEnhancing}
+						>
+							{isEnhancing ? (
+								<Loader2 className="w-4 h-4 animate-spin" />
+							) : (
+								<Sparkles className="w-4 h-4" />
+							)}
+							{isEnhancing ? "Enhancing..." : "Enhance with AI"}
+						</Button>
+					)}
+				</div>
+			</AscendantWindow>
 
-				{event && (
-					<AscendantWindow title={event.title} className="mb-6">
-						<div className="space-y-4">
-							<Badge className={getEventColor(event.type)}>
-								{event.type.toUpperCase()}
-							</Badge>
+			{event && (
+				<AscendantWindow title={event.title} className="mb-6">
+					<div className="space-y-4">
+						<Badge className={getEventColor(event.type)}>
+							{event.type.toUpperCase()}
+						</Badge>
 
+						<div className="pt-2">
+							<p className="text-lg font-heading mb-4">{event.description}</p>
+							<div className="p-4 rounded-lg bg-muted/30 border border-border">
+								<div className="flex items-start gap-2">
+									<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
+									<div>
+										<h4 className="font-heading font-semibold mb-1">Impact</h4>
+										<AscendantText className="block text-sm text-muted-foreground">
+											{event.impact}
+										</AscendantText>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						{event.linkedContent && event.linkedContent.length > 0 && (
 							<div className="pt-2">
-								<p className="text-lg font-heading mb-4">{event.description}</p>
-								<div className="p-4 rounded-lg bg-muted/30 border border-border">
-									<div className="flex items-start gap-2">
-										<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
-										<div>
-											<h4 className="font-heading font-semibold mb-1">
-												Impact
-											</h4>
-											<AscendantText className="block text-sm text-muted-foreground">
-												{event.impact}
-											</AscendantText>
-										</div>
-									</div>
+								<h4 className="font-heading font-semibold mb-2">
+									Linked Compendium Signals
+								</h4>
+								<div className="flex flex-wrap gap-2">
+									{event.linkedContent.map((entry) => (
+										<Badge
+											key={`${entry.type}:${entry.id}`}
+											variant="outline"
+											className="text-xs"
+										>
+											{entry.name} · {entry.type}
+										</Badge>
+									))}
 								</div>
 							</div>
+						)}
 
-							{event.linkedContent && event.linkedContent.length > 0 && (
-								<div className="pt-2">
-									<h4 className="font-heading font-semibold mb-2">
-										Linked Compendium Signals
-									</h4>
-									<div className="flex flex-wrap gap-2">
-										{event.linkedContent.map((entry) => (
-											<Badge
-												key={`${entry.type}:${entry.id}`}
-												variant="outline"
-												className="text-xs"
-											>
-												{entry.name} · {entry.type}
-											</Badge>
-										))}
-									</div>
+						{enhancedText && (
+							<div className="pt-4 border-t border-primary/30">
+								<div className="flex items-center gap-2 mb-2">
+									<Sparkles className="w-4 h-4 text-primary" />
+									<span className="text-xs font-display text-primary">
+										AI-ENHANCED DETAILS
+									</span>
 								</div>
-							)}
-
-							{enhancedText && (
-								<div className="pt-4 border-t border-primary/30">
-									<div className="flex items-center gap-2 mb-2">
-										<Sparkles className="w-4 h-4 text-primary" />
-										<span className="text-xs font-display text-primary">
-											AI-ENHANCED DETAILS
-										</span>
-									</div>
-									<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
-										{enhancedText}
-									</div>
+								<div className="text-sm text-muted-foreground whitespace-pre-line bg-primary/5 rounded-lg p-4 max-h-[500px] overflow-y-auto">
+									{enhancedText}
 								</div>
-							)}
+							</div>
+						)}
 
-							<div className="flex gap-2 pt-2">
-								<Button
-									onClick={handleCopy}
-									variant="outline"
-									className="flex-1"
-								>
-									<Copy className="w-4 h-4 mr-2" />
-									Copy Event
-								</Button>
-								<Button
-									onClick={() => {
-										clearEnhanced();
-										void handleGenerate();
-									}}
-									variant="outline"
-									className="flex-1"
-								>
-									<RefreshCw className="w-4 h-4 mr-2" />
-									Regenerate
-								</Button>
-							</div>
-						</div>
-					</AscendantWindow>
-				)}
-
-				<AscendantWindow title="EVENT TYPES" variant="quest">
-					<div className="space-y-4 text-sm">
-						<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-							<div className="p-4 rounded-lg border border-purple-400/30 bg-purple-400/10">
-								<h4 className="font-heading font-semibold text-purple-400 mb-2">
-									World Events
-								</h4>
-								<AscendantText className="block text-muted-foreground text-xs">
-									Large-scale events that affect the world or region. Use these
-									for major plot developments.
-								</AscendantText>
-							</div>
-							<div className="p-4 rounded-lg border border-blue-400/30 bg-blue-400/10">
-								<h4 className="font-heading font-semibold text-blue-400 mb-2">
-									NPC Encounters
-								</h4>
-								<AscendantText className="block text-muted-foreground text-xs">
-									Random encounters with NPCs that can provide opportunities,
-									information, or complications.
-								</AscendantText>
-							</div>
-							<div className="p-4 rounded-lg border border-orange-400/30 bg-orange-400/10">
-								<h4 className="font-heading font-semibold text-orange-400 mb-2">
-									Complications
-								</h4>
-								<AscendantText className="block text-muted-foreground text-xs">
-									Unexpected complications that add difficulty or urgency to
-									current situations.
-								</AscendantText>
-							</div>
+						<div className="flex gap-2 pt-2">
+							<Button onClick={handleCopy} variant="outline" className="flex-1">
+								<Copy className="w-4 h-4 mr-2" />
+								Copy Event
+							</Button>
+							<Button
+								onClick={() => {
+									clearEnhanced();
+									void handleGenerate();
+								}}
+								variant="outline"
+								className="flex-1"
+							>
+								<RefreshCw className="w-4 h-4 mr-2" />
+								Regenerate
+							</Button>
 						</div>
 					</div>
 				</AscendantWindow>
-			</div>
-		</Layout>
+			)}
+
+			<AscendantWindow title="EVENT TYPES" variant="quest">
+				<div className="space-y-4 text-sm">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+						<div className="p-4 rounded-lg border border-purple-400/30 bg-purple-400/10">
+							<h4 className="font-heading font-semibold text-purple-400 mb-2">
+								World Events
+							</h4>
+							<AscendantText className="block text-muted-foreground text-xs">
+								Large-scale events that affect the world or region. Use these
+								for major plot developments.
+							</AscendantText>
+						</div>
+						<div className="p-4 rounded-lg border border-blue-400/30 bg-blue-400/10">
+							<h4 className="font-heading font-semibold text-blue-400 mb-2">
+								NPC Encounters
+							</h4>
+							<AscendantText className="block text-muted-foreground text-xs">
+								Random encounters with NPCs that can provide opportunities,
+								information, or complications.
+							</AscendantText>
+						</div>
+						<div className="p-4 rounded-lg border border-orange-400/30 bg-orange-400/10">
+							<h4 className="font-heading font-semibold text-orange-400 mb-2">
+								Complications
+							</h4>
+							<AscendantText className="block text-muted-foreground text-xs">
+								Unexpected complications that add difficulty or urgency to
+								current situations.
+							</AscendantText>
+						</div>
+					</div>
+				</div>
+			</AscendantWindow>
+		</div>
 	);
+
+	return embedded ? content : <Layout>{content}</Layout>;
 };
 
 export default RandomEventGenerator;

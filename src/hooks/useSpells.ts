@@ -96,10 +96,13 @@ export const useSpells = (characterId: string) => {
 
 	const addSpell = useMutation({
 		mutationFn: async (spell: SpellInsert) => {
-			const canonicalReference = await normalizeSpellReference({
-				id: spell.spell_id,
-				name: spell.name,
-			});
+			const isHomebrewSpell = spell.source?.toLowerCase().includes("homebrew");
+			const canonicalReference = isHomebrewSpell
+				? { spell_id: null }
+				: await normalizeSpellReference({
+						id: spell.spell_id,
+						name: spell.name,
+					});
 			const spellWithCanonicalId: SpellInsert = {
 				...spell,
 				spell_id: canonicalReference.spell_id,

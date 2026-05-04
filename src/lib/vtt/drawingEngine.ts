@@ -26,6 +26,13 @@ export interface VTTDrawing {
 	createdBy: string;
 	createdAt: string;
 	label?: string;
+	/**
+	 * Optional discriminator. When set to `"aoe"` the drawing is a pinned
+	 * area-of-effect template (P1-4). Lets the Toolbox "Clear all AoE
+	 * templates" button distinguish AoE drops from regular annotations
+	 * without us tracking a separate scene collection.
+	 */
+	kind?: "aoe";
 }
 
 export interface MeasurementResult {
@@ -235,6 +242,79 @@ export function rectPath(
 	y2: number,
 ): string {
 	return `M ${x1} ${y1} L ${x2} ${y1} L ${x2} ${y2} L ${x1} ${y2} Z`;
+}
+
+/**
+ * Build a `VTTDrawing` from the active measurement state so a Warden can
+ * "pin" the in-flight AoE template and leave it on the map for the round.
+ *
+ * Coordinate convention matches the existing drawing CSS pipeline:
+ *   - `line`     → points = [start, end]
+ *   - `circle`   → points = bounding box around `(end ± radius)`
+ *   - `rectangle`→ points = bounding box around `(end ± radius/2)` (cube)
+ *   - `cone`     → points = [apex, far-edge midpoint] so the renderer can
+ *                  derive the apex direction.
+ *
+ * Kept pure for unit-testing; the calling site is responsible for
+ * appending the result to `currentScene.drawings` and broadcasting.
+ */
+export function createAoeFromMeasurement(
+	start: DrawingPoint,
+	end: DrawingPoint,
+	shape: "line" | "circle" | "cone" | "cube",
+	radiusInGridUnits: number,
+	color: string,
+	createdBy: string,
+): VTTDrawing {
+	const id = `aoe-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+	const createdAt = new Date().toISOString();
+	const commonFields = {
+		id,
+		color,
+		strokeWidth: 2,
+		fillColor: color,
+		fillOpacity: 0.22,
+		layer: "drawing" as const,
+		createdBy,
+		createdAt,
+		kind: "aoe" as const,
+	};
+
+	if (shape === "line") {
+		return {
+			...commonFields,
+			type: "line",
+			points: [start, end],
+		};
+	}
+	if (shape === "circle") {
+		const r = radiusInGridUnits;
+		return {
+			...commonFields,
+			type: "circle",
+			points: [
+				{ x: end.x - r, y: end.y - r },
+				{ x: end.x + r, y: end.y + r },
+			],
+		};
+	}
+	if (shape === "cube") {
+		const halfSide = radiusInGridUnits / 2;
+		return {
+			...commonFields,
+			type: "rectangle",
+			points: [
+				{ x: end.x - halfSide, y: end.y - halfSide },
+				{ x: end.x + halfSide, y: end.y + halfSide },
+			],
+		};
+	}
+	// shape === "cone"
+	return {
+		...commonFields,
+		type: "cone",
+		points: [start, end],
+	};
 }
 
 /**

@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useSpells } from "@/hooks/useSpells";
 import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended";
 import {
@@ -23,6 +24,12 @@ import {
 	listCanonicalSpells,
 	listLearnableSpells,
 } from "@/lib/canonicalCompendium";
+import {
+	filterPublishedHomebrewRecords,
+	type HomebrewRuntimeSpell,
+	mapHomebrewSpellForRuntime,
+	runtimeSpellMatchesCharacter,
+} from "@/lib/homebrewRuntime";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -43,6 +50,22 @@ export function AddSpellDialog({
 	const { addSpell } = useSpells(characterId);
 	const { data: character } = useCharacter(characterId);
 	const { toast } = useToast();
+	const { data: campaignId = null } = useQuery<string | null>({
+		queryKey: ["add-spell-campaign-id", characterId],
+		queryFn: () => getCharacterCampaignId(characterId),
+		enabled: open && !!characterId,
+	});
+	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
+		"spell",
+		campaignId,
+	);
+	const homebrewSpells = useMemo<HomebrewRuntimeSpell[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "spell").map(
+				mapHomebrewSpellForRuntime,
+			),
+		[publishedHomebrew],
+	);
 
 	const { data: regentNamesList = [] } = useQuery<string[]>({
 		queryKey: [
@@ -77,26 +100,56 @@ export function AddSpellDialog({
 			character?.job,
 			character?.path,
 			showAll,
+			campaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
 		],
 		queryFn: async () => {
 			if (!character?.job) return [];
-			const campaignId = await getCharacterCampaignId(characterId);
 			const trimmedQuery = searchQuery.trim();
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
 
 			if (showAll) {
-				return listCanonicalSpells(search, { campaignId });
+				const canonicalSpells = await listCanonicalSpells(search, {
+					campaignId,
+				});
+				const searchKey = search ?? "";
+				const matchingHomebrew = homebrewSpells.filter((spell) =>
+					searchKey
+						? normalizeRegentSearch(spell.name)
+								.toLowerCase()
+								.includes(searchKey)
+						: true,
+				);
+				return [
+					...canonicalSpells,
+					...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+				];
 			}
 
-			return listLearnableSpells({
+			const canonicalSpells = await listLearnableSpells({
 				search,
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: character.path ?? null,
 				regentNames: regentNamesList,
 			});
+			const searchKey = search ?? "";
+			const matchingHomebrew = homebrewSpells.filter((spell) => {
+				if (
+					!runtimeSpellMatchesCharacter(spell, character.job, character.path)
+				) {
+					return false;
+				}
+				return searchKey
+					? normalizeRegentSearch(spell.name).toLowerCase().includes(searchKey)
+					: true;
+			});
+			return [
+				...canonicalSpells,
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
 		},
 		enabled: open && !!character?.job,
 	});
@@ -116,10 +169,14 @@ export function AddSpellDialog({
 		try {
 			await addSpell.mutateAsync({
 				character_id: characterId,
-				spell_id: spell.id,
+				spell_id: (spell as { _homebrew?: boolean })._homebrew
+					? null
+					: spell.id,
 				name: spell.name,
 				spell_level: spell.power_level,
-				source: "Compendium Spell",
+				source: (spell as { _homebrew?: boolean })._homebrew
+					? `Homebrew Spell: ${spell.name}`
+					: "Compendium Spell",
 				casting_time: spell.casting_time || null,
 				range: spell.range || null,
 				duration: spell.duration || null,

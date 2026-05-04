@@ -150,39 +150,54 @@ export const WardenBroadcastPanel: React.FC<WardenBroadcastPanelProps> = ({
 								No active player entities detected in campaign.
 							</p>
 						) : (
-							playersOnly.map((member) => (
-								<button
-									key={member.user_id}
-									type="button"
-									className={cn(
-										"flex items-center justify-between w-full p-2 px-3 rounded border transition-all text-left",
-										targetIds.includes(member.user_id)
-											? "bg-amethyst-900/20 border-amethyst-500/50"
-											: "bg-white/5 border-white/5 hover:bg-white/10",
-									)}
-									onClick={() => toggleTarget(member.user_id)}
-								>
-									<div className="flex items-center gap-2">
-										<User className="w-3 h-3 text-amethyst-400" />
-										<span className="text-xs font-heading">
-											{member.user_id.split("-")[0]}...
-										</span>
-										{member.role === "ascendant" && (
-											<Badge
-												variant="outline"
-												className="text-[0.5rem] py-0 h-4 uppercase"
-											>
-												Ascendant
-											</Badge>
+							playersOnly.map((member) => {
+								// Prefer the linked character name; fall back to a readable
+								// "Player <short-id>" instead of a bare UUID fragment.
+								const characterName = (
+									member as typeof member & {
+										characters?: { name?: string | null } | null;
+									}
+								).characters?.name;
+								const displayName =
+									characterName?.trim() ||
+									`Player ${member.user_id.slice(0, 6)}`;
+								const isSelected = targetIds.includes(member.user_id);
+								return (
+									<button
+										key={member.user_id}
+										type="button"
+										aria-label={`Toggle broadcast target: ${displayName}`}
+										aria-pressed={isSelected}
+										className={cn(
+											"flex items-center justify-between w-full p-2 px-3 rounded border transition-all text-left",
+											isSelected
+												? "bg-amethyst-900/20 border-amethyst-500/50"
+												: "bg-white/5 border-white/5 hover:bg-white/10",
 										)}
-									</div>
-									<Checkbox
-										checked={targetIds.includes(member.user_id)}
-										onCheckedChange={() => toggleTarget(member.user_id)}
-										className="rounded-full border-amethyst-500 data-[state=checked]:bg-amethyst-500"
-									/>
-								</button>
-							))
+										onClick={() => toggleTarget(member.user_id)}
+									>
+										<div className="flex items-center gap-2">
+											<User className="w-3 h-3 text-amethyst-400" />
+											<span className="text-xs font-heading">
+												{displayName}
+											</span>
+											{member.role === "ascendant" && (
+												<Badge
+													variant="outline"
+													className="text-[0.5rem] py-0 h-4 uppercase"
+												>
+													Ascendant
+												</Badge>
+											)}
+										</div>
+										<Checkbox
+											checked={isSelected}
+											onCheckedChange={() => toggleTarget(member.user_id)}
+											className="rounded-full border-amethyst-500 data-[state=checked]:bg-amethyst-500"
+										/>
+									</button>
+								);
+							})
 						)}
 					</div>
 				</div>

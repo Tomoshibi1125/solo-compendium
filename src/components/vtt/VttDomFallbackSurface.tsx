@@ -17,8 +17,11 @@ export type VttDomFallbackSurfaceProps = {
 	zoom: number;
 	showGrid: boolean;
 	activeTokenId: string | null;
+	activeTokenIds?: string[];
+	targetedTokenIds?: string[];
 	activeInitiativeTokenId: string | null;
 	setActiveTokenId: (id: string | null) => void;
+	onTokenPointerSelect?: (tokenId: string, additive: boolean) => void;
 };
 
 export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
@@ -28,8 +31,11 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 	zoom,
 	showGrid,
 	activeTokenId,
+	activeTokenIds = [],
+	targetedTokenIds = [],
 	activeInitiativeTokenId,
 	setActiveTokenId,
+	onTokenPointerSelect,
 }: VttDomFallbackSurfaceProps) {
 	const backgroundTransform = useMemo(
 		() =>
@@ -103,8 +109,8 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 				>
 					{fogRects.map((rect) => (
 						<DynamicStyle
-							key={`fallback-fog-${rect.rx}-${rect.ry}-${rect.width}`}
-							className="absolute bg-black/45"
+							key={`fallback-fog-${rect.rx}-${rect.ry}-${rect.width}-${rect.height}`}
+							className="absolute bg-black/75"
 							vars={{
 								left: `${rect.rx * gridSize * zoom}px`,
 								top: `${rect.ry * gridSize * zoom}px`,
@@ -127,16 +133,19 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 						token.render?.mode === "overlay" ||
 						token.tokenType === "effect" ||
 						token.tokenType === "prop";
+					const isSelected =
+						activeTokenId === token.id || activeTokenIds.includes(token.id);
+					const isTargeted = targetedTokenIds.includes(token.id);
 					const borderColor =
 						activeInitiativeTokenId === token.id
 							? "#10b981"
-							: activeTokenId === token.id
+							: isSelected
 								? "#fbbf24"
 								: token.borderColor || token.color || "hsl(var(--primary))";
 					const borderWidth =
 						activeInitiativeTokenId === token.id
 							? "4px"
-							: activeTokenId === token.id
+							: isSelected
 								? "3px"
 								: "2px";
 					const tokenBackground = isOverlayToken
@@ -161,7 +170,13 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 							}}
 							onMouseDown={(event: React.MouseEvent<HTMLButtonElement>) => {
 								event.stopPropagation();
-								setActiveTokenId(token.id);
+								const additive =
+									event.shiftKey || event.ctrlKey || event.metaKey;
+								if (onTokenPointerSelect) {
+									onTokenPointerSelect(token.id, additive);
+								} else {
+									setActiveTokenId(token.id);
+								}
 							}}
 							title={`${token.name}${token.hp !== undefined && token.maxHp !== undefined ? ` (${token.hp}/${token.maxHp} HP)` : ""}`}
 						>
@@ -174,9 +189,9 @@ export const VttDomFallbackSurface = React.memo(function VttDomFallbackSurface({
 									"background-color": tokenBackground,
 									"border-color": borderColor,
 									"border-width": isOverlayToken ? 0 : borderWidth,
-									"box-shadow":
-										activeTokenId === token.id ||
-										activeInitiativeTokenId === token.id
+									"box-shadow": isTargeted
+										? "0 0 0 3px rgba(239,68,68,0.9), 0 0 12px rgba(239,68,68,0.65)"
+										: isSelected || activeInitiativeTokenId === token.id
 											? `0 0 0 1px ${borderColor}`
 											: undefined,
 									opacity: token.render?.opacity ?? 1,

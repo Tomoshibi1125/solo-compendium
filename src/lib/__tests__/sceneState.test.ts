@@ -1,18 +1,32 @@
 import { describe, expect, it } from "vitest";
 import {
+	addLightToScene,
+	addWallToScene,
 	buildDefaultVttScene,
 	computeVttHydration,
+	createVttLightSourceId,
 	createVttSceneId,
 	createVttTokenInstanceId,
+	createVttWallId,
 	DEFAULT_SCENE_SETTINGS,
 	deleteVttScene,
 	duplicateVttScene,
 	getValidActiveTokenId,
 	normalizeVttScene,
+	normalizeVttTokenBars,
 	removeAssetFromVttScenes,
+	removeLightFromScene,
+	removeWallFromScene,
+	updateLightInScene,
+	updateWallInScene,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
-import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
+import type {
+	LightSource,
+	VTTScene,
+	VTTTokenInstance,
+	WallSegment,
+} from "@/types/vtt";
 
 const createToken = (id: string): VTTTokenInstance => ({
 	id,
@@ -53,6 +67,88 @@ describe("getValidActiveTokenId", () => {
 	});
 });
 
+describe("normalizeVttTokenBars", () => {
+	it("synthesizes a primary hp bar from legacy hp/maxHp fields", () => {
+		const token = { ...createToken("token-1"), hp: 7, maxHp: 12 };
+		const normalized = normalizeVttTokenBars(token);
+		expect(normalized.bars).toEqual([
+			{
+				id: "hp",
+				label: "HP",
+				current: 7,
+				max: 12,
+				color: "#22c55e",
+				visible: "all",
+			},
+		]);
+		expect(normalized.hp).toBe(7);
+		expect(normalized.maxHp).toBe(12);
+	});
+
+	it("uses legacy snake-case hp fields when camel-case fields are absent", () => {
+		const token = { ...createToken("token-1"), hp_current: 3, hp_max: 8 };
+		const normalized = normalizeVttTokenBars(token);
+		expect(normalized.bars?.[0].current).toBe(3);
+		expect(normalized.bars?.[0].max).toBe(8);
+		expect(normalized.hp).toBe(3);
+		expect(normalized.maxHp).toBe(8);
+	});
+
+	it("preserves existing bars and caps them to three valid entries", () => {
+		const token: VTTTokenInstance = {
+			...createToken("token-1"),
+			hp: 1,
+			maxHp: 2,
+			bars: [
+				{
+					id: "hp",
+					label: "HP",
+					current: 1,
+					max: 2,
+					color: "#ef4444",
+					visible: "all",
+				},
+				{
+					id: "mana",
+					label: "Mana",
+					current: 4,
+					max: 6,
+					color: "#3b82f6",
+					visible: "controllers",
+				},
+				{
+					id: "focus",
+					label: "Focus",
+					current: 2,
+					max: 3,
+					color: "#eab308",
+					visible: "gm",
+				},
+				{
+					id: "overflow",
+					label: "Overflow",
+					current: 1,
+					max: 1,
+					color: "#ffffff",
+					visible: "all",
+				},
+			],
+		};
+		const normalized = normalizeVttTokenBars(token);
+		expect(normalized.bars).toHaveLength(3);
+		expect(normalized.bars?.map((bar) => bar.id)).toEqual([
+			"hp",
+			"mana",
+			"focus",
+		]);
+	});
+
+	it("returns the same reference when no migration is needed", () => {
+		const token = createToken("token-1");
+		expect(normalizeVttTokenBars(token)).toBe(token);
+	});
+});
+
 describe("createVttTokenInstanceId", () => {
 	it("returns token-prefixed ids", () => {
 		expect(createVttTokenInstanceId()).toMatch(/^token-/);
@@ -63,6 +159,302 @@ describe("createVttTokenInstanceId", () => {
 			Array.from({ length: 25 }, () => createVttTokenInstanceId()),
 		);
 		expect(ids.size).toBe(25);
+	});
+});
+
+describe("createVttLightSourceId", () => {
+	it("returns light-prefixed ids", () => {
+		expect(createVttLightSourceId()).toMatch(/^light-/);
+	});
+
+	it("returns collision-resistant ids across repeated calls", () => {
+		const ids = new Set(
+			Array.from({ length: 25 }, () => createVttLightSourceId()),
+		);
+		expect(ids.size).toBe(25);
+	});
+});
+
+describe("addLightToScene", () => {
+	const createLight = (id: string): LightSource => ({
+		id,
+		x: 5,
+		y: 5,
+		brightRadius: 6,
+		dimRadius: 12,
+		color: "#ffffff",
+		intensity: 0.8,
+		type: "torch",
+	});
+
+	it("appends the light to an empty scene", () => {
+		const scene = buildDefaultVttScene({ name: "s" });
+		const next = addLightToScene(scene, createLight("light-a"));
+		expect(next.lights).toHaveLength(1);
+		expect(next.lights[0].id).toBe("light-a");
+	});
+
+	it("appends without mutating the original scene", () => {
+		const scene = buildDefaultVttScene({ name: "s" });
+		const before = scene.lights.length;
+		addLightToScene(scene, createLight("light-a"));
+		expect(scene.lights.length).toBe(before);
+	});
+
+	it("preserves existing lights when appending", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [createLight("light-a")],
+		};
+		const next = addLightToScene(scene, createLight("light-b"));
+		expect(next.lights.map((l) => l.id)).toEqual(["light-a", "light-b"]);
+	});
+
+	it("handles scenes whose lights field is undefined", () => {
+		// Simulates a scene coming from an older persisted shape.
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: undefined as unknown as LightSource[],
+		};
+		const next = addLightToScene(scene, createLight("light-a"));
+		expect(next.lights).toHaveLength(1);
+	});
+});
+
+describe("updateLightInScene", () => {
+	const createLight = (id: string): LightSource => ({
+		id,
+		x: 5,
+		y: 5,
+		brightRadius: 6,
+		dimRadius: 12,
+		color: "#ffffff",
+		intensity: 0.8,
+		type: "torch",
+	});
+
+	it("patches a single light by id", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [createLight("light-a"), createLight("light-b")],
+		};
+		const next = updateLightInScene(scene, "light-b", {
+			brightRadius: 2,
+			color: "#ff0000",
+		});
+		expect(next.lights[1].brightRadius).toBe(2);
+		expect(next.lights[1].color).toBe("#ff0000");
+		expect(next.lights[0].brightRadius).toBe(6);
+	});
+
+	it("never allows the id to be overwritten via updates", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [createLight("light-a")],
+		};
+		const next = updateLightInScene(scene, "light-a", {
+			id: "hijacked",
+		} as Partial<LightSource>);
+		expect(next.lights[0].id).toBe("light-a");
+	});
+
+	it("returns the same scene reference when the id is unknown", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [createLight("light-a")],
+		};
+		const next = updateLightInScene(scene, "missing", { brightRadius: 99 });
+		expect(next).toBe(scene);
+	});
+
+	it("does not mutate the input light objects", () => {
+		const original = createLight("light-a");
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [original],
+		};
+		updateLightInScene(scene, "light-a", { brightRadius: 99 });
+		expect(original.brightRadius).toBe(6);
+	});
+});
+
+describe("removeLightFromScene", () => {
+	const createLight = (id: string): LightSource => ({
+		id,
+		x: 5,
+		y: 5,
+		brightRadius: 6,
+		dimRadius: 12,
+		color: "#ffffff",
+		intensity: 0.8,
+		type: "torch",
+	});
+
+	it("removes the matching light and preserves others", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [
+				createLight("light-a"),
+				createLight("light-b"),
+				createLight("light-c"),
+			],
+		};
+		const next = removeLightFromScene(scene, "light-b");
+		expect(next.lights.map((l) => l.id)).toEqual(["light-a", "light-c"]);
+	});
+
+	it("returns the same scene reference when the id is unknown", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: [createLight("light-a")],
+		};
+		const next = removeLightFromScene(scene, "missing");
+		expect(next).toBe(scene);
+	});
+
+	it("handles removal from a scene with an undefined lights field", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			lights: undefined as unknown as LightSource[],
+		};
+		const next = removeLightFromScene(scene, "anything");
+		// Either returns the original (fast path) or returns a scene with an
+		// empty lights array — both are valid; we only assert no crash + no
+		// spurious lights.
+		expect(next.lights ?? []).toEqual([]);
+	});
+});
+
+const createWall = (
+	id: string,
+	type: WallSegment["type"] = "wall",
+): WallSegment => ({
+	id,
+	x1: 0,
+	y1: 0,
+	x2: 5,
+	y2: 0,
+	type,
+});
+
+describe("createVttWallId", () => {
+	it("returns wall-prefixed ids", () => {
+		expect(createVttWallId()).toMatch(/^wall-/);
+	});
+
+	it("returns collision-resistant ids across repeated calls", () => {
+		const ids = new Set(Array.from({ length: 25 }, () => createVttWallId()));
+		expect(ids.size).toBe(25);
+	});
+});
+
+describe("addWallToScene", () => {
+	it("appends the wall to an empty scene", () => {
+		const scene = buildDefaultVttScene({ name: "s" });
+		const next = addWallToScene(scene, createWall("wall-a"));
+		expect(next.walls).toHaveLength(1);
+		expect(next.walls[0].id).toBe("wall-a");
+	});
+
+	it("appends without mutating the original scene", () => {
+		const scene = buildDefaultVttScene({ name: "s" });
+		const before = scene.walls.length;
+		addWallToScene(scene, createWall("wall-a"));
+		expect(scene.walls.length).toBe(before);
+	});
+
+	it("preserves existing walls when appending", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [createWall("wall-a")],
+		};
+		const next = addWallToScene(scene, createWall("wall-b", "door"));
+		expect(next.walls.map((w) => w.id)).toEqual(["wall-a", "wall-b"]);
+		expect(next.walls[1].type).toBe("door");
+	});
+
+	it("handles scenes whose walls field is undefined", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: undefined as unknown as WallSegment[],
+		};
+		const next = addWallToScene(scene, createWall("wall-a"));
+		expect(next.walls).toHaveLength(1);
+	});
+});
+
+describe("updateWallInScene", () => {
+	it("patches a single wall by id", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [createWall("wall-a"), createWall("wall-b")],
+		};
+		const next = updateWallInScene(scene, "wall-b", {
+			type: "door",
+			doorOpen: true,
+		});
+		expect(next.walls[1].type).toBe("door");
+		expect(next.walls[1].doorOpen).toBe(true);
+		expect(next.walls[0].type).toBe("wall");
+	});
+
+	it("never allows the id to be overwritten via updates", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [createWall("wall-a")],
+		};
+		const next = updateWallInScene(scene, "wall-a", {
+			id: "hijacked",
+		} as Partial<WallSegment>);
+		expect(next.walls[0].id).toBe("wall-a");
+	});
+
+	it("returns the same scene reference when the id is unknown", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [createWall("wall-a")],
+		};
+		const next = updateWallInScene(scene, "missing", { type: "door" });
+		expect(next).toBe(scene);
+	});
+
+	it("does not mutate the input wall objects", () => {
+		const original = createWall("wall-a");
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [original],
+		};
+		updateWallInScene(scene, "wall-a", { type: "door" });
+		expect(original.type).toBe("wall");
+	});
+});
+
+describe("removeWallFromScene", () => {
+	it("removes the matching wall and preserves others", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [createWall("wall-a"), createWall("wall-b"), createWall("wall-c")],
+		};
+		const next = removeWallFromScene(scene, "wall-b");
+		expect(next.walls.map((w) => w.id)).toEqual(["wall-a", "wall-c"]);
+	});
+
+	it("returns the same scene reference when the id is unknown", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: [createWall("wall-a")],
+		};
+		const next = removeWallFromScene(scene, "missing");
+		expect(next).toBe(scene);
+	});
+
+	it("handles removal from a scene with an undefined walls field", () => {
+		const scene = {
+			...buildDefaultVttScene({ name: "s" }),
+			walls: undefined as unknown as WallSegment[],
+		};
+		const next = removeWallFromScene(scene, "anything");
+		expect(next.walls ?? []).toEqual([]);
 	});
 });
 
@@ -84,6 +476,8 @@ describe("buildDefaultVttScene", () => {
 		expect(scene.ambientSounds).toEqual([]);
 		expect(scene.musicMood).toBeNull();
 		expect(scene.musicAutoplay).toBe(false);
+		expect(scene.musicPlaylistId).toBeNull();
+		expect(scene.musicTrackId).toBeNull();
 		expect(scene.fogOfWar).toBe(false);
 		expect(scene.gridType).toBe("square");
 		expect(scene.id).toMatch(/^scene-/);
@@ -138,6 +532,23 @@ describe("duplicateVttScene", () => {
 		duplicateVttScene(source);
 		expect(source.tokens.map((t) => t.id)).toEqual(originalIds);
 	});
+
+	it("preserves scene-linked atmosphere metadata", () => {
+		const scene: VTTScene = {
+			...source,
+			weather: "rain",
+			musicMood: "dungeon-exploration",
+			musicAutoplay: true,
+			musicPlaylistId: "playlist-1",
+			musicTrackId: "track-2",
+		};
+		const dup = duplicateVttScene(scene);
+		expect(dup.weather).toBe("rain");
+		expect(dup.musicMood).toBe("dungeon-exploration");
+		expect(dup.musicAutoplay).toBe(true);
+		expect(dup.musicPlaylistId).toBe("playlist-1");
+		expect(dup.musicTrackId).toBe("track-2");
+	});
 });
 
 describe("normalizeVttScene", () => {
@@ -181,12 +592,27 @@ describe("normalizeVttScene", () => {
 		scene.gridOpacity = 0.04;
 		scene.musicMood = "boss-epic";
 		scene.musicAutoplay = true;
+		scene.musicPlaylistId = "playlist-1";
+		scene.musicTrackId = "track-2";
 		const normalized = normalizeVttScene(scene);
 		expect(normalized.gridSize).toBe(80);
 		expect(normalized.gridType).toBe("hex");
 		expect(normalized.gridOpacity).toBe(0.04);
 		expect(normalized.musicMood).toBe("boss-epic");
 		expect(normalized.musicAutoplay).toBe(true);
+		expect(normalized.musicPlaylistId).toBe("playlist-1");
+		expect(normalized.musicTrackId).toBe("track-2");
+	});
+
+	it("normalizes legacy scenes without scene-linked audio references", () => {
+		const rawScene = {
+			...buildDefaultVttScene({ name: "Legacy" }),
+			musicPlaylistId: undefined,
+			musicTrackId: undefined,
+		};
+		const normalized = normalizeVttScene(rawScene);
+		expect(normalized.musicPlaylistId).toBeNull();
+		expect(normalized.musicTrackId).toBeNull();
 	});
 });
 

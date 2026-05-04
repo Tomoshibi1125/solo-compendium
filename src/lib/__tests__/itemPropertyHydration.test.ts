@@ -187,7 +187,9 @@ describe("canonical item property hydration", () => {
 			],
 		);
 
-		expect(result.resistances).toEqual(expect.arrayContaining(["fire", "cold"]));
+		expect(result.resistances).toEqual(
+			expect.arrayContaining(["fire", "cold"]),
+		);
 		expect(result.immunities).toEqual(["poison"]);
 		expect(result.vulnerabilities).toEqual([]);
 		expect(result.conditionImmunities).toEqual([]);
@@ -231,11 +233,7 @@ describe("canonical item property hydration", () => {
 
 		const properties = buildItemProperties(item);
 		expect(properties).toEqual(
-			expect.arrayContaining([
-				"+2 to attack",
-				"+1 to damage",
-				"+1 AC",
-			]),
+			expect.arrayContaining(["+2 to attack", "+1 to damage", "+1 AC"]),
 		);
 
 		const modifiers = parseModifiers(properties);
@@ -245,7 +243,9 @@ describe("canonical item property hydration", () => {
 
 	it("preserves relic weapon mechanics through the static provider", async () => {
 		const relics = await staticDataProvider.getRelics("Regent's Shadow Dagger");
-		const dagger = relics.find((relic) => relic.name === "Regent's Shadow Dagger");
+		const dagger = relics.find(
+			(relic) => relic.name === "Regent's Shadow Dagger",
+		);
 
 		expect(dagger).toBeDefined();
 		expect(dagger?.item_type).toBe("weapon");

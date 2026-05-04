@@ -17,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { usePowers } from "@/hooks/usePowers";
 import {
 	isRuneGranted,
@@ -29,6 +30,12 @@ import {
 	listCanonicalPowers,
 	listLearnablePowers,
 } from "@/lib/canonicalCompendium";
+import {
+	filterPublishedHomebrewRecords,
+	type HomebrewRuntimePower,
+	mapHomebrewPowerForRuntime,
+	runtimePowerMatchesCharacter,
+} from "@/lib/homebrewRuntime";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -52,6 +59,22 @@ export function AddPowerDialog({
 	const { data: character } = useCharacter(characterId);
 	const ascendantTools = useAscendantTools();
 	const { grantedAbilityNames } = useRuneGrantedAbilities(characterId);
+	const { data: campaignId = null } = useQuery<string | null>({
+		queryKey: ["add-power-campaign-id", characterId],
+		queryFn: () => getCharacterCampaignId(characterId),
+		enabled: open && !!characterId,
+	});
+	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
+		"power",
+		campaignId,
+	);
+	const homebrewPowers = useMemo<HomebrewRuntimePower[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "power").map(
+				mapHomebrewPowerForRuntime,
+			),
+		[publishedHomebrew],
+	);
 
 	const { data: regentNamesList = [] } = useQuery<string[]>({
 		queryKey: [
@@ -86,27 +109,57 @@ export function AddPowerDialog({
 			character?.job,
 			character?.level,
 			showAll,
+			campaignId,
+			homebrewPowers.map((power) => power.id).join(","),
 		],
 		queryFn: async () => {
 			if (!character?.job) return [];
 
-			const campaignId = await getCharacterCampaignId(characterId);
 			const trimmedQuery = searchQuery.trim();
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
 
 			if (showAll) {
-				return listCanonicalPowers(search, { campaignId });
+				const canonicalPowers = await listCanonicalPowers(search, {
+					campaignId,
+				});
+				const searchKey = search ?? "";
+				const matchingHomebrew = homebrewPowers.filter((power) =>
+					searchKey
+						? normalizeRegentSearch(power.name)
+								.toLowerCase()
+								.includes(searchKey)
+						: true,
+				);
+				return [
+					...canonicalPowers,
+					...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+				];
 			}
 
-			return listLearnablePowers({
+			const canonicalPowers = await listLearnablePowers({
 				search,
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: character.path ?? null,
 				regentNames: regentNamesList,
 			});
+			const searchKey = search ?? "";
+			const matchingHomebrew = homebrewPowers.filter((power) => {
+				if (
+					!runtimePowerMatchesCharacter(power, character.job, character.path)
+				) {
+					return false;
+				}
+				return searchKey
+					? normalizeRegentSearch(power.name).toLowerCase().includes(searchKey)
+					: true;
+			});
+			return [
+				...canonicalPowers,
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
 		},
 		enabled: open && !!character?.job,
 	});
@@ -171,10 +224,14 @@ export function AddPowerDialog({
 
 	const handleAdd = async (power: (typeof powers)[0]) => {
 		const displayName = formatRegentVernacular(power.name);
-		const source = "Compendium Power";
+		const isHomebrewPower = (power as { _homebrew?: boolean })._homebrew;
+		const source = isHomebrewPower
+			? `Homebrew Power: ${power.name}`
+			: "Compendium Power";
 		try {
 			await addPower({
 				character_id: characterId,
+				power_id: isHomebrewPower ? null : power.id,
 				name: power.name,
 				power_level: power.power_level,
 				source,

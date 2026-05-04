@@ -2,6 +2,7 @@ import {
 	ArrowDown,
 	ArrowLeft,
 	ArrowUp,
+	Dices,
 	ExternalLink,
 	Plus,
 	RotateCcw,
@@ -57,6 +58,7 @@ import {
 	removeCondition as removeAdvancedCondition,
 } from "@/lib/conditionSystem";
 import { cn } from "@/lib/utils";
+import { rollMonsterInitiative } from "@/lib/vtt/initiative";
 
 interface Combatant {
 	id: string;
@@ -72,6 +74,8 @@ interface Combatant {
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
 	advancedConditions: ConditionEntry[];
+	/** Dex modifier used for auto-rolled monster initiative (P1-6). */
+	dexMod?: number;
 }
 
 type CampaignWithRole = {
@@ -179,6 +183,7 @@ const mapCampaignCombatantToTracker = (
 		advancedConditions: Array.isArray(stats.advancedConditions)
 			? (stats.advancedConditions as ConditionEntry[])
 			: migrateLegacyConditions(rawLegacyConditions),
+		dexMod: toNumber(stats.dex_mod ?? stats.dexMod),
 	};
 };
 
@@ -421,6 +426,7 @@ const InitiativeTracker = () => {
 						hp: combatant.hp ?? null,
 						max_hp: combatant.maxHp ?? null,
 						ac: combatant.ac ?? null,
+						dex_mod: combatant.dexMod ?? null,
 						damage_resistances: combatant.damage_resistances ?? null,
 						damage_immunities: combatant.damage_immunities ?? null,
 						damage_vulnerabilities: combatant.damage_vulnerabilities ?? null,
@@ -740,6 +746,60 @@ const InitiativeTracker = () => {
 			return prev - 1;
 		});
 	}, [sortedCombatants, round]);
+
+	// P1-6: dedupe set so refetches don't re-roll already-auto-rolled monsters.
+	const autoRolledIdsRef = useRef<Set<string>>(new Set());
+	const lastAutoRollSessionIdRef = useRef<string | null | undefined>(undefined);
+
+	const rollMonsters = useCallback(
+		(rerollAll: boolean) => {
+			setCombatants((prev) => {
+				const target = rerollAll
+					? prev.filter((c) => !c.isHunter)
+					: prev.filter(
+							(c) => !c.isHunter && !autoRolledIdsRef.current.has(c.id),
+						);
+				const rolls = rollMonsterInitiative(target, { rerollAll });
+				if (rolls.length === 0) return prev;
+				const byId = new Map(rolls.map((r) => [r.combatantId, r]));
+				for (const roll of rolls) {
+					autoRolledIdsRef.current.add(roll.combatantId);
+				}
+				if (rerollAll) {
+					toast({
+						title: "Monster initiative re-rolled",
+						description: `Rolled ${rolls.length} monster${rolls.length === 1 ? "" : "s"} (1d20 + Dex).`,
+					});
+				}
+				return prev.map((combatant) => {
+					const roll = byId.get(combatant.id);
+					return roll ? { ...combatant, initiative: roll.total } : combatant;
+				});
+			});
+		},
+		[toast],
+	);
+
+	// Auto-roll effect: trigger for any monster with initiative=0 that
+	// hasn't been auto-rolled in this session.
+	useEffect(() => {
+		const hasUnrolled = combatants.some(
+			(c) =>
+				!c.isHunter &&
+				c.initiative === 0 &&
+				!autoRolledIdsRef.current.has(c.id),
+		);
+		if (hasUnrolled) rollMonsters(false);
+	}, [combatants, rollMonsters]);
+
+	// Reset dedupe set when switching combat sessions so new encounters
+	// auto-roll their fresh monsters.
+	useEffect(() => {
+		const activeSessionId = activeCombatSession?.id;
+		if (lastAutoRollSessionIdRef.current === activeSessionId) return;
+		autoRolledIdsRef.current = new Set();
+		lastAutoRollSessionIdRef.current = activeSessionId;
+	}, [activeCombatSession]);
 
 	const resetCombat = () => {
 		setCombatants([]);
@@ -1146,6 +1206,18 @@ const InitiativeTracker = () => {
 										data-testid="initiative-next-turn"
 									>
 										<ArrowDown className="w-4 h-4" />
+									</Button>
+									<Button
+										size="sm"
+										variant="outline"
+										onClick={() => rollMonsters(true)}
+										disabled={!combatants.some((c) => !c.isHunter)}
+										aria-label="Re-roll all monster initiative"
+										data-testid="initiative-reroll-monsters"
+										title="Re-roll all monster initiative (1d20 + Dex)"
+									>
+										<Dices className="w-4 h-4 mr-2" />
+										Re-roll
 									</Button>
 									<Button
 										size="sm"

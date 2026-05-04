@@ -8,6 +8,7 @@ import {
 	NPC_SECRETS,
 	TREASURE_TIERS,
 } from "@/data/wardenGeneratorContent";
+import { createUniformDiceFormula } from "@/lib/rollableTables";
 
 export interface StaticRollableTableSource {
 	id: string;
@@ -15,6 +16,7 @@ export interface StaticRollableTableSource {
 	description: string;
 	category: "gates" | "rewards" | "npcs" | "treasure";
 	group: string;
+	diceFormula: string;
 	entries: string[];
 	rank?: string;
 	source_book: string;
@@ -31,6 +33,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: "Complications that can destabilize an active rift encounter.",
 		category: "gates",
 		group: "complication",
+		diceFormula: createUniformDiceFormula(GATE_COMPLICATIONS.length) ?? "1d0",
 		entries: [...GATE_COMPLICATIONS],
 		source_book: "Warden's Guide",
 		tags: ["rifts", "hazard", "encounter"],
@@ -42,6 +45,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 			"Environmental hazards and battlefield effects inside unstable rifts.",
 		category: "gates",
 		group: "hazard",
+		diceFormula: createUniformDiceFormula(GATE_HAZARDS.length) ?? "1d0",
 		entries: [...GATE_HAZARDS],
 		source_book: "Warden's Guide",
 		tags: ["rifts", "hazard", "environment"],
@@ -52,6 +56,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: "Theme overlays that define the flavor and enemies of a rift.",
 		category: "gates",
 		group: "theme",
+		diceFormula: createUniformDiceFormula(GATE_THEMES.length) ?? "1d0",
 		entries: [...GATE_THEMES],
 		source_book: "Warden's Guide",
 		tags: ["rifts", "theme", "setting"],
@@ -62,6 +67,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: "Biome prompts for building the physical space of a rift.",
 		category: "gates",
 		group: "biome",
+		diceFormula: createUniformDiceFormula(GATE_BIOMES.length) ?? "1d0",
 		entries: [...GATE_BIOMES],
 		source_book: "Warden's Guide",
 		tags: ["rifts", "biome", "terrain"],
@@ -72,6 +78,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: "Reward outcomes for successful rift clears and hidden finds.",
 		category: "rewards",
 		group: "reward",
+		diceFormula: createUniformDiceFormula(GATE_REWARDS.length) ?? "1d0",
 		entries: [...GATE_REWARDS],
 		source_book: "Warden's Guide",
 		tags: ["rewards", "loot", "rifts"],
@@ -82,6 +89,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: "Motivations that can quickly anchor a new NPC in play.",
 		category: "npcs",
 		group: "motivation",
+		diceFormula: createUniformDiceFormula(NPC_MOTIVATIONS.length) ?? "1d0",
 		entries: [...NPC_MOTIVATIONS],
 		source_book: "Warden's Guide",
 		tags: ["npc", "motivation", "roleplay"],
@@ -92,6 +100,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: "Hidden truths and twists that complicate NPC allegiances.",
 		category: "npcs",
 		group: "secret",
+		diceFormula: createUniformDiceFormula(NPC_SECRETS.length) ?? "1d0",
 		entries: [...NPC_SECRETS],
 		source_book: "Warden's Guide",
 		tags: ["npc", "secret", "plot"],
@@ -102,6 +111,7 @@ export const rollableTables: StaticRollableTableSource[] = [
 		description: `Treasure outcomes calibrated for ${rank} rifts.`,
 		category: "treasure" as const,
 		group: "treasure",
+		diceFormula: createUniformDiceFormula(entries.length) ?? "1d0",
 		entries: [...entries],
 		rank,
 		source_book: "Warden's Guide",

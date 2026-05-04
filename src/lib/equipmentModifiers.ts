@@ -116,9 +116,7 @@ export function parseModifiers(properties: string[]): EquipmentModifiers {
 			];
 		}
 
-		const immunityMatch = prop.match(
-			/^(?:immunity|immune to)\s*:?\s*(.+)$/i,
-		);
+		const immunityMatch = prop.match(/^(?:immunity|immune to)\s*:?\s*(.+)$/i);
 		if (immunityMatch?.[1]) {
 			modifiers.immunities = [
 				...(modifiers.immunities || []),

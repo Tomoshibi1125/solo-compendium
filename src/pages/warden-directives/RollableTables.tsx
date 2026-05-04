@@ -18,12 +18,9 @@ import { useUserToolState } from "@/hooks/useToolState";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import { rollCanonicalTable } from "@/lib/rollableTables";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
-
-function rollTable<T>(table: readonly T[]): T {
-	return table[Math.floor(Math.random() * table.length)];
-}
 
 type RollableTablesState = {
 	activeTab: "gates" | "rewards" | "npcs" | "treasure";
@@ -254,8 +251,8 @@ For EACH result, provide:
 
 	const roll = (tableId: string) => {
 		const table = tableIndex.get(tableId);
-		const entries = table?.rollable_entries ?? [];
-		if (entries.length === 0) {
+		const rolled = table ? rollCanonicalTable(table) : null;
+		if (!rolled) {
 			toast({
 				title: "Table Unavailable",
 				description: "This canonical table has no entries to roll from yet.",
@@ -263,7 +260,7 @@ For EACH result, provide:
 			});
 			return;
 		}
-		const result = formatRegentVernacular(rollTable(entries));
+		const result = formatRegentVernacular(rolled.result);
 		setResults((prev) => {
 			const next = { ...prev, [tableId]: result };
 			if (hydratedRef.current && !isStateLoading) {

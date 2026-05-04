@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { Loader2, Search, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useCompendiumFeats, useFeatures } from "@/hooks/useFeatures";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
+import type { Json } from "@/integrations/supabase/types";
+import {
+	filterPublishedHomebrewRecords,
+	type HomebrewRuntimeFeat,
+	mapHomebrewFeatForRuntime,
+} from "@/lib/homebrewRuntime";
+import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
@@ -30,31 +39,58 @@ export function AddFeatDialog({
 	const { data: feats = [], isLoading } = useCompendiumFeats();
 	const { addFeature } = useFeatures(characterId);
 	const { toast } = useToast();
+	const { data: campaignId = null } = useQuery<string | null>({
+		queryKey: ["add-feat-campaign-id", characterId],
+		queryFn: () => getCharacterCampaignId(characterId),
+		enabled: open && !!characterId,
+	});
+	const { data: publishedHomebrew = [], isLoading: homebrewLoading } =
+		usePublishedHomebrew("feat", campaignId);
+	const homebrewFeats = useMemo<HomebrewRuntimeFeat[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "feat").map(
+				mapHomebrewFeatForRuntime,
+			),
+		[publishedHomebrew],
+	);
+	const allFeats = useMemo(
+		() => [...feats, ...(homebrewFeats as unknown as typeof feats)],
+		[feats, homebrewFeats],
+	);
 
 	const visibleFeats = useMemo(() => {
 		const trimmedQuery = normalizeRegentSearch(
 			searchQuery.trim().toLowerCase(),
 		);
-		if (!trimmedQuery) return feats.slice(0, 50);
+		if (!trimmedQuery) return allFeats.slice(0, 50);
 
-		return feats
+		return allFeats
 			.filter((feat) => {
 				const name = (feat.name || "").toLowerCase();
 				const desc = (feat.description || "").toLowerCase();
 				return name.includes(trimmedQuery) || desc.includes(trimmedQuery);
 			})
 			.slice(0, 50);
-	}, [feats, searchQuery]);
+	}, [allFeats, searchQuery]);
 
-	const handleAdd = async (feat: (typeof feats)[0]) => {
+	const handleAdd = async (feat: (typeof allFeats)[0]) => {
 		const displayName = formatRegentVernacular(feat.name);
+		const isHomebrewFeat = (feat as { _homebrew?: boolean })._homebrew;
 		try {
 			await addFeature({
 				character_id: characterId,
 				name: feat.name,
 				description: feat.description,
-				source: "feat",
+				source: isHomebrewFeat ? "Homebrew Feat" : "feat",
 				level_acquired: 1, // Defaulting to 1, can be edited later
+				feat_id: isHomebrewFeat ? null : feat.id,
+				homebrew_id: isHomebrewFeat
+					? (feat as { homebrew_id?: string }).homebrew_id
+					: null,
+				modifiers: isHomebrewFeat
+					? (((feat as { modifiers?: unknown }).modifiers ??
+							null) as Json | null)
+					: null,
 			});
 
 			toast({
@@ -98,7 +134,7 @@ export function AddFeatDialog({
 					</div>
 
 					<div className="flex-1 overflow-y-auto space-y-2">
-						{isLoading ? (
+						{isLoading || homebrewLoading ? (
 							<div className="flex items-center justify-center py-8">
 								<Loader2 className="w-6 h-6 animate-spin text-primary" />
 							</div>

@@ -38,11 +38,12 @@ export function useCanonicalEquipmentMap(characterId: string | undefined): {
 			// Pull both equipment-shape and items-shape entries — item_type can
 			// vary (weapon/armor/relic/consumable/gear) and consumers care about
 			// canonical fields regardless of the bucket.
-			const [equipment, items] = await Promise.all([
+			const [equipment, items, relics] = await Promise.all([
 				listCanonicalEntries("equipment", undefined, { campaignId }),
 				listCanonicalEntries("items", undefined, { campaignId }),
+				listCanonicalEntries("relics", undefined, { campaignId }),
 			]);
-			return [...equipment, ...items];
+			return [...equipment, ...items, ...relics];
 		},
 		// Canonical data is effectively static — cache aggressively.
 		staleTime: 5 * 60 * 1000,

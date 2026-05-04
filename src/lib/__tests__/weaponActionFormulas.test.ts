@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
+import {
+	resolveWeaponActionFormula,
+	type WeaponActionFormulaInput,
+	type WeaponActionFormulaResult,
+} from "@/lib/weaponActionFormulas";
 import type { AbilityScore } from "@/types/core-rules";
 
 const baseAbilities: Record<AbilityScore, number> = {
@@ -13,14 +17,16 @@ const baseAbilities: Record<AbilityScore, number> = {
 
 describe("weapon action formulas", () => {
 	it("uses STR for normal melee weapon attacks and damage", () => {
-		const formula = resolveWeaponActionFormula({
+		const input: WeaponActionFormulaInput = {
 			abilities: baseAbilities,
 			proficiencyBonus: 2,
 			proficient: true,
 			isRanged: false,
 			isFinesse: false,
 			damageDice: "1d8",
-		});
+		};
+		const formula: WeaponActionFormulaResult =
+			resolveWeaponActionFormula(input);
 
 		expect(formula.ability).toBe("STR");
 		expect(formula.attackBonus).toBe(5);

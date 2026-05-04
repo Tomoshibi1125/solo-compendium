@@ -266,7 +266,7 @@ export const spells_a: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
-		theme_tags: ["black-market", "monarch-era"],
+		theme_tags: ["black-market", "regent-era"],
 	},
 	{
 		id: "spell-a-4",
@@ -355,7 +355,7 @@ export const spells_a: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["monarch-era", "dimensional-bleed", "mana-overflow"],
+		theme_tags: ["regent-era", "dimensional-bleed", "mana-overflow"],
 	},
 	{
 		id: "spell-a-5",
@@ -444,7 +444,7 @@ export const spells_a: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
-		theme_tags: ["mana-overflow", "system-glitch", "elite-tier"],
+		theme_tags: ["mana-overflow", "lattice-anomaly", "elite-tier"],
 	},
 	{
 		id: "spell-a-6",
@@ -711,7 +711,7 @@ export const spells_a: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["urban-combat", "monarch-era", "modern-warfare"],
+		theme_tags: ["urban-combat", "regent-era", "modern-warfare"],
 	},
 	{
 		id: "spell-a-9",
@@ -1246,7 +1246,7 @@ export const spells_a: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["system-glitch", "survival", "classified"],
+		theme_tags: ["lattice-anomaly", "survival", "classified"],
 	},
 	{
 		id: "spell-a-15",
@@ -1335,6 +1335,6 @@ export const spells_a: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
-		theme_tags: ["system-glitch", "post-awakening"],
+		theme_tags: ["lattice-anomaly", "post-awakening"],
 	},
 ];

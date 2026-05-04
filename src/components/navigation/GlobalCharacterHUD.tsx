@@ -11,7 +11,9 @@ import {
 } from "@/hooks/useCharacterSheetState";
 import { useEquipment } from "@/hooks/useEquipment";
 
+import { useCharacterRuneKnowledge } from "@/hooks/useRunes";
 import { useSigils } from "@/hooks/useSigils";
+import { useTattoos } from "@/hooks/useTattoos";
 import { formatModifier } from "@/lib/characterCalculations";
 
 export function GlobalCharacterHUD() {
@@ -23,6 +25,8 @@ export function GlobalCharacterHUD() {
 	const { map: canonicalEquipmentMap } = useCanonicalEquipmentMap(charId);
 
 	const { data: sigils } = useSigils(charId);
+	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(charId);
+	const { tattoos } = useTattoos(charId);
 	const { state: sheetState } = useCharacterSheetState(charId);
 
 	const derivedStats = useCharacterDerivedStats(
@@ -32,6 +36,7 @@ export function GlobalCharacterHUD() {
 		sigils || [],
 		sheetState?.customModifiers || [],
 		canonicalEquipmentMap,
+		{ runeKnowledge, tattoos },
 	);
 
 	const [characterResources] = useCharacterResources(charId);

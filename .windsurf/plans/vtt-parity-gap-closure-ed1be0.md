@@ -1,6 +1,6 @@
 ---
 description: Pragmatic implementation plan for closing remaining VTT, effect-system, notes, and homebrew parity gaps in solo-compendium
-status: awaiting-approval
+status: completed
 source_plan: C:\Users\jjcal\.gemini\antigravity\brain\50ddc0e1-5bb9-4a44-8852-a732d790fc5f\implementation_plan.md.resolved
 repo_root: c:\Users\jjcal\Documents\solo-compendium
 ---
@@ -20,7 +20,7 @@ This plan is intentionally adapted to the repo as it exists today.
 - Do not rebuild already-working surfaces just to match the external plan wording.
 - Prefer extending the canonical static compendium and current hook stack over adding parallel systems.
 - Avoid a broad `VTTEnhanced.tsx` refactor before parity work is stable; only extract focused helpers if a phase becomes too risky otherwise.
-- Await approval before any implementation outside this plan artifact.
+- Continue implementation under the current continuation request.
 
 ## Repo Reality Snapshot
 
@@ -42,7 +42,7 @@ This plan is intentionally adapted to the repo as it exists today.
   - AC breakdown data and UI already exist.
 
 - `src/lib/notePrivacy.ts`
-  - Note visibility helpers already support owner/shared/per-player semantics, even though campaign note persistence is still simpler.
+  - Note visibility helpers already support owner/shared/per-Ascendant semantics, even though campaign note persistence is still simpler.
 
 - `src/lib/canonicalCompendium.ts`
 - `src/data/compendium/staticDataProvider.ts`
@@ -51,14 +51,13 @@ This plan is intentionally adapted to the repo as it exists today.
 
 ### Real gaps still present
 
-- Relic, rune, sigil, and tattoo effects are not yet normalized through one authoritative runtime path.
-- Tattoos have canonical content, but no visible runtime ownership hook surfaced in `src/hooks/*`.
-- `src/pages/warden-directives/RollableTables.tsx` still rolls directly from `src/data/wardenGeneratorContent` arrays instead of compendium-style table entities with formulas.
-- Scene-linked music or playlist metadata is not persisted on `VTTScene`, even though one-shot audio sync exists.
-- Campaign note storage still persists only `is_shared`, while UI/privacy helpers imply richer privacy semantics.
-- Secret text blocks are not parsed or rendered in campaign notes.
-- VTT damage application currently subtracts raw HP in `src/pages/warden-directives/VTTEnhanced.tsx` without resistance, immunity, or vulnerability handling.
-- Homebrew runtime wiring is partial: the editor exists, `usePublishedHomebrew` exists, and `HomebrewFeatureApplicator` exists, but creation/level-up/add-flow injection is not broadly wired.
+- Relic, absorbed rune, active sigil, and owned tattoo effects now have a normalized runtime path.
+- Owned tattoo persistence now has a schema-backed `character_tattoos` foundation and hook surface; a fuller tattoo management UI remains a follow-up surface.
+- `src/pages/warden-directives/RollableTables.tsx` now consumes canonical rollable-table entities seeded from Warden generator content, including dice formulas and shared roll helpers.
+- Scene-linked music mood plus queued playlist/track metadata is persisted on `VTTScene`; Ascendants now resolve scene-owned track/playlist metadata from session and campaign audio libraries.
+- Campaign note privacy intent and secret text blocks are persisted/rendered through encoded content metadata, while `is_shared` remains as a legacy compatibility mirror.
+- VTT damage application now routes through typed mitigation before token and linked character HP mutation.
+- Homebrew runtime wiring now covers character creation, level-up, spell/equipment add flows, and add-flow injection for powers and feats through published homebrew.
 
 ### Non-goals for the first implementation pass
 
@@ -136,6 +135,19 @@ Relics, absorbed runes, active sigils, and tattoos all contribute through one au
 - Activate/deactivate a sigil and confirm recalculation.
 - Apply a tattoo and confirm the effect is reflected without duplicating or bypassing the canonical effect stack.
 
+### Implementation update - 2026-05-04
+
+- Added `bridgeRelicEffects`, `bridgeRuneEffects`, `bridgeSigilEffects`, and `bridgeTattooEffects` to `src/lib/unifiedEffectSystem.ts`.
+- Added deterministic source priorities for effect aggregation: relic/equipment, rune, sigil, then tattoo.
+- Added focused tests in `src/lib/__tests__/unifiedEffectSystem.test.ts` for relic mechanics/properties, absorbed rune descriptions, active sigil passive bonuses, and tattoo effects/resonance safety.
+- Extended `useCanonicalEquipmentMap()` to include canonical relic entries so character equipment rows can resolve equipped relic copies through the static compendium source of truth.
+- Exposed `unifiedEffects` from `useCharacterDerivedStats()` and wired equipped canonical relics, active equipped sigils, and absorbed rune knowledge into that normalized effect list.
+- Added `supabase/migrations/20260504124000_add_character_tattoos.sql` as the owned tattoo persistence foundation with RLS scoped through owning characters.
+- Added `src/hooks/useTattoos.ts` for owned tattoo fetch/add/update/remove flows, including local-character fallback storage.
+- Wired owned active/attuned tattoos into `useCharacterDerivedStats()`, `useCharacterPageModel()`, `useCombatActions()`, and `GlobalCharacterHUD()` so tattoo effects flow through the same normalized effect bridge as relics/runes/sigils.
+- Added `src/lib/__tests__/characterEngine.test.ts` covering active tattoo effects, inactive tattoo exclusion, and tattoo attunement counts.
+- Validation passed: `npx vitest run src/lib/__tests__/homebrewRuntime.test.ts src/lib/__tests__/unifiedEffectSystem.test.ts src/lib/__tests__/characterEngine.test.ts`, `npm run typecheck`, and `git diff --check` with CRLF warnings only.
+
 ## Phase 2 - Promote rollable tables into canonical compendium entities
 
 ### Outcome
@@ -190,6 +202,15 @@ Rollable tables become canonical table entities with row metadata and dice formu
 - Confirm results still share into campaign messages.
 - Confirm AI enhancement still reads the current results payload.
 
+### Implementation update - 2026-05-04
+
+- Verified canonical rollable-table data already exists in `src/data/compendium/rollableTables.ts` and is exposed through `staticDataProvider.getRollableTables()` / `listCanonicalEntries("rollable-tables")`.
+- Added explicit uniform `diceFormula` source metadata and provider-level `dice_formula` fields for canonical table entries.
+- Added `src/lib/rollableTables.ts` with pure `createUniformDiceFormula()` and `rollCanonicalTable()` helpers.
+- Updated `RollableTables.tsx` to roll through the shared canonical helper instead of page-local random entry selection.
+- Expanded catalog validation to require `dice_formula`, and added pure roll helper tests covering deterministic selection, formula fallback, random clamping, and empty tables.
+- Validation passed: `npx vitest run src/lib/__tests__/rollableTables.test.ts src/lib/__tests__/rollableTablesCatalog.test.ts` and `npm run typecheck`.
+
 ## Phase 3 - Persist scene-linked atmosphere and harden map/background behavior
 
 ### Outcome
@@ -202,7 +223,7 @@ Scene activation applies not only the existing background and weather state, but
 - `src/lib/vtt/sceneState.ts`
 - `src/hooks/useVTTRealtime.ts`
 - `src/pages/warden-directives/VTTEnhanced.tsx`
-- `src/pages/player-tools/PlayerMapView.tsx`
+- `src/pages/ascendant-tools/AscendantMapView.tsx`
 - `src/components/vtt/WardenToolsPanel.tsx`
 - `src/components/vtt/VttPixiStage.tsx`
 
@@ -220,7 +241,7 @@ Scene activation applies not only the existing background and weather state, but
 - Change Warden atmosphere controls so scene editing can persist current ambience rather than only firing transient sounds.
 
 - On live scene change:
-  - Warden and players should load the scene background as they already do
+  - Warden and Ascendants should load the scene background as they already do
   - weather should remain scene-derived as it already is
   - music/playlist should now also be scene-derived and re-applied locally
 
@@ -245,8 +266,20 @@ Scene activation applies not only the existing background and weather state, but
 ### Manual verification
 
 - Set scene-specific weather and music, switch scenes, reload, and confirm persistence.
-- Verify players receive the same scene audio intent on scene change.
+- Verify Ascendants receive the same scene audio intent on scene change.
 - Verify background image scale/offset survives scene save/load.
+
+### Implementation update - 2026-05-04
+
+- Extended `VTTScene` with nullable `musicPlaylistId` and `musicTrackId` metadata alongside existing `musicMood` and `musicAutoplay`.
+- Added default and legacy normalization in `buildDefaultVttScene()` and `normalizeVttScene()`.
+- Warden session audio queue play/stop and direct track play/stop now update the current scene audio metadata and broadcast `scene_sync`.
+- Procedural mood changes clear playlist/track metadata so scene audio intent stays unambiguous.
+- Added `resolveSceneAudioTrackIntent()` in `src/lib/vtt/sceneAudio.ts` so scene-owned direct tracks and queued playlist metadata can be resolved from available audio libraries.
+- Wired `src/pages/ascendant-tools/AscendantMapView.tsx` to hydrate session/campaign audio tracks and replay scene-owned direct track or playlist metadata with `vttAudioManager`, while retaining procedural mood playback support.
+- Added scene-state regression coverage for default audio metadata, legacy normalization, explicit metadata preservation, and scene duplication preservation.
+- Added `src/lib/__tests__/sceneAudio.test.ts` coverage for procedural mood gating, direct track intent, playlist start-track resolution, and disabled/unresolved track behavior.
+- Validation passed: `npx vitest run src/lib/__tests__/sceneAudio.test.ts src/lib/__tests__/sceneState.test.ts` and `npm run typecheck`.
 
 ## Phase 4 - Bring campaign note persistence up to the privacy model and add secret blocks
 
@@ -270,7 +303,7 @@ Campaign notes support richer privacy semantics and secret segments instead of o
   - inline secret block markers in note content
   - or structured block metadata persisted with the note
 
-- Render secret segments differently for Warden vs permitted players.
+- Render secret segments differently for Warden vs permitted Ascendants.
 
 - Preserve title visibility rules where appropriate.
 
@@ -290,8 +323,16 @@ Campaign notes support richer privacy semantics and secret segments instead of o
 
 - Verify Warden-only note.
 - Verify shared note.
-- Verify per-player note if supported in the first pass.
-- Verify a mixed note with public text plus secret sections renders correctly for Warden and player roles.
+- Verify per-Ascendant note if supported in the first pass.
+- Verify a mixed note with public text plus secret sections renders correctly for Warden and Ascendant roles.
+
+### Implementation update - 2026-05-04
+
+- Verified `src/lib/campaignNoteContent.ts` embeds privacy metadata in note content, preserving legacy `is_shared` fallback behavior without requiring an immediate schema migration.
+- Verified `CampaignNotes` decodes embedded privacy, filters visible notes through `notePrivacy`, supports private/shared/per-player authoring, and renders `[[secret]]...[[/secret]]` blocks as Warden/owner-only content.
+- Added focused edge-case coverage for secret block parsing, null/empty decode behavior, metadata re-encoding, and legacy shared/private fallback in `campaignNoteContent.test.ts`.
+- Added `notePrivacy.test.ts` coverage for default privacy, view/edit/existence permissions, mutation helpers, and readable/visible filtering.
+- Validation passed: `npx vitest run src/lib/__tests__/campaignNoteContent.test.ts src/lib/__tests__/notePrivacy.test.ts` and `npm run typecheck`.
 
 ## Phase 5 - Centralize damage type application before HP mutation
 
@@ -343,6 +384,14 @@ Damage application honors resistances, immunities, and vulnerabilities before to
 - Apply typed damage to a character token with immunity.
 - Apply typed damage to a character token with vulnerability.
 - Confirm both token HP and character HP sync to the same final value.
+
+### Implementation update - 2026-05-04
+
+- Verified `src/lib/damageApplication.ts` is the single mitigation helper for VTT HP mutation paths.
+- Verified manual Warden token damage in `src/pages/warden-directives/VTTEnhanced.tsx` calls `applyDamageMitigation()` before subtracting HP, supports typed/raw modes, and syncs linked character HP after final damage.
+- Verified targeted action resolution in `src/hooks/useTargetedDamageApply.ts` calls `applyDamageMitigation()` before updating target token HP and linked character HP.
+- Verified no remaining VTT damage HP subtraction path bypasses `applyDamageMitigation()`.
+- Validation passed: `npx vitest run src/lib/__tests__/damageApplication.test.ts src/lib/__tests__/unifiedEffectSystem.test.ts`.
 
 ## Phase 6 - Finish homebrew runtime wiring without rebuilding Genesis Studio
 
@@ -396,6 +445,19 @@ Published homebrew appears in the actual gameplay and character progression surf
 - Confirm it appears in the intended picker flow.
 - Apply it to a character and confirm downstream stats or features update correctly.
 
+### Implementation update - 2026-05-04
+
+- Kept the existing Homebrew page/editor intact and avoided the stale cache-only `useHomebrewCharacterIntegration()` path for runtime consumers.
+- Added `src/lib/homebrewRuntime.ts` as a shared mapper from published homebrew records into static-compatible runtime jobs, paths, spells, powers, items, feats, and feature rows.
+- Wired `src/pages/CharacterNew.tsx` to fetch published job/path homebrew through `usePublishedHomebrew()`, merge it with static job/path picker data, persist selected homebrew job/path names, and grant level-1 homebrew features with `homebrew_id`.
+- Wired `src/components/character/LevelUpWizardModal.tsx` to merge published homebrew paths into path selection, resolve homebrew jobs for choice calculations, and grant homebrew job/path features during level-up through `insertCharacterFeature()`.
+- Wired published homebrew spells into creation, level-up, and Add Spell selection flows; homebrew spells persist by name/source with `spell_id = null` because `character_spells` has no `homebrew_id` column.
+- Wired published homebrew powers into Add Power selection flows; homebrew powers persist by name/source with `power_id = null` because `character_powers` has no `homebrew_id` column.
+- Wired published homebrew items into Add Equipment; homebrew items persist to `character_equipment` with `item_id = null` and homebrew metadata in `custom_modifiers`.
+- Wired published homebrew feats into Add Feat; homebrew feats persist to `character_features` with `homebrew_id` and no canonical `feat_id`.
+- Added `src/lib/__tests__/homebrewRuntime.test.ts` covering job mapping, path mapping/matching, spell mapping/matching, power mapping/matching, item mapping metadata, feat metadata, feature metadata, and content-type filtering.
+- Validation passed: `npx vitest run src/lib/__tests__/homebrewRuntime.test.ts src/lib/__tests__/unifiedEffectSystem.test.ts src/lib/__tests__/characterEngine.test.ts`, `npm run typecheck`, and `git diff --check` with CRLF warnings only.
+
 ## Suggested Implementation Order
 
 1. Phase 1 - unified effect path
@@ -408,7 +470,7 @@ Published homebrew appears in the actual gameplay and character progression surf
 ## Rationale for the order
 
 - Phase 1 establishes the effect authority that later combat and character behavior should trust.
-- Phase 5 is high-value and directly player-facing, but depends on a cleaner view of mitigation data.
+- Phase 5 is high-value and directly Ascendant-facing, but depends on a cleaner view of mitigation data.
 - Phase 3 touches VTT persistence and realtime behavior and should land before any optional cleanup refactors.
 - Phase 4 is partly schema-driven and benefits from the earlier VTT stabilization.
 - Phase 2 is self-contained once the compendium shape decision is made.
@@ -426,7 +488,7 @@ Published homebrew appears in the actual gameplay and character progression surf
 
 ## Cross-Cutting Manual Verification
 
-- Warden scene switching with players connected.
+- Warden scene switching with Ascendants connected.
 - Equip/inscribe/absorb/apply content and verify character math changes once.
 - Run a VTT combat damage flow with at least one resistant target and one vulnerable target.
 - Create notes with both visible and secret content and view them from different roles.

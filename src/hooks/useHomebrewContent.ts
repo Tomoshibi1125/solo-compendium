@@ -7,7 +7,14 @@ import { AppError } from "@/lib/appError";
 import { useAuth } from "@/lib/auth/authContext";
 import { enqueueOfflineSync } from "@/lib/offlineSync";
 
-export type HomebrewContentType = "job" | "path" | "relic" | "spell" | "item";
+export type HomebrewContentType =
+	| "job"
+	| "path"
+	| "relic"
+	| "spell"
+	| "item"
+	| "power"
+	| "feat";
 export type HomebrewStatus = "draft" | "published" | "archived";
 export type HomebrewVisibilityScope = "private" | "campaign" | "public";
 

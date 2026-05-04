@@ -244,6 +244,37 @@
 	}
 }
 
+/* P1-4 — Pin button next to the live measurement label.                  */
+/* Shares the dynamic `left/top` from `.vtt-measurement-label-active` but  */
+/* offsets downward via translate so it doesn't overlap the label.         */
+.vtt-measurement-pin {
+	position: absolute;
+	transform: translate(-50%, 28px);
+	pointer-events: auto;
+	z-index: 25;
+	background: rgba(34, 211, 238, 0.95);
+	color: #0c4a6e;
+	border: 1px solid rgba(8, 47, 73, 0.4);
+	padding: 3px 10px;
+	border-radius: 4px;
+	font-size: 11px;
+	font-weight: 700;
+	font-family: var(--font-heading, inherit);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	cursor: pointer;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.vtt-measurement-pin:hover {
+	background: rgba(125, 231, 252, 0.95);
+}
+
+.vtt-measurement-pin:focus-visible {
+	outline: 2px solid #0c4a6e;
+	outline-offset: 2px;
+}
+
 /* ── Annotations — AMBER (warm, note-like, stands out from map) ──────── */
 .vtt-annotation {
 	position: absolute;

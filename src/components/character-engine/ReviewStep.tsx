@@ -22,6 +22,12 @@ interface ReviewStepProps {
 	staticJobData: StaticJob | null;
 	jobAwakeningAtCreation: { name: string; description?: string }[];
 	jobTraitsAtCreation: { name: string; description?: string }[];
+	alignment?: string;
+	personalityTrait?: string;
+	ideal?: string;
+	bond?: string;
+	flaw?: string;
+	imprintSelections?: string[];
 }
 
 export const ReviewStep: React.FC<ReviewStepProps> = ({
@@ -39,6 +45,12 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 	staticJobData,
 	jobAwakeningAtCreation,
 	jobTraitsAtCreation,
+	alignment,
+	personalityTrait,
+	ideal,
+	bond,
+	flaw,
+	imprintSelections = [],
 }) => {
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
@@ -86,6 +98,56 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 									<span>{selectedBackgroundName}</span>
 								</div>
 							</section>
+
+							{(alignment || personalityTrait || ideal || bond || flaw) && (
+								<section className="space-y-3">
+									<h3 className="text-xs font-heading font-semibold text-primary uppercase tracking-widest border-b border-primary/10 pb-1">
+										Persona Matrix
+									</h3>
+									<div className="grid grid-cols-2 gap-y-2 text-sm">
+										{alignment && (
+											<>
+												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+													Protocol Alignment:
+												</span>
+												<span>{alignment}</span>
+											</>
+										)}
+										{personalityTrait && (
+											<>
+												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+													Personality Signal:
+												</span>
+												<span>{personalityTrait}</span>
+											</>
+										)}
+										{ideal && (
+											<>
+												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+													Core Drive:
+												</span>
+												<span>{ideal}</span>
+											</>
+										)}
+										{bond && (
+											<>
+												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+													Anchor / Bond:
+												</span>
+												<span>{bond}</span>
+											</>
+										)}
+										{flaw && (
+											<>
+												<span className="text-muted-foreground uppercase tracking-tighter text-[10px]">
+													Fault Line:
+												</span>
+												<span>{flaw}</span>
+											</>
+										)}
+									</div>
+								</section>
+							)}
 
 							<section className="space-y-3">
 								<h3 className="text-xs font-heading font-semibold text-primary uppercase tracking-widest border-b border-primary/10 pb-1">
@@ -208,6 +270,24 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												))}
 											</div>
 										</div>
+									</div>
+								</section>
+							)}
+
+							{imprintSelections.length > 0 && (
+								<section className="space-y-3">
+									<h3 className="text-xs font-heading font-semibold text-primary uppercase tracking-widest border-b border-primary/10 pb-1">
+										Creation Imprints
+									</h3>
+									<div className="flex flex-wrap gap-1">
+										{imprintSelections.map((selection) => (
+											<span
+												key={selection}
+												className="px-1.5 py-0.5 rounded-sm bg-primary/5 border border-primary/10 text-[9px] uppercase"
+											>
+												{formatRegentVernacular(selection)}
+											</span>
+										))}
 									</div>
 								</section>
 							)}

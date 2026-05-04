@@ -1,7 +1,58 @@
 /**
  * Comprehensive choice calculation utilities for character creation
  * Handles additional grants from awakening features, traits, paths, regents, etc.
+ *
+ * Since the RA parity refactor this module is LEDGER-FIRST:
+ *   - `jobData.levelChoices` (from `jobs.ts`) is the authoritative source for
+ *     structured picks (cantrips, spells, powers, techniques, fighting styles,
+ *     Reality Sculpting, Contract Invocations, Pact Boons, Absolute Infusions,
+ *     Specialist Training, Frequency Mastery, Favored Terrain, Permanent Tuning
+ *     / Reaping, Channel Absolute, Cross-Frequency Access).
+ *   - `jobData.powersKnown` / `techniquesKnown` arrays drive cumulative counts
+ *     for martial / hybrid jobs.
+ *   - `jobData.spellcasting.cantripsKnown` / `spellsKnown` drive known-caster
+ *     progression.
+ *   - `jobData.spellbook.atCreation` / `perLevel` drives Mage / Revenant's
+ *     Arcane Codex / Reaper's Ledger scribe panel.
+ *   - The regex parser below remains as a SUPPLEMENT for unstructured
+ *     awakeningFeatures, jobTraits, path features, and regent homebrew prose
+ *     that hasn't been migrated into a structured ledger yet.
  */
+
+export type LedgerChoiceType =
+	| "cantrip"
+	| "spell"
+	| "power"
+	| "technique"
+	| "specialist-training"
+	| "frequency-mastery"
+	| "fighting-style"
+	| "favored-terrain"
+	| "reality-sculpting"
+	| "contract-invocation"
+	| "absolute-infusion"
+	| "pact-boon"
+	| "permanent-tuning"
+	| "permanent-reaping"
+	| "channel-absolute"
+	| "cross-frequency-access"
+	| "expertise"
+	| "language"
+	| "skill"
+	| "tool";
+
+export interface LedgerChoice {
+	level: number;
+	type: LedgerChoiceType;
+	count: number;
+	source: string;
+	options?: string[];
+	filter?: {
+		maxPowerLevel?: number;
+		maxLevel?: number;
+		restrictTo?: "job-list" | "any-list";
+	};
+}
 
 export interface ChoiceGrant {
 	type:
@@ -21,6 +72,7 @@ export interface ChoiceGrant {
 }
 
 interface TotalChoices {
+	// Legacy buckets driven by regex prose + ledger skill/language/tool entries.
 	skills: number;
 	feats: number;
 	spells: number;
@@ -31,6 +83,20 @@ interface TotalChoices {
 	tools: number;
 	languages: number;
 	expertise: number;
+	// Ledger-driven buckets (additive; default 0 so legacy consumers are safe).
+	cantrips: number;
+	fightingStyles: number;
+	favoredTerrains: number;
+	realitySculptings: number;
+	contractInvocations: number;
+	absoluteInfusions: number;
+	pactBoons: number;
+	frequencyMasteries: number;
+	crossFrequencyAccesses: number;
+	channelAbsolutes: number;
+	permanentTunings: number;
+	permanentReapings: number;
+	spellbookInscriptions: number;
 }
 
 /**
@@ -314,7 +380,8 @@ function parseChoiceGrants(description: string, source: string): ChoiceGrant[] {
 }
 
 /**
- * Calculate total additional choices from all sources (job, path, regent)
+ * Calculate total additional choices from all sources (job, path, regent).
+ * Ledger-driven fields are authoritative; regex prose adds on top of them.
  */
 export interface ChoiceSourceData {
 	skill_choice_count?: number;
@@ -327,15 +394,17 @@ export interface ChoiceSourceData {
 	features?: Array<{ level: number; description: string; name: string }>;
 	class_features?: Array<{ level: number; description: string; name: string }>;
 	name?: string;
+	// --- Ledger + progression inputs (all optional; populated from StaticJob). ---
+	level_choices?: LedgerChoice[];
+	cantrips_known?: number[];
+	spells_known?: number[];
+	powers_known?: number[];
+	techniques_known?: number[];
+	spellbook?: { atCreation: number; perLevel: number; label: string };
 }
 
-export function calculateTotalChoices(
-	jobData: ChoiceSourceData | null | undefined,
-	pathData: ChoiceSourceData | null | undefined,
-	regentData: ChoiceSourceData[] | null | undefined,
-	level: number = 1,
-): TotalChoices {
-	const totals: TotalChoices = {
+function createEmptyTotals(): TotalChoices {
+	return {
 		skills: 0,
 		feats: 0,
 		spells: 0,
@@ -346,7 +415,110 @@ export function calculateTotalChoices(
 		tools: 0,
 		languages: 0,
 		expertise: 0,
+		cantrips: 0,
+		fightingStyles: 0,
+		favoredTerrains: 0,
+		realitySculptings: 0,
+		contractInvocations: 0,
+		absoluteInfusions: 0,
+		pactBoons: 0,
+		frequencyMasteries: 0,
+		crossFrequencyAccesses: 0,
+		channelAbsolutes: 0,
+		permanentTunings: 0,
+		permanentReapings: 0,
+		spellbookInscriptions: 0,
 	};
+}
+
+// Maps a ledger choice type to the TotalChoices bucket it contributes to.
+// Note: progression arrays (cantripsKnown / spellsKnown / powersKnown /
+// techniquesKnown) are the authoritative count for those types when present,
+// so ledger entries of those types are not double-counted when the array is
+// populated — see applyLedgerToTotals below.
+const LEDGER_TO_BUCKET: Record<LedgerChoiceType, keyof TotalChoices> = {
+	cantrip: "cantrips",
+	spell: "spells",
+	power: "powers",
+	technique: "techniques",
+	"specialist-training": "expertise",
+	"frequency-mastery": "frequencyMasteries",
+	"fighting-style": "fightingStyles",
+	"favored-terrain": "favoredTerrains",
+	"reality-sculpting": "realitySculptings",
+	"contract-invocation": "contractInvocations",
+	"absolute-infusion": "absoluteInfusions",
+	"pact-boon": "pactBoons",
+	"permanent-tuning": "permanentTunings",
+	"permanent-reaping": "permanentReapings",
+	"channel-absolute": "channelAbsolutes",
+	"cross-frequency-access": "crossFrequencyAccesses",
+	expertise: "expertise",
+	language: "languages",
+	skill: "skills",
+	tool: "tools",
+};
+
+// Progression arrays authoritatively own these buckets when present.
+const PROGRESSION_OWNED_BUCKETS: ReadonlySet<keyof TotalChoices> = new Set([
+	"cantrips",
+	"spells",
+	"powers",
+	"techniques",
+]);
+
+function applyLedgerToTotals(
+	totals: TotalChoices,
+	source: ChoiceSourceData | null | undefined,
+	level: number,
+): void {
+	if (!source) return;
+
+	// 1. Progression arrays (cumulative counts owned by job).
+	const atIndex = (arr: number[] | undefined) =>
+		arr && arr.length > 0
+			? arr[Math.max(0, Math.min(level, arr.length) - 1)]
+			: 0;
+	const cantripsCum = atIndex(source.cantrips_known);
+	const spellsCum = atIndex(source.spells_known);
+	const powersCum = atIndex(source.powers_known);
+	const techniquesCum = atIndex(source.techniques_known);
+	totals.cantrips += cantripsCum;
+	totals.spells += spellsCum;
+	totals.powers += powersCum;
+	totals.techniques += techniquesCum;
+
+	// 2. Spellbook inscriptions (Mage / Revenant): atCreation at L1 + perLevel
+	// for each level beyond 1st (cumulative).
+	if (source.spellbook) {
+		const { atCreation, perLevel } = source.spellbook;
+		const inscribed =
+			level >= 1 ? atCreation + Math.max(0, level - 1) * perLevel : 0;
+		totals.spellbookInscriptions += inscribed;
+	}
+
+	// 3. Non-progression ledger entries (all other choice types).
+	if (source.level_choices) {
+		for (const choice of source.level_choices) {
+			if (choice.level > level) continue;
+			const bucket = LEDGER_TO_BUCKET[choice.type];
+			if (!bucket) continue;
+			if (PROGRESSION_OWNED_BUCKETS.has(bucket)) continue; // handled above
+			totals[bucket] += choice.count;
+		}
+	}
+}
+
+export function calculateTotalChoices(
+	jobData: ChoiceSourceData | null | undefined,
+	pathData: ChoiceSourceData | null | undefined,
+	regentData: ChoiceSourceData[] | null | undefined,
+	level: number = 1,
+): TotalChoices {
+	const totals = createEmptyTotals();
+
+	// --- Authoritative ledger + progression from jobData ---
+	applyLedgerToTotals(totals, jobData, level);
 
 	// Base job choices
 	if (jobData) {
@@ -484,4 +656,48 @@ export function getChoiceGrantDetails(
 	}
 
 	return allGrants;
+}
+
+/**
+ * Ledger-aware delta helper for the level-up wizard. Returns per-bucket deltas
+ * (next - prev, clamped at 0) for every bucket in TotalChoices. Positive values
+ * drive the level-up sub-step queue (one panel per bucket with delta > 0).
+ */
+export function getLevelUpChoiceDeltas(
+	jobData: ChoiceSourceData | null | undefined,
+	pathData: ChoiceSourceData | null | undefined,
+	regentData: ChoiceSourceData[] | null | undefined,
+	prevLevel: number,
+	newLevel: number,
+): Partial<Record<keyof TotalChoices, number>> {
+	if (newLevel <= prevLevel) return {};
+	const previous = calculateTotalChoices(
+		jobData,
+		pathData,
+		regentData,
+		prevLevel,
+	);
+	const next = calculateTotalChoices(jobData, pathData, regentData, newLevel);
+	const deltas: Partial<Record<keyof TotalChoices, number>> = {};
+	for (const key of Object.keys(next) as Array<keyof TotalChoices>) {
+		const delta = next[key] - previous[key];
+		if (delta > 0) deltas[key] = delta;
+	}
+	return deltas;
+}
+
+/**
+ * Returns only the ledger choice entries that fire when going from prevLevel
+ * to newLevel (i.e. choice.level in (prevLevel, newLevel]). Drives the
+ * structured level-up sub-step queue — each entry becomes a picker panel.
+ */
+export function getLevelUpLedgerEntries(
+	jobData: ChoiceSourceData | null | undefined,
+	prevLevel: number,
+	newLevel: number,
+): LedgerChoice[] {
+	if (!jobData?.level_choices || newLevel <= prevLevel) return [];
+	return jobData.level_choices.filter(
+		(c) => c.level > prevLevel && c.level <= newLevel,
+	);
 }

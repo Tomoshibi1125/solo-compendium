@@ -1,4 +1,15 @@
 import { useMemo } from "react";
+import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
+import {
+	type CharacterWithAbilities,
+	useCharacters,
+} from "@/hooks/useCharacters";
+import { useEquipment } from "@/hooks/useEquipment";
+import { usePowers } from "@/hooks/usePowers";
+import { useCharacterRuneKnowledge } from "@/hooks/useRunes";
+import { useSigils } from "@/hooks/useSigils";
+import { useTattoos } from "@/hooks/useTattoos";
+import { useTechniques } from "@/hooks/useTechniques";
 import type { ActionResolutionPayload } from "@/lib/actionResolution";
 import { getProficiencyBonus } from "@/lib/characterCalculations";
 import { buildItemProperties } from "@/lib/characterCreation";
@@ -12,13 +23,6 @@ import {
 	useCanonicalEquipmentMap,
 } from "./useCanonicalEquipmentMap";
 import { useCharacterDerivedStats } from "./useCharacterDerivedStats";
-import { useCharacterSheetState } from "./useCharacterSheetState";
-import { type CharacterWithAbilities, useCharacters } from "./useCharacters";
-import { useEquipment } from "./useEquipment";
-import { usePowers } from "./usePowers";
-
-import { useSigils } from "./useSigils";
-import { useTechniques } from "./useTechniques";
 
 type JsonMechanics = Record<string, unknown>;
 
@@ -85,6 +89,8 @@ export const useCombatActions = (characterId: string) => {
 	const { data: sigils, isLoading: sigilsLoading } = useSigils(
 		characterId || "",
 	);
+	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(characterId);
+	const { tattoos, isLoading: tattoosLoading } = useTattoos(characterId);
 	const { state: sheetState } = useCharacterSheetState(characterId);
 
 	const derivedStats = useCharacterDerivedStats(
@@ -94,10 +100,15 @@ export const useCombatActions = (characterId: string) => {
 		sigils || [],
 		sheetState.customModifiers || [],
 		canonicalEquipmentMap,
+		{ runeKnowledge, tattoos },
 	);
 
 	const isLoading =
-		equipmentLoading || powersLoading || techniquesLoading || sigilsLoading;
+		equipmentLoading ||
+		powersLoading ||
+		techniquesLoading ||
+		sigilsLoading ||
+		tattoosLoading;
 
 	const actions = useMemo(() => {
 		if (!character || !derivedStats) return [];
@@ -123,24 +134,25 @@ export const useCombatActions = (characterId: string) => {
 			name: string;
 			properties?: string[] | null;
 		}) => {
-			const profs = (character.weapon_proficiencies || []).map((p) =>
+			const profs = (character.weapon_proficiencies || []).map((p: string) =>
 				p.toLowerCase(),
 			);
 			const itemProps =
-				(item.properties as string[])?.map((p) => p.toLowerCase()) || [];
+				(item.properties as string[])?.map((p: string) => p.toLowerCase()) ||
+				[];
 
 			// Name match
 			if (profs.includes(item.name.toLowerCase())) return true;
 
 			// Category match
 			if (
-				itemProps.some((p) => p.includes("simple")) &&
-				profs.some((p) => p.includes("simple"))
+				itemProps.some((p: string) => p.includes("simple")) &&
+				profs.some((p: string) => p.includes("simple"))
 			)
 				return true;
 			if (
-				itemProps.some((p) => p.includes("martial")) &&
-				profs.some((p) => p.includes("martial"))
+				itemProps.some((p: string) => p.includes("martial")) &&
+				profs.some((p: string) => p.includes("martial"))
 			)
 				return true;
 
@@ -304,7 +316,10 @@ export const useCombatActions = (characterId: string) => {
 		const customPowerAttackBonus =
 			sumCustomModifiers(customModifiers, "attack") +
 			sumCustomModifiers(customModifiers, "attack_bonus");
-		const customPowerDcBonus = sumCustomModifiers(customModifiers, "save_bonus");
+		const customPowerDcBonus = sumCustomModifiers(
+			customModifiers,
+			"save_bonus",
+		);
 
 		// 2. Spell/Power Actions
 		(powers || []).forEach((p) => {

@@ -1,5 +1,11 @@
 import { DEFAULT_SCENE_GRID_OPACITY } from "@/lib/vtt/backgroundTransform";
-import type { VTTScene, VTTTokenInstance } from "@/types/vtt";
+import type {
+	LightSource,
+	VTTScene,
+	VTTTokenBar,
+	VTTTokenInstance,
+	WallSegment,
+} from "@/types/vtt";
 
 export const DEFAULT_SCENE_SETTINGS = {
 	gridSize: 50,
@@ -29,6 +35,120 @@ export const createVttTokenInstanceId = () => {
 	return `token-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 };
 
+export const createVttLightSourceId = () => {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
+		return `light-${crypto.randomUUID()}`;
+	}
+	return `light-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+/**
+ * Append a `LightSource` to a scene's `lights` collection. Non-mutating; the
+ * returned scene reference is a new object suitable for React state updates
+ * and scene-sync broadcasting.
+ */
+export const addLightToScene = (
+	scene: VTTScene,
+	light: LightSource,
+): VTTScene => ({
+	...scene,
+	lights: [...(scene.lights ?? []), light],
+});
+
+/**
+ * Patch a single light on a scene by id. Returns the original scene
+ * reference when the id is unknown (so callers can skip a broadcast).
+ */
+export const updateLightInScene = (
+	scene: VTTScene,
+	lightId: string,
+	updates: Partial<LightSource>,
+): VTTScene => {
+	const lights = scene.lights ?? [];
+	let didChange = false;
+	const nextLights = lights.map((light) => {
+		if (light.id !== lightId) return light;
+		didChange = true;
+		return { ...light, ...updates, id: light.id };
+	});
+	if (!didChange) return scene;
+	return { ...scene, lights: nextLights };
+};
+
+/**
+ * Remove a light from a scene by id. Returns the original scene reference
+ * when the id is unknown (so callers can skip a broadcast).
+ */
+export const removeLightFromScene = (
+	scene: VTTScene,
+	lightId: string,
+): VTTScene => {
+	const lights = scene.lights ?? [];
+	const nextLights = lights.filter((light) => light.id !== lightId);
+	if (nextLights.length === lights.length) return scene;
+	return { ...scene, lights: nextLights };
+};
+
+export const createVttWallId = () => {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
+		return `wall-${crypto.randomUUID()}`;
+	}
+	return `wall-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+/**
+ * Append a `WallSegment` to a scene's `walls` collection. Non-mutating; the
+ * returned scene reference is a new object suitable for React state updates
+ * and scene-sync broadcasting.
+ */
+export const addWallToScene = (
+	scene: VTTScene,
+	wall: WallSegment,
+): VTTScene => ({
+	...scene,
+	walls: [...(scene.walls ?? []), wall],
+});
+
+/**
+ * Patch a single wall on a scene by id. Returns the original scene reference
+ * when the id is unknown (so callers can skip a broadcast).
+ */
+export const updateWallInScene = (
+	scene: VTTScene,
+	wallId: string,
+	updates: Partial<WallSegment>,
+): VTTScene => {
+	const walls = scene.walls ?? [];
+	let didChange = false;
+	const nextWalls = walls.map((wall) => {
+		if (wall.id !== wallId) return wall;
+		didChange = true;
+		return { ...wall, ...updates, id: wall.id };
+	});
+	if (!didChange) return scene;
+	return { ...scene, walls: nextWalls };
+};
+
+/**
+ * Remove a wall from a scene by id. Returns the original scene reference
+ * when the id is unknown (so callers can skip a broadcast).
+ */
+export const removeWallFromScene = (
+	scene: VTTScene,
+	wallId: string,
+): VTTScene => {
+	const walls = scene.walls ?? [];
+	const nextWalls = walls.filter((wall) => wall.id !== wallId);
+	if (nextWalls.length === walls.length) return scene;
+	return { ...scene, walls: nextWalls };
+};
+
 export const getValidActiveTokenId = (
 	activeTokenId: string | null,
 	tokens: VTTTokenInstance[],
@@ -37,6 +157,52 @@ export const getValidActiveTokenId = (
 	return tokens.some((token) => token.id === activeTokenId)
 		? activeTokenId
 		: null;
+};
+
+export const normalizeVttTokenBars = (
+	token: VTTTokenInstance,
+): VTTTokenInstance => {
+	const existingBars = Array.isArray(token.bars)
+		? token.bars
+				.filter(
+					(bar): bar is VTTTokenBar =>
+						typeof bar?.id === "string" &&
+						typeof bar.label === "string" &&
+						typeof bar.current === "number" &&
+						typeof bar.max === "number" &&
+						typeof bar.color === "string" &&
+						(bar.visible === "all" ||
+							bar.visible === "controllers" ||
+							bar.visible === "gm"),
+				)
+				.slice(0, 3)
+		: [];
+	const hp = token.hp ?? token.hp_current;
+	const maxHp = token.maxHp ?? token.hp_max;
+	if (
+		existingBars.length > 0 ||
+		typeof hp !== "number" ||
+		typeof maxHp !== "number" ||
+		maxHp <= 0
+	) {
+		if (!Array.isArray(token.bars)) return token;
+		return { ...token, bars: existingBars };
+	}
+	return {
+		...token,
+		hp,
+		maxHp,
+		bars: [
+			{
+				id: "hp",
+				label: "HP",
+				current: hp,
+				max: maxHp,
+				color: "#22c55e",
+				visible: "all",
+			},
+		],
+	};
 };
 
 interface BuildDefaultVttSceneInput {
@@ -65,10 +231,13 @@ export const buildDefaultVttScene = ({
 	walls: [],
 	lights: [],
 	fogOfWar: false,
+	tokenVisionRevealsFog: false,
 	gridType: "square",
 	weather: "clear",
 	musicMood: null,
 	musicAutoplay: false,
+	musicPlaylistId: null,
+	musicTrackId: null,
 	terrain: [],
 	ambientSounds: [],
 });
@@ -78,7 +247,7 @@ export const duplicateVttScene = (scene: VTTScene): VTTScene => ({
 	id: createVttSceneId(),
 	name: `${scene.name} (copy)`,
 	tokens: scene.tokens.map((token) => ({
-		...token,
+		...normalizeVttTokenBars(token),
 		id: createVttTokenInstanceId(),
 	})),
 });
@@ -93,12 +262,18 @@ export const normalizeVttScene = (scene: VTTScene): VTTScene => ({
 		scene.backgroundOffsetX ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetX,
 	backgroundOffsetY:
 		scene.backgroundOffsetY ?? DEFAULT_SCENE_SETTINGS.backgroundOffsetY,
+	tokens: Array.isArray(scene.tokens)
+		? scene.tokens.map(normalizeVttTokenBars)
+		: [],
 	drawings: Array.isArray(scene.drawings) ? scene.drawings : [],
 	annotations: Array.isArray(scene.annotations) ? scene.annotations : [],
 	walls: Array.isArray(scene.walls) ? scene.walls : [],
 	lights: Array.isArray(scene.lights) ? scene.lights : [],
+	tokenVisionRevealsFog: scene.tokenVisionRevealsFog ?? false,
 	musicMood: scene.musicMood ?? null,
 	musicAutoplay: scene.musicAutoplay ?? false,
+	musicPlaylistId: scene.musicPlaylistId ?? null,
+	musicTrackId: scene.musicTrackId ?? null,
 	terrain: Array.isArray(scene.terrain) ? scene.terrain : [],
 	ambientSounds: Array.isArray(scene.ambientSounds) ? scene.ambientSounds : [],
 	weather: scene.weather,

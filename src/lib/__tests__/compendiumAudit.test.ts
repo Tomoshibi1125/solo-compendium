@@ -6,40 +6,36 @@ import {
 } from "@/lib/compendiumAudit";
 
 describe("compendium audit (provider-backed)", () => {
-	it(
-		"produces a non-empty report with dataset counts and preserves run shape",
-		async () => {
-			const summary = await runCompendiumAudit(staticDataProvider);
-			expect(summary.totalEntries).toBeGreaterThan(0);
-			expect(Object.keys(summary.datasets)).toEqual(
-				expect.arrayContaining([
-					"anomalies",
-					"backgrounds",
-					"conditions",
-					"equipment",
-					"feats",
-					"items",
-					"jobs",
-					"locations",
-					"paths",
-					"powers",
-					"regents",
-					"relics",
-					"runes",
-					"sigils",
-					"skills",
-					"spells",
-					"tattoos",
-					"techniques",
-				]),
-			);
+	it("produces a non-empty report with dataset counts and preserves run shape", async () => {
+		const summary = await runCompendiumAudit(staticDataProvider);
+		expect(summary.totalEntries).toBeGreaterThan(0);
+		expect(Object.keys(summary.datasets)).toEqual(
+			expect.arrayContaining([
+				"anomalies",
+				"backgrounds",
+				"conditions",
+				"equipment",
+				"feats",
+				"items",
+				"jobs",
+				"locations",
+				"paths",
+				"powers",
+				"regents",
+				"relics",
+				"runes",
+				"sigils",
+				"skills",
+				"spells",
+				"tattoos",
+				"techniques",
+			]),
+		);
 
-			const report = formatCompendiumAuditReport(summary);
-			expect(report).toContain("COMPENDIUM AUDIT START");
-			expect(report).toContain("COMPENDIUM AUDIT COMPLETE");
-		},
-		15000,
-	);
+		const report = formatCompendiumAuditReport(summary);
+		expect(report).toContain("COMPENDIUM AUDIT START");
+		expect(report).toContain("COMPENDIUM AUDIT COMPLETE");
+	}, 15000);
 
 	it("never has duplicate ids in canonical datasets", async () => {
 		const summary = await runCompendiumAudit(staticDataProvider);

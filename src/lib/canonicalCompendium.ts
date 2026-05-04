@@ -6,6 +6,7 @@ import type { Json } from "@/integrations/supabase/types";
 import {
 	entryHasAccessToken,
 	getDerivedPowerTags,
+	getDerivedSpellTags,
 	getDerivedTechniqueTags,
 	getPowerAccessTokens,
 	getSpellAccessTokens,
@@ -455,7 +456,9 @@ function normalizeCastableEntry(
 			)
 		: [];
 	const derivedTags =
-		canonicalType === "powers" ? getDerivedPowerTags(entry) : [];
+		canonicalType === "powers"
+			? getDerivedPowerTags(entry)
+			: getDerivedSpellTags(entry);
 	const saveAbility =
 		getNonEmptyString((entry as { save_ability?: unknown }).save_ability) ??
 		getNonEmptyString(
@@ -550,8 +553,14 @@ function matchesTokenEligibility(
 	tokens: readonly string[],
 ): boolean {
 	if (tokens.length === 0) return false;
-	const entryTags = Array.isArray(entry.tags) ? entry.tags : [];
-	return entryHasAccessToken(entryTags, tokens);
+	const explicitClasses = Array.isArray(entry.classes)
+		? entry.classes.filter(
+				(value): value is string => typeof value === "string",
+			)
+		: [];
+	if (explicitClasses.length > 0)
+		return entryHasAccessToken(explicitClasses, tokens);
+	return entryHasAccessToken(getDerivedPowerTags(entry), tokens);
 }
 
 function matchesTechniqueTokenEligibility(
@@ -559,11 +568,33 @@ function matchesTechniqueTokenEligibility(
 	tokens: readonly string[],
 ): boolean {
 	if (tokens.length === 0) return false;
+	const explicitClasses = Array.isArray(entry.classes)
+		? entry.classes.filter(
+				(value): value is string => typeof value === "string",
+			)
+		: [];
+	if (explicitClasses.length > 0)
+		return entryHasAccessToken(explicitClasses, tokens);
 	const rawTags = Array.isArray(entry.tags) ? entry.tags : [];
 	return entryHasAccessToken(
 		[...rawTags, ...getDerivedTechniqueTags(entry)],
 		tokens,
 	);
+}
+
+function matchesSpellTokenEligibility(
+	entry: CanonicalCastableEntry,
+	tokens: readonly string[],
+): boolean {
+	if (tokens.length === 0) return false;
+	const explicitClasses = Array.isArray(entry.classes)
+		? entry.classes.filter(
+				(value): value is string => typeof value === "string",
+			)
+		: [];
+	if (explicitClasses.length > 0)
+		return entryHasAccessToken(explicitClasses, tokens);
+	return entryHasAccessToken(getDerivedSpellTags(entry), tokens);
 }
 
 function preferSpellForLearnableList(
@@ -824,8 +855,7 @@ export async function listLearnableSpells(
 			}
 
 			if (accessTokens.length === 0) return true;
-			if (!Array.isArray(entry.tags) || entry.tags.length === 0) return true;
-			return matchesTokenEligibility(entry, accessTokens);
+			return matchesSpellTokenEligibility(entry, accessTokens);
 		})
 		.sort(
 			(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),

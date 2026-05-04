@@ -11,6 +11,8 @@
  */
 import { describe, expect, it } from "vitest";
 import {
+	type PowerActionFormulaInput,
+	type PowerActionFormulaResult,
 	resolvePowerActionFormula,
 	resolvePowerCastingAbility,
 } from "@/lib/powerActionFormulas";
@@ -62,11 +64,12 @@ describe("resolvePowerCastingAbility — canonical primary stat per job", () => 
 
 describe("resolvePowerActionFormula", () => {
 	it("Mage L1 INT 18 → +6 attack, DC 14", () => {
-		const r = resolvePowerActionFormula({
+		const input: PowerActionFormulaInput = {
 			job: "Mage",
 			abilities: baseAbilities({ INT: 18 }),
 			proficiencyBonus: 2,
-		});
+		};
+		const r: PowerActionFormulaResult = resolvePowerActionFormula(input);
 		expect(r.ability).toBe("INT");
 		expect(r.abilityModifier).toBe(4);
 		expect(r.attackBonus).toBe(6);

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	circlePath,
+	createAoeFromMeasurement,
 	createDrawing,
 	getTemplateCells,
 	measureDistance,
@@ -74,6 +75,105 @@ describe("VTT Drawing Engine", () => {
 			expect(drawing.strokeWidth).toBe(4);
 			expect(drawing.createdBy).toBe("player1");
 			expect(drawing.layer).toBe("drawing");
+		});
+	});
+
+	describe("createAoeFromMeasurement", () => {
+		it("emits a line drawing whose points are the measurement endpoints", () => {
+			const aoe = createAoeFromMeasurement(
+				{ x: 1, y: 2 },
+				{ x: 5, y: 8 },
+				"line",
+				4,
+				"#ff0000",
+				"warden-1",
+			);
+			expect(aoe.type).toBe("line");
+			expect(aoe.kind).toBe("aoe");
+			expect(aoe.points).toEqual([
+				{ x: 1, y: 2 },
+				{ x: 5, y: 8 },
+			]);
+		});
+
+		it("emits a circle drawing as a bounding box around the end point", () => {
+			const aoe = createAoeFromMeasurement(
+				{ x: 0, y: 0 },
+				{ x: 5, y: 5 },
+				"circle",
+				3,
+				"#ff0000",
+				"warden-1",
+			);
+			expect(aoe.type).toBe("circle");
+			expect(aoe.points).toEqual([
+				{ x: 2, y: 2 },
+				{ x: 8, y: 8 },
+			]);
+		});
+
+		it("emits a rectangle drawing for cubes (radius=side length)", () => {
+			const aoe = createAoeFromMeasurement(
+				{ x: 0, y: 0 },
+				{ x: 5, y: 5 },
+				"cube",
+				4, // 4 grid units → half=2
+				"#ff0000",
+				"warden-1",
+			);
+			expect(aoe.type).toBe("rectangle");
+			expect(aoe.points).toEqual([
+				{ x: 3, y: 3 },
+				{ x: 7, y: 7 },
+			]);
+		});
+
+		it("emits a cone drawing whose points encode apex + far edge", () => {
+			const start = { x: 1, y: 1 };
+			const end = { x: 5, y: 1 };
+			const aoe = createAoeFromMeasurement(
+				start,
+				end,
+				"cone",
+				4,
+				"#ff0000",
+				"warden-1",
+			);
+			expect(aoe.type).toBe("cone");
+			expect(aoe.points).toEqual([start, end]);
+		});
+
+		it("tags every produced drawing with kind=aoe and an aoe-prefixed id", () => {
+			const aoe = createAoeFromMeasurement(
+				{ x: 0, y: 0 },
+				{ x: 1, y: 1 },
+				"line",
+				1,
+				"#fff",
+				"warden",
+			);
+			expect(aoe.kind).toBe("aoe");
+			expect(aoe.id).toMatch(/^aoe-/);
+			expect(aoe.fillColor).toBe("#fff");
+			expect(aoe.layer).toBe("drawing");
+		});
+
+		it("produces unique ids across rapid consecutive calls", () => {
+			const ids = new Set(
+				Array.from(
+					{ length: 25 },
+					() =>
+						createAoeFromMeasurement(
+							{ x: 0, y: 0 },
+							{ x: 1, y: 1 },
+							"line",
+							1,
+							"#fff",
+							"warden",
+						).id,
+				),
+			);
+			expect(ids.size).toBe(25);
 		});
 	});
 

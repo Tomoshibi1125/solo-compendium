@@ -282,6 +282,7 @@ export interface CompendiumAnomaly extends BaseCompendiumItem {
 export interface CompendiumSpell extends BaseCompendiumItem {
 	level?: number | null;
 	school?: string | null;
+	classes?: string[] | null;
 	casting_time?: string | null;
 	range?: CompendiumRange | null;
 	components?: CompendiumComponents | null;
@@ -311,6 +312,7 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 export interface CompendiumPower extends BaseCompendiumItem {
 	power_type: string;
 	power_level: number;
+	classes?: string[] | null;
 	casting_time?: string;
 	activation_time?: string;
 	activation?: CompendiumActivation;
@@ -332,6 +334,7 @@ export interface CompendiumPower extends BaseCompendiumItem {
 export interface CompendiumTechnique extends BaseCompendiumItem {
 	type: string;
 	style: string;
+	classes?: string[] | null;
 	level_requirement?: number;
 	uses_per_rest_formula?: string;
 	activation?: { type?: string } | string;

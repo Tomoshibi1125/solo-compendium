@@ -168,7 +168,7 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		techniques: true,
 		powerTags: [
 			"technomancer",
-			"system-interface",
+			"lattice-interface",
 			"current-conductor",
 			"emp",
 			"device",
@@ -361,7 +361,7 @@ const POWER_TAGS_BY_ID: Record<string, string[]> = {
 	"angelic-wings": ["holy-knight", "radiant"],
 	"holy-aura": ["holy-knight", "radiant", "guard"],
 	"avatar-of-battle": ["destroyer", "berserker", "holy-knight", "vanguard"],
-	"chronos-shift": ["assassin", "stalker", "technomancer", "system-interface"],
+	"chronos-shift": ["assassin", "stalker", "technomancer", "lattice-interface"],
 	"mana-burn": ["striker", "technomancer", "force", "current-conductor"],
 	"obsidian-carapace": [
 		"destroyer",
@@ -373,18 +373,19 @@ const POWER_TAGS_BY_ID: Record<string, string[]> = {
 	"aegis-of-light": ["holy-knight", "radiant", "guard"],
 	"phantom-barrage": ["assassin", "stalker", "ambush"],
 	"venom-blood": ["assassin", "stalker", "survival"],
+	"absolute-zero": ["technomancer", "destroyer", "force"],
 	"kinetic-absorption": ["striker", "destroyer", "kinetic", "force"],
 	"infernal-forge": ["technomancer", "destroyer", "engineered-weapon"],
 	"celestial-judgment": ["holy-knight", "radiant", "covenant"],
 	"warp-strike": ["assassin", "striker", "stalker", "phase"],
 	"gravity-crush": ["destroyer", "striker", "force"],
 	"echo-clone": ["assassin", "stalker", "stealth"],
-	"reality-glitch": ["technomancer", "system-interface", "gadget"],
+	"reality-glitch": ["technomancer", "lattice-interface", "gadget"],
 	"solar-flare": ["holy-knight", "radiant"],
 	"aeon-shield": ["technomancer", "holy-knight", "guard"],
 	"nebula-drift": ["technomancer", "stalker", "pursuit"],
 	"gravity-well": ["destroyer", "striker", "force"],
-	"quantum-entanglement": ["technomancer", "system-interface"],
+	"quantum-entanglement": ["technomancer", "lattice-interface"],
 	"supernova-blast": ["destroyer", "berserker", "overload"],
 	"nanite-swarm": ["technomancer", "gadget", "device"],
 	"titan-strength": ["destroyer", "berserker", "reinforced-frame"],
@@ -405,7 +406,21 @@ const POWER_TAGS_BY_ID: Record<string, string[]> = {
 	"necrotic-tether": ["assassin", "stalker", "ambush"],
 	"glacial-fortress": ["destroyer", "holy-knight", "bulwark"],
 	"reality-shear": ["assassin", "technomancer", "phase"],
-	"omega-pulse": ["technomancer", "striker", "system-interface"],
+	"omega-pulse": ["technomancer", "striker", "lattice-interface"],
+	"arcane-charm": ["assassin", "stalker", "technomancer", "stealth"],
+	"arcane-recovery": ["holy-knight", "stalker", "technomancer", "guard"],
+	"gaze-of-petrification": ["destroyer", "stalker", "terminal-sight"],
+	telepathy: ["assassin", "stalker", "technomancer", "terminal-sight"],
+	"arcane-ascension": ["holy-knight", "technomancer", "stalker"],
+	"void-collapse": ["destroyer", "striker", "technomancer", "force"],
+	"mind-control": ["assassin", "technomancer", "stealth"],
+	"life-transfer": ["holy-knight", "stalker", "berserker", "survival"],
+	"blight-touch": ["assassin", "stalker", "umbral"],
+	starfall: ["holy-knight", "destroyer", "technomancer", "radiant"],
+	"void-singularity": ["destroyer", "striker", "technomancer", "force"],
+	"glacier-prison": ["destroyer", "holy-knight", "stalker", "bulwark"],
+	"soul-binding": ["assassin", "holy-knight", "stalker"],
+	"entropy-field": ["technomancer", "destroyer", "lattice-interface"],
 };
 
 export function getDerivedPowerTags(entry: {
@@ -435,12 +450,111 @@ export function getDerivedPowerTags(entry: {
 	if (/radiant|holy|divine|celestial|seraph|sanctified|aegis/.test(text)) {
 		addTags(tags, ["holy-knight", "radiant"]);
 	}
-	if (/nanite|quantum|glitch|plasma|current|device|system|forge/.test(text)) {
-		addTags(tags, ["technomancer", "system-interface"]);
+	if (/nanite|quantum|glitch|plasma|current|device|lattice|forge/.test(text)) {
+		addTags(tags, ["technomancer", "lattice-interface"]);
 	}
 	if (/prey|tracking|sight|echo|beast|wild|pursuit/.test(text)) {
 		addTags(tags, ["stalker", "tracking"]);
 	}
+
+	return Array.from(tags);
+}
+
+export function getDerivedSpellTags(entry: {
+	id?: string | null;
+	name?: string | null;
+	display_name?: string | null;
+	tags?: string[] | null;
+	theme_tags?: string[] | null;
+	school?: string | null;
+	spell_type?: string | null;
+	power_type?: string | null;
+	type?: string | null;
+	mechanics?: Record<string, unknown> | null;
+	limitations?: Record<string, unknown> | null;
+}): string[] {
+	const tags = new Set<string>();
+	const mechanics = entry.mechanics ?? {};
+	const limitations = entry.limitations ?? {};
+	const text = [
+		entry.id,
+		entry.name,
+		entry.display_name,
+		entry.school,
+		entry.spell_type,
+		entry.power_type,
+		entry.type,
+		typeof mechanics.type === "string" ? mechanics.type : null,
+		typeof limitations.conditions === "string"
+			? limitations.conditions
+			: Array.isArray(limitations.conditions)
+				? limitations.conditions.join(" ")
+				: null,
+	]
+		.filter((value): value is string => typeof value === "string")
+		.join(" ")
+		.toLowerCase();
+
+	if (
+		/heal|restore|cure|mend|revive|vitality|blessing|sanctuary|holy|divine|radiant|sacred|purif|soothe/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["herald", "idol", "holy-knight"]);
+	}
+	if (
+		/summon|conjur|demon|abyssal|portal|gate|call|manifest|rift|beast|spirit/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["summoner", "contractor"]);
+	}
+	if (
+		/void|shadow|necrot|death|undead|wither|drain|blight|curse|soul|phantom|umbral/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["revenant", "contractor"]);
+	}
+	if (
+		/mind|charm|command|compel|dominate|stun|sleep|suggest|fear|frighten|psychic|telepath/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["esper", "contractor"]);
+	}
+	if (
+		/detect|scry|reveal|sense|identify|comprehend|augur|divin|see|sight|locate|find|forecast/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["esper", "mage", "stalker"]);
+	}
+	if (
+		/fire|ice|frost|lightning|thunder|bolt|blast|storm|force|beam|ray|burn|scorch|ignite|freeze|tempest|gravity|arcane|mana|lance|wave/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["mage", "technomancer"]);
+	}
+	if (
+		/ward|shield|barrier|protect|banish|counter|dispel|abjur|aegis|armor|prison|binding|shackle/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["mage", "holy-knight", "technomancer"]);
+	}
+	if (
+		/transform|enhance|alter|shift|polymorph|enlarge|reduce|haste|slow|mutate|swift|blink|teleport/.test(
+			text,
+		)
+	) {
+		addTags(tags, ["mage", "technomancer", "stalker"]);
+	}
+	if (/music|song|voice|idol|charm|inspire|morale|performance/.test(text)) {
+		addTags(tags, ["idol", "herald"]);
+	}
+	if (tags.size === 0) addTags(tags, ["mage"]);
 
 	return Array.from(tags);
 }

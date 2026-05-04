@@ -35,6 +35,11 @@ import type { VTTAsset } from "@/data/vttAssetLibrary";
 import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
 import { useCampaignToolState } from "@/hooks/useToolState";
+import {
+	useVTTAudioTracks,
+	type VTTAudioTrack,
+	vttAudioManager,
+} from "@/hooks/useVTTAudio";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { useVTTSettings } from "@/hooks/useVTTSettings";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
@@ -46,7 +51,10 @@ import {
 	getVttBackgroundTransform,
 } from "@/lib/vtt/backgroundTransform";
 import { buildVttFogRects } from "@/lib/vtt/fogRects";
-import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
+import {
+	resolveSceneAudioTrackIntent,
+	syncSceneMusicEngine,
+} from "@/lib/vtt/sceneAudio";
 import { getTokenSizePx } from "@/lib/vtt/tokenSizing";
 import "@/styles/vtt-player-map.css";
 import "@/styles/vtt-performance.css";
@@ -113,6 +121,8 @@ interface Scene {
 	weather?: WeatherType;
 	musicMood?: MusicMood | null;
 	musicAutoplay?: boolean;
+	musicPlaylistId?: string | null;
+	musicTrackId?: string | null;
 	terrain?: TerrainZone[];
 	ambientSounds?: AmbientSoundZone[];
 }
@@ -122,6 +132,21 @@ const toSafeClassName = (id: string) => id.replace(/[^a-zA-Z0-9-]/g, "-");
 type VTTScenesState = {
 	scenes: Scene[];
 	currentSceneId: string | null;
+};
+
+type CampaignAudioTrackState = {
+	id: string;
+	scene_id?: string;
+	session_id?: string;
+	name: string;
+	url: string;
+	type: "music" | "ambient" | "sfx";
+	volume: number;
+	loop: boolean;
+	is_playing: boolean;
+	created_by: string;
+	created_at: string;
+	updated_at: string;
 };
 
 const MOBILE_BREAKPOINT_QUERY = "(max-width: 767px)";
@@ -199,15 +224,70 @@ const AscendantMapView = ({
 	} | null>(null);
 	const [isViewportPanning, setIsViewportPanning] = useState(false);
 	const musicEngineRef = useRef<VttMusicEngine | null>(null);
+	const sceneAudioIntentRef = useRef<{
+		mode: "track" | "playlist";
+		trackId: string;
+		playlistId: string | null;
+	} | null>(null);
+	const stopSceneTrackAudio = useCallback(() => {
+		const current = sceneAudioIntentRef.current;
+		if (!current) return;
+		if (current.mode === "playlist") {
+			void vttAudioManager.stopPlaylist();
+		} else {
+			void vttAudioManager.stopTrack(current.trackId);
+		}
+		sceneAudioIntentRef.current = null;
+	}, []);
 	const syncPlayerSceneMusic = useCallback(
-		(scene: Pick<Scene, "musicMood" | "musicAutoplay"> | null | undefined) => {
+		(
+			scene:
+				| Pick<
+						Scene,
+						"musicMood" | "musicAutoplay" | "musicPlaylistId" | "musicTrackId"
+				  >
+				| null
+				| undefined,
+			tracks: VTTAudioTrack[] = [],
+		) => {
 			const wantsMusic = !!scene?.musicMood && scene.musicAutoplay !== false;
 			if (wantsMusic && !musicEngineRef.current) {
 				musicEngineRef.current = new VttMusicEngine();
 			}
 			syncSceneMusicEngine(musicEngineRef.current, scene);
+			const intent = resolveSceneAudioTrackIntent(scene, tracks);
+			if (wantsMusic || intent.mode === "none" || intent.mode === "stop") {
+				stopSceneTrackAudio();
+				return;
+			}
+
+			const nextIntent = {
+				mode: intent.mode,
+				trackId: intent.track.id,
+				playlistId: intent.mode === "playlist" ? intent.playlist.id : null,
+			};
+			const current = sceneAudioIntentRef.current;
+			if (
+				current?.mode === nextIntent.mode &&
+				current.trackId === nextIntent.trackId &&
+				current.playlistId === nextIntent.playlistId
+			) {
+				return;
+			}
+
+			stopSceneTrackAudio();
+			sceneAudioIntentRef.current = nextIntent;
+			if (intent.mode === "playlist") {
+				void vttAudioManager.playPlaylist(
+					intent.playlist,
+					intent.tracks,
+					intent.startIndex,
+				);
+			} else {
+				void vttAudioManager.playTrack(intent.track);
+			}
 		},
-		[],
+		[stopSceneTrackAudio],
 	);
 
 	useEffect(() => {
@@ -250,15 +330,13 @@ const AscendantMapView = ({
 
 	// Scene state received from Warden
 	const [currentScene, setCurrentScene] = useState<Scene | null>(null);
-	useEffect(() => {
-		syncPlayerSceneMusic(currentScene);
-	}, [currentScene, syncPlayerSceneMusic]);
 	useEffect(
 		() => () => {
 			musicEngineRef.current?.dispose();
 			musicEngineRef.current = null;
+			stopSceneTrackAudio();
 		},
-		[],
+		[stopSceneTrackAudio],
 	);
 
 	const { data: combatData } = useCampaignCombatSession(
@@ -294,6 +372,9 @@ const AscendantMapView = ({
 	const legacyAssetsStorageKey = effectiveCampaignId
 		? `vtt-assets-${effectiveCampaignId}${effectiveSessionId ? `-${effectiveSessionId}` : ""}`
 		: "vtt-assets";
+	const legacyAudioStorageKey = effectiveCampaignId
+		? `vtt-audio-${effectiveCampaignId}`
+		: "vtt-audio";
 	const { state: storedState, isLoading } =
 		useCampaignToolState<VTTScenesState>(effectiveCampaignId || null, toolKey, {
 			initialState: { scenes: [], currentSceneId: null },
@@ -307,6 +388,40 @@ const AscendantMapView = ({
 			storageKey: legacyAssetsStorageKey,
 		},
 	);
+	const { data: sessionAudioTracks = [] } = useVTTAudioTracks(
+		effectiveSessionId || "",
+	);
+	const { state: campaignAudioTracks = [] } = useCampaignToolState<
+		CampaignAudioTrackState[]
+	>(effectiveCampaignId || null, "vtt_audio", {
+		initialState: [],
+		storageKey: legacyAudioStorageKey,
+	});
+	const sceneAudioTracks = useMemo<VTTAudioTrack[]>(() => {
+		const sessionTracks = sessionAudioTracks.map((track) => ({ ...track }));
+		const sessionTrackIds = new Set(sessionTracks.map((track) => track.id));
+		const libraryTracks = campaignAudioTracks
+			.filter((track) => !sessionTrackIds.has(track.id))
+			.map((track) => ({
+				id: track.id,
+				session_id:
+					track.session_id ?? effectiveSessionId ?? "campaign-library",
+				name: track.name,
+				type: track.type,
+				url: track.url,
+				volume: track.volume,
+				loop: track.loop,
+				is_playing: track.is_playing,
+				created_by: track.created_by,
+				created_at: track.created_at,
+				updated_at: track.updated_at,
+			}));
+		return [...sessionTracks, ...libraryTracks];
+	}, [campaignAudioTracks, effectiveSessionId, sessionAudioTracks]);
+
+	useEffect(() => {
+		syncPlayerSceneMusic(currentScene, sceneAudioTracks);
+	}, [currentScene, sceneAudioTracks, syncPlayerSceneMusic]);
 
 	// Hydrate scene from stored state
 	useEffect(() => {
@@ -1093,7 +1208,7 @@ const AscendantMapView = ({
 												<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
 													{fogRects.map((rect) => (
 														<DynamicStyle
-															key={`fog-${rect.rx}-${rect.ry}-${rect.width}`}
+															key={`fog-${rect.rx}-${rect.ry}-${rect.width}-${rect.height}`}
 															className="absolute vtt-fog-cell"
 															vars={{
 																left: `${rect.rx * gridSize * zoom}px`,

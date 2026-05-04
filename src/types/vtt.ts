@@ -1,6 +1,8 @@
 // --- Bridge types from lib/vtt ---
 export type VTTDrawing = import("@/lib/vtt").VTTDrawing;
 export type WallSegment = import("@/lib/vtt").WallSegment;
+export type WallDirection = import("@/lib/vtt").WallDirection;
+export type WallState = import("@/lib/vtt").WallState;
 export type LightSource = import("@/lib/vtt").LightSource;
 export type WeatherType = import("@/lib/vtt").WeatherType;
 export type TerrainZone = import("@/lib/vtt").TerrainZone;
@@ -22,6 +24,17 @@ export interface VTTRenderConfig {
 	mode?: VTTRenderMode;
 	opacity?: number;
 	blendMode?: VTTBlendMode;
+}
+
+export type VTTTokenBarVisibility = "all" | "controllers" | "gm";
+
+export interface VTTTokenBar {
+	id: string;
+	label: string;
+	current: number;
+	max: number;
+	color: string;
+	visible: VTTTokenBarVisibility;
 }
 
 export interface VTTAsset {
@@ -61,6 +74,7 @@ export interface VTTTokenInstance {
 	hp_current?: number;
 	maxHp?: number;
 	hp_max?: number;
+	bars?: VTTTokenBar[];
 	ac?: number;
 	armor_class?: number;
 	initiative?: number;
@@ -71,6 +85,9 @@ export interface VTTTokenInstance {
 	auraColor?: string;
 	lightRadius?: number;
 	lightDimRadius?: number;
+	visionRange?: number;
+	darkvisionRange?: number;
+	blindsightRange?: number;
 	showNameplate?: boolean;
 	barVisibility?: string;
 	/** DDB-style token border color (overrides owner default). */
@@ -105,10 +122,13 @@ export interface VTTScene {
 	walls: WallSegment[];
 	lights: LightSource[];
 	fogOfWar: boolean;
+	tokenVisionRevealsFog?: boolean;
 	fogData?: boolean[][];
 	weather?: WeatherType;
 	musicMood?: MusicMood | null;
 	musicAutoplay?: boolean;
+	musicPlaylistId?: string | null;
+	musicTrackId?: string | null;
 	terrain?: TerrainZone[];
 	ambientSounds?: AmbientSoundZone[];
 }

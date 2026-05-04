@@ -29,9 +29,18 @@ export {
 	getLineSVGPath,
 	isCellInAoE,
 } from "./aoeTemplates";
+export {
+	type ApplyTokenVisionFogOptions,
+	type AutoExploreFogResult,
+	type AutoExploreFogScene,
+	type AutoExploreFogToken,
+	applyTokenVisionToFog,
+	normalizeFogData,
+} from "./autoExploreFog";
 // Drawing & measurement
 export {
 	circlePath,
+	createAoeFromMeasurement,
 	createDrawing,
 	type DrawingPoint,
 	getTemplateCells,
@@ -43,7 +52,6 @@ export {
 	rectPath,
 	type VTTDrawing,
 } from "./drawingEngine";
-
 // Explorer mode fog (tri-state: unexplored / visible / previously explored)
 export {
 	createExplorerFog,
@@ -59,7 +67,6 @@ export {
 	toggleFogCell,
 	updateFogFromVision,
 } from "./explorerFog";
-
 // Foreground layer (overhead tiles — Foundry VTT parity)
 export {
 	computeTileOpacity,
@@ -70,7 +77,6 @@ export {
 	getTileTransformCSS,
 	isTokenUnderTile,
 } from "./foregroundLayer";
-
 // Hex grid
 export {
 	createHexGrid,
@@ -85,6 +91,14 @@ export {
 	pixelToHex,
 	snapToHexCenter,
 } from "./hexGrid";
+// Initiative auto-roll (P1-6)
+export {
+	type InitiativeCandidate,
+	type InitiativeRoll,
+	type RollMonsterInitiativeOptions,
+	rollD20,
+	rollMonsterInitiative,
+} from "./initiative";
 // Inline rolls
 export {
 	type ChatSegment,
@@ -107,7 +121,9 @@ export {
 	type TokenVision,
 	toggleDoor,
 	type VisibilityPolygon,
+	type WallDirection,
 	type WallSegment,
+	type WallState,
 } from "./lightingEngine";
 // Map ping
 export {
@@ -158,15 +174,27 @@ export {
 // Roll macros
 export {
 	createDefaultMacroBar,
+	createDefaultMacros,
 	createMacro,
 	generateCharacterMacros,
 	getMacroByHotkey,
 	loadMacrosFromLocal,
+	MACRO_TOOL_KEY,
 	type MacroBar,
 	type MacroCategory,
 	type RollMacro,
 	saveMacrosToLocal,
+	useMacros,
 } from "./rollMacros";
+export {
+	buildSpellTemplateDragData,
+	createAoeFromSpellTemplate,
+	inferSpellTemplateSpec,
+	VTT_SPELL_TEMPLATE_MIME,
+	type VttSpellTemplateDragData,
+	type VttSpellTemplateShape,
+	type VttSpellTemplateSpec,
+} from "./spellTemplates";
 // Terrain & weather
 export {
 	createTerrainZone,

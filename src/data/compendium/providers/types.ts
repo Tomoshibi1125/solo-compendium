@@ -234,6 +234,7 @@ export interface StaticCompendiumEntry {
 	level_requirement?: number | null;
 	table_category?: string | null;
 	table_group?: string | null;
+	dice_formula?: string | null;
 	rollable_entries?: string[] | null;
 	// Equipment structured fields preserved through canonical hydration so
 	// downstream AC / combat-action computation can consume them directly

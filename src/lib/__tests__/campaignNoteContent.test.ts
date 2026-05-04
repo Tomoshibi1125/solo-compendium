@@ -58,4 +58,75 @@ describe("campaignNoteContent", () => {
 			{ kind: "text", content: "\nCharlie", id: "text-2" },
 		]);
 	});
+
+	it("parses secret blocks without labels", () => {
+		const segments = parseCampaignNoteSegments(
+			"Before[[secret]]Hidden[[/secret]]After",
+		);
+		expect(segments[1]).toEqual({
+			kind: "secret",
+			label: null,
+			content: "Hidden",
+			id: "secret-1",
+		});
+	});
+
+	it("parses multiple consecutive secret blocks", () => {
+		const segments = parseCampaignNoteSegments(
+			"[[secret:A]]First[[/secret]][[secret:B]]Second[[/secret]]",
+		);
+		const secrets = segments.filter((s) => s.kind === "secret");
+		expect(secrets).toHaveLength(2);
+		expect(secrets[0].label).toBe("A");
+		expect(secrets[1].label).toBe("B");
+	});
+
+	it("returns a single text segment when no secrets exist", () => {
+		const segments = parseCampaignNoteSegments("Plain text only");
+		expect(segments).toEqual([
+			{ id: "text-0", kind: "text", content: "Plain text only" },
+		]);
+	});
+
+	it("handles empty body gracefully", () => {
+		const segments = parseCampaignNoteSegments("");
+		expect(segments).toEqual([{ id: "text-0", kind: "text", content: "" }]);
+	});
+
+	it("handles null/empty content in decode", () => {
+		const decoded = decodeCampaignNoteContent({
+			content: null,
+			ownerId: "owner-1",
+			isShared: false,
+		});
+		expect(decoded.body).toBe("");
+		expect(decoded.privacy.visibility).toBe("private");
+		expect(decoded.hasEmbeddedMetadata).toBe(false);
+	});
+
+	it("encodes minimal privacy with empty permissions", () => {
+		const privacy = createPrivacySettings("owner-1");
+		const encoded = encodeCampaignNoteContent({ body: "Test", privacy });
+		const decoded = decodeCampaignNoteContent({
+			content: encoded,
+			ownerId: "owner-1",
+			isShared: false,
+		});
+		expect(decoded.privacy.visibility).toBe("private");
+		expect(decoded.privacy.playerPermissions).toEqual({});
+		expect(decoded.body).toBe("Test");
+	});
+
+	it("strips metadata prefix idempotently", () => {
+		const privacy = createPrivacySettings("owner-1");
+		privacy.visibility = "shared";
+		const encoded = encodeCampaignNoteContent({ body: "Body", privacy });
+		const reEncoded = encodeCampaignNoteContent({ body: encoded, privacy });
+		const decoded = decodeCampaignNoteContent({
+			content: reEncoded,
+			ownerId: "owner-1",
+			isShared: true,
+		});
+		expect(decoded.body).toBe("Body");
+	});
 });

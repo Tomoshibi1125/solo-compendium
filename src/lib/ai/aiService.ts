@@ -1045,7 +1045,10 @@ export class AIServiceManager {
 		try {
 			// ── Route through the server-side proxy (/api/ai) so the API key
 			// never appears in client-side bundles or network requests.
-			const systemPrompt = this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined);
+			const systemPrompt = this.getSystemPrompt(
+				request.type,
+				request.context as Record<string, unknown> | undefined,
+			);
 			const prompt = this.formatInput(request);
 
 			const proxyResponse = await this.fetchWithTimeout(
@@ -1156,7 +1159,10 @@ export class AIServiceManager {
 			this.ensurePollinationsConfigured(service);
 
 			const prompt = this.formatInput(request);
-			const systemPrompt = this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined);
+			const systemPrompt = this.getSystemPrompt(
+				request.type,
+				request.context as Record<string, unknown> | undefined,
+			);
 			const messages: PollinationsMessage[] = [
 				{ role: "system", content: systemPrompt },
 				{ role: "user", content: prompt },
@@ -1259,7 +1265,10 @@ export class AIServiceManager {
 								messages: [
 									{
 										role: "rift",
-										content: this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined),
+										content: this.getSystemPrompt(
+											request.type,
+											request.context as Record<string, unknown> | undefined,
+										),
 									},
 									{ role: "user", content: prompt },
 								],
@@ -1472,7 +1481,13 @@ export class AIServiceManager {
 					body: JSON.stringify({
 						model,
 						messages: [
-							{ role: "rift", content: this.getSystemPrompt(request.type, request.context as Record<string, unknown> | undefined) },
+							{
+								role: "rift",
+								content: this.getSystemPrompt(
+									request.type,
+									request.context as Record<string, unknown> | undefined,
+								),
+							},
 							{ role: "user", content: this.formatInput(request) },
 						],
 						temperature: service.temperature,

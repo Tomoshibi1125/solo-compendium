@@ -31,10 +31,12 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRealtimeCollaboration } from "@/hooks/useRealtimeCollaboration";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useRecordRoll } from "@/hooks/useRollHistory";
+import { useCharacterRuneKnowledge } from "@/hooks/useRunes";
 
 import { useCharacterSigilInscriptions } from "@/hooks/useSigils";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
+import { useTattoos } from "@/hooks/useTattoos";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
 import { addTemporaryHP, applyResourceRest } from "@/lib/characterResources";
@@ -194,6 +196,8 @@ export function useCharacterPageModel() {
 	const { data: activeSigilInscriptions = [] } = useCharacterSigilInscriptions(
 		character?.id,
 	);
+	const { data: runeKnowledge = [] } = useCharacterRuneKnowledge(character?.id);
+	const { tattoos } = useTattoos(character?.id || "");
 
 	// D&D Beyond parity: concentration saves apply advantage/disadvantage from
 	// feats (War Caster) and conditions (Resilient CON, Bear Totem rage, etc.).
@@ -360,7 +364,7 @@ export function useCharacterPageModel() {
 		activeSigilInscriptions,
 		customModifiers,
 		canonicalEquipmentMap,
-		{ hasExtraAttackFeature, regentIds },
+		{ hasExtraAttackFeature, regentIds, runeKnowledge, tattoos },
 	);
 
 	const applyRestResourceUpdates = useCallback(

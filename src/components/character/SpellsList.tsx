@@ -1,5 +1,5 @@
 import { AlertTriangle, Plus, ScrollText, Trash2 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { type DragEvent, useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +28,7 @@ import {
 } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
 import type { DetailData } from "@/types/character";
 import { AddSpellDialog } from "./AddSpellDialog";
 
@@ -87,6 +88,15 @@ export function SpellsList({
 	const cantripCount = countedSpells.filter(
 		(spell) => (spell.spell_level ?? 0) === 0,
 	).length;
+	const spellbookSpells = spells.filter(
+		(spell) => !spell.counts_against_limit && (spell.spell_level ?? 0) > 0,
+	);
+	const spellbookLabel =
+		character?.job === "Revenant"
+			? "Reaper's Ledger"
+			: character?.job === "Mage"
+				? "Arcane Codex"
+				: "Spellbook";
 	const isOverPreparedLimit =
 		spellsPreparedLimit !== null && preparedCount > spellsPreparedLimit;
 	const isOverKnownLimit =
@@ -237,6 +247,24 @@ export function SpellsList({
 		});
 	};
 
+	const handleSpellDragStart = (
+		e: DragEvent<HTMLElement>,
+		spell: CharacterSpell,
+	) => {
+		e.dataTransfer.setData(
+			VTT_SPELL_TEMPLATE_MIME,
+			buildSpellTemplateDragData({
+				id: spell.spell_id ?? spell.id,
+				name: spell.name,
+				range: spell.spell?.range ?? spell.range,
+				target: spell.spell?.target,
+				description: spell.description,
+				mechanics: spell.spell?.mechanics,
+			}),
+		);
+		e.dataTransfer.effectAllowed = "copy";
+	};
+
 	const handleRemove = async (spell: CharacterSpell) => {
 		const displayName = formatRegentVernacular(spell.name);
 		if (!confirm(`Remove ${displayName}?`)) return;
@@ -252,7 +280,8 @@ export function SpellsList({
 			<div className="space-y-4">
 				{(spellsPreparedLimit !== null ||
 					spellsKnownLimit !== null ||
-					cantripsKnownLimit !== null) && (
+					cantripsKnownLimit !== null ||
+					spellbookSpells.length > 0) && (
 					<div className="p-2 rounded-lg border bg-muted/30">
 						<div className="flex items-center justify-between text-sm">
 							{spellsPreparedLimit !== null && (
@@ -295,6 +324,16 @@ export function SpellsList({
 										{cantripCount} / {cantripsKnownLimit}
 									</span>
 									{isOverCantripLimit && <AlertTriangle className="w-4 h-4" />}
+								</div>
+							)}
+							{spellbookSpells.length > 0 && (
+								<div className="flex items-center gap-2">
+									<span className="text-muted-foreground">
+										{formatRegentVernacular(spellbookLabel)}:
+									</span>
+									<span className="font-semibold">
+										{spellbookSpells.length} inscribed
+									</span>
 								</div>
 							)}
 						</div>
@@ -367,9 +406,12 @@ export function SpellsList({
 									? formatRegentVernacular(spell.description)
 									: null;
 								return (
-									<div
+									<fieldset
 										key={spell.id}
-										className="p-3 rounded-lg border bg-muted/30"
+										aria-label={`Draggable spell ${displayName}`}
+										draggable
+										onDragStart={(e) => handleSpellDragStart(e, spell)}
+										className="p-3 rounded-lg border bg-muted/30 min-w-0"
 									>
 										<div className="flex items-start justify-between gap-2">
 											<div className="flex-1">
@@ -443,7 +485,7 @@ export function SpellsList({
 												</Button>
 											</div>
 										</div>
-									</div>
+									</fieldset>
 								);
 							})}
 						</div>

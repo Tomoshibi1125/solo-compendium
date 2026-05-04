@@ -7,6 +7,7 @@ import {
 	Timer,
 	Zap,
 } from "lucide-react";
+import type { DragEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
@@ -19,6 +20,7 @@ import {
 	setPendingResolution,
 } from "@/lib/actionResolution";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
 import type {
 	CompendiumEffects,
 	CompendiumLimitations,
@@ -169,8 +171,30 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 		navigate(path);
 	};
 
+	const handleSpellDragStart = (e: DragEvent<HTMLFieldSetElement>) => {
+		e.dataTransfer.setData(
+			VTT_SPELL_TEMPLATE_MIME,
+			buildSpellTemplateDragData({
+				id: data.id,
+				name: displayName,
+				range: data.range,
+				target: (data as { target?: unknown }).target,
+				area: data.area,
+				description: data.description,
+				mechanics: data.mechanics,
+			}),
+		);
+		e.dataTransfer.effectAllowed = "copy";
+	};
+
 	return (
-		<div className="space-y-6">
+		<fieldset
+			className="space-y-6"
+			aria-label={`Draggable spell details for ${displayName}`}
+			draggable
+			onDragStart={handleSpellDragStart}
+			data-testid="spell-detail-draggable"
+		>
 			{imageSrc && (
 				<div className="w-full flex justify-center">
 					<CompendiumImage
@@ -520,6 +544,6 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					)}
 				</AscendantWindow>
 			)}
-		</div>
+		</fieldset>
 	);
 };

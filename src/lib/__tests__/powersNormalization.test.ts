@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { powers } from "@/data/compendium/powers";
+import { powers_supplemental } from "@/data/compendium/powers-supplemental";
 import { computePowerUses } from "@/lib/perRestCharges";
 
 const CANONICAL_SCHOOLS = new Set([
@@ -19,9 +20,23 @@ const CANONICAL_ACTION_TIMES = new Set([
 	"1 reaction",
 ]);
 
+const POWER_LEVEL_PARITY_MINIMUMS: Record<number, number> = {
+	1: 25,
+	2: 25,
+	3: 100,
+	4: 25,
+	5: 25,
+	6: 25,
+	7: 20,
+	8: 20,
+	9: 20,
+};
+
+const FORBIDDEN_POWER_TERMS = [/system/i, /monarch/i, /\bdm\b/i, /\bplayer\b/i];
+
 describe("Power catalog — coverage", () => {
-	it("contains exactly 76 canonical powers", () => {
-		expect(powers).toHaveLength(76);
+	it("contains the legacy powers plus the expanded parity catalog", () => {
+		expect(powers.length).toBeGreaterThanOrEqual(240);
 	});
 
 	it("every power id is unique and slug-formatted", () => {
@@ -32,6 +47,29 @@ describe("Power catalog — coverage", () => {
 				false,
 			);
 			seen.add(power.id);
+		}
+	});
+
+	it("does not duplicate power names", () => {
+		const seen = new Set<string>();
+		for (const power of powers) {
+			const key = power.name.toLowerCase();
+			expect(seen.has(key), `Duplicate power name "${power.name}"`).toBe(false);
+			seen.add(key);
+		}
+	});
+
+	it("does not contain forbidden legacy terminology", () => {
+		const serialized = JSON.stringify(powers);
+		for (const term of FORBIDDEN_POWER_TERMS) {
+			expect(serialized).not.toMatch(term);
+		}
+	});
+
+	it("supplemental powers declare explicit class eligibility", () => {
+		expect(powers_supplemental.length).toBeGreaterThan(0);
+		for (const power of powers_supplemental) {
+			expect(power.classes?.length ?? 0, power.id).toBeGreaterThan(0);
 		}
 	});
 });
@@ -64,10 +102,22 @@ describe("Power catalog — required schema", () => {
 		).toEqual([]);
 	});
 
-	it("every power is an Innate rank-3 power", () => {
+	it("every power is an Innate power with a supported parity level", () => {
 		for (const power of powers) {
 			expect(power.power_type).toBe("Innate");
-			expect(power.power_level).toBe(3);
+			expect(power.power_level).toBeGreaterThanOrEqual(1);
+			expect(power.power_level).toBeLessThanOrEqual(9);
+		}
+	});
+
+	it("has enough coverage at every power level", () => {
+		for (const [level, minimum] of Object.entries(
+			POWER_LEVEL_PARITY_MINIMUMS,
+		)) {
+			expect(
+				powers.filter((power) => power.power_level === Number(level)).length,
+				`Power level ${level} coverage`,
+			).toBeGreaterThanOrEqual(minimum);
 		}
 	});
 
@@ -86,9 +136,13 @@ describe("Power catalog — required schema", () => {
 		}
 	});
 
-	it("every power is sourced to Ascendant Core Rulebook", () => {
+	it("every power is sourced to a canonical RA book", () => {
 		for (const power of powers) {
-			expect(power.source_book).toBe("Ascendant Core Rulebook");
+			expect(
+				["Ascendant Core Rulebook", "Rift Ascendant Canon"].includes(
+					power.source_book ?? "",
+				),
+			).toBe(true);
 		}
 	});
 });

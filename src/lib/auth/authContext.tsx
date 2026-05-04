@@ -15,6 +15,7 @@ import {
 } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
+import { buildAuthCallbackUrl } from "@/lib/authRedirect";
 import { error as logError } from "@/lib/logger";
 
 export type UserRole = "warden" | "ascendant";
@@ -367,10 +368,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 		try {
 			// Create auth user
-			const redirectTo =
-				typeof window !== "undefined"
-					? `${import.meta.env.VITE_PUBLIC_SITE_URL || "https://system-ascendant.vercel.app"}/auth/callback`
-					: undefined;
+			const redirectTo = buildAuthCallbackUrl();
 			const { data, error } = await supabase.auth.signUp({
 				email,
 				password,
@@ -379,7 +377,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 						display_name: displayName,
 						role: role,
 					},
-					...(redirectTo ? { emailRedirectTo: redirectTo } : {}),
+					emailRedirectTo: redirectTo,
 				},
 			});
 

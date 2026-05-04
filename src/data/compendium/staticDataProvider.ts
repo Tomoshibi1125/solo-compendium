@@ -571,6 +571,7 @@ type StaticSpellSource = {
 	concentration?: boolean;
 	ritual?: boolean;
 	classes?: string[];
+	source_book?: string;
 	savingThrow?: Record<string, Json>;
 	spellAttack?: Record<string, Json>;
 	area?: Record<string, Json>;
@@ -1178,7 +1179,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		tags: [spell.type, spell.rank, school, ...classes].filter(
 			Boolean,
 		) as string[],
-		source_book: "Rift Ascendant Homebrew",
+		source_book: spell.source_book ?? "Rift Ascendant Homebrew",
 		image_url: spell.image,
 		spell_type: spell.type,
 		rank: rankValue,

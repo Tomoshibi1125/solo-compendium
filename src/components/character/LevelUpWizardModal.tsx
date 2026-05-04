@@ -30,11 +30,13 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { getFightingStylesForJob } from "@/data/compendium/fightingStyles";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignByCharacterId } from "@/hooks/useCampaigns";
 import { useCharacter, useUpdateCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
@@ -45,15 +47,24 @@ import {
 	type CanonicalCastableEntry,
 	listCanonicalEntries,
 	listLearnablePowers,
+	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
 import {
 	addJobAwakeningBenefitsForLevel,
 	applyJobAwakeningTraitsToCharacter,
 	autoUpdateFeatureUses,
+	getMaxPowerLevelForJobAtLevel,
+	insertCharacterFeature,
 } from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
-import { calculateTotalChoices } from "@/lib/choiceCalculations";
+import {
+	type ChoiceSourceData,
+	calculateTotalChoices,
+	getLevelUpChoiceDeltas,
+	getLevelUpLedgerEntries,
+	type LedgerChoice,
+} from "@/lib/choiceCalculations";
 import {
 	buildCorePayload,
 	type CharacterLevelUpEvent,
@@ -61,11 +72,24 @@ import {
 } from "@/lib/domainEvents";
 import {
 	addLocalPower,
+	addLocalSpell,
 	addLocalTechnique,
 	isLocalCharacterId,
 	listLocalPowers,
+	listLocalSpells,
 	listLocalTechniques,
 } from "@/lib/guestStore";
+import {
+	filterPublishedHomebrewRecords,
+	type HomebrewRuntimeJob,
+	type HomebrewRuntimePath,
+	type HomebrewRuntimeSpell,
+	mapHomebrewJobForRuntime,
+	mapHomebrewPathForRuntime,
+	mapHomebrewSpellForRuntime,
+	runtimePathMatchesJob,
+	runtimeSpellMatchesCharacter,
+} from "@/lib/homebrewRuntime";
 import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
 import {
 	calculateAverageHPGain,
@@ -80,6 +104,7 @@ import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { StaticJob } from "@/types/character";
 import type { CompendiumFeat, JobFeature } from "@/types/compendium";
 
 // Rift Ascendant XP Thresholds (cumulative XP needed to reach each level)
@@ -131,13 +156,77 @@ type LevelUpFeatureRow = {
 	prerequisites?: string | null;
 	recharge?: string | null;
 	source_name?: string | null;
+	homebrew_id?: string | null;
+	modifiers?: Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"];
 };
+
+type StaticJobWithLedger = StaticJob & {
+	levelChoices?: LedgerChoice[];
+	powersKnown?: number[];
+	techniquesKnown?: number[];
+	spellbook?: { atCreation: number; perLevel: number; label: string };
+};
+
+type LedgerOptionPanel = {
+	key: string;
+	label: string;
+	count: number;
+	type: LedgerChoice["type"];
+	options: Array<{ id: string; label: string; description?: string }>;
+};
+
+const STALKER_FAVORED_TERRAINS = [
+	"Urban Ruins",
+	"Crystalline Caverns",
+	"Overgrown Gatewilds",
+	"Void-Scarred Wastes",
+	"Flooded Substructure",
+	"Volcanic Riftfield",
+	"Frozen Breach",
+	"Gravitic Labyrinth",
+];
 
 const normalizeCompendiumKey = (value?: string | null) =>
 	value
 		?.trim()
 		.toLowerCase()
 		.replace(/[-\s]+/g, "") ?? "";
+
+const formatOptionLabel = (value: string) =>
+	value
+		.split("-")
+		.filter(Boolean)
+		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+		.join(" ");
+
+const toggleLimitedSelection = (
+	current: string[],
+	value: string,
+	limit: number,
+): string[] => {
+	if (current.includes(value)) return current.filter((item) => item !== value);
+	if (current.length >= limit) return current;
+	return [...current, value];
+};
+
+function toChoiceSourceData(
+	job: StaticJobWithLedger | null | undefined,
+	name?: string | null,
+): ChoiceSourceData | null {
+	if (!job) return null;
+	return {
+		name: name ?? job.name,
+		skill_choice_count: 0,
+		awakening_features: job.awakeningFeatures ?? [],
+		job_traits: job.jobTraits ?? [],
+		level_choices: job.levelChoices,
+		cantrips_known: job.spellcasting?.cantripsKnown,
+		spells_known: job.spellcasting?.spellsKnown,
+		powers_known: job.powersKnown,
+		techniques_known: job.techniquesKnown,
+		spellbook: job.spellbook,
+	};
+}
 
 function getExperienceForNextLevel(currentLevel: number): number {
 	return XP_THRESHOLDS[Math.min(currentLevel + 1, 20)] ?? Infinity;
@@ -177,97 +266,98 @@ export const LevelUpWizardModal = ({
 	const [selectedTechniqueIds, setSelectedTechniqueIds] = useState<string[]>(
 		[],
 	);
+	const [selectedCantripIds, setSelectedCantripIds] = useState<string[]>([]);
+	const [selectedSpellIds, setSelectedSpellIds] = useState<string[]>([]);
+	const [selectedSpellbookIds, setSelectedSpellbookIds] = useState<string[]>(
+		[],
+	);
+	const [selectedFightingStyleIds, setSelectedFightingStyleIds] = useState<
+		string[]
+	>([]);
+	const [selectedLedgerOptions, setSelectedLedgerOptions] = useState<
+		Record<string, string[]>
+	>({});
 	const { data: staticJobs, isLoading: jobsLoading } = useStaticJobs();
+	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
+		["job", "path", "spell"],
+		campaignId,
+	);
+	const homebrewJobs = useMemo<HomebrewRuntimeJob[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "job").map(
+				mapHomebrewJobForRuntime,
+			),
+		[publishedHomebrew],
+	);
+	const homebrewPaths = useMemo<HomebrewRuntimePath[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "path").map(
+				mapHomebrewPathForRuntime,
+			),
+		[publishedHomebrew],
+	);
+	const homebrewSpells = useMemo<HomebrewRuntimeSpell[]>(
+		() =>
+			filterPublishedHomebrewRecords(publishedHomebrew, "spell").map(
+				mapHomebrewSpellForRuntime,
+			),
+		[publishedHomebrew],
+	);
 
-	// Calculate available choices at the new level (including job awakening features and traits)
-	const availableChoices = useMemo(() => {
-		if (!character || !staticJobs)
-			return {
-				feats: 0,
-				skills: 0,
-				powers: 0,
-				techniques: 0,
-				runes: 0,
-				items: 0,
-				tools: 0,
-				languages: 0,
-				expertise: 0,
-			};
+	const staticJobObj = useMemo(
+		() =>
+			(staticJobs || []).find(
+				(j) =>
+					normalizeCompendiumKey(j.name) ===
+					normalizeCompendiumKey(character?.job),
+			) as StaticJobWithLedger | undefined,
+		[staticJobs, character?.job],
+	);
+	const homebrewJobObj = useMemo(
+		() =>
+			homebrewJobs.find(
+				(j) =>
+					normalizeCompendiumKey(j.name) ===
+					normalizeCompendiumKey(character?.job),
+			),
+		[homebrewJobs, character?.job],
+	);
+	const jobObj =
+		staticJobObj ??
+		(homebrewJobObj as unknown as StaticJobWithLedger | undefined);
 
-		const staticJob = staticJobs.find((job) => job.name === character.job);
-		if (!staticJob)
-			return {
-				feats: 0,
-				skills: 0,
-				powers: 0,
-				techniques: 0,
-				runes: 0,
-				items: 0,
-				tools: 0,
-				languages: 0,
-				expertise: 0,
-			};
+	const jobChoiceSource = useMemo(
+		() => toChoiceSourceData(jobObj, character?.job),
+		[jobObj, character?.job],
+	);
 
-		// Create enhanced job data with awakening features and traits
-		const enhancedJobData = {
-			name: character.job ?? undefined,
-			skill_choice_count: 0, // Not relevant for level-up
-			awakening_features: staticJob.awakeningFeatures || [],
-			job_traits: staticJob.jobTraits || [],
-		};
+	const availableChoices = useMemo(
+		() => calculateTotalChoices(jobChoiceSource, null, [], newLevel),
+		[jobChoiceSource, newLevel],
+	);
 
-		return calculateTotalChoices(enhancedJobData, null, [], newLevel);
-	}, [character, newLevel, staticJobs]);
-
-	const previousChoices = useMemo(() => {
-		if (!character || !staticJobs)
-			return {
-				feats: 0,
-				skills: 0,
-				powers: 0,
-				techniques: 0,
-				runes: 0,
-				items: 0,
-				tools: 0,
-				languages: 0,
-				expertise: 0,
-			};
-
-		const staticJob = staticJobs.find((job) => job.name === character.job);
-		if (!staticJob)
-			return {
-				feats: 0,
-				skills: 0,
-				powers: 0,
-				techniques: 0,
-				runes: 0,
-				items: 0,
-				tools: 0,
-				languages: 0,
-				expertise: 0,
-			};
-
-		return calculateTotalChoices(
-			{
-				name: character.job ?? undefined,
-				skill_choice_count: 0,
-				awakening_features: staticJob.awakeningFeatures || [],
-				job_traits: staticJob.jobTraits || [],
-			},
+	const choiceDeltas = useMemo(() => {
+		if (!character || !jobChoiceSource) return {};
+		return getLevelUpChoiceDeltas(
+			jobChoiceSource,
 			null,
 			[],
 			character.level,
+			newLevel,
 		);
-	}, [character, staticJobs]);
+	}, [character, jobChoiceSource, newLevel]);
 
-	const requiredPowerChoices = Math.max(
-		0,
-		availableChoices.powers - previousChoices.powers,
-	);
-	const requiredTechniqueChoices = Math.max(
-		0,
-		availableChoices.techniques - previousChoices.techniques,
-	);
+	const levelUpLedgerEntries = useMemo(() => {
+		if (!character || !jobChoiceSource) return [];
+		return getLevelUpLedgerEntries(jobChoiceSource, character.level, newLevel);
+	}, [character, jobChoiceSource, newLevel]);
+
+	const requiredPowerChoices = choiceDeltas.powers ?? 0;
+	const requiredTechniqueChoices = choiceDeltas.techniques ?? 0;
+	const requiredCantripChoices = choiceDeltas.cantrips ?? 0;
+	const requiredSpellChoices = choiceDeltas.spells ?? 0;
+	const requiredSpellbookInscriptions = choiceDeltas.spellbookInscriptions ?? 0;
+	const requiredFightingStyleChoices = choiceDeltas.fightingStyles ?? 0;
 
 	// Level progression logic
 	const currentExperience = character?.experience ?? 0;
@@ -279,7 +369,13 @@ export const LevelUpWizardModal = ({
 	// Path selection: fetch available paths if character has no path and this is a path unlock level
 	const needsPathSelection = !!character && !character.path;
 	const { data: availablePaths = [] } = useQuery<LevelUpPathOption[]>({
-		queryKey: ["level-up-paths", character?.job, newLevel, campaignId],
+		queryKey: [
+			"level-up-paths",
+			character?.job,
+			newLevel,
+			campaignId,
+			homebrewPaths.map((path) => path.id).join(","),
+		],
 		queryFn: async () => {
 			if (!character?.job) return [];
 			const characterJobName = character.job;
@@ -310,11 +406,24 @@ export const LevelUpWizardModal = ({
 					source_book:
 						path.source_book ?? path.source ?? "Rift Ascendant Canon",
 				}));
+			const homebrewCandidates: LevelUpPathOption[] = homebrewPaths
+				.filter((path) =>
+					runtimePathMatchesJob(path, undefined, characterJobName),
+				)
+				.filter((path) => path.path_level <= newLevel)
+				.map((path) => ({
+					id: path.id,
+					name: path.name,
+					description: path.description,
+					display_name: path.display_name || path.name,
+					path_level: path.path_level,
+					source_book: path.source_book,
+				}));
 
 			// Respect sourcebook entitlements: hide paths from sourcebooks the
 			// player (or active campaign) is not entitled to.
 			return filterRowsBySourcebookAccess(
-				staticCandidates,
+				[...staticCandidates, ...homebrewCandidates],
 				(row) => row.source_book,
 				{ campaignId },
 			);
@@ -358,10 +467,6 @@ export const LevelUpWizardModal = ({
 	});
 
 	const showPathSelection = needsPathSelection && availablePaths.length > 0;
-	const jobObj = useMemo(
-		() => (staticJobs || []).find((j) => j.name === character?.job),
-		[staticJobs, character?.job],
-	);
 	const showASISection =
 		!!character && isASILevel(newLevel, jobObj || character.job);
 	const showFeatSelection = showASISection && availableChoices.feats > 0;
@@ -407,6 +512,205 @@ export const LevelUpWizardModal = ({
 		enabled: !!character?.job && requiredTechniqueChoices > 0,
 	});
 
+	const maxSpellLevel = character?.job
+		? getMaxPowerLevelForJobAtLevel(character.job, newLevel)
+		: 0;
+
+	const { data: availableCantrips = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: [
+			"level-up-cantrips",
+			character?.job,
+			effectivePathName,
+			newLevel,
+			requiredCantripChoices,
+			campaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
+		],
+		queryFn: async () => {
+			if (!character?.job || requiredCantripChoices <= 0) return [];
+			const spells = await listLearnableSpells({
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+				maxPowerLevel: 0,
+			});
+			const matchingHomebrew = homebrewSpells.filter(
+				(spell) =>
+					spell.power_level === 0 &&
+					runtimeSpellMatchesCharacter(spell, character.job, effectivePathName),
+			);
+			return [
+				...spells.filter((spell) => spell.power_level === 0),
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
+		},
+		enabled: !!character?.job && requiredCantripChoices > 0,
+	});
+
+	const { data: availableSpells = [] } = useQuery<CanonicalCastableEntry[]>({
+		queryKey: [
+			"level-up-spells",
+			character?.job,
+			effectivePathName,
+			newLevel,
+			requiredSpellChoices,
+			maxSpellLevel,
+			campaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
+		],
+		queryFn: async () => {
+			if (!character?.job || requiredSpellChoices <= 0) return [];
+			const spells = await listLearnableSpells({
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+				maxPowerLevel: maxSpellLevel,
+			});
+			const matchingHomebrew = homebrewSpells.filter(
+				(spell) =>
+					spell.power_level > 0 &&
+					spell.power_level <= maxSpellLevel &&
+					runtimeSpellMatchesCharacter(spell, character.job, effectivePathName),
+			);
+			return [
+				...spells.filter((spell) => spell.power_level > 0),
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
+		},
+		enabled: !!character?.job && requiredSpellChoices > 0,
+	});
+
+	const { data: availableSpellbookSpells = [] } = useQuery<
+		CanonicalCastableEntry[]
+	>({
+		queryKey: [
+			"level-up-spellbook",
+			character?.job,
+			effectivePathName,
+			newLevel,
+			requiredSpellbookInscriptions,
+			maxSpellLevel,
+			campaignId,
+			homebrewSpells.map((spell) => spell.id).join(","),
+		],
+		queryFn: async () => {
+			if (!character?.job || requiredSpellbookInscriptions <= 0) return [];
+			const spells = await listLearnableSpells({
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+				maxPowerLevel: maxSpellLevel,
+			});
+			const matchingHomebrew = homebrewSpells.filter(
+				(spell) =>
+					spell.power_level > 0 &&
+					spell.power_level <= maxSpellLevel &&
+					runtimeSpellMatchesCharacter(spell, character.job, effectivePathName),
+			);
+			return [
+				...spells.filter((spell) => spell.power_level > 0),
+				...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
+			];
+		},
+		enabled: !!character?.job && requiredSpellbookInscriptions > 0,
+	});
+
+	const availableFightingStyles = useMemo(() => {
+		const armorProficiencies =
+			jobObj?.armorProficiencies ?? jobObj?.armor_proficiencies;
+		const gated = getFightingStylesForJob(armorProficiencies);
+		const ledgerStyleIds = new Set(
+			levelUpLedgerEntries
+				.filter((entry) => entry.type === "fighting-style")
+				.flatMap((entry) => entry.options ?? []),
+		);
+		return ledgerStyleIds.size > 0
+			? gated.filter((style) => ledgerStyleIds.has(style.id))
+			: gated;
+	}, [jobObj, levelUpLedgerEntries]);
+
+	const ledgerOptionPanels = useMemo<LedgerOptionPanel[]>(() => {
+		const panels: LedgerOptionPanel[] = [];
+		for (const entry of levelUpLedgerEntries) {
+			const key = `${entry.level}:${entry.type}:${entry.source}`;
+			if (entry.type === "fighting-style") continue;
+			if (entry.type === "favored-terrain") {
+				panels.push({
+					key,
+					label: entry.source,
+					count: entry.count,
+					type: entry.type,
+					options: STALKER_FAVORED_TERRAINS.map((terrain) => ({
+						id: terrain,
+						label: terrain,
+					})),
+				});
+				continue;
+			}
+			if (
+				entry.type === "specialist-training" ||
+				entry.type === "frequency-mastery"
+			) {
+				const skillOptions = (character?.skill_proficiencies ?? []).map(
+					(skill) => ({
+						id: skill,
+						label: skill,
+						description:
+							entry.type === "frequency-mastery"
+								? "Treat low signal rolls as stable output for this skill."
+								: "Double proficiency for this skill.",
+					}),
+				);
+				panels.push({
+					key,
+					label: entry.source,
+					count: entry.count,
+					type: entry.type,
+					options: skillOptions,
+				});
+				continue;
+			}
+			if (entry.options && entry.options.length > 0) {
+				panels.push({
+					key,
+					label: entry.source,
+					count: entry.count,
+					type: entry.type,
+					options: entry.options.map((option) => ({
+						id: option,
+						label: formatOptionLabel(option),
+					})),
+				});
+			}
+		}
+		return panels;
+	}, [character?.skill_proficiencies, levelUpLedgerEntries]);
+
+	const unresolvedLedgerEntries = useMemo(
+		() =>
+			levelUpLedgerEntries.filter((entry) => {
+				if (
+					entry.type === "power" ||
+					entry.type === "technique" ||
+					entry.type === "cantrip" ||
+					entry.type === "spell" ||
+					entry.type === "fighting-style" ||
+					entry.type === "favored-terrain" ||
+					entry.type === "specialist-training" ||
+					entry.type === "frequency-mastery"
+				) {
+					return false;
+				}
+				if (entry.options && entry.options.length > 0) return false;
+				return true;
+			}),
+		[levelUpLedgerEntries],
+	);
+
+	const ledgerOptionRequirementsMet = ledgerOptionPanels.every(
+		(panel) => (selectedLedgerOptions[panel.key]?.length ?? 0) >= panel.count,
+	);
+
 	// Regent progression: show new regent features unlocked at this level
 	const { unlocks: regentUnlocks } = useRegentUnlocks(characterId || "");
 	const primaryRegentUnlock =
@@ -439,6 +743,8 @@ export const LevelUpWizardModal = ({
 			newLevel,
 			campaignId,
 			staticJobs?.length,
+			homebrewJobObj?.homebrew_id,
+			homebrewPaths.map((path) => path.id).join(","),
 		],
 		queryFn: async () => {
 			if (!character?.job) return [];
@@ -501,10 +807,64 @@ export const LevelUpWizardModal = ({
 								})),
 						)
 				: [];
+			const homebrewJobFeatures: LevelUpFeatureRow[] = homebrewJobObj
+				? [
+						...homebrewJobObj.classFeatures,
+						...homebrewJobObj.awakeningFeatures,
+						...homebrewJobObj.jobTraits,
+					]
+						.filter((feature) => feature.level === newLevel)
+						.map((feature) => ({
+							id: feature.id,
+							name: feature.name,
+							description: feature.description,
+							level: feature.level,
+							is_path_feature: false,
+							action_type: feature.action_type,
+							uses_formula: feature.uses_formula,
+							prerequisites: feature.prerequisites,
+							recharge: feature.recharge,
+							source_name: feature.source_name,
+							homebrew_id: feature.homebrew_id,
+							modifiers: feature.modifiers
+								? (feature.modifiers as Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"])
+								: null,
+						}))
+				: [];
+			const homebrewPathFeatures: LevelUpFeatureRow[] = effectivePathName
+				? homebrewPaths
+						.filter(
+							(path) =>
+								normalizeCompendiumKey(path.name) === pathNameKey &&
+								runtimePathMatchesJob(path, undefined, characterJobName),
+						)
+						.flatMap((path) =>
+							path.features
+								.filter((feature) => feature.level === newLevel)
+								.map((feature) => ({
+									id: feature.id,
+									name: feature.name,
+									description: feature.description,
+									level: feature.level,
+									is_path_feature: true,
+									action_type: feature.action_type,
+									uses_formula: feature.uses_formula,
+									prerequisites: feature.prerequisites,
+									recharge: feature.recharge,
+									source_name: feature.source_name,
+									homebrew_id: feature.homebrew_id,
+									modifiers: feature.modifiers
+										? (feature.modifiers as Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"])
+										: null,
+								})),
+						)
+				: [];
 
 			const staticFeatureBase = [
 				...staticJobFeatures,
 				...staticPathFeatures,
+				...homebrewJobFeatures,
+				...homebrewPathFeatures,
 			].filter(
 				(feature, index, allFeatures) =>
 					allFeatures.findIndex(
@@ -543,6 +903,66 @@ export const LevelUpWizardModal = ({
 			return next.length === current.length ? current : next;
 		});
 	}, [availableTechniques]);
+
+	useEffect(() => {
+		setSelectedCantripIds((current) => {
+			const next = current.filter((id) =>
+				availableCantrips.some((cantrip) => cantrip.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableCantrips]);
+
+	useEffect(() => {
+		setSelectedSpellIds((current) => {
+			const next = current.filter((id) =>
+				availableSpells.some((spell) => spell.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableSpells]);
+
+	useEffect(() => {
+		setSelectedSpellbookIds((current) => {
+			const next = current.filter((id) =>
+				availableSpellbookSpells.some((spell) => spell.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableSpellbookSpells]);
+
+	useEffect(() => {
+		setSelectedFightingStyleIds((current) => {
+			const next = current.filter((id) =>
+				availableFightingStyles.some((style) => style.id === id),
+			);
+			return next.length === current.length ? current : next;
+		});
+	}, [availableFightingStyles]);
+
+	useEffect(() => {
+		setSelectedLedgerOptions((current) => {
+			const panelByKey = new Map(
+				ledgerOptionPanels.map((panel) => [
+					panel.key,
+					new Set(panel.options.map((option) => option.id)),
+				]),
+			);
+			let changed = false;
+			const next: Record<string, string[]> = {};
+			for (const [key, values] of Object.entries(current)) {
+				const allowed = panelByKey.get(key);
+				if (!allowed) {
+					changed = true;
+					continue;
+				}
+				const kept = values.filter((value) => allowed.has(value));
+				if (kept.length !== values.length) changed = true;
+				next[key] = kept;
+			}
+			return changed ? next : current;
+		});
+	}, [ledgerOptionPanels]);
 
 	if (isLoading || jobsLoading || !character || !staticJobs) {
 		return (
@@ -647,6 +1067,52 @@ export const LevelUpWizardModal = ({
 			toast({
 				title: "Technique selection required",
 				description: `Choose ${requiredTechniqueChoices} technique${requiredTechniqueChoices === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (selectedCantripIds.length < requiredCantripChoices) {
+			toast({
+				title: "Cantrip selection required",
+				description: `Choose ${requiredCantripChoices} cantrip${requiredCantripChoices === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (selectedSpellIds.length < requiredSpellChoices) {
+			toast({
+				title: "Power inscription required",
+				description: `Choose ${requiredSpellChoices} power inscription${requiredSpellChoices === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (selectedSpellbookIds.length < requiredSpellbookInscriptions) {
+			toast({
+				title: "Spellbook inscription required",
+				description: `Choose ${requiredSpellbookInscriptions} spellbook inscription${requiredSpellbookInscriptions === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (selectedFightingStyleIds.length < requiredFightingStyleChoices) {
+			toast({
+				title: "Fighting Style required",
+				description: `Choose ${requiredFightingStyleChoices} Fighting Style${requiredFightingStyleChoices === 1 ? "" : "s"} before completing this level up.`,
+				variant: "destructive",
+			});
+			return;
+		}
+
+		if (!ledgerOptionRequirementsMet) {
+			toast({
+				title: "Selection protocol required",
+				description:
+					"Complete all ledger-driven selections before leveling up.",
 				variant: "destructive",
 			});
 			return;
@@ -835,6 +1301,143 @@ export const LevelUpWizardModal = ({
 				});
 			}
 
+			const selectedCantripEntries = availableCantrips.filter((spell) =>
+				selectedCantripIds.includes(spell.id),
+			);
+			const selectedSpellEntries = availableSpells.filter((spell) =>
+				selectedSpellIds.includes(spell.id),
+			);
+			const selectedSpellbookEntries = availableSpellbookSpells.filter(
+				(spell) => selectedSpellbookIds.includes(spell.id),
+			);
+			for (const spell of [
+				...selectedCantripEntries.map((entry) => ({
+					entry,
+					source: `Level ${newLevel} Cantrip Choice`,
+					countsAgainstLimit: true,
+				})),
+				...selectedSpellEntries.map((entry) => ({
+					entry,
+					source: `Level ${newLevel} Power Inscription`,
+					countsAgainstLimit: true,
+				})),
+				...selectedSpellbookEntries.map((entry) => ({
+					entry,
+					source: `Level ${newLevel} Spellbook Inscription`,
+					countsAgainstLimit: false,
+				})),
+			]) {
+				const isHomebrewSpell = (spell.entry as { _homebrew?: boolean })
+					._homebrew;
+				const spellPayload = {
+					spell_id: isHomebrewSpell ? null : spell.entry.id,
+					name: spell.entry.name,
+					spell_level: spell.entry.power_level,
+					source: isHomebrewSpell ? `${spell.source} (Homebrew)` : spell.source,
+					casting_time: spell.entry.casting_time || null,
+					range: spell.entry.range || null,
+					duration: spell.entry.duration || null,
+					concentration: spell.entry.concentration || false,
+					ritual: spell.entry.ritual || false,
+					description: spell.entry.description || null,
+					higher_levels: spell.entry.higher_levels || null,
+					is_prepared: false,
+					is_known: true,
+					counts_against_limit: spell.countsAgainstLimit,
+				};
+
+				if (isLocalCharacterId(character.id)) {
+					const existingSpells = listLocalSpells(character.id);
+					if (
+						existingSpells.some(
+							(existing) =>
+								(!isHomebrewSpell &&
+									spell.entry.id &&
+									existing.spell_id === spell.entry.id) ||
+								existing.name === spell.entry.name,
+						)
+					)
+						continue;
+
+					addLocalSpell(character.id, spellPayload);
+					continue;
+				}
+
+				const dedupQuery = supabase
+					.from("character_spells")
+					.select("id")
+					.eq("character_id", character.id)
+					.limit(1);
+				const { data: existingSpell } =
+					!isHomebrewSpell && spell.entry.id
+						? await dedupQuery.eq("spell_id", spell.entry.id)
+						: await dedupQuery.eq("name", spell.entry.name);
+				if ((existingSpell?.length ?? 0) > 0) continue;
+
+				await supabase.from("character_spells").insert({
+					character_id: character.id,
+					...spellPayload,
+				});
+			}
+
+			const selectedFightingStyles = availableFightingStyles.filter((style) =>
+				selectedFightingStyleIds.includes(style.id),
+			);
+			for (const style of selectedFightingStyles) {
+				await insertCharacterFeature(character.id, {
+					name: `Fighting Style: ${style.name}`,
+					source: `Level ${newLevel} Fighting Style`,
+					level_acquired: newLevel,
+					description: style.description,
+					is_active: true,
+					modifiers: style.modifiers
+						? (style.modifiers as Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"])
+						: null,
+				});
+			}
+
+			const specialistTrainingSelections: string[] = [];
+			for (const panel of ledgerOptionPanels) {
+				const selectedValues = selectedLedgerOptions[panel.key] ?? [];
+				for (const value of selectedValues) {
+					const option = panel.options.find(
+						(candidate) => candidate.id === value,
+					);
+					if (!option) continue;
+					if (panel.type === "specialist-training") {
+						specialistTrainingSelections.push(option.id);
+					}
+					await insertCharacterFeature(character.id, {
+						name: `${panel.label}: ${option.label}`,
+						source: `Level ${newLevel} ${panel.label}`,
+						level_acquired: newLevel,
+						description:
+							option.description ??
+							`Selected ${option.label} for ${panel.label}.`,
+						is_active: true,
+					});
+				}
+			}
+
+			if (specialistTrainingSelections.length > 0) {
+				characterUpdates.skill_expertise = Array.from(
+					new Set([
+						...(character.skill_expertise ?? []),
+						...specialistTrainingSelections,
+					]),
+				);
+			}
+
+			for (const entry of unresolvedLedgerEntries) {
+				await insertCharacterFeature(character.id, {
+					name: `Pending Choice: ${entry.source}`,
+					source: `Level ${newLevel} Pending Choice`,
+					level_acquired: newLevel,
+					description: `${entry.source} requires ${entry.count} ${entry.type} selection${entry.count === 1 ? "" : "s"}. Complete this from the character sheet when the catalog panel is available.`,
+					is_active: true,
+				});
+			}
+
 			if (!isMilestone) {
 				characterUpdates.experience = Math.max(
 					0,
@@ -869,6 +1472,8 @@ export const LevelUpWizardModal = ({
 					action_type?: string;
 					uses_formula?: string;
 					recharge?: string;
+					homebrew_id?: string | null;
+					modifiers?: Database["public"]["Tables"]["character_features"]["Insert"]["modifiers"];
 				};
 				const usesMax = calculateFeatureUses(
 					feature.uses_formula || null,
@@ -876,9 +1481,8 @@ export const LevelUpWizardModal = ({
 					newProficiencyBonus,
 				);
 
-				await supabase.from("character_features").insert({
-					character_id: character.id,
-					feature_id: _feature.id ?? null,
+				await insertCharacterFeature(character.id, {
+					feature_id: feature.homebrew_id ? null : (_feature.id ?? null),
 					name: feature.name || "Unknown Feature",
 					source: feature.is_path_feature
 						? `Path: ${characterUpdates.path || effectivePathName || "Unknown"}`
@@ -890,6 +1494,8 @@ export const LevelUpWizardModal = ({
 					uses_current: usesMax,
 					recharge: feature.recharge || null,
 					is_active: true,
+					modifiers: feature.modifiers ?? null,
+					homebrew_id: feature.homebrew_id ?? null,
 				});
 			}
 
@@ -936,7 +1542,7 @@ export const LevelUpWizardModal = ({
 			try {
 				await addJobAwakeningBenefitsForLevel(
 					character.id,
-					jobObj || character.job,
+					staticJobObj || character.job,
 					newLevel,
 				);
 			} catch (error) {
@@ -949,7 +1555,7 @@ export const LevelUpWizardModal = ({
 			try {
 				await applyJobAwakeningTraitsToCharacter(
 					character.id,
-					jobObj || character.job,
+					staticJobObj || character.job,
 					[],
 				);
 			} catch (error) {
@@ -1007,6 +1613,13 @@ export const LevelUpWizardModal = ({
 
 			await Promise.all([
 				queryClient.invalidateQueries({ queryKey: ["powers", character.id] }),
+				queryClient.invalidateQueries({
+					queryKey: ["character-spells", character.id],
+				}),
+				queryClient.invalidateQueries({ queryKey: ["features", character.id] }),
+				queryClient.invalidateQueries({
+					queryKey: ["character-features", character.id],
+				}),
 				queryClient.invalidateQueries({
 					queryKey: ["character-techniques", character.id],
 				}),
@@ -1448,6 +2061,210 @@ export const LevelUpWizardModal = ({
 									</div>
 								)}
 
+								{requiredCantripChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
+										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
+											<Sparkles className="w-4 h-4" />
+											CANTRIP ALIGNMENTS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {requiredCantripChoices} cantrip
+											{requiredCantripChoices === 1 ? "" : "s"} unlocked by this
+											level.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availableCantrips.map((cantrip) => {
+												const isSelected = selectedCantripIds.includes(
+													cantrip.id,
+												);
+												return (
+													<div
+														key={cantrip.id}
+														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-cyan-500/10"
+													>
+														<input
+															type="checkbox"
+															id={`level-cantrip-${cantrip.id}`}
+															checked={isSelected}
+															onChange={() =>
+																setSelectedCantripIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		cantrip.id,
+																		requiredCantripChoices,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedCantripIds.length >=
+																	requiredCantripChoices
+															}
+															className="mt-1 rounded border-cyan-500/30"
+														/>
+														<label
+															htmlFor={`level-cantrip-${cantrip.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<span className="font-resurge text-sm text-cyan-400">
+																{formatRegentVernacular(cantrip.name)}
+															</span>
+															{cantrip.description && (
+																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	{formatRegentVernacular(cantrip.description)}
+																</p>
+															)}
+														</label>
+													</div>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedCantripIds.length}/
+											{requiredCantripChoices}
+										</p>
+									</div>
+								)}
+
+								{requiredSpellChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
+										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2 mb-4">
+											<Sparkles className="w-4 h-4" />
+											POWER INSCRIPTIONS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {requiredSpellChoices} power inscription
+											{requiredSpellChoices === 1 ? "" : "s"} unlocked by this
+											level.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availableSpells.map((spell) => {
+												const isSelected = selectedSpellIds.includes(spell.id);
+												return (
+													<div
+														key={spell.id}
+														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-blue-500/10"
+													>
+														<input
+															type="checkbox"
+															id={`level-spell-${spell.id}`}
+															checked={isSelected}
+															onChange={() =>
+																setSelectedSpellIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		spell.id,
+																		requiredSpellChoices,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedSpellIds.length >= requiredSpellChoices
+															}
+															className="mt-1 rounded border-blue-500/30"
+														/>
+														<label
+															htmlFor={`level-spell-${spell.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-resurge text-sm text-blue-400">
+																	{formatRegentVernacular(spell.name)}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Level {spell.power_level}
+																</Badge>
+															</div>
+															{spell.description && (
+																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	{formatRegentVernacular(spell.description)}
+																</p>
+															)}
+														</label>
+													</div>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedSpellIds.length}/{requiredSpellChoices}
+										</p>
+									</div>
+								)}
+
+								{requiredSpellbookInscriptions > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-indigo-500/10 to-transparent border border-indigo-500/20">
+										<Label className="font-resurge text-indigo-400 tracking-wide flex items-center gap-2 mb-4">
+											<Sparkles className="w-4 h-4" />
+											{formatRegentVernacular(
+												jobObj?.spellbook?.label ?? "Spellbook",
+											)}{" "}
+											INSCRIPTIONS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {requiredSpellbookInscriptions} inscription
+											{requiredSpellbookInscriptions === 1 ? "" : "s"} unlocked
+											by this level.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availableSpellbookSpells.map((spell) => {
+												const isSelected = selectedSpellbookIds.includes(
+													spell.id,
+												);
+												return (
+													<div
+														key={spell.id}
+														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-indigo-500/10"
+													>
+														<input
+															type="checkbox"
+															id={`level-spellbook-${spell.id}`}
+															checked={isSelected}
+															onChange={() =>
+																setSelectedSpellbookIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		spell.id,
+																		requiredSpellbookInscriptions,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedSpellbookIds.length >=
+																	requiredSpellbookInscriptions
+															}
+															className="mt-1 rounded border-indigo-500/30"
+														/>
+														<label
+															htmlFor={`level-spellbook-${spell.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-resurge text-sm text-indigo-400">
+																	{formatRegentVernacular(spell.name)}
+																</span>
+																<Badge variant="secondary" className="text-xs">
+																	Level {spell.power_level}
+																</Badge>
+															</div>
+															{spell.description && (
+																<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																	{formatRegentVernacular(spell.description)}
+																</p>
+															)}
+														</label>
+													</div>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedSpellbookIds.length}/
+											{requiredSpellbookInscriptions}
+										</p>
+									</div>
+								)}
+
 								{requiredPowerChoices > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
 										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
@@ -1620,6 +2437,174 @@ export const LevelUpWizardModal = ({
 											Selected: {selectedTechniqueIds.length}/
 											{requiredTechniqueChoices}
 										</p>
+									</div>
+								)}
+
+								{requiredFightingStyleChoices > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-rose-500/10 to-transparent border border-rose-500/20">
+										<Label className="font-resurge text-rose-400 tracking-wide flex items-center gap-2 mb-4">
+											<Shield className="w-4 h-4" />
+											FIGHTING STYLE
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											Choose {requiredFightingStyleChoices} Fighting Style
+											{requiredFightingStyleChoices === 1 ? "" : "s"} unlocked
+											by this level.
+										</p>
+										<div className="space-y-2 max-h-56 overflow-y-auto">
+											{availableFightingStyles.map((style) => {
+												const isSelected = selectedFightingStyleIds.includes(
+													style.id,
+												);
+												return (
+													<div
+														key={style.id}
+														className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-rose-500/10"
+													>
+														<input
+															type="checkbox"
+															id={`level-style-${style.id}`}
+															checked={isSelected}
+															onChange={() =>
+																setSelectedFightingStyleIds((current) =>
+																	toggleLimitedSelection(
+																		current,
+																		style.id,
+																		requiredFightingStyleChoices,
+																	),
+																)
+															}
+															disabled={
+																!isSelected &&
+																selectedFightingStyleIds.length >=
+																	requiredFightingStyleChoices
+															}
+															className="mt-1 rounded border-rose-500/30"
+														/>
+														<label
+															htmlFor={`level-style-${style.id}`}
+															className="flex-1 cursor-pointer"
+														>
+															<div className="flex items-center gap-2 flex-wrap">
+																<span className="font-resurge text-sm text-rose-400">
+																	{formatRegentVernacular(style.name)}
+																</span>
+																<Badge variant="outline" className="text-xs">
+																	{style.source === "ra-native"
+																		? "RA-native"
+																		: "Baseline"}
+																</Badge>
+															</div>
+															<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																{formatRegentVernacular(style.description)}
+															</p>
+														</label>
+													</div>
+												);
+											})}
+										</div>
+										<p className="text-xs text-muted-foreground mt-2 font-heading">
+											Selected: {selectedFightingStyleIds.length}/
+											{requiredFightingStyleChoices}
+										</p>
+									</div>
+								)}
+
+								{ledgerOptionPanels.map((panel) => {
+									const selectedValues = selectedLedgerOptions[panel.key] ?? [];
+									return (
+										<div
+											key={panel.key}
+											className="p-4 rounded-lg bg-gradient-to-r from-violet-500/10 to-transparent border border-violet-500/20"
+										>
+											<Label className="font-resurge text-violet-400 tracking-wide flex items-center gap-2 mb-4">
+												<Sparkles className="w-4 h-4" />
+												{formatRegentVernacular(panel.label).toUpperCase()}
+											</Label>
+											<p className="text-sm text-muted-foreground mb-3 font-heading">
+												Choose {panel.count} option
+												{panel.count === 1 ? "" : "s"}.
+											</p>
+											<div className="space-y-2 max-h-56 overflow-y-auto">
+												{panel.options.map((option) => {
+													const isSelected = selectedValues.includes(option.id);
+													return (
+														<div
+															key={option.id}
+															className="flex items-start gap-3 p-2 rounded-lg bg-background/50 border border-violet-500/10"
+														>
+															<input
+																type="checkbox"
+																id={`level-ledger-${panel.key}-${option.id}`}
+																checked={isSelected}
+																onChange={() =>
+																	setSelectedLedgerOptions((current) => ({
+																		...current,
+																		[panel.key]: toggleLimitedSelection(
+																			current[panel.key] ?? [],
+																			option.id,
+																			panel.count,
+																		),
+																	}))
+																}
+																disabled={
+																	!isSelected &&
+																	selectedValues.length >= panel.count
+																}
+																className="mt-1 rounded border-violet-500/30"
+															/>
+															<label
+																htmlFor={`level-ledger-${panel.key}-${option.id}`}
+																className="flex-1 cursor-pointer"
+															>
+																<span className="font-resurge text-sm text-violet-400">
+																	{formatRegentVernacular(option.label)}
+																</span>
+																{option.description && (
+																	<p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+																		{formatRegentVernacular(option.description)}
+																	</p>
+																)}
+															</label>
+														</div>
+													);
+												})}
+											</div>
+											<p className="text-xs text-muted-foreground mt-2 font-heading">
+												Selected: {selectedValues.length}/{panel.count}
+											</p>
+										</div>
+									);
+								})}
+
+								{unresolvedLedgerEntries.length > 0 && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-amber-500/10 to-transparent border border-amber-500/20">
+										<Label className="font-resurge text-amber-400 tracking-wide flex items-center gap-2 mb-4">
+											<Sparkles className="w-4 h-4" />
+											PENDING SELECTION PROTOCOLS
+										</Label>
+										<p className="text-sm text-muted-foreground mb-3 font-heading">
+											These ledger choices do not yet have a dedicated catalog
+											panel. They will be recorded as pending features on the
+											sheet.
+										</p>
+										<div className="space-y-2">
+											{unresolvedLedgerEntries.map((entry) => (
+												<div
+													key={`${entry.level}:${entry.type}:${entry.source}`}
+													className="p-2 rounded-lg bg-background/50 border border-amber-500/10"
+												>
+													<span className="font-resurge text-sm text-amber-400">
+														{formatRegentVernacular(entry.source)}
+													</span>
+													<p className="text-xs text-muted-foreground mt-1">
+														{entry.count} {formatOptionLabel(entry.type)}{" "}
+														selection
+														{entry.count === 1 ? "" : "s"}
+													</p>
+												</div>
+											))}
+										</div>
 									</div>
 								)}
 
@@ -1825,7 +2810,13 @@ export const LevelUpWizardModal = ({
 									(!isMilestone && !canLevelUp) ||
 									(showPathSelection && !selectedPathRow) ||
 									selectedPowerIds.length < requiredPowerChoices ||
-									selectedTechniqueIds.length < requiredTechniqueChoices
+									selectedTechniqueIds.length < requiredTechniqueChoices ||
+									selectedCantripIds.length < requiredCantripChoices ||
+									selectedSpellIds.length < requiredSpellChoices ||
+									selectedSpellbookIds.length < requiredSpellbookInscriptions ||
+									selectedFightingStyleIds.length <
+										requiredFightingStyleChoices ||
+									!ledgerOptionRequirementsMet
 								}
 								className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
 							>

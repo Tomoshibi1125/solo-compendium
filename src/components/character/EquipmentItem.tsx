@@ -11,8 +11,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
-import type { Database } from "@/integrations/supabase/types";
 import type { CombatAction } from "@/hooks/useCombatActions";
+import type { Database } from "@/integrations/supabase/types";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -97,7 +97,8 @@ function EquipmentItemComponent({
 				.map((prop) => [prop.toLowerCase(), prop] as const),
 		).values(),
 	);
-	const itemChargesCurrent = item.charges_current ?? computedAction?.resourceCurrent;
+	const itemChargesCurrent =
+		item.charges_current ?? computedAction?.resourceCurrent;
 	const itemChargesMax = item.charges_max ?? computedAction?.resourceMax;
 	const hasCharges = itemChargesCurrent != null || itemChargesMax != null;
 
@@ -183,11 +184,15 @@ function EquipmentItemComponent({
 										: ""}
 								</span>
 							)}
-							{computedAction?.range && <span>Range: {computedAction.range}</span>}
+							{computedAction?.range && (
+								<span>Range: {computedAction.range}</span>
+							)}
 							{item.is_container && (
 								<span>
 									Container: {item.is_active === false ? "inactive" : "active"}
-									{item.ignore_contents_weight ? ", ignores contents weight" : ""}
+									{item.ignore_contents_weight
+										? ", ignores contents weight"
+										: ""}
 								</span>
 							)}
 						</div>
