@@ -50,7 +50,11 @@ import {
 	clampVttGridOpacity,
 	getVttBackgroundTransform,
 } from "@/lib/vtt/backgroundTransform";
-import { buildVttFogRects } from "@/lib/vtt/fogRects";
+import {
+	buildVttFogRenderRects,
+	buildVttVisibleCellSet,
+	isVttTokenVisibleThroughFog,
+} from "@/lib/vtt/fogRects";
 import {
 	resolveSceneAudioTrackIntent,
 	syncSceneMusicEngine,
@@ -69,6 +73,7 @@ import {
 	type TerrainZone,
 	type VTTDrawing,
 	VttMusicEngine,
+	type WallSegment,
 	WEATHER_PRESETS,
 	type WeatherType,
 } from "@/lib/vtt";
@@ -117,6 +122,8 @@ interface Scene {
 	tokens: PlacedToken[];
 	fogOfWar: boolean;
 	fogData?: boolean[][];
+	tokenVisionRevealsFog?: boolean;
+	walls?: WallSegment[];
 	drawings?: VTTDrawing[];
 	weather?: WeatherType;
 	musicMood?: MusicMood | null;
@@ -166,9 +173,13 @@ const isPlayerMapShortcutTarget = (target: EventTarget | null) => {
 const AscendantMapView = ({
 	campaignId,
 	sessionId,
+	onBack,
+	backLabel = "Back",
 }: {
 	campaignId?: string;
 	sessionId?: string;
+	onBack?: () => void;
+	backLabel?: string;
 } = {}) => {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -585,18 +596,13 @@ const AscendantMapView = ({
 	const isOwnToken = useCallback(
 		(token: PlacedToken) => {
 			if (!user?.id) return false;
-			return token.ownerId === user.id || token.characterId === user.id;
+			return (
+				token.ownerId === user.id ||
+				token.characterId === user.id ||
+				(!!myCharacterId && token.characterId === myCharacterId)
+			);
 		},
-		[user?.id],
-	);
-
-	// Initiative order
-	const tokensInInitiative = useMemo(
-		() =>
-			[...visibleTokens]
-				.filter((t) => t.initiative !== undefined && t.initiative !== null)
-				.sort((a, b) => (b.initiative || 0) - (a.initiative || 0)),
-		[visibleTokens],
+		[myCharacterId, user?.id],
 	);
 
 	// Grid position from mouse event
@@ -925,13 +931,105 @@ const AscendantMapView = ({
 		const ownToken = visibleTokens.find((t) => isOwnToken(t) && t.characterId);
 		return ownToken?.characterId || myCharacterId;
 	}, [isOwnToken, myCharacterId, visibleTokens]);
+	const fogVisibleCells = useMemo(() => {
+		if (!currentScene?.fogOfWar || !currentScene.tokenVisionRevealsFog) {
+			return null;
+		}
+		return buildVttVisibleCellSet(
+			{
+				width: currentScene.width,
+				height: currentScene.height,
+				gridSize,
+				fogOfWar: currentScene.fogOfWar,
+				tokenVisionRevealsFog: currentScene.tokenVisionRevealsFog,
+				fogData: currentScene.fogData,
+				walls: currentScene.walls ?? [],
+			},
+			visibleTokens,
+			{
+				currentUserId: user?.id ?? null,
+				ownedCharacterId: ownCharacterId,
+				activeTokenId: draggedTokenId,
+			},
+		);
+	}, [
+		currentScene?.fogData,
+		currentScene?.fogOfWar,
+		currentScene?.height,
+		currentScene?.tokenVisionRevealsFog,
+		currentScene?.walls,
+		currentScene?.width,
+		draggedTokenId,
+		gridSize,
+		ownCharacterId,
+		user?.id,
+		visibleTokens,
+	]);
+	const requiresVisionButHasNone = Boolean(
+		currentScene?.fogOfWar &&
+			currentScene.tokenVisionRevealsFog &&
+			fogVisibleCells &&
+			fogVisibleCells.size === 0,
+	);
 	const fogRects = useMemo(() => {
-		if (!currentScene?.fogOfWar || !currentScene.fogData) return [];
-		return buildVttFogRects(currentScene.fogData);
-	}, [currentScene?.fogData, currentScene?.fogOfWar]);
+		if (!currentScene?.fogOfWar) return [];
+		return buildVttFogRenderRects({
+			scene: {
+				width: currentScene.width,
+				height: currentScene.height,
+				gridSize,
+				fogOfWar: currentScene.fogOfWar,
+				tokenVisionRevealsFog: currentScene.tokenVisionRevealsFog,
+				fogData: currentScene.fogData,
+			},
+			visibleCells: fogVisibleCells,
+		});
+	}, [
+		currentScene?.fogData,
+		currentScene?.fogOfWar,
+		currentScene?.height,
+		currentScene?.tokenVisionRevealsFog,
+		currentScene?.width,
+		fogVisibleCells,
+		gridSize,
+	]);
+	const fogVisibleTokens = useMemo(() => {
+		if (!currentScene) return [];
+		return visibleTokens.filter((token) =>
+			isVttTokenVisibleThroughFog(
+				token,
+				{
+					width: currentScene.width,
+					height: currentScene.height,
+					gridSize,
+					fogOfWar: currentScene.fogOfWar,
+					tokenVisionRevealsFog: currentScene.tokenVisionRevealsFog,
+					fogData: currentScene.fogData,
+				},
+				fogVisibleCells,
+			),
+		);
+	}, [
+		currentScene,
+		currentScene?.fogData,
+		currentScene?.fogOfWar,
+		currentScene?.height,
+		currentScene?.tokenVisionRevealsFog,
+		currentScene?.width,
+		fogVisibleCells,
+		gridSize,
+		visibleTokens,
+	]);
+	const tokensInInitiative = useMemo(
+		() =>
+			[...fogVisibleTokens]
+				.filter((t) => t.initiative !== undefined && t.initiative !== null)
+				.sort((a, b) => (b.initiative || 0) - (a.initiative || 0)),
+		[fogVisibleTokens],
+	);
 	const auraTokens = useMemo(
-		() => visibleTokens.filter((t) => t.auraRadius && t.auraRadius > 0),
-		[visibleTokens],
+		() => fogVisibleTokens.filter((t) => t.auraRadius && t.auraRadius > 0),
+		[fogVisibleTokens],
 	);
 	const weatherPreset = useMemo(() => {
 		const weather = currentScene?.weather;
@@ -1019,13 +1117,23 @@ const AscendantMapView = ({
 						<>
 							<Button
 								variant="ghost"
-								onClick={() => navigate("/ascendant-tools")}
+								onClick={() => {
+									if (onBack) {
+										onBack();
+										return;
+									}
+									navigate("/ascendant-tools");
+								}}
 								size="sm"
 								className="shrink-0 h-8 px-2"
-								aria-label="Back to Ascendant Tools"
+								aria-label={
+									onBack ? "Back to Warden View" : "Back to Ascendant Tools"
+								}
 							>
 								<ArrowLeft className="w-4 h-4" aria-hidden />
-								<span className="hidden md:inline ml-1.5 text-xs">Back</span>
+								<span className="hidden md:inline ml-1.5 text-xs">
+									{backLabel}
+								</span>
 							</Button>
 							<div className="min-w-0 flex-1">
 								<span
@@ -1204,21 +1312,30 @@ const AscendantMapView = ({
 											)}
 
 											{/* Fog of war */}
-											{currentScene?.fogOfWar && currentScene.fogData && (
+											{currentScene?.fogOfWar && (
 												<div className="absolute inset-0 pointer-events-none vtt-fog-overlay-layer z-[90]">
 													{fogRects.map((rect) => (
 														<DynamicStyle
-															key={`fog-${rect.rx}-${rect.ry}-${rect.width}-${rect.height}`}
+															key={`fog-${rect.state}-${rect.rx}-${rect.ry}-${rect.width}-${rect.height}`}
 															className="absolute vtt-fog-cell"
 															vars={{
 																left: `${rect.rx * gridSize * zoom}px`,
 																top: `${rect.ry * gridSize * zoom}px`,
 																width: `${rect.width * gridSize * zoom}px`,
 																height: `${rect.height * gridSize * zoom}px`,
-																opacity: 0.9,
+																opacity: rect.opacity,
+																"background-color":
+																	rect.state === "hidden"
+																		? "#000000"
+																		: "#1a1510",
 															}}
 														/>
 													))}
+												</div>
+											)}
+											{requiresVisionButHasNone && (
+												<div className="absolute inset-0 z-[95] flex items-center justify-center bg-black text-center text-xs uppercase tracking-[0.22em] text-white/70 pointer-events-none">
+													No controlled token vision
 												</div>
 											)}
 
@@ -1370,7 +1487,7 @@ const AscendantMapView = ({
 											})}
 
 											{/* Tokens */}
-											{visibleTokens.map((token) => {
+											{fogVisibleTokens.map((token) => {
 												// Grid-unit footprint (Roll20/Foundry/DDB parity).
 												const size = getTokenSizePx(token.size, gridSize, zoom);
 												const canDrag = isOwnToken(token) && !token.locked;
@@ -1547,7 +1664,7 @@ const AscendantMapView = ({
 											)}
 
 											{/* Empty state */}
-											{visibleTokens.length === 0 &&
+											{fogVisibleTokens.length === 0 &&
 												!currentScene?.backgroundImage && (
 													<div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
 														<p className="text-sm font-mono uppercase tracking-widest animate-pulse">
@@ -1977,7 +2094,7 @@ const AscendantMapView = ({
 							{/* Token list */}
 							<AscendantWindow title="TOKENS ON MAP" compact>
 								<div className="space-y-1 max-h-48 overflow-y-auto">
-									{visibleTokens.map((token) => (
+									{fogVisibleTokens.map((token) => (
 										<div
 											key={token.id}
 											className="flex items-center gap-2 text-xs p-1 rounded hover:bg-muted/30"
@@ -2005,7 +2122,7 @@ const AscendantMapView = ({
 											)}
 										</div>
 									))}
-									{visibleTokens.length === 0 && (
+									{fogVisibleTokens.length === 0 && (
 										<AscendantText className="block text-xs text-muted-foreground text-center py-2">
 											No tokens yet.
 										</AscendantText>

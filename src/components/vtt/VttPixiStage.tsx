@@ -16,7 +16,12 @@ import {
 	clampVttGridOpacity,
 	getVttBackgroundTransform,
 } from "@/lib/vtt/backgroundTransform";
-import { buildVttFogRects } from "@/lib/vtt/fogRects";
+import {
+	buildVttFogRenderRects,
+	buildVttVisibleCellSet,
+	isVttTokenVisibleThroughFog,
+	VTT_WARDEN_HIDDEN_FOG_OPACITY,
+} from "@/lib/vtt/fogRects";
 import { getTokenFootprintPx, type TokenSize } from "@/lib/vtt/tokenSizing";
 import type { VTTTokenBar } from "@/types/vtt";
 
@@ -81,6 +86,7 @@ type SceneLike = {
 	gridOpacity?: number;
 	fogOfWar: boolean;
 	fogData?: boolean[][];
+	tokenVisionRevealsFog?: boolean;
 };
 
 type VttPixiStageProps = {
@@ -97,6 +103,7 @@ type VttPixiStageProps = {
 	targetedTokenIds?: string[];
 	activeInitiativeTokenId?: string | null;
 	currentUserId?: string | null;
+	ownedCharacterId?: string | null;
 	setActiveTokenId: (id: string | null) => void;
 	onTokenPointerSelect?: (tokenId: string, additive: boolean) => void;
 	updateToken: (tokenId: string, updates: Partial<PlacedToken>) => void;
@@ -177,10 +184,23 @@ const getMaxTextureSize = (): number => {
 // Cache once per page load so we don't create throwaway contexts repeatedly.
 const GPU_MAX_TEXTURE = getMaxTextureSize();
 
+const scaleWallsForPixiVisibility = (
+	walls: import("@/lib/vtt").WallSegment[],
+	step: number,
+) =>
+	walls.map((wall) => ({
+		...wall,
+		x1: wall.x1 * step,
+		y1: wall.y1 * step,
+		x2: wall.x2 * step,
+		y2: wall.y2 * step,
+	}));
+
 type StageLayers = {
 	world: Container;
 	bg: Container;
 	weatherLayer: Container;
+	lightingLayer: Container;
 	effectsLayer: Container;
 	gridLayer: Container;
 	wallsLayer: Container;
@@ -204,6 +224,7 @@ export function VttPixiStage({
 	targetedTokenIds = [],
 	activeInitiativeTokenId = null,
 	currentUserId = null,
+	ownedCharacterId = null,
 	setActiveTokenId,
 	onTokenPointerSelect,
 	updateToken,
@@ -243,6 +264,40 @@ export function VttPixiStage({
 		const h = (scene?.height ?? 0) * gridSize * zoom;
 		return { w, h };
 	}, [gridSize, zoom, scene?.height, scene?.width]);
+	const fogVisibleCells = useMemo(() => {
+		if (!scene?.fogOfWar || !scene.tokenVisionRevealsFog || isWarden)
+			return null;
+		return buildVttVisibleCellSet(
+			{
+				width: scene.width,
+				height: scene.height,
+				gridSize,
+				fogOfWar: scene.fogOfWar,
+				tokenVisionRevealsFog: scene.tokenVisionRevealsFog,
+				fogData: scene.fogData,
+				walls,
+			},
+			tokens,
+			{
+				currentUserId,
+				ownedCharacterId,
+				activeTokenId,
+			},
+		);
+	}, [
+		activeTokenId,
+		currentUserId,
+		gridSize,
+		isWarden,
+		ownedCharacterId,
+		scene?.fogData,
+		scene?.fogOfWar,
+		scene?.height,
+		scene?.tokenVisionRevealsFog,
+		scene?.width,
+		tokens,
+		walls,
+	]);
 	const worldSizeRef = useRef(worldSize);
 
 	useEffect(() => {
@@ -605,6 +660,7 @@ export function VttPixiStage({
 		const world = new Container();
 		const bg = new Container();
 		const weatherLayer = new Container();
+		const lightingLayer = new Container();
 		const effectsLayer = new Container();
 		const gridLayer = new Container();
 		const wallsLayer = new Container();
@@ -625,6 +681,7 @@ export function VttPixiStage({
 			world,
 			bg,
 			weatherLayer,
+			lightingLayer,
 			effectsLayer,
 			gridLayer,
 			wallsLayer,
@@ -637,6 +694,7 @@ export function VttPixiStage({
 		stage.addChild(world);
 		world.addChild(bg);
 		world.addChild(weatherLayer);
+		world.addChild(lightingLayer);
 		world.addChild(effectsLayer);
 		world.addChild(gridLayer);
 		world.addChild(wallsLayer);
@@ -684,6 +742,7 @@ export function VttPixiStage({
 		const {
 			bg,
 			weatherLayer,
+			lightingLayer,
 			gridLayer: grid,
 			wallsLayer,
 			tokenLayer,
@@ -691,7 +750,7 @@ export function VttPixiStage({
 			fogLayer: fog,
 		} = layers;
 
-		let bgActive = true;
+		let renderActive = true;
 		if (canvasHostRef.current) {
 			delete canvasHostRef.current.dataset.bgLoaded;
 		}
@@ -701,7 +760,7 @@ export function VttPixiStage({
 			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
 			try {
 				const texture = await Assets.load(scene.backgroundImage);
-				if (!bgActive) return;
+				if (!renderActive) return;
 				const backgroundTransform = getVttBackgroundTransform({
 					sceneWidth: scene.width ?? 0,
 					sceneHeight: scene.height ?? 0,
@@ -1005,88 +1064,49 @@ export function VttPixiStage({
 
 		const renderFog = () => {
 			fog.removeChildren();
-			if (!scene?.fogOfWar || !scene.fogData) return;
-
-			const fg = new Graphics();
-			fg.alpha = isWarden ? 0.5 : 0.85;
+			if (!scene?.fogOfWar) return;
 			const step = gridSize * zoom;
-			for (const rect of buildVttFogRects(scene.fogData)) {
+			const fogRects = buildVttFogRenderRects({
+				scene: {
+					width: scene.width,
+					height: scene.height,
+					gridSize,
+					fogOfWar: scene.fogOfWar,
+					tokenVisionRevealsFog: isWarden ? false : scene.tokenVisionRevealsFog,
+					fogData: scene.fogData,
+				},
+				visibleCells: isWarden ? null : fogVisibleCells,
+				showExploredMemory: !isWarden,
+			});
+			for (const rect of fogRects) {
+				const fg = new Graphics();
 				fg.rect(
 					rect.rx * step,
 					rect.ry * step,
 					rect.width * step,
 					rect.height * step,
 				);
-			}
-
-			fg.fill({ color: 0x000000, alpha: 0.8 });
-			fog.addChild(fg);
-
-			// Line of Sight masking
-			if (!isWarden) {
-				// Collect tokens that grant vision (owned tokens or all characters if none selected)
-				const visionSources = activeTokenId
-					? tokens.filter((t) => t.id === activeTokenId)
-					: tokens.filter((t) => t.tokenType === "character");
-
-				if (visionSources.length > 0) {
-					const losMask = new Graphics();
-					losMask.fill({ color: 0xffffff }); // this will be our mask area
-
-					for (const source of visionSources) {
-						const vision = {
-							tokenId: source.id,
-							x: source.x,
-							y: source.y,
-							visionRange: 12, // 60ft default vision (12 squares)
-							darkvisionRange: 0,
-							blindsightRange: 0,
-						};
-
-						const polygon = computeVisibilityPolygon(
-							vision,
-							walls || [],
-							gridSize * zoom,
-							72,
-						);
-
-						if (polygon.vertices.length > 0) {
-							losMask.moveTo(polygon.vertices[0][0], polygon.vertices[0][1]);
-							for (let i = 1; i < polygon.vertices.length; i++) {
-								losMask.lineTo(polygon.vertices[i][0], polygon.vertices[i][1]);
-							}
-							losMask.closePath();
-						}
-					}
-
-					// Create a dark overlay that covers the whole map
-					const darkness = new Graphics();
-					darkness.rect(
-						0,
-						0,
-						(scene?.width || 100) * step,
-						(scene?.height || 100) * step,
-					);
-					darkness.fill({ color: 0x000000, alpha: 0.85 });
-
-					fog.addChild(darkness);
-					fog.addChild(losMask);
-					darkness.mask = losMask;
-				}
+				fg.fill({
+					color: rect.state === "hidden" ? 0x000000 : 0x1a1510,
+					alpha: isWarden ? VTT_WARDEN_HIDDEN_FOG_OPACITY : rect.opacity,
+				});
+				fog.addChild(fg);
 			}
 		};
 
 		const renderLighting = async () => {
-			// Create a render texture for lights to masked on top
+			lightingLayer.removeChildren();
 			if (lightSources.length === 0) return;
-			const lightLayer = new Graphics();
+			const lightLayer = new Container();
 			lightLayer.blendMode = "add";
+			const step = gridSize * zoom;
+			const visibilityWalls = scaleWallsForPixiVisibility(walls, step);
 
 			for (const light of lightSources) {
-				const cx = light.x * gridSize * zoom;
-				const cy = light.y * gridSize * zoom;
-				const rBright = light.brightRadius * gridSize * zoom;
-				const rDim = light.dimRadius * gridSize * zoom;
+				const cx = (light.x + 0.5) * step;
+				const cy = (light.y + 0.5) * step;
+				const rBright = light.brightRadius * step;
+				const rDim = light.dimRadius * step;
 
 				const vision = {
 					tokenId: light.id,
@@ -1098,8 +1118,8 @@ export function VttPixiStage({
 				};
 				const polygon = computeVisibilityPolygon(
 					vision,
-					walls,
-					gridSize * zoom,
+					visibilityWalls,
+					step,
 					72,
 				);
 
@@ -1134,7 +1154,7 @@ export function VttPixiStage({
 				lightLayer.addChild(lightG);
 			}
 
-			fog.addChild(lightLayer);
+			lightingLayer.addChild(lightLayer);
 		};
 
 		// Snap-to-grid ghost rendering lives in the pointer-handler effect below;
@@ -1147,10 +1167,25 @@ export function VttPixiStage({
 
 			const visible = tokens.filter((token) => {
 				if (!effectiveVisibleLayers[token.layer]) return false;
-				return isWarden ? true : token.visible;
+				if (isWarden) return true;
+				if (!token.visible) return false;
+				if (!scene) return true;
+				return isVttTokenVisibleThroughFog(
+					token,
+					{
+						width: scene.width,
+						height: scene.height,
+						gridSize,
+						fogOfWar: scene.fogOfWar,
+						tokenVisionRevealsFog: scene.tokenVisionRevealsFog,
+						fogData: scene.fogData,
+					},
+					fogVisibleCells,
+				);
 			});
 
 			for (const token of visible) {
+				if (!renderActive) return;
 				// Grid-unit footprint (industry standard: Roll20/Foundry/DDB).
 				// Medium = 1×1 cells, Large = 2×2, Huge = 3×3, Gargantuan = 4×4,
 				// Tiny = 0.5×0.5. Previous code used fixed pixel constants
@@ -1236,6 +1271,7 @@ export function VttPixiStage({
 				if (token.imageUrl) {
 					try {
 						const texture = await Assets.load(token.imageUrl);
+						if (!renderActive) return;
 						const sprite = Sprite.from(texture as never);
 						// Foundry parity: imageScale multiplies sprite size but
 						// never the grid footprint/token.
@@ -1476,7 +1512,7 @@ export function VttPixiStage({
 		void renderTokens();
 
 		return () => {
-			bgActive = false;
+			renderActive = false;
 		};
 	}, [
 		activeTokenId,
@@ -1486,6 +1522,7 @@ export function VttPixiStage({
 		appReady,
 		currentUserId,
 		effectiveVisibleLayers,
+		fogVisibleCells,
 		gridSize,
 		isWarden,
 		onTokenPointerSelect,

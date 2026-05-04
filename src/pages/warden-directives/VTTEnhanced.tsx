@@ -4260,6 +4260,10 @@ const VTTEnhanced = () => {
 					<AscendantMapView
 						campaignId={campaignId || ""}
 						sessionId={sessionId || undefined}
+						onBack={
+							isActualWarden ? () => setSimulatePlayerView(false) : undefined
+						}
+						backLabel={isActualWarden ? "Warden View" : "Back"}
 					/>
 				</EmbeddedProvider>
 			) : (
@@ -6330,6 +6334,9 @@ const VTTEnhanced = () => {
 												activeInitiativeTokenId={activeInitiativeTokenId}
 												onTokenPointerSelect={handleTokenPointerSelect}
 												setActiveTokenId={setActiveTokenId}
+												isWarden={isWarden}
+												currentUserId={user?.id ?? null}
+												ownedCharacterId={null}
 											/>
 										) : (
 											<MemoizedVttPixiStage
@@ -6350,6 +6357,7 @@ const VTTEnhanced = () => {
 												targetedTokenIds={selectedTargetIds}
 												activeInitiativeTokenId={activeInitiativeTokenId}
 												currentUserId={user?.id ?? null}
+												ownedCharacterId={null}
 												onTokenPointerSelect={handleTokenPointerSelect}
 												setActiveTokenId={setActiveTokenId}
 												updateToken={updateToken}

@@ -94,12 +94,41 @@ describe("VttDomFallbackSurface", () => {
 	it("renders background transform, grid, fog cells, and token selection", () => {
 		const scene = makeScene({
 			fogOfWar: true,
+			lights: [
+				{
+					id: "light-1",
+					x: 1,
+					y: 1,
+					brightRadius: 1,
+					dimRadius: 2,
+					color: "#ffd27d",
+					intensity: 0.8,
+					type: "torch",
+				},
+			],
+			walls: [
+				{
+					id: "wall-1",
+					x1: 1,
+					y1: 1,
+					x2: 3,
+					y2: 1,
+					type: "wall",
+				},
+			],
 			fogData: [
 				[true, false],
 				[false, true],
 			],
 		});
-		const token = makeToken({ hp: 12, maxHp: 20 });
+		const token = makeToken({
+			hp: 12,
+			maxHp: 20,
+			x: 0,
+			y: 0,
+			imageScale: 1.25,
+			render: { blendMode: "screen", opacity: 0.7 },
+		});
 		const { container, unmount } = mount(
 			<VttDomFallbackSurface
 				scene={scene}
@@ -129,11 +158,24 @@ describe("VttDomFallbackSurface", () => {
 		expect(grid?.style.backgroundSize).toBe("100px 100px");
 		expect(grid?.style.opacity).toBe("0.18");
 		const fog = container.querySelector('[data-testid="vtt-dom-fallback-fog"]');
-		expect(fog?.children.length).toBe(2);
+		expect(fog?.children.length).toBe(4);
+		expect((fog?.children[0] as HTMLElement | undefined)?.style.opacity).toBe(
+			"1",
+		);
+		expect(
+			container.querySelector('[data-testid="vtt-dom-fallback-lights"]'),
+		).toBeTruthy();
+		expect(
+			container.querySelector('[data-testid="vtt-dom-fallback-walls"]'),
+		).toBeTruthy();
 		const tokenButton = container.querySelector<HTMLButtonElement>(
 			'[data-testid="vtt-dom-fallback-token-token-1"]',
 		);
 		expect(tokenButton?.title).toBe("Hero (12/20 HP)");
+		const tokenInner = tokenButton?.firstElementChild as HTMLElement | null;
+		expect(tokenInner?.style.transform).toBe("scale(1.25)");
+		expect(tokenInner?.style.mixBlendMode).toBe("screen");
+		expect(tokenInner?.style.opacity).toBe("0.7");
 		act(() => {
 			tokenButton?.dispatchEvent(
 				new MouseEvent("mousedown", { bubbles: true }),
@@ -159,6 +201,54 @@ describe("VttDomFallbackSurface", () => {
 		);
 		expect(
 			container.querySelector('[data-testid="vtt-dom-fallback-grid"]'),
+		).toBeNull();
+		unmount();
+	});
+
+	it("filters hidden Ascendant tokens when token vision reveals fog", () => {
+		const scene = makeScene({
+			width: 6,
+			height: 4,
+			fogOfWar: true,
+			tokenVisionRevealsFog: true,
+			fogData: [
+				[true, true, true, true, true, true],
+				[true, true, true, true, true, true],
+				[true, true, true, true, true, true],
+				[true, true, true, true, true, true],
+			],
+		});
+		const ownedToken = makeToken({
+			id: "owned",
+			x: 1,
+			y: 1,
+			ownerId: "user-1",
+			visionRange: 1,
+		});
+		const hiddenToken = makeToken({
+			id: "hidden",
+			x: 5,
+			y: 3,
+			ownerId: "user-2",
+		});
+		const { container, unmount } = mount(
+			<VttDomFallbackSurface
+				scene={scene}
+				tokens={[ownedToken, hiddenToken]}
+				gridSize={50}
+				zoom={1}
+				showGrid
+				activeTokenId={null}
+				activeInitiativeTokenId={null}
+				setActiveTokenId={setActiveTokenId}
+				currentUserId="user-1"
+			/>,
+		);
+		expect(
+			container.querySelector('[data-testid="vtt-dom-fallback-token-owned"]'),
+		).toBeTruthy();
+		expect(
+			container.querySelector('[data-testid="vtt-dom-fallback-token-hidden"]'),
 		).toBeNull();
 		unmount();
 	});
