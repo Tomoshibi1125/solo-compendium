@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+﻿import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -53,6 +53,7 @@ import {
 	addStartingEquipment,
 	applyJobAwakeningTraitsToCharacter,
 	getJobASI,
+	getMaxAbilityLevelForJobAtLevel,
 	insertCharacterFeature,
 } from "@/lib/characterCreation";
 import {
@@ -495,7 +496,7 @@ const CharacterNew = () => {
 			const mapped = [...staticMapped, ...homebrewMapped];
 
 			// Respect sourcebook entitlements (returns all rows when the user has
-			// no accessible set configured — i.e. they see canon content).
+			// no accessible set configured â€” i.e. they see canon content).
 			return filterRowsBySourcebookAccess(
 				mapped,
 				(row) => (row as { source_book?: string | null }).source_book,
@@ -677,6 +678,12 @@ const CharacterNew = () => {
 	const flawOptions = asStringArray(
 		(selectedBackgroundData as { flaws?: unknown } | undefined)?.flaws,
 	);
+	const creationSpellLevelCap = jobData?.name
+		? getMaxAbilityLevelForJobAtLevel(jobData.name, 1, "spell")
+		: 0;
+	const creationPowerLevelCap = jobData?.name
+		? getMaxAbilityLevelForJobAtLevel(jobData.name, 1, "power")
+		: 0;
 
 	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
@@ -692,6 +699,7 @@ const CharacterNew = () => {
 				accessContext: { campaignId: homebrewCampaignId },
 				jobName: jobData.name,
 				pathName: selectedPathName,
+				maxPowerLevel: creationPowerLevelCap,
 			});
 		},
 		enabled: !!jobData?.name && requiredPowerChoices > 0,
@@ -762,12 +770,12 @@ const CharacterNew = () => {
 				accessContext: { campaignId: homebrewCampaignId },
 				jobName: jobData.name,
 				pathName: selectedPathName,
-				maxPowerLevel: 1,
+				maxPowerLevel: creationSpellLevelCap,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
 				(spell) =>
 					spell.power_level > 0 &&
-					spell.power_level <= 1 &&
+					spell.power_level <= creationSpellLevelCap &&
 					runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
 			);
 			return [
@@ -795,12 +803,12 @@ const CharacterNew = () => {
 				accessContext: { campaignId: homebrewCampaignId },
 				jobName: jobData.name,
 				pathName: selectedPathName,
-				maxPowerLevel: 1,
+				maxPowerLevel: creationSpellLevelCap,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
 				(spell) =>
 					spell.power_level > 0 &&
-					spell.power_level <= 1 &&
+					spell.power_level <= creationSpellLevelCap &&
 					runtimeSpellMatchesCharacter(spell, jobData.name, selectedPathName),
 			);
 			return [
@@ -1164,6 +1172,10 @@ const CharacterNew = () => {
 				jobName: dbJob.name,
 				pathName: selectedPathName,
 				regentNames: [],
+				characterLevel: 1,
+				maxSpellLevel: getMaxAbilityLevelForJobAtLevel(dbJob.name, 1, "spell"),
+				maxPowerLevel: getMaxAbilityLevelForJobAtLevel(dbJob.name, 1, "power"),
+				maxTechniqueLevel: 1,
 			};
 
 			const finalAbilities = { ...abilities };
@@ -1390,7 +1402,7 @@ const CharacterNew = () => {
 
 			// D&D Beyond parity (#11): eagerly seed spell slot rows at creation
 			// so the spells panel doesn't need to lazy-create them on first
-			// render. Best-effort — failure here doesn't block character setup.
+			// render. Best-effort â€” failure here doesn't block character setup.
 			try {
 				await initializeSpellSlots.mutateAsync({
 					characterId: character.id,

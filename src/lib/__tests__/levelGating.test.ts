@@ -1,5 +1,11 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import {
+	type AbilityProgressionJobReference,
+	getSpellProgressionForAbilityJob,
+	normalizeAbilityProgressionJobName,
+	type SpellProgression,
+} from "@/lib/abilityProgression";
+import {
 	buildLevelUpGatingSummary,
 	canAccessPower,
 	canAcquireFeature,
@@ -12,6 +18,7 @@ import {
 	getAvailableSpellSlots,
 	getCantripLimit,
 	getFeaturesUnlockedAtLevel,
+	getMaxAccessibleAbilityLevel,
 	getMaxAccessiblePowerLevel,
 	getMinPathUnlockLevelForJob,
 	getStaticPathUnlockLevel,
@@ -284,8 +291,26 @@ describe("ASI gating", () => {
 // ---------------------------------------------------------------------------
 
 describe("spell/power level gating", () => {
+	it("normalizes ability progression job references", () => {
+		const job: AbilityProgressionJobReference = { name: " Mage " };
+		const progression: SpellProgression = getSpellProgressionForAbilityJob(job);
+		expect(normalizeAbilityProgressionJobName(job.name)).toBe("mage");
+		expect(progression).toBe("full");
+		expect(getSpellProgressionForAbilityJob("Holy Knight")).toBe("half");
+		expect(getSpellProgressionForAbilityJob("Contractor")).toBe("pact");
+		expect(getSpellProgressionForAbilityJob(null)).toBe("none");
+	});
+
 	it("non-caster has 0 max power level", () => {
 		expect(getMaxAccessiblePowerLevel("Vanguard", 20)).toBe(0);
+	});
+
+	it("martial jobs use ability-level power progression without spell access", () => {
+		expect(getMaxAccessiblePowerLevel("Destroyer", 20)).toBe(0);
+		expect(getMaxAccessibleAbilityLevel("Destroyer", 1, "power")).toBe(1);
+		expect(getMaxAccessibleAbilityLevel("Destroyer", 3, "power")).toBe(2);
+		expect(getMaxAccessibleAbilityLevel("Destroyer", 17, "power")).toBe(9);
+		expect(getMaxAccessibleAbilityLevel("Destroyer", 20, "spell")).toBe(0);
 	});
 
 	it("full caster progression matches SRD", () => {

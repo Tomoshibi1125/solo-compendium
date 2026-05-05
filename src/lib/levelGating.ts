@@ -21,6 +21,7 @@ import {
 	getSpellsPreparedLimit,
 } from "@/lib/characterCalculations";
 import {
+	getMaxAbilityLevelForJobAtLevel,
 	getMaxPowerLevelForJobAtLevel,
 	type JobReference,
 } from "@/lib/characterCreation";
@@ -327,6 +328,14 @@ export function getMaxAccessiblePowerLevel(
 	characterLevel: number,
 ): number {
 	return getMaxPowerLevelForJobAtLevel(job, characterLevel);
+}
+
+export function getMaxAccessibleAbilityLevel(
+	job: JobReference,
+	characterLevel: number,
+	kind: "spell" | "power",
+): number {
+	return getMaxAbilityLevelForJobAtLevel(job, characterLevel, kind);
 }
 
 /**

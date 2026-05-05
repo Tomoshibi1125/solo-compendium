@@ -3,7 +3,9 @@ import {
 	getRunePrimaryStatModifier,
 	getRuneRarityBonus,
 	inferRuneAbilityKind,
+	type RuneGrantAccessContext,
 	resolveRuneAbsorption,
+	resolveRuneGrant,
 } from "@/lib/runeAutomation";
 
 const STR16 = 16; // +3
@@ -204,5 +206,40 @@ describe("resolveRuneAbsorption — helpers", () => {
 		).toBe("technique");
 		expect(inferRuneAbilityKind({ rank: "POWER" })).toBe("power");
 		expect(inferRuneAbilityKind({ rank: "A" })).toBe("spell");
+	});
+});
+
+describe("resolveRuneGrant native strict eligibility", () => {
+	it("marks a high-level spell native but under-level when job can eventually learn it", async () => {
+		const accessContext: RuneGrantAccessContext = {
+			jobName: "Mage",
+			characterLevel: 5,
+			pathName: null,
+			regentNames: [],
+		};
+		const grant = await resolveRuneGrant(
+			{ kind: "spell", ref: "spell-a-1" },
+			accessContext,
+		);
+		expect(grant).not.toBeNull();
+		expect(grant?.isNative).toBe(true);
+		expect(grant?.isUnderLevel).toBe(true);
+		expect(grant?.abilityLevel).toBeGreaterThan(grant?.maxNativeLevel ?? 0);
+		expect(grant?.promotesAtLevel).toBeGreaterThan(5);
+	});
+
+	it("marks a spell non-native for a martial job even when level is ignored", async () => {
+		const grant = await resolveRuneGrant(
+			{ kind: "spell", ref: "spell-a-1" },
+			{
+				jobName: "Striker",
+				characterLevel: 20,
+				pathName: null,
+				regentNames: [],
+			},
+		);
+		expect(grant).not.toBeNull();
+		expect(grant?.isNative).toBe(false);
+		expect(grant?.isUnderLevel).toBe(false);
 	});
 });

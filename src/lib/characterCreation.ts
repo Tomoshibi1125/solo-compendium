@@ -6,6 +6,10 @@
 import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
+	type AbilityProgressionKind,
+	getMaxAbilityLevelForJobAtLevel as getMaxAbilityProgressionLevelForJobAtLevel,
+} from "@/lib/abilityProgression";
+import {
 	findCanonicalCastableByName,
 	isCanonicalSpellLearnable,
 	listLearnablePowers,
@@ -437,38 +441,15 @@ export function getMaxPowerLevelForJobAtLevel(
 	job: JobReference,
 	level: number,
 ): number {
-	const clamped = Math.min(Math.max(level, 1), 20);
-	const progression = getSpellProgressionForJob(job);
+	return getMaxAbilityProgressionLevelForJobAtLevel(job, level, "spell");
+}
 
-	if (progression === "none") return 0;
-
-	if (progression === "pact") {
-		if (clamped >= 9) return 5;
-		if (clamped >= 7) return 4;
-		if (clamped >= 5) return 3;
-		if (clamped >= 3) return 2;
-		return 1;
-	}
-
-	if (progression === "half") {
-		if (clamped >= 17) return 5;
-		if (clamped >= 13) return 4;
-		if (clamped >= 9) return 3;
-		if (clamped >= 5) return 2;
-		if (clamped >= 2) return 1;
-		return 0;
-	}
-
-	// full caster
-	if (clamped >= 17) return 9;
-	if (clamped >= 15) return 8;
-	if (clamped >= 13) return 7;
-	if (clamped >= 11) return 6;
-	if (clamped >= 9) return 5;
-	if (clamped >= 7) return 4;
-	if (clamped >= 5) return 3;
-	if (clamped >= 3) return 2;
-	return 1;
+export function getMaxAbilityLevelForJobAtLevel(
+	job: JobReference,
+	level: number,
+	kind: AbilityProgressionKind,
+): number {
+	return getMaxAbilityProgressionLevelForJobAtLevel(job, level, kind);
 }
 
 export async function getExistingFeatureNames(
@@ -3784,7 +3765,7 @@ export async function addStartingEquipment(
 									name: normalizedItem.name,
 									rarity: mapToDbRarity(normalizedItem.rarity),
 								})
-							: 1,
+							: 0,
 					}
 				: {
 						item_id: null,
@@ -3792,7 +3773,7 @@ export async function addStartingEquipment(
 						item_type: "gear",
 						quantity: 1,
 						is_equipped: false,
-						sigil_slots_base: 1,
+						sigil_slots_base: 0,
 					};
 
 			if (isLocalCharacterId(characterId)) {
@@ -3889,6 +3870,7 @@ export async function addStartingPowers(
 	const accessiblePowers = await listLearnablePowers({
 		accessContext: { campaignId },
 		jobName: jobName ?? null,
+		maxPowerLevel: getMaxAbilityProgressionLevelForJobAtLevel(job, 1, "power"),
 	});
 
 	if (accessiblePowers.length > 0) {

@@ -4,6 +4,7 @@ import {
 	ShieldAlert,
 	ShieldCheck,
 	ShieldX,
+	Sparkles,
 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
@@ -24,6 +25,7 @@ interface DefensesModalProps {
 	immunities?: string[];
 	vulnerabilities?: string[];
 	conditionImmunities?: string[];
+	sigilTraits?: string[];
 	triggerButton?: React.ReactNode;
 	characterId: string;
 	isOpen?: boolean;
@@ -36,6 +38,7 @@ export function DefensesModal({
 	immunities = [],
 	vulnerabilities = [],
 	conditionImmunities = [],
+	sigilTraits = [],
 	triggerButton,
 	characterId,
 	isOpen,
@@ -63,7 +66,8 @@ export function DefensesModal({
 		resistances.length > 0 ||
 		immunities.length > 0 ||
 		vulnerabilities.length > 0 ||
-		conditionImmunities.length > 0;
+		conditionImmunities.length > 0 ||
+		sigilTraits.length > 0;
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -245,6 +249,25 @@ export function DefensesModal({
 									</div>
 								</div>
 							)}
+						</div>
+					)}
+
+					{sigilTraits.length > 0 && (
+						<div className="space-y-1.5">
+							<div className="flex items-center gap-1.5 text-xs font-medium text-purple-600 dark:text-purple-400">
+								<Sparkles className="h-3.5 w-3.5" /> Sigil Traits
+							</div>
+							<div className="flex flex-wrap gap-1.5">
+								{sigilTraits.map((t) => (
+									<Badge
+										key={t}
+										variant="outline"
+										className="text-[11px] font-normal border-purple-200 bg-purple-50/50 text-purple-700 dark:border-purple-900 dark:bg-purple-950/50 dark:text-purple-300"
+									>
+										{t}
+									</Badge>
+								))}
+							</div>
 						</div>
 					)}
 

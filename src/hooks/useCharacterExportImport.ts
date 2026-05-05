@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	resolveCanonicalCastableReference,
@@ -727,16 +728,26 @@ async function importRelatedCharacterRows(
 	userId: string,
 ): Promise<void> {
 	const charData = recordOrNull(data.character);
+	const importedJobName = stringOrNull(charData?.job);
+	const importedLevel = numberOrDefault(charData?.level, 1);
 	const importedAbilityContext: CharacterAbilityAccessContext = {
 		campaignId: null,
 		accessContext: { campaignId: null },
-		jobName: stringOrNull(charData?.job),
+		jobName: importedJobName,
 		pathName: stringOrNull(charData?.path),
 		regentNames: Array.isArray(charData?.regent_overlays)
 			? charData.regent_overlays.filter(
 					(value): value is string => typeof value === "string",
 				)
 			: [],
+		characterLevel: importedLevel,
+		maxSpellLevel: importedJobName
+			? getMaxAbilityLevelForJobAtLevel(importedJobName, importedLevel, "spell")
+			: null,
+		maxPowerLevel: importedJobName
+			? getMaxAbilityLevelForJobAtLevel(importedJobName, importedLevel, "power")
+			: null,
+		maxTechniqueLevel: importedLevel,
 	};
 
 	if (Array.isArray(data.abilities) && data.abilities.length > 0) {

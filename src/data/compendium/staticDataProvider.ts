@@ -83,6 +83,10 @@ export interface StaticCompendiumEntry {
 	rune_type?: string | null;
 	rune_category?: string | null;
 	rune_level?: number | null;
+	teaches?: {
+		kind: "spell" | "power" | "technique";
+		ref: string;
+	} | null;
 	cr?: string | null;
 	gate_rank?: string | null;
 	is_boss?: boolean;
@@ -737,6 +741,10 @@ type StaticRuneSource = {
 	lore?: string;
 	discovery_lore?: string;
 	tags?: string[];
+	teaches?: {
+		kind: "spell" | "power" | "technique";
+		ref: string;
+	};
 	requires_level?: number;
 };
 
@@ -1167,6 +1175,49 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		: { type: "instantaneous" };
 	const derivedComponents = { verbal: true, somatic: true, material: false };
 	const derivedEffects = { primary: primaryEffect };
+	const effectsValue = (
+		spell.effects && typeof spell.effects === "object"
+			? spell.effects
+			: derivedEffects
+	) as Record<string, Json>;
+	const mechanicsValue = (
+		spell.mechanics && typeof spell.mechanics === "object"
+			? spell.mechanics
+			: (spell as Record<string, Json>).spellAttack
+				? { attack: (spell as Record<string, Json>).spellAttack }
+				: {
+						saving_throw: { ability: "agility", effect: "half damage" },
+					}
+	) as Record<string, Json>;
+	const hasResolutionBlock = Boolean(
+		mechanicsValue.attack ||
+			mechanicsValue.saving_throw ||
+			mechanicsValue.healing ||
+			mechanicsValue.utility ||
+			mechanicsValue.resolution,
+	);
+	const resolvedMechanics = hasResolutionBlock
+		? mechanicsValue
+		: ({
+				...mechanicsValue,
+				utility: {
+					type: "explicit_effect",
+					ability:
+						typeof mechanicsValue.ability === "string"
+							? mechanicsValue.ability
+							: "spellcasting",
+					resolution:
+						typeof effectsValue.primary === "string" && effectsValue.primary
+							? effectsValue.primary
+							: spell.description,
+					formula:
+						typeof mechanicsValue.scaling === "string"
+							? mechanicsValue.scaling
+							: spell.higher_levels ||
+								spell.atHigherLevels ||
+								"No damage formula; resolves through the described non-damage effect.",
+				},
+			} as Record<string, Json>);
 
 	return {
 		id: spell.id || spell.name.toLowerCase().replace(/\s+/g, "-"),
@@ -1196,16 +1247,8 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		components: (spell.components && typeof spell.components === "object"
 			? spell.components
 			: derivedComponents) as Record<string, Json>,
-		effects: (spell.effects && typeof spell.effects === "object"
-			? spell.effects
-			: derivedEffects) as Record<string, Json>,
-		mechanics: (spell.mechanics && typeof spell.mechanics === "object"
-			? spell.mechanics
-			: (spell as Record<string, Json>).spellAttack
-				? { attack: (spell as Record<string, Json>).spellAttack }
-				: {
-						saving_throw: { ability: "agility", effect: "half damage" },
-					}) as Record<string, Json>,
+		effects: effectsValue,
+		mechanics: resolvedMechanics,
 		limitations: (spell.limitations && typeof spell.limitations === "object"
 			? {
 					...spell.limitations,

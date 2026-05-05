@@ -1096,6 +1096,7 @@ export default function CharacterSheetV2() {
 					immunities={stats.immunities}
 					vulnerabilities={stats.vulnerabilities}
 					conditionImmunities={stats.conditionImmunities}
+					sigilTraits={stats.finalTraits}
 					acBreakdown={stats.armorClassDetail}
 					characterId={character.id}
 				/>

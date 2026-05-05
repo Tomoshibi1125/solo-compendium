@@ -403,6 +403,27 @@ const sharedFamilies: PowerFamily[] = [
 		forms: ["Vent", "Rush", "Crown", "Engine", "Burst"],
 		levels: SHARED_POWER_LEVELS,
 	},
+	{
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker"],
+		mode: "kinetic",
+		school: "Evocation",
+		theme: "cross-discipline martial gate pressure",
+		damageType: "force",
+		prefixes: ["Apex", "Rift", "Storm", "Iron", "Nova", "Echo"],
+		forms: [
+			"Drive",
+			"Guard",
+			"Rush",
+			"Feint",
+			"Break",
+			"Surge",
+			"Counter",
+			"Vault",
+			"Pulse",
+			"Lock",
+		],
+		levels: FULL_POWER_LEVELS,
+	},
 ];
 
 export const powers_supplemental: CompendiumPower[] = [

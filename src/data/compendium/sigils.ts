@@ -11,6 +11,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Ignores the first 2 points of a target's damage reduction or physical resistance.",
 		tags: ["sigil", "weapon", "offensive", "physical"],
+		inscription_difficulty: 10,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -58,10 +59,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { damage_bonus: 1 },
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d6 physical or magical damage on hit.",
@@ -80,6 +78,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Whenever you score a critical hit, the force knocks the target prone if they are Large or smaller.",
 		tags: ["sigil", "weapon", "force"],
+		inscription_difficulty: 10,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -125,10 +124,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { attack_bonus: 1 },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 2d6 physical or magical damage on hit.",
@@ -147,6 +143,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Slashing or piercing damage inflicted by this weapon causes the target to bleed, losing 1d4 HP at the start of their next turn.",
 		tags: ["sigil", "weapon", "necrotic"],
+		inscription_difficulty: 13,
 		source_book: "Shadow Legion Archives",
 		lore: {
 			origin:
@@ -193,8 +190,8 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d6 physical or magical damage on hit.",
+			damage_bonus: "1d4 necrotic",
+			traits: ["Bleeding (1d4, 1 round)"],
 		},
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
@@ -214,6 +211,10 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Active: Once per short rest, convert all physical damage of your next attack into Fire damage, bypassing standard resistance.",
 		tags: ["sigil", "weapon", "fire"],
+		active_feature:
+			"Salamander's Strike: As a bonus action, imbue your next weapon attack with fire. Deals +2d6 fire damage. (1/short rest)",
+		effect_type: "active",
+		inscription_difficulty: 13,
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
@@ -259,10 +260,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d12 physical or magical damage on hit.",
-		},
+		passive_bonuses: {},
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 1d12 physical or magical damage on hit.",
@@ -281,6 +279,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Hitting an enemy reduces their movement speed by 5 feet until the end of their next turn. Does not stack.",
 		tags: ["sigil", "weapon", "cold"],
+		inscription_difficulty: 13,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -326,10 +325,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d4 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Slow (10ft, 1 round)"] },
 		discovery_lore: "Found pinned to a monstrous corpse.",
 		effects: {
 			primary: "Deals 2d4 physical or magical damage on hit.",
@@ -348,6 +344,10 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Active: If you hit the same target twice in one turn, release a shockwave dealing 1d8 lightning damage to an adjacent enemy.",
 		tags: ["sigil", "weapon", "lightning"],
+		active_feature:
+			"Thunder-Bird's Call: As a bonus action, your next attack deals +2d8 lightning damage and the target cannot take reactions until the start of their next turn. (1/short rest)",
+		effect_type: "active",
+		inscription_difficulty: 13,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "A traditional shamanic rune adapted by modern Guild enchanters.",
@@ -393,10 +393,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: {},
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 1d6 physical or magical damage on hit.",
@@ -415,6 +412,10 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Against Anomaly or Shadow-type anomalies, the weapon's damage die increases by one step (e.g., 1d6 becomes 1d8).",
 		tags: ["sigil", "weapon", "radiant"],
+		active_feature:
+			"Radiant Burst: As an action, emit a 15ft radiant pulse dealing 3d8 radiant damage (CON save for half) to undead/fiends. (1/long rest)",
+		effect_type: "hybrid",
+		inscription_difficulty: 13,
 		source_book: "Holylight Cathedral",
 		lore: {
 			origin:
@@ -460,10 +461,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d4 physical or magical damage on hit.",
-		},
+		passive_bonuses: { damage_bonus: "1d6 radiant" },
 		discovery_lore: "Found pinned to a monstrous corpse.",
 		effects: {
 			primary: "Deals 2d4 physical or magical damage on hit.",
@@ -482,6 +480,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Your attacks with this weapon make no sound and give off no light. You do not break stealth when drawing it.",
 		tags: ["sigil", "weapon", "necrotic", "stealth"],
+		inscription_difficulty: 13,
 		source_book: "Shadow Legion Archives",
 		lore: {
 			origin:
@@ -527,10 +526,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d12 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Advantage on Stealth checks"] },
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d12 physical or magical damage on hit.",
@@ -548,6 +544,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Reduces damage taken from ranged weapon attacks by 3.",
 		tags: ["sigil", "armor", "defensive"],
+		inscription_difficulty: 10,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -594,10 +591,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { ac_bonus: 1 },
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 2d6 physical or magical damage on hit.",
@@ -616,6 +610,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: While below 50% max HP, you gain a +1 bonus to Armor Class.",
 		tags: ["sigil", "armor", "vitality"],
+		inscription_difficulty: 10,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -661,10 +656,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d8 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Advantage on death saving throws"] },
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 2d8 physical or magical damage on hit.",
@@ -682,6 +674,7 @@ export const sigils: CompendiumSigil[] = [
 		can_inscribe_on: ["armor"],
 		effect_description: "Passive: Reduces all Fire damage taken by 5.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 13,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -727,10 +720,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d8 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Resistance: Fire"] },
 		discovery_lore: "Discovered encoded in an ancient grimoire.",
 		effects: {
 			primary: "Deals 2d8 physical or magical damage on hit.",
@@ -748,6 +738,7 @@ export const sigils: CompendiumSigil[] = [
 		can_inscribe_on: ["armor"],
 		effect_description: "Passive: Reduces all Cold damage taken by 5.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 13,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -793,10 +784,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Resistance: Cold"] },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 3d6 physical or magical damage on hit.",
@@ -814,6 +802,7 @@ export const sigils: CompendiumSigil[] = [
 		can_inscribe_on: ["armor"],
 		effect_description: "Passive: Reduces all Lightning damage taken by 5.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 13,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Built by reverse-engineering the scales of the Storm anomaly.",
@@ -858,10 +847,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 4d10 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Resistance: Lightning"] },
 		discovery_lore: "Found pinned to a monstrous corpse.",
 		effects: {
 			primary: "Deals 4d10 physical or magical damage on hit.",
@@ -880,6 +866,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: You ignore difficult terrain penalties created by rubble or natural ground.",
 		tags: ["sigil", "armor", "utility"],
+		inscription_difficulty: 13,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "An agile enhancement favored by the Guild's scouting corps.",
@@ -924,10 +911,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d12 + 6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { speed_bonus: 10 },
 		discovery_lore: "Discovered encoded in an ancient grimoire.",
 		effects: {
 			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
@@ -946,6 +930,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: You have advantage on Intelligence (Investigation) checks to identify enemy weaknesses.",
 		tags: ["sigil", "accessory", "intelligence"],
+		inscription_difficulty: 13,
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
@@ -991,10 +976,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
-		},
+		passive_bonuses: { intelligence_bonus: 1 },
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
@@ -1013,6 +995,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: You cannot be surprised by visible enemies, and your ranged weapon attacks ignore half cover.",
 		tags: ["sigil", "accessory", "sense"],
+		inscription_difficulty: 13,
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
@@ -1059,10 +1042,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d12 physical or magical damage on hit.",
-		},
+		passive_bonuses: { wisdom_bonus: 1 },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 1d12 physical or magical damage on hit.",
@@ -1081,6 +1061,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: When you take the ready action, you can move up to 10 feet as part of the reaction.",
 		tags: ["sigil", "accessory", "agility"],
+		inscription_difficulty: 13,
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
@@ -1127,10 +1108,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { dexterity_bonus: 1 },
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 3d6 physical or magical damage on hit.",
@@ -1149,6 +1127,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: You count as one size category larger for the purposes of grappling, shoving, and carrying capacity.",
 		tags: ["sigil", "accessory", "strength"],
+		inscription_difficulty: 13,
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
@@ -1194,10 +1173,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 4d10 physical or magical damage on hit.",
-		},
+		passive_bonuses: { strength_bonus: 1 },
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 4d10 physical or magical damage on hit.",
@@ -1216,6 +1192,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Hostile creatures must succeed on a DC 13 Sense check to target you if another ally is within 5 feet.",
 		tags: ["sigil", "accessory", "presence"],
+		inscription_difficulty: 13,
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
@@ -1261,10 +1238,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
-		},
+		passive_bonuses: { charisma_bonus: 1 },
 		discovery_lore: "Discovered encoded in an ancient grimoire.",
 		effects: {
 			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
@@ -1283,6 +1257,10 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Whenever you score a critical hit, recover 1 expended Job resource (or spell slot of level 1).",
 		tags: ["sigil", "accessory", "mana"],
+		active_feature:
+			"Mana Font Surge: As a bonus action, recover one expended spell slot of 3rd level or lower. (1/long rest)",
+		effect_type: "hybrid",
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1329,8 +1307,7 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d12 + 6 physical or magical damage on hit.",
+			traits: ["Mana Regeneration (+1 spell slot recovery on short rest)"],
 		},
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
@@ -1350,6 +1327,10 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Any humanoid killed by this weapon instantly rises as a Shadow Minion under your control for 1 minute.",
 		tags: ["sigil", "weapon", "necrotic", "summoning"],
+		active_feature:
+			"Void Step: As a bonus action, teleport up to 30 feet to an unoccupied space you can see that is in dim light or darkness. (Proficiency/long rest)",
+		effect_type: "hybrid",
+		inscription_difficulty: 22,
 		source_book: "Shadow Legion Archives",
 		lore: {
 			origin:
@@ -1395,10 +1376,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
-		},
+		passive_bonuses: { attack_bonus: 2, damage_bonus: "2d6 necrotic" },
 		discovery_lore: "Discovered encoded in an ancient grimoire.",
 		effects: {
 			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
@@ -1417,6 +1395,10 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: If an attack would reduce you to 0 HP, it instead reduces you to 1 HP, and releases a 20ft fiery explosion (4d10 Fire damage).",
 		tags: ["sigil", "armor", "vitality"],
+		active_feature:
+			"Undying Flame: When you drop to 0 HP, you instead drop to 1 HP and gain temporary HP equal to your level. (1/long rest)",
+		effect_type: "active",
+		inscription_difficulty: 22,
 		source_book: "Holylight Cathedral",
 		lore: {
 			origin:
@@ -1463,8 +1445,7 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d12 physical or magical damage on hit.",
+			traits: ["Undying Flame: Drop to 1 HP instead of 0 (1/long rest)"],
 		},
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
@@ -1484,6 +1465,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Fire damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1530,10 +1512,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d8 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Immunity: Fire"] },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 2d8 physical or magical damage on hit.",
@@ -1552,6 +1531,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Cold damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1597,10 +1577,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d12 + 6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Immunity: Cold"] },
 		discovery_lore: "Found pinned to a monstrous corpse.",
 		effects: {
 			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
@@ -1619,6 +1596,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Lightning damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1664,10 +1642,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Immunity: Lightning"] },
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
 			primary: "Deals 1d6 physical or magical damage on hit.",
@@ -1686,6 +1661,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Acid damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1731,10 +1707,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Immunity: Acid"] },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
@@ -1753,6 +1726,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Poison damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1798,10 +1772,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 4d10 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Immunity: Poison"] },
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 4d10 physical or magical damage on hit.",
@@ -1820,6 +1791,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Thunder damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1865,10 +1837,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Immunity: Thunder"] },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 3d6 physical or magical damage on hit.",
@@ -1887,6 +1856,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Force damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -1932,10 +1902,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Resistance: Force"] },
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
 			primary: "Deals 3d6 physical or magical damage on hit.",
@@ -1954,6 +1921,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Grants Resistance to Psychic damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
+		inscription_difficulty: 16,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -2000,10 +1968,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Resistance: Psychic"] },
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
 			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
@@ -2022,6 +1987,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Attacks with this slashing weapon ignore slashing resistance and treat immunity as resistance.",
 		tags: ["sigil", "weapon", "mastery"],
+		inscription_difficulty: 19,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -2068,8 +2034,8 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d12 + 6 physical or magical damage on hit.",
+			attack_bonus: 2,
+			traits: ["Ignore slashing resistance"],
 		},
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
@@ -2089,6 +2055,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Attacks with this bludgeoning weapon push targets 10 feet backward on a hit.",
 		tags: ["sigil", "weapon", "mastery"],
+		inscription_difficulty: 19,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -2134,10 +2101,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d8 physical or magical damage on hit.",
-		},
+		passive_bonuses: { attack_bonus: 2, traits: ["Push 10ft on hit"] },
 		discovery_lore: "Discovered encoded in an ancient grimoire.",
 		effects: {
 			primary: "Deals 1d8 physical or magical damage on hit.",
@@ -2155,6 +2119,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Your ranged attacks ignore half and three-quarters cover entirely.",
 		tags: ["sigil", "weapon", "mastery"],
+		inscription_difficulty: 19,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Ensured a 100% kill rate for the Guild's elite archer division.",
@@ -2200,8 +2165,8 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d10 + 2 physical or magical damage on hit.",
+			attack_bonus: 2,
+			traits: ["Ignore half/three-quarters cover"],
 		},
 		discovery_lore: "Traded for thirty vials of anomaly ichor.",
 		effects: {
@@ -2221,6 +2186,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Attacks made at a 10-foot reach or 20-foot range deal an additional 1d6 piercing damage.",
 		tags: ["sigil", "weapon", "mastery"],
+		inscription_difficulty: 19,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Keeps the deadliest horrors exactly an arm's length away.",
@@ -2266,8 +2232,8 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d6 physical or magical damage on hit.",
+			damage_bonus: "1d6 piercing",
+			traits: ["Reach bonus damage"],
 		},
 		discovery_lore: "Recovered after a massive Guild raid.",
 		effects: {
@@ -2286,6 +2252,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Once per turn, you can declare a reckless attack. On hit, the target is stunned until their turn.",
 		tags: ["sigil", "weapon", "mastery"],
+		inscription_difficulty: 19,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -2332,8 +2299,8 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 3d6 physical or magical damage on hit.",
+			damage_bonus: 3,
+			traits: ["Stun on declared reckless attack (1/turn)"],
 		},
 		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
 		effects: {
@@ -2353,6 +2320,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Spells requiring an attack roll score a critical hit on a 19 or 20.",
 		tags: ["sigil", "weapon", "mastery"],
+		inscription_difficulty: 19,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "The mage's ultimate catalyst.",
@@ -2397,10 +2365,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
-		},
+		passive_bonuses: { traits: ["Spell crits on 19-20"] },
 		discovery_lore: "Found pinned to a monstrous corpse.",
 		effects: {
 			primary: "Deals 1d6 physical or magical damage on hit.",
@@ -2419,6 +2384,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Increases Maximum HP by your Character Level x 2.",
 		tags: ["sigil", "armor", "vitality"],
+		inscription_difficulty: 22,
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
@@ -2464,10 +2430,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d8 physical or magical damage on hit.",
-		},
+		passive_bonuses: { speed_bonus: 5, ac_bonus: 1 },
 		discovery_lore: "Found pinned to a monstrous corpse.",
 		effects: {
 			primary: "Deals 1d8 physical or magical damage on hit.",

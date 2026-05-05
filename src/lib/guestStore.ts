@@ -447,7 +447,7 @@ export function addLocalEquipment(
 		is_active: item.is_active ?? true,
 		ignore_contents_weight: item.ignore_contents_weight ?? false,
 		custom_modifiers: item.custom_modifiers ?? null,
-		sigil_slots_base: 0,
+		sigil_slots_base: item.sigil_slots_base ?? 0,
 	};
 
 	const equipment = [...entry.equipment, next];

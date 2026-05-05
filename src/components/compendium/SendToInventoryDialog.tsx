@@ -25,6 +25,7 @@ import { useSpells } from "@/hooks/useSpells";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { useTechniques } from "@/hooks/useTechniques";
 import type { Database } from "@/integrations/supabase/types";
+import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 
 interface SendToInventoryDialogProps {
 	item: CompendiumEntry | null;
@@ -127,23 +128,32 @@ export function SendToInventoryDialog({
 						});
 						break;
 
-					default:
+					default: {
 						// Items, Sigils, Tattoos, Relics, etc go to equipment
+						const itemType = item.type;
+						const itemProps = Array.isArray(item.properties)
+							? item.properties
+							: null;
 						await addEquipment({
 							character_id: targetId,
 							name: item.name,
 							description: item.description,
-							item_type: item.type,
+							item_type: itemType,
 							rarity: item.rarity as
 								| Database["public"]["Enums"]["rarity"]
 								| null,
 							weight: item.weight || 0,
 							value_credits: item.value || 0,
-							properties: Array.isArray(item.properties)
-								? item.properties
-								: null,
+							properties: itemProps,
 							requires_attunement: item.attunement || false,
+							sigil_slots_base: getDefaultSigilSlotsBaseForEquipment({
+								item_type: itemType,
+								properties: itemProps,
+								name: item.name,
+								rarity: item.rarity ?? null,
+							}),
 						});
+					}
 				}
 
 				toast({

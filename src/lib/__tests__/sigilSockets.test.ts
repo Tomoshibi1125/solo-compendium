@@ -1,10 +1,16 @@
 import { describe, expect, it } from "vitest";
 import {
 	applySigilBonuses,
+	attemptAddSocket,
+	canPerformSocketWork,
 	getDefaultSigilSlotsBaseForEquipment,
 	getEffectiveSigilSlots,
+	getMaxSocketsForRarity,
 	getSigilSlotBonusForRarity,
+	getSocketCraftingDC,
 	isSigilCompatibleWithEquipment,
+	type SocketCraftingContext,
+	type SocketCraftingResult,
 	validateSigilInscription,
 } from "@/lib/sigilAutomation";
 
@@ -151,6 +157,84 @@ describe("sigil socket rarity ladder", () => {
 		).toBe(true);
 	});
 
+	it("applies flat ability bonus keys (e.g. intelligence_bonus)", () => {
+		const result = applySigilBonuses(
+			{
+				ac: 10,
+				speed: 30,
+				abilities: {},
+				attackBonus: 0,
+				damageBonus: "",
+				traits: [],
+			},
+			[
+				{
+					is_active: true,
+					sigil: {
+						passive_bonuses: {
+							intelligence_bonus: 2,
+							wisdom_bonus: 1,
+							strength_bonus: 3,
+						},
+					},
+				},
+			],
+		);
+		expect(result.abilities.intelligence).toBe(2);
+		expect(result.abilities.wisdom).toBe(1);
+		expect(result.abilities.strength).toBe(3);
+	});
+
+	it("prefers higher value between flat bonus keys and nested ability_scores", () => {
+		const result = applySigilBonuses(
+			{
+				ac: 10,
+				speed: 30,
+				abilities: { intelligence: 14 },
+				attackBonus: 0,
+				damageBonus: "",
+				traits: [],
+			},
+			[
+				{
+					is_active: true,
+					sigil: {
+						passive_bonuses: {
+							ability_scores: { intelligence: 16 },
+							intelligence_bonus: 18,
+						},
+					},
+				},
+			],
+		);
+		// flat key (18) should win over nested (16) and initial (14)
+		expect(result.abilities.intelligence).toBe(18);
+	});
+
+	it("handles string damage_bonus in passive_bonuses", () => {
+		const result = applySigilBonuses(
+			{
+				ac: 10,
+				speed: 30,
+				abilities: {},
+				attackBonus: 0,
+				damageBonus: "",
+				traits: [],
+			},
+			[
+				{
+					is_active: true,
+					sigil: {
+						passive_bonuses: {
+							damage_bonus: "1d6 fire",
+						},
+					},
+				},
+			],
+		);
+		expect(result.damageBonus).toBe("1d6 fire");
+	});
+
 	it("aggregates active passive sigil bonuses for derived stat consumers", () => {
 		const result = applySigilBonuses(
 			{
@@ -199,5 +283,149 @@ describe("sigil socket rarity ladder", () => {
 			damageBonus: "+4",
 			traits: ["Existing", "Keen"],
 		});
+	});
+});
+
+describe("socket crafting DC", () => {
+	it("returns base 10 for common with 0 existing sockets", () => {
+		expect(getSocketCraftingDC("common", 0)).toBe(10);
+	});
+
+	it("scales by rarity step × 3", () => {
+		expect(getSocketCraftingDC("uncommon", 0)).toBe(13);
+		expect(getSocketCraftingDC("rare", 0)).toBe(16);
+		expect(getSocketCraftingDC("very_rare", 0)).toBe(19);
+		expect(getSocketCraftingDC("legendary", 0)).toBe(25);
+	});
+
+	it("scales by existing sockets × 3", () => {
+		expect(getSocketCraftingDC("common", 1)).toBe(13);
+		expect(getSocketCraftingDC("common", 2)).toBe(16);
+		expect(getSocketCraftingDC("rare", 2)).toBe(22);
+	});
+});
+
+describe("max sockets for rarity", () => {
+	it.each([
+		["common", 1],
+		["uncommon", 2],
+		["rare", 3],
+		["very_rare", 4],
+		["legendary", 5],
+		["artifact", 6],
+		[null, 1],
+	])("maps %s to max %i sockets", (rarity, expected) => {
+		expect(getMaxSocketsForRarity(rarity)).toBe(expected);
+	});
+});
+
+describe("canPerformSocketWork", () => {
+	it("allows technomancer job", () => {
+		expect(canPerformSocketWork({ job: "Technomancer" })).toEqual({
+			allowed: true,
+			source: "technomancer",
+		});
+	});
+
+	it("allows Aetheric Inscriptor feat", () => {
+		expect(
+			canPerformSocketWork({
+				job: "Fighter",
+				features: [{ name: "Aetheric Inscriptor" }],
+			}),
+		).toEqual({ allowed: true, source: "feat" });
+	});
+
+	it("rejects characters without qualifying job or feat", () => {
+		expect(
+			canPerformSocketWork({
+				job: "Fighter",
+				features: [{ name: "Great Weapon Master" }],
+			}),
+		).toEqual({ allowed: false, source: null });
+	});
+});
+
+describe("attemptAddSocket", () => {
+	const baseCtx: SocketCraftingContext = {
+		currentSlots: 0,
+		equipmentRarity: "common",
+		intModifier: 3,
+		proficiencyBonus: 2,
+		isProficient: true,
+		hasExpertise: false,
+		isTechnomancer: false,
+		hasInscriptorFeat: false,
+		roll: 10,
+	};
+
+	it("blocks when at max sockets", () => {
+		const result: SocketCraftingResult = attemptAddSocket({
+			...baseCtx,
+			currentSlots: 1,
+		});
+		expect(result.success).toBe(false);
+		expect(result.materialsConsumed).toBe(false);
+		expect(result.narrative).toContain("maximum socket capacity");
+	});
+
+	it("succeeds on a passing roll", () => {
+		// DC = 10 (common, 0 slots), check = 10 + 3 (INT) + 2 (prof) = 15
+		const result = attemptAddSocket(baseCtx);
+		expect(result.success).toBe(true);
+		expect(result.newSlotsBase).toBe(1);
+		expect(result.dc).toBe(10);
+		expect(result.checkTotal).toBe(15);
+		expect(result.materialsConsumed).toBe(true);
+	});
+
+	it("critical fail causes item damage", () => {
+		const result = attemptAddSocket({ ...baseCtx, roll: 1 });
+		expect(result.success).toBe(false);
+		expect(result.itemDamaged).toBe(true);
+		expect(result.materialsConsumed).toBe(true);
+	});
+
+	it("critical success or margin >= 10 grants quality modifier", () => {
+		const result = attemptAddSocket({ ...baseCtx, roll: 20 });
+		expect(result.success).toBe(true);
+		expect(result.qualityModifier).toBe(1);
+	});
+
+	it("close failure (margin -1 to -5) consumes materials without damage", () => {
+		// DC = 10, check = 2 + 3 + 2 = 7, margin = -3
+		const result = attemptAddSocket({ ...baseCtx, roll: 2 });
+		expect(result.success).toBe(false);
+		expect(result.materialsConsumed).toBe(true);
+		expect(result.itemDamaged).toBe(false);
+	});
+
+	it("applies expertise double proficiency", () => {
+		// DC = 10, check = 10 + 3 + 4 (expertise) = 17
+		const result = attemptAddSocket({
+			...baseCtx,
+			hasExpertise: true,
+		});
+		expect(result.checkTotal).toBe(17);
+		expect(result.success).toBe(true);
+	});
+
+	it("applies technomancer proficiency when not otherwise proficient", () => {
+		// DC = 10, check = 10 + 3 + 2 (tech PB) = 15
+		const result = attemptAddSocket({
+			...baseCtx,
+			isProficient: false,
+			isTechnomancer: true,
+		});
+		expect(result.checkTotal).toBe(15);
+	});
+
+	it("applies Aetheric Inscriptor feat bonus", () => {
+		// DC = 10, check = 10 + 3 + 2 (prof) + 2 (feat) = 17
+		const result = attemptAddSocket({
+			...baseCtx,
+			hasInscriptorFeat: true,
+		});
+		expect(result.checkTotal).toBe(17);
 	});
 });

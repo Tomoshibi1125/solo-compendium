@@ -258,6 +258,268 @@ export function validateSigilInscription(input: {
 	return { allowed: true };
 }
 
+// ─── Socket Crafting System ──────────────────────────────────────────────────
+// Socket increases are magical gear work requiring a Technomancer or a character
+// with an appropriate feat (e.g. Aetheric Inscriptor). Quality affects risk.
+
+export interface SocketCraftingContext {
+	/** Current sigil_slots_base on the target equipment */
+	currentSlots: number;
+	/** Equipment rarity for DC scaling */
+	equipmentRarity: string | null | undefined;
+	/** Crafter's Intelligence modifier (used as the relevant ability for this skill check) */
+	intModifier: number;
+	/** Crafter's proficiency bonus */
+	proficiencyBonus: number;
+	/** Whether crafter is proficient in the relevant skill (Arcana / Inscription Tools) */
+	isProficient: boolean;
+	/** Whether crafter has expertise (double proficiency) in Inscription Tools */
+	hasExpertise: boolean;
+	/** Whether crafter is a Technomancer (class features grant additional bonuses) */
+	isTechnomancer: boolean;
+	/** Whether crafter has the Aetheric Inscriptor feat */
+	hasInscriptorFeat: boolean;
+	/** Optional: Technomancer level for scaling bonuses */
+	technomancerLevel?: number;
+	/** Natural d20 roll (1-20) */
+	roll: number;
+}
+
+export interface SocketCraftingResult {
+	success: boolean;
+	/** New sigil_slots_base value (only if success) */
+	newSlotsBase: number;
+	/** Total check result */
+	checkTotal: number;
+	/** Target DC */
+	dc: number;
+	/** Quality modifier applied to future inscriptions on this slot */
+	qualityModifier: number;
+	/** Narrative description of outcome */
+	narrative: string;
+	/** Whether materials are consumed (always on success, conditional on fail) */
+	materialsConsumed: boolean;
+	/** Whether the item took cosmetic damage (critical fail only) */
+	itemDamaged: boolean;
+}
+
+/**
+ * Rarity step index used for DC calculation.
+ * Formula: DC = 10 + (rarityStep × 3) + (existingSockets × 3)
+ *
+ * Rationale: Common items have simpler mana lattice structures (DC 10).
+ * Each rarity tier adds denser lattice weaving (+3 per tier).
+ * Each existing socket compresses remaining lattice space (+3 per socket).
+ */
+const RARITY_STEP: Record<string, number> = {
+	common: 0,
+	uncommon: 1,
+	rare: 2,
+	very_rare: 3,
+	"very rare": 3,
+	epic: 4,
+	legendary: 5,
+	artifact: 6,
+};
+
+/**
+ * Calculate the DC for adding a socket to equipment.
+ * DC = 10 + (rarityStep × 3) + (existingSockets × 3)
+ *
+ * - Base 10: minimum skill to manipulate any mana lattice
+ * - +3 per rarity tier: denser lattice = harder to carve without disruption
+ * - +3 per existing socket: remaining lattice area shrinks, precision required
+ */
+export function getSocketCraftingDC(
+	equipmentRarity: string | null | undefined,
+	currentSlots: number,
+): number {
+	const rarity = (equipmentRarity || "common").toLowerCase();
+	const step = RARITY_STEP[rarity] ?? 0;
+	return 10 + step * 3 + currentSlots * 3;
+}
+
+/**
+ * Get the maximum number of sockets an item can ever have based on rarity.
+ * Even with crafting, items have an upper bound.
+ */
+export function getMaxSocketsForRarity(
+	rarity: string | null | undefined,
+): number {
+	switch ((rarity || "common").toLowerCase()) {
+		case "common":
+			return 1;
+		case "uncommon":
+			return 2;
+		case "rare":
+			return 3;
+		case "very_rare":
+		case "very rare":
+			return 4;
+		case "legendary":
+			return 5;
+		case "artifact":
+			return 6;
+		default:
+			return 1;
+	}
+}
+
+/**
+ * Check whether a character can perform socket crafting work.
+ * Requires Technomancer job or Aetheric Inscriptor feat.
+ */
+export function canPerformSocketWork(character: {
+	job?: string | null;
+	features?: Array<{ name: string; source?: string | null }>;
+}): { allowed: boolean; source: "technomancer" | "feat" | null } {
+	const job = (character.job || "").toLowerCase().replace(/[\s-]+/g, "");
+	if (job === "technomancer") {
+		return { allowed: true, source: "technomancer" };
+	}
+	const hasFeat = (character.features || []).some(
+		(f) =>
+			f.name.toLowerCase().includes("aetheric inscriptor") ||
+			f.name.toLowerCase().includes("sigil crafter") ||
+			f.source?.toLowerCase().includes("aetheric inscriptor"),
+	);
+	if (hasFeat) {
+		return { allowed: true, source: "feat" };
+	}
+	return { allowed: false, source: null };
+}
+
+/**
+ * Attempt to add a sigil socket to a piece of equipment.
+ * Returns detailed result including success/fail, quality, and narrative.
+ */
+export function attemptAddSocket(
+	ctx: SocketCraftingContext,
+): SocketCraftingResult {
+	const dc = getSocketCraftingDC(ctx.equipmentRarity, ctx.currentSlots);
+	const maxSlots = getMaxSocketsForRarity(ctx.equipmentRarity);
+
+	// Cannot exceed max sockets for rarity
+	if (ctx.currentSlots >= maxSlots) {
+		return {
+			success: false,
+			newSlotsBase: ctx.currentSlots,
+			checkTotal: 0,
+			dc,
+			qualityModifier: 0,
+			narrative: `This ${ctx.equipmentRarity || "common"} item has reached its maximum socket capacity (${maxSlots}).`,
+			materialsConsumed: false,
+			itemDamaged: false,
+		};
+	}
+
+	// Check = d20 + INT mod + skill proficiency component + class/feat bonuses
+	// Skill: Arcana (Intelligence) or Inscription Tools proficiency
+	let bonus = ctx.intModifier;
+
+	// Proficiency component
+	if (ctx.hasExpertise) {
+		// Expertise = double proficiency bonus
+		bonus += ctx.proficiencyBonus * 2;
+	} else if (ctx.isProficient) {
+		bonus += ctx.proficiencyBonus;
+	}
+
+	// Technomancer class bonuses (stacks with proficiency)
+	if (ctx.isTechnomancer) {
+		// Technomancers always add PB to inscription work (Mandate Vision)
+		if (!ctx.isProficient && !ctx.hasExpertise) {
+			bonus += ctx.proficiencyBonus;
+		}
+		// Overclocked Crafting (level 10+): +2 to all crafting checks
+		if (ctx.technomancerLevel && ctx.technomancerLevel >= 10) {
+			bonus += 2;
+		}
+	}
+
+	// Aetheric Inscriptor feat: flat +2 to inscription checks
+	if (ctx.hasInscriptorFeat) {
+		bonus += 2;
+	}
+
+	const checkTotal = ctx.roll + bonus;
+	const margin = checkTotal - dc;
+	const isCritFail = ctx.roll === 1;
+	const isCritSuccess = ctx.roll === 20;
+
+	if (isCritFail) {
+		return {
+			success: false,
+			newSlotsBase: ctx.currentSlots,
+			checkTotal,
+			dc,
+			qualityModifier: 0,
+			narrative:
+				"Critical failure — the mana lattice rejects the inscription violently. Materials are destroyed and the item's surface is scorched.",
+			materialsConsumed: true,
+			itemDamaged: true,
+		};
+	}
+
+	if (isCritSuccess || margin >= 10) {
+		// Exceptional success — high quality socket
+		return {
+			success: true,
+			newSlotsBase: ctx.currentSlots + 1,
+			checkTotal,
+			dc,
+			qualityModifier: 1,
+			narrative:
+				"Masterwork inscription — the new socket resonates perfectly with the item's mana lattice. Future sigils inscribed here gain enhanced stability.",
+			materialsConsumed: true,
+			itemDamaged: false,
+		};
+	}
+
+	if (margin >= 0) {
+		// Standard success
+		return {
+			success: true,
+			newSlotsBase: ctx.currentSlots + 1,
+			checkTotal,
+			dc,
+			qualityModifier: 0,
+			narrative:
+				"The socket carves cleanly into the equipment's lattice structure. A new sigil slot is ready for inscription.",
+			materialsConsumed: true,
+			itemDamaged: false,
+		};
+	}
+
+	if (margin >= -5) {
+		// Close failure — materials consumed but no damage
+		return {
+			success: false,
+			newSlotsBase: ctx.currentSlots,
+			checkTotal,
+			dc,
+			qualityModifier: 0,
+			narrative:
+				"The inscription destabilizes before completion — the lattice reseals. Materials are consumed but the item is undamaged.",
+			materialsConsumed: true,
+			itemDamaged: false,
+		};
+	}
+
+	// Severe failure — materials consumed, cosmetic damage
+	return {
+		success: false,
+		newSlotsBase: ctx.currentSlots,
+		checkTotal,
+		dc,
+		qualityModifier: 0,
+		narrative:
+			"The mana flow overloads the inscription point. Materials are destroyed and the item bears minor lattice scarring.",
+		materialsConsumed: true,
+		itemDamaged: true,
+	};
+}
+
 /**
  * Apply passive bonuses from active sigils to character stats.
  */
@@ -319,6 +581,26 @@ export function applySigilBonuses(
 				const current = totalBonuses.abilities[ability] || 0;
 				totalBonuses.abilities[ability] = Math.max(current, value);
 			});
+		}
+
+		// Flat ability bonus keys: strength_bonus, dexterity_bonus, etc.
+		const abilityBonusKeys = [
+			"strength",
+			"dexterity",
+			"constitution",
+			"intelligence",
+			"wisdom",
+			"charisma",
+		];
+		for (const ability of abilityBonusKeys) {
+			const key = `${ability}_bonus`;
+			if (typeof bonuses[key] === "number") {
+				const current = totalBonuses.abilities[ability] || 0;
+				totalBonuses.abilities[ability] = Math.max(
+					current,
+					bonuses[key] as number,
+				);
+			}
 		}
 
 		if (Array.isArray(bonuses.traits)) {

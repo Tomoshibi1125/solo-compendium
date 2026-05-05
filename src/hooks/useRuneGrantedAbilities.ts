@@ -14,6 +14,7 @@
  */
 
 import { useMemo } from "react";
+import { useFeatures } from "@/hooks/useFeatures";
 import { useCharacterRuneKnowledge } from "@/hooks/useRunes";
 
 const RUNE_PREFIXES = ["rune of the ", "rune of ", "runic ", "sigil of "];
@@ -40,7 +41,33 @@ function deriveGrantedAbilityName(runeName: string): string {
 
 interface RuneGrantedAbilities {
 	grantedAbilityNames: Set<string>;
+	grantedAbilityRefs: Set<string>;
 	isLoading: boolean;
+}
+
+function normalizeAbilityKey(value: string): string {
+	return value.trim().toLowerCase();
+}
+
+function slugifyAbilityKey(value: string): string {
+	return normalizeAbilityKey(value)
+		.replace(/['’]/g, "")
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+}
+
+function getRuneTeachesModifier(feature: {
+	modifiers?: unknown;
+}): { kind?: string | null; ref?: string | null } | null {
+	const modifiers = feature.modifiers;
+	if (!modifiers || typeof modifiers !== "object" || Array.isArray(modifiers)) {
+		return null;
+	}
+	const teaches = (modifiers as { teaches?: unknown }).teaches;
+	if (!teaches || typeof teaches !== "object" || Array.isArray(teaches)) {
+		return null;
+	}
+	return teaches as { kind?: string | null; ref?: string | null };
 }
 
 export function useRuneGrantedAbilities(
@@ -48,21 +75,40 @@ export function useRuneGrantedAbilities(
 ): RuneGrantedAbilities {
 	const { data: runeKnowledge = [], isLoading } =
 		useCharacterRuneKnowledge(characterId);
+	const { features = [], isLoading: featuresLoading } = useFeatures(
+		characterId ?? "",
+	);
 
 	const grantedAbilityNames = useMemo(() => {
-		const set = new Set<string>();
+		const names = new Set<string>();
 		for (const entry of runeKnowledge) {
 			// Only absorbed runes count as "granting" the ability.
 			if ((entry.mastery_level ?? 0) < 5) continue;
 			const name = entry.rune?.name;
 			if (!name) continue;
 			const derived = deriveGrantedAbilityName(name);
-			if (derived) set.add(derived);
+			if (derived) names.add(derived);
 		}
-		return set;
+		return names;
 	}, [runeKnowledge]);
 
-	return { grantedAbilityNames, isLoading };
+	const grantedAbilityRefs = useMemo(() => {
+		const refs = new Set<string>();
+		for (const feature of features) {
+			if (!feature.source?.startsWith("Rune:")) continue;
+			const teaches = getRuneTeachesModifier(feature);
+			if (!teaches?.ref) continue;
+			refs.add(normalizeAbilityKey(teaches.ref));
+			refs.add(slugifyAbilityKey(teaches.ref));
+		}
+		return refs;
+	}, [features]);
+
+	return {
+		grantedAbilityNames,
+		grantedAbilityRefs,
+		isLoading: isLoading || featuresLoading,
+	};
 }
 
 /**
@@ -72,12 +118,11 @@ export function useRuneGrantedAbilities(
 export function isRuneGranted(
 	abilityName: string,
 	grantedAbilityNames: Set<string>,
+	grantedAbilityRefs?: Set<string>,
 ): boolean {
-	if (grantedAbilityNames.size === 0) return false;
-	const normalized = abilityName.trim().toLowerCase();
+	const normalized = normalizeAbilityKey(abilityName);
 	if (grantedAbilityNames.has(normalized)) return true;
-	// Fallback: check if any granted name is contained in the ability name
-	// or vice-versa (handles minor naming drift between rune and ability).
+	if (grantedAbilityRefs?.has(slugifyAbilityKey(abilityName))) return true;
 	for (const granted of grantedAbilityNames) {
 		if (
 			granted.length >= 4 &&

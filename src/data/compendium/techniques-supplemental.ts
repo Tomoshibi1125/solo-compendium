@@ -425,6 +425,29 @@ const sharedFamilies: TechniqueFamily[] = [
 		forms: ["Vent", "Rush", "Crown", "Drive", "Breaker"],
 		levels: SHARED_TECHNIQUE_LEVELS,
 	},
+	{
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker"],
+		mode: "brutal",
+		type: "Combat Arts",
+		style: "Cross-Guild Martial Protocol",
+		theme: "shared awakened combat doctrine",
+		damageType: "force",
+		ability: "Strength",
+		prefixes: ["Apex", "Rift", "Storm", "Iron", "Nova", "Echo"],
+		forms: [
+			"Drive",
+			"Guard",
+			"Rush",
+			"Feint",
+			"Break",
+			"Surge",
+			"Counter",
+			"Vault",
+			"Pulse",
+			"Lock",
+		],
+		levels: FULL_TECHNIQUE_LEVELS,
+	},
 ];
 
 export const techniques_supplemental: CompendiumTechnique[] = [

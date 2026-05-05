@@ -446,20 +446,40 @@ export const useCombatActions = (characterId: string) => {
 			if (!eq?.is_equipped || (eq.requires_attunement && !eq.is_attuned))
 				return;
 
-			const feat = sigilData.active_feature as ActiveFeature;
-			const name = feat.name || sigilData.name;
+			const rawFeature = sigilData.active_feature;
+			const feat: ActiveFeature =
+				typeof rawFeature === "object" && rawFeature !== null
+					? (rawFeature as ActiveFeature)
+					: {};
+			// Parse string active_feature: "Name: description (uses)"
+			const featureStr = typeof rawFeature === "string" ? rawFeature : "";
+			const colonIdx = featureStr.indexOf(":");
+			const parsedName =
+				colonIdx > 0 ? featureStr.slice(0, colonIdx).trim() : "";
+			const parsedDesc =
+				colonIdx > 0 ? featureStr.slice(colonIdx + 1).trim() : featureStr;
+			const usesMatch = featureStr.match(/\((\d+)\/(short|long)\s*rest\)/i);
+			const parsedUses = usesMatch ? parseInt(usesMatch[1], 10) : undefined;
+			const parsedAction = featureStr.toLowerCase().includes("bonus action")
+				? "1 bonus action"
+				: featureStr.toLowerCase().includes("reaction")
+					? "1 reaction"
+					: "1 action";
+
+			const name = feat.name || parsedName || sigilData.name;
 			const sourceName = eq.name;
 
 			result.push({
 				id: `sigil-action-${si.id}`,
 				name: `${name} (${sourceName})`,
 				type: "item-sigil",
-				description: feat.description || sigilData.effect_description,
-				activation: feat.action_type || "1 action",
+				description:
+					feat.description || parsedDesc || sigilData.effect_description,
+				activation: feat.action_type || parsedAction,
 				range: feat.range || "Self",
 				target: feat.target || "One creature",
-				resourceCurrent: eq.charges_current ?? feat.uses_max,
-				resourceMax: eq.charges_max ?? feat.uses_max,
+				resourceCurrent: eq.charges_current ?? feat.uses_max ?? parsedUses,
+				resourceMax: eq.charges_max ?? feat.uses_max ?? parsedUses,
 				payload: {
 					version: 1,
 					id: `sigil-action-${si.id}`,
@@ -471,7 +491,8 @@ export const useCombatActions = (characterId: string) => {
 								? "save"
 								: "damage"
 							: "effect",
-					description: feat.description || sigilData.effect_description,
+					description:
+						feat.description || parsedDesc || sigilData.effect_description,
 					save: feat.resolution
 						? {
 								dc: parseInt(feat.resolution.match(/\d+/)?.[0] || "10", 10),

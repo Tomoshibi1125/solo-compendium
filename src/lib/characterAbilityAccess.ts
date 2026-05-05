@@ -1,6 +1,7 @@
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
 	type CanonicalCastableEntry,
 	findCanonicalEntryById,
@@ -18,11 +19,20 @@ import {
 	runtimePowerMatchesCharacter,
 	runtimeSpellMatchesCharacter,
 } from "@/lib/homebrewRuntime";
+import {
+	jobCanLearnPowers,
+	jobCanLearnSpells,
+	jobCanLearnTechniques,
+} from "@/lib/jobAbilityAccess";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 
 export interface CharacterAbilityAccessContext
 	extends LearnableCastableOptions {
 	campaignId: string | null;
+	characterLevel: number | null;
+	maxSpellLevel: number | null;
+	maxPowerLevel: number | null;
+	maxTechniqueLevel: number | null;
 	jobName: string | null;
 	pathName: string | null;
 	regentNames: string[];
@@ -30,7 +40,7 @@ export interface CharacterAbilityAccessContext
 
 type CharacterAccessRow = Pick<
 	Database["public"]["Tables"]["characters"]["Row"],
-	"job" | "path" | "regent_overlays"
+	"job" | "path" | "regent_overlays" | "level"
 >;
 
 function normalizeAccessKey(value: string | null | undefined): string {
@@ -74,7 +84,7 @@ async function getCharacterAccessRow(
 	if (!isSupabaseConfigured || !characterId) return null;
 	const { data, error } = await supabase
 		.from("characters")
-		.select("job, path, regent_overlays")
+		.select("job, path, regent_overlays, level")
 		.eq("id", characterId)
 		.maybeSingle();
 	if (error) throw error;
@@ -89,12 +99,25 @@ export async function getCharacterAbilityAccessContext(
 		getCharacterCampaignId(characterId),
 	]);
 	const regentNames = await resolveRegentNames(character?.regent_overlays);
+	const characterLevel =
+		typeof character?.level === "number" ? character.level : null;
+	const jobName = character?.job ?? null;
 	return {
 		campaignId,
 		accessContext: { campaignId },
-		jobName: character?.job ?? null,
+		jobName,
 		pathName: character?.path ?? null,
 		regentNames,
+		characterLevel,
+		maxSpellLevel:
+			jobName && characterLevel
+				? getMaxAbilityLevelForJobAtLevel(jobName, characterLevel, "spell")
+				: null,
+		maxPowerLevel:
+			jobName && characterLevel
+				? getMaxAbilityLevelForJobAtLevel(jobName, characterLevel, "power")
+				: null,
+		maxTechniqueLevel: characterLevel,
 	};
 }
 
@@ -107,11 +130,80 @@ function requireCharacterJob(
 	}
 }
 
+function getRequiredCharacterLevelForAbility(
+	jobName: string,
+	abilityLevel: number,
+	kind: "spell" | "power",
+): number | null {
+	for (let level = 1; level <= 20; level += 1) {
+		if (getMaxAbilityLevelForJobAtLevel(jobName, level, kind) >= abilityLevel) {
+			return level;
+		}
+	}
+	return null;
+}
+
+function getTechniqueLevelRequirement(entry: StaticCompendiumEntry): number {
+	const direct =
+		(entry as { level_requirement?: unknown }).level_requirement ??
+		(entry as { requires_level?: unknown }).requires_level ??
+		entry.level;
+	return typeof direct === "number" ? direct : 0;
+}
+
+function getCastableLevelError(
+	entry: { power_level: number },
+	context: CharacterAbilityAccessContext,
+	kind: "spell" | "power",
+): string | null {
+	const maxLevel =
+		kind === "spell" ? context.maxSpellLevel : context.maxPowerLevel;
+	const canLearn =
+		kind === "spell"
+			? jobCanLearnSpells(context.jobName)
+			: jobCanLearnPowers(context.jobName);
+	if (
+		!canLearn ||
+		typeof maxLevel !== "number" ||
+		entry.power_level <= maxLevel
+	) {
+		return null;
+	}
+	const requiredLevel = context.jobName
+		? getRequiredCharacterLevelForAbility(
+				context.jobName,
+				entry.power_level,
+				kind,
+			)
+		: null;
+	return requiredLevel
+		? `This ${kind} requires character level ${requiredLevel}.`
+		: `This ${kind} exceeds this character's progression.`;
+}
+
+function getTechniqueLevelError(
+	entry: StaticCompendiumEntry,
+	context: CharacterAbilityAccessContext,
+): string | null {
+	const requiredLevel = getTechniqueLevelRequirement(entry);
+	const maxLevel = context.maxTechniqueLevel ?? context.characterLevel;
+	if (
+		!jobCanLearnTechniques(context.jobName) ||
+		typeof maxLevel !== "number" ||
+		requiredLevel <= maxLevel
+	) {
+		return null;
+	}
+	return `This technique requires character level ${requiredLevel}.`;
+}
+
 export function assertCanonicalPowerLearnable(
 	entry: CanonicalCastableEntry,
 	context: CharacterAbilityAccessContext,
 ): void {
 	requireCharacterJob(context, "power");
+	const levelError = getCastableLevelError(entry, context, "power");
+	if (levelError) throw new Error(levelError);
 	if (!isCanonicalPowerLearnable(entry, context)) {
 		throw new Error(
 			"This power is not available to this character's job, path, or regents.",
@@ -124,6 +216,8 @@ export function assertCanonicalSpellLearnable(
 	context: CharacterAbilityAccessContext,
 ): void {
 	requireCharacterJob(context, "spell");
+	const levelError = getCastableLevelError(entry, context, "spell");
+	if (levelError) throw new Error(levelError);
 	if (!isCanonicalSpellLearnable(entry, context)) {
 		throw new Error(
 			"This spell is not available to this character's job, path, or regents.",
@@ -136,6 +230,8 @@ export function assertCanonicalTechniqueLearnable(
 	context: CharacterAbilityAccessContext,
 ): void {
 	requireCharacterJob(context, "technique");
+	const levelError = getTechniqueLevelError(entry, context);
+	if (levelError) throw new Error(levelError);
 	if (!isCanonicalTechniqueLearnable(entry, context)) {
 		throw new Error(
 			"This technique is not available to this character's job, path, or regents.",
@@ -185,6 +281,8 @@ export async function assertHomebrewPowerLearnable(
 		throw new Error("This homebrew power is not available to this character.");
 	}
 	const power = mapHomebrewPowerForRuntime(record);
+	const levelError = getCastableLevelError(power, context, "power");
+	if (levelError) throw new Error(levelError);
 	if (!runtimePowerMatchesCharacter(power, context.jobName, context.pathName)) {
 		throw new Error(
 			"This homebrew power is not available to this character's job or path.",
@@ -202,6 +300,8 @@ export async function assertHomebrewSpellLearnable(
 		throw new Error("This homebrew spell is not available to this character.");
 	}
 	const spell = mapHomebrewSpellForRuntime(record);
+	const levelError = getCastableLevelError(spell, context, "spell");
+	if (levelError) throw new Error(levelError);
 	if (!runtimeSpellMatchesCharacter(spell, context.jobName, context.pathName)) {
 		throw new Error(
 			"This homebrew spell is not available to this character's job or path.",

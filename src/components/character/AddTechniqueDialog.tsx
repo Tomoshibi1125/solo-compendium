@@ -41,7 +41,8 @@ export function AddTechniqueDialog({
 	const [searchQuery, setSearchQuery] = useState("");
 	const { addTechnique } = useTechniques(characterId);
 	const { data: character } = useCharacter(characterId);
-	const { grantedAbilityNames } = useRuneGrantedAbilities(characterId);
+	const { grantedAbilityNames, grantedAbilityRefs } =
+		useRuneGrantedAbilities(characterId);
 	const { toast } = useToast();
 
 	const characterJob = (character?.job ?? "").trim().toLowerCase();
@@ -88,12 +89,18 @@ export function AddTechniqueDialog({
 			) {
 				sources.push("Job");
 			}
-			if (isRuneGranted(tech.name, grantedAbilityNames)) {
+			if (isRuneGranted(tech.name, grantedAbilityNames, grantedAbilityRefs)) {
 				sources.push("Rune");
 			}
 			return sources;
 		};
-	}, [character?.job, character?.path, characterJob, grantedAbilityNames]);
+	}, [
+		character?.job,
+		character?.path,
+		characterJob,
+		grantedAbilityNames,
+		grantedAbilityRefs,
+	]);
 
 	const visibleTechniques = useMemo(() => {
 		const trimmedQuery = normalizeRegentSearch(

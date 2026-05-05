@@ -237,4 +237,27 @@ describe("canonicalCompendium resolver", () => {
 			destroyerPowers.every((entry) => entry.canonical_type === "powers"),
 		).toBe(true);
 	});
+
+	it("level-gates learnable powers, spells, and techniques", async () => {
+		const [
+			levelOnePowers,
+			levelTwentyPowers,
+			levelOneSpells,
+			levelOneTechniques,
+		] = await Promise.all([
+			listLearnablePowers({ jobName: "Destroyer", characterLevel: 1 }),
+			listLearnablePowers({ jobName: "Destroyer", characterLevel: 20 }),
+			listLearnableSpells({ jobName: "Mage", characterLevel: 1 }),
+			listLearnableTechniques({ jobName: "Destroyer", characterLevel: 1 }),
+		]);
+
+		expect(levelOnePowers.every((entry) => entry.power_level <= 1)).toBe(true);
+		expect(levelTwentyPowers.length).toBeGreaterThan(levelOnePowers.length);
+		expect(levelOneSpells.every((entry) => entry.power_level <= 1)).toBe(true);
+		expect(
+			levelOneTechniques.every(
+				(entry) => (entry.level_requirement ?? entry.level ?? 0) <= 1,
+			),
+		).toBe(true);
+	});
 });

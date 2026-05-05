@@ -1,5 +1,16 @@
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
+import {
+	type CanonicalCastableEntry,
+	isCanonicalPowerLearnable,
+	isCanonicalSpellLearnable,
+	isCanonicalTechniqueLearnable,
+	listCanonicalEntries,
+	listCanonicalPowers,
+	listCanonicalSpells,
+} from "@/lib/canonicalCompendium";
 import { logger } from "@/lib/logger";
 import { type RegentGrantKind, regentGrantsAbility } from "@/lib/regentGrants";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
@@ -103,6 +114,7 @@ export type RuneAbsorptionInput = {
 	unlockedRegents?: Array<string | null | undefined>;
 	nativeRecharge?: string | null;
 	regentFrequency?: string | null;
+	forceCrossClassAdaptation?: boolean;
 };
 
 export type RuneAbilityScores = Partial<Record<AbilityScore, number>>;
@@ -216,10 +228,42 @@ export function inferRuneAbilityKind(rune: {
 	return "spell";
 }
 
+export type RuneTeaches = {
+	kind: "spell" | "power" | "technique";
+	ref: string;
+};
+
+export type RuneGrantAccessContext = {
+	accessContext?: { campaignId?: string | null };
+	jobName?: string | null;
+	pathName?: string | null;
+	regentNames?: string[] | null;
+	characterLevel?: number | null;
+};
+
+export type RuneGrantResolution = {
+	teaches: RuneTeaches;
+	abilityKind: RegentGrantKind;
+	abilityEntry: CanonicalCastableEntry | StaticCompendiumEntry;
+	abilityLevel: number;
+	isNative: boolean;
+	isUnderLevel: boolean;
+	maxNativeLevel: number | null;
+	promotesAtLevel: number | null;
+};
+
+type RuneFeatureModifierValue =
+	| boolean
+	| string
+	| number
+	| Record<string, boolean | string | number | null>
+	| null;
+
 export function buildRuneFeatureModifiers(
 	absorption: RuneAbsorptionResult,
-	teaches?: { kind: "spell" | "power" | "technique"; ref: string } | null,
-): Record<string, boolean | string | Record<string, string> | null> {
+	teaches?: RuneTeaches | null,
+	grant?: RuneGrantResolution | null,
+): Record<string, RuneFeatureModifierValue> {
 	return {
 		acquired_via: "rune",
 		ability_kind: absorption.abilityKind,
@@ -227,21 +271,180 @@ export function buildRuneFeatureModifiers(
 		is_native_via_job: absorption.isNativeViaJob,
 		is_native_via_regent: absorption.isNativeViaRegent,
 		teaches: teaches ?? null,
+		rune_grant_native: grant?.isNative ?? null,
+		rune_grant_under_level: grant?.isUnderLevel ?? null,
+		rune_grant_ability_level: grant?.abilityLevel ?? null,
+		rune_grant_max_native_level: grant?.maxNativeLevel ?? null,
+		rune_grant_promotes_at_level: grant?.promotesAtLevel ?? null,
+		rune_grant_slot_state: absorption.isCrossClassAdaptation
+			? "adapted"
+			: grant?.isUnderLevel
+				? "dedicated"
+				: grant
+					? "native"
+					: null,
+		rune_grant_dedicated_ref:
+			grant?.isUnderLevel && teaches ? teaches.ref : null,
+	};
+}
+
+function slugifyAbilityRef(value: string): string {
+	return value
+		.trim()
+		.toLowerCase()
+		.replace(/['’]/g, "")
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+}
+
+function matchesRuneTeachesRef(
+	entry: { id: string; name: string },
+	ref: string,
+): boolean {
+	const normalizedRef = slugifyAbilityRef(ref);
+	return (
+		entry.id === ref ||
+		slugifyAbilityRef(entry.id) === normalizedRef ||
+		slugifyAbilityRef(entry.name) === normalizedRef
+	);
+}
+
+function getTechniqueRequirement(entry: StaticCompendiumEntry): number {
+	const level =
+		(entry as { level_requirement?: unknown }).level_requirement ??
+		(entry as { requires_level?: unknown }).requires_level ??
+		entry.level;
+	return typeof level === "number" ? level : 0;
+}
+
+function getPromotionLevel(
+	jobName: string | null | undefined,
+	abilityLevel: number,
+	kind: "spell" | "power" | "technique",
+): number | null {
+	if (!jobName) return null;
+	if (kind === "technique") return abilityLevel;
+	for (let level = 1; level <= 20; level += 1) {
+		if (getMaxAbilityLevelForJobAtLevel(jobName, level, kind) >= abilityLevel) {
+			return level;
+		}
+	}
+	return null;
+}
+
+async function findRuneTaughtCastable(
+	teaches: RuneTeaches,
+	accessContext?: { campaignId?: string | null },
+): Promise<CanonicalCastableEntry | null> {
+	const entries =
+		teaches.kind === "spell"
+			? await listCanonicalSpells(undefined, accessContext)
+			: teaches.kind === "power"
+				? await listCanonicalPowers(undefined, accessContext)
+				: [];
+	return (
+		entries.find((entry) => matchesRuneTeachesRef(entry, teaches.ref)) ?? null
+	);
+}
+
+async function findRuneTaughtTechnique(
+	teaches: RuneTeaches,
+	accessContext?: { campaignId?: string | null },
+): Promise<StaticCompendiumEntry | null> {
+	const entries = await listCanonicalEntries(
+		"techniques",
+		undefined,
+		accessContext,
+	);
+	return (
+		entries.find((entry) => matchesRuneTeachesRef(entry, teaches.ref)) ?? null
+	);
+}
+
+export async function resolveRuneGrant(
+	teaches: RuneTeaches | null | undefined,
+	context: RuneGrantAccessContext,
+): Promise<RuneGrantResolution | null> {
+	if (!teaches?.kind || !teaches.ref) return null;
+	const abilityEntry =
+		teaches.kind === "technique"
+			? await findRuneTaughtTechnique(teaches, context.accessContext)
+			: await findRuneTaughtCastable(teaches, context.accessContext);
+	if (!abilityEntry) return null;
+
+	const levellessContext = {
+		accessContext: context.accessContext,
+		jobName: context.jobName,
+		pathName: context.pathName,
+		regentNames: context.regentNames,
+		characterLevel: null,
+		maxSpellLevel: null,
+		maxPowerLevel: null,
+		maxLevel: null,
+		maxTechniqueLevel: null,
+	};
+	const isNative =
+		teaches.kind === "spell"
+			? isCanonicalSpellLearnable(
+					abilityEntry as CanonicalCastableEntry,
+					levellessContext,
+				)
+			: teaches.kind === "power"
+				? isCanonicalPowerLearnable(
+						abilityEntry as CanonicalCastableEntry,
+						levellessContext,
+					)
+				: isCanonicalTechniqueLearnable(abilityEntry, levellessContext);
+	const abilityLevel =
+		teaches.kind === "technique"
+			? getTechniqueRequirement(abilityEntry)
+			: (abilityEntry as CanonicalCastableEntry).power_level;
+	const maxNativeLevel =
+		teaches.kind === "technique"
+			? (context.characterLevel ?? null)
+			: context.jobName && typeof context.characterLevel === "number"
+				? getMaxAbilityLevelForJobAtLevel(
+						context.jobName,
+						context.characterLevel,
+						teaches.kind,
+					)
+				: null;
+	const isUnderLevel =
+		isNative &&
+		typeof maxNativeLevel === "number" &&
+		abilityLevel > maxNativeLevel;
+	return {
+		teaches,
+		abilityKind: teaches.kind,
+		abilityEntry,
+		abilityLevel,
+		isNative,
+		isUnderLevel,
+		maxNativeLevel,
+		promotesAtLevel: isUnderLevel
+			? getPromotionLevel(context.jobName, abilityLevel, teaches.kind)
+			: null,
 	};
 }
 
 function resolveRuneAbsorptionFromInput(
 	input: RuneAbsorptionInput,
 ): RuneAbsorptionResult {
-	const isNativeViaJob = jobGrantsAbility(
+	const broadNativeViaJob = jobGrantsAbility(
 		input.characterJob,
 		input.abilityKind,
 	);
 	const regentMatch = (input.unlockedRegents ?? []).find((regent) =>
 		regentGrantsAbility(regent, input.abilityKind),
 	);
-	const isNativeViaRegent = Boolean(regentMatch);
-	const isCrossClassAdaptation = !isNativeViaJob && !isNativeViaRegent;
+	const broadNativeViaRegent = Boolean(regentMatch);
+	const isCrossClassAdaptation =
+		input.forceCrossClassAdaptation ??
+		(!broadNativeViaJob && !broadNativeViaRegent);
+	const isNativeViaJob = isCrossClassAdaptation ? false : broadNativeViaJob;
+	const isNativeViaRegent = isCrossClassAdaptation
+		? false
+		: broadNativeViaRegent;
 
 	if (isCrossClassAdaptation) {
 		const usesMax = Math.max(

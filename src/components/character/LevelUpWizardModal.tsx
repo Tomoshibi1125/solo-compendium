@@ -96,7 +96,11 @@ import {
 	runtimePathMatchesJob,
 	runtimeSpellMatchesCharacter,
 } from "@/lib/homebrewRuntime";
-import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
+import {
+	getMaxAccessibleAbilityLevel,
+	getStaticPathUnlockLevel,
+	isASILevel,
+} from "@/lib/levelGating";
 import {
 	calculateAverageHPGain,
 	calculateMaxHPGain,
@@ -501,6 +505,12 @@ export const LevelUpWizardModal = ({
 	const showASISection =
 		!!character && isASILevel(newLevel, jobObj || character.job);
 	const showFeatSelection = showASISection && availableChoices.feats > 0;
+	const maxSpellLevel = character?.job
+		? getMaxPowerLevelForJobAtLevel(character.job, newLevel)
+		: 0;
+	const maxPowerLevel = character?.job
+		? getMaxAccessibleAbilityLevel(character.job, newLevel, "power")
+		: 0;
 
 	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
@@ -509,6 +519,7 @@ export const LevelUpWizardModal = ({
 			effectivePathName,
 			newLevel,
 			requiredPowerChoices,
+			maxPowerLevel,
 			campaignId,
 			characterRegentNames.join(","),
 		],
@@ -519,6 +530,7 @@ export const LevelUpWizardModal = ({
 				jobName: character.job,
 				pathName: effectivePathName,
 				regentNames: characterRegentNames,
+				maxPowerLevel,
 			});
 		},
 		enabled: !!character?.job && requiredPowerChoices > 0,
@@ -546,10 +558,6 @@ export const LevelUpWizardModal = ({
 		},
 		enabled: !!character?.job && requiredTechniqueChoices > 0,
 	});
-
-	const maxSpellLevel = character?.job
-		? getMaxPowerLevelForJobAtLevel(character.job, newLevel)
-		: 0;
 
 	const { data: availableCantrips = [] } = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
@@ -1167,6 +1175,10 @@ export const LevelUpWizardModal = ({
 				jobName: character.job,
 				pathName: effectivePathName,
 				regentNames: characterRegentNames,
+				characterLevel: newLevel,
+				maxSpellLevel,
+				maxPowerLevel,
+				maxTechniqueLevel: newLevel,
 			};
 			// Calculate new stats
 			const newProficiencyBonus = calculateProficiencyBonusForLevel(newLevel);

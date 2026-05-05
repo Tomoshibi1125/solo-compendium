@@ -3,6 +3,7 @@ import type {
 	StaticDataProvider,
 } from "@/data/compendium/providers/types";
 import type { Json } from "@/integrations/supabase/types";
+import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
 	entryHasAccessToken,
 	getDerivedPowerTags,
@@ -251,6 +252,9 @@ export type LearnableCastableOptions = {
 	search?: string;
 	accessContext?: { campaignId?: string | null };
 	maxPowerLevel?: number | null;
+	maxSpellLevel?: number | null;
+	characterLevel?: number | null;
+	castableKind?: "spell" | "power";
 	jobName?: string | null;
 	pathName?: string | null;
 	regentNames?: string[] | null;
@@ -1124,6 +1128,33 @@ function matchesSpellTokenEligibility(
 	return entryHasAccessToken(getDerivedSpellTags(entry), tokens);
 }
 
+function getCastableLevelCap(
+	options: LearnableCastableOptions,
+	defaultKind: "spell" | "power",
+): number | null {
+	const explicit =
+		defaultKind === "spell"
+			? (options.maxSpellLevel ?? options.maxPowerLevel)
+			: options.maxPowerLevel;
+	if (typeof explicit === "number") return explicit;
+	if (typeof options.characterLevel !== "number" || !options.jobName)
+		return null;
+	return getMaxAbilityLevelForJobAtLevel(
+		options.jobName,
+		options.characterLevel,
+		options.castableKind ?? defaultKind,
+	);
+}
+
+function isWithinCastableLevelCap(
+	entry: CanonicalCastableEntry,
+	options: LearnableCastableOptions,
+	defaultKind: "spell" | "power",
+): boolean {
+	const maxLevel = getCastableLevelCap(options, defaultKind);
+	return maxLevel === null || entry.power_level <= maxLevel;
+}
+
 function preferSpellForLearnableList(
 	existing: CanonicalCastableEntry,
 	next: CanonicalCastableEntry,
@@ -1220,6 +1251,7 @@ export function isCanonicalSpellLearnable(
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "spell")) return false;
 	if (options.jobName && !jobCanLearnSpells(options.jobName)) return false;
+	if (!isWithinCastableLevelCap(entry, options, "spell")) return false;
 	const accessTokens = getSpellAccessTokens(
 		options.jobName,
 		options.pathName,
@@ -1235,6 +1267,7 @@ export function isCanonicalPowerLearnable(
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "power")) return false;
 	if (options.jobName && !jobCanLearnPowers(options.jobName)) return false;
+	if (!isWithinCastableLevelCap(entry, options, "power")) return false;
 	const accessTokens = getPowerAccessTokens(
 		options.jobName,
 		options.pathName,
@@ -1384,17 +1417,17 @@ export async function isCanonicalCastableAccessible(
 export async function listLearnableCastables(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {
+	const maxPowerLevel = getCastableLevelCap(
+		options,
+		options.castableKind ?? "spell",
+	);
 	const castables = await listCanonicalCastables(
 		options.search,
 		options.accessContext,
 	);
 	const filtered = castables.filter((entry) => {
-		if (
-			typeof options.maxPowerLevel === "number" &&
-			entry.power_level > options.maxPowerLevel
-		) {
+		if (typeof maxPowerLevel === "number" && entry.power_level > maxPowerLevel)
 			return false;
-		}
 
 		return matchesCastableEligibility(entry, options);
 	});
@@ -1420,6 +1453,7 @@ export async function listLearnableSpells(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {
 	if (options.jobName && !jobCanLearnSpells(options.jobName)) return [];
+	const maxPowerLevel = getCastableLevelCap(options, "spell");
 	const spells = await listCanonicalSpells(
 		options.search,
 		options.accessContext,
@@ -1433,11 +1467,10 @@ export async function listLearnableSpells(
 	return spells
 		.filter((entry) => {
 			if (
-				typeof options.maxPowerLevel === "number" &&
-				entry.power_level > options.maxPowerLevel
-			) {
+				typeof maxPowerLevel === "number" &&
+				entry.power_level > maxPowerLevel
+			)
 				return false;
-			}
 
 			if (accessTokens.length === 0) return !options.jobName;
 			return isCanonicalSpellLearnable(entry, options);
@@ -1467,6 +1500,8 @@ export type LearnableTechniqueOptions = {
 	search?: string;
 	accessContext?: { campaignId?: string | null };
 	maxLevel?: number | null;
+	maxTechniqueLevel?: number | null;
+	characterLevel?: number | null;
 	jobName?: string | null;
 	pathName?: string | null;
 	regentNames?: string[] | null;
@@ -1478,6 +1513,15 @@ function getTechniqueLevelRequirement(entry: StaticCompendiumEntry): number {
 		(entry as { requires_level?: unknown }).requires_level ??
 		entry.level;
 	return typeof direct === "number" ? direct : 0;
+}
+
+function getTechniqueLevelCap(
+	options: LearnableTechniqueOptions,
+): number | null {
+	const explicit = options.maxTechniqueLevel ?? options.maxLevel;
+	if (typeof explicit === "number") return explicit;
+	if (typeof options.characterLevel === "number") return options.characterLevel;
+	return null;
 }
 
 function getTechniqueClassRequirement(
@@ -1493,6 +1537,12 @@ export function isCanonicalTechniqueLearnable(
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "technique")) return false;
 	if (options.jobName && !jobCanLearnTechniques(options.jobName)) return false;
+	const maxLevel = getTechniqueLevelCap(options);
+	if (
+		typeof maxLevel === "number" &&
+		getTechniqueLevelRequirement(entry) > maxLevel
+	)
+		return false;
 	const accessTokens = getTechniqueAccessTokens(
 		options.jobName,
 		options.pathName,
@@ -1509,6 +1559,7 @@ export async function listLearnableTechniques(
 	options: LearnableTechniqueOptions = {},
 ): Promise<StaticCompendiumEntry[]> {
 	if (options.jobName && !jobCanLearnTechniques(options.jobName)) return [];
+	const maxLevel = getTechniqueLevelCap(options);
 	const techniques = await listCanonicalEntries(
 		"techniques",
 		options.search,
@@ -1518,8 +1569,8 @@ export async function listLearnableTechniques(
 	return techniques
 		.filter((entry) => {
 			if (
-				typeof options.maxLevel === "number" &&
-				getTechniqueLevelRequirement(entry) > options.maxLevel
+				typeof maxLevel === "number" &&
+				getTechniqueLevelRequirement(entry) > maxLevel
 			) {
 				return false;
 			}

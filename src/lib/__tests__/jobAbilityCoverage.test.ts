@@ -83,10 +83,10 @@ const POWER_PARITY_MINIMUMS: Record<
 	string,
 	{ total: number; unique: number; levels: Record<number, number> }
 > = {
-	Destroyer: { total: 70, unique: 25, levels: { 1: 5, 3: 25, 5: 5, 9: 3 } },
-	Berserker: { total: 60, unique: 25, levels: { 1: 5, 3: 15, 5: 5, 9: 3 } },
-	Assassin: { total: 70, unique: 25, levels: { 1: 5, 3: 25, 5: 5, 9: 3 } },
-	Striker: { total: 60, unique: 25, levels: { 1: 5, 3: 15, 5: 5, 9: 3 } },
+	Destroyer: { total: 120, unique: 25, levels: { 1: 5, 3: 25, 5: 5, 9: 3 } },
+	Berserker: { total: 120, unique: 25, levels: { 1: 5, 3: 15, 5: 5, 9: 3 } },
+	Assassin: { total: 120, unique: 25, levels: { 1: 5, 3: 25, 5: 5, 9: 3 } },
+	Striker: { total: 120, unique: 25, levels: { 1: 5, 3: 15, 5: 5, 9: 3 } },
 	"Holy Knight": { total: 75, unique: 30, levels: { 1: 5, 3: 30, 5: 5, 9: 3 } },
 	Technomancer: { total: 75, unique: 25, levels: { 1: 5, 3: 30, 5: 5, 9: 3 } },
 	Stalker: { total: 75, unique: 25, levels: { 1: 5, 3: 30, 5: 5, 9: 3 } },
@@ -96,10 +96,10 @@ const TECHNIQUE_PARITY_MINIMUMS: Record<
 	string,
 	{ total: number; unique: number; levels: Record<number, number> }
 > = {
-	Destroyer: { total: 100, unique: 25, levels: { 1: 5, 3: 5, 5: 70, 9: 3 } },
-	Berserker: { total: 80, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
-	Assassin: { total: 95, unique: 25, levels: { 1: 5, 3: 5, 5: 55, 9: 3 } },
-	Striker: { total: 75, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
+	Destroyer: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 70, 9: 3 } },
+	Berserker: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
+	Assassin: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 55, 9: 3 } },
+	Striker: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
 	"Holy Knight": {
 		total: 100,
 		unique: 25,

@@ -31,9 +31,41 @@ describe("compendium completeness (static packs)", () => {
 			const hasAttack = isRecord(mechanics.attack);
 			const hasSave = isRecord(mechanics.saving_throw);
 			const hasHealing = isRecord(mechanics.healing);
-			expect(hasAttack || hasSave || hasHealing).toBe(true);
+			const hasUtility = isRecord(mechanics.utility);
+			const hasResolution = isRecord(mechanics.resolution);
+			expect(
+				hasAttack || hasSave || hasHealing || hasUtility || hasResolution,
+			).toBe(true);
 
 			expect(typeof spell.flavor).toBe("string");
+		}
+	});
+
+	it("powers and techniques have structured use-ready mechanics fields", async () => {
+		const powers = await staticDataProvider.getPowers("");
+		const techniques = await staticDataProvider.getTechniques("");
+
+		for (const power of powers) {
+			expect(typeof power.id).toBe("string");
+			expect(typeof power.name).toBe("string");
+			expect(typeof power.description).toBe("string");
+			expect(typeof power.casting_time).toBe("string");
+			expect(power.range).toBeTruthy();
+			expect(power.duration).toBeTruthy();
+			expect(isRecord(power.effects)).toBe(true);
+			expect(isRecord(power.mechanics)).toBe(true);
+		}
+
+		for (const technique of techniques) {
+			expect(typeof technique.id).toBe("string");
+			expect(typeof technique.name).toBe("string");
+			expect(typeof technique.description).toBe("string");
+			expect(technique.activation).toBeTruthy();
+			expect(technique.range).toBeTruthy();
+			expect(technique.duration).toBeTruthy();
+			expect(isRecord(technique.effects)).toBe(true);
+			expect(isRecord(technique.mechanics)).toBe(true);
+			expect(isRecord(technique.limitations)).toBe(true);
 		}
 	});
 

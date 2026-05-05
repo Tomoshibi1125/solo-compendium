@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
+import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
 import { useRecordRoll } from "@/hooks/useRollHistory";
@@ -90,6 +91,7 @@ export function PowersList({
 		reorderPowers,
 		concentrationPower,
 	} = usePowers(characterId);
+	const { features, updateFeature } = useFeatures(characterId);
 	const powers = rawPowers as Power[];
 	const { data: character } = useCharacter(characterId);
 	const { data: spellSlots = [] } = useSpellSlots(
@@ -223,6 +225,53 @@ export function PowersList({
 
 	const handleCastSpell = async (power: Power) => {
 		const displayName = formatRegentVernacular(power.name);
+		const runeFeature = power.source?.startsWith("Rune:")
+			? features.find(
+					(feature) =>
+						feature.source === power.source ||
+						`${feature.source} (Adapted)` === power.source,
+				)
+			: null;
+		if (runeFeature?.uses_max !== null && runeFeature?.uses_max !== undefined) {
+			if ((runeFeature.uses_current ?? 0) <= 0) {
+				toast({
+					title: "No Uses Available",
+					description: `${displayName} has no rune-granted uses remaining.`,
+					variant: "destructive",
+				});
+				return;
+			}
+			await updateFeature({
+				id: runeFeature.id,
+				updates: {
+					uses_current: Math.max(0, (runeFeature.uses_current ?? 0) - 1),
+				},
+			});
+			if (campaignId && power.power_level > 0) {
+				rollInCampaign(campaignId, {
+					dice_formula: "0",
+					result: 0,
+					rolls: [],
+					roll_type: "ability",
+					context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+					character_id: characterId,
+				});
+				recordRoll.mutate({
+					dice_formula: "0",
+					result: 0,
+					rolls: [],
+					roll_type: "ability",
+					context: `Activates Power: ${displayName} (Level ${power.power_level})`,
+					campaign_id: campaignId ?? null,
+					character_id: characterId,
+				});
+			}
+			toast({
+				title: "Power Used",
+				description: `${displayName} used with a rune-granted slot.`,
+			});
+			return;
+		}
 
 		// Always go through the unified spellCasting pipeline (DDB parity #12).
 		// Slot consumption, active-spell persistence, and spell:cast events

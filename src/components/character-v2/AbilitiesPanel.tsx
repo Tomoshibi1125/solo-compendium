@@ -104,6 +104,7 @@ export function AbilitiesPanel({
 				<TabsContent value="techniques" className="mt-0 outline-none">
 					<TechniquesList
 						characterId={characterId}
+						campaignId={campaignId}
 						onSelectDetail={onSelectDetail}
 						hideHeader
 					/>

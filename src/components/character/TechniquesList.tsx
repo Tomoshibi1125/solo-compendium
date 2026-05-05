@@ -6,13 +6,17 @@
  * rendered standalone with the AscendantWindow chrome.
  */
 
-import { Plus, Sword, Trash2 } from "lucide-react";
+import { Play, Plus, Sword, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacter } from "@/hooks/useCharacters";
+import { useFeatures } from "@/hooks/useFeatures";
+import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useTechniques } from "@/hooks/useTechniques";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -21,6 +25,7 @@ import { AddTechniqueDialog } from "./AddTechniqueDialog";
 
 interface TechniquesListProps {
 	characterId: string;
+	campaignId?: string;
 	onSelectDetail?: (detail: DetailData) => void;
 	/** When true, render without the AscendantWindow chrome (used inside AbilitiesPanel). */
 	hideHeader?: boolean;
@@ -28,6 +33,7 @@ interface TechniquesListProps {
 
 export function TechniquesList({
 	characterId,
+	campaignId,
 	onSelectDetail,
 	hideHeader = false,
 }: TechniquesListProps) {
@@ -36,8 +42,118 @@ export function TechniquesList({
 		isLoading,
 		removeTechnique,
 	} = useTechniques(characterId);
+	const { data: character } = useCharacter(characterId);
+	const { features, updateFeature } = useFeatures(characterId);
 	const { toast } = useToast();
+	const recordRoll = useRecordRoll();
+	const ascendantTools = useAscendantTools();
+	const { rollInCampaign } = ascendantTools;
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
+
+	const getRuneFeature = (source: string | null | undefined) => {
+		if (!source?.startsWith("Rune:")) return null;
+		return (
+			features.find(
+				(feature) =>
+					feature.source === source || `${feature.source} (Adapted)` === source,
+			) ?? null
+		);
+	};
+
+	const getFormula = (value: unknown): string | null => {
+		if (typeof value === "string" && value.trim()) return value;
+		if (typeof value === "number") return String(value);
+		return null;
+	};
+
+	const getTechniqueFormula = (technique: unknown): string => {
+		const record =
+			technique && typeof technique === "object" && !Array.isArray(technique)
+				? (technique as Record<string, unknown>)
+				: {};
+		const mechanics =
+			record.mechanics &&
+			typeof record.mechanics === "object" &&
+			!Array.isArray(record.mechanics)
+				? (record.mechanics as Record<string, unknown>)
+				: {};
+		const attack =
+			mechanics.attack &&
+			typeof mechanics.attack === "object" &&
+			!Array.isArray(mechanics.attack)
+				? (mechanics.attack as Record<string, unknown>)
+				: {};
+		return (
+			getFormula(attack.damage) ??
+			getFormula(mechanics.damage_profile) ??
+			getFormula(mechanics.damage) ??
+			"0"
+		);
+	};
+
+	const handleUse = async (
+		entry: (typeof techniques)[number],
+		name: string,
+	) => {
+		const displayName = formatRegentVernacular(name);
+		const runeFeature = getRuneFeature(entry.source);
+		try {
+			if (
+				runeFeature?.uses_max !== null &&
+				runeFeature?.uses_max !== undefined
+			) {
+				if ((runeFeature.uses_current ?? 0) <= 0) {
+					toast({
+						title: "No Uses Available",
+						description: `${displayName} has no rune-granted uses remaining.`,
+						variant: "destructive",
+					});
+					return;
+				}
+				await updateFeature({
+					id: runeFeature.id,
+					updates: {
+						uses_current: Math.max(0, (runeFeature.uses_current ?? 0) - 1),
+					},
+				});
+			}
+
+			const diceFormula = getTechniqueFormula(entry.technique);
+			const context = `Uses Technique: ${displayName}`;
+			if (campaignId) {
+				rollInCampaign(campaignId, {
+					dice_formula: diceFormula,
+					result: 0,
+					rolls: [],
+					roll_type: "ability",
+					context,
+					character_id: characterId,
+				});
+			}
+			recordRoll.mutate({
+				dice_formula: diceFormula,
+				result: 0,
+				rolls: [],
+				roll_type: "ability",
+				context,
+				campaign_id: campaignId ?? null,
+				character_id: characterId,
+			});
+			ascendantTools
+				.trackCustomFeatureUsage(characterId, name, "activate", "SA")
+				.catch(console.error);
+			toast({
+				title: "Technique Used",
+				description: `${displayName} has been activated by ${character?.name ?? "the character"}.`,
+			});
+		} catch {
+			toast({
+				title: "Use Failed",
+				description: `Failed to use ${displayName}.`,
+				variant: "destructive",
+			});
+		}
+	};
 
 	const handleRemove = async (id: string, name: string) => {
 		const displayName = formatRegentVernacular(name);
@@ -100,6 +216,11 @@ export function TechniquesList({
 							const description = compendium?.description ?? null;
 							const techniqueType = compendium?.technique_type ?? null;
 							const levelReq = compendium?.level_requirement ?? null;
+							const runeFeature = getRuneFeature(entry.source);
+							const noRuneUses =
+								runeFeature?.uses_max !== null &&
+								runeFeature?.uses_max !== undefined &&
+								(runeFeature.uses_current ?? 0) <= 0;
 
 							return (
 								<div
@@ -144,15 +265,28 @@ export function TechniquesList({
 												</div>
 											)}
 										</div>
-										<Button
-											variant="ghost"
-											size="icon"
-											className="h-8 w-8"
-											onClick={() => handleRemove(entry.id, name)}
-											aria-label={`Remove ${displayName}`}
-										>
-											<Trash2 className="w-4 h-4" />
-										</Button>
+										<div className="flex items-center gap-1">
+											<Button
+												variant="outline"
+												size="sm"
+												className="h-8 gap-1 text-xs"
+												disabled={noRuneUses}
+												onClick={() => handleUse(entry, name)}
+												aria-label={`Use ${displayName}`}
+											>
+												<Play className="w-3 h-3" />
+												Use
+											</Button>
+											<Button
+												variant="ghost"
+												size="icon"
+												className="h-8 w-8"
+												onClick={() => handleRemove(entry.id, name)}
+												aria-label={`Remove ${displayName}`}
+											>
+												<Trash2 className="w-4 h-4" />
+											</Button>
+										</div>
 									</div>
 								</div>
 							);

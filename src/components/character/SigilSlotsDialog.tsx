@@ -27,6 +27,7 @@ import {
 import {
 	getEffectiveSigilSlots,
 	getEquipmentSigilCategory,
+	getMaxSocketsForRarity,
 	getSigilSlotBonusForRarity,
 	isSigilCompatibleWithEquipment,
 } from "@/lib/sigilAutomation";
@@ -65,11 +66,13 @@ export function SigilSlotsDialog({
 		String(equipment.sigil_slots_base ?? 0),
 	);
 
+	const currentBaseSlots = equipment.sigil_slots_base ?? 0;
 	const effectiveSlots = getEffectiveSigilSlots({
-		sigil_slots_base: equipment.sigil_slots_base ?? 0,
+		sigil_slots_base: currentBaseSlots,
 		rarity: equipment.rarity,
 	});
 	const rarityBonus = getSigilSlotBonusForRarity(equipment.rarity);
+	const maxBaseSockets = getMaxSocketsForRarity(equipment.rarity);
 
 	const equipmentCategory = getEquipmentSigilCategory({
 		item_type: equipment.item_type,
@@ -158,6 +161,32 @@ export function SigilSlotsDialog({
 		}
 	};
 
+	const handleAddSocket = async () => {
+		if (currentBaseSlots >= maxBaseSockets) {
+			toast({
+				title: "Maximum sockets reached",
+				description: `This ${equipment.rarity || "common"} item cannot exceed ${maxBaseSockets} base socket${maxBaseSockets === 1 ? "" : "s"}.`,
+				variant: "destructive",
+			});
+			return;
+		}
+		const nextBaseSlots = currentBaseSlots + 1;
+		try {
+			await onUpdateBaseSlots(nextBaseSlots);
+			setBaseSlotsDraft(String(nextBaseSlots));
+			toast({
+				title: "Socket added",
+				description: `${formatRegentVernacular(equipment.name)} now has ${nextBaseSlots} base socket${nextBaseSlots === 1 ? "" : "s"}.`,
+			});
+		} catch (e) {
+			toast({
+				title: "Failed to update base slots",
+				description: e instanceof Error ? e.message : "Unknown error",
+				variant: "destructive",
+			});
+		}
+	};
+
 	const handleRemove = async (inscriptionId: string) => {
 		try {
 			await removeSigil.mutateAsync({ characterId, inscriptionId });
@@ -228,6 +257,29 @@ export function SigilSlotsDialog({
 						</div>
 					</div>
 
+					<div className="rounded-lg border bg-muted/20 p-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+						<div>
+							<div className="font-heading font-semibold text-sm">
+								Socket Work
+							</div>
+							<div className="text-xs text-muted-foreground">
+								After the physical dice check succeeds, add one base socket.
+							</div>
+						</div>
+						<div className="flex flex-wrap items-center gap-2">
+							<Badge variant="outline">
+								Base {currentBaseSlots}/{maxBaseSockets}
+							</Badge>
+							<Button
+								variant="outline"
+								onClick={handleAddSocket}
+								disabled={currentBaseSlots >= maxBaseSockets}
+							>
+								Add Socket
+							</Button>
+						</div>
+					</div>
+
 					{effectiveSlots <= 0 ? (
 						<div className="text-sm text-muted-foreground">
 							This item has no sigil slots.
@@ -255,6 +307,40 @@ export function SigilSlotsDialog({
 													{formatRegentVernacular(
 														existing.sigil.effect_description,
 													)}
+												</div>
+											)}
+											{existing?.sigil?.passive_bonuses &&
+												typeof existing.sigil.passive_bonuses === "object" && (
+													<div className="text-xs text-emerald-500 line-clamp-1">
+														{Object.entries(
+															existing.sigil.passive_bonuses as Record<
+																string,
+																unknown
+															>,
+														)
+															.filter(
+																([, v]) => typeof v === "number" && v !== 0,
+															)
+															.map(
+																([k, v]) =>
+																	`${k.replace(/_/g, " ")}: ${(v as number) > 0 ? "+" : ""}${v}`,
+															)
+															.join(", ")}
+													</div>
+												)}
+											{existing?.sigil?.active_feature && (
+												<div className="text-xs text-amber-500 line-clamp-1">
+													⚡{" "}
+													{typeof existing.sigil.active_feature === "string"
+														? existing.sigil.active_feature
+														: String(
+																(
+																	existing.sigil.active_feature as Record<
+																		string,
+																		unknown
+																	>
+																).name || "Active ability",
+															)}
 												</div>
 											)}
 										</div>

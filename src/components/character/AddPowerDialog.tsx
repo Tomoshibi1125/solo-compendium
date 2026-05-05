@@ -33,6 +33,7 @@ import {
 	mapHomebrewPowerForRuntime,
 	runtimePowerMatchesCharacter,
 } from "@/lib/homebrewRuntime";
+import { getMaxAccessibleAbilityLevel } from "@/lib/levelGating";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -54,7 +55,8 @@ export function AddPowerDialog({
 	const { toast } = useToast();
 	const { data: character } = useCharacter(characterId);
 	const ascendantTools = useAscendantTools();
-	const { grantedAbilityNames } = useRuneGrantedAbilities(characterId);
+	const { grantedAbilityNames, grantedAbilityRefs } =
+		useRuneGrantedAbilities(characterId);
 	const { data: campaignId = null } = useQuery<string | null>({
 		queryKey: ["add-power-campaign-id", characterId],
 		queryFn: () => getCharacterCampaignId(characterId),
@@ -114,6 +116,11 @@ export function AddPowerDialog({
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
+			const maxPowerLevel = getMaxAccessibleAbilityLevel(
+				character.job,
+				character.level ?? 1,
+				"power",
+			);
 
 			const canonicalPowers = await listLearnablePowers({
 				search,
@@ -121,10 +128,12 @@ export function AddPowerDialog({
 				jobName: character.job,
 				pathName: character.path ?? null,
 				regentNames: regentNamesList,
+				maxPowerLevel,
 			});
 			const searchKey = search ?? "";
 			const matchingHomebrew = homebrewPowers.filter((power) => {
 				if (
+					power.power_level > maxPowerLevel ||
 					!runtimePowerMatchesCharacter(power, character.job, character.path)
 				) {
 					return false;
@@ -164,7 +173,7 @@ export function AddPowerDialog({
 					break;
 				}
 			}
-			if (isRuneGranted(entry.name, grantedAbilityNames)) {
+			if (isRuneGranted(entry.name, grantedAbilityNames, grantedAbilityRefs)) {
 				sources.push("Rune");
 			}
 			result.set(entry.id, sources);
@@ -176,6 +185,7 @@ export function AddPowerDialog({
 		character?.path,
 		regentNamesList,
 		grantedAbilityNames,
+		grantedAbilityRefs,
 	]);
 
 	const sortedPowers = useMemo(() => {

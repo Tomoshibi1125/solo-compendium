@@ -25,6 +25,10 @@ export interface StaticCompendiumEntry {
 	rune_type?: string | null;
 	rune_category?: string | null;
 	rune_level?: number | null;
+	teaches?: {
+		kind: "spell" | "power" | "technique";
+		ref: string;
+	} | null;
 	cr?: string | null;
 	gate_rank?: string | null;
 	is_boss?: boolean;

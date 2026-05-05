@@ -5833,4 +5833,63 @@ export const comprehensiveFeats: CompendiumFeat[] = [
 		theme_tags: ["black-market", "dungeon-core", "monarch-era"],
 		image: "/generated/effects/darkness-shroud.webp",
 	},
+	{
+		id: "aetheric-inscriptor",
+		name: "Aetheric Inscriptor",
+		display_name: "Aetheric Inscriptor",
+		description:
+			"You have trained in the precise art of sigil inscription and mana-lattice manipulation, allowing you to carve sigil sockets into equipment and inscribe sigils with reduced risk of failure.",
+		lore: {
+			origin:
+				"Developed by Bureau-licensed enchanters who lacked Technomancer awakening but mastered lattice theory through years of study.",
+			history:
+				"The Ascendant Bureau began issuing Inscriptor certifications after a wave of black-market socket failures caused equipment meltdowns across Neo-Seoul.",
+			curse: "",
+			personality: "Meticulous, patient.",
+			current_owner: "Any trained enchanter.",
+			prior_owners: ["Bureau Enchantment Division"],
+		},
+		flavor: "The lattice speaks to those who listen with steady hands.",
+		tags: ["crafting", "magic", "feat", "sigil", "inscription"],
+		rarity: "uncommon",
+		source_book: "Ascendant Core Rulebook",
+		effects: {
+			primary:
+				"You can perform sigil socket crafting (adding sockets to equipment). You add your proficiency bonus + 2 to inscription checks.",
+			secondary:
+				"Once per long rest, you may attempt one socket-increase without expending materials on failure (materials are only consumed on success).",
+			tertiary:
+				"You gain proficiency with Inscription Tools if you do not already have it.",
+			primaryEffect:
+				"Grants the ability to perform socket crafting work — carving sigil sockets into equipment's mana lattice. Inscription check bonus: proficiency + INT mod + 2.",
+			secondaryEffect:
+				"Free attempt (no material loss on failure) once per long rest.",
+		},
+		repeatable: false,
+		mechanics: {
+			action_type: "Special (downtime/crafting)",
+			duration: "Permanent",
+			damage_profile: "N/A",
+			range: "Touch",
+			type: "passive",
+			frequency: "1 free attempt/long rest",
+			action: "1 hour (crafting time)",
+			prerequisite:
+				"Intelligence 13+, proficiency with Tinker's Tools or Arcane Tools",
+		},
+		limitations: {
+			uses: "Permanent (passive); free attempt recharges on long rest",
+			recharge: "Long rest (free attempt only)",
+			requires_attunement: false,
+			conditions: [
+				"Requires Intelligence 13 or higher",
+				"Requires proficiency with Tinker's Tools or Arcane Tools",
+				"Socket crafting requires 1 hour of uninterrupted work and appropriate materials",
+			],
+		},
+		discovery_lore:
+			"The Bureau's Enchantment Division publishes a yearly certification exam — passing grants official Inscriptor status and access to subsidized lattice-grade materials.",
+		theme_tags: ["crafting", "hunter-bureau", "mana-overflow"],
+		image: "/generated/effects/arcane-sigil.webp",
+	},
 ];
