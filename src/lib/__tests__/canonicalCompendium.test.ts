@@ -1,10 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
+	isAbilityEntryComplete,
+	isCanonicalPowerLearnable,
+	isCanonicalSpellLearnable,
+	isCanonicalTechniqueLearnable,
 	listCanonicalCastables,
 	listCanonicalEntries,
+	listCanonicalPowers,
+	listCanonicalSpells,
 	listLearnablePowers,
 	listLearnableSpells,
 	listLearnableTechniques,
+	validateAbilityCompleteness,
 } from "@/lib/canonicalCompendium";
 
 describe("canonicalCompendium resolver", () => {
@@ -139,6 +146,83 @@ describe("canonicalCompendium resolver", () => {
 		expect(magePowers).toHaveLength(0);
 		expect(mageTechniques).toHaveLength(0);
 		expect(destroyerSpells).toHaveLength(0);
+	});
+
+	it("rejects cross-job canonical eligibility at the helper layer", async () => {
+		const [power] = await listCanonicalPowers();
+		const [spell] = await listCanonicalSpells();
+		const [technique] = await listCanonicalEntries("techniques");
+
+		expect(isCanonicalPowerLearnable(power, { jobName: "Mage" })).toBe(false);
+		expect(isCanonicalSpellLearnable(spell, { jobName: "Destroyer" })).toBe(
+			false,
+		);
+		expect(isCanonicalTechniqueLearnable(technique, { jobName: "Mage" })).toBe(
+			false,
+		);
+	});
+
+	it("marks hard-incomplete abilities as incomplete", () => {
+		const incomplete = {
+			id: "incomplete-test-spell",
+			name: "Incomplete Test Spell",
+			description: "Missing mechanics and resolution.",
+			source_book: "Test Source",
+			tags: ["spell", "mage"],
+			canonical_type: "spells",
+			power_level: 1,
+			power_type: "Spell",
+			casting_time: "1 action",
+			range: "60 feet",
+			duration: "Instantaneous",
+			concentration: false,
+			ritual: false,
+			higher_levels: null,
+			has_attack_roll: false,
+			has_save: false,
+			save_ability: null,
+			damage_roll: null,
+			damage_type: null,
+			target: null,
+			mechanics: null,
+		};
+
+		expect(isAbilityEntryComplete(incomplete, "spell")).toBe(false);
+		expect(
+			validateAbilityCompleteness(incomplete, "spell").some(
+				(issue) => issue.severity === "error",
+			),
+		).toBe(true);
+	});
+
+	it("only returns complete entries through learnable ability lists", async () => {
+		const [powers, spells, techniques] = await Promise.all([
+			listLearnablePowers({ jobName: "Destroyer" }),
+			listLearnableSpells({ jobName: "Mage" }),
+			listLearnableTechniques({ jobName: "Destroyer" }),
+		]);
+
+		expect(
+			powers.flatMap((entry) =>
+				validateAbilityCompleteness(entry, "power").filter(
+					(issue) => issue.severity === "error",
+				),
+			),
+		).toEqual([]);
+		expect(
+			spells.flatMap((entry) =>
+				validateAbilityCompleteness(entry, "spell").filter(
+					(issue) => issue.severity === "error",
+				),
+			),
+		).toEqual([]);
+		expect(
+			techniques.flatMap((entry) =>
+				validateAbilityCompleteness(entry, "technique").filter(
+					(issue) => issue.severity === "error",
+				),
+			),
+		).toEqual([]);
 	});
 
 	it("returns martial powers and techniques through their own canonical list APIs", async () => {

@@ -51,6 +51,12 @@ import {
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
 import {
+	assertCanonicalPowerLearnable,
+	assertCanonicalSpellLearnable,
+	assertCanonicalTechniqueLearnable,
+	type CharacterAbilityAccessContext,
+} from "@/lib/characterAbilityAccess";
+import {
 	addJobAwakeningBenefitsForLevel,
 	applyJobAwakeningTraitsToCharacter,
 	autoUpdateFeatureUses,
@@ -435,6 +441,31 @@ export const LevelUpWizardModal = ({
 		[availablePaths, selectedPath],
 	);
 	const effectivePathName = character?.path ?? selectedPathRow?.name ?? null;
+	const characterRegentNames = useMemo(() => {
+		const overlays = Array.isArray(character?.regent_overlays)
+			? character.regent_overlays.filter(
+					(value): value is string => typeof value === "string",
+				)
+			: [];
+		if (overlays.length === 0) return [];
+		const overlayKeys = new Set(overlays.map(normalizeCompendiumKey));
+		const regents = getStaticRegents() as Array<{
+			id?: string | null;
+			name?: string | null;
+			display_name?: string | null;
+		}>;
+		const names = new Set<string>();
+		for (const regent of regents) {
+			const candidates = [regent.id, regent.name, regent.display_name]
+				.map(normalizeCompendiumKey)
+				.filter(Boolean);
+			if (candidates.some((candidate) => overlayKeys.has(candidate))) {
+				if (regent.name) names.add(regent.name);
+			}
+		}
+		for (const overlay of overlays) names.add(overlay);
+		return Array.from(names);
+	}, [character?.regent_overlays]);
 
 	// Fetch available feats for selection at ASI levels
 	const { data: availableFeats = [] } = useQuery({
@@ -479,6 +510,7 @@ export const LevelUpWizardModal = ({
 			newLevel,
 			requiredPowerChoices,
 			campaignId,
+			characterRegentNames.join(","),
 		],
 		queryFn: async () => {
 			if (!character?.job || requiredPowerChoices <= 0) return [];
@@ -486,6 +518,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				regentNames: characterRegentNames,
 			});
 		},
 		enabled: !!character?.job && requiredPowerChoices > 0,
@@ -499,6 +532,7 @@ export const LevelUpWizardModal = ({
 			newLevel,
 			requiredTechniqueChoices,
 			campaignId,
+			characterRegentNames.join(","),
 		],
 		queryFn: async () => {
 			if (!character?.job || requiredTechniqueChoices <= 0) return [];
@@ -506,6 +540,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				regentNames: characterRegentNames,
 				maxLevel: newLevel,
 			});
 		},
@@ -524,6 +559,7 @@ export const LevelUpWizardModal = ({
 			newLevel,
 			requiredCantripChoices,
 			campaignId,
+			characterRegentNames.join(","),
 			homebrewSpells.map((spell) => spell.id).join(","),
 		],
 		queryFn: async () => {
@@ -532,6 +568,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				regentNames: characterRegentNames,
 				maxPowerLevel: 0,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
@@ -556,6 +593,7 @@ export const LevelUpWizardModal = ({
 			requiredSpellChoices,
 			maxSpellLevel,
 			campaignId,
+			characterRegentNames.join(","),
 			homebrewSpells.map((spell) => spell.id).join(","),
 		],
 		queryFn: async () => {
@@ -564,6 +602,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				regentNames: characterRegentNames,
 				maxPowerLevel: maxSpellLevel,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
@@ -591,6 +630,7 @@ export const LevelUpWizardModal = ({
 			requiredSpellbookInscriptions,
 			maxSpellLevel,
 			campaignId,
+			characterRegentNames.join(","),
 			homebrewSpells.map((spell) => spell.id).join(","),
 		],
 		queryFn: async () => {
@@ -599,6 +639,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				regentNames: characterRegentNames,
 				maxPowerLevel: maxSpellLevel,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
@@ -1120,6 +1161,13 @@ export const LevelUpWizardModal = ({
 
 		setLoading(true);
 		try {
+			const levelUpAbilityContext: CharacterAbilityAccessContext = {
+				campaignId,
+				accessContext: { campaignId },
+				jobName: character.job,
+				pathName: effectivePathName,
+				regentNames: characterRegentNames,
+			};
 			// Calculate new stats
 			const newProficiencyBonus = calculateProficiencyBonusForLevel(newLevel);
 			const newRiftFavorDie = calculateRiftFavorDie(newLevel);
@@ -1217,6 +1265,7 @@ export const LevelUpWizardModal = ({
 				selectedPowerIds.includes(power.id),
 			);
 			for (const power of selectedPowerEntries) {
+				assertCanonicalPowerLearnable(power, levelUpAbilityContext);
 				const powerPayload = {
 					power_id: power.id,
 					name: power.name,
@@ -1270,6 +1319,7 @@ export const LevelUpWizardModal = ({
 				selectedTechniqueIds.includes(technique.id),
 			);
 			for (const technique of selectedTechniqueEntries) {
+				assertCanonicalTechniqueLearnable(technique, levelUpAbilityContext);
 				if (isLocalCharacterId(character.id)) {
 					const existingTechniques = listLocalTechniques(character.id);
 					if (
@@ -1329,6 +1379,21 @@ export const LevelUpWizardModal = ({
 			]) {
 				const isHomebrewSpell = (spell.entry as { _homebrew?: boolean })
 					._homebrew;
+				if (isHomebrewSpell) {
+					if (
+						!runtimeSpellMatchesCharacter(
+							spell.entry as unknown as HomebrewRuntimeSpell,
+							character.job,
+							effectivePathName,
+						)
+					) {
+						throw new Error(
+							"This homebrew spell is not available to this character's job or path.",
+						);
+					}
+				} else {
+					assertCanonicalSpellLearnable(spell.entry, levelUpAbilityContext);
+				}
 				const spellPayload = {
 					spell_id: isHomebrewSpell ? null : spell.entry.id,
 					name: spell.entry.name,

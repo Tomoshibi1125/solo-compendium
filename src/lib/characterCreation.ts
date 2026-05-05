@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
 	findCanonicalCastableByName,
+	isCanonicalSpellLearnable,
 	listLearnablePowers,
 } from "@/lib/canonicalCompendium";
 import { calculateFeatureUses } from "@/lib/characterEngine";
@@ -33,7 +34,6 @@ import {
 	getCharacterCampaignId,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
-import { normalizeSpellReference } from "@/lib/spellReference";
 import type {
 	Background as DbBackground,
 	Job as DbJob,
@@ -3536,9 +3536,12 @@ export async function addInnateChannelingForLevel(
 			undefined,
 			["spells"],
 		);
-		const normalizedSpellReference = await normalizeSpellReference({
-			name: spell.name,
-		});
+		if (
+			!canonicalSpell ||
+			!isCanonicalSpellLearnable(canonicalSpell, { jobName })
+		) {
+			continue;
+		}
 		const usesMax =
 			spell.uses && spell.uses !== "at-will" ? spell.uses.value : null;
 		const usesCurrent = usesMax;
@@ -3558,7 +3561,7 @@ export async function addInnateChannelingForLevel(
 			)
 				continue;
 			addLocalSpell(characterId, {
-				spell_id: normalizedSpellReference.spell_id,
+				spell_id: canonicalSpell.id,
 				name: spell.name,
 				source: sourceLabel,
 				spell_level: spell.level,
@@ -3590,7 +3593,7 @@ export async function addInnateChannelingForLevel(
 
 		await supabase.from("character_spells").insert({
 			character_id: characterId,
-			spell_id: normalizedSpellReference.spell_id,
+			spell_id: canonicalSpell.id,
 			name: spell.name,
 			source: sourceLabel,
 			spell_level: spell.level,

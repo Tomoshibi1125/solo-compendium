@@ -8,13 +8,20 @@ import {
 	resolveCanonicalReference,
 	type StaticCanonicalEntryType,
 } from "@/lib/canonicalCompendium";
+import {
+	assertCanonicalPowerLearnable,
+	assertCanonicalSpellLearnable,
+	assertCanonicalTechniqueLearnable,
+	assertHomebrewPowerLearnable,
+	assertHomebrewSpellLearnable,
+	type CharacterAbilityAccessContext,
+} from "@/lib/characterAbilityAccess";
 import { normalizeCharacterOverlayFields } from "@/lib/characterOverlayValidation";
 import {
 	classifyImportVersion,
 	collectContainerOriginalIds,
 	resolveImportedContainerId,
 } from "@/lib/importValidation";
-import { normalizeSpellReference } from "@/lib/spellReference";
 
 /**
  * Export schema version. Bump when the export shape changes in a way that
@@ -278,6 +285,7 @@ async function buildImportedFeatureRows(
 async function buildImportedPowerRows(
 	rows: Record<string, unknown>[],
 	characterId: string,
+	context: CharacterAbilityAccessContext,
 ): Promise<PowerInsert[]> {
 	return Promise.all(
 		rows.map(async (power) => {
@@ -285,10 +293,19 @@ async function buildImportedPowerRows(
 			const canonicalPower = (
 				await resolveCanonicalCastableReference(
 					{ id: stringOrNull(power.power_id), name },
-					undefined,
+					context.accessContext,
 					["powers"],
 				)
 			).entry;
+			if (canonicalPower) {
+				assertCanonicalPowerLearnable(canonicalPower, context);
+			} else if (name) {
+				await assertHomebrewPowerLearnable(name, context);
+			} else {
+				throw new Error(
+					"Imported power is missing a canonical or homebrew reference.",
+				);
+			}
 
 			return {
 				...power,
@@ -303,20 +320,33 @@ async function buildImportedPowerRows(
 async function buildImportedSpellRows(
 	rows: Record<string, unknown>[],
 	characterId: string,
+	context: CharacterAbilityAccessContext,
 ): Promise<SpellInsert[]> {
 	return Promise.all(
 		rows.map(async (spell) => {
 			const name = stringOrNull(spell.name);
-			const canonicalSpell = await normalizeSpellReference({
-				id: stringOrNull(spell.spell_id),
-				name,
-			});
+			const canonicalSpell = (
+				await resolveCanonicalCastableReference(
+					{ id: stringOrNull(spell.spell_id), name },
+					context.accessContext,
+					["spells"],
+				)
+			).entry;
+			if (canonicalSpell) {
+				assertCanonicalSpellLearnable(canonicalSpell, context);
+			} else if (name) {
+				await assertHomebrewSpellLearnable(name, context);
+			} else {
+				throw new Error(
+					"Imported spell is missing a canonical or homebrew reference.",
+				);
+			}
 
 			return {
 				...spell,
 				character_id: characterId,
 				id: undefined,
-				spell_id: canonicalSpell.spell_id,
+				spell_id: canonicalSpell?.id ?? null,
 			} as SpellInsert;
 		}),
 	);
@@ -325,6 +355,7 @@ async function buildImportedSpellRows(
 async function buildImportedTechniqueRows(
 	rows: Record<string, unknown>[],
 	characterId: string,
+	context: CharacterAbilityAccessContext,
 ): Promise<TechniqueInsert[]> {
 	const built = await Promise.all(
 		rows.map(async (technique) => {
@@ -336,6 +367,17 @@ async function buildImportedTechniqueRows(
 			);
 
 			if (!techniqueId) return null;
+			const techniqueEntry = (
+				await resolveCanonicalReference(
+					"techniques",
+					{ id: techniqueId, name: stringOrNull(technique.name) },
+					context.accessContext,
+				)
+			).entry;
+			if (!techniqueEntry) {
+				throw new Error("Imported technique is missing a canonical reference.");
+			}
+			assertCanonicalTechniqueLearnable(techniqueEntry, context);
 
 			return {
 				...stripImportOnlyFields(technique, ["technique"]),
@@ -684,6 +726,19 @@ async function importRelatedCharacterRows(
 	characterId: string,
 	userId: string,
 ): Promise<void> {
+	const charData = recordOrNull(data.character);
+	const importedAbilityContext: CharacterAbilityAccessContext = {
+		campaignId: null,
+		accessContext: { campaignId: null },
+		jobName: stringOrNull(charData?.job),
+		pathName: stringOrNull(charData?.path),
+		regentNames: Array.isArray(charData?.regent_overlays)
+			? charData.regent_overlays.filter(
+					(value): value is string => typeof value === "string",
+				)
+			: [],
+	};
+
 	if (Array.isArray(data.abilities) && data.abilities.length > 0) {
 		const abilities = data.abilities.map(
 			(ability: Record<string, unknown>) => ({
@@ -720,6 +775,7 @@ async function importRelatedCharacterRows(
 		const powers = await buildImportedPowerRows(
 			data.powers as Record<string, unknown>[],
 			characterId,
+			importedAbilityContext,
 		);
 		await supabase.from("character_powers").insert(powers).throwOnError();
 	}
@@ -728,6 +784,7 @@ async function importRelatedCharacterRows(
 		const spells = await buildImportedSpellRows(
 			data.spells as Record<string, unknown>[],
 			characterId,
+			importedAbilityContext,
 		);
 		await supabase.from("character_spells").insert(spells).throwOnError();
 	}
@@ -736,6 +793,7 @@ async function importRelatedCharacterRows(
 		const techniques = await buildImportedTechniqueRows(
 			data.techniques as Record<string, unknown>[],
 			characterId,
+			importedAbilityContext,
 		);
 		if (techniques.length > 0) {
 			await supabase

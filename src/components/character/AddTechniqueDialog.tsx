@@ -11,8 +11,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import {
@@ -20,10 +18,7 @@ import {
 	useRuneGrantedAbilities,
 } from "@/hooks/useRuneGrantedAbilities";
 import { useTechniques } from "@/hooks/useTechniques";
-import {
-	listCanonicalEntries,
-	listLearnableTechniques,
-} from "@/lib/canonicalCompendium";
+import { listLearnableTechniques } from "@/lib/canonicalCompendium";
 import {
 	entryHasAccessToken,
 	getTechniqueAccessTokens,
@@ -44,7 +39,6 @@ export function AddTechniqueDialog({
 	characterId: string;
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
-	const [filterToJob, setFilterToJob] = useState(true);
 	const { addTechnique } = useTechniques(characterId);
 	const { data: character } = useCharacter(characterId);
 	const { grantedAbilityNames } = useRuneGrantedAbilities(characterId);
@@ -59,16 +53,13 @@ export function AddTechniqueDialog({
 			character?.path,
 			character?.level,
 			searchQuery,
-			filterToJob,
 		],
 		queryFn: async () => {
+			if (!character?.job) return [];
 			const campaignId = await getCharacterCampaignId(characterId);
 			const search = searchQuery.trim()
 				? normalizeRegentSearch(searchQuery.trim()).toLowerCase()
 				: undefined;
-			if (!filterToJob || !character?.job) {
-				return listCanonicalEntries("techniques", search, { campaignId });
-			}
 			return listLearnableTechniques({
 				search,
 				accessContext: { campaignId },
@@ -164,21 +155,6 @@ export function AddTechniqueDialog({
 								className="pl-10"
 							/>
 						</div>
-						{characterJob && (
-							<div className="flex items-center gap-2 shrink-0">
-								<Switch
-									id="add-technique-filter-job"
-									checked={filterToJob}
-									onCheckedChange={setFilterToJob}
-								/>
-								<Label
-									htmlFor="add-technique-filter-job"
-									className="text-xs cursor-pointer"
-								>
-									My job only
-								</Label>
-							</div>
-						)}
 					</div>
 
 					<div className="flex-1 overflow-y-auto space-y-2">
@@ -190,9 +166,7 @@ export function AddTechniqueDialog({
 							<div className="text-center py-8 text-muted-foreground">
 								{searchQuery
 									? "No techniques found matching your search."
-									: filterToJob && characterJob
-										? "No techniques available for your job. Toggle 'My job only' off to browse all."
-										: "No techniques available."}
+									: "No techniques available for your job."}
 							</div>
 						) : (
 							visibleTechniques.map((tech) => {

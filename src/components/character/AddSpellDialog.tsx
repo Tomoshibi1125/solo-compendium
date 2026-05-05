@@ -11,8 +11,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
@@ -21,7 +19,6 @@ import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended
 import {
 	type CanonicalCastableEntry,
 	listCanonicalEntries,
-	listCanonicalSpells,
 	listLearnableSpells,
 } from "@/lib/canonicalCompendium";
 import {
@@ -46,7 +43,6 @@ export function AddSpellDialog({
 	characterId: string;
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
-	const [showAll, setShowAll] = useState(false);
 	const { addSpell } = useSpells(characterId);
 	const { data: character } = useCharacter(characterId);
 	const { toast } = useToast();
@@ -99,7 +95,6 @@ export function AddSpellDialog({
 			searchQuery,
 			character?.job,
 			character?.path,
-			showAll,
 			campaignId,
 			homebrewSpells.map((spell) => spell.id).join(","),
 		],
@@ -109,24 +104,6 @@ export function AddSpellDialog({
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
-
-			if (showAll) {
-				const canonicalSpells = await listCanonicalSpells(search, {
-					campaignId,
-				});
-				const searchKey = search ?? "";
-				const matchingHomebrew = homebrewSpells.filter((spell) =>
-					searchKey
-						? normalizeRegentSearch(spell.name)
-								.toLowerCase()
-								.includes(searchKey)
-						: true,
-				);
-				return [
-					...canonicalSpells,
-					...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
-				];
-			}
 
 			const canonicalSpells = await listLearnableSpells({
 				search,
@@ -228,19 +205,6 @@ export function AddSpellDialog({
 								className="pl-10"
 							/>
 						</div>
-						<div className="flex items-center gap-2 shrink-0">
-							<Switch
-								id="add-spell-show-all"
-								checked={showAll}
-								onCheckedChange={setShowAll}
-							/>
-							<Label
-								htmlFor="add-spell-show-all"
-								className="text-xs cursor-pointer"
-							>
-								Show all
-							</Label>
-						</div>
 					</div>
 
 					<div className="flex-1 overflow-y-auto space-y-2">
@@ -252,9 +216,7 @@ export function AddSpellDialog({
 							<div className="text-center py-8 text-muted-foreground">
 								{searchQuery
 									? "No spells found matching your search."
-									: showAll
-										? "No spells available."
-										: "No lore-matched spells are available for this job."}
+									: "No lore-matched spells are available for this job."}
 							</div>
 						) : (
 							visibleSpells.map((spell) => (

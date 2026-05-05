@@ -21,6 +21,7 @@ import { useEquipment } from "@/hooks/useEquipment";
 import { useFeatures } from "@/hooks/useFeatures";
 import { usePowers } from "@/hooks/usePowers";
 import { useLearnRune } from "@/hooks/useRunes";
+import { useSpells } from "@/hooks/useSpells";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { useTechniques } from "@/hooks/useTechniques";
 import type { Database } from "@/integrations/supabase/types";
@@ -52,6 +53,7 @@ export function SendToInventoryDialog({
 		targetType === "character" ? targetId : "",
 	);
 	const { addPower } = usePowers(targetType === "character" ? targetId : "");
+	const { addSpell } = useSpells(targetType === "character" ? targetId : "");
 	const { addTechnique } = useTechniques(
 		targetType === "character" ? targetId : "",
 	);
@@ -78,13 +80,29 @@ export function SendToInventoryDialog({
 				// Routing based on type
 				switch (item.type) {
 					case "spells":
+						await addSpell.mutateAsync({
+							character_id: targetId,
+							spell_id: item.id,
+							name: item.name,
+							description: item.description,
+							spell_level: item.level || 0,
+							source: item.source_book || "Compendium Spell",
+							is_prepared: false,
+							is_known: true,
+							counts_against_limit: true,
+						});
+						break;
+
 					case "powers":
 						await addPower({
 							character_id: targetId,
+							power_id: item.id,
 							name: item.name,
 							description: item.description,
 							power_level: item.level || 0,
-							source: item.source_book || "Compendium",
+							source: item.source_book || "Compendium Power",
+							is_prepared: false,
+							is_known: true,
 						});
 						break;
 

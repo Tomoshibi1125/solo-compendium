@@ -11,8 +11,6 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
@@ -27,7 +25,6 @@ import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended
 import {
 	type CanonicalCastableEntry,
 	listCanonicalEntries,
-	listCanonicalPowers,
 	listLearnablePowers,
 } from "@/lib/canonicalCompendium";
 import {
@@ -53,7 +50,6 @@ export function AddPowerDialog({
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [levelTab, setLevelTab] = useState<string>("all");
-	const [showAll, setShowAll] = useState(false);
 	const { addPower } = usePowers(characterId);
 	const { toast } = useToast();
 	const { data: character } = useCharacter(characterId);
@@ -108,7 +104,6 @@ export function AddPowerDialog({
 			searchQuery,
 			character?.job,
 			character?.level,
-			showAll,
 			campaignId,
 			homebrewPowers.map((power) => power.id).join(","),
 		],
@@ -119,24 +114,6 @@ export function AddPowerDialog({
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
-
-			if (showAll) {
-				const canonicalPowers = await listCanonicalPowers(search, {
-					campaignId,
-				});
-				const searchKey = search ?? "";
-				const matchingHomebrew = homebrewPowers.filter((power) =>
-					searchKey
-						? normalizeRegentSearch(power.name)
-								.toLowerCase()
-								.includes(searchKey)
-						: true,
-				);
-				return [
-					...canonicalPowers,
-					...(matchingHomebrew as unknown as CanonicalCastableEntry[]),
-				];
-			}
 
 			const canonicalPowers = await listLearnablePowers({
 				search,
@@ -290,19 +267,6 @@ export function AddPowerDialog({
 								onChange={(e) => setSearchQuery(e.target.value)}
 								className="pl-10"
 							/>
-						</div>
-						<div className="flex items-center gap-2 shrink-0">
-							<Switch
-								id="add-power-show-all"
-								checked={showAll}
-								onCheckedChange={setShowAll}
-							/>
-							<Label
-								htmlFor="add-power-show-all"
-								className="text-xs cursor-pointer"
-							>
-								Show all
-							</Label>
 						</div>
 					</div>
 

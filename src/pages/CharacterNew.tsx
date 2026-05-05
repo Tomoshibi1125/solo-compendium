@@ -40,6 +40,12 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
+import {
+	assertCanonicalPowerLearnable,
+	assertCanonicalSpellLearnable,
+	assertCanonicalTechniqueLearnable,
+	type CharacterAbilityAccessContext,
+} from "@/lib/characterAbilityAccess";
 import { calculateHPMax } from "@/lib/characterCalculations";
 import {
 	addJobAwakeningBenefitsForLevel,
@@ -678,10 +684,12 @@ const CharacterNew = () => {
 			selectedJob,
 			selectedPathName,
 			requiredPowerChoices,
+			homebrewCampaignId,
 		],
 		queryFn: async () => {
 			if (!jobData?.name || requiredPowerChoices <= 0) return [];
 			return listLearnablePowers({
+				accessContext: { campaignId: homebrewCampaignId },
 				jobName: jobData.name,
 				pathName: selectedPathName,
 			});
@@ -695,10 +703,12 @@ const CharacterNew = () => {
 			selectedJob,
 			selectedPathName,
 			requiredTechniqueChoices,
+			homebrewCampaignId,
 		],
 		queryFn: async () => {
 			if (!jobData?.name || requiredTechniqueChoices <= 0) return [];
 			return listLearnableTechniques({
+				accessContext: { campaignId: homebrewCampaignId },
 				jobName: jobData.name,
 				pathName: selectedPathName,
 				maxLevel: 1,
@@ -1148,6 +1158,13 @@ const CharacterNew = () => {
 				armor_proficiencies: armorsResult.unique,
 				speed: jobSpeed,
 			});
+			const creationAbilityContext: CharacterAbilityAccessContext = {
+				campaignId: homebrewCampaignId,
+				accessContext: { campaignId: homebrewCampaignId },
+				jobName: dbJob.name,
+				pathName: selectedPathName,
+				regentNames: [],
+			};
 
 			const finalAbilities = { ...abilities };
 			for (const [k, v] of Object.entries(jobASI)) {
@@ -1216,6 +1233,7 @@ const CharacterNew = () => {
 				selectedPowerIds.includes(power.id),
 			);
 			for (const power of selectedPowerEntries) {
+				assertCanonicalPowerLearnable(power, creationAbilityContext);
 				const payload = {
 					power_id: power.id,
 					name: power.name,
@@ -1244,6 +1262,7 @@ const CharacterNew = () => {
 				selectedTechniqueIds.includes(technique.id),
 			);
 			for (const technique of selectedTechniqueEntries) {
+				assertCanonicalTechniqueLearnable(technique, creationAbilityContext);
 				if (isLocalCharacterId(character.id)) {
 					addLocalTechnique(character.id, {
 						technique_id: technique.id,
@@ -1286,6 +1305,21 @@ const CharacterNew = () => {
 			]) {
 				const isHomebrewSpell = (spell.entry as { _homebrew?: boolean })
 					._homebrew;
+				if (isHomebrewSpell) {
+					if (
+						!runtimeSpellMatchesCharacter(
+							spell.entry as unknown as HomebrewRuntimeSpell,
+							dbJob.name,
+							selectedPathName,
+						)
+					) {
+						throw new Error(
+							"This homebrew spell is not available to this character's job or path.",
+						);
+					}
+				} else {
+					assertCanonicalSpellLearnable(spell.entry, creationAbilityContext);
+				}
 				const payload = {
 					spell_id: isHomebrewSpell ? null : spell.entry.id,
 					name: spell.entry.name,

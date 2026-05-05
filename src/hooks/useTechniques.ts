@@ -3,6 +3,11 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import {
+	assertCanonicalTechniqueLearnable,
+	findAccessibleCanonicalTechnique,
+	getCharacterAbilityAccessContext,
+} from "@/lib/characterAbilityAccess";
+import {
 	addLocalTechnique,
 	isLocalCharacterId,
 	listLocalTechniques,
@@ -70,6 +75,19 @@ export const useTechniques = (characterId: string) => {
 
 	const addTechnique = useMutation({
 		mutationFn: async (techniqueId: string) => {
+			const abilityContext =
+				await getCharacterAbilityAccessContext(characterId);
+			const technique = await findAccessibleCanonicalTechnique(
+				techniqueId,
+				abilityContext,
+			);
+			if (!technique) {
+				throw new Error(
+					"This technique is not in the complete canonical technique catalog.",
+				);
+			}
+			assertCanonicalTechniqueLearnable(technique, abilityContext);
+
 			if (isLocalCharacterId(characterId)) {
 				return addLocalTechnique(characterId, { technique_id: techniqueId });
 			}

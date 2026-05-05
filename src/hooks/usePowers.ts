@@ -9,6 +9,11 @@ import {
 	listCanonicalPowers,
 	resolveCanonicalCastableReference,
 } from "@/lib/canonicalCompendium";
+import {
+	assertCanonicalPowerLearnable,
+	assertHomebrewPowerLearnable,
+	getCharacterAbilityAccessContext,
+} from "@/lib/characterAbilityAccess";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalPower,
@@ -244,6 +249,18 @@ export const usePowers = (characterId: string) => {
 					? null
 					: (canonicalEntry?.id ?? power.power_id ?? null),
 			};
+			const abilityContext =
+				await getCharacterAbilityAccessContext(characterId);
+
+			if (isHomebrewPower) {
+				await assertHomebrewPowerLearnable(power.name, abilityContext);
+			} else if (canonicalEntry) {
+				assertCanonicalPowerLearnable(canonicalEntry, abilityContext);
+			} else {
+				throw new Error(
+					"This power is not in the complete canonical power catalog.",
+				);
+			}
 
 			if (isLocalCharacterId(characterId)) {
 				addLocalPower(
@@ -285,12 +302,11 @@ export const usePowers = (characterId: string) => {
 				}
 			}
 
-			const campaignId = await getCharacterCampaignId(characterId);
 			if (
 				powerWithCanonicalId.power_id &&
 				!(await isCanonicalCastableAccessible(
 					powerWithCanonicalId.power_id,
-					{ campaignId },
+					abilityContext.accessContext,
 					["powers"],
 				))
 			) {

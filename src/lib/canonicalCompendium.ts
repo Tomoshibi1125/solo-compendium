@@ -247,7 +247,7 @@ export interface CanonicalCastableEntry extends StaticCompendiumEntry {
 	tags: string[];
 }
 
-type LearnableCastableOptions = {
+export type LearnableCastableOptions = {
 	search?: string;
 	accessContext?: { campaignId?: string | null };
 	maxPowerLevel?: number | null;
@@ -266,6 +266,18 @@ function isJsonRecord(value: unknown): value is Record<string, Json> {
 
 function getNonEmptyString(value: unknown): string | null {
 	return typeof value === "string" && value.trim().length > 0 ? value : null;
+}
+
+export type AbilityCatalogKind = "power" | "spell" | "technique";
+export type AbilityCompletenessSeverity = "error" | "warning";
+
+export interface AbilityCompletenessIssue {
+	kind: AbilityCatalogKind;
+	id: string;
+	name: string;
+	field: string;
+	reason: string;
+	severity: AbilityCompletenessSeverity;
 }
 
 // Strings used as non-damage placeholders in the castable data (e.g. utility
@@ -423,6 +435,7 @@ function getNonPlaceholderDamageType(value: unknown): string | null {
 function extractDamageType(
 	entry: StaticCompendiumEntry,
 	attack: Record<string, Json> | null,
+	mechanics?: Record<string, Json> | null,
 ): string | null {
 	const directDamageType = getNonPlaceholderDamageType(
 		(entry as { damage_type?: unknown }).damage_type,
@@ -437,7 +450,521 @@ function extractDamageType(
 		return getNonPlaceholderDamageType(attackDamage.type);
 	}
 
+	const mechanicsAttack = isJsonRecord(mechanics?.attack)
+		? (mechanics?.attack as Record<string, Json>)
+		: null;
+	const mechanicsAttackDamageType = getNonPlaceholderDamageType(
+		mechanicsAttack?.damage_type,
+	);
+	if (mechanicsAttackDamageType) return mechanicsAttackDamageType;
+
+	const mechanicsDamageProfile = getNonPlaceholderDamage(
+		mechanics?.damage_profile,
+	);
+	if (mechanicsDamageProfile) {
+		const match = mechanicsDamageProfile.match(/\b([a-z]+)\s*$/i);
+		if (match) return getNonPlaceholderDamageType(match[1]);
+	}
+
 	return null;
+}
+
+function getEntryId(entry: StaticCompendiumEntry): string {
+	return getNonEmptyString(entry.id) ?? "(missing id)";
+}
+
+function getEntryName(entry: StaticCompendiumEntry): string {
+	return getNonEmptyString(entry.name) ?? "(missing name)";
+}
+
+function pushCompletenessIssue(
+	issues: AbilityCompletenessIssue[],
+	kind: AbilityCatalogKind,
+	entry: StaticCompendiumEntry,
+	field: string,
+	reason: string,
+	severity: AbilityCompletenessSeverity = "error",
+): void {
+	issues.push({
+		kind,
+		id: getEntryId(entry),
+		name: getEntryName(entry),
+		field,
+		reason,
+		severity,
+	});
+}
+
+function hasFormulaText(value: unknown): boolean {
+	const text = getStringLikeValue(value)?.trim() ?? "";
+	if (!text) return false;
+	if (PLACEHOLDER_DAMAGE_TOKENS.has(text.toLowerCase())) return false;
+	return (
+		/\d+d\d+/i.test(text) ||
+		/^\d+(?:\s*[+-]\s*\d+)?$/.test(text) ||
+		/\b(level|rank|slot|modifier|proficiency|ability)\b/i.test(text)
+	);
+}
+
+function hasNonEmptyArray(value: unknown): boolean {
+	return (
+		Array.isArray(value) && value.some((entry) => getNonEmptyString(entry))
+	);
+}
+
+function isNonDamageProfile(value: unknown): boolean {
+	const text = getStringLikeValue(value)?.trim().toLowerCase() ?? "";
+	return [
+		"utility",
+		"self-heal",
+		"healing",
+		"support",
+		"buff",
+		"debuff",
+	].includes(text);
+}
+
+function describesNonDamageResolution(value: unknown): boolean {
+	return /\b(non-damage|utility|restore|restores|heals|healing|temporary hp|condition|charmed|frightened|invisible|paralyzed|telepath|reaction|opportunity)\b/i.test(
+		getStringLikeValue(value) ?? "",
+	);
+}
+
+function hasSavingThrowDetails(
+	savingThrow: Record<string, Json> | null,
+	saveAbility: string | null,
+): boolean {
+	return Boolean(
+		saveAbility ||
+			getNonEmptyString(savingThrow?.ability) ||
+			getNonEmptyString(savingThrow?.success) ||
+			getNonEmptyString(savingThrow?.failure) ||
+			(typeof savingThrow?.dc === "number" && savingThrow.dc > 0) ||
+			getNonEmptyString(savingThrow?.dc),
+	);
+}
+
+function validateCommonAbilityFields(
+	entry: StaticCompendiumEntry,
+	kind: AbilityCatalogKind,
+	issues: AbilityCompletenessIssue[],
+): void {
+	for (const field of ["id", "name", "description", "source_book"] as const) {
+		if (!getNonEmptyString(entry[field])) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				field,
+				"Missing required text.",
+			);
+		}
+	}
+	if (!hasNonEmptyArray(entry.tags) && !hasNonEmptyArray(entry.classes)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"tags/classes",
+			"Missing ability access tags or class eligibility.",
+		);
+	}
+}
+
+function validateCastableCompleteness(
+	entry: CanonicalCastableEntry,
+	kind: Extract<AbilityCatalogKind, "power" | "spell">,
+): AbilityCompletenessIssue[] {
+	const issues: AbilityCompletenessIssue[] = [];
+	validateCommonAbilityFields(entry, kind, issues);
+	for (const field of ["casting_time", "range", "duration"] as const) {
+		if (!getNonEmptyString(entry[field])) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				field,
+				"Missing table-use timing or targeting data.",
+			);
+		}
+	}
+	if (!isJsonRecord(entry.mechanics)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"mechanics",
+			"Missing structured mechanics.",
+		);
+	}
+	const mechanics = isJsonRecord(entry.mechanics) ? entry.mechanics : {};
+	const attack = getAttackRecord(entry, mechanics);
+	const savingThrow = getSavingThrowRecord(entry, mechanics);
+	const healing = isJsonRecord(mechanics.healing) ? mechanics.healing : null;
+	const damageProfile = getNonPlaceholderDamage(mechanics.damage_profile);
+	const damageRoll =
+		extractDamageRoll(entry, attack, mechanics) ??
+		(hasFormulaText(damageProfile) ? damageProfile : null);
+	const damageType = extractDamageType(entry, attack, mechanics);
+	const nonDamageResolution =
+		isNonDamageProfile(damageProfile) ||
+		Boolean(healing) ||
+		describesNonDamageResolution(entry.effects?.primary) ||
+		describesNonDamageResolution(entry.description);
+	const hasSaveDetails = hasSavingThrowDetails(savingThrow, entry.save_ability);
+	if (attack) {
+		if (!getNonEmptyString(attack.mode) && !getNonEmptyString(attack.type)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.mode",
+				"Missing attack mode or type.",
+			);
+		}
+		if (
+			!getNonEmptyString(attack.modifier) &&
+			!getNonEmptyString(attack.ability)
+		) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.modifier",
+				"Missing attack ability or modifier.",
+			);
+		}
+		if (!hasFormulaText(attack.damage) && !hasFormulaText(damageRoll)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.damage",
+				nonDamageResolution
+					? "Attack block carries placeholder damage for a utility/healing resolution and should be enriched."
+					: "Missing attack damage formula.",
+				nonDamageResolution ? "warning" : "error",
+			);
+		}
+		if (!getNonPlaceholderDamageType(attack.damage_type) && !damageType) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.damage_type",
+				nonDamageResolution
+					? "Attack block carries no damage type for a utility/healing resolution and should be enriched."
+					: "Missing attack damage type.",
+				nonDamageResolution ? "warning" : "error",
+			);
+		}
+	}
+	if ((entry.has_save || savingThrow) && hasSaveDetails) {
+		if (!entry.save_ability && !getNonEmptyString(savingThrow?.ability)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"saving_throw.ability",
+				"Missing saving throw ability.",
+			);
+		}
+		const dc = savingThrow?.dc ?? mechanics.dc ?? mechanics.save_dc;
+		if (dc === undefined || dc === null || dc === "") {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"saving_throw.dc",
+				"Missing saving throw DC or dynamic formula sentinel.",
+			);
+		}
+		if (!getNonEmptyString(savingThrow?.success)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"saving_throw.success",
+				"Missing save success text.",
+			);
+		}
+		if (!getNonEmptyString(savingThrow?.failure)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"saving_throw.failure",
+				"Missing save failure text.",
+			);
+		}
+	} else if ((entry.has_save || savingThrow) && attack) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"saving_throw",
+			"Contains an empty legacy save placeholder beside an actionable attack block.",
+			"warning",
+		);
+	}
+	if (damageRoll && !damageType) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"damage_type",
+			"Missing damage type for damaging ability.",
+		);
+	}
+	if (healing && !hasFormulaText(healing.dice ?? healing.amount)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"mechanics.healing",
+			"Missing healing formula.",
+		);
+	}
+	if (
+		!damageRoll &&
+		!attack &&
+		!hasSaveDetails &&
+		!healing &&
+		!getNonEmptyString(entry.effects?.primary)
+	) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"resolution",
+			"Missing attack, save, healing, or explicit effect resolution.",
+		);
+	}
+	if (
+		kind === "spell" &&
+		entry.power_level === 0 &&
+		!getNonEmptyString(entry.higher_levels)
+	) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"higher_levels",
+			"Missing cantrip scaling rules.",
+		);
+	}
+	return issues;
+}
+
+function validateTechniqueCompleteness(
+	entry: StaticCompendiumEntry,
+): AbilityCompletenessIssue[] {
+	const kind: AbilityCatalogKind = "technique";
+	const issues: AbilityCompletenessIssue[] = [];
+	validateCommonAbilityFields(entry, kind, issues);
+	const activation = formatActivationText(
+		(entry as { activation?: unknown }).activation,
+	);
+	const range = formatRangeText((entry as { range?: unknown }).range);
+	const duration = formatDurationText(
+		(entry as { duration?: unknown }).duration,
+	);
+	if (!activation) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"activation",
+			"Missing action economy.",
+		);
+	}
+	if (!range) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"range",
+			"Missing range or target.",
+		);
+	}
+	if (!duration) {
+		pushCompletenessIssue(issues, kind, entry, "duration", "Missing duration.");
+	}
+	const mechanics = isJsonRecord(entry.mechanics)
+		? (entry.mechanics as Record<string, Json>)
+		: null;
+	if (!mechanics) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"mechanics",
+			"Missing structured mechanics.",
+		);
+	}
+	const limitations = isJsonRecord(entry.limitations)
+		? (entry.limitations as Record<string, Json>)
+		: null;
+	if (!getNonEmptyString(limitations?.uses)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"limitations.uses",
+			"Missing usage limit.",
+		);
+	}
+	if (!getNonEmptyString(limitations?.recharge)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"limitations.recharge",
+			"Missing recharge rule.",
+		);
+	}
+	const attack = isJsonRecord(mechanics?.attack)
+		? (mechanics?.attack as Record<string, Json>)
+		: null;
+	const savingThrow = isJsonRecord(mechanics?.saving_throw)
+		? (mechanics?.saving_throw as Record<string, Json>)
+		: null;
+	const damageProfile = getNonPlaceholderDamage(mechanics?.damage_profile);
+	const nonDamageResolution =
+		isNonDamageProfile(mechanics?.damage_profile) ||
+		describesNonDamageResolution(entry.effects?.primary) ||
+		describesNonDamageResolution(entry.description);
+	if (attack) {
+		if (!getNonEmptyString(attack.mode) && !getNonEmptyString(attack.type)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.mode",
+				"Missing attack mode or type.",
+			);
+		}
+		if (!getNonEmptyString(attack.modifier)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.modifier",
+				"Missing attack modifier.",
+			);
+		}
+		if (!hasFormulaText(attack.damage) && !hasFormulaText(damageProfile)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.damage",
+				nonDamageResolution
+					? "Attack block carries placeholder damage for a utility/control resolution and should be enriched."
+					: "Missing attack damage formula.",
+				nonDamageResolution ? "warning" : "error",
+			);
+		}
+		if (!getNonPlaceholderDamageType(attack.damage_type)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.attack.damage_type",
+				nonDamageResolution
+					? "Attack block carries no damage type for a utility/control resolution and should be enriched."
+					: "Missing attack damage type.",
+				nonDamageResolution ? "warning" : "error",
+			);
+		}
+	}
+	if (savingThrow) {
+		if (!getNonEmptyString(savingThrow.ability)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.saving_throw.ability",
+				"Missing saving throw ability.",
+			);
+		}
+		if (
+			savingThrow.dc === undefined ||
+			savingThrow.dc === null ||
+			savingThrow.dc === ""
+		) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.saving_throw.dc",
+				"Missing saving throw DC.",
+			);
+		}
+		if (!getNonEmptyString(savingThrow.success)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.saving_throw.success",
+				"Missing save success text.",
+			);
+		}
+		if (!getNonEmptyString(savingThrow.failure)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"mechanics.saving_throw.failure",
+				"Missing save failure text.",
+			);
+		}
+	}
+	if (
+		!attack &&
+		!savingThrow &&
+		!damageProfile &&
+		!getNonEmptyString(entry.effects?.primary)
+	) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"resolution",
+			"Missing attack, save, damage, or explicit effect resolution.",
+		);
+	}
+	if (
+		getNonEmptyString(mechanics?.frequency) ||
+		getNonEmptyString(mechanics?.action_type)
+	) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"mechanics",
+			"Contains legacy mechanics aliases that should be resolved during enrichment.",
+			"warning",
+		);
+	}
+	return issues;
+}
+
+export function validateAbilityCompleteness(
+	entry: CanonicalCastableEntry | StaticCompendiumEntry,
+	kind: AbilityCatalogKind,
+): AbilityCompletenessIssue[] {
+	if (kind === "technique") return validateTechniqueCompleteness(entry);
+	return validateCastableCompleteness(entry as CanonicalCastableEntry, kind);
+}
+
+export function isAbilityEntryComplete(
+	entry: CanonicalCastableEntry | StaticCompendiumEntry,
+	kind: AbilityCatalogKind,
+): boolean {
+	return !validateAbilityCompleteness(entry, kind).some(
+		(issue) => issue.severity === "error",
+	);
 }
 
 function normalizeCastableEntry(
@@ -507,7 +1034,7 @@ function normalizeCastableEntry(
 		),
 		save_ability: saveAbility,
 		damage_roll: extractDamageRoll(entry, attack, mechanics),
-		damage_type: extractDamageType(entry, attack),
+		damage_type: extractDamageType(entry, attack, mechanics),
 		target:
 			getNonEmptyString((entry as { target?: unknown }).target) ??
 			getNonEmptyString(mechanics?.target),
@@ -630,9 +1157,11 @@ async function listCanonicalCastablesByType(
 	const results = await listCanonicalEntriesBatch(types, search, accessContext);
 
 	return types.flatMap((type) =>
-		(results.get(type) ?? []).map((entry) =>
-			normalizeCastableEntry(entry, type),
-		),
+		(results.get(type) ?? [])
+			.map((entry) => normalizeCastableEntry(entry, type))
+			.filter((entry) =>
+				isAbilityEntryComplete(entry, type === "powers" ? "power" : "spell"),
+			),
 	);
 }
 
@@ -656,6 +1185,62 @@ export async function listCanonicalSpells(
 		search,
 		accessContext,
 	);
+}
+
+export async function auditCanonicalAbilityCompleteness(accessContext?: {
+	campaignId?: string | null;
+}): Promise<AbilityCompletenessIssue[]> {
+	const results = await listCanonicalEntriesBatch(
+		["powers", "spells", "techniques"],
+		undefined,
+		accessContext,
+	);
+	return [
+		...(results.get("powers") ?? []).flatMap((entry) =>
+			validateAbilityCompleteness(
+				normalizeCastableEntry(entry, "powers"),
+				"power",
+			),
+		),
+		...(results.get("spells") ?? []).flatMap((entry) =>
+			validateAbilityCompleteness(
+				normalizeCastableEntry(entry, "spells"),
+				"spell",
+			),
+		),
+		...(results.get("techniques") ?? []).flatMap((entry) =>
+			validateAbilityCompleteness(entry, "technique"),
+		),
+	];
+}
+
+export function isCanonicalSpellLearnable(
+	entry: CanonicalCastableEntry,
+	options: LearnableCastableOptions = {},
+): boolean {
+	if (!isAbilityEntryComplete(entry, "spell")) return false;
+	if (options.jobName && !jobCanLearnSpells(options.jobName)) return false;
+	const accessTokens = getSpellAccessTokens(
+		options.jobName,
+		options.pathName,
+		options.regentNames,
+	);
+	if (accessTokens.length === 0) return !options.jobName;
+	return matchesSpellTokenEligibility(entry, accessTokens);
+}
+
+export function isCanonicalPowerLearnable(
+	entry: CanonicalCastableEntry,
+	options: LearnableCastableOptions = {},
+): boolean {
+	if (!isAbilityEntryComplete(entry, "power")) return false;
+	if (options.jobName && !jobCanLearnPowers(options.jobName)) return false;
+	const accessTokens = getPowerAccessTokens(
+		options.jobName,
+		options.pathName,
+		options.regentNames,
+	);
+	return matchesTokenEligibility(entry, accessTokens);
 }
 
 export async function findCanonicalCastableByName(
@@ -854,8 +1439,8 @@ export async function listLearnableSpells(
 				return false;
 			}
 
-			if (accessTokens.length === 0) return true;
-			return matchesSpellTokenEligibility(entry, accessTokens);
+			if (accessTokens.length === 0) return !options.jobName;
+			return isCanonicalSpellLearnable(entry, options);
 		})
 		.sort(
 			(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),
@@ -870,20 +1455,15 @@ export async function listLearnablePowers(
 		options.search,
 		options.accessContext,
 	);
-	const accessTokens = getPowerAccessTokens(
-		options.jobName,
-		options.pathName,
-		options.regentNames,
-	);
 
 	return powers
-		.filter((entry) => matchesTokenEligibility(entry, accessTokens))
+		.filter((entry) => isCanonicalPowerLearnable(entry, options))
 		.sort(
 			(a, b) => a.power_level - b.power_level || a.name.localeCompare(b.name),
 		);
 }
 
-type LearnableTechniqueOptions = {
+export type LearnableTechniqueOptions = {
 	search?: string;
 	accessContext?: { campaignId?: string | null };
 	maxLevel?: number | null;
@@ -907,6 +1487,24 @@ function getTechniqueClassRequirement(
 	return typeof direct === "string" && direct.trim().length > 0 ? direct : null;
 }
 
+export function isCanonicalTechniqueLearnable(
+	entry: StaticCompendiumEntry,
+	options: LearnableTechniqueOptions = {},
+): boolean {
+	if (!isAbilityEntryComplete(entry, "technique")) return false;
+	if (options.jobName && !jobCanLearnTechniques(options.jobName)) return false;
+	const accessTokens = getTechniqueAccessTokens(
+		options.jobName,
+		options.pathName,
+		options.regentNames,
+	);
+	const classRequirement = getTechniqueClassRequirement(entry);
+	if (classRequirement) {
+		return accessTokens.includes(normalizeEligibilityToken(classRequirement));
+	}
+	return matchesTechniqueTokenEligibility(entry, accessTokens);
+}
+
 export async function listLearnableTechniques(
 	options: LearnableTechniqueOptions = {},
 ): Promise<StaticCompendiumEntry[]> {
@@ -915,11 +1513,6 @@ export async function listLearnableTechniques(
 		"techniques",
 		options.search,
 		options.accessContext,
-	);
-	const accessTokens = getTechniqueAccessTokens(
-		options.jobName,
-		options.pathName,
-		options.regentNames,
 	);
 
 	return techniques
@@ -931,14 +1524,7 @@ export async function listLearnableTechniques(
 				return false;
 			}
 
-			const classRequirement = getTechniqueClassRequirement(entry);
-			if (classRequirement) {
-				return accessTokens.includes(
-					normalizeEligibilityToken(classRequirement),
-				);
-			}
-
-			return matchesTechniqueTokenEligibility(entry, accessTokens);
+			return isCanonicalTechniqueLearnable(entry, options);
 		})
 		.sort(
 			(a, b) =>

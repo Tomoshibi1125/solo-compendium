@@ -20,7 +20,6 @@ import type { CharacterExtended } from "@/integrations/supabase/supabaseExtended
 import type { Database, Json } from "@/integrations/supabase/types";
 import {
 	type CanonicalCastableEntry,
-	findCanonicalCastableByName,
 	findCanonicalEntryByName,
 	listCanonicalEntries,
 	listLearnableCastables,
@@ -311,7 +310,6 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 
 		setSaving(true);
 		try {
-			const campaignId = await getCharacterCampaignId(characterId);
 			const { data: characterRow } = await supabase
 				.from("characters")
 				.select("skill_proficiencies, skill_expertise, tool_proficiencies")
@@ -751,9 +749,7 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						const powerName = grant.name;
 						if (existingPowerNames.has(powerName)) continue;
 
-						const powerRow =
-							choiceData.learnablePowerByName.get(powerName) ||
-							(await findCanonicalCastableByName(powerName, { campaignId }));
+						const powerRow = choiceData.learnablePowerByName.get(powerName);
 						if (!powerRow?.name) continue;
 						const powerSource =
 							powerRow.canonical_type === "spells"

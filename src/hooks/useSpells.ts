@@ -5,7 +5,13 @@ import {
 	type CanonicalCastableEntry,
 	isCanonicalCastableAccessible,
 	listCanonicalSpells,
+	resolveCanonicalCastableReference,
 } from "@/lib/canonicalCompendium";
+import {
+	assertCanonicalSpellLearnable,
+	assertHomebrewSpellLearnable,
+	getCharacterAbilityAccessContext,
+} from "@/lib/characterAbilityAccess";
 import {
 	addLocalSpell,
 	isLocalCharacterId,
@@ -14,7 +20,6 @@ import {
 	updateLocalSpell,
 } from "@/lib/guestStore";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
-import { normalizeSpellReference } from "@/lib/spellReference";
 
 type SpellRow = Database["public"]["Tables"]["character_spells"]["Row"];
 type SpellInsert = Database["public"]["Tables"]["character_spells"]["Insert"];
@@ -97,28 +102,40 @@ export const useSpells = (characterId: string) => {
 	const addSpell = useMutation({
 		mutationFn: async (spell: SpellInsert) => {
 			const isHomebrewSpell = spell.source?.toLowerCase().includes("homebrew");
-			const canonicalReference = isHomebrewSpell
-				? { spell_id: null }
-				: await normalizeSpellReference({
-						id: spell.spell_id,
-						name: spell.name,
-					});
+			const canonicalResolution = isHomebrewSpell
+				? { entry: null }
+				: await resolveCanonicalCastableReference(
+						{ id: spell.spell_id, name: spell.name },
+						undefined,
+						["spells"],
+					);
+			const canonicalEntry = canonicalResolution.entry;
 			const spellWithCanonicalId: SpellInsert = {
 				...spell,
-				spell_id: canonicalReference.spell_id,
+				spell_id: isHomebrewSpell ? null : (canonicalEntry?.id ?? null),
 			};
+			const abilityContext =
+				await getCharacterAbilityAccessContext(characterId);
+
+			if (isHomebrewSpell) {
+				await assertHomebrewSpellLearnable(spell.name, abilityContext);
+			} else if (canonicalEntry) {
+				assertCanonicalSpellLearnable(canonicalEntry, abilityContext);
+			} else {
+				throw new Error(
+					"This spell is not in the complete canonical spell catalog.",
+				);
+			}
 
 			if (isLocalCharacterId(characterId)) {
 				return addLocalSpell(characterId, spellWithCanonicalId);
 			}
 
-			const campaignId = await getCharacterCampaignId(characterId);
-
 			if (
 				spellWithCanonicalId.spell_id &&
 				!(await isCanonicalCastableAccessible(
 					spellWithCanonicalId.spell_id,
-					{ campaignId },
+					abilityContext.accessContext,
 					["spells"],
 				))
 			) {
