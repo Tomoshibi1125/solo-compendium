@@ -30,11 +30,16 @@ import {
 import { WardenInlineHomebrewItemForm } from "@/components/warden-directives/WardenInlineHomebrewItemForm";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignMembers } from "@/hooks/useCampaigns";
+import { useFeatures } from "@/hooks/useFeatures";
 import {
 	usePublishedHomebrew,
 	useSaveHomebrewContent,
 	useSetHomebrewStatus,
 } from "@/hooks/useHomebrewContent";
+import { usePowers } from "@/hooks/usePowers";
+import { useLearnRune } from "@/hooks/useRunes";
+import { useSpells } from "@/hooks/useSpells";
+import { useTechniques } from "@/hooks/useTechniques";
 import {
 	homebrewRuntimeItemToDeliverableItem,
 	linkedEntryToDeliverableItem,
@@ -62,7 +67,7 @@ interface WardenItemDeliveryDialogProps {
 	title?: string;
 }
 
-const ITEM_CONTEXT_TYPES = [
+const ALL_COMPENDIUM_TYPES = [
 	"equipment",
 	"items",
 	"relics",
@@ -70,9 +75,45 @@ const ITEM_CONTEXT_TYPES = [
 	"sigils",
 	"artifacts",
 	"tattoos",
+	"spells",
+	"powers",
+	"feats",
+	"techniques",
+	"backgrounds",
 ] as const;
 
-const ITEM_CONTEXT_TYPE_SET = new Set<string>(ITEM_CONTEXT_TYPES);
+const ALL_COMPENDIUM_TYPE_SET = new Set<string>(ALL_COMPENDIUM_TYPES);
+
+// Types that require special routing (not character_equipment)
+const ABILITY_TYPE_SET = new Set([
+	"spells",
+	"powers",
+	"feats",
+	"techniques",
+	"backgrounds",
+]);
+const RUNE_TYPE_SET = new Set(["runes"]);
+
+const TYPE_FILTER_GROUPS = [
+	{ id: "all", label: "All", types: null as Set<string> | null },
+	{
+		id: "items",
+		label: "Items",
+		types: new Set([
+			"equipment",
+			"items",
+			"relics",
+			"sigils",
+			"artifacts",
+			"tattoos",
+		]),
+	},
+	{ id: "spells", label: "Spells", types: new Set(["spells"]) },
+	{ id: "powers", label: "Powers", types: new Set(["powers"]) },
+	{ id: "feats", label: "Feats", types: new Set(["feats", "backgrounds"]) },
+	{ id: "techniques", label: "Techniques", types: new Set(["techniques"]) },
+	{ id: "runes", label: "Runes", types: new Set(["runes"]) },
+];
 
 type CatalogEntry = {
 	key: string;
@@ -92,6 +133,7 @@ export function WardenItemDeliveryDialog({
 }: WardenItemDeliveryDialogProps) {
 	const [mode, setMode] = useState<WardenDeliveryMode>("direct");
 	const [search, setSearch] = useState("");
+	const [typeFilter, setTypeFilter] = useState("all");
 	const [activePanel, setActivePanel] = useState<DeliveryPanel>("catalog");
 	const [selectedCatalogKey, setSelectedCatalogKey] = useState<string>("");
 	const [createdItem, setCreatedItem] = useState<WardenDeliverableItem | null>(
@@ -114,6 +156,14 @@ export function WardenItemDeliveryDialog({
 	const { data: publishedHomebrew = [], isLoading: isHomebrewLoading } =
 		usePublishedHomebrew("item", campaignId);
 
+	// Hooks for ability-type delivery — bound to first selected character
+	const primaryCharId = selectedCharacterIds[0] ?? "";
+	const { addSpell } = useSpells(primaryCharId);
+	const { addPower } = usePowers(primaryCharId);
+	const { addTechnique } = useTechniques(primaryCharId);
+	const { addFeature } = useFeatures(primaryCharId);
+	const learnRune = useLearnRune();
+
 	useEffect(() => {
 		if (!open) return;
 		setSelectedCharacterIds(initialCharacterId ? [initialCharacterId] : []);
@@ -122,15 +172,17 @@ export function WardenItemDeliveryDialog({
 		setCreatedItem(null);
 		setQuantity(1);
 		setActivePanel("catalog");
+		setTypeFilter("all");
+		setSearch("");
 		setHomebrewForm(createDefaultHomebrewItemForm());
 	}, [initialCharacterId, open]);
 
 	const { data: context, isLoading: isContextLoading } = useQuery({
-		queryKey: ["warden-item-delivery-context", campaignId],
+		queryKey: ["warden-item-delivery-context-v2", campaignId],
 		queryFn: () =>
 			loadWardenGenerationContext({
 				campaignId,
-				types: ITEM_CONTEXT_TYPES,
+				types: ALL_COMPENDIUM_TYPES,
 			}),
 		enabled: open && !!campaignId,
 		staleTime: 300_000,
@@ -139,7 +191,7 @@ export function WardenItemDeliveryDialog({
 	const linkedItems = useMemo(
 		() =>
 			context?.allEntries.filter((entry) =>
-				ITEM_CONTEXT_TYPE_SET.has(entry.type),
+				ALL_COMPENDIUM_TYPE_SET.has(entry.type),
 			) || [],
 		[context?.allEntries],
 	);
@@ -164,9 +216,17 @@ export function WardenItemDeliveryDialog({
 	}, [linkedItems, publishedHomebrew]);
 
 	const filteredItems = useMemo(() => {
+		// Apply type-group filter first
+		const group = TYPE_FILTER_GROUPS.find((g) => g.id === typeFilter);
+		const typeSet = group?.types ?? null;
+		const typeFiltered = typeSet
+			? catalogItems.filter(({ item }) => typeSet.has(item.type ?? ""))
+			: catalogItems;
+
+		// Then apply text search
 		const query = search.trim().toLowerCase();
 		const candidates = query
-			? catalogItems.filter(({ item, sourceLabel }) =>
+			? typeFiltered.filter(({ item, sourceLabel }) =>
 					[
 						item.name,
 						item.description ?? "",
@@ -181,9 +241,9 @@ export function WardenItemDeliveryDialog({
 						.toLowerCase()
 						.includes(query),
 				)
-			: catalogItems;
+			: typeFiltered;
 		return candidates.slice(0, 50);
-	}, [catalogItems, search]);
+	}, [catalogItems, search, typeFilter]);
 
 	const selectedCatalogItem = catalogItems.find(
 		(entry) => entry.key === selectedCatalogKey,
@@ -201,6 +261,12 @@ export function WardenItemDeliveryDialog({
 	const isSavingHomebrew =
 		saveHomebrew.isPending || setHomebrewStatus.isPending;
 	const isLoading = isContextLoading || isHomebrewLoading;
+
+	// Derive whether selected item requires special (non-equipment) routing
+	const selectedItemType = selectedItem?.type ?? "";
+	const isAbilityType = ABILITY_TYPE_SET.has(selectedItemType);
+	const isRuneType = RUNE_TYPE_SET.has(selectedItemType);
+	const isNonPhysicalType = isAbilityType || isRuneType;
 
 	const updateHomebrewForm = <K extends keyof HomebrewItemFormState>(
 		key: K,
@@ -266,6 +332,78 @@ export function WardenItemDeliveryDialog({
 
 	const handleDeliver = async () => {
 		if (!selectedItem) return;
+
+		// Ability / rune types: route to the correct character table
+		if (isNonPhysicalType) {
+			const charId = selectedCharacterIds[0];
+			if (!charId) return;
+			try {
+				switch (selectedItemType) {
+					case "spells":
+						await addSpell.mutateAsync({
+							character_id: charId,
+							spell_id: selectedItem.id ?? undefined,
+							name: selectedItem.name,
+							description: selectedItem.description ?? "",
+							spell_level: 0,
+							source: selectedItem.sourceBook ?? "Compendium",
+							is_prepared: false,
+							is_known: true,
+							counts_against_limit: true,
+						});
+						break;
+					case "powers":
+						await addPower({
+							character_id: charId,
+							power_id: selectedItem.id ?? undefined,
+							name: selectedItem.name,
+							description: selectedItem.description ?? "",
+							power_level: 0,
+							source: selectedItem.sourceBook ?? "Compendium",
+							is_prepared: false,
+							is_known: true,
+						});
+						break;
+					case "techniques":
+						if (selectedItem.id)
+							await addTechnique.mutateAsync(selectedItem.id);
+						break;
+					case "feats":
+					case "backgrounds":
+						await addFeature({
+							character_id: charId,
+							name: selectedItem.name,
+							description: selectedItem.description ?? "",
+							source:
+								selectedItemType === "backgrounds" ? "background" : "feat",
+							level_acquired: 1,
+						});
+						break;
+					case "runes":
+						if (selectedItem.id) {
+							await learnRune.mutateAsync({
+								characterId: charId,
+								runeId: selectedItem.id,
+							});
+						}
+						break;
+				}
+				toast({
+					title: "Delivered",
+					description: `${selectedItem.name} was sent to the selected Ascendant.`,
+				});
+				onOpenChange(false);
+			} catch (err: unknown) {
+				toast({
+					title: "Delivery failed",
+					description: err instanceof Error ? err.message : "Unknown error",
+					variant: "destructive",
+				});
+			}
+			return;
+		}
+
+		// Physical item path (existing)
 		await deliverItem({
 			campaignId,
 			mode,
@@ -278,9 +416,7 @@ export function WardenItemDeliveryDialog({
 	};
 
 	const disabled =
-		!selectedItem ||
-		isDelivering ||
-		(mode === "direct" && selectedCharacterIds.length === 0);
+		!selectedItem || isDelivering || selectedCharacterIds.length === 0;
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
@@ -291,8 +427,9 @@ export function WardenItemDeliveryDialog({
 						{title}
 					</DialogTitle>
 					<DialogDescription>
-						Send canonical rewards, campaign homebrew, or a newly forged item
-						directly to Ascendants, assigned loot, or the Party Stash.
+						Send spells, powers, feats, techniques, items, relics, or homebrew
+						directly to an Ascendant's character sheet, assigned loot, or the
+						Party Stash.
 					</DialogDescription>
 				</DialogHeader>
 
@@ -307,16 +444,20 @@ export function WardenItemDeliveryDialog({
 										["loot", "Assigned Loot"],
 										["stash", "Party Stash"],
 									] as Array<[WardenDeliveryMode, string]>
-								).map(([value, label]) => (
-									<Button
-										key={value}
-										type="button"
-										variant={mode === value ? "default" : "outline"}
-										onClick={() => setMode(value)}
-									>
-										{label}
-									</Button>
-								))}
+								).map(([value, label]) => {
+									// Loot and Stash modes only make sense for physical items
+									if (isNonPhysicalType && value !== "direct") return null;
+									return (
+										<Button
+											key={value}
+											type="button"
+											variant={mode === value ? "default" : "outline"}
+											onClick={() => setMode(value)}
+										>
+											{label}
+										</Button>
+									);
+								})}
 							</div>
 						</div>
 
@@ -376,12 +517,27 @@ export function WardenItemDeliveryDialog({
 										</p>
 									</div>
 								)}
+								{/* Type filter pills */}
+								<div className="flex flex-wrap gap-1">
+									{TYPE_FILTER_GROUPS.map((group) => (
+										<Button
+											key={group.id}
+											type="button"
+											size="sm"
+											variant={typeFilter === group.id ? "default" : "outline"}
+											className="h-7 text-xs px-2"
+											onClick={() => setTypeFilter(group.id)}
+										>
+											{group.label}
+										</Button>
+									))}
+								</div>
 								<div className="relative">
 									<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
 									<Input
 										value={search}
 										onChange={(event) => setSearch(event.target.value)}
-										placeholder="Search weapons, armor, relics, runes, sigils, homebrew..."
+										placeholder="Search spells, powers, feats, items, relics, runes, homebrew..."
 										className="pl-9"
 									/>
 								</div>
@@ -436,67 +592,90 @@ export function WardenItemDeliveryDialog({
 							/>
 						</div>
 
-						{mode === "direct" && (
+						{/* Character selection — single dropdown for ability/rune types, checkboxes for items */}
+						{(mode === "direct" || isNonPhysicalType) && (
 							<div className="space-y-2">
-								<Label>Ascendants</Label>
-								<div className="max-h-56 overflow-y-auto rounded border border-border/60 p-2 space-y-2">
-									{eligibleMembers.length === 0 &&
-									selectedSharedCharacterIds.length === 0 ? (
-										<p className="text-xs text-muted-foreground text-center py-4">
-											No linked Ascendants in this campaign.
-										</p>
-									) : (
-										<>
-											{eligibleMembers.map((member) => {
-												const characterId = member.character_id || "";
-												const checkboxId = `delivery-character-${characterId}`;
-												return (
-													<Label
-														key={member.id}
-														htmlFor={checkboxId}
-														className="flex items-center gap-2 rounded p-2 hover:bg-muted/30"
-													>
-														<Checkbox
-															id={checkboxId}
-															checked={selectedCharacterIds.includes(
-																characterId,
-															)}
-															onCheckedChange={() =>
-																toggleCharacter(characterId)
-															}
-														/>
-														<span className="text-sm">
-															{member.characters?.name || "Unnamed Ascendant"}
-														</span>
-													</Label>
-												);
-											})}
-											{selectedSharedCharacterIds.map((characterId) => {
-												const checkboxId = `delivery-shared-character-${characterId}`;
-												return (
-													<Label
-														key={characterId}
-														htmlFor={checkboxId}
-														className="flex items-center gap-2 rounded p-2 hover:bg-muted/30"
-													>
-														<Checkbox
-															id={checkboxId}
-															checked={selectedCharacterIds.includes(
-																characterId,
-															)}
-															onCheckedChange={() =>
-																toggleCharacter(characterId)
-															}
-														/>
-														<span className="text-sm">
-															Selected shared Ascendant
-														</span>
-													</Label>
-												);
-											})}
-										</>
-									)}
-								</div>
+								<Label>Ascendant{isNonPhysicalType ? "" : "s"}</Label>
+								{isNonPhysicalType ? (
+									// Single-select for spells/powers/feats/techniques/runes
+									<Select
+										value={selectedCharacterIds[0] ?? ""}
+										onValueChange={(v) => setSelectedCharacterIds(v ? [v] : [])}
+									>
+										<SelectTrigger>
+											<SelectValue placeholder="Select an Ascendant" />
+										</SelectTrigger>
+										<SelectContent>
+											{eligibleMembers.map((member) => (
+												<SelectItem
+													key={member.id}
+													value={member.character_id ?? ""}
+												>
+													{member.characters?.name || "Unnamed Ascendant"}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								) : (
+									<div className="max-h-56 overflow-y-auto rounded border border-border/60 p-2 space-y-2">
+										{eligibleMembers.length === 0 &&
+										selectedSharedCharacterIds.length === 0 ? (
+											<p className="text-xs text-muted-foreground text-center py-4">
+												No linked Ascendants in this campaign.
+											</p>
+										) : (
+											<>
+												{eligibleMembers.map((member) => {
+													const characterId = member.character_id || "";
+													const checkboxId = `delivery-character-${characterId}`;
+													return (
+														<Label
+															key={member.id}
+															htmlFor={checkboxId}
+															className="flex items-center gap-2 rounded p-2 hover:bg-muted/30"
+														>
+															<Checkbox
+																id={checkboxId}
+																checked={selectedCharacterIds.includes(
+																	characterId,
+																)}
+																onCheckedChange={() =>
+																	toggleCharacter(characterId)
+																}
+															/>
+															<span className="text-sm">
+																{member.characters?.name || "Unnamed Ascendant"}
+															</span>
+														</Label>
+													);
+												})}
+												{selectedSharedCharacterIds.map((characterId) => {
+													const checkboxId = `delivery-shared-character-${characterId}`;
+													return (
+														<Label
+															key={characterId}
+															htmlFor={checkboxId}
+															className="flex items-center gap-2 rounded p-2 hover:bg-muted/30"
+														>
+															<Checkbox
+																id={checkboxId}
+																checked={selectedCharacterIds.includes(
+																	characterId,
+																)}
+																onCheckedChange={() =>
+																	toggleCharacter(characterId)
+																}
+															/>
+															<span className="text-sm">
+																Selected shared Ascendant
+															</span>
+														</Label>
+													);
+												})}
+											</>
+										)}
+									</div>
+								)}
 							</div>
 						)}
 

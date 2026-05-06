@@ -1,29 +1,19 @@
 import { formatDistanceToNow } from "date-fns";
 import {
 	Download,
-	PackageOpen,
-	Plus,
 	ShieldAlert,
 	ShieldCheck,
 	Sparkles,
 	Swords,
 	Trash2,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
 	useCampaignEncounters,
@@ -33,22 +23,15 @@ import {
 import { useCampaignExport } from "@/hooks/useCampaignExport";
 
 import {
-	useAssignCampaignLoot,
-	useAssignCampaignRelic,
-	useCampaignLootDrops,
-	useCampaignRelicInstances,
-} from "@/hooks/useCampaignRewards";
-import {
 	DEFAULT_RULES,
 	useCampaignRuleEvents,
 	useCampaignRules,
 	useCreateCampaignRuleEvent,
 	useUpdateCampaignRules,
 } from "@/hooks/useCampaignRules";
-import { useCampaignMembers } from "@/hooks/useCampaigns";
+
 import { supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
-import { formatRegentVernacular } from "@/lib/vernacular";
 
 const downloadJson = (payload: Json, filename: string) => {
 	const blob = new Blob([JSON.stringify(payload, null, 2)], {
@@ -70,12 +53,6 @@ const toNumberOrNull = (value: string) => {
 	return Number.isFinite(parsed) ? parsed : null;
 };
 
-type LootItemDraft = {
-	name: string;
-	quantity: number;
-	value: number | null;
-};
-
 interface CampaignProtocolControlsProps {
 	campaignId: string;
 }
@@ -85,7 +62,6 @@ export function CampaignProtocolControls({
 }: CampaignProtocolControlsProps) {
 	const navigate = useNavigate();
 	const { toast } = useToast();
-	const { data: members = [] } = useCampaignMembers(campaignId);
 
 	const { data: rulesData } = useCampaignRules(campaignId);
 	const { data: ruleEvents = [] } = useCampaignRuleEvents(campaignId);
@@ -96,45 +72,15 @@ export function CampaignProtocolControls({
 	const deployEncounter = useDeployCampaignEncounter();
 	const deleteEncounter = useDeleteCampaignEncounter();
 
-	const { data: lootDrops = [] } = useCampaignLootDrops(campaignId);
-	const { data: relicInstances = [] } = useCampaignRelicInstances(campaignId);
-	const assignLoot = useAssignCampaignLoot();
-	const assignRelic = useAssignCampaignRelic();
-
 	const exportCampaign = useCampaignExport();
 
 	const [rules, setRules] = useState(DEFAULT_RULES);
-
-	const [lootDraft, setLootDraft] = useState<LootItemDraft>({
-		name: "",
-		quantity: 1,
-		value: null,
-	});
-	const [lootItems, setLootItems] = useState<LootItemDraft[]>([]);
-	const [lootRecipient, setLootRecipient] = useState("unassigned");
-	const [lootEncounterId, setLootEncounterId] = useState("none");
-
-	const [relicName, setRelicName] = useState("");
-	const [relicRarity, setRelicRarity] = useState("uncommon");
-	const [relicValue, setRelicValue] = useState("");
-	const [relicProperties, setRelicProperties] = useState("{}");
-	const [relicBoundTo, setRelicBoundTo] = useState("unassigned");
-	const [relicTradeable, setRelicTradeable] = useState(true);
 
 	useEffect(() => {
 		if (rulesData?.rules) {
 			setRules(rulesData.rules);
 		}
 	}, [rulesData?.rules]);
-
-	const memberOptions = useMemo(() => {
-		return members.map((member) => ({
-			id: member.id,
-			name: member.characters?.name || "Unlinked Ascendant",
-			job: member.characters?.job || "Unknown",
-			level: member.characters?.level || 1,
-		}));
-	}, [members]);
 
 	const handleExportEncounter = async (
 		encounterId: string,
@@ -163,78 +109,6 @@ export function CampaignProtocolControls({
 			payload,
 			`encounter-${encounterName.replace(/\s+/g, "-").toLowerCase()}.json`,
 		);
-	};
-
-	const handleAddLootItem = () => {
-		if (!lootDraft.name.trim()) return;
-		setLootItems((prev) => [
-			...prev,
-			{
-				name: lootDraft.name.trim(),
-				quantity: Math.max(1, lootDraft.quantity),
-				value: lootDraft.value,
-			},
-		]);
-		setLootDraft({ name: "", quantity: 1, value: null });
-	};
-
-	const handleAssignLoot = async () => {
-		if (lootItems.length === 0) {
-			toast({
-				title: "Add loot first",
-				description: "Include at least one loot item before assigning.",
-				variant: "destructive",
-			});
-			return;
-		}
-		await assignLoot.mutateAsync({
-			campaignId,
-			items: lootItems.map((item) => ({
-				name: item.name,
-				quantity: item.quantity,
-				value_credits: item.value ?? undefined,
-			})),
-			encounterId: lootEncounterId !== "none" ? lootEncounterId : null,
-			assignedToMemberId: lootRecipient !== "unassigned" ? lootRecipient : null,
-		});
-		setLootItems([]);
-	};
-
-	const handleAssignRelic = async () => {
-		if (!relicName.trim()) {
-			toast({
-				title: "Relic name required",
-				description: "Provide a relic name before assigning.",
-				variant: "destructive",
-			});
-			return;
-		}
-		let properties: Json = {};
-		try {
-			properties = relicProperties ? (JSON.parse(relicProperties) as Json) : {};
-		} catch {
-			toast({
-				title: "Invalid relic properties",
-				description: "Properties must be valid JSON.",
-				variant: "destructive",
-			});
-			return;
-		}
-
-		await assignRelic.mutateAsync({
-			campaignId,
-			name: relicName.trim(),
-			rarity: relicRarity,
-			valueCredits: toNumberOrNull(relicValue) ?? undefined,
-			properties,
-			boundToMemberId: relicBoundTo !== "unassigned" ? relicBoundTo : null,
-			tradeable: relicTradeable,
-		});
-
-		setRelicName("");
-		setRelicProperties("{}");
-		setRelicValue("");
-		setRelicBoundTo("unassigned");
 	};
 
 	const handleSaveRules = () => {
@@ -518,272 +392,6 @@ export function CampaignProtocolControls({
 								</div>
 							</div>
 						))
-					)}
-				</div>
-			</AscendantWindow>
-
-			<AscendantWindow
-				title="LOOT & RELIC DISTRIBUTION"
-				data-testid="campaign-rewards-panel"
-			>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-					<div className="space-y-4">
-						<h3 className="font-heading font-semibold flex items-center gap-2">
-							<PackageOpen className="w-4 h-4" />
-							Assign Loot Drop
-						</h3>
-						<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-							<div className="sm:col-span-2">
-								<Label htmlFor="loot-item">Loot Item</Label>
-								<Input
-									id="loot-item"
-									value={lootDraft.name}
-									onChange={(event) =>
-										setLootDraft((prev) => ({
-											...prev,
-											name: event.target.value,
-										}))
-									}
-								/>
-							</div>
-							<div>
-								<Label htmlFor="loot-qty">Qty</Label>
-								<Input
-									id="loot-qty"
-									type="number"
-									min={1}
-									value={lootDraft.quantity}
-									onChange={(event) =>
-										setLootDraft((prev) => ({
-											...prev,
-											quantity: Math.max(1, Number(event.target.value) || 1),
-										}))
-									}
-								/>
-							</div>
-							<div className="sm:col-span-2">
-								<Label htmlFor="loot-value">Value (credits)</Label>
-								<Input
-									id="loot-value"
-									type="number"
-									value={lootDraft.value ?? ""}
-									onChange={(event) =>
-										setLootDraft((prev) => ({
-											...prev,
-											value: toNumberOrNull(event.target.value),
-										}))
-									}
-								/>
-							</div>
-							<div className="flex items-end">
-								<Button
-									variant="outline"
-									onClick={handleAddLootItem}
-									className="w-full"
-								>
-									<Plus className="w-4 h-4 mr-2" />
-									Add
-								</Button>
-							</div>
-						</div>
-
-						{lootItems.length > 0 && (
-							<div className="space-y-2">
-								{lootItems.map((item, index) => (
-									<div
-										key={item.name}
-										className="flex items-center justify-between rounded border border-border px-3 py-2"
-									>
-										<div>
-											<p className="text-sm font-heading">{item.name}</p>
-											<p className="text-xs text-muted-foreground">
-												Qty {item.quantity} · Value {item.value ?? "n/a"}
-											</p>
-										</div>
-										<Button
-											size="icon"
-											variant="ghost"
-											onClick={() =>
-												setLootItems((prev) =>
-													prev.filter((_, idx) => idx !== index),
-												)
-											}
-										>
-											<Trash2 className="w-4 h-4" />
-										</Button>
-									</div>
-								))}
-							</div>
-						)}
-
-						<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-							<div>
-								<Label htmlFor="loot-recipient">Assign To</Label>
-								<Select value={lootRecipient} onValueChange={setLootRecipient}>
-									<SelectTrigger id="loot-recipient">
-										<SelectValue placeholder="Unassigned" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectItem value="unassigned">Unassigned</SelectItem>
-										{memberOptions.map((member) => (
-											<SelectItem key={member.id} value={member.id}>
-												{member.name} · Lv {member.level}{" "}
-												{formatRegentVernacular(member.job)}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-							</div>
-							<div>
-								<Label htmlFor="loot-encounter">Link Encounter</Label>
-								<Select
-									value={lootEncounterId}
-									onValueChange={setLootEncounterId}
-								>
-									<SelectTrigger id="loot-encounter">
-										<SelectValue placeholder="None" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectItem value="none">No encounter</SelectItem>
-										{encounters.map((encounter) => (
-											<SelectItem key={encounter.id} value={encounter.id}>
-												{encounter.name}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-							</div>
-						</div>
-
-						<Button
-							onClick={handleAssignLoot}
-							className="w-full"
-							data-testid="campaign-loot-assign"
-						>
-							<PackageOpen className="w-4 h-4 mr-2" />
-							Record Loot Drop
-						</Button>
-					</div>
-
-					<div className="space-y-4">
-						<h3 className="font-heading font-semibold flex items-center gap-2">
-							<Sparkles className="w-4 h-4" />
-							Assign Relic
-						</h3>
-						<div className="space-y-3">
-							<div>
-								<Label htmlFor="relic-name">Relic Name</Label>
-								<Input
-									id="relic-name"
-									value={relicName}
-									onChange={(event) => setRelicName(event.target.value)}
-								/>
-							</div>
-							<div className="grid grid-cols-2 gap-3">
-								<div>
-									<Label htmlFor="relic-rarity">Rarity</Label>
-									<Select value={relicRarity} onValueChange={setRelicRarity}>
-										<SelectTrigger id="relic-rarity">
-											<SelectValue />
-										</SelectTrigger>
-										<SelectContent>
-											{[
-												"common",
-												"uncommon",
-												"rare",
-												"very_rare",
-												"legendary",
-											].map((rarity) => (
-												<SelectItem key={rarity} value={rarity}>
-													{rarity.replace("_", " ")}
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</div>
-								<div>
-									<Label htmlFor="relic-value">Value (credits)</Label>
-									<Input
-										id="relic-value"
-										type="number"
-										value={relicValue}
-										onChange={(event) => setRelicValue(event.target.value)}
-									/>
-								</div>
-							</div>
-							<div>
-								<Label htmlFor="relic-properties">Properties (JSON)</Label>
-								<Textarea
-									id="relic-properties"
-									rows={3}
-									value={relicProperties}
-									onChange={(event) => setRelicProperties(event.target.value)}
-								/>
-							</div>
-							<div className="grid grid-cols-2 gap-3">
-								<div>
-									<Label htmlFor="relic-recipient">Bind To</Label>
-									<Select value={relicBoundTo} onValueChange={setRelicBoundTo}>
-										<SelectTrigger id="relic-recipient">
-											<SelectValue placeholder="Unassigned" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="unassigned">Unassigned</SelectItem>
-											{memberOptions.map((member) => (
-												<SelectItem key={member.id} value={member.id}>
-													{member.name} · Lv {member.level}{" "}
-													{formatRegentVernacular(member.job)}
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</div>
-								<div className="flex items-center justify-between rounded-lg border border-border bg-muted/30 px-3">
-									<Label htmlFor="relic-tradeable">Tradeable</Label>
-									<Switch
-										id="relic-tradeable"
-										checked={relicTradeable}
-										onCheckedChange={setRelicTradeable}
-									/>
-								</div>
-							</div>
-							<Button
-								onClick={handleAssignRelic}
-								className="w-full"
-								data-testid="campaign-relic-assign"
-							>
-								<Sparkles className="w-4 h-4 mr-2" />
-								Assign Relic
-							</Button>
-						</div>
-					</div>
-				</div>
-
-				<div className="mt-6 space-y-3">
-					<h3 className="font-heading font-semibold">Recent Drops</h3>
-					{lootDrops.length === 0 && relicInstances.length === 0 ? (
-						<p className="text-sm text-muted-foreground">
-							No loot or relics recorded yet.
-						</p>
-					) : (
-						<div className="space-y-2">
-							{lootDrops.slice(0, 5).map((drop) => (
-								<div
-									key={drop.id}
-									className="rounded border border-border px-3 py-2 text-sm"
-								>
-									Loot drop · {new Date(drop.created_at).toLocaleString()}
-								</div>
-							))}
-							{relicInstances.slice(0, 5).map((relic) => (
-								<div
-									key={relic.id}
-									className="rounded border border-border px-3 py-2 text-sm"
-								>
-									Relic {relic.name} · {relic.rarity ?? "unknown"}
-								</div>
-							))}
-						</div>
 					)}
 				</div>
 			</AscendantWindow>
