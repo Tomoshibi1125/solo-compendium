@@ -9,6 +9,32 @@ function coverageKey(kind: string, ref: string): string {
 	return `${kind}:${ref}`;
 }
 
+const stableStringify = (value: unknown): string => {
+	if (value == null) return "";
+	if (typeof value !== "object") return String(value).toLowerCase().trim();
+	if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+	const entries = Object.entries(value as Record<string, unknown>).sort(
+		([a], [b]) => a.localeCompare(b),
+	);
+	return `{${entries.map(([key, entry]) => `${key}:${stableStringify(entry)}`).join(",")}}`;
+};
+
+const runeFunctionalFingerprint = (rune: (typeof allRunes)[number]): string =>
+	stableStringify({
+		teaches: rune.teaches,
+		rune_type: rune.rune_type,
+		rune_category: rune.rune_category,
+		effect_type: rune.effect_type,
+		activation_action: rune.activation_action,
+		duration: rune.duration,
+		range: rune.range,
+		rune_level: rune.rune_level,
+		rank: rune.rank,
+		effects: rune.effects,
+		mechanics: rune.mechanics,
+		limitations: rune.limitations,
+	});
+
 describe("runes data normalization", () => {
 	it("does not expose top-level uses_per_rest or recharge fields", () => {
 		for (const rune of allRunes) {
@@ -80,6 +106,18 @@ describe("runes data normalization", () => {
 		for (const rune of catalogAuthoredAbilityRunes) {
 			expect(allRuneIds.has(rune.id), rune.id).toBe(true);
 		}
+	});
+
+	it("does not contain functionally identical rune clones", () => {
+		const fingerprints = new Map<string, string[]>();
+		for (const rune of allRunes) {
+			const key = runeFunctionalFingerprint(rune);
+			fingerprints.set(key, [...(fingerprints.get(key) ?? []), rune.name]);
+		}
+		const duplicates = [...fingerprints.values()]
+			.filter((names) => names.length > 1)
+			.map((names) => names.join(" | "));
+		expect(duplicates).toEqual([]);
 	});
 
 	it("does not expose fallback or generated placeholder rune entries", () => {

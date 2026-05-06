@@ -140,7 +140,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 					sendMessage
 						.mutateAsync({
 							campaignId,
-							content: `**System**: The Warden has updated the campaign rules/settings.`,
+							content: `**Campaign**: The Warden has updated the campaign rules/settings.`,
 						})
 						.catch(console.error);
 				},

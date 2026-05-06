@@ -114,7 +114,7 @@ export function CampaignSessionsPanel({
 		await sendMessage
 			.mutateAsync({
 				campaignId,
-				content: `**System**: A new session has been scheduled - "${sessionTitle.trim()}"`,
+				content: `**Campaign**: A new session has been scheduled - "${sessionTitle.trim()}"`,
 			})
 			.catch(console.error);
 
@@ -139,7 +139,7 @@ export function CampaignSessionsPanel({
 		await sendMessage
 			.mutateAsync({
 				campaignId,
-				content: `**System**: Status for "${title}" changed to ${status.replace("_", " ")}.`,
+				content: `**Campaign**: Status for "${title}" changed to ${status.replace("_", " ")}.`,
 			})
 			.catch(console.error);
 	};
@@ -168,7 +168,7 @@ export function CampaignSessionsPanel({
 			await sendMessage
 				.mutateAsync({
 					campaignId,
-					content: `**System**: A new campaign log ("${logTitle.trim()}") has been added.`,
+					content: `**Campaign**: A new campaign log ("${logTitle.trim()}") has been added.`,
 				})
 				.catch(console.error);
 		}

@@ -63,6 +63,30 @@ const LEVEL_PARITY_MINIMUMS: Record<number, number> = {
 
 const FORBIDDEN_SPELL_TERMS = [/system/i, /monarch/i, /\bdm\b/i, /\bplayer\b/i];
 
+const stableStringify = (value: unknown): string => {
+	if (value == null) return "";
+	if (typeof value !== "object") return String(value).toLowerCase().trim();
+	if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+	const entries = Object.entries(value as Record<string, unknown>).sort(
+		([a], [b]) => a.localeCompare(b),
+	);
+	return `{${entries.map(([key, entry]) => `${key}:${stableStringify(entry)}`).join(",")}}`;
+};
+
+const spellFunctionalFingerprint = (spell: (typeof spells)[number]): string =>
+	stableStringify({
+		level: spell.level,
+		school: spell.school,
+		casting_time: spell.casting_time,
+		range: spell.range,
+		duration: spell.duration,
+		attack: spell.attack,
+		saving_throw: spell.saving_throw,
+		area: spell.area,
+		effects: spell.effects,
+		higher_levels: spell.higher_levels,
+	});
+
 describe("Spell catalog — coverage", () => {
 	it("contains the legacy rank files plus the expanded parity catalog", () => {
 		expect(spells_d).toHaveLength(15);
@@ -118,6 +142,38 @@ describe("Spell catalog — coverage", () => {
 			seen.add(key);
 		}
 		expect(duplicates).toEqual([]);
+	});
+
+	it("does not contain functionally identical spell clones", () => {
+		const fingerprints = new Map<string, string[]>();
+		for (const spell of spells) {
+			const key = spellFunctionalFingerprint(spell);
+			fingerprints.set(key, [...(fingerprints.get(key) ?? []), spell.name]);
+		}
+		const duplicates = [...fingerprints.values()]
+			.filter((names) => names.length > 1)
+			.map((names) => names.join(" | "));
+		expect(duplicates).toEqual([]);
+	});
+
+	it("keeps screenshot-reported generated spell families mechanically distinct", () => {
+		const names = [
+			"Aetheric Beacon",
+			"Aetheric Relay",
+			"Aura Lens",
+			"Crowd Chorus",
+			"Mending Pulse",
+			"Mending Thread",
+		];
+		const selected = names.map((name) => {
+			const spell = spells.find((entry) => entry.name === name);
+			if (!spell) {
+				throw new Error(`${name} should exist in generated spell catalog`);
+			}
+			return spell;
+		});
+		const unique = new Set(selected.map(spellFunctionalFingerprint));
+		expect(unique.size).toBe(names.length);
 	});
 });
 
@@ -265,6 +321,39 @@ describe("Spell catalog — slot-based purity (no stale charge fields)", () => {
 			offenders.map((s) => s.id),
 			`Spells leaking mechanics.${field}`,
 		).toEqual([]);
+	});
+
+	it("normalizes higher-rank text to higher_levels without duplicate aliases", () => {
+		const offenders = spells.filter(
+			(spell) =>
+				(spell as unknown as Record<string, unknown>).atHigherLevels !==
+				undefined,
+		);
+		expect(offenders.map((spell) => spell.id)).toEqual([]);
+	});
+
+	it("does not mirror top-level spell metadata inside mechanics", () => {
+		const mirroredKeys = [
+			"attack",
+			"saving_throw",
+			"duration",
+			"range",
+			"type",
+			"action",
+			"ability",
+			"save",
+			"dc",
+			"save_dc",
+		];
+		const offenders = spells.flatMap((spell) => {
+			const mechanics = (spell as unknown as Record<string, unknown>)
+				.mechanics as Record<string, unknown> | undefined;
+			if (!mechanics) return [];
+			return mirroredKeys
+				.filter((key) => mechanics[key] !== undefined)
+				.map((key) => `${spell.id}:${key}`);
+		});
+		expect(offenders).toEqual([]);
 	});
 });
 

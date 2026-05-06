@@ -13,7 +13,10 @@
 
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { jobs } from "@/data/compendium/jobs";
-import { applyJobAwakeningTraitsToCharacter } from "@/lib/characterCreation";
+import {
+	applyJobAwakeningTraitsToCharacter,
+	getJobASI,
+} from "@/lib/characterCreation";
 import {
 	createLocalCharacter,
 	getLocalCharacterWithAbilities,
@@ -74,6 +77,8 @@ describe("racial ASI at level 1", () => {
 		expect(after).toBeDefined();
 		expect(after?.str).toBe(17); // 15 + 2
 		expect(after?.vit).toBe(15); // 14 + 1
+		expect(after?.abilities.STR).toBe(17);
+		expect(after?.abilities.VIT).toBe(15);
 		expect(after?.agi).toBe(13); // unchanged
 		expect(after?.int).toBe(10);
 		expect(after?.sense).toBe(12);
@@ -108,6 +113,20 @@ describe("racial ASI at level 1", () => {
 		const after = getLocalCharacterWithAbilities(row.id);
 		expect(after?.int).toBe(17); // 15 + 2, NOT 15 + 6
 		expect(after?.pre).toBe(11); // 10 + 1, NOT 10 + 3
+	});
+
+	it("maps camelCase and snake_case job ASI sources for creator preview", () => {
+		const idol = jobs.find((j) => j.id === "idol");
+		if (!idol) throw new Error("Idol job not found");
+
+		expect(getJobASI("Idol", 1, idol)).toEqual({ PRE: 2, AGI: 1 });
+		expect(
+			getJobASI("Idol", 1, {
+				...idol,
+				abilityScoreImprovements: undefined,
+				ability_score_improvements: idol.abilityScoreImprovements,
+			}),
+		).toEqual({ PRE: 2, AGI: 1 });
 	});
 
 	it("sets Summoner saving throw profs, speed, senses, resistances at creation", async () => {

@@ -32,7 +32,7 @@ type DatasetEntry = { dataset: string; entry: Entry };
 const datasets: Array<[string, Entry[]]> = [
 	["spells", allSpells as Entry[]],
 	["powers", allPowers as Entry[]],
-	["techniques", allTechniques as Entry[]],
+	["techniques", allTechniques as unknown as Entry[]],
 	["runes", allRunes as Entry[]],
 ];
 

@@ -109,48 +109,48 @@ function effectFor(
 ): { primary: string; secondary: string } {
 	if (seed.mode === "vanguard") {
 		return {
-			primary: `Interposes a weapon or shield line, reducing damage and answering with ${dice} ${seed.damageType} damage.`,
+			primary: `Interposes ${seed.theme}, reducing damage and answering with ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"On a failed save, the target is pushed 5 feet or loses advantage on its next attack.",
 		};
 	}
 	if (seed.mode === "brutal") {
 		return {
-			primary: `Turns momentum into a crushing blow for ${dice} ${seed.damageType} damage.`,
+			primary: `Turns ${seed.theme} into a crushing blow for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"On a failed save, the target is knocked prone or has its speed reduced by 10 feet.",
 		};
 	}
 	if (seed.mode === "precision") {
 		return {
-			primary: `Finds a gap in guard and deals ${dice} ${seed.damageType} damage.`,
+			primary: `Finds a gap in guard through ${seed.theme} and deals ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"If the user had advantage, the target cannot take reactions until its next turn.",
 		};
 	}
 	if (seed.mode === "unarmed") {
 		return {
-			primary: `Channels breath and footwork into an unarmed strike for ${dice} ${seed.damageType} damage.`,
+			primary: `Channels ${seed.theme} into an unarmed strike for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"The user may move 10 feet without provoking opportunity attacks.",
 		};
 	}
 	if (seed.mode === "radiant") {
 		return {
-			primary: `Binds a weapon path to radiant oath pressure for ${dice} ${seed.damageType} damage.`,
+			primary: `Binds a weapon path to ${seed.theme} for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"An ally within 30 feet gains temporary hit points equal to the technique level.",
 		};
 	}
 	if (seed.mode === "engineered") {
 		return {
-			primary: `Triggers a prepared device-assisted strike for ${dice} ${seed.damageType} damage.`,
+			primary: `Triggers ${seed.theme} as a prepared device-assisted strike for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"The target is marked by harmless tracer light until the end of the next turn.",
 		};
 	}
 	return {
-		primary: `Reads a quarry line and attacks for ${dice} ${seed.damageType} damage.`,
+		primary: `Reads ${seed.theme} and attacks for ${dice} ${seed.damageType} damage.`,
 		secondary:
 			"The user ignores nonmagical difficult terrain until the end of the turn.",
 	};
@@ -169,7 +169,7 @@ function makeSeeds(family: TechniqueFamily): TechniqueSeed[] {
 			mode: family.mode,
 			type: family.type,
 			style: family.style,
-			theme: family.theme,
+			theme: `${family.theme} through the ${prefix.toLowerCase()} ${form.toLowerCase()} pattern`,
 			level:
 				family.levels[
 					(prefixIndex * family.forms.length + formIndex) % family.levels.length
@@ -433,7 +433,7 @@ const sharedFamilies: TechniqueFamily[] = [
 		theme: "shared awakened combat doctrine",
 		damageType: "force",
 		ability: "Strength",
-		prefixes: ["Apex", "Rift", "Storm", "Iron", "Nova", "Echo"],
+		prefixes: ["Apex", "Rift", "Storm", "Adamant", "Nova", "Echo"],
 		forms: [
 			"Drive",
 			"Guard",

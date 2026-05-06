@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { homebrewRuntimeItemToDeliverableItem } from "@/hooks/useWardenItemDelivery";
 import {
 	filterPublishedHomebrewRecords,
 	type HomebrewRuntimeRecord,
@@ -12,7 +13,14 @@ import {
 	runtimePathMatchesJob,
 	runtimePowerMatchesCharacter,
 	runtimeSpellMatchesCharacter,
-} from "@/lib/homebrewRuntime";
+} from "../homebrewRuntime";
+import {
+	buildHomebrewDeliverableItem,
+	buildHomebrewItemData,
+	buildHomebrewItemProperties,
+	createDefaultHomebrewItemForm,
+	normalizeHomebrewRarity,
+} from "../wardenItemHomebrew";
 
 const makeRecord = (
 	overrides: Partial<HomebrewRuntimeRecord>,
@@ -229,6 +237,7 @@ describe("homebrew runtime mapping", () => {
 					properties: ["light", "finesse"],
 					weight: "2.5",
 					rarity: "rare",
+					value_credits: 1200,
 					damage: "1d8",
 					damageType: "force",
 					requiresAttunement: "true",
@@ -247,6 +256,7 @@ describe("homebrew runtime mapping", () => {
 			properties: ["light", "finesse"],
 			weight: 2.5,
 			rarity: "rare",
+			value_credits: 1200,
 			damage: "1d8",
 			damage_type: "force",
 			requires_attunement: true,
@@ -258,6 +268,82 @@ describe("homebrew runtime mapping", () => {
 			attack_bonus: 1,
 			homebrew_id: "item-1",
 			source: "homebrew",
+		});
+		expect(homebrewRuntimeItemToDeliverableItem(item).valueCredits).toBe(1200);
+	});
+
+	it("builds inline Warden homebrew items as usable equipment payload data", () => {
+		const form = {
+			...createDefaultHomebrewItemForm(),
+			name: "Aegis Circuit Mantle",
+			description: "A mantle threaded with defensive mana circuits.",
+			itemType: "armor",
+			rarity: "rare",
+			weight: "4.5",
+			valueCredits: "2500",
+			armorClass: "15",
+			armorType: "light",
+			acBonus: "1",
+			attackBonus: "2",
+			damageBonus: "3",
+			charges: "4",
+			requiresAttunement: true,
+			isContainer: true,
+			capacityWeight: "20",
+			resistancesText: "fire, cold",
+			immunitiesText: "poison",
+			propertiesText: "Advantage on resonance checks",
+		};
+
+		const data = buildHomebrewItemData(form);
+		const deliverable = buildHomebrewDeliverableItem(form, "homebrew-item-1");
+
+		expect(normalizeHomebrewRarity("none")).toBeNull();
+		expect(buildHomebrewItemProperties(form)).toEqual(data.properties);
+		expect(data).toMatchObject({
+			type: "armor",
+			rarity: "rare",
+			weight: 4.5,
+			value_credits: 2500,
+			armor_class: "15",
+			armor_type: "light",
+			charges: 4,
+			requires_attunement: true,
+			is_container: true,
+			capacity_weight: 20,
+			resistances: ["fire", "cold"],
+			immunities: ["poison"],
+		});
+		expect(data.properties).toEqual(
+			expect.arrayContaining([
+				"AC 15",
+				"light",
+				"+1 AC",
+				"+2 to attack",
+				"+3 to damage",
+				"Resistance: fire, cold",
+				"Immunity: poison",
+				"Advantage on resonance checks",
+			]),
+		);
+		expect(deliverable).toMatchObject({
+			id: "homebrew-item-1",
+			homebrewId: "homebrew-item-1",
+			sourceKind: "homebrew",
+			type: "armor",
+			rarity: "rare",
+			chargesCurrent: 4,
+			chargesMax: 4,
+			requiresAttunement: true,
+			isContainer: true,
+			capacityWeight: 20,
+		});
+		expect(deliverable.customModifiers).toMatchObject({
+			acBonus: 1,
+			attackBonus: 2,
+			damageBonus: 3,
+			source: "homebrew",
+			homebrew_id: "homebrew-item-1",
 		});
 	});
 

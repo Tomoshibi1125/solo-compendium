@@ -118,7 +118,7 @@ import {
 	useCampaignEncounterEntries,
 	useSaveCampaignEncounter,
 } from "@/hooks/useCampaignEncounters";
-import { useAddPlayerCharacterToCampaign } from "@/hooks/useCampaignInvites";
+import { useAddAscendantCharacterToCampaign } from "@/hooks/useCampaignInvites";
 import { normalizeRules } from "@/hooks/useCampaignRules";
 import { useIsCampaignWarden, useIsWarden } from "@/hooks/useCampaigns";
 import {
@@ -887,7 +887,7 @@ export const WardenWiringSeal = {
 		},
 		campaign: {
 			auth: { campaignWarden: useIsCampaignWarden, warden: useIsWarden },
-			invites: { add: useAddPlayerCharacterToCampaign },
+			invites: { add: useAddAscendantCharacterToCampaign },
 			permissions: { update: useUpdateSharePermissions },
 			encounters: {
 				entries: useCampaignEncounterEntries,

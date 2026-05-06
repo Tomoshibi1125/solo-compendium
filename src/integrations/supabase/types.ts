@@ -8453,6 +8453,14 @@ export type Database = {
 				};
 				Returns: string;
 			};
+			attach_campaign_member_character: {
+				Args: {
+					p_campaign_id: string;
+					p_character_id: string;
+					p_member_id: string;
+				};
+				Returns: undefined;
+			};
 			add_player_character_to_campaign: {
 				Args: {
 					p_campaign_id: string;
@@ -8704,14 +8712,15 @@ export type Database = {
 				Args: { p_share_code: string };
 				Returns: {
 					created_at: string;
-					description: string;
-					dm_id: string;
+					description: string | null;
 					id: string;
 					is_active: boolean;
 					name: string;
+					party_gold: Json | null;
 					settings: Json;
 					share_code: string;
 					updated_at: string;
+					warden_id: string;
 				}[];
 			};
 			get_campaign_invite_by_token: {
@@ -8727,6 +8736,23 @@ export type Database = {
 					role: string;
 					status: string;
 					used_count: number;
+				}[];
+			};
+			get_campaign_linked_characters: {
+				Args: { p_campaign_id: string };
+				Returns: {
+					armor_class: number;
+					campaign_id: string;
+					campaign_member_id: string;
+					character_id: string;
+					character_name: string;
+					hp_current: number;
+					hp_max: number;
+					job: string | null;
+					level: number;
+					portrait_url: string | null;
+					role: string;
+					user_id: string;
 				}[];
 			};
 			get_campaign_member_count: {
@@ -8770,7 +8796,7 @@ export type Database = {
 			};
 			join_campaign_by_id: {
 				Args: { p_campaign_id: string; p_character_id?: string };
-				Returns: undefined;
+				Returns: string;
 			};
 			log_ai_usage: {
 				Args: {

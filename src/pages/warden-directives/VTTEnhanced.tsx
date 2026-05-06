@@ -481,6 +481,10 @@ type CharacterSummary = {
 	job?: string;
 };
 
+type CampaignLinkedCharacterSummary = CharacterSummary & {
+	user_id?: string;
+};
+
 /** Shape returned by useCampaignMembers: member row + joined character summary */
 type CampaignMemberWithCharacter = CampaignMember & {
 	characters: CharacterSummary | null;
@@ -1341,11 +1345,60 @@ const VTTEnhanced = () => {
 		[members],
 	);
 
-	// Load campaign characters via members
-	const { data: campaignCharacters } = useQuery<CharacterSummary[]>({
+	// Load campaign characters via authoritative linked-character records
+	const { data: campaignCharacters } = useQuery<
+		CampaignLinkedCharacterSummary[]
+	>({
 		queryKey: ["campaign-characters", campaignId],
-		queryFn: async (): Promise<CharacterSummary[]> => {
+		queryFn: async (): Promise<CampaignLinkedCharacterSummary[]> => {
 			if (!campaignId) return [];
+			const { data: linkedData, error: linkedError } = await supabase.rpc(
+				"get_campaign_linked_characters",
+				{ p_campaign_id: campaignId },
+			);
+
+			if (!linkedError && Array.isArray(linkedData)) {
+				return linkedData
+					.map(
+						(row: {
+							character_id?: string | null;
+							character_name?: string | null;
+							hp_current?: number | null;
+							hp_max?: number | null;
+							armor_class?: number | null;
+							portrait_url?: string | null;
+							level?: number | null;
+							job?: string | null;
+							user_id?: string | null;
+						}): CampaignLinkedCharacterSummary | null => {
+							if (!row.character_id || !row.character_name) return null;
+							return {
+								id: row.character_id,
+								name: row.character_name,
+								hp_current: row.hp_current ?? undefined,
+								hp_max: row.hp_max ?? undefined,
+								armor_class: row.armor_class ?? undefined,
+								portrait_url: row.portrait_url ?? null,
+								level: row.level ?? undefined,
+								job: row.job ?? undefined,
+								user_id: row.user_id ?? undefined,
+							};
+						},
+					)
+					.filter((entry): entry is CampaignLinkedCharacterSummary => !!entry);
+			}
+
+			if (linkedError) {
+				const message = linkedError.message.toLowerCase();
+				const isMissingLinkedCharacterRpc =
+					message.includes("get_campaign_linked_characters") &&
+					(message.includes("does not exist") ||
+						message.includes("no function matches") ||
+						message.includes("could not find function") ||
+						message.includes("schema cache"));
+				if (!isMissingLinkedCharacterRpc) throw linkedError;
+			}
+
 			const { data: membersData } = await supabase
 				.from("campaign_members")
 				.select("character_id, characters(*)")
@@ -1355,7 +1408,7 @@ const VTTEnhanced = () => {
 			if (!membersData) return [];
 			return membersData
 				.map((m: { characters: unknown | null }) => m.characters)
-				.filter((entry): entry is CharacterSummary => {
+				.filter((entry): entry is CampaignLinkedCharacterSummary => {
 					if (!entry || typeof entry !== "object") return false;
 					return isCharacterSummary(entry as Record<string, unknown>);
 				});
@@ -1383,15 +1436,21 @@ const VTTEnhanced = () => {
 	// Map character IDs to their owning user IDs for token ownership
 	const characterOwnerMap = useMemo<Map<string, string>>(() => {
 		const map = new Map<string, string>();
-		if (!members) return map;
-		for (const member of members) {
-			const chars = member.characters;
-			if (chars && typeof chars.id === "string") {
-				map.set(chars.id, member.user_id);
+		if (members) {
+			for (const member of members) {
+				const chars = member.characters;
+				if (chars && typeof chars.id === "string") {
+					map.set(chars.id, member.user_id);
+				}
+			}
+		}
+		for (const character of campaignCharacters || []) {
+			if (character.user_id) {
+				map.set(character.id, character.user_id);
 			}
 		}
 		return map;
-	}, [members]);
+	}, [campaignCharacters, members]);
 
 	const filteredLibraryTokens = useMemo(() => {
 		const query = tokenSearch.trim().toLowerCase();

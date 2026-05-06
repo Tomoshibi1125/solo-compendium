@@ -24,6 +24,7 @@ import {
 	isLocalCharacterId,
 	listLocalFeatures,
 	listLocalSpells,
+	setLocalAbilities,
 	updateLocalCharacter,
 	updateLocalFeature,
 } from "@/lib/guestStore";
@@ -1982,6 +1983,43 @@ const JOB_ASI_TO_SYSTEM: Record<string, string> = {
 	presence: "PRE",
 };
 
+const JOB_ASI_TO_DB: Record<
+	string,
+	"str" | "agi" | "vit" | "int" | "sense" | "pre"
+> = {
+	strength: "str",
+	agility: "agi",
+	vitality: "vit",
+	intelligence: "int",
+	sense: "sense",
+	presence: "pre",
+};
+
+const JOB_DB_TO_SYSTEM: Record<
+	"str" | "agi" | "vit" | "int" | "sense" | "pre",
+	"STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE"
+> = {
+	str: "STR",
+	agi: "AGI",
+	vit: "VIT",
+	int: "INT",
+	sense: "SENSE",
+	pre: "PRE",
+};
+
+type JobASIValue = number[] | Record<string, number> | null | undefined;
+
+function getRawJobASI(job: unknown): JobASIValue {
+	const source = job as
+		| {
+				ability_score_improvements?: JobASIValue;
+				abilityScoreImprovements?: JobASIValue;
+		  }
+		| null
+		| undefined;
+	return source?.ability_score_improvements ?? source?.abilityScoreImprovements;
+}
+
 /**
  * Get the ability score improvements for a job, mapped to Rift Ascendant ability names.
  * Returns a Record like { STR: 2, VIT: 1 }.
@@ -1989,12 +2027,13 @@ const JOB_ASI_TO_SYSTEM: Record<string, string> = {
 export function getJobASI(
 	jobName: string | null | undefined,
 	level: number,
+	jobSource?: unknown,
 ): Record<string, number> {
-	const job = findStaticJobByName(jobName);
-	if (!job || !job.ability_score_improvements) return {};
+	const job = jobSource ?? findStaticJobByName(jobName);
+	const asi = getRawJobASI(job);
+	if (!job || !asi) return {};
 
 	const result: Record<string, number> = {};
-	const asi = job.ability_score_improvements;
 	if (Array.isArray(asi) && asi.includes(level)) {
 		// This handles the case where improvements are gated by level
 		// (Common in path scaling)
@@ -3060,22 +3099,11 @@ export async function applyJobAwakeningTraitsToCharacter(
 		db: "str" | "agi" | "vit" | "int" | "sense" | "pre";
 		delta: number;
 	}> = [];
-	if (
-		job.abilityScoreImprovements &&
-		!Array.isArray(job.abilityScoreImprovements)
-	) {
-		const rawASI = job.abilityScoreImprovements as Record<string, number>;
-		const map: Record<string, "str" | "agi" | "vit" | "int" | "sense" | "pre"> =
-			{
-				strength: "str",
-				agility: "agi",
-				vitality: "vit",
-				intelligence: "int",
-				sense: "sense",
-				presence: "pre",
-			};
+	const rawJobASI = getRawJobASI(job);
+	if (rawJobASI && !Array.isArray(rawJobASI)) {
+		const rawASI = rawJobASI as Record<string, number>;
 		for (const [key, value] of Object.entries(rawASI)) {
-			const col = map[key.toLowerCase()];
+			const col = JOB_ASI_TO_DB[key.toLowerCase()];
 			if (col && typeof value === "number" && value !== 0) {
 				asiEntries.push({ db: col, delta: value });
 			}
@@ -3096,6 +3124,7 @@ export async function applyJobAwakeningTraitsToCharacter(
 				(f?.source ?? "") === asiApplyKey || (f?.name ?? "") === asiApplyKey,
 		);
 		const statsPatch: Record<string, number> = {};
+		const nextAbilities = { ...(existing.abilities ?? {}) };
 		if (!asiAlreadyApplied) {
 			for (const { db, delta } of asiEntries) {
 				const current =
@@ -3103,6 +3132,8 @@ export async function applyJobAwakeningTraitsToCharacter(
 						db
 					] ?? 0;
 				statsPatch[db] = Number(current) + delta;
+				const ability = JOB_DB_TO_SYSTEM[db];
+				nextAbilities[ability] = Number(current) + delta;
 			}
 		}
 
@@ -3134,6 +3165,7 @@ export async function applyJobAwakeningTraitsToCharacter(
 		} as never);
 
 		if (!asiAlreadyApplied && asiEntries.length > 0) {
+			setLocalAbilities(characterId, nextAbilities);
 			addLocalFeature(characterId, {
 				name: asiApplyKey,
 				source: asiApplyKey,
@@ -3216,6 +3248,44 @@ export async function applyJobAwakeningTraitsToCharacter(
 	}
 
 	if (!asiAlreadyApplied && asiEntries.length > 0) {
+		const { data: abilityRows, error: abilityReadErr } = await supabase
+			.from("character_abilities")
+			.select("ability, score")
+			.eq("character_id", characterId);
+		if (!abilityReadErr) {
+			const currentByAbility = new Map<string, number>();
+			for (const row of abilityRows ?? []) {
+				currentByAbility.set(row.ability, row.score);
+			}
+			const abilityUpdates = asiEntries.map(({ db, delta }) => {
+				const ability = JOB_DB_TO_SYSTEM[db];
+				const rowCurrent =
+					(existing as unknown as Record<string, number | null | undefined>)[
+						db
+					] ??
+					currentByAbility.get(ability) ??
+					10;
+				return {
+					character_id: characterId,
+					ability,
+					score: Number(rowCurrent) + delta,
+				};
+			});
+			const { error: abilityWriteErr } = await supabase
+				.from("character_abilities")
+				.upsert(abilityUpdates, { onConflict: "character_id,ability" });
+			if (abilityWriteErr) {
+				console.warn(
+					"applyJobAwakeningTraitsToCharacter: failed to persist job ASI abilities",
+					abilityWriteErr,
+				);
+			}
+		} else {
+			console.warn(
+				"applyJobAwakeningTraitsToCharacter: failed to read job ASI abilities",
+				abilityReadErr,
+			);
+		}
 		await supabase.from("character_features").insert({
 			character_id: characterId,
 			name: asiApplyKey,

@@ -4,6 +4,7 @@ import { useAssignCampaignLoot } from "@/hooks/useCampaignRewards";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { buildItemProperties } from "@/lib/characterCreation";
+import type { HomebrewRuntimeItem } from "@/lib/homebrewRuntime";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import type { WardenLinkedEntry } from "@/lib/wardenGenerationContext";
 
@@ -14,6 +15,7 @@ export interface WardenDeliverableItem {
 	name: string;
 	description?: string | null;
 	type?: string | null;
+	sourceKind?: "canonical" | "homebrew" | "generated";
 	quantity?: number;
 	rarity?: string | null;
 	weight?: number | null;
@@ -21,9 +23,19 @@ export interface WardenDeliverableItem {
 	properties?: string[] | null;
 	requiresAttunement?: boolean;
 	sourceBook?: string | null;
+	homebrewId?: string | null;
+	tags?: string[];
+	damage?: string | null;
+	damageType?: string | null;
+	armorClass?: string | number | null;
 	sigilSlotsBase?: number | null;
 	chargesCurrent?: number | null;
 	chargesMax?: number | null;
+	customModifiers?: Record<string, unknown> | null;
+	isContainer?: boolean;
+	capacityWeight?: number | null;
+	capacityVolume?: number | null;
+	relicTier?: string | null;
 }
 
 interface WardenItemDeliveryInput {
@@ -54,6 +66,7 @@ export function linkedEntryToDeliverableItem(
 		name: entry.name,
 		description: entry.description,
 		type,
+		sourceKind: "canonical",
 		rarity: entry.rarity,
 		weight: entry.entry.weight ?? null,
 		valueCredits:
@@ -70,8 +83,27 @@ export function linkedEntryToDeliverableItem(
 				? properties
 				: normalizeProperties(entry.entry.properties),
 		requiresAttunement:
-			(entry.entry as { attunement?: boolean | null }).attunement ?? false,
+			(entry.entry as { requires_attunement?: boolean | null })
+				.requires_attunement ??
+			(entry.entry as { attunement?: boolean | null }).attunement ??
+			((
+				entry.entry as {
+					limitations?: { requires_attunement?: boolean } | null;
+				}
+			).limitations?.requires_attunement ||
+				false),
 		sourceBook: entry.sourceBook,
+		tags: entry.tags,
+		damage:
+			typeof (entry.entry as { damage?: unknown }).damage === "string" ||
+			typeof (entry.entry as { damage?: unknown }).damage === "number"
+				? String((entry.entry as { damage: string | number }).damage)
+				: null,
+		damageType:
+			(entry.entry as { damage_type?: string | null }).damage_type ?? null,
+		armorClass:
+			(entry.entry as { armor_class?: string | number | null }).armor_class ??
+			null,
 		sigilSlotsBase:
 			entry.entry.sigil_slots_base ??
 			getDefaultSigilSlotsBaseForEquipment({
@@ -80,14 +112,48 @@ export function linkedEntryToDeliverableItem(
 				name: entry.name,
 				rarity: entry.rarity,
 			}),
-		chargesCurrent:
-			typeof (entry.entry as { charges?: unknown }).charges === "number"
-				? ((entry.entry as { charges: number }).charges as number)
-				: null,
-		chargesMax:
-			typeof (entry.entry as { charges?: unknown }).charges === "number"
-				? ((entry.entry as { charges: number }).charges as number)
-				: null,
+		chargesCurrent: extractCharges(entry.entry).current,
+		chargesMax: extractCharges(entry.entry).max,
+		relicTier:
+			(entry.entry as { relic_tier?: string | null }).relic_tier ?? null,
+	};
+}
+
+export function homebrewRuntimeItemToDeliverableItem(
+	item: HomebrewRuntimeItem,
+): WardenDeliverableItem {
+	const charges = typeof item.charges === "number" ? item.charges : null;
+	return {
+		id: item.id,
+		name: item.name,
+		description: item.description,
+		type: item.item_type || item.equipment_type || "gear",
+		sourceKind: "homebrew",
+		rarity: item.rarity,
+		weight: item.weight,
+		valueCredits:
+			typeof item.value_credits === "number"
+				? item.value_credits
+				: typeof item.cost_credits === "number"
+					? item.cost_credits
+					: null,
+		properties: item.properties,
+		requiresAttunement: item.requires_attunement,
+		sourceBook: item.source_book,
+		homebrewId: item.homebrew_id,
+		tags: item.tags,
+		damage: item.damage,
+		damageType: item.damage_type,
+		armorClass: item.armor_class,
+		chargesCurrent: charges,
+		chargesMax: charges,
+		customModifiers: item.custom_modifiers,
+		isContainer:
+			typeof item.is_container === "boolean" ? item.is_container : undefined,
+		capacityWeight:
+			typeof item.capacity_weight === "number" ? item.capacity_weight : null,
+		capacityVolume:
+			typeof item.capacity_volume === "number" ? item.capacity_volume : null,
 	};
 }
 
@@ -239,9 +305,10 @@ function buildEquipmentInsert(
 ): CharacterEquipmentInsert {
 	const inventoryType = normalizeInventoryType(item.type);
 	const properties = item.properties ?? [];
+	const customModifiers = buildCustomModifiers(item);
 	return {
 		character_id: characterId,
-		item_id: item.id ?? null,
+		item_id: item.sourceKind === "homebrew" ? null : (item.id ?? null),
 		name: item.name,
 		item_type: inventoryType,
 		description: item.description ?? null,
@@ -261,9 +328,14 @@ function buildEquipmentInsert(
 				name: item.name,
 				rarity: item.rarity ?? null,
 			}),
-		relic_tier: null,
-		charges_current: item.chargesCurrent ?? null,
+		relic_tier: normalizeRelicTierForDb(item.relicTier),
+		charges_current: item.chargesCurrent ?? item.chargesMax ?? null,
 		charges_max: item.chargesMax ?? null,
+		custom_modifiers: customModifiers,
+		is_container: item.isContainer ?? false,
+		capacity_weight: item.capacityWeight ?? null,
+		capacity_volume: item.capacityVolume ?? null,
+		is_active: true,
 	};
 }
 
@@ -299,11 +371,13 @@ function normalizeInventoryType(type?: string | null): string {
 	if (normalized === "tattoos") return "tattoo";
 	if (normalized === "relics") return "relic";
 	if (normalized === "artifacts") return "artifact";
+	if (normalized === "tools") return "tool";
+	if (normalized === "shield") return "armor";
 	return normalized.replace(/s$/, "") || "item";
 }
 
 function normalizeRarityForDb(rarity?: string | null): Rarity | null {
-	const normalized = rarity?.toLowerCase().replace(/-/g, "_");
+	const normalized = rarity?.toLowerCase().replace(/[\s-]/g, "_");
 	if (
 		normalized === "common" ||
 		normalized === "uncommon" ||
@@ -312,6 +386,75 @@ function normalizeRarityForDb(rarity?: string | null): Rarity | null {
 		normalized === "legendary"
 	) {
 		return normalized as Rarity;
+	}
+	return null;
+}
+
+function normalizeRelicTierForDb(
+	relicTier?: string | null,
+): Database["public"]["Enums"]["relic_tier"] | null {
+	const normalized = relicTier?.toLowerCase().replace(/[\s-]/g, "_");
+	if (
+		normalized === "dormant" ||
+		normalized === "awakened" ||
+		normalized === "resonant"
+	) {
+		return normalized;
+	}
+	return null;
+}
+
+function buildCustomModifiers(item: WardenDeliverableItem): Json | null {
+	const modifiers = {
+		...(item.customModifiers ?? {}),
+		...(item.sourceKind === "homebrew" || item.homebrewId
+			? {
+					source: "homebrew",
+					homebrew_id: item.homebrewId ?? item.id ?? null,
+				}
+			: {}),
+	};
+	return Object.keys(modifiers).length > 0 ? (modifiers as Json) : null;
+}
+
+function extractCharges(entry: WardenLinkedEntry["entry"]): {
+	current: number | null;
+	max: number | null;
+} {
+	const rawCharges = (entry as { charges?: unknown }).charges;
+	if (typeof rawCharges === "number" && Number.isFinite(rawCharges)) {
+		return { current: rawCharges, max: rawCharges };
+	}
+	if (
+		rawCharges &&
+		typeof rawCharges === "object" &&
+		!Array.isArray(rawCharges)
+	) {
+		const chargeRecord = rawCharges as {
+			current?: unknown;
+			max?: unknown;
+			value?: unknown;
+			total?: unknown;
+		};
+		const max = parseOptionalNumber(
+			chargeRecord.max ?? chargeRecord.total ?? chargeRecord.value,
+		);
+		const current = parseOptionalNumber(chargeRecord.current) ?? max;
+		return { current, max };
+	}
+	return {
+		current: parseOptionalNumber(
+			(entry as { charges_current?: unknown }).charges_current,
+		),
+		max: parseOptionalNumber((entry as { charges_max?: unknown }).charges_max),
+	};
+}
+
+function parseOptionalNumber(value: unknown): number | null {
+	if (typeof value === "number" && Number.isFinite(value)) return value;
+	if (typeof value === "string") {
+		const parsed = Number.parseFloat(value);
+		if (Number.isFinite(parsed)) return parsed;
 	}
 	return null;
 }

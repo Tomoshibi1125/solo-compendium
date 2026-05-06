@@ -422,8 +422,12 @@ const CharacterNew = () => {
 		if (!selectedJob) return {} as Record<AbilityScore, number>;
 		const dbJob = allJobs.find((j) => j.id === selectedJob);
 		if (!dbJob) return {} as Record<AbilityScore, number>;
-		return getJobASI(dbJob.name, 1) as Record<AbilityScore, number>;
-	}, [allJobs, selectedJob]);
+		const sourceJob =
+			staticJobCatalog.find((j) => j.name === dbJob.name) ??
+			selectedHomebrewJob ??
+			dbJob;
+		return getJobASI(dbJob.name, 1, sourceJob) as Record<AbilityScore, number>;
+	}, [allJobs, selectedHomebrewJob, selectedJob, staticJobCatalog]);
 
 	const effectiveAbilities = useMemo(() => {
 		const next = { ...abilities };
@@ -1149,6 +1153,12 @@ const CharacterNew = () => {
 				appearance: appearance.trim() || null,
 				backstory: backstory.trim() || null,
 				notes: creatorProfileNotes,
+				str: abilities.STR,
+				agi: abilities.AGI,
+				vit: abilities.VIT,
+				int: abilities.INT,
+				sense: abilities.SENSE,
+				pre: abilities.PRE,
 				proficiency_bonus: 2,
 				armor_class: 10 + Math.floor((effectiveAbilities.AGI - 10) / 2),
 				hp_current: hpMax,
@@ -1179,9 +1189,6 @@ const CharacterNew = () => {
 			};
 
 			const finalAbilities = { ...abilities };
-			for (const [k, v] of Object.entries(jobASI)) {
-				if (k in finalAbilities) finalAbilities[k as AbilityScore] += v;
-			}
 
 			if (isLocalCharacterId(character.id)) {
 				setLocalAbilities(
@@ -1470,6 +1477,74 @@ const CharacterNew = () => {
 		name: s.name,
 	}));
 
+	const imprintProgressItems = useMemo(
+		() =>
+			[
+				{
+					label: "Cantrip Alignments",
+					selected: selectedCantripIds.length,
+					required: requiredCantripChoices,
+				},
+				{
+					label: "Power Inscriptions",
+					selected: selectedSpellIds.length,
+					required: requiredSpellChoices,
+				},
+				{
+					label: `${staticJobLedgerData?.spellbook?.label ?? "Spellbook"} Inscriptions`,
+					selected: selectedSpellbookIds.length,
+					required: requiredSpellbookInscriptions,
+				},
+				{
+					label: "Power Imprints",
+					selected: selectedPowerIds.length,
+					required: requiredPowerChoices,
+				},
+				{
+					label: "Technique Protocols",
+					selected: selectedTechniqueIds.length,
+					required: requiredTechniqueChoices,
+				},
+				{
+					label: "Fighting Styles",
+					selected: selectedFightingStyleIds.length,
+					required: requiredFightingStyleChoices,
+				},
+				{
+					label: "Specialist Training",
+					selected: selectedSpecialistTraining.length,
+					required: requiredSpecialistTrainingChoices,
+				},
+				{
+					label: "Favored Terrain",
+					selected: selectedFavoredTerrains.length,
+					required: requiredFavoredTerrainChoices,
+				},
+			].filter((item) => item.required > 0),
+		[
+			requiredCantripChoices,
+			requiredFavoredTerrainChoices,
+			requiredFightingStyleChoices,
+			requiredPowerChoices,
+			requiredSpecialistTrainingChoices,
+			requiredSpellChoices,
+			requiredSpellbookInscriptions,
+			requiredTechniqueChoices,
+			selectedCantripIds.length,
+			selectedFavoredTerrains.length,
+			selectedFightingStyleIds.length,
+			selectedPowerIds.length,
+			selectedSpecialistTraining.length,
+			selectedSpellIds.length,
+			selectedSpellbookIds.length,
+			selectedTechniqueIds.length,
+			staticJobLedgerData?.spellbook?.label,
+		],
+	);
+	const imprintsComplete = imprintProgressItems.every(
+		(item) => item.selected === item.required,
+	);
+
 	const reviewImprintSelections = useMemo(() => {
 		const powerNames = availablePowers
 			.filter((power) => selectedPowerIds.includes(power.id))
@@ -1660,6 +1735,39 @@ const CharacterNew = () => {
 										combat protocols granted by your job at creation.
 									</p>
 								</div>
+
+								{imprintProgressItems.length > 0 && (
+									<div className="p-4 rounded-lg border border-primary/10 bg-background/40 space-y-3">
+										<div className="flex items-center justify-between gap-3">
+											<span className="text-xs font-heading uppercase tracking-widest text-primary/70">
+												Selection Status
+											</span>
+											<Badge
+												variant={imprintsComplete ? "secondary" : "outline"}
+												className="text-xs"
+											>
+												{imprintsComplete ? "Ready" : "Choices Required"}
+											</Badge>
+										</div>
+										<div className="flex flex-wrap gap-2">
+											{imprintProgressItems.map((item) => {
+												const isComplete = item.selected === item.required;
+												return (
+													<Badge
+														key={item.label}
+														variant={isComplete ? "secondary" : "outline"}
+														className="justify-between gap-2 px-2 py-1 text-xs"
+													>
+														<span>{item.label}</span>
+														<span>
+															{item.selected}/{item.required}
+														</span>
+													</Badge>
+												);
+											})}
+										</div>
+									</div>
+								)}
 
 								{requiredCantripChoices > 0 && (
 									<div className="space-y-3">

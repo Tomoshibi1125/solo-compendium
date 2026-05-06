@@ -454,13 +454,13 @@ export function CampaignNotes({ campaignId }: CampaignNotesProps) {
 										htmlFor="note-show-title-only"
 										className="cursor-pointer"
 									>
-										Show title to players without content access
+										Show title to Ascendants without content access
 									</Label>
 								</div>
 								<div className="space-y-2">
 									{campaignPlayers.length === 0 ? (
 										<p className="text-sm text-muted-foreground">
-											No player members are available for per-player
+											No Ascendant members are available for per-Ascendant
 											permissions.
 										</p>
 									) : (

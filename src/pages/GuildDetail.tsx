@@ -236,11 +236,12 @@ const GuildDetail = () => {
 
 					{/* ROSTER TAB */}
 					<TabsContent value="roster" className="space-y-6">
-						{/* Player Members */}
-						<AscendantWindow title="PLAYER MEMBERS">
+						{/* Ascendant Members */}
+						<AscendantWindow title="ASCENDANT MEMBERS">
 							{playerMembers.length === 0 ? (
 								<AscendantText className="block text-muted-foreground text-center py-8">
-									No player members yet. Share the guild code to invite players.
+									No Ascendant members yet. Share the guild code to invite
+									Ascendants.
 								</AscendantText>
 							) : (
 								<div className="space-y-2">

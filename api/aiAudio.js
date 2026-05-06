@@ -367,11 +367,19 @@ export default async function handler(req, res) {
 
 		let role = memberRow?.role ?? null;
 		if (!role) {
-			const { data: campaignRow } = await userClient
+			let { data: campaignRow, error: campaignErr } = await userClient
 				.from("campaigns")
-				.select("warden_id, dm_id")
+				.select("warden_id")
 				.eq("id", campaignId)
 				.maybeSingle();
+			if (campaignErr) {
+				const legacyResult = await userClient
+					.from("campaigns")
+					.select("dm_id")
+					.eq("id", campaignId)
+					.maybeSingle();
+				campaignRow = legacyResult.data;
+			}
 			if (
 				campaignRow &&
 				(campaignRow.warden_id === userId || campaignRow.dm_id === userId)

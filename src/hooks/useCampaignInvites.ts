@@ -103,14 +103,17 @@ const shouldFallbackToLegacyInviteRpc = (error: unknown): boolean => {
 		(error as { message?: unknown }).message ?? "",
 	).toLowerCase();
 	return (
-		message.includes("function") &&
-		message.includes("create_campaign_invite") &&
-		(message.includes("does not exist") ||
-			message.includes("no function matches") ||
-			message.includes("could not find function") ||
-			message.includes("schema cache"))
+		(message.includes("create_campaign_invite") &&
+			(message.includes("does not exist") ||
+				message.includes("no function matches") ||
+				message.includes("could not find function") ||
+				message.includes("schema cache"))) ||
+		message.includes("invalid invite role")
 	);
 };
+
+const toLegacyInviteRole = (role: "ascendant" | "co-warden") =>
+	role === "co-warden" ? "co-system" : "hunter";
 
 const shouldFallbackToLegacyRevokeRpc = (error: unknown): boolean => {
 	if (!error || typeof error !== "object") return false;
@@ -269,7 +272,7 @@ export const useCreateCampaignInvite = () => {
 					"create_campaign_invite" as keyof Database["public"]["Functions"],
 					{
 						p_campaign_id: campaignId,
-						p_role: role,
+						p_role: toLegacyInviteRole(role),
 						p_expires_at: expiresAt ?? undefined,
 						p_max_uses: maxUses,
 					},
@@ -309,7 +312,7 @@ export const useCreateCampaignInvite = () => {
 	});
 };
 
-export const useAddPlayerCharacterToCampaign = () => {
+export const useAddAscendantCharacterToCampaign = () => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
@@ -327,14 +330,37 @@ export const useAddPlayerCharacterToCampaign = () => {
 				throw new AppError("Supabase not configured", "CONFIG");
 			}
 
-			const { data, error } = await supabase.rpc(
-				"add_player_character_to_campaign" as keyof Database["public"]["Functions"],
+			let { data, error } = await supabase.rpc(
+				"add_ascendant_character_to_campaign" as keyof Database["public"]["Functions"],
 				{
 					p_campaign_id: campaignId,
 					p_character_id: characterId,
 					p_invite_token: inviteToken ?? undefined,
 				},
 			);
+
+			if (error) {
+				const message = error.message.toLowerCase();
+				const isMissingCanonical =
+					message.includes("add_ascendant_character_to_campaign") &&
+					(message.includes("does not exist") ||
+						message.includes("no function matches") ||
+						message.includes("could not find function") ||
+						message.includes("schema cache"));
+
+				if (isMissingCanonical) {
+					const legacyResult = await supabase.rpc(
+						"add_player_character_to_campaign" as keyof Database["public"]["Functions"],
+						{
+							p_campaign_id: campaignId,
+							p_character_id: characterId,
+							p_invite_token: inviteToken ?? undefined,
+						},
+					);
+					data = legacyResult.data;
+					error = legacyResult.error;
+				}
+			}
 
 			if (error) throw error;
 			return data as string;
@@ -359,6 +385,9 @@ export const useAddPlayerCharacterToCampaign = () => {
 		},
 	});
 };
+
+export const useAddPlayerCharacterToCampaign = () =>
+	useAddAscendantCharacterToCampaign();
 
 export const useCampaignInviteAuditLogs = (campaignId: string) => {
 	return useQuery({
@@ -518,6 +547,14 @@ export const useRedeemCampaignInvite = () => {
 				.maybeSingle();
 
 			if (!fetchError && joinedCampaign) {
+				const { data: memberRow } = await supabase
+					.from("campaign_members")
+					.select("role")
+					.eq("campaign_id", campaignId)
+					.eq("user_id", user.id)
+					.maybeSingle();
+				const memberRole =
+					memberRow?.role === "co-warden" ? "co-warden" : "ascendant";
 				const localCampaigns = loadLocalCampaigns();
 				if (!localCampaigns.some((c) => c.id === campaignId)) {
 					saveLocalCampaigns([joinedCampaign as Campaign, ...localCampaigns]);
@@ -532,12 +569,15 @@ export const useRedeemCampaignInvite = () => {
 						campaign_id: campaignId,
 						user_id: user.id,
 						character_id: characterId || null,
-						role: "ascendant",
+						role: memberRole,
 						joined_at: new Date().toISOString(),
 					});
 					saveLocalMembers(localMembers);
-				} else if (characterId) {
-					localMembers[memberIdx].character_id = characterId;
+				} else {
+					if (characterId) {
+						localMembers[memberIdx].character_id = characterId;
+					}
+					localMembers[memberIdx].role = memberRole;
 					saveLocalMembers(localMembers);
 				}
 			}

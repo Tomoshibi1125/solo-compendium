@@ -120,10 +120,9 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 		});
 
 		if (char) {
-			// System broadcast when sharing
 			await sendMessage.mutateAsync({
 				campaignId,
-				content: `**System**: ${char.name} has joined the campaign.`,
+				content: `**Campaign**: ${char.name} has joined the campaign.`,
 			});
 		}
 
@@ -139,10 +138,9 @@ export function CampaignCharacters({ campaignId }: CampaignCharactersProps) {
 			await unshareCharacter.mutateAsync({ campaignId, characterId });
 
 			if (char) {
-				// System broadcast when unsharing
 				await sendMessage.mutateAsync({
 					campaignId,
-					content: `**System**: ${char.name} has left the campaign.`,
+					content: `**Campaign**: ${char.name} has left the campaign.`,
 				});
 			}
 		}

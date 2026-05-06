@@ -34,6 +34,34 @@ const POWER_LEVEL_PARITY_MINIMUMS: Record<number, number> = {
 
 const FORBIDDEN_POWER_TERMS = [/system/i, /monarch/i, /\bdm\b/i, /\bplayer\b/i];
 
+const stableStringify = (value: unknown): string => {
+	if (value == null) return "";
+	if (typeof value !== "object") return String(value).toLowerCase().trim();
+	if (Array.isArray(value)) return `[${value.map(stableStringify).join(",")}]`;
+	const entries = Object.entries(value as Record<string, unknown>).sort(
+		([a], [b]) => a.localeCompare(b),
+	);
+	return `{${entries.map(([key, entry]) => `${key}:${stableStringify(entry)}`).join(",")}}`;
+};
+
+const powerFunctionalFingerprint = (power: (typeof powers)[number]): string =>
+	stableStringify({
+		power_level: power.power_level,
+		power_type: power.power_type,
+		school: power.school,
+		casting_time: power.casting_time,
+		range: power.range,
+		duration: power.duration,
+		target: power.target,
+		has_save: power.has_save,
+		save_ability: power.save_ability,
+		damage_roll: power.damage_roll,
+		damage_type: power.damage_type,
+		effects: power.effects,
+		mechanics: power.mechanics,
+		limitations: power.limitations,
+	});
+
 describe("Power catalog — coverage", () => {
 	it("contains the legacy powers plus the expanded parity catalog", () => {
 		expect(powers.length).toBeGreaterThanOrEqual(240);
@@ -57,6 +85,18 @@ describe("Power catalog — coverage", () => {
 			expect(seen.has(key), `Duplicate power name "${power.name}"`).toBe(false);
 			seen.add(key);
 		}
+	});
+
+	it("does not contain functionally identical power clones", () => {
+		const fingerprints = new Map<string, string[]>();
+		for (const power of powers) {
+			const key = powerFunctionalFingerprint(power);
+			fingerprints.set(key, [...(fingerprints.get(key) ?? []), power.name]);
+		}
+		const duplicates = [...fingerprints.values()]
+			.filter((names) => names.length > 1)
+			.map((names) => names.join(" | "));
+		expect(duplicates).toEqual([]);
 	});
 
 	it("does not contain forbidden legacy terminology", () => {
@@ -205,6 +245,25 @@ describe("Power catalog — charge normalization", () => {
 			offenders.map((p) => p.id),
 			`Powers leaking mechanics.${field}`,
 		).toEqual([]);
+	});
+
+	it("does not mirror top-level power metadata inside mechanics", () => {
+		const mirroredKeys = [
+			"duration",
+			"range",
+			"ability",
+			"action",
+			"action_type",
+		];
+		const offenders = powers.flatMap((power) => {
+			const mechanics = (power as unknown as Record<string, unknown>)
+				.mechanics as Record<string, unknown> | undefined;
+			if (!mechanics) return [];
+			return mirroredKeys
+				.filter((key) => mechanics[key] !== undefined)
+				.map((key) => `${power.id}:${key}`);
+		});
+		expect(offenders).toEqual([]);
 	});
 });
 

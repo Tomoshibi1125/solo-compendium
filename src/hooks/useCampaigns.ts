@@ -105,19 +105,25 @@ const createShareCode = () => {
 const isLocalMode = () => !isSupabaseConfigured;
 const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
 
-const isMissingAddCharacterRpc = (error: unknown): boolean => {
+const isMissingRpc = (error: unknown, functionName: string): boolean => {
 	if (!error || typeof error !== "object") return false;
 	const message = String(
 		(error as { message?: string }).message ?? "",
 	).toLowerCase();
 	return (
-		message.includes("add_player_character_to_campaign") &&
+		message.includes(functionName.toLowerCase()) &&
 		(message.includes("does not exist") ||
-			message.includes("no function matches"))
+			message.includes("no function matches") ||
+			message.includes("could not find function") ||
+			message.includes("schema cache"))
 	);
 };
 
-// Fetch campaigns where user is System (Warden)
+const isMissingAddCharacterRpc = (error: unknown): boolean =>
+	isMissingRpc(error, "add_ascendant_character_to_campaign") ||
+	isMissingRpc(error, "add_player_character_to_campaign");
+
+// Fetch campaigns where user is Warden
 export const useMyCampaigns = () => {
 	return useQuery({
 		queryKey: ["campaigns", "my"],
@@ -871,48 +877,73 @@ export const useJoinCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
-			const { data: existingMember, error: existingMemberError } =
-				await supabase
-					.from("campaign_members")
-					.select("id")
-					.eq("campaign_id", campaignId)
-					.eq("user_id", user.id)
-					.maybeSingle();
+			const joinResult = await supabase.rpc("join_campaign_by_id", {
+				p_campaign_id: campaignId,
+				p_character_id: characterId ?? undefined,
+			});
 
-			if (existingMemberError) throw existingMemberError;
+			if (joinResult.error) {
+				if (!isMissingRpc(joinResult.error, "join_campaign_by_id")) {
+					throw joinResult.error;
+				}
 
-			if (!existingMember) {
-				const { error } = await supabase.from("campaign_members").insert({
-					campaign_id: campaignId,
-					user_id: user.id,
-					character_id: null,
-					role: "ascendant",
-				});
-
-				if (error) throw error;
-			}
-
-			if (characterId) {
-				const attachResult = await supabase.rpc(
-					"add_player_character_to_campaign",
-					{
-						p_campaign_id: campaignId,
-						p_character_id: characterId,
-					},
-				);
-
-				if (attachResult.error) {
-					if (!isMissingAddCharacterRpc(attachResult.error)) {
-						throw attachResult.error as Error;
-					}
-
-					const { error: legacyError } = await supabase
+				const { data: existingMember, error: existingMemberError } =
+					await supabase
 						.from("campaign_members")
-						.update({ character_id: characterId })
+						.select("id")
 						.eq("campaign_id", campaignId)
-						.eq("user_id", user.id);
+						.eq("user_id", user.id)
+						.maybeSingle();
 
-					if (legacyError) throw legacyError;
+				if (existingMemberError) throw existingMemberError;
+
+				if (!existingMember) {
+					const { error } = await supabase.from("campaign_members").insert({
+						campaign_id: campaignId,
+						user_id: user.id,
+						character_id: null,
+						role: "ascendant",
+					});
+
+					if (error) throw error;
+				}
+
+				if (characterId) {
+					const attachResult = await supabase.rpc(
+						"add_ascendant_character_to_campaign",
+						{
+							p_campaign_id: campaignId,
+							p_character_id: characterId,
+						},
+					);
+
+					if (attachResult.error) {
+						if (!isMissingAddCharacterRpc(attachResult.error)) {
+							throw attachResult.error as Error;
+						}
+
+						const legacyAttachResult = await supabase.rpc(
+							"add_player_character_to_campaign",
+							{
+								p_campaign_id: campaignId,
+								p_character_id: characterId,
+							},
+						);
+
+						if (legacyAttachResult.error) {
+							if (!isMissingAddCharacterRpc(legacyAttachResult.error)) {
+								throw legacyAttachResult.error as Error;
+							}
+
+							const { error: legacyError } = await supabase
+								.from("campaign_members")
+								.update({ character_id: characterId })
+								.eq("campaign_id", campaignId)
+								.eq("user_id", user.id);
+
+							if (legacyError) throw legacyError;
+						}
+					}
 				}
 			}
 
@@ -1047,7 +1078,7 @@ export const useLinkCampaignCharacter = () => {
 			}
 
 			const attachResult = await supabase.rpc(
-				"add_player_character_to_campaign",
+				"add_ascendant_character_to_campaign",
 				{
 					p_campaign_id: campaignId,
 					p_character_id: characterId,
@@ -1059,13 +1090,27 @@ export const useLinkCampaignCharacter = () => {
 					throw attachResult.error as Error;
 				}
 
-				const { error: legacyError } = await supabase
-					.from("campaign_members")
-					.update({ character_id: characterId })
-					.eq("campaign_id", campaignId)
-					.eq("user_id", user.id);
+				const legacyAttachResult = await supabase.rpc(
+					"add_player_character_to_campaign",
+					{
+						p_campaign_id: campaignId,
+						p_character_id: characterId,
+					},
+				);
 
-				if (legacyError) throw legacyError;
+				if (legacyAttachResult.error) {
+					if (!isMissingAddCharacterRpc(legacyAttachResult.error)) {
+						throw legacyAttachResult.error as Error;
+					}
+
+					const { error: legacyError } = await supabase
+						.from("campaign_members")
+						.update({ character_id: characterId })
+						.eq("campaign_id", campaignId)
+						.eq("user_id", user.id);
+
+					if (legacyError) throw legacyError;
+				}
 			}
 		},
 		onSuccess: (_, variables) => {
@@ -1340,10 +1385,10 @@ export const useLeaveCampaign = () => {
 	});
 };
 
-// Check if current user is the Rift (Warden) of a campaign
+// Check if current user is the Warden of a campaign
 export const useIsCampaignWarden = (campaignId: string) => {
 	return useQuery({
-		queryKey: ["campaigns", campaignId, "is-system"],
+		queryKey: ["campaigns", campaignId, "is-warden"],
 		queryFn: async () => {
 			if (isLocalMode()) {
 				const userId = getLocalUserId();
@@ -1535,7 +1580,7 @@ export const useCampaignRole = (campaignId: string) => {
 	});
 };
 
-// Check if user is a Warden (System/Warden) - now uses profiles table
+// Check if user is a Warden - now uses profiles table
 export const useIsWarden = () => {
 	return useQuery({
 		queryKey: ["user", "is-warden"],

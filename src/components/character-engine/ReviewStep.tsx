@@ -2,6 +2,7 @@ import { Check, Loader2 } from "lucide-react";
 import type React from "react";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { Job, StaticJob } from "@/types/character";
@@ -52,6 +53,22 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 	flaw,
 	imprintSelections = [],
 }) => {
+	const imprintGroups = Object.entries(
+		imprintSelections.reduce<Record<string, string[]>>((groups, selection) => {
+			const separatorIndex = selection.indexOf(":");
+			const label =
+				separatorIndex >= 0 ? selection.slice(0, separatorIndex) : "Imprint";
+			const value =
+				separatorIndex >= 0
+					? selection.slice(separatorIndex + 1).trim()
+					: selection;
+			const values = groups[label] ?? [];
+			values.push(value);
+			groups[label] = values;
+			return groups;
+		}, {}),
+	).map(([label, values]) => ({ label, values }));
+
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
 			<AscendantWindow title="FINAL AUTHORIZATION: ENTITY AWAKENING">
@@ -279,14 +296,32 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 									<h3 className="text-xs font-heading font-semibold text-primary uppercase tracking-widest border-b border-primary/10 pb-1">
 										Creation Imprints
 									</h3>
-									<div className="flex flex-wrap gap-1">
-										{imprintSelections.map((selection) => (
-											<span
-												key={selection}
-												className="px-1.5 py-0.5 rounded-sm bg-primary/5 border border-primary/10 text-[9px] uppercase"
+									<div className="space-y-3">
+										{imprintGroups.map((group) => (
+											<div
+												key={group.label}
+												className="rounded bg-primary/5 border border-primary/10 p-2 space-y-2"
 											>
-												{formatRegentVernacular(selection)}
-											</span>
+												<div className="flex items-center justify-between gap-2">
+													<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+														{group.label}
+													</span>
+													<Badge variant="outline" className="text-[9px]">
+														{group.values.length}
+													</Badge>
+												</div>
+												<div className="flex flex-wrap gap-1">
+													{group.values.map((value) => (
+														<Badge
+															key={`${group.label}:${value}`}
+															variant="secondary"
+															className="text-[9px] uppercase"
+														>
+															{formatRegentVernacular(value)}
+														</Badge>
+													))}
+												</div>
+											</div>
 										))}
 									</div>
 								</section>

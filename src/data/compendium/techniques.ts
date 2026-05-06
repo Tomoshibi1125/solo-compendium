@@ -1,3 +1,4 @@
+import type { CompendiumTechnique } from "../../types/compendium";
 import { techniques_supplemental } from "./techniques-supplemental";
 
 // Techniques Compendium - Authoritative Rift Ascendant Content
@@ -5,7 +6,38 @@ import { techniques_supplemental } from "./techniques-supplemental";
 // Based on Rift Ascendant mechanics
 // Deduplicated and Lore-Enriched
 
-export const techniques = [
+function normalizeTechniqueMechanics(
+	technique: CompendiumTechnique,
+): CompendiumTechnique {
+	const mechanics =
+		technique.mechanics && typeof technique.mechanics === "object"
+			? (technique.mechanics as Record<string, unknown>)
+			: null;
+	if (!mechanics) return technique;
+
+	const nextMechanics: Record<string, unknown> = {};
+	for (const [key, value] of Object.entries(mechanics)) {
+		if (
+			[
+				"duration",
+				"range",
+				"type",
+				"action",
+				"action_type",
+				"frequency",
+			].includes(key)
+		)
+			continue;
+		nextMechanics[key] = value;
+	}
+
+	return {
+		...technique,
+		mechanics: nextMechanics,
+	};
+}
+
+export const techniques: CompendiumTechnique[] = [
 	{
 		id: "umbral-strike",
 		name: "Umbral Strike",
@@ -4856,4 +4888,4 @@ export const techniques = [
 		theme_tags: ["shadow-domain", "experimental", "ancient-power"],
 	},
 	...techniques_supplemental,
-];
+].map(normalizeTechniqueMechanics);

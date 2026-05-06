@@ -39,6 +39,7 @@ interface SpellSeed {
 	concentration?: boolean;
 	ritual?: boolean;
 	material?: string | boolean;
+	variant: number;
 }
 
 interface SpellFamily {
@@ -120,6 +121,168 @@ function defaultDamageType(seed: SpellSeed): string {
 	return "force";
 }
 
+function pickVariant<T>(seed: SpellSeed, values: readonly T[]): T {
+	return values[seed.variant % values.length];
+}
+
+function riderForMode(seed: SpellSeed): string {
+	const riders: Record<SpellMode, readonly string[]> = {
+		strike: [
+			"pushes the target 10 feet",
+			"outlines the target until your next turn",
+			"knocks the target prone on a critical hit",
+			"prevents the target from taking reactions until your next turn",
+		],
+		ward: [
+			"converts blocked damage into temporary hit points",
+			"moves the ward to a second ally after it triggers",
+			"emits dim light that reveals invisible creatures within 5 feet",
+			"grants advantage on the next save against forced movement",
+		],
+		restore: [
+			"lets the target immediately stand without spending movement",
+			"ends one frightened or charmed condition",
+			"grants temporary hit points equal to your casting ability modifier",
+			"allows the target to move 10 feet without provoking opportunity attacks",
+		],
+		summon: [
+			"slows one adjacent enemy by 10 feet",
+			"marks one adjacent enemy for the echo's next attack",
+			"shoves one adjacent enemy 5 feet",
+			"creates half cover for one adjacent ally",
+		],
+		control: [
+			"restrains the target until the start of your next turn",
+			"knocks the target prone",
+			"prevents reactions until your next turn",
+			"reduces the target's speed to 0 until your next turn",
+		],
+		sense: [
+			"reveals invisible mana signatures",
+			"maps active gate seams",
+			"identifies disguised anomalies",
+			"exposes false spatial geometry",
+		],
+		mobility: [
+			"grants +10 feet of speed",
+			"allows vertical movement along walls",
+			"leaves a decoy afterimage",
+			"ignores difficult terrain during the movement",
+		],
+		charm: [
+			"charms the target",
+			"frightens the target",
+			"prevents reactions",
+			"forces disadvantage on the target's next Insight check",
+		],
+		curse: [
+			"subtracts 1d4 from the target's next attack roll",
+			"subtracts 1d4 from the target's next saving throw",
+			"reduces healing received by the target until your next turn",
+			"reveals the target's position while cursed",
+		],
+		terrain: [
+			"creates difficult terrain",
+			"lightly obscures the area",
+			"pulls creatures 5 feet toward the center",
+			"pushes creatures 5 feet away from the center",
+		],
+		device: [
+			"marks the target",
+			"illuminates the target",
+			"stabilizes one adjacent ally",
+			"disrupts one mundane sensor",
+		],
+	};
+	return pickVariant(seed, riders[seed.mode]);
+}
+
+function rangeForSeed(seed: SpellSeed): string {
+	const ranges: Record<SpellMode, readonly string[]> = {
+		strike: ["60 feet", "90 feet", "120 feet", "150 feet"],
+		ward: ["30 feet", "60 feet", "Touch", "Self"],
+		restore: ["Touch", "30 feet", "60 feet", "90 feet"],
+		summon: ["30 feet", "60 feet", "90 feet", "120 feet"],
+		control: ["30 feet", "60 feet", "90 feet", "120 feet"],
+		sense: ["Self", "30 feet", "60 feet", "120 feet"],
+		mobility: ["30 feet", "60 feet", "90 feet", "Self"],
+		charm: ["30 feet", "60 feet", "90 feet", "120 feet"],
+		curse: ["30 feet", "60 feet", "90 feet", "120 feet"],
+		terrain: ["60 feet", "90 feet", "120 feet", "150 feet"],
+		device: ["30 feet", "60 feet", "90 feet", "120 feet"],
+	};
+	return pickVariant(seed, ranges[seed.mode]);
+}
+
+function durationForSeed(seed: SpellSeed): string {
+	const durations: Record<SpellMode, readonly string[]> = {
+		strike: ["Instantaneous", "1 round"],
+		ward: ["1 round", "1 minute", "Concentration, up to 1 minute"],
+		restore: ["Instantaneous", "1 round"],
+		summon: ["Concentration, up to 1 minute", "1 minute"],
+		control: ["1 round", "Concentration, up to 1 minute"],
+		sense: ["1 minute", "10 minutes", "Concentration, up to 10 minutes"],
+		mobility: ["Instantaneous", "1 round"],
+		charm: ["1 round", "Concentration, up to 1 minute"],
+		curse: ["1 round", "Concentration, up to 1 minute"],
+		terrain: ["Concentration, up to 1 minute", "1 minute"],
+		device: ["1 round", "1 minute"],
+	};
+	return pickVariant(seed, durations[seed.mode]);
+}
+
+function castingTimeForSeed(seed: SpellSeed): string {
+	const actions: Record<SpellMode, readonly string[]> = {
+		strike: ["1 action", "1 bonus action"],
+		ward: ["1 reaction", "1 bonus action"],
+		restore: ["1 action", "1 bonus action"],
+		summon: ["1 action"],
+		control: ["1 action"],
+		sense: ["1 action", "1 minute"],
+		mobility: ["1 bonus action", "1 action"],
+		charm: ["1 action"],
+		curse: ["1 action", "1 bonus action"],
+		terrain: ["1 action"],
+		device: ["1 action", "1 bonus action"],
+	};
+	return pickVariant(seed, actions[seed.mode]);
+}
+
+function areaForSeed(seed: SpellSeed): {
+	type: string;
+	size: string;
+	shape: string;
+} {
+	if (seed.mode === "terrain") {
+		return pickVariant(seed, [
+			{ type: "square", size: "20-foot", shape: "square" },
+			{ type: "circle", size: "15-foot radius", shape: "sphere" },
+			{ type: "line", size: "30-foot", shape: "line" },
+			{ type: "cube", size: "10-foot", shape: "cube" },
+		]);
+	}
+	if (seed.mode === "summon") {
+		return pickVariant(seed, [
+			{ type: "point", size: "5-foot", shape: "space" },
+			{ type: "point", size: "10-foot", shape: "space" },
+		]);
+	}
+	if (seed.mode === "sense") {
+		return pickVariant(seed, [
+			{ type: "radius", size: "30-foot", shape: "sphere" },
+			{ type: "cone", size: "60-foot", shape: "cone" },
+			{ type: "line", size: "120-foot", shape: "line" },
+			{ type: "point", size: "single subject", shape: "point" },
+		]);
+	}
+	return pickVariant(seed, [
+		{ type: "point", size: "single target", shape: "point" },
+		{ type: "line", size: "30-foot", shape: "line" },
+		{ type: "cone", size: "15-foot", shape: "cone" },
+		{ type: "radius", size: "10-foot", shape: "sphere" },
+	]);
+}
+
 function saveForMode(mode: SpellMode): string | null {
 	if (mode === "strike" || mode === "terrain" || mode === "device")
 		return "Agility";
@@ -134,76 +297,65 @@ function effectText(
 	dice: string,
 	damageType: string,
 ): { primary: string; secondary: string } {
+	const rider = riderForMode(seed);
 	if (seed.mode === "restore") {
 		return {
-			primary: `Restores ${healingForLevel(seed.level)} hit points or removes one minor harmful condition.`,
-			secondary:
-				"At higher ranks, one additional ally in range can receive half the healing.",
+			primary: `Channels ${seed.theme} to restore ${healingForLevel(seed.level)} hit points or remove one minor harmful condition.`,
+			secondary: `At higher ranks, one additional ally in range can receive half the healing; the base target also ${rider}.`,
 		};
 	}
 	if (seed.mode === "ward") {
 		return {
-			primary:
-				"Grants a protective lattice that adds +2 AC or +1d4 to the next saving throw before the spell ends.",
-			secondary:
-				"If the ward blocks damage, the protected creature gains temporary hit points equal to the spell level + your casting ability modifier.",
+			primary: `Shapes ${seed.theme} into a protective lattice that adds +2 AC or +1d4 to the next saving throw before the spell ends.`,
+			secondary: `If the ward blocks damage, it ${rider}.`,
 		};
 	}
 	if (seed.mode === "summon") {
 		return {
-			primary:
-				"Manifests a bound echo in an unoccupied space within range for the duration.",
-			secondary: `When the echo appears, one creature adjacent to it must save or take ${dice} ${damageType} damage and have its speed reduced by 10 feet until your next turn.`,
+			primary: `Manifests ${seed.theme} as a bound echo in an unoccupied space within range for the duration.`,
+			secondary: `When the echo appears, one creature adjacent to it must save or take ${dice} ${damageType} damage; the echo also ${rider}.`,
 		};
 	}
 	if (seed.mode === "sense") {
 		return {
-			primary:
-				"Reveals hidden mana signatures, active gates, disguised anomalies, or false spatial geometry within range.",
+			primary: `${rider} within range by aligning to ${seed.theme}.`,
 			secondary:
 				"For the duration, you have advantage on the next Investigation, Insight, Perception, or Survival check tied to the revealed subject.",
 		};
 	}
 	if (seed.mode === "mobility") {
 		return {
-			primary:
-				"Repositions one willing creature through a short resonance fold without provoking opportunity attacks.",
-			secondary:
-				"The moved creature gains +10 feet of speed until the end of its next turn.",
+			primary: `Repositions one willing creature through ${seed.theme} without provoking opportunity attacks.`,
+			secondary: `The moved creature ${rider} until the end of its next turn.`,
 		};
 	}
 	if (seed.mode === "charm") {
 		return {
-			primary: "Overloads emotion, rhythm, or intent in the target's aura.",
-			secondary:
-				"On a failed save, the target is charmed, frightened, or unable to take reactions until the end of your next turn.",
+			primary: `Overloads emotion, rhythm, or intent with ${seed.theme}.`,
+			secondary: `On a failed save, the spell ${rider} until the end of your next turn.`,
 		};
 	}
 	if (seed.mode === "curse") {
 		return {
-			primary: `Brands the target with a draining omen that deals ${dice} ${damageType} damage.`,
-			secondary:
-				"On a failed save, the target subtracts 1d4 from its next attack roll or saving throw before the spell ends.",
+			primary: `Brands the target with ${seed.theme}, dealing ${dice} ${damageType} damage.`,
+			secondary: `On a failed save, it ${rider} before the spell ends.`,
 		};
 	}
 	if (seed.mode === "terrain") {
 		return {
-			primary:
-				"Alters a 20-foot square of battlefield into hazardous gate terrain for the duration.",
-			secondary: `Creatures that enter the area for the first time on a turn or start there must save or take ${dice} ${damageType} damage and treat the area as difficult terrain.`,
+			primary: `Alters battlefield space with ${seed.theme} for the duration.`,
+			secondary: `Creatures that enter the area for the first time on a turn or start there must save or take ${dice} ${damageType} damage; the terrain also ${rider}.`,
 		};
 	}
 	if (seed.mode === "device") {
 		return {
-			primary: `Deploys a compact focus, drone, or etched tool that releases ${dice} ${damageType} damage or a tactical utility pulse.`,
-			secondary:
-				"The device can also mark a target, illuminate an area, stabilize an ally, or disrupt a mundane electronic sensor at the Warden's discretion.",
+			primary: `Deploys ${seed.theme} through a compact focus, drone, or etched tool that releases ${dice} ${damageType} damage or a tactical utility pulse.`,
+			secondary: `The device can also ${rider} until the end of your next turn.`,
 		};
 	}
 	return {
-		primary: `Deals ${dice} ${damageType} damage with a focused mana circuit.`,
-		secondary:
-			"On a failed save or critical hit, the target is pushed 10 feet, knocked prone, or briefly outlined by residual mana until your next turn.",
+		primary: `Deals ${dice} ${damageType} damage with ${seed.theme}.`,
+		secondary: `On a failed save or critical hit, the spell ${rider} until your next turn.`,
 	};
 }
 
@@ -214,25 +366,26 @@ function descriptionFor(
 ): string {
 	const ability = abilityForClasses(seed.classes);
 	const save = saveForMode(seed.mode);
+	const rider = riderForMode(seed);
 	if (seed.mode === "restore")
-		return `You tune ${seed.theme} into a restorative circuit, restoring ${healingForLevel(seed.level)} hit points to a creature within range. The target can also end one disease, poison, fear, or charm effect if the condition's source is no higher than this spell's level.`;
+		return `You tune ${seed.theme} into a restorative circuit, restoring ${healingForLevel(seed.level)} hit points to a creature within range. The target can also end one disease, poison, fear, or charm effect if the condition's source is no higher than this spell's level, and ${rider}.`;
 	if (seed.mode === "ward")
-		return `You fold ${seed.theme} around one creature or object within range. Until the spell ends, the ward grants +2 AC against one attack or +1d4 to one saving throw, then releases residual temporary hit points equal to your ${ability} modifier plus the spell level.`;
+		return `You fold ${seed.theme} around one creature or object within range. Until the spell ends, the ward grants +2 AC against one attack or +1d4 to one saving throw, then ${rider}.`;
 	if (seed.mode === "summon")
-		return `You open a controlled rift aperture and manifest ${seed.theme} as a bound echo for the duration. The echo occupies a 5-foot space, threatens adjacent enemies, and forces one nearby creature to make a ${save} saving throw or take ${dice} ${damageType} damage and lose 10 feet of speed until your next turn.`;
+		return `You open a controlled rift aperture and manifest ${seed.theme} as a bound echo for the duration. The echo occupies a nearby space, threatens adjacent enemies, and forces one nearby creature to make a ${save} saving throw or take ${dice} ${damageType} damage while it ${rider}.`;
 	if (seed.mode === "sense")
-		return `You align your senses with ${seed.theme}, revealing hidden mana signatures, active gate seams, disguised anomalies, and false spatial geometry within range. For the duration, your next relevant Investigation, Insight, Perception, or Survival check is made with advantage.`;
+		return `You align your senses with ${seed.theme}, and the spell ${rider}. For the duration, your next relevant Investigation, Insight, Perception, or Survival check is made with advantage.`;
 	if (seed.mode === "mobility")
-		return `You bend ${seed.theme} into a short resonance fold. One willing creature you can see moves up to 30 feet to an unoccupied space you can see without provoking opportunity attacks, then gains +10 feet of speed until the end of its next turn.`;
+		return `You bend ${seed.theme} into a short resonance fold. One willing creature you can see moves to an unoccupied space you can see without provoking opportunity attacks, then ${rider} until the end of its next turn.`;
 	if (seed.mode === "charm")
-		return `You infuse ${seed.theme} into a target's aura. The target must succeed on a ${save} saving throw or become charmed, frightened, or unable to take reactions until the end of your next turn; on a success it still has disadvantage on its next Insight or Perception check before then.`;
+		return `You infuse ${seed.theme} into a target's aura. The target must succeed on a ${save} saving throw or the spell ${rider} until the end of your next turn; on a success it still has disadvantage on its next Insight or Perception check before then.`;
 	if (seed.mode === "curse")
-		return `You carve ${seed.theme} into a hostile aura. The target must make a ${save} saving throw, taking ${dice} ${damageType} damage on a failure or half as much on a success. On a failure it also subtracts 1d4 from its next attack roll or saving throw before the spell ends.`;
+		return `You carve ${seed.theme} into a hostile aura. The target must make a ${save} saving throw, taking ${dice} ${damageType} damage on a failure or half as much on a success. On a failure it also ${rider}.`;
 	if (seed.mode === "terrain")
-		return `You overwrite local space with ${seed.theme}, creating a 20-foot square of unstable gate terrain. Creatures that enter the area for the first time on a turn or start there must make a ${save} saving throw, taking ${dice} ${damageType} damage and treating the area as difficult terrain on a failure.`;
+		return `You overwrite local space with ${seed.theme}, creating unstable gate terrain. Creatures that enter the area for the first time on a turn or start there must make a ${save} saving throw, taking ${dice} ${damageType} damage on a failure while the terrain ${rider}.`;
 	if (seed.mode === "device")
-		return `You deploy ${seed.theme} through a focus, drone, or etched tool within range. Make a ranged spell attack using ${ability}; on a hit the target takes ${dice} ${damageType} damage, and the device can also mark, illuminate, stabilize, or disrupt a mundane sensor until the end of your next turn.`;
-	return `You condense ${seed.theme} into a precise combat circuit. Make a ranged spell attack using ${ability}; on a hit the target takes ${dice} ${damageType} damage. If the attack is a critical hit, the target is pushed 10 feet, knocked prone, or briefly outlined by residual mana until your next turn.`;
+		return `You deploy ${seed.theme} through a focus, drone, or etched tool within range. Make a ranged spell attack using ${ability}; on a hit the target takes ${dice} ${damageType} damage, and the device can also ${rider} until the end of your next turn.`;
+	return `You condense ${seed.theme} into a precise combat circuit. Make a ranged spell attack using ${ability}; on a hit the target takes ${dice} ${damageType} damage. If the attack is a critical hit, it ${rider} until your next turn.`;
 }
 
 function makeSeedFamily(family: SpellFamily): SpellSeed[] {
@@ -246,7 +399,7 @@ function makeSeedFamily(family: SpellFamily): SpellSeed[] {
 			school: family.school,
 			classes: family.classes,
 			mode: family.mode,
-			theme: family.theme,
+			theme: `${family.theme} through the ${prefix.toLowerCase()} ${form.toLowerCase()} pattern`,
 			damageType: family.damageType,
 			range: family.range,
 			duration: family.duration,
@@ -254,6 +407,7 @@ function makeSeedFamily(family: SpellFamily): SpellSeed[] {
 			concentration: family.concentration,
 			ritual: family.ritual,
 			material: family.material,
+			variant: prefixIndex * family.forms.length + formIndex,
 		})),
 	);
 }
@@ -267,18 +421,9 @@ function makeSpell(seed: SpellSeed): CompendiumSpell {
 	const save = saveForMode(seed.mode);
 	const effects = effectText(seed, dice, damageType);
 	const hasAttack = ["strike", "device"].includes(seed.mode);
-	const duration =
-		seed.duration ??
-		(seed.concentration ? "Concentration, up to 1 minute" : "Instantaneous");
-	const range =
-		seed.range ??
-		(seed.mode === "terrain"
-			? "90 feet"
-			: seed.mode === "ward" || seed.mode === "restore"
-				? "60 feet"
-				: "120 feet");
-	const castingTime =
-		seed.castingTime ?? (seed.mode === "ward" ? "1 reaction" : "1 action");
+	const duration = seed.duration ?? durationForSeed(seed);
+	const range = seed.range ?? rangeForSeed(seed);
+	const castingTime = seed.castingTime ?? castingTimeForSeed(seed);
 	const savingThrow = save
 		? {
 				ability: save,
@@ -326,33 +471,15 @@ function makeSpell(seed: SpellSeed): CompendiumSpell {
 				}
 			: null,
 		saving_throw: savingThrow,
-		area:
-			seed.mode === "terrain"
-				? { type: "square", size: "20-foot", shape: "square" }
-				: seed.mode === "summon"
-					? { type: "point", size: "5-foot", shape: "space" }
-					: { type: "point", size: "single target", shape: "point" },
+		area: areaForSeed(seed),
 		mechanics: {
-			duration,
-			range,
-			type: seed.school,
-			action: castingTime,
-			ability,
-			dc: save ? 0 : undefined,
-			save: save ?? undefined,
 			damage_profile: hasAttack || save ? `${dice} ${damageType}` : undefined,
-			lattice_interaction: `${rank}-rank mana circuit stabilized through gate-lattice resonance`,
-			attack: hasAttack
-				? {
-						type: damageType,
-						mode: "ranged",
-						resolution: "spell_attack",
-						modifier: ability,
-						damage: dice,
-						damage_type: damageType,
-					}
-				: undefined,
-			saving_throw: savingThrow ?? undefined,
+			lattice_interaction: `${rank}-rank ${seed.mode} circuit stabilized through ${seed.theme}`,
+			utility: {
+				type: seed.mode,
+				ability,
+				resolution: effects.secondary,
+			},
 			healing:
 				seed.mode === "restore"
 					? { dice: healingForLevel(seed.level), type: "restorative mana" }
@@ -363,10 +490,6 @@ function makeSpell(seed: SpellSeed): CompendiumSpell {
 					: "Scales with higher-rank spell slots.",
 		},
 		higher_levels:
-			seed.level === 0
-				? "This cantrip improves at character levels 5, 11, and 17, adding one extra damage or healing die each time."
-				: "When cast using a higher-rank spell slot, increase the damage, healing, ward value, or affected area by one step per slot rank above the base level.",
-		atHigherLevels:
 			seed.level === 0
 				? "This cantrip improves at character levels 5, 11, and 17, adding one extra damage or healing die each time."
 				: "When cast using a higher-rank spell slot, increase the damage, healing, ward value, or affected area by one step per slot rank above the base level.",

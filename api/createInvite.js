@@ -102,7 +102,10 @@ export default async function handler(req, res) {
 	// Parse body and extract parameters BEFORE using them
 	const body = readJsonBody(req);
 	const campaignId = typeof body.campaignId === "string" ? body.campaignId : "";
-	const role = body.role === "co-system" ? "co-system" : "hunter";
+	const role =
+		body.role === "co-warden" || body.role === "co-system"
+			? "co-warden"
+			: "ascendant";
 	const expiresAt =
 		typeof body.expiresAt === "string" && body.expiresAt.length > 0
 			? body.expiresAt
@@ -120,24 +123,35 @@ export default async function handler(req, res) {
 		return res.status(400).json({ error: "campaignId is required" });
 	}
 
-	// Require requester to be the campaign DM
+	// Require requester to be the campaign Warden
 	const requesterId = tokenUserData.user.id;
-	const { data: dmRows, error: dmError } = await userClient
+	const { data: wardenRows, error: wardenError } = await userClient
 		.from("campaigns")
-		.select("id, dm_id")
+		.select("id, warden_id")
 		.eq("id", campaignId)
 		.limit(1);
 
-	if (dmError) {
+	if (wardenError) {
 		return res
 			.status(403)
 			.json({ error: "Unable to verify campaign ownership" });
 	}
-	const campaignRow = dmRows?.[0];
-	if (!campaignRow || campaignRow.dm_id !== requesterId) {
+	const campaignRow = wardenRows?.[0];
+	let hasCampaignInviteAccess = campaignRow?.warden_id === requesterId;
+	if (campaignRow && !hasCampaignInviteAccess) {
+		const { data: memberRows } = await userClient
+			.from("campaign_members")
+			.select("role")
+			.eq("campaign_id", campaignId)
+			.eq("user_id", requesterId)
+			.eq("role", "co-warden")
+			.limit(1);
+		hasCampaignInviteAccess = !!memberRows?.[0];
+	}
+	if (!campaignRow || !hasCampaignInviteAccess) {
 		return res
 			.status(403)
-			.json({ error: "Only the campaign DM can create invites" });
+			.json({ error: "Only the campaign Warden can create invites" });
 	}
 
 	let { data: inviteRows, error: inviteError } = await userClient.rpc(
@@ -154,7 +168,7 @@ export default async function handler(req, res) {
 	if (inviteError && isLegacyCreateInviteRpcError(inviteError.message)) {
 		const legacy = await userClient.rpc("create_campaign_invite", {
 			p_campaign_id: campaignId,
-			p_role: role,
+			p_role: role === "co-warden" ? "co-system" : "hunter",
 			p_expires_at: expiresAt,
 			p_max_uses: maxUses,
 			// Legacy RPC may ignore invite_email; enforce failure if email was requested

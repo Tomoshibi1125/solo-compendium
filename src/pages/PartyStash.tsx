@@ -29,13 +29,20 @@ export default function PartyStash() {
 		queryKey: ["my_campaign_character", campaignId, user?.id],
 		queryFn: async () => {
 			if (!campaignId || !user?.id) return null;
-			const { data } = await supabase
+			const { data: member } = await supabase
 				.from("campaign_members")
-				.select("character_id")
+				.select("id, character_id")
 				.eq("campaign_id", campaignId)
 				.eq("user_id", user.id)
 				.maybeSingle();
-			return data?.character_id || null;
+			if (!member?.id) return null;
+			const { data: linkedCharacters } = await supabase
+				.from("campaign_member_characters")
+				.select("character_id")
+				.eq("campaign_member_id", member.id)
+				.order("created_at", { ascending: true })
+				.limit(1);
+			return linkedCharacters?.[0]?.character_id || member.character_id || null;
 		},
 		enabled: !!campaignId && !!user?.id,
 	});

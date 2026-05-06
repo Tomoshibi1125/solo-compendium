@@ -127,47 +127,47 @@ function effectFor(
 ): { primary: string; secondary: string } {
 	if (seed.mode === "guard") {
 		return {
-			primary: `Creates a reinforced mana shell that reduces incoming damage and retaliates for ${dice} ${seed.damageType} damage.`,
+			primary: `Shapes ${seed.theme} into a reinforced mana shell that reduces incoming damage and retaliates for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"The protected creature can shift 5 feet without provoking opportunity attacks.",
 		};
 	}
 	if (seed.mode === "overload") {
 		return {
-			primary: `Releases a volatile body-current for ${dice} ${seed.damageType} damage.`,
+			primary: `Releases ${seed.theme} as a volatile body-current for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"On a failed save, the target is pushed 10 feet or knocked prone.",
 		};
 	}
 	if (seed.mode === "ambush") {
 		return {
-			primary: `Conceals the user in a brief rift shadow and strikes for ${dice} ${seed.damageType} damage.`,
+			primary: `Conceals the user through ${seed.theme} and strikes for ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"If the user had advantage, the target cannot take reactions until its next turn.",
 		};
 	}
 	if (seed.mode === "kinetic") {
 		return {
-			primary: `Condenses nerve-gate force into an impact dealing ${dice} ${seed.damageType} damage.`,
+			primary: `Condenses ${seed.theme} into an impact dealing ${dice} ${seed.damageType} damage.`,
 			secondary: "The user may move 10 feet before or after the impact.",
 		};
 	}
 	if (seed.mode === "radiant") {
 		return {
-			primary: `Channels oathbound radiance for ${dice} ${seed.damageType} damage or temporary hit points.`,
+			primary: `Channels ${seed.theme} for ${dice} ${seed.damageType} damage or temporary hit points.`,
 			secondary:
 				"An ally within 30 feet gains advantage on its next save against fear or charm.",
 		};
 	}
 	if (seed.mode === "device") {
 		return {
-			primary: `Deploys a compact mana device that deals ${dice} ${seed.damageType} damage.`,
+			primary: `Deploys ${seed.theme} through a compact mana device that deals ${dice} ${seed.damageType} damage.`,
 			secondary:
 				"The device can mark, illuminate, stabilize, or disrupt one mundane sensor until the end of the next turn.",
 		};
 	}
 	return {
-		primary: `Locks onto a quarry signature and deals ${dice} ${seed.damageType} damage.`,
+		primary: `Locks onto ${seed.theme} and deals ${dice} ${seed.damageType} damage.`,
 		secondary:
 			"The user learns the target's direction until the end of the next turn if it remains within 300 feet.",
 	};
@@ -186,7 +186,7 @@ function makeSeeds(family: PowerFamily): PowerSeed[] {
 			classes: family.classes,
 			mode: family.mode,
 			school: family.school,
-			theme: family.theme,
+			theme: `${family.theme} through the ${prefix.toLowerCase()} ${form.toLowerCase()} pattern`,
 			level:
 				family.levels[
 					(prefixIndex * family.forms.length + formIndex) % family.levels.length
@@ -409,7 +409,7 @@ const sharedFamilies: PowerFamily[] = [
 		school: "Evocation",
 		theme: "cross-discipline martial gate pressure",
 		damageType: "force",
-		prefixes: ["Apex", "Rift", "Storm", "Iron", "Nova", "Echo"],
+		prefixes: ["Apex", "Rift", "Storm", "Adamant", "Nova", "Echo"],
 		forms: [
 			"Drive",
 			"Guard",

@@ -209,7 +209,7 @@ const CampaignJoin = () => {
 									className="mt-1 font-mono text-center"
 								/>
 								<AscendantText className="block text-xs text-muted-foreground mt-2">
-									Tokens are included in invite links from your Warden (System).
+									Tokens are included in invite links from your Warden.
 								</AscendantText>
 							</div>
 							<Button

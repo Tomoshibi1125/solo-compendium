@@ -147,7 +147,7 @@ const CampaignDetail = () => {
 		if (char) {
 			await sendMessage.mutateAsync({
 				campaignId: id,
-				content: `**System**: ${char.name} has joined the campaign.`,
+				content: `**Campaign**: ${char.name} has joined the campaign.`,
 			});
 		}
 		setAttachDialogOpen(false);
@@ -512,7 +512,7 @@ const CampaignDetail = () => {
 														onClick={() => setInviteModalOpen(true)}
 													>
 														<UserPlus className="w-4 h-4 mr-2" />
-														Invite Players
+														Invite Ascendants
 													</Button>
 												</div>
 											</div>

@@ -115,7 +115,7 @@ export function CampaignInviteModal({
 						INVITE ASCENDANTS
 					</DialogTitle>
 					<DialogDescription>
-						Bring players into "{campaign.name}" via global share codes or
+						Bring Ascendants into "{campaign.name}" via global share codes or
 						secure single-use tokens.
 					</DialogDescription>
 				</DialogHeader>
