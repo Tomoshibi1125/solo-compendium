@@ -11,6 +11,8 @@
  */
 import { describe, expect, it } from "vitest";
 import {
+	appendAbilityModifierToDamageFormula,
+	buildAttackRollFormula,
 	type PowerActionFormulaInput,
 	type PowerActionFormulaResult,
 	resolvePowerActionFormula,
@@ -202,5 +204,26 @@ describe("resolvePowerActionFormula", () => {
 		});
 		expect(r.attackBonus).toBe(2);
 		expect(r.saveDC).toBe(10);
+	});
+});
+
+describe("power formula display helpers", () => {
+	it("formats attack rolls with signed modifiers", () => {
+		expect(buildAttackRollFormula(5)).toBe("1d20+5");
+		expect(buildAttackRollFormula(0)).toBe("1d20");
+		expect(buildAttackRollFormula(-1)).toBe("1d20-1");
+	});
+
+	it("appends ability modifiers to plain dice-only damage formulas", () => {
+		expect(appendAbilityModifierToDamageFormula("2d6", 3)).toBe("2d6+3");
+		expect(appendAbilityModifierToDamageFormula("2d6", -1)).toBe("2d6-1");
+		expect(appendAbilityModifierToDamageFormula("2d6", 0)).toBe("2d6");
+	});
+
+	it("does not double-append modifiers to already-augmented or complex formulas", () => {
+		expect(appendAbilityModifierToDamageFormula("2d6+2", 3)).toBe("2d6+2");
+		expect(appendAbilityModifierToDamageFormula("2d6 fire", 3)).toBe(
+			"2d6 fire",
+		);
 	});
 });

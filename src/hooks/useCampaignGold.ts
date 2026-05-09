@@ -1,33 +1,43 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
+import { RA_CURRENCY_TYPES, type RaCurrencyId } from "@/lib/currency";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
 
-// D&D 5e standard coin denominations
-interface PartyGold {
-	gp: number;
-	sp: number;
-	cp: number;
-	pp: number;
-	ep: number;
-}
+type PartyCredits = Record<RaCurrencyId, number>;
 
-const DEFAULT_PARTY_GOLD: PartyGold = {
-	gp: 0,
-	sp: 0,
-	cp: 0,
-	pp: 0,
-	ep: 0,
+const DEFAULT_PARTY_CREDITS: PartyCredits = {
+	core: 0,
+	gate: 0,
+	crystal: 0,
+	mana: 0,
+};
+
+const parsePartyCredits = (value: unknown): PartyCredits => {
+	const parsed =
+		value && typeof value === "object"
+			? (value as Record<string, unknown>)
+			: {};
+
+	return {
+		core: Number(parsed.core ?? parsed.pp ?? 0) || 0,
+		gate: Number(parsed.gate ?? parsed.gp ?? 0) || 0,
+		crystal:
+			(Number(parsed.crystal ?? parsed.sp ?? 0) || 0) +
+			(Number(parsed.ep ?? 0) || 0) * 5,
+		mana: Number(parsed.mana ?? parsed.cp ?? 0) || 0,
+	};
 };
 
 export const useCampaignGold = (campaignId: string | null) => {
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
-	const { data: partyGold = DEFAULT_PARTY_GOLD, isLoading } = useQuery({
+	const { data: partyCredits = DEFAULT_PARTY_CREDITS, isLoading } = useQuery({
 		queryKey: ["campaign_gold", campaignId],
 		queryFn: async () => {
-			if (!campaignId) return DEFAULT_PARTY_GOLD;
+			if (!campaignId) return DEFAULT_PARTY_CREDITS;
 
 			const { data, error } = await supabase
 				.from("campaigns")
@@ -41,33 +51,30 @@ export const useCampaignGold = (campaignId: string | null) => {
 			}
 
 			// Fallback to default if null or empty
-			if (!data?.party_gold) return DEFAULT_PARTY_GOLD;
+			if (!data?.party_gold) return DEFAULT_PARTY_CREDITS;
 
-			const parsed = JSON.parse(
-				JSON.stringify(data.party_gold || {}),
-			) as Partial<PartyGold>;
-
-			return {
-				gp: parsed.gp || 0,
-				sp: parsed.sp || 0,
-				cp: parsed.cp || 0,
-				pp: parsed.pp || 0,
-				ep: parsed.ep || 0,
-			};
+			return parsePartyCredits(
+				JSON.parse(JSON.stringify(data.party_gold || {})),
+			);
 		},
 		enabled: !!campaignId,
 	});
 
-	const updateGold = useMutation({
-		mutationFn: async (newGold: PartyGold) => {
+	const updateCredits = useMutation({
+		mutationFn: async (newCredits: PartyCredits) => {
 			if (!campaignId) throw new Error("No active campaign");
+
+			const sanitized = Object.fromEntries(
+				RA_CURRENCY_TYPES.map((currency) => [
+					currency.id,
+					Math.max(0, Math.floor(newCredits[currency.id] || 0)),
+				]),
+			) as PartyCredits;
 
 			const { data, error } = await supabase
 				.from("campaigns")
 				.update({
-					party_gold: JSON.parse(
-						JSON.stringify(newGold),
-					) as import("@/integrations/supabase/types").Json,
+					party_gold: JSON.parse(JSON.stringify(sanitized)) as Json,
 				})
 				.eq("id", campaignId)
 				.select("party_gold")
@@ -89,7 +96,7 @@ export const useCampaignGold = (campaignId: string | null) => {
 		onError: (error) => {
 			logErrorWithContext(error, "useCampaignGold.update");
 			toast({
-				title: "Failed to update gold",
+				title: "Failed to update Credits",
 				description: getErrorMessage(error),
 				variant: "destructive",
 			});
@@ -97,8 +104,10 @@ export const useCampaignGold = (campaignId: string | null) => {
 	});
 
 	return {
-		partyGold,
+		partyCredits,
+		partyGold: partyCredits,
 		isLoading,
-		updateGold: updateGold.mutateAsync,
+		updateCredits: updateCredits.mutateAsync,
+		updateGold: updateCredits.mutateAsync,
 	};
 };

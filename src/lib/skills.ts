@@ -26,6 +26,14 @@ const SKILLS: Record<string, SkillDefinition> = {
 	Persuasion: { name: "Persuasion", ability: "PRE" },
 };
 
+const normalizeSkillName = (value: string): string =>
+	value.trim().toLowerCase().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
+
+const hasSkill = (values: string[], skillName: string): boolean => {
+	const key = normalizeSkillName(skillName);
+	return values.some((value) => normalizeSkillName(value) === key);
+};
+
 export function calculateSkillModifier(
 	skillName: string,
 	abilities: Record<AbilityScore, number>,
@@ -39,9 +47,9 @@ export function calculateSkillModifier(
 	const abilityMod = getAbilityModifier(abilities[skill.ability]);
 	let modifier = abilityMod;
 
-	if (expertise.includes(skillName)) {
+	if (hasSkill(expertise, skillName)) {
 		modifier += proficiencyBonus * 2;
-	} else if (proficiencies.includes(skillName)) {
+	} else if (hasSkill(proficiencies, skillName)) {
 		modifier += proficiencyBonus;
 	}
 

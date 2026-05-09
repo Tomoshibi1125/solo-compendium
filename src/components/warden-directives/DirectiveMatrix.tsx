@@ -86,11 +86,11 @@ const DIRECTIVE_COMPLICATIONS = [
 
 const DIRECTIVE_REWARDS = [
 	"Standard Rift rewards",
-	"$10 Bills",
-	"$100 Bills",
-	"$5 Bills",
-	"$1 Bills",
-	"10¢ Coins",
+	"Gate Credits",
+	"Core Credits",
+	"Crystal Credits",
+	"Mana Credits",
+	"Mana Credit chips",
 	"Rare material access",
 	"Awakened Council favor",
 	"Relic fragment",

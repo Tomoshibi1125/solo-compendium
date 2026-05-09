@@ -61,6 +61,7 @@ export type QuestScaling = z.infer<typeof QuestScalingSchema>;
 // Quest reward types
 export const QuestRewardSchema = z.object({
 	rift_favor: z.number().optional(),
+	credits: z.number().optional(),
 	gold: z.number().optional(),
 	relic_shards: z.number().optional(),
 	experience: z.number().optional(),
@@ -243,9 +244,18 @@ export function calculateQuestReward(
 		rift_favor: template.base_rewards.rift_favor
 			? Math.max(1, Math.floor(template.base_rewards.rift_favor * multiplier))
 			: undefined,
-		gold: template.base_rewards.gold
-			? Math.max(1, Math.floor(template.base_rewards.gold * multiplier))
-			: undefined,
+		credits:
+			template.base_rewards.credits || template.base_rewards.gold
+				? Math.max(
+						1,
+						Math.floor(
+							(template.base_rewards.credits ??
+								template.base_rewards.gold ??
+								0) * multiplier,
+						),
+					)
+				: undefined,
+		gold: undefined,
 		relic_shards: template.base_rewards.relic_shards
 			? Math.max(1, Math.floor(template.base_rewards.relic_shards * multiplier))
 			: undefined,

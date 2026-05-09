@@ -49,7 +49,7 @@ export interface Item {
 	// 5e mechanics (Rift Ascendant themed)
 	requires_attunement?: boolean;
 	weight: number; // In pounds
-	value: number; // In gold pieces
+	value: number; // In Gate Credits
 
 	// Rift Ascendant specific fields
 	essence_cost?: number; // Essence cost to use/attune

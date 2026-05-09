@@ -48,9 +48,27 @@ import {
 	bridgeTattooEffects,
 	type UnifiedEffectEntry,
 } from "@/lib/unifiedEffectSystem";
-import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
+import type { AbilityScore } from "@/types/core-rules";
 
-const ABILITY_KEYS = Object.keys(ABILITY_NAMES) as AbilityScore[];
+const ABILITY_KEYS: AbilityScore[] = [
+	"STR",
+	"AGI",
+	"VIT",
+	"INT",
+	"SENSE",
+	"PRE",
+];
+
+const normalizeSkillName = (value: string): string =>
+	value.trim().toLowerCase().replace(/[_-]+/g, " ").replace(/\s+/g, " ");
+
+const hasSkill = (
+	values: string[] | null | undefined,
+	skillName: string,
+): boolean => {
+	const key = normalizeSkillName(skillName);
+	return (values || []).some((value) => normalizeSkillName(value) === key);
+};
 
 interface EquipmentModifierResult {
 	armorClass: number;
@@ -599,8 +617,8 @@ export function useCharacterDerivedStats(
 				modifier,
 				passive: 10 + modifier,
 				ability: skill.ability,
-				proficient: (character.skill_proficiencies || []).includes(skill.name),
-				expertise: (character.skill_expertise || []).includes(skill.name),
+				proficient: hasSkill(character.skill_proficiencies, skill.name),
+				expertise: hasSkill(character.skill_expertise, skill.name),
 			};
 			return acc;
 		}, {});

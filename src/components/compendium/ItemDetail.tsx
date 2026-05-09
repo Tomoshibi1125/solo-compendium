@@ -21,6 +21,13 @@ export interface ItemData {
 	rarity?: string | null;
 	value?: number | null;
 	weight?: number | null;
+	damage?: string | number | null;
+	damage_type?: string | null;
+	armor_class?: string | number | null;
+	armor_type?: string | null;
+	weapon_type?: string | null;
+	activation?: Record<string, unknown> | string | null;
+	limitations?: Record<string, unknown> | null;
 	// weight matches CompendiumItem
 	requirements?: {
 		class?: string[];
@@ -77,7 +84,8 @@ export interface ItemData {
 	image_url?: string | null;
 	image?: string | null;
 	flavor?: string | null;
-	lore?: string | null;
+	lore?: string | Record<string, unknown> | null;
+	discovery_lore?: string | null;
 	mechanics?: Record<string, unknown> | null;
 }
 
@@ -93,6 +101,46 @@ const rarityStyles: Record<string, string> = {
 	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
 };
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+	!!value && typeof value === "object" && !Array.isArray(value);
+
+const stringifyRuleValue = (value: unknown): string | null => {
+	if (value == null) return null;
+	if (typeof value === "string") return value;
+	if (typeof value === "number" || typeof value === "boolean")
+		return String(value);
+	if (Array.isArray(value)) {
+		const parts = value.map(stringifyRuleValue).filter(Boolean);
+		return parts.length > 0 ? parts.join(", ") : null;
+	}
+	if (isRecord(value)) {
+		const parts = Object.entries(value)
+			.map(([key, entryValue]) => {
+				const rendered = stringifyRuleValue(entryValue);
+				return rendered ? `${key}: ${rendered}` : null;
+			})
+			.filter(Boolean);
+		return parts.length > 0 ? parts.join("; ") : null;
+	}
+	return null;
+};
+
+const getMechanicsRecord = (
+	mechanics: Record<string, unknown> | null | undefined,
+	key: string,
+): Record<string, unknown> | null => {
+	const value = mechanics?.[key];
+	return isRecord(value) ? value : null;
+};
+
+const getMechanicsArray = (
+	mechanics: Record<string, unknown> | null | undefined,
+	key: string,
+): unknown[] => {
+	const value = mechanics?.[key];
+	return Array.isArray(value) ? value : [];
+};
+
 export const ItemDetail = ({ data }: { data: ItemData }) => {
 	const item = data;
 	const navigate = useNavigate();
@@ -103,6 +151,31 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 		: undefined;
 	const weapon = item.properties?.weapon;
 	const magical = item.properties?.magical;
+	const rulesIdentity = getMechanicsRecord(item.mechanics, "identity");
+	const rulesAction = getMechanicsRecord(item.mechanics, "action_economy");
+	const rulesTargeting = getMechanicsRecord(item.mechanics, "targeting");
+	const rulesResolution = getMechanicsRecord(item.mechanics, "resolution");
+	const rulesAbilities = getMechanicsRecord(
+		item.mechanics,
+		"ability_modifiers",
+	);
+	const rulesFormulas = getMechanicsRecord(item.mechanics, "formulas");
+	const passiveRules = getMechanicsArray(item.mechanics, "passive_rules");
+	const activeRules = getMechanicsArray(item.mechanics, "active_rules");
+	const loreText =
+		typeof data.lore === "string"
+			? data.lore
+			: (stringifyRuleValue(data.lore) ?? null);
+	const hasStructuredRules = Boolean(
+		rulesIdentity ||
+			rulesAction ||
+			rulesTargeting ||
+			rulesResolution ||
+			rulesAbilities ||
+			rulesFormulas ||
+			passiveRules.length > 0 ||
+			activeRules.length > 0,
+	);
 
 	const parseDiceFromText = (text: string): string | null => {
 		const match = text.match(/\b(\d+d\d+(?:\s*[+-]\s*\d+)?)\b/i);
@@ -415,6 +488,182 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 				</AscendantWindow>
 			)}
 
+			{hasStructuredRules && (
+				<AscendantWindow id="item-rules" title="RULES PAYLOAD">
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
+						{rulesIdentity && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Identity</p>
+								<ul className="space-y-1 text-muted-foreground">
+									{Object.entries(rulesIdentity).map(([key, value]) => {
+										const rendered = stringifyRuleValue(value);
+										if (!rendered) return null;
+										return (
+											<li key={key}>
+												<span className="text-foreground/80">
+													{formatRegentVernacular(key.replace(/_/g, " "))}:{" "}
+												</span>
+												<AutoLinkText text={formatRegentVernacular(rendered)} />
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{rulesAction && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Activation</p>
+								<ul className="space-y-1 text-muted-foreground">
+									{Object.entries(rulesAction).map(([key, value]) => {
+										const rendered = stringifyRuleValue(value);
+										if (!rendered) return null;
+										return (
+											<li key={key}>
+												<span className="text-foreground/80">
+													{formatRegentVernacular(key.replace(/_/g, " "))}:{" "}
+												</span>
+												{formatRegentVernacular(rendered)}
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{rulesTargeting && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Targeting</p>
+								<ul className="space-y-1 text-muted-foreground">
+									{Object.entries(rulesTargeting).map(([key, value]) => {
+										const rendered = stringifyRuleValue(value);
+										if (!rendered) return null;
+										return (
+											<li key={key}>
+												<span className="text-foreground/80">
+													{formatRegentVernacular(key.replace(/_/g, " "))}:{" "}
+												</span>
+												{formatRegentVernacular(rendered)}
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{rulesResolution && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Resolution</p>
+								<ul className="space-y-1 text-muted-foreground">
+									{Object.entries(rulesResolution).map(([key, value]) => {
+										const rendered = stringifyRuleValue(value);
+										if (!rendered) return null;
+										return (
+											<li key={key}>
+												<span className="text-foreground/80">
+													{formatRegentVernacular(key.replace(/_/g, " "))}:{" "}
+												</span>
+												<AutoLinkText text={formatRegentVernacular(rendered)} />
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{rulesAbilities && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Ability Modifiers</p>
+								<ul className="space-y-1 text-muted-foreground">
+									{Object.entries(rulesAbilities).map(([key, value]) => {
+										const rendered = stringifyRuleValue(value);
+										if (!rendered) return null;
+										return (
+											<li key={key}>
+												<span className="text-foreground/80">
+													{formatRegentVernacular(key.replace(/_/g, " "))}:{" "}
+												</span>
+												{formatRegentVernacular(rendered)}
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{rulesFormulas && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Formulas</p>
+								<ul className="space-y-1 text-muted-foreground">
+									{Object.entries(rulesFormulas).map(([key, value]) => {
+										const rendered = stringifyRuleValue(value);
+										if (!rendered) return null;
+										return (
+											<li key={key}>
+												<span className="text-foreground/80">
+													{formatRegentVernacular(key.replace(/_/g, " "))}:{" "}
+												</span>
+												{formatRegentVernacular(rendered)}
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{passiveRules.length > 0 && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Passive Rules</p>
+								<ul className="list-disc list-inside text-muted-foreground">
+									{passiveRules.map((rule) => {
+										const rendered = stringifyRuleValue(rule);
+										if (!rendered) return null;
+										return (
+											<li key={rendered}>
+												<AutoLinkText text={formatRegentVernacular(rendered)} />
+											</li>
+										);
+									})}
+								</ul>
+							</div>
+						)}
+						{activeRules.length > 0 && (
+							<div className="space-y-2 rounded border border-primary/10 bg-black/30 p-3">
+								<p className="font-heading text-primary">Active Rules</p>
+								<div className="space-y-2 text-muted-foreground">
+									{activeRules.map((rule, index) => {
+										const record = isRecord(rule) ? rule : null;
+										const label = record
+											? stringifyRuleValue(record.name) ||
+												`Active Rule ${index + 1}`
+											: `Active Rule ${index + 1}`;
+										const body = record
+											? stringifyRuleValue(record.description)
+											: stringifyRuleValue(rule);
+										const ruleKey =
+											(record
+												? stringifyRuleValue(record.id) ||
+													stringifyRuleValue(record.name) ||
+													stringifyRuleValue(record.description) ||
+													JSON.stringify(record)
+												: body) || label;
+										return (
+											<div
+												key={ruleKey}
+												className="border-l-2 border-primary/30 pl-3"
+											>
+												<p className="font-heading text-foreground">
+													{formatRegentVernacular(label)}
+												</p>
+												{body && (
+													<p>
+														<AutoLinkText text={formatRegentVernacular(body)} />
+													</p>
+												)}
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
+
 			{(data.effects || data.effect) && (
 				<AscendantWindow id="item-effects" title="EFFECTS">
 					<div className="space-y-4 text-sm">
@@ -515,24 +764,24 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
-					{data.lore && (
+					{loreText && (
 						<div className="mt-6 pt-4 border-t border-cyan/10">
 							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText text={data.lore || ""} />
+								<AutoLinkText text={loreText} />
 							</p>
 						</div>
 					)}
-					{data.mechanics && Object.keys(data.mechanics).length > 0 && (
+					{data.discovery_lore && (
 						<div className="mt-6 pt-4 border-t border-cyan/10">
 							<h4 className="text-cyan font-bold text-[10px] uppercase tracking-wider mb-2">
-								System Diagnostics
+								Discovery Record
 							</h4>
-							<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
-								{JSON.stringify(data.mechanics, null, 2)}
-							</pre>
+							<p className="text-sm text-muted-foreground leading-relaxed">
+								<AutoLinkText text={data.discovery_lore} />
+							</p>
 						</div>
 					)}
 				</AscendantWindow>

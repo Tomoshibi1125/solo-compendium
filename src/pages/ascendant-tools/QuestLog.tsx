@@ -31,6 +31,11 @@ import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import type { Json } from "@/integrations/supabase/types";
 import { getLevelingMode } from "@/lib/campaignSettings";
+import {
+	buildRaCurrencyItemDescription,
+	formatRaCurrencyAmount,
+	RA_STANDARD_CURRENCY_ID,
+} from "@/lib/currency";
 import type {
 	DailyQuestInstance,
 	DailyQuestTemplate,
@@ -87,7 +92,8 @@ const formatRequirement = (template?: DailyQuestTemplate) => {
 const formatReward = (reward: QuestReward, showExperience: boolean) => {
 	const parts: string[] = [];
 	if (reward.rift_favor) parts.push(`Rift Favor +${reward.rift_favor}`);
-	if (reward.gold) parts.push(`Gold +${reward.gold}`);
+	const credits = reward.credits ?? reward.gold;
+	if (credits) parts.push(formatRaCurrencyAmount(credits));
 	if (reward.relic_shards) parts.push(`Relic Shards +${reward.relic_shards}`);
 	if (showExperience && reward.experience)
 		parts.push(`XP +${reward.experience}`);
@@ -186,12 +192,12 @@ export function QuestLog({ characterId }: { characterId: string }) {
 		}
 	};
 
-	const updateCurrency = async (label: string, amount: number) => {
+	const updateCredits = async (amount: number) => {
 		if (amount === 0) return;
 		const match = equipment.find(
 			(item) =>
 				item.item_type === "currency" &&
-				item.name.toLowerCase().includes(label),
+				item.name.toLowerCase().includes("gate credit"),
 		);
 		if (match) {
 			await updateEquipment({
@@ -201,11 +207,11 @@ export function QuestLog({ characterId }: { characterId: string }) {
 		} else {
 			await addEquipment({
 				character_id: characterId,
-				name: label === "gold" ? "Gold" : label,
+				name: "Gate Credits",
 				item_type: "currency",
 				quantity: Math.max(0, amount),
 				weight: 0.02,
-				description: "Daily quest reward",
+				description: buildRaCurrencyItemDescription(RA_STANDARD_CURRENCY_ID),
 			});
 		}
 	};
@@ -267,8 +273,9 @@ export function QuestLog({ characterId }: { characterId: string }) {
 				}
 			}
 
-			if (reward.gold) {
-				await updateCurrency("gold", reward.gold);
+			const credits = reward.credits ?? reward.gold;
+			if (credits) {
+				await updateCredits(credits);
 			}
 			if (reward.relic_shards) {
 				await updateResource("relic_shards", reward.relic_shards);

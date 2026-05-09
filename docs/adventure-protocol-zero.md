@@ -281,7 +281,7 @@ As a bonus action, Rhee can monitor the party's vital resonance through her Aeth
 - **Medical Bay** (free healing between missions, restoration of conditions)
 - **Intelligence Briefings** (information about Gate locations, Anomaly types)
 - **Legal Authority** (Bureau badge allows access to restricted areas, bypass of civilian law)
-- **Danger Pay:** 50,000 ₩ per E-Rank mission, 200,000 ₩ per C-Rank, scaling upward
+- **Danger Pay:** 500 Gate Credits per E-Rank mission, 2,000 Gate Credits per C-Rank, scaling upward
 
 ---
 
@@ -510,7 +510,7 @@ The party is NOT expected to fight the Shadow Stalkers. This is a skill challeng
 
 **Treasure:**
 Before the destabilization, looting the Shadow Fiend remains yields:
-- **3× Lesser Dark Essence** (Material Component, value 50 ₩ each)
+- **3× Lesser Dark Essence** (Material Component, value 50 Gate Credits each)
 - On a successful DC 13 SENSE check after the first fight: a **D-Rank Healing Ampoule** hidden inside a shattered ticket booth in Area A
 - On a successful DC 15 INT check examining the subway car in Area C: a **Bureau Field Report** (Handout #1 — see Appendix E) left behind by a previous investigation team, referencing "anomalous resonance patterns" in the gate network
 
@@ -599,7 +599,7 @@ He pauses. Then: *"Gates don't destabilize. That's what we're going to find out.
 Kang's prosthetic hand clenches hard enough to crack the coffee mug. He composes himself in an instant. *"Show me your HUD log."* If the notification has vanished (which it has), he says: *"Then it didn't happen. Understood?"* His tone brooks no argument. He makes a separate note — handwritten, not on his tablet.
 
 **Rewards and Advancement:**
-- The party receives their first bi-weekly Bureau salary: **100,000 ₩ per Ascendant** (enough for living expenses and basic equipment)
+- The party receives their first bi-weekly Bureau salary: **1,000 Gate Credits per Ascendant** (enough for living expenses and basic equipment)
 - Access to **Bureau Armory** (D-Rank and C-Rank equipment; see Appendix A for available items)
 - Access to **Bureau Intelligence Database** (advantage on History and Investigation checks related to Gates, Anomalies, and Ascendant organizations)
 - Agent Rhee is formally assigned as their field handler
@@ -615,7 +615,7 @@ Roll on this table when the party travels between locations in Neo-Seoul during 
 | d8 | Encounter |
 |----|-----------|
 | 1 | **Micro-Gate:** A D-Rank Gate the size of a manhole cover opens in the sidewalk. 1d4 **Lesser Shadow Fiends** crawl out. Bureau response is 10 minutes away. |
-| 2 | **Street Brawl:** Two unregistered Ascendants are fighting over an Essence crystal in an alley. One is a Destroyer (Level 2), the other an Assassin (Level 2). If intervened, both turn hostile. Bureau fine for unregistered fighting: 500,000 ₩. |
+| 2 | **Street Brawl:** Two unregistered Ascendants are fighting over an Essence crystal in an alley. One is a Destroyer (Level 2), the other an Assassin (Level 2). If intervened, both turn hostile. Bureau fine for unregistered fighting: 5,000 Gate Credits. |
 | 3 | **Essence Dealer:** A nervous dealer offers the party black-market Essence crystals at half price. DC 14 SENSE (Insight) to notice they're diluted (half effectiveness). If purchased, the dealer is a Null Guild acolyte gathering intel. |
 | 4 | **Bureau Patrol:** A Bureau checkpoint stops the party for ID verification. Routine — unless the party is carrying contraband (unregistered Relics, stolen Essence). |
 | 5 | **Gate Survivor:** A civilian stumbles out of an alley, covered in dimensional slime, mumbling about "the purple light." A micro-Gate closed behind them. They need medical attention (DC 12 SENSE/Medicine check). |
@@ -833,7 +833,7 @@ See Appendix B for all stat blocks.
   - *Shadow-Thread Gloves* (advantage on Stealth checks in dim light, requires attunement)
   - *Resonance Beacon* (wondrous item, as an action create a 30-ft radius zone that suppresses illusions for 1 minute, 1/long rest)
   - *Gate Compass* (wondrous item, points toward the nearest Dimensional Rift within 1 mile)
-- **Essence Crystal Cache:** 3,200 ₩ worth of refined Essence (Bureau will confiscate unless the party conceals them — DC 14 PRE Deception vs. Rhee's passive Insight of 15)
+- **Essence Crystal Cache:** 3,200 Gate Credits worth of refined Essence (Bureau will confiscate unless the party conceals them — DC 14 PRE Deception vs. Rhee's passive Insight of 15)
 - **Data Tablets:** Contains encrypted Null Guild communications (DC 16 INT to decrypt, or can be sent to Bureau Intelligence — results arrive in Chapter 3)
 - **Essence Amplifier Prototype:** Intact. Critical evidence for the investigation.
 
@@ -915,7 +915,7 @@ Roll 1d6 when the party travels through the industrial district; encounter on a 
 | 4 | **Ascendant Corp Security Sweep:** A team of 4 Corporate Security Guards is searching for "stolen company property." They're looking for Essence Amplifiers and will detain anyone suspicious. |
 | 5 | **Specter's Warning (if ally):** Specter contacts the party via burner phone: "Enforcers heading your way. Two B-Ranks. Take the side street." If heeded, party avoids an ambush. |
 | 6 | **Collapsed Rift:** A Gate opened and closed in seconds, leaving behind a crater of dimensional residue and a single, terrified D-Rank Anomaly (a **Void Sprite** — CR 1/2, harmless unless provoked). The sprite carries a fragment of crystallized memory showing a glimpse of the Red Gate dimension. |
-| 7 | **Bureau Bounty Board:** A public notice board lists current bounties for unregistered Ascendants and Gate-related crimes. One bounty is for "The Engineer — S-Rank, Extremely Dangerous. Reward: 500,000,000 ₩." |
+| 7 | **Bureau Bounty Board:** A public notice board lists current bounties for unregistered Ascendants and Gate-related crimes. One bounty is for "The Engineer — S-Rank, Extremely Dangerous. Reward: 5,000,000 Gate Credits." |
 | 8 | **System Notification:** All party members simultaneously receive: `[SYSTEM NOTICE: DIMENSIONAL STABILITY INDEX — 73% AND FALLING. PROTOCOL CANDIDATES IDENTIFIED.]` The notification can't be screenshotted or recorded. |
 
 ---
@@ -1093,7 +1093,7 @@ The Ice Caves are a three-level dungeon carved into the glacier. They serve as t
 | Room | Description | Contents |
 |------|-------------|----------|
 | **1A. Entry Hall** | 40 × 30 ft. High vaulted ceiling of translucent ice. Ancient pillars carved with dimensional runes. Well-lit (ambient glow from runes). | 2× **Ice-Fang Wolves** (CR 1) are denning here. They can be bypassed with DC 14 AGI (Stealth) or driven off with DC 13 PRE (Intimidation). |
-| **1B. Frozen Gallery** | 60 × 20 ft corridor. Walls contain frozen figures — humanoid shapes trapped in the ice. | DC 14 INT (Investigation): The figures are wearing armor and carrying weapons from a civilization that doesn't match any known culture. They died fighting. Some are holding **Mana Crystals** (worth 200 ₩ each, 1d6 found). |
+| **1B. Frozen Gallery** | 60 × 20 ft corridor. Walls contain frozen figures — humanoid shapes trapped in the ice. | DC 14 INT (Investigation): The figures are wearing armor and carrying weapons from a civilization that doesn't match any known culture. They died fighting. Some are holding **Mana Crystals** (worth 200 Gate Credits each, 1d6 found). |
 | **1C. The Fork** | Junction. Three tunnels branch off: left (Level 2), center (dead end with trap), right (shortcut to Level 3). | DC 13 SENSE (Perception) to detect cold air currents and determine which passage leads deeper. |
 | **1D. Trap Corridor (Center)** | 40 × 10 ft. Smooth ice floor. | **Trap: Ice Slide.** The floor is angled imperceptibly. When weight is applied, the entire section slides forward into a 30-foot pit. DC 14 SENSE (Perception) to detect. DC 15 AGI save to avoid. Fall: 3d6 bludgeoning damage. Climbing out: DC 13 Athletics. |
 
@@ -1238,8 +1238,8 @@ When the Frost Troll reaches 0 HP and fails to regenerate:
 
 **Treasure:**
 - **The Regent's Key** (B-Rank Relic; see Appendix A) — a golden key-shaped Relic that resonates with the System's deepest protocols. It grants the holder advantage on SENSE checks related to Anomalies and Gates, and it *hums* in the presence of other Regents or Regent-aspiring Ascendants. Its true purpose is revealed in Chapter 4.
-- **Frost Troll Core Fragments** (5× B-Rank Essence Crystals, value 5,000 ₩ each)
-- **Troll Ice Plate** (Material Component — can be fashioned into a +1 shield or armor by a skilled craftsman, value 15,000 ₩)
+- **Frost Troll Core Fragments** (5× B-Rank Essence Crystals, value 5,000 Gate Credits each)
+- **Troll Ice Plate** (Material Component — can be fashioned into a +1 shield or armor by a skilled craftsman, value 15,000 Gate Credits)
 
 **Milestone:** Characters advance to **Level 7** upon returning to the real world.
 
@@ -3611,7 +3611,7 @@ Roll 1d6 each travel day; encounter on 1-3. Roll 1d6:
 |----|-----------|
 | 1 | 1d4+1 **Ice-Fang Wolves** stalking the party. Attack at night if not detected. |
 | 2 | **Blizzard.** DC 15 VIT save or 1 Exhaustion level. Visibility 10 ft for 1d4 hours. |
-| 3 | **Frozen Anomaly Remains.** A dead creature frozen mid-battle. Looting: DC 13, yields 1d4 C-Rank Essence Crystals (1,000 ₩ each). |
+| 3 | **Frozen Anomaly Remains.** A dead creature frozen mid-battle. Looting: DC 13, yields 1d4 C-Rank Essence Crystals (1,000 Gate Credits each). |
 | 4 | **Ice Crevasse.** DC 14 SENSE (Perception) to detect. Falling: 4d6 damage. Climbing out: DC 14 Athletics. |
 | 5 | **Dimensional Echo.** The party sees ghostly images of themselves from a parallel timeline — fighting, dying, or fleeing. No mechanical effect, deeply unsettling. |
 | 6 | **Aurora Event.** The blood-red sky briefly clears, revealing a breathtaking aurora of dimensional energy. Characters who meditate during this gain advantage on their next saving throw. |

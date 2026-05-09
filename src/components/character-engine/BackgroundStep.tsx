@@ -11,6 +11,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import type { Database } from "@/integrations/supabase/types";
+import { formatRaCurrencyAmount } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface BackgroundFeature {
@@ -175,7 +176,9 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 											Starting Capital
 										</Label>
 										<div className="text-[11px] text-primary/80 font-semibold mt-1">
-											{selectedBackgroundData.starting_credits} Credits
+											{formatRaCurrencyAmount(
+												selectedBackgroundData.starting_credits,
+											)}
 										</div>
 									</div>
 								)}

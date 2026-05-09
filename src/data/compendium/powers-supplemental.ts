@@ -113,6 +113,11 @@ function diceForLevel(level: number): string {
 	);
 }
 
+function damageTypeForSeed(seed: PowerSeed): string {
+	if (/\bstorm\b/i.test(seed.name)) return "thunder";
+	return seed.damageType;
+}
+
 function castingTimeFor(seed: PowerSeed): string {
 	if (seed.castingTime) return seed.castingTime;
 	if (seed.mode === "guard") return "1 reaction";
@@ -202,10 +207,12 @@ function makeSeeds(family: PowerFamily): PowerSeed[] {
 function makePower(seed: PowerSeed): CompendiumPower {
 	powerCounts[seed.level] += 1;
 	const dice = diceForLevel(seed.level);
+	const damageType = damageTypeForSeed(seed);
 	const save = saveForMode(seed.mode);
 	const ability = abilityForClasses(seed.classes);
 	const castingTime = castingTimeFor(seed);
-	const effects = effectFor(seed, dice);
+	const resolvedSeed = { ...seed, damageType };
+	const effects = effectFor(resolvedSeed, dice);
 	const range = seed.range ?? (seed.mode === "guard" ? "Self" : "60 feet");
 	const duration = seed.duration ?? "Instantaneous";
 
@@ -213,7 +220,7 @@ function makePower(seed: PowerSeed): CompendiumPower {
 		id: `power-parity-${seed.level}-${powerCounts[seed.level]}-${slug(seed.name)}`,
 		name: seed.name,
 		display_name: seed.name,
-		description: descriptionFor(seed, dice),
+		description: descriptionFor(resolvedSeed, dice),
 		flavor: `${seed.name} is a field-ready awakened power for ${seed.classes.join(", ")} Ascendants.`,
 		tags: ["awakened", "power", seed.mode, seed.school, ...seed.classes],
 		classes: seed.classes,
@@ -233,10 +240,10 @@ function makePower(seed: PowerSeed): CompendiumPower {
 		has_save: true,
 		save_ability: save,
 		damage_roll: dice,
-		damage_type: seed.damageType,
+		damage_type: damageType,
 		mechanics: {
 			duration,
-			damage_profile: `${dice} ${seed.damageType}`,
+			damage_profile: `${dice} ${damageType}`,
 			range,
 			type: seed.mode,
 			ability,

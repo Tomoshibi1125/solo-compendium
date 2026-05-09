@@ -386,28 +386,33 @@ export const useCampaignByCharacterId = (characterId?: string) => {
 };
 
 // Fetch campaign by share code
+// Uses the SECURITY DEFINER RPC which bypasses RLS and is granted to both
+// authenticated and anon roles, so even unauthenticated visitors can look up
+// a campaign by its share code to join.
 export const useCampaignByShareCode = (shareCode: string) => {
 	return useQuery({
 		queryKey: ["campaigns", "share-code", shareCode],
 		queryFn: async () => {
+			const upperCode = shareCode.toUpperCase();
+
 			if (isLocalMode()) {
 				return (
 					loadLocalCampaigns().find(
-						(campaign) => campaign.share_code === shareCode.toUpperCase(),
-					) || null
-				);
-			}
-			const { data: authData } = await supabase.auth.getUser();
-			if (!authData.user && guestEnabled) {
-				return (
-					loadLocalCampaigns().find(
-						(campaign) => campaign.share_code === shareCode.toUpperCase(),
+						(campaign) => campaign.share_code === upperCode,
 					) || null
 				);
 			}
 
+			// Check local cache first for offline/guest scenarios
+			const localMatch = loadLocalCampaigns().find(
+				(campaign) => campaign.share_code === upperCode,
+			);
+
+			// Always attempt the RPC — it is SECURITY DEFINER with row_security=off
+			// and is granted to both authenticated AND anon roles, so it works for
+			// unauthenticated visitors looking up a campaign to join.
 			const rpcResult = await supabase.rpc("get_campaign_by_share_code", {
-				p_share_code: shareCode.toUpperCase(),
+				p_share_code: upperCode,
 			});
 
 			if (rpcResult.error) {
@@ -417,21 +422,16 @@ export const useCampaignByShareCode = (shareCode: string) => {
 
 				if (!isRpcMissing) throw rpcResult.error;
 
-				// Fallback: direct SELECT when RPC doesn't exist
-				const { data: directData, error: directError } = await supabase
-					.from("campaigns")
-					.select("*")
-					.eq("share_code", shareCode.toUpperCase())
-					.maybeSingle();
-
-				if (directError) throw directError;
-				return (directData || null) as Campaign | null;
+				// RPC doesn't exist — return local cache match if available.
+				// A direct SELECT on campaigns table would fail for non-members
+				// due to RLS, so we do NOT attempt it.
+				return localMatch || null;
 			}
 
 			const campaign = Array.isArray(rpcResult.data)
 				? rpcResult.data[0]
 				: rpcResult.data;
-			return (campaign || null) as unknown as Campaign | null;
+			return (campaign || localMatch || null) as unknown as Campaign | null;
 		},
 		enabled: !!shareCode && shareCode.length === 6,
 	});

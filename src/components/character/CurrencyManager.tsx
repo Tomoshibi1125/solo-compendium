@@ -6,15 +6,12 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import {
+	buildRaCurrencyItemDescription,
+	RA_CURRENCY_TYPES,
+	type RaCurrencyId,
+} from "@/lib/currency";
 import { cn } from "@/lib/utils";
-
-const CURRENCY_TYPES = [
-	{ id: "platinum", name: "Platinum", symbol: "PP", color: "text-indigo-400" },
-	{ id: "gold", name: "Gold", symbol: "GP", color: "text-bond-gold" },
-	{ id: "electrum", name: "Electrum", symbol: "EP", color: "text-zinc-400" },
-	{ id: "silver", name: "Silver", symbol: "SP", color: "text-zinc-400" },
-	{ id: "copper", name: "Copper", symbol: "CP", color: "text-amber-600" },
-];
 
 export function CurrencyManager({ characterId }: { characterId: string }) {
 	const { equipment, updateEquipment, addEquipment } =
@@ -28,15 +25,27 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 	const currencyItems = equipment.filter((e) => e.item_type === "currency");
 
 	// Get or create currency for each type
-	const getCurrency = (type: string) => {
+	const getCurrency = (type: RaCurrencyId) => {
+		const currencyType = RA_CURRENCY_TYPES.find(
+			(currency) => currency.id === type,
+		);
+		if (!currencyType) return null;
+		const aliases = [
+			currencyType.id,
+			currencyType.name.toLowerCase(),
+			currencyType.singularName.toLowerCase(),
+			currencyType.legacyId,
+		];
 		return (
-			currencyItems.find((c) => c.name.toLowerCase().includes(type)) || null
+			currencyItems.find((c) =>
+				aliases.some((alias) => c.name.toLowerCase().includes(alias)),
+			) || null
 		);
 	};
 
-	const handleAddCurrency = async (type: string, amount: number) => {
+	const handleAddCurrency = async (type: RaCurrencyId, amount: number) => {
 		const existing = getCurrency(type);
-		const currencyType = CURRENCY_TYPES.find((t) => t.id === type);
+		const currencyType = RA_CURRENCY_TYPES.find((t) => t.id === type);
 		if (!currencyType) return;
 
 		try {
@@ -56,8 +65,8 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 					name: currencyType.name,
 					item_type: "currency",
 					quantity: amount,
-					weight: 0.02, // 50 coins per pound
-					description: `Rift rewards - ${currencyType.name} coins`,
+					weight: 0.02, // 50 credit notes per pound
+					description: buildRaCurrencyItemDescription(currencyType.id),
 				});
 				toast({
 					title: "Currency added",
@@ -81,9 +90,9 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 		}
 	};
 
-	const handleSetCurrency = async (type: string, amount: number) => {
+	const handleSetCurrency = async (type: RaCurrencyId, amount: number) => {
 		const existing = getCurrency(type);
-		const currencyType = CURRENCY_TYPES.find((t) => t.id === type);
+		const currencyType = RA_CURRENCY_TYPES.find((t) => t.id === type);
 		if (!currencyType) return;
 
 		try {
@@ -99,7 +108,7 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 					item_type: "currency",
 					quantity: amount,
 					weight: 0.02,
-					description: `Rift rewards - ${currencyType.name} coins`,
+					description: buildRaCurrencyItemDescription(currencyType.id),
 				});
 			}
 
@@ -129,10 +138,10 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 		<AscendantWindow title="RIFT REWARDS">
 			<div className="space-y-3">
 				<p className="text-xs text-muted-foreground mb-4">
-					Track currency earned from Rift completions. In the post-reset world,
-					Ascendants are rewarded by the Rift.
+					Track Bureau-issued Credits earned from contracts, salvage exchange,
+					and campaign rewards.
 				</p>
-				{CURRENCY_TYPES.map((type) => {
+				{RA_CURRENCY_TYPES.map((type) => {
 					const currency = getCurrency(type.id);
 					const quantity = currency?.quantity || 0;
 					const isEditing = editing === type.id;
@@ -143,11 +152,11 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 							className="p-3 rounded-lg border bg-muted/30 flex items-center justify-between"
 						>
 							<div className="flex items-center gap-3">
-								<Coins className={cn("w-5 h-5", type.color)} />
+								<Coins className={cn("w-5 h-5", type.colorClass)} />
 								<div>
 									<div className="font-heading font-semibold">{type.name}</div>
 									<div className="text-xs text-muted-foreground">
-										{type.symbol}
+										{type.symbol} · {type.description}
 									</div>
 								</div>
 							</div>

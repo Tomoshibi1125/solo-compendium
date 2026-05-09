@@ -569,7 +569,7 @@ export const spells_c: CompendiumSpell[] = [
 			verbal: true,
 			somatic: true,
 			material: true,
-			focus: "powdered rift-iron (100gp)",
+			focus: "powdered rift-iron (100 Gate Credits)",
 		},
 		concentration: false,
 		ritual: false,

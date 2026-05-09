@@ -124,8 +124,8 @@ const TreasureGenerator = () => {
 
 SEED DATA:
 - Rift Rank: ${treasure.rank}
-- Dollars (in $10 bills): $${treasure.tens * 10}
-${treasure.hundreds > 0 ? `- $100 Bills: ${treasure.hundreds}\n` : ""}${treasure.fives > 0 ? `- $5 Bills: ${treasure.fives}\n` : ""}${treasure.ones > 0 ? `- $1 Bills: ${treasure.ones}\n` : ""}${treasure.dimes > 0 ? `- 10¢ Coins: ${treasure.dimes}\n` : ""}- Items: ${treasure.items.join(", ") || "None"}
+- Gate Credits: ${treasure.tens}
+${treasure.hundreds > 0 ? `- Core Credits: ${treasure.hundreds}\n` : ""}${treasure.fives > 0 ? `- Crystal Credits: ${treasure.fives}\n` : ""}${treasure.ones > 0 ? `- Mana Credits: ${treasure.ones}\n` : ""}${treasure.dimes > 0 ? `- Mana Credit Chips: ${treasure.dimes}\n` : ""}- Items: ${treasure.items.join(", ") || "None"}
 - Materials: ${treasure.materials.join(", ") || "None"}
 - Relics: ${treasure.relics.join(", ") || "None"}
 
@@ -134,7 +134,7 @@ Provide ALL of the following sections with full detail:
 1. ITEMS: Full stat blocks for each item (type, rarity, attunement, properties, damage/AC/bonuses, weight)
 2. MAGICAL PROPERTIES: Activation rules, charges, recharge conditions, side effects, cursed variants
 3. LORE: Item history, creator, previous owners, legendary status within Rift Ascendant world
-4. VALUE: GP value, trade value, faction value for each item
+4. VALUE: Bureau Credit value, trade value, faction value for each item
 5. MATERIALS: Weight, composition, crafting uses, what can be forged from them
 6. RELICS: Full relic stat block with attunement requirements, abilities at dormant/awakened/exalted tiers
 7. DESCRIPTION: Read-aloud boxed text for when players discover this treasure hoard`;
@@ -144,8 +144,8 @@ Provide ALL of the following sections with full detail:
 	const handleCopy = () => {
 		if (!treasure) return;
 		const text = `Rift Rank ${treasure.rank} Treasure:
-Value in $10 Bills: $${treasure.tens * 10}
-${treasure.hundreds > 0 ? `$100 Bills: ${treasure.hundreds}\n` : ""}${treasure.fives > 0 ? `$5 Bills: ${treasure.fives}\n` : ""}${treasure.ones > 0 ? `$1 Bills: ${treasure.ones}\n` : ""}${treasure.dimes > 0 ? `10¢ Coins: ${treasure.dimes}\n` : ""}${treasure.items.length > 0 ? `Items: ${treasure.items.join(", ")}\n` : ""}${treasure.materials.length > 0 ? `Materials: ${treasure.materials.join(", ")}\n` : ""}${treasure.relics.length > 0 ? `Relics: ${treasure.relics.join(", ")}\n` : ""}
+Gate Credits: ${treasure.tens}
+${treasure.hundreds > 0 ? `Core Credits: ${treasure.hundreds}\n` : ""}${treasure.fives > 0 ? `Crystal Credits: ${treasure.fives}\n` : ""}${treasure.ones > 0 ? `Mana Credits: ${treasure.ones}\n` : ""}${treasure.dimes > 0 ? `Mana Credit Chips: ${treasure.dimes}\n` : ""}${treasure.items.length > 0 ? `Items: ${treasure.items.join(", ")}\n` : ""}${treasure.materials.length > 0 ? `Materials: ${treasure.materials.join(", ")}\n` : ""}${treasure.relics.length > 0 ? `Relics: ${treasure.relics.join(", ")}\n` : ""}
 ${treasure.description}
 
 ---
@@ -162,7 +162,7 @@ ${
    • Properties: [Mechanical bonuses and effects]
    • Damage/AC/Save Bonus: [+${treasure.rank === "S" ? "4" : treasure.rank === "A" ? "3" : treasure.rank === "B" ? "2" : treasure.rank === "C" ? "1" : "0"}]
    • Weight: [Standard for item type]
-   • Value: [${treasure.rank} Rank appropriate GP]`,
+   • Value: [${treasure.rank} Rank appropriate Bureau Credits]`,
 		)
 		.join("\n\n") || "None"
 }
@@ -200,7 +200,7 @@ ${
 	treasure.items
 		.map(
 			(item, i) => `${i + 1}. ${item}:
-   • Market Value: [${treasure.rank} Rank appropriate GP]
+   • Market Value: [${treasure.rank} Rank appropriate Bureau Credits]
    • Trade Value: [Bartering potential]
    • Faction Value: [Which factions value this item]`,
 		)
@@ -558,8 +558,8 @@ READ-ALOUD DISCOVERY:
 										Rank {rank}
 									</div>
 									<div className="text-xs text-muted-foreground">
-										Value Range ($10s): {table.tenRange[0]}-{table.tenRange[1]}{" "}
-										| Items: {Math.round(table.itemChance * 100)}% | Materials:{" "}
+										Gate Credit Range: {table.tenRange[0]}-{table.tenRange[1]} |
+										Items: {Math.round(table.itemChance * 100)}% | Materials:{" "}
 										{Math.round(table.materialChance * 100)}% | Relics:{" "}
 										{Math.round(table.relicChance * 100)}%
 									</div>

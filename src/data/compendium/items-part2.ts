@@ -46,6 +46,94 @@ export const items_part2: Item[] = [
 			"consumable",
 		],
 		theme_tags: ["system-glitch", "survival"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description: "Action. Restore 2d4 mana.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "aff50e98",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_0::Black-Market Mana Elixir",
+				variant_note: "Restores HP on consumption.",
+			},
+			formulas: {
+				effect_formula: "2d4",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Black-Market Mana Elixir keys aetheric consumable potion rules through signature de90c943.",
+				role: "consumable",
+				signature: "de90c943",
+				theme: "aetheric",
+			},
+			passive_rules: ["On drink, restore 2d4 mana."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: "2d4",
+				save: null,
+				use_rule: "Action. Restore 2d4 mana.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_1",
@@ -90,6 +178,100 @@ export const items_part2: Item[] = [
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "ice", "fire", "consumable"],
 		theme_tags: ["survival", "system-glitch", "mana-overflow"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description:
+						"Action. Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "8d22e581",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_1::Greater Liquid Shadow",
+				variant_note:
+					"Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Greater Liquid Shadow keys shadow consumable potion rules through signature e369cfcc.",
+				role: "consumable",
+				signature: "e369cfcc",
+				theme: "shadow",
+			},
+			passive_rules: [
+				"Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+				"Grants 1 minute of stealth advantage in dim light or darkness.",
+			],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule:
+					"Action. Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_2",
@@ -133,6 +315,95 @@ export const items_part2: Item[] = [
 			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
 		tags: ["equipment", "fire", "control", "melee"],
 		theme_tags: ["system-glitch", "shadow-domain", "modern-warfare"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "ba102ad4",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_2::Void Warhammer",
+				variant_note: "Crit on 19-20. Critical hits push target 5 ft.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d12 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Void Warhammer keys void melee bludgeon heavy rules through signature fb29de42.",
+				role: "offense",
+				signature: "fb29de42",
+				theme: "void",
+			},
+			passive_rules: [
+				"Crit on 19-20. Critical hits push target 5 ft.",
+				"On a hit, target's space becomes lattice-bled difficult terrain until the end of its next turn.",
+				"+5 ft. to your speed while wielding this item.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d12 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Crit on 19-20. Critical hits push target 5 ft.",
+					"On a hit, target's space becomes lattice-bled difficult terrain until the end of its next turn.",
+					"+5 ft. to your speed while wielding this item.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_3",
@@ -180,6 +451,95 @@ export const items_part2: Item[] = [
 			"Catalogued at a Bureau intake desk after a routine third-party deposit.",
 		tags: ["equipment", "burst", "sustained", "utility", "firearm"],
 		theme_tags: ["guild-ops", "black-market", "post-awakening"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["AGI"],
+				armor_class: [],
+				attack: ["AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "55391f38",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_3::Crimson Revolver",
+				variant_note: "Suppressed. Doesn't reveal your position when fired.",
+			},
+			formulas: {
+				attack_roll: "d20 + AGI modifier + proficiency bonus",
+				damage_roll: "1d8 + AGI modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "firearm_pistol",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Crimson Revolver keys crimson firearm pistol rules through signature eec24a4c.",
+				role: "offense",
+				signature: "eec24a4c",
+				theme: "crimson",
+			},
+			passive_rules: [
+				"Suppressed. Doesn't reveal your position when fired.",
+				"While target is below half HP, attacks with this weapon deal +1d4 damage.",
+				"+1 to Investigation and Insight checks while attuned.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "slashing",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d8 + AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Suppressed. Doesn't reveal your position when fired.",
+					"While target is below half HP, attacks with this weapon deal +1d4 damage.",
+					"+1 to Investigation and Insight checks while attuned.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Ranged (30/90)",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_4",
@@ -195,11 +555,12 @@ export const items_part2: Item[] = [
 		armor_class: "17",
 		armor_type: "Heavy",
 		stealth_disadvantage: true,
+		strength_requirement: 15,
 		properties: {},
 		effects: {
 			passive: [
 				"Provides AC 17. Stealth checks at disadvantage.",
-				"Heavy carapace plating. AC 17. Stealth disadvantage.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 		},
@@ -220,6 +581,96 @@ export const items_part2: Item[] = [
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "damage", "offensive", "perception", "ice", "armor"],
 		theme_tags: ["urban-combat", "forbidden"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: ["Requires STR 15 to avoid armor penalties."],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				requirements: ["STR"],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "8a9849db",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_4::Gate-Forged Spaulders",
+				variant_note:
+					"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+			},
+			formulas: {
+				armor_class: "17",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: "Requires STR 15",
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Gate-Forged Spaulders keys standard armor heavy rules through signature f99152e6.",
+				role: "defense",
+				signature: "f99152e6",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Provides AC 17. Stealth checks at disadvantage.",
+				"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "17",
+				armor_type: "Heavy",
+				stealth_disadvantage: true,
+				strength_requirement: 15,
+				equipped_effects: [
+					"Provides AC 17. Stealth checks at disadvantage.",
+					"Heavy carapace plating. AC 17. Stealth disadvantage. Requires STR 15.",
+					"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_5",
@@ -265,6 +716,95 @@ export const items_part2: Item[] = [
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "area", "debuff", "perception", "melee"],
 		theme_tags: ["guild-ops", "mana-overflow"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "7138448c",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_5::Void Gauntlets",
+				variant_note: "Counts as an unarmed strike for Striker class features.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d4 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_gauntlet",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Void Gauntlets keys void melee gauntlet rules through signature 7dcde028.",
+				role: "offense",
+				signature: "7dcde028",
+				theme: "void",
+			},
+			passive_rules: [
+				"Counts as an unarmed strike for Striker class features.",
+				"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+				"+1 to attack rolls against creatures within 5 ft. of an ally.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d4 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Counts as an unarmed strike for Striker class features.",
+					"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+					"+1 to attack rolls against creatures within 5 ft. of an ally.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_6",
@@ -311,6 +851,94 @@ export const items_part2: Item[] = [
 			"consumable",
 		],
 		theme_tags: ["survival", "gate-zone"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Apply",
+					description: "Action. Cures the poisoned condition.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "ae6ace10",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_6::Lesser Aetheric Antidote",
+				variant_note: "Cures the poisoned condition.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_purifier",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Lesser Aetheric Antidote keys aetheric consumable purifier rules through signature 5aeb324f.",
+				role: "consumable",
+				signature: "5aeb324f",
+				theme: "aetheric",
+			},
+			passive_rules: ["Cures the poisoned condition."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Cures the poisoned condition.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_7",
@@ -323,7 +951,7 @@ export const items_part2: Item[] = [
 		weight: 7,
 		value: 169,
 		item_type: "armor",
-		armor_class: "11 + Dex modifier",
+		armor_class: "11 + AGI modifier",
 		armor_type: "Light",
 		properties: {},
 		effects: {
@@ -351,6 +979,98 @@ export const items_part2: Item[] = [
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "stealth", "void", "single-target", "armor"],
 		theme_tags: ["dimensional-bleed", "guild-ops"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b35d3c92",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_7::Phantom Combat Vest",
+				variant_note:
+					"Stealth-treated armor. Advantage on Stealth checks while worn.",
+			},
+			formulas: {
+				armor_class: "11 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Phantom Combat Vest keys void armor light rules through signature da2ce1cd.",
+				role: "defense",
+				signature: "da2ce1cd",
+				theme: "void",
+			},
+			passive_rules: [
+				"Provides AC 11 + AGI modifier.",
+				"Stealth-treated armor. Advantage on Stealth checks while worn.",
+				"Resistance to necrotic damage.",
+				"Crit on 19-20 against gate-spawned creatures.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "11 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides AC 11 + AGI modifier.",
+					"Stealth-treated armor. Advantage on Stealth checks while worn.",
+					"Resistance to necrotic damage.",
+					"Crit on 19-20 against gate-spawned creatures.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_8",
@@ -391,6 +1111,94 @@ export const items_part2: Item[] = [
 			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "damage", "utility", "consumable"],
 		theme_tags: ["survival", "regent-era", "gate-zone"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description: "Action. Restore 2d4 mana.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "aff50e98",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_8::High-Grade Mana Elixir",
+				variant_note: "Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			formulas: {
+				effect_formula: "2d4",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"High-Grade Mana Elixir keys aetheric consumable potion rules through signature 861ea573.",
+				role: "consumable",
+				signature: "861ea573",
+				theme: "aetheric",
+			},
+			passive_rules: ["On drink, restore 2d4 mana."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: "2d4",
+				save: null,
+				use_rule: "Action. Restore 2d4 mana.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_9",
@@ -430,6 +1238,94 @@ export const items_part2: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "area", "control", "fire", "consumable"],
 		theme_tags: ["system-glitch", "survival"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Apply",
+					description: "Action. Cures the poisoned condition.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "ae6ace10",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_9::Unstable Aetheric Antidote",
+				variant_note: "Cures the poisoned condition.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_purifier",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Unstable Aetheric Antidote keys aetheric consumable purifier rules through signature c33c2882.",
+				role: "consumable",
+				signature: "c33c2882",
+				theme: "aetheric",
+			},
+			passive_rules: ["Cures the poisoned condition."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Cures the poisoned condition.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_10",
@@ -470,6 +1366,94 @@ export const items_part2: Item[] = [
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "area", "damage", "shadow", "burst", "consumable"],
 		theme_tags: ["classified", "system-glitch", "survival"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description: "Action. Restore 2d4 mana.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "aff50e98",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_10::Purified Mana Elixir",
+				variant_note: "Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			formulas: {
+				effect_formula: "2d4",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Purified Mana Elixir keys aetheric consumable potion rules through signature 5f8d0f46.",
+				role: "consumable",
+				signature: "5f8d0f46",
+				theme: "aetheric",
+			},
+			passive_rules: ["On drink, restore 2d4 mana."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: "2d4",
+				save: null,
+				use_rule: "Action. Restore 2d4 mana.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_11",
@@ -531,6 +1515,109 @@ export const items_part2: Item[] = [
 			"melee",
 		],
 		theme_tags: ["shadow-domain", "urban-combat", "survival"],
+		activation: {
+			type: "bonus-action",
+			consumes_item: false,
+			cost: "1 bonus action",
+			frequency: "long-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "long-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR", "AGI"],
+				armor_class: [],
+				attack: ["STR", "AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "bonus-action",
+				consumes_item: false,
+				cost: "1 bonus action",
+				frequency: "long-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Mana Surge",
+					description:
+						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
+					action: "bonus-action",
+					dc: null,
+					frequency: "long-rest",
+				},
+			],
+			audit: {
+				fingerprint: "9f95d7d1",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_11::Guild-Issue Whip",
+				variant_note: "Reach: melee attacks have 10 ft. range.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR or AGI modifier + proficiency bonus + 1",
+				damage_roll: "1d4 + STR or AGI modifier + 1",
+				recharge: "long-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_whip",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Guild-Issue Whip keys standard melee whip rules through signature 039141d9.",
+				role: "offense",
+				signature: "039141d9",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Reach: melee attacks have 10 ft. range.",
+				"On a kill, your next attack within 1 minute deals an extra 2d6 damage.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "slashing",
+				active_options: [
+					{
+						name: "Mana Surge",
+						description:
+							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "1d4 + STR or AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Reach: melee attacks have 10 ft. range.",
+					"On a kill, your next attack within 1 minute deals an extra 2d6 damage.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_12",
@@ -583,6 +1670,93 @@ export const items_part2: Item[] = [
 			"melee",
 		],
 		theme_tags: ["guild-ops", "classified", "hunter-bureau"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "cf606e32",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_12::Void Longsword",
+				variant_note: "",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d8 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_blade_versatile",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Void Longsword keys void melee blade versatile rules through signature 02ba67a4.",
+				role: "offense",
+				signature: "02ba67a4",
+				theme: "void",
+			},
+			passive_rules: [
+				"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+				"On a kill with this item, gain 1d4 temporary HP.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d8 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+					"On a kill with this item, gain 1d4 temporary HP.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_13",
@@ -628,6 +1802,96 @@ export const items_part2: Item[] = [
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "fire", "utility", "healing", "melee"],
 		theme_tags: ["dimensional-bleed", "shadow-domain"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9151f6ff",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_13::Aetheric Spear",
+				variant_note:
+					"Reach. On a hit, you may use a reaction to make an opportunity attack against a creature within 10 ft.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d8 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_polearm",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Spear keys aetheric melee polearm rules through signature 63c5d416.",
+				role: "offense",
+				signature: "63c5d416",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Reach. On a hit, you may use a reaction to make an opportunity attack against a creature within 10 ft.",
+				"On a hit, target loses 1 mana point (if any).",
+				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d8 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Reach. On a hit, you may use a reaction to make an opportunity attack against a creature within 10 ft.",
+					"On a hit, target loses 1 mana point (if any).",
+					"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_14",
@@ -640,7 +1904,7 @@ export const items_part2: Item[] = [
 		weight: 8,
 		value: 64,
 		item_type: "armor",
-		armor_class: "12 + Dex modifier",
+		armor_class: "12 + AGI modifier",
 		armor_type: "Light",
 		properties: {},
 		effects: {
@@ -667,6 +1931,98 @@ export const items_part2: Item[] = [
 			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "area", "necrotic", "shadow", "buff", "armor"],
 		theme_tags: ["dungeon-core", "mana-overflow", "elite-tier"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "3551c5d7",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_14::Aether-Plated Combat Vest",
+				variant_note:
+					"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+			},
+			formulas: {
+				armor_class: "12 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aether-Plated Combat Vest keys aetheric armor light rules through signature a683fbdc.",
+				role: "defense",
+				signature: "a683fbdc",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Provides AC 12 + AGI modifier.",
+				"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+				"+1 to spell-save DCs while worn.",
+				"Once per short rest, treat a single failed Vitality save as a success.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "12 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides AC 12 + AGI modifier.",
+					"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+					"+1 to spell-save DCs while worn.",
+					"Once per short rest, treat a single failed Vitality save as a success.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_15",
@@ -705,6 +2061,96 @@ export const items_part2: Item[] = [
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "perception", "mobility", "armor"],
 		theme_tags: ["rift-energy", "mana-overflow"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "deac92d9",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_15::Aegis Exo-Suit",
+				variant_note:
+					"Tower shield. +2 AC. Provides three-quarter cover when set as an action.",
+			},
+			formulas: {
+				armor_class: "+2",
+				recharge: "continuous",
+				shield_bonus: "+2 AC",
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_shield",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aegis Exo-Suit keys standard armor shield rules through signature a7194f51.",
+				role: "defense",
+				signature: "a7194f51",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Provides +2 AC while wielded.",
+				"Tower shield. +2 AC. Provides three-quarter cover when set as an action.",
+				"Once per short rest, reroll a missed attack roll.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "+2",
+				armor_type: "Shield",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides +2 AC while wielded.",
+					"Tower shield. +2 AC. Provides three-quarter cover when set as an action.",
+					"Once per short rest, reroll a missed attack roll.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_16",
@@ -751,6 +2197,95 @@ export const items_part2: Item[] = [
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "radiant", "psychic", "burst", "melee"],
 		theme_tags: ["post-awakening", "classified"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "ee79f7c9",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_16::Mana-Infused Katana",
+				variant_note: "When wielded two-handed, +1 to damage rolls.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d10 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_blade_versatile",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Mana-Infused Katana keys aetheric melee blade versatile rules through signature 91a35f85.",
+				role: "offense",
+				signature: "91a35f85",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"When wielded two-handed, +1 to damage rolls.",
+				"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+				"On a hit against a Frightened creature, deal +1d4 damage.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d10 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"When wielded two-handed, +1 to damage rolls.",
+					"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+					"On a hit against a Frightened creature, deal +1d4 damage.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_17",
@@ -763,7 +2298,7 @@ export const items_part2: Item[] = [
 		weight: 1,
 		value: 448,
 		item_type: "armor",
-		armor_class: "12 + Dex modifier",
+		armor_class: "12 + AGI modifier",
 		armor_type: "Light",
 		properties: {},
 		effects: {
@@ -789,6 +2324,95 @@ export const items_part2: Item[] = [
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "void", "necrotic", "area", "armor"],
 		theme_tags: ["classified", "guild-ops", "regent-era"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "65a3e417",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_17::Nano-Weave Exo-Suit",
+				variant_note: "Reinforced light armor. AC 12 + AGI.",
+			},
+			formulas: {
+				armor_class: "12 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Nano-Weave Exo-Suit keys standard armor light rules through signature 906ec056.",
+				role: "defense",
+				signature: "906ec056",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Provides AC 12 + AGI modifier.",
+				"Reinforced light armor. AC 12 + AGI.",
+				"+1 to Investigation and Insight checks while attuned.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "12 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides AC 12 + AGI modifier.",
+					"Reinforced light armor. AC 12 + AGI.",
+					"+1 to Investigation and Insight checks while attuned.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_18",
@@ -801,7 +2425,7 @@ export const items_part2: Item[] = [
 		weight: 5,
 		value: 368,
 		item_type: "armor",
-		armor_class: "13 + Dex modifier",
+		armor_class: "13 + AGI modifier",
 		armor_type: "Light",
 		requires_attunement: true,
 		properties: {},
@@ -838,6 +2462,105 @@ export const items_part2: Item[] = [
 			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "defensive", "buff", "armor"],
 		theme_tags: ["mana-overflow", "elite-tier"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "short-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "short-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "short-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Lattice Pulse",
+					description:
+						"As an action, emit a 15-ft. cone pulse. Each creature in the cone makes a DC 13 Vitality save, taking 3d6 force damage on a fail (half on success).",
+					action: "action",
+					dc: 13,
+					frequency: "short-rest",
+				},
+			],
+			audit: {
+				fingerprint: "31780819",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_18::Vanguard Shin Guards",
+				variant_note:
+					"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+			},
+			formulas: {
+				armor_class: "13 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Vanguard Shin Guards keys standard armor light rules through signature f7284fe0.",
+				role: "defense",
+				signature: "f7284fe0",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Provides AC 13 + AGI modifier.",
+				"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+				"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "13 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides AC 13 + AGI modifier.",
+					"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+					"Once per short rest, treat a roll of 1-9 on an attack as a 10.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_19",
@@ -886,6 +2609,95 @@ export const items_part2: Item[] = [
 			"consumable",
 		],
 		theme_tags: ["post-awakening", "modern-warfare"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description:
+						"Action. Grants 5 + Vitality temporary HP for 10 minutes.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "274b8169",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_19::High-Grade Health Potion",
+				variant_note: "Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"High-Grade Health Potion keys standard consumable potion rules through signature 3e0bdbf2.",
+				role: "consumable",
+				signature: "3e0bdbf2",
+				theme: "standard",
+			},
+			passive_rules: ["Grants 5 + Vitality temporary HP for 10 minutes."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_20",
@@ -926,6 +2738,94 @@ export const items_part2: Item[] = [
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "void", "fire", "consumable"],
 		theme_tags: ["modern-warfare", "hunter-bureau", "classified"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description: "Action. Restore 2d4 mana.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "aff50e98",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_20::Greater Mana Elixir",
+				variant_note: "Restores HP on consumption.",
+			},
+			formulas: {
+				effect_formula: "2d4",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Greater Mana Elixir keys aetheric consumable potion rules through signature 4618c0d9.",
+				role: "consumable",
+				signature: "4618c0d9",
+				theme: "aetheric",
+			},
+			passive_rules: ["On drink, restore 2d4 mana."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: "2d4",
+				save: null,
+				use_rule: "Action. Restore 2d4 mana.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_21",
@@ -973,6 +2873,95 @@ export const items_part2: Item[] = [
 			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "shadow", "sustained", "ice", "melee"],
 		theme_tags: ["regent-era", "elite-tier", "modern-warfare"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "ca63d2f6",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_21::Abyssal Katana",
+				variant_note: "When wielded two-handed, +1 to damage rolls.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d10 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_blade_versatile",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Abyssal Katana keys void melee blade versatile rules through signature cbf50bee.",
+				role: "offense",
+				signature: "cbf50bee",
+				theme: "void",
+			},
+			passive_rules: [
+				"When wielded two-handed, +1 to damage rolls.",
+				"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+				"+5 ft. to your speed while wielding this item.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d10 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"When wielded two-handed, +1 to damage rolls.",
+					"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+					"+5 ft. to your speed while wielding this item.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_22",
@@ -1018,6 +3007,96 @@ export const items_part2: Item[] = [
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "area", "defensive", "healing", "psychic", "melee"],
 		theme_tags: ["hunter-bureau", "classified"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "10d9142b",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_22::Aetheric Warhammer",
+				variant_note:
+					"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "2d6 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Warhammer keys aetheric melee bludgeon heavy rules through signature 32dcdaa1.",
+				role: "offense",
+				signature: "32dcdaa1",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+				"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+				"+1 to attack rolls when at full HP.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "2d6 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+					"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+					"+1 to attack rolls when at full HP.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_23",
@@ -1073,6 +3152,112 @@ export const items_part2: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "single-target", "necrotic", "melee"],
 		theme_tags: ["modern-warfare", "experimental", "regent-era"],
+		activation: {
+			type: "bonus-action",
+			consumes_item: false,
+			cost: "1 bonus action",
+			frequency: "short-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "short-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR", "AGI"],
+				armor_class: [],
+				attack: ["STR", "AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "bonus-action",
+				consumes_item: false,
+				cost: "1 bonus action",
+				frequency: "short-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Phase Step",
+					description:
+						"As a bonus action, teleport up to 30 ft. to an unoccupied space you can see.",
+					action: "bonus-action",
+					dc: null,
+					frequency: "short-rest",
+				},
+			],
+			audit: {
+				fingerprint: "6e9633c8",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_23::Abyssal Whip",
+				variant_note:
+					"Reach. On a hit, target makes a DC 11 Agility save or is pulled 5 ft. toward you.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR or AGI modifier + proficiency bonus + 1",
+				damage_roll: "1d6 + STR or AGI modifier + 1",
+				recharge: "short-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_whip",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Abyssal Whip keys void melee whip rules through signature 972409dc.",
+				role: "offense",
+				signature: "972409dc",
+				theme: "void",
+			},
+			passive_rules: [
+				"Reach. On a hit, target makes a DC 11 Agility save or is pulled 5 ft. toward you.",
+				"On a hit, target's space becomes lattice-bled difficult terrain until the end of its next turn.",
+				"On a hit, target makes a DC 13 Vitality save or is disarmed of one held item.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [
+					{
+						name: "Phase Step",
+						description:
+							"As a bonus action, teleport up to 30 ft. to an unoccupied space you can see.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "1d6 + STR or AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Reach. On a hit, target makes a DC 11 Agility save or is pulled 5 ft. toward you.",
+					"On a hit, target's space becomes lattice-bled difficult terrain until the end of its next turn.",
+					"On a hit, target makes a DC 13 Vitality save or is disarmed of one held item.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_24",
@@ -1119,6 +3304,96 @@ export const items_part2: Item[] = [
 			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "single-target", "mobility", "melee"],
 		theme_tags: ["ancient-power", "guild-ops"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "845d4cc6",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_24::Obsidian Longsword",
+				variant_note:
+					"Counts as both slashing and piercing for resistance bypass.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d8 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_blade_versatile",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Obsidian Longsword keys shadow melee blade versatile rules through signature 4e60613e.",
+				role: "offense",
+				signature: "4e60613e",
+				theme: "shadow",
+			},
+			passive_rules: [
+				"Counts as both slashing and piercing for resistance bypass.",
+				"While in dim light or darkness, attacks with this weapon have advantage.",
+				"+5 ft. to your speed while wielding this item.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d8 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Counts as both slashing and piercing for resistance bypass.",
+					"While in dim light or darkness, attacks with this weapon have advantage.",
+					"+5 ft. to your speed while wielding this item.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_25",
@@ -1164,6 +3439,95 @@ export const items_part2: Item[] = [
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "perception", "mobility", "melee"],
 		theme_tags: ["elite-tier", "survival", "system-glitch"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "2bea25bd",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_25::Crimson Warhammer",
+				variant_note: "Crit on 19-20. Critical hits push target 5 ft.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d12 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Crimson Warhammer keys crimson melee bludgeon heavy rules through signature e483b828.",
+				role: "offense",
+				signature: "e483b828",
+				theme: "crimson",
+			},
+			passive_rules: [
+				"Crit on 19-20. Critical hits push target 5 ft.",
+				"While target is below half HP, attacks with this weapon deal +1d4 damage.",
+				"On a kill with this item, gain 1d4 temporary HP.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "slashing",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d12 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Crit on 19-20. Critical hits push target 5 ft.",
+					"While target is below half HP, attacks with this weapon deal +1d4 damage.",
+					"On a kill with this item, gain 1d4 temporary HP.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_26",
@@ -1176,7 +3540,7 @@ export const items_part2: Item[] = [
 		weight: 3,
 		value: 112,
 		item_type: "armor",
-		armor_class: "12 + Dex modifier",
+		armor_class: "12 + AGI modifier",
 		armor_type: "Light",
 		properties: {},
 		effects: {
@@ -1203,6 +3567,97 @@ export const items_part2: Item[] = [
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "buff", "control", "shadow", "armor"],
 		theme_tags: ["urban-combat", "forbidden"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "02187a77",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_26::Lattice-Scale Exo-Suit",
+				variant_note: "Reinforced light armor. AC 12 + AGI.",
+			},
+			formulas: {
+				armor_class: "12 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Lattice-Scale Exo-Suit keys aetheric armor light rules through signature 9088b110.",
+				role: "defense",
+				signature: "9088b110",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Provides AC 12 + AGI modifier.",
+				"Reinforced light armor. AC 12 + AGI.",
+				"+1 to spell-save DCs while worn.",
+				"Add +1d4 damage when target is below half HP.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "12 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides AC 12 + AGI modifier.",
+					"Reinforced light armor. AC 12 + AGI.",
+					"+1 to spell-save DCs while worn.",
+					"Add +1d4 damage when target is below half HP.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_27",
@@ -1257,6 +3712,109 @@ export const items_part2: Item[] = [
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "radiant", "lightning", "melee"],
 		theme_tags: ["hunter-bureau", "urban-combat", "modern-warfare"],
+		activation: {
+			type: "bonus-action",
+			consumes_item: false,
+			cost: "1 bonus action",
+			frequency: "long-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "long-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "bonus-action",
+				consumes_item: false,
+				cost: "1 bonus action",
+				frequency: "long-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Mana Surge",
+					description:
+						"As a bonus action, regain 1 spell slot of 2nd level or lower.",
+					action: "bonus-action",
+					dc: null,
+					frequency: "long-rest",
+				},
+			],
+			audit: {
+				fingerprint: "e2fde1fc",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_27::Hunter's Warhammer",
+				variant_note: "Crit on 19-20. Critical hits push target 5 ft.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus + 1",
+				damage_roll: "1d12 + STR modifier + 1",
+				recharge: "long-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Hunter's Warhammer keys standard melee bludgeon heavy rules through signature 4e78cf6d.",
+				role: "offense",
+				signature: "4e78cf6d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Crit on 19-20. Critical hits push target 5 ft.",
+				"Once per short rest, cast Misty Step (no spell slot required) while wielding this item.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "bludgeoning",
+				active_options: [
+					{
+						name: "Mana Surge",
+						description:
+							"As a bonus action, regain 1 spell slot of 2nd level or lower.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "1d12 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Crit on 19-20. Critical hits push target 5 ft.",
+					"Once per short rest, cast Misty Step (no spell slot required) while wielding this item.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_28",
@@ -1268,7 +3826,7 @@ export const items_part2: Item[] = [
 		weight: 7,
 		value: 197,
 		item_type: "armor",
-		armor_class: "11 + Dex modifier",
+		armor_class: "11 + AGI modifier",
 		armor_type: "Light",
 		properties: {},
 		effects: {
@@ -1294,6 +3852,96 @@ export const items_part2: Item[] = [
 			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "psychic", "ice", "armor"],
 		theme_tags: ["modern-warfare", "dungeon-core", "regent-era"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b2e235bc",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_28::Gate-Forged Tactical Helmet",
+				variant_note:
+					"Reinforced headgear. Advantage on saves vs. concussive impacts.",
+			},
+			formulas: {
+				armor_class: "11 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_headgear",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Gate-Forged Tactical Helmet keys standard armor headgear rules through signature 0f81e507.",
+				role: "defense",
+				signature: "0f81e507",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Provides AC 11 + AGI modifier.",
+				"Reinforced headgear. Advantage on saves vs. concussive impacts.",
+				"Once per short rest, treat a single failed Vitality save as a success.",
+			],
+			resolution: {
+				type: "armor_class",
+				armor_class: "11 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Provides AC 11 + AGI modifier.",
+					"Reinforced headgear. Advantage on saves vs. concussive impacts.",
+					"Once per short rest, treat a single failed Vitality save as a success.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "item_p2_29",
@@ -1339,6 +3987,95 @@ export const items_part2: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "sustained", "fire", "melee"],
 		theme_tags: ["experimental", "hunter-bureau", "post-awakening"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR", "AGI"],
+				armor_class: [],
+				attack: ["STR", "AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "2190abcb",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_29::Aetheric Whip",
+				variant_note: "Reach: melee attacks have 10 ft. range.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR or AGI modifier + proficiency bonus",
+				damage_roll: "1d4 + STR or AGI modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_whip",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Whip keys aetheric melee whip rules through signature 9d95a3bc.",
+				role: "offense",
+				signature: "9d95a3bc",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Reach: melee attacks have 10 ft. range.",
+				"While attuned, gain +1 to spell-attack rolls.",
+				"+1 to attack rolls against creatures within 5 ft. of an ally.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d4 + STR or AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Reach: melee attacks have 10 ft. range.",
+					"While attuned, gain +1 to spell-attack rolls.",
+					"+1 to attack rolls against creatures within 5 ft. of an ally.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_30",
@@ -1384,6 +4121,96 @@ export const items_part2: Item[] = [
 			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "defensive", "sustained", "buff", "melee"],
 		theme_tags: ["experimental", "elite-tier"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "31cfde35",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_30::Aetheric Gauntlets",
+				variant_note:
+					"Aether-knuckles. Counts as an arcane focus and a Striker weapon.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d4 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_gauntlet",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Gauntlets keys aetheric melee gauntlet rules through signature a12b5e39.",
+				role: "offense",
+				signature: "a12b5e39",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Aether-knuckles. Counts as an arcane focus and a Striker weapon.",
+				"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+				"Once per short rest, reroll a missed attack roll.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d4 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Aether-knuckles. Counts as an arcane focus and a Striker weapon.",
+					"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+					"Once per short rest, reroll a missed attack roll.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_31",
@@ -1434,6 +4261,97 @@ export const items_part2: Item[] = [
 			"consumable",
 		],
 		theme_tags: ["hunter-bureau", "dimensional-bleed"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description: "Action. Restores HP on consumption.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "1e58281c",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_31::Unstable Liquid Shadow",
+				variant_note: "Restores HP on consumption.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Unstable Liquid Shadow keys shadow consumable potion rules through signature 5613eaad.",
+				role: "consumable",
+				signature: "5613eaad",
+				theme: "shadow",
+			},
+			passive_rules: [
+				"Restores HP on consumption.",
+				"Grants 1 minute of stealth advantage in dim light or darkness.",
+			],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Restores HP on consumption.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_32",
@@ -1475,6 +4393,96 @@ export const items_part2: Item[] = [
 			"Catalogued at a Bureau intake desk after a routine third-party deposit.",
 		tags: ["equipment", "damage", "control", "consumable"],
 		theme_tags: ["hunter-bureau", "modern-warfare"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Apply",
+					description:
+						"Action. Cures one of: charmed, frightened, poisoned, weakened.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "b69f70db",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_32::Guild-Standard Aetheric Antidote",
+				variant_note: "Cures one of: charmed, frightened, poisoned, weakened.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_purifier",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Guild-Standard Aetheric Antidote keys aetheric consumable purifier rules through signature 6db8d4cb.",
+				role: "consumable",
+				signature: "6db8d4cb",
+				theme: "aetheric",
+			},
+			passive_rules: ["Cures one of: charmed, frightened, poisoned, weakened."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule:
+					"Action. Cures one of: charmed, frightened, poisoned, weakened.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_33",
@@ -1514,6 +4522,94 @@ export const items_part2: Item[] = [
 			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
 		tags: ["equipment", "necrotic", "control", "shadow", "consumable"],
 		theme_tags: ["experimental", "shadow-domain", "guild-ops"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description: "Action. Drink the potion. Restore 2d4 + 2 HP.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "e0271cc6",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_33::Purified Beast Repellent",
+				variant_note: "Restores HP on consumption.",
+			},
+			formulas: {
+				effect_formula: "2d4 + 2",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Purified Beast Repellent keys standard consumable potion rules through signature c94f9df1.",
+				role: "consumable",
+				signature: "c94f9df1",
+				theme: "standard",
+			},
+			passive_rules: ["On drink, restore 2d4 + 2 hit points."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: "2d4 + 2",
+				save: null,
+				use_rule: "Action. Drink the potion. Restore 2d4 + 2 HP.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_34",
@@ -1555,6 +4651,95 @@ export const items_part2: Item[] = [
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "utility", "healing", "consumable"],
 		theme_tags: ["urban-combat", "hunter-bureau"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description:
+						"Action. Grants 5 + Vitality temporary HP for 10 minutes.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "274b8169",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_34::Black-Market Beast Repellent",
+				variant_note: "Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Black-Market Beast Repellent keys standard consumable potion rules through signature b678f39e.",
+				role: "consumable",
+				signature: "b678f39e",
+				theme: "standard",
+			},
+			passive_rules: ["Grants 5 + Vitality temporary HP for 10 minutes."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_35",
@@ -1596,6 +4781,95 @@ export const items_part2: Item[] = [
 			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
 		tags: ["equipment", "control", "utility", "consumable"],
 		theme_tags: ["elite-tier", "rift-energy"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description:
+						"Action. Grants 5 + Vitality temporary HP for 10 minutes.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "274b8169",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_35::Unstable Health Potion",
+				variant_note: "Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Unstable Health Potion keys standard consumable potion rules through signature 2d9fb752.",
+				role: "consumable",
+				signature: "2d9fb752",
+				theme: "standard",
+			},
+			passive_rules: ["Grants 5 + Vitality temporary HP for 10 minutes."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Grants 5 + Vitality temporary HP for 10 minutes.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_36",
@@ -1640,6 +4914,94 @@ export const items_part2: Item[] = [
 			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "radiant", "lightning", "melee"],
 		theme_tags: ["mana-overflow", "forbidden"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "286e4060",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_36::Guild-Issue Warhammer",
+				variant_note:
+					"On a hit, target makes a DC 13 Strength save or is knocked prone.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d10 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Guild-Issue Warhammer keys standard melee bludgeon heavy rules through signature 353452a0.",
+				role: "offense",
+				signature: "353452a0",
+				theme: "standard",
+			},
+			passive_rules: [
+				"On a hit, target makes a DC 13 Strength save or is knocked prone.",
+				"On a kill with this item, gain 1d4 temporary HP.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "bludgeoning",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d10 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"On a hit, target makes a DC 13 Strength save or is knocked prone.",
+					"On a kill with this item, gain 1d4 temporary HP.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_37",
@@ -1694,6 +5056,110 @@ export const items_part2: Item[] = [
 			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "shadow", "necrotic", "buff", "perception", "melee"],
 		theme_tags: ["black-market", "gate-zone", "classified"],
+		activation: {
+			type: "bonus-action",
+			consumes_item: false,
+			cost: "1 bonus action",
+			frequency: "short-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "short-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "bonus-action",
+				consumes_item: false,
+				cost: "1 bonus action",
+				frequency: "short-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Phase Step",
+					description:
+						"As a bonus action, teleport up to 30 ft. to an unoccupied space you can see.",
+					action: "bonus-action",
+					dc: null,
+					frequency: "short-rest",
+				},
+			],
+			audit: {
+				fingerprint: "34508252",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_37::Hunter's Warhammer",
+				variant_note:
+					"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus + 1",
+				damage_roll: "2d6 + STR modifier + 1",
+				recharge: "short-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Hunter's Warhammer keys standard melee bludgeon heavy rules through signature 6b7c0a88.",
+				role: "offense",
+				signature: "6b7c0a88",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+				"+1 AC against the first attack made against you each round.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "bludgeoning",
+				active_options: [
+					{
+						name: "Phase Step",
+						description:
+							"As a bonus action, teleport up to 30 ft. to an unoccupied space you can see.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "2d6 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+					"+1 AC against the first attack made against you each round.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_38",
@@ -1741,6 +5207,95 @@ export const items_part2: Item[] = [
 			"Recovered during the post-clear sweep of a B-rank facility seal.",
 		tags: ["equipment", "necrotic", "stealth", "firearm"],
 		theme_tags: ["classified", "dungeon-core", "survival"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["AGI"],
+				armor_class: [],
+				attack: ["AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "31cfeb4c",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_38::Starlight Sniper Rifle",
+				variant_note: "Long-arm. Disadvantage on attacks within 5 ft.",
+			},
+			formulas: {
+				attack_roll: "d20 + AGI modifier + proficiency bonus",
+				damage_roll: "1d10 + AGI modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "firearm_rifle",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Starlight Sniper Rifle keys starlight firearm rifle rules through signature 8725aa80.",
+				role: "offense",
+				signature: "8725aa80",
+				theme: "starlight",
+			},
+			passive_rules: [
+				"Long-arm. Disadvantage on attacks within 5 ft.",
+				"+1d4 radiant damage on the first hit each round against an Anomaly.",
+				"+1 to attack rolls against creatures within 5 ft. of an ally.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "radiant",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d10 + AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Long-arm. Disadvantage on attacks within 5 ft.",
+					"+1d4 radiant damage on the first hit each round against an Anomaly.",
+					"+1 to attack rolls against creatures within 5 ft. of an ally.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Ranged (80/240)",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_39",
@@ -1786,6 +5341,94 @@ export const items_part2: Item[] = [
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "utility", "sustained", "melee"],
 		theme_tags: ["experimental", "elite-tier"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "2f90d09d",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_39::Guild-Issue Halberd",
+				variant_note:
+					"Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "2d4 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_polearm",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Guild-Issue Halberd keys standard melee polearm rules through signature cb5b4f7d.",
+				role: "offense",
+				signature: "cb5b4f7d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
+				"+1 to Investigation and Insight checks while attuned.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "piercing",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "2d4 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
+					"+1 to Investigation and Insight checks while attuned.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_40",
@@ -1829,6 +5472,94 @@ export const items_part2: Item[] = [
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "stealth", "control", "necrotic", "support", "melee"],
 		theme_tags: ["dungeon-core", "gate-zone", "classified"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "bad576d7",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_40::Hunter's Spear",
+				variant_note:
+					"Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "2d4 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_polearm",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Hunter's Spear keys standard melee polearm rules through signature 27afa63d.",
+				role: "offense",
+				signature: "27afa63d",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
+				"Once per short rest, treat a single failed Vitality save as a success.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "piercing",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "2d4 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
+					"Once per short rest, treat a single failed Vitality save as a success.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_41",
@@ -1883,6 +5614,110 @@ export const items_part2: Item[] = [
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "lightning", "mobility", "psychic", "melee"],
 		theme_tags: ["system-glitch", "survival"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "short-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "short-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "short-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Lattice Tag",
+					description:
+						"As an action, mark a creature within 60 ft. for 1 minute. Attacks against the marked creature deal +1d6 damage of this item's theme.",
+					action: "action",
+					dc: null,
+					frequency: "short-rest",
+				},
+			],
+			audit: {
+				fingerprint: "cd279a4a",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_41::Hunter's Warhammer",
+				variant_note:
+					"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus + 1",
+				damage_roll: "2d6 + STR modifier + 1",
+				recharge: "short-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_bludgeon_heavy",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Hunter's Warhammer keys standard melee bludgeon heavy rules through signature c1d11cfd.",
+				role: "offense",
+				signature: "c1d11cfd",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+				"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "bludgeoning",
+				active_options: [
+					{
+						name: "Lattice Tag",
+						description:
+							"As an action, mark a creature within 60 ft. for 1 minute. Attacks against the marked creature deal +1d6 damage of this item's theme.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "2d6 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Slow swing. On hit, deal +1 damage per 2 levels of the wielder.",
+					"Once per long rest, gain advantage on all attacks for 1 round as a bonus action.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_42",
@@ -1930,6 +5765,95 @@ export const items_part2: Item[] = [
 			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
 		tags: ["equipment", "shadow", "necrotic", "lightning", "firearm"],
 		theme_tags: ["system-glitch", "guild-ops", "post-awakening"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["AGI"],
+				armor_class: [],
+				attack: ["AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d703c549",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_42::Crimson Sniper Rifle",
+				variant_note: "Marksman variant. Crit on 19-20.",
+			},
+			formulas: {
+				attack_roll: "d20 + AGI modifier + proficiency bonus",
+				damage_roll: "2d6 + AGI modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "firearm_rifle",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Crimson Sniper Rifle keys crimson firearm rifle rules through signature 19383b06.",
+				role: "offense",
+				signature: "19383b06",
+				theme: "crimson",
+			},
+			passive_rules: [
+				"Marksman variant. Crit on 19-20.",
+				"On a critical hit, the bleed damage doubles and lasts 4 turns instead of 2.",
+				"Once per long rest, when you take damage, you may halve it as a reaction.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "slashing",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "2d6 + AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Marksman variant. Crit on 19-20.",
+					"On a critical hit, the bleed damage doubles and lasts 4 turns instead of 2.",
+					"Once per long rest, when you take damage, you may halve it as a reaction.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Ranged (80/240)",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_43",
@@ -1973,6 +5897,99 @@ export const items_part2: Item[] = [
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "support", "ice", "mobility", "consumable"],
 		theme_tags: ["dimensional-bleed", "modern-warfare", "rift-energy"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description:
+						"Action. Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "8e0bdb0e",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_43::Unstable Beast Repellent",
+				variant_note:
+					"Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Unstable Beast Repellent keys standard consumable potion rules through signature 3e74f742.",
+				role: "consumable",
+				signature: "3e74f742",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule:
+					"Action. Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_44",
@@ -2013,6 +6030,94 @@ export const items_part2: Item[] = [
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "stealth", "ice", "psychic", "shadow", "consumable"],
 		theme_tags: ["hunter-bureau", "dungeon-core"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Apply",
+					description: "Action. Cures the poisoned condition.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "ae6ace10",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_44::High-Grade Aetheric Antidote",
+				variant_note: "Cures the poisoned condition.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_purifier",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"High-Grade Aetheric Antidote keys aetheric consumable purifier rules through signature 4860bb93.",
+				role: "consumable",
+				signature: "4860bb93",
+				theme: "aetheric",
+			},
+			passive_rules: ["Cures the poisoned condition."],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule: "Action. Cures the poisoned condition.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_45",
@@ -2058,6 +6163,96 @@ export const items_part2: Item[] = [
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "lightning", "burst", "psychic", "melee"],
 		theme_tags: ["regent-era", "rift-energy"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "6fafc193",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_45::Mana-Infused Halberd",
+				variant_note:
+					"Reach. On a hit, you may use a reaction to make an opportunity attack against a creature within 10 ft.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d8 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_polearm",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Mana-Infused Halberd keys aetheric melee polearm rules through signature 6b27c4d1.",
+				role: "offense",
+				signature: "6b27c4d1",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Reach. On a hit, you may use a reaction to make an opportunity attack against a creature within 10 ft.",
+				"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+				"+1 to attack rolls when at full HP.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d8 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Reach. On a hit, you may use a reaction to make an opportunity attack against a creature within 10 ft.",
+					"On a critical hit, target's next spellcast within 1 minute requires a DC 13 concentration save.",
+					"+1 to attack rolls when at full HP.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_46",
@@ -2113,6 +6308,111 @@ export const items_part2: Item[] = [
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "area", "support", "melee"],
 		theme_tags: ["dimensional-bleed", "guild-ops"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "short-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "short-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "short-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Lattice Tag",
+					description:
+						"As an action, mark a creature within 60 ft. for 1 minute. Attacks against the marked creature deal +1d6 damage of this item's theme.",
+					action: "action",
+					dc: null,
+					frequency: "short-rest",
+				},
+			],
+			audit: {
+				fingerprint: "f47010fb",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_46::Aetheric Katana",
+				variant_note: "When wielded two-handed, +1 to damage rolls.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus + 1",
+				damage_roll: "1d10 + STR modifier + 1",
+				recharge: "short-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_blade_versatile",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Katana keys aetheric melee blade versatile rules through signature db9173c7.",
+				role: "offense",
+				signature: "db9173c7",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"When wielded two-handed, +1 to damage rolls.",
+				"While attuned, gain +1 to spell-attack rolls.",
+				"+1d4 damage against creatures with the Construct or Anomaly tag.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "force",
+				active_options: [
+					{
+						name: "Lattice Tag",
+						description:
+							"As an action, mark a creature within 60 ft. for 1 minute. Attacks against the marked creature deal +1d6 damage of this item's theme.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "1d10 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"When wielded two-handed, +1 to damage rolls.",
+					"While attuned, gain +1 to spell-attack rolls.",
+					"+1d4 damage against creatures with the Construct or Anomaly tag.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_47",
@@ -2168,6 +6468,111 @@ export const items_part2: Item[] = [
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "ice", "necrotic", "area", "sustained", "melee"],
 		theme_tags: ["dungeon-core", "system-glitch"],
+		activation: {
+			type: "bonus-action",
+			consumes_item: false,
+			cost: "1 bonus action",
+			frequency: "short-rest",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: true,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "short-rest",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR", "AGI"],
+				armor_class: [],
+				attack: ["STR", "AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "bonus-action",
+				consumes_item: false,
+				cost: "1 bonus action",
+				frequency: "short-rest",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Surge Strike",
+					description:
+						"As a bonus action, your next attack with this weapon before the end of your turn deals an additional 2d6 damage.",
+					action: "bonus-action",
+					dc: null,
+					frequency: "short-rest",
+				},
+			],
+			audit: {
+				fingerprint: "23405dd4",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_47::Abyssal Dagger",
+				variant_note: "+1 to attack rolls when you have advantage.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR or AGI modifier + proficiency bonus + 1",
+				damage_roll: "1d6 + STR or AGI modifier + 1",
+				recharge: "short-rest",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "rare",
+				archetype: "melee_blade_finesse",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Abyssal Dagger keys void melee blade finesse rules through signature 5df11a28.",
+				role: "offense",
+				signature: "5df11a28",
+				theme: "void",
+			},
+			passive_rules: [
+				"+1 to attack rolls when you have advantage.",
+				"On a hit, target's space becomes lattice-bled difficult terrain until the end of its next turn.",
+				"Once per long rest, cast a 2nd-level spell (player choice) without expending a spell slot.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [
+					{
+						name: "Surge Strike",
+						description:
+							"As a bonus action, your next attack with this weapon before the end of your turn deals an additional 2d6 damage.",
+						dc: null,
+					},
+				],
+				attack_roll: true,
+				damage_formula: "1d6 + STR or AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"+1 to attack rolls when you have advantage.",
+					"On a hit, target's space becomes lattice-bled difficult terrain until the end of its next turn.",
+					"Once per long rest, cast a 2nd-level spell (player choice) without expending a spell slot.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "item_p2_48",
@@ -2218,6 +6623,99 @@ export const items_part2: Item[] = [
 			"consumable",
 		],
 		theme_tags: ["mana-overflow", "elite-tier", "modern-warfare"],
+		activation: {
+			type: "action",
+			consumes_item: true,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User activates the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "at-will",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: true,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User activates the item.",
+			},
+			active_rules: [
+				{
+					name: "Drink",
+					description:
+						"Action. Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+					action: "action",
+					dc: null,
+					frequency: "at-will",
+				},
+			],
+			audit: {
+				fingerprint: "8e0bdb0e",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_48::Guild-Standard Beast Repellent",
+				variant_note:
+					"Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "consumable_potion",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Guild-Standard Beast Repellent keys standard consumable potion rules through signature 14688224.",
+				role: "consumable",
+				signature: "14688224",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			],
+			resolution: {
+				type: "consumable",
+				damage_type: null,
+				consumes_item: true,
+				damage_formula: null,
+				save: null,
+				use_rule:
+					"Action. Advantage on attack rolls for 1 minute. After, gain one level of exhaustion.",
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "item_p2_49",
@@ -2263,5 +6761,94 @@ export const items_part2: Item[] = [
 			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "fire", "single-target", "melee"],
 		theme_tags: ["dimensional-bleed", "ancient-power"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR", "AGI"],
+				armor_class: [],
+				attack: ["STR", "AGI"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d4c623ce",
+				payload_complete: true,
+				uniqueness_seed: "item_p2_49::Abyssal Dagger",
+				variant_note: "Crit on 19-20.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR or AGI modifier + proficiency bonus",
+				damage_roll: "1d6 + STR or AGI modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "melee_blade_finesse",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Abyssal Dagger keys void melee blade finesse rules through signature adbdb408.",
+				role: "offense",
+				signature: "adbdb408",
+				theme: "void",
+			},
+			passive_rules: [
+				"Crit on 19-20.",
+				"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+				"Once per long rest, when you take damage, you may halve it as a reaction.",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "necrotic",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d6 + STR or AGI modifier",
+				damage_roll: true,
+				on_hit: [
+					"Crit on 19-20.",
+					"On a hit, target makes a DC 12 Vitality save or has disadvantage on its next attack.",
+					"Once per long rest, when you take damage, you may halve it as a reaction.",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 ];

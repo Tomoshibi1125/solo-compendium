@@ -196,6 +196,25 @@ function getPrimaryEffect(entry: AbilityEntry): string {
 	return entry.description ?? `Teaches ${entry.name}.`;
 }
 
+function getAbilityDamageProfile(entry: AbilityEntry): string {
+	const damageRoll = (entry as { damage_roll?: string | null }).damage_roll;
+	if (damageRoll && /\d+d\d+/i.test(damageRoll)) {
+		const damageType = (entry as { damage_type?: string | null }).damage_type;
+		return damageType ? `${damageRoll} ${damageType}` : damageRoll;
+	}
+	const mechanics = entry.mechanics as
+		| { damage_profile?: unknown }
+		| null
+		| undefined;
+	const profile =
+		typeof mechanics?.damage_profile === "string"
+			? mechanics.damage_profile
+			: null;
+	return profile && /\d+d\d+/i.test(profile)
+		? profile
+		: "non-damage learning payload";
+}
+
 function getAbilityLore(entry: AbilityEntry): string {
 	const lore = entry.lore;
 	if (typeof lore === "string" && lore.trim()) return lore;
@@ -219,6 +238,7 @@ function makeCatalogAuthoredRune(
 	const abilityLevel = getAbilityLevel(kind, entry);
 	const kindLabel =
 		kind === "spell" ? "Spell" : kind === "power" ? "Power" : "Technique";
+	const runeName = `${kindLabel} Rune of ${entry.name}`;
 	const category = getAbilityCategory(kind, entry);
 	const rank = getAbilityRank(kind, entry);
 	const primaryEffect = getPrimaryEffect(entry);
@@ -235,9 +255,13 @@ function makeCatalogAuthoredRune(
 	].join("\n\n");
 	return {
 		id: `rune-${kind}-${entry.id}`,
-		name: `Rune of ${entry.name}`,
-		display_name: `Rune of ${entry.name}`,
-		aliases: [`${entry.name} Rune`, `${rank} Rune of ${category}`],
+		name: runeName,
+		display_name: runeName,
+		aliases: [
+			`Rune of ${entry.name}`,
+			`${entry.name} Rune`,
+			`${rank} Rune of ${category}`,
+		],
 		teaches: { kind, ref: entry.id },
 		description,
 		flavor:
@@ -283,11 +307,7 @@ function makeCatalogAuthoredRune(
 			ability_category: category,
 			activation,
 			duration,
-			damage_profile:
-				(entry as { damage_roll?: string | null }).damage_roll ??
-				(entry.mechanics as { damage_profile?: string } | null | undefined)
-					?.damage_profile ??
-				primaryEffect,
+			damage_profile: getAbilityDamageProfile(entry),
 			range: "Self",
 			taught_range: range,
 			taught_duration: duration,

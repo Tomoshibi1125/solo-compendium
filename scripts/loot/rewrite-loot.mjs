@@ -34,7 +34,10 @@ import {
 	scrubThemeTags,
 	TERMINOLOGY_FIXES,
 } from "./lib.mjs";
-import { rebuildItem as rebuildItemEngine } from "./rebuild.mjs";
+import {
+	enrichItemPayload,
+	rebuildItem as rebuildItemEngine,
+} from "./rebuild.mjs";
 import { serializeArrayBody } from "./serializer.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -77,10 +80,10 @@ function parseItemArrayFile(filePath, exportName) {
 	return { text, literal, arr, header: text.slice(0, m.index), tail: text.slice(m.index + m[0].length) };
 }
 
-function writeItemArrayFile(filePath, exportName, items, originalHeader = null) {
-	const header = originalHeader || `import type { Item } from "./items";\n\n`;
+function writeItemArrayFile(filePath, exportName, items, originalHeader = null, typeName = "Item") {
+	const header = originalHeader || `import type { ${typeName} } from "./items";\n\n`;
 	const body = serializeArrayBody(items, 1);
-	const out = `${header.replace(/\n+$/, "\n")}\nexport const ${exportName}: Item[] = [\n${body},\n];\n`;
+	const out = `${header.replace(/\n+$/, "\n")}\nexport const ${exportName}: ${typeName}[] = [\n${body},\n];\n`;
 	writeFileSync(filePath, out, "utf8");
 }
 
@@ -269,6 +272,7 @@ function processPatchFile(fileName, exportName) {
 		it = patchImage(it, fileName);
 		it = patchBoilerplateFlavor(it, fileName);
 		it = patchBoilerplateDiscovery(it, fileName);
+		it = enrichItemPayload(it, fileName);
 		return it;
 	});
 	writeItemArrayFile(filePath, exportName, out, header);
@@ -296,7 +300,7 @@ function processArtifacts() {
 		it = patchBoilerplateFlavor(it, "artifacts.ts");
 		// Stamp display_name if missing for legendary entries.
 		if (!it.display_name) it.display_name = it.name;
-		return it;
+		return enrichItemPayload(it, "artifacts.ts");
 	});
 	writeItemArrayFile(filePath, "artifacts", out, header);
 	return out.length;
@@ -331,7 +335,17 @@ function processTattoosTextScrub() {
 }
 
 function processRelicsTextScrub() {
-	return applyTextScrub(join(COMPENDIUM_DIR, "relics-comprehensive.ts"));
+	const filePath = join(COMPENDIUM_DIR, "relics-comprehensive.ts");
+	const { arr, header } = parseItemArrayFile(filePath, "comprehensiveRelics");
+	const out = arr.map((raw) => {
+		let it = patchTextFields(raw);
+		it = patchLore(it, "relics-comprehensive.ts");
+		it = patchBoilerplateFlavor(it, "relics-comprehensive.ts");
+		it = enrichItemPayload(it, "relics-comprehensive.ts");
+		return it;
+	});
+	writeItemArrayFile(filePath, "comprehensiveRelics", out, header, "Relic");
+	return out.length;
 }
 
 function processRunesImagePatch() {
@@ -379,6 +393,7 @@ const TARGETS = {
 		}
 		return total;
 	},
+	gapfill: () => processPatchFile("items-gap-fill.ts", "items_gap_fill"),
 	artifacts: () => processArtifacts(),
 	sigils: () => processSigilsTextScrub(),
 	tattoos: () => processTattoosTextScrub(),
@@ -400,6 +415,10 @@ async function main() {
 	if (want("parts") || want("items")) {
 		summary.parts = TARGETS.parts();
 		console.log(`✔ items-part2-9.ts rebuilt (${summary.parts} entries total)`);
+	}
+	if (want("gapfill") || want("items")) {
+		summary.gapfill = TARGETS.gapfill();
+		console.log(`✔ items-gap-fill.ts patched (${summary.gapfill} entries)`);
 	}
 	if (want("artifacts")) {
 		summary.artifacts = TARGETS.artifacts();

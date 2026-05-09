@@ -22,6 +22,8 @@
 import { getJobPrimaryAbility } from "@/lib/5eCharacterCalculations";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 
+const DICE_ONLY_RE = /^\s*\d+d\d+\s*$/i;
+
 export interface PowerActionFormulaInput {
 	job: string | { name: string } | null | undefined;
 	abilities: Record<AbilityScore, number>;
@@ -39,6 +41,27 @@ export interface PowerActionFormulaResult {
 	abilityModifier: number;
 	attackBonus: number;
 	saveDC: number;
+	attackRoll: string;
+}
+
+export function formatSignedNumber(value: number): string {
+	if (value === 0) return "";
+	return value > 0 ? `+${value}` : `${value}`;
+}
+
+export function buildAttackRollFormula(attackBonus: number): string {
+	return `1d20${formatSignedNumber(attackBonus)}`;
+}
+
+export function appendAbilityModifierToDamageFormula(
+	formula: string | null | undefined,
+	abilityModifier: number,
+): string | undefined {
+	const trimmed = formula?.trim();
+	if (!trimmed) return undefined;
+	if (abilityModifier === 0) return trimmed;
+	if (!DICE_ONLY_RE.test(trimmed)) return trimmed;
+	return `${trimmed}${formatSignedNumber(abilityModifier)}`;
 }
 
 /**
@@ -69,5 +92,11 @@ export function resolvePowerActionFormula(
 		abilityModifier + input.proficiencyBonus + (input.attackBonus ?? 0);
 	const saveDC =
 		8 + abilityModifier + input.proficiencyBonus + (input.dcBonus ?? 0);
-	return { ability, abilityModifier, attackBonus, saveDC };
+	return {
+		ability,
+		abilityModifier,
+		attackBonus,
+		saveDC,
+		attackRoll: buildAttackRollFormula(attackBonus),
+	};
 }

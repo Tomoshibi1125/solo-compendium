@@ -273,7 +273,14 @@ export function ProficiencySidebar({
 										<button
 											type="button"
 											onClick={() => onRollSkill(skill.name)}
-											className="group flex items-center justify-between px-2 py-1.5 rounded-[2px] bg-black/20 border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all text-left w-full"
+											className={cn(
+												"group flex items-center justify-between px-2 py-1.5 rounded-[2px] border hover:border-primary/20 hover:bg-primary/5 transition-all text-left w-full",
+												s.expertise
+													? "bg-primary/10 border-primary/40"
+													: s.proficient
+														? "bg-primary/5 border-primary/20"
+														: "bg-black/20 border-transparent",
+											)}
 										>
 											<div className="flex items-center gap-2 min-w-0">
 												<div
@@ -292,6 +299,18 @@ export function ProficiencySidebar({
 												<span className="text-[9px] font-mono text-primary/40 uppercase">
 													{skill.ability.substring(0, 3)}
 												</span>
+												{(s.proficient || s.expertise) && (
+													<span
+														className={cn(
+															"text-[8px] font-mono uppercase tracking-widest rounded border px-1 py-0.5",
+															s.expertise
+																? "text-primary border-primary/50 bg-primary/10"
+																: "text-primary/80 border-primary/30 bg-primary/5",
+														)}
+													>
+														{s.expertise ? "EXP" : "PROF"}
+													</span>
+												)}
 											</div>
 											<div className="flex items-center gap-2">
 												<span

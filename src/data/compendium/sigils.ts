@@ -37,7 +37,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 11 (Void Stylus)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Blindness",
@@ -102,7 +102,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 12 (Shadow Quill)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -167,7 +167,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 12 (Rift Calligraphy Brush)",
-				"Material cost: 100gp",
+				"Material cost: 100 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -238,7 +238,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 15 (Shadow Quill)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -303,7 +303,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: helm",
 				"Inscription DC: 15 (Void Stylus)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Blindness",
@@ -371,7 +371,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: helm",
 				"Inscription DC: 13 (Arcane Chisel)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -413,7 +413,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Against Anomaly or Shadow-type anomalies, the weapon's damage die increases by one step (e.g., 1d6 becomes 1d8).",
 		tags: ["sigil", "weapon", "radiant"],
 		active_feature:
-			"Radiant Burst: As an action, emit a 15ft radiant pulse dealing 3d8 radiant damage (CON save for half) to undead/fiends. (1/long rest)",
+			"Radiant Burst: As an action, emit a 15ft radiant pulse dealing 3d8 radiant damage (CON save for half) to anomaly/anomaly. (1/long rest)",
 		effect_type: "hybrid",
 		inscription_difficulty: 13,
 		source_book: "Holylight Cathedral",
@@ -439,7 +439,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 13 (Shadow Quill)",
-				"Material cost: 500gp",
+				"Material cost: 500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -504,7 +504,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -569,7 +569,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 17 (Crystal Engraver)",
-				"Material cost: 50gp",
+				"Material cost: 50 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -634,7 +634,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 13 (Rift Calligraphy Brush)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -698,7 +698,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 12 (Crystal Engraver)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -762,7 +762,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: shield",
 				"Inscription DC: 20 (Arcane Chisel)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -825,7 +825,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 21 (Void Stylus)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -889,7 +889,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 250gp",
+				"Material cost: 250 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -954,7 +954,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: shield",
 				"Inscription DC: 17 (Arcane Chisel)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -1020,7 +1020,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 19 (Void Stylus)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -1086,7 +1086,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 18 (Arcane Chisel)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Paralysis",
@@ -1151,7 +1151,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 14 (Arcane Chisel)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -1216,7 +1216,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 500gp",
+				"Material cost: 500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -1284,7 +1284,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: helm",
 				"Inscription DC: 16 (Shadow Quill)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -1354,7 +1354,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 17 (Mana Etching Needle)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -1422,7 +1422,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 21 (Crystal Engraver)",
-				"Material cost: 50gp",
+				"Material cost: 50 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -1490,7 +1490,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: helm",
 				"Inscription DC: 19 (Shadow Quill)",
-				"Material cost: 500gp",
+				"Material cost: 500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -1555,7 +1555,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 21 (Crystal Engraver)",
-				"Material cost: 50gp",
+				"Material cost: 50 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Lethargy",
@@ -1620,7 +1620,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 17 (Void Stylus)",
-				"Material cost: 250gp",
+				"Material cost: 250 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -1685,7 +1685,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 11 (Arcane Chisel)",
-				"Material cost: 50gp",
+				"Material cost: 50 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -1750,7 +1750,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: helm",
 				"Inscription DC: 12 (Rift Calligraphy Brush)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Paralysis",
@@ -1815,7 +1815,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 13 (Mana Etching Needle)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -1880,7 +1880,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 18 (Shadow Quill)",
-				"Material cost: 500gp",
+				"Material cost: 500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Paralysis",
@@ -1946,7 +1946,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 18 (Mana Etching Needle)",
-				"Material cost: 250gp",
+				"Material cost: 250 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Fear",
@@ -2011,7 +2011,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 10 (Void Stylus)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Blindness",
@@ -2079,7 +2079,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 19 (Mana Etching Needle)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Blindness",
@@ -2142,7 +2142,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 13 (Mana Etching Needle)",
-				"Material cost: 250gp",
+				"Material cost: 250 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Paralysis",
@@ -2209,7 +2209,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: shield",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
-				"Material cost: 250gp",
+				"Material cost: 250 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -2276,7 +2276,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 19 (Void Stylus)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Blindness",
@@ -2343,7 +2343,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 12 (Shadow Quill)",
-				"Material cost: 100gp",
+				"Material cost: 100 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Paralysis",
@@ -2408,7 +2408,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: accessory",
 				"Inscription DC: 10 (Void Stylus)",
-				"Material cost: 500gp",
+				"Material cost: 500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Paralysis",
@@ -2471,7 +2471,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: shield",
 				"Inscription DC: 12 (Crystal Engraver)",
-				"Material cost: 1000gp",
+				"Material cost: 1,000 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Blindness",
@@ -2537,7 +2537,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 19 (Mana Etching Needle)",
-				"Material cost: 100gp",
+				"Material cost: 100 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -2603,7 +2603,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: boots",
 				"Inscription DC: 11 (Crystal Engraver)",
-				"Material cost: 50gp",
+				"Material cost: 50 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",
@@ -2670,7 +2670,7 @@ export const sigils: CompendiumSigil[] = [
 			restrictions: [
 				"Socket type: gloves",
 				"Inscription DC: 11 (Mana Etching Needle)",
-				"Material cost: 2500gp",
+				"Material cost: 2,500 Gate Credits",
 			],
 			damage_profile: "See active effect",
 			condition: "Stunning",

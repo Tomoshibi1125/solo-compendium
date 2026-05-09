@@ -17,6 +17,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type {
 	CompendiumEffects,
@@ -67,7 +68,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 		if (m?.attack) {
 			const bonus = parseBonus(m.attack.modifier);
 			const attackRoll =
-				bonus !== null ? `1d20${bonus >= 0 ? "+" : ""}${bonus}` : "1d20";
+				bonus !== null ? buildAttackRollFormula(bonus) : "1d20";
 			const damageRoll =
 				typeof m.attack.damage === "string"
 					? m.attack.damage
@@ -153,23 +154,52 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 					</div>
 
 					{(mechanics?.attack || mechanics?.saving_throw) && (
-						<div className="flex flex-wrap gap-2">
-							<Button
-								variant="outline"
-								onClick={() => queueResolutionAndNavigate("/dice")}
-							>
-								Roll
-							</Button>
-							<Button
-								variant="outline"
-								onClick={() =>
-									queueResolutionAndNavigate(
-										"/warden-directives/initiative-tracker",
-									)
-								}
-							>
-								Resolve in Initiative
-							</Button>
+						<div className="space-y-2">
+							<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+								{mechanics?.attack && (
+									<span>
+										Base attack: {(() => {
+											const raw = mechanics.attack?.modifier;
+											const bonus =
+												typeof raw === "number"
+													? raw
+													: typeof raw === "string" &&
+															/^[-+]?\d+$/.test(raw.trim())
+														? parseInt(raw, 10)
+														: null;
+											return bonus !== null
+												? buildAttackRollFormula(bonus)
+												: "1d20";
+										})()}
+									</span>
+								)}
+								{mechanics?.saving_throw && (
+									<span>
+										Base save: DC {mechanics.saving_throw.dc ?? 10}
+										{mechanics.saving_throw.ability
+											? ` ${mechanics.saving_throw.ability}`
+											: ""}
+									</span>
+								)}
+							</div>
+							<div className="flex flex-wrap gap-2">
+								<Button
+									variant="outline"
+									onClick={() => queueResolutionAndNavigate("/dice")}
+								>
+									Roll
+								</Button>
+								<Button
+									variant="outline"
+									onClick={() =>
+										queueResolutionAndNavigate(
+											"/warden-directives/initiative-tracker",
+										)
+									}
+								>
+									Resolve in Initiative
+								</Button>
+							</div>
 						</div>
 					)}
 					{data.level_requirement !== undefined &&

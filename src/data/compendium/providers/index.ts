@@ -123,6 +123,7 @@ export interface StaticCompendiumEntry {
 	mechanics?: Record<string, Json> | null;
 	limitations?: Record<string, Json> | null;
 	flavor?: string | null;
+	discovery_lore?: string | null;
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
 	properties?: string[] | Record<string, Json> | null;
@@ -468,6 +469,9 @@ type StaticItemSource = {
 	properties?: Record<string, Json> | string[];
 	simple_properties?: string[] | null;
 	effects?: Record<string, Json>;
+	activation?: Record<string, Json> | string | null;
+	mechanics?: Record<string, Json> | null;
+	limitations?: Record<string, Json> | null;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
 	charges?: number | Record<string, Json>;
@@ -476,6 +480,10 @@ type StaticItemSource = {
 	value?: number;
 	weight?: number;
 	source?: string;
+	lore?: string | Record<string, Json> | null;
+	flavor?: string | null;
+	discovery_lore?: string | null;
+	theme_tags?: string[] | null;
 	sigil_slots_base?: number | null;
 	// Structured equipment fields surfaced through canonical hydration so
 	// downstream consumers (useEquipment, useCombatActions, AC calc) don't
@@ -1072,6 +1080,9 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		simple_properties: item.simple_properties ?? null,
 		item_properties: deriveItemProperties(item),
 		effects: item.effects ?? null,
+		activation: item.activation ?? null,
+		mechanics: item.mechanics ?? null,
+		limitations: item.limitations ?? null,
 		attunement: item.attunement ?? null,
 		cursed: item.cursed ?? null,
 		charges: item.charges ?? null,
@@ -1081,6 +1092,10 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 		cost_credits: item.value,
 		weight: item.weight,
 		source: item.source,
+		lore: item.lore ?? null,
+		flavor: item.flavor ?? null,
+		discovery_lore: item.discovery_lore ?? null,
+		theme_tags: item.theme_tags ?? null,
 		rarity: item.rarity || "common",
 		sigil_slots_base:
 			item.sigil_slots_base ??
@@ -1695,6 +1710,8 @@ export const staticDataProvider: StaticDataProvider = {
 			abilities?: Record<string, Json> | null;
 			lore?: Record<string, Json> | null;
 			mechanics?: Record<string, Json> | null;
+			activation?: Record<string, Json> | string | null;
+			limitations?: Record<string, Json> | null;
 			source?: string;
 			image?: string;
 			damage?: string | number | null;
@@ -1728,6 +1745,8 @@ export const staticDataProvider: StaticDataProvider = {
 			abilities: relic.abilities ?? null,
 			lore: relic.lore ?? null,
 			mechanics: relic.mechanics ?? null,
+			activation: relic.activation ?? null,
+			limitations: relic.limitations ?? null,
 			damage: relic.damage ?? null,
 			damage_type: relic.damage_type ?? null,
 			weapon_type: relic.weapon_type ?? null,

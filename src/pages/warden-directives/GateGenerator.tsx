@@ -625,10 +625,10 @@ const GateGenerator = () => {
 													Currency:{" "}
 													{[
 														rift.rewards.treasure.hundreds > 0
-															? `$${rift.rewards.treasure.hundreds * 100}`
+															? `${rift.rewards.treasure.hundreds} Core Credits`
 															: "",
 														rift.rewards.treasure.tens > 0
-															? `$${rift.rewards.treasure.tens * 10}`
+															? `${rift.rewards.treasure.tens} Gate Credits`
 															: "",
 													]
 														.filter(Boolean)

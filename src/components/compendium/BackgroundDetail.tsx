@@ -2,6 +2,7 @@ import { Coins } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRaCurrencyAmount } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumBackground } from "@/types/compendium";
@@ -85,7 +86,7 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 							<div className="flex items-center gap-2 mt-2">
 								<Coins className="w-5 h-5 text-yellow-400" />
 								<span className="font-heading">
-									{data.starting_credits} credits
+									{formatRaCurrencyAmount(data.starting_credits)}
 								</span>
 							</div>
 						)}

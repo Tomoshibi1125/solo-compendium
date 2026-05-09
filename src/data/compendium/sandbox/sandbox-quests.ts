@@ -37,7 +37,8 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Beacon delivered to Commander Park (Bureau HQ).",
 			"Beacon destroyed in the field (partial credit).",
 		],
-		rewardNotes: "500 gp stipend; Rep +1 Bureau Sentinels; minor Relic roll.",
+		rewardNotes:
+			"500 Gate Credits stipend; Rep +1 Bureau Sentinels; minor Relic roll.",
 		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Commander Park Jae-won",
 	},
@@ -57,7 +58,7 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Two delivered (partial reward).",
 			"Clinic sacked (reputation penalty).",
 		],
-		rewardNotes: "Rep +1 Bureau, +1 Independent; 250 gp flat.",
+		rewardNotes: "Rep +1 Bureau, +1 Independent; 250 Gate Credits flat.",
 		linkedNpcName: "Quartermaster Lin Mei-hua",
 	},
 
@@ -78,7 +79,7 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Team extracted after Vermillion (Rep +1 both).",
 			"Team lost (Rep -2 Bureau).",
 		],
-		rewardNotes: "Surgical Sigil + 1200 gp.",
+		rewardNotes: "Surgical Sigil + 1,200 Gate Credits.",
 		linkedFactionId: "bureau-sentinels",
 	},
 	{

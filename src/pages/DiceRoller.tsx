@@ -51,6 +51,7 @@ import {
 	type ResolutionOutcome,
 	resolveAttack,
 	resolveDamage,
+	resolveEffect,
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
@@ -296,7 +297,9 @@ const DiceRoller = () => {
 						? resolveSave(pending)
 						: pending.kind === "healing"
 							? resolveHealing(pending)
-							: resolveDamage(pending);
+							: pending.kind === "effect"
+								? resolveEffect(pending)
+								: resolveDamage(pending);
 
 			setPendingResolutionState(pending);
 			setResolutionOutcome(outcome);

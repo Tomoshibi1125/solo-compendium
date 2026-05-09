@@ -2,6 +2,10 @@ import {
 	calculateAttackModifier,
 	chooseWeaponAttackAbility,
 } from "@/lib/derivedStats";
+import {
+	buildAttackRollFormula,
+	formatSignedNumber,
+} from "@/lib/powerActionFormulas";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
 
 export interface WeaponActionFormulaInput {
@@ -23,15 +27,10 @@ export interface WeaponActionFormulaResult {
 	damageRoll: string;
 }
 
-function signedNumber(value: number): string {
-	if (value === 0) return "";
-	return value > 0 ? `+${value}` : `${value}`;
-}
-
 function normalizeDamageBonus(
 	value: string | number | null | undefined,
 ): string {
-	if (typeof value === "number") return signedNumber(value);
+	if (typeof value === "number") return formatSignedNumber(value);
 	return value?.trim() ?? "";
 }
 
@@ -52,10 +51,10 @@ function buildDamageRoll(
 	const flatBonus = toFlatDamageBonus(normalizedBonus);
 
 	if (flatBonus !== null) {
-		return `${dice}${signedNumber(abilityModifier + flatBonus)}`;
+		return `${dice}${formatSignedNumber(abilityModifier + flatBonus)}`;
 	}
 
-	return `${dice}${signedNumber(abilityModifier)}${normalizedBonus}`;
+	return `${dice}${formatSignedNumber(abilityModifier)}${normalizedBonus}`;
 }
 
 export function resolveWeaponActionFormula(
@@ -78,7 +77,7 @@ export function resolveWeaponActionFormula(
 		ability,
 		abilityModifier,
 		attackBonus,
-		attackRoll: `1d20${signedNumber(attackBonus)}`,
+		attackRoll: buildAttackRollFormula(attackBonus),
 		damageRoll: buildDamageRoll(
 			input.damageDice,
 			abilityModifier,

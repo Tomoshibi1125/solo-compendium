@@ -14,10 +14,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
+import { useCombatActions } from "@/hooks/useCombatActions";
 import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useTechniques } from "@/hooks/useTechniques";
+import { formatModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
@@ -43,6 +45,7 @@ export function TechniquesList({
 		removeTechnique,
 	} = useTechniques(characterId);
 	const { data: character } = useCharacter(characterId);
+	const { actions } = useCombatActions(characterId);
 	const { features, updateFeature } = useFeatures(characterId);
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
@@ -216,6 +219,10 @@ export function TechniquesList({
 							const description = compendium?.description ?? null;
 							const techniqueType = compendium?.technique_type ?? null;
 							const levelReq = compendium?.level_requirement ?? null;
+							const actionFormula = actions.find(
+								(action) =>
+									action.sourceId === entry.id && action.type === "technique",
+							);
 							const runeFeature = getRuneFeature(entry.source);
 							const noRuneUses =
 								runeFeature?.uses_max !== null &&
@@ -258,7 +265,37 @@ export function TechniquesList({
 														Level {levelReq}
 													</Badge>
 												)}
+												{actionFormula?.formulaAbility &&
+													actionFormula.formulaAbilityModifier !==
+														undefined && (
+														<Badge variant="outline" className="text-xs">
+															{actionFormula.formulaAbility}{" "}
+															{formatModifier(
+																actionFormula.formulaAbilityModifier,
+															)}
+														</Badge>
+													)}
 											</div>
+											{(actionFormula?.damageRoll || actionFormula?.saveDC) && (
+												<div className="flex flex-wrap gap-x-3 gap-y-1 mb-1 text-[11px] text-muted-foreground">
+													{actionFormula.saveDC && (
+														<span>
+															Save: DC {actionFormula.saveDC}
+															{actionFormula.saveAbility
+																? ` ${actionFormula.saveAbility}`
+																: ""}
+														</span>
+													)}
+													{actionFormula.damageRoll && (
+														<span>
+															Damage: {actionFormula.damageRoll}
+															{actionFormula.damageType
+																? ` ${actionFormula.damageType}`
+																: ""}
+														</span>
+													)}
+												</div>
+											)}
 											{description && (
 												<div className="text-xs text-muted-foreground line-clamp-3">
 													<AutoLinkText text={description} />

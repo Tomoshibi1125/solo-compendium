@@ -37,11 +37,11 @@ export function generateRarity(): TreasureRarity {
 
 export interface TreasureResult {
 	rank: string;
-	hundreds: number; // $100 Bills (Platinum)
-	tens: number; // $10 Bills (Gold)
-	fives: number; // $5 Bills (Electrum)
-	ones: number; // $1 Bills (Silver)
-	dimes: number; // 10¢ Coins (Copper)
+	hundreds: number; // Core Credits
+	tens: number; // Gate Credits
+	fives: number; // Crystal Credits
+	ones: number; // Mana Credits
+	dimes: number; // Mana Credit chips
 	items: string[];
 	itemEntries: WardenLinkedEntry[];
 	materials: string[];
@@ -230,12 +230,12 @@ export async function generateTreasure(rank: string): Promise<TreasureResult> {
 	const displayMaterials = materials.map(formatRegentVernacular);
 	const displayRelics = relics.map(formatRegentVernacular);
 
-	let currencyDesc = `Rift Rank ${rank} treasure hoard containing $${tens * 10} USD (in $10 Bills).`;
+	let currencyDesc = `Rift Rank ${rank} treasure hoard containing ${tens} Gate Credits.`;
 	const extras = [];
-	if (hundreds > 0) extras.push(`${hundreds} x $100 Bills`);
-	if (fives > 0) extras.push(`${fives} x $5 Bills`);
-	if (ones > 0) extras.push(`${ones} x $1 Bills`);
-	if (dimes > 0) extras.push(`${dimes} x 10¢ Coins`);
+	if (hundreds > 0) extras.push(`${hundreds} Core Credits`);
+	if (fives > 0) extras.push(`${fives} Crystal Credits`);
+	if (ones > 0) extras.push(`${ones} Mana Credits`);
+	if (dimes > 0) extras.push(`${dimes} Mana Credit chips`);
 
 	if (extras.length > 0) {
 		currencyDesc += ` Additional denominations: ${extras.join(", ")}.`;

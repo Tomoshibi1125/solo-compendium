@@ -3,6 +3,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRaCurrencyAmount } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumItem } from "@/types/compendium";
@@ -81,10 +82,10 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<div className="flex items-center gap-2">
 						<Coins className="w-5 h-5 text-yellow-400" />
 						<span className="font-display text-xl">
-							{item.cost?.toLocaleString() || "—"}
+							{formatRaCurrencyAmount(item.cost)}
 						</span>
 					</div>
-					<span className="text-xs text-muted-foreground">credits</span>
+					<span className="text-xs text-muted-foreground">Bureau value</span>
 				</AscendantWindow>
 
 				<AscendantWindow title="WEIGHT" compact>

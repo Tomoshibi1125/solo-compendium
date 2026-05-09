@@ -28,6 +28,8 @@ export interface AuditEntry {
 	mechanics?: unknown;
 	effects?: unknown;
 	properties?: unknown;
+	activation?: unknown;
+	limitations?: unknown;
 	weight?: number | null;
 	damage?: unknown;
 	damage_type?: unknown;
@@ -130,6 +132,22 @@ const templatedLanguageDatasets = new Set([
 	"artifacts",
 ]);
 
+const itemRulePayloadDatasets = new Set(["equipment", "items", "relics"]);
+
+const itemRulesPayloadKeys = [
+	"identity",
+	"action_economy",
+	"targeting",
+	"resolution",
+	"ability_modifiers",
+	"formulas",
+	"source_integrity",
+	"audit",
+];
+
+const legacyAbilityTermsPattern =
+	/\b(Dexterity|Dex|Constitution|Wisdom|Charisma)\b/i;
+
 // Stopwords permitted to stay lowercase after the first word in a Title Case
 // castable name.
 const TITLE_CASE_STOPWORDS = new Set([
@@ -182,7 +200,7 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 	},
 	{
 		pattern: /\b(Blood|Crimson|Sanguine|Carnage|Gore)\b/i,
-		expected: ["necrotic", "slashing", "force"],
+		expected: ["necrotic", "slashing", "force", "fire"],
 	},
 	{
 		pattern:
@@ -190,7 +208,7 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 		expected: ["necrotic"],
 	},
 	{
-		pattern: /\b(Lightning|Thunder|Storm|Tempest|Surge|Shock|Electric)\b/i,
+		pattern: /\b(Lightning|Thunder|Storm|Tempest|Shock|Electric)\b/i,
 		expected: ["lightning", "thunder"],
 	},
 	{ pattern: /\b(Arcane|Mana|Aether)\b/i, expected: ["force"] },
@@ -200,11 +218,11 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 // carry a damage roll. The audit flags entries that do.
 const UTILITY_NAME_TOKENS: RegExp[] = [
 	/\b(regenerat|heal|restor|mend|cure|revital)/i,
-	/\b(invisibil|invisible|cloak|veil|obscure)/i,
+	/\b(invisibil|invisible|obscure)/i,
 	/\b(telepath|mind link|mind speech|mind speak)/i,
 	/\b(true sight|clairvoy|scry|detect|reveal)/i,
 	/\b(shadow step|blink|teleport|phase|step of)/i,
-	/\b(resilience|fortitude|endurance|guard|ward)/i,
+	/\b(resilience|fortitude|endurance)/i,
 	/\b(charm|persuade|calm|beguile|pacify)/i,
 	/\b(recovery|refresh|renew|meditate)/i,
 	/\b(lycanthrop|shapeshift|polymorph|transform)/i,
@@ -434,8 +452,12 @@ function auditCastableEntry(
 			: null) ||
 		(isRecord(mechanics.saving_throw) ? mechanics.saving_throw : null);
 	const healing = isRecord(mechanics.healing) ? mechanics.healing : null;
+	const utility = isRecord(mechanics.utility) ? mechanics.utility : null;
+	const resolution = isRecord(mechanics.resolution)
+		? mechanics.resolution
+		: null;
 
-	if (!attack && !savingThrow && !healing) {
+	if (!attack && !savingThrow && !healing && !utility && !resolution) {
 		addIssue(issues, {
 			severity: "error",
 			dataset,
@@ -451,6 +473,8 @@ function auditCastableEntry(
 		getFormulaString((entry as { damage_roll?: unknown }).damage_roll) ??
 		getFormulaString(attack?.damage) ??
 		getFormulaString(healing) ??
+		getFormulaString(utility?.formula) ??
+		getFormulaString(resolution?.formula) ??
 		getString(mechanics.damage_profile) ??
 		getString(mechanics.damage);
 	if (!formula) {
@@ -791,6 +815,207 @@ function auditEquipmentEntry(
 	});
 }
 
+function hasNonEmptyRecordValue(record: Record<string, Json>): boolean {
+	return Object.values(record).some((value) => {
+		if (value == null) return false;
+		if (typeof value === "string") return value.trim().length > 0;
+		if (typeof value === "number" || typeof value === "boolean") return true;
+		if (Array.isArray(value)) return value.length > 0;
+		return isRecord(value) && hasNonEmptyRecordValue(value);
+	});
+}
+
+function auditItemRulesPayload(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const mechanics = isRecord(entry.mechanics) ? entry.mechanics : null;
+	if (!mechanics) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_item_rules_payload",
+			message: "Item lacks a structured mechanics rules payload.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+		return;
+	}
+
+	if (mechanics.rules_payload_version !== "ra-item-v1") {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "invalid_item_rules_payload_version",
+			message:
+				'Item mechanics must declare rules_payload_version "ra-item-v1".',
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
+	for (const key of itemRulesPayloadKeys) {
+		if (!isRecord(mechanics[key])) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "incomplete_item_rules_payload",
+				message: `Item mechanics missing required "${key}" rules block.`,
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+
+	const activation = isRecord(entry.activation) ? entry.activation : null;
+	if (
+		!activation ||
+		!getString(activation.type) ||
+		!getString(activation.cost)
+	) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_item_activation_payload",
+			message: "Item lacks explicit activation type and action cost metadata.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
+	if (!isRecord(entry.limitations)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_item_limitations_payload",
+			message:
+				"Item lacks explicit limitations, attunement, charge, or use-state metadata.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
+	const identity = isRecord(mechanics.identity) ? mechanics.identity : null;
+	if (
+		!identity ||
+		!getString(identity.archetype) ||
+		!getString(identity.signature) ||
+		!getString(identity.distinguishing_rule) ||
+		!getString(identity.canon_basis)
+	) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_item_identity_payload",
+			message:
+				"Item lacks a unique RA identity signature, archetype, and canon basis.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
+	const formulas = isRecord(mechanics.formulas) ? mechanics.formulas : null;
+	if (!formulas || !hasNonEmptyRecordValue(formulas)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_item_formula_payload",
+			message: "Item lacks explicit formula metadata.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
+	const abilityModifiers = isRecord(mechanics.ability_modifiers)
+		? mechanics.ability_modifiers
+		: null;
+	if (!abilityModifiers || !hasNonEmptyRecordValue(abilityModifiers)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_item_ability_modifier_payload",
+			message: "Item lacks explicit RA ability modifier metadata.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+
+	const payloadText = collectTextFragments([
+		mechanics,
+		entry.activation,
+		entry.limitations,
+	]).join("\n");
+	if (legacyAbilityTermsPattern.test(payloadText)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "legacy_ability_terms_in_item_rules",
+			message:
+				"Item rules payload uses legacy ability terminology instead of RA ability names.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditItemPayloadUniqueness(
+	datasets: Record<string, AuditEntry[]>,
+	issues: CompendiumAuditIssue[],
+) {
+	const signatures = new Map<string, AuditEntry[]>();
+	const seeds = new Map<string, AuditEntry[]>();
+	for (const dataset of itemRulePayloadDatasets) {
+		for (const entry of datasets[dataset] ?? []) {
+			const mechanics = isRecord(entry.mechanics) ? entry.mechanics : null;
+			const identity =
+				mechanics && isRecord(mechanics.identity) ? mechanics.identity : null;
+			const audit =
+				mechanics && isRecord(mechanics.audit) ? mechanics.audit : null;
+			const signature = identity ? getString(identity.signature) : null;
+			const seed = audit ? getString(audit.uniqueness_seed) : null;
+			if (signature) {
+				const current = signatures.get(signature) ?? [];
+				current.push(entry);
+				signatures.set(signature, current);
+			}
+			if (seed) {
+				const current = seeds.get(seed) ?? [];
+				current.push(entry);
+				seeds.set(seed, current);
+			}
+		}
+	}
+
+	for (const [signature, entries] of signatures.entries()) {
+		if (entries.length <= 1) continue;
+		for (const entry of entries) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: "items",
+				code: "duplicate_item_identity_signature",
+				message: `Item identity signature "${signature}" is reused by ${entries.length} entries.`,
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+
+	for (const [seed, entries] of seeds.entries()) {
+		if (entries.length <= 1) continue;
+		for (const entry of entries) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: "items",
+				code: "duplicate_item_uniqueness_seed",
+				message: `Item uniqueness seed "${seed}" is reused by ${entries.length} entries.`,
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+}
+
 export async function runCompendiumAudit(
 	provider: AuditProvider,
 ): Promise<CompendiumAuditSummary> {
@@ -815,8 +1040,12 @@ export async function runCompendiumAudit(
 			if (dataset === "equipment" || dataset === "relics") {
 				auditEquipmentEntry(dataset, entry, issues);
 			}
+			if (itemRulePayloadDatasets.has(dataset)) {
+				auditItemRulesPayload(dataset, entry, issues);
+			}
 		}
 	}
+	auditItemPayloadUniqueness(datasets, issues);
 
 	const errors = issues.filter((issue) => issue.severity === "error");
 	const warnings = issues.filter((issue) => issue.severity === "warning");

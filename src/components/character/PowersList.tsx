@@ -1,5 +1,6 @@
 import { AlertTriangle, Plus, Trash2, Wand2 } from "lucide-react";
 import { useCallback, useState } from "react";
+import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,19 +15,16 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
+import { useCombatActions } from "@/hooks/useCombatActions";
 import { useFeatures } from "@/hooks/useFeatures";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePowers } from "@/hooks/usePowers";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useSpellCasting } from "@/hooks/useSpellCasting";
-import type { Database } from "@/integrations/supabase/types";
-import type { DetailData } from "@/types/character";
-
-export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
-
-import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
+import type { Database } from "@/integrations/supabase/types";
 import {
+	formatModifier,
 	getAbilityModifier,
 	getCantripsKnownLimit,
 	getSpellcastingAbility,
@@ -35,7 +33,10 @@ import {
 } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import type { DetailData } from "@/types/character";
 import { AddPowerDialog } from "./AddPowerDialog";
+
+export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
 
 function CompendiumLink({
 	name,
@@ -99,6 +100,7 @@ export function PowersList({
 		character?.job || null,
 		character?.level || 1,
 	);
+	const { actions } = useCombatActions(characterId);
 	const { toast } = useToast();
 	const recordRoll = useRecordRoll();
 	const ascendantTools = useAscendantTools();
@@ -542,6 +544,11 @@ export function PowersList({
 									const displayDuration = power.duration
 										? formatRegentVernacular(power.duration)
 										: null;
+									const actionFormula = actions.find(
+										(action) =>
+											action.sourceId === power.id &&
+											(action.type === "power" || action.type === "spell"),
+									);
 
 									return (
 										<div
@@ -600,6 +607,39 @@ export function PowersList({
 															<span>Duration: {displayDuration}</span>
 														)}
 													</div>
+													{actionFormula && (
+														<div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-[11px] text-muted-foreground">
+															{actionFormula.formulaAbility &&
+																actionFormula.formulaAbilityModifier !==
+																	undefined && (
+																	<span>
+																		Formula: {actionFormula.formulaAbility}{" "}
+																		{formatModifier(
+																			actionFormula.formulaAbilityModifier,
+																		)}
+																	</span>
+																)}
+															{actionFormula.attackRoll && (
+																<span>Attack: {actionFormula.attackRoll}</span>
+															)}
+															{actionFormula.saveDC && (
+																<span>
+																	Save: DC {actionFormula.saveDC}
+																	{actionFormula.saveAbility
+																		? ` ${actionFormula.saveAbility}`
+																		: ""}
+																</span>
+															)}
+															{actionFormula.damageRoll && (
+																<span>
+																	Damage: {actionFormula.damageRoll}
+																	{actionFormula.damageType
+																		? ` ${actionFormula.damageType}`
+																		: ""}
+																</span>
+															)}
+														</div>
+													)}
 												</div>
 												<div className="flex items-center gap-2">
 													<div className="flex items-center gap-2">

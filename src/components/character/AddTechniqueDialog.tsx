@@ -143,7 +143,7 @@ export function AddTechniqueDialog({
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden flex flex-col">
+			<DialogContent className="max-w-2xl max-h-[80vh] min-h-0 overflow-hidden flex flex-col">
 				<DialogHeader>
 					<DialogTitle>Discover Technique</DialogTitle>
 					<DialogDescription>
@@ -151,8 +151,8 @@ export function AddTechniqueDialog({
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className="space-y-4 flex-1 overflow-hidden flex flex-col">
-					<div className="flex items-center gap-3">
+				<div className="space-y-4 min-h-0 flex-1 overflow-hidden flex flex-col">
+					<div className="flex items-center gap-3 flex-shrink-0">
 						<div className="relative flex-1">
 							<Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
 							<Input
@@ -164,7 +164,7 @@ export function AddTechniqueDialog({
 						</div>
 					</div>
 
-					<div className="flex-1 overflow-y-auto space-y-2">
+					<div className="min-h-0 flex-1 overflow-y-auto space-y-2 pr-1">
 						{isLoading ? (
 							<div className="flex items-center justify-center py-8">
 								<Loader2 className="w-6 h-6 animate-spin text-primary" />

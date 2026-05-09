@@ -48,7 +48,8 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				name: "Anomaly Essence (Minor)",
 				rarity: "common",
 				weight: 20,
-				description: "Trade for 50 gp at any Bazaar booth.",
+				description:
+					"Trade for 50 Gate Credits at any Bureau or guild exchange.",
 			},
 			{
 				name: "Frayed Ward Tattoo",
@@ -142,7 +143,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				name: "Anomaly Essence (Rare)",
 				rarity: "rare",
 				weight: 15,
-				description: "Trade for 500 gp.",
+				description: "Trade for 500 Gate Credits.",
 			},
 			{
 				name: "Cultist Diary (Awoko, redacted)",

@@ -403,31 +403,42 @@ export const JobStep: React.FC<JobStepProps> = ({
 									</div>
 
 									<div className="grid grid-cols-2 gap-3">
-										{jobData.skill_choices.map((skill) => (
-											<div
-												key={skill}
-												className="flex items-center space-x-3 p-2 rounded border border-primary/5 bg-black/20 hover:border-primary/20 transition-colors"
-											>
-												<Checkbox
-													id={`skill-${skill}`}
-													checked={selectedSkills.includes(skill)}
-													onCheckedChange={(checked) =>
-														handleSkillToggle(skill, !!checked)
-													}
-													disabled={
-														!selectedSkills.includes(skill) &&
-														selectedSkills.length >= totalSkillsAllowed
-													}
-													className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
-												/>
-												<label
-													htmlFor={`skill-${skill}`}
-													className="text-xs font-heading cursor-pointer select-none text-foreground/80 hover:text-primary transition-colors"
+										{jobData.skill_choices.map((skill) => {
+											const checked = selectedSkills.includes(skill);
+											return (
+												<div
+													key={skill}
+													className={`flex items-center space-x-3 p-2 rounded border transition-colors ${
+														checked
+															? "border-primary/50 bg-primary/10 shadow-[0_0_12px_hsl(var(--primary)/0.15)]"
+															: "border-primary/5 bg-black/20 hover:border-primary/20"
+													}`}
 												>
-													{formatRegentVernacular(skill)}
-												</label>
-											</div>
-										))}
+													<Checkbox
+														id={`skill-${skill}`}
+														checked={checked}
+														onCheckedChange={(isChecked) =>
+															handleSkillToggle(skill, !!isChecked)
+														}
+														disabled={
+															!checked &&
+															selectedSkills.length >= totalSkillsAllowed
+														}
+														className="border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+													/>
+													<label
+														htmlFor={`skill-${skill}`}
+														className={`text-xs font-heading cursor-pointer select-none transition-colors ${
+															checked
+																? "text-primary font-semibold"
+																: "text-foreground/80 hover:text-primary"
+														}`}
+													>
+														{formatRegentVernacular(skill)}
+													</label>
+												</div>
+											);
+										})}
 									</div>
 								</div>
 							)}

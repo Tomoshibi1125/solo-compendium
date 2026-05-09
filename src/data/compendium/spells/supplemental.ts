@@ -112,6 +112,7 @@ function healingForLevel(level: number): string {
 }
 
 function defaultDamageType(seed: SpellSeed): string {
+	if (seed.name.toLowerCase().includes("storm")) return "lightning";
 	if (seed.damageType) return seed.damageType;
 	if (seed.school === "Necromancy") return "necrotic";
 	if (seed.school === "Enchantment") return "psychic";
@@ -119,6 +120,10 @@ function defaultDamageType(seed: SpellSeed): string {
 	if (seed.school === "Conjuration") return "force";
 	if (seed.school === "Transmutation") return "thunder";
 	return "force";
+}
+
+function hasDamageResolution(seed: SpellSeed): boolean {
+	return ["strike", "summon", "curse", "terrain", "device"].includes(seed.mode);
 }
 
 function pickVariant<T>(seed: SpellSeed, values: readonly T[]): T {
@@ -421,6 +426,7 @@ function makeSpell(seed: SpellSeed): CompendiumSpell {
 	const save = saveForMode(seed.mode);
 	const effects = effectText(seed, dice, damageType);
 	const hasAttack = ["strike", "device"].includes(seed.mode);
+	const hasDamage = hasDamageResolution(seed);
 	const duration = seed.duration ?? durationForSeed(seed);
 	const range = seed.range ?? rangeForSeed(seed);
 	const castingTime = seed.castingTime ?? castingTimeForSeed(seed);
@@ -473,12 +479,18 @@ function makeSpell(seed: SpellSeed): CompendiumSpell {
 		saving_throw: savingThrow,
 		area: areaForSeed(seed),
 		mechanics: {
-			damage_profile: hasAttack || save ? `${dice} ${damageType}` : undefined,
+			damage_profile: hasDamage ? `${dice} ${damageType}` : undefined,
 			lattice_interaction: `${rank}-rank ${seed.mode} circuit stabilized through ${seed.theme}`,
 			utility: {
 				type: seed.mode,
 				ability,
 				resolution: effects.secondary,
+				formula:
+					seed.mode === "restore"
+						? healingForLevel(seed.level)
+						: hasDamage
+							? `${dice} ${damageType}`
+							: "non-damage utility effect",
 			},
 			healing:
 				seed.mode === "restore"

@@ -177,7 +177,7 @@ SEED DATA:
 
 Provide ALL of the following sections with full detail:
 
-1. STATS: Type, rarity, attunement requirements, weight, value in GP
+1. STATS: Type, rarity, attunement requirements, weight, value in Bureau Credits
 2. PROPERTIES: Full mechanical effects at each awakening tier (dormant/awakened/exalted) with action types, uses, recharge, DCs, damage dice
 3. ABILITIES: 2-4 unique abilities with complete SRD-compatible mechanics
 4. CURSE/BLESSING: Optional curse mechanics with removal conditions, or blessing with activation
@@ -206,7 +206,7 @@ STATS:
 • Rarity: ${currentRelic.rarity}
 • Attunement: ${currentRelic.attunement ? `Required by character of ${currentRelic.rank} Rank or higher` : "None required"}
 • Weight: [Standard for ${currentRelic.type} type]
-• Value: [${currentRelic.rarity === "legendary" ? "10,000+" : currentRelic.rarity === "very-rare" ? "5,000+" : currentRelic.rarity === "rare" ? "2,000+" : currentRelic.rarity === "uncommon" ? "500+" : "100+"} GP]
+• Value: [${currentRelic.rarity === "legendary" ? "10,000+" : currentRelic.rarity === "very-rare" ? "5,000+" : currentRelic.rarity === "rare" ? "2,000+" : currentRelic.rarity === "uncommon" ? "500+" : "100+"} Gate Credits]
 
 PROPERTIES:
 ${

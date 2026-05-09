@@ -38,7 +38,11 @@ interface ActionCardProps {
 	description: string;
 	attackBonus?: number;
 	damage?: string;
+	damageType?: string;
 	range?: string;
+	formulaAbility?: string;
+	formulaAbilityModifier?: number;
+	attackRoll?: string;
 	uses?: { current: number; max: number };
 	recharge?: string;
 	onRoll?: (
@@ -87,7 +91,11 @@ function ActionCardComponent({
 	description,
 	attackBonus,
 	damage,
+	damageType,
 	range,
+	formulaAbility,
+	formulaAbilityModifier,
+	attackRoll,
 	uses,
 	recharge,
 	onRoll,
@@ -109,6 +117,19 @@ function ActionCardComponent({
 		? formatRegentVernacular(recharge)
 		: undefined;
 	const displayDamage = damage ? formatRegentVernacular(damage) : undefined;
+	const displayDamageType = damageType
+		? formatRegentVernacular(damageType)
+		: undefined;
+	const displayAbilityFormula =
+		formulaAbility && formulaAbilityModifier !== undefined
+			? `${formulaAbility} ${formatModifier(formulaAbilityModifier)}`
+			: undefined;
+	const displayAttackRoll =
+		payload?.attack?.roll ??
+		attackRoll ??
+		(attackBonus !== undefined
+			? `1d20${attackBonus >= 0 ? "+" : ""}${attackBonus}`
+			: undefined);
 
 	const handleRoll = (
 		rollType: "attack" | "damage" | "check" | "save" | "effect",
@@ -269,11 +290,34 @@ function ActionCardComponent({
 							Recharge: {displayRecharge}
 						</Badge>
 					)}
+					{displayAbilityFormula && (
+						<Badge variant="outline" className="text-xs">
+							{displayAbilityFormula}
+						</Badge>
+					)}
 				</div>
 
 				<div className="text-sm text-muted-foreground">
 					<AutoLinkText text={description} />
 				</div>
+
+				{(displayAttackRoll || payload?.save || displayDamage) && (
+					<div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
+						{displayAttackRoll && <span>Attack: {displayAttackRoll}</span>}
+						{payload?.save && (
+							<span>
+								Save: DC {payload.save.dc}
+								{payload.save.ability ? ` ${payload.save.ability}` : ""}
+							</span>
+						)}
+						{displayDamage && (
+							<span>
+								Damage: {displayDamage}
+								{displayDamageType ? ` ${displayDamageType}` : ""}
+							</span>
+						)}
+					</div>
+				)}
 
 				<div className="flex gap-2 pt-2 border-t border-border/50 flex-wrap">
 					{(payload?.attack || attackBonus !== undefined) && (
@@ -352,7 +396,11 @@ export const ActionCard = memo(
 			prevProps.type === nextProps.type &&
 			prevProps.attackBonus === nextProps.attackBonus &&
 			prevProps.damage === nextProps.damage &&
+			prevProps.damageType === nextProps.damageType &&
 			prevProps.range === nextProps.range &&
+			prevProps.formulaAbility === nextProps.formulaAbility &&
+			prevProps.formulaAbilityModifier === nextProps.formulaAbilityModifier &&
+			prevProps.attackRoll === nextProps.attackRoll &&
 			prevProps.uses?.current === nextProps.uses?.current &&
 			prevProps.uses?.max === nextProps.uses?.max &&
 			prevProps.recharge === nextProps.recharge &&

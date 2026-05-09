@@ -88,6 +88,11 @@ function diceForLevel(level: number): string {
 	);
 }
 
+function damageTypeForSeed(seed: TechniqueSeed): string {
+	if (/\b(thunder|storm)\b/i.test(seed.name)) return "thunder";
+	return seed.damageType;
+}
+
 function saveForMode(mode: TechniqueMode): string {
 	if (mode === "vanguard" || mode === "brutal") return "Strength";
 	if (mode === "precision" || mode === "pursuit") return "Sense";
@@ -185,8 +190,10 @@ function makeSeeds(family: TechniqueFamily): TechniqueSeed[] {
 function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 	techniqueCounts[seed.level] += 1;
 	const dice = diceForLevel(seed.level);
+	const damageType = damageTypeForSeed(seed);
 	const save = saveForMode(seed.mode);
-	const effects = effectFor(seed, dice);
+	const resolvedSeed = { ...seed, damageType };
+	const effects = effectFor(resolvedSeed, dice);
 	const activation = activationType(seed);
 	const range =
 		seed.range ??
@@ -198,7 +205,7 @@ function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 		id: `technique-parity-${seed.level}-${techniqueCounts[seed.level]}-${slug(seed.name)}`,
 		name: seed.name,
 		display_name: seed.name,
-		description: descriptionFor(seed, dice),
+		description: descriptionFor(resolvedSeed, dice),
 		flavor: `${seed.name} is a field-tested technique for ${seed.classes.join(", ")} Ascendants.`,
 		tags: ["awakened", "technique", seed.mode, seed.type, ...seed.classes],
 		classes: seed.classes,
@@ -214,7 +221,7 @@ function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 		duration: "Instantaneous",
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: `${dice} ${seed.damageType}`,
+			damage_profile: `${dice} ${damageType}`,
 			range,
 			type: seed.mode,
 			action:
@@ -226,12 +233,12 @@ function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 			ability: seed.ability,
 			lattice_interaction: `${seed.level}-tier ${seed.theme} reinforced by trained mana control`,
 			attack: {
-				type: seed.damageType,
+				type: damageType,
 				mode: range === "Self" ? "melee" : "ranged",
 				resolution: "martial_attack",
 				modifier: seed.ability,
 				damage: dice,
-				damage_type: seed.damageType,
+				damage_type: damageType,
 			},
 			saving_throw: {
 				ability: save,

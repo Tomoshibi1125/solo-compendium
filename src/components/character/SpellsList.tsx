@@ -14,12 +14,14 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
+import { useCombatActions } from "@/hooks/useCombatActions";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import type { useSpellCasting } from "@/hooks/useSpellCasting";
 import { useSpellSlots } from "@/hooks/useSpellSlots";
 import { type CharacterSpell, useSpells } from "@/hooks/useSpells";
 import {
+	formatModifier,
 	getAbilityModifier,
 	getCantripsKnownLimit,
 	getSpellcastingAbility,
@@ -49,6 +51,7 @@ export function SpellsList({
 }: SpellsListProps) {
 	const { spells, updateSpell, removeSpell } = useSpells(characterId);
 	const { data: character } = useCharacter(characterId);
+	const { actions } = useCombatActions(characterId);
 	const { data: spellSlots = [] } = useSpellSlots(
 		characterId,
 		character?.job || null,
@@ -405,6 +408,10 @@ export function SpellsList({
 								const displayDescription = spell.description
 									? formatRegentVernacular(spell.description)
 									: null;
+								const actionFormula = actions.find(
+									(action) =>
+										action.sourceId === spell.id && action.type === "spell",
+								);
 								return (
 									<fieldset
 										key={spell.id}
@@ -448,6 +455,39 @@ export function SpellsList({
 												{displayDescription && (
 													<div className="text-xs text-muted-foreground line-clamp-3">
 														<AutoLinkText text={spell.description || ""} />
+													</div>
+												)}
+												{actionFormula && (
+													<div className="flex flex-wrap gap-x-3 gap-y-1 mt-1 text-[11px] text-muted-foreground">
+														{actionFormula.formulaAbility &&
+															actionFormula.formulaAbilityModifier !==
+																undefined && (
+																<span>
+																	Formula: {actionFormula.formulaAbility}{" "}
+																	{formatModifier(
+																		actionFormula.formulaAbilityModifier,
+																	)}
+																</span>
+															)}
+														{actionFormula.attackRoll && (
+															<span>Attack: {actionFormula.attackRoll}</span>
+														)}
+														{actionFormula.saveDC && (
+															<span>
+																Save: DC {actionFormula.saveDC}
+																{actionFormula.saveAbility
+																	? ` ${actionFormula.saveAbility}`
+																	: ""}
+															</span>
+														)}
+														{actionFormula.damageRoll && (
+															<span>
+																Damage: {actionFormula.damageRoll}
+																{actionFormula.damageType
+																	? ` ${actionFormula.damageType}`
+																	: ""}
+															</span>
+														)}
 													</div>
 												)}
 											</div>

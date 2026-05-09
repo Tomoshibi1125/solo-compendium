@@ -98,7 +98,13 @@ const hashString = (input: string) => {
 const normalizeReward = (reward: Record<string, unknown>): QuestReward => ({
 	rift_favor:
 		typeof reward.rift_favor === "number" ? reward.rift_favor : undefined,
-	gold: typeof reward.gold === "number" ? reward.gold : undefined,
+	credits:
+		typeof reward.credits === "number"
+			? reward.credits
+			: typeof reward.gold === "number"
+				? reward.gold
+				: undefined,
+	gold: undefined,
 	relic_shards:
 		typeof reward.relic_shards === "number" ? reward.relic_shards : undefined,
 	experience:

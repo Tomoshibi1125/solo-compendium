@@ -1094,6 +1094,7 @@ const CharacterNew = () => {
 					? job.speed
 					: 30;
 			const hpMax = calculateHPMax(level, hitDieSize, vitModifier);
+			const creationAbilities = { ...effectiveAbilities };
 
 			// D&D Beyond Quickbuilder parity (#11): detect duplicate proficiency
 			// grants between Job and Background and de-dupe before persisting.
@@ -1153,12 +1154,12 @@ const CharacterNew = () => {
 				appearance: appearance.trim() || null,
 				backstory: backstory.trim() || null,
 				notes: creatorProfileNotes,
-				str: abilities.STR,
-				agi: abilities.AGI,
-				vit: abilities.VIT,
-				int: abilities.INT,
-				sense: abilities.SENSE,
-				pre: abilities.PRE,
+				str: creationAbilities.STR,
+				agi: creationAbilities.AGI,
+				vit: creationAbilities.VIT,
+				int: creationAbilities.INT,
+				sense: creationAbilities.SENSE,
+				pre: creationAbilities.PRE,
 				proficiency_bonus: 2,
 				armor_class: 10 + Math.floor((effectiveAbilities.AGI - 10) / 2),
 				hp_current: hpMax,
@@ -1188,13 +1189,21 @@ const CharacterNew = () => {
 				maxTechniqueLevel: 1,
 			};
 
-			const finalAbilities = { ...abilities };
+			const finalAbilities = { ...creationAbilities };
 
 			if (isLocalCharacterId(character.id)) {
 				setLocalAbilities(
 					character.id,
 					finalAbilities as Record<DbAbilityScore, number>,
 				);
+				await insertCharacterFeature(character.id, {
+					name: `Racial ASI: ${dbJob.name}`,
+					source: `Racial ASI: ${dbJob.name}`,
+					level_acquired: 1,
+					description:
+						"Job ability score improvements represented in creation ability scores.",
+					is_active: false,
+				});
 			} else {
 				const updates = Object.entries(finalAbilities).map(
 					([ability, score]) => ({
@@ -1206,6 +1215,15 @@ const CharacterNew = () => {
 				await supabase
 					.from("character_abilities")
 					.upsert(updates, { onConflict: "character_id,ability" });
+				await supabase.from("character_features").insert({
+					character_id: character.id,
+					name: `Racial ASI: ${dbJob.name}`,
+					source: `Racial ASI: ${dbJob.name}`,
+					level_acquired: 1,
+					description:
+						"Job ability score improvements represented in creation ability scores.",
+					is_active: false,
+				});
 			}
 
 			if (selectedHomebrewJob) {

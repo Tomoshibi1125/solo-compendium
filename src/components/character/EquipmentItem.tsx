@@ -13,6 +13,7 @@ import {
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import type { CombatAction } from "@/hooks/useCombatActions";
 import type { Database } from "@/integrations/supabase/types";
+import { formatModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -101,6 +102,11 @@ function EquipmentItemComponent({
 		item.charges_current ?? computedAction?.resourceCurrent;
 	const itemChargesMax = item.charges_max ?? computedAction?.resourceMax;
 	const hasCharges = itemChargesCurrent != null || itemChargesMax != null;
+	const computedAbilityFormula =
+		computedAction?.formulaAbility &&
+		computedAction.formulaAbilityModifier !== undefined
+			? `${computedAction.formulaAbility} ${formatModifier(computedAction.formulaAbilityModifier)}`
+			: null;
 
 	return (
 		<div
@@ -157,8 +163,9 @@ function EquipmentItemComponent({
 						)}
 						{computedAction?.attackBonus !== undefined && (
 							<Badge variant="outline" className="text-xs">
-								Attack {computedAction.attackBonus >= 0 ? "+" : ""}
-								{computedAction.attackBonus}
+								Attack{" "}
+								{computedAction.attackRoll ??
+									`${computedAction.attackBonus >= 0 ? "+" : ""}${computedAction.attackBonus}`}
 							</Badge>
 						)}
 						{computedAction?.saveDC !== undefined && (
@@ -174,8 +181,12 @@ function EquipmentItemComponent({
 					</div>
 					{(computedAction?.damageRoll ||
 						computedAction?.range ||
+						computedAbilityFormula ||
 						item.is_container) && (
 						<div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground mb-1">
+							{computedAbilityFormula && (
+								<span>Formula: {computedAbilityFormula}</span>
+							)}
 							{computedAction?.damageRoll && (
 								<span>
 									Damage: {computedAction.damageRoll}

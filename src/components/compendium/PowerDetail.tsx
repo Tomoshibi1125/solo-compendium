@@ -6,6 +6,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { setPendingResolution } from "@/lib/actionResolution";
+import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
@@ -33,6 +34,21 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 	const tierColor = tierColors[data.power_level] || "text-foreground";
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
+	const mechanics =
+		data.mechanics && typeof data.mechanics === "object"
+			? (data.mechanics as Record<string, unknown>)
+			: {};
+	const baseAttackRoll = data.has_attack_roll
+		? buildAttackRollFormula(
+				typeof mechanics.attack_bonus === "number" ? mechanics.attack_bonus : 0,
+			)
+		: undefined;
+	const baseSaveDC =
+		typeof mechanics.save_dc === "number"
+			? mechanics.save_dc
+			: data.has_save
+				? 8
+				: undefined;
 
 	const handleRoll = () => {
 		const id = crypto.randomUUID();
@@ -45,7 +61,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				name,
 				source: { type: "power", entryId: data.id },
 				kind: "attack",
-				attack: { roll: "1d20+5" }, // Defaulting to +5 for mechanical consistency if not specified
+				attack: { roll: baseAttackRoll ?? "1d20" },
 				damage: data.damage_roll
 					? { roll: data.damage_roll, type: data.damage_type }
 					: undefined,
@@ -58,7 +74,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				name,
 				source: { type: "power", entryId: data.id },
 				kind: "save",
-				save: { dc: 15, ability: data.save_ability, roll: "1d20" }, // Defaulting to DC 15
+				save: { dc: baseSaveDC ?? 8, ability: data.save_ability, roll: "1d20" },
 				damage: data.damage_roll
 					? { roll: data.damage_roll, type: data.damage_type }
 					: undefined,
@@ -118,7 +134,22 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							)}
 
 						{(data.has_attack_roll || data.has_save) && (
-							<div className="pt-2">
+							<div className="pt-2 space-y-2">
+								<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+									{baseAttackRoll && <span>Base attack: {baseAttackRoll}</span>}
+									{baseSaveDC !== undefined && (
+										<span>
+											Base save: DC {baseSaveDC}
+											{data.save_ability ? ` ${data.save_ability}` : ""}
+										</span>
+									)}
+									{data.damage_roll && (
+										<span>
+											Damage: {data.damage_roll}
+											{data.damage_type ? ` ${data.damage_type}` : ""}
+										</span>
+									)}
+								</div>
 								<Button onClick={handleRoll} className="gap-2">
 									<Zap className="w-4 h-4" />
 									Roll Power

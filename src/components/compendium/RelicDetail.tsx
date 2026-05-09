@@ -9,6 +9,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { formatRaCurrencyAmount } from "@/lib/currency";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumRelic } from "@/types/compendium";
@@ -214,7 +215,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 						<div className="flex items-center gap-2">
 							<Coins className="w-5 h-5 text-yellow-400" />
 							<span className="font-heading">
-								{data.cost.toLocaleString()} credits
+								{formatRaCurrencyAmount(data.cost)}
 							</span>
 						</div>
 					</AscendantWindow>

@@ -127,7 +127,11 @@ export function ActionsList({
 							description={action.description || ""}
 							attackBonus={action.attackBonus}
 							damage={action.damageRoll}
+							damageType={action.damageType}
 							range={action.range}
+							formulaAbility={action.formulaAbility}
+							formulaAbilityModifier={action.formulaAbilityModifier}
+							attackRoll={action.attackRoll}
 							uses={
 								action.resourceMax
 									? {
@@ -166,7 +170,11 @@ export function ActionsList({
 								description={action.description || ""}
 								attackBonus={action.attackBonus}
 								damage={action.damageRoll}
+								damageType={action.damageType}
 								range={action.range}
+								formulaAbility={action.formulaAbility}
+								formulaAbilityModifier={action.formulaAbilityModifier}
+								attackRoll={action.attackRoll}
 								uses={
 									action.resourceMax
 										? {

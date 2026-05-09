@@ -16,6 +16,7 @@ import { useCampaignGold } from "@/hooks/useCampaignGold";
 import { useCampaignInventory } from "@/hooks/useCampaignInventory";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { RA_CURRENCY_TYPES } from "@/lib/currency";
 
 export default function PartyStash() {
 	const navigate = useNavigate();
@@ -50,24 +51,24 @@ export default function PartyStash() {
 	const { inventory, isLoading, addItem, removeItem, updateItem } =
 		useCampaignInventory(campaignId, myCharacter || undefined);
 	const {
-		partyGold,
+		partyCredits,
 		isLoading: isGoldLoading,
-		updateGold,
+		updateCredits,
 	} = useCampaignGold(campaignId);
 
 	const [newItemName, setNewItemName] = useState("");
 	const [newItemQuantity, setNewItemQuantity] = useState(1);
 
-	// State for local gold edits before saving
-	const [goldEdits, setGoldEdits] = useState(partyGold);
-	const [isEditingGold, setIsEditingGold] = useState(false);
+	// State for local Credit edits before saving
+	const [creditEdits, setCreditEdits] = useState(partyCredits);
+	const [isEditingCredits, setIsEditingCredits] = useState(false);
 
 	// Sync local edits when remote data changes (if not currently editing)
 	React.useEffect(() => {
-		if (!isEditingGold) {
-			setGoldEdits(partyGold);
+		if (!isEditingCredits) {
+			setCreditEdits(partyCredits);
 		}
-	}, [partyGold, isEditingGold]);
+	}, [partyCredits, isEditingCredits]);
 
 	if (!campaignId) {
 		return (
@@ -97,9 +98,9 @@ export default function PartyStash() {
 		setNewItemQuantity(1);
 	};
 
-	const handleSaveGold = async () => {
-		await updateGold(goldEdits);
-		setIsEditingGold(false);
+	const handleSaveCredits = async () => {
+		await updateCredits(creditEdits);
+		setIsEditingCredits(false);
 	};
 
 	return (
@@ -130,7 +131,7 @@ export default function PartyStash() {
 						<div className="flex-1 space-y-2">
 							<Label>Item Name</Label>
 							<Input
-								placeholder="e.g. 500 Gold Pieces, Health Potion"
+								placeholder="e.g. Bureau salvage voucher, Healing Ampoule"
 								value={newItemName}
 								onChange={(e) => setNewItemName(e.target.value)}
 							/>
@@ -155,39 +156,41 @@ export default function PartyStash() {
 				<AscendantWindow title="PARTY WEALTH" className="relative">
 					{isGoldLoading ? (
 						<AscendantText className="block text-muted-foreground p-4">
-							Counting coins...
+							Reconciling Credits...
 						</AscendantText>
 					) : (
 						<div className="space-y-4">
-							<div className="grid grid-cols-5 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
-								{(["pp", "gp", "ep", "sp", "cp"] as const).map((coin) => (
-									<div key={coin} className="flex flex-col items-center gap-2">
+							<div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-black/40 p-4 rounded-[2px] border border-primary/20 shadow-[inset_0_0_15px_rgba(0,0,0,0.8)]">
+								{RA_CURRENCY_TYPES.map((currency) => (
+									<div
+										key={currency.id}
+										className="flex flex-col items-center gap-2"
+									>
 										<div
 											className={`w-10 h-10 rounded-[2px] flex items-center justify-center font-heading font-bold tracking-widest text-xs border bg-black/80 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]
-                                            ${coin === "pp" ? "text-slate-300 border-slate-500 shadow-[0_0_8px_rgba(203,213,225,0.3)]" : ""}
-                                            ${coin === "gp" ? "text-yellow-400 border-yellow-600 shadow-[0_0_8px_rgba(250,204,21,0.3)]" : ""}
-                                            ${coin === "ep" ? "text-blue-300 border-blue-500 shadow-[0_0_8px_rgba(147,197,253,0.3)]" : ""}
-                                            ${coin === "sp" ? "text-gray-300 border-gray-500 shadow-[0_0_8px_rgba(209,213,219,0.3)]" : ""}
-                                            ${coin === "cp" ? "text-amber-500 border-amber-700 shadow-[0_0_8px_rgba(245,158,11,0.3)]" : ""}
+                                            ${currency.colorClass} ${currency.borderClass}
                                         `}
 										>
-											{coin.toUpperCase()}
+											{currency.symbol}
 										</div>
-										{isEditingGold ? (
+										<div className="text-center text-xs text-muted-foreground">
+											{currency.shortLabel}
+										</div>
+										{isEditingCredits ? (
 											<Input
 												type="number"
-												value={goldEdits[coin]}
+												value={creditEdits[currency.id]}
 												onChange={(e) =>
-													setGoldEdits((prev) => ({
+													setCreditEdits((prev) => ({
 														...prev,
-														[coin]: parseInt(e.target.value, 10) || 0,
+														[currency.id]: parseInt(e.target.value, 10) || 0,
 													}))
 												}
 												className="w-full text-center font-mono mt-2"
 											/>
 										) : (
 											<span className="text-xl font-heading font-bold drop-shadow-[0_0_5px_currentColor] mt-2 block w-full text-center">
-												{partyGold[coin]}
+												{partyCredits[currency.id]}
 											</span>
 										)}
 									</div>
@@ -195,25 +198,25 @@ export default function PartyStash() {
 							</div>
 
 							<div className="flex justify-end gap-2">
-								{isEditingGold ? (
+								{isEditingCredits ? (
 									<>
 										<Button
 											variant="outline"
 											onClick={() => {
-												setGoldEdits(partyGold);
-												setIsEditingGold(false);
+												setCreditEdits(partyCredits);
+												setIsEditingCredits(false);
 											}}
 										>
 											Cancel
 										</Button>
-										<Button onClick={handleSaveGold}>Save Wealth</Button>
+										<Button onClick={handleSaveCredits}>Save Wealth</Button>
 									</>
 								) : (
 									<Button
 										variant="outline"
-										onClick={() => setIsEditingGold(true)}
+										onClick={() => setIsEditingCredits(true)}
 									>
-										<Coins className="w-4 h-4 mr-2" /> Edit Coins
+										<Coins className="w-4 h-4 mr-2" /> Edit Credits
 									</Button>
 								)}
 							</div>

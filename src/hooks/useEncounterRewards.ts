@@ -286,13 +286,13 @@ function generateLootForEncounter(
 	const loot: Array<{ name: string; value: number; description?: string }> = [];
 
 	// Basic loot generation based on total XP
-	const goldValue = Math.floor(totalXP * 0.1); // 10% of XP in gold value
+	const creditValue = Math.floor(totalXP * 0.1);
 
-	if (goldValue > 0) {
+	if (creditValue > 0) {
 		loot.push({
-			name: "Gold Pieces",
-			value: goldValue,
-			description: "Coins recovered from the encounter",
+			name: "Gate Credits",
+			value: creditValue,
+			description: "Bureau Credits issued for verified encounter salvage",
 		});
 	}
 

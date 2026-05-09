@@ -189,6 +189,7 @@ export interface StaticCompendiumEntry {
 	ritual?: boolean | null;
 	effect_type?: string | null;
 	activation_action?: string | null;
+	activation?: Record<string, Json> | string | null;
 	uses_per_rest?: string | null;
 	requires_level?: number | null;
 	requires_job?: Record<string, Json> | null;

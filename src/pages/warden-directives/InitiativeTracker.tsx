@@ -46,6 +46,7 @@ import {
 	type ResolutionOutcome,
 	resolveAttack,
 	resolveDamage,
+	resolveEffect,
 	resolveHealing,
 	resolveSave,
 } from "@/lib/actionResolution";
@@ -918,7 +919,9 @@ const InitiativeTracker = () => {
 					? resolveSave(pendingWithMode)
 					: pending.kind === "healing"
 						? resolveHealing(pending)
-						: resolveDamage(pending);
+						: pending.kind === "effect"
+							? resolveEffect(pending)
+							: resolveDamage(pending);
 
 		if (outcome.kind === "save" && pending.save?.ability) {
 			const ability = pending.save.ability.toLowerCase();

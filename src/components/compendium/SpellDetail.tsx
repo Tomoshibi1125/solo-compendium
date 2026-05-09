@@ -19,6 +19,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
 import type {
@@ -114,7 +115,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				name,
 				source: { type: "spell", entryId: data.id },
 				kind: "attack",
-				attack: { roll: `1d20+${bonus}` },
+				attack: { roll: buildAttackRollFormula(bonus) },
 				damage: damageRoll ? { roll: String(damageRoll) } : undefined,
 				appliesConditions: Array.isArray(m?.condition)
 					? m.condition
@@ -249,6 +250,25 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							Resolve in Initiative
 						</Button>
 					</div>
+					{mechanics && (
+						<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+							{(mechanics as CompendiumMechanics).attack && (
+								<span>
+									Rank/default attack:{" "}
+									{buildAttackRollFormula(rankBonus(data.rank))}
+								</span>
+							)}
+							{(mechanics as CompendiumMechanics).saving_throw && (
+								<span>
+									Rank/default save: DC{" "}
+									{typeof (mechanics as CompendiumMechanics).saving_throw
+										?.dc === "number"
+										? (mechanics as CompendiumMechanics).saving_throw?.dc
+										: rankSaveDC(data.rank)}
+								</span>
+							)}
+						</div>
+					)}
 				</div>
 			</AscendantWindow>
 

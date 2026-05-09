@@ -31,6 +31,85 @@ export const items_part1: Item[] = [
 			"Available from Hunter Association medical supply depots. Unglamorous but essential.",
 		tags: ["equipment", "area", "offensive", "single-target", "debuff"],
 		theme_tags: ["black-market", "experimental", "elite-tier"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "1a6e1dfe",
+				payload_complete: true,
+				uniqueness_seed: "bg-emr-uniform::Emergency Medical Responder Uniform",
+				variant_note:
+					"Tailored uniform. Conveys formal Bureau status; +2 to Intimidation checks against civilians.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_attire",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Emergency Medical Responder Uniform keys standard gear attire rules through signature 380589d8.",
+				role: "utility",
+				signature: "380589d8",
+				theme: "standard",
+			},
+			passive_rules: ["+1 to Medicine checks when worn"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution: "+1 to Medicine checks when worn",
+				passive_effects: ["+1 to Medicine checks when worn"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-trauma-kit",
@@ -62,6 +141,84 @@ export const items_part1: Item[] = [
 			"Available at Hunter Association supply depots. Required kit for any certified medic on a gate team.",
 		tags: ["equipment", "stealth", "control", "support"],
 		theme_tags: ["mana-overflow", "guild-ops", "ancient-power"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "6f76a11c",
+				payload_complete: true,
+				uniqueness_seed: "bg-trauma-kit::First-Aid Trauma Kit",
+				variant_note: "Bureau standard toolkit. +2 to relevant tool checks.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_kit",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"First-Aid Trauma Kit keys standard gear kit rules through signature 66eccdea.",
+				role: "utility",
+				signature: "66eccdea",
+				theme: "standard",
+			},
+			passive_rules: ["+2 to Medicine checks to stabilize a creature"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution: "+2 to Medicine checks to stabilize a creature",
+				passive_effects: ["+2 to Medicine checks to stabilize a creature"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-phantom-pager",
@@ -95,6 +252,89 @@ export const items_part1: Item[] = [
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "psychic", "single-target"],
 		theme_tags: ["modern-warfare", "dimensional-bleed"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9bde0dbf",
+				payload_complete: true,
+				uniqueness_seed: "bg-phantom-pager::Phantom Pager",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Phantom Pager keys void gear misc rules through signature 4e51c3a4.",
+				role: "utility",
+				signature: "4e51c3a4",
+				theme: "void",
+			},
+			passive_rules: [
+				"Buzzes faintly when within 300 feet of an unstable rift (50% reliability)",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Buzzes faintly when within 300 feet of an unstable rift (50% reliability)",
+				passive_effects: [
+					"Buzzes faintly when within 300 feet of an unstable rift (50% reliability)",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-cracked-laptop",
@@ -127,6 +367,85 @@ export const items_part1: Item[] = [
 			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "lightning", "necrotic", "defensive"],
 		theme_tags: ["guild-ops", "ancient-power", "urban-combat"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "7deabe43",
+				payload_complete: true,
+				uniqueness_seed: "bg-cracked-laptop::Cracked-Screen Laptop",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Cracked-Screen Laptop keys standard gear misc rules through signature 70484368.",
+				role: "utility",
+				signature: "70484368",
+				theme: "standard",
+			},
+			passive_rules: ["+1 to Investigation checks involving data analysis"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+1 to Investigation checks involving data analysis",
+				passive_effects: ["+1 to Investigation checks involving data analysis"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-company-badge",
@@ -155,6 +474,86 @@ export const items_part1: Item[] = [
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "shadow", "control", "void"],
 		theme_tags: ["ancient-power", "elite-tier", "survival"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9ecfee76",
+				payload_complete: true,
+				uniqueness_seed: "bg-company-badge::Dissolved Corporation ID Badge",
+				variant_note:
+					"Bureau-recognized ID + lattice-coded encryption. Grants access to restricted Bureau labs.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_credential",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Dissolved Corporation ID Badge keys standard gear credential rules through signature 234755cf.",
+				role: "utility",
+				signature: "234755cf",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-business-suit",
@@ -186,6 +585,85 @@ export const items_part1: Item[] = [
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "debuff", "buff", "necrotic"],
 		theme_tags: ["rift-energy", "survival"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "16ad8853",
+				payload_complete: true,
+				uniqueness_seed: "bg-business-suit::Crumpled Business Suit",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Crumpled Business Suit keys standard gear misc rules through signature 801795e7.",
+				role: "utility",
+				signature: "801795e7",
+				theme: "standard",
+			},
+			passive_rules: ["+1 to Persuasion checks in formal settings"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution: "+1 to Persuasion checks in formal settings",
+				passive_effects: ["+1 to Persuasion checks in formal settings"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-safety-vest",
@@ -198,7 +676,7 @@ export const items_part1: Item[] = [
 		weight: 2,
 		value: 10,
 		item_type: "armor",
-		armor_class: "11 + Dex modifier",
+		armor_class: "11 + AGI modifier",
 		armor_type: "Light",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -216,6 +694,88 @@ export const items_part1: Item[] = [
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "debuff", "utility", "psychic", "healing"],
 		theme_tags: ["ancient-power", "mana-overflow", "rift-energy"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9db05e72",
+				payload_complete: true,
+				uniqueness_seed: "bg-safety-vest::Reinforced Safety Vest",
+				variant_note:
+					"Mana-stable weave. Resistance to a chosen damage type while attuned.",
+			},
+			formulas: {
+				armor_class: "11 + AGI modifier",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Reinforced Safety Vest keys standard armor light rules through signature 17ca6b24.",
+				role: "defense",
+				signature: "17ca6b24",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "armor_class",
+				armor_class: "11 + AGI modifier",
+				armor_type: "Light",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "bg-dented-hardhat",
@@ -247,6 +807,88 @@ export const items_part1: Item[] = [
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "debuff", "shadow", "single-target"],
 		theme_tags: ["ancient-power", "dungeon-core", "hunter-bureau"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "41da64dd",
+				payload_complete: true,
+				uniqueness_seed: "bg-dented-hardhat::Dented Hard Hat",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Dented Hard Hat keys standard gear misc rules through signature 5e3c4073.",
+				role: "utility",
+				signature: "5e3c4073",
+				theme: "standard",
+			},
+			passive_rules: ["Advantage on saves against falling debris and cave-ins"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Advantage on saves against falling debris and cave-ins",
+				passive_effects: [
+					"Advantage on saves against falling debris and cave-ins",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-heavy-multitool",
@@ -278,6 +920,85 @@ export const items_part1: Item[] = [
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "support", "damage", "stealth"],
 		theme_tags: ["classified", "survival"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "1a52ad51",
+				payload_complete: true,
+				uniqueness_seed: "bg-heavy-multitool::Heavy-Duty Multi-Tool",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Heavy-Duty Multi-Tool keys standard gear misc rules through signature fd6d979b.",
+				role: "utility",
+				signature: "fd6d979b",
+				theme: "standard",
+			},
+			passive_rules: ["+1 to checks involving improvised repairs"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution: "+1 to checks involving improvised repairs",
+				passive_effects: ["+1 to checks involving improvised repairs"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-press-badge",
@@ -312,6 +1033,90 @@ export const items_part1: Item[] = [
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "burst", "single-target"],
 		theme_tags: ["experimental", "elite-tier"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "695adeca",
+				payload_complete: true,
+				uniqueness_seed: "bg-press-badge::Weathered Press Badge",
+				variant_note:
+					"Bureau-recognized ID. +1 to social checks made with Bureau personnel.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_credential",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Weathered Press Badge keys standard gear credential rules through signature 88253395.",
+				role: "utility",
+				signature: "88253395",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+2 to Persuasion checks when requesting access or information from officials",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+2 to Persuasion checks when requesting access or information from officials",
+				passive_effects: [
+					"+2 to Persuasion checks when requesting access or information from officials",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-voice-recorder",
@@ -343,6 +1148,86 @@ export const items_part1: Item[] = [
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "healing", "stealth", "damage"],
 		theme_tags: ["experimental", "rift-energy"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "357fdb60",
+				payload_complete: true,
+				uniqueness_seed: "bg-voice-recorder::Digital Voice Recorder",
+				variant_note:
+					"+1 to Investigation checks involving data analysis and surveillance.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_electronics",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Digital Voice Recorder keys standard gear electronics rules through signature df7b0810.",
+				role: "utility",
+				signature: "df7b0810",
+				theme: "standard",
+			},
+			passive_rules: ["+1 to Investigation checks involving interviews"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+1 to Investigation checks involving interviews",
+				passive_effects: ["+1 to Investigation checks involving interviews"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-encrypted-notebook",
@@ -377,6 +1262,90 @@ export const items_part1: Item[] = [
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "single-target", "stealth"],
 		theme_tags: ["classified", "guild-ops"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "83b9a7c2",
+				payload_complete: true,
+				uniqueness_seed: "bg-encrypted-notebook::Encrypted Contact Notebook",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Encrypted Contact Notebook keys standard gear misc rules through signature 52e644ef.",
+				role: "utility",
+				signature: "52e644ef",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Contains d4 useful contacts in any major city (Warden discretion)",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Contains d4 useful contacts in any major city (Warden discretion)",
+				passive_effects: [
+					"Contains d4 useful contacts in any major city (Warden discretion)",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-market-stall",
@@ -406,6 +1375,86 @@ export const items_part1: Item[] = [
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "damage", "lightning"],
 		theme_tags: ["gate-zone", "black-market", "shadow-domain"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "f6aa3d87",
+				payload_complete: true,
+				uniqueness_seed: "bg-market-stall::Collapsible Market Stall",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Collapsible Market Stall keys standard gear misc rules through signature f7577325.",
+				role: "utility",
+				signature: "f7577325",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-lucky-coin",
@@ -440,6 +1489,89 @@ export const items_part1: Item[] = [
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "healing", "sustained"],
 		theme_tags: ["classified", "post-awakening", "system-glitch"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e02733bb",
+				payload_complete: true,
+				uniqueness_seed: "bg-lucky-coin::Lucky First-Sale Coin",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Lucky First-Sale Coin keys standard gear misc rules through signature afb97053.",
+				role: "utility",
+				signature: "afb97053",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Once per long rest, reroll a failed Persuasion check involving commerce",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Once per long rest, reroll a failed Persuasion check involving commerce",
+				passive_effects: [
+					"Once per long rest, reroll a failed Persuasion check involving commerce",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-customer-ledger",
@@ -474,6 +1606,90 @@ export const items_part1: Item[] = [
 			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "control", "mobility", "defensive", "support"],
 		theme_tags: ["dimensional-bleed", "elite-tier"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "724178ce",
+				payload_complete: true,
+				uniqueness_seed: "bg-customer-ledger::Customer Ledger",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Customer Ledger keys standard gear misc rules through signature 6e46fc8f.",
+				role: "utility",
+				signature: "6e46fc8f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+1 to Persuasion checks in marketplace or commercial settings",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+1 to Persuasion checks in marketplace or commercial settings",
+				passive_effects: [
+					"+1 to Persuasion checks in marketplace or commercial settings",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-security-uniform",
@@ -486,7 +1702,7 @@ export const items_part1: Item[] = [
 		weight: 5,
 		value: 25,
 		item_type: "armor",
-		armor_class: "12 + Dex modifier",
+		armor_class: "12 + AGI modifier",
 		armor_type: "Light",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -504,6 +1720,86 @@ export const items_part1: Item[] = [
 			"Traded by a nomadic Awakened who claimed to have no memory of acquiring it.",
 		tags: ["equipment", "single-target", "defensive"],
 		theme_tags: ["system-glitch", "black-market"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "587e25f8",
+				payload_complete: true,
+				uniqueness_seed: "bg-security-uniform::Reinforced Security Uniform",
+				variant_note:
+					"Tailored uniform. Conveys formal Bureau status; +2 to Intimidation checks against civilians.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_attire",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Reinforced Security Uniform keys standard gear attire rules through signature 4ede6bf1.",
+				role: "utility",
+				signature: "4ede6bf1",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-tactical-flashlight",
@@ -539,6 +1835,88 @@ export const items_part1: Item[] = [
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "sustained", "mobility", "psychic", "buff"],
 		theme_tags: ["elite-tier", "gate-zone"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "51f4db97",
+				payload_complete: true,
+				uniqueness_seed: "bg-tactical-flashlight::Tactical Flashlight Baton",
+				variant_note:
+					"Acts as an arcane focus. Once per short rest, cast a known cantrip without expending an action.",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d4 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "focus_wand",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Tactical Flashlight Baton keys standard focus wand rules through signature aa899e2e.",
+				role: "offense",
+				signature: "aa899e2e",
+				theme: "standard",
+			},
+			passive_rules: ["Provides 60 ft bright light, 120 ft dim light"],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "bludgeoning",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d4 + STR modifier",
+				damage_roll: true,
+				on_hit: ["Provides 60 ft bright light, 120 ft dim light"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "bg-guild-radio",
@@ -571,6 +1949,90 @@ export const items_part1: Item[] = [
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "defensive", "psychic"],
 		theme_tags: ["mana-overflow", "system-glitch"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "e89c1b4a",
+				payload_complete: true,
+				uniqueness_seed: "bg-guild-radio::Modified Security Radio",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Modified Security Radio keys standard gear misc rules through signature d15813db.",
+				role: "utility",
+				signature: "d15813db",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Can monitor guild and emergency frequencies within 5 miles",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Can monitor guild and emergency frequencies within 5 miles",
+				passive_effects: [
+					"Can monitor guild and emergency frequencies within 5 miles",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-delivery-uniform",
@@ -600,6 +2062,86 @@ export const items_part1: Item[] = [
 			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "sustained", "defensive", "utility", "offensive"],
 		theme_tags: ["survival", "regent-era", "rift-energy"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "587e25f8",
+				payload_complete: true,
+				uniqueness_seed: "bg-delivery-uniform::Reflective Delivery Uniform",
+				variant_note:
+					"+1 to social checks in formal or guild-administrative settings.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_attire",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Reflective Delivery Uniform keys standard gear attire rules through signature c221e507.",
+				role: "utility",
+				signature: "c221e507",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-gate-gps",
@@ -635,6 +2177,91 @@ export const items_part1: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "ice", "support", "lightning"],
 		theme_tags: ["modern-warfare", "survival"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "5db8f6d7",
+				payload_complete: true,
+				uniqueness_seed: "bg-gate-gps::Gate-Zone GPS Device",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Gate-Zone GPS Device keys standard gear misc rules through signature c2b180b9.",
+				role: "utility",
+				signature: "c2b180b9",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+2 to Survival checks to navigate urban environments",
+				"Shows known rift locations within 10 miles",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+2 to Survival checks to navigate urban environments",
+				passive_effects: [
+					"+2 to Survival checks to navigate urban environments",
+					"Shows known rift locations within 10 miles",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-thermal-bag",
@@ -670,6 +2297,92 @@ export const items_part1: Item[] = [
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "void", "radiant", "sustained", "buff"],
 		theme_tags: ["post-awakening", "gate-zone", "modern-warfare"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "d0564012",
+				payload_complete: true,
+				uniqueness_seed: "bg-thermal-bag::Aetheric Thermal Bag",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Thermal Bag keys aetheric gear misc rules through signature 107f8294.",
+				role: "utility",
+				signature: "107f8294",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Keeps contents at a stable temperature for 24 hours",
+				"Potions stored inside maintain potency 50% longer",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Keeps contents at a stable temperature for 24 hours",
+				passive_effects: [
+					"Keeps contents at a stable temperature for 24 hours",
+					"Potions stored inside maintain potency 50% longer",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-teacher-satchel",
@@ -703,6 +2416,89 @@ export const items_part1: Item[] = [
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "mobility", "psychic"],
 		theme_tags: ["dimensional-bleed", "mana-overflow"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "b196125b",
+				payload_complete: true,
+				uniqueness_seed: "bg-teacher-satchel::Teacher's Leather Satchel",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Teacher's Leather Satchel keys standard gear misc rules through signature 33f7c2f6.",
+				role: "utility",
+				signature: "33f7c2f6",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Can hold up to 30 lbs of books and documents without encumbrance",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Can hold up to 30 lbs of books and documents without encumbrance",
+				passive_effects: [
+					"Can hold up to 30 lbs of books and documents without encumbrance",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-red-pen",
@@ -732,6 +2528,85 @@ export const items_part1: Item[] = [
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "burst", "radiant", "perception"],
 		theme_tags: ["dungeon-core", "rift-energy"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "f6aa3d87",
+				payload_complete: true,
+				uniqueness_seed: "bg-red-pen::Red Grading Pen",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Red Grading Pen keys standard gear misc rules through signature 4ea61b4b.",
+				role: "utility",
+				signature: "4ea61b4b",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Resolve the item through the listed utility effect.",
+				passive_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-ironic-textbook",
@@ -763,6 +2638,84 @@ export const items_part1: Item[] = [
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "lightning", "shadow"],
 		theme_tags: ["mana-overflow", "survival", "dimensional-bleed"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "1754db3b",
+				payload_complete: true,
+				uniqueness_seed: "bg-ironic-textbook::World History Textbook",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"World History Textbook keys standard gear misc rules through signature e759f19f.",
+				role: "utility",
+				signature: "e759f19f",
+				theme: "standard",
+			},
+			passive_rules: ["+1 to History checks involving pre-gate events"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution: "+1 to History checks involving pre-gate events",
+				passive_effects: ["+1 to History checks involving pre-gate events"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-oil-coveralls",
@@ -795,6 +2748,86 @@ export const items_part1: Item[] = [
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "support", "utility", "healing"],
 		theme_tags: ["mana-overflow", "experimental"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "957c032f",
+				payload_complete: true,
+				uniqueness_seed: "bg-oil-coveralls::Oil-Stained Coveralls",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Oil-Stained Coveralls keys standard gear misc rules through signature 94125302.",
+				role: "utility",
+				signature: "94125302",
+				theme: "standard",
+			},
+			passive_rules: ["Resistance to acid damage from mechanical fluids"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Resistance to acid damage from mechanical fluids",
+				passive_effects: ["Resistance to acid damage from mechanical fluids"],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-rune-wrenches",
@@ -828,6 +2861,89 @@ export const items_part1: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "sustained", "defensive", "healing"],
 		theme_tags: ["forbidden", "mana-overflow"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "a509d83b",
+				payload_complete: true,
+				uniqueness_seed: "bg-rune-wrenches::Rune-Modified Wrench Set",
+				variant_note: "A piece of Bureau-quartermastered field gear.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Rune-Modified Wrench Set keys standard gear misc rules through signature e7cbdf0a.",
+				role: "utility",
+				signature: "e7cbdf0a",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+2 to checks involving repair or dismantling mechanical devices",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+2 to checks involving repair or dismantling mechanical devices",
+				passive_effects: [
+					"+2 to checks involving repair or dismantling mechanical devices",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-aetheric-scanner",
@@ -863,6 +2979,92 @@ export const items_part1: Item[] = [
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "support", "utility"],
 		theme_tags: ["dimensional-bleed", "dungeon-core"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "ec02b792",
+				payload_complete: true,
+				uniqueness_seed: "bg-aetheric-scanner::Aetheric Diagnostic Scanner",
+				variant_note:
+					"Mana-trace scanner. Can detect spellcasting within 30 ft. as an action.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "gear_electronics",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Aetheric Diagnostic Scanner keys aetheric gear electronics rules through signature 14d9109e.",
+				role: "utility",
+				signature: "14d9109e",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Can detect aetheric energy in objects within 10 feet",
+				"+1 to Arcana checks involving magitech",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Can detect aetheric energy in objects within 10 feet",
+				passive_effects: [
+					"Can detect aetheric energy in objects within 10 feet",
+					"+1 to Arcana checks involving magitech",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-fire-jacket",
@@ -875,7 +3077,7 @@ export const items_part1: Item[] = [
 		weight: 8,
 		value: 75,
 		item_type: "armor",
-		armor_class: "13 + Dex modifier (max 2)",
+		armor_class: "13 + AGI modifier (max 2)",
 		armor_type: "Medium",
 		effects: {
 			passive: ["Resistance to fire damage from non-magical sources"],
@@ -896,6 +3098,90 @@ export const items_part1: Item[] = [
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "stealth", "damage", "debuff", "support"],
 		theme_tags: ["gate-zone", "shadow-domain"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "3c2172f6",
+				payload_complete: true,
+				uniqueness_seed: "bg-fire-jacket::Guild-Reinforced Tactical Jacket",
+				variant_note:
+					"Stealth-treated armor. Advantage on Stealth checks while worn.",
+			},
+			formulas: {
+				armor_class: "13 + AGI modifier (max 2)",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Guild-Reinforced Tactical Jacket keys standard armor light rules through signature 41432c88.",
+				role: "defense",
+				signature: "41432c88",
+				theme: "standard",
+			},
+			passive_rules: ["Resistance to fire damage from non-magical sources"],
+			resolution: {
+				type: "armor_class",
+				armor_class: "13 + AGI modifier (max 2)",
+				armor_type: "Medium",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [
+					"Resistance to fire damage from non-magical sources",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "bg-halligan-bar",
@@ -934,6 +3220,91 @@ export const items_part1: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "debuff", "control", "psychic"],
 		theme_tags: ["post-awakening", "regent-era", "gate-zone"],
+		activation: {
+			type: "action",
+			consumes_item: false,
+			cost: "1 action",
+			frequency: "at-will",
+			trigger: "User makes an Attack action with the item.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: ["STR"],
+				armor_class: [],
+				attack: ["STR"],
+				notes:
+					"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "action",
+				consumes_item: false,
+				cost: "1 action",
+				frequency: "at-will",
+				trigger: "User makes an Attack action with the item.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "9b2ca28b",
+				payload_complete: true,
+				uniqueness_seed: "bg-halligan-bar::Halligan Bar",
+				variant_note: "",
+			},
+			formulas: {
+				attack_roll: "d20 + STR modifier + proficiency bonus",
+				damage_roll: "1d8 + STR modifier",
+				recharge: "at-will",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "melee_blade_versatile",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Halligan Bar keys standard melee blade versatile rules through signature c3df1b66.",
+				role: "offense",
+				signature: "c3df1b66",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Advantage on Strength checks to force open doors and barriers",
+			],
+			resolution: {
+				type: "weapon_attack",
+				damage_type: "bludgeoning",
+				active_options: [],
+				attack_roll: true,
+				damage_formula: "1d8 + STR modifier",
+				damage_roll: true,
+				on_hit: [
+					"Advantage on Strength checks to force open doors and barriers",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "Melee",
+				area: null,
+				line_of_effect: "standard weapon targeting",
+				target: "One creature or object",
+			},
+		},
 	},
 	{
 		id: "bg-dept-radio",
@@ -965,6 +3336,87 @@ export const items_part1: Item[] = [
 			"Recovered from a time-locked chest that required three different elemental keys to open.",
 		tags: ["equipment", "shadow", "area", "debuff"],
 		theme_tags: ["modern-warfare", "dimensional-bleed", "dungeon-core"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "5b95b349",
+				payload_complete: true,
+				uniqueness_seed: "bg-dept-radio::Gate-Zone Department Radio",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Gate-Zone Department Radio keys standard gear misc rules through signature 14a9341e.",
+				role: "utility",
+				signature: "14a9341e",
+				theme: "standard",
+			},
+			passive_rules: ["Communication range: 3 miles (1 mile in gate zones)"],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Communication range: 3 miles (1 mile in gate zones)",
+				passive_effects: [
+					"Communication range: 3 miles (1 mile in gate zones)",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-case-binder",
@@ -997,6 +3449,90 @@ export const items_part1: Item[] = [
 			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "control", "buff", "burst"],
 		theme_tags: ["forbidden", "elite-tier", "experimental"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "1d8658da",
+				payload_complete: true,
+				uniqueness_seed: "bg-case-binder::Case File Binder",
+				variant_note:
+					"A bound creature has disadvantage on spellcasting checks. DC 20 Strength or DC 25 Sleight of Hand to escape.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_restraint",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Case File Binder keys standard gear restraint rules through signature e2ced2a3.",
+				role: "utility",
+				signature: "e2ced2a3",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+1 to Insight checks when reviewing documents or records",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+1 to Insight checks when reviewing documents or records",
+				passive_effects: [
+					"+1 to Insight checks when reviewing documents or records",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-govt-id",
@@ -1030,6 +3566,90 @@ export const items_part1: Item[] = [
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "single-target", "support"],
 		theme_tags: ["guild-ops", "gate-zone"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "db7d9bb3",
+				payload_complete: true,
+				uniqueness_seed: "bg-govt-id::Government-Issued ID",
+				variant_note:
+					"A field accessory. Cataloged in the Bureau quartermaster registry.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Government-Issued ID keys standard gear misc rules through signature d87bf642.",
+				role: "utility",
+				signature: "d87bf642",
+				theme: "standard",
+			},
+			passive_rules: [
+				"Grants access to government and Bureau-affiliated public facilities",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Grants access to government and Bureau-affiliated public facilities",
+				passive_effects: [
+					"Grants access to government and Bureau-affiliated public facilities",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-deescalation-guide",
@@ -1061,6 +3681,89 @@ export const items_part1: Item[] = [
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "defensive", "damage", "perception", "debuff"],
 		theme_tags: ["black-market", "elite-tier", "regent-era"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "2ed7205f",
+				payload_complete: true,
+				uniqueness_seed: "bg-deescalation-guide::Crisis De-Escalation Guide",
+				variant_note: "A miscellaneous piece of standard Hunter kit.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_misc",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Crisis De-Escalation Guide keys standard gear misc rules through signature d753bdc1.",
+				role: "utility",
+				signature: "d753bdc1",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+1 to Persuasion checks to calm frightened or hostile NPCs",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+1 to Persuasion checks to calm frightened or hostile NPCs",
+				passive_effects: [
+					"+1 to Persuasion checks to calm frightened or hostile NPCs",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-tactical-vest",
@@ -1073,7 +3776,7 @@ export const items_part1: Item[] = [
 		weight: 8,
 		value: 50,
 		item_type: "armor",
-		armor_class: "14 + Dex modifier (max 2)",
+		armor_class: "14 + AGI modifier (max 2)",
 		armor_type: "Medium",
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -1092,6 +3795,88 @@ export const items_part1: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "psychic", "offensive", "single-target", "radiant"],
 		theme_tags: ["survival", "elite-tier", "mana-overflow"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state: "must be equipped; attunement required when listed",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: ["AGI"],
+				requirements: [],
+				attack: [],
+				notes:
+					"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "132dcb94",
+				payload_complete: true,
+				uniqueness_seed: "bg-tactical-vest::Department-Issue Tactical Vest",
+				variant_note:
+					"Light, flexible armor weave. Standard kit for fast movers.",
+			},
+			formulas: {
+				armor_class: "14 + AGI modifier (max 2)",
+				recharge: "continuous",
+				shield_bonus: null,
+				speed_penalty: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "armor_light",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Department-Issue Tactical Vest keys standard armor light rules through signature 6d3bf9f6.",
+				role: "defense",
+				signature: "6d3bf9f6",
+				theme: "standard",
+			},
+			passive_rules: [],
+			resolution: {
+				type: "armor_class",
+				armor_class: "14 + AGI modifier (max 2)",
+				armor_type: "Medium",
+				stealth_disadvantage: false,
+				strength_requirement: null,
+				equipped_effects: [],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "worn or wielded",
+				area: null,
+				line_of_effect: "equipment slot",
+				target: "Self",
+			},
+		},
 	},
 	{
 		id: "bg-mana-handcuffs",
@@ -1126,6 +3911,92 @@ export const items_part1: Item[] = [
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "burst", "control", "ice", "necrotic"],
 		theme_tags: ["experimental", "dimensional-bleed", "rift-energy"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "51cf00ca",
+				payload_complete: true,
+				uniqueness_seed: "bg-mana-handcuffs::Mana-Inert Handcuffs",
+				variant_note:
+					"Bound creatures with mana lattice augmentation are treated as having no augmentation. DC 22 Strength to break.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "uncommon",
+				archetype: "gear_restraint",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Mana-Inert Handcuffs keys aetheric gear restraint rules through signature 1a581243.",
+				role: "utility",
+				signature: "1a581243",
+				theme: "aetheric",
+			},
+			passive_rules: [
+				"Restrained creature has disadvantage on spellcasting checks",
+				"Requires DC 20 Strength or DC 25 Sleight of Hand to escape",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"Restrained creature has disadvantage on spellcasting checks",
+				passive_effects: [
+					"Restrained creature has disadvantage on spellcasting checks",
+					"Requires DC 20 Strength or DC 25 Sleight of Hand to escape",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: false,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: false,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 	{
 		id: "bg-police-badge",
@@ -1160,5 +4031,91 @@ export const items_part1: Item[] = [
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "control", "buff", "mobility", "necrotic"],
 		theme_tags: ["survival", "post-awakening", "system-glitch"],
+		activation: {
+			type: "passive",
+			consumes_item: false,
+			cost: "no action",
+			frequency: "continuous",
+			trigger: "Equipped, carried, worn, or used as described.",
+		},
+		limitations: {
+			cursed: false,
+			charges: null,
+			attunement_required: false,
+			equipment_state:
+				"must be carried, consumed, or deployed as the activation describes",
+			recharge: "as listed",
+			restrictions: [],
+		},
+		mechanics: {
+			ability_modifiers: {
+				damage: [],
+				armor_class: [],
+				attack: [],
+				notes:
+					"Utility and consumable items only call for an ability when their explicit rule names one.",
+				save_dc: [],
+			},
+			action_economy: {
+				type: "passive",
+				consumes_item: false,
+				cost: "no action",
+				frequency: "continuous",
+				trigger: "Equipped, carried, worn, or used as described.",
+			},
+			active_rules: [],
+			audit: {
+				fingerprint: "ae21112b",
+				payload_complete: true,
+				uniqueness_seed: "bg-police-badge::Ascendant Bureau Badge",
+				variant_note:
+					"Bureau-recognized ID. +1 to social checks made with Bureau personnel.",
+			},
+			formulas: {
+				effect_formula: "explicit non-damage item effect",
+				recharge: "continuous",
+				save_dc: null,
+			},
+			identity: {
+				rarity: "common",
+				archetype: "gear_credential",
+				canon_basis: "RA canon",
+				distinguishing_rule:
+					"Ascendant Bureau Badge keys standard gear credential rules through signature 5485e27f.",
+				role: "utility",
+				signature: "5485e27f",
+				theme: "standard",
+			},
+			passive_rules: [
+				"+2 to Intimidation checks against non-hostile NPCs",
+				"Grants access to law enforcement facilities and crime scenes",
+			],
+			resolution: {
+				type: "equipment_utility",
+				active_options: [],
+				non_damage_resolution:
+					"+2 to Intimidation checks against non-hostile NPCs",
+				passive_effects: [
+					"+2 to Intimidation checks against non-hostile NPCs",
+					"Grants access to law enforcement facilities and crime scenes",
+				],
+			},
+			rules_payload_version: "ra-item-v1",
+			source_integrity: {
+				allows_5e_baseline: true,
+				canon_guardrails: [
+					"Use RA ability names in formulas.",
+					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+				],
+				ra_specific_mundane: true,
+			},
+			targeting: {
+				range: "self",
+				area: null,
+				line_of_effect: "as item description permits",
+				target: "Self, touched object, or listed utility target",
+			},
+		},
 	},
 ];
