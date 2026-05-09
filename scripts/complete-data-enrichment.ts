@@ -3,10 +3,7 @@ import * as path from "path";
 import { comprehensiveFeats } from "../src/data/compendium/feats-comprehensive";
 import { powers } from "../src/data/compendium/powers";
 import { techniques } from "../src/data/compendium/techniques";
-import { runes_s } from "../src/data/compendium/runes/spell-rank-s";
-import { runes_power_powers } from "../src/data/compendium/runes/power-powers";
-import { technique_runes } from "../src/data/compendium/runes/technique-techniques";
-import { spells_a } from "../src/data/compendium/spells/rank-a";
+// Removed rank-a import
 import { sigils } from "../src/data/compendium/sigils";
 import { tattoos } from "../src/data/compendium/tattoos";
 
@@ -46,34 +43,8 @@ const filesToProcess = [
 		importPath: "../../types/compendium",
 		data: tattoos,
 	},
-	{
-		name: "src/data/compendium/runes/spell-rank-s.ts",
-		exportName: "runes_s",
-		type: "CompendiumRune",
-		importPath: "../../../types/compendium",
-		data: runes_s,
-	},
-	{
-		name: "src/data/compendium/runes/power-powers.ts",
-		exportName: "runes_power_powers",
-		type: "CompendiumRune",
-		importPath: "../../../types/compendium",
-		data: runes_power_powers,
-	},
-	{
-		name: "src/data/compendium/runes/technique-techniques.ts",
-		exportName: "technique_runes",
-		type: "CompendiumRune",
-		importPath: "../../../types/compendium",
-		data: technique_runes,
-	},
-	{
-		name: "src/data/compendium/spells/rank-a.ts",
-		exportName: "spells_a",
-		type: "CompendiumSpell",
-		importPath: "../../../types/compendium",
-		data: spells_a,
-	},
+
+	// Removed rank-a.ts processing
 ];
 
 // Fillers

@@ -1,5 +1,72 @@
 import type { CompendiumPower } from "../../types/compendium";
 
+// ─── Unique lore and flavor pools ──────────────────────────
+const POWER_LORE: string[] = [
+	"Developed during a live gate-break when a Destroyer's Aetheric-Sight locked onto a kill-angle no one else could see.",
+	"Codified by the Striker nerve-gate training academy after analyzing 300 hours of A-Rank combat footage.",
+	"First performed instinctively by a Berserker in Overload state — she couldn't replicate it consciously for months.",
+	"Adapted from anomaly movement patterns observed by Stalkers during extended tracking operations.",
+	"Leaked from the Shadow Legion's restricted training archives when a defector joined a Bureau-licensed Guild.",
+	"Emerged when a Holy Knight's oath-manifestation produced a combat effect the Bureau had never classified.",
+	"Reverse-engineered from a gate boss's melee attack pattern by a Technomancer with high-speed recording equipment.",
+	"Discovered by an E-Rank Hunter who shouldn't have been able to execute it at all, according to Bureau models.",
+	"Standard curriculum at the Bureau's martial training facility since the Seoul Protocols.",
+	"Pieced together from three independent field reports filed by Assassins operating in different hemispheres.",
+	"Materialized as muscle memory during a double-Awakening event — the Hunter's body moved before his mind did.",
+	"Bureau kinesiologists documented the mana flow pattern and classified it as a 'combat instinct crystallization.'",
+	"Recorded by a Guild Master who spent six months training with wild Awakened in the Siberian gate-scarred wastelands.",
+	"Extracted from the combat logs of a Destroyer who solo-cleared twelve consecutive gates without resting.",
+	"Transmitted via the underground Awakened network known as the 'Umbral Cant' circuit.",
+	"Found encoded in the rhythmic patterns of a B-Rank gate's ambient mana field by a Technomancer music theorist.",
+	"Created during the Gwangju Crisis by a multi-class raid party improvising against phasing anomalies.",
+	"Bureau classified. Released to field operatives on a need-to-know basis after the Osaka Incident.",
+	"Originally a meditation exercise that produced combat applications when performed under extreme stress.",
+	"Adapted from pre-Bureau martial traditions by Awakened who trained without government oversight or formal technique.",
+	"Compiled after a Berserker's Overload discharge destroyed Bureau testing equipment and the facility wall behind it.",
+	"A Stalker observed a Beast-Class anomaly execute this maneuver and spent three months learning to replicate it.",
+	"Developed independently by a Destroyer and an Assassin who had never met — their mana-flow diagrams were identical.",
+	"Bureau combat instructors added this to the required curriculum after a single demonstration silenced every objection.",
+	"Donated to the Bureau archives by a retiring S-Rank Striker who called it 'the only technique that never let me down.'",
+	"Reconstructed from damaged body-cam footage of a National-Level Hunter engaging a Monarch-class anomaly.",
+	"First used in competition at the annual Bureau Martial Tournament, where it immediately became meta-defining.",
+	"Created by a Holy Knight who channeled her oath through her weapon for the first time during a near-death experience.",
+	"A Technomancer's device-calibration error accidentally produced the optimal mana flow for this technique.",
+	"Field-tested across 150 documented gate clears before the Bureau granted formal certification.",
+];
+
+const POWER_FLAVOR: string[] = [
+	"The gate boss felt this one. So did the floor beneath it.",
+	"Bureau combat analysts call it 'efficient.' The targets call it nothing — they don't get the chance.",
+	"It's not elegant. It's not subtle. It works.",
+	"The resonance feedback shakes the bones. Your bones. Their bones. Everyone's bones.",
+	"Veteran Hunters recognize the mana signature before they see the strike.",
+	"You don't learn this from a manual. You learn it from the thing trying to kill you.",
+	"The training dummy exploded. They don't use training dummies anymore.",
+	"Simple enough for an E-Rank. Devastating enough for an S-Rank.",
+	"Bureau safety protocols recommend a 10-foot clearance. Most Hunters ignore that.",
+	"It leaves scorch marks on gate-crystal. Gate-crystal doesn't burn.",
+	"The Academy teaches three forms. The field uses one: the one that works.",
+	"Every Guild has someone who can do this. Not every Guild has someone who survives doing it.",
+	"Quiet. Precise. Final.",
+	"The mana cost is measured in heartbeats. Usually two.",
+	"Bureau marksmanship instructors use this as the benchmark. Everyone falls short.",
+	"It's not a technique. It's a statement.",
+	"The older Hunters call it 'The Opening.' Because nothing stands after it.",
+	"You can feel it charge before you see it release. Smart enemies run.",
+	"The Bureau rates this as 'controlled lethality.' The definition of 'controlled' is generous.",
+	"It resonates through the weapon like a tuning fork. The weapon remembers.",
+	"There are faster techniques. There are stronger ones. This one is both.",
+	"The first time you land it, you understand what Awakening means.",
+	"Bureau medical staff keep antidotes ready when this technique is being practiced. Just in case.",
+	"Named by the Hunters who survived being on the receiving end. There weren't many.",
+	"The mana discharge is visible to the naked eye. It looks like lightning in slow motion.",
+	"Guild Masters demonstrate this once. The recruits never need to be told twice.",
+	"It requires absolute focus. Which is why Berserkers do it on instinct.",
+	"The Bureau classified it as 'non-lethal' until someone tested it at full power.",
+	"Clean execution. No wasted movement. No second chance needed.",
+	"The resonance pattern is unique to your Awakening. No two Hunters perform it the same way.",
+];
+
 type MartialJob =
 	| "Destroyer"
 	| "Berserker"
@@ -206,6 +273,7 @@ function makeSeeds(family: PowerFamily): PowerSeed[] {
 
 function makePower(seed: PowerSeed): CompendiumPower {
 	powerCounts[seed.level] += 1;
+	const seedIdx = seed.name.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
 	const dice = diceForLevel(seed.level);
 	const damageType = damageTypeForSeed(seed);
 	const save = saveForMode(seed.mode);
@@ -221,7 +289,7 @@ function makePower(seed: PowerSeed): CompendiumPower {
 		name: seed.name,
 		display_name: seed.name,
 		description: descriptionFor(resolvedSeed, dice),
-		flavor: `${seed.name} is a field-ready awakened power for ${seed.classes.join(", ")} Ascendants.`,
+		flavor: POWER_FLAVOR[seedIdx % POWER_FLAVOR.length],
 		tags: ["awakened", "power", seed.mode, seed.school, ...seed.classes],
 		classes: seed.classes,
 		rarity: rarityForLevel(seed.level),
@@ -261,7 +329,8 @@ function makePower(seed: PowerSeed): CompendiumPower {
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
-		discovery_lore: `Bureau field auditors catalogued ${seed.name} after repeated reports from ${seed.classes.join(", ")} teams operating near unstable gates.`,
+		discovery_lore:
+			POWER_LORE[(seedIdx * 7 + seed.level * 3) % POWER_LORE.length],
 		theme_tags: [seed.mode, seed.theme, ...seed.classes.map(slug)],
 	};
 }

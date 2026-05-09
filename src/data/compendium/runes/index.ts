@@ -7,13 +7,6 @@ import type {
 	CompendiumTechnique,
 	CompendiumRune as RuneCompendiumEntry,
 } from "@/types/compendium";
-import { runes_power_powers } from "./power-powers";
-import { runes_a } from "./spell-rank-a";
-import { runes_b } from "./spell-rank-b";
-import { runes_c } from "./spell-rank-c";
-import { spell_rank_d_runes } from "./spell-rank-d";
-import { runes_s } from "./spell-rank-s";
-import { technique_runes } from "./technique-techniques";
 
 type RuneTeachKind = "spell" | "power" | "technique";
 
@@ -21,16 +14,6 @@ type AbilityEntry = CompendiumSpell | CompendiumPower | CompendiumTechnique;
 
 const RUNE_CROSS_CLASS_TEXT =
 	"Cross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.";
-
-const rawAuthoredRunes: RuneCompendiumEntry[] = [
-	...spell_rank_d_runes,
-	...runes_c,
-	...runes_b,
-	...runes_a,
-	...runes_s,
-	...runes_power_powers,
-	...technique_runes,
-];
 
 function slugifyRuneRef(value: string): string {
 	return value
@@ -52,61 +35,6 @@ function getAbilityLevel(kind: RuneTeachKind, entry: AbilityEntry): number {
 
 function getCoverageKeys(kind: RuneTeachKind, entry: AbilityEntry): string[] {
 	return [entry.id, slugifyRuneRef(entry.name)].map((ref) => `${kind}:${ref}`);
-}
-
-function buildCanonicalRefMap(): Map<string, string> {
-	const refs = new Map<string, string>();
-	const add = (kind: RuneTeachKind, entry: AbilityEntry) => {
-		for (const key of getCoverageKeys(kind, entry)) {
-			refs.set(key, entry.id);
-		}
-	};
-	spells.forEach((entry) => {
-		add("spell", entry);
-	});
-	powers.forEach((entry) => {
-		add("power", entry);
-	});
-	techniques.forEach((entry) => {
-		add("technique", entry as CompendiumTechnique);
-	});
-	return refs;
-}
-
-const canonicalRefMap = buildCanonicalRefMap();
-
-function normalizeAuthoredRuneTeaches(
-	rune: RuneCompendiumEntry,
-): RuneCompendiumEntry {
-	const teaches = rune.teaches;
-	if (!teaches?.ref) return rune;
-	const canonicalRef =
-		canonicalRefMap.get(`${teaches.kind}:${teaches.ref}`) ??
-		canonicalRefMap.get(`${teaches.kind}:${slugifyRuneRef(teaches.ref)}`);
-	if (!canonicalRef || canonicalRef === teaches.ref) return rune;
-	return {
-		...rune,
-		teaches: {
-			...teaches,
-			ref: canonicalRef,
-		},
-	};
-}
-
-const authoredRunes: RuneCompendiumEntry[] = rawAuthoredRunes.map(
-	normalizeAuthoredRuneTeaches,
-);
-
-function getExistingRuneCoverageKeys(
-	runes: RuneCompendiumEntry[],
-): Set<string> {
-	const keys = new Set<string>();
-	for (const rune of runes) {
-		const teaches = rune.teaches;
-		if (!teaches?.ref) continue;
-		keys.add(`${teaches.kind}:${teaches.ref}`);
-	}
-	return keys;
 }
 
 function formatAbilityValue(value: unknown): string | null {
@@ -334,7 +262,7 @@ function makeCatalogAuthoredRune(
 }
 
 function makeCatalogAuthoredRunes(): RuneCompendiumEntry[] {
-	const covered = getExistingRuneCoverageKeys(authoredRunes);
+	const covered = new Set<string>();
 	const catalogRunes: RuneCompendiumEntry[] = [];
 	const addMissing = (kind: RuneTeachKind, entry: AbilityEntry) => {
 		if (getCoverageKeys(kind, entry).some((key) => covered.has(key))) return;
@@ -357,7 +285,4 @@ function makeCatalogAuthoredRunes(): RuneCompendiumEntry[] {
 export const catalogAuthoredAbilityRunes: RuneCompendiumEntry[] =
 	makeCatalogAuthoredRunes();
 
-export const allRunes: RuneCompendiumEntry[] = [
-	...authoredRunes,
-	...catalogAuthoredAbilityRunes,
-];
+export const allRunes: RuneCompendiumEntry[] = [...catalogAuthoredAbilityRunes];

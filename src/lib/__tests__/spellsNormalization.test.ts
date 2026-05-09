@@ -9,11 +9,7 @@
  */
 import { describe, expect, it } from "vitest";
 import { spells } from "@/data/compendium/spells";
-import { spells_a } from "@/data/compendium/spells/rank-a";
-import { spells_b } from "@/data/compendium/spells/rank-b";
-import { spells_c } from "@/data/compendium/spells/rank-c";
 import { spells_d } from "@/data/compendium/spells/rank-d";
-import { spells_s } from "@/data/compendium/spells/rank-s";
 import { spells_supplemental } from "@/data/compendium/spells/supplemental";
 
 const CANONICAL_SCHOOLS = new Set([
@@ -90,10 +86,7 @@ const spellFunctionalFingerprint = (spell: (typeof spells)[number]): string =>
 describe("Spell catalog — coverage", () => {
 	it("contains the legacy rank files plus the expanded parity catalog", () => {
 		expect(spells_d).toHaveLength(15);
-		expect(spells_c).toHaveLength(15);
-		expect(spells_b).toHaveLength(15);
-		expect(spells_a).toHaveLength(15);
-		expect(spells_s).toHaveLength(15);
+
 		expect(spells.length).toBeGreaterThanOrEqual(450);
 		for (const [rank, minimum] of Object.entries(RANK_PARITY_MINIMUMS)) {
 			expect(

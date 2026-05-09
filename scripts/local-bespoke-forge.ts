@@ -5,19 +5,7 @@ import * as path from 'path';
 import { comprehensiveFeats } from '../src/data/compendium/feats-comprehensive';
 import { powers } from '../src/data/compendium/powers';
 import { techniques } from '../src/data/compendium/techniques';
-import { spells_a } from '../src/data/compendium/spells/rank-a';
-import { spells_b } from '../src/data/compendium/spells/rank-b';
-import { spells_c } from '../src/data/compendium/spells/rank-c';
-import { spells_d } from '../src/data/compendium/spells/rank-d';
-import { spells_s } from '../src/data/compendium/spells/rank-s';
 
-import { runes_power_powers } from '../src/data/compendium/runes/power-powers';
-import { technique_runes } from '../src/data/compendium/runes/technique-techniques';
-import { runes_a } from '../src/data/compendium/runes/spell-rank-a';
-import { runes_b } from '../src/data/compendium/runes/spell-rank-b';
-import { runes_c } from '../src/data/compendium/runes/spell-rank-c';
-import { spell_rank_d_runes } from '../src/data/compendium/runes/spell-rank-d';
-import { runes_s } from '../src/data/compendium/runes/spell-rank-s';
 
 function titleCase(str: string) {
   return str.split('-').map(w => w.charAt(0).toUpperCase() + w.substring(1)).join(' ');
@@ -260,16 +248,5 @@ dump('src/data/compendium/feats-comprehensive.ts', 'comprehensiveFeats', 'Compen
 dump('src/data/compendium/powers.ts', 'powers', 'CompendiumPower', '../../types/compendium', processArray(powers, 'CompendiumPower', 'power', false, true));
 dump('src/data/compendium/techniques.ts', 'techniques', 'CompendiumTechnique', '../../types/compendium', processArray(techniques, 'CompendiumTechnique', 'technique', false, true));
 
-dump('src/data/compendium/spells/rank-s.ts', 'spells_s', 'CompendiumSpell', '../../../types/compendium', processArray(spells_s, 'CompendiumSpell', 'S', true, true));
-dump('src/data/compendium/spells/rank-a.ts', 'spells_a', 'CompendiumSpell', '../../../types/compendium', processArray(spells_a, 'CompendiumSpell', 'A', true, true));
-dump('src/data/compendium/spells/rank-b.ts', 'spells_b', 'CompendiumSpell', '../../../types/compendium', processArray(spells_b, 'CompendiumSpell', 'B', true, true));
-dump('src/data/compendium/spells/rank-c.ts', 'spells_c', 'CompendiumSpell', '../../../types/compendium', processArray(spells_c, 'CompendiumSpell', 'C', true, true));
-dump('src/data/compendium/spells/rank-d.ts', 'spells_d', 'CompendiumSpell', '../../../types/compendium', processArray(spells_d, 'CompendiumSpell', 'D', true, true));
+// Removed S, A, B, C
 
-dump('src/data/compendium/runes/spell-rank-s.ts', 'runes_s', 'CompendiumRune', '../../../types/compendium', processArray(runes_s, 'CompendiumRune', 'S', false, true));
-dump('src/data/compendium/runes/spell-rank-a.ts', 'runes_a', 'CompendiumRune', '../../../types/compendium', processArray(runes_a, 'CompendiumRune', 'A', false, true));
-dump('src/data/compendium/runes/spell-rank-b.ts', 'runes_b', 'CompendiumRune', '../../../types/compendium', processArray(runes_b, 'CompendiumRune', 'B', false, true));
-dump('src/data/compendium/runes/spell-rank-c.ts', 'runes_c', 'CompendiumRune', '../../../types/compendium', processArray(runes_c, 'CompendiumRune', 'C', false, true));
-dump('src/data/compendium/runes/spell-rank-d.ts', 'spell_rank_d_runes', 'CompendiumRune', '../../../types/compendium', processArray(spell_rank_d_runes, 'CompendiumRune', 'D', false, true));
-dump('src/data/compendium/runes/power-powers.ts', 'runes_power_powers', 'CompendiumRune', '../../../types/compendium', processArray(runes_power_powers, 'CompendiumRune', 'power', false, true));
-dump('src/data/compendium/runes/technique-techniques.ts', 'technique_runes', 'CompendiumRune', '../../../types/compendium', processArray(technique_runes, 'CompendiumRune', 'technique', false, true));

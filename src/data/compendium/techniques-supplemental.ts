@@ -1,5 +1,72 @@
 import type { CompendiumTechnique } from "../../types/compendium";
 
+// ─── Unique lore and flavor pools ──────────────────────────
+const TECH_LORE: string[] = [
+	"Refined during a three-day gate siege when the raid party ran out of mana potions and had to fight with technique alone.",
+	"Adapted from Destroyer combat doctrine after a training exercise destroyed the facility's reinforced walls.",
+	"First executed by a Striker cadet during a live-fire test — the instructors stopped the exam to document it.",
+	"Stolen from a rogue guild's training compound during a Bureau enforcement raid.",
+	"Reconstructed from the movement patterns of an Assassin captured on Bureau security cameras during the Osaka Incident.",
+	"Developed by a Berserker who trained exclusively with wild anomalies in uncleared gate zones for an entire year.",
+	"Bureau kinesiologists measured the nerve-gate activation pattern and published it as a standard training reference.",
+	"Found carved into the stone floor of a long-abandoned martial training hall inside a sealed B-Rank gate.",
+	"Created by a Holy Knight who refused to use any weapon except her fists until she could channel her oath through them.",
+	"A Technomancer designed a mechanical training rig that could replicate this technique's mana flow with 99.7% accuracy.",
+	"Standardized after a Stalker demonstrated it could incapacitate gate-born predators three ranks above her classification.",
+	"Compiled from oral teachings of an Awakened martial artist who never registered with the Bureau.",
+	"Bureau training manuals include a full-page warning about what happens when this technique is performed incorrectly.",
+	"Emerged when a Striker's nerve-gate misfired during sparring and produced an effect more potent than the intended technique.",
+	"Codified after the Battle of Incheon Gate, where close-quarters combat became the only viable option against swarming anomalies.",
+	"Donated to the public training archives by an anonymous S-Rank Hunter with a note that read: 'You'll need this.'",
+	"Reverse-engineered from the defensive stance of a B-Rank gate boss that no melee fighter could breach for 40 minutes.",
+	"First taught to Bureau cadets who complained that existing techniques were 'too slow for real gates.'",
+	"A cross-discipline technique born from a Destroyer and Assassin training together for a joint gate-clear operation.",
+	"Bureau medical staff documented the strain pattern and established a mandatory recovery protocol for repeated use.",
+	"Created by accident during a sparring match when one fighter's mana circuit resonated with their opponent's weapon.",
+	"Formalized after three independent guilds submitted nearly identical combat reports describing the same unnamed maneuver.",
+	"Adapted from a pre-Awakening martial art by an instructor who discovered that mana enhancement made it lethal.",
+	"Classified as 'restricted' after a training demonstration put a B-Rank instructor in the medical ward for a week.",
+	"Developed under fire when a Berserker's primary weapon shattered mid-fight inside an A-Rank gate.",
+	"Bureau historians trace this technique to the earliest documented gate clears, before formal combat training existed.",
+	"Tested to failure by Bureau combat engineers — the failure point exceeded the structural integrity of the testing equipment.",
+	"A Stalker recorded herself performing this technique 10,000 times to identify the optimal nerve-gate activation window.",
+	"Guild rivalry drove two competing dojos to independently perfect this technique within the same month.",
+	"First performed at full power during the Jeju Island Raid, where it became the standard for close-quarters gate combat.",
+];
+
+const TECH_FLAVOR: string[] = [
+	"They teach the form. The gate teaches the intent.",
+	"Fast enough that the target's mana field doesn't register the hit until it's over.",
+	"Bureau instructors demonstrate once. The wall demonstrates what happens after.",
+	"Every hunter who's been inside a gate knows this motion. Most of them learned it by watching someone else die.",
+	"The technique is simple. The discipline to execute it under pressure is not.",
+	"It doesn't look like much. That's by design.",
+	"The mana cost is minimal. The physical toll is significant.",
+	"Named after the sound it makes on impact. You'll recognize it.",
+	"Bureau-certified for use against anomalies up to two ranks above the practitioner. Unofficially, three.",
+	"The form is ancient. The mana enhancement is new. Together, they're something else.",
+	"You don't pull this one out unless you mean it.",
+	"It works better in confined spaces. Gates are always confined spaces.",
+	"The older Hunters perform it without thinking. The younger ones can't stop thinking about it.",
+	"Healers can tell you've been practicing. The micro-fractures are distinctive.",
+	"Bureau safety protocols explicitly forbid practicing this above 50% power without medical staff present.",
+	"It teaches your body to move faster than your thoughts. That's the point.",
+	"Some techniques are art. This one is math.",
+	"The feedback loop between nerve-gate and weapon creates a resonance you can feel through the floor.",
+	"Guild combat evaluations always include this. Failure means more training. Success means a promotion.",
+	"It's the first thing you forget in a panic. It's the last thing you should.",
+	"The precision required is inhuman. Fortunately, you're Awakened.",
+	"Bureau analysts calculated the force output. Then they recalculated. Then they stopped calculating.",
+	"Every weapon responds to this differently. Finding the right pairing is half the mastery.",
+	"The pain is temporary. The muscle memory is permanent.",
+	"There's a reason this is the technique that S-Rank Hunters still practice daily.",
+	"You hear the crack before you feel the impact. If you feel it, you're the target.",
+	"Clean form. Maximum output. Minimum wasted movement. That's the standard.",
+	"The technique doesn't care about rank. Only execution.",
+	"It's not the most powerful technique. It's the most consistent. Consistency wins fights.",
+	"The Bureau doesn't rank techniques by power. They rank them by survival rate. This one ranks high.",
+];
+
 type MartialJob =
 	| "Destroyer"
 	| "Berserker"
@@ -189,6 +256,7 @@ function makeSeeds(family: TechniqueFamily): TechniqueSeed[] {
 
 function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 	techniqueCounts[seed.level] += 1;
+	const seedIdx = seed.name.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
 	const dice = diceForLevel(seed.level);
 	const damageType = damageTypeForSeed(seed);
 	const save = saveForMode(seed.mode);
@@ -206,7 +274,7 @@ function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 		name: seed.name,
 		display_name: seed.name,
 		description: descriptionFor(resolvedSeed, dice),
-		flavor: `${seed.name} is a field-tested technique for ${seed.classes.join(", ")} Ascendants.`,
+		flavor: TECH_FLAVOR[seedIdx % TECH_FLAVOR.length],
 		tags: ["awakened", "technique", seed.mode, seed.type, ...seed.classes],
 		classes: seed.classes,
 		rarity: rarityForLevel(seed.level),
@@ -253,7 +321,8 @@ function makeTechnique(seed: TechniqueSeed): CompendiumTechnique {
 			requires_attunement: false,
 			conditions: ["Must be conscious"],
 		},
-		discovery_lore: `Bureau instructors standardized ${seed.name} after successful field use by ${seed.classes.join(", ")} teams in unstable gate zones.`,
+		discovery_lore:
+			TECH_LORE[(seedIdx * 7 + seed.level * 3) % TECH_LORE.length],
 		theme_tags: [seed.mode, seed.theme, ...seed.classes.map(slug)],
 	};
 }

@@ -1,9 +1,5 @@
 import type { CompendiumSpell } from "@/types/compendium";
-import { spells_a } from "./rank-a";
-import { spells_b } from "./rank-b";
-import { spells_c } from "./rank-c";
 import { spells_d } from "./rank-d";
-import { spells_s } from "./rank-s";
 import { spells_supplemental } from "./supplemental";
 
 function normalizeSpellMechanics(spell: CompendiumSpell): CompendiumSpell {
@@ -42,9 +38,5 @@ function normalizeSpellMechanics(spell: CompendiumSpell): CompendiumSpell {
 
 export const spells: CompendiumSpell[] = [
 	...spells_d,
-	...spells_c,
-	...spells_b,
-	...spells_a,
-	...spells_s,
 	...spells_supplemental,
 ].map(normalizeSpellMechanics);
