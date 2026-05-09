@@ -302,18 +302,39 @@ function ActionCardComponent({
 				</div>
 
 				{(displayAttackRoll || payload?.save || displayDamage) && (
-					<div className="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-						{displayAttackRoll && <span>Attack: {displayAttackRoll}</span>}
+					<div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground font-mono bg-muted/30 rounded-md px-3 py-1.5">
+						{displayAttackRoll && (
+							<span className="flex items-center gap-1">
+								<span className="text-primary/70">ATK</span>
+								<span className="font-semibold text-foreground">
+									{displayAttackRoll}
+								</span>
+							</span>
+						)}
 						{payload?.save && (
-							<span>
-								Save: DC {payload.save.dc}
-								{payload.save.ability ? ` ${payload.save.ability}` : ""}
+							<span className="flex items-center gap-1">
+								<span className="text-primary/70">DC</span>
+								<span className="font-semibold text-foreground">
+									{payload.save.dc}
+								</span>
+								{payload.save.ability && (
+									<span className="text-muted-foreground">
+										{payload.save.ability}
+									</span>
+								)}
 							</span>
 						)}
 						{displayDamage && (
-							<span>
-								Damage: {displayDamage}
-								{displayDamageType ? ` ${displayDamageType}` : ""}
+							<span className="flex items-center gap-1">
+								<span className="text-primary/70">DMG</span>
+								<span className="font-semibold text-foreground">
+									{displayDamage}
+								</span>
+								{displayDamageType && (
+									<span className="text-muted-foreground">
+										{displayDamageType}
+									</span>
+								)}
 							</span>
 						)}
 					</div>
@@ -328,8 +349,8 @@ function ActionCardComponent({
 								rollType="ability"
 								rollKey="attack"
 								label={
-									payload?.attack
-										? "Attack"
+									displayAttackRoll
+										? `Attack: ${displayAttackRoll}`
 										: `Attack: ${formatModifier(attackBonus || 0)}`
 								}
 								modifier={attackBonus}

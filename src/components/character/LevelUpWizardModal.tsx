@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+	AlertTriangle,
 	Crown,
 	Heart,
 	Loader2,
@@ -7,6 +8,7 @@ import {
 	Sparkles,
 	Star,
 	Swords,
+	TrendingDown,
 	TrendingUp,
 	Zap,
 } from "lucide-react";
@@ -76,6 +78,7 @@ import {
 	type CharacterLevelUpEvent,
 	DomainEventBus,
 } from "@/lib/domainEvents";
+import { parseFeatureMetadata } from "@/lib/featureDescriptionParser";
 import {
 	addLocalPower,
 	addLocalSpell,
@@ -806,18 +809,21 @@ export const LevelUpWizardModal = ({
 				staticJob?.classFeatures ?? []
 			)
 				.filter((feature) => feature.level === newLevel)
-				.map((feature, index) => ({
-					id: `static-job-${characterJobName.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
-					name: feature.name,
-					description: feature.description,
-					level: feature.level,
-					is_path_feature: false,
-					action_type: null,
-					uses_formula: null,
-					prerequisites: null,
-					recharge: null,
-					source_name: null,
-				}));
+				.map((feature, index) => {
+					const parsed = parseFeatureMetadata(feature.description);
+					return {
+						id: `static-job-${characterJobName.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
+						name: feature.name,
+						description: feature.description,
+						level: feature.level,
+						is_path_feature: false,
+						action_type: parsed.action_type,
+						uses_formula: parsed.uses_formula,
+						prerequisites: null,
+						recharge: parsed.recharge,
+						source_name: null,
+					};
+				});
 
 			const protocolStaticPaths =
 				getStaticPaths() as unknown as StaticPathSource[];
@@ -842,18 +848,21 @@ export const LevelUpWizardModal = ({
 						.flatMap((path) =>
 							(path.features ?? [])
 								.filter((feature) => feature.level === newLevel)
-								.map((feature, index) => ({
-									id: `static-path-${path.name.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
-									name: feature.name,
-									description: feature.description,
-									level: feature.level,
-									is_path_feature: true,
-									action_type: null,
-									uses_formula: null,
-									prerequisites: path.prerequisites ?? null,
-									recharge: null,
-									source_name: null,
-								})),
+								.map((feature, index) => {
+									const parsed = parseFeatureMetadata(feature.description);
+									return {
+										id: `static-path-${path.name.toLowerCase().replace(/\s+/g, "-")}-${feature.name.toLowerCase().replace(/\s+/g, "-")}-${index}`,
+										name: feature.name,
+										description: feature.description,
+										level: feature.level,
+										is_path_feature: true,
+										action_type: parsed.action_type,
+										uses_formula: parsed.uses_formula,
+										prerequisites: path.prerequisites ?? null,
+										recharge: parsed.recharge,
+										source_name: null,
+									};
+								}),
 						)
 				: [];
 			const homebrewJobFeatures: LevelUpFeatureRow[] = homebrewJobObj
@@ -928,6 +937,8 @@ export const LevelUpWizardModal = ({
 		},
 		enabled: !!character && !!newLevel && !!staticJobs,
 	});
+
+	const isLevelDown = !!character && newLevel < character.level;
 
 	useEffect(() => {
 		if (character) {
@@ -1065,6 +1076,133 @@ export const LevelUpWizardModal = ({
 	const averageHP = calculateAverageHPGain(hitDieSize, vitModifier);
 	const maxHP = calculateMaxHPGain(hitDieSize, vitModifier);
 	const minHP = calculateMinHPGain(vitModifier);
+
+	const handleLevelDown = async () => {
+		if (!character || newLevel >= character.level || newLevel < 1) return;
+		setLoading(true);
+		try {
+			const levelsLost = character.level - newLevel;
+			const hitDieSize = character.hit_dice_size ?? 8;
+			const vitMod = Math.floor((character.abilities.VIT - 10) / 2);
+			const avgHpPerLevel = Math.max(
+				1,
+				Math.floor(hitDieSize / 2) + 1 + vitMod,
+			);
+			const hpReduction = avgHpPerLevel * levelsLost;
+			const newHP = Math.max(1, (character.hp_max ?? 1) - hpReduction);
+			const newProfBonus = calculateProficiencyBonusForLevel(newLevel);
+			const newRiftFavorDie = calculateRiftFavorDie(newLevel);
+			const newRiftFavorMax = calculateRiftFavorMax(newLevel);
+
+			// Auto-remove features acquired above target level
+			if (!isLocalCharacterId(character.id)) {
+				await supabase
+					.from("character_features")
+					.delete()
+					.eq("character_id", character.id)
+					.gt("level_acquired", newLevel);
+
+				// Remove powers/spells/techniques acquired at levels above target
+				for (let lvl = newLevel + 1; lvl <= character.level; lvl++) {
+					const levelPattern = `Level ${lvl}%`;
+					await supabase
+						.from("character_powers")
+						.delete()
+						.eq("character_id", character.id)
+						.like("source", levelPattern);
+					await supabase
+						.from("character_spells")
+						.delete()
+						.eq("character_id", character.id)
+						.like("source", levelPattern);
+					await supabase
+						.from("character_techniques")
+						.delete()
+						.eq("character_id", character.id)
+						.like("source", levelPattern);
+				}
+			}
+
+			await updateCharacter.mutateAsync({
+				id: character.id,
+				data: {
+					level: newLevel,
+					hp_max: newHP,
+					hp_current: Math.min(character.hp_current ?? newHP, newHP),
+					hit_dice_max: newLevel,
+					hit_dice_current: Math.min(
+						character.hit_dice_current ?? newLevel,
+						newLevel,
+					),
+					proficiency_bonus: newProfBonus,
+					rift_favor_die: newRiftFavorDie,
+					rift_favor_max: newRiftFavorMax,
+					rift_favor_current: Math.min(
+						character.rift_favor_current ?? newRiftFavorMax,
+						newRiftFavorMax,
+					),
+				},
+			});
+
+			// Re-initialize spell slots for new lower level
+			try {
+				await initializeSpellSlots.mutateAsync({
+					characterId: character.id,
+					job: jobObj || character.job,
+					level: newLevel,
+				});
+			} catch (error) {
+				logger.error(
+					"Failed to re-initialize spell slots on level down:",
+					error,
+				);
+			}
+
+			// Auto-update remaining feature uses
+			try {
+				await autoUpdateFeatureUses(character.id);
+			} catch (error) {
+				logger.error(
+					"Failed to auto-update feature uses on level down:",
+					error,
+				);
+			}
+
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: ["powers", character.id] }),
+				queryClient.invalidateQueries({
+					queryKey: ["character-spells", character.id],
+				}),
+				queryClient.invalidateQueries({ queryKey: ["features", character.id] }),
+				queryClient.invalidateQueries({
+					queryKey: ["character-features", character.id],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["character-techniques", character.id],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["character", character.id],
+				}),
+				queryClient.invalidateQueries({
+					queryKey: ["combat-actions", character.id],
+				}),
+			]);
+
+			toast({
+				title: "Level Down Complete",
+				description: `${character.name} reduced to Level ${newLevel}. Features and abilities above this level have been removed.`,
+			});
+			onClose();
+		} catch {
+			toast({
+				title: "Failed to level down",
+				description: "Could not complete level reduction. Please try again.",
+				variant: "destructive",
+			});
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	const handleLevelUp = async () => {
 		if (newLevel <= character.level) {
@@ -1757,12 +1895,28 @@ export const LevelUpWizardModal = ({
 				</DialogDescription>
 				<ScrollArea className="flex-1 overflow-y-auto w-full h-full">
 					<div className="px-4 py-6 sm:py-8 sm:px-6">
-						{/* Level Up Header */}
+						{/* Level Change Header */}
 						<div className="text-center mb-6 sm:mb-8">
-							<div className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-resurge/10 rounded-full border border-resurge/30 mb-4">
-								<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-resurge" />
-								<span className="font-resurge text-resurge tracking-wide text-sm sm:text-base">
-									LEVEL UP PROTOCOL
+							<div
+								className={cn(
+									"inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border mb-4",
+									isLevelDown
+										? "bg-red-500/10 border-red-500/30"
+										: "bg-resurge/10 border-resurge/30",
+								)}
+							>
+								{isLevelDown ? (
+									<TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+								) : (
+									<TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-resurge" />
+								)}
+								<span
+									className={cn(
+										"font-resurge tracking-wide text-sm sm:text-base",
+										isLevelDown ? "text-red-400" : "text-resurge",
+									)}
+								>
+									{isLevelDown ? "LEVEL DOWN PROTOCOL" : "LEVEL UP PROTOCOL"}
 								</span>
 							</div>
 							<h1 className="font-resurge text-2xl sm:text-3xl font-bold gradient-text-shadow tracking-wider mb-2 leading-tight">
@@ -1772,30 +1926,59 @@ export const LevelUpWizardModal = ({
 								<span className="text-muted-foreground">
 									LV. {character.level}
 								</span>
-								<span className="text-resurge animate-pulse">{"->"}</span>
-								<span className={cn("font-bold", rankInfo.color)}>
-									LV. {newLevel}
-								</span>
-								<Badge
+								<span
 									className={cn(
-										"ml-2 font-resurge",
-										rankInfo.color,
-										"bg-transparent border-current text-xs sm:text-sm",
+										isLevelDown ? "text-red-400" : "text-resurge",
+										"animate-pulse",
 									)}
 								>
-									{rankInfo.rank}-RANK
-								</Badge>
+									{"->"}
+								</span>
+								<span
+									className={cn(
+										"font-bold",
+										isLevelDown ? "text-red-400" : rankInfo.color,
+									)}
+								>
+									LV. {newLevel}
+								</span>
+								{!isLevelDown && (
+									<Badge
+										className={cn(
+											"ml-2 font-resurge",
+											rankInfo.color,
+											"bg-transparent border-current text-xs sm:text-sm",
+										)}
+									>
+										{rankInfo.rank}-RANK
+									</Badge>
+								)}
 							</div>
 						</div>
 
 						<AscendantWindow
-							title="SYSTEM ENHANCEMENT"
-							className="border-resurge/50 mb-6"
+							title={isLevelDown ? "LEVEL REDUCTION" : "SYSTEM ENHANCEMENT"}
+							className={cn(
+								"mb-6",
+								isLevelDown ? "border-red-500/50" : "border-resurge/50",
+							)}
 						>
 							<div className="space-y-6">
 								{/* Level Selection */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/10 to-transparent border border-resurge/20">
-									<Label className="font-resurge text-resurge tracking-wide flex items-center gap-2">
+								<div
+									className={cn(
+										"p-4 rounded-lg bg-gradient-to-r border",
+										isLevelDown
+											? "from-red-500/10 to-transparent border-red-500/20"
+											: "from-resurge/10 to-transparent border-resurge/20",
+									)}
+								>
+									<Label
+										className={cn(
+											"font-resurge tracking-wide flex items-center gap-2",
+											isLevelDown ? "text-red-400" : "text-resurge",
+										)}
+									>
 										<Star className="w-4 h-4" />
 										TARGET LEVEL
 									</Label>
@@ -1808,27 +1991,125 @@ export const LevelUpWizardModal = ({
 										</span>
 										<Input
 											type="number"
-											min={character.level + 1}
+											min={1}
 											max={20}
 											value={newLevel}
 											onChange={(e) =>
 												setNewLevel(
 													Math.min(
 														20,
-														Math.max(
-															character.level + 1,
-															parseInt(e.target.value, 10) ||
-																character.level + 1,
-														),
+														Math.max(1, parseInt(e.target.value, 10) || 1),
 													),
 												)
 											}
-											className="w-24 text-center font-resurge text-xl border-resurge/30 focus:border-resurge"
+											className={cn(
+												"w-24 text-center font-resurge text-xl",
+												isLevelDown
+													? "border-red-500/30 focus:border-red-500"
+													: "border-resurge/30 focus:border-resurge",
+											)}
 										/>
 									</div>
 								</div>
 
-								{!isMilestone && (
+								{/* Level Down Preview — only shown when going down */}
+								{isLevelDown && (
+									<>
+										<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-amber-500/5 border border-red-500/30">
+											<div className="flex items-start gap-3">
+												<AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
+												<div>
+													<h4 className="font-resurge text-amber-400 tracking-wide text-sm mb-2">
+														DESTRUCTIVE OPERATION
+													</h4>
+													<p className="text-sm text-muted-foreground font-heading">
+														Reducing from Level {character.level} to Level{" "}
+														{newLevel} will
+														<strong className="text-red-400">
+															{" "}
+															automatically remove
+														</strong>{" "}
+														all features, powers, spells, and techniques
+														acquired above Level {newLevel}. HP, proficiency
+														bonus, rift favor, and hit dice will be
+														recalculated.
+													</p>
+												</div>
+											</div>
+										</div>
+
+										{/* Level-down stat preview */}
+										<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/5 to-transparent border border-red-500/20">
+											<h4 className="font-resurge font-semibold mb-4 text-red-400 tracking-wide flex items-center gap-2">
+												<TrendingDown className="w-4 h-4" />
+												STAT REDUCTIONS
+											</h4>
+											<div className="grid grid-cols-2 gap-4 text-sm">
+												<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+													<span className="text-muted-foreground font-heading">
+														Prof. Bonus
+													</span>
+													<span className="font-resurge text-lg">
+														+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
+														<span className="text-red-400">
+															+{Math.ceil(newLevel / 4) + 1}
+														</span>
+													</span>
+												</div>
+												<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+													<span className="text-muted-foreground font-heading">
+														Max HP
+													</span>
+													<span className="font-resurge text-lg">
+														{character.hp_max} {"->"}{" "}
+														<span className="text-red-400">
+															{Math.max(
+																1,
+																(character.hp_max ?? 1) -
+																	Math.max(
+																		1,
+																		Math.floor(hitDieSize / 2) +
+																			1 +
+																			vitModifier,
+																	) *
+																		(character.level - newLevel),
+															)}
+														</span>
+													</span>
+												</div>
+												<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+													<span className="text-muted-foreground font-heading">
+														Hit Dice
+													</span>
+													<span className="font-resurge text-lg">
+														{character.hit_dice_max} {"->"}{" "}
+														<span className="text-red-400">{newLevel}</span>
+													</span>
+												</div>
+												<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+													<span className="text-muted-foreground font-heading">
+														Rift Favor
+													</span>
+													<span className="font-resurge text-lg">
+														d{character.rift_favor_die} {"->"}{" "}
+														<span className="text-red-400">
+															d
+															{newLevel <= 4
+																? 4
+																: newLevel <= 10
+																	? 6
+																	: newLevel <= 16
+																		? 8
+																		: 10}
+														</span>
+													</span>
+												</div>
+											</div>
+										</div>
+									</>
+								)}
+
+								{!isLevelDown && !isMilestone && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
 										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2">
 											<Star className="w-4 h-4" />
@@ -1851,67 +2132,71 @@ export const LevelUpWizardModal = ({
 									</div>
 								)}
 
-								{/* HP Increase */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
-									<Label className="font-resurge text-red-400 tracking-wide flex items-center gap-2">
-										<Heart className="w-4 h-4" />
-										VITALITY INCREASE
-									</Label>
-									<div className="flex items-center gap-4 mt-3">
-										<div className="flex-1">
-											<div className="relative">
-												<Input
-													type="number"
-													min={1}
-													max={maxHP}
-													value={hpIncrease || ""}
-													onChange={(e) =>
-														setHpIncrease(parseInt(e.target.value, 10) || null)
-													}
-													placeholder={`Average: ${averageHP}`}
-													className={cn(
-														"text-center font-resurge text-xl border-red-500/30 focus:border-red-500",
-														isRolling && "animate-pulse text-red-400",
-													)}
-												/>
-												{hpIncrease && (
-													<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-400 font-heading">
-														HP
-													</span>
-												)}
-											</div>
-											<p className="text-xs text-muted-foreground mt-2 font-heading">
-												Roll d{hitDieSize} {vitModifier >= 0 ? "+" : ""}
-												{vitModifier} (VIT) | Range: {minHP} - {maxHP}
-											</p>
-										</div>
-										<Button
-											variant="outline"
-											onClick={rollHP}
-											disabled={isRolling}
-											className={cn(
-												"gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge",
-												isRolling && "animate-pulse",
-											)}
-										>
-											<Zap
-												className={cn("w-4 h-4", isRolling && "animate-spin")}
-											/>
-											{isRolling ? "Rolling..." : "Roll"}
-										</Button>
-										<Button
-											variant="outline"
-											onClick={() => setHpIncrease(averageHP)}
-											className="gap-2 border-red-500/30 hover:bg-red-500/10 hover:border-red-500"
-										>
+								{/* HP Increase — only for level up */}
+								{!isLevelDown && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-red-500/10 to-transparent border border-red-500/20">
+										<Label className="font-resurge text-red-400 tracking-wide flex items-center gap-2">
 											<Heart className="w-4 h-4" />
-											Average ({averageHP})
-										</Button>
+											VITALITY INCREASE
+										</Label>
+										<div className="flex items-center gap-4 mt-3">
+											<div className="flex-1">
+												<div className="relative">
+													<Input
+														type="number"
+														min={1}
+														max={maxHP}
+														value={hpIncrease || ""}
+														onChange={(e) =>
+															setHpIncrease(
+																parseInt(e.target.value, 10) || null,
+															)
+														}
+														placeholder={`Average: ${averageHP}`}
+														className={cn(
+															"text-center font-resurge text-xl border-red-500/30 focus:border-red-500",
+															isRolling && "animate-pulse text-red-400",
+														)}
+													/>
+													{hpIncrease && (
+														<span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-red-400 font-heading">
+															HP
+														</span>
+													)}
+												</div>
+												<p className="text-xs text-muted-foreground mt-2 font-heading">
+													Roll d{hitDieSize} {vitModifier >= 0 ? "+" : ""}
+													{vitModifier} (VIT) | Range: {minHP} - {maxHP}
+												</p>
+											</div>
+											<Button
+												variant="outline"
+												onClick={rollHP}
+												disabled={isRolling}
+												className={cn(
+													"gap-2 border-resurge/30 hover:bg-resurge/10 hover:border-resurge",
+													isRolling && "animate-pulse",
+												)}
+											>
+												<Zap
+													className={cn("w-4 h-4", isRolling && "animate-spin")}
+												/>
+												{isRolling ? "Rolling..." : "Roll"}
+											</Button>
+											<Button
+												variant="outline"
+												onClick={() => setHpIncrease(averageHP)}
+												className="gap-2 border-red-500/30 hover:bg-red-500/10 hover:border-red-500"
+											>
+												<Heart className="w-4 h-4" />
+												Average ({averageHP})
+											</Button>
+										</div>
 									</div>
-								</div>
+								)}
 
 								{/* Path Selection (shown when character has no path and paths are available at this level) */}
-								{showPathSelection && (
+								{!isLevelDown && showPathSelection && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
 										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
 											<Swords className="w-4 h-4" />
@@ -1965,7 +2250,7 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{/* ASI / Feat Selection (shown at ASI levels: 4, 8, 12, 16, 19) */}
-								{showASISection && (
+								{!isLevelDown && showASISection && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-green-500/10 to-transparent border border-green-500/20">
 										<Label className="font-resurge text-green-400 tracking-wide flex items-center gap-2 mb-4">
 											<Shield className="w-4 h-4" />
@@ -2064,7 +2349,7 @@ export const LevelUpWizardModal = ({
 								)}
 
 								{/* Feat Selection (shown when feats are available from awakening features) */}
-								{showFeatSelection && (
+								{!isLevelDown && showFeatSelection && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-purple-500/10 to-transparent border border-purple-500/20">
 										<Label className="font-resurge text-purple-400 tracking-wide flex items-center gap-2 mb-4">
 											<Star className="w-4 h-4" />
@@ -2138,7 +2423,7 @@ export const LevelUpWizardModal = ({
 									</div>
 								)}
 
-								{requiredCantripChoices > 0 && (
+								{!isLevelDown && requiredCantripChoices > 0 && (
 									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
 										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
@@ -2809,64 +3094,66 @@ export const LevelUpWizardModal = ({
 									</div>
 								)}
 
-								{/* Stat Changes Preview */}
-								<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/5 to-shadow-purple/5 border border-resurge/20">
-									<h4 className="font-resurge font-semibold mb-4 text-resurge tracking-wide flex items-center gap-2">
-										<TrendingUp className="w-4 h-4" />
-										STAT MODIFICATIONS
-									</h4>
-									<div className="grid grid-cols-2 gap-4 text-sm">
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Proficiency Bonus
-											</span>
-											<span className="font-resurge text-lg">
-												+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
-												<span className="text-resurge">
-													+{Math.ceil(newLevel / 4) + 1}
+								{/* Stat Changes Preview — only for level up */}
+								{!isLevelDown && (
+									<div className="p-4 rounded-lg bg-gradient-to-r from-resurge/5 to-shadow-purple/5 border border-resurge/20">
+										<h4 className="font-resurge font-semibold mb-4 text-resurge tracking-wide flex items-center gap-2">
+											<TrendingUp className="w-4 h-4" />
+											STAT MODIFICATIONS
+										</h4>
+										<div className="grid grid-cols-2 gap-4 text-sm">
+											<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+												<span className="text-muted-foreground font-heading">
+													Proficiency Bonus
 												</span>
-											</span>
-										</div>
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Rift Favor Die
-											</span>
-											<span className="font-resurge text-lg">
-												d{character.rift_favor_die} {"->"}{" "}
-												<span className="text-resurge">
-													d
-													{newLevel <= 4
-														? 4
-														: newLevel <= 10
-															? 6
-															: newLevel <= 16
-																? 8
-																: 10}
+												<span className="font-resurge text-lg">
+													+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
+													<span className="text-resurge">
+														+{Math.ceil(newLevel / 4) + 1}
+													</span>
 												</span>
-											</span>
-										</div>
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Max HP
-											</span>
-											<span className="font-resurge text-lg">
-												{character.hp_max} {"->"}{" "}
-												<span className="text-red-400">
-													{character.hp_max + (hpIncrease || 0)}
+											</div>
+											<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+												<span className="text-muted-foreground font-heading">
+													Rift Favor Die
 												</span>
-											</span>
-										</div>
-										<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
-											<span className="text-muted-foreground font-heading">
-												Hit Dice
-											</span>
-											<span className="font-resurge text-lg">
-												{character.hit_dice_max} {"->"}{" "}
-												<span className="text-resurge">{newLevel}</span>
-											</span>
+												<span className="font-resurge text-lg">
+													d{character.rift_favor_die} {"->"}{" "}
+													<span className="text-resurge">
+														d
+														{newLevel <= 4
+															? 4
+															: newLevel <= 10
+																? 6
+																: newLevel <= 16
+																	? 8
+																	: 10}
+													</span>
+												</span>
+											</div>
+											<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+												<span className="text-muted-foreground font-heading">
+													Max HP
+												</span>
+												<span className="font-resurge text-lg">
+													{character.hp_max} {"->"}{" "}
+													<span className="text-red-400">
+														{character.hp_max + (hpIncrease || 0)}
+													</span>
+												</span>
+											</div>
+											<div className="flex items-center justify-between p-3 rounded-lg bg-background/50">
+												<span className="text-muted-foreground font-heading">
+													Hit Dice
+												</span>
+												<span className="font-resurge text-lg">
+													{character.hit_dice_max} {"->"}{" "}
+													<span className="text-resurge">{newLevel}</span>
+												</span>
+											</div>
 										</div>
 									</div>
-								</div>
+								)}
 							</div>
 						</AscendantWindow>
 
@@ -2879,28 +3166,45 @@ export const LevelUpWizardModal = ({
 								Cancel
 							</Button>
 							<Button
-								onClick={handleLevelUp}
+								onClick={isLevelDown ? handleLevelDown : handleLevelUp}
 								disabled={
 									loading ||
-									hpIncrease === null ||
-									newLevel <= character.level ||
-									(!isMilestone && !canLevelUp) ||
-									(showPathSelection && !selectedPathRow) ||
-									selectedPowerIds.length < requiredPowerChoices ||
-									selectedTechniqueIds.length < requiredTechniqueChoices ||
-									selectedCantripIds.length < requiredCantripChoices ||
-									selectedSpellIds.length < requiredSpellChoices ||
-									selectedSpellbookIds.length < requiredSpellbookInscriptions ||
-									selectedFightingStyleIds.length <
-										requiredFightingStyleChoices ||
-									!ledgerOptionRequirementsMet
+									newLevel === character.level ||
+									(!isLevelDown && hpIncrease === null) ||
+									(!isLevelDown && !isMilestone && !canLevelUp) ||
+									(!isLevelDown && showPathSelection && !selectedPathRow) ||
+									(!isLevelDown &&
+										selectedPowerIds.length < requiredPowerChoices) ||
+									(!isLevelDown &&
+										selectedTechniqueIds.length < requiredTechniqueChoices) ||
+									(!isLevelDown &&
+										selectedCantripIds.length < requiredCantripChoices) ||
+									(!isLevelDown &&
+										selectedSpellIds.length < requiredSpellChoices) ||
+									(!isLevelDown &&
+										selectedSpellbookIds.length <
+											requiredSpellbookInscriptions) ||
+									(!isLevelDown &&
+										selectedFightingStyleIds.length <
+											requiredFightingStyleChoices) ||
+									(!isLevelDown && !ledgerOptionRequirementsMet)
 								}
-								className="gap-2 font-heading bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg transition-all"
+								className={cn(
+									"gap-2 font-heading transition-all",
+									isLevelDown
+										? "bg-gradient-to-r from-red-600 to-red-800 hover:shadow-red-500/30 hover:shadow-lg"
+										: "bg-gradient-to-r from-resurge to-shadow-purple hover:shadow-resurge/30 hover:shadow-lg",
+								)}
 							>
 								{loading ? (
 									<>
 										<Loader2 className="w-4 h-4 animate-spin" />
 										Processing...
+									</>
+								) : isLevelDown ? (
+									<>
+										<TrendingDown className="w-4 h-4" />
+										Confirm Level Down
 									</>
 								) : (
 									<>
