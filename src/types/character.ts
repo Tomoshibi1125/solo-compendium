@@ -162,6 +162,21 @@ export interface StaticJob {
 		spellsKnown?: number[];
 		spellSlots?: Record<string, number[]>;
 	};
+	spellbook?: {
+		atCreation: number;
+		perLevel: number;
+		label: string;
+	};
+	powersKnown?: number[];
+	techniquesKnown?: number[];
+	levelChoices?: Array<{
+		level: number;
+		type: string;
+		count: number;
+		source: string;
+		options?: string[];
+		filter?: { maxPowerLevel?: number; maxLevel?: number; restrictTo?: string };
+	}>;
 	startingEquipment?: string[][];
 	hitPointsAtFirstLevel?: string;
 	hitPointsAtHigherLevels?: string;

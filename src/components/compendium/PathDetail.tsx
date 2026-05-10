@@ -65,21 +65,20 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 		};
 	}, [data.id, data.job_id, data.features, jobName]);
 
+	const coreFeatures = features;
+
 	const abilityFeatures = useMemo(
 		() =>
-			features.filter(
-				(feature) =>
-					feature.action_type || feature.recharge || feature.uses_formula,
-			),
-		[features],
-	);
-	const abilityIds = useMemo(
-		() => new Set(abilityFeatures.map((feature) => feature.id)),
-		[abilityFeatures],
-	);
-	const coreFeatures = useMemo(
-		() => features.filter((feature) => !abilityIds.has(feature.id)),
-		[features, abilityIds],
+			(data.abilities || []).map((ability, idx) => ({
+				id: `${data.id}-ability-${idx}`,
+				name: ability.name,
+				display_name: ability.name,
+				description: ability.description,
+				recharge: ability.recharge ? `Recharge ${ability.recharge}-6` : null,
+				uses_formula: ability.cost,
+				action_type: null,
+			})),
+		[data.abilities, data.id],
 	);
 
 	const getTierIcon = (tier?: number) => {
@@ -281,6 +280,50 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 								</div>
 							</div>
 						))}
+					</div>
+				</div>
+			)}
+
+			{/* Stats */}
+			{data.stats && (
+				<div>
+					<h3 className="text-lg font-semibold mb-3 font-heading">
+						Path Bonuses
+					</h3>
+					<div className="p-4 bg-card border rounded-lg">
+						<div className="flex gap-4 mb-2">
+							<span className="text-sm text-muted-foreground">
+								Primary:{" "}
+								<span className="font-medium text-foreground">
+									{formatRegentVernacular(data.stats.primaryAttribute)}
+								</span>
+							</span>
+							{data.stats.secondaryAttribute && (
+								<span className="text-sm text-muted-foreground">
+									Secondary:{" "}
+									<span className="font-medium text-foreground">
+										{formatRegentVernacular(data.stats.secondaryAttribute)}
+									</span>
+								</span>
+							)}
+						</div>
+						{data.stats.bonusStats &&
+							Object.keys(data.stats.bonusStats).length > 0 && (
+								<div className="text-sm mt-3">
+									<span className="text-muted-foreground block mb-2">
+										Bonus Stats:{" "}
+									</span>
+									<div className="flex flex-wrap gap-2">
+										{Object.entries(data.stats.bonusStats).map(
+											([stat, val]) => (
+												<Badge key={stat} variant="outline">
+													{formatRegentVernacular(stat)} +{val}
+												</Badge>
+											),
+										)}
+									</div>
+								</div>
+							)}
 					</div>
 				</div>
 			)}

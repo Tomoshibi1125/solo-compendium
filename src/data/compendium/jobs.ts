@@ -1,4 +1,4 @@
-﻿import type { StaticJob as AuthoritativeStaticJob } from "@/types/character";
+import type { StaticJob as AuthoritativeStaticJob } from "@/types/character";
 
 // Each Job functions simultaneously as LINEAGE (race) and MANDATE (class).
 // racialTraits = physiological/lineage identity granted at Awakening (race equivalent).
@@ -2996,7 +2996,7 @@ export const jobs: Job[] = [
 		description:
 			"The Herald is an Awakened identity that specializes in the Absolute Transmission mandate. As an Ascendant of this lineage, their nervous system was restructured at Awakening into a living antenna — a receiver tuned to the Absolute's broadcast, translating sanctified resonance into restorative, radiant, and reality-correcting mantras. In the modern world, Heralds are the Ascendant Bureau's field chaplains and raid medics; their very presence re-anchors an ally's vitals, and their mantras can mend shattered bones or incinerate unholy anomalies with equal authority. They are the bridge between civilians and the Absolute's will.",
 		hitDie: "1d8",
-		primaryAbility: "Presence",
+		primaryAbility: "Sense",
 		saving_throws: ["Sense", "Presence"],
 		skillChoices: ["History", "Insight", "Medicine", "Persuasion", "Religion"],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
@@ -3049,7 +3049,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { presence: 2, sense: 1 },
+		abilityScoreImprovements: { sense: 2, presence: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Liturgical Latin"],
@@ -3069,7 +3069,7 @@ export const jobs: Job[] = [
 		hitPointsAtHigherLevels:
 			"1d8 (or 5) + your Vitality modifier per level after 1st",
 		spellcasting: {
-			ability: "Presence",
+			ability: "Sense",
 			focus: "Absolute focus",
 			cantripsKnown: [
 				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
@@ -3081,25 +3081,25 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Absolute Channeling",
 				description:
-					"Cast Herald mantras using Presence. Prepare from the full Herald list each day (Presence mod + Herald level mantras).",
+					"Cast Herald mantras using Sense. Prepare from the full Herald list each day (Sense mod + Herald level mantras).",
 			},
 			{
 				level: 1,
 				name: "Receive Signal",
 				description:
-					"As a bonus action, detect the presence and type of celestials, fiends, and undead within 60 ft. Uses = Presence mod per long rest.",
-			},
-			{
-				level: 2,
-				name: "Channel Absolute",
-				description:
-					"Once per short rest, invoke the Absolute's authority for a chosen effect (Turn Unholy, Restorative Pulse, or Radiant Ignition). Additional uses and effects unlock at higher levels.",
+					"As a bonus action, detect the presence and type of celestials, fiends, and undead within 60 ft. Uses = Sense mod per long rest.",
 			},
 			{
 				level: 1,
 				name: "Mandate",
 				description:
 					"Choose a Mandate — your specialty of Absolute transmission. Mandate features at 1st, 6th, 8th, and 17th level.",
+			},
+			{
+				level: 2,
+				name: "Channel Absolute",
+				description:
+					"Once per short rest, invoke the Absolute's authority for a chosen effect (Turn Unholy, Restorative Pulse, or Radiant Ignition). Additional uses and effects unlock at higher levels.",
 			},
 			{
 				level: 4,
@@ -3113,16 +3113,58 @@ export const jobs: Job[] = [
 					"When you Receive Signal, undead and fiends of CR 1/2 or lower within 30 ft must save or be destroyed. Higher CR thresholds unlock with level.",
 			},
 			{
+				level: 6,
+				name: "Mandate Feature",
+				description:
+					"Your chosen Mandate deepens its resonance. Gain the 6th-level feature from your selected Mandate — this feature enhances your Channel Absolute effect or grants a Mandate-specific aura, mantra, or defensive ward.",
+			},
+			{
+				level: 8,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
 				level: 10,
 				name: "Absolute Intervention",
 				description:
 					"Once per long rest, implore the Absolute directly for aid — the DM determines the form of intervention (heal, damage, teleport, revelation). At 20th, the intervention is automatic.",
 			},
 			{
+				level: 12,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 14,
+				name: "Amplified Broadcast",
+				description:
+					"Your Absolute transmissions saturate a wider field. The range of your Receive Signal increases to 120 ft. When you use Channel Absolute, the radius of the effect doubles. Allies within 60 ft of you have advantage on saving throws against being frightened while you are conscious.",
+			},
+			{
+				level: 16,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 17,
+				name: "Mandate Feature",
+				description:
+					"Your Mandate reaches its penultimate broadcast clarity. Gain the 17th-level feature from your selected Mandate — a high-tier ability that defines your role as an apex-tier Herald in the field.",
+			},
+			{
 				level: 18,
 				name: "Mandate Apex",
 				description:
 					"Your Mandate reaches its final broadcast frequency — capstone feature from your chosen Mandate.",
+			},
+			{
+				level: 19,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
 			},
 			{
 				level: 20,
@@ -3334,13 +3376,74 @@ export const jobs: Job[] = [
 			{
 				level: 4,
 				name: "Ability Score Improvement",
-				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 6,
+				name: "Patron Feature",
+				description:
+					"Your patron grants you further power. Gain the 6th-level feature from your selected patron pact.",
+			},
+			{
+				level: 8,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 10,
+				name: "Patron Feature",
+				description:
+					"Your patron grants you further power. Gain the 10th-level feature from your selected patron pact.",
 			},
 			{
 				level: 11,
 				name: "Mystic Arcanum (6th)",
 				description:
-					"Your patron grants you one 6th-level spell you can cast once per long rest without using a pact slot. Additional levels at 13th (7th), 15th (8th), 17th (9th).",
+					"Your patron grants you one 6th-level spell you can cast once per long rest without using a pact slot.",
+			},
+			{
+				level: 12,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 13,
+				name: "Mystic Arcanum (7th)",
+				description:
+					"Your patron grants you one 7th-level spell you can cast once per long rest without using a pact slot.",
+			},
+			{
+				level: 14,
+				name: "Patron Feature",
+				description:
+					"Your patron grants you their ultimate boon. Gain the 14th-level feature from your selected patron pact.",
+			},
+			{
+				level: 15,
+				name: "Mystic Arcanum (8th)",
+				description:
+					"Your patron grants you one 8th-level spell you can cast once per long rest without using a pact slot.",
+			},
+			{
+				level: 16,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 17,
+				name: "Mystic Arcanum (9th)",
+				description:
+					"Your patron grants you one 9th-level spell you can cast once per long rest without using a pact slot.",
+			},
+			{
+				level: 19,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
 			},
 			{
 				level: 20,
@@ -3609,10 +3712,64 @@ export const jobs: Job[] = [
 					"Attack twice whenever you take the Attack action on your turn.",
 			},
 			{
+				level: 7,
+				name: "Conclave Feature",
+				description:
+					"Your hunting specialization grants you further capabilities. Gain the 7th-level feature from your selected Conclave.",
+			},
+			{
+				level: 8,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 10,
+				name: "Terrain Camouflage",
+				description:
+					"You can spend 1 minute creating camouflage for yourself. You can't be tracked by nonmagical means, unless you choose to leave a trail.",
+			},
+			{
+				level: 11,
+				name: "Conclave Feature",
+				description:
+					"Your hunting specialization grants you further capabilities. Gain the 11th-level feature from your selected Conclave.",
+			},
+			{
+				level: 12,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
 				level: 14,
 				name: "Vanish",
 				description:
 					"Use the Hide action as a bonus action on each of your turns. You cannot be tracked by non-magical means.",
+			},
+			{
+				level: 15,
+				name: "Conclave Feature",
+				description:
+					"Your hunting specialization reaches its peak. Gain the 15th-level feature from your selected Conclave.",
+			},
+			{
+				level: 16,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
+			},
+			{
+				level: 18,
+				name: "Predator Senses",
+				description:
+					"You gain preternatural senses that help you fight creatures you can't see. When you attack a creature you can't see, your inability to see it doesn't impose disadvantage on your attack rolls against it. You are also aware of the location of any invisible creature within 30 feet of you.",
+			},
+			{
+				level: 19,
+				name: "Ability Score Improvement",
+				description:
+					"Increase one ability score by 2, or two ability scores by 1 each. You cannot increase an ability score above 20 using this feature.",
 			},
 			{
 				level: 20,

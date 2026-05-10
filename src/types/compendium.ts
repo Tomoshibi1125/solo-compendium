@@ -626,11 +626,25 @@ export interface CompendiumJob extends BaseCompendiumItem {
 export interface CompendiumPath extends BaseCompendiumItem {
 	level: number;
 	job_id: string;
+	job_name?: string;
+	path_tier?: number;
+	pathType?: string;
 	features: Array<{
 		level: number;
 		name: string;
 		description: string;
 	}>;
+	abilities?: Array<{
+		name: string;
+		description: string;
+		recharge?: number;
+		cost?: string;
+	}>;
+	stats?: {
+		primaryAttribute: string;
+		secondaryAttribute?: string;
+		bonusStats: Record<string, number>;
+	};
 	prerequisites?: string;
 }
 

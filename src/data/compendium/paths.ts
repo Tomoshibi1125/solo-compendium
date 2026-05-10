@@ -1,4 +1,4 @@
-﻿// Job Paths Compendium - Ascendant Compendium (84 Paths)
+// Job Paths Compendium - Ascendant Compendium (84 Paths)
 // 14 Jobs Ã— 6 Paths each, unique SA identities with 5e-compatible mechanical backbone
 
 interface Path {
@@ -5041,57 +5041,58 @@ export const paths: Path[] = [
 		source: "Ascendant Compendium",
 	},
 	{
-		id: "idol--war-anthem",
-		name: "Path of the War Anthem",
+		id: "idol--dance-resonance",
+		name: "Path of the Dance Resonance",
 		jobId: "idol",
 		jobName: "Idol",
 		tier: 2,
-		pathType: "war-anthem",
+		pathType: "dance-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Performance"],
+			skills: ["Acrobatics", "Performance"],
 		},
 		description:
-			"The War Anthem mandate designates those who broadcast combat-amplifying harmonics as their primary offensive layer. They are the frontline resonance conductors, their very presence realigning the morale and physical output of their allies into a cohesive nexus of destruction. In the heat of a gate-eruption, the War Anthem Idol turns the chaos of battle into a systematic, rhytmic elimination of the threat.",
+			"Those who walk the Path of the Dance Resonance channel the Absolute's combat-frequency through movement itself — their fighting styles derived from modern dance forms weaponized by the Ascendant Bureau's martial arts division. K-pop precision choreography becomes blade-work timing, contemporary flow becomes evasion doctrine, ballet extension becomes strike reach, and hip-hop impact becomes devastating kinetic force. In the modern world, the Dance Idol is the supreme mobile combatant, their battlefield presence a lethal performance that inspires allies and annihilates anomalies with equal grace.",
 		features: [
 			{
-				name: "Tactical Proficiencies",
-				description: "Prof with medium armor, shields, and martial weapons.",
-				level: 3,
-			},
-			{
-				name: "Combat Inspiration",
+				name: "Combat Choreography",
 				description:
-					"When a creature uses your Hype die on an attack roll, it can also add the die to a damage roll. Or it can add the die to AC against one attack (reaction, after seeing the strike but before knowing if it connects).",
+					"Prof with medium armor and martial weapons. Choose a primary dance discipline: K-Pop (bonus action feint: advantage on next attack), Contemporary (when hit, use reaction to move 10 ft without provoking), Ballet (melee reach increases by 5 ft), or Hip-Hop (unarmed strikes deal 1d8 + PRS force damage).",
 				level: 3,
 			},
 			{
-				name: "Vanguards Strike",
+				name: "Dance Combat",
+				description:
+					"When you take the Attack action, your speed increases by 10 ft. On hit, expend one Hype die: Spin Strike (add die to damage, gain +2 AC until start of next turn), Breakfall Combo (add die to damage, knock target prone if Medium or smaller), or Rhythm Rush (add die to damage, move up to 15 ft without provoking opportunity attacks).",
+				level: 3,
+			},
+			{
+				name: "Dual Tempo",
 				description: "Attack twice when you take the Attack action.",
 				level: 6,
 			},
 			{
-				name: "Harmonic Integration",
+				name: "Master Choreographer",
 				description:
-					"When you use your action to manifest an Idol mantra, make one weapon attack as a bonus action.",
+					"You can use a d6 instead of expending a Hype die for Dance Combat. Additionally, when you hit with a Dance Combat flourish, one ally within 30 ft who can see you can use their reaction to move up to half their speed.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Absolute War Anthem",
+				name: "Showstopper Finale",
 				description:
-					"All allies within 30 ft gain +2 to strike rolls and saving throws for 1 min. Concentration. Once/long rest.",
-				recharge: 3,
+					"Perform a devastating combat dance sequence: make a melee attack against every creature within 10 ft. Each hit uses a free Dance Combat flourish (d6, no Hype die expended). Allies within 30 ft who can see you gain 2d8 temporary HP. Once/short rest.",
+				recharge: 1,
 				cost: "Action",
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Strength",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				charisma: 2,
-				strength: 1,
+				dexterity: 1,
 			},
 		},
 		source: "Ascendant Compendium",

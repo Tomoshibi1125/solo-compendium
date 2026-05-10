@@ -182,6 +182,9 @@ export interface StaticCompendiumEntry {
 	job_id?: string | null;
 	job_name?: string | null;
 	path_tier?: number | null;
+	pathType?: string | null;
+	features?: Array<Record<string, Json>> | null;
+	abilities?: Record<string, Json> | Array<Record<string, Json>> | null;
 	// Sync Parity support
 	spell_level?: number | null;
 	casting_time?: string | null;

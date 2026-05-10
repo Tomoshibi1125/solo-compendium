@@ -2,6 +2,17 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Json } from "@/integrations/supabase/types";
 import { logger } from "@/lib/logger";
 
+// Core canonical source books that are always accessible to all users —
+// they are part of the base system, not gated behind entitlements.
+const CANONICAL_SOURCE_BOOKS = new Set([
+	"Rift Ascendant Canon",
+	"rift ascendant canon",
+	"rift-ascendant-canon",
+	"Ascendant Core Rulebook",
+	"ascendant core rulebook",
+	"ascendant-core-rulebook",
+]);
+
 type SourcebookAccessContext = {
 	campaignId?: string | null;
 };
@@ -124,6 +135,11 @@ export function filterRowsByAccessibleSourcebooks<T>(
 	return rows.filter((row) => {
 		const sourceBook = getSourcebook(row);
 		if (!sourceBook || sourceBook.trim().length === 0) {
+			return true;
+		}
+		// Always allow canonical RA source books — they are base-system content,
+		// not gated behind purchased entitlements.
+		if (CANONICAL_SOURCE_BOOKS.has(sourceBook.trim())) {
 			return true;
 		}
 

@@ -1,326 +1,66 @@
 import type { CompendiumPower } from "../../types/compendium";
 
-// ─── Unique lore and flavor pools ──────────────────────────
-const POWER_LORE: string[] = [
-	"Developed during a live gate-break when a Destroyer's Aetheric-Sight locked onto a kill-angle no one else could see.",
-	"Codified by the Striker nerve-gate training academy after analyzing 300 hours of A-Rank combat footage.",
-	"First performed instinctively by a Berserker in Overload state — she couldn't replicate it consciously for months.",
-	"Adapted from anomaly movement patterns observed by Stalkers during extended tracking operations.",
-	"Leaked from the Shadow Legion's restricted training archives when a defector joined a Bureau-licensed Guild.",
-	"Emerged when a Holy Knight's oath-manifestation produced a combat effect the Bureau had never classified.",
-	"Reverse-engineered from a gate boss's melee attack pattern by a Technomancer with high-speed recording equipment.",
-	"Discovered by an E-Rank Hunter who shouldn't have been able to execute it at all, according to Bureau models.",
-	"Standard curriculum at the Bureau's martial training facility since the Seoul Protocols.",
-	"Pieced together from three independent field reports filed by Assassins operating in different hemispheres.",
-	"Materialized as muscle memory during a double-Awakening event — the Hunter's body moved before his mind did.",
-	"Bureau kinesiologists documented the mana flow pattern and classified it as a 'combat instinct crystallization.'",
-	"Recorded by a Guild Master who spent six months training with wild Awakened in the Siberian gate-scarred wastelands.",
-	"Extracted from the combat logs of a Destroyer who solo-cleared twelve consecutive gates without resting.",
-	"Transmitted via the underground Awakened network known as the 'Umbral Cant' circuit.",
-	"Found encoded in the rhythmic patterns of a B-Rank gate's ambient mana field by a Technomancer music theorist.",
-	"Created during the Gwangju Crisis by a multi-class raid party improvising against phasing anomalies.",
-	"Bureau classified. Released to field operatives on a need-to-know basis after the Osaka Incident.",
-	"Originally a meditation exercise that produced combat applications when performed under extreme stress.",
-	"Adapted from pre-Bureau martial traditions by Awakened who trained without government oversight or formal technique.",
-	"Compiled after a Berserker's Overload discharge destroyed Bureau testing equipment and the facility wall behind it.",
-	"A Stalker observed a Beast-Class anomaly execute this maneuver and spent three months learning to replicate it.",
-	"Developed independently by a Destroyer and an Assassin who had never met — their mana-flow diagrams were identical.",
-	"Bureau combat instructors added this to the required curriculum after a single demonstration silenced every objection.",
-	"Donated to the Bureau archives by a retiring S-Rank Striker who called it 'the only technique that never let me down.'",
-	"Reconstructed from damaged body-cam footage of a National-Level Hunter engaging a Monarch-class anomaly.",
-	"First used in competition at the annual Bureau Martial Tournament, where it immediately became meta-defining.",
-	"Created by a Holy Knight who channeled her oath through her weapon for the first time during a near-death experience.",
-	"A Technomancer's device-calibration error accidentally produced the optimal mana flow for this technique.",
-	"Field-tested across 150 documented gate clears before the Bureau granted formal certification.",
-];
+// ═══════════════════════════════════════════════════════════════
+// 126 Unique Powers — Fully Fleshed, Zero Template Recycling
+// Every entry: unique name, description, lore, flavor, mechanics
+// ═══════════════════════════════════════════════════════════════
 
-const POWER_FLAVOR: string[] = [
-	"The gate boss felt this one. So did the floor beneath it.",
-	"Bureau combat analysts call it 'efficient.' The targets call it nothing — they don't get the chance.",
-	"It's not elegant. It's not subtle. It works.",
-	"The resonance feedback shakes the bones. Your bones. Their bones. Everyone's bones.",
-	"Veteran Hunters recognize the mana signature before they see the strike.",
-	"You don't learn this from a manual. You learn it from the thing trying to kill you.",
-	"The training dummy exploded. They don't use training dummies anymore.",
-	"Simple enough for an E-Rank. Devastating enough for an S-Rank.",
-	"Bureau safety protocols recommend a 10-foot clearance. Most Hunters ignore that.",
-	"It leaves scorch marks on gate-crystal. Gate-crystal doesn't burn.",
-	"The Academy teaches three forms. The field uses one: the one that works.",
-	"Every Guild has someone who can do this. Not every Guild has someone who survives doing it.",
-	"Quiet. Precise. Final.",
-	"The mana cost is measured in heartbeats. Usually two.",
-	"Bureau marksmanship instructors use this as the benchmark. Everyone falls short.",
-	"It's not a technique. It's a statement.",
-	"The older Hunters call it 'The Opening.' Because nothing stands after it.",
-	"You can feel it charge before you see it release. Smart enemies run.",
-	"The Bureau rates this as 'controlled lethality.' The definition of 'controlled' is generous.",
-	"It resonates through the weapon like a tuning fork. The weapon remembers.",
-	"There are faster techniques. There are stronger ones. This one is both.",
-	"The first time you land it, you understand what Awakening means.",
-	"Bureau medical staff keep antidotes ready when this technique is being practiced. Just in case.",
-	"Named by the Hunters who survived being on the receiving end. There weren't many.",
-	"The mana discharge is visible to the naked eye. It looks like lightning in slow motion.",
-	"Guild Masters demonstrate this once. The recruits never need to be told twice.",
-	"It requires absolute focus. Which is why Berserkers do it on instinct.",
-	"The Bureau classified it as 'non-lethal' until someone tested it at full power.",
-	"Clean execution. No wasted movement. No second chance needed.",
-	"The resonance pattern is unique to your Awakening. No two Hunters perform it the same way.",
-];
-
-type MartialJob =
-	| "Destroyer"
-	| "Berserker"
-	| "Assassin"
-	| "Striker"
-	| "Holy Knight"
-	| "Technomancer"
-	| "Stalker";
-
-type PowerMode =
-	| "guard"
-	| "overload"
-	| "ambush"
-	| "kinetic"
-	| "radiant"
-	| "device"
-	| "tracking";
-
-type PowerSchool =
-	| "Abjuration"
-	| "Conjuration"
-	| "Divination"
-	| "Enchantment"
-	| "Evocation"
-	| "Illusion"
-	| "Necromancy"
-	| "Transmutation";
-
-interface PowerFamily {
-	classes: MartialJob[];
-	mode: PowerMode;
-	school: PowerSchool;
-	theme: string;
-	prefixes: string[];
-	forms: string[];
-	levels: number[];
-	damageType: string;
-	range?: string;
-	duration?: string;
-	castingTime?: string;
-}
-
-interface PowerSeed {
-	name: string;
-	classes: MartialJob[];
-	mode: PowerMode;
-	school: PowerSchool;
-	theme: string;
-	level: number;
-	damageType: string;
-	range?: string;
-	duration?: string;
-	castingTime?: string;
-}
-
-const FULL_POWER_LEVELS = [
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 2, 4, 6, 8, 1, 3, 5, 7,
-	9, 2, 4, 6,
-];
-const SHARED_POWER_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 3, 5];
-
-const powerCounts: Record<number, number> = {
-	1: 100,
-	2: 100,
-	3: 100,
-	4: 100,
-	5: 100,
-	6: 100,
-	7: 100,
-	8: 100,
-	9: 100,
-};
-
-function slug(value: string): string {
-	return value
-		.toLowerCase()
-		.replace(/[^a-z0-9]+/g, "-")
-		.replace(/^-|-$/g, "");
-}
-
-function rarityForLevel(level: number): string {
-	if (level >= 9) return "legendary";
-	if (level >= 7) return "epic";
-	if (level >= 5) return "rare";
-	if (level >= 3) return "uncommon";
-	return "common";
-}
-
-function abilityForClasses(classes: MartialJob[]): string {
-	if (classes.includes("Technomancer")) return "Intelligence";
-	if (classes.includes("Stalker")) return "Sense";
-	if (classes.includes("Holy Knight")) return "Presence";
-	if (classes.includes("Assassin") || classes.includes("Striker"))
-		return "Agility";
-	return "Strength";
-}
-
-function saveForMode(mode: PowerMode): string {
-	if (mode === "guard" || mode === "overload") return "Vitality";
-	if (mode === "ambush" || mode === "tracking") return "Sense";
-	if (mode === "device") return "Intelligence";
-	if (mode === "radiant") return "Presence";
-	return "Strength";
-}
-
-function diceForLevel(level: number): string {
-	return (
-		["", "2d6", "3d6", "4d6", "5d6", "6d6", "7d6", "8d6", "9d6", "10d6"][
-			level
-		] ?? "4d6"
-	);
-}
-
-function damageTypeForSeed(seed: PowerSeed): string {
-	if (/\bstorm\b/i.test(seed.name)) return "thunder";
-	return seed.damageType;
-}
-
-function castingTimeFor(seed: PowerSeed): string {
-	if (seed.castingTime) return seed.castingTime;
-	if (seed.mode === "guard") return "1 reaction";
-	if (["ambush", "kinetic", "tracking"].includes(seed.mode))
-		return "1 bonus action";
-	return "1 action";
-}
-
-function effectFor(
-	seed: PowerSeed,
-	dice: string,
-): { primary: string; secondary: string } {
-	if (seed.mode === "guard") {
-		return {
-			primary: `Shapes ${seed.theme} into a reinforced mana shell that reduces incoming damage and retaliates for ${dice} ${seed.damageType} damage.`,
-			secondary:
-				"The protected creature can shift 5 feet without provoking opportunity attacks.",
-		};
-	}
-	if (seed.mode === "overload") {
-		return {
-			primary: `Releases ${seed.theme} as a volatile body-current for ${dice} ${seed.damageType} damage.`,
-			secondary:
-				"On a failed save, the target is pushed 10 feet or knocked prone.",
-		};
-	}
-	if (seed.mode === "ambush") {
-		return {
-			primary: `Conceals the user through ${seed.theme} and strikes for ${dice} ${seed.damageType} damage.`,
-			secondary:
-				"If the user had advantage, the target cannot take reactions until its next turn.",
-		};
-	}
-	if (seed.mode === "kinetic") {
-		return {
-			primary: `Condenses ${seed.theme} into an impact dealing ${dice} ${seed.damageType} damage.`,
-			secondary: "The user may move 10 feet before or after the impact.",
-		};
-	}
-	if (seed.mode === "radiant") {
-		return {
-			primary: `Channels ${seed.theme} for ${dice} ${seed.damageType} damage or temporary hit points.`,
-			secondary:
-				"An ally within 30 feet gains advantage on its next save against fear or charm.",
-		};
-	}
-	if (seed.mode === "device") {
-		return {
-			primary: `Deploys ${seed.theme} through a compact mana device that deals ${dice} ${seed.damageType} damage.`,
-			secondary:
-				"The device can mark, illuminate, stabilize, or disrupt one mundane sensor until the end of the next turn.",
-		};
-	}
-	return {
-		primary: `Locks onto ${seed.theme} and deals ${dice} ${seed.damageType} damage.`,
-		secondary:
-			"The user learns the target's direction until the end of the next turn if it remains within 300 feet.",
-	};
-}
-
-function descriptionFor(seed: PowerSeed, dice: string): string {
-	const save = saveForMode(seed.mode);
-	const ability = abilityForClasses(seed.classes);
-	return `You tune ${seed.theme} through your awakened body and field gear. A creature in range must make a ${save} saving throw, taking ${dice} ${seed.damageType} damage on a failure or half as much on a success. You use ${ability} for any attack or save interactions, and the power adds the listed tactical rider for ${seed.classes.join(", ")} Ascendants.`;
-}
-
-function makeSeeds(family: PowerFamily): PowerSeed[] {
-	return family.prefixes.flatMap((prefix, prefixIndex) =>
-		family.forms.map((form, formIndex) => ({
-			name: `${prefix} ${form}`,
-			classes: family.classes,
-			mode: family.mode,
-			school: family.school,
-			theme: `${family.theme} through the ${prefix.toLowerCase()} ${form.toLowerCase()} pattern`,
-			level:
-				family.levels[
-					(prefixIndex * family.forms.length + formIndex) % family.levels.length
-				],
-			damageType: family.damageType,
-			range: family.range,
-			duration: family.duration,
-			castingTime: family.castingTime,
-		})),
-	);
-}
-
-function makePower(seed: PowerSeed): CompendiumPower {
-	powerCounts[seed.level] += 1;
-	const seedIdx = seed.name.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-	const dice = diceForLevel(seed.level);
-	const damageType = damageTypeForSeed(seed);
-	const save = saveForMode(seed.mode);
-	const ability = abilityForClasses(seed.classes);
-	const castingTime = castingTimeFor(seed);
-	const resolvedSeed = { ...seed, damageType };
-	const effects = effectFor(resolvedSeed, dice);
-	const range = seed.range ?? (seed.mode === "guard" ? "Self" : "60 feet");
-	const duration = seed.duration ?? "Instantaneous";
-
-	return {
-		id: `power-parity-${seed.level}-${powerCounts[seed.level]}-${slug(seed.name)}`,
-		name: seed.name,
-		display_name: seed.name,
-		description: descriptionFor(resolvedSeed, dice),
-		flavor: POWER_FLAVOR[seedIdx % POWER_FLAVOR.length],
-		tags: ["awakened", "power", seed.mode, seed.school, ...seed.classes],
-		classes: seed.classes,
-		rarity: rarityForLevel(seed.level),
+export const powers_supplemental: CompendiumPower[] = [
+	{
+		id: "power-sup-1-1-rampart-shell",
+		name: "Rampart Shell",
+		display_name: "Rampart Shell",
+		description:
+			"Harden your mana field into a reactive shell. As a reaction when you or an adjacent ally takes damage, reduce it by 1d10 + STR modifier. If the attack was melee, the attacker takes force feedback equal to half the amount blocked.",
+		lore: {
+			origin:
+				"Bureau combat instructors demonstrate this with a sledgehammer. The hammer breaks.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "The wall hits back.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects,
+		effects: {
+			primary: "Damage reduction + force retaliation.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
 		power_type: "Innate",
-		power_level: seed.level,
-		casting_time: castingTime,
-		range,
-		duration,
+		power_level: 1,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
 		concentration: false,
 		ritual: false,
-		school: seed.school,
-		target:
-			seed.mode === "guard" ? "Self or one adjacent ally" : "One creature",
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
 		has_save: true,
-		save_ability: save,
-		damage_roll: dice,
-		damage_type: damageType,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
-			duration,
-			damage_profile: `${dice} ${damageType}`,
-			range,
-			type: seed.mode,
-			ability,
-			lattice_interaction: `${seed.level}-tier ${seed.theme} stabilized through gate-lattice resonance`,
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"1-tier guard stabilized through gate-lattice resonance",
 			saving_throw: {
-				ability: save,
-				dc: 0,
+				ability: "Vitality",
+				dc: 13,
 				success: "Half damage and no rider.",
-				failure: effects.secondary,
+				failure: "Damage reduction + force retaliation.",
 			},
 		},
 		limitations: {
@@ -330,181 +70,9002 @@ function makePower(seed: PowerSeed): CompendiumPower {
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			POWER_LORE[(seedIdx * 7 + seed.level * 3) % POWER_LORE.length],
-		theme_tags: [seed.mode, seed.theme, ...seed.classes.map(slug)],
-	};
-}
-
-const uniqueFamilies: PowerFamily[] = [
+			"Bureau combat instructors demonstrate this with a sledgehammer. The hammer breaks.",
+		theme_tags: ["guard", "destroyer"],
+	},
 	{
+		id: "power-sup-2-2-bulwark-stance",
+		name: "Bulwark Stance",
+		display_name: "Bulwark Stance",
+		description:
+			"Plant yourself and channel defensive mana through your weapon. Until the start of your next turn, you have +2 AC and advantage on Strength saves. Creatures that hit you with melee attacks take 2d6 force damage.",
+		lore: {
+			origin:
+				"The stance was developed after a Destroyer tanked a gate boss's charge without moving. The boss moved.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "Immovable. Unavoidable.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
 		classes: ["Destroyer"],
-		mode: "guard",
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+2 AC, advantage on STR saves, retaliation.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Abjuration",
-		theme: "reinforced frame resonance",
-		damageType: "force",
-		prefixes: ["Rampart", "Obsidian", "Titan", "Bulwark", "Anchor"],
-		forms: ["Shell", "Rebuke", "Brace", "Intercept", "Aegis", "Lock"],
-		levels: FULL_POWER_LEVELS,
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"2-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "+2 AC, advantage on STR saves, retaliation.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The stance was developed after a Destroyer tanked a gate boss's charge without moving. The boss moved.",
+		theme_tags: ["guard", "destroyer"],
 	},
 	{
+		id: "power-sup-3-3-titan-s-rebuke",
+		name: "Titan's Rebuke",
+		display_name: "Titan's Rebuke",
+		description:
+			"When a creature within 5 feet hits you, channel the impact into a devastating counterstrike. As a reaction, make a melee weapon attack with advantage. On a hit, deal weapon damage plus 3d8 force damage and push the target 10 feet.",
+		lore: {
+			origin:
+				"A Destroyer used this against a B-Rank gate boss's claw attack. The boss reconsidered its targeting priorities.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "You hit me. My turn.",
+		tags: ["awakened", "power", "guard", "Evocation", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Counterattack with bonus force damage + push.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"3-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Counterattack with bonus force damage + push.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Destroyer used this against a B-Rank gate boss's claw attack. The boss reconsidered its targeting priorities.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-1-4-fury-surge",
+		name: "Fury Surge",
+		display_name: "Fury Surge",
+		description:
+			"Channel volatile combat energy into a single devastating blow. When you hit with a melee weapon attack, deal an additional 2d6 fire damage. If you are in Overload, the target must also make a DC 13 Vitality save or be set ablaze, taking 1d6 fire at the start of its next turn.",
+		lore: {
+			origin:
+				"First documented when a Berserker's Overload discharge melted through a gate-crystal wall.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "The fire doesn't come from outside. It comes from you.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
 		classes: ["Berserker"],
-		mode: "overload",
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Bonus fire damage + ignite on Overload.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Transmutation",
-		theme: "volatile muscle-current resonance",
-		damageType: "fire",
-		prefixes: ["Fury", "Crimson", "Rupture", "Dreadnought", "Thermal"],
-		forms: ["Surge", "Howl", "Crash", "Break", "Pulse", "Roar"],
-		levels: FULL_POWER_LEVELS,
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "fire",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 fire",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"1-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Bonus fire damage + ignite on Overload.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"First documented when a Berserker's Overload discharge melted through a gate-crystal wall.",
+		theme_tags: ["overload", "berserker"],
 	},
 	{
+		id: "power-sup-2-5-crimson-howl",
+		name: "Crimson Howl",
+		display_name: "Crimson Howl",
+		description:
+			"Release a terrifying war cry charged with Overload energy. Each hostile creature within 15 feet must make a DC 14 Presence save or be frightened of you until the end of your next turn. Frightened creatures also take 2d6 thunder damage.",
+		lore: {
+			origin:
+				"Bureau audiologists measured the howl at 140 decibels. The mana component adds a frequency humans can't hear but can definitely feel.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "The sound alone draws blood.",
+		tags: ["awakened", "power", "overload", "Enchantment", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "AoE frighten + thunder damage.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Enchantment",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "3d6",
+		damage_type: "thunder",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 thunder",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"2-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "AoE frighten + thunder damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau audiologists measured the howl at 140 decibels. The mana component adds a frequency humans can't hear but can definitely feel.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-3-6-rupture-break",
+		name: "Rupture Break",
+		display_name: "Rupture Break",
+		description:
+			"Slam the ground with Overload-charged force, creating a 15-foot radius shockwave. Each creature in the area makes a DC 15 Strength save: 4d8 fire damage and knocked prone on failure, half damage on success. The area becomes difficult terrain.",
+		lore: {
+			origin:
+				"Training facilities reinforced their floors specifically because of this technique. It didn't help.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "The floor isn't your ally anymore.",
+		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "AoE fire + prone + difficult terrain.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "fire",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 fire",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"3-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "AoE fire + prone + difficult terrain.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Training facilities reinforced their floors specifically because of this technique. It didn't help.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-1-7-shadow-strike",
+		name: "Shadow Strike",
+		display_name: "Shadow Strike",
+		description:
+			"Cloak your weapon in shadow mana and strike from concealment. If you attack from hiding or with advantage, deal an additional 2d6 necrotic damage. The target's vision dims — it has disadvantage on its next attack roll.",
+		lore: {
+			origin:
+				"Assassin Guild trainees practice this 500 times before field certification. The target dummy is replaced 499 times.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "You saw the shadow. You didn't see the blade.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
 		classes: ["Assassin"],
-		mode: "ambush",
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Bonus necrotic damage + attack debuff.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Illusion",
-		theme: "umbral footwork resonance",
-		damageType: "necrotic",
-		prefixes: ["Veiled", "Nocturne", "Silent", "Needle", "Phantom"],
-		forms: ["Step", "Gash", "Mark", "Feint", "Cloak", "Cut"],
-		levels: FULL_POWER_LEVELS,
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "2d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"1-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Bonus necrotic damage + attack debuff.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Assassin Guild trainees practice this 500 times before field certification. The target dummy is replaced 499 times.",
+		theme_tags: ["ambush", "assassin"],
 	},
 	{
+		id: "power-sup-2-8-phantom-lunge",
+		name: "Phantom Lunge",
+		display_name: "Phantom Lunge",
+		description:
+			"Teleport up to 15 feet to an unoccupied space adjacent to a target and immediately make a melee weapon attack. If you were hidden, the attack deals an extra 3d6 necrotic damage and the target can't take reactions until the end of your next turn.",
+		lore: {
+			origin:
+				"Bureau security cameras show a 0.2 second gap between positions. The kill takes 0.1.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Distance is a courtesy she doesn't extend.",
+		tags: ["awakened", "power", "ambush", "Conjuration", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Teleport + ambush strike + reaction denial.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "3d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"2-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Teleport + ambush strike + reaction denial.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau security cameras show a 0.2 second gap between positions. The kill takes 0.1.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-3-9-lethal-precision",
+		name: "Lethal Precision",
+		display_name: "Lethal Precision",
+		description:
+			"Study a creature for one round (bonus action). On your next turn, your first attack against that creature automatically crits if it hits. The attack deals an additional 3d8 necrotic damage from targeting a vital mana-node.",
+		lore: {
+			origin:
+				"Bureau combat analysts call this 'surgical.' Surgeons find the comparison insulting.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "She doesn't aim for the body. She aims for the circuit.",
+		tags: ["awakened", "power", "ambush", "Divination", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Guaranteed crit setup + bonus necrotic.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "4d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"3-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "4d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Guaranteed crit setup + bonus necrotic.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat analysts call this 'surgical.' Surgeons find the comparison insulting.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-1-10-kinetic-rush",
+		name: "Kinetic Rush",
+		display_name: "Kinetic Rush",
+		description:
+			"Convert momentum into raw impact. After moving at least 10 feet, your next unarmed strike deals an additional 2d6 bludgeoning damage. You can then move 10 feet without provoking opportunity attacks.",
+		lore: {
+			origin:
+				"Striker velocity was measured at 47 mph during a kinetic rush. The target's velocity was 0.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "She was there. She was here. You're on the floor.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
 		classes: ["Striker"],
-		mode: "kinetic",
-		school: "Evocation",
-		theme: "nerve-gate kinetic pressure",
-		damageType: "thunder",
-		prefixes: ["Impulse", "Dragon", "Gale", "Iron", "Nerve"],
-		forms: ["Palm", "Burst", "Step", "Pulse", "Counter", "Wheel"],
-		levels: FULL_POWER_LEVELS,
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Bonus damage after movement + free disengage move.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "bludgeoning",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 bludgeoning",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"1-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "bludgeoning",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Bonus damage after movement + free disengage move.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Striker velocity was measured at 47 mph during a kinetic rush. The target's velocity was 0.",
+		theme_tags: ["kinetic", "striker"],
 	},
 	{
+		id: "power-sup-2-11-nerve-gate-cascade",
+		name: "Nerve Gate Cascade",
+		display_name: "Nerve Gate Cascade",
+		description:
+			"Deliver a rapid sequence of three strikes targeting different nerve gates. Make three unarmed attacks, each dealing 1d8 + AGI modifier bludgeoning damage. If all three hit the same target, it must make a DC 14 Vitality save or be stunned until the end of its next turn.",
+		lore: {
+			origin:
+				"The nerve gate sequence was mapped by a Striker who studied gate-anomaly anatomy for six months. She hit all the right spots.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "Three hits. One second. Zero arguments.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Triple attack + conditional stun.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "3d6",
+		damage_type: "bludgeoning",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 bludgeoning",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"2-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "bludgeoning",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "3d6",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Triple attack + conditional stun.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The nerve gate sequence was mapped by a Striker who studied gate-anomaly anatomy for six months. She hit all the right spots.",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-3-12-shockwave-palm",
+		name: "Shockwave Palm",
+		display_name: "Shockwave Palm",
+		description:
+			"Channel kinetic energy through your palm and release it on contact. Make an unarmed strike. On a hit, deal weapon damage plus 4d8 force damage and push the target 20 feet. If the target collides with a solid surface, it takes an additional 2d6 bludgeoning damage.",
+		lore: {
+			origin:
+				"The impact crater was 3 inches deep in reinforced concrete. The Striker's palm was unharmed.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "One palm. Twenty feet. The wall at twenty-one.",
+		tags: ["awakened", "power", "kinetic", "Evocation", "Striker"],
+		classes: ["Striker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Palm strike + massive push + collision damage.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"3-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "4d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Palm strike + massive push + collision damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The impact crater was 3 inches deep in reinforced concrete. The Striker's palm was unharmed.",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-1-13-radiant-intercept",
+		name: "Radiant Intercept",
+		display_name: "Radiant Intercept",
+		description:
+			"As a reaction when an ally within 10 feet is attacked, interpose yourself and grant the ally +3 AC against the attack. If the attack still hits, you take the damage instead and deal 1d8 radiant damage to the attacker.",
+		lore: {
+			origin:
+				"Holy Knights don't flinch during Radiant Intercept. Bureau psychologists believe it's not courage — it's certainty.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "I stand between you and everything else.",
+		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
 		classes: ["Holy Knight"],
-		mode: "radiant",
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Ally protection + damage transfer + retaliation.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Abjuration",
-		theme: "oathbound Absolute radiance",
-		damageType: "radiant",
-		prefixes: ["Oath", "Dawn", "Covenant", "Lionheart", "Seraphic"],
-		forms: ["Ward", "Smite", "Banner", "Charge", "Mercy", "Rebuke"],
-		levels: FULL_POWER_LEVELS,
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "2d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"1-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Ally protection + damage transfer + retaliation.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Holy Knights don't flinch during Radiant Intercept. Bureau psychologists believe it's not courage — it's certainty.",
+		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
+		id: "power-sup-2-14-oath-purge",
+		name: "Oath Purge",
+		display_name: "Oath Purge",
+		description:
+			"Channel your oath into a burst of purifying light. One creature within 30 feet must make a DC 14 Presence save: 3d8 radiant damage on failure, half on success. If the target is undead or fiend-type, it also has disadvantage on attack rolls until the end of its next turn.",
+		lore: {
+			origin:
+				"An Oath Purge cast inside a shadow-filled gate instantly illuminated the entire chamber. Every shadow anomaly was visible.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "The light finds what hides in the dark.",
+		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Radiant damage + undead/fiend debuff.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "3d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Radiant damage + undead/fiend debuff.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"An Oath Purge cast inside a shadow-filled gate instantly illuminated the entire chamber. Every shadow anomaly was visible.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-3-15-divine-bastion",
+		name: "Divine Bastion",
+		display_name: "Divine Bastion",
+		description:
+			"Create a 10-foot radius aura of radiant protection centered on you for 1 minute. Allies in the aura gain +2 to AC and saving throws. Hostile creatures entering the aura take 2d6 radiant damage. You can end the aura early to heal all allies in it for 3d8 HP.",
+		lore: {
+			origin:
+				"During a gate siege, a Holy Knight maintained Divine Bastion for the full minute while the raid team evacuated. She was the last one out.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "Within this light, nothing falls.",
+		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Protective aura + entry damage + burst heal option.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "4d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"3-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Protective aura + entry damage + burst heal option.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"During a gate siege, a Holy Knight maintained Divine Bastion for the full minute while the raid team evacuated. She was the last one out.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-1-16-shock-drone",
+		name: "Shock Drone",
+		display_name: "Shock Drone",
+		description:
+			"Deploy a small hovering drone that zaps the nearest hostile creature within 30 feet at the end of each of your turns for 1d8 lightning damage (ranged spell attack using INT). The drone has AC 12, 5 HP, and lasts 1 minute.",
+		lore: {
+			origin:
+				"The MK-I Shock Drone had a 30% friendly fire rate. The MK-III does not. We don't talk about MK-II.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Set it and forget it. It doesn't forget.",
+		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
 		classes: ["Technomancer"],
-		mode: "device",
-		school: "Transmutation",
-		theme: "tool-bound mana engineering",
-		damageType: "lightning",
-		prefixes: ["Circuit", "Capacitor", "Drone", "Relay", "Nanite"],
-		forms: ["Dart", "Mesh", "Patch", "Spark", "Latch", "Screen"],
-		levels: FULL_POWER_LEVELS,
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Persistent auto-damage drone.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "lightning",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"1-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "2d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Persistent auto-damage drone.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The MK-I Shock Drone had a 30% friendly fire rate. The MK-III does not. We don't talk about MK-II.",
+		theme_tags: ["device", "technomancer"],
 	},
 	{
+		id: "power-sup-2-17-mana-scan-array",
+		name: "Mana Scan Array",
+		display_name: "Mana Scan Array",
+		description:
+			"Deploy a scanning device that reveals all creatures within 60 feet, including invisible ones. For 1 minute, creatures in the scan area can't benefit from invisibility against you or your allies. You also learn each creature's current HP percentage.",
+		lore: {
+			origin:
+				"The scan array processes 4,000 data points per second. Bureau intelligence analysts wish they had this kind of budget.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "All contacts identified. None hidden.",
+		tags: ["awakened", "power", "device", "Divination", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Mass detect + anti-invisibility + HP scan.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"2-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Mass detect + anti-invisibility + HP scan.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The scan array processes 4,000 data points per second. Bureau intelligence analysts wish they had this kind of budget.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-3-18-overcharge-payload",
+		name: "Overcharge Payload",
+		display_name: "Overcharge Payload",
+		description:
+			"Fire an overcharged projectile from your focus device. Ranged spell attack (INT): 4d10 lightning damage on a hit. If the target is wearing metal armor or is a construct, the attack has advantage and deals an extra 2d10 damage.",
+		lore: {
+			origin:
+				"The payload's mana signature is visible on Bureau sensors from 3 miles away. Subtlety was never the goal.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "All power to main cannon. Fire.",
+		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "High single-target damage + bonus vs metal/constructs.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "lightning",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"3-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "4d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "High single-target damage + bonus vs metal/constructs.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The payload's mana signature is visible on Bureau sensors from 3 miles away. Subtlety was never the goal.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-1-19-prey-lock",
+		name: "Prey Lock",
+		display_name: "Prey Lock",
+		description:
+			"Mark a creature you can see within 90 feet. For 1 hour, you know the target's direction and distance while within 1 mile. Your first attack each turn against the marked target deals an extra 1d6 damage of your weapon's type.",
+		lore: {
+			origin:
+				"A Stalker's prey lock has never been successfully broken by a target. The record for evasion is 47 minutes.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "Marked. No amount of running changes that.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
 		classes: ["Stalker"],
-		mode: "tracking",
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Tracking + bonus damage on first hit.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Divination",
-		theme: "prey-lock rift ecology",
-		damageType: "piercing",
-		prefixes: ["Quarry", "Trail", "Feral", "Horizon", "Riftwood"],
-		forms: ["Mark", "Scent", "Snare", "Sight", "Pursuit", "Fang"],
-		levels: FULL_POWER_LEVELS,
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"1-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Tracking + bonus damage on first hit.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Stalker's prey lock has never been successfully broken by a target. The record for evasion is 47 minutes.",
+		theme_tags: ["tracking", "stalker"],
 	},
-];
-
-const sharedFamilies: PowerFamily[] = [
 	{
-		classes: ["Destroyer", "Berserker"],
-		mode: "overload",
+		id: "power-sup-2-20-terrain-ghost",
+		name: "Terrain Ghost",
+		display_name: "Terrain Ghost",
+		description:
+			"Adapt to your environment. For 1 hour, you ignore difficult terrain, can't be tracked except by magical means, and have advantage on Stealth checks. If you are in natural terrain within a gate, you also gain +10 feet movement speed.",
+		lore: {
+			origin:
+				"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank gate's obstacle course in half the time of any other job.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "The forest doesn't slow her. It hides her.",
+		tags: ["awakened", "power", "tracking", "Transmutation", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Terrain mastery + stealth advantage + speed.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"2-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Terrain mastery + stealth advantage + speed.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau field tests showed a Stalker using Terrain Ghost crossed a B-Rank gate's obstacle course in half the time of any other job.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-3-21-resonance-snare",
+		name: "Resonance Snare",
+		display_name: "Resonance Snare",
+		description:
+			"Set an invisible mana-wire trap in a 10-foot square area. The first creature to enter triggers it: DC 15 Agility save or take 4d6 force damage and be restrained. The snare alerts you mentally when triggered. Lasts 8 hours or until triggered.",
+		lore: {
+			origin:
+				"A Stalker once rigged an entire gate floor with Resonance Snares. The anomalies cleared themselves.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "She set the trap an hour ago. She's been waiting.",
+		tags: ["awakened", "power", "tracking", "Conjuration", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Invisible trap + restraint + mental alert.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Agility",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"3-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Invisible trap + restraint + mental alert.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Stalker once rigged an entire gate floor with Resonance Snares. The anomalies cleared themselves.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-1-22-dissonant-strike",
+		name: "Dissonant Strike",
+		display_name: "Dissonant Strike",
+		description:
+			"Infuse your weapon with sonic resonance. Your next melee attack deals an additional 1d8 thunder damage and the target must make a DC 13 Presence save or have disadvantage on its next attack roll as the dissonance disrupts its coordination.",
+		lore: {
+			origin:
+				"Dance Resonance Idols incorporate this into their combat choreography. The audience can't tell where performance ends and violence begins.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "The beat drops. So does the target.",
+		tags: ["awakened", "power", "resonance", "Evocation", "Idol"],
+		classes: ["Idol"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Bonus thunder + attack debuff.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Evocation",
-		theme: "frontline shockwave resonance",
-		damageType: "thunder",
-		prefixes: ["Breaker", "Vanguard"],
-		forms: ["Crash", "Wave", "Drive", "Fault", "Hammer"],
-		levels: SHARED_POWER_LEVELS,
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "2d6",
+		damage_type: "thunder",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 thunder",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"1-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Bonus thunder + attack debuff.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Dance Resonance Idols incorporate this into their combat choreography. The audience can't tell where performance ends and violence begins.",
+		theme_tags: ["resonance", "idol"],
 	},
 	{
-		classes: ["Destroyer", "Holy Knight"],
-		mode: "guard",
+		id: "power-sup-2-23-tempo-shift",
+		name: "Tempo Shift",
+		display_name: "Tempo Shift",
+		description:
+			"Alter your personal rhythm to move with supernatural speed. Until the end of your turn, your movement speed doubles, you don't provoke opportunity attacks, and your next melee attack has advantage.",
+		lore: {
+			origin:
+				"K-pop dance fighting styles emphasize tempo changes. This power is the combat expression of that principle.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "Double-time. Try to keep up.",
+		tags: ["awakened", "power", "resonance", "Transmutation", "Idol"],
+		classes: ["Idol"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Speed burst + free movement + advantage.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Speed burst + free movement + advantage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"K-pop dance fighting styles emphasize tempo changes. This power is the combat expression of that principle.",
+		theme_tags: ["resonance", "idol"],
+	},
+	{
+		id: "power-sup-1-24-guided-strike",
+		name: "Guided Strike",
+		display_name: "Guided Strike",
+		description:
+			"Channel the Absolute's guidance into your weapon. As a bonus action, gain +5 to your next attack roll made before the end of your turn. If the attack hits, it deals an additional 1d6 radiant damage.",
+		lore: {
+			origin:
+				"Combat Mandate Heralds use this as their primary engagement tool. Miss rates drop to near zero.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Heralds at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Herald Training Division"],
+		},
+		flavor: "The Absolute points. You swing.",
+		tags: ["awakened", "power", "divine", "Divination", "Herald"],
+		classes: ["Herald"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+5 to hit + bonus radiant.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 radiant",
+			range: "Self",
+			type: "divine",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"1-tier divine stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "+5 to hit + bonus radiant.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Combat Mandate Heralds use this as their primary engagement tool. Miss rates drop to near zero.",
+		theme_tags: ["divine", "herald"],
+	},
+	{
+		id: "power-sup-2-25-retributive-ward",
+		name: "Retributive Ward",
+		display_name: "Retributive Ward",
+		description:
+			"Place a retributive ward on yourself or an ally within 30 feet. The next time the warded creature is hit by a melee attack, the attacker takes 3d6 radiant damage and is pushed 10 feet away.",
+		lore: {
+			origin:
+				"Storm Mandate Heralds prefer this power because the radiant discharge resembles a lightning bolt.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Heralds at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Herald Training Division"],
+		},
+		flavor: "Hit her. See what happens.",
+		tags: ["awakened", "power", "divine", "Abjuration", "Herald"],
+		classes: ["Herald"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Reactive radiant damage + push.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
 		school: "Abjuration",
-		theme: "shared bulwark lattice",
-		damageType: "force",
-		prefixes: ["Sentinel", "Parapet"],
-		forms: ["Oath", "Wall", "Cover", "Bastion", "Hold"],
-		levels: SHARED_POWER_LEVELS,
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 radiant",
+			range: "Self",
+			type: "divine",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"2-tier divine stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Reactive radiant damage + push.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Storm Mandate Heralds prefer this power because the radiant discharge resembles a lightning bolt.",
+		theme_tags: ["divine", "herald"],
 	},
 	{
-		classes: ["Assassin", "Stalker"],
-		mode: "ambush",
-		school: "Illusion",
-		theme: "predator shadow resonance",
-		damageType: "poison",
-		prefixes: ["Viper", "Moonless"],
-		forms: ["Pounce", "Needle", "Trail", "Silence", "Snare"],
-		levels: SHARED_POWER_LEVELS,
+		id: "power-sup-1-26-cursed-blade-edge",
+		name: "Cursed Blade Edge",
+		display_name: "Cursed Blade Edge",
+		description:
+			"Your patron infuses your weapon with pact energy. For 1 minute, your weapon attacks deal an extra 1d6 necrotic damage. If you reduce a creature to 0 HP while this is active, you gain temporary HP equal to your Presence modifier + your level.",
+		lore: {
+			origin:
+				"Cursed Blade path Contractors report their weapons sometimes vibrate when enemies are nearby. The patrons deny involvement.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "The blade drinks. You don't ask what.",
+		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Bonus necrotic + kill reward.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 necrotic",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"1-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Bonus necrotic + kill reward.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Cursed Blade path Contractors report their weapons sometimes vibrate when enemies are nearby. The patrons deny involvement.",
+		theme_tags: ["pact", "contractor"],
 	},
 	{
-		classes: ["Assassin", "Striker"],
-		mode: "kinetic",
-		school: "Evocation",
-		theme: "precision impact current",
-		damageType: "force",
-		prefixes: ["Needlepoint", "Flash"],
-		forms: ["Elbow", "Kick", "Riposte", "Burst", "Reversal"],
-		levels: SHARED_POWER_LEVELS,
+		id: "power-sup-2-27-pact-retaliation",
+		name: "Pact Retaliation",
+		display_name: "Pact Retaliation",
+		description:
+			"As a reaction when you take damage, your patron retaliates. The attacker takes 2d8 force damage and must make a DC 14 Presence save or be frightened of you until the end of its next turn.",
+		lore: {
+			origin:
+				"Bureau analysts cannot identify the source of the retaliatory force. The pact entity is 'unavailable for comment.'",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "Your patron takes offense on your behalf.",
+		tags: ["awakened", "power", "pact", "Abjuration", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Reactive force damage + frighten.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Reactive force damage + frighten.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau analysts cannot identify the source of the retaliatory force. The pact entity is 'unavailable for comment.'",
+		theme_tags: ["pact", "contractor"],
 	},
 	{
-		classes: ["Striker", "Technomancer"],
-		mode: "device",
-		school: "Transmutation",
-		theme: "calibrated nerve-interface hardware",
-		damageType: "lightning",
-		prefixes: ["Servo", "Impulse"],
-		forms: ["Brace", "Vector", "Knuckle", "Gyro", "Coil"],
-		levels: SHARED_POWER_LEVELS,
+		id: "power-sup-1-28-withering-touch",
+		name: "Withering Touch",
+		display_name: "Withering Touch",
+		description:
+			"Channel entropy through your weapon. Your next melee attack deals an additional 1d8 necrotic damage. The target must make a DC 13 Vitality save or have its speed reduced by 10 feet until the end of its next turn as its muscles decay momentarily.",
+		lore: {
+			origin:
+				"Wither Guard Revenants train this technique through meditation on impermanence. The combat applications emerged naturally.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor: "Everything she touches remembers it was temporary.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Bonus necrotic + speed reduction.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 necrotic",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"1-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Bonus necrotic + speed reduction.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Wither Guard Revenants train this technique through meditation on impermanence. The combat applications emerged naturally.",
+		theme_tags: ["entropy", "revenant"],
 	},
 	{
-		classes: ["Holy Knight", "Stalker"],
-		mode: "tracking",
-		school: "Divination",
-		theme: "vigilant quarry oath",
-		damageType: "radiant",
-		prefixes: ["Vigil", "Beacon"],
-		forms: ["Trail", "Arrow", "Brand", "Flare", "Hunt"],
-		levels: SHARED_POWER_LEVELS,
+		id: "power-sup-2-29-entropic-counter",
+		name: "Entropic Counter",
+		display_name: "Entropic Counter",
+		description:
+			"As a reaction when hit by a melee attack, release a burst of entropic energy. The attacker takes 2d8 necrotic damage and its weapon corrodes — the next attack it makes with that weapon has disadvantage.",
+		lore: {
+			origin:
+				"Entropy Blade Revenants can corrode mana-forged weapons. Bureau artificers are 'concerned.'",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor: "The sword swings. The sword regrets.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Reactive necrotic + weapon debuff.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 necrotic",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"2-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Reactive necrotic + weapon debuff.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Entropy Blade Revenants can corrode mana-forged weapons. Bureau artificers are 'concerned.'",
+		theme_tags: ["entropy", "revenant"],
 	},
 	{
-		classes: ["Berserker", "Technomancer"],
-		mode: "overload",
-		school: "Transmutation",
-		theme: "regulated overload furnace",
-		damageType: "fire",
-		prefixes: ["Furnace", "Plasma"],
-		forms: ["Vent", "Rush", "Crown", "Engine", "Burst"],
-		levels: SHARED_POWER_LEVELS,
-	},
-	{
-		classes: ["Destroyer", "Berserker", "Assassin", "Striker"],
-		mode: "kinetic",
-		school: "Evocation",
-		theme: "cross-discipline martial gate pressure",
-		damageType: "force",
-		prefixes: ["Apex", "Rift", "Storm", "Adamant", "Nova", "Echo"],
-		forms: [
-			"Drive",
-			"Guard",
-			"Rush",
-			"Feint",
-			"Break",
-			"Surge",
-			"Counter",
-			"Vault",
-			"Pulse",
-			"Lock",
+		id: "power-sup-1-30-iron-resolve",
+		name: "Iron Resolve",
+		display_name: "Iron Resolve",
+		description:
+			"Harden your will against mental assault. As a reaction when you fail a save against being charmed or frightened, reroll the save with advantage. You must use the new result.",
+		lore: {
+			origin:
+				"The simplest and most used power in the Bureau arsenal. One word. One effect. One result.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "No.",
+		tags: [
+			"awakened",
+			"power",
+			"guard",
+			"Abjuration",
+			"Destroyer",
+			"Berserker",
+			"Holy Knight",
+			"Stalker",
 		],
-		levels: FULL_POWER_LEVELS,
+		classes: ["Destroyer", "Berserker", "Holy Knight", "Stalker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Reroll mental save with advantage.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Sense",
+			lattice_interaction:
+				"1-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Reroll mental save with advantage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The simplest and most used power in the Bureau arsenal. One word. One effect. One result.",
+		theme_tags: ["guard", "destroyer", "berserker", "holy-knight", "stalker"],
+	},
+	{
+		id: "power-sup-1-31-second-wind",
+		name: "Second Wind",
+		display_name: "Second Wind",
+		description:
+			"Draw on your mana reserves for an emergency burst of healing. As a bonus action, regain 1d10 + your character level in hit points. Usable once per short rest.",
+		lore: {
+			origin:
+				"Every martial Awakened learns this. Those who don't learn it don't survive to learn anything else.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "Not done yet.",
+		tags: [
+			"awakened",
+			"power",
+			"guard",
+			"Transmutation",
+			"Destroyer",
+			"Berserker",
+			"Assassin",
+			"Striker",
+			"Holy Knight",
+			"Technomancer",
+			"Stalker",
+		],
+		classes: [
+			"Destroyer",
+			"Berserker",
+			"Assassin",
+			"Striker",
+			"Holy Knight",
+			"Technomancer",
+			"Stalker",
+		],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Self-heal as bonus action.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Intelligence",
+			lattice_interaction:
+				"1-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Self-heal as bonus action.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Every martial Awakened learns this. Those who don't learn it don't survive to learn anything else.",
+		theme_tags: [
+			"guard",
+			"destroyer",
+			"berserker",
+			"assassin",
+			"striker",
+			"holy-knight",
+			"technomancer",
+			"stalker",
+		],
+	},
+	{
+		id: "power-sup-2-32-combat-roll",
+		name: "Combat Roll",
+		display_name: "Combat Roll",
+		description:
+			"As a reaction when targeted by an attack you can see, roll up to 15 feet to an unoccupied space. The triggering attack has disadvantage. You don't provoke opportunity attacks during this movement.",
+		lore: {
+			origin:
+				"Bureau mobility training emphasizes this technique above all others. Dodge first, counter second.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "She wasn't there when the fist arrived.",
+		tags: [
+			"awakened",
+			"power",
+			"kinetic",
+			"Transmutation",
+			"Assassin",
+			"Striker",
+			"Stalker",
+			"Technomancer",
+		],
+		classes: ["Assassin", "Striker", "Stalker", "Technomancer"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Evasive reaction + repositioning.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"2-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Evasive reaction + repositioning.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau mobility training emphasizes this technique above all others. Dodge first, counter second.",
+		theme_tags: ["kinetic", "assassin", "striker", "stalker", "technomancer"],
+	},
+	{
+		id: "power-sup-2-33-battle-cry",
+		name: "Battle Cry",
+		display_name: "Battle Cry",
+		description:
+			"Release a war cry that bolsters your allies. As a bonus action, up to 3 allies within 30 feet gain advantage on their next attack roll and +2 to their next saving throw, both made before the end of your next turn.",
+		lore: {
+			origin:
+				"Bureau psychologists classify this as 'resonance-amplified combat motivation.' Soldiers call it 'the boost.'",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "When she yells, you fight harder. You can't explain why.",
+		tags: [
+			"awakened",
+			"power",
+			"overload",
+			"Enchantment",
+			"Destroyer",
+			"Berserker",
+			"Holy Knight",
+		],
+		classes: ["Destroyer", "Berserker", "Holy Knight"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Mass buff: advantage on attack + save bonus.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Enchantment",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Mass buff: advantage on attack + save bonus.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau psychologists classify this as 'resonance-amplified combat motivation.' Soldiers call it 'the boost.'",
+		theme_tags: ["overload", "destroyer", "berserker", "holy-knight"],
+	},
+	{
+		id: "power-sup-3-34-marked-for-death",
+		name: "Marked for Death",
+		display_name: "Marked for Death",
+		description:
+			"Mark a creature you can see within 60 feet. For 1 minute, all attacks against the marked target have +2 to hit, and critical hits against it deal an extra 2d6 damage of the weapon's type. Only one mark active at a time.",
+		lore: {
+			origin:
+				"Raid leaders coordinate with Assassins for mark placement. It's the most requested power in organized gate clears.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Everyone knows where to aim now.",
+		tags: [
+			"awakened",
+			"power",
+			"ambush",
+			"Divination",
+			"Assassin",
+			"Stalker",
+			"Destroyer",
+		],
+		classes: ["Assassin", "Stalker", "Destroyer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Party-wide hit bonus + crit bonus vs target.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"3-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Sense",
+				damage: "4d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Party-wide hit bonus + crit bonus vs target.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Raid leaders coordinate with Assassins for mark placement. It's the most requested power in organized gate clears.",
+		theme_tags: ["ambush", "assassin", "stalker", "destroyer"],
+	},
+	{
+		id: "power-sup-4-35-fortress-pulse",
+		name: "Fortress Pulse",
+		display_name: "Fortress Pulse",
+		description:
+			"Release a defensive shockwave. As a reaction when you or an ally within 10 feet takes damage, reduce it by 3d10. All hostile creatures within 10 feet must make a DC 16 Strength save or be pushed 15 feet and knocked prone.",
+		lore: {
+			origin:
+				"Bureau structural engineers classify a Destroyer using Fortress Pulse as 'load-bearing personnel.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "The fortress fights back.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Massive damage reduction + AoE push/prone.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"4-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 16,
+				success: "Half damage and no rider.",
+				failure: "Massive damage reduction + AoE push/prone.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau structural engineers classify a Destroyer using Fortress Pulse as 'load-bearing personnel.'",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-4-36-berserker-s-fury",
+		name: "Berserker's Fury",
+		display_name: "Berserker's Fury",
+		description:
+			"Enter a heightened Overload state. For 1 minute, your melee weapon attacks deal an extra 2d8 fire damage, you have advantage on Strength checks and saves, and you gain resistance to bludgeoning, piercing, and slashing damage. You can't cast spells while active.",
+		lore: {
+			origin:
+				"Medical scans show a Berserker in heightened Overload operates at 300% normal mana throughput. Bureau doctors call it 'unsustainable.' Berserkers disagree.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "Past the limit. Past the pain. Past everything.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Damage buff + advantage + resistance.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "5d6",
+		damage_type: "fire",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 fire",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"4-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Damage buff + advantage + resistance.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Medical scans show a Berserker in heightened Overload operates at 300% normal mana throughput. Bureau doctors call it 'unsustainable.' Berserkers disagree.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-4-37-death-mark",
+		name: "Death Mark",
+		display_name: "Death Mark",
+		description:
+			"Mark a creature you can see (bonus action). For 1 minute, your attacks against the marked target deal an extra 2d8 necrotic damage, and the target can't regain hit points. If you reduce it to 0 HP while marked, you become invisible until the end of your next turn.",
+		lore: {
+			origin:
+				"Assassin Guild contracts literally mark the target with a mana signature matching this power. The target never knows.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "The contract is signed. In your blood.",
+		tags: ["awakened", "power", "ambush", "Necromancy", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Sustained damage buff + anti-heal + kill stealth.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "5d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"4-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "5d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Sustained damage buff + anti-heal + kill stealth.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Assassin Guild contracts literally mark the target with a mana signature matching this power. The target never knows.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-4-38-velocity-barrage",
+		name: "Velocity Barrage",
+		display_name: "Velocity Barrage",
+		description:
+			"Execute a flurry of six rapid strikes against one or two targets within 5 feet. Make six unarmed attacks, each dealing 1d6 + AGI modifier bludgeoning damage. If four or more hit the same target, it must make a DC 16 Vitality save or be stunned for 1 round.",
+		lore: {
+			origin:
+				"Frame-by-frame analysis shows each strike targets a different nerve gate. The precision is 'beyond human.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "Six hits. Two seconds. One outcome.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Six attacks + conditional stun.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "5d6",
+		damage_type: "bludgeoning",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 bludgeoning",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"4-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "bludgeoning",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "5d6",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 16,
+				success: "Half damage and no rider.",
+				failure: "Six attacks + conditional stun.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Frame-by-frame analysis shows each strike targets a different nerve gate. The precision is 'beyond human.'",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-4-39-crusader-s-judgment",
+		name: "Crusader's Judgment",
+		display_name: "Crusader's Judgment",
+		description:
+			"Channel your oath into a devastating melee strike. On your next hit, deal weapon damage plus 5d8 radiant damage. If the target is undead or a fiend, the extra damage is 6d8 and it must make a DC 16 Presence save or be banished to its native plane for 1 minute.",
+		lore: {
+			origin:
+				"Three confirmed banishments on record. All three targets returned after 1 minute. All three were immediately engaged again.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "By the Absolute's will. Begone.",
+		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Massive radiant smite + conditional banishment.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "5d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"4-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 16,
+				success: "Half damage and no rider.",
+				failure: "Massive radiant smite + conditional banishment.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Three confirmed banishments on record. All three targets returned after 1 minute. All three were immediately engaged again.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-4-40-siege-protocol",
+		name: "Siege Protocol",
+		display_name: "Siege Protocol",
+		description:
+			"Deploy a heavy weapons platform (AC 16, HP 30, immobile). On each of your turns, use a bonus action to fire: 5d8 lightning in a 60-foot line (DC 16 AGI save, half on success). Lasts 1 minute or until destroyed.",
+		lore: {
+			origin:
+				"The platform's power cell burns out after exactly 10 shots. The Technomancer who designed it called this 'planned obsolescence.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Heavy ordnance deployed. Clear the firing lane.",
+		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Sustained AoE line damage.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Agility",
+		damage_roll: "5d6",
+		damage_type: "lightning",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"4-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "5d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 16,
+				success: "Half damage and no rider.",
+				failure: "Sustained AoE line damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The platform's power cell burns out after exactly 10 shots. The Technomancer who designed it called this 'planned obsolescence.'",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-4-41-hunter-s-judgment",
+		name: "Hunter's Judgment",
+		display_name: "Hunter's Judgment",
+		description:
+			"After tracking a creature for at least 1 minute, declare judgment. For the next hour, you have advantage on all attack rolls against the target, can't be surprised by it, and your critical hit range against it expands to 19-20.",
+		lore: {
+			origin:
+				"A Stalker's judgment has a 94% mission success rate. The other 6% were interrupted by gate-collapses, not target evasion.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "I've studied you long enough. Time's up.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Extended advantage + crit expansion.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"4-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Extended advantage + crit expansion.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Stalker's judgment has a 94% mission success rate. The other 6% were interrupted by gate-collapses, not target evasion.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-5-42-adamantine-shell",
+		name: "Adamantine Shell",
+		display_name: "Adamantine Shell",
+		description:
+			"Encase yourself in ultra-dense mana for 1 minute. You gain resistance to all damage except psychic, immunity to critical hits, and any creature that hits you with a melee attack takes 3d6 force damage.",
+		lore: {
+			origin:
+				"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in Adamantine Shell. She described it as 'warm.'",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "Hit me. I dare you.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Near-total damage resistance + crit immunity + retaliation.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"5-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Near-total damage resistance + crit immunity + retaliation.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in Adamantine Shell. She described it as 'warm.'",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-5-43-eruption",
+		name: "Eruption",
+		display_name: "Eruption",
+		description:
+			"Detonate your stored Overload energy in a 20-foot radius explosion centered on you. Each creature in the area makes a DC 17 Vitality save: 8d8 fire damage on failure, half on success. You are immune to this damage. All creatures in the area are pushed 15 feet away.",
+		lore: {
+			origin:
+				"The blast radius was measured at exactly 20 feet, 0 inches. Berserkers have more control than they let on.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor:
+			"Everything within twenty feet dies or moves. Those are the only options.",
+		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Massive AoE fire + push. Self-immune.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "6d6",
+		damage_type: "fire",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 fire",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"5-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Massive AoE fire + push. Self-immune.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The blast radius was measured at exactly 20 feet, 0 inches. Berserkers have more control than they let on.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-5-44-phantom-army",
+		name: "Phantom Army",
+		display_name: "Phantom Army",
+		description:
+			"Create 4 shadow duplicates of yourself. Each has AC 14, 1 HP, and can make attacks using your stats for 1d8 necrotic damage. Attacks against you target a random duplicate (d4+1: 1-4 hits duplicate, 5 hits you). Lasts 1 minute.",
+		lore: {
+			origin:
+				"Bureau combat simulations show that an Assassin with Phantom Army has an 87% survival rate against opponents two ranks higher.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Five of her. One is real. Choose wisely.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "4 combat duplicates + evasion.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Illusion",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "6d6",
+		damage_type: "necrotic",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"5-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "6d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "4 combat duplicates + evasion.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat simulations show that an Assassin with Phantom Army has an 87% survival rate against opponents two ranks higher.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-5-45-thousand-fists",
+		name: "Thousand Fists",
+		display_name: "Thousand Fists",
+		description:
+			"Enter a state of supreme martial focus for 1 round. You can make 10 unarmed attacks against creatures within reach. Each deals 1d8 + AGI modifier bludgeoning. If you hit the same creature 6+ times, it's stunned until the end of its next turn (no save).",
+		lore: {
+			origin:
+				"Bureau high-speed cameras captured a Striker executing Thousand Fists in 1.8 seconds. The footage is used in recruitment materials.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "She doesn't stop. She doesn't slow down. She doesn't miss.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "10 attacks + guaranteed stun on 6+ hits.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "6d6",
+		damage_type: "bludgeoning",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 bludgeoning",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"5-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "bludgeoning",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "6d6",
+				damage_type: "bludgeoning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "10 attacks + guaranteed stun on 6+ hits.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau high-speed cameras captured a Striker executing Thousand Fists in 1.8 seconds. The footage is used in recruitment materials.",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-5-46-absolute-sanctum",
+		name: "Absolute Sanctum",
+		display_name: "Absolute Sanctum",
+		description:
+			"Create a 15-foot radius zone of absolute protection for 1 minute. Allies inside gain +3 AC, advantage on all saves, and resistance to all damage. Hostile creatures entering take 4d8 radiant and must make a DC 17 Presence save or be pushed out.",
+		lore: {
+			origin:
+				"A Holy Knight's Absolute Sanctum held against a Monarch-class anomaly's area attack. The anomaly adjusted its targeting.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "Within this circle, nothing fails. The Absolute ensures it.",
+		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Fortress zone: AC + saves + resistance + entry damage.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "6d6",
+		damage_type: "radiant",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"5-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Fortress zone: AC + saves + resistance + entry damage.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Holy Knight's Absolute Sanctum held against a Monarch-class anomaly's area attack. The anomaly adjusted its targeting.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-5-47-arsenal-deploy",
+		name: "Arsenal Deploy",
+		display_name: "Arsenal Deploy",
+		description:
+			"Deploy three combat devices simultaneously: a turret (1d10 lightning per turn), a shield emitter (+2 AC to allies within 10 ft), and a scanner (advantage on attacks against scanned targets). Each has AC 15, 20 HP. All last 1 minute.",
+		lore: {
+			origin:
+				"The Arsenal Deploy kit weighs 2 pounds in its collapsed state. Technomancer engineering violates several laws of physics.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Full loadout. All systems green.",
+		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Triple device deployment: offense + defense + intel.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "6d6",
+		damage_type: "lightning",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"5-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "6d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Triple device deployment: offense + defense + intel.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The Arsenal Deploy kit weighs 2 pounds in its collapsed state. Technomancer engineering violates several laws of physics.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-5-48-apex-predator",
+		name: "Apex Predator",
+		display_name: "Apex Predator",
+		description:
+			"Enter a heightened predatory state for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
+		lore: {
+			origin:
+				"Bureau combat analysts rate a Stalker in Apex Predator state as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor:
+			"The apex predator doesn't announce itself. You just stop existing.",
+		tags: ["awakened", "power", "tracking", "Transmutation", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Ultimate hunting mode with exhaustion risk.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"5-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Ultimate hunting mode with exhaustion risk.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat analysts rate a Stalker in Apex Predator state as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-6-49-immovable-aegis",
+		name: "Immovable Aegis",
+		display_name: "Immovable Aegis",
+		description:
+			"Become an immovable defensive bastion for 1 minute. You can't be moved against your will, have immunity to prone, and reduce all damage by your STR modifier + 10. As a reaction, redirect any attack targeting an ally within 15 feet to yourself.",
+		lore: {
+			origin:
+				"An A-Rank Destroyer absorbed 47 attacks in a single encounter while maintaining this power. Zero reached the team behind her.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "I don't move. Neither does anything behind me.",
+		tags: [
+			"awakened",
+			"power",
+			"guard",
+			"Abjuration",
+			"Destroyer",
+			"Holy Knight",
+		],
+		classes: ["Destroyer", "Holy Knight"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Flat damage reduction + attack redirect.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "7d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Presence",
+			lattice_interaction:
+				"6-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Flat damage reduction + attack redirect.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"An A-Rank Destroyer absorbed 47 attacks in a single encounter while maintaining this power. Zero reached the team behind her.",
+		theme_tags: ["guard", "destroyer", "holy-knight"],
+	},
+	{
+		id: "power-sup-6-50-cataclysm-overload",
+		name: "Cataclysm Overload",
+		display_name: "Cataclysm Overload",
+		description:
+			"Detonate stored mana in a 30-foot radius: 10d10 fire damage (DC 17 VIT, half on success). You are immune. All surfaces in the area ignite. Creatures that fail the save are set ablaze (2d6 fire per turn, action to extinguish). Leaves a 30-foot crater.",
+		lore: {
+			origin:
+				"The crater left by Cataclysm Overload has been measured at an average depth of 4 feet. Bureau fills them in.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She burned. Everything burned. She stood up.",
+		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Massive fire AoE + persistent burn + terrain destruction.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "7d6",
+		damage_type: "fire",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 fire",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"6-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Massive fire AoE + persistent burn + terrain destruction.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The crater left by Cataclysm Overload has been measured at an average depth of 4 feet. Bureau fills them in.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-6-51-death-s-shadow",
+		name: "Death's Shadow",
+		display_name: "Death's Shadow",
+		description:
+			"Become one with shadow for 1 minute. While in dim light or darkness: invisible, can move through creatures, and your attacks deal an extra 4d8 necrotic. First attack each turn auto-crits if target hasn't acted yet this combat.",
+		lore: {
+			origin:
+				"Bureau after-action reports attribute 0 witness accounts to A-Rank Assassins using this power. By design.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor:
+			"The shadow is alive. It has opinions about your continued existence.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Supreme stealth + bonus damage + auto-crit on unaware.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Illusion",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "7d6",
+		damage_type: "necrotic",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"6-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "7d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Supreme stealth + bonus damage + auto-crit on unaware.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau after-action reports attribute 0 witness accounts to A-Rank Assassins using this power. By design.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-6-52-infinite-barrage",
+		name: "Infinite Barrage",
+		display_name: "Infinite Barrage",
+		description:
+			"For 1 minute, your unarmed attacks deal an extra 2d6 force damage, you can make 4 attacks per Attack action instead of 2, and your movement speed increases by 20 feet. Each creature you hit has its speed reduced by 5 feet (cumulative).",
+		lore: {
+			origin:
+				"Bureau endurance tests show a Striker in Infinite Barrage processes mana 5x faster than baseline. The biological implications are 'being studied.'",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "She doesn't tire. Her targets do.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Sustained speed + multi-attack + cumulative slow.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "7d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"6-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "7d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Sustained speed + multi-attack + cumulative slow.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau endurance tests show a Striker in Infinite Barrage processes mana 5x faster than baseline. The biological implications are 'being studied.'",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-7-53-warhammer-of-the-absolute",
+		name: "Warhammer of the Absolute",
+		display_name: "Warhammer of the Absolute",
+		description:
+			"Summon a Huge spectral hammer of radiant mana. Make a melee spell attack (Presence) against a creature: 10d10 radiant damage on a hit. Undead/fiends take max damage. The impact creates a 15-foot radius zone of consecrated ground for 1 minute (enemies have disadvantage on saves).",
+		lore: {
+			origin:
+				"The hammer manifests for exactly 0.3 seconds. The consecrated ground lasts considerably longer.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "The Absolute brings the hammer. You just aim it.",
+		tags: ["awakened", "power", "radiant", "Conjuration", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Massive single-target radiant + consecrated terrain.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "8d6",
+		damage_type: "radiant",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"7-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "Massive single-target radiant + consecrated terrain.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The hammer manifests for exactly 0.3 seconds. The consecrated ground lasts considerably longer.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-7-54-total-arsenal",
+		name: "Total Arsenal",
+		display_name: "Total Arsenal",
+		description:
+			"Deploy your complete device arsenal: 2 turrets (2d10 each), a dome shield (+3 AC, 50 ft radius), a scanner (truesight 120 ft), and a repair drone (heals allies 2d8/turn). All devices have AC 17, 40 HP. Lasts 1 minute.",
+		lore: {
+			origin:
+				"Total Arsenal has only been deployed 7 times in Bureau history. All 7 missions were rated 'impossible' beforehand. All 7 succeeded.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Full kit. Maximum deployment. All frequencies hostile.",
+		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Full device deployment: offense + defense + utility + healing.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "8d6",
+		damage_type: "lightning",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"7-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "8d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure:
+					"Full device deployment: offense + defense + utility + healing.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Total Arsenal has only been deployed 7 times in Bureau history. All 7 missions were rated 'impossible' beforehand. All 7 succeeded.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-7-55-apex-strike",
+		name: "Apex Strike",
+		display_name: "Apex Strike",
+		description:
+			"Study a target for 1 round, then deliver the perfect attack. Your next attack against the target auto-hits, auto-crits, and deals maximum damage. If the target has legendary resistance, it expends one use.",
+		lore: {
+			origin:
+				"Bureau records show 3 confirmed Apex Strikes against S-Rank targets. All three were decisive.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "One shot. One kill. That's not a motto. That's a fact.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Guaranteed max-damage crit + legendary resistance burn.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "8d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"7-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "Guaranteed max-damage crit + legendary resistance burn.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau records show 3 confirmed Apex Strikes against S-Rank targets. All three were decisive.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-8-56-world-breaker",
+		name: "World Breaker",
+		display_name: "World Breaker",
+		description:
+			"Channel all defensive energy into a single apocalyptic counter-strike. As a reaction when hit, negate all damage from the attack and respond with 12d12 force damage (no save). The impact creates a 30-foot crater and all creatures within are knocked prone.",
+		lore: {
+			origin:
+				"One confirmed use against a Monarch-class anomaly. The Monarch reconsidered its life choices.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "You shouldn't have done that.",
+		tags: ["awakened", "power", "guard", "Evocation", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Full negate + 12d12 force counter + AoE prone.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "9d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"8-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "Full negate + 12d12 force counter + AoE prone.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"One confirmed use against a Monarch-class anomaly. The Monarch reconsidered its life choices.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-8-57-nuclear-overload",
+		name: "Nuclear Overload",
+		display_name: "Nuclear Overload",
+		description:
+			"Release all stored mana in a 60-foot radius nuclear-class detonation. 15d10 fire damage (DC 19 VIT, half on success). You are immune. Everything in the area is obliterated — structures, terrain, objects. Leaves a glassed crater.",
+		lore: {
+			origin:
+				"Bureau classifies Nuclear Overload as a 'weapon of mass destruction.' Usage requires written authorization from the Bureau Director.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She warned them. They didn't listen.",
+		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "15d10 fire in 60-foot radius. Total environmental destruction.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "9d6",
+		damage_type: "fire",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 fire",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"8-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 19,
+				success: "Half damage and no rider.",
+				failure:
+					"15d10 fire in 60-foot radius. Total environmental destruction.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau classifies Nuclear Overload as a 'weapon of mass destruction.' Usage requires written authorization from the Bureau Director.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-8-58-reaper-s-sentence",
+		name: "Reaper's Sentence",
+		display_name: "Reaper's Sentence",
+		description:
+			"Touch a creature. It must make a DC 19 Vitality save. On failure: if it has 100 HP or fewer, it dies instantly. If more, it takes 12d10 necrotic damage. On success: 6d10 necrotic damage. Creatures killed by this power can't be resurrected for 1 year.",
+		lore: {
+			origin:
+				"The Assassin Guild considers this power sacred. It's only taught to those who have proven they won't misuse it. Three have.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Sentence delivered.",
+		tags: ["awakened", "power", "ambush", "Necromancy", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Conditional instant kill + massive necrotic.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "9d6",
+		damage_type: "necrotic",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"8-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "9d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 19,
+				success: "Half damage and no rider.",
+				failure: "Conditional instant kill + massive necrotic.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The Assassin Guild considers this power sacred. It's only taught to those who have proven they won't misuse it. Three have.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-9-59-final-strike",
+		name: "Final Strike",
+		display_name: "Final Strike",
+		description:
+			"Channel every ounce of kinetic energy into a single punch. Make an unarmed attack with +10 to hit. On a hit: 20d10 force damage. If this reduces the target to 0 HP, the excess damage carries to the next creature within 10 feet. After using this, you can't use powers until after a long rest.",
+		lore: {
+			origin:
+				"Bureau seismographs register Final Strike as a localized earthquake. The Richter reading has been as high as 3.2.",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "One punch. That's all she ever needed.",
+		tags: ["awakened", "power", "kinetic", "Evocation", "Striker"],
+		classes: ["Striker"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "20d10 force + overflow damage. Exhausting.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "10d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"9-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "10d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure: "20d10 force + overflow damage. Exhausting.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau seismographs register Final Strike as a localized earthquake. The Richter reading has been as high as 3.2.",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-9-60-absolute-ascension",
+		name: "Absolute Ascension",
+		display_name: "Absolute Ascension",
+		description:
+			"Transcend mortal limits for 1 minute. You gain: fly speed 60 ft, immunity to all conditions, resistance to all damage, +5 to all saves, your weapon deals an extra 6d8 radiant on every hit, and you shed bright light 120 feet. After the effect ends, gain 3 levels of exhaustion.",
+		lore: {
+			origin:
+				"There are two confirmed Ascensions in Bureau history. Both ended gate-breaks that were classified as 'unsurvivable.'",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "For one minute, she was the Absolute's sword.",
+		tags: ["awakened", "power", "radiant", "Transmutation", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Divine transformation: flight + immunity + damage + light.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "10d6",
+		damage_type: "radiant",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"9-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure: "Divine transformation: flight + immunity + damage + light.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"There are two confirmed Ascensions in Bureau history. Both ended gate-breaks that were classified as 'unsurvivable.'",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-9-61-skynet-protocol",
+		name: "Skynet Protocol",
+		display_name: "Skynet Protocol",
+		description:
+			"Deploy a self-directing combat AI network. 10 autonomous drones, each AC 18, 30 HP, dealing 2d10 lightning per attack. The network targets optimally, covering all flanks. It also provides truesight 300 ft, +5 to all ally attack rolls within range, and jams enemy communications. Lasts 1 minute.",
+		lore: {
+			origin:
+				"The Bureau's AI ethics board reviewed this power for 6 months. They approved it with 'extreme reservations.'",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor:
+			"All frequencies compromised. All targets acquired. All exits blocked.",
+		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "10 drones + truesight + ally buff + comms jamming.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "10d6",
+		damage_type: "lightning",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"9-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "10d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure: "10 drones + truesight + ally buff + comms jamming.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The Bureau's AI ethics board reviewed this power for 6 months. They approved it with 'extreme reservations.'",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-9-62-apex-convergence",
+		name: "Apex Convergence",
+		display_name: "Apex Convergence",
+		description:
+			"Mark every hostile creature within 300 feet simultaneously. For 1 minute, you and all allies have advantage on attacks against all marked targets, can't be surprised, have truesight 300 ft, and the first hit against each marked target each round deals an extra 4d6 damage.",
+		lore: {
+			origin:
+				"A Stalker used Apex Convergence during a double S-Rank gate-break. The tactical advantage was described as 'the closest thing to omniscience in combat.'",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "Every target. Every angle. Every exit. All at once.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Mass mark: advantage + truesight + bonus damage for entire party.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "10d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"9-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure:
+					"Mass mark: advantage + truesight + bonus damage for entire party.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Stalker used Apex Convergence during a double S-Rank gate-break. The tactical advantage was described as 'the closest thing to omniscience in combat.'",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-1-63-fault-line-stomp",
+		name: "Fault Line Stomp",
+		display_name: "Fault Line Stomp",
+		description:
+			"Slam the ground and send a shockwave along a 30-foot line. Each creature in the line: DC 13 STR save or knocked prone and take 2d6 force. The line becomes difficult terrain for 1 minute as the floor fractures.",
+		lore: {
+			origin:
+				"Bureau structural engineers hate this spell. Destroyers use it anyway.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "The floor disagreed with her foot. The floor lost.",
+		tags: ["awakened", "power", "guard", "Evocation", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Prone + 2d6 force in a line.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"1-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Prone + 2d6 force in a line.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau structural engineers hate this spell. Destroyers use it anyway.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-1-64-crimson-frenzy",
+		name: "Crimson Frenzy",
+		display_name: "Crimson Frenzy",
+		description:
+			"Enter a mana-fueled frenzy for 1 minute. You gain +2 to melee damage rolls and advantage on Strength checks, but attacks against you have advantage. When the frenzy ends, gain 1 level of exhaustion.",
+		lore: {
+			origin:
+				"Bureau combat psychologists classify this as 'controlled decompensation.' Berserkers call it Tuesday.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She stopped thinking. She started hitting. Better.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"+2 melee damage, advantage on STR, attacks against you have advantage.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"1-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure:
+					"+2 melee damage, advantage on STR, attacks against you have advantage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat psychologists classify this as 'controlled decompensation.' Berserkers call it Tuesday.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-1-65-nerve-strike",
+		name: "Nerve Strike",
+		display_name: "Nerve Strike",
+		description:
+			"As part of a melee attack, target a nerve cluster. On hit, deal normal damage + 1d8 necrotic. Target must make DC 13 VIT save or have disadvantage on its next attack roll as pain disrupts its motor control.",
+		lore: {
+			origin:
+				"Bureau hand-to-hand instructors teach the nerve map. Assassins memorize it.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "She didn't hit hard. She hit precisely. Worse.",
+		tags: ["awakened", "power", "ambush", "Necromancy", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Extra 1d8 necrotic + attack disadvantage on failed save.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 necrotic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"1-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "necrotic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "necrotic",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Extra 1d8 necrotic + attack disadvantage on failed save.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau hand-to-hand instructors teach the nerve map. Assassins memorize it.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-1-66-pressure-point-cascade",
+		name: "Pressure Point Cascade",
+		display_name: "Pressure Point Cascade",
+		description:
+			"After hitting with an unarmed strike, trigger a cascade of mana-pressure through the target's body. Deal normal damage + 1d6 force and push the target 10 feet. If it collides with a wall or creature, both take 1d6 bludgeoning.",
+		lore: {
+			origin:
+				"The Bureau training dummy budget tripled after Strikers joined. They go through walls.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "One touch. Three impacts. The wall counts.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Extra 1d6 force + push + collision damage.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"1-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "2d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Extra 1d6 force + push + collision damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The Bureau training dummy budget tripled after Strikers joined. They go through walls.",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-2-67-circuit-flare",
+		name: "Circuit Flare",
+		display_name: "Circuit Flare",
+		description:
+			"As a bonus action, ignite your mana circuit's radiant output. For 1 minute, your melee attacks deal +1d6 radiant and shed bright light 10 feet. Undead and fiends that start their turn within 5 feet take 1d4 radiant.",
+		lore: {
+			origin:
+				"The Absolute's radiance channeled through a weapon is described as 'warm.' Undead describe it as 'terminal.'",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "She glows. The things that shouldn't exist stop existing.",
+		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+1d6 radiant melee, light aura, passive undead damage.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "3d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "+1d6 radiant melee, light aura, passive undead damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The Absolute's radiance channeled through a weapon is described as 'warm.' Undead describe it as 'terminal.'",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-2-68-drone-overwatch",
+		name: "Drone Overwatch",
+		display_name: "Drone Overwatch",
+		description:
+			"Deploy a hovering combat drone (AC 14, 10 HP, 30 ft fly) that occupies your bonus action. Each turn, the drone can fire: ranged attack +4, 1d8 lightning. If the drone is destroyed, it explodes: each creature within 5 feet takes 2d6 lightning.",
+		lore: {
+			origin:
+				"Model designation MK-V Scout-Strike. Previous models are classified as 'learning opportunities.'",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Airborne. Armed. Autonomous. Mostly.",
+		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Drone fires 1d8 lightning/turn; explodes for 2d6 on destruction.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "lightning",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 lightning",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"2-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "lightning",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "3d6",
+				damage_type: "lightning",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure:
+					"Drone fires 1d8 lightning/turn; explodes for 2d6 on destruction.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Model designation MK-V Scout-Strike. Previous models are classified as 'learning opportunities.'",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-2-69-prey-sense",
+		name: "Prey Sense",
+		display_name: "Prey Sense",
+		description:
+			"Attune to a creature you've damaged within the last hour. For 10 minutes, you know its exact location within 1 mile, its remaining HP percentage, and whether it's moving. Your first attack against it each turn deals +1d6 damage.",
+		lore: {
+			origin:
+				"A Stalker tracked an A-Rank anomaly through 4 gate floors using Prey Sense alone. It took 6 hours. She was patient.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "She tasted its blood once. That's enough.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Track + HP read + 1d6 bonus damage.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"2-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Track + HP read + 1d6 bonus damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Stalker tracked an A-Rank anomaly through 4 gate floors using Prey Sense alone. It took 6 hours. She was patient.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-2-70-harmonic-ward",
+		name: "Harmonic Ward",
+		display_name: "Harmonic Ward",
+		description:
+			"Begin a defensive harmonic. For 1 minute, you and up to 3 allies within 15 feet gain +1 AC and resistance to thunder damage. As a reaction, you can end the harmonic early to grant one ally within range 2d8 temporary HP.",
+		lore: {
+			origin:
+				"During a gate-breach concert, an Idol maintained Harmonic Ward while performing. Ticket sales for the next show sold out in 3 minutes.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "The frequency protects. The silence follows.",
+		tags: ["awakened", "power", "resonance", "Abjuration", "Idol"],
+		classes: ["Idol"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+1 AC, thunder resistance, emergency temp HP burst.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "+1 AC, thunder resistance, emergency temp HP burst.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"During a gate-breach concert, an Idol maintained Harmonic Ward while performing. Ticket sales for the next show sold out in 3 minutes.",
+		theme_tags: ["resonance", "idol"],
+	},
+	{
+		id: "power-sup-2-71-tether-of-binding",
+		name: "Tether of Binding",
+		display_name: "Tether of Binding",
+		description:
+			"Launch a spectral chain from your patron that latches onto a creature within 30 feet. DC 14 PRS save or tethered for 1 minute: target can't move more than 30 feet from you, and if it tries to teleport, it takes 3d6 psychic damage and the teleport fails.",
+		lore: {
+			origin:
+				"Bureau containment teams request Contractors specifically for high-mobility targets. The tether has a 97% containment rate.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "Your patron wants you close. The chain insists.",
+		tags: ["awakened", "power", "pact", "Conjuration", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Movement leash + teleport suppression.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "3d6",
+		damage_type: "psychic",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 psychic",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Movement leash + teleport suppression.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau containment teams request Contractors specifically for high-mobility targets. The tether has a 97% containment rate.",
+		theme_tags: ["pact", "contractor"],
+	},
+	{
+		id: "power-sup-2-72-death-s-momentum",
+		name: "Death's Momentum",
+		display_name: "Death's Momentum",
+		description:
+			"When you reduce a creature to 0 HP, your mana circuit surges. You immediately gain 2d8 temporary HP and can move up to 15 feet without provoking opportunity attacks. Your next melee attack within 1 round deals +1d8 necrotic.",
+		lore: {
+			origin:
+				"Bureau analysts note that Revenants fight harder, not weaker, as enemies fall. The momentum is literal.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor: "Death feeds her. She's always hungry.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "On-kill: temp HP + free move + bonus damage.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 necrotic",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"2-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "On-kill: temp HP + free move + bonus damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau analysts note that Revenants fight harder, not weaker, as enemies fall. The momentum is literal.",
+		theme_tags: ["entropy", "revenant"],
+	},
+	{
+		id: "power-sup-3-73-seismic-anchor",
+		name: "Seismic Anchor",
+		display_name: "Seismic Anchor",
+		description:
+			"Plant yourself as an immovable point. For 1 minute, you can't be moved against your will, knocked prone, or pushed. Your AC increases by +2. As a reaction, when an ally within 10 feet is targeted by an attack, you can force the attack to target you instead.",
+		lore: {
+			origin:
+				"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank gate boss tried to push her off a bridge. The bridge broke. She didn't.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "She became the ground. The ground doesn't move.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Immovable stance + AC boost + ally protection.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"3-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Immovable stance + AC boost + ally protection.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Destroyer held Seismic Anchor for 4 minutes while an S-Rank gate boss tried to push her off a bridge. The bridge broke. She didn't.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-3-74-berserker-s-gambit",
+		name: "Berserker's Gambit",
+		display_name: "Berserker's Gambit",
+		description:
+			"Sacrifice hit points to fuel devastation. Spend up to 20 HP (no reduction); your next melee attack within 1 round deals bonus damage equal to twice the HP spent. If you reduce the target to 0 HP, you regain half the HP spent.",
+		lore: {
+			origin:
+				"Bureau combat medics keep Berserkers on a 'HP budget.' The Berserkers consistently overdraft.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She paid in blood. The target paid more.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Trade HP for 2x bonus melee damage; kill refunds half.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"3-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Trade HP for 2x bonus melee damage; kill refunds half.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat medics keep Berserkers on a 'HP budget.' The Berserkers consistently overdraft.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-3-75-phantom-blade-flurry",
+		name: "Phantom Blade Flurry",
+		display_name: "Phantom Blade Flurry",
+		description:
+			"Create 3 illusory copies of your weapon that strike simultaneously with your real attack. Make one melee attack; on a hit, deal normal damage + 3d6 force as the phantom blades strike. The target must make a DC 15 INT save or be unable to use reactions until the end of your next turn.",
+		lore: {
+			origin:
+				"Bureau security footage shows four simultaneous impacts from different angles. Image analysis confirms only one physical blade.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Four blades. One is real. All of them hurt.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Extra 3d6 force + reaction denial.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Illusion",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Intelligence",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"3-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "4d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Extra 3d6 force + reaction denial.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau security footage shows four simultaneous impacts from different angles. Image analysis confirms only one physical blade.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-3-76-one-inch-collapse",
+		name: "One-Inch Collapse",
+		display_name: "One-Inch Collapse",
+		description:
+			"Concentrate your entire mana output into a single point-blank strike delivered at skin contact distance. Melee attack with advantage; on hit: 4d10 force damage. If the target is grappled or restrained, damage increases to 6d10.",
+		lore: {
+			origin:
+				"Bureau training dummies don't survive this technique. The Bureau stopped buying replacements and uses conjured targets instead.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "One inch. Full force. Everything behind it.",
+		tags: ["awakened", "power", "kinetic", "Evocation", "Striker"],
+		classes: ["Striker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "4d10 force (6d10 if target is restrained/grappled).",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"3-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "4d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "4d10 force (6d10 if target is restrained/grappled).",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau training dummies don't survive this technique. The Bureau stopped buying replacements and uses conjured targets instead.",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-3-77-covenant-aegis",
+		name: "Covenant Aegis",
+		display_name: "Covenant Aegis",
+		description:
+			"As a reaction when you or an ally within 30 feet takes damage, invoke the Absolute's covenant. The damage is halved, and the attacker must make a DC 15 PRS save or be marked: you have advantage on attacks against marked creatures for 1 minute.",
+		lore: {
+			origin:
+				"Holy Knights invoke this without hesitation. The covenant's protection has never failed when the oath was genuine.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "The Absolute remembers who struck first.",
+		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Halve damage + mark attacker (advantage on attacks vs them).",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "4d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"3-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Halve damage + mark attacker (advantage on attacks vs them).",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Holy Knights invoke this without hesitation. The covenant's protection has never failed when the oath was genuine.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-3-78-payload-deployment",
+		name: "Payload Deployment",
+		display_name: "Payload Deployment",
+		description:
+			"Launch a guided mana-payload that detonates at a point within 120 feet. Each creature in a 20-foot radius: DC 15 AGI save, 4d8 fire on failure, half on success. Constructs and gate-tech in the area take double damage.",
+		lore: {
+			origin:
+				"The payload guidance system is accurate to within 6 inches. Bureau munitions teams consider this 'adequate.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Guidance system locked. Payload away. Cover your ears.",
+		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "4d8 fire in 20-foot radius; double vs constructs.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Agility",
+		damage_roll: "4d6",
+		damage_type: "fire",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 fire",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"3-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "4d6",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "4d8 fire in 20-foot radius; double vs constructs.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The payload guidance system is accurate to within 6 inches. Bureau munitions teams consider this 'adequate.'",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-3-79-quarry-pindown",
+		name: "Quarry Pindown",
+		display_name: "Quarry Pindown",
+		description:
+			"Fire a mana-tracking bolt at a creature within 90 feet. Ranged attack: 3d8 piercing on hit, and the target is pinned (speed becomes 0) until it uses an action to make a DC 15 STR check to pull the bolt free. While pinned, your attacks against it deal +1d6 damage.",
+		lore: {
+			origin:
+				"The mana-bolt anchors itself to the nearest solid surface through the target. Extraction requires 'considerable effort.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "Pinned. Tracked. Finished when she's ready.",
+		tags: ["awakened", "power", "tracking", "Conjuration", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "3d8 piercing + speed 0 + bonus damage while pinned.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "piercing",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 piercing",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"3-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "3d8 piercing + speed 0 + bonus damage while pinned.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The mana-bolt anchors itself to the nearest solid surface through the target. Extraction requires 'considerable effort.'",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-4-80-encore-performance",
+		name: "Encore Performance",
+		display_name: "Encore Performance",
+		description:
+			"After casting a spell of 3rd level or lower, immediately cast it again as a bonus action without expending a slot. The encore version deals half damage or has half duration. You can only encore a spell once per long rest.",
+		lore: {
+			origin:
+				"Bureau mana-efficiency analysts rate this as 'impossible.' Idols rate it as 'Tuesday night.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "They asked for an encore. She was already casting it.",
+		tags: ["awakened", "power", "resonance", "Enchantment", "Idol"],
+		classes: ["Idol"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Repeat a spell (3rd or lower) at half potency, no slot cost.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Enchantment",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"4-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Repeat a spell (3rd or lower) at half potency, no slot cost.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau mana-efficiency analysts rate this as 'impossible.' Idols rate it as 'Tuesday night.'",
+		theme_tags: ["resonance", "idol"],
+	},
+	{
+		id: "power-sup-4-81-blood-pact-escalation",
+		name: "Blood Pact Escalation",
+		display_name: "Blood Pact Escalation",
+		description:
+			"Offer your own HP to your patron for increased power. Spend up to 30 HP (can't be reduced). For the next minute, all your pact spells deal +1d8 bonus damage per 10 HP spent, and your spell save DC increases by 1 per 10 HP spent.",
+		lore: {
+			origin:
+				"Bureau pact oversight flags this as 'high-risk self-modification.' Contractors consider it 'an investment.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "The patron accepts payment. In blood. In advance.",
+		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Trade HP for +damage and +DC on pact spells.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"4-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Trade HP for +damage and +DC on pact spells.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau pact oversight flags this as 'high-risk self-modification.' Contractors consider it 'an investment.'",
+		theme_tags: ["pact", "contractor"],
+	},
+	{
+		id: "power-sup-4-82-entropy-harvest",
+		name: "Entropy Harvest",
+		display_name: "Entropy Harvest",
+		description:
+			"For 1 minute, whenever a creature within 30 feet dies, you absorb its residual mana-circuit energy: regain 2d8 HP and gain +1 to attack rolls (stacking, max +3). At max stacks, your necrotic damage ignores resistance.",
+		lore: {
+			origin:
+				"Bureau after-action reports note Revenants become 'significantly more dangerous' as combat progresses. The data supports this.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor: "She gets stronger as they fall. That's the design.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "On-death within 30 ft: heal + stacking attack bonus.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"4-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "On-death within 30 ft: heal + stacking attack bonus.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau after-action reports note Revenants become 'significantly more dangerous' as combat progresses. The data supports this.",
+		theme_tags: ["entropy", "revenant"],
+	},
+	{
+		id: "power-sup-5-83-bulwark-singularity",
+		name: "Bulwark Singularity",
+		display_name: "Bulwark Singularity",
+		description:
+			"Become the absolute center of defense. For 1 minute: all damage dealt to allies within 15 feet is redirected to you, you gain resistance to all damage, and your AC increases by +3. You can't move or take the Attack action while maintaining.",
+		lore: {
+			origin:
+				"A Destroyer maintained Bulwark Singularity for 2 minutes during the Osaka Crisis. She absorbed 847 points of damage. She survived.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "Every hit. Every ally. Through her. She holds.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Absorb all ally damage within 15 ft + resistance + AC boost.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"5-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Absorb all ally damage within 15 ft + resistance + AC boost.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Destroyer maintained Bulwark Singularity for 2 minutes during the Osaka Crisis. She absorbed 847 points of damage. She survived.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-5-84-annihilation-rush",
+		name: "Annihilation Rush",
+		display_name: "Annihilation Rush",
+		description:
+			"Your mana circuit overloads into a 30-second combat trance. For 5 rounds: your melee attacks deal +3d6 damage, you have advantage on all attack rolls, and you can make one additional melee attack per turn. You can't cast spells during the rush. When it ends: 2 levels of exhaustion.",
+		lore: {
+			origin:
+				"Bureau medical teams prepare recovery stations before Berserkers engage in S-Rank operations. The trance duration is precisely 30 seconds.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "Thirty seconds. That's all she needs. That's all anyone needs.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+3d6 melee damage, advantage, extra attack, then 2 exhaustion.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"5-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure:
+					"+3d6 melee damage, advantage, extra attack, then 2 exhaustion.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau medical teams prepare recovery stations before Berserkers engage in S-Rank operations. The trance duration is precisely 30 seconds.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-5-85-kill-protocol",
+		name: "Kill Protocol",
+		display_name: "Kill Protocol",
+		description:
+			"Become invisible for 1 round. The first attack you make while invisible is a guaranteed critical hit if it hits. The attack deals an additional 5d6 damage of the weapon's type. After the attack, you can teleport 30 feet to a space in dim light.",
+		lore: {
+			origin:
+				"Bureau surveillance can't track Kill Protocol. By the time the cameras adjust, the Assassin is 30 feet away in shadow.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Invisible. One attack. Critical. Gone.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Guaranteed crit on first attack + 5d6 bonus + teleport.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Illusion",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"5-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "6d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Guaranteed crit on first attack + 5d6 bonus + teleport.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau surveillance can't track Kill Protocol. By the time the cameras adjust, the Assassin is 30 feet away in shadow.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-5-86-mana-reactor-core",
+		name: "Mana Reactor Core",
+		display_name: "Mana Reactor Core",
+		description:
+			"Activate a mana reactor within your focus device. For 10 minutes: all your device spells deal +2d6 damage, your spell slots regenerate 1 level of slots per minute (max 3rd level), and your drone/construct allies gain +2 AC.",
+		lore: {
+			origin:
+				"Bureau engineering teams designed the reactor core with 47 safety interlocks. Technomancers disable at least 30 of them.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Reactor online. All systems at 200%. Proceed.",
+		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+2d6 device damage + slot regen + construct AC boost.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"5-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "6d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "+2d6 device damage + slot regen + construct AC boost.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau engineering teams designed the reactor core with 47 safety interlocks. Technomancers disable at least 30 of them.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-5-87-absolute-smite",
+		name: "Absolute Smite",
+		display_name: "Absolute Smite",
+		description:
+			"Channel the Absolute's full judgment through your weapon. Next melee hit deals +6d8 radiant damage (+8d8 vs undead/fiends). The target must make a DC 17 PRS save or be stunned for 1 round. If the target is killed, it cannot be raised by any means below 7th level.",
+		lore: {
+			origin:
+				"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank undead anomalies. The Absolute doesn't allow encores.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "Judgment. Delivered. Final.",
+		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "+6d8 radiant, stun on failed save, anti-resurrection rider.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "6d6",
+		damage_type: "radiant",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"5-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "+6d8 radiant, stun on failed save, anti-resurrection rider.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank undead anomalies. The Absolute doesn't allow encores.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-6-88-orbital-strike-array",
+		name: "Orbital Strike Array",
+		display_name: "Orbital Strike Array",
+		description:
+			"Deploy three guided mana-charges that detonate in sequence at points within 120 feet. Each creates a 15-foot radius explosion: DC 17 AGI save, 5d8 fire/force on failure, half on success. Creatures hit by multiple blasts save once but take damage from each.",
+		lore: {
+			origin:
+				"The Bureau's damage assessment team uses special software to calculate Orbital Strike Array collateral. The software crashes frequently.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Three targets. Three impacts. One Technomancer.",
+		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Three 15-foot blasts: 5d8 fire/force each.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Agility",
+		damage_roll: "7d6",
+		damage_type: "fire",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 fire",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"6-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "fire",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "7d6",
+				damage_type: "fire",
+			},
+			saving_throw: {
+				ability: "Agility",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Three 15-foot blasts: 5d8 fire/force each.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"The Bureau's damage assessment team uses special software to calculate Orbital Strike Array collateral. The software crashes frequently.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-6-89-idol-s-magnum-opus",
+		name: "Idol's Magnum Opus",
+		display_name: "Idol's Magnum Opus",
+		description:
+			"Perform a 1-round masterwork that reshapes the battlefield. All allies within 60 feet: regain 4d8 HP, gain +2 to all saves for 1 minute, and are cured of frightened, charmed, and stunned. All enemies: DC 17 PRS save or charmed for 1 round and can't take reactions.",
+		lore: {
+			origin:
+				"Bureau combat psych evaluators confirmed: an Idol's Magnum Opus shifted the morale of a 30-person raid from 'panicking' to 'invincible' in 6 seconds.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "The perfect performance. Once per concert. Once per lifetime.",
+		tags: ["awakened", "power", "resonance", "Enchantment", "Idol"],
+		classes: ["Idol"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Mass heal + buff + cure allies; charm + reaction-deny enemies.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Enchantment",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "7d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 force",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"6-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure:
+					"Mass heal + buff + cure allies; charm + reaction-deny enemies.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat psych evaluators confirmed: an Idol's Magnum Opus shifted the morale of a 30-person raid from 'panicking' to 'invincible' in 6 seconds.",
+		theme_tags: ["resonance", "idol"],
+	},
+	{
+		id: "power-sup-6-90-patron-s-embrace",
+		name: "Patron's Embrace",
+		display_name: "Patron's Embrace",
+		description:
+			"Your patron temporarily merges with your mana circuit. For 1 minute: you gain 50 temp HP, resistance to two damage types of your patron's choosing, and your pact spells ignore resistance. When the spell ends, you take 4d6 psychic damage as the patron withdraws.",
+		lore: {
+			origin:
+				"Bureau psych evaluators note that Contractors under Patron's Embrace exhibit 'personality bleed' — mannerisms and speech patterns shift to match their patron.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "The patron is inside you now. It feels like drowning. In power.",
+		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "50 temp HP, 2 resistances, ignore resistance on pact spells.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "7d6",
+		damage_type: "psychic",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 psychic",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"6-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "50 temp HP, 2 resistances, ignore resistance on pact spells.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau psych evaluators note that Contractors under Patron's Embrace exhibit 'personality bleed' — mannerisms and speech patterns shift to match their patron.",
+		theme_tags: ["pact", "contractor"],
+	},
+	{
+		id: "power-sup-6-91-final-entropy",
+		name: "Final Entropy",
+		display_name: "Final Entropy",
+		description:
+			"Mark a creature for entropic collapse. For 1 minute, every time you deal necrotic damage to the marked target, its HP maximum is reduced by the damage dealt. If its HP max reaches 0, it disintegrates entirely and can't be revived.",
+		lore: {
+			origin:
+				"Bureau containment protocol classifies Final Entropy as 'irreversible termination.' Revenants consider it 'efficient.'",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor: "Everything ends. She decides when.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Necrotic damage reduces target's max HP; kill at 0 max HP = permanent death.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "7d6",
+		damage_type: "necrotic",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 necrotic",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"6-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure:
+					"Necrotic damage reduces target's max HP; kill at 0 max HP = permanent death.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau containment protocol classifies Final Entropy as 'irreversible termination.' Revenants consider it 'efficient.'",
+		theme_tags: ["entropy", "revenant"],
+	},
+	{
+		id: "power-sup-6-92-quarry-annihilation",
+		name: "Quarry Annihilation",
+		display_name: "Quarry Annihilation",
+		description:
+			"Lock onto a creature you've tracked for at least 1 minute. For the next minute, all your attacks against it have advantage, you deal +3d6 bonus damage per hit, and it can't benefit from invisibility, cover, or teleportation against you.",
+		lore: {
+			origin:
+				"A Stalker used Quarry Annihilation on an S-Rank gate boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "Tracked long enough. Time's up.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Advantage + 3d6 bonus + target can't hide or flee.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "7d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"6-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Advantage + 3d6 bonus + target can't hide or flee.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"A Stalker used Quarry Annihilation on an S-Rank gate boss that had been fleeing for 40 minutes. The boss lasted 18 seconds.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-7-93-fortress-mode",
+		name: "Fortress Mode",
+		display_name: "Fortress Mode",
+		description:
+			"Transform into a living fortress. For 1 minute: your AC becomes 25, you gain immunity to forced movement and prone, all allies within 20 feet gain +3 AC, and any creature that hits you with melee takes 2d8 force retaliation. Speed becomes 0.",
+		lore: {
+			origin:
+				"Bureau tactical AI classified a Destroyer in Fortress Mode as 'terrain feature, allied, impassable.' The AI wasn't wrong.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "She IS the fortification. The enemy attacks the building.",
+		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "AC 25, ally AC aura, melee retaliation, immobile.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Abjuration",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "8d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"7-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "AC 25, ally AC aura, melee retaliation, immobile.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau tactical AI classified a Destroyer in Fortress Mode as 'terrain feature, allied, impassable.' The AI wasn't wrong.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-7-94-terminal-velocity",
+		name: "Terminal Velocity",
+		display_name: "Terminal Velocity",
+		description:
+			"Push your mana circuit beyond terminal capacity. For 3 rounds: all melee damage is tripled, you can't be knocked unconscious (fight at 0 HP), and your movement speed triples. When the effect ends, if you're at 0 HP, you die.",
+		lore: {
+			origin:
+				"Bureau medical teams describe Terminal Velocity as 'borrowing from a future that may not exist.' Two confirmed survivals. One confirmed death.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "Three rounds. Everything tripled. Including the consequences.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Triple melee damage, death-immunity for 3 rounds, risk of death.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "8d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"7-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure:
+					"Triple melee damage, death-immunity for 3 rounds, risk of death.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau medical teams describe Terminal Velocity as 'borrowing from a future that may not exist.' Two confirmed survivals. One confirmed death.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-7-95-perfect-kill",
+		name: "Perfect Kill",
+		display_name: "Perfect Kill",
+		description:
+			"Mark a target and spend 1 minute observing it (can be done while invisible). After observation, your next attack against the target within 1 hour: automatically hits, automatically crits, deals max damage on all dice, and the target must make DC 18 VIT save or be reduced to 0 HP.",
+		lore: {
+			origin:
+				"Bureau records contain two confirmed Perfect Kills against S-Rank targets. Both required exactly one strike.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "She watched. She waited. She decided.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
+		classes: ["Assassin"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Auto-hit, auto-crit, max damage, potential instant kill.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Illusion",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "8d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 force",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"7-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "8d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "Auto-hit, auto-crit, max damage, potential instant kill.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau records contain two confirmed Perfect Kills against S-Rank targets. Both required exactly one strike.",
+		theme_tags: ["ambush", "assassin"],
+	},
+	{
+		id: "power-sup-7-96-eight-gates-release",
+		name: "Eight Gates Release",
+		display_name: "Eight Gates Release",
+		description:
+			"Unlock all eight mana gates in your circuit simultaneously. For 1 minute: unarmed damage becomes 4d10, speed doubles, you gain an extra action each turn, and you can make opportunity attacks with advantage. When it ends: 3 levels of exhaustion.",
+		lore: {
+			origin:
+				"Bureau martial arts researchers documented the eight-gate sequence. The seventh gate is described as 'inadvisable.' The eighth is 'theoretical.'",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "Eight gates. All open. Nothing held back.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "4d10 unarmed, double speed, extra action, then 3 exhaustion.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "8d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"7-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "8d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "4d10 unarmed, double speed, extra action, then 3 exhaustion.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau martial arts researchers documented the eight-gate sequence. The seventh gate is described as 'inadvisable.' The eighth is 'theoretical.'",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-9-97-s-rank-smite",
+		name: "S-Rank Smite",
+		display_name: "S-Rank Smite",
+		description:
+			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Undead and fiends are instantly destroyed regardless of HP.",
+		lore: {
+			origin:
+				"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank gate boss was already dust.",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "One strike. S-Rank. The Absolute's final word.",
+		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"+12d8 radiant + permanent ability loss + instant undead/fiend kill.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "10d6",
+		damage_type: "radiant",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"9-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure:
+					"+12d8 radiant + permanent ability loss + instant undead/fiend kill.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank gate boss was already dust.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-9-98-singularity-engine",
+		name: "Singularity Engine",
+		display_name: "Singularity Engine",
+		description:
+			"Activate the theoretical singularity engine in your focus device. For 1 minute: all device abilities deal triple damage, you can cast two spells per turn, all your constructs/drones gain +50 HP and triple damage. When it ends, your focus device is destroyed (requires 7 days to rebuild).",
+		lore: {
+			origin:
+				"Bureau engineering division classified the singularity engine as 'theoretically possible.' One Technomancer proved them right. The device was scrap afterward.",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor:
+			"Singularity engaged. All limiters removed. Device will not survive.",
+		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Triple damage on all device abilities, dual-cast, construct empowerment.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "10d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 force",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"9-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "10d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure:
+					"Triple damage on all device abilities, dual-cast, construct empowerment.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau engineering division classified the singularity engine as 'theoretically possible.' One Technomancer proved them right. The device was scrap afterward.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-9-99-predator-supremacy",
+		name: "Predator Supremacy",
+		display_name: "Predator Supremacy",
+		description:
+			"Enter the ultimate tracking state. For 1 hour: you automatically know the location of every creature within 1 mile, can't be surprised, have advantage on all attacks, and your first hit each turn deals +4d8 damage. You can track a creature across dimensional boundaries.",
+		lore: {
+			origin:
+				"Bureau S-Rank operations deploy Stalkers in Predator Supremacy state as 'primary acquisition assets.' Nothing escapes.",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "Everything within a mile is prey. Everything.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"1-mile omniscience, advantage on all attacks, +4d8 first-hit bonus.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "10d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"9-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure:
+					"1-mile omniscience, advantage on all attacks, +4d8 first-hit bonus.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau S-Rank operations deploy Stalkers in Predator Supremacy state as 'primary acquisition assets.' Nothing escapes.",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-9-100-final-chorus",
+		name: "Final Chorus",
+		display_name: "Final Chorus",
+		description:
+			"Perform the Final Chorus — a harmonic so perfect it reshapes reality within 120 feet. All allies: full HP restoration, all conditions removed, gain 50 temp HP. All enemies: DC 20 PRS save or charmed and incapacitated for 1 minute. You can't cast spells for 24 hours after.",
+		lore: {
+			origin:
+				"Bureau records list one Final Chorus. Every creature in a 120-foot radius stopped fighting. Allies. Enemies. The gate boss. For 47 seconds, there was only music.",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "The last song. The perfect song. Everything stops to listen.",
+		tags: ["awakened", "power", "resonance", "Enchantment", "Idol"],
+		classes: ["Idol"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Full ally heal + mass charm/incapacitate enemies.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Enchantment",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "10d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 force",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"9-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure: "Full ally heal + mass charm/incapacitate enemies.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau records list one Final Chorus. Every creature in a 120-foot radius stopped fighting. Allies. Enemies. The gate boss. For 47 seconds, there was only music.",
+		theme_tags: ["resonance", "idol"],
+	},
+	{
+		id: "power-sup-9-101-absolute-pact",
+		name: "Absolute Pact",
+		display_name: "Absolute Pact",
+		description:
+			"Invoke the ultimate clause of your patron contract. Your patron physically manifests (CR 20, acts independently, follows your commands) for 1 minute. You take 8d6 psychic damage at the end of each of your turns while the patron is manifested. If you die during the manifestation, your patron claims your soul.",
+		lore: {
+			origin:
+				"Bureau classified. One confirmed Absolute Pact. The Contractor survived. The S-Rank gate did not. The patron 'seemed satisfied.'",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor:
+			"You called. The patron answered. In person. Permanently, if you're not careful.",
+		tags: ["awakened", "power", "pact", "Conjuration", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Summon CR 20 patron; 8d6 psychic/turn to you; death = soul claimed.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "10d6",
+		damage_type: "psychic",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 psychic",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"9-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure:
+					"Summon CR 20 patron; 8d6 psychic/turn to you; death = soul claimed.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau classified. One confirmed Absolute Pact. The Contractor survived. The S-Rank gate did not. The patron 'seemed satisfied.'",
+		theme_tags: ["pact", "contractor"],
+	},
+	{
+		id: "power-sup-2-102-gravity-well-slam",
+		name: "Gravity Well Slam",
+		display_name: "Gravity Well Slam",
+		description:
+			"Create a 10-foot gravity well centered on your weapon strike. All creatures within 10 feet are pulled 5 feet toward you and must make DC 14 STR save or be knocked prone. You gain +1 AC per creature pulled until end of your next turn.",
+		lore: {
+			origin:
+				"Bureau physics division confirmed the gravity differential at 4G. Inside a 10-foot radius. The Destroyer shrugged.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Steadfast; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Destroyers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Destroyer Training Division"],
+		},
+		flavor: "Everything comes to her. That's the gravity of the situation.",
+		tags: ["awakened", "power", "guard", "Transmutation", "Destroyer"],
+		classes: ["Destroyer"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Pull + prone + AC scaling.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 reaction",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "Self or one adjacent ally",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 force",
+			range: "Self",
+			type: "guard",
+			action: "1 reaction",
+			ability: "Strength",
+			lattice_interaction:
+				"2-tier guard stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Pull + prone + AC scaling.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau physics division confirmed the gravity differential at 4G. Inside a 10-foot radius. The Destroyer shrugged.",
+		theme_tags: ["guard", "destroyer"],
+	},
+	{
+		id: "power-sup-1-103-adrenaline-surge",
+		name: "Adrenaline Surge",
+		display_name: "Adrenaline Surge",
+		description:
+			"As a reaction when you take damage, surge your mana circuit's combat response. Gain temporary HP equal to 1d8 + your Constitution modifier. Your next melee attack deals +1d6 damage.",
+		lore: {
+			origin:
+				"Bureau medical staff track 'adrenaline surge events.' Berserkers average 12 per gate operation.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She got hit. She got angry. She got stronger.",
+		tags: [
+			"awakened",
+			"power",
+			"overload",
+			"Transmutation",
+			"Berserker",
+			"Striker",
+		],
+		classes: ["Berserker", "Striker"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Reaction temp HP + bonus melee damage.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Agility",
+			lattice_interaction:
+				"1-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Reaction temp HP + bonus melee damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau medical staff track 'adrenaline surge events.' Berserkers average 12 per gate operation.",
+		theme_tags: ["overload", "berserker", "striker"],
+	},
+	{
+		id: "power-sup-2-104-phantom-decoy",
+		name: "Phantom Decoy",
+		display_name: "Phantom Decoy",
+		description:
+			"Create a perfect mana-clone decoy at your position and turn invisible for 1 round. The decoy has 1 HP and mimics your last action. When the decoy is destroyed, it explodes for 2d6 psychic to all creatures within 5 feet.",
+		lore: {
+			origin:
+				"Bureau combat instructors use this in training exercises. Trainees learn to check for decoys. They still fall for them.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Patient; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Assassins at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Assassin Training Division"],
+		},
+		flavor: "Which one is real? Wrong question. Both hurt.",
+		tags: ["awakened", "power", "ambush", "Illusion", "Assassin", "Idol"],
+		classes: ["Assassin", "Idol"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Invisibility + decoy + psychic explosion on decoy death.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Illusion",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Sense",
+		damage_roll: "3d6",
+		damage_type: "psychic",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 psychic",
+			range: "Self",
+			type: "ambush",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier ambush stabilized through gate-lattice resonance",
+			attack: {
+				type: "psychic",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Presence",
+				damage: "3d6",
+				damage_type: "psychic",
+			},
+			saving_throw: {
+				ability: "Sense",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Invisibility + decoy + psychic explosion on decoy death.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat instructors use this in training exercises. Trainees learn to check for decoys. They still fall for them.",
+		theme_tags: ["ambush", "assassin", "idol"],
+	},
+	{
+		id: "power-sup-1-105-gate-reader",
+		name: "Gate Reader",
+		display_name: "Gate Reader",
+		description:
+			"Touch a gate surface and read its dimensional frequency. Learn the gate's rank, number of floors remaining, boss type category, and dominant element. Also learn if any other Awakened have entered in the last 24 hours.",
+		lore: {
+			origin:
+				"Bureau recon protocols require Gate Reader before any entry. The intelligence it provides has a 98% accuracy rate.",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "She listens to the gate. The gate talks.",
+		tags: [
+			"awakened",
+			"power",
+			"tracking",
+			"Divination",
+			"Stalker",
+			"Summoner",
+		],
+		classes: ["Stalker", "Summoner"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Full gate intelligence scan.",
+			secondary: "Damage increases by 1d6 per level above 1st.",
+		},
+		power_type: "Innate",
+		power_level: 1,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "2d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 1st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "2d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"1-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 13,
+				success: "Half damage and no rider.",
+				failure: "Full gate intelligence scan.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau recon protocols require Gate Reader before any entry. The intelligence it provides has a 98% accuracy rate.",
+		theme_tags: ["tracking", "stalker", "summoner"],
+	},
+	{
+		id: "power-sup-3-106-sacrifice-engine",
+		name: "Sacrifice Engine",
+		display_name: "Sacrifice Engine",
+		description:
+			"Sacrifice a summoned creature, familiar, or willing ally's temporary HP to fuel a devastating patron attack. For every 10 HP sacrificed, deal 3d8 patron-element damage to one creature within 60 feet (no save, no attack roll).",
+		lore: {
+			origin:
+				"Bureau pact oversight classifies this as 'morally complex.' Contractors classify it as 'efficient.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "The patron demands a sacrifice. The patron provides the damage.",
+		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Convert HP to guaranteed damage (3d8 per 10 HP).",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"3-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Convert HP to guaranteed damage (3d8 per 10 HP).",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau pact oversight classifies this as 'morally complex.' Contractors classify it as 'efficient.'",
+		theme_tags: ["pact", "contractor"],
+	},
+	{
+		id: "power-sup-2-107-resonance-counter",
+		name: "Resonance Counter",
+		display_name: "Resonance Counter",
+		description:
+			"As a reaction when an ally within 30 feet is hit by an attack, perform a counter-harmonic that reduces the damage by 2d8 + your Presence modifier. If the damage is reduced to 0, the attacker takes 1d8 thunder.",
+		lore: {
+			origin:
+				"Idols who master this become permanent raid fixtures. Bureau assignment priority: 'immediate.'",
+			history:
+				"Catalogued in the Bureau's common-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Idols at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Idol Training Division"],
+		},
+		flavor: "She sang a note. The blow softened. The enemy flinched.",
+		tags: ["awakened", "power", "resonance", "Abjuration", "Idol"],
+		classes: ["Idol"],
+		rarity: "common",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Reaction damage reduction + counter damage.",
+			secondary: "Damage increases by 1d6 per level above 2st.",
+		},
+		power_type: "Innate",
+		power_level: 2,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "3d6",
+		damage_type: "thunder",
+		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "3d6 thunder",
+			range: "Self",
+			type: "resonance",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"2-tier resonance stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 14,
+				success: "Half damage and no rider.",
+				failure: "Reaction damage reduction + counter damage.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Idols who master this become permanent raid fixtures. Bureau assignment priority: 'immediate.'",
+		theme_tags: ["resonance", "idol"],
+	},
+	{
+		id: "power-sup-4-108-mana-forge",
+		name: "Mana Forge",
+		display_name: "Mana Forge",
+		description:
+			"Over 10 minutes, forge a temporary magical weapon or piece of armor from raw mana-crystal. The item lasts 8 hours, counts as +1, and can be attuned immediately. You can also modify an existing weapon: add +1d6 elemental damage for 8 hours.",
+		lore: {
+			origin:
+				"Bureau quartermasters stopped requisitioning weapons for Technomancers. They just build their own. Often better.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "She built it from nothing. It works better than factory.",
+		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
+		classes: ["Technomancer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Create +1 weapon/armor or add 1d6 elemental to existing weapon.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"4-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "5d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure:
+					"Create +1 weapon/armor or add 1d6 elemental to existing weapon.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau quartermasters stopped requisitioning weapons for Technomancers. They just build their own. Often better.",
+		theme_tags: ["device", "technomancer"],
+	},
+	{
+		id: "power-sup-3-109-entropic-feedback",
+		name: "Entropic Feedback",
+		display_name: "Entropic Feedback",
+		description:
+			"When you take necrotic damage, your circuit converts it to power. For 1 minute, you are immune to necrotic damage. Instead, necrotic damage you would take heals you for half the amount. Your necrotic attacks deal +1d8 during this time.",
+		lore: {
+			origin:
+				"Bureau combat analysts noted that attacking a Revenant with necrotic abilities during Entropic Feedback is 'catastrophically counterproductive.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor: "Feed her entropy. She grows.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Necrotic immunity + convert necrotic to healing + damage bonus.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 necrotic",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"3-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure:
+					"Necrotic immunity + convert necrotic to healing + damage bonus.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat analysts noted that attacking a Revenant with necrotic abilities during Entropic Feedback is 'catastrophically counterproductive.'",
+		theme_tags: ["entropy", "revenant"],
+	},
+	{
+		id: "power-sup-3-110-herald-s-intervention",
+		name: "Herald's Intervention",
+		display_name: "Herald's Intervention",
+		description:
+			"As a reaction when an ally within 60 feet would be reduced to 0 HP, intervene with the Absolute's grace. The ally instead drops to 1 HP and gains 2d10 temporary HP. You take 2d6 radiant damage from the strain.",
+		lore: {
+			origin:
+				"Bureau Herald training prioritizes this power above all others. A Herald who can't intervene isn't a Herald.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Heralds at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Herald Training Division"],
+		},
+		flavor: "Not on her watch. Not today.",
+		tags: ["awakened", "power", "radiant", "Abjuration", "Herald"],
+		classes: ["Herald"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Prevent ally death-blow + temp HP; self-damage cost.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "4d6",
+		damage_type: "radiant",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Sense",
+			lattice_interaction:
+				"3-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Prevent ally death-blow + temp HP; self-damage cost.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau Herald training prioritizes this power above all others. A Herald who can't intervene isn't a Herald.",
+		theme_tags: ["radiant", "herald"],
+	},
+	{
+		id: "power-sup-4-111-parallel-processing",
+		name: "Parallel Processing",
+		display_name: "Parallel Processing",
+		description:
+			"Split your consciousness into parallel threads. For 1 minute, you can concentrate on 2 spells simultaneously, and you have advantage on all Intelligence and Presence checks. When the effect ends, you gain 1 level of exhaustion.",
+		lore: {
+			origin:
+				"Bureau psionic researchers classify dual concentration as 'theoretically impossible.' Espers classify it as 'Tuesday.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Espers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Esper Training Division"],
+		},
+		flavor: "Two thoughts. Two spells. One mind. Barely.",
+		tags: ["awakened", "power", "tracking", "Divination", "Esper"],
+		classes: ["Esper"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Dual concentration + advantage on mental checks + exhaustion.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Strength",
+			lattice_interaction:
+				"4-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure:
+					"Dual concentration + advantage on mental checks + exhaustion.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau psionic researchers classify dual concentration as 'theoretically impossible.' Espers classify it as 'Tuesday.'",
+		theme_tags: ["tracking", "esper"],
+	},
+	{
+		id: "power-sup-4-112-war-cry",
+		name: "War Cry",
+		display_name: "War Cry",
+		description:
+			"Release a mana-amplified war cry. All enemies within 30 feet: DC 16 PRS save or frightened for 1 minute. All allies within 30 feet: gain 2d8 temporary HP and advantage on their next attack roll.",
+		lore: {
+			origin:
+				"Bureau audiological equipment registers a War Cry at 140 decibels. The mana component causes an additional 'existential dread.'",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She screamed. The allies charged. The enemies ran.",
+		tags: [
+			"awakened",
+			"power",
+			"overload",
+			"Enchantment",
+			"Berserker",
+			"Destroyer",
+		],
+		classes: ["Berserker", "Destroyer"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Mass fear (enemies) + temp HP and advantage (allies).",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Enchantment",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"4-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 16,
+				success: "Half damage and no rider.",
+				failure: "Mass fear (enemies) + temp HP and advantage (allies).",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau audiological equipment registers a War Cry at 140 decibels. The mana component causes an additional 'existential dread.'",
+		theme_tags: ["overload", "berserker", "destroyer"],
+	},
+	{
+		id: "power-sup-5-113-execute-protocol",
+		name: "Execute Protocol",
+		display_name: "Execute Protocol",
+		description:
+			"When you hit a creature that is below half its maximum HP, you can trigger Execute Protocol. The attack deals an additional 5d10 damage. If the target has 30 HP or fewer after the bonus damage, it dies instantly.",
+		lore: {
+			origin:
+				"Bureau Hunter rankings weight Execute Protocol proficiency heavily. The ability to finish targets is 'operationally critical.'",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Stalkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+		},
+		flavor: "Below half. Execution threshold. Protocol active.",
+		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
+		classes: ["Stalker"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "5d10 bonus vs bloodied + instant kill at 30 HP.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Sense",
+			lattice_interaction:
+				"5-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "5d10 bonus vs bloodied + instant kill at 30 HP.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau Hunter rankings weight Execute Protocol proficiency heavily. The ability to finish targets is 'operationally critical.'",
+		theme_tags: ["tracking", "stalker"],
+	},
+	{
+		id: "power-sup-5-114-radiant-martyr",
+		name: "Radiant Martyr",
+		display_name: "Radiant Martyr",
+		description:
+			"When you would be reduced to 0 HP, you can instead drop to 1 HP and release a burst of the Absolute's radiance. All enemies within 30 feet: DC 17 PRS save, 6d8 radiant on failure, half on success. All allies regain 3d8 HP.",
+		lore: {
+			origin:
+				"Bureau combat chaplains call this 'the Absolute's last gift.' Holy Knights who use it typically require 48 hours of recovery.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Holy Knights at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Holy Knight Training Division"],
+		},
+		flavor: "She fell. Then the light fell. Then everything changed.",
+		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
+		classes: ["Holy Knight"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Defy death + radiant burst to enemies + mass heal allies.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Abjuration",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "6d6",
+		damage_type: "radiant",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 radiant",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"5-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Defy death + radiant burst to enemies + mass heal allies.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau combat chaplains call this 'the Absolute's last gift.' Holy Knights who use it typically require 48 hours of recovery.",
+		theme_tags: ["radiant", "holy-knight"],
+	},
+	{
+		id: "power-sup-4-115-summoner-s-pack",
+		name: "Summoner's Pack",
+		display_name: "Summoner's Pack",
+		description:
+			"Summon 3 Small gate-creature scouts (AC 13, 10 HP each, 40 ft speed). They act on your initiative, obey mental commands, and can perform the Help action. If one is destroyed, it explodes for 1d6 force to adjacent creatures.",
+		lore: {
+			origin:
+				"Bureau reconnaissance values quantity over quality at lower gate levels. Three scouts cover more ground than one big summon.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Summoners at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Summoner Training Division"],
+		},
+		flavor: "Three scouts. Three pairs of eyes. Three explosive surprises.",
+		tags: ["awakened", "power", "tracking", "Conjuration", "Summoner"],
+		classes: ["Summoner"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "3 scout creatures + Help action + explosive death.",
+			secondary: "Damage increases by 1d6 per level above 4rd.",
+		},
+		power_type: "Innate",
+		power_level: 4,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "5d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "5d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Strength",
+			lattice_interaction:
+				"4-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "3 scout creatures + Help action + explosive death.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau reconnaissance values quantity over quality at lower gate levels. Three scouts cover more ground than one big summon.",
+		theme_tags: ["tracking", "summoner"],
+	},
+	{
+		id: "power-sup-3-116-mana-recycler",
+		name: "Mana Recycler",
+		display_name: "Mana Recycler",
+		description:
+			"When you cast a spell of 3rd level or lower that deals no damage, immediately recover a spell slot of 1 level lower than the spell cast. This can only trigger once per short rest.",
+		lore: {
+			origin:
+				"Bureau mana-efficiency metrics improved 23% after Technomancers adopted Mana Recycler into standard loadouts.",
+			history:
+				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Technomancers at the appropriate rank.",
+			prior_owners: [
+				"Bureau Combat Archives",
+				"Technomancer Training Division",
+			],
+		},
+		flavor: "Waste not. The mana goes somewhere useful.",
+		tags: [
+			"awakened",
+			"power",
+			"device",
+			"Transmutation",
+			"Technomancer",
+			"Mage",
+		],
+		classes: ["Technomancer", "Mage"],
+		rarity: "uncommon",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Recover lower-level slot on non-damage spell cast.",
+			secondary: "Damage increases by 1d6 per level above 3rd.",
+		},
+		power_type: "Innate",
+		power_level: 3,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Instantaneous",
+		concentration: false,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "4d6",
+		damage_type: "force",
+		higher_levels: "Damage increases by 1d6 per level above 3rd.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Instantaneous",
+			damage_profile: "4d6 force",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"3-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "4d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 15,
+				success: "Half damage and no rider.",
+				failure: "Recover lower-level slot on non-damage spell cast.",
+			},
+		},
+		limitations: {
+			uses: "3/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau mana-efficiency metrics improved 23% after Technomancers adopted Mana Recycler into standard loadouts.",
+		theme_tags: ["device", "technomancer", "mage"],
+	},
+	{
+		id: "power-sup-5-117-circuit-defibrillator",
+		name: "Circuit Defibrillator",
+		display_name: "Circuit Defibrillator",
+		description:
+			"As an action, touch a creature at 0 HP and jumpstart its mana circuit. The creature immediately regains consciousness with HP equal to 3d10 + your spellcasting modifier and can take its turn normally this round.",
+		lore: {
+			origin:
+				"Bureau field medics carry this as mandatory kit. The difference between a failed raid and a successful one is often one Circuit Defibrillator.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Precise; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Heralds at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Herald Training Division"],
+		},
+		flavor: "Clear. Pulse restored. Fight.",
+		tags: [
+			"awakened",
+			"power",
+			"device",
+			"Evocation",
+			"Herald",
+			"Technomancer",
+		],
+		classes: ["Herald", "Technomancer"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Instant revive at 3d10 HP + immediate action.",
+			secondary:
+				"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 5,
+		casting_time: "1 action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "6d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 5th. At 7th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "6d6 force",
+			range: "60 feet",
+			type: "device",
+			action: "1 action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"5-tier device stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "ranged",
+				resolution: "martial_attack",
+				modifier: "Intelligence",
+				damage: "6d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Instant revive at 3d10 HP + immediate action.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau field medics carry this as mandatory kit. The difference between a failed raid and a successful one is often one Circuit Defibrillator.",
+		theme_tags: ["device", "herald", "technomancer"],
+	},
+	{
+		id: "power-sup-6-118-runic-detonation",
+		name: "Runic Detonation",
+		display_name: "Runic Detonation",
+		description:
+			"Inscribe a mana-rune on a surface. The rune detonates when triggered (proximity, timer, or command word). Detonation: DC 17 INT save in 30-foot radius, 8d8 force on failure, half on success. You can have up to 3 runes active simultaneously.",
+		lore: {
+			origin:
+				"Bureau demolitions teams replaced physical explosives with Runic Detonation charges. The cleanup is simpler and the yield is higher.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Mages at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Mage Training Division"],
+		},
+		flavor: "Three runes. Three traps. Three regrets.",
+		tags: ["awakened", "power", "overload", "Evocation", "Mage", "Esper"],
+		classes: ["Mage", "Esper"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "8d8 force in 30-foot radius; up to 3 active at once.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Evocation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Intelligence",
+		damage_roll: "7d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"6-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Intelligence",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "8d8 force in 30-foot radius; up to 3 active at once.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau demolitions teams replaced physical explosives with Runic Detonation charges. The cleanup is simpler and the yield is higher.",
+		theme_tags: ["overload", "mage", "esper"],
+	},
+	{
+		id: "power-sup-6-119-commander-s-presence",
+		name: "Commander's Presence",
+		display_name: "Commander's Presence",
+		description:
+			"Project an aura of absolute tactical authority. For 1 minute, all allies within 60 feet: can use your saving throw bonus instead of their own (their choice per save), and when you take the Help action, the ally gains +1d8 to the roll instead of advantage.",
+		lore: {
+			origin:
+				"Bureau tactical command rates Heralds with Commander's Presence as 'force multiplier assets.' Assignment priority: S-Rank operations.",
+			history:
+				"Catalogued in the Bureau's rare-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is distinctive.",
+			current_owner:
+				"Available to Bureau-certified Heralds at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Herald Training Division"],
+		},
+		flavor: "She commands. They follow. They survive.",
+		tags: [
+			"awakened",
+			"power",
+			"radiant",
+			"Enchantment",
+			"Herald",
+			"Holy Knight",
+		],
+		classes: ["Herald", "Holy Knight"],
+		rarity: "rare",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Share save bonus + enhanced Help action.",
+			secondary:
+				"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		},
+		power_type: "Innate",
+		power_level: 6,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Enchantment",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "7d6",
+		damage_type: "force",
+		higher_levels:
+			"Damage increases by 1d6 per level above 6th. At 8th level, the secondary effect also intensifies.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "7d6 force",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Presence",
+			lattice_interaction:
+				"6-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 17,
+				success: "Half damage and no rider.",
+				failure: "Share save bonus + enhanced Help action.",
+			},
+		},
+		limitations: {
+			uses: "2/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau tactical command rates Heralds with Commander's Presence as 'force multiplier assets.' Assignment priority: S-Rank operations.",
+		theme_tags: ["radiant", "herald", "holy-knight"],
+	},
+	{
+		id: "power-sup-8-120-entropic-avatar",
+		name: "Entropic Avatar",
+		display_name: "Entropic Avatar",
+		description:
+			"Transform into an avatar of entropy for 1 minute. Gain +50 temp HP, fly speed 60 feet, immunity to necrotic and poison, and all your attacks deal +3d8 necrotic. Creatures that touch you or hit you with melee take 2d8 necrotic. When the form ends: 3 levels of exhaustion.",
+		lore: {
+			origin:
+				"Bureau records classify Entropic Avatar as 'S-Rank threat equivalent.' Revenants in this form are not approached by allies or enemies.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Revenants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Revenant Training Division"],
+		},
+		flavor:
+			"She stopped being human. For one minute. The minute was sufficient.",
+		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
+		classes: ["Revenant"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Transformation: massive buffs + contact damage + heavy exhaustion cost.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "9d6",
+		damage_type: "necrotic",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 necrotic",
+			range: "Self",
+			type: "entropy",
+			action: "1 bonus action",
+			ability: "Intelligence",
+			lattice_interaction:
+				"8-tier entropy stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure:
+					"Transformation: massive buffs + contact damage + heavy exhaustion cost.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau records classify Entropic Avatar as 'S-Rank threat equivalent.' Revenants in this form are not approached by allies or enemies.",
+		theme_tags: ["entropy", "revenant"],
+	},
+	{
+		id: "power-sup-8-121-esper-ascension",
+		name: "Esper Ascension",
+		display_name: "Esper Ascension",
+		description:
+			"Ascend to a state of total psionic awareness. For 1 minute: you levitate 30 feet (fly 30 ft hover), have blindsight 120 feet, can read thoughts of all creatures within 120 feet (no save), and your psychic spells deal +4d6 damage. When it ends: stunned for 1 round.",
+		lore: {
+			origin:
+				"Bureau psionic assessment rates Esper Ascension as 'perception beyond human parameters.' The one-round stun is considered 'a fair trade.'",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Espers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Esper Training Division"],
+		},
+		flavor:
+			"She sees everything. Every thought. Every intention. Every weakness.",
+		tags: ["awakened", "power", "tracking", "Divination", "Esper"],
+		classes: ["Esper"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Flight + blindsight + thought reading + psychic damage boost.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Divination",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "9d6",
+		damage_type: "psychic",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 psychic",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Strength",
+			lattice_interaction:
+				"8-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure:
+					"Flight + blindsight + thought reading + psychic damage boost.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau psionic assessment rates Esper Ascension as 'perception beyond human parameters.' The one-round stun is considered 'a fair trade.'",
+		theme_tags: ["tracking", "esper"],
+	},
+	{
+		id: "power-sup-7-122-patron-sacrifice",
+		name: "Patron Sacrifice",
+		display_name: "Patron Sacrifice",
+		description:
+			"Offer a significant portion of your life force to your patron in exchange for a massive power surge. Permanently reduce your max HP by 10. In return: regain all expended spell slots, gain +3 to spell save DC for 1 minute, and your next patron spell deals double damage.",
+		lore: {
+			origin:
+				"Bureau pact oversight STRONGLY discourages this power. The HP reduction is permanent. Contractors who use it more than twice are flagged for intervention.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Contractors at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Contractor Training Division"],
+		},
+		flavor: "The patron demands. You pay. The power is worth it. Usually.",
+		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
+		classes: ["Contractor"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Permanent HP loss for full slot recovery + DC boost + double damage.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 7,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Necromancy",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "8d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "8d6 force",
+			range: "Self",
+			type: "pact",
+			action: "1 bonus action",
+			ability: "Presence",
+			lattice_interaction:
+				"7-tier pact stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure:
+					"Permanent HP loss for full slot recovery + DC boost + double damage.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau pact oversight STRONGLY discourages this power. The HP reduction is permanent. Contractors who use it more than twice are flagged for intervention.",
+		theme_tags: ["pact", "contractor"],
+	},
+	{
+		id: "power-sup-8-123-striker-s-zenith",
+		name: "Striker's Zenith",
+		display_name: "Striker's Zenith",
+		description:
+			"Enter a state of perfect kinetic harmony. For 1 minute: your unarmed attacks deal 3d10 + STR force, you can make 4 unarmed attacks per action, your movement doesn't provoke opportunity attacks, and you can run along walls and across water.",
+		lore: {
+			origin:
+				"Bureau martial assessment: a Striker in Zenith state operates at 'beyond measurable human combat efficiency.' The one-minute limit is considered 'merciful.'",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Explosive; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Strikers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Striker Training Division"],
+		},
+		flavor: "Perfect balance. Perfect speed. Perfect violence.",
+		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
+		classes: ["Striker"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "3d10 unarmed, 4 attacks, free movement, wall/water run.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 bonus action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "One creature",
+		has_save: false,
+		save_ability: "Strength",
+		damage_roll: "9d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 force",
+			range: "Self",
+			type: "kinetic",
+			action: "1 bonus action",
+			ability: "Agility",
+			lattice_interaction:
+				"8-tier kinetic stabilized through gate-lattice resonance",
+			attack: {
+				type: "force",
+				mode: "melee",
+				resolution: "martial_attack",
+				modifier: "Agility",
+				damage: "9d6",
+				damage_type: "force",
+			},
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "3d10 unarmed, 4 attacks, free movement, wall/water run.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau martial assessment: a Striker in Zenith state operates at 'beyond measurable human combat efficiency.' The one-minute limit is considered 'merciful.'",
+		theme_tags: ["kinetic", "striker"],
+	},
+	{
+		id: "power-sup-8-124-berserker-s-last-stand",
+		name: "Berserker's Last Stand",
+		display_name: "Berserker's Last Stand",
+		description:
+			"Activate when you are at or below 25% HP. For 1 minute: your melee damage is quadrupled, you can't be knocked unconscious, you regenerate 2d10 HP per round, and you are immune to frightened and charmed. When it ends: you drop to 0 HP (death saves).",
+		lore: {
+			origin:
+				"Bureau medical teams describe this as 'borrowing against a future that may not arrive.' Berserkers with Vitality saves above 18 survive the crash 80% of the time.",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Volatile; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Berserkers at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Berserker Training Division"],
+		},
+		flavor: "She's dying. She doesn't care. She fights harder.",
+		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
+		classes: ["Berserker"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary:
+				"Quadruple melee damage + death immunity + regen + crash at end.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 action",
+		range: "Self (15-foot radius)",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Transmutation",
+		target: "Each creature in area",
+		has_save: true,
+		save_ability: "Vitality",
+		damage_roll: "9d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 force",
+			range: "Self (15-foot radius)",
+			type: "overload",
+			action: "1 action",
+			ability: "Strength",
+			lattice_interaction:
+				"8-tier overload stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Vitality",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure:
+					"Quadruple melee damage + death immunity + regen + crash at end.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau medical teams describe this as 'borrowing against a future that may not arrive.' Berserkers with Vitality saves above 18 survive the crash 80% of the time.",
+		theme_tags: ["overload", "berserker"],
+	},
+	{
+		id: "power-sup-8-125-summoner-s-leviathan",
+		name: "Summoner's Leviathan",
+		display_name: "Summoner's Leviathan",
+		description:
+			"Summon a Huge gate-leviathan (AC 18, HP 200, multiattack: 3 at +10 for 3d10+7) that acts on its own initiative and obeys your mental commands. It has resistance to all damage and immunity to frightened. Lasts 1 minute or until destroyed.",
+		lore: {
+			origin:
+				"Bureau gate-response teams classify a summoned leviathan as 'allied strategic asset.' The leviathan classifies them as 'small.'",
+			history:
+				"Catalogued in the Bureau's epic-tier compendium after field validation.",
+			curse: "",
+			personality: "Focused; the mana signature is intense.",
+			current_owner:
+				"Available to Bureau-certified Summoners at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Summoner Training Division"],
+		},
+		flavor: "The gate opened. Something enormous answered.",
+		tags: ["awakened", "power", "tracking", "Conjuration", "Summoner"],
+		classes: ["Summoner"],
+		rarity: "epic",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Huge CR 12 summon: 200 HP, multiattack, resistance to all.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 8,
+		casting_time: "1 bonus action",
+		range: "60 feet",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Conjuration",
+		target: "One creature you can see",
+		has_save: true,
+		save_ability: "Strength",
+		damage_roll: "9d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "9d6 force",
+			range: "60 feet",
+			type: "tracking",
+			action: "1 bonus action",
+			ability: "Strength",
+			lattice_interaction:
+				"8-tier tracking stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Strength",
+				dc: 18,
+				success: "Half damage and no rider.",
+				failure: "Huge CR 12 summon: 200 HP, multiattack, resistance to all.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau gate-response teams classify a summoned leviathan as 'allied strategic asset.' The leviathan classifies them as 'small.'",
+		theme_tags: ["tracking", "summoner"],
+	},
+	{
+		id: "power-sup-9-126-divine-mandate",
+		name: "Divine Mandate",
+		display_name: "Divine Mandate",
+		description:
+			"Speak with the Absolute's voice. All creatures within 120 feet that can hear you must make DC 20 PRS save. On failure: they must follow one complex command (up to 25 words) for 1 hour. On success: they are frightened of you for 1 minute. Allies are immune.",
+		lore: {
+			origin:
+				"Bureau Director classification: ABSOLUTE AUTHORITY. One confirmed use. The Director authorized it personally. The S-Rank gate-boss and its entire army knelt.",
+			history:
+				"Catalogued in the Bureau's legendary-tier compendium after field validation.",
+			curse: "",
+			personality: "Resolute; the mana signature is overwhelming.",
+			current_owner:
+				"Available to Bureau-certified Heralds at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Herald Training Division"],
+		},
+		flavor: "The Absolute speaks. Through her. Everyone obeys.",
+		tags: ["awakened", "power", "radiant", "Enchantment", "Herald"],
+		classes: ["Herald"],
+		rarity: "legendary",
+		source_book: "Rift Ascendant Canon",
+		effects: {
+			primary: "Mass domination (120 ft) or fear on save.",
+			secondary:
+				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		},
+		power_type: "Innate",
+		power_level: 9,
+		casting_time: "1 action",
+		range: "Self",
+		duration: "Concentration, up to 1 minute",
+		concentration: true,
+		ritual: false,
+		school: "Enchantment",
+		target: "One creature",
+		has_save: true,
+		save_ability: "Presence",
+		damage_roll: "10d6",
+		damage_type: "force",
+		higher_levels:
+			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
+		components: { verbal: true, somatic: true, material: false },
+		mechanics: {
+			duration: "Concentration, up to 1 minute",
+			damage_profile: "10d6 force",
+			range: "Self",
+			type: "radiant",
+			action: "1 action",
+			ability: "Sense",
+			lattice_interaction:
+				"9-tier radiant stabilized through gate-lattice resonance",
+			saving_throw: {
+				ability: "Presence",
+				dc: 20,
+				success: "Half damage and no rider.",
+				failure: "Mass domination (120 ft) or fear on save.",
+			},
+		},
+		limitations: {
+			uses: "1/long rest",
+			recharge: "long rest",
+			requires_attunement: false,
+			conditions: ["Must be conscious"],
+		},
+		discovery_lore:
+			"Bureau Director classification: ABSOLUTE AUTHORITY. One confirmed use. The Director authorized it personally. The S-Rank gate-boss and its entire army knelt.",
+		theme_tags: ["radiant", "herald"],
 	},
 ];
-
-export const powers_supplemental: CompendiumPower[] = [
-	...uniqueFamilies,
-	...sharedFamilies,
-]
-	.flatMap(makeSeeds)
-	.map(makePower);

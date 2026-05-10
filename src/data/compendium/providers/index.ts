@@ -127,7 +127,7 @@ export interface StaticCompendiumEntry {
 	higher_levels?: string | null;
 	atHigherLevels?: string | null;
 	properties?: string[] | Record<string, Json> | null;
-	abilities?: Record<string, Json> | null;
+	abilities?: Record<string, Json> | Array<Record<string, Json>> | null;
 	lore?: string | Record<string, Json> | null;
 	attunement?: boolean | null;
 	cursed?: boolean | null;
@@ -285,6 +285,8 @@ export interface StaticCompendiumEntry {
 	job_id?: string | null;
 	job_name?: string | null;
 	path_tier?: number | null;
+	pathType?: string | null;
+	features?: Array<Record<string, Json>> | null;
 	// Sync Parity support
 	spell_level?: number | null;
 	casting_time?: string | null;
@@ -1602,6 +1604,23 @@ export const staticDataProvider: StaticDataProvider = {
 			tier: number;
 			source: string;
 			image?: string;
+			pathType?: string;
+			features?: Array<{
+				level: number;
+				name: string;
+				description: string;
+			}>;
+			abilities?: Array<{
+				name: string;
+				description: string;
+				recharge?: number;
+				cost?: string;
+			}>;
+			stats?: {
+				primaryAttribute: string;
+				secondaryAttribute?: string;
+				bonusStats: Record<string, number>;
+			};
 			requirements: {
 				level?: number;
 				prerequisites?: string[];
@@ -1629,6 +1648,11 @@ export const staticDataProvider: StaticDataProvider = {
 			job_id: path.jobId,
 			job_name: path.jobName,
 			path_tier: path.tier,
+			pathType: path.pathType,
+			features: (path.features as unknown as Array<Record<string, Json>>) || [],
+			abilities:
+				(path.abilities as unknown as Array<Record<string, Json>>) || [],
+			stats: path.stats as unknown as Record<string, Json>,
 			prerequisites: path.requirements.prerequisites?.join(", "),
 			rarity:
 				path.tier === 3 ? "legendary" : path.tier === 2 ? "very_rare" : "rare",
