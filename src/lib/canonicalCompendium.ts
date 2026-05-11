@@ -18,6 +18,13 @@ import {
 	normalizeJobAccessToken,
 } from "@/lib/jobAbilityAccess";
 import {
+	getActivePathAbilityGrants,
+	getEffectiveMaxAbilityLevel,
+	getPathGrantMaxAbilityLevel,
+	normalizePathAbilityValue,
+	type PathAbilityGrant,
+} from "@/lib/pathAbilityAccess";
+import {
 	filterRowsBySourcebookAccess,
 	isSourcebookAccessible,
 } from "@/lib/sourcebookAccess";
@@ -1128,6 +1135,112 @@ function matchesSpellTokenEligibility(
 	return entryHasAccessToken(getDerivedSpellTags(entry), tokens);
 }
 
+function getEntrySchoolToken(entry: CanonicalCastableEntry): string | null {
+	const school = getNonEmptyString((entry as { school?: unknown }).school);
+	return school ? normalizePathAbilityValue(school) : null;
+}
+
+function pathGrantMatchesSpellEntry(
+	entry: CanonicalCastableEntry,
+	grant: PathAbilityGrant,
+	characterLevel?: number | null,
+): boolean {
+	if (grant.kind !== "spell") return false;
+	if (
+		typeof characterLevel === "number" &&
+		entry.power_level > getPathGrantMaxAbilityLevel(grant, characterLevel)
+	) {
+		return false;
+	}
+	if (grant.entryNames?.length) {
+		const entryName = normalizePathAbilityValue(entry.name);
+		if (
+			!grant.entryNames.some(
+				(name) => normalizePathAbilityValue(name) === entryName,
+			)
+		) {
+			return false;
+		}
+	}
+	if (
+		grant.sourceTokens.length > 0 &&
+		!matchesSpellTokenEligibility(entry, grant.sourceTokens)
+	) {
+		return false;
+	}
+	if (
+		grant.schools?.length &&
+		(!grant.leveledSchoolsOnly || entry.power_level > 0)
+	) {
+		const entrySchool = getEntrySchoolToken(entry);
+		const allowedSchools = grant.schools.map(normalizePathAbilityValue);
+		if (!entrySchool || !allowedSchools.includes(entrySchool)) return false;
+	}
+	return true;
+}
+
+function pathGrantMatchesPowerEntry(
+	entry: CanonicalCastableEntry,
+	grant: PathAbilityGrant,
+	characterLevel?: number | null,
+): boolean {
+	if (grant.kind !== "power") return false;
+	if (
+		typeof characterLevel === "number" &&
+		entry.power_level > getPathGrantMaxAbilityLevel(grant, characterLevel)
+	) {
+		return false;
+	}
+	if (grant.entryNames?.length) {
+		const entryName = normalizePathAbilityValue(entry.name);
+		if (
+			!grant.entryNames.some(
+				(name) => normalizePathAbilityValue(name) === entryName,
+			)
+		) {
+			return false;
+		}
+	}
+	return (
+		grant.sourceTokens.length === 0 ||
+		matchesTokenEligibility(entry, grant.sourceTokens)
+	);
+}
+
+function pathGrantMatchesTechniqueEntry(
+	entry: StaticCompendiumEntry,
+	grant: PathAbilityGrant,
+	characterLevel?: number | null,
+): boolean {
+	if (grant.kind !== "technique") return false;
+	if (
+		typeof characterLevel === "number" &&
+		getTechniqueLevelRequirement(entry) > characterLevel
+	) {
+		return false;
+	}
+	if (
+		typeof grant.maxLevel === "number" &&
+		getTechniqueLevelRequirement(entry) > grant.maxLevel
+	) {
+		return false;
+	}
+	if (grant.entryNames?.length) {
+		const entryName = normalizePathAbilityValue(entry.name);
+		if (
+			!grant.entryNames.some(
+				(name) => normalizePathAbilityValue(name) === entryName,
+			)
+		) {
+			return false;
+		}
+	}
+	return (
+		grant.sourceTokens.length === 0 ||
+		matchesTechniqueTokenEligibility(entry, grant.sourceTokens)
+	);
+}
+
 function getCastableLevelCap(
 	options: LearnableCastableOptions,
 	defaultKind: "spell" | "power",
@@ -1137,6 +1250,18 @@ function getCastableLevelCap(
 			? (options.maxSpellLevel ?? options.maxPowerLevel)
 			: options.maxPowerLevel;
 	if (typeof explicit === "number") return explicit;
+	if (
+		typeof options.characterLevel === "number" &&
+		options.jobName &&
+		options.pathName
+	) {
+		return getEffectiveMaxAbilityLevel({
+			jobName: options.jobName,
+			pathName: options.pathName,
+			characterLevel: options.characterLevel,
+			kind: options.castableKind ?? defaultKind,
+		});
+	}
 	if (typeof options.characterLevel !== "number" || !options.jobName)
 		return null;
 	return getMaxAbilityLevelForJobAtLevel(
@@ -1146,12 +1271,38 @@ function getCastableLevelCap(
 	);
 }
 
-function isWithinCastableLevelCap(
+function getExplicitCastableLevelCap(
+	options: LearnableCastableOptions,
+	defaultKind: "spell" | "power",
+): number | null {
+	const explicit =
+		defaultKind === "spell"
+			? (options.maxSpellLevel ?? options.maxPowerLevel)
+			: options.maxPowerLevel;
+	return typeof explicit === "number" ? explicit : null;
+}
+
+function getBaseCastableLevelCap(
+	options: LearnableCastableOptions,
+	defaultKind: "spell" | "power",
+): number | null {
+	const explicit = getExplicitCastableLevelCap(options, defaultKind);
+	if (typeof options.characterLevel !== "number" || !options.jobName)
+		return typeof explicit === "number" ? explicit : null;
+	const baseCap = getMaxAbilityLevelForJobAtLevel(
+		options.jobName,
+		options.characterLevel,
+		options.castableKind ?? defaultKind,
+	);
+	return typeof explicit === "number" ? Math.min(explicit, baseCap) : baseCap;
+}
+
+function isWithinBaseCastableLevelCap(
 	entry: CanonicalCastableEntry,
 	options: LearnableCastableOptions,
 	defaultKind: "spell" | "power",
 ): boolean {
-	const maxLevel = getCastableLevelCap(options, defaultKind);
+	const maxLevel = getBaseCastableLevelCap(options, defaultKind);
 	return maxLevel === null || entry.power_level <= maxLevel;
 }
 
@@ -1250,15 +1401,39 @@ export function isCanonicalSpellLearnable(
 	options: LearnableCastableOptions = {},
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "spell")) return false;
-	if (options.jobName && !jobCanLearnSpells(options.jobName)) return false;
-	if (!isWithinCastableLevelCap(entry, options, "spell")) return false;
+	const pathGrants = getActivePathAbilityGrants({
+		jobName: options.jobName,
+		pathName: options.pathName,
+		characterLevel: options.characterLevel,
+		kind: "spell",
+	});
+	if (
+		options.jobName &&
+		!jobCanLearnSpells(options.jobName) &&
+		pathGrants.length === 0
+	) {
+		return false;
+	}
+	const explicitCap = getExplicitCastableLevelCap(options, "spell");
+	const pathGrantAllowed = pathGrants.some(
+		(grant) =>
+			(explicitCap === null || entry.power_level <= explicitCap) &&
+			pathGrantMatchesSpellEntry(entry, grant, options.characterLevel),
+	);
+	if (pathGrantAllowed) return true;
+	if (!isWithinBaseCastableLevelCap(entry, options, "spell")) return false;
 	const accessTokens = getSpellAccessTokens(
 		options.jobName,
 		options.pathName,
 		options.regentNames,
 	);
-	if (accessTokens.length === 0) return !options.jobName;
-	return matchesSpellTokenEligibility(entry, accessTokens);
+	const baseAllowed =
+		accessTokens.length === 0
+			? !options.jobName
+			: jobCanLearnSpells(options.jobName)
+				? matchesSpellTokenEligibility(entry, accessTokens)
+				: false;
+	return baseAllowed;
 }
 
 export function isCanonicalPowerLearnable(
@@ -1266,14 +1441,36 @@ export function isCanonicalPowerLearnable(
 	options: LearnableCastableOptions = {},
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "power")) return false;
-	if (options.jobName && !jobCanLearnPowers(options.jobName)) return false;
-	if (!isWithinCastableLevelCap(entry, options, "power")) return false;
+	const pathGrants = getActivePathAbilityGrants({
+		jobName: options.jobName,
+		pathName: options.pathName,
+		characterLevel: options.characterLevel,
+		kind: "power",
+	});
+	if (
+		options.jobName &&
+		!jobCanLearnPowers(options.jobName) &&
+		pathGrants.length === 0
+	) {
+		return false;
+	}
+	const explicitCap = getExplicitCastableLevelCap(options, "power");
+	const pathGrantAllowed = pathGrants.some(
+		(grant) =>
+			(explicitCap === null || entry.power_level <= explicitCap) &&
+			pathGrantMatchesPowerEntry(entry, grant, options.characterLevel),
+	);
+	if (pathGrantAllowed) return true;
+	if (!isWithinBaseCastableLevelCap(entry, options, "power")) return false;
 	const accessTokens = getPowerAccessTokens(
 		options.jobName,
 		options.pathName,
 		options.regentNames,
 	);
-	return matchesTokenEligibility(entry, accessTokens);
+	const baseAllowed = jobCanLearnPowers(options.jobName)
+		? matchesTokenEligibility(entry, accessTokens)
+		: false;
+	return baseAllowed;
 }
 
 export async function findCanonicalCastableByName(
@@ -1452,8 +1649,19 @@ export async function listLearnableCastables(
 export async function listLearnableSpells(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {
-	if (options.jobName && !jobCanLearnSpells(options.jobName)) return [];
-	const maxPowerLevel = getCastableLevelCap(options, "spell");
+	const pathGrants = getActivePathAbilityGrants({
+		jobName: options.jobName,
+		pathName: options.pathName,
+		characterLevel: options.characterLevel,
+		kind: "spell",
+	});
+	if (
+		options.jobName &&
+		!jobCanLearnSpells(options.jobName) &&
+		pathGrants.length === 0
+	) {
+		return [];
+	}
 	const spells = await listCanonicalSpells(
 		options.search,
 		options.accessContext,
@@ -1466,13 +1674,8 @@ export async function listLearnableSpells(
 
 	return spells
 		.filter((entry) => {
-			if (
-				typeof maxPowerLevel === "number" &&
-				entry.power_level > maxPowerLevel
-			)
-				return false;
-
-			if (accessTokens.length === 0) return !options.jobName;
+			if (accessTokens.length === 0 && pathGrants.length === 0)
+				return !options.jobName;
 			return isCanonicalSpellLearnable(entry, options);
 		})
 		.sort(
@@ -1483,7 +1686,19 @@ export async function listLearnableSpells(
 export async function listLearnablePowers(
 	options: LearnableCastableOptions = {},
 ): Promise<CanonicalCastableEntry[]> {
-	if (options.jobName && !jobCanLearnPowers(options.jobName)) return [];
+	const pathGrants = getActivePathAbilityGrants({
+		jobName: options.jobName,
+		pathName: options.pathName,
+		characterLevel: options.characterLevel,
+		kind: "power",
+	});
+	if (
+		options.jobName &&
+		!jobCanLearnPowers(options.jobName) &&
+		pathGrants.length === 0
+	) {
+		return [];
+	}
 	const powers = await listCanonicalPowers(
 		options.search,
 		options.accessContext,
@@ -1536,13 +1751,29 @@ export function isCanonicalTechniqueLearnable(
 	options: LearnableTechniqueOptions = {},
 ): boolean {
 	if (!isAbilityEntryComplete(entry, "technique")) return false;
-	if (options.jobName && !jobCanLearnTechniques(options.jobName)) return false;
+	const pathGrants = getActivePathAbilityGrants({
+		jobName: options.jobName,
+		pathName: options.pathName,
+		characterLevel: options.characterLevel,
+		kind: "technique",
+	});
+	if (
+		options.jobName &&
+		!jobCanLearnTechniques(options.jobName) &&
+		pathGrants.length === 0
+	) {
+		return false;
+	}
 	const maxLevel = getTechniqueLevelCap(options);
 	if (
 		typeof maxLevel === "number" &&
 		getTechniqueLevelRequirement(entry) > maxLevel
 	)
 		return false;
+	const pathGrantAllowed = pathGrants.some((grant) =>
+		pathGrantMatchesTechniqueEntry(entry, grant, options.characterLevel),
+	);
+	if (pathGrantAllowed) return true;
 	const accessTokens = getTechniqueAccessTokens(
 		options.jobName,
 		options.pathName,
@@ -1552,13 +1783,28 @@ export function isCanonicalTechniqueLearnable(
 	if (classRequirement) {
 		return accessTokens.includes(normalizeEligibilityToken(classRequirement));
 	}
-	return matchesTechniqueTokenEligibility(entry, accessTokens);
+	const baseAllowed = jobCanLearnTechniques(options.jobName)
+		? matchesTechniqueTokenEligibility(entry, accessTokens)
+		: false;
+	return baseAllowed;
 }
 
 export async function listLearnableTechniques(
 	options: LearnableTechniqueOptions = {},
 ): Promise<StaticCompendiumEntry[]> {
-	if (options.jobName && !jobCanLearnTechniques(options.jobName)) return [];
+	const pathGrants = getActivePathAbilityGrants({
+		jobName: options.jobName,
+		pathName: options.pathName,
+		characterLevel: options.characterLevel,
+		kind: "technique",
+	});
+	if (
+		options.jobName &&
+		!jobCanLearnTechniques(options.jobName) &&
+		pathGrants.length === 0
+	) {
+		return [];
+	}
 	const maxLevel = getTechniqueLevelCap(options);
 	const techniques = await listCanonicalEntries(
 		"techniques",

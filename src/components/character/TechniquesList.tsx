@@ -20,6 +20,11 @@ import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { useTechniques } from "@/hooks/useTechniques";
 import { formatModifier } from "@/lib/characterCalculations";
+import {
+	resolveTechniqueUseFormula,
+	resolveTechniqueUseRollType,
+	type TechniqueActionFormulaSource,
+} from "@/lib/techniqueActionFormula";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
@@ -63,40 +68,10 @@ export function TechniquesList({
 		);
 	};
 
-	const getFormula = (value: unknown): string | null => {
-		if (typeof value === "string" && value.trim()) return value;
-		if (typeof value === "number") return String(value);
-		return null;
-	};
-
-	const getTechniqueFormula = (technique: unknown): string => {
-		const record =
-			technique && typeof technique === "object" && !Array.isArray(technique)
-				? (technique as Record<string, unknown>)
-				: {};
-		const mechanics =
-			record.mechanics &&
-			typeof record.mechanics === "object" &&
-			!Array.isArray(record.mechanics)
-				? (record.mechanics as Record<string, unknown>)
-				: {};
-		const attack =
-			mechanics.attack &&
-			typeof mechanics.attack === "object" &&
-			!Array.isArray(mechanics.attack)
-				? (mechanics.attack as Record<string, unknown>)
-				: {};
-		return (
-			getFormula(attack.damage) ??
-			getFormula(mechanics.damage_profile) ??
-			getFormula(mechanics.damage) ??
-			"0"
-		);
-	};
-
 	const handleUse = async (
 		entry: (typeof techniques)[number],
 		name: string,
+		actionFormula: TechniqueActionFormulaSource | null | undefined,
 	) => {
 		const displayName = formatRegentVernacular(name);
 		const runeFeature = getRuneFeature(entry.source);
@@ -121,14 +96,15 @@ export function TechniquesList({
 				});
 			}
 
-			const diceFormula = getTechniqueFormula(entry.technique);
+			const diceFormula = resolveTechniqueUseFormula(actionFormula);
+			const rollType = resolveTechniqueUseRollType(actionFormula);
 			const context = `Uses Technique: ${displayName}`;
 			if (campaignId) {
 				rollInCampaign(campaignId, {
 					dice_formula: diceFormula,
 					result: 0,
 					rolls: [],
-					roll_type: "ability",
+					roll_type: rollType,
 					context,
 					character_id: characterId,
 				});
@@ -137,7 +113,7 @@ export function TechniquesList({
 				dice_formula: diceFormula,
 				result: 0,
 				rolls: [],
-				roll_type: "ability",
+				roll_type: rollType,
 				context,
 				campaign_id: campaignId ?? null,
 				character_id: characterId,
@@ -308,7 +284,7 @@ export function TechniquesList({
 												size="sm"
 												className="h-8 gap-1 text-xs"
 												disabled={noRuneUses}
-												onClick={() => handleUse(entry, name)}
+												onClick={() => handleUse(entry, name, actionFormula)}
 												aria-label={`Use ${displayName}`}
 											>
 												<Play className="w-3 h-3" />

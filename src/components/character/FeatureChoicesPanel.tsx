@@ -1,4 +1,4 @@
-﻿import type { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -25,7 +25,6 @@ import {
 	listLearnablePowers,
 	listLearnableSpells,
 } from "@/lib/canonicalCompendium";
-import { getMaxAccessibleAbilityLevel } from "@/lib/levelGating";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 import type { AbilityScore } from "@/types/core-rules";
@@ -179,23 +178,15 @@ export function FeatureChoicesPanel({ characterId }: { characterId: string }) {
 						accessContext: { campaignId },
 						jobName: characterJob,
 						pathName: characterPath,
+						characterLevel: level,
 						regentNames,
-						maxPowerLevel: getMaxAccessibleAbilityLevel(
-							characterJob,
-							level,
-							"power",
-						),
 					}),
 					listLearnableSpells({
 						accessContext: { campaignId },
 						jobName: characterJob,
 						pathName: characterPath,
+						characterLevel: level,
 						regentNames,
-						maxPowerLevel: getMaxAccessibleAbilityLevel(
-							characterJob,
-							level,
-							"spell",
-						),
 					}),
 				]);
 				for (const power of [...learnablePowers, ...learnableSpells]) {

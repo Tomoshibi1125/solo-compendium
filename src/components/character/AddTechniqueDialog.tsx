@@ -66,6 +66,7 @@ export function AddTechniqueDialog({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: character.path ?? null,
+				characterLevel: character.level ?? null,
 				maxLevel: character.level ?? null,
 			});
 		},

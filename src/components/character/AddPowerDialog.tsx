@@ -33,7 +33,7 @@ import {
 	mapHomebrewPowerForRuntime,
 	runtimePowerMatchesCharacter,
 } from "@/lib/homebrewRuntime";
-import { getMaxAccessibleAbilityLevel } from "@/lib/levelGating";
+import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -105,6 +105,7 @@ export function AddPowerDialog({
 			characterId,
 			searchQuery,
 			character?.job,
+			character?.path,
 			character?.level,
 			campaignId,
 			homebrewPowers.map((power) => power.id).join(","),
@@ -116,19 +117,21 @@ export function AddPowerDialog({
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
-			const maxPowerLevel = getMaxAccessibleAbilityLevel(
-				character.job,
-				character.level ?? 1,
-				"power",
-			);
+			const characterLevel = character.level ?? 1;
+			const maxPowerLevel = getEffectiveMaxAbilityLevel({
+				jobName: character.job,
+				pathName: character.path ?? null,
+				characterLevel,
+				kind: "power",
+			});
 
 			const canonicalPowers = await listLearnablePowers({
 				search,
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: character.path ?? null,
+				characterLevel,
 				regentNames: regentNamesList,
-				maxPowerLevel,
 			});
 			const searchKey = search ?? "";
 			const matchingHomebrew = homebrewPowers.filter((power) => {

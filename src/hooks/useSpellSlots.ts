@@ -11,6 +11,7 @@ import {
 	getLocalCharacterState,
 	isLocalCharacterId,
 	listLocalSpellSlots,
+	removeLocalSpellSlot,
 	updateLocalSpellSlotRow,
 	upsertLocalSpellSlot,
 } from "@/lib/guestStore";
@@ -55,6 +56,15 @@ const writeCachedSpellSlots = (key: string, slots: SpellSlotData[]) => {
 	}
 };
 
+const clampCurrentSlots = (current: number | null | undefined, max: number) =>
+	Math.min(Math.max(0, current ?? max), max);
+
+const expectedMaxSlotsForLevel = (
+	expectedSlots: Record<number, number>,
+	runeSlotBonuses: Map<number, number>,
+	spellLevel: number,
+) => expectedSlots[spellLevel] + (runeSlotBonuses.get(spellLevel) ?? 0);
+
 /**
  * Fetch spell slots for a character
  */
@@ -78,15 +88,27 @@ export const useSpellSlots = (
 				const byLevel = new Map(existing.map((s) => [s.spell_level, s]));
 
 				for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
-					const maxSlots =
-						expectedSlots[spellLevel] + (runeSlotBonuses.get(spellLevel) ?? 0);
-					if (maxSlots <= 0) continue;
-					if (byLevel.has(spellLevel)) continue;
+					const maxSlots = expectedMaxSlotsForLevel(
+						expectedSlots,
+						runeSlotBonuses,
+						spellLevel,
+					);
+					const existingSlot = byLevel.get(spellLevel);
+					if (maxSlots <= 0) {
+						if (existingSlot) {
+							removeLocalSpellSlot(existingSlot.id);
+							byLevel.delete(spellLevel);
+						}
+						continue;
+					}
 
 					const row = upsertLocalSpellSlot(characterId, {
 						spell_level: spellLevel,
 						slots_max: maxSlots,
-						slots_current: maxSlots,
+						slots_current: clampCurrentSlots(
+							existingSlot?.slots_current,
+							maxSlots,
+						),
 						slots_recovered_on_short_rest: isPactCaster ? 1 : 0,
 						slots_recovered_on_long_rest: 1,
 					});
@@ -95,7 +117,11 @@ export const useSpellSlots = (
 
 				const slots: SpellSlotData[] = [];
 				for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
-					const maxSlots = expectedSlots[spellLevel];
+					const maxSlots = expectedMaxSlotsForLevel(
+						expectedSlots,
+						runeSlotBonuses,
+						spellLevel,
+					);
 					if (maxSlots <= 0) continue;
 
 					const row = byLevel.get(spellLevel);
@@ -103,8 +129,8 @@ export const useSpellSlots = (
 
 					slots.push({
 						level: spellLevel,
-						max: row.slots_max ?? maxSlots,
-						current: row.slots_current ?? maxSlots,
+						max: maxSlots,
+						current: clampCurrentSlots(row.slots_current, maxSlots),
 						recoveredOnShortRest: row.slots_recovered_on_short_rest === 1,
 						recoveredOnLongRest: row.slots_recovered_on_long_rest === 1,
 					});
@@ -144,17 +170,20 @@ export const useSpellSlots = (
 			const slots: SpellSlotData[] = [];
 
 			for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
-				const maxSlots =
-					expectedSlots[spellLevel] + (runeSlotBonuses.get(spellLevel) ?? 0);
+				const maxSlots = expectedMaxSlotsForLevel(
+					expectedSlots,
+					runeSlotBonuses,
+					spellLevel,
+				);
 
 				// Find existing slot record
 				const existing = data?.find((s) => s.spell_level === spellLevel);
 
-				if (maxSlots > 0 || existing) {
+				if (maxSlots > 0) {
 					slots.push({
 						level: spellLevel,
-						max: existing?.slots_max ?? maxSlots,
-						current: existing?.slots_current ?? maxSlots,
+						max: maxSlots,
+						current: clampCurrentSlots(existing?.slots_current, maxSlots),
 						recoveredOnShortRest: existing?.slots_recovered_on_short_rest === 1,
 						recoveredOnLongRest: existing?.slots_recovered_on_long_rest === 1,
 					});
@@ -195,7 +224,13 @@ export const useUpdateSpellSlot = () => {
 					casterType,
 					entry.character.level,
 				);
-				const maxSlots = expectedSlots[spellLevel];
+				const runeSlotBonuses =
+					await getRuneGrantedGeneralSpellSlotBonuses(characterId);
+				const maxSlots = expectedMaxSlotsForLevel(
+					expectedSlots,
+					runeSlotBonuses,
+					spellLevel,
+				);
 				if (maxSlots <= 0) return;
 
 				const existing = listLocalSpellSlots(characterId).find(
@@ -203,13 +238,13 @@ export const useUpdateSpellSlot = () => {
 				);
 				if (existing) {
 					updateLocalSpellSlotRow(existing.id, {
-						slots_current: Math.max(0, current),
+						slots_current: Math.min(Math.max(0, current), maxSlots),
 					});
 				} else {
 					upsertLocalSpellSlot(characterId, {
 						spell_level: spellLevel,
 						slots_max: maxSlots,
-						slots_current: Math.max(0, current),
+						slots_current: Math.min(Math.max(0, current), maxSlots),
 						slots_recovered_on_short_rest: casterType === "pact" ? 1 : 0,
 						slots_recovered_on_long_rest: 1,
 					});
@@ -271,7 +306,13 @@ export const useUpdateSpellSlot = () => {
 						casterType,
 						character.level,
 					);
-					const maxSlots = expectedSlots[spellLevel];
+					const runeSlotBonuses =
+						await getRuneGrantedGeneralSpellSlotBonuses(characterId);
+					const maxSlots = expectedMaxSlotsForLevel(
+						expectedSlots,
+						runeSlotBonuses,
+						spellLevel,
+					);
 
 					if (maxSlots > 0) {
 						const { error } = await supabase
@@ -280,7 +321,7 @@ export const useUpdateSpellSlot = () => {
 								character_id: characterId,
 								spell_level: spellLevel,
 								slots_max: maxSlots,
-								slots_current: Math.max(0, current),
+								slots_current: Math.min(Math.max(0, current), maxSlots),
 								slots_recovered_on_short_rest: 0,
 								slots_recovered_on_long_rest: 1,
 							});
@@ -324,25 +365,29 @@ export const useInitializeSpellSlots = () => {
 
 				const existing = listLocalSpellSlots(characterId);
 				for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
-					const maxSlots =
-						expectedSlots[spellLevel] + (runeSlotBonuses.get(spellLevel) ?? 0);
-					if (maxSlots <= 0) continue;
-
+					const maxSlots = expectedMaxSlotsForLevel(
+						expectedSlots,
+						runeSlotBonuses,
+						spellLevel,
+					);
 					const existingSlot = existing.find(
 						(s) => s.spell_level === spellLevel,
 					);
-					const nextMax = Math.max(existingSlot?.slots_max ?? 0, maxSlots);
+					if (maxSlots <= 0) {
+						if (existingSlot) {
+							removeLocalSpellSlot(existingSlot.id);
+						}
+						continue;
+					}
 					const newCurrent = existingSlot
-						? Math.min(existingSlot.slots_current, nextMax)
-						: nextMax;
+						? clampCurrentSlots(existingSlot.slots_current, maxSlots)
+						: maxSlots;
 
 					upsertLocalSpellSlot(characterId, {
 						spell_level: spellLevel,
-						slots_max: nextMax,
+						slots_max: maxSlots,
 						slots_current: newCurrent,
-						slots_recovered_on_short_rest: isPactCaster
-							? 1
-							: (existingSlot?.slots_recovered_on_short_rest ?? 0),
+						slots_recovered_on_short_rest: isPactCaster ? 1 : 0,
 						slots_recovered_on_long_rest:
 							existingSlot?.slots_recovered_on_long_rest ?? 1,
 					});
@@ -373,26 +418,41 @@ export const useInitializeSpellSlots = () => {
 			if (existingError) throw existingError;
 
 			for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
-				const maxSlots =
-					expectedSlots[spellLevel] + (runeSlotBonuses.get(spellLevel) ?? 0);
-				if (maxSlots <= 0) continue;
+				const maxSlots = expectedMaxSlotsForLevel(
+					expectedSlots,
+					runeSlotBonuses,
+					spellLevel,
+				);
 
 				// Find existing slot record
 				const existingSlot = existing?.find(
 					(s) => s.spell_level === spellLevel,
 				) as SpellSlotRow | undefined;
 
-				const nextMax = Math.max(existingSlot?.slots_max ?? 0, maxSlots);
+				if (maxSlots <= 0) {
+					if (existingSlot?.id) {
+						const { error: deleteError } = await supabase
+							.from("character_spell_slots")
+							.delete()
+							.eq("id", existingSlot.id);
+						if (deleteError) throw deleteError;
+					}
+					continue;
+				}
+
 				const nextCurrent = existingSlot
-					? Math.min(existingSlot.slots_current ?? nextMax, nextMax)
-					: nextMax;
+					? clampCurrentSlots(existingSlot.slots_current, maxSlots)
+					: maxSlots;
 
 				if (existingSlot?.id) {
 					const { error: updateError } = await supabase
 						.from("character_spell_slots")
 						.update({
-							slots_max: nextMax,
+							slots_max: maxSlots,
 							slots_current: nextCurrent,
+							slots_recovered_on_short_rest: isPactCaster ? 1 : 0,
+							slots_recovered_on_long_rest:
+								existingSlot.slots_recovered_on_long_rest ?? 1,
 						})
 						.eq("id", existingSlot.id);
 					if (updateError) throw updateError;
@@ -420,16 +480,20 @@ export const useInitializeSpellSlots = () => {
 
 				const slots: SpellSlotData[] = [];
 				for (let spellLevel = 1; spellLevel <= 9; spellLevel++) {
-					const expectedMax = expectedSlots[spellLevel];
+					const expectedMax = expectedMaxSlotsForLevel(
+						expectedSlots,
+						runeSlotBonuses,
+						spellLevel,
+					);
 					const row = (refreshed || []).find(
 						(s) => s.spell_level === spellLevel,
 					) as SpellSlotRow | undefined;
-					if (expectedMax <= 0 && !row) continue;
+					if (expectedMax <= 0) continue;
 
 					slots.push({
 						level: spellLevel,
-						max: row?.slots_max ?? expectedMax,
-						current: row?.slots_current ?? row?.slots_max ?? expectedMax,
+						max: expectedMax,
+						current: clampCurrentSlots(row?.slots_current, expectedMax),
 						recoveredOnShortRest: row?.slots_recovered_on_short_rest === 1,
 						recoveredOnLongRest: row?.slots_recovered_on_long_rest === 1,
 					});

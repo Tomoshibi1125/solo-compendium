@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
+	type CanonicalCastableEntry,
+	listCanonicalPowers,
+} from "@/lib/canonicalCompendium";
+import {
 	getRunePrimaryStatModifier,
 	getRuneRarityBonus,
 	inferRuneAbilityKind,
@@ -11,6 +15,19 @@ import {
 const STR16 = 16; // +3
 const AGI16 = 16; // +3
 const INT16 = 16; // +3
+
+async function getHighLevelDestroyerPower(): Promise<CanonicalCastableEntry> {
+	const power = (await listCanonicalPowers()).find((entry) => {
+		const classes = (entry as { classes?: unknown }).classes;
+		return (
+			entry.power_level > 3 &&
+			Array.isArray(classes) &&
+			classes.includes("Destroyer")
+		);
+	});
+	if (!power) throw new Error("Expected a high-level Destroyer power.");
+	return power;
+}
 
 describe("resolveRuneAbsorption — locked formula", () => {
 	it("striker_absorbs_spell_rune_no_regent → cross-class with stat term", () => {
@@ -210,15 +227,16 @@ describe("resolveRuneAbsorption — helpers", () => {
 });
 
 describe("resolveRuneGrant native strict eligibility", () => {
-	it("marks a high-level spell native but under-level when job can eventually learn it", async () => {
+	it("marks a high-level power native but under-level when job can eventually learn it", async () => {
+		const power = await getHighLevelDestroyerPower();
 		const accessContext: RuneGrantAccessContext = {
-			jobName: "Mage",
+			jobName: "Destroyer",
 			characterLevel: 5,
 			pathName: null,
 			regentNames: [],
 		};
 		const grant = await resolveRuneGrant(
-			{ kind: "spell", ref: "spell-a-1" },
+			{ kind: "power", ref: power.name },
 			accessContext,
 		);
 		expect(grant).not.toBeNull();
@@ -228,11 +246,12 @@ describe("resolveRuneGrant native strict eligibility", () => {
 		expect(grant?.promotesAtLevel).toBeGreaterThan(5);
 	});
 
-	it("marks a spell non-native for a martial job even when level is ignored", async () => {
+	it("marks a power non-native for a caster job even when level is ignored", async () => {
+		const power = await getHighLevelDestroyerPower();
 		const grant = await resolveRuneGrant(
-			{ kind: "spell", ref: "spell-a-1" },
+			{ kind: "power", ref: power.name },
 			{
-				jobName: "Striker",
+				jobName: "Mage",
 				characterLevel: 20,
 				pathName: null,
 				regentNames: [],
@@ -241,5 +260,32 @@ describe("resolveRuneGrant native strict eligibility", () => {
 		expect(grant).not.toBeNull();
 		expect(grant?.isNative).toBe(false);
 		expect(grant?.isUnderLevel).toBe(false);
+	});
+
+	it("treats exact path-granted powers as native only for the selected path", async () => {
+		const matchingPathGrant = await resolveRuneGrant(
+			{ kind: "power", ref: "Cursed Blade Edge" },
+			{
+				jobName: "Contractor",
+				pathName: "Path of the Cursed Blade",
+				characterLevel: 1,
+				regentNames: [],
+			},
+		);
+		const missingPathGrant = await resolveRuneGrant(
+			{ kind: "power", ref: "Cursed Blade Edge" },
+			{
+				jobName: "Contractor",
+				pathName: "Path of the Forgotten Star",
+				characterLevel: 1,
+				regentNames: [],
+			},
+		);
+
+		expect(matchingPathGrant).not.toBeNull();
+		expect(matchingPathGrant?.isNative).toBe(true);
+		expect(matchingPathGrant?.isUnderLevel).toBe(false);
+		expect(missingPathGrant).not.toBeNull();
+		expect(missingPathGrant?.isNative).toBe(false);
 	});
 });

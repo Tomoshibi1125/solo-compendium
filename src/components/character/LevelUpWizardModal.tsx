@@ -62,7 +62,6 @@ import {
 	addJobAwakeningBenefitsForLevel,
 	applyJobAwakeningTraitsToCharacter,
 	autoUpdateFeatureUses,
-	getMaxPowerLevelForJobAtLevel,
 	insertCharacterFeature,
 } from "@/lib/characterCreation";
 import { calculateFeatureUses } from "@/lib/characterEngine";
@@ -99,11 +98,8 @@ import {
 	runtimePathMatchesJob,
 	runtimeSpellMatchesCharacter,
 } from "@/lib/homebrewRuntime";
-import {
-	getMaxAccessibleAbilityLevel,
-	getStaticPathUnlockLevel,
-	isASILevel,
-} from "@/lib/levelGating";
+import { removeProgressionGrantsAboveLevel } from "@/lib/levelDownCleanup";
+import { getStaticPathUnlockLevel, isASILevel } from "@/lib/levelGating";
 import {
 	calculateAverageHPGain,
 	calculateMaxHPGain,
@@ -114,6 +110,7 @@ import {
 } from "@/lib/levelUpCalculations";
 import { logger } from "@/lib/logger";
 import { getStaticPaths, getStaticRegents } from "@/lib/ProtocolDataManager";
+import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -156,6 +153,7 @@ type LevelUpPathOption = {
 	display_name?: string | null;
 	path_level: number;
 	source_book?: string | null;
+	features?: Array<{ level: number; description: string; name: string }>;
 };
 
 type LevelUpFeatureRow = {
@@ -238,6 +236,17 @@ function toChoiceSourceData(
 		powers_known: job.powersKnown,
 		techniques_known: job.techniquesKnown,
 		spellbook: job.spellbook,
+	};
+}
+
+function toPathChoiceSourceData(
+	path: Pick<ChoiceSourceData, "features" | "name"> | null | undefined,
+	name?: string | null,
+): ChoiceSourceData | null {
+	if (!path) return null;
+	return {
+		name: name ?? path.name,
+		features: path.features ?? [],
 	};
 }
 
@@ -344,33 +353,10 @@ export const LevelUpWizardModal = ({
 		[jobObj, character?.job],
 	);
 
-	const availableChoices = useMemo(
-		() => calculateTotalChoices(jobChoiceSource, null, [], newLevel),
-		[jobChoiceSource, newLevel],
-	);
-
-	const choiceDeltas = useMemo(() => {
-		if (!character || !jobChoiceSource) return {};
-		return getLevelUpChoiceDeltas(
-			jobChoiceSource,
-			null,
-			[],
-			character.level,
-			newLevel,
-		);
-	}, [character, jobChoiceSource, newLevel]);
-
 	const levelUpLedgerEntries = useMemo(() => {
 		if (!character || !jobChoiceSource) return [];
 		return getLevelUpLedgerEntries(jobChoiceSource, character.level, newLevel);
 	}, [character, jobChoiceSource, newLevel]);
-
-	const requiredPowerChoices = choiceDeltas.powers ?? 0;
-	const requiredTechniqueChoices = choiceDeltas.techniques ?? 0;
-	const requiredCantripChoices = choiceDeltas.cantrips ?? 0;
-	const requiredSpellChoices = choiceDeltas.spells ?? 0;
-	const requiredSpellbookInscriptions = choiceDeltas.spellbookInscriptions ?? 0;
-	const requiredFightingStyleChoices = choiceDeltas.fightingStyles ?? 0;
 
 	// Level progression logic
 	const currentExperience = character?.experience ?? 0;
@@ -418,6 +404,7 @@ export const LevelUpWizardModal = ({
 					path_level: path.path_level ?? getStaticPathUnlockLevel(path),
 					source_book:
 						path.source_book ?? path.source ?? "Rift Ascendant Canon",
+					features: path.features ?? [],
 				}));
 			const homebrewCandidates: LevelUpPathOption[] = homebrewPaths
 				.filter((path) =>
@@ -431,6 +418,7 @@ export const LevelUpWizardModal = ({
 					display_name: path.display_name || path.name,
 					path_level: path.path_level,
 					source_book: path.source_book,
+					features: path.features ?? [],
 				}));
 
 			// Respect sourcebook entitlements: hide paths from sourcebooks the
@@ -474,6 +462,57 @@ export const LevelUpWizardModal = ({
 		return Array.from(names);
 	}, [character?.regent_overlays]);
 
+	const pathChoiceSource = useMemo(() => {
+		if (!character?.job || !effectivePathName) return null;
+		if (selectedPathRow) {
+			return toPathChoiceSourceData(selectedPathRow, effectivePathName);
+		}
+		const jobNameKey = normalizeCompendiumKey(character.job);
+		const pathNameKey = normalizeCompendiumKey(effectivePathName);
+		const staticPath = (getStaticPaths() as unknown as StaticPathSource[]).find(
+			(path) => {
+				const matchesJob = [path.job_id, path.jobId, path.jobName]
+					.map((value) => normalizeCompendiumKey(value))
+					.filter(Boolean)
+					.includes(jobNameKey);
+				return matchesJob && normalizeCompendiumKey(path.name) === pathNameKey;
+			},
+		);
+		const homebrewPath = homebrewPaths.find((path) => {
+			const matchesJob = runtimePathMatchesJob(path, undefined, character.job);
+			return matchesJob && normalizeCompendiumKey(path.name) === pathNameKey;
+		});
+		return toPathChoiceSourceData(
+			staticPath ?? homebrewPath,
+			effectivePathName,
+		);
+	}, [character?.job, effectivePathName, homebrewPaths, selectedPathRow]);
+
+	const availableChoices = useMemo(
+		() =>
+			calculateTotalChoices(jobChoiceSource, pathChoiceSource, [], newLevel),
+		[jobChoiceSource, pathChoiceSource, newLevel],
+	);
+
+	const choiceDeltas = useMemo(() => {
+		if (!character || !jobChoiceSource) return {};
+		return getLevelUpChoiceDeltas(
+			jobChoiceSource,
+			pathChoiceSource,
+			[],
+			character.level,
+			newLevel,
+			character.path ? pathChoiceSource : null,
+		);
+	}, [character, jobChoiceSource, pathChoiceSource, newLevel]);
+
+	const requiredPowerChoices = choiceDeltas.powers ?? 0;
+	const requiredTechniqueChoices = choiceDeltas.techniques ?? 0;
+	const requiredCantripChoices = choiceDeltas.cantrips ?? 0;
+	const requiredSpellChoices = choiceDeltas.spells ?? 0;
+	const requiredSpellbookInscriptions = choiceDeltas.spellbookInscriptions ?? 0;
+	const requiredFightingStyleChoices = choiceDeltas.fightingStyles ?? 0;
+
 	// Fetch available feats for selection at ASI levels
 	const { data: availableFeats = [] } = useQuery({
 		queryKey: ["level-up-feats", character?.job, newLevel, campaignId],
@@ -509,10 +548,20 @@ export const LevelUpWizardModal = ({
 		!!character && isASILevel(newLevel, jobObj || character.job);
 	const showFeatSelection = showASISection && availableChoices.feats > 0;
 	const maxSpellLevel = character?.job
-		? getMaxPowerLevelForJobAtLevel(character.job, newLevel)
+		? getEffectiveMaxAbilityLevel({
+				jobName: character.job,
+				pathName: effectivePathName,
+				characterLevel: newLevel,
+				kind: "spell",
+			})
 		: 0;
 	const maxPowerLevel = character?.job
-		? getMaxAccessibleAbilityLevel(character.job, newLevel, "power")
+		? getEffectiveMaxAbilityLevel({
+				jobName: character.job,
+				pathName: effectivePathName,
+				characterLevel: newLevel,
+				kind: "power",
+			})
 		: 0;
 
 	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
@@ -532,8 +581,8 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				characterLevel: newLevel,
 				regentNames: characterRegentNames,
-				maxPowerLevel,
 			});
 		},
 		enabled: !!character?.job && requiredPowerChoices > 0,
@@ -555,6 +604,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				characterLevel: newLevel,
 				regentNames: characterRegentNames,
 				maxLevel: newLevel,
 			});
@@ -579,6 +629,7 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				characterLevel: newLevel,
 				regentNames: characterRegentNames,
 				maxPowerLevel: 0,
 			});
@@ -613,8 +664,8 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				characterLevel: newLevel,
 				regentNames: characterRegentNames,
-				maxPowerLevel: maxSpellLevel,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
 				(spell) =>
@@ -650,8 +701,8 @@ export const LevelUpWizardModal = ({
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: effectivePathName,
+				characterLevel: newLevel,
 				regentNames: characterRegentNames,
-				maxPowerLevel: maxSpellLevel,
 			});
 			const matchingHomebrew = homebrewSpells.filter(
 				(spell) =>
@@ -942,7 +993,7 @@ export const LevelUpWizardModal = ({
 
 	useEffect(() => {
 		if (character) {
-			setNewLevel(character.level + 1);
+			setNewLevel(Math.min(character.level + 1, 20));
 		}
 	}, [character]);
 
@@ -1045,31 +1096,6 @@ export const LevelUpWizardModal = ({
 		);
 	}
 
-	if (character.level >= 20) {
-		return (
-			<Dialog open={isOpen} onOpenChange={onClose}>
-				<DialogContent className="max-w-2xl bg-background border-resurge/20">
-					<AscendantWindow
-						title="MAXIMUM LEVEL REACHED"
-						variant="alert"
-						className="text-center py-12"
-					>
-						<Crown className="w-16 h-16 mx-auto text-amber-400 mb-4" />
-						<p className="text-lg font-resurge text-amber-400 mb-2">
-							{character.name} has reached the pinnacle of power.
-						</p>
-						<p className="text-muted-foreground">
-							Level 20 - The Rift has no further tests for this Ascendant.
-						</p>
-					</AscendantWindow>
-					<div className="flex justify-end mt-4">
-						<Button onClick={onClose}>Close</Button>
-					</div>
-				</DialogContent>
-			</Dialog>
-		);
-	}
-
 	// Calculate HP increase (DDB / 5e parity — see levelUpCalculations.ts).
 	const vitModifier = Math.floor((character.abilities.VIT - 10) / 2);
 	const hitDieSize = character.hit_dice_size;
@@ -1094,34 +1120,11 @@ export const LevelUpWizardModal = ({
 			const newRiftFavorDie = calculateRiftFavorDie(newLevel);
 			const newRiftFavorMax = calculateRiftFavorMax(newLevel);
 
-			// Auto-remove features acquired above target level
-			if (!isLocalCharacterId(character.id)) {
-				await supabase
-					.from("character_features")
-					.delete()
-					.eq("character_id", character.id)
-					.gt("level_acquired", newLevel);
-
-				// Remove powers/spells/techniques acquired at levels above target
-				for (let lvl = newLevel + 1; lvl <= character.level; lvl++) {
-					const levelPattern = `Level ${lvl}%`;
-					await supabase
-						.from("character_powers")
-						.delete()
-						.eq("character_id", character.id)
-						.like("source", levelPattern);
-					await supabase
-						.from("character_spells")
-						.delete()
-						.eq("character_id", character.id)
-						.like("source", levelPattern);
-					await supabase
-						.from("character_techniques")
-						.delete()
-						.eq("character_id", character.id)
-						.like("source", levelPattern);
-				}
-			}
+			await removeProgressionGrantsAboveLevel(
+				character.id,
+				character.level,
+				newLevel,
+			);
 
 			await updateCharacter.mutateAsync({
 				id: character.id,

@@ -27,7 +27,7 @@ import {
 	mapHomebrewSpellForRuntime,
 	runtimeSpellMatchesCharacter,
 } from "@/lib/homebrewRuntime";
-import { getMaxAccessibleAbilityLevel } from "@/lib/levelGating";
+import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 import {
 	formatRegentVernacular,
@@ -106,19 +106,21 @@ export function AddSpellDialog({
 			const search = trimmedQuery
 				? normalizeRegentSearch(trimmedQuery).toLowerCase()
 				: undefined;
-			const maxSpellLevel = getMaxAccessibleAbilityLevel(
-				character.job,
-				character.level ?? 1,
-				"spell",
-			);
+			const characterLevel = character.level ?? 1;
+			const maxSpellLevel = getEffectiveMaxAbilityLevel({
+				jobName: character.job,
+				pathName: character.path ?? null,
+				characterLevel,
+				kind: "spell",
+			});
 
 			const canonicalSpells = await listLearnableSpells({
 				search,
 				accessContext: { campaignId },
 				jobName: character.job,
 				pathName: character.path ?? null,
+				characterLevel,
 				regentNames: regentNamesList,
-				maxPowerLevel: maxSpellLevel,
 			});
 			const searchKey = search ?? "";
 			const matchingHomebrew = homebrewSpells.filter((spell) => {

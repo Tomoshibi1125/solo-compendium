@@ -5,6 +5,7 @@ import {
 import type { VTTScene } from "@/types/vtt";
 
 // Sub-module imports — 37 chapters, 24 handouts, 20 VTT scenes
+import { riftAscendantWorldLoreChapter } from "./sandbox/rift-ascendant-world-lore";
 import { chaptersPart1 } from "./sandbox/sandbox-chapters-part1";
 import { chaptersPart2 } from "./sandbox/sandbox-chapters-part2";
 import { chaptersPart3 } from "./sandbox/sandbox-chapters-part3";
@@ -99,9 +100,10 @@ export interface SandboxChapter {
 }
 
 // ── Combined chapter array (ordered for reading flow) ───────────────────────
-// Part4 leads with Chapter 0 (Day Zero — The Memory-Care Wing), so it goes FIRST.
+// Sourcebook lore opens the book, then Part4 leads the adventure with Chapter 0.
 const [chapterZero, ...chaptersPart4Remainder] = chaptersPart4;
 export const sandboxWikiChapters: SandboxChapter[] = [
+	riftAscendantWorldLoreChapter,
 	...(chapterZero ? [chapterZero] : []), // Chapter 0: Day Zero — The Memory-Care Wing (Intro Adventure)
 	...chaptersPart1, // Chapters 1-8: Briefing, Divination, City, Factions, Hubs, Downtime, E-Rank Gate
 	...chaptersPart2, // Chapters 9-16: D through S-Rank Gates + Final Boss
@@ -122,11 +124,12 @@ export const sandboxVTTScenes: SandboxVTTScene[] = sandboxVTTScenesExpanded;
 // ── Final export: the complete module ────────────────────────────────────────
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
+	// v3: adds the canon pre-Gate world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, characters (NPCs as
 	// warden-claimed rows), encounters, quests, factions, loot, timeline, plus
 	// VTT audio tracks and pinned assets. Older campaigns imported on v1 will
 	// run the new sections on next auto-populate click.
-	version: 2,
+	version: 3,
 	title: "The Shadow of the Regent",
 	description:
 		"A massive open-world sandbox campaign (Level 1-10) set in a modern city district overwhelmed by a Gate Surge. Features 37 lore-rich chapters, 43 unique NPCs spanning all 14 canonical Rift Ascendant Jobs across 5 factions, 20 VTT maps, 24 handouts including 5 Warden secrets, 6 pre-scaffolded sessions, 11 encounter decks, 15 quest objectives, 5 faction dossiers, 6 gate-rank loot tables, 14-day district timeline, a roaming S-Rank Anomaly, Regent Relic mechanics, and a non-linear story driven by player choice. Built to Curse of Strahd scale with gothic-horror body-horror tone. Inspired by Solo Leveling; 100% aligned to Rift Ascendant canon (pantheon of 12 Eternals, canonical Relics/Artifacts/Sigils/Tattoos/Shadow Soldiers/Anomalies all name-linked to source compendia).",

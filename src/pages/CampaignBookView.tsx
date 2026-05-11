@@ -1,6 +1,7 @@
 import {
 	BookOpen,
 	ChevronLeft,
+	Download,
 	FileText,
 	Layers,
 	Loader2,
@@ -72,6 +73,13 @@ type SandboxAudioTrackState = {
 	url: string;
 	type: "music" | "ambient" | "sfx";
 };
+
+const getDownloadSlug = (value: string) =>
+	value
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "")
+		.slice(0, 80) || "campaign-book-section";
 
 const CampaignBookView = () => {
 	const { id } = useParams<{ id: string }>();
@@ -366,6 +374,31 @@ const CampaignBookView = () => {
 		});
 	};
 
+	const handleDownloadSection = () => {
+		if (!activeSection) return;
+		const content = activeSection.content || campaign.description || "";
+		const sectionHeading =
+			activeSection.type === "static" && activeSection.id === "intro"
+				? campaign.name
+				: activeSection.title;
+		const markdown = content.trimStart().startsWith("#")
+			? content
+			: `# ${sectionHeading}\n\n${content}`;
+		const blob = new Blob([markdown], { type: "text/markdown;charset=utf-8" });
+		const url = URL.createObjectURL(blob);
+		const anchor = document.createElement("a");
+		anchor.href = url;
+		anchor.download = `${getDownloadSlug(activeSection.title)}.md`;
+		document.body.appendChild(anchor);
+		anchor.click();
+		anchor.remove();
+		URL.revokeObjectURL(url);
+		toast({
+			title: "Download Ready",
+			description: `"${activeSection.title}" has been saved as Markdown.`,
+		});
+	};
+
 	const handleOpenInVTT = () => {
 		// Send the active section to VTT and navigate there
 		if (activeSection) {
@@ -604,6 +637,15 @@ const CampaignBookView = () => {
 						<span className="text-cyan">{activeSection?.title}</span>
 					</div>
 					<div className="flex items-center gap-2">
+						<Button
+							variant="ghost"
+							size="sm"
+							className="gap-1 text-xs text-fuchsia-400 hover:text-white"
+							onClick={handleDownloadSection}
+						>
+							<Download className="w-3 h-3" />
+							<span className="hidden sm:inline">Download .md</span>
+						</Button>
 						<Button
 							variant="ghost"
 							size="sm"

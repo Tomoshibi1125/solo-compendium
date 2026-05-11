@@ -905,6 +905,31 @@ export function updateLocalSpellSlotRow(
 	throw new AppError("Spell slot not found", "NOT_FOUND");
 }
 
+export function removeLocalSpellSlot(slotId: string): void {
+	const state = loadGuestState();
+	const entries = Object.values(state.characters);
+
+	for (const entry of entries) {
+		const idx = entry.spellSlots.findIndex((s) => s.id === slotId);
+		if (idx === -1) continue;
+
+		const now = nowIso();
+		const characterId = entry.character.id;
+		const nextSlots = entry.spellSlots.filter((s) => s.id !== slotId);
+
+		state.characters[characterId] = {
+			...state.characters[characterId],
+			spellSlots: nextSlots,
+			character: { ...entry.character, updated_at: now },
+		};
+		state.updatedAt = now;
+		saveGuestState(state);
+		return;
+	}
+
+	throw new AppError("Spell slot not found", "NOT_FOUND");
+}
+
 // Techniques helpers
 export function listLocalTechniques(characterId: string): TechniqueRow[] {
 	const entry = getLocalCharacterState(characterId);

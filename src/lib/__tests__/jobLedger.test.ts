@@ -358,6 +358,60 @@ describe("getLevelUpChoiceDeltas", () => {
 		);
 		expect(deltas.fightingStyles).toBe(1);
 	});
+
+	it("includes path feature picks when a character chooses an already-unlocked path", () => {
+		const pathSource = {
+			features: [
+				{
+					level: 3,
+					name: "Weave-Combat Attunement",
+					description:
+						"Learn 2 Mage cantrips and 3 Mage spells (abjuration/evocation).",
+				},
+			],
+		};
+
+		const newlyChosenPathDeltas = getLevelUpChoiceDeltas(
+			{},
+			pathSource,
+			[],
+			3,
+			4,
+			null,
+		);
+		const existingPathDeltas = getLevelUpChoiceDeltas(
+			{},
+			pathSource,
+			[],
+			3,
+			4,
+			pathSource,
+		);
+
+		expect(newlyChosenPathDeltas.cantrips).toBe(2);
+		expect(newlyChosenPathDeltas.spells).toBe(3);
+		expect(existingPathDeltas.cantrips).toBeUndefined();
+		expect(existingPathDeltas.spells).toBeUndefined();
+	});
+
+	it("counts maneuver prose as technique choices for path features", () => {
+		const totals = calculateTotalChoices(
+			{},
+			{
+				features: [
+					{
+						level: 3,
+						name: "Tactical Charge",
+						description: "Learn 3 maneuvers, gain 4 tactical dice (d8).",
+					},
+				],
+			},
+			[],
+			3,
+		);
+
+		expect(totals.techniques).toBe(3);
+	});
 });
 
 describe("getLevelUpLedgerEntries", () => {

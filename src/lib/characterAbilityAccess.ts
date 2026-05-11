@@ -24,6 +24,7 @@ import {
 	jobCanLearnSpells,
 	jobCanLearnTechniques,
 } from "@/lib/jobAbilityAccess";
+import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
 
 export interface CharacterAbilityAccessContext
@@ -102,20 +103,31 @@ export async function getCharacterAbilityAccessContext(
 	const characterLevel =
 		typeof character?.level === "number" ? character.level : null;
 	const jobName = character?.job ?? null;
+	const pathName = character?.path ?? null;
 	return {
 		campaignId,
 		accessContext: { campaignId },
 		jobName,
-		pathName: character?.path ?? null,
+		pathName,
 		regentNames,
 		characterLevel,
 		maxSpellLevel:
 			jobName && characterLevel
-				? getMaxAbilityLevelForJobAtLevel(jobName, characterLevel, "spell")
+				? getEffectiveMaxAbilityLevel({
+						jobName,
+						pathName,
+						characterLevel,
+						kind: "spell",
+					})
 				: null,
 		maxPowerLevel:
 			jobName && characterLevel
-				? getMaxAbilityLevelForJobAtLevel(jobName, characterLevel, "power")
+				? getEffectiveMaxAbilityLevel({
+						jobName,
+						pathName,
+						characterLevel,
+						kind: "power",
+					})
 				: null,
 		maxTechniqueLevel: characterLevel,
 	};
@@ -202,13 +214,12 @@ export function assertCanonicalPowerLearnable(
 	context: CharacterAbilityAccessContext,
 ): void {
 	requireCharacterJob(context, "power");
+	if (isCanonicalPowerLearnable(entry, context)) return;
 	const levelError = getCastableLevelError(entry, context, "power");
 	if (levelError) throw new Error(levelError);
-	if (!isCanonicalPowerLearnable(entry, context)) {
-		throw new Error(
-			"This power is not available to this character's job, path, or regents.",
-		);
-	}
+	throw new Error(
+		"This power is not available to this character's job, path, or regents.",
+	);
 }
 
 export function assertCanonicalSpellLearnable(
@@ -216,13 +227,12 @@ export function assertCanonicalSpellLearnable(
 	context: CharacterAbilityAccessContext,
 ): void {
 	requireCharacterJob(context, "spell");
+	if (isCanonicalSpellLearnable(entry, context)) return;
 	const levelError = getCastableLevelError(entry, context, "spell");
 	if (levelError) throw new Error(levelError);
-	if (!isCanonicalSpellLearnable(entry, context)) {
-		throw new Error(
-			"This spell is not available to this character's job, path, or regents.",
-		);
-	}
+	throw new Error(
+		"This spell is not available to this character's job, path, or regents.",
+	);
 }
 
 export function assertCanonicalTechniqueLearnable(

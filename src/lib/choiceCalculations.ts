@@ -58,6 +58,7 @@ export interface ChoiceGrant {
 	type:
 		| "skills"
 		| "feats"
+		| "cantrips"
 		| "spells"
 		| "powers"
 		| "techniques"
@@ -124,6 +125,36 @@ const writtenNumberToDigit = (word: string): number => {
 function parseChoiceGrants(description: string, source: string): ChoiceGrant[] {
 	const grants: ChoiceGrant[] = [];
 	const desc = description.toLowerCase();
+
+	const sourceQualifiedAbilityPatterns: Array<{
+		type: "cantrips" | "spells";
+		pattern: RegExp;
+	}> = [
+		{
+			type: "cantrips",
+			pattern:
+				/(?:\b(?:learn|gain|know|choose|select|and)\s+|\+\s*)(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?!additional\b)(?:[a-z][a-z'-]*\s+)?cantrips?\b/i,
+		},
+		{
+			type: "spells",
+			pattern:
+				/(?:\b(?:learn|gain|know|choose|select|and)\s+|\+\s*)(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+(?!additional\b)(?:[a-z][a-z'-]*\s+)?spells?\b/i,
+		},
+	];
+
+	for (const { type, pattern } of sourceQualifiedAbilityPatterns) {
+		const match = desc.match(pattern);
+		if (!match) continue;
+		const count = /^\d+$/.test(match[1])
+			? parseInt(match[1], 10)
+			: writtenNumberToDigit(match[1]);
+		grants.push({
+			type,
+			count,
+			source,
+			description: `${description.substring(0, 100)}...`,
+		});
+	}
 
 	// Skill proficiency patterns - handle both digits and written numbers
 	const skillPatterns = [
@@ -229,6 +260,10 @@ function parseChoiceGrants(description: string, source: string): ChoiceGrant[] {
 
 	// Technique patterns - handle both digits and written numbers
 	const techniquePatterns = [
+		/learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+maneuvers?/i,
+		/gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+maneuvers?/i,
+		/choose\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+maneuvers?/i,
+		/select\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+maneuvers?/i,
 		/learn\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
 		/gain\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
 		/master\s+(one|two|three|four|five|six|seven|eight|nine|ten|\d+)\s+additional\s+techniques?/i,
@@ -669,11 +704,12 @@ export function getLevelUpChoiceDeltas(
 	regentData: ChoiceSourceData[] | null | undefined,
 	prevLevel: number,
 	newLevel: number,
+	previousPathData: ChoiceSourceData | null | undefined = pathData,
 ): Partial<Record<keyof TotalChoices, number>> {
 	if (newLevel <= prevLevel) return {};
 	const previous = calculateTotalChoices(
 		jobData,
-		pathData,
+		previousPathData,
 		regentData,
 		prevLevel,
 	);

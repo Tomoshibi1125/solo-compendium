@@ -1281,69 +1281,7 @@ export function useCharacterExport() {
 }
 
 export function useCharacterImport() {
-	const { toast } = useToast();
-	const { user } = useAuth();
-
-	const importCharacterJson = useCallback(
-		async (file: File) => {
-			try {
-				if (!isSupabaseConfigured) {
-					throw new Error("Backend not configured");
-				}
-
-				if (!user) {
-					throw new Error("Must be logged in to import characters");
-				}
-
-				const text = await file.text();
-				const data = JSON.parse(text);
-
-				// Validate structure
-				if (!data.character || !data.character.name) {
-					throw new Error("Invalid character file format");
-				}
-
-				// Create new character from import
-				const { character: charData } = data;
-				const newCharacter = await buildImportedCharacterInsert(
-					charData as Record<string, unknown>,
-					user.id,
-				);
-
-				const { data: createdCharacter, error: createError } = await supabase
-					.from("characters")
-					.insert(
-						newCharacter as Database["public"]["Tables"]["characters"]["Insert"],
-					)
-					.select()
-					.single();
-
-				if (createError || !createdCharacter) {
-					throw new Error("Failed to create character");
-				}
-				await importRelatedCharacterRows(
-					data as Record<string, unknown>,
-					createdCharacter.id,
-					user.id,
-				);
-
-				toast({
-					title: "Import Successful",
-					description: `${charData.name} has been imported successfully`,
-				});
-
-				return createdCharacter;
-			} catch (error) {
-				toast({
-					title: "Import Failed",
-					description: error instanceof Error ? error.message : "Unknown error",
-					variant: "destructive",
-				});
-				return null;
-			}
-		},
-		[user, toast],
-	);
+	const { importCharacterJson } = useCharacterExport();
 
 	return {
 		importCharacterJson,

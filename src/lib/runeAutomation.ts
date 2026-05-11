@@ -1,7 +1,6 @@
 import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
-import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
 	type CanonicalCastableEntry,
 	isCanonicalPowerLearnable,
@@ -19,6 +18,7 @@ import {
 	jobCanLearnSpells,
 	jobCanLearnTechniques,
 } from "./jobAbilityAccess";
+import { getEffectiveMaxAbilityLevel } from "./pathAbilityAccess";
 
 export type Rune = Database["public"]["Tables"]["compendium_runes"]["Row"];
 
@@ -317,17 +317,48 @@ function getTechniqueRequirement(entry: StaticCompendiumEntry): number {
 	return typeof level === "number" ? level : 0;
 }
 
-function getPromotionLevel(
-	jobName: string | null | undefined,
-	abilityLevel: number,
+function isRuneGrantLearnableAtLevel(
+	kind: "spell" | "power" | "technique",
+	entry: CanonicalCastableEntry | StaticCompendiumEntry,
+	context: RuneGrantAccessContext,
+	characterLevel: number,
+): boolean {
+	const options = {
+		accessContext: context.accessContext,
+		jobName: context.jobName,
+		pathName: context.pathName,
+		regentNames: context.regentNames,
+		characterLevel,
+	};
+	if (kind === "spell")
+		return isCanonicalSpellLearnable(entry as CanonicalCastableEntry, options);
+	if (kind === "power")
+		return isCanonicalPowerLearnable(entry as CanonicalCastableEntry, options);
+	return isCanonicalTechniqueLearnable(entry, options);
+}
+
+function getCurrentMaxNativeLevel(
+	context: RuneGrantAccessContext,
 	kind: "spell" | "power" | "technique",
 ): number | null {
-	if (!jobName) return null;
-	if (kind === "technique") return abilityLevel;
+	if (typeof context.characterLevel !== "number") return null;
+	if (kind === "technique") return context.characterLevel;
+	if (!context.jobName) return null;
+	return getEffectiveMaxAbilityLevel({
+		jobName: context.jobName,
+		pathName: context.pathName,
+		characterLevel: context.characterLevel,
+		kind,
+	});
+}
+
+function getPromotionLevel(
+	context: RuneGrantAccessContext,
+	entry: CanonicalCastableEntry | StaticCompendiumEntry,
+	kind: "spell" | "power" | "technique",
+): number | null {
 	for (let level = 1; level <= 20; level += 1) {
-		if (getMaxAbilityLevelForJobAtLevel(jobName, level, kind) >= abilityLevel) {
-			return level;
-		}
+		if (isRuneGrantLearnableAtLevel(kind, entry, context, level)) return level;
 	}
 	return null;
 }
@@ -372,47 +403,30 @@ export async function resolveRuneGrant(
 			: await findRuneTaughtCastable(teaches, context.accessContext);
 	if (!abilityEntry) return null;
 
-	const levellessContext = {
-		accessContext: context.accessContext,
-		jobName: context.jobName,
-		pathName: context.pathName,
-		regentNames: context.regentNames,
-		characterLevel: null,
-		maxSpellLevel: null,
-		maxPowerLevel: null,
-		maxLevel: null,
-		maxTechniqueLevel: null,
-	};
-	const isNative =
-		teaches.kind === "spell"
-			? isCanonicalSpellLearnable(
-					abilityEntry as CanonicalCastableEntry,
-					levellessContext,
-				)
-			: teaches.kind === "power"
-				? isCanonicalPowerLearnable(
-						abilityEntry as CanonicalCastableEntry,
-						levellessContext,
-					)
-				: isCanonicalTechniqueLearnable(abilityEntry, levellessContext);
+	const isNative = isRuneGrantLearnableAtLevel(
+		teaches.kind,
+		abilityEntry,
+		context,
+		20,
+	);
+	const currentlyNative =
+		typeof context.characterLevel === "number" &&
+		isRuneGrantLearnableAtLevel(
+			teaches.kind,
+			abilityEntry,
+			context,
+			context.characterLevel,
+		);
 	const abilityLevel =
 		teaches.kind === "technique"
 			? getTechniqueRequirement(abilityEntry)
 			: (abilityEntry as CanonicalCastableEntry).power_level;
-	const maxNativeLevel =
-		teaches.kind === "technique"
-			? (context.characterLevel ?? null)
-			: context.jobName && typeof context.characterLevel === "number"
-				? getMaxAbilityLevelForJobAtLevel(
-						context.jobName,
-						context.characterLevel,
-						teaches.kind,
-					)
-				: null;
+	const currentMaxNativeLevel = getCurrentMaxNativeLevel(context, teaches.kind);
+	const maxNativeLevel = currentlyNative
+		? Math.max(currentMaxNativeLevel ?? 0, abilityLevel)
+		: currentMaxNativeLevel;
 	const isUnderLevel =
-		isNative &&
-		typeof maxNativeLevel === "number" &&
-		abilityLevel > maxNativeLevel;
+		isNative && typeof context.characterLevel === "number" && !currentlyNative;
 	return {
 		teaches,
 		abilityKind: teaches.kind,
@@ -422,7 +436,7 @@ export async function resolveRuneGrant(
 		isUnderLevel,
 		maxNativeLevel,
 		promotesAtLevel: isUnderLevel
-			? getPromotionLevel(context.jobName, abilityLevel, teaches.kind)
+			? getPromotionLevel(context, abilityEntry, teaches.kind)
 			: null,
 	};
 }

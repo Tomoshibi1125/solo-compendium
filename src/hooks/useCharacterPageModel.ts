@@ -41,6 +41,10 @@ import { isSupabaseConfigured } from "@/integrations/supabase/client";
 import { resolveCanonicalReference } from "@/lib/canonicalCompendium";
 import { addTemporaryHP, applyResourceRest } from "@/lib/characterResources";
 import {
+	type ConditionEntry,
+	migrateLegacyConditions,
+} from "@/lib/conditionSystem";
+import {
 	normalizeCustomModifiers,
 	resolveAdvantageFromCustomModifiers,
 } from "@/lib/customModifiers";
@@ -48,6 +52,36 @@ import { formatRollResult, rollDiceString } from "@/lib/diceRoller";
 import { isLocalCharacterId } from "@/lib/guestStore";
 import { isSourcebookAccessible } from "@/lib/sourcebookAccess";
 import { formatRegentVernacular } from "@/lib/vernacular";
+
+const isConditionEntryLike = (value: unknown): value is ConditionEntry => {
+	if (typeof value !== "object" || value === null || Array.isArray(value)) {
+		return false;
+	}
+	return (
+		typeof (value as { conditionName?: unknown }).conditionName === "string"
+	);
+};
+
+const normalizeConditionEntries = (value: unknown): ConditionEntry[] => {
+	if (!Array.isArray(value)) return [];
+	return value.filter(isConditionEntryLike);
+};
+
+const createManualConditionEntry = (conditionName: string): ConditionEntry => ({
+	id:
+		typeof crypto !== "undefined" && "randomUUID" in crypto
+			? crypto.randomUUID()
+			: `cond-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+	conditionName: conditionName.toLowerCase(),
+	sourceType: "manual",
+	sourceId: null,
+	sourceName: "Manual",
+	appliedAt: new Date().toISOString(),
+	durationRounds: null,
+	remainingRounds: null,
+	concentrationSpellId: null,
+	isActive: true,
+});
 
 export function useCharacterPageModel() {
 	const { id } = useParams<{ id: string }>();
@@ -303,6 +337,25 @@ export function useCharacterPageModel() {
 
 	const hasTriggeredPrintRef = useRef(false);
 	const characterResources = sheetState.resources;
+	const sheetConditions = useMemo(
+		() => normalizeConditionEntries(characterResources.conditions),
+		[characterResources.conditions],
+	);
+	const fallbackConditions = useMemo(() => {
+		const geminiState = character?.gemini_state;
+		const stateConditions =
+			typeof geminiState === "object" &&
+			geminiState !== null &&
+			!Array.isArray(geminiState)
+				? normalizeConditionEntries(
+						(geminiState as { conditions?: unknown }).conditions,
+					)
+				: [];
+		if (stateConditions.length > 0) return stateConditions;
+		return migrateLegacyConditions(character?.conditions ?? []);
+	}, [character?.gemini_state, character?.conditions]);
+	const characterConditions =
+		sheetConditions.length > 0 ? sheetConditions : fallbackConditions;
 
 	useEffect(() => {
 		if (!character || isReadOnly) return;
@@ -318,6 +371,30 @@ export function useCharacterPageModel() {
 			void sheetController.saveSheetState({ resources: nextResources });
 		}
 	}, [character, characterResources, isReadOnly, sheetController]);
+
+	useEffect(() => {
+		if (
+			!character ||
+			isReadOnly ||
+			sheetConditions.length > 0 ||
+			fallbackConditions.length === 0
+		) {
+			return;
+		}
+		void sheetController.saveSheetState({
+			resources: {
+				...characterResources,
+				conditions: fallbackConditions,
+			},
+		});
+	}, [
+		character,
+		isReadOnly,
+		sheetConditions.length,
+		fallbackConditions,
+		characterResources,
+		sheetController,
+	]);
 
 	useEffect(() => {
 		if (isPrintMode) {
@@ -530,6 +607,93 @@ export function useCharacterPageModel() {
 		);
 	};
 
+	const persistCharacterConditions = useCallback(
+		async (nextConditions: ConditionEntry[]) => {
+			if (!character || isReadOnly) return;
+			await sheetController.saveSheetState({
+				resources: {
+					...characterResources,
+					conditions: nextConditions,
+				},
+			});
+			updateCharacter.mutate({
+				id: character.id,
+				data: {
+					conditions: nextConditions
+						.filter((condition) => condition.isActive)
+						.map((condition) => condition.conditionName),
+				},
+			});
+		},
+		[
+			character,
+			isReadOnly,
+			characterResources,
+			sheetController,
+			updateCharacter,
+		],
+	);
+
+	const handleAddCondition = useCallback(
+		(conditionName: string) => {
+			if (!character || isReadOnly) return;
+			const nextConditions = [
+				...characterConditions,
+				createManualConditionEntry(conditionName),
+			];
+			void persistCharacterConditions(nextConditions);
+			ascendantTools
+				.trackConditionChange(character.id, conditionName, "add")
+				.catch(console.error);
+		},
+		[
+			character,
+			isReadOnly,
+			characterConditions,
+			persistCharacterConditions,
+			ascendantTools,
+		],
+	);
+
+	const handleRemoveCondition = useCallback(
+		(conditionId: string) => {
+			if (!character || isReadOnly) return;
+			const removed = characterConditions.find(
+				(condition) => condition.id === conditionId,
+			);
+			const nextConditions = characterConditions.filter(
+				(condition) => condition.id !== conditionId,
+			);
+			void persistCharacterConditions(nextConditions);
+			if (removed) {
+				ascendantTools
+					.trackConditionChange(character.id, removed.conditionName, "remove")
+					.catch(console.error);
+			}
+		},
+		[
+			character,
+			isReadOnly,
+			characterConditions,
+			persistCharacterConditions,
+			ascendantTools,
+		],
+	);
+
+	const handleExhaustionChange = useCallback(
+		(delta: number) => {
+			if (!character || isReadOnly || delta === 0) return;
+			void sheetController.onExhaustionChange(
+				character.id,
+				delta,
+				character.exhaustion_level || 0,
+				updateCharacter,
+				ascendantTools,
+			);
+		},
+		[character, isReadOnly, sheetController, updateCharacter, ascendantTools],
+	);
+
 	const handleGenerateShareLink = () => {
 		if (character) generateShareToken.mutate(character.id);
 	};
@@ -558,6 +722,7 @@ export function useCharacterPageModel() {
 		character,
 		memoizedStats,
 		characterResources,
+		characterConditions,
 		displayNames,
 		characterCampaign,
 		spellCasting,
@@ -584,6 +749,9 @@ export function useCharacterPageModel() {
 		handleLongRest,
 		rollAndRecord,
 		handleResourceAdjust,
+		handleAddCondition,
+		handleRemoveCondition,
+		handleExhaustionChange,
 		ascendantTools,
 		concentration,
 		deathSaves,

@@ -11,7 +11,7 @@ import {
 	Wand2,
 	Zap,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
@@ -66,10 +66,6 @@ import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import type { Json } from "@/integrations/supabase/types";
 import { getAbilityModifier } from "@/lib/characterCalculations";
 import { calculateTotalTempHP } from "@/lib/characterResources";
-import {
-	type ConditionEntry,
-	migrateLegacyConditions,
-} from "@/lib/conditionSystem";
 import { getXPProgress, type LevelingType } from "@/lib/experience";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { cn } from "@/lib/utils";
@@ -90,6 +86,7 @@ export default function CharacterSheetV2() {
 		character,
 		memoizedStats,
 		characterResources,
+		characterConditions,
 		displayNames,
 		campaignId,
 		spellCasting,
@@ -109,6 +106,9 @@ export default function CharacterSheetV2() {
 		handleLongRest,
 		rollAndRecord,
 		handleResourceAdjust,
+		handleAddCondition,
+		handleRemoveCondition,
+		handleExhaustionChange,
 		ascendantTools,
 		concentration,
 		deathSaves,
@@ -171,7 +171,6 @@ export default function CharacterSheetV2() {
 
 	const characterState = character
 		? (character.gemini_state as {
-				conditions?: ConditionEntry[];
 				leveling_type?: LevelingType;
 			} & Record<string, Json>) || {}
 		: {};
@@ -180,15 +179,6 @@ export default function CharacterSheetV2() {
 	const xpProgress = character
 		? getXPProgress(character.experience || 0)
 		: { current: 0, next: 300, percent: 0 };
-
-	const characterConditions = useMemo(() => {
-		if (!character) return [];
-		const structured = characterState.conditions;
-		if (structured && Array.isArray(structured) && structured.length > 0) {
-			return structured;
-		}
-		return migrateLegacyConditions(character.conditions || []);
-	}, [character, characterState.conditions]);
 
 	if (isLoading) {
 		return (
@@ -396,137 +386,6 @@ export default function CharacterSheetV2() {
 		if (result.wasAtZero && result.newHp > 0) {
 			deathSaves.receiveHealing();
 		}
-	};
-
-	function isConditionEntryArray(val: Json): val is ConditionEntry[] {
-		if (!Array.isArray(val)) return false;
-		if (val.length === 0) return true;
-		const first = val[0];
-		return (
-			typeof first === "object" &&
-			first !== null &&
-			!Array.isArray(first) &&
-			"conditionName" in (first as Record<string, Json>)
-		);
-	}
-
-	function isStringArray(val: Json): val is string[] {
-		if (!Array.isArray(val)) return false;
-		if (val.length === 0) return true;
-		return typeof val[0] === "string";
-	}
-
-	const onExhaustionChange = (delta: number) => {
-		const newLevel = Math.max(
-			0,
-			Math.min(6, (character.exhaustion_level || 0) + delta),
-		);
-		updateCharacter.mutate({
-			id: character.id,
-			data: { exhaustion_level: newLevel },
-		});
-		if (delta > 0)
-			ascendantTools
-				.trackConditionChange(character.id, "Exhaustion", "add")
-				.catch(console.error);
-		else
-			ascendantTools
-				.trackConditionChange(character.id, "Exhaustion", "remove")
-				.catch(console.error);
-	};
-
-	const onAddCondition = (condition: string) => {
-		const currentRaw = character.conditions || [];
-		let current: ConditionEntry[] = [];
-
-		if (isConditionEntryArray(currentRaw)) {
-			current = currentRaw;
-		} else if (isStringArray(currentRaw)) {
-			current = migrateLegacyConditions(currentRaw);
-		}
-
-		const entry: ConditionEntry = {
-			id: crypto.randomUUID(),
-			conditionName: condition,
-			sourceType: "manual",
-			sourceId: null,
-			sourceName: "Manual",
-			appliedAt: new Date().toISOString(),
-			durationRounds: null,
-			remainingRounds: null,
-			concentrationSpellId: null,
-			isActive: true,
-		};
-		updateCharacter.mutate({
-			id: character.id,
-			data: {
-				conditions: [...current, entry].map((c) => c.conditionName),
-				gemini_state: {
-					...characterState,
-					conditions: [...current, entry].map(
-						(c): Json => ({
-							id: c.id,
-							conditionName: c.conditionName,
-							sourceType: c.sourceType,
-							sourceId: c.sourceId,
-							sourceName: c.sourceName,
-							appliedAt: c.appliedAt,
-							durationRounds: c.durationRounds,
-							remainingRounds: c.remainingRounds,
-							concentrationSpellId: c.concentrationSpellId,
-							isActive: c.isActive,
-							notes: c.notes || null,
-						}),
-					),
-				},
-			},
-		});
-		ascendantTools
-			.trackConditionChange(character.id, condition, "add")
-			.catch(console.error);
-	};
-
-	const onRemoveCondition = (conditionId: string) => {
-		const currentRaw = character.conditions || [];
-		let current: ConditionEntry[] = [];
-
-		if (isConditionEntryArray(currentRaw)) {
-			current = currentRaw;
-		} else if (isStringArray(currentRaw)) {
-			current = migrateLegacyConditions(currentRaw);
-		}
-
-		const updated = current.filter((c) => c.id !== conditionId);
-		const removed = current.find((c) => c.id === conditionId);
-		updateCharacter.mutate({
-			id: character.id,
-			data: {
-				conditions: updated.map((c) => c.conditionName),
-				gemini_state: {
-					...characterState,
-					conditions: updated.map(
-						(c) =>
-							({
-								id: c.id,
-								conditionName: c.conditionName,
-								sourceType: c.sourceType,
-								sourceId: c.sourceId,
-								sourceName: c.sourceName,
-								appliedAt: c.appliedAt,
-								durationRounds: c.durationRounds,
-								remainingRounds: c.remainingRounds,
-								concentrationSpellId: c.concentrationSpellId,
-								isActive: c.isActive,
-								notes: c.notes,
-							}) as { [key: string]: Json | undefined },
-					),
-				} as Json,
-			},
-		});
-		if (removed)
-			ascendantTools
-				.trackConditionChange(character.id, removed.conditionName, "remove")
-				.catch(console.error);
 	};
 
 	// We pass down specific native actions/elements rather than taking them from props!
@@ -821,10 +680,10 @@ export default function CharacterSheetV2() {
 							conditions={characterConditions}
 							exhaustionLevel={character.exhaustion_level}
 							onClearExhaustion={() =>
-								onExhaustionChange(-character.exhaustion_level)
+								handleExhaustionChange(-character.exhaustion_level)
 							}
-							onAddCondition={onAddCondition}
-							onRemoveCondition={onRemoveCondition}
+							onAddCondition={handleAddCondition}
+							onRemoveCondition={handleRemoveCondition}
 						/>
 					)}
 

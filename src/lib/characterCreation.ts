@@ -11,7 +11,6 @@ import {
 } from "@/lib/abilityProgression";
 import {
 	findCanonicalCastableByName,
-	isCanonicalSpellLearnable,
 	listLearnablePowers,
 } from "@/lib/canonicalCompendium";
 import { calculateFeatureUses } from "@/lib/characterEngine";
@@ -3587,12 +3586,7 @@ export async function addInnateChannelingForLevel(
 			undefined,
 			["spells"],
 		);
-		if (
-			!canonicalSpell ||
-			!isCanonicalSpellLearnable(canonicalSpell, { jobName })
-		) {
-			continue;
-		}
+		if (!canonicalSpell) continue;
 		const usesMax =
 			spell.uses && spell.uses !== "at-will" ? spell.uses.value : null;
 		const usesCurrent = usesMax;
@@ -3929,6 +3923,11 @@ export async function addStartingEquipment(
 export async function addStartingPowers(
 	characterId: string,
 	job: JobReference,
+	options: {
+		pathName?: string | null;
+		characterLevel?: number | null;
+		regentNames?: string[] | null;
+	} = {},
 ): Promise<void> {
 	if (!job) {
 		console.warn("Cannot add starting powers: job missing");
@@ -3940,7 +3939,9 @@ export async function addStartingPowers(
 	const accessiblePowers = await listLearnablePowers({
 		accessContext: { campaignId },
 		jobName: jobName ?? null,
-		maxPowerLevel: getMaxAbilityProgressionLevelForJobAtLevel(job, 1, "power"),
+		pathName: options.pathName ?? null,
+		characterLevel: options.characterLevel ?? 1,
+		regentNames: options.regentNames ?? null,
 	});
 
 	if (accessiblePowers.length > 0) {
