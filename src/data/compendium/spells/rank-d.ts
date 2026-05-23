@@ -9,7 +9,7 @@ import type { CompendiumSpell } from "../../../types/compendium";
 export const spells_d: CompendiumSpell[] = [
 	{
 		id: "spell-d-1",
-        classes: ["Mage", "Esper", "Technomancer", "Contractor", "Stalker"],
+        classes: ["Mage", "Esper", "Contractor", "Stalker", "Technomancer"],
         name: "Chill Lance",
 		display_name: "Chill Lance",
 		description:
@@ -104,7 +104,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-2",
-        classes: ["Mage", "Esper", "Technomancer", "Idol"],
+        classes: ["Mage", "Esper", "Idol", "Technomancer"],
         name: "Thunder Shackle",
 		display_name: "Thunder Shackle",
 		description:
@@ -200,7 +200,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-3",
-        classes: ["Mage", "Technomancer", "Contractor"],
+        classes: ["Mage", "Contractor", "Technomancer"],
         name: "Tempest Binding",
 		display_name: "Tempest Binding",
 		description:
@@ -297,7 +297,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-4",
-        classes: ["Mage", "Esper", "Technomancer", "Idol", "Contractor"],
+        classes: ["Mage", "Esper", "Contractor", "Idol", "Technomancer"],
         name: "Surge Storm",
 		display_name: "Surge Storm",
 		description:
@@ -393,7 +393,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-5",
-        classes: ["Mage", "Esper", "Revenant", "Technomancer", "Assassin", "Stalker"],
+        classes: ["Mage", "Esper", "Revenant", "Stalker", "Technomancer"],
         name: "Sanguine Strike",
 		display_name: "Sanguine Strike",
 		description:
@@ -489,7 +489,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-6",
-        classes: ["Mage", "Summoner", "Holy Knight", "Technomancer", "Herald", "Idol"],
+        classes: ["Mage", "Summoner", "Idol", "Herald", "Holy Knight", "Technomancer"],
         name: "Bright Tomb",
 		display_name: "Bright Tomb",
 		description:
@@ -583,7 +583,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-7",
-        classes: ["Mage", "Technomancer", "Idol"],
+        classes: ["Mage", "Idol", "Technomancer"],
         name: "Arctic Lance",
 		display_name: "Arctic Lance",
 		description:
@@ -675,7 +675,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-8",
-        classes: ["Mage", "Technomancer", "Contractor", "Stalker"],
+        classes: ["Mage", "Contractor", "Stalker", "Technomancer"],
         name: "Crimson Cleave",
 		display_name: "Crimson Cleave",
 		description:
@@ -767,7 +767,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-9",
-        classes: ["Mage", "Revenant", "Technomancer", "Contractor", "Stalker"],
+        classes: ["Mage", "Revenant", "Contractor", "Stalker", "Technomancer"],
         name: "Blood Tear",
 		display_name: "Blood Tear",
 		description:
@@ -859,7 +859,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-10",
-        classes: ["Mage", "Revenant", "Technomancer", "Contractor"],
+        classes: ["Mage", "Revenant", "Contractor", "Technomancer"],
         name: "Night Storm",
 		display_name: "Night Storm",
 		description:
@@ -1047,7 +1047,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-12",
-        classes: ["Mage", "Revenant", "Technomancer", "Idol", "Contractor"],
+        classes: ["Mage", "Revenant", "Contractor", "Idol", "Technomancer"],
         name: "Entropy Siphon",
 		display_name: "Entropy Siphon",
 		description:
@@ -1146,7 +1146,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-13",
-        classes: ["Mage", "Holy Knight", "Technomancer", "Herald", "Contractor", "Idol", "Summoner"],
+        classes: ["Mage", "Contractor", "Idol", "Herald", "Holy Knight", "Technomancer", "Summoner"],
         name: "Corona Storm",
 		display_name: "Corona Storm",
 		description:
@@ -1238,7 +1238,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-14",
-        classes: ["Mage", "Revenant", "Technomancer", "Idol", "Assassin", "Stalker"],
+        classes: ["Mage", "Revenant", "Idol", "Stalker", "Technomancer"],
         name: "Lightning Lance",
 		display_name: "Lightning Lance",
 		description:
@@ -1333,7 +1333,7 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-15",
-        classes: ["Mage", "Technomancer", "Contractor", "Stalker"],
+        classes: ["Mage", "Contractor", "Stalker", "Technomancer"],
         name: "Ice Lance",
 		display_name: "Ice Lance",
 		description:

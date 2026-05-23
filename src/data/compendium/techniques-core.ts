@@ -3,7 +3,7 @@ import type { CompendiumTechnique } from "../../types/compendium";
 export const techniques_core: CompendiumTechnique[] = [
 	{
 		id: "guardian-stance",
-        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Summoner", "Holy Knight"],
+        classes: ["Technomancer"],
         name: "Guardian Stance",
 		display_name: "Guardian Stance",
 		description:
@@ -57,7 +57,7 @@ export const techniques_core: CompendiumTechnique[] = [
 	},
 	{
 		id: "phase-walk",
-        classes: ["Technomancer", "Assassin", "Striker"],
+        classes: ["Assassin", "Striker", "Technomancer"],
         name: "Phase Walk",
 		display_name: "Phase Walk",
 		description:
@@ -120,7 +120,7 @@ export const techniques_core: CompendiumTechnique[] = [
 	},
 	{
 		id: "guardians-rebuke",
-        classes: ["Technomancer", "Striker"],
+        classes: ["Striker", "Technomancer"],
         name: "Guardian's Rebuke",
 		display_name: "Guardian's Rebuke",
 		description:
