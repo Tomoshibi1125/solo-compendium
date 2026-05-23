@@ -12,10 +12,19 @@ export interface RiftFavorOption {
 	minLevel: number;
 }
 
+export const RIFT_BOOST_OPTION_ID = "favor-inspiration";
+
+export interface RiftFavorBoostRoll {
+	diceFormula: string;
+	roll: number;
+	result: number;
+	message: string;
+}
+
 const RIFT_FAVOR_OPTIONS: RiftFavorOption[] = [
 	// ── Core (D&D Inspiration equivalent) ──
 	{
-		id: "favor-inspiration",
+		id: RIFT_BOOST_OPTION_ID,
 		name: "Rift Boost",
 		cost: 1,
 		description:
@@ -158,6 +167,21 @@ export function getAffordableOptions(state: RiftFavorState): RiftFavorOption[] {
 			!(opt.id === "favor-death-defiance" && state.deathDefianceUsed) &&
 			!(opt.id === "favor-critical-surge" && state.criticalSurgeUsed),
 	);
+}
+
+export function rollRiftFavorBoost(state: RiftFavorState): RiftFavorBoostRoll {
+	const dieSize =
+		Number.isFinite(state.dieSize) && state.dieSize > 0
+			? Math.floor(state.dieSize)
+			: 4;
+	const roll = Math.floor(Math.random() * dieSize) + 1;
+
+	return {
+		diceFormula: `1d${dieSize}`,
+		roll,
+		result: roll,
+		message: `Rift Boost: ${roll} on 1d${dieSize}. Add this to your d20 roll.`,
+	};
 }
 
 /** Spend Rift Favor on an option */

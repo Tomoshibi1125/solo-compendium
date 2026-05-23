@@ -10,6 +10,11 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import {
+	formatDetailValue,
+	getEffectLines,
+	getLimitationLines,
+} from "@/components/compendium/detailFormatters";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +25,6 @@ import {
 import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type {
-	CompendiumEffects,
 	CompendiumMechanics,
 	CompendiumTechnique,
 } from "@/types/compendium";
@@ -40,6 +44,12 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 	const effects = data.effects || undefined;
 	const mechanics = data.mechanics || undefined;
 	const limitations = data.limitations || undefined;
+	const classes = Array.isArray(data.classes) ? data.classes : [];
+	const effectLines = getEffectLines(effects);
+	const limitationLines = getLimitationLines(limitations);
+	const activationText = formatDetailValue(activation);
+	const durationText = formatDetailValue(duration);
+	const rangeText = formatDetailValue(range);
 
 	const buildResolutionPayload = (): ActionResolutionPayload | null => {
 		const m = mechanics as CompendiumMechanics | null;
@@ -153,6 +163,32 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						)}
 					</div>
 
+					{classes.length > 0 && (
+						<div className="flex flex-wrap gap-2">
+							<span className="text-sm text-muted-foreground">Classes:</span>
+							{classes.map((className) => (
+								<Badge key={className} variant="outline" className="text-xs">
+									{formatRegentVernacular(className)}
+								</Badge>
+							))}
+						</div>
+					)}
+
+					{(data.level_requirement || data.uses_per_rest_formula) && (
+						<div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+							{data.level_requirement !== undefined &&
+								data.level_requirement > 0 && (
+									<span>Level Requirement: {data.level_requirement}</span>
+								)}
+							{data.uses_per_rest_formula && (
+								<span>
+									Uses per Rest:{" "}
+									{formatRegentVernacular(data.uses_per_rest_formula)}
+								</span>
+							)}
+						</div>
+					)}
+
 					{(mechanics?.attack || mechanics?.saving_throw) && (
 						<div className="space-y-2">
 							<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
@@ -202,72 +238,42 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</div>
 						</div>
 					)}
-					{data.level_requirement !== undefined &&
-						data.level_requirement > 0 && (
-							<Badge
-								variant="outline"
-								className="border-primary/40 text-primary"
-							>
-								Level {data.level_requirement}
-							</Badge>
-						)}
 				</div>
 			</AscendantWindow>
 
-			{(activation || duration || range || components) && (
+			{(activationText || durationText || rangeText || components) && (
 				<div
 					id="technique-activation"
 					className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
 				>
-					{activation && (
+					{activationText && (
 						<AscendantWindow title="ACTIVATION" compact>
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(
-										typeof activation === "string"
-											? activation
-											: activation.type,
-									)}
+									{formatRegentVernacular(activationText)}
 								</span>
 							</div>
 						</AscendantWindow>
 					)}
-					{duration && (
+					{durationText && (
 						<AscendantWindow title="DURATION" compact>
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(
-										typeof duration === "string" ? duration : duration.type,
-									)}
+									{formatRegentVernacular(durationText)}
 								</span>
 							</div>
-							{typeof duration === "object" &&
-								(duration.value || duration.time) && (
-									<span className="text-xs text-muted-foreground">
-										{duration.value || duration.time}
-										{duration.unit ? ` ${duration.unit}` : ""}
-									</span>
-								)}
 						</AscendantWindow>
 					)}
-					{range && (
+					{rangeText && (
 						<AscendantWindow title="RANGE" compact>
 							<div className="flex items-center gap-2">
 								<Target className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(
-										typeof range === "string" ? range : range.type,
-									)}
+									{formatRegentVernacular(rangeText)}
 								</span>
 							</div>
-							{typeof range === "object" && (range.distance || range.value) && (
-								<span className="text-xs text-muted-foreground">
-									{range.distance || range.value}
-									{range.unit ? ` ${range.unit}` : " ft"}
-								</span>
-							)}
 						</AscendantWindow>
 					)}
 					{components && (
@@ -286,6 +292,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 										{components.material}
 									</p>
 								)}
+							{components.focus && (
+								<p className="text-xs text-muted-foreground italic mt-0.5">
+									Focus: {components.focus}
+								</p>
+							)}
 						</AscendantWindow>
 					)}
 				</div>
@@ -330,30 +341,22 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 				</AscendantWindow>
 			)}
 
-			{effects && !Array.isArray(effects) && (
+			{effectLines.length > 0 && (
 				<AscendantWindow id="technique-effects" title="EFFECTS">
 					<div className="space-y-3">
-						{(effects as CompendiumEffects).primary && (
-							<p className="text-foreground leading-relaxed">
-								<AutoLinkText
-									text={(effects as CompendiumEffects).primary || ""}
-								/>
-							</p>
-						)}
-						{(effects as CompendiumEffects).secondary && (
-							<p className="text-muted-foreground leading-relaxed">
-								<AutoLinkText
-									text={(effects as CompendiumEffects).secondary || ""}
-								/>
-							</p>
-						)}
-						{(effects as CompendiumEffects).tertiary && (
-							<p className="text-muted-foreground leading-relaxed">
-								<AutoLinkText
-									text={(effects as CompendiumEffects).tertiary || ""}
-								/>
-							</p>
-						)}
+						{effectLines.map((line) => (
+							<div
+								key={`${line.label}:${line.text}`}
+								className="border-l-2 border-primary/50 pl-3"
+							>
+								<p className="text-xs uppercase tracking-wider text-muted-foreground">
+									{line.label}
+								</p>
+								<p className="text-foreground">
+									<AutoLinkText text={line.text} />
+								</p>
+							</div>
+						))}
 					</div>
 				</AscendantWindow>
 			)}
@@ -361,28 +364,47 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 			{mechanics && (
 				<AscendantWindow id="technique-mechanics" title="MECHANICS">
 					<div className="space-y-4">
-						{mechanics.attack && (
-							<div className="flex items-start gap-2">
-								<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
-								<div>
-									<p className="font-heading capitalize">
-										{formatRegentVernacular(mechanics.attack.type || "")} attack
-									</p>
-									<p className="text-sm text-muted-foreground">
-										{mechanics.attack.damage
-											? formatRegentVernacular(
-													`Damage: ${typeof mechanics.attack.damage === "string" ? mechanics.attack.damage : mechanics.attack.damage.dice}`,
-												)
-											: "Damage varies"}
-										{mechanics.attack.modifier
-											? formatRegentVernacular(
-													` | Modifier: ${mechanics.attack.modifier}`,
-												)
-											: ""}
-									</p>
-								</div>
-							</div>
-						)}
+						{mechanics.attack &&
+							(() => {
+								const attack = mechanics.attack;
+								if (!attack) return null;
+								const damageRoll =
+									typeof attack.damage === "string"
+										? attack.damage
+										: typeof attack.damage === "object" &&
+												attack.damage !== null &&
+												"dice" in attack.damage
+											? String(attack.damage.dice ?? "")
+											: "";
+								const damageType =
+									typeof attack.damage === "object" &&
+									attack.damage !== null &&
+									"type" in attack.damage
+										? String((attack.damage as { type?: unknown }).type ?? "")
+										: "";
+								return (
+									<div className="flex items-start gap-2">
+										<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+										<div>
+											<p className="font-heading capitalize">
+												{formatRegentVernacular(attack.type || "")} attack
+											</p>
+											<p className="text-sm text-muted-foreground">
+												{damageRoll
+													? formatRegentVernacular(
+															`Damage: ${damageRoll}${damageType ? ` ${damageType}` : ""}`,
+														)
+													: "Damage varies"}
+												{attack.modifier
+													? formatRegentVernacular(
+															` | Modifier: ${attack.modifier}`,
+														)
+													: ""}
+											</p>
+										</div>
+									</div>
+								);
+							})()}
 						{mechanics.saving_throw && (
 							<div className="flex items-start gap-2">
 								<Shield className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
@@ -400,6 +422,12 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 										<p className="text-xs text-muted-foreground">
 											Success:{" "}
 											{formatRegentVernacular(mechanics.saving_throw.success)}
+										</p>
+									)}
+									{mechanics.saving_throw.failure && (
+										<p className="text-xs text-muted-foreground">
+											Failure:{" "}
+											{formatRegentVernacular(mechanics.saving_throw.failure)}
 										</p>
 									)}
 								</div>
@@ -421,49 +449,37 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 								</div>
 							</div>
 						)}
-						{Array.isArray(mechanics.condition) &&
-							mechanics.condition.length > 0 && (
-								<div className="flex items-start gap-2">
-									<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-									<div>
-										<p className="font-heading">Conditions</p>
-										<p className="text-sm text-muted-foreground">
-											{mechanics.condition
-												.map(formatRegentVernacular)
-												.join(", ")}
-										</p>
-									</div>
+						{formatDetailValue(mechanics.condition) && (
+							<div className="flex items-start gap-2">
+								<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+								<div>
+									<p className="font-heading">Conditions</p>
+									<p className="text-sm text-muted-foreground">
+										{formatRegentVernacular(
+											formatDetailValue(mechanics.condition),
+										)}
+									</p>
 								</div>
-							)}
+							</div>
+						)}
 					</div>
 				</AscendantWindow>
 			)}
 
-			{limitations && (
+			{limitationLines.length > 0 && (
 				<AscendantWindow title="LIMITATIONS">
 					<ul className="space-y-2 text-sm">
-						{limitations.uses && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>Uses: {formatRegentVernacular(limitations.uses)}</span>
-							</li>
-						)}
-						{limitations.recharge && (
-							<li className="flex items-center gap-2">
+						{limitationLines.map((line) => (
+							<li
+								key={`${line.label}:${line.text}`}
+								className="flex items-center gap-2"
+							>
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Recharge: {formatRegentVernacular(limitations.recharge)}
+									{line.label}: {formatRegentVernacular(line.text)}
 								</span>
 							</li>
-						)}
-						{limitations.exhaustion && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Exhaustion: {formatRegentVernacular(limitations.exhaustion)}
-								</span>
-							</li>
-						)}
+						))}
 					</ul>
 				</AscendantWindow>
 			)}

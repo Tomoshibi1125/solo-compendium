@@ -1,4 +1,12 @@
-import { Heart, Shield, Swords, Wand2, Zap } from "lucide-react";
+import {
+	Eye,
+	Footprints,
+	Heart,
+	Shield,
+	Swords,
+	Wand2,
+	Zap,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
@@ -166,26 +174,26 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</p>
 						</div>
 					)}
-					{data.mechanics && Object.keys(data.mechanics).length > 0 && (
-						<div className="mt-6 pt-4 border-t border-cyan/10">
-							<h4 className="text-cyan font-bold text-[10px] uppercase tracking-wider mb-2">
-								Base Concept Mechanics
-							</h4>
-							<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
-								{JSON.stringify(data.mechanics, null, 2)}
-							</pre>
-						</div>
-					)}
-
-					{data.tags && data.tags.length > 0 && (
-						<div className="flex flex-wrap gap-2">
-							{data.tags.map((tag) => (
-								<Badge key={tag} variant="secondary">
-									{formatRegentVernacular(tag)}
-								</Badge>
-							))}
-						</div>
-					)}
+					<div className="flex flex-wrap items-center gap-2">
+						{data.type && (
+							<Badge variant="secondary">
+								{formatRegentVernacular(String(data.type))}
+							</Badge>
+						)}
+						{data.rank !== undefined && data.rank !== null && (
+							<Badge
+								variant="outline"
+								className="border-amber-500/40 text-amber-400"
+							>
+								Rank {String(data.rank)}
+							</Badge>
+						)}
+						{data.tags?.map((tag) => (
+							<Badge key={tag} variant="secondary">
+								{formatRegentVernacular(tag)}
+							</Badge>
+						))}
+					</div>
 				</div>
 			</AscendantWindow>
 
@@ -229,6 +237,189 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					</div>
 				</AscendantWindow>
 			</div>
+
+			{/* Speeds & Senses */}
+			{(data.darkvision ||
+				(data.specialSenses && data.specialSenses.length > 0) ||
+				data.climb_speed ||
+				data.swim_speed ||
+				data.fly_speed) && (
+				<AscendantWindow title="SENSES & MOVEMENT">
+					<div className="grid md:grid-cols-2 gap-4">
+						{(data.darkvision ||
+							(data.specialSenses && data.specialSenses.length > 0)) && (
+							<div className="flex items-start gap-2">
+								<Eye className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+								<div>
+									<p className="font-heading">Senses</p>
+									{data.darkvision !== undefined && (
+										<p className="text-sm text-muted-foreground">
+											Darkvision {data.darkvision} ft
+										</p>
+									)}
+									{data.specialSenses?.map((sense) => (
+										<p key={sense} className="text-sm text-muted-foreground">
+											{formatRegentVernacular(sense)}
+										</p>
+									))}
+								</div>
+							</div>
+						)}
+						{(data.climb_speed || data.swim_speed || data.fly_speed) && (
+							<div className="flex items-start gap-2">
+								<Footprints className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+								<div>
+									<p className="font-heading">Movement</p>
+									{data.climb_speed !== undefined && (
+										<p className="text-sm text-muted-foreground">
+											Climb {data.climb_speed} ft
+										</p>
+									)}
+									{data.swim_speed !== undefined && (
+										<p className="text-sm text-muted-foreground">
+											Swim {data.swim_speed} ft
+										</p>
+									)}
+									{data.fly_speed !== undefined && (
+										<p className="text-sm text-muted-foreground">
+											Fly {data.fly_speed} ft
+										</p>
+									)}
+								</div>
+							</div>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Defenses (resistances / immunities) */}
+			{((data.damage_resistances && data.damage_resistances.length > 0) ||
+				(data.damage_immunities && data.damage_immunities.length > 0) ||
+				(data.condition_immunities &&
+					data.condition_immunities.length > 0)) && (
+				<AscendantWindow title="DEFENSES">
+					<div className="grid md:grid-cols-3 gap-4">
+						{data.damage_resistances && data.damage_resistances.length > 0 && (
+							<div>
+								<h4 className="font-heading text-sm text-muted-foreground mb-2">
+									Damage Resistances
+								</h4>
+								<p className="font-heading">
+									{data.damage_resistances
+										.map(formatRegentVernacular)
+										.join(", ")}
+								</p>
+							</div>
+						)}
+						{data.damage_immunities && data.damage_immunities.length > 0 && (
+							<div>
+								<h4 className="font-heading text-sm text-muted-foreground mb-2">
+									Damage Immunities
+								</h4>
+								<p className="font-heading">
+									{data.damage_immunities
+										.map(formatRegentVernacular)
+										.join(", ")}
+								</p>
+							</div>
+						)}
+						{data.condition_immunities &&
+							data.condition_immunities.length > 0 && (
+								<div>
+									<h4 className="font-heading text-sm text-muted-foreground mb-2">
+										Condition Immunities
+									</h4>
+									<p className="font-heading">
+										{data.condition_immunities
+											.map(formatRegentVernacular)
+											.join(", ")}
+									</p>
+								</div>
+							)}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Ability Score Improvements */}
+			{data.ability_score_improvements &&
+				!Array.isArray(data.ability_score_improvements) &&
+				Object.keys(data.ability_score_improvements).length > 0 && (
+					<AscendantWindow title="ABILITY SCORE IMPROVEMENTS">
+						<div className="flex flex-wrap gap-2">
+							{Object.entries(data.ability_score_improvements).map(
+								([stat, val]) => (
+									<Badge key={stat} variant="outline">
+										{formatRegentVernacular(stat)} +{val}
+									</Badge>
+								),
+							)}
+						</div>
+					</AscendantWindow>
+				)}
+
+			{/* Awakening Features */}
+			{data.awakening_features && data.awakening_features.length > 0 && (
+				<AscendantWindow title="AWAKENING FEATURES">
+					<div className="space-y-3">
+						{data.awakening_features
+							.slice()
+							.sort((a, b) => (a.level ?? 0) - (b.level ?? 0))
+							.map((feature) => (
+								<div
+									key={`awaken-${feature.level}-${feature.name}`}
+									className="border-l-2 border-amethyst/40 pl-3"
+								>
+									<div className="flex items-baseline gap-2 mb-1">
+										<h4 className="font-heading font-semibold">
+											{formatRegentVernacular(feature.name)}
+										</h4>
+										<Badge variant="outline" className="text-xs">
+											Level {feature.level}
+										</Badge>
+									</div>
+									<p className="text-sm text-muted-foreground">
+										<AutoLinkText text={feature.description || ""} />
+									</p>
+								</div>
+							))}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{/* Job Traits */}
+			{data.job_traits && data.job_traits.length > 0 && (
+				<AscendantWindow title="JOB TRAITS">
+					<div className="space-y-3">
+						{data.job_traits.map((trait) => (
+							<div
+								key={trait.name}
+								className="p-3 rounded bg-primary/5 border border-primary/10"
+							>
+								<div className="flex items-baseline justify-between gap-2 mb-1">
+									<h4 className="font-heading font-semibold text-primary">
+										{formatRegentVernacular(trait.name)}
+									</h4>
+									<div className="flex items-center gap-2">
+										{trait.type && (
+											<Badge variant="outline" className="text-xs">
+												{formatRegentVernacular(trait.type)}
+											</Badge>
+										)}
+										{trait.frequency && (
+											<Badge variant="outline" className="text-xs">
+												{formatRegentVernacular(trait.frequency)}
+											</Badge>
+										)}
+									</div>
+								</div>
+								<p className="text-sm text-foreground/80">
+									<AutoLinkText text={trait.description} />
+								</p>
+							</div>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
 
 			{/* Hit Points */}
 			{(data.hp_at_level_1 || data.hp_at_higher_levels) && (

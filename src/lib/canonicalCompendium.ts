@@ -330,7 +330,7 @@ function humanizeToken(value: string): string {
 	return value.replace(/_/g, " ").trim();
 }
 
-function formatActivationText(value: unknown): string | null {
+export function formatActivationText(value: unknown): string | null {
 	if (typeof value === "string" && value.trim().length > 0) return value;
 	if (!isJsonRecord(value)) return null;
 
@@ -346,7 +346,7 @@ function formatActivationText(value: unknown): string | null {
 	return normalizedType;
 }
 
-function formatRangeText(value: unknown): string | null {
+export function formatRangeText(value: unknown): string | null {
 	if (typeof value === "string" && value.trim().length > 0) return value;
 	if (typeof value === "number") return `${value} feet`;
 	if (!isJsonRecord(value)) return null;
@@ -364,7 +364,7 @@ function formatRangeText(value: unknown): string | null {
 	return type ?? distance ?? null;
 }
 
-function formatDurationText(value: unknown): string | null {
+export function formatDurationText(value: unknown): string | null {
 	if (typeof value === "string" && value.trim().length > 0) return value;
 	if (!isJsonRecord(value)) return getStringLikeValue(value);
 

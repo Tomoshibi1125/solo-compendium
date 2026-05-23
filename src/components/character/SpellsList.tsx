@@ -33,6 +33,7 @@ import { formatRegentVernacular } from "@/lib/vernacular";
 import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
 import type { DetailData } from "@/types/character";
 import { AddSpellDialog } from "./AddSpellDialog";
+import { SpellcastingStatsCard } from "./SpellcastingStatsCard";
 
 interface SpellsListProps {
 	characterId: string;
@@ -281,6 +282,7 @@ export function SpellsList({
 	const body = (
 		<>
 			<div className="space-y-4">
+				<SpellcastingStatsCard characterId={characterId} scope="spells" />
 				{(spellsPreparedLimit !== null ||
 					spellsKnownLimit !== null ||
 					cantripsKnownLimit !== null ||
@@ -430,7 +432,11 @@ export function SpellsList({
 															onSelectDetail?.({
 																title: displayName,
 																description: spell.description || "",
-																payload: spell,
+																payload: {
+																	entry: spell,
+																	canonical: spell.spell,
+																	action: actionFormula,
+																},
 															})
 														}
 													>

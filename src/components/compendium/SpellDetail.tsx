@@ -1,4 +1,5 @@
 import {
+	Clock,
 	Footprints,
 	Shield,
 	Sparkles,
@@ -11,6 +12,12 @@ import type { DragEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import {
+	formatAreaValue,
+	formatDetailValue,
+	getEffectLines,
+	getLimitationLines,
+} from "@/components/compendium/detailFormatters";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -22,12 +29,7 @@ import {
 import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
-import type {
-	CompendiumEffects,
-	CompendiumLimitations,
-	CompendiumMechanics,
-	CompendiumSpell,
-} from "@/types/compendium";
+import type { CompendiumMechanics, CompendiumSpell } from "@/types/compendium";
 
 export interface SpellData extends CompendiumSpell {}
 
@@ -52,17 +54,26 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 	const effects = data.effects || undefined;
 	const mechanics = data.mechanics || undefined;
 	const limitations = data.limitations || undefined;
+	const classes = Array.isArray((data as { classes?: unknown }).classes)
+		? ((data as { classes?: string[] }).classes ?? [])
+		: [];
+	const topAttack = data.attack ?? null;
+	const topSavingThrow = data.saving_throw ?? null;
+	const castingTimeText = formatDetailValue(data.casting_time ?? activation);
+	const areaText = formatAreaValue(data.area);
+	const effectLines = getEffectLines(effects);
+	const limitationLines = getLimitationLines(limitations);
 
-	const renderRange = () => {
-		if (!range) return null;
-		if (typeof range === "string") return formatRegentVernacular(range);
-		if (typeof range === "object") {
-			return `${range.value}${range.unit ? ` ${range.unit}` : ""} (${formatRegentVernacular(range.type)})`;
+	const rangeText = formatDetailValue(range);
+
+	const getDamageRoll = (damage: unknown): string | null => {
+		if (typeof damage === "string") return damage;
+		if (damage && typeof damage === "object" && "dice" in damage) {
+			const dice = (damage as { dice?: unknown }).dice;
+			return typeof dice === "string" ? dice : null;
 		}
 		return null;
 	};
-
-	const rangeText = renderRange();
 
 	const rankBonus = (rank: string | null | undefined): number => {
 		switch (rank) {
@@ -103,11 +114,12 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 		const id = crypto.randomUUID();
 		const name = displayName;
 
-		const damageRoll =
-			typeof m?.attack?.damage === "string" ? m.attack.damage : null;
+		const attack = m?.attack ?? topAttack;
+		const savingThrow = m?.saving_throw ?? topSavingThrow;
+		const damageRoll = getDamageRoll(m?.attack?.damage ?? topAttack?.damage);
 		const healingRoll = m?.healing?.dice ?? null;
 
-		if (m?.attack) {
+		if (attack) {
 			const bonus = rankBonus(data.rank);
 			return {
 				version: 1,
@@ -125,14 +137,14 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			};
 		}
 
-		if (m?.saving_throw) {
+		if (savingThrow) {
 			const dc =
-				typeof m.saving_throw.dc === "number"
-					? m.saving_throw.dc
+				typeof savingThrow.dc === "number"
+					? savingThrow.dc
 					: rankSaveDC(data.rank);
 			const ability =
-				typeof m.saving_throw.ability === "string"
-					? m.saving_throw.ability
+				typeof savingThrow.ability === "string"
+					? savingThrow.ability
 					: undefined;
 
 			return {
@@ -232,6 +244,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						)}
 					</div>
 
+					{classes.length > 0 && (
+						<div className="flex flex-wrap gap-2">
+							<span className="text-sm text-muted-foreground">Classes:</span>
+							{classes.map((className) => (
+								<Badge key={className} variant="outline" className="text-xs">
+									{formatRegentVernacular(className)}
+								</Badge>
+							))}
+						</div>
+					)}
+
 					<div className="flex flex-wrap gap-2">
 						<Button
 							variant="outline"
@@ -252,41 +275,66 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					</div>
 					{mechanics && (
 						<div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
-							{(mechanics as CompendiumMechanics).attack && (
+							{(mechanics as CompendiumMechanics).attack || topAttack ? (
 								<span>
 									Rank/default attack:{" "}
 									{buildAttackRollFormula(rankBonus(data.rank))}
 								</span>
-							)}
-							{(mechanics as CompendiumMechanics).saving_throw && (
+							) : null}
+							{(mechanics as CompendiumMechanics).saving_throw ||
+							topSavingThrow ? (
 								<span>
 									Rank/default save: DC{" "}
 									{typeof (mechanics as CompendiumMechanics).saving_throw
 										?.dc === "number"
 										? (mechanics as CompendiumMechanics).saving_throw?.dc
-										: rankSaveDC(data.rank)}
+										: typeof topSavingThrow?.dc === "number"
+											? topSavingThrow.dc
+											: rankSaveDC(data.rank)}
 								</span>
-							)}
+							) : null}
 						</div>
 					)}
 				</div>
 			</AscendantWindow>
 
-			<div
-				id="spell-stats"
-				className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
-			>
-				{rangeText && (
-					<AscendantWindow title="RANGE" compact>
-						<div className="flex items-center gap-2">
-							<Target className="w-5 h-5 text-emerald-400" />
-							<span className="font-heading">
-								{formatRegentVernacular(rangeText)}
-							</span>
-						</div>
-					</AscendantWindow>
-				)}
-			</div>
+			{(castingTimeText || rangeText || areaText) && (
+				<div
+					id="spell-stats"
+					className="grid grid-cols-2 md:grid-cols-4 gap-4 scroll-mt-4"
+				>
+					{castingTimeText && (
+						<AscendantWindow title="CASTING TIME" compact>
+							<div className="flex items-center gap-2">
+								<Clock className="w-5 h-5 text-primary" />
+								<span className="font-heading">
+									{formatRegentVernacular(castingTimeText)}
+								</span>
+							</div>
+						</AscendantWindow>
+					)}
+					{rangeText && (
+						<AscendantWindow title="RANGE" compact>
+							<div className="flex items-center gap-2">
+								<Target className="w-5 h-5 text-emerald-400" />
+								<span className="font-heading">
+									{formatRegentVernacular(rangeText)}
+								</span>
+							</div>
+						</AscendantWindow>
+					)}
+					{areaText && (
+						<AscendantWindow title="AREA" compact>
+							<div className="flex items-center gap-2">
+								<Target className="w-5 h-5 text-primary" />
+								<span className="font-heading">
+									{formatRegentVernacular(areaText)}
+								</span>
+							</div>
+						</AscendantWindow>
+					)}
+				</div>
+			)}
 
 			{(activation || duration || components) && (
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -295,11 +343,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-center gap-2">
 								<Zap className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(
-										typeof activation === "string"
-											? activation
-											: activation.type,
-									)}
+									{formatDetailValue(activation)}
 								</span>
 							</div>
 							{typeof activation === "object" && activation.cost && (
@@ -314,9 +358,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							<div className="flex items-center gap-2">
 								<Timer className="w-5 h-5 text-primary" />
 								<span className="font-heading capitalize">
-									{formatRegentVernacular(
-										typeof duration === "string" ? duration : duration.type,
-									)}
+									{formatDetailValue(duration)}
 								</span>
 							</div>
 							{typeof duration === "object" && (
@@ -353,36 +395,22 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 				</div>
 			)}
 
-			{effects && !Array.isArray(effects) && (
+			{effectLines.length > 0 && (
 				<AscendantWindow title="EFFECTS">
 					<div className="space-y-3">
-						{(effects as CompendiumEffects).primary && (
-							<div className="border-l-2 border-primary/50 pl-3">
+						{effectLines.map((line) => (
+							<div
+								key={`${line.label}:${line.text}`}
+								className="border-l-2 border-primary/50 pl-3"
+							>
+								<p className="text-xs uppercase tracking-wider text-muted-foreground">
+									{line.label}
+								</p>
 								<p className="text-foreground">
-									<AutoLinkText
-										text={(effects as CompendiumEffects).primary || ""}
-									/>
+									<AutoLinkText text={line.text} />
 								</p>
 							</div>
-						)}
-						{(effects as CompendiumEffects).secondary && (
-							<div className="border-l-2 border-secondary/50 pl-3">
-								<p className="text-muted-foreground">
-									<AutoLinkText
-										text={(effects as CompendiumEffects).secondary || ""}
-									/>
-								</p>
-							</div>
-						)}
-						{(effects as CompendiumEffects).tertiary && (
-							<div className="border-l-2 border-muted-foreground/50 pl-3">
-								<p className="text-xs text-muted-foreground">
-									<AutoLinkText
-										text={(effects as CompendiumEffects).tertiary || ""}
-									/>
-								</p>
-							</div>
-						)}
+						))}
 					</div>
 				</AscendantWindow>
 			)}
@@ -392,8 +420,17 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 					<div className="space-y-4">
 						{(() => {
 							const m = mechanics as CompendiumMechanics;
-							const attack = m.attack;
+							const attack = m.attack ?? topAttack;
 							if (!attack) return null;
+							const damageRoll = getDamageRoll(attack.damage);
+							const damageType =
+								"damage_type" in attack
+									? String(
+											(attack as { damage_type?: unknown }).damage_type ?? "",
+										)
+									: "";
+							const modifier =
+								"modifier" in attack ? attack.modifier : topAttack?.ability;
 							return (
 								<div className="flex items-start gap-2">
 									<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
@@ -403,23 +440,13 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 											attack
 										</p>
 										<p className="text-sm text-muted-foreground">
-											{attack.damage
+											{damageRoll
 												? formatRegentVernacular(
-														`Damage: ${
-															typeof attack.damage === "string"
-																? attack.damage
-																: typeof attack.damage === "object" &&
-																		attack.damage !== null &&
-																		"dice" in (attack.damage as object)
-																	? (attack.damage as { dice: string }).dice
-																	: "Varies"
-														}`,
+														`Damage: ${damageRoll}${damageType ? ` ${damageType}` : ""}`,
 													)
 												: "Damage varies"}
-											{attack.modifier
-												? formatRegentVernacular(
-														` | Modifier: ${attack.modifier}`,
-													)
+											{modifier
+												? formatRegentVernacular(` | Modifier: ${modifier}`)
 												: ""}
 										</p>
 									</div>
@@ -428,7 +455,7 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 						})()}
 						{(() => {
 							const m = mechanics as CompendiumMechanics;
-							const st = m.saving_throw;
+							const st = m.saving_throw ?? topSavingThrow;
 							if (!st) return null;
 							return (
 								<div className="flex items-start gap-2">
@@ -441,6 +468,11 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 										{st.success && (
 											<p className="text-xs text-muted-foreground">
 												Success: {formatRegentVernacular(st.success)}
+											</p>
+										)}
+										{st.failure && (
+											<p className="text-xs text-muted-foreground">
+												Failure: {formatRegentVernacular(st.failure)}
 											</p>
 										)}
 									</div>
@@ -470,63 +502,39 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 								</div>
 							);
 						})()}
-						{Array.isArray((mechanics as CompendiumMechanics).condition) &&
-							((mechanics as CompendiumMechanics).condition as string[])
-								.length > 0 && (
-								<div className="flex items-start gap-2">
-									<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
-									<div>
-										<p className="font-heading">Conditions</p>
-										<p className="text-sm text-muted-foreground">
-											{(
-												(mechanics as CompendiumMechanics).condition as string[]
-											)
-												.map(formatRegentVernacular)
-												.join(", ")}
-										</p>
-									</div>
+						{formatDetailValue(
+							(mechanics as CompendiumMechanics).condition,
+						) && (
+							<div className="flex items-start gap-2">
+								<Shield className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
+								<div>
+									<p className="font-heading">Conditions</p>
+									<p className="text-sm text-muted-foreground">
+										{formatDetailValue(
+											(mechanics as CompendiumMechanics).condition,
+										)}
+									</p>
 								</div>
-							)}
+							</div>
+						)}
 					</div>
 				</AscendantWindow>
 			)}
 
-			{limitations && (
+			{limitationLines.length > 0 && (
 				<AscendantWindow title="LIMITATIONS">
 					<ul className="space-y-2 text-sm">
-						{(limitations as CompendiumLimitations).uses && (
-							<li className="flex items-center gap-2">
+						{limitationLines.map((line) => (
+							<li
+								key={`${line.label}:${line.text}`}
+								className="flex items-center gap-2"
+							>
 								<Shield className="w-4 h-4 text-muted-foreground" />
 								<span>
-									Uses:{" "}
-									{formatRegentVernacular(
-										(limitations as CompendiumLimitations).uses || "",
-									)}
+									{line.label}: {formatRegentVernacular(line.text)}
 								</span>
 							</li>
-						)}
-						{(limitations as CompendiumLimitations).recharge && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Recharge:{" "}
-									{formatRegentVernacular(
-										(limitations as CompendiumLimitations).recharge || "",
-									)}
-								</span>
-							</li>
-						)}
-						{(limitations as CompendiumLimitations).exhaustion && (
-							<li className="flex items-center gap-2">
-								<Shield className="w-4 h-4 text-muted-foreground" />
-								<span>
-									Exhaustion:{" "}
-									{formatRegentVernacular(
-										(limitations as CompendiumLimitations).exhaustion || "",
-									)}
-								</span>
-							</li>
-						)}
+						))}
 					</ul>
 				</AscendantWindow>
 			)}

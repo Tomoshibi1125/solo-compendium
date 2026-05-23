@@ -35,8 +35,11 @@ import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
 import { AddPowerDialog } from "./AddPowerDialog";
+import { SpellcastingStatsCard } from "./SpellcastingStatsCard";
 
-export type Power = Database["public"]["Tables"]["character_powers"]["Row"];
+export type Power = Database["public"]["Tables"]["character_powers"]["Row"] & {
+	power?: unknown;
+};
 
 function CompendiumLink({
 	name,
@@ -363,6 +366,7 @@ export function PowersList({
 	const body = (
 		<>
 			<div className="space-y-4">
+				<SpellcastingStatsCard characterId={characterId} scope="powers" />
 				{/* Spell Limits Display */}
 				{(spellsPreparedLimit !== null ||
 					spellsKnownLimit !== null ||
@@ -568,7 +572,11 @@ export function PowersList({
 																onSelectDetail?.({
 																	title: displayName,
 																	description: power.description || "",
-																	payload: power,
+																	payload: {
+																		entry: power,
+																		canonical: power.power,
+																		action: actionFormula,
+																	},
 																})
 															}
 														/>

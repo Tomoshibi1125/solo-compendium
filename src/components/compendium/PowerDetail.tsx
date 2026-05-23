@@ -2,6 +2,11 @@ import { BookOpen, Clock, Target, Timer, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import {
+	formatDetailValue,
+	getEffectLines,
+	getLimitationLines,
+} from "@/components/compendium/detailFormatters";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,7 +15,7 @@ import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
-import type { CompendiumPower } from "@/types/compendium";
+import type { CompendiumMechanics, CompendiumPower } from "@/types/compendium";
 
 interface PowerData extends CompendiumPower {}
 
@@ -38,6 +43,18 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 		data.mechanics && typeof data.mechanics === "object"
 			? (data.mechanics as Record<string, unknown>)
 			: {};
+	const classes = Array.isArray(data.classes) ? data.classes : [];
+	const effectLines = getEffectLines(data.effects);
+	const limitationLines = getLimitationLines(data.limitations);
+	const componentsText = data.components
+		? [
+				data.components.verbal ? "V" : null,
+				data.components.somatic ? "S" : null,
+				data.components.material ? "M" : null,
+			]
+				.filter(Boolean)
+				.join("")
+		: "";
 	const baseAttackRoll = data.has_attack_roll
 		? buildAttackRollFormula(
 				typeof mechanics.attack_bonus === "number" ? mechanics.attack_bonus : 0,
@@ -108,6 +125,11 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex-1 space-y-4">
 						<div className="flex flex-wrap items-center gap-2">
 							<Badge className={tierColor}>{tierLabel}</Badge>
+							{data.power_type && (
+								<Badge variant="secondary">
+									{formatRegentVernacular(data.power_type)}
+								</Badge>
+							)}
 							{data.school && (
 								<Badge variant="secondary">
 									{formatRegentVernacular(data.school)}
@@ -117,21 +139,23 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 								<Badge variant="destructive">Concentration</Badge>
 							)}
 							{data.ritual && <Badge variant="outline">Ritual</Badge>}
+							{data.source_book && (
+								<Badge variant="outline">
+									{formatRegentVernacular(data.source_book)}
+								</Badge>
+							)}
 						</div>
 
-						{data.tags &&
-							data.tags.filter((t) => t.startsWith("job:")).length > 0 && (
-								<div className="flex flex-wrap gap-2">
-									<span className="text-sm text-muted-foreground">Jobs:</span>
-									{data.tags
-										.filter((t) => t.startsWith("job:"))
-										.map((job) => (
-											<Badge key={job} variant="outline" className="text-xs">
-												{formatRegentVernacular(job.replace("job:", ""))}
-											</Badge>
-										))}
-								</div>
-							)}
+						{classes.length > 0 && (
+							<div className="flex flex-wrap gap-2">
+								<span className="text-sm text-muted-foreground">Classes:</span>
+								{classes.map((className) => (
+									<Badge key={className} variant="outline" className="text-xs">
+										{formatRegentVernacular(className)}
+									</Badge>
+								))}
+							</div>
+						)}
 
 						{(data.has_attack_roll || data.has_save) && (
 							<div className="pt-2 space-y-2">
@@ -148,6 +172,9 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 											Damage: {data.damage_roll}
 											{data.damage_type ? ` ${data.damage_type}` : ""}
 										</span>
+									)}
+									{data.target && (
+										<span>Target: {formatRegentVernacular(data.target)}</span>
 									)}
 								</div>
 								<Button onClick={handleRoll} className="gap-2">
@@ -166,7 +193,11 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Clock className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatRegentVernacular(data.casting_time || "1 action")}
+							{formatRegentVernacular(
+								formatDetailValue(
+									data.casting_time || data.activation_time || data.activation,
+								) || "1 action",
+							)}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -175,11 +206,7 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 					<div className="flex items-center gap-2">
 						<Target className="w-5 h-5 text-primary" />
 						<span className="font-heading">
-							{formatRegentVernacular(
-								(typeof data.range === "string"
-									? data.range
-									: (data.range as { type?: string })?.type) || "Self",
-							)}
+							{formatRegentVernacular(formatDetailValue(data.range) || "Self")}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -189,23 +216,22 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 						<Timer className="w-5 h-5 text-primary" />
 						<span className="font-heading">
 							{formatRegentVernacular(
-								(typeof data.duration === "string"
-									? data.duration
-									: (data.duration as { value?: string })?.value) ||
-									"Instantaneous",
+								formatDetailValue(data.duration) || "Instantaneous",
 							)}
 						</span>
 					</div>
 				</AscendantWindow>
 
-				<AscendantWindow title="TAGS" compact>
+				<AscendantWindow title="COMPONENTS" compact>
 					<div className="flex items-center gap-2">
 						<Zap className="w-5 h-5 text-primary" />
-						<span className="font-heading">
-							{data.tags?.filter((t) => !t.startsWith("job:")).join(", ") ||
-								"None"}
-						</span>
+						<span className="font-heading">{componentsText || "None"}</span>
 					</div>
+					{typeof data.components?.material === "string" && (
+						<p className="text-xs text-muted-foreground mt-1">
+							{formatRegentVernacular(data.components.material)}
+						</p>
+					)}
 				</AscendantWindow>
 			</div>
 
@@ -237,12 +263,92 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				)}
 			</AscendantWindow>
 
+			{effectLines.length > 0 && (
+				<AscendantWindow title="EFFECTS">
+					<div className="space-y-3">
+						{effectLines.map((line) => (
+							<div
+								key={`${line.label}:${line.text}`}
+								className="border-l-2 border-primary/50 pl-3"
+							>
+								<p className="text-xs uppercase tracking-wider text-muted-foreground">
+									{line.label}
+								</p>
+								<p className="text-foreground">
+									<AutoLinkText text={line.text} />
+								</p>
+							</div>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
+
 			{/* Mechanics Raw Output if exists */}
-			{data.mechanics && Object.keys(data.mechanics).length > 0 && (
-				<AscendantWindow title="SYSTEM DIAGNOSTICS">
-					<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
-						{JSON.stringify(data.mechanics, null, 2)}
-					</pre>
+			{Object.keys(mechanics).length > 0 && (
+				<AscendantWindow title="MECHANICS">
+					<div className="space-y-3 text-sm">
+						{(
+							[
+								["Action", mechanics.action],
+								["Ability", mechanics.ability],
+								["Damage", mechanics.damage_profile],
+								["Range", mechanics.range],
+								["Duration", mechanics.duration],
+								["Lattice Interaction", mechanics.lattice_interaction],
+							] as Array<[string, unknown]>
+						).map(([label, value]) => {
+							const text = formatDetailValue(value);
+							return text ? (
+								<div key={label} className="flex items-start gap-2">
+									<span className="min-w-32 text-muted-foreground">
+										{String(label)}:
+									</span>
+									<span>{formatRegentVernacular(text)}</span>
+								</div>
+							) : null;
+						})}
+						{(() => {
+							const typedMechanics = mechanics as CompendiumMechanics;
+							const save = typedMechanics.saving_throw;
+							if (!save) return null;
+							return (
+								<div className="rounded border border-border p-3">
+									<p className="font-heading">
+										{formatRegentVernacular(save.ability || "")} Save DC{" "}
+										{save.dc}
+									</p>
+									{save.success && (
+										<p className="text-xs text-muted-foreground">
+											Success: {formatRegentVernacular(save.success)}
+										</p>
+									)}
+									{save.failure && (
+										<p className="text-xs text-muted-foreground">
+											Failure: {formatRegentVernacular(save.failure)}
+										</p>
+									)}
+								</div>
+							);
+						})()}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{limitationLines.length > 0 && (
+				<AscendantWindow title="LIMITATIONS">
+					<ul className="space-y-2 text-sm">
+						{limitationLines.map((line) => (
+							<li
+								key={`${line.label}:${line.text}`}
+								className="flex items-center gap-2"
+							>
+								<Timer className="w-4 h-4 text-muted-foreground" />
+								<span>
+									{line.label}: {formatRegentVernacular(line.text)}
+								</span>
+							</li>
+						))}
+					</ul>
 				</AscendantWindow>
 			)}
 

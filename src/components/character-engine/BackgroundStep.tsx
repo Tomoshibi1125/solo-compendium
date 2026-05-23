@@ -24,6 +24,20 @@ type Background =
 		display_name?: string | null;
 	};
 
+const collectStringValues = (value: unknown): string[] => {
+	if (typeof value === "string") {
+		return value
+			.split(",")
+			.map((part) => part.trim())
+			.filter(Boolean);
+	}
+	if (Array.isArray(value)) return value.flatMap(collectStringValues);
+	if (value && typeof value === "object") {
+		return Object.values(value).flatMap(collectStringValues);
+	}
+	return [];
+};
+
 const isBackgroundFeature = (feature: unknown): feature is BackgroundFeature =>
 	typeof feature === "object" &&
 	feature !== null &&
@@ -32,6 +46,198 @@ const isBackgroundFeature = (feature: unknown): feature is BackgroundFeature =>
 	(!("description" in feature) ||
 		feature.description == null ||
 		typeof feature.description === "string");
+
+// ---------------------------------------------------------------------------
+// Structured-description mechanic parser
+// ---------------------------------------------------------------------------
+
+/** Keywords that indicate structured mechanic phrases within descriptions */
+const MECHANIC_KEYWORD_PATTERNS: { label: string; pattern: RegExp }[] = [
+	{ label: "Advantage", pattern: /\badvantage on\b/i },
+	{ label: "Proficiency", pattern: /\bproficiency\b/i },
+	{
+		label: "Skill Check",
+		pattern:
+			/\b(?:perception|stealth|survival|investigation|insight|persuasion|intimidation|athletics|acrobatics|arcana|history|nature|religion|medicine|deception|performance|sleight of hand|animal handling)\s+(?:checks?|rolls?)\b/i,
+	},
+	{ label: "Difficult Terrain", pattern: /\bdifficult terrain\b/i },
+	{ label: "Exhaustion", pattern: /\bexhaustion\b/i },
+	{
+		label: "Shelter",
+		pattern: /\b(?:hidden (?:place|shelter)|rest (?:where|safely))\b/i,
+	},
+	{ label: "Requisition", pattern: /\b(?:requisition|confiscate|access)\b/i },
+	{
+		label: "Knowledge",
+		pattern: /\b(?:identify|deduce|know the|estimate|predict)\b/i,
+	},
+	{ label: "Network", pattern: /\b(?:informant|contact|network|alumni)\b/i },
+];
+
+interface StructuredMechanics {
+	keywords: string[];
+	proficiencies: string[];
+	equipmentBundle: string[];
+	downtimeHooks: string[];
+}
+
+function parseStructuredMechanics(
+	description: string | null | undefined,
+	mechanics: unknown,
+): StructuredMechanics {
+	const result: StructuredMechanics = {
+		keywords: [],
+		proficiencies: [],
+		equipmentBundle: [],
+		downtimeHooks: [],
+	};
+
+	if (description) {
+		for (const { label, pattern } of MECHANIC_KEYWORD_PATTERNS) {
+			if (pattern.test(description) && !result.keywords.includes(label)) {
+				result.keywords.push(label);
+			}
+		}
+	}
+
+	// Parse structured mechanics JSON if present
+	if (mechanics && typeof mechanics === "object" && !Array.isArray(mechanics)) {
+		const mech = mechanics as Record<string, unknown>;
+
+		if (mech.proficiencies) {
+			result.proficiencies.push(...collectStringValues(mech.proficiencies));
+		}
+		if (mech.equipment_bundle || mech.equipment) {
+			result.equipmentBundle.push(
+				...collectStringValues(mech.equipment_bundle ?? mech.equipment),
+			);
+		}
+		if (mech.downtime || mech.downtime_hooks) {
+			result.downtimeHooks.push(
+				...collectStringValues(mech.downtime ?? mech.downtime_hooks),
+			);
+		}
+	}
+
+	return result;
+}
+
+// ---------------------------------------------------------------------------
+// UI Components
+// ---------------------------------------------------------------------------
+
+function BackgroundChipGroup({
+	label,
+	values,
+	variant = "secondary",
+}: {
+	label: string;
+	values: string[];
+	variant?: "default" | "secondary" | "outline";
+}) {
+	if (values.length === 0) return null;
+
+	return (
+		<div className="space-y-1">
+			<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+				{label}
+			</Label>
+			<div className="flex flex-wrap gap-2 mt-1">
+				{values.map((value) => (
+					<Badge
+						key={`${label}-${value}`}
+						variant={variant}
+						className="text-[10px] h-5 bg-primary/10 border-primary/20"
+					>
+						{formatRegentVernacular(value)}
+					</Badge>
+				))}
+			</div>
+		</div>
+	);
+}
+
+function BackgroundFeatureCard({
+	feature,
+	mechanics,
+}: {
+	feature: BackgroundFeature;
+	mechanics?: StructuredMechanics | null;
+}) {
+	const hasStructuredMechanics =
+		mechanics &&
+		(mechanics.keywords.length > 0 ||
+			mechanics.proficiencies.length > 0 ||
+			mechanics.equipmentBundle.length > 0 ||
+			mechanics.downtimeHooks.length > 0);
+
+	return (
+		<div className="p-3 bg-black/40 rounded border border-primary/10 space-y-2">
+			<Label className="text-[10px] uppercase tracking-tighter text-primary/80 font-bold">
+				{formatRegentVernacular(feature.name)}
+			</Label>
+			{feature.description && (
+				<AscendantText className="text-[11px] text-muted-foreground mt-1 block">
+					{formatRegentVernacular(feature.description)}
+				</AscendantText>
+			)}
+
+			{/* Structured Mechanics Blocks */}
+			{hasStructuredMechanics && (
+				<div className="mt-2 space-y-2">
+					{mechanics.keywords.length > 0 && (
+						<div className="flex flex-wrap gap-1">
+							{mechanics.keywords.map((keyword) => (
+								<Badge
+									key={`keyword-${keyword}`}
+									variant="outline"
+									className="text-[9px] border-primary/20 bg-primary/5 text-primary/80"
+								>
+									{keyword}
+								</Badge>
+							))}
+						</div>
+					)}
+
+					{mechanics.proficiencies.length > 0 && (
+						<div className="text-[10px]">
+							<span className="text-muted-foreground font-medium uppercase tracking-wider">
+								Grants:{" "}
+							</span>
+							<span className="text-primary/80">
+								{mechanics.proficiencies.map(formatRegentVernacular).join(", ")}
+							</span>
+						</div>
+					)}
+
+					{mechanics.equipmentBundle.length > 0 && (
+						<div className="text-[10px]">
+							<span className="text-muted-foreground font-medium uppercase tracking-wider">
+								Equipment:{" "}
+							</span>
+							<span className="text-primary/80">
+								{mechanics.equipmentBundle
+									.map(formatRegentVernacular)
+									.join(", ")}
+							</span>
+						</div>
+					)}
+
+					{mechanics.downtimeHooks.length > 0 && (
+						<div className="text-[10px]">
+							<span className="text-muted-foreground font-medium uppercase tracking-wider">
+								Downtime:{" "}
+							</span>
+							<span className="text-primary/80">
+								{mechanics.downtimeHooks.map(formatRegentVernacular).join(", ")}
+							</span>
+						</div>
+					)}
+				</div>
+			)}
+		</div>
+	);
+}
 
 interface BackgroundStepProps {
 	selectedBackground: string;
@@ -59,6 +265,23 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 	)
 		? (selectedBackgroundData.features as unknown[]).filter(isBackgroundFeature)
 		: [];
+	const backgroundInventory = collectStringValues(
+		selectedBackgroundData?.starting_equipment ??
+			(selectedBackgroundData as { equipment?: unknown }).equipment,
+	);
+	const singularFeature =
+		selectedBackgroundData?.feature_name &&
+		!backgroundFeatures.some(
+			(feature) => feature.name === selectedBackgroundData.feature_name,
+		)
+			? [
+					{
+						name: selectedBackgroundData.feature_name,
+						description: selectedBackgroundData.feature_description,
+					},
+				]
+			: [];
+	const displayFeatures = [...singularFeature, ...backgroundFeatures];
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -106,68 +329,20 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 							</AscendantText>
 
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-4 border-t border-primary/5">
-								{selectedBackgroundData.skill_proficiencies &&
-									selectedBackgroundData.skill_proficiencies.length > 0 && (
-										<div className="space-y-1">
-											<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
-												Neural Patterns (Skills)
-											</Label>
-											<div className="flex flex-wrap gap-2 mt-1">
-												{selectedBackgroundData.skill_proficiencies.map(
-													(skill) => (
-														<Badge
-															key={`skill-${skill}`}
-															variant="secondary"
-															className="text-[10px] h-5 bg-primary/10 border-primary/20"
-														>
-															{formatRegentVernacular(skill)}
-														</Badge>
-													),
-												)}
-											</div>
-										</div>
-									)}
+								<BackgroundChipGroup
+									label="Neural Patterns (Skills)"
+									values={selectedBackgroundData.skill_proficiencies ?? []}
+								/>
 
-								{selectedBackgroundData.tool_proficiencies &&
-									selectedBackgroundData.tool_proficiencies.length > 0 && (
-										<div className="space-y-1">
-											<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
-												Functional Tools (Utility)
-											</Label>
-											<div className="flex flex-wrap gap-2 mt-1">
-												{selectedBackgroundData.tool_proficiencies.map(
-													(tool) => (
-														<Badge
-															key={`tool-${tool}`}
-															variant="secondary"
-															className="text-[10px] h-5 bg-primary/10 border-primary/20"
-														>
-															{formatRegentVernacular(tool)}
-														</Badge>
-													),
-												)}
-											</div>
-										</div>
-									)}
+								<BackgroundChipGroup
+									label="Functional Tools (Utility)"
+									values={selectedBackgroundData.tool_proficiencies ?? []}
+								/>
 
-								{backgroundLanguages.length > 0 && (
-									<div className="space-y-1">
-										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
-											Linguistic Bindings
-										</Label>
-										<div className="flex flex-wrap gap-2 mt-1">
-											{backgroundLanguages.map((lang) => (
-												<Badge
-													key={`lang-${lang}`}
-													variant="secondary"
-													className="text-[10px] h-5 bg-primary/10 border-primary/20"
-												>
-													{formatRegentVernacular(lang)}
-												</Badge>
-											))}
-										</div>
-									</div>
-								)}
+								<BackgroundChipGroup
+									label="Linguistic Bindings"
+									values={backgroundLanguages}
+								/>
 
 								{/* Starting Wealth / Credits */}
 								{selectedBackgroundData.starting_credits != null && (
@@ -184,53 +359,34 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 								)}
 
 								{/* Starting Equipment */}
-								{selectedBackgroundData.starting_equipment &&
-									selectedBackgroundData.starting_equipment.length > 0 && (
-										<div className="space-y-1 md:col-span-2">
-											<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
-												Starting Inventory Pack
-											</Label>
-											<div className="text-[11px] text-muted-foreground italic leading-tight mt-1 pl-2 border-l border-primary/20 py-1">
-												{Array.isArray(
-													selectedBackgroundData.starting_equipment,
-												)
-													? selectedBackgroundData.starting_equipment.join(", ")
-													: selectedBackgroundData.starting_equipment}
-											</div>
-										</div>
-									)}
+								<div className="md:col-span-2">
+									<BackgroundChipGroup
+										label="Starting Inventory Pack"
+										values={backgroundInventory}
+										variant="outline"
+									/>
+								</div>
 
 								{/* Background Features (Support both array and singular) */}
 								<div className="md:col-span-2 space-y-3 pt-2">
-									{selectedBackgroundData.feature_name && (
-										<div className="p-3 bg-black/40 rounded border border-primary/10">
-											<Label className="text-[10px] uppercase tracking-tighter text-primary/80 font-bold">
-												Origin Feature: {selectedBackgroundData.feature_name}
-											</Label>
-											<AscendantText className="text-[11px] text-muted-foreground mt-1">
-												{selectedBackgroundData.feature_description}
-											</AscendantText>
-										</div>
-									)}
-
-									{backgroundFeatures.length > 0 && (
+									{displayFeatures.length > 0 && (
 										<div className="space-y-3">
 											<Label className="text-[10px] font-heading font-semibold text-primary uppercase tracking-wider">
 												Background Features
 											</Label>
-											{backgroundFeatures.map((f) => (
-												<div
-													key={f.name}
-													className="p-3 bg-black/40 rounded border border-primary/10"
-												>
-													<Label className="text-[10px] uppercase tracking-tighter text-primary/80 font-bold">
-														{f.name}
-													</Label>
-													<AscendantText className="text-[11px] text-muted-foreground mt-1 block">
-														{f.description}
-													</AscendantText>
-												</div>
-											))}
+											{displayFeatures.map((feature) => {
+												const structured = parseStructuredMechanics(
+													feature.description,
+													selectedBackgroundData.mechanics,
+												);
+												return (
+													<BackgroundFeatureCard
+														key={feature.name}
+														feature={feature}
+														mechanics={structured}
+													/>
+												);
+											})}
 										</div>
 									)}
 								</div>

@@ -362,6 +362,76 @@ export function EquipmentList({
 					</div>
 				) : (
 					<div className="space-y-6">
+						{groupedEquipment.weapon && (
+							<div className="space-y-3">
+								<div className="text-sm font-heading text-muted-foreground">
+									Weapons
+								</div>
+								<SortableList
+									items={groupedEquipment.weapon}
+									onReorder={(newOrder) =>
+										handleReorderGroup("weapon", newOrder)
+									}
+									renderItem={(item) => {
+										const canonical = findCanonicalForRow(
+											canonicalEquipmentMap,
+											item.name,
+										);
+										const computedAction =
+											actionsByEquipmentId.get(item.id) ?? null;
+										const totalSlots = getEffectiveSigilSlots({
+											sigil_slots_base: item.sigil_slots_base,
+											rarity: item.rarity,
+										});
+										const usedSlots = sigilInscriptions.filter(
+											(s) => s.equipment_id === item.id,
+										).length;
+										return (
+											<EquipmentItem
+												key={item.id}
+												item={item}
+												canonical={canonical}
+												onToggleEquipped={handleToggleEquipped}
+												onToggleAttuned={handleToggleAttuned}
+												onRemove={handleRemove}
+												onChangeContainer={handleChangeContainer}
+												containers={containers.filter((c) => c.id !== item.id)}
+												canAttune={canAttune}
+												nestedItems={equipmentByContainer[item.id] || []}
+												computedAction={computedAction}
+												onSelect={() =>
+													onSelectDetail?.({
+														title: item.name,
+														description: item.description || "",
+														payload: {
+															entry: item,
+															canonical,
+															action: computedAction,
+														},
+													})
+												}
+												sigilControl={
+													totalSlots > 0 ? (
+														<div className="mt-2">
+															<Button
+																variant="outline"
+																size="sm"
+																className="h-7 px-2 text-[10px]"
+																onClick={() => setSigilDialogItemId(item.id)}
+															>
+																Sigils {usedSlots}/{totalSlots}
+															</Button>
+														</div>
+													) : null
+												}
+											/>
+										);
+									}}
+									itemClassName="mb-2"
+								/>
+							</div>
+						)}
+
 						{Object.keys(groupedEquipables).length > 0 && (
 							<div className="space-y-3">
 								<div className="text-sm font-heading text-muted-foreground">
@@ -381,6 +451,12 @@ export function EquipmentList({
 													handleReorderGroup(type, newOrder)
 												}
 												renderItem={(item) => {
+													const canonical = findCanonicalForRow(
+														canonicalEquipmentMap,
+														item.name,
+													);
+													const computedAction =
+														actionsByEquipmentId.get(item.id) ?? null;
 													const totalSlots = getEffectiveSigilSlots({
 														sigil_slots_base: item.sigil_slots_base,
 														rarity: item.rarity,
@@ -392,10 +468,7 @@ export function EquipmentList({
 														<EquipmentItem
 															key={item.id}
 															item={item}
-															canonical={findCanonicalForRow(
-																canonicalEquipmentMap,
-																item.name,
-															)}
+															canonical={canonical}
 															onToggleEquipped={handleToggleEquipped}
 															onToggleAttuned={handleToggleAttuned}
 															onRemove={handleRemove}
@@ -405,14 +478,16 @@ export function EquipmentList({
 															)}
 															canAttune={canAttune}
 															nestedItems={equipmentByContainer[item.id] || []}
-															computedAction={
-																actionsByEquipmentId.get(item.id) ?? null
-															}
+															computedAction={computedAction}
 															onSelect={() =>
 																onSelectDetail?.({
 																	title: item.name,
 																	description: item.description || "",
-																	payload: item,
+																	payload: {
+																		entry: item,
+																		canonical,
+																		action: computedAction,
+																	},
 																})
 															}
 															sigilControl={
@@ -460,35 +535,42 @@ export function EquipmentList({
 												onReorder={(newOrder) =>
 													handleReorderGroup(type, newOrder)
 												}
-												renderItem={(item) => (
-													<EquipmentItem
-														key={item.id}
-														item={item}
-														canonical={findCanonicalForRow(
-															canonicalEquipmentMap,
-															item.name,
-														)}
-														onToggleEquipped={handleToggleEquipped}
-														onToggleAttuned={handleToggleAttuned}
-														onRemove={handleRemove}
-														onChangeContainer={handleChangeContainer}
-														containers={containers.filter(
-															(c) => c.id !== item.id,
-														)}
-														canAttune={canAttune}
-														nestedItems={equipmentByContainer[item.id] || []}
-														computedAction={
-															actionsByEquipmentId.get(item.id) ?? null
-														}
-														onSelect={() =>
-															onSelectDetail?.({
-																title: item.name,
-																description: item.description || "",
-																payload: item,
-															})
-														}
-													/>
-												)}
+												renderItem={(item) => {
+													const canonical = findCanonicalForRow(
+														canonicalEquipmentMap,
+														item.name,
+													);
+													const computedAction =
+														actionsByEquipmentId.get(item.id) ?? null;
+													return (
+														<EquipmentItem
+															key={item.id}
+															item={item}
+															canonical={canonical}
+															onToggleEquipped={handleToggleEquipped}
+															onToggleAttuned={handleToggleAttuned}
+															onRemove={handleRemove}
+															onChangeContainer={handleChangeContainer}
+															containers={containers.filter(
+																(c) => c.id !== item.id,
+															)}
+															canAttune={canAttune}
+															nestedItems={equipmentByContainer[item.id] || []}
+															computedAction={computedAction}
+															onSelect={() =>
+																onSelectDetail?.({
+																	title: item.name,
+																	description: item.description || "",
+																	payload: {
+																		entry: item,
+																		canonical,
+																		action: computedAction,
+																	},
+																})
+															}
+														/>
+													);
+												}}
 												itemClassName="mb-2"
 											/>
 										</div>

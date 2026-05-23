@@ -236,6 +236,23 @@ export function ProficiencySidebar({
 										</div>
 									</div>
 								)}
+								{defenses.vulnerabilities.length > 0 && (
+									<div className="space-y-1">
+										<span className="text-[9px] font-mono text-red-400/60 uppercase">
+											Vulnerabilities
+										</span>
+										<div className="flex flex-wrap gap-1">
+											{defenses.vulnerabilities.map((v) => (
+												<span
+													key={v}
+													className="text-[10px] text-red-400 bg-red-400/10 border border-red-400/20 px-1.5 py-0.5 rounded-[2px]"
+												>
+													{v}
+												</span>
+											))}
+										</div>
+									</div>
+								)}
 								{defenses.conditionImmunities.length > 0 && (
 									<div className="space-y-1">
 										<span className="text-[9px] font-mono text-blue-400/60 uppercase">

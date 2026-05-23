@@ -125,9 +125,21 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 						</p>
 					)}
 				</div>
-				{data.level && (
-					<Badge className={getTierColor(data.level)}>Tier {data.level}</Badge>
-				)}
+				<div className="flex flex-wrap items-center gap-2">
+					{data.level && (
+						<Badge className={getTierColor(data.level)}>
+							Tier {data.level}
+						</Badge>
+					)}
+					{data.path_tier !== undefined && data.path_tier !== data.level && (
+						<Badge variant="outline">Path Tier {data.path_tier}</Badge>
+					)}
+					{data.pathType && (
+						<Badge variant="secondary">
+							{formatRegentVernacular(data.pathType)}
+						</Badge>
+					)}
+				</div>
 			</div>
 
 			<Separator />
@@ -157,16 +169,6 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 								}
 							/>
 						</p>
-					</div>
-				)}
-				{data.mechanics && Object.keys(data.mechanics).length > 0 && (
-					<div className="mt-6 pt-4 border-t border-cyan/10">
-						<h4 className="text-cyan font-bold text-[10px] uppercase tracking-wider mb-2">
-							Path Mechanics
-						</h4>
-						<pre className="whitespace-pre-wrap font-mono bg-void/50 p-3 rounded text-xs text-muted-foreground overflow-hidden">
-							{JSON.stringify(data.mechanics, null, 2)}
-						</pre>
 					</div>
 				)}
 			</div>

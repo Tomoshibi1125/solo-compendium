@@ -19,6 +19,7 @@ import { HealthDialog } from "@/components/CharacterSheet/HealthDialog";
 import { ShortRestDialog } from "@/components/CharacterSheet/ShortRestDialog";
 import { ActionsList } from "@/components/character/ActionsList";
 import { CharacterBackupPanel } from "@/components/character/CharacterBackupPanel";
+import { CharacterDetailRollsPanel } from "@/components/character/CharacterDetailRollsPanel";
 import { CharacterEditDialog } from "@/components/character/CharacterEditDialog";
 import { CharacterExtrasPanel } from "@/components/character/CharacterExtrasPanel";
 import { CurrencyManager } from "@/components/character/CurrencyManager";
@@ -64,7 +65,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCharacterPageModel } from "@/hooks/useCharacterPageModel";
 import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import type { Json } from "@/integrations/supabase/types";
-import { getAbilityModifier } from "@/lib/characterCalculations";
+import {
+	getAbilityModifier,
+	getProficiencyBonus,
+} from "@/lib/characterCalculations";
 import { calculateTotalTempHP } from "@/lib/characterResources";
 import { getXPProgress, type LevelingType } from "@/lib/experience";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
@@ -654,6 +658,7 @@ export default function CharacterSheetV2() {
 				tempHp={calculateTotalTempHP(characterResources)}
 				ac={stats.calculatedStats.armorClass}
 				initiative={stats.finalInitiative}
+				proficiencyBonus={getProficiencyBonus(character.level || 1)}
 				className={cn(
 					"fixed top-16 left-0 right-0 z-50 transform transition-transform duration-300",
 					showScrollHeader ? "translate-y-0" : "-translate-y-full",
@@ -732,6 +737,8 @@ export default function CharacterSheetV2() {
 							initiativeBreakdown={`Base Mod: ${getAbilityModifier(stats.finalAbilities.AGI)} | Custom/Sigils: ${stats.finalInitiative - getAbilityModifier(stats.finalAbilities.AGI)}`}
 							speed={stats.finalSpeed}
 							speedBreakdown={`Base Speed: ${stats.baseStats.speed} | Custom/Sigils/Encumbrance: ${stats.finalSpeed - stats.baseStats.speed}`}
+							proficiencyBonus={getProficiencyBonus(character.level || 1)}
+							characterLevel={character.level || 1}
 							hitDice={{
 								current: character.hit_dice_current,
 								max: character.hit_dice_max,
@@ -847,6 +854,8 @@ export default function CharacterSheetV2() {
 						ac={stats.calculatedStats.armorClass}
 						initiative={stats.finalInitiative}
 						speed={stats.finalSpeed}
+						proficiencyBonus={getProficiencyBonus(character.level || 1)}
+						characterLevel={character.level || 1}
 						hitDice={{
 							current: character.hit_dice_current,
 							max: character.hit_dice_max,
@@ -1064,6 +1073,10 @@ export default function CharacterSheetV2() {
 									<div className="text-sm font-heading leading-relaxed text-foreground/90 space-y-4">
 										<AutoLinkText text={selectedDetail.description} />
 									</div>
+									<CharacterDetailRollsPanel
+										payload={selectedDetail.payload}
+										type={selectedDetail.type}
+									/>
 									{/* Roll Buttons / Actions would go here if provided in payload */}
 								</div>
 								<div className="p-6 border-t border-primary/10 bg-black/20">

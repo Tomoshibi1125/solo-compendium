@@ -4,9 +4,37 @@ import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { RiftFavorOption } from "@/lib/riftFavor";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { Job, StaticJob } from "@/types/character";
 import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
+
+interface ReviewResolvedStats {
+	proficiencyBonus: number;
+	riftFavorDie: number;
+	riftFavorMax: number;
+	initiative: number;
+	armorClass: number;
+	speed: number;
+	passivePerception: number;
+	carryingCapacity: number;
+	spellSaveDC: number | null;
+	spellAttackBonus: number | null;
+	spellcastingAbility: AbilityScore | null;
+	hitDieSize: number;
+	savingThrows: {
+		ability: AbilityScore;
+		value: number;
+		proficient: boolean;
+	}[];
+	trainedSkills: {
+		id: string;
+		name: string;
+		ability: AbilityScore;
+		value: number;
+		expertise: boolean;
+	}[];
+}
 
 interface ReviewStepProps {
 	name: string;
@@ -23,6 +51,17 @@ interface ReviewStepProps {
 	staticJobData: StaticJob | null;
 	jobAwakeningAtCreation: { name: string; description?: string }[];
 	jobTraitsAtCreation: { name: string; description?: string }[];
+	resolvedStats?: ReviewResolvedStats;
+	riftFavorOptions?: RiftFavorOption[];
+	startingLoadout?: {
+		name: string;
+		type?: string | null;
+		attackLine?: string;
+		damageLine?: string;
+		armorLine?: string;
+		range?: string | null;
+		properties?: string[];
+	}[];
 	alignment?: string;
 	personalityTrait?: string;
 	ideal?: string;
@@ -46,6 +85,9 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 	staticJobData,
 	jobAwakeningAtCreation,
 	jobTraitsAtCreation,
+	resolvedStats,
+	riftFavorOptions = [],
+	startingLoadout = [],
 	alignment,
 	personalityTrait,
 	ideal,
@@ -68,6 +110,22 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 			return groups;
 		}, {}),
 	).map(([label, values]) => ({ label, values }));
+	const proficiencyBonus = resolvedStats?.proficiencyBonus ?? 2;
+	const initiative =
+		resolvedStats?.initiative ?? Math.floor((effectiveAbilities.AGI - 10) / 2);
+	const speed = resolvedStats?.speed ?? staticJobData?.speed ?? 30;
+	const riftFavorMax = resolvedStats?.riftFavorMax ?? 3;
+	const riftFavorDie = resolvedStats?.riftFavorDie ?? 4;
+	const hitDieSize =
+		resolvedStats?.hitDieSize ??
+		Number.parseInt(staticJobData?.hitDie?.replace("1d", "") ?? "8", 10);
+	const spellcastingAbility = resolvedStats?.spellcastingAbility ?? null;
+	const spellAttackBonus = resolvedStats?.spellAttackBonus ?? null;
+	const spellSaveDC = resolvedStats?.spellSaveDC ?? null;
+	const trainedSkills = resolvedStats?.trainedSkills ?? [];
+	const savingThrows = resolvedStats?.savingThrows ?? [];
+	const formatSigned = (value: number) =>
+		value >= 0 ? `+${value}` : `${value}`;
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
@@ -203,32 +261,161 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 								<h3 className="text-xs font-heading font-semibold text-primary uppercase tracking-widest border-b border-primary/10 pb-1">
 									Combat Lattice Initialization
 								</h3>
-								<div className="flex justify-between gap-4">
-									<div className="flex-grow p-3 rounded bg-black/40 border border-primary/10 text-center">
+								<div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
 										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
 											Pulse (HP)
 										</span>
 										<span className="text-xl font-heading text-primary">
 											{hpMax} / {hpMax}
 										</span>
+										<span className="block text-[9px] text-muted-foreground">
+											1d{hitDieSize}{" "}
+											{formatSigned(
+												Math.floor((effectiveAbilities.VIT - 10) / 2),
+											)}
+										</span>
 									</div>
-									<div className="flex-grow p-3 rounded bg-black/40 border border-primary/10 text-center">
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
 										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
 											Deflection (AC)
 										</span>
 										<span className="text-xl font-heading text-primary">
-											{baseAC}
+											{resolvedStats?.armorClass ?? baseAC}
+										</span>
+										<span className="block text-[9px] text-muted-foreground">
+											10{" "}
+											{formatSigned(
+												Math.floor((effectiveAbilities.AGI - 10) / 2),
+											)}
 										</span>
 									</div>
-									<div className="flex-grow p-3 rounded bg-black/40 border border-primary/10 text-center">
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
 										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
 											Expertise (PB)
 										</span>
 										<span className="text-xl font-heading text-primary">
-											+2
+											{formatSigned(proficiencyBonus)}
+										</span>
+										<span className="block text-[9px] text-muted-foreground">
+											Level 1 proficiency
+										</span>
+									</div>
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
+										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Initiative
+										</span>
+										<span className="text-xl font-heading text-primary">
+											{formatSigned(initiative)}
+										</span>
+										<span className="block text-[9px] text-muted-foreground">
+											AGI modifier
 										</span>
 									</div>
 								</div>
+								<div className="grid grid-cols-2 xl:grid-cols-4 gap-3">
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
+										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Speed
+										</span>
+										<span className="text-lg font-heading text-primary">
+											{speed} FT
+										</span>
+									</div>
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
+										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Rift Favor
+										</span>
+										<span className="text-lg font-heading text-primary">
+											{riftFavorMax} / {riftFavorMax} d{riftFavorDie}
+										</span>
+									</div>
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
+										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Spell Save DC
+										</span>
+										<span className="text-lg font-heading text-primary">
+											{spellSaveDC ?? "—"}
+										</span>
+										{spellcastingAbility && (
+											<span className="block text-[9px] text-muted-foreground">
+												8 + PB + {spellcastingAbility}
+											</span>
+										)}
+									</div>
+									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
+										<span className="block text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Spell Attack
+										</span>
+										<span className="text-lg font-heading text-primary">
+											{spellAttackBonus === null
+												? "—"
+												: formatSigned(spellAttackBonus)}
+										</span>
+										{spellcastingAbility && (
+											<span className="block text-[9px] text-muted-foreground">
+												PB + {spellcastingAbility}
+											</span>
+										)}
+									</div>
+								</div>
+								{savingThrows.length > 0 && (
+									<div className="space-y-2">
+										<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Saving Throws
+										</span>
+										<div className="flex flex-wrap gap-1">
+											{savingThrows.map((save) => (
+												<Badge
+													key={save.ability}
+													variant={save.proficient ? "default" : "outline"}
+													className="text-[9px]"
+												>
+													{save.ability} {formatSigned(save.value)}
+												</Badge>
+											))}
+										</div>
+									</div>
+								)}
+								{trainedSkills.length > 0 && (
+									<div className="space-y-2">
+										<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Trained Skill Rolls
+										</span>
+										<div className="flex flex-wrap gap-1">
+											{trainedSkills.map((skill) => (
+												<Badge
+													key={skill.id}
+													variant={skill.expertise ? "default" : "secondary"}
+													className="text-[9px]"
+												>
+													{formatRegentVernacular(skill.name)}{" "}
+													{formatSigned(skill.value)}
+													{skill.expertise ? " EXP" : ""}
+												</Badge>
+											))}
+										</div>
+									</div>
+								)}
+								{riftFavorOptions.length > 0 && (
+									<div className="space-y-2">
+										<span className="text-[9px] uppercase tracking-tighter text-muted-foreground">
+											Unlocked Rift Favor Options
+										</span>
+										<div className="flex flex-wrap gap-1">
+											{riftFavorOptions.map((option) => (
+												<Badge
+													key={option.id}
+													variant="outline"
+													className="text-[9px]"
+													title={option.rulesText}
+												>
+													{option.name} · Cost {option.cost}
+												</Badge>
+											))}
+										</div>
+									</div>
+								)}
 							</section>
 
 							{staticJobData && (
@@ -287,6 +474,56 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 												))}
 											</div>
 										</div>
+										{startingLoadout.length > 0 && (
+											<div className="pt-2 space-y-2">
+												<span className="uppercase tracking-tighter text-[9px] block">
+													Starting Loadout:
+												</span>
+												<div className="space-y-2">
+													{startingLoadout.map((item) => (
+														<div
+															key={item.name}
+															className="rounded bg-black/30 border border-primary/10 p-2 space-y-1"
+														>
+															<div className="flex items-center justify-between gap-2">
+																<span className="font-heading text-primary/90">
+																	{formatRegentVernacular(item.name)}
+																</span>
+																{item.type && (
+																	<Badge
+																		variant="outline"
+																		className="text-[8px]"
+																	>
+																		{formatRegentVernacular(item.type)}
+																	</Badge>
+																)}
+															</div>
+															<div className="flex flex-wrap gap-1">
+																{[
+																	item.attackLine,
+																	item.damageLine,
+																	item.armorLine,
+																	item.range ? `Range ${item.range}` : null,
+																	...(item.properties ?? []).slice(0, 4),
+																]
+																	.filter((line): line is string =>
+																		Boolean(line),
+																	)
+																	.map((line) => (
+																		<Badge
+																			key={`${item.name}-${line}`}
+																			variant="secondary"
+																			className="text-[8px]"
+																		>
+																			{formatRegentVernacular(line)}
+																		</Badge>
+																	))}
+															</div>
+														</div>
+													))}
+												</div>
+											</div>
+										)}
 									</div>
 								</section>
 							)}

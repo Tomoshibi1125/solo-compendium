@@ -1,11 +1,15 @@
-import { Boxes, Sparkles } from "lucide-react";
+import { Boxes, Shield, Sparkles, Zap } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import {
+	getEffectLines,
+	getLimitationLines,
+} from "@/components/compendium/detailFormatters";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
-import type { CompendiumEffects, CompendiumTattoo } from "@/types/compendium";
+import type { CompendiumTattoo } from "@/types/compendium";
 
 interface TattooDetailProps {
 	data: CompendiumTattoo;
@@ -26,6 +30,8 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 	const rarityStyle = data.rarity
 		? rarityStyles[data.rarity.toLowerCase()]
 		: undefined;
+	const effectLines = getEffectLines(data.effects);
+	const limitationLines = getLimitationLines(data.limitations);
 
 	return (
 		<div className="space-y-6">
@@ -87,40 +93,88 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 						</div>
 					</AscendantWindow>
 				)}
+				{data.ink_type && (
+					<AscendantWindow
+						title="INK TYPE"
+						compact
+						className="bg-void border-amethyst/20"
+					>
+						<div className="flex items-center gap-2">
+							<Sparkles className="w-5 h-5 text-amethyst/70" />
+							<span className="font-heading text-amethyst">
+								{formatRegentVernacular(data.ink_type)}
+							</span>
+						</div>
+					</AscendantWindow>
+				)}
 			</div>
 
-			{data.effects && !Array.isArray(data.effects) && (
+			{data.active_veins && data.active_veins.length > 0 && (
+				<AscendantWindow title="ACTIVE VEINS">
+					<div className="flex flex-wrap gap-2">
+						{data.active_veins.map((vein) => (
+							<Badge
+								key={vein}
+								variant="outline"
+								className="border-cyan/40 text-cyan"
+							>
+								{formatRegentVernacular(vein)}
+							</Badge>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
+
+			{data.resonance_effect && (
+				<AscendantWindow title="RESONANCE EFFECT">
+					<div className="flex items-start gap-3">
+						<Zap className="w-5 h-5 text-amethyst flex-shrink-0 mt-0.5" />
+						<p className="text-foreground leading-relaxed">
+							<AutoLinkText text={data.resonance_effect} />
+						</p>
+					</div>
+				</AscendantWindow>
+			)}
+
+			{effectLines.length > 0 && (
 				<AscendantWindow
 					id="tattoo-effects"
 					title="CIRCUIT EFFECTS"
 					className="border-amethyst/30 shadow-[0_0_15px_-5px_rgba(168,85,247,0.3)]"
 				>
 					<div className="space-y-4 text-sm">
-						{(data.effects as CompendiumEffects).primary && (
-							<div className="p-4 bg-muted/10 border-l border-cyan/40 rounded-r-lg">
+						{effectLines.map((line) => (
+							<div
+								key={`${line.label}:${line.text}`}
+								className="p-4 bg-muted/10 border-l border-cyan/40 rounded-r-lg"
+							>
 								<p className="font-heading text-cyan mb-2 uppercase text-xs tracking-wider">
-									Primary Effect
+									{line.label}
 								</p>
 								<p className="text-foreground leading-relaxed">
-									<AutoLinkText
-										text={(data.effects as CompendiumEffects).primary || ""}
-									/>
+									<AutoLinkText text={line.text} />
 								</p>
 							</div>
-						)}
-						{(data.effects as CompendiumEffects).secondary && (
-							<div className="p-4 bg-muted/10 border-l border-amethyst/40 rounded-r-lg">
-								<p className="font-heading text-amethyst mb-2 uppercase text-xs tracking-wider">
-									Secondary Effect
-								</p>
-								<p className="text-foreground leading-relaxed">
-									<AutoLinkText
-										text={(data.effects as CompendiumEffects).secondary || ""}
-									/>
-								</p>
-							</div>
-						)}
+						))}
 					</div>
+				</AscendantWindow>
+			)}
+
+			{limitationLines.length > 0 && (
+				<AscendantWindow title="LIMITATIONS">
+					<ul className="space-y-2 text-sm">
+						{limitationLines.map((line) => (
+							<li
+								key={`${line.label}:${line.text}`}
+								className="flex items-center gap-2"
+							>
+								<Shield className="w-4 h-4 text-muted-foreground" />
+								<span>
+									{line.label}: {formatRegentVernacular(line.text)}
+								</span>
+							</li>
+						))}
+					</ul>
 				</AscendantWindow>
 			)}
 
@@ -143,17 +197,6 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 							<p className="text-sm text-muted-foreground leading-relaxed">
 								<AutoLinkText text={(data.lore as string) || ""} />
 							</p>
-						</div>
-					)}
-
-					{data.mechanics && Object.keys(data.mechanics).length > 0 && (
-						<div className="mt-6 pt-4 border-t border-cyan/10">
-							<h4 className="text-cyan font-bold text-[10px] uppercase tracking-wider mb-2">
-								Core Diagnostics
-							</h4>
-							<pre className="whitespace-pre-wrap font-mono bg-void/80 p-3 rounded text-[10px] text-cyan/60 overflow-hidden border border-cyan/20">
-								{JSON.stringify(data.mechanics, null, 2)}
-							</pre>
 						</div>
 					)}
 				</AscendantWindow>

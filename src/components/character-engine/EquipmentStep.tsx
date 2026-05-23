@@ -1,9 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
 import { Check } from "lucide-react";
+import { useMemo, useState } from "react";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import type { StaticCompendiumEntry } from "@/data/compendium/providers/types";
+import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { cn } from "@/lib/utils";
+import { formatRegentVernacular } from "@/lib/vernacular";
 import type { StaticJob } from "@/types/character";
 
 interface EquipmentStepProps {
@@ -14,11 +20,143 @@ interface EquipmentStepProps {
 	) => void;
 }
 
+const normalizeEquipmentLookup = (value: string) =>
+	value
+		.toLowerCase()
+		.replace(/\([^)]*\)/g, "")
+		.replace(/[^a-z0-9]+/g, "")
+		.trim();
+
+const stringifyValue = (value: unknown): string | null => {
+	if (value === null || value === undefined) return null;
+	if (typeof value === "string") return value.trim() || null;
+	if (typeof value === "number") return `${value}`;
+	if (typeof value === "boolean") return value ? "Yes" : "No";
+	return null;
+};
+
+const getPropertyLabels = (entry: StaticCompendiumEntry): string[] => {
+	if (Array.isArray(entry.simple_properties)) return entry.simple_properties;
+	if (Array.isArray(entry.properties)) return entry.properties;
+	if (entry.properties && typeof entry.properties === "object") {
+		return Object.entries(entry.properties)
+			.filter(([, value]) => value === true || value === "true")
+			.map(([key]) => key);
+	}
+	return [];
+};
+
+const getCanonicalMatches = (
+	option: string,
+	canonicalEntries: StaticCompendiumEntry[],
+	canonicalByName: Map<string, StaticCompendiumEntry>,
+) => {
+	const optionKey = normalizeEquipmentLookup(option);
+	const direct = canonicalByName.get(optionKey);
+	if (direct) return [direct];
+
+	return canonicalEntries
+		.filter((entry) => {
+			const entryKey = normalizeEquipmentLookup(entry.name);
+			return (
+				entryKey.length >= 4 &&
+				(optionKey.includes(entryKey) || entryKey.includes(optionKey))
+			);
+		})
+		.slice(0, 3);
+};
+
+const getCanonicalLines = (entry: StaticCompendiumEntry): string[] => {
+	const lines: string[] = [];
+	const damage = stringifyValue(entry.damage);
+	const damageType = stringifyValue(entry.damage_type);
+	const armorClass = stringifyValue(entry.armor_class);
+	const equipmentType = stringifyValue(
+		entry.weapon_type ??
+			entry.armor_type ??
+			entry.item_type ??
+			entry.equipment_type,
+	);
+	const properties = getPropertyLabels(entry);
+	const weight = stringifyValue(entry.weight);
+	const rarity = stringifyValue(entry.rarity);
+
+	if (damage)
+		lines.push(`Damage ${damage}${damageType ? ` ${damageType}` : ""}`);
+	if (armorClass) lines.push(`AC ${armorClass}`);
+	if (equipmentType) lines.push(formatRegentVernacular(equipmentType));
+	if (properties.length > 0)
+		lines.push(properties.map(formatRegentVernacular).join(", "));
+	if (entry.stealth_disadvantage) lines.push("Stealth Disadvantage");
+	if (entry.strength_requirement)
+		lines.push(`STR ${entry.strength_requirement}`);
+	if (weight) lines.push(`${weight} lb`);
+	if (rarity) lines.push(formatRegentVernacular(rarity));
+
+	return lines;
+};
+
+function CanonicalEquipmentDetails({
+	matches,
+	showAllStats,
+}: {
+	matches: StaticCompendiumEntry[];
+	showAllStats: boolean;
+}) {
+	if (matches.length === 0) return null;
+
+	return (
+		<div className="mt-2 space-y-1">
+			{matches.map((entry) => {
+				const lines = showAllStats
+					? getCanonicalLines(entry)
+					: getCanonicalLines(entry).slice(0, 3);
+				if (lines.length === 0) return null;
+				return (
+					<div key={entry.id} className="flex flex-wrap gap-1">
+						{lines.map((line) => (
+							<Badge
+								key={`${entry.id}-${line}`}
+								variant="outline"
+								className="text-[8px] border-primary/20 bg-black/20"
+							>
+								{line}
+							</Badge>
+						))}
+					</div>
+				);
+			})}
+		</div>
+	);
+}
+
 export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 	staticJobData,
 	equipmentChoices,
 	setEquipmentChoices,
 }) => {
+	const [showAllStats, setShowAllStats] = useState(false);
+	const { data: canonicalEntries = [] } = useQuery({
+		queryKey: ["creation-canonical-equipment"],
+		queryFn: async () => {
+			const [equipment, items, relics] = await Promise.all([
+				listCanonicalEntries("equipment"),
+				listCanonicalEntries("items"),
+				listCanonicalEntries("relics"),
+			]);
+			return [...equipment, ...items, ...relics];
+		},
+		staleTime: 5 * 60 * 1000,
+	});
+	const canonicalByName = useMemo(() => {
+		const next = new Map<string, StaticCompendiumEntry>();
+		for (const entry of canonicalEntries) {
+			const key = normalizeEquipmentLookup(entry.name);
+			if (key && !next.has(key)) next.set(key, entry);
+		}
+		return next;
+	}, [canonicalEntries]);
+
 	if (
 		!staticJobData?.startingEquipment ||
 		staticJobData.startingEquipment.length === 0
@@ -48,11 +186,27 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 						Select active equipment hardware for the current loadout. The first
 						configuration in each array is staged as default.
 					</AscendantText>
+					<div className="flex justify-end">
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							onClick={() => setShowAllStats((current) => !current)}
+							className="text-[10px] uppercase tracking-widest"
+						>
+							{showAllStats ? "Show summary" : "Show all stats"}
+						</Button>
+					</div>
 
 					<div className="space-y-4">
 						{staticJobData.startingEquipment.map(
 							(group: string[], groupIndex: number) => {
 								const chosen = equipmentChoices[groupIndex] ?? group[0];
+								const chosenCanonicalMatches = getCanonicalMatches(
+									chosen,
+									canonicalEntries,
+									canonicalByName,
+								);
 
 								return (
 									<div
@@ -66,6 +220,10 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 													<span className="font-heading font-semibold text-sm text-primary/80">
 														{group[0]}
 													</span>
+													<CanonicalEquipmentDetails
+														matches={chosenCanonicalMatches}
+														showAllStats={showAllStats}
+													/>
 												</div>
 												<Badge
 													variant="secondary"
@@ -89,36 +247,49 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 												</div>
 
 												<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-													{group.map((option) => (
-														<button
-															key={option}
-															type="button"
-															onClick={() =>
-																setEquipmentChoices((prev) => ({
-																	...prev,
-																	[groupIndex]: option,
-																}))
-															}
-															className={cn(
-																"text-left p-3 rounded border transition-all flex items-center gap-3",
-																chosen === option
-																	? "border-primary/60 bg-primary/10 text-primary-foreground"
-																	: "border-primary/5 bg-black/40 text-muted-foreground hover:border-primary/20 hover:bg-black/60",
-															)}
-														>
-															<div
+													{group.map((option) => {
+														const canonicalMatches = getCanonicalMatches(
+															option,
+															canonicalEntries,
+															canonicalByName,
+														);
+														return (
+															<button
+																key={option}
+																type="button"
+																onClick={() =>
+																	setEquipmentChoices((prev) => ({
+																		...prev,
+																		[groupIndex]: option,
+																	}))
+																}
 																className={cn(
-																	"w-3 h-3 rounded-full border flex-shrink-0 transition-all",
+																	"text-left p-3 rounded border transition-all flex items-start gap-3",
 																	chosen === option
-																		? "border-primary bg-primary scale-110 shadow-[0_0_8px_rgba(var(--primary),0.5)]"
-																		: "border-primary/20 bg-transparent",
+																		? "border-primary/60 bg-primary/10 text-primary-foreground"
+																		: "border-primary/5 bg-black/40 text-muted-foreground hover:border-primary/20 hover:bg-black/60",
 																)}
-															/>
-															<span className="font-heading text-xs tracking-tight">
-																{option}
-															</span>
-														</button>
-													))}
+															>
+																<div
+																	className={cn(
+																		"w-3 h-3 rounded-full border flex-shrink-0 transition-all mt-0.5",
+																		chosen === option
+																			? "border-primary bg-primary scale-110 shadow-[0_0_8px_rgba(var(--primary),0.5)]"
+																			: "border-primary/20 bg-transparent",
+																	)}
+																/>
+																<div className="min-w-0">
+																	<span className="font-heading text-xs tracking-tight">
+																		{option}
+																	</span>
+																	<CanonicalEquipmentDetails
+																		matches={canonicalMatches}
+																		showAllStats={showAllStats}
+																	/>
+																</div>
+															</button>
+														);
+													})}
 												</div>
 											</div>
 										)}
@@ -145,7 +316,17 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 											className="text-xs flex items-center gap-3 text-muted-foreground/80"
 										>
 											<Check className="w-3 h-3 text-primary/60 flex-shrink-0" />
-											{chosen}
+											<div className="min-w-0">
+												<div>{chosen}</div>
+												<CanonicalEquipmentDetails
+													matches={getCanonicalMatches(
+														chosen,
+														canonicalEntries,
+														canonicalByName,
+													)}
+													showAllStats={showAllStats}
+												/>
+											</div>
 										</li>
 									);
 								},

@@ -1,6 +1,7 @@
 import type React from "react";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import {
 	Select,
@@ -9,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { formatActivationText } from "@/lib/canonicalCompendium";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 interface PathFeature {
@@ -21,6 +23,7 @@ interface PathAbility {
 	name: string;
 	description?: string | null;
 	cost?: string | null;
+	recharge?: number | string | null;
 }
 
 interface PathStats {
@@ -45,6 +48,148 @@ interface PathStepProps {
 	selectedPath: string;
 	onPathChange: (pathId: string) => void;
 	paths: PathRow[];
+}
+
+const formatMaybe = (value: string | null | undefined) =>
+	value ? formatRegentVernacular(value) : "";
+
+// ---------------------------------------------------------------------------
+// Inline mechanic extraction from description text
+// ---------------------------------------------------------------------------
+
+/** Extracts dice formulas like "1d6", "2d8+3", "3d10 force", etc. */
+const DICE_FORMULA_RE =
+	/\b(\d+d\d+(?:\s*[+]\s*\w+)?(?:\s+(?:radiant|necrotic|force|fire|cold|lightning|thunder|psychic|poison|acid|bludgeoning|piercing|slashing))?)\b/gi;
+
+/** Extracts save references like "STR save", "AGI half", "SENSE save DC" */
+const SAVE_RE =
+	/\b(STR|AGI|VIT|INT|SENSE|PRE|Strength|Agility|Vitality|Intelligence|Sense|Presence|Constitution|Dexterity|Wisdom|Charisma)\s+(?:save|saving throw|half)\b/gi;
+
+/** Extracts range/radius like "30 ft", "60-ft radius", "10-ft aura", "within 5 ft" */
+const RANGE_RE =
+	/\b(\d+)[- ]?(?:ft|feet|foot)\b(?:\s*(?:radius|aura|cone|line|sphere|cube))?/gi;
+
+interface ExtractedMechanics {
+	diceFormulas: string[];
+	saves: string[];
+	ranges: string[];
+	actionType: string | null;
+}
+
+function extractMechanicsFromDescription(
+	description: string | null | undefined,
+): ExtractedMechanics {
+	const result: ExtractedMechanics = {
+		diceFormulas: [],
+		saves: [],
+		ranges: [],
+		actionType: null,
+	};
+	if (!description) return result;
+
+	const diceMatches = [...description.matchAll(DICE_FORMULA_RE)];
+	const seen = new Set<string>();
+	for (const match of diceMatches) {
+		const normalized = match[1].trim().toLowerCase();
+		if (!seen.has(normalized)) {
+			seen.add(normalized);
+			result.diceFormulas.push(match[1].trim());
+		}
+	}
+
+	const saveMatches = [...description.matchAll(SAVE_RE)];
+	const seenSaves = new Set<string>();
+	for (const match of saveMatches) {
+		const ability = match[1].toUpperCase().slice(0, 3);
+		if (!seenSaves.has(ability)) {
+			seenSaves.add(ability);
+			result.saves.push(`${ability} save`);
+		}
+	}
+
+	const rangeMatches = [...description.matchAll(RANGE_RE)];
+	const seenRanges = new Set<string>();
+	for (const match of rangeMatches) {
+		const range = match[0].trim();
+		if (!seenRanges.has(range)) {
+			seenRanges.add(range);
+			result.ranges.push(range);
+		}
+	}
+
+	return result;
+}
+
+function buildMechanicPreview(mechanics: ExtractedMechanics): string | null {
+	const parts: string[] = [];
+	if (mechanics.diceFormulas.length > 0) {
+		parts.push(mechanics.diceFormulas.join(", "));
+	}
+	if (mechanics.saves.length > 0) {
+		parts.push(mechanics.saves.join(", "));
+	}
+	if (mechanics.ranges.length > 0) {
+		// Only show unique meaningful ranges (skip "5 ft" which is typically melee default)
+		const significant = mechanics.ranges.filter((r) => !r.startsWith("5 "));
+		if (significant.length > 0) {
+			parts.push(significant.join(", "));
+		}
+	}
+	return parts.length > 0 ? parts.join(" · ") : null;
+}
+
+function normalizeActivationCost(
+	cost: string | null | undefined,
+): string | null {
+	if (!cost) return null;
+	// Try the canonical formatter first (handles structured objects and strings)
+	const formatted = formatActivationText(cost);
+	if (formatted) return formatted;
+	// Fall back to raw string
+	return cost.trim() || null;
+}
+
+function PathMechanicCard({
+	title,
+	description,
+	badges,
+	mechanicPreview,
+}: {
+	title: string;
+	description?: string | null;
+	badges: { label: string; variant?: "default" | "secondary" | "outline" }[];
+	mechanicPreview?: string | null;
+}) {
+	return (
+		<div className="text-xs space-y-2 p-3 rounded bg-black/40 border border-primary/10">
+			<div className="flex justify-between items-start gap-3">
+				<span className="font-semibold text-primary">
+					{formatRegentVernacular(title)}
+				</span>
+				<div className="flex flex-wrap justify-end gap-1">
+					{badges.map((badge) => (
+						<Badge
+							key={`${title}-${badge.label}`}
+							variant={badge.variant ?? "secondary"}
+							className="text-[9px] uppercase"
+						>
+							{badge.label}
+						</Badge>
+					))}
+				</div>
+			</div>
+			{description && (
+				<AscendantText className="text-muted-foreground block">
+					{formatRegentVernacular(description)}
+				</AscendantText>
+			)}
+			{mechanicPreview && (
+				<div className="mt-1 text-[10px] text-primary/80 font-mono bg-primary/5 border border-primary/10 rounded px-2 py-1">
+					{mechanicPreview}
+				</div>
+			)}
+		</div>
+	);
 }
 
 export const PathStep: React.FC<PathStepProps> = ({
@@ -117,24 +262,24 @@ export const PathStep: React.FC<PathStepProps> = ({
 											Path Attributes
 											<span className="h-[1px] flex-grow bg-primary/20"></span>
 										</h4>
-										<div className="grid grid-cols-2 gap-2 text-xs">
-											<div>
-												<span className="text-muted-foreground">
-													Primary Node:
-												</span>{" "}
-												<span className="font-medium text-foreground">
-													{selectedPathData.stats.primaryAttribute}
-												</span>
-											</div>
+										<div className="flex flex-wrap gap-2">
+											<Badge
+												variant="secondary"
+												className="text-[10px] bg-primary/10 border-primary/20"
+											>
+												Primary:{" "}
+												{formatMaybe(selectedPathData.stats.primaryAttribute)}
+											</Badge>
 											{selectedPathData.stats.secondaryAttribute && (
-												<div>
-													<span className="text-muted-foreground">
-														Secondary Node:
-													</span>{" "}
-													<span className="font-medium text-foreground">
-														{selectedPathData.stats.secondaryAttribute}
-													</span>
-												</div>
+												<Badge
+													variant="outline"
+													className="text-[10px] border-primary/20"
+												>
+													Secondary:{" "}
+													{formatMaybe(
+														selectedPathData.stats.secondaryAttribute,
+													)}
+												</Badge>
 											)}
 										</div>
 									</div>
@@ -152,24 +297,21 @@ export const PathStep: React.FC<PathStepProps> = ({
 											<div className="space-y-4">
 												{[...selectedPathData.features]
 													.sort((a, b) => a.level - b.level)
-													.map((f) => (
-														<div
-															key={`${f.level}-${f.name}`}
-															className="text-xs space-y-1 p-3 rounded bg-black/40 border border-primary/10"
-														>
-															<div className="flex justify-between items-center">
-																<span className="font-semibold text-primary">
-																	{f.name}
-																</span>
-																<span className="text-[9px] uppercase text-muted-foreground bg-primary/5 px-2 py-0.5 rounded">
-																	Level {f.level}
-																</span>
-															</div>
-															<AscendantText className="text-muted-foreground">
-																{f.description}
-															</AscendantText>
-														</div>
-													))}
+													.map((f) => {
+														const mechanics = extractMechanicsFromDescription(
+															f.description,
+														);
+														const preview = buildMechanicPreview(mechanics);
+														return (
+															<PathMechanicCard
+																key={`${f.level}-${f.name}`}
+																title={f.name}
+																description={f.description}
+																badges={[{ label: `Level ${f.level}` }]}
+																mechanicPreview={preview}
+															/>
+														);
+													})}
 											</div>
 										</div>
 									)}
@@ -184,26 +326,41 @@ export const PathStep: React.FC<PathStepProps> = ({
 												<span className="h-[1px] flex-grow bg-primary/20"></span>
 											</h4>
 											<div className="space-y-4">
-												{selectedPathData.abilities.map((a) => (
-													<div
-														key={a.name}
-														className="text-xs space-y-1 p-3 rounded bg-black/40 border border-primary/10"
-													>
-														<div className="flex justify-between items-center">
-															<span className="font-semibold text-foreground">
-																{a.name}
-															</span>
-															{a.cost && (
-																<span className="text-[9px] uppercase text-muted-foreground bg-primary/5 px-2 py-0.5 rounded">
-																	{a.cost}
-																</span>
-															)}
-														</div>
-														<AscendantText className="text-muted-foreground block">
-															{a.description}
-														</AscendantText>
-													</div>
-												))}
+												{selectedPathData.abilities.map((a) => {
+													const normalizedCost = normalizeActivationCost(
+														a.cost,
+													);
+													const mechanics = extractMechanicsFromDescription(
+														a.description,
+													);
+													const preview = buildMechanicPreview(mechanics);
+													return (
+														<PathMechanicCard
+															key={a.name}
+															title={a.name}
+															description={a.description}
+															badges={[
+																...(normalizedCost
+																	? [
+																			{
+																				label: normalizedCost,
+																			},
+																		]
+																	: []),
+																...(a.recharge !== null &&
+																a.recharge !== undefined
+																	? [
+																			{
+																				label: `Recharge ${a.recharge}`,
+																				variant: "outline" as const,
+																			},
+																		]
+																	: []),
+															]}
+															mechanicPreview={preview}
+														/>
+													);
+												})}
 											</div>
 										</div>
 									)}

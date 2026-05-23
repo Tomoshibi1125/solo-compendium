@@ -1,4 +1,5 @@
 import {
+	Award,
 	Dice6,
 	Heart,
 	Minus,
@@ -23,12 +24,16 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useToast } from "@/hooks/use-toast";
+import { useCampaignDice } from "@/hooks/useCampaignDice";
+import { useRecordRoll } from "@/hooks/useRollHistory";
 import { formatModifier } from "@/lib/characterCalculations";
 import {
 	getAffordableOptions,
 	getAvailableFavorOptions,
+	RIFT_BOOST_OPTION_ID,
 	type RiftFavorState,
+	rollRiftFavorBoost,
 	spendRiftFavor,
 } from "@/lib/riftFavor";
 
@@ -37,6 +42,8 @@ interface StatusHeaderProps {
 	ac: number;
 	initiative: number;
 	speed: number;
+	proficiencyBonus: number;
+	characterLevel: number;
 	acBreakdown?: string;
 	initiativeBreakdown?: string;
 	speedBreakdown?: string;
@@ -74,6 +81,8 @@ export function StatusHeader({
 	ac,
 	initiative,
 	speed,
+	proficiencyBonus,
+	characterLevel,
 	hitDice,
 	riftFavor,
 	acBreakdown,
@@ -88,7 +97,9 @@ export function StatusHeader({
 	characterId,
 	campaignId,
 }: StatusHeaderProps) {
-	const ddbEnhancements = useCharacterSheetEnhancements(characterId);
+	const { toast } = useToast();
+	const recordRoll = useRecordRoll();
+	const { rollInCampaign } = useCampaignDice();
 
 	const riftFavorState: RiftFavorState = {
 		current: riftFavor.current,
@@ -105,21 +116,62 @@ export function StatusHeader({
 	const handleSpendFavor = (optionId: string) => {
 		const result = spendRiftFavor(riftFavorState, optionId);
 		if (result.success) {
-			ddbEnhancements.roll(
-				"rift-favor",
-				0,
-				"save", // using save as generic
-				result.message,
-				campaignId,
-				"normal",
-			);
+			const boostRoll =
+				optionId === RIFT_BOOST_OPTION_ID
+					? rollRiftFavorBoost(riftFavorState)
+					: null;
+			const context = boostRoll
+				? `${boostRoll.message} (${result.updatedState.current}/${result.updatedState.max} Rift Favor remaining)`
+				: result.message;
+			const rollPayload = {
+				character_id: characterId,
+				campaign_id: campaignId ?? null,
+				dice_formula: boostRoll?.diceFormula ?? "0",
+				result: boostRoll?.result ?? 0,
+				roll_type: boostRoll ? "modifier" : "rift_favor",
+				rolls: boostRoll ? [boostRoll.roll] : [],
+				context,
+				modifiers: {
+					option: result.option?.id,
+					option_name: result.option?.name,
+					cost: result.option?.cost,
+					remaining: result.updatedState.current,
+					max: result.updatedState.max,
+				},
+			};
+
+			recordRoll.mutate(rollPayload);
+			if (campaignId) {
+				rollInCampaign(campaignId, rollPayload);
+			}
+			toast({
+				title: result.option?.name ?? "Rift Favor",
+				description: context,
+			});
 			onAdjustResource("rift_favor_current", -(result.option?.cost ?? 1));
+		} else {
+			toast({
+				title: "Rift Favor unavailable",
+				description: result.message,
+				variant: "destructive",
+			});
 		}
 	};
 
+	const proficiencyTier =
+		characterLevel >= 17
+			? "S"
+			: characterLevel >= 13
+				? "A"
+				: characterLevel >= 9
+					? "B"
+					: characterLevel >= 5
+						? "C"
+						: "D";
+
 	return (
 		<TooltipProvider delayDuration={200}>
-			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 w-full">
+			<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 w-full">
 				{/* Armor Class Block */}
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -216,6 +268,36 @@ export function StatusHeader({
 							<div className="text-muted-foreground">{speedBreakdown}</div>
 						</TooltipContent>
 					)}
+				</Tooltip>
+
+				{/* Proficiency Bonus Block */}
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<div
+							data-testid="status-proficiency-bonus"
+							className="bg-obsidian-charcoal/60 border border-primary/20 rounded-[2px] p-4 flex flex-col items-center justify-center w-full"
+						>
+							<Award className="w-5 h-5 text-amber-300 mb-2" />
+							<span className="text-2xl font-display font-bold text-white">
+								{formatModifier(proficiencyBonus)}
+							</span>
+							<span className="text-[10px] font-mono text-primary/50 uppercase tracking-widest mt-1">
+								PROF_BONUS
+							</span>
+						</div>
+					</TooltipTrigger>
+					<TooltipContent
+						side="bottom"
+						className="font-mono text-xs max-w-[220px] whitespace-normal"
+					>
+						<div className="font-bold text-primary mb-1 border-b border-primary/20 pb-1">
+							Proficiency Bonus
+						</div>
+						<div className="text-muted-foreground">
+							Added to attacks, saves, and skills you are proficient in. Tier{" "}
+							{proficiencyTier} · Level {characterLevel}.
+						</div>
+					</TooltipContent>
 				</Tooltip>
 
 				{/* HP Block (Span 2 or wide) */}
@@ -335,7 +417,7 @@ export function StatusHeader({
 											<span className="text-xs">Cost: {opt.cost}</span>
 										</div>
 										<span className="text-[10px] text-muted-foreground whitespace-normal">
-											{opt.description}
+											{opt.rulesText || opt.description}
 										</span>
 									</DropdownMenuItem>
 								);
@@ -345,7 +427,7 @@ export function StatusHeader({
 				</div>
 
 				{hp.current === 0 && (
-					<div className="col-span-2 md:col-span-4 lg:col-span-6 mt-4">
+					<div className="col-span-2 md:col-span-4 lg:col-span-7 mt-4">
 						<DeathSaveTracker
 							successes={deathSaves.successes}
 							failures={deathSaves.failures}

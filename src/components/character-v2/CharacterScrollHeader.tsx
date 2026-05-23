@@ -1,4 +1,4 @@
-import { Heart, Shield, Zap } from "lucide-react";
+import { Award, Heart, Shield, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { formatModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ interface CharacterScrollHeaderProps {
 	tempHp: number;
 	ac: number;
 	initiative: number;
+	proficiencyBonus: number;
 	className?: string;
 }
 
@@ -22,6 +23,7 @@ export function CharacterScrollHeader({
 	tempHp,
 	ac,
 	initiative,
+	proficiencyBonus,
 	className,
 }: CharacterScrollHeaderProps) {
 	const hpPercent = Math.min(100, Math.max(0, (hp.current / hp.max) * 100));
@@ -109,6 +111,17 @@ export function CharacterScrollHeader({
 								<Zap className="w-3 h-3 text-yellow-400" />
 								<span className="text-xs font-bold text-yellow-100">
 									{formatModifier(initiative)}
+								</span>
+							</div>
+						</div>
+						<div className="flex flex-col items-center">
+							<span className="text-[8px] font-mono text-primary/40 uppercase">
+								PB
+							</span>
+							<div className="flex items-center gap-1">
+								<Award className="w-3 h-3 text-amber-300" />
+								<span className="text-xs font-bold text-amber-100">
+									{formatModifier(proficiencyBonus)}
 								</span>
 							</div>
 						</div>

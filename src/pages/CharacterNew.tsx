@@ -11,6 +11,7 @@ import {
 import { EquipmentStep } from "@/components/character-engine/EquipmentStep";
 // Component-based Character Engine imports
 import { IdentityStep } from "@/components/character-engine/IdentityStep";
+import { ImprintOptionCard } from "@/components/character-engine/ImprintOptionCard";
 import { JobStep } from "@/components/character-engine/JobStep";
 import { PathStep } from "@/components/character-engine/PathStep";
 import { PersonaStep } from "@/components/character-engine/PersonaStep";
@@ -35,6 +36,11 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import {
+	formatAttackLine,
+	formatCompactActionLine,
+	formatDamageLine,
+} from "@/lib/canonicalActionDisplay";
+import {
 	type CanonicalCastableEntry,
 	listLearnablePowers,
 	listLearnableSpells,
@@ -46,7 +52,11 @@ import {
 	assertCanonicalTechniqueLearnable,
 	type CharacterAbilityAccessContext,
 } from "@/lib/characterAbilityAccess";
-import { calculateHPMax } from "@/lib/characterCalculations";
+import {
+	calculateCharacterStats,
+	calculateHPMax,
+	getSpellcastingAbility,
+} from "@/lib/characterCalculations";
 import {
 	addJobAwakeningBenefitsForLevel,
 	addLevel1Features,
@@ -84,11 +94,14 @@ import {
 	initializeProtocolData,
 } from "@/lib/ProtocolDataManager";
 import { getEffectiveMaxAbilityLevel } from "@/lib/pathAbilityAccess";
+import { resolvePowerActionFormula } from "@/lib/powerActionFormulas";
 import {
 	dedupeProficiencies,
 	formatDuplicatesSummary,
 } from "@/lib/proficiencyDedup";
+import { getAvailableFavorOptions } from "@/lib/riftFavor";
 import { filterRowsBySourcebookAccess } from "@/lib/sourcebookAccess";
+import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import type {
 	Background,
 	Job,
@@ -96,7 +109,7 @@ import type {
 	StaticBackground,
 	StaticJob,
 } from "@/types/character";
-import type { AbilityScore } from "@/types/core-rules";
+import { type AbilityScore, SKILLS } from "@/types/core-rules";
 
 type DbAbilityScore = Database["public"]["Enums"]["ability_score"];
 
@@ -157,6 +170,79 @@ const asStringArray = (value: unknown): string[] =>
 	Array.isArray(value)
 		? value.filter((item): item is string => typeof item === "string")
 		: [];
+
+const ABILITY_SCORE_BY_NAME: Record<string, AbilityScore> = {
+	agi: "AGI",
+	agility: "AGI",
+	int: "INT",
+	intelligence: "INT",
+	pre: "PRE",
+	presence: "PRE",
+	sense: "SENSE",
+	str: "STR",
+	strength: "STR",
+	vit: "VIT",
+	vitality: "VIT",
+};
+
+const ABILITY_ORDER: AbilityScore[] = [
+	"STR",
+	"AGI",
+	"VIT",
+	"INT",
+	"SENSE",
+	"PRE",
+];
+
+const normalizeAbilityScore = (value: string): AbilityScore | null =>
+	ABILITY_SCORE_BY_NAME[value.trim().toLowerCase()] ?? null;
+
+const normalizeSkillId = (value: string) => {
+	const normalized = normalizeCompendiumKey(value);
+	return (
+		SKILLS.find(
+			(skill) =>
+				normalizeCompendiumKey(skill.id) === normalized ||
+				normalizeCompendiumKey(skill.name) === normalized,
+		)?.id ?? value
+	);
+};
+
+const stringifyCreationValue = (value: unknown): string | null => {
+	if (value === null || value === undefined) return null;
+	if (typeof value === "string") return value.trim() || null;
+	if (typeof value === "number") return `${value}`;
+	if (typeof value === "boolean") return value ? "Yes" : "No";
+	return null;
+};
+
+const collectCreationProperties = (entry: StaticCompendiumEntry): string[] => {
+	if (Array.isArray(entry.simple_properties)) return entry.simple_properties;
+	if (Array.isArray(entry.properties)) return entry.properties;
+	if (entry.properties && typeof entry.properties === "object") {
+		return Object.entries(entry.properties)
+			.filter(([, value]) => value === true || value === "true")
+			.map(([key]) => key);
+	}
+	return [];
+};
+
+const hasProperty = (entry: StaticCompendiumEntry, property: string) =>
+	collectCreationProperties(entry).some(
+		(value) =>
+			normalizeCompendiumKey(value) === normalizeCompendiumKey(property),
+	);
+
+const isRangedEquipment = (entry: StaticCompendiumEntry) => {
+	const weaponType = stringifyCreationValue(entry.weapon_type);
+	const range = stringifyCreationValue(entry.range);
+	return Boolean(
+		weaponType?.toLowerCase().includes("ranged") ||
+			range?.includes("/") ||
+			hasProperty(entry, "ammunition") ||
+			hasProperty(entry, "thrown"),
+	);
+};
 
 const appendUnique = (current: string[], value: string) => {
 	if (!value) return current;
@@ -244,6 +330,27 @@ const CharacterNew = () => {
 
 	const { data: templates } = useCharacterTemplates();
 	const { data: staticJobCatalog = [] } = useStaticJobs();
+	const { data: canonicalEquipmentEntries = [] } = useQuery({
+		queryKey: ["creation-review-canonical-equipment", homebrewCampaignId],
+		queryFn: async () => {
+			const { listCanonicalEntries } = await import(
+				"@/lib/canonicalCompendium"
+			);
+			const [equipment, items, relics] = await Promise.all([
+				listCanonicalEntries("equipment", undefined, {
+					campaignId: homebrewCampaignId,
+				}),
+				listCanonicalEntries("items", undefined, {
+					campaignId: homebrewCampaignId,
+				}),
+				listCanonicalEntries("relics", undefined, {
+					campaignId: homebrewCampaignId,
+				}),
+			]);
+			return [...equipment, ...items, ...relics];
+		},
+		staleTime: 5 * 60 * 1000,
+	});
 	const { data: publishedHomebrew = [] } = usePublishedHomebrew(
 		["job", "path", "spell"],
 		homebrewCampaignId,
@@ -1633,6 +1740,281 @@ const CharacterNew = () => {
 		staticJobLedgerData?.spellbook?.label,
 	]);
 
+	const creationPowerFormula = useMemo(
+		() =>
+			resolvePowerActionFormula({
+				job: jobData?.name ?? staticJobData?.name,
+				abilities: effectiveAbilities,
+				proficiencyBonus: 2,
+			}),
+		[effectiveAbilities, jobData?.name, staticJobData?.name],
+	);
+
+	const getImprintMetadata = (entry: CanonicalCastableEntry) =>
+		[
+			entry.source_book ? `Source: ${entry.source_book}` : null,
+			entry.activation_time ? `Time: ${entry.activation_time}` : null,
+			entry.range ? `Range: ${entry.range}` : null,
+			entry.duration ? `Duration: ${entry.duration}` : null,
+		].filter((value): value is string => Boolean(value));
+
+	const getImprintActionPreview = (entry: CanonicalCastableEntry) =>
+		formatCompactActionLine({
+			attack: entry.has_attack_roll
+				? {
+						ability: creationPowerFormula.ability,
+						abilityModifier: creationPowerFormula.abilityModifier,
+						attackBonus: creationPowerFormula.attackBonus,
+						attackRoll: creationPowerFormula.attackRoll,
+					}
+				: undefined,
+			save: entry.has_save
+				? {
+						saveDC: creationPowerFormula.saveDC,
+						saveAbility: entry.save_ability,
+					}
+				: undefined,
+			damage: entry.damage_roll
+				? {
+						damageRoll: entry.damage_roll,
+						damageType: entry.damage_type,
+					}
+				: undefined,
+		});
+
+	const getTechniqueMetadata = (entry: StaticCompendiumEntry) =>
+		[
+			entry.source_book ? `Source: ${entry.source_book}` : null,
+			stringifyCreationValue(
+				(entry as { activation_action?: unknown }).activation_action ??
+					(entry as { activation?: unknown }).activation,
+			)
+				? `Time: ${stringifyCreationValue(
+						(entry as { activation_action?: unknown }).activation_action ??
+							(entry as { activation?: unknown }).activation,
+					)}`
+				: null,
+			stringifyCreationValue(entry.range)
+				? `Range: ${stringifyCreationValue(entry.range)}`
+				: null,
+			stringifyCreationValue(entry.duration)
+				? `Duration: ${stringifyCreationValue(entry.duration)}`
+				: null,
+		].filter((value): value is string => Boolean(value));
+
+	const getTechniqueActionPreview = (entry: StaticCompendiumEntry) => {
+		const mechanics =
+			entry.mechanics && typeof entry.mechanics === "object"
+				? (entry.mechanics as Record<string, unknown>)
+				: null;
+		const attack =
+			mechanics?.attack && typeof mechanics.attack === "object"
+				? (mechanics.attack as Record<string, unknown>)
+				: null;
+		const savingThrow =
+			mechanics?.saving_throw && typeof mechanics.saving_throw === "object"
+				? (mechanics.saving_throw as Record<string, unknown>)
+				: null;
+		const damageRoll = stringifyCreationValue(
+			entry.damage ?? attack?.damage ?? mechanics?.damage_profile,
+		);
+		const damageType = stringifyCreationValue(
+			entry.damage_type ?? attack?.damage_type,
+		);
+		const saveAbility = stringifyCreationValue(
+			entry.saving_throw_ability ?? savingThrow?.ability,
+		);
+
+		return formatCompactActionLine({
+			attack:
+				entry.has_attack_roll || attack
+					? {
+							ability: creationPowerFormula.ability,
+							abilityModifier: creationPowerFormula.abilityModifier,
+							attackBonus: creationPowerFormula.attackBonus,
+							attackRoll: creationPowerFormula.attackRoll,
+						}
+					: undefined,
+			save: saveAbility
+				? {
+						saveDC: creationPowerFormula.saveDC,
+						saveAbility,
+					}
+				: undefined,
+			damage: damageRoll
+				? {
+						damageRoll,
+						damageType,
+					}
+				: undefined,
+		});
+	};
+
+	const canonicalEquipmentByName = useMemo(() => {
+		const map = new Map<string, StaticCompendiumEntry>();
+		for (const entry of canonicalEquipmentEntries) {
+			const key = normalizeCompendiumKey(entry.name);
+			if (key && !map.has(key)) map.set(key, entry);
+		}
+		return map;
+	}, [canonicalEquipmentEntries]);
+
+	const reviewLoadout = useMemo(() => {
+		if (!staticJobData?.startingEquipment) return [];
+
+		return staticJobData.startingEquipment.map((group, index) => {
+			const name = equipmentChoices[index] ?? group[0];
+			const normalizedName = normalizeCompendiumKey(name);
+			const entry =
+				canonicalEquipmentByName.get(normalizedName) ??
+				canonicalEquipmentEntries.find((candidate) => {
+					const candidateKey = normalizeCompendiumKey(candidate.name);
+					return (
+						candidateKey.length >= 4 &&
+						(normalizedName.includes(candidateKey) ||
+							candidateKey.includes(normalizedName))
+					);
+				}) ??
+				null;
+			if (!entry) return { name };
+
+			const damageDice = stringifyCreationValue(entry.damage);
+			const damageType = stringifyCreationValue(entry.damage_type);
+			const armorClass = stringifyCreationValue(entry.armor_class);
+			const range = stringifyCreationValue(entry.range);
+			const properties = collectCreationProperties(entry);
+			const itemType = stringifyCreationValue(
+				entry.weapon_type ??
+					entry.armor_type ??
+					entry.item_type ??
+					entry.equipment_type,
+			);
+			const weaponFormula = damageDice
+				? resolveWeaponActionFormula({
+						abilities: effectiveAbilities,
+						proficiencyBonus: 2,
+						proficient: true,
+						isRanged: isRangedEquipment(entry),
+						isFinesse: hasProperty(entry, "finesse"),
+						damageDice,
+					})
+				: null;
+
+			return {
+				name,
+				type: itemType,
+				attackLine: weaponFormula
+					? formatAttackLine({
+							ability: weaponFormula.ability,
+							abilityModifier: weaponFormula.abilityModifier,
+							attackBonus: weaponFormula.attackBonus,
+							attackRoll: weaponFormula.attackRoll,
+						})
+					: undefined,
+				damageLine: weaponFormula
+					? formatDamageLine({
+							damageRoll: weaponFormula.damageRoll,
+							damageType,
+						})
+					: damageDice
+						? formatDamageLine({ damageRoll: damageDice, damageType })
+						: undefined,
+				armorLine: armorClass
+					? `AC ${armorClass}${entry.stealth_disadvantage ? " · Stealth Disadvantage" : ""}`
+					: undefined,
+				range,
+				properties,
+			};
+		});
+	}, [
+		canonicalEquipmentByName,
+		canonicalEquipmentEntries,
+		effectiveAbilities,
+		equipmentChoices,
+		staticJobData?.startingEquipment,
+	]);
+
+	const reviewResolvedStats = useMemo(() => {
+		const jobName = jobData?.name ?? staticJobData?.name ?? null;
+		const hitDieSize =
+			typeof jobData?.hit_die === "number" && Number.isFinite(jobData.hit_die)
+				? jobData.hit_die
+				: Number.parseInt(staticJobData?.hitDie?.replace("1d", "") ?? "8", 10);
+		const speed =
+			typeof staticJobData?.speed === "number" &&
+			Number.isFinite(staticJobData.speed)
+				? staticJobData.speed
+				: 30;
+		const savingThrowProficiencies = [
+			...(staticJobData?.saving_throws ?? []),
+			...(staticJobData?.savingThrows ?? []),
+			...(staticJobData?.saving_throw_proficiencies ?? []),
+			...(jobData?.saving_throw_proficiencies ?? []),
+		]
+			.map((ability) => normalizeAbilityScore(String(ability)))
+			.filter((ability): ability is AbilityScore => ability !== null);
+		const selectedBackgroundSkills = asStringArray(
+			(selectedBackgroundData as { skill_proficiencies?: unknown } | undefined)
+				?.skill_proficiencies,
+		);
+		const skillProficiencies = Array.from(
+			new Set(
+				[...selectedSkills, ...selectedBackgroundSkills].map(normalizeSkillId),
+			),
+		);
+		const skillExpertise = Array.from(
+			new Set(selectedSpecialistTraining.map(normalizeSkillId)),
+		);
+		const baseArmorClass = 10 + Math.floor((effectiveAbilities.AGI - 10) / 2);
+		const stats = calculateCharacterStats({
+			level: 1,
+			abilities: effectiveAbilities,
+			savingThrowProficiencies,
+			skillProficiencies,
+			skillExpertise,
+			armorClass: baseArmorClass,
+			speed,
+			job: jobName,
+		});
+		const spellcastingAbility = getSpellcastingAbility(jobName);
+
+		return {
+			...stats,
+			hitDieSize: Number.isFinite(hitDieSize) ? hitDieSize : 8,
+			spellcastingAbility,
+			savingThrowProficiencies,
+			savingThrows: ABILITY_ORDER.map((ability) => ({
+				ability,
+				value: stats.savingThrows[ability],
+				proficient: savingThrowProficiencies.includes(ability),
+			})),
+			trainedSkills: skillProficiencies.map((skillId) => {
+				const skill = SKILLS.find((entry) => entry.id === skillId);
+				return {
+					id: skillId,
+					name: skill?.name ?? skillId,
+					ability: skill?.defaultAbility ?? "STR",
+					value: stats.skills[skillId] ?? 0,
+					expertise: skillExpertise.includes(skillId),
+				};
+			}),
+		};
+	}, [
+		effectiveAbilities,
+		jobData?.hit_die,
+		jobData?.name,
+		jobData?.saving_throw_proficiencies,
+		selectedBackgroundData,
+		selectedSkills,
+		selectedSpecialistTraining,
+		staticJobData?.hitDie,
+		staticJobData?.name,
+		staticJobData?.savingThrows,
+		staticJobData?.saving_throw_proficiencies,
+		staticJobData?.saving_throws,
+		staticJobData?.speed,
+	]);
+
 	return (
 		<Layout>
 			<div className="container py-8 max-w-4xl animate-in fade-in duration-700">
@@ -1818,10 +2200,15 @@ const CharacterNew = () => {
 														cantrip.id,
 													);
 													return (
-														<button
+														<ImprintOptionCard
 															key={cantrip.id}
-															type="button"
-															data-testid="creation-cantrip-imprint-option"
+															title={cantrip.name}
+															description={cantrip.description}
+															badges={[{ label: "Cantrip" }]}
+															metadata={getImprintMetadata(cantrip)}
+															actionPreview={getImprintActionPreview(cantrip)}
+															selected={isSelected}
+															testId="creation-cantrip-imprint-option"
 															onClick={() =>
 																setSelectedCantripIds((current) =>
 																	toggleLimitedSelection(
@@ -1836,26 +2223,7 @@ const CharacterNew = () => {
 																selectedCantripIds.length >=
 																	requiredCantripChoices
 															}
-															className={`text-left p-4 rounded-lg border transition-colors ${
-																isSelected
-																	? "border-primary bg-primary/10"
-																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-															}`}
-														>
-															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-heading font-semibold">
-																	{cantrip.name}
-																</span>
-																<Badge variant="secondary" className="text-xs">
-																	Cantrip
-																</Badge>
-															</div>
-															{cantrip.description && (
-																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-																	{cantrip.description}
-																</p>
-															)}
-														</button>
+														/>
 													);
 												})}
 											</div>
@@ -1881,10 +2249,25 @@ const CharacterNew = () => {
 														spell.id,
 													);
 													return (
-														<button
+														<ImprintOptionCard
 															key={spell.id}
-															type="button"
-															data-testid="creation-spell-imprint-option"
+															title={spell.name}
+															description={spell.description}
+															badges={[
+																{ label: `Level ${spell.power_level}` },
+																...(spell.power_type
+																	? [
+																			{
+																				label: spell.power_type,
+																				variant: "outline" as const,
+																			},
+																		]
+																	: []),
+															]}
+															metadata={getImprintMetadata(spell)}
+															actionPreview={getImprintActionPreview(spell)}
+															selected={isSelected}
+															testId="creation-spell-imprint-option"
 															onClick={() =>
 																setSelectedSpellIds((current) =>
 																	toggleLimitedSelection(
@@ -1898,31 +2281,7 @@ const CharacterNew = () => {
 																!isSelected &&
 																selectedSpellIds.length >= requiredSpellChoices
 															}
-															className={`text-left p-4 rounded-lg border transition-colors ${
-																isSelected
-																	? "border-primary bg-primary/10"
-																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-															}`}
-														>
-															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-heading font-semibold">
-																	{spell.name}
-																</span>
-																<Badge variant="secondary" className="text-xs">
-																	Level {spell.power_level}
-																</Badge>
-																{spell.power_type && (
-																	<Badge variant="outline" className="text-xs">
-																		{spell.power_type}
-																	</Badge>
-																)}
-															</div>
-															{spell.description && (
-																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-																	{spell.description}
-																</p>
-															)}
-														</button>
+														/>
 													);
 												})}
 											</div>
@@ -1949,10 +2308,25 @@ const CharacterNew = () => {
 														spell.id,
 													);
 													return (
-														<button
+														<ImprintOptionCard
 															key={spell.id}
-															type="button"
-															data-testid="creation-spellbook-imprint-option"
+															title={spell.name}
+															description={spell.description}
+															badges={[
+																{ label: `Level ${spell.power_level}` },
+																...(spell.power_type
+																	? [
+																			{
+																				label: spell.power_type,
+																				variant: "outline" as const,
+																			},
+																		]
+																	: []),
+															]}
+															metadata={getImprintMetadata(spell)}
+															actionPreview={getImprintActionPreview(spell)}
+															selected={isSelected}
+															testId="creation-spellbook-imprint-option"
 															onClick={() =>
 																setSelectedSpellbookIds((current) =>
 																	toggleLimitedSelection(
@@ -1967,31 +2341,7 @@ const CharacterNew = () => {
 																selectedSpellbookIds.length >=
 																	requiredSpellbookInscriptions
 															}
-															className={`text-left p-4 rounded-lg border transition-colors ${
-																isSelected
-																	? "border-primary bg-primary/10"
-																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-															}`}
-														>
-															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-heading font-semibold">
-																	{spell.name}
-																</span>
-																<Badge variant="secondary" className="text-xs">
-																	Level {spell.power_level}
-																</Badge>
-																{spell.power_type && (
-																	<Badge variant="outline" className="text-xs">
-																		{spell.power_type}
-																	</Badge>
-																)}
-															</div>
-															{spell.description && (
-																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-																	{spell.description}
-																</p>
-															)}
-														</button>
+														/>
 													);
 												})}
 											</div>
@@ -2016,55 +2366,39 @@ const CharacterNew = () => {
 														power.id,
 													);
 													return (
-														<button
+														<ImprintOptionCard
 															key={power.id}
-															type="button"
-															data-testid="creation-power-imprint-option"
-															onClick={() => {
-																if (isSelected) {
-																	setSelectedPowerIds(
-																		selectedPowerIds.filter(
-																			(id) => id !== power.id,
-																		),
-																	);
-																} else if (
-																	selectedPowerIds.length < requiredPowerChoices
-																) {
-																	setSelectedPowerIds([
-																		...selectedPowerIds,
+															title={power.name}
+															description={power.description}
+															badges={[
+																{ label: `Level ${power.power_level}` },
+																...(power.power_type
+																	? [
+																			{
+																				label: power.power_type,
+																				variant: "outline" as const,
+																			},
+																		]
+																	: []),
+															]}
+															metadata={getImprintMetadata(power)}
+															actionPreview={getImprintActionPreview(power)}
+															selected={isSelected}
+															testId="creation-power-imprint-option"
+															onClick={() =>
+																setSelectedPowerIds((current) =>
+																	toggleLimitedSelection(
+																		current,
 																		power.id,
-																	]);
-																}
-															}}
+																		requiredPowerChoices,
+																	),
+																)
+															}
 															disabled={
 																!isSelected &&
 																selectedPowerIds.length >= requiredPowerChoices
 															}
-															className={`text-left p-4 rounded-lg border transition-colors ${
-																isSelected
-																	? "border-primary bg-primary/10"
-																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-															}`}
-														>
-															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-heading font-semibold">
-																	{power.name}
-																</span>
-																<Badge variant="secondary" className="text-xs">
-																	Level {power.power_level}
-																</Badge>
-																{power.power_type && (
-																	<Badge variant="outline" className="text-xs">
-																		{power.power_type}
-																	</Badge>
-																)}
-															</div>
-															{power.description && (
-																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-																	{power.description}
-																</p>
-															)}
-														</button>
+														/>
 													);
 												})}
 											</div>
@@ -2089,62 +2423,48 @@ const CharacterNew = () => {
 														technique.id,
 													);
 													return (
-														<button
+														<ImprintOptionCard
 															key={technique.id}
-															type="button"
-															data-testid="creation-technique-imprint-option"
-															onClick={() => {
-																if (isSelected) {
-																	setSelectedTechniqueIds(
-																		selectedTechniqueIds.filter(
-																			(id) => id !== technique.id,
-																		),
-																	);
-																} else if (
-																	selectedTechniqueIds.length <
-																	requiredTechniqueChoices
-																) {
-																	setSelectedTechniqueIds([
-																		...selectedTechniqueIds,
+															title={technique.name}
+															description={technique.description}
+															badges={[
+																...(technique.level_requirement
+																	? [
+																			{
+																				label: `Level ${technique.level_requirement}`,
+																			},
+																		]
+																	: []),
+																...(technique.technique_type
+																	? [
+																			{
+																				label: technique.technique_type,
+																				variant: "outline" as const,
+																			},
+																		]
+																	: []),
+															]}
+															metadata={getTechniqueMetadata(technique)}
+															actionPreview={getTechniqueActionPreview(
+																technique,
+															)}
+															selected={isSelected}
+															testId="creation-technique-imprint-option"
+															onClick={() =>
+																setSelectedTechniqueIds((current) =>
+																	toggleLimitedSelection(
+																		current,
 																		technique.id,
-																	]);
-																}
-															}}
+																		requiredTechniqueChoices,
+																	),
+																)
+															}
 															disabled={
 																!isSelected &&
 																selectedTechniqueIds.length >=
 																	requiredTechniqueChoices
 															}
-															className={`text-left p-4 rounded-lg border transition-colors ${
-																isSelected
-																	? "border-primary bg-primary/10"
-																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-															}`}
-														>
-															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-heading font-semibold">
-																	{technique.name}
-																</span>
-																{technique.level_requirement && (
-																	<Badge
-																		variant="secondary"
-																		className="text-xs"
-																	>
-																		Level {technique.level_requirement}
-																	</Badge>
-																)}
-																{technique.technique_type && (
-																	<Badge variant="outline" className="text-xs">
-																		{technique.technique_type}
-																	</Badge>
-																)}
-															</div>
-															{technique.description && (
-																<p className="text-xs text-muted-foreground mt-2 line-clamp-2">
-																	{technique.description}
-																</p>
-															)}
-														</button>
+														/>
 													);
 												})}
 											</div>
@@ -2164,10 +2484,21 @@ const CharacterNew = () => {
 													style.id,
 												);
 												return (
-													<button
+													<ImprintOptionCard
 														key={style.id}
-														type="button"
-														data-testid="creation-fighting-style-option"
+														title={style.name}
+														description={style.description}
+														badges={[
+															{
+																label:
+																	style.source === "ra-native"
+																		? "RA-native"
+																		: "Baseline",
+																variant: "outline" as const,
+															},
+														]}
+														selected={isSelected}
+														testId="creation-fighting-style-option"
 														onClick={() =>
 															setSelectedFightingStyleIds((current) =>
 																toggleLimitedSelection(
@@ -2182,26 +2513,7 @@ const CharacterNew = () => {
 															selectedFightingStyleIds.length >=
 																requiredFightingStyleChoices
 														}
-														className={`text-left p-4 rounded-lg border transition-colors ${
-															isSelected
-																? "border-primary bg-primary/10"
-																: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-														}`}
-													>
-														<div className="flex items-center gap-2 flex-wrap">
-															<span className="font-heading font-semibold">
-																{style.name}
-															</span>
-															<Badge variant="outline" className="text-xs">
-																{style.source === "ra-native"
-																	? "RA-native"
-																	: "Baseline"}
-															</Badge>
-														</div>
-														<p className="text-xs text-muted-foreground mt-2">
-															{style.description}
-														</p>
-													</button>
+													/>
 												);
 											})}
 										</div>
@@ -2225,10 +2537,17 @@ const CharacterNew = () => {
 													const isSelected =
 														selectedSpecialistTraining.includes(option.id);
 													return (
-														<button
+														<ImprintOptionCard
 															key={`${option.kind}-${option.id}`}
-															type="button"
-															data-testid="creation-specialist-training-option"
+															title={option.label}
+															badges={[
+																{
+																	label: option.kind,
+																	variant: "outline" as const,
+																},
+															]}
+															selected={isSelected}
+															testId="creation-specialist-training-option"
 															onClick={() =>
 																setSelectedSpecialistTraining((current) =>
 																	toggleLimitedSelection(
@@ -2243,21 +2562,7 @@ const CharacterNew = () => {
 																selectedSpecialistTraining.length >=
 																	requiredSpecialistTrainingChoices
 															}
-															className={`text-left p-4 rounded-lg border transition-colors ${
-																isSelected
-																	? "border-primary bg-primary/10"
-																	: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-															}`}
-														>
-															<div className="flex items-center gap-2 flex-wrap">
-																<span className="font-heading font-semibold">
-																	{option.label}
-																</span>
-																<Badge variant="outline" className="text-xs">
-																	{option.kind}
-																</Badge>
-															</div>
-														</button>
+														/>
 													);
 												})}
 											</div>
@@ -2276,10 +2581,11 @@ const CharacterNew = () => {
 												const isSelected =
 													selectedFavoredTerrains.includes(terrain);
 												return (
-													<button
+													<ImprintOptionCard
 														key={terrain}
-														type="button"
-														data-testid="creation-favored-terrain-option"
+														title={terrain}
+														selected={isSelected}
+														testId="creation-favored-terrain-option"
 														onClick={() =>
 															setSelectedFavoredTerrains((current) =>
 																toggleLimitedSelection(
@@ -2294,16 +2600,7 @@ const CharacterNew = () => {
 															selectedFavoredTerrains.length >=
 																requiredFavoredTerrainChoices
 														}
-														className={`text-left p-4 rounded-lg border transition-colors ${
-															isSelected
-																? "border-primary bg-primary/10"
-																: "border-primary/10 bg-background/40 hover:bg-primary/5 disabled:opacity-50"
-														}`}
-													>
-														<span className="font-heading font-semibold">
-															{terrain}
-														</span>
-													</button>
+													/>
 												);
 											})}
 										</div>
@@ -2342,6 +2639,9 @@ const CharacterNew = () => {
 							staticJobData={staticJobData || null}
 							jobAwakeningAtCreation={jobAwakeningAtCreation}
 							jobTraitsAtCreation={jobTraitsAtCreation}
+							resolvedStats={reviewResolvedStats}
+							riftFavorOptions={getAvailableFavorOptions(1)}
+							startingLoadout={reviewLoadout}
 							alignment={alignment}
 							personalityTrait={personalityTrait}
 							ideal={ideal}

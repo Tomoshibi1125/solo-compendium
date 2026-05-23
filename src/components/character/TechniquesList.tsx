@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { DetailData } from "@/types/character";
 import { AddTechniqueDialog } from "./AddTechniqueDialog";
+import { SpellcastingStatsCard } from "./SpellcastingStatsCard";
 
 interface TechniquesListProps {
 	characterId: string;
@@ -155,6 +156,7 @@ export function TechniquesList({
 	const body = (
 		<>
 			<div className="space-y-4">
+				<SpellcastingStatsCard characterId={characterId} scope="techniques" />
 				<div className="flex items-center justify-between gap-2">
 					<div className="text-xs text-muted-foreground">
 						{techniques.length} technique{techniques.length === 1 ? "" : "s"}
@@ -222,7 +224,11 @@ export function TechniquesList({
 														onSelectDetail?.({
 															title: displayName,
 															description: description || "",
-															payload: compendium ?? entry,
+															payload: {
+																entry,
+																canonical: compendium,
+																action: actionFormula,
+															},
 														})
 													}
 												>
