@@ -49,9 +49,9 @@ describe("dedupeProficiencies (DDB Quickbuilder parity)", () => {
 		// Acolyte background grants Insight + Religion; Job picks include
 		// Insight and Stealth. Net duplicate: Insight.
 		const jobSkills = ["Stealth", "Insight"];
-		const bgSkills = ["Insight", "Religion"];
+		const bgSkills = ["Insight", "Cosmic Lore"];
 		const result = dedupeProficiencies([...jobSkills, ...bgSkills]);
-		expect(result.unique).toEqual(["Stealth", "Insight", "Religion"]);
+		expect(result.unique).toEqual(["Stealth", "Insight", "Cosmic Lore"]);
 		expect(result.duplicates).toEqual(["Insight"]);
 	});
 

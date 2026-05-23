@@ -242,7 +242,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Unyielding Fortress",
 		display_name: "Unyielding Fortress",
 		description:
-			"Enter an immovable stance for 1 minute. You can't be moved, you have advantage on all Strength and Constitution saves, reduce all damage by 5, and can use your reaction to impose disadvantage on any attack targeting an ally within 10 feet.",
+			"Enter an immovable stance for 1 minute. You can't be moved, you have advantage on all Strength and Vitality saves, reduce all damage by 5, and can use your reaction to impose disadvantage on any attack targeting an ally within 10 feet.",
 		lore: {
 			origin:
 				"Developed through Destroyer combat doctrine and field-tested in gate operations.",

@@ -7374,7 +7374,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Adrenaline Surge",
 		display_name: "Adrenaline Surge",
 		description:
-			"As a reaction when you take damage, surge your mana circuit's combat response. Gain temporary HP equal to 1d8 + your Constitution modifier. Your next melee attack deals +1d6 damage.",
+			"As a reaction when you take damage, surge your mana circuit's combat response. Gain temporary HP equal to 1d8 + your Vitality modifier. Your next melee attack deals +1d6 damage.",
 		lore: {
 			origin:
 				"Bureau medical staff track 'adrenaline surge events.' Berserkers average 12 per gate operation.",

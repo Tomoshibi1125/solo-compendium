@@ -606,12 +606,15 @@ export function calculateTotalChoices(
 	// Regent features
 	if (regentData) {
 		for (const regent of regentData) {
-			if (regent.class_features) {
-				for (const feature of regent.class_features) {
-					if (feature.level <= level) {
+			const features = regent.class_features || regent.features;
+			if (features) {
+				for (const feature of features) {
+					// If a feature has no level (e.g. background features), always include it
+					const featureLevel = (feature as { level?: number }).level;
+					if (featureLevel === undefined || featureLevel <= level) {
 						const grants = parseChoiceGrants(
 							feature.description,
-							`Regent: ${regent.name}`,
+							`Background: ${regent.name ?? ""}`,
 						);
 						for (const grant of grants) {
 							totals[grant.type] += grant.count;

@@ -23,7 +23,7 @@ export interface InitiativeCandidate {
 	id: string;
 	isHunter: boolean;
 	initiative: number;
-	/** Dexterity modifier. Defaults to 0 when the combatant has no stat block. */
+	/** Agility modifier. Defaults to 0 when the combatant has no stat block. */
 	dexMod?: number;
 }
 

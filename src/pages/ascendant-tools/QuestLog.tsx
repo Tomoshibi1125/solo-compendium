@@ -268,7 +268,7 @@ export function QuestLog({ characterId }: { characterId: string }) {
 
 				if (reward.rift_favor) {
 					ascendantTools
-						.trackCustomFeatureUsage(characterId, "Rift Favor", "regain", "SA")
+						.trackCustomFeatureUsage(characterId, "Rift Favor", "regain", "RA")
 						.catch(console.error);
 				}
 			}

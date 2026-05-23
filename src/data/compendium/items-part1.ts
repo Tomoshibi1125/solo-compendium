@@ -2620,7 +2620,7 @@ export const items_part1: Item[] = [
 		value: 10,
 		item_type: "misc",
 		effects: {
-			passive: ["+1 to History checks involving pre-gate events"],
+			passive: ["+1 to Dimensional Lore checks involving pre-gate events"],
 		},
 		source: "Rift Ascendant Canon",
 		lore: {
@@ -2692,12 +2692,17 @@ export const items_part1: Item[] = [
 				signature: "e759f19f",
 				theme: "standard",
 			},
-			passive_rules: ["+1 to History checks involving pre-gate events"],
+			passive_rules: [
+				"+1 to Dimensional Lore checks involving pre-gate events",
+			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "+1 to History checks involving pre-gate events",
-				passive_effects: ["+1 to History checks involving pre-gate events"],
+				non_damage_resolution:
+					"+1 to Dimensional Lore checks involving pre-gate events",
+				passive_effects: [
+					"+1 to Dimensional Lore checks involving pre-gate events",
+				],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
@@ -2959,7 +2964,7 @@ export const items_part1: Item[] = [
 		effects: {
 			passive: [
 				"Can detect aetheric energy in objects within 10 feet",
-				"+1 to Arcana checks involving magitech",
+				"+1 to Mana Flow checks involving magitech",
 			],
 		},
 		source: "Rift Ascendant Canon",
@@ -3036,7 +3041,7 @@ export const items_part1: Item[] = [
 			},
 			passive_rules: [
 				"Can detect aetheric energy in objects within 10 feet",
-				"+1 to Arcana checks involving magitech",
+				"+1 to Mana Flow checks involving magitech",
 			],
 			resolution: {
 				type: "equipment_utility",
@@ -3045,7 +3050,7 @@ export const items_part1: Item[] = [
 					"Can detect aetheric energy in objects within 10 feet",
 				passive_effects: [
 					"Can detect aetheric energy in objects within 10 feet",
-					"+1 to Arcana checks involving magitech",
+					"+1 to Mana Flow checks involving magitech",
 				],
 			},
 			rules_payload_version: "ra-item-v1",

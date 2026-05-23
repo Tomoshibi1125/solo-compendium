@@ -120,7 +120,7 @@ export function TechniquesList({
 				character_id: characterId,
 			});
 			ascendantTools
-				.trackCustomFeatureUsage(characterId, name, "activate", "SA")
+				.trackCustomFeatureUsage(characterId, name, "activate", "RA")
 				.catch(console.error);
 			toast({
 				title: "Technique Used",

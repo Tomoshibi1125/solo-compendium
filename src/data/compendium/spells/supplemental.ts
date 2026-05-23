@@ -841,7 +841,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Mana Lens",
 		display_name: "Mana Lens",
 		description:
-			"Attune your vision to detect ambient mana. For the duration, you can see mana signatures within 30 feet as colored auras: active spells glow blue, enchanted items glow gold, and gate-residue glows red. You have advantage on Arcana checks to identify magical effects you can see.",
+			"Attune your vision to detect ambient mana. For the duration, you can see mana signatures within 30 feet as colored auras: active spells glow blue, enchanted items glow gold, and gate-residue glows red. You have advantage on Mana Flow checks to identify magical effects you can see.",
 		lore: {
 			origin:
 				"Fundamental Bureau tool — every analyst learns this before they learn to file reports.",
@@ -868,7 +868,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "See mana signatures within 30 feet.",
-			secondary: "Advantage on Arcana checks to identify magical effects.",
+			secondary: "Advantage on Mana Flow checks to identify magical effects.",
 		},
 		level: 0,
 		school: "Divination",

@@ -70,7 +70,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		rank: "D",
 		description:
 			"You were a corporate drone, living a life of spreadsheets, endless meetings, and lukewarm coffee. Your awakening was the most exciting thing to ever happen to you—or the most terrifying interruption to your routine.",
-		skill_proficiencies: ["History", "Persuasion"],
+		skill_proficiencies: ["Dimensional Lore", "Persuasion"],
 		tool_proficiencies: ["Calligrapher's Supplies", "Forgery Kit"],
 		languages: ["One additional language"],
 		equipment: [
@@ -442,7 +442,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 		rank: "D",
 		description:
 			"You were an educator, shaping the minds of the next generation. When the gates opened, you found yourself protecting your students. Your awakening gave you the power to ensure they had a future.",
-		skill_proficiencies: ["History", "Insight"],
+		skill_proficiencies: ["Dimensional Lore", "Insight"],
 		tool_proficiencies: ["Calligrapher's Supplies"],
 		languages: ["Two additional languages"],
 		equipment: [

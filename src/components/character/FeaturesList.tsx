@@ -120,7 +120,7 @@ export function FeaturesList({
 			// Broadcast feature usage for DDB Parity
 			const actionType = delta < 0 ? "spend" : "regain";
 			ascendantTools
-				.trackCustomFeatureUsage(characterId, feature.name, actionType, "SA")
+				.trackCustomFeatureUsage(characterId, feature.name, actionType, "RA")
 				.catch(console.error);
 
 			if (delta < 0) {
@@ -168,7 +168,7 @@ export function FeaturesList({
 					characterId,
 					feature.name,
 					newActiveState ? "activate" : "deactivate",
-					"SA",
+					"RA",
 				)
 				.catch(console.error);
 		} catch {

@@ -48,14 +48,14 @@ export const SKILLS: Skill[] = [
 	},
 	{
 		id: "arcana",
-		name: "Arcana",
+		name: "Mana Flow",
 		defaultAbility: "INT",
 		description:
 			"Understanding Rifts, Rift anomalies, and power theory in the post-reset world",
 	},
 	{
 		id: "history",
-		name: "History",
+		name: "Dimensional Lore",
 		defaultAbility: "INT",
 		description: "Recalling past events, notable Ascendants, major incidents",
 	},
@@ -67,13 +67,13 @@ export const SKILLS: Skill[] = [
 	},
 	{
 		id: "nature",
-		name: "Nature",
+		name: "Gate Topology",
 		defaultAbility: "INT",
 		description: "Knowing wild ecosystems, beasts, natural hazards",
 	},
 	{
 		id: "religion",
-		name: "Religion",
+		name: "Cosmic Lore",
 		defaultAbility: "INT",
 		description: "Understanding cults, rituals, spiritual traditions",
 	},

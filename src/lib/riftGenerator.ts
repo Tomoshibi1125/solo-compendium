@@ -323,7 +323,7 @@ function generateRoomDescription(
 		boss: `${size}. Open arena with environmental features suitable for ${rank}-Rank combat. Elevated terrain or cover at edges. Boss positioning at center or far end.`,
 		treasure: `${size}. Resource cache positioned against far wall. ${rank === "S" || rank === "A" ? "Warded with protective sigils." : "Minor traps may protect contents."}`,
 		trap: `${size}. Concealed pressure plates or tripwires. Trigger zone covers primary path. DC ${rankDC(rank)} to detect, ${rankDamage(rank)} damage on trigger.`,
-		puzzle: `${size}. Interactive mechanism dominates center. Requires DC ${rankDC(rank)} Investigation or Arcana check to solve. Failure triggers minor hazard.`,
+		puzzle: `${size}. Interactive mechanism dominates center. Requires DC ${rankDC(rank)} Investigation or Mana Flow check to solve. Failure triggers minor hazard.`,
 		secret: `${size}. Concealed behind DC ${rankDC(rank) + 2} Perception check. Contains bonus loot or lore relevant to the ${biome} setting.`,
 		room: `${size}. Standard Rift chamber. ${biome} terrain features provide half cover in 2-3 positions. One or two exits.`,
 	};

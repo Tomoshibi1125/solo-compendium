@@ -304,7 +304,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Tracking and pursuit",
 			"Natural disaster survival",
 		],
-		synergies: ["Herbalism", "Animal Handling", "Nature Lore"],
+		synergies: ["Herbalism", "Beast Taming", "Nature Lore"],
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -544,7 +544,7 @@ export const comprehensiveSkills: Skill[] = [
 	// MAGICAL SKILLS (Expanded)
 	{
 		id: "arcana",
-		name: "Arcana",
+		name: "Mana Flow",
 		description: "Knowledge of magical theory, spells, and magical phenomena.",
 		ability: "Intelligence",
 		type: "magical",
@@ -615,7 +615,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Creating new spells",
 			"Improving existing spells",
 		],
-		synergies: ["Arcana", "Magical Theory", "Research"],
+		synergies: ["Mana Flow", "Magical Theory", "Research"],
 		source: "Rift Ascendant Canon",
 	},
 	{
@@ -654,7 +654,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Creating new magic systems",
 			"Magical architecture",
 		],
-		synergies: ["Arcana", "Spellcraft", "Research"],
+		synergies: ["Mana Flow", "Spellcraft", "Research"],
 		source: "Rift Ascendant Canon",
 	},
 
@@ -772,7 +772,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Improving existing items",
 			"Magical crafting",
 		],
-		synergies: ["Arcana", "Spellcraft", "Crafting"],
+		synergies: ["Mana Flow", "Spellcraft", "Crafting"],
 		source: "Rift Ascendant Canon",
 	},
 

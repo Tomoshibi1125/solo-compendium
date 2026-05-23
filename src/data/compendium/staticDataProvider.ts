@@ -1150,7 +1150,8 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 			job.toolProficiencies ||
 			(legacyJob.tool_proficiencies as string[]) ||
 			null,
-		skill_choices: job.skillChoices || (legacyJob.skill_choices as string[]) || null,
+		skill_choices:
+			job.skillChoices || (legacyJob.skill_choices as string[]) || null,
 		skill_choice_count: skillChoiceCount,
 		starting_equipment:
 			job.startingEquipment ||

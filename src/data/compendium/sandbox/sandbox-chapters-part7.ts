@@ -262,7 +262,7 @@ The cathedral's main hall, stripped. A 60 ft. wide ritual sigil carved into the 
 ### S-4 — The Choir Loft
 *(Second-floor balcony overlooking the Nave)*
 
-Raised balcony. Old wooden pews. Sheet music scattered — unreadable without a DC 14 Arcana check, which reveals it as a **Choral Invocation** used to summon shadow-minions. The Cult has a minor Idol tier here.
+Raised balcony. Old wooden pews. Sheet music scattered — unreadable without a DC 14 Mana Flow check, which reveals it as a **Choral Invocation** used to summon shadow-minions. The Cult has a minor Idol tier here.
 
 - **NPC**: **The Choral Mother** *(new canon-extension NPC — Idol, level 5, feeds 14-Job gap; aligned with Elara-inverted)*. She believes the invocation is aesthetic; The Hollow Mother has lied to her about its function.
 - **Encounter**: The Choral Mother + **2× Umbral Scouts** *(shadow-soldiers.ts, umbral-scout)* summoned by her song.

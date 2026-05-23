@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacter } from "@/hooks/useCharacters";
 import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
@@ -58,15 +59,11 @@ function mapCompendiumEquipmentTypeToInventoryType(
 function isEquipableCompendiumItemType(
 	itemType: string | null | undefined,
 ): boolean {
-	const t = (itemType || "").toLowerCase();
-	return (
-		t === "weapon" ||
-		t === "armor" ||
-		t === "shield" ||
-		t === "gear" ||
-		t === "tools" ||
-		t === "tool"
-	);
+	if (!itemType) return true; // include items with no type declared
+	const t = itemType.toLowerCase();
+	// Exclude meta/system-only types that should never be added to inventory
+	const excluded = ["npc", "monster", "class", "path", "background", "feat"];
+	return !excluded.some((ex) => t.includes(ex));
 }
 
 export function AddEquipmentDialog({
@@ -81,6 +78,9 @@ export function AddEquipmentDialog({
 	const [searchQuery, setSearchQuery] = useState("");
 	const [customItemOpen, setCustomItemOpen] = useState(false);
 	const { addEquipment } = useEquipment(characterId);
+	const { data: character } = useCharacter(characterId);
+	const characterJob = character?.job;
+	const characterBackground = character?.background;
 	const { toast } = useToast();
 	const ascendantTools = useAscendantTools();
 	const { data: campaignId = null } = useQuery<string | null>({
@@ -110,12 +110,23 @@ export function AddEquipmentDialog({
 		],
 		queryFn: async () => {
 			const trimmedQuery = searchQuery.trim();
-			const staticItems = await listCanonicalEntries(
-				"equipment",
-				trimmedQuery || undefined,
-				{ campaignId },
-			);
-			const mappedStatic = staticItems
+			const [staticItems, staticOtherItems, staticRelics] = await Promise.all([
+				listCanonicalEntries("equipment", trimmedQuery || undefined, {
+					campaignId,
+				}),
+				listCanonicalEntries("items", trimmedQuery || undefined, {
+					campaignId,
+				}),
+				listCanonicalEntries("relics", trimmedQuery || undefined, {
+					campaignId,
+				}),
+			]);
+			const allStaticItems = [
+				...staticItems,
+				...staticOtherItems,
+				...staticRelics,
+			];
+			const mappedStatic = allStaticItems
 				.filter((item) =>
 					isEquipableCompendiumItemType(item.equipment_type || item.item_type),
 				)
@@ -158,6 +169,17 @@ export function AddEquipmentDialog({
 				) {
 					return false;
 				}
+				const req = item.requirements as
+					| { classes?: string[] }
+					| null
+					| undefined;
+				const matchingJobs =
+					!req?.classes ||
+					req.classes.length === 0 ||
+					req.classes.includes(characterJob || "") ||
+					req.classes.includes(characterBackground || "");
+
+				if (!matchingJobs) return false;
 				if (!searchKey) return true;
 				return (
 					item.name.toLowerCase().includes(searchKey) ||
@@ -179,7 +201,7 @@ export function AddEquipmentDialog({
 				characterId,
 				"Equipment",
 				`Added ${item.name}`,
-				"SA",
+				"RA",
 			);
 			await addEquipment({
 				character_id: characterId,

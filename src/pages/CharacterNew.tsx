@@ -66,6 +66,7 @@ import {
 	insertCharacterFeature,
 } from "@/lib/characterCreation";
 import {
+	type ChoiceSourceData,
 	calculateTotalChoices,
 	type LedgerChoice,
 } from "@/lib/choiceCalculations";
@@ -701,7 +702,9 @@ const CharacterNew = () => {
 		return calculateTotalChoices(
 			combinedJobData as Parameters<typeof calculateTotalChoices>[0],
 			selectedPathRow,
-			[],
+			selectedBackgroundData
+				? [selectedBackgroundData as unknown as ChoiceSourceData]
+				: [],
 			1,
 		);
 	}, [
@@ -710,6 +713,7 @@ const CharacterNew = () => {
 		staticJobLedgerData,
 		selectedPath,
 		pathsAvailableAtCreation,
+		selectedBackgroundData,
 	]);
 
 	const selectedPathName = useMemo(() => {
@@ -2161,6 +2165,16 @@ const CharacterNew = () => {
 							staticJobData={staticJobData}
 							equipmentChoices={equipmentChoices}
 							setEquipmentChoices={setEquipmentChoices}
+							backgroundEquipment={
+								(
+									selectedBackgroundData as
+										| { starting_equipment?: string[]; equipment?: string[] }
+										| undefined
+								)?.starting_equipment ??
+								(selectedBackgroundData as { equipment?: string[] } | undefined)
+									?.equipment ??
+								null
+							}
 						/>
 					)}
 

@@ -197,7 +197,7 @@ const bureauSentinels: SandboxNPC[] = [
 		keyAbilities: [
 			"Analyze Weakness (reveal anomaly vulnerabilities, 1/encounter)",
 			"Aetheric Shield (absorb 20 damage, 2/day)",
-			"Research Insight (grant party advantage on Arcana/Nature checks)",
+			"Research Insight (grant party advantage on Arcana/Gate Topology checks)",
 		],
 		recruitCondition:
 			"Bring her three different anomaly tissue samples from Rank C or higher creatures",

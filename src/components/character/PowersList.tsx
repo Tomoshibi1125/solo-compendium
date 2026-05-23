@@ -313,7 +313,7 @@ export function PowersList({
 		}
 
 		ascendantTools
-			.trackCustomFeatureUsage(characterId, power.name, "activate", "SA")
+			.trackCustomFeatureUsage(characterId, power.name, "activate", "RA")
 			.catch(console.error);
 
 		// Optional campaign roll log (kept from legacy path so DM/party views

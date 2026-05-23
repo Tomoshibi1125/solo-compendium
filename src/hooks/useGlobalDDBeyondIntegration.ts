@@ -122,7 +122,7 @@ export interface AscendantTools {
 		characterId: string,
 		featureName: string,
 		action: string,
-		system: "SA",
+		system: "RA" | "SA",
 		options?: { skipBroadcast?: boolean },
 	) => Promise<void>;
 }

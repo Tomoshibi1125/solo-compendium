@@ -64,13 +64,13 @@ export const SKILLS: Skill[] = [
 	},
 	{
 		id: "arcana",
-		name: "Arcana",
+		name: "Mana Flow",
 		ability: "INT",
 		description: "Magical knowledge and Rift anomalies",
 	},
 	{
 		id: "history",
-		name: "History",
+		name: "Dimensional Lore",
 		ability: "INT",
 		description: "Recalling past events and Ascendant lore",
 	},
@@ -82,19 +82,19 @@ export const SKILLS: Skill[] = [
 	},
 	{
 		id: "nature",
-		name: "Nature",
+		name: "Gate Topology",
 		ability: "INT",
 		description: "Natural world and creatures",
 	},
 	{
 		id: "religion",
-		name: "Religion",
+		name: "Cosmic Lore",
 		ability: "INT",
 		description: "Cults, rituals, and spiritual traditions",
 	},
 	{
 		id: "animal-handling",
-		name: "Animal Handling",
+		name: "Beast Taming",
 		ability: "SENSE",
 		description: "Animal training and behavior",
 	},

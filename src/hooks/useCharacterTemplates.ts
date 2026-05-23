@@ -42,7 +42,7 @@ const DEFAULT_TEMPLATES: CharacterTemplate[] = [
 		job: "Mage",
 		background: "Scholar",
 		abilities: { STR: 8, AGI: 12, VIT: 10, INT: 15, SENSE: 13, PRE: 14 },
-		skills: ["Arcana", "History"],
+		skills: ["Mana Flow", "Dimensional Lore"],
 		equipment: { 0: "Quarterstaff", 1: "Arcane Focus", 2: "Scholar Pack" },
 	},
 ];

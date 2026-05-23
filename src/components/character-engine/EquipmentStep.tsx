@@ -18,6 +18,8 @@ interface EquipmentStepProps {
 	setEquipmentChoices: (
 		choices: (prev: Record<number, string>) => Record<number, string>,
 	) => void;
+	/** Fixed gear granted by the character's background (no choice required). */
+	backgroundEquipment?: string[] | null;
 }
 
 const normalizeEquipmentLookup = (value: string) =>
@@ -134,6 +136,7 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 	staticJobData,
 	equipmentChoices,
 	setEquipmentChoices,
+	backgroundEquipment,
 }) => {
 	const [showAllStats, setShowAllStats] = useState(false);
 	const { data: canonicalEntries = [] } = useQuery({
@@ -161,6 +164,41 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 		!staticJobData?.startingEquipment ||
 		staticJobData.startingEquipment.length === 0
 	) {
+		if (backgroundEquipment && backgroundEquipment.length > 0) {
+			// No job choices, but background gear still needs to be shown
+			return (
+				<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+					<AscendantWindow title="MODEL EQUIPMENT: AUTOMATED PROVISIONING">
+						<div className="space-y-3">
+							<p className="text-[10px] uppercase tracking-widest text-primary/40 font-bold mb-3">
+								Background Equipment — Standard Issue
+							</p>
+							<ul className="space-y-2 pl-1">
+								{backgroundEquipment.map((item) => (
+									<li
+										key={item}
+										className="text-xs flex items-center gap-3 text-muted-foreground/80"
+									>
+										<Check className="w-3 h-3 text-primary/60 flex-shrink-0" />
+										<div className="min-w-0">
+											<div>{item}</div>
+											<CanonicalEquipmentDetails
+												matches={getCanonicalMatches(
+													item,
+													canonicalEntries,
+													canonicalByName,
+												)}
+												showAllStats={showAllStats}
+											/>
+										</div>
+									</li>
+								))}
+							</ul>
+						</div>
+					</AscendantWindow>
+				</div>
+			);
+		}
 		return (
 			<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
 				<AscendantWindow title="MODEL EQUIPMENT: AUTOMATED PROVISIONING">
@@ -186,6 +224,30 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 						Select active equipment hardware for the current loadout. The first
 						configuration in each array is staged as default.
 					</AscendantText>
+
+					{backgroundEquipment && backgroundEquipment.length > 0 && (
+						<div className="p-4 rounded-lg border border-primary/10 bg-black/20 space-y-2">
+							<p className="text-[10px] uppercase tracking-widest text-primary/40 font-bold">
+								Background Equipment — Standard Issue
+							</p>
+							{backgroundEquipment.map((item) => (
+								<div key={item} className="flex items-center gap-3">
+									<div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+									<span className="font-heading text-sm text-primary/70">
+										{item}
+									</span>
+									<CanonicalEquipmentDetails
+										matches={getCanonicalMatches(
+											item,
+											canonicalEntries,
+											canonicalByName,
+										)}
+										showAllStats={showAllStats}
+									/>
+								</div>
+							))}
+						</div>
+					)}
 					<div className="flex justify-end">
 						<Button
 							type="button"
@@ -331,6 +393,30 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 									);
 								},
 							)}
+							{(backgroundEquipment ?? []).map((item) => (
+								<li
+									key={`bg-summary-${item.replace(/\s/g, "")}`}
+									className="text-xs flex items-center gap-3 text-muted-foreground/60"
+								>
+									<Check className="w-3 h-3 text-primary/40 flex-shrink-0" />
+									<div className="min-w-0">
+										<div>
+											{item}{" "}
+											<span className="text-[9px] uppercase tracking-tighter text-primary/30 ml-1">
+												Background
+											</span>
+										</div>
+										<CanonicalEquipmentDetails
+											matches={getCanonicalMatches(
+												item,
+												canonicalEntries,
+												canonicalByName,
+											)}
+											showAllStats={showAllStats}
+										/>
+									</div>
+								</li>
+							))}
 						</ul>
 					</div>
 				</div>

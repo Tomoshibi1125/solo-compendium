@@ -94,7 +94,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -175,7 +175,7 @@ export const paths: Path[] = [
 		pathType: "spell-breaker",
 		requirements: {
 			level: 3,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Spell Breaker mandate designates an Ascendant as the ultimate deterrent against hostile mana-manifestations. They have integrated the primordial threads of the Absolute directly into their weapon bonds, allowing them to channel anti-resonance frequencies through physical strikes. Often recruited by high-stakes containment units, they are the ones who traverse resonant storms to deliver the final, crushing blow to reality-warping entities.",
@@ -291,7 +291,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Constitution",
+			primaryAttribute: "Vitality",
 			secondaryAttribute: "Strength",
 			bonusStats: {
 				constitution: 2,
@@ -356,7 +356,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				strength: 2,
 				wisdom: 1,
@@ -373,7 +373,7 @@ export const paths: Path[] = [
 		pathType: "echo",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Arcana"],
+			skills: ["Athletics", "Mana Flow"],
 		},
 		description:
 			"The Path of the Aftershock is held by those whose strikes resonate with such intensity that the Absolute generates residual force iterations â€” temporal echoes of their movements from adjacent reflections. In the field, it manifests as multiple strikes resolving simultaneously from ghostly iterations. Footage of Aftershock Destroyers highlights the sheer visual overload of doubled impacts tearing through gate entities with absolute recursive power.",
@@ -426,7 +426,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -484,7 +484,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -501,7 +501,7 @@ export const paths: Path[] = [
 		pathType: "gate-beast",
 		requirements: {
 			level: 3,
-			skills: ["Nature", "Survival"],
+			skills: ["Gate Topology", "Survival"],
 		},
 		description:
 			"The Gate Beast represents an Awakened who has harmonized their essence with the primal aetheric fauna found within the shadows of the Gates. They do not merely observe nature; they consume its most violent aspects to fuel their own ascendant power. In modern tactical guilds, they are the trackers and frontline skirmishers who can transition from human strategist to mindless predator in a heartbeat, channeling the echoes of ancient beasts to protect or destroy with animalistic clarity.",
@@ -542,7 +542,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				strength: 2,
 				wisdom: 1,
@@ -559,7 +559,7 @@ export const paths: Path[] = [
 		pathType: "mana-scars",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "History"],
+			skills: ["Athletics", "Dimensional Lore"],
 		},
 		description:
 			"Those who walk the Path of the Mana Scars are living testaments to the Absolute's traumatic touch. Their bodies are maps of ancient gate-breaks and survived overloads, the luminous scar tissue acting as high-capacity conductors for defensive mana. While the modern world might see them as grizzled survivors of the first gate-age, their true purpose is to serve as the unbreakable anchors of a guild resonance, turning the pain of their history into the armor of the present.",
@@ -600,7 +600,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -617,7 +617,7 @@ export const paths: Path[] = [
 		pathType: "rift-storm",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Nature"],
+			skills: ["Athletics", "Gate Topology"],
 		},
 		description:
 			"The Rift Storm represents an Ascendant who has survived the epicenter of a catastrophic gate-collapse and emerged saturated with raw, elemental mana. When they enter Overload, their internal energy vents as pure environmental turbulenceâ€”fire, lightning, or freezing cold radiating from their very pores. They are volatile assets, often deployed by elite containment units as a 'scorched earth' deterrent against massive gate-swarms where collateral damage is a secondary concern to survival.",
@@ -658,7 +658,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -675,7 +675,7 @@ export const paths: Path[] = [
 		pathType: "absolute-zealot",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Religion"],
+			skills: ["Athletics", "Cosmic Lore"],
 		},
 		description:
 			"The Absolute Zealot is an Ascendant whose devotion to the primordial force transcended mere faith and became a physical anchor. They do not see their power as a 'connection' but as a divine mandate to be executed. Often seen leading extremist fellowships or streaming their gate-raids as grand aetheric sermons, they possess a terrifying resilience, as the Absolute itself seems to refuse their passing until their work is finished. To them, every strike is a prayer, and every kill is an offering.",
@@ -722,7 +722,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -739,7 +739,7 @@ export const paths: Path[] = [
 		pathType: "aetheric-anomaly",
 		requirements: {
 			level: 3,
-			skills: ["Athletics", "Arcana"],
+			skills: ["Athletics", "Mana Flow"],
 		},
 		description:
 			"The Aetheric Anomaly is an Ascendant whose connection to the Absolute was shattered and reformed during a violent gate-collapse. They are walking anchors of instability whose every Overload triggers random, reality-warping discharges. While guilds often fear their unpredictability, they are prized for their ability to bypass conventional defensive measures and turn any battlefield into a chaotic domain where only they can truly thrive.",
@@ -786,7 +786,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				strength: 2,
 				constitution: 1,
@@ -849,7 +849,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
+			primaryAttribute: "Agility",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				dexterity: 2,
@@ -913,8 +913,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				dexterity: 2,
 				constitution: 1,
@@ -931,7 +931,7 @@ export const paths: Path[] = [
 		pathType: "weave-infiltrator",
 		requirements: {
 			level: 3,
-			skills: ["Stealth", "Arcana"],
+			skills: ["Stealth", "Mana Flow"],
 		},
 		description:
 			"The Weave Infiltrator mandate allows an Ascendant to harmonize their phase-shifted essence with the primordial weave of the Absolute. They do not just hide; they exist within the static of the local mana-field, capable of intercepting aetheric flows and stealing the resonances of other casters mid-manifestation. In a world of complex gate-wards and magical defenses, they are the ultimate locksmiths of reality.",
@@ -977,7 +977,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
+			primaryAttribute: "Agility",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				dexterity: 1,
@@ -1041,7 +1041,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
+			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				charisma: 2,
@@ -1105,8 +1105,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Charisma",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				dexterity: 2,
 				charisma: 1,
@@ -1169,8 +1169,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -1227,8 +1227,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -1285,8 +1285,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -1303,7 +1303,7 @@ export const paths: Path[] = [
 		pathType: "aetheric-channeler",
 		requirements: {
 			level: 3,
-			skills: ["Acrobatics", "Nature"],
+			skills: ["Acrobatics", "Gate Topology"],
 		},
 		description:
 			"The Aetheric Channeler mandate transforms an Ascendant into a living environmental conductor. They do not just strike; they convert ambient aetheric energy into fundamental elemental forcesâ€”concussive gravity, thermal discharges, or high-intensity lightning. In the containment of a high-tier gate, they are the ultimate multi-role assets, capable of adapting their physical strikes to the specific weaknesses of any anomaly.",
@@ -1343,8 +1343,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 1,
 				wisdom: 2,
@@ -1401,8 +1401,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Charisma",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				dexterity: 2,
 				charisma: 1,
@@ -1459,8 +1459,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -1528,8 +1528,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Dexterity",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				wisdom: 2,
 				dexterity: 1,
@@ -1546,7 +1546,7 @@ export const paths: Path[] = [
 		pathType: "detonation-specialist",
 		requirements: {
 			level: 2,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Detonation Specialist mandate is walked by those who treat aetheric energy as a raw, explosive substrate. They are the architects of controlled destruction, capable of weaving destructive mantras that bypass friendly resonances with surgical precision. In the high-stakes world of gate clearance, they serve as the heavy artillery, turning the local weave into a localized supernova of calculated fury.",
@@ -1587,7 +1587,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -1604,7 +1604,7 @@ export const paths: Path[] = [
 		pathType: "shield-architect",
 		requirements: {
 			level: 2,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Shield Architect mandate is for those who view the weave of the Absolute as a protective barrier to be reinforced. They generate persistent aetheric shields that absorb damage and reject hostile manifestations. In a world where a single error can mean total annihilation, the Architect is the foundation of any successful suppression missionâ€”the one whose continuous protection harmonics ensure the survival of the party.",
@@ -1645,7 +1645,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -1662,7 +1662,7 @@ export const paths: Path[] = [
 		pathType: "probability-mandate",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Insight"],
+			skills: ["Mana Flow", "Insight"],
 		},
 		description:
 			"The Probability Mandate designates an Ascendant who has learned to perceive the underlying variables of the Absolute. They do not see the future as a vision, but as a series of calculated outcomes that can be anchored into reality. In the modern world, they are the indispensable strategists of any high-tier guild, capable of overriding unfavorable resonance-branches and ensuring the 'unlucky' moment never comes to pass.",
@@ -1703,7 +1703,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				intelligence: 2,
 				wisdom: 1,
@@ -1720,7 +1720,7 @@ export const paths: Path[] = [
 		pathType: "phantasmist",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Deception"],
+			skills: ["Mana Flow", "Deception"],
 		},
 		description:
 			"The Phantasmist mandate is walked by those who have mastered the art of weaving aetheric fakes so sophisticated that the Absolute itself accepts them as genuine resonance. They do not just create illusions; they inject false realities into the world, bypassing all senses to fool both sentient and anomalous threats. At their peak, their phantasms can manifest physical presence, proving that in the Absolute's eye, perception IS reality.",
@@ -1761,7 +1761,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				intelligence: 2,
 				charisma: 1,
@@ -1778,7 +1778,7 @@ export const paths: Path[] = [
 		pathType: "rift-caller",
 		requirements: {
 			level: 2,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Rift Caller mandate is for those who treat physical space as a mere suggestion. They specialize in tearing open micro-gates to pull matter from distant reaches or summon reinforcements from the Absolute's many reflections. In the modern world of gate-containment, they are the masters of logistics and tactical displacement, moving through reality via dimensional shortcuts that bypass all conventional defenses.",
@@ -1819,7 +1819,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -1836,7 +1836,7 @@ export const paths: Path[] = [
 		pathType: "matter-weaver",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Investigation"],
+			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Matter Weaver mandate allows an Ascendant to rewrite the fundamental physical properties of the local substrate. They treat the world as a programmable weave, capable of turning steel to glass or concrete to water with a single aetheric command. In the modern world of advanced alchemy and essence-cultivation, the Weaver is a priceless asset for both guild construction and tactical environmental manipulation.",
@@ -1877,7 +1877,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				intelligence: 2,
 				wisdom: 1,
@@ -1894,7 +1894,7 @@ export const paths: Path[] = [
 		pathType: "aetheric-dragon",
 		requirements: {
 			level: 1,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial gate dragonsâ€”ancient masters of the Absolute who predated even the current cycle of Gates. Their spirit manifests as elemental fury, their very cells crystallizing into draconic mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
@@ -1940,8 +1940,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -1958,7 +1958,7 @@ export const paths: Path[] = [
 		pathType: "aetheric-cascade",
 		requirements: {
 			level: 1,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Aetheric Cascade mandate is granted to those whose connection to the Absolute was shattered and reformed into a volatile reactive core. They do not just cast; they trigger cascading aetheric events that baffle traditional understanding. Each manifestation is a harmonic anomaly, a reality-warping discharge that can heal an ally or incinerate a foe with the same unpredictable fervor.",
@@ -2004,8 +2004,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -2022,7 +2022,7 @@ export const paths: Path[] = [
 		pathType: "shadow",
 		requirements: {
 			level: 1,
-			skills: ["Stealth", "Arcana"],
+			skills: ["Stealth", "Mana Flow"],
 		},
 		description:
 			"Espers who draw power from the empty space between gate dimensions â€” the void that separates realities. They tend to be quiet, withdrawn individuals whose internal resonance focuses on the silence behind the Absolute's weave. Environmental fluctuations are common when they pass, and the shadows around them often seem to detach from their physical anchors. They command absolute darkness, summon void-born entities, and can dissolve their physical form into pure shadow-resonance.",
@@ -2068,8 +2068,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -2086,7 +2086,7 @@ export const paths: Path[] = [
 		pathType: "storm",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Nature"],
+			skills: ["Mana Flow", "Gate Topology"],
 		},
 		description:
 			"The Path of the Tempest Core is for those whose anomalous resonance is synchronized with absolute atmospheric pressure. Lightning arcs from their skin during moments of high resonance-flux, wind shifts when they move, and environmental sensors fluctuate wildly in their presence. They are the living conduits of the Absolute's storms, their internal resonance-field powered by the very energy that structures a gate's atmosphere.",
@@ -2138,8 +2138,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -2156,7 +2156,7 @@ export const paths: Path[] = [
 		pathType: "absolute-spark",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Religion"],
+			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
 			"Espers who carry a fragment of the Absolute's core energy â€” not mere gate mana, but the fundamental force itself. Often individuals whose innate empathy resonated with the restorative layers of the Absolute during their awakening, they access both destructive Esper resonance-flux and Herald restorative transmissions. They are the rarest anomaly type, serving as the ultimate stabilizers for high-tier containment missions.",
@@ -2202,8 +2202,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				charisma: 2,
 				wisdom: 1,
@@ -2220,7 +2220,7 @@ export const paths: Path[] = [
 		pathType: "aberrant",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Insight"],
+			skills: ["Mana Flow", "Insight"],
 		},
 		description:
 			"Espers touched by entities from beyond the known gate network â€” alien intelligences whose psionic imprint rewired their resonance during awakening. These Ascendants often perceive the Absolute not as a network of laws, but as a collective of interconnected consciousnesses that exist outside of traditional time. They cast with thought alone, their minds becoming an impenetrably alien echo of the Absolute's deepest layers.",
@@ -2272,7 +2272,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
+			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				charisma: 2,
@@ -2290,7 +2290,7 @@ export const paths: Path[] = [
 		pathType: "void-lord",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Medicine"],
+			skills: ["Mana Flow", "Medicine"],
 		},
 		description:
 			"The Void Lord mandate is for those who treat offensive entropy as a fundamental cosmic law. They do not just kill; they accelerate the chain reaction of the Absolute's decay, turning every fallen foe into a resonator for necrotic fury. In the containment of high-density gates, they are the indispensable reapers who ensure that the longer a fight persists, the more the environment itself rebels against the living.",
@@ -2337,7 +2337,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -2354,7 +2354,7 @@ export const paths: Path[] = [
 		pathType: "entropy-drinker",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Persuasion"],
+			skills: ["Mana Flow", "Persuasion"],
 		},
 		description:
 			"The Entropy Drinker mandate is held by those who have learned to siphon the Absolute's decaying frequency to sustain their own physical vessel. They do not just damage their foes; they feed upon them, converting the local entropic field into a source of personal vitality. In the elite guilds, they are often seen as unsettling but necessary assets who can endure and thrive in environments that would wither any other Ascendant.",
@@ -2401,7 +2401,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				intelligence: 2,
 				charisma: 1,
@@ -2418,7 +2418,7 @@ export const paths: Path[] = [
 		pathType: "wither-guard",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Athletics"],
+			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Wither Guard mandate elevates an Ascendant to the position of an entropic bulwark. They weave defensive fields of decay that corrode incoming manifestations and weaponize the Absolute's cessation as a barrier. While other Revenants seek to harvest, the Guard seeks to containâ€”ensuring that nothing hostile can survive the concentrated entropic pressure of their presence.",
@@ -2465,7 +2465,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -2482,7 +2482,7 @@ export const paths: Path[] = [
 		pathType: "entropy-blade",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Acrobatics"],
+			skills: ["Mana Flow", "Acrobatics"],
 		},
 		description:
 			"The Entropy Blade mandate allows an Ascendant to channel the Absolute's decay through physical steel. They do not just fight; they perform a lethal close-range dance where every strike ages matter on contact. Steel rusts, flesh withers, and the very air around their blade turns to a freezing entropic mist. They are the most mobile of the Revenant lineages, phasing through their own decay field to deliver strikes from impossible angles.",
@@ -2523,7 +2523,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Dexterity",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				intelligence: 2,
 				dexterity: 1,
@@ -2540,7 +2540,7 @@ export const paths: Path[] = [
 		pathType: "plague-weaver",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Medicine"],
+			skills: ["Mana Flow", "Medicine"],
 		},
 		description:
 			"The Plague Weaver mandate elevates entropy to the level of a virulent contagion. They do not just target individuals; they manifest entropic plagues that cascade through enemy ranks, jumping from one host to another like a sentient virus. In the containment mandates of the modern world, the Weaver is often seen as a walking pandemic vector, though their ability to dissolve entire gate encounters into decaying sludge is unsurpassed.",
@@ -2587,7 +2587,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				intelligence: 2,
 				wisdom: 1,
@@ -2604,7 +2604,7 @@ export const paths: Path[] = [
 		pathType: "threshold-walker",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Insight"],
+			skills: ["Mana Flow", "Insight"],
 		},
 		description:
 			"The Threshold Walker mandate is a rare and heavy burden, granted to those who stand on the exact boundary between existence and the void. They alone among the Revenants have learned to reverse the Absolute's entropic flow, pulling allies back from the brink or shoving enemies over it with equal conviction. They are the supreme arbiters of life and death, treated with equal parts reverence and fear by all who understand the cold logic of the threshold.",
@@ -2651,7 +2651,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				intelligence: 2,
 				wisdom: 1,
@@ -2668,7 +2668,7 @@ export const paths: Path[] = [
 		pathType: "biome-architect",
 		requirements: {
 			level: 2,
-			skills: ["Nature"],
+			skills: ["Gate Topology"],
 		},
 		description:
 			"The Biome Architect mandate is held by those who have attained a perfect resonance with a specific gate ecosystem. They do not just survive; they recover their internal essence by absorbing ambient gate energy with an efficiency that borders on the miraculous. In the containment protocols of the modern world, the Architect is indispensable for identifying and stabilizing the volatile environments that bleed into our reality.",
@@ -2720,8 +2720,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				wisdom: 2,
 				constitution: 1,
@@ -2738,7 +2738,7 @@ export const paths: Path[] = [
 		pathType: "apex-shifter",
 		requirements: {
 			level: 2,
-			skills: ["Nature", "Survival"],
+			skills: ["Gate Topology", "Survival"],
 		},
 		description:
 			"The Apex Shifter mandate is for those who seek to dominate their environment by assuming the physical vessels of the Absolute's apex predators. They do not merely shift; they undergo a total biological restructuring into powerful gate creatures that exceed all earthly limits. In the modern world, they are the front-line tanks who lead every raid, their very existence a bridge between human consciousness and absolute fury.",
@@ -2784,8 +2784,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				wisdom: 2,
 				constitution: 1,
@@ -2802,7 +2802,7 @@ export const paths: Path[] = [
 		pathType: "dream-weaver",
 		requirements: {
 			level: 2,
-			skills: ["Nature", "Insight"],
+			skills: ["Gate Topology", "Insight"],
 		},
 		description:
 			"The Dream Weaver mandate designates those who have forged a connection with the Lush-resonanceâ€”the restorative, semi-material reflections that drift along the boundaries of certain gates. They do not just heal; they manifest localized patches of aetheric stability that promote rapid biological repair. In the modern world, the Weaver is the emotional and physical anchor of any raid team, transforming a nightmare gate-break into a temporary sanctuary.",
@@ -2842,8 +2842,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Charisma",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				wisdom: 2,
 				charisma: 1,
@@ -2860,7 +2860,7 @@ export const paths: Path[] = [
 		pathType: "pack-commander",
 		requirements: {
 			level: 2,
-			skills: ["Nature", "Animal Handling"],
+			skills: ["Gate Topology", "Beast Taming"],
 		},
 		description:
 			"The Pack Commander mandate elevates a Summoner to the status of an absolute leader within the gate's predatory hierarchy. They do not just summon entities; they command them like a unified tactical unit, reinforcing their creatures with their own internal aetheric essence. In the modern world, one Commander with a full menagerie is a one-person tactical squad, turning a solo raid into a coordinated absolute assault.",
@@ -2905,8 +2905,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				wisdom: 2,
 				constitution: 1,
@@ -2923,7 +2923,7 @@ export const paths: Path[] = [
 		pathType: "symbiotic-host",
 		requirements: {
 			level: 2,
-			skills: ["Nature", "Medicine"],
+			skills: ["Gate Topology", "Medicine"],
 		},
 		description:
 			"The Symbiotic Host mandate is given to those who have allowed their physical vessel to become a living ecosystem for mutualistic gate-organisms. They do not just host these symbiotes; they fuse with them to gain terrifying biological efficiencies and project a defensive field of aetheric spores. In the Absolute's cycle of life and death, the Host is the bridge where both processes occur simultaneously within the same body.",
@@ -2969,8 +2969,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				wisdom: 2,
 				constitution: 1,
@@ -2987,7 +2987,7 @@ export const paths: Path[] = [
 		pathType: "cosmic-conduit",
 		requirements: {
 			level: 2,
-			skills: ["Arcana", "Nature"],
+			skills: ["Mana Flow", "Gate Topology"],
 		},
 		description:
 			"The Cosmic Conduit mandate is for those who draw power from the massive, distant aetheric vibrations that resonate through high-rank gates. They do not just see stars; they channel the fundamental cosmic energy of the Absolute into manifestations of healing, destruction, and prophetic anchoring. In the modern world, they are the supreme mystics of the gate-age, their every action informed by a variable cosmic map only they can perceive.",
@@ -3033,7 +3033,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
+			primaryAttribute: "Sense",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				wisdom: 2,
@@ -3102,8 +3102,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				wisdom: 2,
 				constitution: 1,
@@ -3120,7 +3120,7 @@ export const paths: Path[] = [
 		pathType: "radiance-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Religion"],
+			skills: ["Cosmic Lore"],
 		},
 		description:
 			"The Radiance Mandate grants an Ascendant the ability to broadcast the Absolute's most destructive light resonance. Their presence is a beacon of pure aetheric energy, incinerating the void-remnants of the gates and shielding their allies in a protective luminance. In the modern world, a Radiance Herald is often the vanguard of any high-rank gate suppression, their radiant overloads visible from miles around.",
@@ -3171,8 +3171,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Charisma",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				wisdom: 2,
 				charisma: 1,
@@ -3189,7 +3189,7 @@ export const paths: Path[] = [
 		pathType: "combat-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Athletics", "Religion"],
+			skills: ["Athletics", "Cosmic Lore"],
 		},
 		description:
 			"The Combat Mandate is given to those who serve as the physical conduit for the Absolute's offensive transmissions. Armored, lethal, and broadcasting the martial directives of the Zenith lineage, they fight at the forefront of every gate eruption. They do not just support; they lead the charge, their weapon strikes resonating with the pure destructive intent of the Absolute.",
@@ -3240,7 +3240,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
+			primaryAttribute: "Sense",
 			secondaryAttribute: "Strength",
 			bonusStats: {
 				wisdom: 2,
@@ -3258,7 +3258,7 @@ export const paths: Path[] = [
 		pathType: "knowledge-mandate",
 		requirements: {
 			level: 1,
-			skills: ["History", "Religion"],
+			skills: ["Dimensional Lore", "Cosmic Lore"],
 		},
 		description:
 			"The Knowledge Mandate provides an Ascendant with a direct uplink to the Absolute's primordial records. They do not just learn; they download encrypted knowledge that bypasses all mortal limitations, allowing them to read the aetheric signatures of enemies and objects with near-perfect accuracy. In the modern world, they are the supreme archivists and analysts, their transmissions revealing everything the gates seek to hide.",
@@ -3303,7 +3303,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
+			primaryAttribute: "Sense",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				wisdom: 2,
@@ -3321,7 +3321,7 @@ export const paths: Path[] = [
 		pathType: "storm-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Nature", "Religion"],
+			skills: ["Gate Topology", "Cosmic Lore"],
 		},
 		description:
 			"The Storm Mandate empowers an Ascendant to broadcast the Absolute's most violent atmospheric resonance. They are walking thunderheads, their every gesture capable of summoning lightning and shattering the resolve of their foes. In the modern world, a Storm Herald is the ultimate deterrent, their radiant and electrical overloads enough to power entire city blocks or level them with equal ease.",
@@ -3372,7 +3372,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
+			primaryAttribute: "Sense",
 			secondaryAttribute: "Strength",
 			bonusStats: {
 				wisdom: 2,
@@ -3390,7 +3390,7 @@ export const paths: Path[] = [
 		pathType: "triage-mandate",
 		requirements: {
 			level: 1,
-			skills: ["Medicine", "Religion"],
+			skills: ["Medicine", "Cosmic Lore"],
 		},
 		description:
 			"The Triage Mandate is for those who specialize in the Absolute's emergency field calibrations. They operate on a unique restorative resonance that maximizes output on critical vessels, marking targets for absolute elimination while canceling lethal blows through aetheric realignment. In the modern world, a Triage Herald's presence is the difference between a total wipe and an absolute victory.",
@@ -3441,8 +3441,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Wisdom",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Sense",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				wisdom: 2,
 				constitution: 1,
@@ -3459,7 +3459,7 @@ export const paths: Path[] = [
 		pathType: "glamour-weaver",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Deception"],
+			skills: ["Mana Flow", "Deception"],
 		},
 		description:
 			"The Glamour Weaver bargain is forged with the ethereal reflections that rule the Absolute's most vibrant gate ecosystems. They do not just deceive; they rewrite the sensory reality of those around them, weaving illusions of absolute beauty or terrifying despair. In the modern world, the Glamour Weaver is a master of social and physical manipulation, their presence alone enough to ensnare the unwary.",
@@ -3499,8 +3499,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Dexterity",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				charisma: 2,
 				dexterity: 1,
@@ -3517,7 +3517,7 @@ export const paths: Path[] = [
 		pathType: "infernal-conduit",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Intimidation"],
+			skills: ["Mana Flow", "Intimidation"],
 		},
 		description:
 			"The Infernal Conduit bargain is forged with the destructive entities that dwell within the deepest entropic layers of the gates. Their physical vessel burns with a literal internal heat, every kill feeding the insatiable hunger of their patron. In the modern world, the Infernal is a walking force of destruction, their aetheric bargain granting them the power to hurl foes through the void itself.",
@@ -3557,8 +3557,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -3575,7 +3575,7 @@ export const paths: Path[] = [
 		pathType: "void-whisperer",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Investigation"],
+			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Void Whisperer bargain is forged with the vast, ancient intelligences that drift beyond the Absolute's primary resonance-layers. They do not just see the gates; they perceive the alien geometry of the multiverse, granting them psionic capabilities that shatter the fragile minds of their enemies. In the modern world, the Void Whisperer is a master of mental dominance and informational warfare.",
@@ -3615,7 +3615,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
+			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				charisma: 2,
@@ -3633,7 +3633,7 @@ export const paths: Path[] = [
 		pathType: "radiant-vessel",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Religion"],
+			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
 			"The Radiant Vessel bargain is forged with the luminous entities of the Zenith lineage â€” beings of pure restorative and destructive light. They are the rarest of all Contractors, their physical vessel a conduit for aetheric energy that heals and incinerates with equal intensity. In the modern world, they are often seen as modern saints or supreme gate-raid anchors.",
@@ -3678,8 +3678,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				charisma: 2,
 				wisdom: 1,
@@ -3696,7 +3696,7 @@ export const paths: Path[] = [
 		pathType: "cursed-blade",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Athletics"],
+			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Cursed Blade bargain is forged with the sentient, shadow-forged armaments found deep within the Absolute's highest-rank gates. They do not just wield a weapon; they are bonded to a physical manifestation of their patron's hunger. In the modern world, the Cursed Blade is a lethal martial specialist, their every strike fueled by an ancient aetheric curse that consumes the resonance of their victims.",
@@ -3742,7 +3742,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
+			primaryAttribute: "Presence",
 			secondaryAttribute: "Strength",
 			bonusStats: {
 				charisma: 2,
@@ -3760,7 +3760,7 @@ export const paths: Path[] = [
 		pathType: "deep-dweller",
 		requirements: {
 			level: 1,
-			skills: ["Arcana", "Nature"],
+			skills: ["Mana Flow", "Gate Topology"],
 		},
 		description:
 			"The Deep Dweller bargain is forged with the colossal, kraken-like entities that rule the Absolute's submerged gate dimensions. They are masters of the crushing pressure and freezing cold found at the boundaries of the aetheric abyss, manifesting spectral tentacles and dimensional rifts at will. In the modern world, they are the undisputed masters of coastal and underwater gate containment.",
@@ -3811,8 +3811,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -3869,8 +3869,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -3887,7 +3887,7 @@ export const paths: Path[] = [
 		pathType: "pack-leader",
 		requirements: {
 			level: 3,
-			skills: ["Animal Handling", "Nature"],
+			skills: ["Beast Taming", "Gate Topology"],
 		},
 		description:
 			"The Pack Leader mandate is for those who forge deep aetheric bonds with the Absolute's apex predators. They do not just hunt alongside their companion; they fuse their hunting instincts into a single, coordinated absolute strikes that dominate the battlefield. In the modern world, the Pack Leader is a one-person tactical unit, their bonded entity often as famous and lethal as the Stalker themselves.",
@@ -3927,8 +3927,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -3991,8 +3991,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -4009,7 +4009,7 @@ export const paths: Path[] = [
 		pathType: "rift-strider",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Survival"],
+			skills: ["Mana Flow", "Survival"],
 		},
 		description:
 			"The Rift Strider mandate empowers a Stalker to navigate the precarious boundaries between gate dimensions. They do not just track prey; they step through micro-rifts in reality, manifesting across the battlefield with a frightening fluidity. In the modern world, the Rift Strider is the supreme interceptor, their ability to seal dimensional crossings and strike through space making them an indispensable asset.",
@@ -4055,8 +4055,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -4119,8 +4119,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -4137,7 +4137,7 @@ export const paths: Path[] = [
 		pathType: "hive-synchronist",
 		requirements: {
 			level: 3,
-			skills: ["Nature", "Survival"],
+			skills: ["Gate Topology", "Survival"],
 		},
 		description:
 			"The Hive Synchronist mandate designates those who have bonded with a living swarm of gate-microorganisms. They do not just carry a hive; they are a walking ecosystem, their swarm enhancing every offensive manifestation and providing absolute mobility via aethertic levitation. In the modern world, the Synchronist is a terrifyingly efficient field operative, their presence denoted by a permanent cloud of aetheric static.",
@@ -4183,8 +4183,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Dexterity",
-			secondaryAttribute: "Wisdom",
+			primaryAttribute: "Agility",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				dexterity: 2,
 				wisdom: 1,
@@ -4201,7 +4201,7 @@ export const paths: Path[] = [
 		pathType: "absolute-devotion",
 		requirements: {
 			level: 3,
-			skills: ["Religion"],
+			skills: ["Cosmic Lore"],
 		},
 		description:
 			"The Absolute Devotion mandate designates those who are the physical paragons of the Absolute's primary resonance. They do not just follow a code; they become a walking anchor for the restorative and protective frequencies of the Zenith lineage, their presence alone stabilizing the local reality of their allies. In the modern world, the Devotion Knight is the ultimate frontline leader, their absolute faith manifesting as physical aetheric armaments.",
@@ -4248,7 +4248,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				strength: 2,
 				charisma: 1,
@@ -4312,7 +4312,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				strength: 2,
 				charisma: 1,
@@ -4329,7 +4329,7 @@ export const paths: Path[] = [
 		pathType: "verdant-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Nature", "Religion"],
+			skills: ["Gate Topology", "Cosmic Lore"],
 		},
 		description:
 			"Those who walk the Path of the Verdant Mandate swear to protect the Absoluteâ€™s original intent against the encroaching resonance corruption of the gates. Their covenant is a primal pact with the world's original life-resonance, anchoring themselves to threatened gate biomes to serve as the ultimate custodians of aetheric diversity. In the modern world, they are the bulwark against total ecological collapse, their presence stabilizing the very fabric of reality.",
@@ -4376,7 +4376,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				strength: 2,
 				charisma: 1,
@@ -4440,7 +4440,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				strength: 2,
 				charisma: 1,
@@ -4457,7 +4457,7 @@ export const paths: Path[] = [
 		pathType: "atonement-mandate",
 		requirements: {
 			level: 3,
-			skills: ["Persuasion", "Religion"],
+			skills: ["Persuasion", "Cosmic Lore"],
 		},
 		description:
 			"The Atonement Mandate is held by those who prioritize the absolute preservation of life. They do not just defend; they absorb the suffering of their allies, manifesting as a living shield for the Absolute's most fragile resonance-layers. In the modern world, the Atonement Knight is the supreme guardian of peace, their covenant punishing those who choose violence with a radiant backlash.",
@@ -4503,8 +4503,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Constitution",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				charisma: 2,
 				constitution: 1,
@@ -4568,7 +4568,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Strength",
-			secondaryAttribute: "Charisma",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				strength: 2,
 				charisma: 1,
@@ -4585,7 +4585,7 @@ export const paths: Path[] = [
 		pathType: "aether-chemist-design",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Medicine"],
+			skills: ["Mana Flow", "Medicine"],
 		},
 		description:
 			"The Aether Chemist designs are for those who synthesize aetheric reagents harvested directly from the gates. They do not just brew potions; they architecture complex somatic sequences that heal, transform, and incinerate with absolute precision. In the modern world, the Aether Chemist is the supreme specialist in restorative and entropic resonance dynamics, their presence stabilizing the party's biological integrity.",
@@ -4637,7 +4637,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				intelligence: 2,
 				wisdom: 1,
@@ -4654,7 +4654,7 @@ export const paths: Path[] = [
 		pathType: "aether-vessel-design",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Athletics"],
+			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Aether Vessel designs are for those who infuse physical armaments with the Absolute's blueprints. They do not just wear armor; they manifest localized power-frames that grant superhuman strength and impenetrable defensive auras, turning the Technomancer into a walking force of aetheric might. In the modern world, the Aether Vessel is the supreme martial-architect, their designs representing the peak of ascendant warfare.",
@@ -4707,7 +4707,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -4724,7 +4724,7 @@ export const paths: Path[] = [
 		pathType: "resonance-siege-design",
 		requirements: {
 			level: 3,
-			skills: ["Arcana"],
+			skills: ["Mana Flow"],
 		},
 		description:
 			"The Resonance Siege designs represent the peak of offensive aetheric manifestations. They do not just build platforms; they architecture localized resonators that project destructive harmonics or protective fields across the battlefield. In the modern world, the Resonance Siege architect is the supreme heavy resonance specialist, their constructs capable of breaking any gate-defense with absolute power.",
@@ -4777,7 +4777,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -4794,7 +4794,7 @@ export const paths: Path[] = [
 		pathType: "synchronist-binary-design",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Athletics"],
+			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
 			"The Synchronist Binary designs are for those who bond with a primary aetheric defender. They do not just build a companion; they fuse their own neural resonance with a physical construct, creating a perfect binary fighting unit. In the modern world, the Synchronist is a formidable frontline combatant, their attacks fueled by aetheric compilations that outpace physical reflex.",
@@ -4847,7 +4847,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Constitution",
+			secondaryAttribute: "Vitality",
 			bonusStats: {
 				intelligence: 2,
 				constitution: 1,
@@ -4864,7 +4864,7 @@ export const paths: Path[] = [
 		pathType: "swarm-conduit-design",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Investigation"],
+			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Swarm Conduit designs are for those who deploy aetheric micro-conspicuous to blanket the battlefield. They do not just control drones; they weave a living surveillance and offensive weave that provides absolute oversight and precision strikes. In the modern world, the Swarm Conduit is the supreme tactical specialist, their micro-conduits capable of relaying information and force across any distance.",
@@ -4911,7 +4911,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Dexterity",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				intelligence: 2,
 				dexterity: 1,
@@ -4928,7 +4928,7 @@ export const paths: Path[] = [
 		pathType: "aether-breacher-design",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Investigation"],
+			skills: ["Mana Flow", "Investigation"],
 		},
 		description:
 			"The Aetheric Breacher designs are for those who interface directly with the Absolute's core resonance. They treat reality like a malleable sequence â€” finding vulnerabilities, suppressing enemy manifestations, and realigning the laws of local aetheric flow. In the modern world, the Breacher is the supreme infiltration specialist, their ability to bypass any defensive mandate making them the ultimate asset for high-rank gate raids.",
@@ -4975,7 +4975,7 @@ export const paths: Path[] = [
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Wisdom",
+			secondaryAttribute: "Sense",
 			bonusStats: {
 				intelligence: 2,
 				wisdom: 1,
@@ -4992,7 +4992,7 @@ export const paths: Path[] = [
 		pathType: "lore-resonance",
 		requirements: {
 			level: 3,
-			skills: ["History", "Performance"],
+			skills: ["Dimensional Lore", "Performance"],
 		},
 		description:
 			"Those who walk the Path of the Lore Resonance are collectors of the Absolute's recursive data-manifolds. They do not just record; they weaponize information itself, disrupting enemy manifestations by echoing their own psychological vulnerabilities back at them in a tidal wave of dissonant data. In the modern world, the Lore Idol is the supreme analytical strategist, their mastery of the Absolute's secrets making them feared by any entity with a hidden variable.",
@@ -5031,7 +5031,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
+			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				charisma: 2,
@@ -5146,8 +5146,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Dexterity",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				charisma: 2,
 				dexterity: 1,
@@ -5209,8 +5209,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Dexterity",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				charisma: 2,
 				dexterity: 1,
@@ -5267,8 +5267,8 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
-			secondaryAttribute: "Dexterity",
+			primaryAttribute: "Presence",
+			secondaryAttribute: "Agility",
 			bonusStats: {
 				charisma: 2,
 				dexterity: 1,
@@ -5285,7 +5285,7 @@ export const paths: Path[] = [
 		pathType: "genesis-resonance",
 		requirements: {
 			level: 3,
-			skills: ["Arcana", "Performance"],
+			skills: ["Mana Flow", "Performance"],
 		},
 		description:
 			"The Path of the Genesis Resonance designates an Idol who taps into the Absolute's foundational harmonicâ€”the vibration that structures matter itself. They do not just imagine; they manifest, fabricating physical items and animating objects from raw mana as a physical manifestation of their art. In the modern world, they are the supreme architects of the material weave, their presence turning any location into a factory of absolute creation.",
@@ -5325,7 +5325,7 @@ export const paths: Path[] = [
 			},
 		],
 		stats: {
-			primaryAttribute: "Charisma",
+			primaryAttribute: "Presence",
 			secondaryAttribute: "Intelligence",
 			bonusStats: {
 				charisma: 2,

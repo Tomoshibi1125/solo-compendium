@@ -211,7 +211,7 @@ The following side quests are available from various NPCs and faction boards thr
 1. Enter 3 different Gates and plant mana sensors (DC 12 Arcana at each Gate's core/boss room)
 2. Return data to Professor Lun
 3. Accompany Lun to the S-Rank Gate perimeter for final measurements
-**Rewards**: Confirmed intelligence (+1 Bureau reputation), the S-Rank Gate boss starts with -20 HP if mana veins are disrupted, Professor Lun provides an academic paper that grants advantage on Arcana checks related to Gates
+**Rewards**: Confirmed intelligence (+1 Bureau reputation), the S-Rank Gate boss starts with -20 HP if mana veins are disrupted, Professor Lun provides an academic paper that grants advantage on Mana Flow checks related to Gates
 
 ---
 

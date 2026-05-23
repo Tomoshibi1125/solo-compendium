@@ -345,7 +345,7 @@ export function useCharacterSheetState(characterId: string) {
 			if (delta < 0) {
 				const label = field === "hit_dice_current" ? "Hit Dice" : "Rift Favor";
 				ascendantTools
-					.trackCustomFeatureUsage(id, label, "used", "SA")
+					.trackCustomFeatureUsage(id, label, "used", "RA")
 					.catch(console.error);
 			}
 		},
@@ -367,7 +367,7 @@ export function useCharacterSheetState(characterId: string) {
 			await applyRestResourceUpdates("short");
 
 			ascendantTools
-				.trackCustomFeatureUsage(id, "Short Rest", "completed", "SA")
+				.trackCustomFeatureUsage(id, "Short Rest", "completed", "RA")
 				.catch(console.error);
 
 			toast({
@@ -406,10 +406,10 @@ export function useCharacterSheetState(characterId: string) {
 					.catch(console.error);
 
 			ascendantTools
-				.trackCustomFeatureUsage(id, "Hit Dice", "restored", "SA")
+				.trackCustomFeatureUsage(id, "Hit Dice", "restored", "RA")
 				.catch(console.error);
 			ascendantTools
-				.trackCustomFeatureUsage(id, "Rift Favor", "restored", "SA")
+				.trackCustomFeatureUsage(id, "Rift Favor", "restored", "RA")
 				.catch(console.error);
 
 			toast({

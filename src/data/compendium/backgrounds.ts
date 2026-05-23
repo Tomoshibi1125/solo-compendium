@@ -131,7 +131,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "B",
 		description:
 			"You were identified as an Awakened early and sent to a prestigious academy funded by the mega-guilds. You have been trained in magical theory, gate mechanics, and PR. You are polished, educated, and expected to be a star.",
-		skill_proficiencies: ["Arcana", "History"],
+		skill_proficiencies: ["Mana Flow", "Dimensional Lore"],
 		tool_proficiencies: ["Calligrapher's Supplies"],
 		languages: ["Two additional languages of your choice"],
 		equipment: [
@@ -315,7 +315,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "A",
 		description:
 			"You are highly sensitive to mana, capable of feeling the fluctuations of aether in the air. You might have been a radar operator, a meteorologist, or just someone with extreme migraines before awakening.",
-		skill_proficiencies: ["Perception", "Nature"],
+		skill_proficiencies: ["Perception", "Gate Topology"],
 		tool_proficiencies: ["Alchemist's Supplies"],
 		languages: ["One additional language"],
 		equipment: [
@@ -376,7 +376,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "S",
 		description:
 			"You were directly spoken to by a Sovereign or a high-ranking entity of the rifts when you awakened. You bear a mark, a burden, and a destiny that you barely understand.",
-		skill_proficiencies: ["Religion", "Intimidation"],
+		skill_proficiencies: ["Cosmic Lore", "Intimidation"],
 		tool_proficiencies: [],
 		languages: ["Two exotic languages (e.g., Celestial, Infernal)"],
 		equipment: [
@@ -498,7 +498,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "A",
 		description:
 			"You are a master of runic technology, blending modern computer science with ancient magical sigils. You design the containment fields that keep gates from breaking and craft the magical gear Hunters rely on.",
-		skill_proficiencies: ["Arcana", "Investigation"],
+		skill_proficiencies: ["Mana Flow", "Investigation"],
 		tool_proficiencies: ["Tinker's Tools", "Jeweler's Tools"],
 		languages: ["One exotic language"],
 		equipment: [
@@ -559,7 +559,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "S",
 		description:
 			"You are a trusted guardian of the Hunter Association's deepest vaults, where S-Rank artifacts, cursed items, and high-value prisoner cores are kept. You have been exposed to extreme magical radiation.",
-		skill_proficiencies: ["Insight", "History"],
+		skill_proficiencies: ["Insight", "Dimensional Lore"],
 		tool_proficiencies: ["Thieves' Tools", "Tinker's Tools"],
 		languages: [],
 		equipment: [
@@ -1056,7 +1056,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "A",
 		description:
 			"You are a brilliant researcher employed by a mega-corporation or the government. You study mana, reverse-engineer alien biology, and develop the potions and gear that keep Hunters alive. You were likely awakened during a lab accident.",
-		skill_proficiencies: ["Arcana", "Medicine"],
+		skill_proficiencies: ["Mana Flow", "Medicine"],
 		tool_proficiencies: ["Alchemist's Supplies", "Poisoner's Kit"],
 		languages: ["Two additional languages"],
 		equipment: [
@@ -1243,7 +1243,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "A",
 		description:
 			"You are the scion of a massive corporate conglomerate that runs a top-tier Hunter Guild. You were born with a silver spoon and awakened with an S-Rank or A-Rank potential. The world expects you to lead, but you have yet to prove you're more than just nepotism.",
-		skill_proficiencies: ["Persuasion", "History"],
+		skill_proficiencies: ["Persuasion", "Dimensional Lore"],
 		tool_proficiencies: ["Vehicles (Land)", "Gaming Set"],
 		languages: ["Two additional languages"],
 		equipment: [
@@ -1305,7 +1305,7 @@ export const backgrounds: StaticBackground[] = [
 		rank: "D",
 		description:
 			"You were a member of a doomsday cult that believes the Sovereigns and the rifts are divine judgments. You either escaped the cult when you awakened, or you are secretly still a member acting as a sleeper agent among the Hunters.",
-		skill_proficiencies: ["Religion", "Deception"],
+		skill_proficiencies: ["Cosmic Lore", "Deception"],
 		tool_proficiencies: ["Disguise Kit", "Poisoner's Kit"],
 		languages: ["One exotic language"],
 		equipment: [

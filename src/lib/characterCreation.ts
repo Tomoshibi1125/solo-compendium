@@ -690,7 +690,12 @@ export function getRacialTraitModifiers(
 		}
 		if (trait === "arcane optic mutation") {
 			return [
-				{ type: "skill_prof", value: 0, target: "Arcana", source: traitName },
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Mana Flow",
+					source: traitName,
+				},
 				{
 					type: "see_invisible",
 					value: 30,
@@ -747,7 +752,12 @@ export function getRacialTraitModifiers(
 	if (job === "summoner") {
 		if (trait === "aetheric anchor") {
 			return [
-				{ type: "skill_prof", value: 0, target: "Nature", source: traitName },
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Gate Topology",
+					source: traitName,
+				},
 			];
 		}
 		if (trait === "summoner's ward") {
@@ -766,7 +776,12 @@ export function getRacialTraitModifiers(
 	if (job === "herald") {
 		if (trait === "mandate-receptive cortex") {
 			return [
-				{ type: "skill_prof", value: 0, target: "Religion", source: traitName },
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Cosmic Lore",
+					source: traitName,
+				},
 				{
 					type: "advantage",
 					value: 0,
@@ -854,7 +869,12 @@ export function getRacialTraitModifiers(
 		}
 		if (trait === "aura of command") {
 			return [
-				{ type: "skill_prof", value: 0, target: "History", source: traitName },
+				{
+					type: "skill_prof",
+					value: 0,
+					target: "Dimensional Lore",
+					source: traitName,
+				},
 				{
 					type: "advantage",
 					value: 0,

@@ -239,7 +239,7 @@ This is a nature-aspect Gate — a dimension where explosive botanical growth ha
 - **Encounter**: Blood Zealot Karn + 6 Cult Acolytes
   - **Karn**: HP 65 | AC 15 | +7 to hit, 2d8+4 necrotic | *Blood Drain*: on hit, heals for half damage dealt | *Fanatic Frenzy* (1/day): all Cult allies gain advantage on attacks for 2 rounds
   - **Acolytes** (6): HP 15 each | AC 11 | +3 to hit, 1d6+1 slashing | *Self-Sacrifice*: When Karn takes damage, an acolyte within 5 ft. can take the damage instead
-- **Disrupting the Ritual**: DC 14 Arcana check as an action while within the ritual circle. Success stops the Gate Break acceleration. Failure triggers a mana backlash (2d8 force damage to the character).
+- **Disrupting the Ritual**: DC 14 Mana Flow check as an action while within the ritual circle. Success stops the Gate Break acceleration. Failure triggers a mana backlash (2d8 force damage to the character).
 
 ### Basement Vault — The Vault
 - Accessible via a service elevator that still functions (ominously).

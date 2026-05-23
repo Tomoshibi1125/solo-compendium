@@ -155,7 +155,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		],
 		sigil: "A floating eye wreathed in arcane runes",
 		manifestation: "The Grand Library (A living archive dimension)",
-		specializations: ["Knowledge", "Arcana", "Memory"],
+		specializations: ["Knowledge", "Mana Flow", "Memory"],
 		dogma: [
 			"Knowledge hoarded is knowledge lost to the Void.",
 			"The Rift reveals its truths only to the worthy — earn your answers.",
@@ -683,14 +683,14 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		rank: "Quasi-Deity",
 		directive: "Adaptive Multiplication",
 		portfolio: [
-			"Nature",
+			"Gate Topology",
 			"Evolution",
 			"Organic Swarms",
 			"Biological Resilience",
 		],
 		sigil: "A crystalline insect wing with floral patterns",
 		manifestation: "The Hive Staff (Stave of Growth)",
-		specializations: ["Nature", "Life", "Survival"],
+		specializations: ["Gate Topology", "Life", "Survival"],
 		dogma: [
 			"Multiply or perish — the swarm endures where the individual falls.",
 			"Evolution is the soul's way of reaching the Zenith.",
@@ -1468,7 +1468,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		portfolio: ["Ice", "Frozen Mana", "Hidden Truths", "Mystery"],
 		sigil: "A crystalline snowflake with a void at its center",
 		manifestation: "Frost-Key (Scepter of the Void-Cold)",
-		specializations: ["Knowledge", "Arcana", "Trickery"],
+		specializations: ["Knowledge", "Mana Flow", "Trickery"],
 		dogma: [
 			"Emotion clouds judgement — still the heart to find the truth.",
 			"The answer is hidden in the silence between heartbeats.",

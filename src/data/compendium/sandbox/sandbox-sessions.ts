@@ -170,7 +170,7 @@ export const sandboxSessions: SandboxSession[] = [
 				logType: "session",
 				title: "Warden Prep — Awoko Seed",
 				content: [
-					'Graffiti throughout gate: _"We are the only name that stays."_ Foreshadows the Identity-Erosion / Regent reveal. Dr. Hayashi recognizes the symbol — feed this detail via a Perception or History check.',
+					'Graffiti throughout gate: _"We are the only name that stays."_ Foreshadows the Identity-Erosion / Regent reveal. Dr. Hayashi recognizes the symbol — feed this detail via a Perception or Dimensional Lore check.',
 				].join("\n"),
 				isPlayerVisible: false,
 			},
