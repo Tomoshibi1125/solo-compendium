@@ -8,7 +8,8 @@ import type { CompendiumTechnique } from "../../types/compendium";
 export const techniques_supplemental: CompendiumTechnique[] = [
 	{
 		id: "tech-sup-1-1-shield-bash",
-		name: "Shield Bash",
+        classes: ["Technomancer", "Striker", "Destroyer"],
+        name: "Shield Bash",
 		display_name: "Shield Bash",
 		description:
 			"Slam your shield or weapon flat into a creature within 5 feet. Make a melee attack using Strength; on hit, 1d8+STR bludgeoning damage and the target must make a DC 13 Strength save or be pushed 10 feet and knocked prone.",
@@ -24,7 +25,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The shield isn't for defense. Not right now.",
 		tags: ["awakened", "technique", "vanguard", "Weapon", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -74,7 +74,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-2-iron-curtain",
-		name: "Iron Curtain",
+        classes: ["Technomancer", "Striker", "Destroyer"],
+        name: "Iron Curtain",
 		display_name: "Iron Curtain",
 		description:
 			"As a reaction when an ally within 10 feet is targeted by an attack, impose yourself. The attack targets you instead. You have +3 AC against it. If the attack misses you, you can make one melee weapon attack against the attacker as part of the same reaction.",
@@ -90,7 +91,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Through me. Only through me.",
 		tags: ["awakened", "technique", "vanguard", "Defense", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -140,7 +140,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-3-anchor-slam",
-		name: "Anchor Slam",
+        classes: ["Technomancer", "Striker", "Destroyer"],
+        name: "Anchor Slam",
 		display_name: "Anchor Slam",
 		description:
 			"Slam your weapon into the ground, creating a 15-foot radius shockwave. Each creature makes DC 16 STR save: 5d8 force and knocked prone on failure, half on success. The area becomes difficult terrain for 1 minute.",
@@ -156,7 +157,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The ground listens when she strikes it.",
 		tags: ["awakened", "technique", "vanguard", "Weapon", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -206,7 +206,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-4-unyielding-fortress",
-		name: "Unyielding Fortress",
+        classes: ["Technomancer", "Striker", "Destroyer"],
+        name: "Unyielding Fortress",
 		display_name: "Unyielding Fortress",
 		description:
 			"Enter an immovable stance for 1 minute. You can't be moved, you have advantage on all Strength and Constitution saves, reduce all damage by 5, and can use your reaction to impose disadvantage on any attack targeting an ally within 10 feet.",
@@ -222,7 +223,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "I am the wall. I am the gate. Nothing passes.",
 		tags: ["awakened", "technique", "vanguard", "Stance", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -272,7 +272,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-5-world-anchor",
-		name: "World Anchor",
+        classes: ["Summoner", "Technomancer", "Contractor", "Striker", "Destroyer"],
+        name: "World Anchor",
 		display_name: "World Anchor",
 		description:
 			"Drive your weapon into the earth and become one with the battlefield. For 1 minute: you can't move but gain immunity to all conditions, reduce all damage by 15, and any creature that attacks an ally within 30 feet of you takes 5d10 force damage automatically. After the effect ends, gain 2 exhaustion.",
@@ -288,7 +289,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She didn't move. Nothing else could.",
 		tags: ["awakened", "technique", "vanguard", "Ultimate", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -338,7 +338,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-6-reckless-cleave",
-		name: "Reckless Cleave",
+        classes: ["Technomancer", "Striker", "Berserker", "Destroyer"],
+        name: "Reckless Cleave",
 		display_name: "Reckless Cleave",
 		description:
 			"Make a melee weapon attack with advantage, but attacks against you also have advantage until the start of your next turn. On a hit, deal weapon damage plus 1d8 slashing damage to the target and each creature within 5 feet of it.",
@@ -354,7 +355,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "All in. All the time.",
 		tags: ["awakened", "technique", "brutal", "Weapon", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -404,7 +404,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-7-savage-charge",
-		name: "Savage Charge",
+        classes: ["Technomancer", "Striker", "Berserker"],
+        name: "Savage Charge",
 		display_name: "Savage Charge",
 		description:
 			"Charge up to 30 feet in a straight line, then make a melee attack with advantage. On a hit, deal weapon damage plus 3d8 bludgeoning and the target must make DC 15 STR save or be knocked prone. If already in Overload, charge distance increases to 60 feet.",
@@ -420,7 +421,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The distance between us is a problem. Your problem.",
 		tags: ["awakened", "technique", "brutal", "Movement", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -470,7 +470,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-8-carnage-wave",
-		name: "Carnage Wave",
+        classes: ["Technomancer", "Striker", "Berserker"],
+        name: "Carnage Wave",
 		display_name: "Carnage Wave",
 		description:
 			"Sweep your weapon in a devastating arc. Make a melee weapon attack against each creature within 10 feet. On a hit, deal weapon damage plus 3d10 slashing. Creatures reduced to 0 HP explode (2d6 slashing to creatures within 5 feet of them).",
@@ -486,7 +487,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One swing. Everything dies or moves.",
 		tags: ["awakened", "technique", "brutal", "Weapon", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -536,7 +536,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-9-unstoppable-rampage",
-		name: "Unstoppable Rampage",
+        classes: ["Technomancer", "Striker", "Berserker"],
+        name: "Unstoppable Rampage",
 		display_name: "Unstoppable Rampage",
 		description:
 			"For 1 minute: you can make a melee attack against every creature you pass within 5 feet during your movement (once each), your speed can't be reduced, and you're immune to prone, grappled, and restrained. Each kill grants +5 temporary HP.",
@@ -552,7 +553,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She stopped when there was nothing left to hit.",
 		tags: ["awakened", "technique", "brutal", "Stance", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -602,7 +602,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-10-extinction-strike",
-		name: "Extinction Strike",
+        classes: ["Technomancer", "Striker", "Berserker"],
+        name: "Extinction Strike",
 		display_name: "Extinction Strike",
 		description:
 			"Channel maximum Overload into a single attack. Make a melee weapon attack. On a hit: weapon damage plus 15d12 fire damage. The target is launched 60 feet and everything in the path takes half damage. Miss: half damage to the target anyway. Usable once per long rest.",
@@ -618,7 +619,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One hit. The last hit anything will ever need.",
 		tags: ["awakened", "technique", "brutal", "Ultimate", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -668,7 +668,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-11-vital-strike",
-		name: "Vital Strike",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Vital Strike",
 		display_name: "Vital Strike",
 		description:
 			"Target a vital point. If you have advantage or the target is within 5 feet of an ally, deal weapon damage plus 1d8 piercing and the target's AC is reduced by 1 until the end of its next turn (doesn't stack).",
@@ -684,7 +685,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She doesn't aim for the body. She aims for the gap.",
 		tags: ["awakened", "technique", "precision", "Weapon", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -735,7 +735,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-12-arterial-cut",
-		name: "Arterial Cut",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Arterial Cut",
 		display_name: "Arterial Cut",
 		description:
 			"Slice a precise wound that bleeds. On a hit with advantage, deal weapon damage plus 3d6 slashing. The target takes 2d4 bleed damage at the start of each of its turns for 1 minute. A creature can use its action to staunch the wound (DC 14 Medicine).",
@@ -751,7 +752,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "It's a small cut. You'll notice it in about three seconds.",
 		tags: ["awakened", "technique", "precision", "Weapon", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -802,7 +802,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-13-organ-failure",
-		name: "Organ Failure",
+        classes: ["Revenant", "Technomancer", "Assassin", "Striker"],
+        name: "Organ Failure",
 		display_name: "Organ Failure",
 		description:
 			"Target a creature's internal mana node. If you have advantage, on a hit deal weapon damage plus 6d6 necrotic. The target must make DC 16 VIT save or be poisoned for 1 minute (its speed halved, disadvantage on attacks). Save ends.",
@@ -818,7 +819,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The outside looks fine. The inside doesn't.",
 		tags: ["awakened", "technique", "precision", "Weapon", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -869,7 +869,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-14-deathmark-strike",
-		name: "Deathmark Strike",
+        classes: ["Revenant", "Technomancer", "Contractor", "Assassin", "Striker"],
+        name: "Deathmark Strike",
 		display_name: "Deathmark Strike",
 		description:
 			"Deliver the ideal strike. If you have advantage and the attack hits, it automatically crits. The critical deals maximum damage on all dice. The target must make DC 18 VIT save or be stunned for 1 round.",
@@ -885,7 +886,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The perfect angle. The perfect moment. The perfect end.",
 		tags: ["awakened", "technique", "precision", "Weapon", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -936,7 +936,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-15-assassination-protocol",
-		name: "Assassination Protocol",
+        classes: ["Revenant", "Technomancer", "Contractor", "Assassin", "Striker"],
+        name: "Assassination Protocol",
 		display_name: "Assassination Protocol",
 		description:
 			"Execute a flawless killing sequence. Make 3 attacks with advantage. Each that hits deals weapon damage plus 5d8 necrotic. If all three hit the same target and it has fewer than 150 HP afterward, it dies instantly (DC 20 VIT negates the instant kill, not the damage).",
@@ -952,7 +953,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Three cuts. Done.",
 		tags: ["awakened", "technique", "precision", "Ultimate", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1003,7 +1003,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-16-nerve-disruption",
-		name: "Nerve Disruption",
+        classes: ["Technomancer", "Striker"],
+        name: "Nerve Disruption",
 		display_name: "Nerve Disruption",
 		description:
 			"Strike a nerve cluster. Make an unarmed attack; on hit, 1d8+AGI bludgeoning damage and the target must make DC 13 VIT save or lose its reaction until the end of your next turn.",
@@ -1019,7 +1020,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The nerve she hit doesn't have a name. It has a number.",
 		tags: ["awakened", "technique", "unarmed", "Martial", "Striker"],
-		classes: ["Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1069,7 +1069,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-17-meridian-cascade",
-		name: "Meridian Cascade",
+        classes: ["Technomancer", "Striker"],
+        name: "Meridian Cascade",
 		display_name: "Meridian Cascade",
 		description:
 			"Strike 5 pressure points in rapid succession. Make 3 unarmed attacks. If 2+ hit the same target, it must make DC 15 VIT save or have its speed reduced to 0 and disadvantage on attacks until end of its next turn.",
@@ -1085,7 +1086,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Five points. Three seconds. Zero movement.",
 		tags: ["awakened", "technique", "unarmed", "Martial", "Striker"],
-		classes: ["Striker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1135,7 +1135,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-18-gate-breaker-fist",
-		name: "Gate Breaker Fist",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Gate Breaker Fist",
 		display_name: "Gate Breaker Fist",
 		description:
 			"Channel mana through your fist for a strike that ignores all resistances and immunities. Make an unarmed attack: 6d10+AGI force damage. Deals double damage to objects and structures. Can target ethereal/incorporeal creatures normally.",
@@ -1151,7 +1152,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She punches the concept of 'defense.' It breaks.",
 		tags: ["awakened", "technique", "unarmed", "Martial", "Striker"],
-		classes: ["Striker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1201,7 +1201,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-19-one-inch-impact",
-		name: "One-Inch Impact",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "One-Inch Impact",
 		display_name: "One-Inch Impact",
 		description:
 			"Deliver a close-range strike of concentrated force. Touch range. On hit: 10d8 force damage and the target is launched 30 feet. If it collides with another creature, both make DC 18 STR saves or take 5d6 bludgeoning and are prone.",
@@ -1217,7 +1218,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One inch of movement. Thirty feet of result.",
 		tags: ["awakened", "technique", "unarmed", "Martial", "Striker"],
-		classes: ["Striker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1267,7 +1267,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-20-final-form",
-		name: "Final Form",
+        classes: ["Technomancer", "Striker"],
+        name: "Final Form",
 		display_name: "Final Form",
 		description:
 			"Achieve martial transcendence for 1 minute. Your unarmed strikes deal force damage, your attacks per Attack action become 6, your speed doubles, and you're immune to conditions. Each creature you hit has its AC permanently reduced by 1 (to minimum 10) for the encounter.",
@@ -1284,7 +1285,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		flavor:
 			"This is what the body was designed for. Everything before was practice.",
 		tags: ["awakened", "technique", "unarmed", "Ultimate", "Striker"],
-		classes: ["Striker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1334,7 +1334,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-21-smite",
-		name: "Smite",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Contractor", "Striker"],
+        name: "Smite",
 		display_name: "Smite",
 		description:
 			"Channel your oath through your weapon. On your next hit, deal an extra 2d8 radiant damage. Against undead or fiends, 3d8 instead.",
@@ -1350,7 +1351,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The light asks no questions. Neither does the blade.",
 		tags: ["awakened", "technique", "radiant", "Weapon", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1400,7 +1400,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-22-radiant-cleave",
-		name: "Radiant Cleave",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Destroyer", "Idol", "Summoner"],
+        name: "Radiant Cleave",
 		display_name: "Radiant Cleave",
 		description:
 			"Sweep your weapon in an arc of radiant fury. Each creature within 10 feet of you must make DC 15 AGI save: 3d8 radiant on failure, half on success. Allies are unaffected.",
@@ -1416,7 +1417,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The light cuts. It cuts very precisely.",
 		tags: ["awakened", "technique", "radiant", "Weapon", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1466,7 +1466,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-23-judgment-strike",
-		name: "Judgment Strike",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Contractor", "Striker"],
+        name: "Judgment Strike",
 		display_name: "Judgment Strike",
 		description:
 			"On your next melee hit, deal weapon damage plus 6d8 radiant. The target must make DC 17 PRS save or be blinded until end of its next turn. If it's undead/fiend, it's also paralyzed for 1 round on a failed save.",
@@ -1482,7 +1483,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The Absolute passes judgment. The sword delivers the verdict.",
 		tags: ["awakened", "technique", "radiant", "Weapon", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1532,7 +1532,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-24-taser-fist",
-		name: "Taser Fist",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Taser Fist",
 		display_name: "Taser Fist",
 		description:
 			"Deliver an electrically charged punch through your combat gauntlet. Melee attack using INT: 1d8+INT lightning damage. On a hit, the target can't take reactions until end of its next turn.",
@@ -1551,7 +1552,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Shaking hands was never this exciting.",
 		tags: ["awakened", "technique", "engineered", "Device", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1602,7 +1602,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-25-emp-burst",
-		name: "EMP Burst",
+        classes: ["Technomancer", "Striker"],
+        name: "EMP Burst",
 		display_name: "EMP Burst",
 		description:
 			"Discharge an electromagnetic pulse in a 15-foot radius. Each creature must make DC 15 INT save: 3d8 lightning on failure, half on success. Constructs and creatures with metal armor have disadvantage on the save. All non-magical electronic devices in the area are disabled for 1 minute.",
@@ -1621,7 +1622,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Everything electronic in the room just died. You're next.",
 		tags: ["awakened", "technique", "engineered", "Device", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1672,7 +1672,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-26-railgun-shot",
-		name: "Railgun Shot",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Railgun Shot",
 		display_name: "Railgun Shot",
 		description:
 			"Fire a hypersonic mana-accelerated projectile. Make a ranged attack (INT) against a creature within 300 feet. On a hit: 8d10 force damage. The projectile pierces through up to 3 creatures in a line — each makes a DC 17 AGI save for half.",
@@ -1691,7 +1692,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The sound arrives after the impact. So does the pain.",
 		tags: ["awakened", "technique", "engineered", "Device", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1742,7 +1742,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-27-hamstring",
-		name: "Hamstring",
+        classes: ["Technomancer", "Stalker", "Striker"],
+        name: "Hamstring",
 		display_name: "Hamstring",
 		description:
 			"Target a creature's mobility. On a weapon hit, deal weapon damage plus 1d6 slashing. The target's speed is reduced by 15 feet until the end of its next turn. If the target's speed is already reduced, it's also knocked prone.",
@@ -1758,7 +1759,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "You can't run if you can't walk.",
 		tags: ["awakened", "technique", "pursuit", "Weapon", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1808,7 +1808,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-28-entangle-shot",
-		name: "Entangle Shot",
+        classes: ["Summoner", "Technomancer", "Stalker", "Striker"],
+        name: "Entangle Shot",
 		display_name: "Entangle Shot",
 		description:
 			"Fire a bolt or arrow wrapped in mana-wire. Ranged weapon attack. On a hit: weapon damage plus 2d6 piercing and the target must make DC 15 STR save or be restrained until it uses an action to break free (DC 15 Athletics/Acrobatics).",
@@ -1824,7 +1825,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The wire holds. The target doesn't.",
 		tags: ["awakened", "technique", "pursuit", "Weapon", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1874,7 +1874,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-29-predator-s-leap",
-		name: "Predator's Leap",
+        classes: ["Technomancer", "Stalker", "Striker"],
+        name: "Predator's Leap",
 		display_name: "Predator's Leap",
 		description:
 			"Leap up to 40 feet to a space adjacent to a creature you've marked. This movement doesn't provoke opportunity attacks. Your next attack this turn has advantage and deals an extra 3d6 damage.",
@@ -1890,7 +1891,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Airborne. Descending. Arriving.",
 		tags: ["awakened", "technique", "pursuit", "Movement", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1940,7 +1940,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-30-rhythmic-strike",
-		name: "Rhythmic Strike",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Rhythmic Strike",
 		display_name: "Rhythmic Strike",
 		description:
 			"Channel K-pop fighting style into a flashy melee attack. On a hit, deal 1d8+PRS thunder damage. Each ally within 30 feet who can see you gains +1 to their next attack roll from the inspiring performance.",
@@ -1956,7 +1957,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Every hit is choreographed. Every hit lands.",
 		tags: ["awakened", "technique", "resonance", "Dance", "Idol"],
-		classes: ["Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2007,7 +2007,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-31-dance-of-blades",
-		name: "Dance of Blades",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Dance of Blades",
 		display_name: "Dance of Blades",
 		description:
 			"Perform an acrobatic weapon flourish, attacking each creature within 5 feet. Make a melee attack against each: weapon damage + 1d6 slashing. For each creature hit, you gain +1 AC until the start of your next turn (max +3).",
@@ -2023,7 +2024,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The dance has a body count.",
 		tags: ["awakened", "technique", "resonance", "Blade", "Idol"],
-		classes: ["Idol"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2074,7 +2074,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-32-crescendo-finale",
-		name: "Crescendo Finale",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Crescendo Finale",
 		display_name: "Crescendo Finale",
 		description:
 			"Build to a devastating performance climax. Make 3 melee attacks. Each hit deals weapon damage + 2d6 thunder. If all 3 hit, release a sonic burst: each hostile creature within 15 feet makes DC 16 VIT save or is stunned until end of its next turn.",
@@ -2090,7 +2091,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The final note. Everyone remembers the final note.",
 		tags: ["awakened", "technique", "resonance", "Performance", "Idol"],
-		classes: ["Idol"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2141,7 +2141,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-33-sacred-weapon",
-		name: "Sacred Weapon",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Idol", "Summoner"],
+        name: "Sacred Weapon",
 		display_name: "Sacred Weapon",
 		description:
 			"Bless your weapon with the Absolute's light for 1 minute. Your weapon attacks deal an extra 1d4 radiant damage and count as magical. You shed bright light in a 20-foot radius.",
@@ -2157,7 +2158,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The weapon shines. What it hits does not.",
 		tags: ["awakened", "technique", "divine", "Weapon", "Herald"],
-		classes: ["Herald"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2207,7 +2207,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-34-spiritual-hammer",
-		name: "Spiritual Hammer",
+        classes: ["Summoner", "Holy Knight", "Technomancer", "Herald", "Striker", "Idol"],
+        name: "Spiritual Hammer",
 		display_name: "Spiritual Hammer",
 		description:
 			"Summon a spectral weapon within 60 feet. As a bonus action each turn, make a melee spell attack (Sense): 2d8+SNS radiant damage. The hammer sheds light and can move 20 feet per turn.",
@@ -2223,7 +2224,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She doesn't swing the hammer. The hammer swings itself.",
 		tags: ["awakened", "technique", "divine", "Summoned", "Herald"],
-		classes: ["Herald"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2273,7 +2273,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-35-war-god-s-blessing",
-		name: "War God's Blessing",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Idol", "Summoner"],
+        name: "War God's Blessing",
 		display_name: "War God's Blessing",
 		description:
 			"As a reaction when an ally within 30 feet makes an attack roll, add +10 to the roll. Usable once per short rest.",
@@ -2289,7 +2290,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The Absolute ensures the blade finds its mark.",
 		tags: ["awakened", "technique", "divine", "Blessing", "Herald"],
-		classes: ["Herald"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2339,7 +2339,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-36-pact-blade",
-		name: "Pact Blade",
+        classes: ["Summoner", "Technomancer", "Contractor", "Striker"],
+        name: "Pact Blade",
 		display_name: "Pact Blade",
 		description:
 			"Summon a weapon forged from your patron's essence. The pact blade uses PRS for attack and damage, deals 1d8+PRS force damage, counts as magical, and can be dismissed/resummoned as a bonus action.",
@@ -2355,7 +2356,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Your patron hands you a weapon. Terms and conditions apply.",
 		tags: ["awakened", "technique", "pact", "Weapon", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2405,7 +2405,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-37-eldritch-riposte",
-		name: "Eldritch Riposte",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Eldritch Riposte",
 		display_name: "Eldritch Riposte",
 		description:
 			"As a reaction when a creature misses you with a melee attack, make a pact blade attack against it with advantage. On a hit, deal weapon damage plus 2d8 force and push the target 10 feet.",
@@ -2421,7 +2422,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "You missed. Your patron didn't.",
 		tags: ["awakened", "technique", "pact", "Reaction", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2471,7 +2471,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-38-patron-s-fury",
-		name: "Patron's Fury",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Patron's Fury",
 		display_name: "Patron's Fury",
 		description:
 			"Channel your patron's wrath through your blade. Make 3 pact blade attacks. Each hit deals weapon damage plus 2d6 force. If all 3 hit the same target, your patron manifests briefly: the target must make DC 17 PRS save or be frightened for 1 minute.",
@@ -2487,7 +2488,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Three swings. Three warnings. One patron watching.",
 		tags: ["awakened", "technique", "pact", "Weapon", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2537,7 +2537,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-39-withering-blade",
-		name: "Withering Blade",
+        classes: ["Revenant", "Technomancer", "Striker"],
+        name: "Withering Blade",
 		display_name: "Withering Blade",
 		description:
 			"Channel entropy into your weapon. On your next hit, deal weapon damage plus 1d6 necrotic. You heal HP equal to the necrotic damage dealt.",
@@ -2553,7 +2554,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She takes what the blade gives. Fair exchange.",
 		tags: ["awakened", "technique", "entropy", "Weapon", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2603,7 +2603,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-40-death-s-reach",
-		name: "Death's Reach",
+        classes: ["Revenant", "Technomancer", "Striker"],
+        name: "Death's Reach",
 		display_name: "Death's Reach",
 		description:
 			"Extend your weapon's reach with a tendril of necrotic energy. Make a melee weapon attack with 15-foot reach. On a hit, weapon damage plus 3d6 necrotic. The target can't regain HP until the start of your next turn.",
@@ -2619,7 +2620,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Distance doesn't help. She reaches further.",
 		tags: ["awakened", "technique", "entropy", "Weapon", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2669,7 +2669,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-41-entropy-surge",
-		name: "Entropy Surge",
+        classes: ["Revenant", "Technomancer", "Striker"],
+        name: "Entropy Surge",
 		display_name: "Entropy Surge",
 		description:
 			"On your next melee hit, deal weapon damage plus 5d8 necrotic. The target must make DC 17 VIT save or its maximum HP is reduced by the necrotic damage dealt until it finishes a long rest. You heal for half.",
@@ -2685,7 +2686,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She doesn't just wound. She diminishes.",
 		tags: ["awakened", "technique", "entropy", "Weapon", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2735,7 +2735,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-42-gate-breaker-chop",
-		name: "Gate Breaker Chop",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Gate Breaker Chop",
 		display_name: "Gate Breaker Chop",
 		description:
 			"A devastating overhead strike that channels mana through the weapon's edge. Melee attack: normal damage + 1d8 force. If the target is a construct or gate-structure, deals double bonus damage. Can be used to destroy gate-crystal locks.",
@@ -2758,7 +2759,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Destroyer",
 			"Berserker",
 		],
-		classes: ["Destroyer", "Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2809,7 +2809,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-43-mana-circuit-rush",
-		name: "Mana Circuit Rush",
+        classes: ["Technomancer", "Striker"],
+        name: "Mana Circuit Rush",
 		display_name: "Mana Circuit Rush",
 		description:
 			"Flood your mana circuit into your legs and charge up to 30 feet in a straight line toward a target. If you reach it, make a melee attack with advantage. On hit, normal damage + 1d8 force and target must make DC 13 STR save or be knocked prone.",
@@ -2832,7 +2833,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Striker",
 			"Berserker",
 		],
-		classes: ["Striker", "Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2883,7 +2883,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-44-precision-disarm",
-		name: "Precision Disarm",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Precision Disarm",
 		display_name: "Precision Disarm",
 		description:
 			"Target the tendons and grip-muscles with a precise strike. On a hit, normal damage and the target must make DC 13 AGI save or drop one held item of your choice. The item lands at the target's feet.",
@@ -2906,7 +2907,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Stalker",
 		],
-		classes: ["Assassin", "Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2957,7 +2957,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-45-riposte-lattice",
-		name: "Riposte Lattice",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Idol", "Summoner"],
+        name: "Riposte Lattice",
 		display_name: "Riposte Lattice",
 		description:
 			"As a reaction when a creature misses you with a melee attack, immediately make a melee attack against it. If you hit, deal normal damage + 1d6 radiant and regain 1d4 HP.",
@@ -2980,7 +2981,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Holy Knight",
 			"Destroyer",
 		],
-		classes: ["Holy Knight", "Destroyer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3031,7 +3031,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-46-sonic-throw",
-		name: "Sonic Throw",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Sonic Throw",
 		display_name: "Sonic Throw",
 		description:
 			"Infuse a thrown weapon or projectile with sonic mana. Ranged attack: normal damage + 1d8 thunder. If the target is concentrating on a spell, it has disadvantage on the concentration save.",
@@ -3054,7 +3055,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Idol",
 			"Technomancer",
 		],
-		classes: ["Idol", "Technomancer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3105,7 +3105,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-47-anchor-strike",
-		name: "Anchor Strike",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Idol", "Summoner"],
+        name: "Anchor Strike",
 		display_name: "Anchor Strike",
 		description:
 			"Strike a creature and anchor it to the local mana-lattice. On hit: normal damage + 2d6 force, and the target's speed becomes 0 until the end of its next turn. If it tries to teleport, it takes 2d8 force and the teleport fails.",
@@ -3128,7 +3129,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Destroyer",
 			"Holy Knight",
 		],
-		classes: ["Destroyer", "Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3179,7 +3179,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-48-mana-overrun",
-		name: "Mana Overrun",
+        classes: ["Technomancer", "Striker"],
+        name: "Mana Overrun",
 		display_name: "Mana Overrun",
 		description:
 			"Charge through up to 3 creatures in a 30-foot line. Make a separate melee attack against each. Each hit deals normal damage + 1d6 force. Creatures hit must make DC 14 STR save or be pushed 10 feet to the side.",
@@ -3202,7 +3203,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Berserker",
 			"Striker",
 		],
-		classes: ["Berserker", "Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3253,7 +3253,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-49-vital-point-strike",
-		name: "Vital Point Strike",
+        classes: ["Revenant", "Technomancer", "Assassin", "Striker"],
+        name: "Vital Point Strike",
 		display_name: "Vital Point Strike",
 		description:
 			"Target a creature's mana-circuit junction point with a surgical strike. On hit: normal damage + 2d6 necrotic. Target's mana recovery is suppressed: it can't regain HP from any source until the end of its next turn.",
@@ -3276,7 +3277,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Striker",
 		],
-		classes: ["Assassin", "Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3327,7 +3327,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-50-resonance-slash",
-		name: "Resonance Slash",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "Resonance Slash",
 		display_name: "Resonance Slash",
 		description:
 			"Infuse a melee weapon with harmonic resonance and strike. On hit: normal damage + 2d6 thunder. The impact creates a 10-foot shockwave: each creature other than you within 10 feet of the target makes DC 14 VIT save or takes 1d6 thunder.",
@@ -3343,7 +3344,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The slash sings. Everything nearby listens.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Idol"],
-		classes: ["Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3394,7 +3394,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-51-thermal-coating",
-		name: "Thermal Coating",
+        classes: ["Technomancer", "Striker", "Berserker"],
+        name: "Thermal Coating",
 		display_name: "Thermal Coating",
 		description:
 			"As a bonus action, coat your weapon with superheated mana. For 1 minute, your weapon attacks deal +1d6 fire damage and ignite flammable objects. You can dismiss the coating as a free action.",
@@ -3420,7 +3421,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Technomancer",
 			"Mage",
 		],
-		classes: ["Technomancer", "Mage"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3470,7 +3470,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-52-gate-cutter",
-		name: "Gate Cutter",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Gate Cutter",
 		display_name: "Gate Cutter",
 		description:
 			"Swing your weapon in a massive arc that tears through the mana-lattice. All creatures in a 15-foot cone in front of you: DC 15 AGI save, 4d8 force on failure, half on success. Gate-structures and mana-barriers take double damage.",
@@ -3486,7 +3487,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The arc cuts through everything. Including the gate itself.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3537,7 +3537,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-53-skull-splitter",
-		name: "Skull Splitter",
+        classes: ["Technomancer", "Striker"],
+        name: "Skull Splitter",
 		display_name: "Skull Splitter",
 		description:
 			"A single devastating overhead strike that concentrates your full mana output. Melee attack: normal damage + 4d10 force. If the target is at or below half HP, you score a critical hit on a roll of 18-20.",
@@ -3553,7 +3554,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One swing. Maximum force. The skull was optional.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3604,7 +3604,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-54-shadow-execution",
-		name: "Shadow Execution",
+        classes: ["Revenant", "Technomancer", "Contractor", "Assassin", "Striker"],
+        name: "Shadow Execution",
 		display_name: "Shadow Execution",
 		description:
 			"If you are hidden from the target, your attack automatically crits. On hit: normal damage + 3d6 necrotic. Target must make DC 15 PRS save or be blinded until the end of its next turn as shadow-mana floods its visual cortex.",
@@ -3620,7 +3621,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "From the shadow. Into the shadow. They never see.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3671,7 +3671,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-55-iron-pillar-stance",
-		name: "Iron Pillar Stance",
+        classes: ["Summoner", "Holy Knight", "Technomancer", "Herald", "Striker", "Idol"],
+        name: "Iron Pillar Stance",
 		display_name: "Iron Pillar Stance",
 		description:
 			"Plant your feet and become an immovable defender. For 1 minute: you can't be moved, gain +3 AC, and as a reaction can make a melee attack against any creature that enters your reach. Movement speed becomes 0.",
@@ -3694,7 +3695,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Destroyer",
 			"Holy Knight",
 		],
-		classes: ["Destroyer", "Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3746,7 +3746,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-56-cascade-combo",
-		name: "Cascade Combo",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Cascade Combo",
 		display_name: "Cascade Combo",
 		description:
 			"Execute a three-hit mana-accelerated combo. Make three unarmed attacks (each at -2). Each successive hit that connects deals escalating damage: 1d8, 2d8, 3d8 force. If all three connect, the target is stunned until end of its next turn.",
@@ -3762,7 +3763,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One. Two. Three. Stun.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Striker"],
-		classes: ["Striker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3813,7 +3813,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-57-quarry-brand",
-		name: "Quarry Brand",
+        classes: ["Technomancer", "Stalker", "Striker"],
+        name: "Quarry Brand",
 		display_name: "Quarry Brand",
 		description:
 			"When you hit a creature, mark it as prey. For 1 minute: you have advantage on attacks against it, you always know its location, and your first hit each turn deals +2d6 damage. If the target dies, you can transfer the mark as a free action.",
@@ -3829,7 +3830,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Branded. Hunted. Ended.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3880,7 +3880,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-58-devotion-guard",
-		name: "Devotion Guard",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Idol", "Summoner"],
+        name: "Devotion Guard",
 		display_name: "Devotion Guard",
 		description:
 			"As a reaction when an ally within 10 feet takes damage, interpose yourself. You take the damage instead (reduced by your AC bonus, minimum 1). The ally gains temporary HP equal to your Presence modifier.",
@@ -3896,7 +3897,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Between the ally and the blade. Always.",
 		tags: ["awakened", "technique", "defensive", "defensive", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3947,7 +3947,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-59-voltaic-chain-strike",
-		name: "Voltaic Chain Strike",
+        classes: ["Technomancer", "Striker"],
+        name: "Voltaic Chain Strike",
 		display_name: "Voltaic Chain Strike",
 		description:
 			"Strike a creature and discharge a mana-electric chain through its body. On hit: normal damage + 3d8 lightning. The charge arcs to up to 2 additional creatures within 15 feet of the target: each takes 2d8 lightning (DC 16 AGI, half on success).",
@@ -3966,7 +3967,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One strike. Three targets. One invoice.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4017,7 +4017,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-60-entropic-rend",
-		name: "Entropic Rend",
+        classes: ["Revenant", "Technomancer", "Striker"],
+        name: "Entropic Rend",
 		display_name: "Entropic Rend",
 		description:
 			"Infuse your weapon with pure entropy and strike. On hit: normal damage + 4d6 necrotic. Target's AC is reduced by 2 for 1 minute as its defensive mana-lattice corrodes. This reduction stacks with itself up to -4 AC.",
@@ -4033,7 +4034,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The armor remembers being new. Not for long.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4084,7 +4084,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-61-pact-weapon-manifest",
-		name: "Pact Weapon Manifest",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Pact Weapon Manifest",
 		display_name: "Pact Weapon Manifest",
 		description:
 			"Manifest a weapon from your patron's dimension. Choose any melee weapon form. It counts as magical, uses Presence for attack/damage, deals +2d6 damage of your patron's element, and can't be disarmed. Lasts 1 hour or until dismissed.",
@@ -4101,7 +4102,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		flavor:
 			"The patron provides the weapon. The Contractor provides the violence.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4154,7 +4154,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-62-meteor-fist",
-		name: "Meteor Fist",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Meteor Fist",
 		display_name: "Meteor Fist",
 		description:
 			"Concentrate all mana-kinetic force into a single punch that strikes with the impact of a falling star. Melee attack: 8d10 force damage. The target must make DC 17 STR save or be launched 30 feet and knocked prone. If it collides with a surface, both take 4d6 bludgeoning.",
@@ -4170,7 +4171,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The fist arrives. The target departs.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Striker"],
-		classes: ["Striker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4221,7 +4221,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-63-demolition-wave",
-		name: "Demolition Wave",
+        classes: ["Technomancer", "Striker"],
+        name: "Demolition Wave",
 		display_name: "Demolition Wave",
 		description:
 			"Strike the ground and send a devastating shockwave in a 30-foot cone. Each creature: DC 17 STR save, 6d10 force on failure, half on success. All structures, barriers, and constructs in the area take triple damage. Terrain becomes difficult.",
@@ -4237,7 +4238,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The ground has an opinion. It's disagreeing with everything.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4288,7 +4288,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-64-mark-of-the-absolute",
-		name: "Mark of the Absolute",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Assassin", "Striker", "Idol", "Summoner"],
+        name: "Mark of the Absolute",
 		display_name: "Mark of the Absolute",
 		description:
 			"Brand a creature with the Absolute's mark. On hit: normal damage + 5d8 radiant. For 1 minute, the marked creature takes 2d8 radiant at the start of each of its turns, sheds bright light 10 feet (can't hide), and all attacks against it from allies deal +1d6 radiant.",
@@ -4304,7 +4305,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The Absolute sees you now. It does not approve.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4355,7 +4355,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-65-whirlwind-execution",
-		name: "Whirlwind Execution",
+        classes: ["Summoner", "Technomancer", "Assassin", "Striker"],
+        name: "Whirlwind Execution",
 		display_name: "Whirlwind Execution",
 		description:
 			"Spin through multiple targets with mana-enhanced speed. Make a melee attack against up to 5 creatures within reach. Each hit deals normal damage + 3d6 force. If you hit 3 or more targets, you become invisible until the start of your next turn.",
@@ -4378,7 +4379,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Stalker",
 		],
-		classes: ["Assassin", "Stalker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4431,7 +4431,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-66-graviton-slam",
-		name: "Graviton Slam",
+        classes: ["Technomancer", "Contractor", "Striker", "Destroyer"],
+        name: "Graviton Slam",
 		display_name: "Graviton Slam",
 		description:
 			"Leap 30 feet into the air and slam down with gravity-multiplied force. Each creature within 15 feet of impact: DC 17 STR save, 8d8 force on failure, half on success. Targets that fail are knocked prone and their speed is 0 until end of their next turn.",
@@ -4454,7 +4455,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Striker",
 			"Destroyer",
 		],
-		classes: ["Striker", "Destroyer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4505,7 +4505,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-67-eternal-slash",
-		name: "Eternal Slash",
+        classes: ["Revenant", "Technomancer", "Assassin", "Striker"],
+        name: "Eternal Slash",
 		display_name: "Eternal Slash",
 		description:
 			"Execute a blade strike infused with terminal entropy. On hit: normal damage + 6d8 necrotic. The wound cannot be healed by any means for 1 minute. If the target is reduced to 0 HP while the wound persists, it cannot be revived by spells below 7th level.",
@@ -4521,7 +4522,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The wound remembers. The wound doesn't close.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4572,7 +4572,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-68-resonance-blade-dance",
-		name: "Resonance Blade Dance",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Resonance Blade Dance",
 		display_name: "Resonance Blade Dance",
 		description:
 			"Perform a combat dance that generates mana-blades of sound. For 1 minute, you can make ranged spell attacks (60 ft, 3d8 thunder) as a bonus action. While dancing, you gain +2 AC and your movement doesn't provoke opportunity attacks.",
@@ -4588,7 +4589,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She dances. Blades of sound follow. It's beautiful. It's lethal.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Idol"],
-		classes: ["Idol"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4640,7 +4640,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-69-gate-breaker-barrage",
-		name: "Gate Breaker Barrage",
+        classes: ["Technomancer", "Herald", "Contractor", "Striker", "Berserker", "Idol", "Summoner", "Holy Knight"],
+        name: "Gate Breaker Barrage",
 		display_name: "Gate Breaker Barrage",
 		description:
 			"Enter a 1-round rampage of mana-fueled strikes. Make 4 melee attacks with advantage. Each hit deals normal damage + 2d8 force. If you hit with all 4, the target must make DC 17 VIT save or be stunned for 1 round.",
@@ -4656,7 +4657,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Four hits. All of them meant to end things.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4707,7 +4707,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-70-dimensional-blade",
-		name: "Dimensional Blade",
+        classes: ["Technomancer", "Contractor", "Assassin", "Striker"],
+        name: "Dimensional Blade",
 		display_name: "Dimensional Blade",
 		description:
 			"Manifest a blade that cuts through dimensional boundaries. For 1 minute: your weapon attacks ignore armor AC (targets use base 10 + DEX only), deal +3d8 force, and can hit creatures in adjacent gate-layers (invisible, ethereal, phase-shifted).",
@@ -4731,7 +4732,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Stalker",
 		],
-		classes: ["Assassin", "Stalker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4782,7 +4782,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-71-mountain-crusher",
-		name: "Mountain Crusher",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Mountain Crusher",
 		display_name: "Mountain Crusher",
 		description:
 			"Channel your full mana reserve into a single world-breaking strike. Melee attack: normal damage + 10d10 force. All creatures within 30 feet of the impact: DC 18 STR save or knocked prone and pushed 20 feet. Structures within 30 feet take 100 force damage.",
@@ -4806,7 +4807,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Destroyer",
 			"Berserker",
 		],
-		classes: ["Destroyer", "Berserker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4857,7 +4857,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-72-infinite-combo",
-		name: "Infinite Combo",
+        classes: ["Technomancer", "Herald", "Striker", "Idol", "Summoner", "Holy Knight"],
+        name: "Infinite Combo",
 		display_name: "Infinite Combo",
 		description:
 			"Enter a mana-accelerated state where each consecutive hit builds momentum. Make melee attacks until you miss. Each hit after the first deals escalating damage: +1d10 per hit (2nd hit +1d10, 3rd +2d10, etc). If you land 5+ hits, the target is stunned for 1 minute (DC 19 VIT).",
@@ -4873,7 +4874,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She didn't stop. She couldn't stop. The target wished she would.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Striker"],
-		classes: ["Striker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4924,7 +4924,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-73-absolute-execution",
-		name: "Absolute Execution",
+        classes: ["Revenant", "Technomancer", "Contractor", "Assassin", "Striker"],
+        name: "Absolute Execution",
 		display_name: "Absolute Execution",
 		description:
 			"Mark a target and study it for 1 round. On your next turn, make a single melee attack. This attack automatically hits, automatically crits, and deals maximum damage on all dice + 8d8 necrotic. If the target has 100 HP or fewer after damage, it dies instantly.",
@@ -4940,7 +4941,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Studied. Judged. Executed.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4991,7 +4991,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-74-world-splitter",
-		name: "World Splitter",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "World Splitter",
 		display_name: "World Splitter",
 		description:
 			"The ultimate Destroyer technique. Strike the ground and split reality in a 60-foot line, 20 feet wide. Everything in the area: DC 20 STR save, 15d10 force on failure, half on success. Structures are automatically destroyed. The fissure persists for 1 minute as impassable terrain.",
@@ -5007,7 +5008,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She split the world. The world let her.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5058,7 +5058,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-75-fist-of-the-infinite",
-		name: "Fist of the Infinite",
+        classes: ["Technomancer", "Contractor", "Striker"],
+        name: "Fist of the Infinite",
 		display_name: "Fist of the Infinite",
 		description:
 			"Channel every mana gate, every circuit node, every ounce of kinetic potential into a single transcendent punch. Melee attack: 20d10 force damage. If this reduces the target to 0 HP, everything within 30 feet takes 10d10 force as the mana-shockwave propagates. You gain 5 levels of exhaustion.",
@@ -5074,7 +5075,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One punch. Everything she has. Everything she is.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Striker"],
-		classes: ["Striker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5126,7 +5126,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-76-final-hunt",
-		name: "Final Hunt",
+        classes: ["Technomancer", "Herald", "Assassin", "Striker", "Idol", "Summoner", "Holy Knight"],
+        name: "Final Hunt",
 		display_name: "Final Hunt",
 		description:
 			"Declare a Final Hunt against one creature you can see. For 24 hours: you always know its location regardless of distance or plane, all your attacks against it have advantage and deal +5d8 damage, and it can't benefit from healing, concealment, or dimensional travel. If you kill it, regain all spent resources.",
@@ -5149,7 +5150,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Stalker",
 			"Assassin",
 		],
-		classes: ["Stalker", "Assassin"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5202,7 +5202,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-77-resonance-apocalypse",
-		name: "Resonance Apocalypse",
+        classes: ["Technomancer", "Idol", "Herald", "Striker", "Summoner", "Holy Knight"],
+        name: "Resonance Apocalypse",
 		display_name: "Resonance Apocalypse",
 		description:
 			"Perform the ultimate harmonic — a sound that resonates with the fundamental frequency of reality. All creatures within 120 feet (ally and enemy): DC 20 PRS save. Enemies on failure: 12d8 thunder, stunned 1 minute, deafened permanently. Allies on success: full HP, all conditions removed, +3 to all rolls for 1 minute.",
@@ -5218,7 +5219,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The sound that ends the concert. And everything else.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Idol"],
-		classes: ["Idol"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5271,7 +5271,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-78-mana-laced-headbutt",
-		name: "Mana-Laced Headbutt",
+        classes: ["Technomancer", "Striker"],
+        name: "Mana-Laced Headbutt",
 		display_name: "Mana-Laced Headbutt",
 		description:
 			"Channel mana into your skull and deliver a devastating headbutt. Melee attack: normal damage + 1d8 force. On hit, both you and the target must make DC 13 VIT saves or be stunned until end of your next turn. You have advantage on this save.",
@@ -5294,7 +5295,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Berserker",
 			"Striker",
 		],
-		classes: ["Berserker", "Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5345,7 +5345,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-79-serpent-lash",
-		name: "Serpent Lash",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Serpent Lash",
 		display_name: "Serpent Lash",
 		description:
 			"Extend your weapon's reach by channeling mana into a whip-like extension. Your melee attack gains 10 feet of additional reach for this strike. On hit: normal damage + 1d6 force, and you can pull the target 5 feet toward you.",
@@ -5368,7 +5369,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Stalker",
 			"Assassin",
 		],
-		classes: ["Stalker", "Assassin"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5419,7 +5419,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-80-counter-surge",
-		name: "Counter Surge",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Contractor", "Striker", "Idol", "Summoner"],
+        name: "Counter Surge",
 		display_name: "Counter Surge",
 		description:
 			"As a reaction when you're hit by a melee attack, absorb the impact's kinetic energy and store it. Your next melee attack within 1 round deals bonus damage equal to the damage you absorbed (max 15).",
@@ -5442,7 +5443,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Striker",
 			"Holy Knight",
 		],
-		classes: ["Striker", "Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5493,7 +5493,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-81-lacerate",
-		name: "Lacerate",
+        classes: ["Revenant", "Technomancer", "Assassin", "Striker"],
+        name: "Lacerate",
 		display_name: "Lacerate",
 		description:
 			"Deliver a bleeding strike. On hit: normal damage + 1d8 slashing. Target bleeds: takes 1d4 necrotic at the start of each of its turns for 3 rounds (or until it receives healing or uses an action to staunch).",
@@ -5516,7 +5517,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Berserker",
 		],
-		classes: ["Assassin", "Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5567,7 +5567,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-82-mana-hookshot",
-		name: "Mana Hookshot",
+        classes: ["Technomancer", "Striker"],
+        name: "Mana Hookshot",
 		display_name: "Mana Hookshot",
 		description:
 			"Fire a mana-tethered grappling hook at a creature or surface within 30 feet. If targeting a creature: ranged attack, 1d8 force on hit, and you pull yourself to the target (or pull a Medium or smaller target to you). If targeting a surface: you launch yourself to that point.",
@@ -5593,7 +5594,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Technomancer",
 			"Stalker",
 		],
-		classes: ["Technomancer", "Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5644,7 +5644,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-83-radiant-bind",
-		name: "Radiant Bind",
+        classes: ["Holy Knight", "Technomancer", "Herald", "Striker", "Idol", "Summoner"],
+        name: "Radiant Bind",
 		display_name: "Radiant Bind",
 		description:
 			"As a reaction when you hit a creature with a melee attack, bind it with radiant chains. Target must make DC 15 STR save or be restrained until end of its next turn. While restrained, it takes 2d6 radiant at the start of its turn.",
@@ -5667,7 +5668,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Herald",
 			"Holy Knight",
 		],
-		classes: ["Herald", "Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5718,7 +5718,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-84-flickering-blade",
-		name: "Flickering Blade",
+        classes: ["Technomancer", "Assassin", "Striker", "Destroyer"],
+        name: "Flickering Blade",
 		display_name: "Flickering Blade",
 		description:
 			"Your weapon flickers between visible and invisible as you strike. Make 2 melee attacks; the target can't use reactions against these attacks (shield spells, parries, etc.). Each hit deals normal damage + 1d6 force.",
@@ -5741,7 +5742,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Stalker",
 		],
-		classes: ["Assassin", "Stalker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5792,7 +5792,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-85-kinetic-deflection-field",
-		name: "Kinetic Deflection Field",
+        classes: ["Technomancer", "Striker"],
+        name: "Kinetic Deflection Field",
 		display_name: "Kinetic Deflection Field",
 		description:
 			"As a reaction, project a kinetic deflection field. Reduce ranged attack damage by 3d6. If this reduces the damage to 0, you can redirect the projectile at another creature within 30 feet (use your attack modifier).",
@@ -5818,7 +5819,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Technomancer",
 			"Esper",
 		],
-		classes: ["Technomancer", "Esper"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5869,7 +5869,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-86-crushing-grapple",
-		name: "Crushing Grapple",
+        classes: ["Technomancer", "Striker"],
+        name: "Crushing Grapple",
 		display_name: "Crushing Grapple",
 		description:
 			"On a successful grapple check, you can activate Crushing Grapple. The grappled creature takes 3d8 force damage immediately and 2d8 at the start of each of its turns while grappled. Your grapple DC increases by 3.",
@@ -5892,7 +5893,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Destroyer",
 			"Berserker",
 		],
-		classes: ["Destroyer", "Berserker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5943,7 +5943,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-87-mana-blade-ricochet",
-		name: "Mana-Blade Ricochet",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Mana-Blade Ricochet",
 		display_name: "Mana-Blade Ricochet",
 		description:
 			"Throw a mana-formed blade that ricochets between targets. Choose up to 3 creatures within 30 feet of each other. Make a ranged attack against each: 3d6 force per hit. If all 3 hit, the blade returns and you can make a fourth attack against any of the original targets.",
@@ -5969,7 +5970,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Technomancer",
 			"Idol",
 		],
-		classes: ["Technomancer", "Idol"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6020,7 +6020,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-88-void-step",
-		name: "Void Step",
+        classes: ["Revenant", "Technomancer", "Assassin", "Striker"],
+        name: "Void Step",
 		display_name: "Void Step",
 		description:
 			"Teleport up to 60 feet to an unoccupied space you can see. If you appear within 5 feet of a creature, you can make one melee attack with advantage. On hit: normal damage + 3d8 necrotic as void energy bleeds through.",
@@ -6036,7 +6037,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She was there. She is here. The void came with her.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6087,7 +6087,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-89-earthquake-stomp",
-		name: "Earthquake Stomp",
+        classes: ["Summoner", "Technomancer", "Striker", "Destroyer"],
+        name: "Earthquake Stomp",
 		display_name: "Earthquake Stomp",
 		description:
 			"Slam both feet into the ground, creating a localized earthquake. All creatures within 20 feet on the ground: DC 16 STR save or knocked prone and take 4d6 force. Structures within 20 feet take 50 force damage.",
@@ -6103,7 +6104,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She stamped. The building reconsidered its structural choices.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6154,7 +6154,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-90-idol-s-duel",
-		name: "Idol's Duel",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Idol's Duel",
 		display_name: "Idol's Duel",
 		description:
 			"Challenge one creature to a performance duel. DC 16 PRS save. On failure, for 1 minute: the target can only attack you, and your attacks against it deal +2d8 thunder. If you reduce it to 0 HP, all allies within 30 feet gain 3d8 temporary HP.",
@@ -6170,7 +6171,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "One on one. Center stage. No audience. Just us.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Idol"],
-		classes: ["Idol"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6221,7 +6221,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-91-circuit-breaker-slash",
-		name: "Circuit Breaker Slash",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Circuit Breaker Slash",
 		display_name: "Circuit Breaker Slash",
 		description:
 			"Strike a creature's mana circuit junction with a calibrated blade. On hit: normal damage + 4d8 force. Target must make DC 17 INT save or lose access to one random spell slot (1st-3rd level) for 1 minute.",
@@ -6244,7 +6245,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Assassin",
 			"Technomancer",
 		],
-		classes: ["Assassin", "Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6295,7 +6295,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-92-juggernaut-charge",
-		name: "Juggernaut Charge",
+        classes: ["Technomancer", "Striker"],
+        name: "Juggernaut Charge",
 		display_name: "Juggernaut Charge",
 		description:
 			"Charge up to 60 feet in a straight line. Every creature in your path: DC 17 STR save or take 5d10 force and knocked prone. Creatures that fail by 5+ are also pushed 15 feet to the side. Nothing stops the charge.",
@@ -6318,7 +6319,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Destroyer",
 			"Berserker",
 		],
-		classes: ["Destroyer", "Berserker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6369,7 +6369,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-93-harmonic-counter",
-		name: "Harmonic Counter",
+        classes: ["Technomancer", "Idol", "Striker"],
+        name: "Harmonic Counter",
 		display_name: "Harmonic Counter",
 		description:
 			"As a reaction when an enemy casts a spell within 60 feet, perform a counter-harmonic. The caster must make a DC 17 PRS save. On failure, the spell is disrupted and the caster takes 3d8 thunder damage. On success, the spell goes through but at disadvantage.",
@@ -6385,7 +6386,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She sang over the spell. The spell lost.",
 		tags: ["awakened", "technique", "defensive", "defensive", "Idol"],
-		classes: ["Idol"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6436,7 +6436,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-94-shadow-harvest",
-		name: "Shadow Harvest",
+        classes: ["Revenant", "Technomancer", "Assassin", "Striker"],
+        name: "Shadow Harvest",
 		display_name: "Shadow Harvest",
 		description:
 			"Strike a creature's shadow, causing its mana circuit to hemorrhage. On hit: normal damage + 5d6 necrotic. For 1 minute, the target bleeds mana: at the start of each of its turns, you gain 1d8 temporary HP.",
@@ -6459,7 +6460,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Revenant",
 			"Assassin",
 		],
-		classes: ["Revenant", "Assassin"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6510,7 +6510,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-95-gravity-hammer",
-		name: "Gravity Hammer",
+        classes: ["Technomancer", "Striker"],
+        name: "Gravity Hammer",
 		display_name: "Gravity Hammer",
 		description:
 			"Increase gravity around your weapon tenfold and strike. Melee attack: normal damage + 8d8 force. On hit, target is knocked prone and pinned (speed 0, disadvantage on AGI saves) until it makes a DC 17 STR check as an action.",
@@ -6526,7 +6527,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The hammer weighs as much as a small car. For one swing.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6577,7 +6577,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-96-chronostrike",
-		name: "Chronostrike",
+        classes: ["Technomancer", "Striker"],
+        name: "Chronostrike",
 		display_name: "Chronostrike",
 		description:
 			"Strike a creature while briefly accelerating your personal timeline. Make 3 melee attacks, each dealing normal damage + 2d6 force. The attacks occur so fast the target can't use reactions until the start of its next turn.",
@@ -6600,7 +6601,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Striker",
 			"Esper",
 		],
-		classes: ["Striker", "Esper"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6651,7 +6651,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-97-summoner-s-bond-strike",
-		name: "Summoner's Bond Strike",
+        classes: ["Summoner", "Technomancer", "Striker"],
+        name: "Summoner's Bond Strike",
 		display_name: "Summoner's Bond Strike",
 		description:
 			"You and your summoned creature attack simultaneously. Both make melee attacks against the same target. If both hit, the target takes an additional 4d8 force as the dual mana-signatures create a destructive interference pattern.",
@@ -6667,7 +6668,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Two attacks. One moment. The mana-lattice screams.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Summoner"],
-		classes: ["Summoner"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6718,7 +6718,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-98-entropy-blade",
-		name: "Entropy Blade",
+        classes: ["Revenant", "Technomancer", "Contractor", "Striker"],
+        name: "Entropy Blade",
 		display_name: "Entropy Blade",
 		description:
 			"Manifest a blade of pure entropy from your mana circuit. For 1 minute: melee attacks with this blade deal 5d8 necrotic, ignore resistance to necrotic, and reduce the target's max HP by half the damage dealt. The blade dims all light within 10 feet.",
@@ -6734,7 +6735,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The blade isn't metal. It's the end of things, given an edge.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6785,7 +6785,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-99-absolute-cleave",
-		name: "Absolute Cleave",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Contractor", "Striker", "Destroyer"],
+        name: "Absolute Cleave",
 		display_name: "Absolute Cleave",
 		description:
 			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Undead and fiends that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
@@ -6808,7 +6809,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Holy Knight",
 			"Destroyer",
 		],
-		classes: ["Holy Knight", "Destroyer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6859,7 +6859,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-100-contingency-strike",
-		name: "Contingency Strike",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "Contingency Strike",
 		display_name: "Contingency Strike",
 		description:
 			"Prepare a contingency attack during a short rest. Choose a trigger (creature attacks you, creature casts a spell, creature moves within 5 feet). When triggered within the next 8 hours, you instantly make a melee attack with advantage that deals normal damage + 5d8 force.",
@@ -6882,7 +6883,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Stalker",
 			"Assassin",
 		],
-		classes: ["Stalker", "Assassin"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6933,7 +6933,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-101-mana-engine-overdrive",
-		name: "Mana Engine Overdrive",
+        classes: ["Technomancer", "Striker"],
+        name: "Mana Engine Overdrive",
 		display_name: "Mana Engine Overdrive",
 		description:
 			"Overclock your focus device's mana engine to critical. For 3 rounds: all device attacks deal triple damage, you can fire two Payload Deployments per turn, and your constructs gain +100% HP. When it ends, device is disabled for 1 hour.",
@@ -6952,7 +6953,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "The engine screams. Everything screams. Three rounds.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7005,7 +7005,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-102-one-thousand-blows",
-		name: "One Thousand Blows",
+        classes: ["Technomancer", "Assassin", "Striker"],
+        name: "One Thousand Blows",
 		display_name: "One Thousand Blows",
 		description:
 			"Execute a flurry of mana-accelerated strikes too fast to perceive individually. Make 10 melee attacks against creatures within reach. Each hit deals 1d10 + STR force. If more than 5 attacks hit, all targets are stunned for 1 round.",
@@ -7021,7 +7022,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She hit the target ten times. The target counted zero.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Striker"],
-		classes: ["Striker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7072,7 +7072,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-103-berserker-s-requiem",
-		name: "Berserker's Requiem",
+        classes: ["Revenant", "Technomancer", "Striker", "Berserker"],
+        name: "Berserker's Requiem",
 		display_name: "Berserker's Requiem",
 		description:
 			"The final overload. For 1 minute: all stats become 24, you can't be killed (stay at 1 HP minimum), all melee attacks deal +6d12 force, and you have advantage on everything. When it ends: you die. Only Full Revival or equivalent can bring you back.",
@@ -7088,7 +7089,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She chose to die fighting. The fighting was magnificent.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7139,7 +7139,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-104-destroyer-s-ruin",
-		name: "Destroyer's Ruin",
+        classes: ["Technomancer", "Striker"],
+        name: "Destroyer's Ruin",
 		display_name: "Destroyer's Ruin",
 		description:
 			"Channel every particle of mana into a single catastrophic strike. Melee attack against the ground: every creature and structure within 60 feet takes 20d8 force damage (DC 20 STR save for half). The terrain within 60 feet is permanently destroyed and becomes a crater.",
@@ -7155,7 +7156,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She hit the ground. The ground stopped existing.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7207,7 +7207,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-105-summoner-s-convergence",
-		name: "Summoner's Convergence",
+        classes: ["Summoner", "Technomancer", "Contractor", "Striker"],
+        name: "Summoner's Convergence",
 		display_name: "Summoner's Convergence",
 		description:
 			"Summon every gate-creature you've ever bonded with simultaneously. Up to 8 creatures appear (total CR cannot exceed 20). They all act on your initiative, obey mental commands, and remain for 1 minute. You can't cast spells while maintaining.",
@@ -7223,7 +7224,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She called them all. They all answered.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Summoner"],
-		classes: ["Summoner"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7274,7 +7274,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-106-holy-knight-s-sacrifice",
-		name: "Holy Knight's Sacrifice",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Striker"],
+        name: "Holy Knight's Sacrifice",
 		display_name: "Holy Knight's Sacrifice",
 		description:
 			"The ultimate oath. Choose one ally within 30 feet. For 1 minute: all damage that would affect that ally is redirected to you, your AC becomes 25, and you regenerate 5d10 HP per round. If you are reduced to 0 HP during this time, the ally gains 100 temporary HP and advantage on all rolls for 10 minutes.",
@@ -7290,7 +7291,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "She swore an oath. The Absolute enforced it. Even beyond death.",
 		tags: ["awakened", "technique", "defensive", "defensive", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7343,7 +7343,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-107-esper-singularity",
-		name: "Esper Singularity",
+        classes: ["Technomancer", "Striker"],
+        name: "Esper Singularity",
 		display_name: "Esper Singularity",
 		description:
 			"Collapse every mind within 120 feet into a single psionic singularity. All enemies: DC 20 PRS save. Failure: 15d6 psychic and incapacitated for 1 minute. Success: half damage and stunned for 1 round. Allies within range instead gain advantage on all rolls for 1 minute.",
@@ -7359,7 +7360,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		},
 		flavor: "Every mind. One point. One thought. Silence.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Esper"],
-		classes: ["Esper"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7410,7 +7410,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-108-revenant-s-final-entropy",
-		name: "Revenant's Final Entropy",
+        classes: ["Revenant", "Technomancer", "Striker"],
+        name: "Revenant's Final Entropy",
 		display_name: "Revenant's Final Entropy",
 		description:
 			"Channel the full entropy of your mana circuit into a 60-foot radius death field. All enemy creatures: DC 20 VIT save. Failure: current HP is halved and max HP is halved for 24 hours. Success: take 10d8 necrotic. You regain HP equal to total damage dealt.",
@@ -7427,7 +7428,6 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		flavor:
 			"Everything in that radius got closer to death. She got further from it.",
 		tags: ["awakened", "technique", "offensive", "offensive", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {

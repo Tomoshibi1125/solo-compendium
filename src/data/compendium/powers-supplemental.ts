@@ -8,7 +8,8 @@ import type { CompendiumPower } from "../../types/compendium";
 export const powers_supplemental: CompendiumPower[] = [
 	{
 		id: "power-sup-1-1-rampart-shell",
-		name: "Rampart Shell",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "Rampart Shell",
 		display_name: "Rampart Shell",
 		description:
 			"Harden your mana field into a reactive shell. As a reaction when you or an adjacent ally takes damage, reduce it by 1d10 + STR modifier. If the attack was melee, the attacker takes force feedback equal to half the amount blocked.",
@@ -25,7 +26,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The wall hits back.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -75,7 +75,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-2-bulwark-stance",
-		name: "Bulwark Stance",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Destroyer", "Holy Knight"],
+        name: "Bulwark Stance",
 		display_name: "Bulwark Stance",
 		description:
 			"Plant yourself and channel defensive mana through your weapon. Until the start of your next turn, you have +2 AC and advantage on Strength saves. Creatures that hit you with melee attacks take 2d6 force damage.",
@@ -92,7 +93,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Immovable. Unavoidable.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -142,7 +142,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-3-titan-s-rebuke",
-		name: "Titan's Rebuke",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Striker", "Destroyer", "Summoner", "Holy Knight"],
+        name: "Titan's Rebuke",
 		display_name: "Titan's Rebuke",
 		description:
 			"When a creature within 5 feet hits you, channel the impact into a devastating counterstrike. As a reaction, make a melee weapon attack with advantage. On a hit, deal weapon damage plus 3d8 force damage and push the target 10 feet.",
@@ -159,7 +160,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "You hit me. My turn.",
 		tags: ["awakened", "power", "guard", "Evocation", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -209,7 +209,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-4-fury-surge",
-		name: "Fury Surge",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Berserker", "Holy Knight"],
+        name: "Fury Surge",
 		display_name: "Fury Surge",
 		description:
 			"Channel volatile combat energy into a single devastating blow. When you hit with a melee weapon attack, deal an additional 2d6 fire damage. If you are in Overload, the target must also make a DC 13 Vitality save or be set ablaze, taking 1d6 fire at the start of its next turn.",
@@ -226,7 +227,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The fire doesn't come from outside. It comes from you.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -276,7 +276,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-5-crimson-howl",
-		name: "Crimson Howl",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Berserker"],
+        name: "Crimson Howl",
 		display_name: "Crimson Howl",
 		description:
 			"Release a terrifying war cry charged with Overload energy. Each hostile creature within 15 feet must make a DC 14 Presence save or be frightened of you until the end of your next turn. Frightened creatures also take 2d6 thunder damage.",
@@ -293,7 +294,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The sound alone draws blood.",
 		tags: ["awakened", "power", "overload", "Enchantment", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -343,7 +343,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-6-rupture-break",
-		name: "Rupture Break",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker", "Berserker", "Destroyer"],
+        name: "Rupture Break",
 		display_name: "Rupture Break",
 		description:
 			"Slam the ground with Overload-charged force, creating a 15-foot radius shockwave. Each creature in the area makes a DC 15 Strength save: 4d8 fire damage and knocked prone on failure, half damage on success. The area becomes difficult terrain.",
@@ -360,7 +361,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The floor isn't your ally anymore.",
 		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -410,7 +410,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-7-shadow-strike",
-		name: "Shadow Strike",
+        classes: ["Esper", "Revenant", "Technomancer", "Idol", "Contractor", "Assassin"],
+        name: "Shadow Strike",
 		display_name: "Shadow Strike",
 		description:
 			"Cloak your weapon in shadow mana and strike from concealment. If you attack from hiding or with advantage, deal an additional 2d6 necrotic damage. The target's vision dims — it has disadvantage on its next attack roll.",
@@ -427,7 +428,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "You saw the shadow. You didn't see the blade.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -485,7 +485,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-8-phantom-lunge",
-		name: "Phantom Lunge",
+        classes: ["Revenant", "Summoner", "Technomancer", "Idol", "Contractor", "Assassin"],
+        name: "Phantom Lunge",
 		display_name: "Phantom Lunge",
 		description:
 			"Teleport up to 15 feet to an unoccupied space adjacent to a target and immediately make a melee weapon attack. If you were hidden, the attack deals an extra 3d6 necrotic damage and the target can't take reactions until the end of your next turn.",
@@ -502,7 +503,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Distance is a courtesy she doesn't extend.",
 		tags: ["awakened", "power", "ambush", "Conjuration", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -560,7 +560,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-9-lethal-precision",
-		name: "Lethal Precision",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Assassin"],
+        name: "Lethal Precision",
 		display_name: "Lethal Precision",
 		description:
 			"Study a creature for one round (bonus action). On your next turn, your first attack against that creature automatically crits if it hits. The attack deals an additional 3d8 necrotic damage from targeting a vital mana-node.",
@@ -577,7 +578,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She doesn't aim for the body. She aims for the circuit.",
 		tags: ["awakened", "power", "ambush", "Divination", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -635,7 +635,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-10-kinetic-rush",
-		name: "Kinetic Rush",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Kinetic Rush",
 		display_name: "Kinetic Rush",
 		description:
 			"Convert momentum into raw impact. After moving at least 10 feet, your next unarmed strike deals an additional 2d6 bludgeoning damage. You can then move 10 feet without provoking opportunity attacks.",
@@ -652,7 +653,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She was there. She was here. You're on the floor.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -710,7 +710,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-11-nerve-gate-cascade",
-		name: "Nerve Gate Cascade",
+        classes: ["Esper", "Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Holy Knight"],
+        name: "Nerve Gate Cascade",
 		display_name: "Nerve Gate Cascade",
 		description:
 			"Deliver a rapid sequence of three strikes targeting different nerve gates. Make three unarmed attacks, each dealing 1d8 + AGI modifier bludgeoning damage. If all three hit the same target, it must make a DC 14 Vitality save or be stunned until the end of its next turn.",
@@ -727,7 +728,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Three hits. One second. Zero arguments.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -785,7 +785,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-12-shockwave-palm",
-		name: "Shockwave Palm",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Shockwave Palm",
 		display_name: "Shockwave Palm",
 		description:
 			"Channel kinetic energy through your palm and release it on contact. Make an unarmed strike. On a hit, deal weapon damage plus 4d8 force damage and push the target 20 feet. If the target collides with a solid surface, it takes an additional 2d6 bludgeoning damage.",
@@ -802,7 +803,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "One palm. Twenty feet. The wall at twenty-one.",
 		tags: ["awakened", "power", "kinetic", "Evocation", "Striker"],
-		classes: ["Striker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -860,7 +860,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-13-radiant-intercept",
-		name: "Radiant Intercept",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Summoner"],
+        name: "Radiant Intercept",
 		display_name: "Radiant Intercept",
 		description:
 			"As a reaction when an ally within 10 feet is attacked, interpose yourself and grant the ally +3 AC against the attack. If the attack still hits, you take the damage instead and deal 1d8 radiant damage to the attacker.",
@@ -877,7 +878,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "I stand between you and everything else.",
 		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -927,7 +927,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-14-oath-purge",
-		name: "Oath Purge",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor"],
+        name: "Oath Purge",
 		display_name: "Oath Purge",
 		description:
 			"Channel your oath into a burst of purifying light. One creature within 30 feet must make a DC 14 Presence save: 3d8 radiant damage on failure, half on success. If the target is undead or fiend-type, it also has disadvantage on attack rolls until the end of its next turn.",
@@ -944,7 +945,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The light finds what hides in the dark.",
 		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -994,7 +994,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-15-divine-bastion",
-		name: "Divine Bastion",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Summoner"],
+        name: "Divine Bastion",
 		display_name: "Divine Bastion",
 		description:
 			"Create a 10-foot radius aura of radiant protection centered on you for 1 minute. Allies in the aura gain +2 to AC and saving throws. Hostile creatures entering the aura take 2d6 radiant damage. You can end the aura early to heal all allies in it for 3d8 HP.",
@@ -1011,7 +1012,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Within this light, nothing falls.",
 		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1061,7 +1061,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-16-shock-drone",
-		name: "Shock Drone",
+        classes: ["Technomancer", "Idol", "Contractor"],
+        name: "Shock Drone",
 		display_name: "Shock Drone",
 		description:
 			"Deploy a small hovering drone that zaps the nearest hostile creature within 30 feet at the end of each of your turns for 1d8 lightning damage (ranged spell attack using INT). The drone has AC 12, 5 HP, and lasts 1 minute.",
@@ -1081,7 +1082,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Set it and forget it. It doesn't forget.",
 		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1139,7 +1139,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-17-mana-scan-array",
-		name: "Mana Scan Array",
+        classes: ["Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Mana Scan Array",
 		display_name: "Mana Scan Array",
 		description:
 			"Deploy a scanning device that reveals all creatures within 60 feet, including invisible ones. For 1 minute, creatures in the scan area can't benefit from invisibility against you or your allies. You also learn each creature's current HP percentage.",
@@ -1159,7 +1160,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "All contacts identified. None hidden.",
 		tags: ["awakened", "power", "device", "Divination", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1217,7 +1217,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-18-overcharge-payload",
-		name: "Overcharge Payload",
+        classes: ["Technomancer", "Idol", "Contractor"],
+        name: "Overcharge Payload",
 		display_name: "Overcharge Payload",
 		description:
 			"Fire an overcharged projectile from your focus device. Ranged spell attack (INT): 4d10 lightning damage on a hit. If the target is wearing metal armor or is a construct, the attack has advantage and deals an extra 2d10 damage.",
@@ -1237,7 +1238,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "All power to main cannon. Fire.",
 		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1295,7 +1295,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-19-prey-lock",
-		name: "Prey Lock",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Prey Lock",
 		display_name: "Prey Lock",
 		description:
 			"Mark a creature you can see within 90 feet. For 1 hour, you know the target's direction and distance while within 1 mile. Your first attack each turn against the marked target deals an extra 1d6 damage of your weapon's type.",
@@ -1312,7 +1313,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Marked. No amount of running changes that.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1362,7 +1362,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-20-terrain-ghost",
-		name: "Terrain Ghost",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Assassin", "Stalker", "Striker"],
+        name: "Terrain Ghost",
 		display_name: "Terrain Ghost",
 		description:
 			"Adapt to your environment. For 1 hour, you ignore difficult terrain, can't be tracked except by magical means, and have advantage on Stealth checks. If you are in natural terrain within a gate, you also gain +10 feet movement speed.",
@@ -1379,7 +1380,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The forest doesn't slow her. It hides her.",
 		tags: ["awakened", "power", "tracking", "Transmutation", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1429,7 +1429,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-21-resonance-snare",
-		name: "Resonance Snare",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Resonance Snare",
 		display_name: "Resonance Snare",
 		description:
 			"Set an invisible mana-wire trap in a 10-foot square area. The first creature to enter triggers it: DC 15 Agility save or take 4d6 force damage and be restrained. The snare alerts you mentally when triggered. Lasts 8 hours or until triggered.",
@@ -1446,7 +1447,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She set the trap an hour ago. She's been waiting.",
 		tags: ["awakened", "power", "tracking", "Conjuration", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1496,7 +1496,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-22-dissonant-strike",
-		name: "Dissonant Strike",
+        classes: ["Technomancer", "Idol", "Contractor"],
+        name: "Dissonant Strike",
 		display_name: "Dissonant Strike",
 		description:
 			"Infuse your weapon with sonic resonance. Your next melee attack deals an additional 1d8 thunder damage and the target must make a DC 13 Presence save or have disadvantage on its next attack roll as the dissonance disrupts its coordination.",
@@ -1513,7 +1514,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The beat drops. So does the target.",
 		tags: ["awakened", "power", "resonance", "Evocation", "Idol"],
-		classes: ["Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1563,7 +1563,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-23-tempo-shift",
-		name: "Tempo Shift",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Tempo Shift",
 		display_name: "Tempo Shift",
 		description:
 			"Alter your personal rhythm to move with supernatural speed. Until the end of your turn, your movement speed doubles, you don't provoke opportunity attacks, and your next melee attack has advantage.",
@@ -1580,7 +1581,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Double-time. Try to keep up.",
 		tags: ["awakened", "power", "resonance", "Transmutation", "Idol"],
-		classes: ["Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1630,7 +1630,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-24-guided-strike",
-		name: "Guided Strike",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Summoner"],
+        name: "Guided Strike",
 		display_name: "Guided Strike",
 		description:
 			"Channel the Absolute's guidance into your weapon. As a bonus action, gain +5 to your next attack roll made before the end of your turn. If the attack hits, it deals an additional 1d6 radiant damage.",
@@ -1647,7 +1648,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The Absolute points. You swing.",
 		tags: ["awakened", "power", "divine", "Divination", "Herald"],
-		classes: ["Herald"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1697,7 +1697,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-25-retributive-ward",
-		name: "Retributive Ward",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Summoner"],
+        name: "Retributive Ward",
 		display_name: "Retributive Ward",
 		description:
 			"Place a retributive ward on yourself or an ally within 30 feet. The next time the warded creature is hit by a melee attack, the attacker takes 3d6 radiant damage and is pushed 10 feet away.",
@@ -1714,7 +1715,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Hit her. See what happens.",
 		tags: ["awakened", "power", "divine", "Abjuration", "Herald"],
-		classes: ["Herald"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1764,7 +1764,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-26-cursed-blade-edge",
-		name: "Cursed Blade Edge",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Cursed Blade Edge",
 		display_name: "Cursed Blade Edge",
 		description:
 			"Your patron infuses your weapon with pact energy. For 1 minute, your weapon attacks deal an extra 1d6 necrotic damage. If you reduce a creature to 0 HP while this is active, you gain temporary HP equal to your Presence modifier + your level.",
@@ -1781,7 +1782,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The blade drinks. You don't ask what.",
 		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1831,7 +1831,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-27-pact-retaliation",
-		name: "Pact Retaliation",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Pact Retaliation",
 		display_name: "Pact Retaliation",
 		description:
 			"As a reaction when you take damage, your patron retaliates. The attacker takes 2d8 force damage and must make a DC 14 Presence save or be frightened of you until the end of its next turn.",
@@ -1848,7 +1849,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Your patron takes offense on your behalf.",
 		tags: ["awakened", "power", "pact", "Abjuration", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1898,7 +1898,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-28-withering-touch",
-		name: "Withering Touch",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Withering Touch",
 		display_name: "Withering Touch",
 		description:
 			"Channel entropy through your weapon. Your next melee attack deals an additional 1d8 necrotic damage. The target must make a DC 13 Vitality save or have its speed reduced by 10 feet until the end of its next turn as its muscles decay momentarily.",
@@ -1915,7 +1916,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Everything she touches remembers it was temporary.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -1965,7 +1965,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-29-entropic-counter",
-		name: "Entropic Counter",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor"],
+        name: "Entropic Counter",
 		display_name: "Entropic Counter",
 		description:
 			"As a reaction when hit by a melee attack, release a burst of entropic energy. The attacker takes 2d8 necrotic damage and its weapon corrodes — the next attack it makes with that weapon has disadvantage.",
@@ -1982,7 +1983,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The sword swings. The sword regrets.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2032,7 +2032,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-30-iron-resolve",
-		name: "Iron Resolve",
+        classes: ["Esper", "Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner"],
+        name: "Iron Resolve",
 		display_name: "Iron Resolve",
 		description:
 			"Harden your will against mental assault. As a reaction when you fail a save against being charmed or frightened, reroll the save with advantage. You must use the new result.",
@@ -2058,7 +2059,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Holy Knight",
 			"Stalker",
 		],
-		classes: ["Destroyer", "Berserker", "Holy Knight", "Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2108,7 +2108,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-31-second-wind",
-		name: "Second Wind",
+        classes: ["Summoner", "Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Assassin", "Striker"],
+        name: "Second Wind",
 		display_name: "Second Wind",
 		description:
 			"Draw on your mana reserves for an emergency burst of healing. As a bonus action, regain 1d10 + your character level in hit points. Usable once per short rest.",
@@ -2129,15 +2130,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"power",
 			"guard",
 			"Transmutation",
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Technomancer",
-			"Stalker",
-		],
-		classes: [
 			"Destroyer",
 			"Berserker",
 			"Assassin",
@@ -2204,7 +2196,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-32-combat-roll",
-		name: "Combat Roll",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Combat Roll",
 		display_name: "Combat Roll",
 		description:
 			"As a reaction when targeted by an attack you can see, roll up to 15 feet to an unoccupied space. The triggering attack has disadvantage. You don't provoke opportunity attacks during this movement.",
@@ -2230,7 +2223,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Stalker",
 			"Technomancer",
 		],
-		classes: ["Assassin", "Striker", "Stalker", "Technomancer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2288,7 +2280,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-33-battle-cry",
-		name: "Battle Cry",
+        classes: ["Esper", "Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Berserker", "Summoner"],
+        name: "Battle Cry",
 		display_name: "Battle Cry",
 		description:
 			"Release a war cry that bolsters your allies. As a bonus action, up to 3 allies within 30 feet gain advantage on their next attack roll and +2 to their next saving throw, both made before the end of your next turn.",
@@ -2313,7 +2306,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Berserker",
 			"Holy Knight",
 		],
-		classes: ["Destroyer", "Berserker", "Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2363,7 +2355,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-34-marked-for-death",
-		name: "Marked for Death",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Marked for Death",
 		display_name: "Marked for Death",
 		description:
 			"Mark a creature you can see within 60 feet. For 1 minute, all attacks against the marked target have +2 to hit, and critical hits against it deal an extra 2d6 damage of the weapon's type. Only one mark active at a time.",
@@ -2388,7 +2381,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Stalker",
 			"Destroyer",
 		],
-		classes: ["Assassin", "Stalker", "Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2446,7 +2438,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-35-fortress-pulse",
-		name: "Fortress Pulse",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Fortress Pulse",
 		display_name: "Fortress Pulse",
 		description:
 			"Release a defensive shockwave. As a reaction when you or an ally within 10 feet takes damage, reduce it by 3d10. All hostile creatures within 10 feet must make a DC 16 Strength save or be pushed 15 feet and knocked prone.",
@@ -2463,7 +2456,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The fortress fights back.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2513,7 +2505,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-36-berserker-s-fury",
-		name: "Berserker's Fury",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Berserker", "Holy Knight"],
+        name: "Berserker's Fury",
 		display_name: "Berserker's Fury",
 		description:
 			"Enter a heightened Overload state. For 1 minute, your melee weapon attacks deal an extra 2d8 fire damage, you have advantage on Strength checks and saves, and you gain resistance to bludgeoning, piercing, and slashing damage. You can't cast spells while active.",
@@ -2530,7 +2523,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Past the limit. Past the pain. Past everything.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2580,7 +2572,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-37-death-mark",
-		name: "Death Mark",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Death Mark",
 		display_name: "Death Mark",
 		description:
 			"Mark a creature you can see (bonus action). For 1 minute, your attacks against the marked target deal an extra 2d8 necrotic damage, and the target can't regain hit points. If you reduce it to 0 HP while marked, you become invisible until the end of your next turn.",
@@ -2597,7 +2590,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The contract is signed. In your blood.",
 		tags: ["awakened", "power", "ambush", "Necromancy", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2655,7 +2647,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-38-velocity-barrage",
-		name: "Velocity Barrage",
+        classes: ["Esper", "Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Assassin", "Striker", "Berserker", "Holy Knight"],
+        name: "Velocity Barrage",
 		display_name: "Velocity Barrage",
 		description:
 			"Execute a flurry of six rapid strikes against one or two targets within 5 feet. Make six unarmed attacks, each dealing 1d6 + AGI modifier bludgeoning damage. If four or more hit the same target, it must make a DC 16 Vitality save or be stunned for 1 round.",
@@ -2672,7 +2665,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Six hits. Two seconds. One outcome.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2730,7 +2722,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-39-crusader-s-judgment",
-		name: "Crusader's Judgment",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor"],
+        name: "Crusader's Judgment",
 		display_name: "Crusader's Judgment",
 		description:
 			"Channel your oath into a devastating melee strike. On your next hit, deal weapon damage plus 5d8 radiant damage. If the target is undead or a fiend, the extra damage is 6d8 and it must make a DC 16 Presence save or be banished to its native plane for 1 minute.",
@@ -2747,7 +2740,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "By the Absolute's will. Begone.",
 		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2797,7 +2789,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-40-siege-protocol",
-		name: "Siege Protocol",
+        classes: ["Technomancer", "Idol", "Contractor", "Destroyer"],
+        name: "Siege Protocol",
 		display_name: "Siege Protocol",
 		description:
 			"Deploy a heavy weapons platform (AC 16, HP 30, immobile). On each of your turns, use a bonus action to fire: 5d8 lightning in a 60-foot line (DC 16 AGI save, half on success). Lasts 1 minute or until destroyed.",
@@ -2817,7 +2810,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Heavy ordnance deployed. Clear the firing lane.",
 		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2875,7 +2867,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-41-hunter-s-judgment",
-		name: "Hunter's Judgment",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Hunter's Judgment",
 		display_name: "Hunter's Judgment",
 		description:
 			"After tracking a creature for at least 1 minute, declare judgment. For the next hour, you have advantage on all attack rolls against the target, can't be surprised by it, and your critical hit range against it expands to 19-20.",
@@ -2892,7 +2885,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "I've studied you long enough. Time's up.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -2942,7 +2934,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-42-adamantine-shell",
-		name: "Adamantine Shell",
+        classes: ["Esper", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "Adamantine Shell",
 		display_name: "Adamantine Shell",
 		description:
 			"Encase yourself in ultra-dense mana for 1 minute. You gain resistance to all damage except psychic, immunity to critical hits, and any creature that hits you with a melee attack takes 3d6 force damage.",
@@ -2959,7 +2952,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Hit me. I dare you.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3011,7 +3003,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-43-eruption",
-		name: "Eruption",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Berserker", "Summoner", "Holy Knight"],
+        name: "Eruption",
 		display_name: "Eruption",
 		description:
 			"Detonate your stored Overload energy in a 20-foot radius explosion centered on you. Each creature in the area makes a DC 17 Vitality save: 8d8 fire damage on failure, half on success. You are immune to this damage. All creatures in the area are pushed 15 feet away.",
@@ -3029,7 +3022,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"Everything within twenty feet dies or moves. Those are the only options.",
 		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3081,7 +3073,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-44-phantom-army",
-		name: "Phantom Army",
+        classes: ["Esper", "Revenant", "Technomancer", "Idol", "Contractor", "Assassin"],
+        name: "Phantom Army",
 		display_name: "Phantom Army",
 		description:
 			"Create 4 shadow duplicates of yourself. Each has AC 14, 1 HP, and can make attacks using your stats for 1d8 necrotic damage. Attacks against you target a random duplicate (d4+1: 1-4 hits duplicate, 5 hits you). Lasts 1 minute.",
@@ -3098,7 +3091,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Five of her. One is real. Choose wisely.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3158,7 +3150,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-45-thousand-fists",
-		name: "Thousand Fists",
+        classes: ["Esper", "Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Thousand Fists",
 		display_name: "Thousand Fists",
 		description:
 			"Enter a state of supreme martial focus for 1 round. You can make 10 unarmed attacks against creatures within reach. Each deals 1d8 + AGI modifier bludgeoning. If you hit the same creature 6+ times, it's stunned until the end of its next turn (no save).",
@@ -3175,7 +3168,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She doesn't stop. She doesn't slow down. She doesn't miss.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3235,7 +3227,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-46-absolute-sanctum",
-		name: "Absolute Sanctum",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Summoner"],
+        name: "Absolute Sanctum",
 		display_name: "Absolute Sanctum",
 		description:
 			"Create a 15-foot radius zone of absolute protection for 1 minute. Allies inside gain +3 AC, advantage on all saves, and resistance to all damage. Hostile creatures entering take 4d8 radiant and must make a DC 17 Presence save or be pushed out.",
@@ -3252,7 +3245,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Within this circle, nothing fails. The Absolute ensures it.",
 		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3304,7 +3296,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-47-arsenal-deploy",
-		name: "Arsenal Deploy",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Destroyer"],
+        name: "Arsenal Deploy",
 		display_name: "Arsenal Deploy",
 		description:
 			"Deploy three combat devices simultaneously: a turret (1d10 lightning per turn), a shield emitter (+2 AC to allies within 10 ft), and a scanner (advantage on attacks against scanned targets). Each has AC 15, 20 HP. All last 1 minute.",
@@ -3324,7 +3317,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Full loadout. All systems green.",
 		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3384,7 +3376,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-48-apex-predator",
-		name: "Apex Predator",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Apex Predator",
 		display_name: "Apex Predator",
 		description:
 			"Enter a heightened predatory state for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
@@ -3402,7 +3395,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"The apex predator doesn't announce itself. You just stop existing.",
 		tags: ["awakened", "power", "tracking", "Transmutation", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3454,7 +3446,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-49-immovable-aegis",
-		name: "Immovable Aegis",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Destroyer", "Summoner"],
+        name: "Immovable Aegis",
 		display_name: "Immovable Aegis",
 		description:
 			"Become an immovable defensive bastion for 1 minute. You can't be moved against your will, have immunity to prone, and reduce all damage by your STR modifier + 10. As a reaction, redirect any attack targeting an ally within 15 feet to yourself.",
@@ -3478,7 +3471,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Destroyer",
 			"Holy Knight",
 		],
-		classes: ["Destroyer", "Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3530,7 +3522,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-50-cataclysm-overload",
-		name: "Cataclysm Overload",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Berserker", "Summoner", "Holy Knight"],
+        name: "Cataclysm Overload",
 		display_name: "Cataclysm Overload",
 		description:
 			"Detonate stored mana in a 30-foot radius: 10d10 fire damage (DC 17 VIT, half on success). You are immune. All surfaces in the area ignite. Creatures that fail the save are set ablaze (2d6 fire per turn, action to extinguish). Leaves a 30-foot crater.",
@@ -3547,7 +3540,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She burned. Everything burned. She stood up.",
 		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3599,7 +3591,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-51-death-s-shadow",
-		name: "Death's Shadow",
+        classes: ["Esper", "Revenant", "Technomancer", "Idol", "Contractor", "Assassin"],
+        name: "Death's Shadow",
 		display_name: "Death's Shadow",
 		description:
 			"Become one with shadow for 1 minute. While in dim light or darkness: invisible, can move through creatures, and your attacks deal an extra 4d8 necrotic. First attack each turn auto-crits if target hasn't acted yet this combat.",
@@ -3617,7 +3610,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"The shadow is alive. It has opinions about your continued existence.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3677,7 +3669,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-52-infinite-barrage",
-		name: "Infinite Barrage",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker", "Berserker"],
+        name: "Infinite Barrage",
 		display_name: "Infinite Barrage",
 		description:
 			"For 1 minute, your unarmed attacks deal an extra 2d6 force damage, you can make 4 attacks per Attack action instead of 2, and your movement speed increases by 20 feet. Each creature you hit has its speed reduced by 5 feet (cumulative).",
@@ -3694,7 +3687,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She doesn't tire. Her targets do.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3754,7 +3746,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-53-warhammer-of-the-absolute",
-		name: "Warhammer of the Absolute",
+        classes: ["Revenant", "Summoner", "Holy Knight", "Technomancer", "Idol", "Contractor"],
+        name: "Warhammer of the Absolute",
 		display_name: "Warhammer of the Absolute",
 		description:
 			"Summon a Huge spectral hammer of radiant mana. Make a melee spell attack (Presence) against a creature: 10d10 radiant damage on a hit. Undead/fiends take max damage. The impact creates a 15-foot radius zone of consecrated ground for 1 minute (enemies have disadvantage on saves).",
@@ -3771,7 +3764,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The Absolute brings the hammer. You just aim it.",
 		tags: ["awakened", "power", "radiant", "Conjuration", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3823,7 +3815,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-54-total-arsenal",
-		name: "Total Arsenal",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Stalker", "Destroyer", "Holy Knight"],
+        name: "Total Arsenal",
 		display_name: "Total Arsenal",
 		description:
 			"Deploy your complete device arsenal: 2 turrets (2d10 each), a dome shield (+3 AC, 50 ft radius), a scanner (truesight 120 ft), and a repair drone (heals allies 2d8/turn). All devices have AC 17, 40 HP. Lasts 1 minute.",
@@ -3843,7 +3836,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Full kit. Maximum deployment. All frequencies hostile.",
 		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3904,7 +3896,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-55-apex-strike",
-		name: "Apex Strike",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Apex Strike",
 		display_name: "Apex Strike",
 		description:
 			"Study a target for 1 round, then deliver the perfect attack. Your next attack against the target auto-hits, auto-crits, and deals maximum damage. If the target has legendary resistance, it expends one use.",
@@ -3921,7 +3914,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "One shot. One kill. That's not a motto. That's a fact.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -3973,7 +3965,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-56-world-breaker",
-		name: "World Breaker",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "World Breaker",
 		display_name: "World Breaker",
 		description:
 			"Channel all defensive energy into a single apocalyptic counter-strike. As a reaction when hit, negate all damage from the attack and respond with 12d12 force damage (no save). The impact creates a 30-foot crater and all creatures within are knocked prone.",
@@ -3990,7 +3983,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "You shouldn't have done that.",
 		tags: ["awakened", "power", "guard", "Evocation", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4042,7 +4034,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-57-nuclear-overload",
-		name: "Nuclear Overload",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Berserker", "Summoner", "Holy Knight"],
+        name: "Nuclear Overload",
 		display_name: "Nuclear Overload",
 		description:
 			"Release all stored mana in a 60-foot radius nuclear-class detonation. 15d10 fire damage (DC 19 VIT, half on success). You are immune. Everything in the area is obliterated — structures, terrain, objects. Leaves a glassed crater.",
@@ -4059,7 +4052,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She warned them. They didn't listen.",
 		tags: ["awakened", "power", "overload", "Evocation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4112,7 +4104,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-58-reaper-s-sentence",
-		name: "Reaper's Sentence",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Reaper's Sentence",
 		display_name: "Reaper's Sentence",
 		description:
 			"Touch a creature. It must make a DC 19 Vitality save. On failure: if it has 100 HP or fewer, it dies instantly. If more, it takes 12d10 necrotic damage. On success: 6d10 necrotic damage. Creatures killed by this power can't be resurrected for 1 year.",
@@ -4129,7 +4122,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Sentence delivered.",
 		tags: ["awakened", "power", "ambush", "Necromancy", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4189,7 +4181,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-59-final-strike",
-		name: "Final Strike",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Final Strike",
 		display_name: "Final Strike",
 		description:
 			"Channel every ounce of kinetic energy into a single punch. Make an unarmed attack with +10 to hit. On a hit: 20d10 force damage. If this reduces the target to 0 HP, the excess damage carries to the next creature within 10 feet. After using this, you can't use powers until after a long rest.",
@@ -4206,7 +4199,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "One punch. That's all she ever needed.",
 		tags: ["awakened", "power", "kinetic", "Evocation", "Striker"],
-		classes: ["Striker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4266,7 +4258,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-60-absolute-ascension",
-		name: "Absolute Ascension",
+        classes: ["Summoner", "Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker"],
+        name: "Absolute Ascension",
 		display_name: "Absolute Ascension",
 		description:
 			"Transcend mortal limits for 1 minute. You gain: fly speed 60 ft, immunity to all conditions, resistance to all damage, +5 to all saves, your weapon deals an extra 6d8 radiant on every hit, and you shed bright light 120 feet. After the effect ends, gain 3 levels of exhaustion.",
@@ -4283,7 +4276,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "For one minute, she was the Absolute's sword.",
 		tags: ["awakened", "power", "radiant", "Transmutation", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4335,7 +4327,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-61-skynet-protocol",
-		name: "Skynet Protocol",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Stalker"],
+        name: "Skynet Protocol",
 		display_name: "Skynet Protocol",
 		description:
 			"Deploy a self-directing combat AI network. 10 autonomous drones, each AC 18, 30 HP, dealing 2d10 lightning per attack. The network targets optimally, covering all flanks. It also provides truesight 300 ft, +5 to all ally attack rolls within range, and jams enemy communications. Lasts 1 minute.",
@@ -4356,7 +4349,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"All frequencies compromised. All targets acquired. All exits blocked.",
 		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4416,7 +4408,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-62-apex-convergence",
-		name: "Apex Convergence",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Apex Convergence",
 		display_name: "Apex Convergence",
 		description:
 			"Mark every hostile creature within 300 feet simultaneously. For 1 minute, you and all allies have advantage on attacks against all marked targets, can't be surprised, have truesight 300 ft, and the first hit against each marked target each round deals an extra 4d6 damage.",
@@ -4433,7 +4426,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Every target. Every angle. Every exit. All at once.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4487,7 +4479,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-63-fault-line-stomp",
-		name: "Fault Line Stomp",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker", "Destroyer"],
+        name: "Fault Line Stomp",
 		display_name: "Fault Line Stomp",
 		description:
 			"Slam the ground and send a shockwave along a 30-foot line. Each creature in the line: DC 13 STR save or knocked prone and take 2d6 force. The line becomes difficult terrain for 1 minute as the floor fractures.",
@@ -4504,7 +4497,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The floor disagreed with her foot. The floor lost.",
 		tags: ["awakened", "power", "guard", "Evocation", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4554,7 +4546,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-64-crimson-frenzy",
-		name: "Crimson Frenzy",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Berserker", "Holy Knight"],
+        name: "Crimson Frenzy",
 		display_name: "Crimson Frenzy",
 		description:
 			"Enter a mana-fueled frenzy for 1 minute. You gain +2 to melee damage rolls and advantage on Strength checks, but attacks against you have advantage. When the frenzy ends, gain 1 level of exhaustion.",
@@ -4571,7 +4564,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She stopped thinking. She started hitting. Better.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4623,7 +4615,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-65-nerve-strike",
-		name: "Nerve Strike",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Nerve Strike",
 		display_name: "Nerve Strike",
 		description:
 			"As part of a melee attack, target a nerve cluster. On hit, deal normal damage + 1d8 necrotic. Target must make DC 13 VIT save or have disadvantage on its next attack roll as pain disrupts its motor control.",
@@ -4640,7 +4633,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She didn't hit hard. She hit precisely. Worse.",
 		tags: ["awakened", "power", "ambush", "Necromancy", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4698,7 +4690,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-66-pressure-point-cascade",
-		name: "Pressure Point Cascade",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker", "Destroyer"],
+        name: "Pressure Point Cascade",
 		display_name: "Pressure Point Cascade",
 		description:
 			"After hitting with an unarmed strike, trigger a cascade of mana-pressure through the target's body. Deal normal damage + 1d6 force and push the target 10 feet. If it collides with a wall or creature, both take 1d6 bludgeoning.",
@@ -4715,7 +4708,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "One touch. Three impacts. The wall counts.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4773,7 +4765,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-67-circuit-flare",
-		name: "Circuit Flare",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor"],
+        name: "Circuit Flare",
 		display_name: "Circuit Flare",
 		description:
 			"As a bonus action, ignite your mana circuit's radiant output. For 1 minute, your melee attacks deal +1d6 radiant and shed bright light 10 feet. Undead and fiends that start their turn within 5 feet take 1d4 radiant.",
@@ -4790,7 +4783,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She glows. The things that shouldn't exist stop existing.",
 		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4840,7 +4832,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-68-drone-overwatch",
-		name: "Drone Overwatch",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor"],
+        name: "Drone Overwatch",
 		display_name: "Drone Overwatch",
 		description:
 			"Deploy a hovering combat drone (AC 14, 10 HP, 30 ft fly) that occupies your bonus action. Each turn, the drone can fire: ranged attack +4, 1d8 lightning. If the drone is destroyed, it explodes: each creature within 5 feet takes 2d6 lightning.",
@@ -4860,7 +4853,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Airborne. Armed. Autonomous. Mostly.",
 		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4920,7 +4912,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-69-prey-sense",
-		name: "Prey Sense",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Prey Sense",
 		display_name: "Prey Sense",
 		description:
 			"Attune to a creature you've damaged within the last hour. For 10 minutes, you know its exact location within 1 mile, its remaining HP percentage, and whether it's moving. Your first attack against it each turn deals +1d6 damage.",
@@ -4937,7 +4930,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She tasted its blood once. That's enough.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -4987,7 +4979,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-70-harmonic-ward",
-		name: "Harmonic Ward",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Harmonic Ward",
 		display_name: "Harmonic Ward",
 		description:
 			"Begin a defensive harmonic. For 1 minute, you and up to 3 allies within 15 feet gain +1 AC and resistance to thunder damage. As a reaction, you can end the harmonic early to grant one ally within range 2d8 temporary HP.",
@@ -5004,7 +4997,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The frequency protects. The silence follows.",
 		tags: ["awakened", "power", "resonance", "Abjuration", "Idol"],
-		classes: ["Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5054,7 +5046,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-71-tether-of-binding",
-		name: "Tether of Binding",
+        classes: ["Esper", "Summoner", "Technomancer", "Idol", "Contractor"],
+        name: "Tether of Binding",
 		display_name: "Tether of Binding",
 		description:
 			"Launch a spectral chain from your patron that latches onto a creature within 30 feet. DC 14 PRS save or tethered for 1 minute: target can't move more than 30 feet from you, and if it tries to teleport, it takes 3d6 psychic damage and the teleport fails.",
@@ -5071,7 +5064,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Your patron wants you close. The chain insists.",
 		tags: ["awakened", "power", "pact", "Conjuration", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5121,7 +5113,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-72-death-s-momentum",
-		name: "Death's Momentum",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Death's Momentum",
 		display_name: "Death's Momentum",
 		description:
 			"When you reduce a creature to 0 HP, your mana circuit surges. You immediately gain 2d8 temporary HP and can move up to 15 feet without provoking opportunity attacks. Your next melee attack within 1 round deals +1d8 necrotic.",
@@ -5138,7 +5131,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Death feeds her. She's always hungry.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5188,7 +5180,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-73-seismic-anchor",
-		name: "Seismic Anchor",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Holy Knight"],
+        name: "Seismic Anchor",
 		display_name: "Seismic Anchor",
 		description:
 			"Plant yourself as an immovable point. For 1 minute, you can't be moved against your will, knocked prone, or pushed. Your AC increases by +2. As a reaction, when an ally within 10 feet is targeted by an attack, you can force the attack to target you instead.",
@@ -5205,7 +5198,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She became the ground. The ground doesn't move.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5255,7 +5247,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-74-berserker-s-gambit",
-		name: "Berserker's Gambit",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Berserker", "Holy Knight"],
+        name: "Berserker's Gambit",
 		display_name: "Berserker's Gambit",
 		description:
 			"Sacrifice hit points to fuel devastation. Spend up to 20 HP (no reduction); your next melee attack within 1 round deals bonus damage equal to twice the HP spent. If you reduce the target to 0 HP, you regain half the HP spent.",
@@ -5272,7 +5265,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She paid in blood. The target paid more.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5322,7 +5314,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-75-phantom-blade-flurry",
-		name: "Phantom Blade Flurry",
+        classes: ["Esper", "Revenant", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Phantom Blade Flurry",
 		display_name: "Phantom Blade Flurry",
 		description:
 			"Create 3 illusory copies of your weapon that strike simultaneously with your real attack. Make one melee attack; on a hit, deal normal damage + 3d6 force as the phantom blades strike. The target must make a DC 15 INT save or be unable to use reactions until the end of your next turn.",
@@ -5339,7 +5332,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Four blades. One is real. All of them hurt.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5397,7 +5389,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-76-one-inch-collapse",
-		name: "One-Inch Collapse",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker"],
+        name: "One-Inch Collapse",
 		display_name: "One-Inch Collapse",
 		description:
 			"Concentrate your entire mana output into a single point-blank strike delivered at skin contact distance. Melee attack with advantage; on hit: 4d10 force damage. If the target is grappled or restrained, damage increases to 6d10.",
@@ -5414,7 +5407,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "One inch. Full force. Everything behind it.",
 		tags: ["awakened", "power", "kinetic", "Evocation", "Striker"],
-		classes: ["Striker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5472,7 +5464,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-77-covenant-aegis",
-		name: "Covenant Aegis",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Destroyer", "Summoner"],
+        name: "Covenant Aegis",
 		display_name: "Covenant Aegis",
 		description:
 			"As a reaction when you or an ally within 30 feet takes damage, invoke the Absolute's covenant. The damage is halved, and the attacker must make a DC 15 PRS save or be marked: you have advantage on attacks against marked creatures for 1 minute.",
@@ -5489,7 +5482,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The Absolute remembers who struck first.",
 		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5539,7 +5531,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-78-payload-deployment",
-		name: "Payload Deployment",
+        classes: ["Technomancer", "Idol", "Contractor"],
+        name: "Payload Deployment",
 		display_name: "Payload Deployment",
 		description:
 			"Launch a guided mana-payload that detonates at a point within 120 feet. Each creature in a 20-foot radius: DC 15 AGI save, 4d8 fire on failure, half on success. Constructs and gate-tech in the area take double damage.",
@@ -5559,7 +5552,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Guidance system locked. Payload away. Cover your ears.",
 		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5617,7 +5609,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-79-quarry-pindown",
-		name: "Quarry Pindown",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Quarry Pindown",
 		display_name: "Quarry Pindown",
 		description:
 			"Fire a mana-tracking bolt at a creature within 90 feet. Ranged attack: 3d8 piercing on hit, and the target is pinned (speed becomes 0) until it uses an action to make a DC 15 STR check to pull the bolt free. While pinned, your attacks against it deal +1d6 damage.",
@@ -5634,7 +5627,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Pinned. Tracked. Finished when she's ready.",
 		tags: ["awakened", "power", "tracking", "Conjuration", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5684,7 +5676,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-80-encore-performance",
-		name: "Encore Performance",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Encore Performance",
 		display_name: "Encore Performance",
 		description:
 			"After casting a spell of 3rd level or lower, immediately cast it again as a bonus action without expending a slot. The encore version deals half damage or has half duration. You can only encore a spell once per long rest.",
@@ -5701,7 +5694,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "They asked for an encore. She was already casting it.",
 		tags: ["awakened", "power", "resonance", "Enchantment", "Idol"],
-		classes: ["Idol"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5751,7 +5743,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-81-blood-pact-escalation",
-		name: "Blood Pact Escalation",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Blood Pact Escalation",
 		display_name: "Blood Pact Escalation",
 		description:
 			"Offer your own HP to your patron for increased power. Spend up to 30 HP (can't be reduced). For the next minute, all your pact spells deal +1d8 bonus damage per 10 HP spent, and your spell save DC increases by 1 per 10 HP spent.",
@@ -5768,7 +5761,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The patron accepts payment. In blood. In advance.",
 		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5818,7 +5810,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-82-entropy-harvest",
-		name: "Entropy Harvest",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Entropy Harvest",
 		display_name: "Entropy Harvest",
 		description:
 			"For 1 minute, whenever a creature within 30 feet dies, you absorb its residual mana-circuit energy: regain 2d8 HP and gain +1 to attack rolls (stacking, max +3). At max stacks, your necrotic damage ignores resistance.",
@@ -5835,7 +5828,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She gets stronger as they fall. That's the design.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5885,7 +5877,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-83-bulwark-singularity",
-		name: "Bulwark Singularity",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Striker", "Destroyer", "Summoner", "Holy Knight"],
+        name: "Bulwark Singularity",
 		display_name: "Bulwark Singularity",
 		description:
 			"Become the absolute center of defense. For 1 minute: all damage dealt to allies within 15 feet is redirected to you, you gain resistance to all damage, and your AC increases by +3. You can't move or take the Attack action while maintaining.",
@@ -5902,7 +5895,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Every hit. Every ally. Through her. She holds.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -5954,7 +5946,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-84-annihilation-rush",
-		name: "Annihilation Rush",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Berserker", "Holy Knight"],
+        name: "Annihilation Rush",
 		display_name: "Annihilation Rush",
 		description:
 			"Your mana circuit overloads into a 30-second combat trance. For 5 rounds: your melee attacks deal +3d6 damage, you have advantage on all attack rolls, and you can make one additional melee attack per turn. You can't cast spells during the rush. When it ends: 2 levels of exhaustion.",
@@ -5971,7 +5964,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Thirty seconds. That's all she needs. That's all anyone needs.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6024,7 +6016,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-85-kill-protocol",
-		name: "Kill Protocol",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Assassin", "Striker"],
+        name: "Kill Protocol",
 		display_name: "Kill Protocol",
 		description:
 			"Become invisible for 1 round. The first attack you make while invisible is a guaranteed critical hit if it hits. The attack deals an additional 5d6 damage of the weapon's type. After the attack, you can teleport 30 feet to a space in dim light.",
@@ -6041,7 +6034,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Invisible. One attack. Critical. Gone.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6101,7 +6093,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-86-mana-reactor-core",
-		name: "Mana Reactor Core",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Mana Reactor Core",
 		display_name: "Mana Reactor Core",
 		description:
 			"Activate a mana reactor within your focus device. For 10 minutes: all your device spells deal +2d6 damage, your spell slots regenerate 1 level of slots per minute (max 3rd level), and your drone/construct allies gain +2 AC.",
@@ -6121,7 +6114,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Reactor online. All systems at 200%. Proceed.",
 		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6181,7 +6173,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-87-absolute-smite",
-		name: "Absolute Smite",
+        classes: ["Esper", "Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Absolute Smite",
 		display_name: "Absolute Smite",
 		description:
 			"Channel the Absolute's full judgment through your weapon. Next melee hit deals +6d8 radiant damage (+8d8 vs undead/fiends). The target must make a DC 17 PRS save or be stunned for 1 round. If the target is killed, it cannot be raised by any means below 7th level.",
@@ -6198,7 +6191,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Judgment. Delivered. Final.",
 		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6250,7 +6242,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-88-orbital-strike-array",
-		name: "Orbital Strike Array",
+        classes: ["Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Orbital Strike Array",
 		display_name: "Orbital Strike Array",
 		description:
 			"Deploy three guided mana-charges that detonate in sequence at points within 120 feet. Each creates a 15-foot radius explosion: DC 17 AGI save, 5d8 fire/force on failure, half on success. Creatures hit by multiple blasts save once but take damage from each.",
@@ -6270,7 +6263,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Three targets. Three impacts. One Technomancer.",
 		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6330,7 +6322,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-89-idol-s-magnum-opus",
-		name: "Idol's Magnum Opus",
+        classes: ["Esper", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "Idol's Magnum Opus",
 		display_name: "Idol's Magnum Opus",
 		description:
 			"Perform a 1-round masterwork that reshapes the battlefield. All allies within 60 feet: regain 4d8 HP, gain +2 to all saves for 1 minute, and are cured of frightened, charmed, and stunned. All enemies: DC 17 PRS save or charmed for 1 round and can't take reactions.",
@@ -6347,7 +6340,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The perfect performance. Once per concert. Once per lifetime.",
 		tags: ["awakened", "power", "resonance", "Enchantment", "Idol"],
-		classes: ["Idol"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6400,7 +6392,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-90-patron-s-embrace",
-		name: "Patron's Embrace",
+        classes: ["Esper", "Revenant", "Technomancer", "Idol", "Contractor"],
+        name: "Patron's Embrace",
 		display_name: "Patron's Embrace",
 		description:
 			"Your patron temporarily merges with your mana circuit. For 1 minute: you gain 50 temp HP, resistance to two damage types of your patron's choosing, and your pact spells ignore resistance. When the spell ends, you take 4d6 psychic damage as the patron withdraws.",
@@ -6417,7 +6410,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The patron is inside you now. It feels like drowning. In power.",
 		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6469,7 +6461,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-91-final-entropy",
-		name: "Final Entropy",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Final Entropy",
 		display_name: "Final Entropy",
 		description:
 			"Mark a creature for entropic collapse. For 1 minute, every time you deal necrotic damage to the marked target, its HP maximum is reduced by the damage dealt. If its HP max reaches 0, it disintegrates entirely and can't be revived.",
@@ -6486,7 +6479,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Everything ends. She decides when.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6540,7 +6532,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-92-quarry-annihilation",
-		name: "Quarry Annihilation",
+        classes: ["Technomancer", "Idol", "Contractor", "Assassin", "Stalker", "Striker"],
+        name: "Quarry Annihilation",
 		display_name: "Quarry Annihilation",
 		description:
 			"Lock onto a creature you've tracked for at least 1 minute. For the next minute, all your attacks against it have advantage, you deal +3d6 bonus damage per hit, and it can't benefit from invisibility, cover, or teleportation against you.",
@@ -6557,7 +6550,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Tracked long enough. Time's up.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6609,7 +6601,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-93-fortress-mode",
-		name: "Fortress Mode",
+        classes: ["Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner"],
+        name: "Fortress Mode",
 		display_name: "Fortress Mode",
 		description:
 			"Transform into a living fortress. For 1 minute: your AC becomes 25, you gain immunity to forced movement and prone, all allies within 20 feet gain +3 AC, and any creature that hits you with melee takes 2d8 force retaliation. Speed becomes 0.",
@@ -6626,7 +6619,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She IS the fortification. The enemy attacks the building.",
 		tags: ["awakened", "power", "guard", "Abjuration", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6678,7 +6670,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-94-terminal-velocity",
-		name: "Terminal Velocity",
+        classes: ["Revenant", "Summoner", "Technomancer", "Idol", "Contractor", "Striker", "Berserker"],
+        name: "Terminal Velocity",
 		display_name: "Terminal Velocity",
 		description:
 			"Push your mana circuit beyond terminal capacity. For 3 rounds: all melee damage is tripled, you can't be knocked unconscious (fight at 0 HP), and your movement speed triples. When the effect ends, if you're at 0 HP, you die.",
@@ -6695,7 +6688,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Three rounds. Everything tripled. Including the consequences.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6749,7 +6741,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-95-perfect-kill",
-		name: "Perfect Kill",
+        classes: ["Esper", "Technomancer", "Idol", "Herald", "Contractor", "Assassin", "Striker", "Summoner", "Holy Knight"],
+        name: "Perfect Kill",
 		display_name: "Perfect Kill",
 		description:
 			"Mark a target and spend 1 minute observing it (can be done while invisible). After observation, your next attack against the target within 1 hour: automatically hits, automatically crits, deals max damage on all dice, and the target must make DC 18 VIT save or be reduced to 0 HP.",
@@ -6766,7 +6759,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She watched. She waited. She decided.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin"],
-		classes: ["Assassin"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6826,7 +6818,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-96-eight-gates-release",
-		name: "Eight Gates Release",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Eight Gates Release",
 		display_name: "Eight Gates Release",
 		description:
 			"Unlock all eight mana gates in your circuit simultaneously. For 1 minute: unarmed damage becomes 4d10, speed doubles, you gain an extra action each turn, and you can make opportunity attacks with advantage. When it ends: 3 levels of exhaustion.",
@@ -6843,7 +6836,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Eight gates. All open. Nothing held back.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6903,7 +6895,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-97-s-rank-smite",
-		name: "S-Rank Smite",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "S-Rank Smite",
 		display_name: "S-Rank Smite",
 		description:
 			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Undead and fiends are instantly destroyed regardless of HP.",
@@ -6920,7 +6913,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "One strike. S-Rank. The Absolute's final word.",
 		tags: ["awakened", "power", "radiant", "Evocation", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -6974,7 +6966,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-98-singularity-engine",
-		name: "Singularity Engine",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Singularity Engine",
 		display_name: "Singularity Engine",
 		description:
 			"Activate the theoretical singularity engine in your focus device. For 1 minute: all device abilities deal triple damage, you can cast two spells per turn, all your constructs/drones gain +50 HP and triple damage. When it ends, your focus device is destroyed (requires 7 days to rebuild).",
@@ -6995,7 +6988,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"Singularity engaged. All limiters removed. Device will not survive.",
 		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7057,7 +7049,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-99-predator-supremacy",
-		name: "Predator Supremacy",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Predator Supremacy",
 		display_name: "Predator Supremacy",
 		description:
 			"Enter the ultimate tracking state. For 1 hour: you automatically know the location of every creature within 1 mile, can't be surprised, have advantage on all attacks, and your first hit each turn deals +4d8 damage. You can track a creature across dimensional boundaries.",
@@ -7074,7 +7067,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Everything within a mile is prey. Everything.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7128,7 +7120,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-100-final-chorus",
-		name: "Final Chorus",
+        classes: ["Esper", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "Final Chorus",
 		display_name: "Final Chorus",
 		description:
 			"Perform the Final Chorus — a harmonic so perfect it reshapes reality within 120 feet. All allies: full HP restoration, all conditions removed, gain 50 temp HP. All enemies: DC 20 PRS save or charmed and incapacitated for 1 minute. You can't cast spells for 24 hours after.",
@@ -7145,7 +7138,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The last song. The perfect song. Everything stops to listen.",
 		tags: ["awakened", "power", "resonance", "Enchantment", "Idol"],
-		classes: ["Idol"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7197,7 +7189,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-101-absolute-pact",
-		name: "Absolute Pact",
+        classes: ["Esper", "Revenant", "Summoner", "Technomancer", "Idol", "Contractor"],
+        name: "Absolute Pact",
 		display_name: "Absolute Pact",
 		description:
 			"Invoke the ultimate clause of your patron contract. Your patron physically manifests (CR 20, acts independently, follows your commands) for 1 minute. You take 8d6 psychic damage at the end of each of your turns while the patron is manifested. If you die during the manifestation, your patron claims your soul.",
@@ -7215,7 +7208,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"You called. The patron answered. In person. Permanently, if you're not careful.",
 		tags: ["awakened", "power", "pact", "Conjuration", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7269,7 +7261,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-102-gravity-well-slam",
-		name: "Gravity Well Slam",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker", "Destroyer"],
+        name: "Gravity Well Slam",
 		display_name: "Gravity Well Slam",
 		description:
 			"Create a 10-foot gravity well centered on your weapon strike. All creatures within 10 feet are pulled 5 feet toward you and must make DC 14 STR save or be knocked prone. You gain +1 AC per creature pulled until end of your next turn.",
@@ -7286,7 +7279,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Everything comes to her. That's the gravity of the situation.",
 		tags: ["awakened", "power", "guard", "Transmutation", "Destroyer"],
-		classes: ["Destroyer"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7336,7 +7328,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-103-adrenaline-surge",
-		name: "Adrenaline Surge",
+        classes: ["Summoner", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Berserker", "Holy Knight"],
+        name: "Adrenaline Surge",
 		display_name: "Adrenaline Surge",
 		description:
 			"As a reaction when you take damage, surge your mana circuit's combat response. Gain temporary HP equal to 1d8 + your Constitution modifier. Your next melee attack deals +1d6 damage.",
@@ -7360,7 +7353,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Berserker",
 			"Striker",
 		],
-		classes: ["Berserker", "Striker"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7410,7 +7402,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-104-phantom-decoy",
-		name: "Phantom Decoy",
+        classes: ["Esper", "Revenant", "Technomancer", "Idol", "Contractor", "Assassin"],
+        name: "Phantom Decoy",
 		display_name: "Phantom Decoy",
 		description:
 			"Create a perfect mana-clone decoy at your position and turn invisible for 1 round. The decoy has 1 HP and mimics your last action. When the decoy is destroyed, it explodes for 2d6 psychic to all creatures within 5 feet.",
@@ -7427,7 +7420,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Which one is real? Wrong question. Both hurt.",
 		tags: ["awakened", "power", "ambush", "Illusion", "Assassin", "Idol"],
-		classes: ["Assassin", "Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7485,7 +7477,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-105-gate-reader",
-		name: "Gate Reader",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Gate Reader",
 		display_name: "Gate Reader",
 		description:
 			"Touch a gate surface and read its dimensional frequency. Learn the gate's rank, number of floors remaining, boss type category, and dominant element. Also learn if any other Awakened have entered in the last 24 hours.",
@@ -7509,7 +7502,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Stalker",
 			"Summoner",
 		],
-		classes: ["Stalker", "Summoner"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7559,7 +7551,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-106-sacrifice-engine",
-		name: "Sacrifice Engine",
+        classes: ["Revenant", "Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Sacrifice Engine",
 		display_name: "Sacrifice Engine",
 		description:
 			"Sacrifice a summoned creature, familiar, or willing ally's temporary HP to fuel a devastating patron attack. For every 10 HP sacrificed, deal 3d8 patron-element damage to one creature within 60 feet (no save, no attack roll).",
@@ -7576,7 +7569,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The patron demands a sacrifice. The patron provides the damage.",
 		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7626,7 +7618,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-107-resonance-counter",
-		name: "Resonance Counter",
+        classes: ["Technomancer", "Idol", "Contractor"],
+        name: "Resonance Counter",
 		display_name: "Resonance Counter",
 		description:
 			"As a reaction when an ally within 30 feet is hit by an attack, perform a counter-harmonic that reduces the damage by 2d8 + your Presence modifier. If the damage is reduced to 0, the attacker takes 1d8 thunder.",
@@ -7643,7 +7636,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She sang a note. The blow softened. The enemy flinched.",
 		tags: ["awakened", "power", "resonance", "Abjuration", "Idol"],
-		classes: ["Idol"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7693,7 +7685,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-108-mana-forge",
-		name: "Mana Forge",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Mana Forge",
 		display_name: "Mana Forge",
 		description:
 			"Over 10 minutes, forge a temporary magical weapon or piece of armor from raw mana-crystal. The item lasts 8 hours, counts as +1, and can be attuned immediately. You can also modify an existing weapon: add +1d6 elemental damage for 8 hours.",
@@ -7713,7 +7706,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She built it from nothing. It works better than factory.",
 		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
-		classes: ["Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7773,7 +7765,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-109-entropic-feedback",
-		name: "Entropic Feedback",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor"],
+        name: "Entropic Feedback",
 		display_name: "Entropic Feedback",
 		description:
 			"When you take necrotic damage, your circuit converts it to power. For 1 minute, you are immune to necrotic damage. Instead, necrotic damage you would take heals you for half the amount. Your necrotic attacks deal +1d8 during this time.",
@@ -7790,7 +7783,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Feed her entropy. She grows.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7842,7 +7834,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-110-herald-s-intervention",
-		name: "Herald's Intervention",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor"],
+        name: "Herald's Intervention",
 		display_name: "Herald's Intervention",
 		description:
 			"As a reaction when an ally within 60 feet would be reduced to 0 HP, intervene with the Absolute's grace. The ally instead drops to 1 HP and gains 2d10 temporary HP. You take 2d6 radiant damage from the strain.",
@@ -7859,7 +7852,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Not on her watch. Not today.",
 		tags: ["awakened", "power", "radiant", "Abjuration", "Herald"],
-		classes: ["Herald"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7909,7 +7901,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-111-parallel-processing",
-		name: "Parallel Processing",
+        classes: ["Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Parallel Processing",
 		display_name: "Parallel Processing",
 		description:
 			"Split your consciousness into parallel threads. For 1 minute, you can concentrate on 2 spells simultaneously, and you have advantage on all Intelligence and Presence checks. When the effect ends, you gain 1 level of exhaustion.",
@@ -7926,7 +7919,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Two thoughts. Two spells. One mind. Barely.",
 		tags: ["awakened", "power", "tracking", "Divination", "Esper"],
-		classes: ["Esper"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -7977,7 +7969,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-112-war-cry",
-		name: "War Cry",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Striker", "Berserker"],
+        name: "War Cry",
 		display_name: "War Cry",
 		description:
 			"Release a mana-amplified war cry. All enemies within 30 feet: DC 16 PRS save or frightened for 1 minute. All allies within 30 feet: gain 2d8 temporary HP and advantage on their next attack roll.",
@@ -8001,7 +7994,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Berserker",
 			"Destroyer",
 		],
-		classes: ["Berserker", "Destroyer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8051,7 +8043,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-113-execute-protocol",
-		name: "Execute Protocol",
+        classes: ["Technomancer", "Idol", "Contractor", "Assassin", "Stalker", "Striker"],
+        name: "Execute Protocol",
 		display_name: "Execute Protocol",
 		description:
 			"When you hit a creature that is below half its maximum HP, you can trigger Execute Protocol. The attack deals an additional 5d10 damage. If the target has 30 HP or fewer after the bonus damage, it dies instantly.",
@@ -8068,7 +8061,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Below half. Execution threshold. Protocol active.",
 		tags: ["awakened", "power", "tracking", "Divination", "Stalker"],
-		classes: ["Stalker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8120,7 +8112,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-114-radiant-martyr",
-		name: "Radiant Martyr",
+        classes: ["Revenant", "Holy Knight", "Technomancer", "Idol", "Contractor"],
+        name: "Radiant Martyr",
 		display_name: "Radiant Martyr",
 		description:
 			"When you would be reduced to 0 HP, you can instead drop to 1 HP and release a burst of the Absolute's radiance. All enemies within 30 feet: DC 17 PRS save, 6d8 radiant on failure, half on success. All allies regain 3d8 HP.",
@@ -8137,7 +8130,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She fell. Then the light fell. Then everything changed.",
 		tags: ["awakened", "power", "radiant", "Abjuration", "Holy Knight"],
-		classes: ["Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8189,7 +8181,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-115-summoner-s-pack",
-		name: "Summoner's Pack",
+        classes: ["Esper", "Revenant", "Summoner", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Summoner's Pack",
 		display_name: "Summoner's Pack",
 		description:
 			"Summon 3 Small gate-creature scouts (AC 13, 10 HP each, 40 ft speed). They act on your initiative, obey mental commands, and can perform the Help action. If one is destroyed, it explodes for 1d6 force to adjacent creatures.",
@@ -8206,7 +8199,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Three scouts. Three pairs of eyes. Three explosive surprises.",
 		tags: ["awakened", "power", "tracking", "Conjuration", "Summoner"],
-		classes: ["Summoner"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8256,7 +8248,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-116-mana-recycler",
-		name: "Mana Recycler",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Mana Recycler",
 		display_name: "Mana Recycler",
 		description:
 			"When you cast a spell of 3rd level or lower that deals no damage, immediately recover a spell slot of 1 level lower than the spell cast. This can only trigger once per short rest.",
@@ -8283,7 +8276,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Technomancer",
 			"Mage",
 		],
-		classes: ["Technomancer", "Mage"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8341,7 +8333,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-117-circuit-defibrillator",
-		name: "Circuit Defibrillator",
+        classes: ["Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner", "Holy Knight"],
+        name: "Circuit Defibrillator",
 		display_name: "Circuit Defibrillator",
 		description:
 			"As an action, touch a creature at 0 HP and jumpstart its mana circuit. The creature immediately regains consciousness with HP equal to 3d10 + your spellcasting modifier and can take its turn normally this round.",
@@ -8365,7 +8358,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Herald",
 			"Technomancer",
 		],
-		classes: ["Herald", "Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8425,7 +8417,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-118-runic-detonation",
-		name: "Runic Detonation",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Striker", "Berserker"],
+        name: "Runic Detonation",
 		display_name: "Runic Detonation",
 		description:
 			"Inscribe a mana-rune on a surface. The rune detonates when triggered (proximity, timer, or command word). Detonation: DC 17 INT save in 30-foot radius, 8d8 force on failure, half on success. You can have up to 3 runes active simultaneously.",
@@ -8442,7 +8435,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Three runes. Three traps. Three regrets.",
 		tags: ["awakened", "power", "overload", "Evocation", "Mage", "Esper"],
-		classes: ["Mage", "Esper"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8494,7 +8486,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-119-commander-s-presence",
-		name: "Commander's Presence",
+        classes: ["Esper", "Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner"],
+        name: "Commander's Presence",
 		display_name: "Commander's Presence",
 		description:
 			"Project an aura of absolute tactical authority. For 1 minute, all allies within 60 feet: can use your saving throw bonus instead of their own (their choice per save), and when you take the Help action, the ally gains +1d8 to the roll instead of advantage.",
@@ -8518,7 +8511,6 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Herald",
 			"Holy Knight",
 		],
-		classes: ["Herald", "Holy Knight"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8570,7 +8562,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-120-entropic-avatar",
-		name: "Entropic Avatar",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker", "Destroyer"],
+        name: "Entropic Avatar",
 		display_name: "Entropic Avatar",
 		description:
 			"Transform into an avatar of entropy for 1 minute. Gain +50 temp HP, fly speed 60 feet, immunity to necrotic and poison, and all your attacks deal +3d8 necrotic. Creatures that touch you or hit you with melee take 2d8 necrotic. When the form ends: 3 levels of exhaustion.",
@@ -8588,7 +8581,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"She stopped being human. For one minute. The minute was sufficient.",
 		tags: ["awakened", "power", "entropy", "Necromancy", "Revenant"],
-		classes: ["Revenant"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8642,7 +8634,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-121-esper-ascension",
-		name: "Esper Ascension",
+        classes: ["Esper", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Esper Ascension",
 		display_name: "Esper Ascension",
 		description:
 			"Ascend to a state of total psionic awareness. For 1 minute: you levitate 30 feet (fly 30 ft hover), have blindsight 120 feet, can read thoughts of all creatures within 120 feet (no save), and your psychic spells deal +4d6 damage. When it ends: stunned for 1 round.",
@@ -8660,7 +8653,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		flavor:
 			"She sees everything. Every thought. Every intention. Every weakness.",
 		tags: ["awakened", "power", "tracking", "Divination", "Esper"],
-		classes: ["Esper"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8713,7 +8705,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-122-patron-sacrifice",
-		name: "Patron Sacrifice",
+        classes: ["Revenant", "Technomancer", "Idol", "Contractor", "Striker"],
+        name: "Patron Sacrifice",
 		display_name: "Patron Sacrifice",
 		description:
 			"Offer a significant portion of your life force to your patron in exchange for a massive power surge. Permanently reduce your max HP by 10. In return: regain all expended spell slots, gain +3 to spell save DC for 1 minute, and your next patron spell deals double damage.",
@@ -8730,7 +8723,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The patron demands. You pay. The power is worth it. Usually.",
 		tags: ["awakened", "power", "pact", "Necromancy", "Contractor"],
-		classes: ["Contractor"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8784,7 +8776,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-123-striker-s-zenith",
-		name: "Striker's Zenith",
+        classes: ["Summoner", "Technomancer", "Idol", "Contractor", "Striker", "Destroyer"],
+        name: "Striker's Zenith",
 		display_name: "Striker's Zenith",
 		description:
 			"Enter a state of perfect kinetic harmony. For 1 minute: your unarmed attacks deal 3d10 + STR force, you can make 4 unarmed attacks per action, your movement doesn't provoke opportunity attacks, and you can run along walls and across water.",
@@ -8801,7 +8794,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "Perfect balance. Perfect speed. Perfect violence.",
 		tags: ["awakened", "power", "kinetic", "Transmutation", "Striker"],
-		classes: ["Striker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8861,7 +8853,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-124-berserker-s-last-stand",
-		name: "Berserker's Last Stand",
+        classes: ["Esper", "Revenant", "Summoner", "Technomancer", "Idol", "Contractor", "Striker", "Berserker"],
+        name: "Berserker's Last Stand",
 		display_name: "Berserker's Last Stand",
 		description:
 			"Activate when you are at or below 25% HP. For 1 minute: your melee damage is quadrupled, you can't be knocked unconscious, you regenerate 2d10 HP per round, and you are immune to frightened and charmed. When it ends: you drop to 0 HP (death saves).",
@@ -8878,7 +8871,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "She's dying. She doesn't care. She fights harder.",
 		tags: ["awakened", "power", "overload", "Transmutation", "Berserker"],
-		classes: ["Berserker"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -8932,7 +8924,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-125-summoner-s-leviathan",
-		name: "Summoner's Leviathan",
+        classes: ["Esper", "Summoner", "Technomancer", "Idol", "Contractor", "Stalker", "Striker"],
+        name: "Summoner's Leviathan",
 		display_name: "Summoner's Leviathan",
 		description:
 			"Summon a Huge gate-leviathan (AC 18, HP 200, multiattack: 3 at +10 for 3d10+7) that acts on its own initiative and obeys your mental commands. It has resistance to all damage and immunity to frightened. Lasts 1 minute or until destroyed.",
@@ -8949,7 +8942,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The gate opened. Something enormous answered.",
 		tags: ["awakened", "power", "tracking", "Conjuration", "Summoner"],
-		classes: ["Summoner"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
@@ -9001,7 +8993,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-126-divine-mandate",
-		name: "Divine Mandate",
+        classes: ["Esper", "Holy Knight", "Technomancer", "Idol", "Herald", "Contractor", "Striker", "Summoner"],
+        name: "Divine Mandate",
 		display_name: "Divine Mandate",
 		description:
 			"Speak with the Absolute's voice. All creatures within 120 feet that can hear you must make DC 20 PRS save. On failure: they must follow one complex command (up to 25 words) for 1 hour. On success: they are frightened of you for 1 minute. Allies are immune.",
@@ -9018,7 +9011,6 @@ export const powers_supplemental: CompendiumPower[] = [
 		},
 		flavor: "The Absolute speaks. Through her. Everyone obeys.",
 		tags: ["awakened", "power", "radiant", "Enchantment", "Herald"],
-		classes: ["Herald"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
 		effects: {

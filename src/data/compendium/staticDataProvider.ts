@@ -1250,6 +1250,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 		tags: [spell.type, spell.rank, school, ...classes].filter(
 			Boolean,
 		) as string[],
+		classes: classes,
 		source_book: spell.source_book ?? "Rift Ascendant Homebrew",
 		image_url: spell.image,
 		spell_type: spell.type,
@@ -1914,6 +1915,7 @@ export const staticDataProvider: StaticDataProvider = {
 			description: power.description,
 			created_at: new Date().toISOString(),
 			tags: ["power", power.type, power.rarity].filter(Boolean) as string[],
+			classes: (power as any).classes || [],
 			source_book: power.source,
 			image_url: power.image,
 			power_level:
