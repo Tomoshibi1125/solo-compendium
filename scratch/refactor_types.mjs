@@ -1,14 +1,16 @@
-import fs from 'fs';
+import fs from "fs";
 
-const TYPES_PATH = 'c:/Users/jjcal/Documents/solo-compendium/src/types/compendium.ts';
+const TYPES_PATH =
+	"c:/Users/jjcal/Documents/solo-compendium/src/types/compendium.ts";
 
 function refactorTypes() {
-    console.log('Refactoring Compendium Types via script...');
-    let content = fs.readFileSync(TYPES_PATH, 'utf8');
+	console.log("Refactoring Compendium Types via script...");
+	let content = fs.readFileSync(TYPES_PATH, "utf8");
 
-    // Refactor CompendiumRune
-    const runePattern = /export interface CompendiumRune extends BaseCompendiumItem {[\s\S]*?}/;
-    const runeReplacement = `export interface CompendiumRune extends BaseCompendiumItem {
+	// Refactor CompendiumRune
+	const runePattern =
+		/export interface CompendiumRune extends BaseCompendiumItem {[\s\S]*?}/;
+	const runeReplacement = `export interface CompendiumRune extends BaseCompendiumItem {
 	effect_description: string;
 	aliases?: string[];
 	rune_type: "martial" | "caster" | "hybrid" | "utility" | "offensive" | "defensive";
@@ -25,34 +27,41 @@ function refactorTypes() {
 	higher_levels?: string;
 	discovery_lore?: string;
 }`;
-    content = content.replace(runePattern, runeReplacement);
+	content = content.replace(runePattern, runeReplacement);
 
-    // Refactor/Add CompendiumSigil
-    const sigilPattern = /export interface CompendiumSigil extends BaseCompendiumItem {[\s\S]*?}/;
-    const sigilReplacement = `export interface CompendiumSigil extends BaseCompendiumItem {
+	// Refactor/Add CompendiumSigil
+	const sigilPattern =
+		/export interface CompendiumSigil extends BaseCompendiumItem {[\s\S]*?}/;
+	const sigilReplacement = `export interface CompendiumSigil extends BaseCompendiumItem {
 	passive_bonuses: Record<string, number | string | string[]>;
 	can_inscribe_on: string[];
 	rarity: string;
 	tags: string[];
 }`;
-    if (sigilPattern.test(content)) {
-        content = content.replace(sigilPattern, sigilReplacement);
-    } else {
-        // Find a good place to insert it if missing (e.g., after CompendiumRune)
-        content = content.replace(runeReplacement, `${runeReplacement}\n\n${sigilReplacement}`);
-    }
+	if (sigilPattern.test(content)) {
+		content = content.replace(sigilPattern, sigilReplacement);
+	} else {
+		// Find a good place to insert it if missing (e.g., after CompendiumRune)
+		content = content.replace(
+			runeReplacement,
+			`${runeReplacement}\n\n${sigilReplacement}`,
+		);
+	}
 
-    // Ensure CompendiumSigil is in CompendiumEntity union
-    if (!content.includes('| CompendiumSigil')) {
-        content = content.replace(/\| CompendiumDeity/, '| CompendiumDeity\n\t| CompendiumSigil');
-    }
+	// Ensure CompendiumSigil is in CompendiumEntity union
+	if (!content.includes("| CompendiumSigil")) {
+		content = content.replace(
+			/\| CompendiumDeity/,
+			"| CompendiumDeity\n\t| CompendiumSigil",
+		);
+	}
 
-    fs.writeFileSync(TYPES_PATH, content, 'utf8');
-    console.log('Compendium Types refactored successfully.');
+	fs.writeFileSync(TYPES_PATH, content, "utf8");
+	console.log("Compendium Types refactored successfully.");
 }
 
 try {
-    refactorTypes();
+	refactorTypes();
 } catch (error) {
-    console.error('Error refactoring types:', error);
+	console.error("Error refactoring types:", error);
 }

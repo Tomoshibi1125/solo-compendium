@@ -84,7 +84,13 @@ function detemplateFile(absolutePath: string): {
 
 	next = next.replace(
 		TEMPLATED_DESCRIPTION,
-		(_match, damage: string, dc: string, ability: string, condition: string) => {
+		(
+			_match,
+			damage: string,
+			dc: string,
+			ability: string,
+			condition: string,
+		) => {
 			descriptionReplacements += 1;
 			return buildReplacement(damage, dc, ability, condition).description;
 		},
@@ -123,9 +129,7 @@ function detemplateFile(absolutePath: string): {
 function main(): void {
 	const cwd = process.cwd();
 	const all = [...targets, ...runeTargets];
-	const results = all.map((relative) =>
-		detemplateFile(resolve(cwd, relative)),
-	);
+	const results = all.map((relative) => detemplateFile(resolve(cwd, relative)));
 
 	const totals = results.reduce(
 		(acc, r) => ({

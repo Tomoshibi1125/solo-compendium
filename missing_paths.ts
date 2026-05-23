@@ -1,6 +1,6 @@
-	{
-		jobName: "Herald",
-		pathName: "Path of the Restoration Mandate",
+{
+	jobName: "Herald", pathName;
+	: "Path of the Restoration Mandate",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald"],
@@ -17,9 +17,11 @@
 			"Radiant Condemnation"
 		],
 		progression: "base",
-	},	{
-		jobName: "Herald",
-		pathName: "Path of the Combat Mandate",
+}
+,
+{
+	jobName: "Herald", pathName;
+	: "Path of the Combat Mandate",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald","Mage"],
@@ -36,9 +38,11 @@
 			"Pact Renegotiation"
 		],
 		progression: "base",
-	},	{
-		jobName: "Herald",
-		pathName: "Path of the Triage Mandate",
+}
+,
+{
+	jobName: "Herald", pathName;
+	: "Path of the Triage Mandate",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Revenant"],
@@ -54,9 +58,11 @@
 			"Raise Gate Dead"
 		],
 		progression: "base",
-	},	{
-		jobName: "Summoner",
-		pathName: "Path of the Dream Weaver",
+}
+,
+{
+	jobName: "Summoner", pathName;
+	: "Path of the Dream Weaver",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Idol","Esper"],
@@ -72,9 +78,11 @@
 			"Psionic Bastion"
 		],
 		progression: "base",
-	},	{
-		jobName: "Summoner",
-		pathName: "Path of the Pack Commander",
+}
+,
+{
+	jobName: "Summoner", pathName;
+	: "Path of the Pack Commander",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Summoner"],
@@ -91,9 +99,11 @@
 			"Gate Fissure"
 		],
 		progression: "base",
-	},	{
-		jobName: "Summoner",
-		pathName: "Path of the Symbiotic Host",
+}
+,
+{
+	jobName: "Summoner", pathName;
+	: "Path of the Symbiotic Host",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Revenant","Mage"],
@@ -105,9 +115,11 @@
 			"Restoration Chorus"
 		],
 		progression: "base",
-	},	{
-		jobName: "Summoner",
-		pathName: "Path of the Cosmic Conduit",
+}
+,
+{
+	jobName: "Summoner", pathName;
+	: "Path of the Cosmic Conduit",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald","Mage"],
@@ -124,9 +136,11 @@
 			"Bureau Authority Override"
 		],
 		progression: "base",
-	},	{
-		jobName: "Contractor",
-		pathName: "Path of the Cursed Blade",
+}
+,
+{
+	jobName: "Contractor", pathName;
+	: "Path of the Cursed Blade",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage","Destroyer"],
@@ -143,9 +157,11 @@
 			"Bureau Authority Override"
 		],
 		progression: "base",
-	},	{
-		jobName: "Contractor",
-		pathName: "Path of the Deep Dweller",
+}
+,
+{
+	jobName: "Contractor", pathName;
+	: "Path of the Deep Dweller",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage"],
@@ -162,9 +178,11 @@
 			"Restoration Chorus"
 		],
 		progression: "base",
-	},	{
-		jobName: "Esper",
-		pathName: "Path of the Aetheric Dragon",
+}
+,
+{
+	jobName: "Esper", pathName;
+	: "Path of the Aetheric Dragon",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage"],
@@ -181,9 +199,11 @@
 			"Bureau Authority Override"
 		],
 		progression: "base",
-	},	{
-		jobName: "Esper",
-		pathName: "Path of the Void Resonance",
+}
+,
+{
+	jobName: "Esper", pathName;
+	: "Path of the Void Resonance",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage","Revenant"],
@@ -200,9 +220,11 @@
 			"Gate Fissure"
 		],
 		progression: "base",
-	},	{
-		jobName: "Esper",
-		pathName: "Path of the Tempest Core",
+}
+,
+{
+	jobName: "Esper", pathName;
+	: "Path of the Tempest Core",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage"],
@@ -219,9 +241,11 @@
 			"Mana Storm"
 		],
 		progression: "base",
-	},	{
-		jobName: "Esper",
-		pathName: "Path of the Psionic Breach",
+}
+,
+{
+	jobName: "Esper", pathName;
+	: "Path of the Psionic Breach",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Esper"],
@@ -238,9 +262,11 @@
 			"Psionic Bastion"
 		],
 		progression: "base",
-	},	{
-		jobName: "Revenant",
-		pathName: "Path of the Void Lord",
+}
+,
+{
+	jobName: "Revenant", pathName;
+	: "Path of the Void Lord",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Contractor","Mage"],
@@ -257,9 +283,11 @@
 			"Pact Dominion"
 		],
 		progression: "base",
-	},	{
-		jobName: "Revenant",
-		pathName: "Path of the Entropy Drinker",
+}
+,
+{
+	jobName: "Revenant", pathName;
+	: "Path of the Entropy Drinker",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Revenant"],
@@ -271,9 +299,11 @@
 			"Mana Siphon Strike"
 		],
 		progression: "base",
-	},	{
-		jobName: "Revenant",
-		pathName: "Path of the Wither Guard",
+}
+,
+{
+	jobName: "Revenant", pathName;
+	: "Path of the Wither Guard",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Revenant"],
@@ -288,9 +318,11 @@
 			"Entropic Reaping"
 		],
 		progression: "base",
-	},	{
-		jobName: "Revenant",
-		pathName: "Path of the Plague Weaver",
+}
+,
+{
+	jobName: "Revenant", pathName;
+	: "Path of the Plague Weaver",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Revenant","Summoner"],
@@ -301,9 +333,11 @@
 			"Restoration Chorus"
 		],
 		progression: "base",
-	},	{
-		jobName: "Holy Knight",
-		pathName: "Path of the Dominance Mandate",
+}
+,
+{
+	jobName: "Holy Knight", pathName;
+	: "Path of the Dominance Mandate",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Contractor","Esper"],
@@ -319,9 +353,11 @@
 			"Pact Dominion"
 		],
 		progression: "base",
-	},	{
-		jobName: "Holy Knight",
-		pathName: "Path of the Atonement Mandate",
+}
+,
+{
+	jobName: "Holy Knight", pathName;
+	: "Path of the Atonement Mandate",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald"],
@@ -338,9 +374,11 @@
 			"Pact Renegotiation"
 		],
 		progression: "base",
-	},	{
-		jobName: "Holy Knight",
-		pathName: "Path of the Exaltation Mandate",
+}
+,
+{
+	jobName: "Holy Knight", pathName;
+	: "Path of the Exaltation Mandate",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald","Idol"],
@@ -353,9 +391,11 @@
 			"Mass Circuit Boost"
 		],
 		progression: "base",
-	},	{
-		jobName: "Stalker",
-		pathName: "Path of the Umbral Hunter",
+}
+,
+{
+	jobName: "Stalker", pathName;
+	: "Path of the Umbral Hunter",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage"],
@@ -370,9 +410,11 @@
 			"Predator's Web"
 		],
 		progression: "base",
-	},	{
-		jobName: "Stalker",
-		pathName: "Path of the Apex Slayer",
+}
+,
+{
+	jobName: "Stalker", pathName;
+	: "Path of the Apex Slayer",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald","Mage"],
@@ -388,9 +430,11 @@
 			"Mana Storm"
 		],
 		progression: "base",
-	},	{
-		jobName: "Stalker",
-		pathName: "Path of the Hive Synchronist",
+}
+,
+{
+	jobName: "Stalker", pathName;
+	: "Path of the Hive Synchronist",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Summoner","Mage"],
@@ -404,9 +448,11 @@
 			"Predator's Web"
 		],
 		progression: "base",
-	},	{
-		jobName: "Technomancer",
-		pathName: "Design: The Aether Vessel",
+}
+,
+{
+	jobName: "Technomancer", pathName;
+	: "Design: The Aether Vessel",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage"],
@@ -422,9 +468,11 @@
 			"Sonic Annihilation"
 		],
 		progression: "base",
-	},	{
-		jobName: "Technomancer",
-		pathName: "Design: Resonance Siege",
+}
+,
+{
+	jobName: "Technomancer", pathName;
+	: "Design: Resonance Siege",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Mage"],
@@ -441,9 +489,11 @@
 			"Mana Cascade Failure"
 		],
 		progression: "base",
-	},	{
-		jobName: "Technomancer",
-		pathName: "Design: Synchronist Binary",
+}
+,
+{
+	jobName: "Technomancer", pathName;
+	: "Design: Synchronist Binary",
 		level: 1,
 		kind: "spell",
 		sourceTokens: ["Herald"],
@@ -460,4 +510,5 @@
 			"Bureau Authority Override"
 		],
 		progression: "base",
-	},
+}
+,

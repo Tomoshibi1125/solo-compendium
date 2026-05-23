@@ -104,7 +104,9 @@ function getPassiveRules(item) {
 	const rules = [];
 	const passive = getEffects(item).passive;
 	if (Array.isArray(passive)) {
-		rules.push(...passive.filter((rule) => typeof rule === "string" && rule.trim()));
+		rules.push(
+			...passive.filter((rule) => typeof rule === "string" && rule.trim()),
+		);
 	}
 	for (const key of ["primary", "secondary"]) {
 		const value = getEffects(item)[key];
@@ -137,7 +139,10 @@ function getActiveRules(item) {
 			if (!ability || typeof ability !== "object") continue;
 			const type = String(ability.type ?? "").toLowerCase();
 			if (!["active", "command"].includes(type)) continue;
-			if (typeof ability.name !== "string" || typeof ability.description !== "string") {
+			if (
+				typeof ability.name !== "string" ||
+				typeof ability.description !== "string"
+			) {
 				continue;
 			}
 			rules.push({
@@ -175,7 +180,7 @@ function extractFormulaFromText(text) {
 	return (
 		text.match(/\d+d\d+(?:\s*[+-]\s*\d+)?/i)?.[0] ??
 		text.match(/\+\d+\s+AC/i)?.[0] ??
-		text.match(/AC\s+\d+(?:\s*\+\s*AGI[^\.;]*)?/i)?.[0] ??
+		text.match(/AC\s+\d+(?:\s*\+\s*AGI[^.;]*)?/i)?.[0] ??
 		null
 	);
 }
@@ -298,7 +303,8 @@ function buildResolution(item, archetype, abilityProfile) {
 	const primaryActive = getPrimaryActive(item);
 	if (isWeaponArchetype(archetype)) {
 		const damageDice = damageDiceOnly(String(item.damage ?? ""));
-		const damageType = item.damage_type ?? item.properties?.weapon?.damage_type ?? "physical";
+		const damageType =
+			item.damage_type ?? item.properties?.weapon?.damage_type ?? "physical";
 		return {
 			type: "weapon_attack",
 			attack_roll: true,
@@ -365,7 +371,8 @@ function buildAbilityModifiers(item, archetype, abilityProfile) {
 			damage: abilityProfile.damage,
 			save_dc: [],
 			armor_class: [],
-			notes: "Weapon formulas use RA ability modifiers plus proficiency when proficient.",
+			notes:
+				"Weapon formulas use RA ability modifiers plus proficiency when proficient.",
 		};
 	}
 	if (isArmorArchetype(archetype)) {
@@ -380,7 +387,8 @@ function buildAbilityModifiers(item, archetype, abilityProfile) {
 					: [],
 			requirements:
 				typeof item.strength_requirement === "number" ? ["STR"] : [],
-			notes: "Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
+			notes:
+				"Armor formulas use RA AGI modifiers when the armor category permits an agility bonus.",
 		};
 	}
 	const activeText = getPrimaryActive(item)?.description ?? "";
@@ -389,7 +397,8 @@ function buildAbilityModifiers(item, archetype, abilityProfile) {
 		damage: [],
 		save_dc: /\bDC\s+\d+/i.test(activeText) ? [getSaveAbility(activeText)] : [],
 		armor_class: [],
-		notes: "Utility and consumable items only call for an ability when their explicit rule names one.",
+		notes:
+			"Utility and consumable items only call for an ability when their explicit rule names one.",
 	};
 }
 
@@ -397,7 +406,8 @@ function buildFormulas(item, archetype, abilityProfile, rarity) {
 	const primaryActive = getPrimaryActive(item);
 	const itemBonus = getItemBonus(item, rarity);
 	if (isWeaponArchetype(archetype)) {
-		const damageDice = damageDiceOnly(String(item.damage ?? "")) ?? "weapon die";
+		const damageDice =
+			damageDiceOnly(String(item.damage ?? "")) ?? "weapon die";
 		const bonusText = itemBonus > 0 ? ` + ${itemBonus}` : "";
 		return {
 			attack_roll: `d20 + ${abilityProfile.formulaAbility} modifier + proficiency bonus${bonusText}`,
@@ -445,7 +455,8 @@ function buildIdentity(item, archetype, theme, rarity, key, file) {
 		signature,
 		distinguishing_rule: `${item.name} keys ${themeKey} ${archetype.replace(/_/g, " ")} rules through signature ${signature}.`,
 		canon_basis:
-			item.source === "Rift Ascendant Canon" || item.source === "Ascendant Compendium"
+			item.source === "Rift Ascendant Canon" ||
+			item.source === "Ascendant Compendium"
 				? "RA canon"
 				: rarity === "common"
 					? "RA mundane baseline"
@@ -455,7 +466,8 @@ function buildIdentity(item, archetype, theme, rarity, key, file) {
 
 function buildSourceIntegrity(item, rarity, archetype) {
 	return {
-		allows_5e_baseline: rarity === "common" && !isConsumableArchetype(archetype),
+		allows_5e_baseline:
+			rarity === "common" && !isConsumableArchetype(archetype),
 		ra_specific_mundane:
 			rarity === "common" &&
 			/\b(gate|hunter|bureau|mana|rift|lattice|ascendant|anomaly)\b/i.test(
@@ -492,7 +504,15 @@ function buildLimitations(item, archetype) {
 	};
 }
 
-function enrichRulesPayload(item, archetype, variant, theme, rarity, key, file) {
+function enrichRulesPayload(
+	item,
+	archetype,
+	variant,
+	theme,
+	rarity,
+	key,
+	file,
+) {
 	const normalized = normalizeRaRulesLanguage(item);
 	if (typeof normalized.armor_class === "string") {
 		normalized.armor_class = normalizeRaRulesLanguage(normalized.armor_class);
@@ -622,8 +642,12 @@ export function rebuildItem(rawItem, file) {
 	}
 
 	// ----- tags + attunement -----
-	const tags = Array.isArray(rawItem.tags) ? scrubThemeTags(rawItem.tags) : ["equipment"];
-	const themeTags = Array.isArray(rawItem.theme_tags) ? scrubThemeTags(rawItem.theme_tags) : [];
+	const tags = Array.isArray(rawItem.tags)
+		? scrubThemeTags(rawItem.tags)
+		: ["equipment"];
+	const themeTags = Array.isArray(rawItem.theme_tags)
+		? scrubThemeTags(rawItem.theme_tags)
+		: [];
 	merged.tags = uniq([...tags, archetype.split("_")[0]]);
 	merged.theme_tags = themeTags;
 
@@ -637,7 +661,15 @@ export function rebuildItem(rawItem, file) {
 		merged.cursed = true;
 	}
 
-	return enrichRulesPayload(merged, archetype, variant, theme, rarity, variantKey, file);
+	return enrichRulesPayload(
+		merged,
+		archetype,
+		variant,
+		theme,
+		rarity,
+		variantKey,
+		file,
+	);
 }
 
 // =============================================================
@@ -664,7 +696,10 @@ function mergeWeapon(merged, archetype, variant, theme, rarity, key) {
 	if (variant.props?.includes("versatile (1d8)")) wpn.versatile = "1d8";
 	if (variant.props?.includes("versatile (1d12)")) wpn.versatile = "1d12";
 	if (variant.range) {
-		const rangeNum = parseInt(String(variant.range).match(/\d+/)?.[0] || "0", 10);
+		const rangeNum = parseInt(
+			String(variant.range).match(/\d+/)?.[0] || "0",
+			10,
+		);
 		if (rangeNum > 0) wpn.range = rangeNum;
 	}
 	merged.properties = { weapon: wpn };
@@ -672,8 +707,15 @@ function mergeWeapon(merged, archetype, variant, theme, rarity, key) {
 	// Effects: variant note + theme rider + rarity unique passive + (rare+) active.
 	const passives = [];
 	if (variant.note) passives.push(variant.note);
-	if (theme && Array.isArray(theme.ridersWeapon) && theme.ridersWeapon.length > 0) {
-		const rider = theme.ridersWeapon[fnv1a(`${key}::weapon-rider`) % theme.ridersWeapon.length];
+	if (
+		theme &&
+		Array.isArray(theme.ridersWeapon) &&
+		theme.ridersWeapon.length > 0
+	) {
+		const rider =
+			theme.ridersWeapon[
+				fnv1a(`${key}::weapon-rider`) % theme.ridersWeapon.length
+			];
 		passives.push(rider);
 	}
 	if (rarity !== "common") {
@@ -691,10 +733,16 @@ function mergeWeapon(merged, archetype, variant, theme, rarity, key) {
 
 function computeWeaponType(archetype, variant) {
 	if (archetype.startsWith("firearm_")) return "martial ranged";
-	if (archetype === "ranged_bow" || archetype === "ranged_crossbow") return "martial ranged";
+	if (archetype === "ranged_bow" || archetype === "ranged_crossbow")
+		return "martial ranged";
 	if (archetype === "ranged_thrown") return "simple ranged";
 	if (archetype === "focus_wand") return "simple ranged";
-	if (archetype === "melee_staff" || archetype === "melee_gauntlet" || archetype === "melee_sickle") return "simple melee";
+	if (
+		archetype === "melee_staff" ||
+		archetype === "melee_gauntlet" ||
+		archetype === "melee_sickle"
+	)
+		return "simple melee";
 	return "martial melee";
 }
 
@@ -729,18 +777,32 @@ function mergeArmor(merged, archetype, variant, theme, rarity, key) {
 	const passives = [];
 	// Always include AC line for character-sheet parser.
 	if (archetype === "armor_shield") {
-		passives.push(`Provides +${2 + (rarityArmorBonus(rarity) || 0)} AC while wielded.`);
+		passives.push(
+			`Provides +${2 + (rarityArmorBonus(rarity) || 0)} AC while wielded.`,
+		);
 	} else if (merged.armor_type === "Heavy") {
-		passives.push(`Provides AC ${merged.armor_class}. Stealth checks at disadvantage.`);
+		passives.push(
+			`Provides AC ${merged.armor_class}. Stealth checks at disadvantage.`,
+		);
 	} else if (merged.armor_type === "Medium") {
-		passives.push(`Provides AC ${merged.armor_class.replace(" + AGI modifier (max 2)", " + AGI (max +2)")}.`);
+		passives.push(
+			`Provides AC ${merged.armor_class.replace(" + AGI modifier (max 2)", " + AGI (max +2)")}.`,
+		);
 	} else {
 		passives.push(`Provides AC ${merged.armor_class}.`);
 	}
-	if (variant.note && !passives.includes(variant.note)) passives.push(variant.note);
+	if (variant.note && !passives.includes(variant.note))
+		passives.push(variant.note);
 
-	if (theme && Array.isArray(theme.ridersArmor) && theme.ridersArmor.length > 0) {
-		const rider = theme.ridersArmor[fnv1a(`${key}::armor-rider`) % theme.ridersArmor.length];
+	if (
+		theme &&
+		Array.isArray(theme.ridersArmor) &&
+		theme.ridersArmor.length > 0
+	) {
+		const rider =
+			theme.ridersArmor[
+				fnv1a(`${key}::armor-rider`) % theme.ridersArmor.length
+			];
 		passives.push(rider);
 	}
 	if (rarity !== "common") {
@@ -787,7 +849,8 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 	if (archetype === "consumable_potion" || archetype === "consumable_stim") {
 		// Theme override takes priority over variant pick (so 'Mana X' is always mana, etc.).
 		const subtype = theme?.consumableSubtype || variant.subtype || "healing";
-		const actName = variant.action || (archetype === "consumable_stim" ? "Inject" : "Drink");
+		const actName =
+			variant.action || (archetype === "consumable_stim" ? "Inject" : "Drink");
 		const actVerb = archetype === "consumable_stim" ? "Inject" : "Drink";
 		const range = archetype === "consumable_stim" ? "5 ft." : "self";
 		if (subtype === "healing") {
@@ -809,7 +872,9 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 				frequency: "at-will",
 			});
 		} else {
-			passives.push(variant.note || "Provides a temporary boost on consumption.");
+			passives.push(
+				variant.note || "Provides a temporary boost on consumption.",
+			);
 			actives.push({
 				name: actName,
 				description: `${archetype === "consumable_stim" ? "Bonus action" : "Action"}. ${variant.note || "Activate."}`,
@@ -819,7 +884,9 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 		}
 	} else if (archetype === "consumable_grenade") {
 		const sub = variant.subtype || "force";
-		const dmg = variant.damage ? variant.damage[rarity[0]] || variant.damage.c : null;
+		const dmg = variant.damage
+			? variant.damage[rarity[0]] || variant.damage.c
+			: null;
 		const radius = variant.radius || 10;
 		const dc = 10 + rarityScalingMod(rarity);
 		merged.range = "Thrown (30/90)";
@@ -827,7 +894,9 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 		if (dmg) {
 			merged.damage = dmg;
 			merged.damage_type = variant.damageType;
-			merged.properties = { weapon: { damage: dmg, damage_type: variant.damageType, range: 30 } };
+			merged.properties = {
+				weapon: { damage: dmg, damage_type: variant.damageType, range: 30 },
+			};
 		}
 		const desc = dmg
 			? `Action. Throw to a point within 30 ft. All creatures within ${radius} ft. make a DC ${dc} Agility save, taking ${dmg} ${variant.damageType} damage on a fail (half on success).`
@@ -841,7 +910,9 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 		});
 		passives.push(variant.note || `${sub} grenade. Detonates in ${radius} ft.`);
 	} else if (archetype === "consumable_scroll") {
-		passives.push(variant.note || "Single-use scroll. Casts an inscribed spell.");
+		passives.push(
+			variant.note || "Single-use scroll. Casts an inscribed spell.",
+		);
 		actives.push({
 			name: "Read",
 			description: "Action. Cast the inscribed spell. The scroll is consumed.",
@@ -849,7 +920,10 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 			frequency: "at-will",
 		});
 	} else if (archetype === "consumable_purifier") {
-		passives.push(variant.note || "Cures one of: poisoned, charmed, frightened, or weakened.");
+		passives.push(
+			variant.note ||
+				"Cures one of: poisoned, charmed, frightened, or weakened.",
+		);
 		actives.push({
 			name: variant.action || "Apply",
 			description: `Action. ${variant.note || "Cure one targeted condition."}`,
@@ -857,7 +931,9 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 			frequency: "at-will",
 		});
 	} else if (archetype === "consumable_signal") {
-		passives.push(variant.note || "Burns for 1 minute. Bright light in a 60-ft. radius.");
+		passives.push(
+			variant.note || "Burns for 1 minute. Bright light in a 60-ft. radius.",
+		);
 		actives.push({
 			name: "Activate",
 			description: `Action. ${variant.note || "Burn for 1 minute. Bright light in 60 ft."}`,
@@ -870,8 +946,15 @@ function mergeConsumable(merged, archetype, variant, theme, rarity, key) {
 
 	// Theme consumable rider — only add when it provides genuinely new info
 	// (skip if the rider's primary effect already matches the subtype we just generated).
-	if (theme && Array.isArray(theme.ridersConsumable) && theme.ridersConsumable.length > 0) {
-		const rider = theme.ridersConsumable[fnv1a(`${key}::consumable-rider`) % theme.ridersConsumable.length];
+	if (
+		theme &&
+		Array.isArray(theme.ridersConsumable) &&
+		theme.ridersConsumable.length > 0
+	) {
+		const rider =
+			theme.ridersConsumable[
+				fnv1a(`${key}::consumable-rider`) % theme.ridersConsumable.length
+			];
 		const subtype = theme?.consumableSubtype || variant.subtype || "";
 		const riderRedundant =
 			(subtype === "mana" && /restores mana/i.test(rider)) ||
@@ -911,9 +994,14 @@ function mergeGear(merged, archetype, variant, theme, rarity, key) {
 
 	const passives = [];
 	if (variant.note) passives.push(variant.note);
-	if (theme && Array.isArray(theme.ridersArmor) && theme.ridersArmor.length > 0) {
+	if (
+		theme &&
+		Array.isArray(theme.ridersArmor) &&
+		theme.ridersArmor.length > 0
+	) {
 		// gear borrows from armor riders for thematic consistency
-		const rider = theme.ridersArmor[fnv1a(`${key}::gear-rider`) % theme.ridersArmor.length];
+		const rider =
+			theme.ridersArmor[fnv1a(`${key}::gear-rider`) % theme.ridersArmor.length];
 		passives.push(rider);
 	}
 	if (rarity !== "common") {

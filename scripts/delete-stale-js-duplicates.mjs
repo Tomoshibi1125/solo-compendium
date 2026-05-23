@@ -13,8 +13,8 @@
  * with the same basename. Standalone .js files are left alone.
  */
 
-import { readdirSync, statSync, rmSync, existsSync } from "node:fs";
-import { join, extname, basename, dirname } from "node:path";
+import { existsSync, readdirSync, rmSync, statSync } from "node:fs";
+import { basename, dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

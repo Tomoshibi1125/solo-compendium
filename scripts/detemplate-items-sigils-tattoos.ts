@@ -51,7 +51,7 @@ function hash(value: string): number {
 		h ^= value.charCodeAt(i);
 		h = Math.imul(h, 16777619);
 	}
-	return (h >>> 0);
+	return h >>> 0;
 }
 
 function pick(pool: string[], anchor: string): string {
@@ -350,12 +350,14 @@ function buildReplacements(): Replacement[] {
 		replace: (anchor) => pick(DEEPLY_TERRITORIAL_POOL, anchor),
 	});
 	list.push({
-		needle: "Forged by the Bureau's arcane division to combat carapace-armored monsters encountered in C-Rank gates.",
+		needle:
+			"Forged by the Bureau's arcane division to combat carapace-armored monsters encountered in C-Rank gates.",
 		replace: (anchor) => pick(TATTOO_ORIGIN_POOL, anchor),
 	});
 
 	list.push({
-		needle: "Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
+		needle:
+			"Inked by rogue alchemists looking to push Hunter flesh beyond its natural limits.",
 		replace: (anchor) => pick(INKED_BY_ROGUE_POOL, anchor),
 	});
 	list.push({
@@ -381,7 +383,8 @@ function buildReplacements(): Replacement[] {
 		replace: (anchor) => pick(SILENT_HUNGRY_POOL, anchor),
 	});
 	list.push({
-		needle: "Appeared in a Hunter's inventory after a System notification that no one else could see.",
+		needle:
+			"Appeared in a Hunter's inventory after a System notification that no one else could see.",
 		replace: (anchor) => pick(HUNTER_INVENTORY_NOTIFICATION_POOL, anchor),
 	});
 	list.push({
@@ -409,14 +412,18 @@ function processFile(absolutePath: string): number {
 				const anchor = entry.id || "anchor";
 				if (typeof replacement.needle === "string") {
 					if (line.includes(replacement.needle)) {
-						lines[i] = line.split(replacement.needle).join(replacement.replace(anchor));
+						lines[i] = line
+							.split(replacement.needle)
+							.join(replacement.replace(anchor));
 						modifications += 1;
 					}
 				} else {
 					const needleRegex = replacement.needle;
 					if (needleRegex.test(line)) {
 						needleRegex.lastIndex = 0;
-						lines[i] = line.replace(needleRegex, () => replacement.replace(anchor));
+						lines[i] = line.replace(needleRegex, () =>
+							replacement.replace(anchor),
+						);
 						modifications += 1;
 					}
 				}

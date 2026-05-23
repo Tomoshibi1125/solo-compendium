@@ -48,7 +48,8 @@ function readAllDataSources() {
 function extractPaths(source) {
 	const paths = new Set();
 	// Matches "/generated/..." and "/audio/..." inside double-quoted strings
-	const re = /"(\/(?:generated|audio)\/[^"\\]+\.(?:webp|png|jpg|jpeg|svg|mp3|ogg|wav|m4a))"/gi;
+	const re =
+		/"(\/(?:generated|audio)\/[^"\\]+\.(?:webp|png|jpg|jpeg|svg|mp3|ogg|wav|m4a))"/gi;
 	let m;
 	while ((m = re.exec(source)) !== null) {
 		paths.add(m[1]);
@@ -92,16 +93,19 @@ function categorise(p) {
 	if (p.startsWith("/generated/compendium/anomalies/")) return "image-anomaly";
 	if (p.startsWith("/generated/compendium/monsters/")) return "image-monster";
 	if (p.startsWith("/generated/compendium/regents/")) return "image-regent";
-	if (p.startsWith("/generated/compendium/Regents/")) return "image-regent-BADCASE";
+	if (p.startsWith("/generated/compendium/Regents/"))
+		return "image-regent-BADCASE";
 	if (p.startsWith("/generated/compendium/spells/")) return "image-spell";
 	if (p.startsWith("/generated/compendium/items/")) return "image-item";
 	if (p.startsWith("/generated/compendium/locations/")) return "image-location";
 	if (p.startsWith("/generated/compendium/artifacts/")) return "image-artifact";
 	if (p.startsWith("/generated/compendium/relics/")) return "image-relic";
-	if (p.startsWith("/generated/compendium/backgrounds/")) return "image-background";
+	if (p.startsWith("/generated/compendium/backgrounds/"))
+		return "image-background";
 	if (p.startsWith("/generated/compendium/jobs/")) return "image-job";
 	if (p.startsWith("/generated/compendium/runes/")) return "image-rune";
-	if (p.startsWith("/generated/compendium/techniques/")) return "image-technique";
+	if (p.startsWith("/generated/compendium/techniques/"))
+		return "image-technique";
 	if (p.startsWith("/generated/compendium/powers/")) return "image-power";
 	if (p.startsWith("/generated/compendium/")) return "image-other-compendium";
 	if (p.startsWith("/generated/maps/")) return "image-map";
@@ -122,7 +126,9 @@ async function main() {
 
 	console.log("[audit] Scanning compendium source files...");
 	const sourceFiles = readAllDataSources();
-	console.log(`[audit]   Found ${sourceFiles.length} .ts files under src/data/compendium`);
+	console.log(
+		`[audit]   Found ${sourceFiles.length} .ts files under src/data/compendium`,
+	);
 
 	// Also scan runtime manifests that hold audio references
 	const manifestFiles = [
@@ -231,11 +237,19 @@ async function main() {
 	lines.push("");
 	lines.push(`Generated: ${summary.generatedAt}`);
 	lines.push("");
-	lines.push(`- **Unique asset paths referenced**: ${summary.totals.uniquePaths}`);
+	lines.push(
+		`- **Unique asset paths referenced**: ${summary.totals.uniquePaths}`,
+	);
 	lines.push(`- **Missing files on disk**: ${summary.totals.missing}`);
-	lines.push(`- **Casing mismatches (bad on Linux)**: ${summary.totals.casingMismatch}`);
-	lines.push(`- **Anomaly placeholder pool references**: ${summary.totals.placeholderAnomalies}`);
-	lines.push(`- **Regent folder on disk**: ${summary.regentFolder.fileCount} files`);
+	lines.push(
+		`- **Casing mismatches (bad on Linux)**: ${summary.totals.casingMismatch}`,
+	);
+	lines.push(
+		`- **Anomaly placeholder pool references**: ${summary.totals.placeholderAnomalies}`,
+	);
+	lines.push(
+		`- **Regent folder on disk**: ${summary.regentFolder.fileCount} files`,
+	);
 	lines.push("");
 	lines.push(`## By category`);
 	lines.push("");
@@ -272,7 +286,9 @@ async function main() {
 	console.log(`[audit] Wrote ${outMd}`);
 
 	console.log("");
-	console.log(`[audit] DONE. Totals: missing=${summary.totals.missing}, casingMismatch=${summary.totals.casingMismatch}, placeholder=${summary.totals.placeholderAnomalies}`);
+	console.log(
+		`[audit] DONE. Totals: missing=${summary.totals.missing}, casingMismatch=${summary.totals.casingMismatch}, placeholder=${summary.totals.placeholderAnomalies}`,
+	);
 }
 
 main().catch((err) => {

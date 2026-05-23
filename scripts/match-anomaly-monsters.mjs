@@ -25,7 +25,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const ROOT = resolve(__dirname, "..");
 const ANOMALIES_DIR = join(ROOT, "src", "data", "compendium", "anomalies");
-const MONSTERS_DIR = join(ROOT, "public", "generated", "compendium", "monsters");
+const MONSTERS_DIR = join(
+	ROOT,
+	"public",
+	"generated",
+	"compendium",
+	"monsters",
+);
 const AUDIT_DIR = join(ROOT, "audit");
 
 // ---------------------------------------------------------------------------
@@ -49,14 +55,22 @@ function parseAnomaliesFromFile(filePath) {
 	const idMatches = [...src.matchAll(/id:\s*"(anomaly-[^"]+)"/g)];
 	for (let i = 0; i < idMatches.length; i++) {
 		const startIdx = idMatches[i].index;
-		const endIdx = i + 1 < idMatches.length ? idMatches[i + 1].index : src.length;
+		const endIdx =
+			i + 1 < idMatches.length ? idMatches[i + 1].index : src.length;
 		const block = src.slice(startIdx, endIdx);
 		const id = idMatches[i][1];
 		const name = extractField(block, "name") ?? "";
 		const type = extractField(block, "type") ?? "";
 		const rank = extractField(block, "rank") ?? "";
 		const image = extractField(block, "image") ?? "";
-		anomalies.push({ id, name, type, rank, image, sourceFile: filePath.replace(`${ROOT}\\`, "").replace(`${ROOT}/`, "") });
+		anomalies.push({
+			id,
+			name,
+			type,
+			rank,
+			image,
+			sourceFile: filePath.replace(`${ROOT}\\`, "").replace(`${ROOT}/`, ""),
+		});
 	}
 	return anomalies;
 }
@@ -219,7 +233,10 @@ function matchAnomaly(anomaly, pools, availableSet) {
 
 	// Priority 3 — Default pool
 	for (let attempt = 0; attempt < 10; attempt++) {
-		const slot = pickSlot(`${anomaly.id}-default-${attempt}`, pools.defaultPool);
+		const slot = pickSlot(
+			`${anomaly.id}-default-${attempt}`,
+			pools.defaultPool,
+		);
 		const fn = slotToFilename(slot);
 		if (availableSet.has(fn)) {
 			return {
@@ -279,10 +296,7 @@ async function main() {
 			sourceFile: anomaly.sourceFile,
 		});
 		byReason.set(match.reason, (byReason.get(match.reason) || 0) + 1);
-		targetUsage.set(
-			match.filename,
-			(targetUsage.get(match.filename) || 0) + 1,
-		);
+		targetUsage.set(match.filename, (targetUsage.get(match.filename) || 0) + 1);
 	}
 
 	const duplicateTargets = [...targetUsage.entries()]
@@ -299,7 +313,9 @@ async function main() {
 			duplicateTargetAssignments: duplicateTargets.length,
 		},
 		reasonCounts: Object.fromEntries(byReason),
-		top20DuplicateTargets: duplicateTargets.slice(0, 20).map(([fn, c]) => ({ filename: fn, assignedCount: c })),
+		top20DuplicateTargets: duplicateTargets
+			.slice(0, 20)
+			.map(([fn, c]) => ({ filename: fn, assignedCount: c })),
 		mapping,
 	};
 
@@ -309,10 +325,14 @@ async function main() {
 	console.log("");
 	console.log("[match] Summary:");
 	console.log(`  anomalies            = ${summary.totals.anomalies}`);
-	console.log(`  monsters available   = ${summary.totals.monsterFilesAvailable}`);
+	console.log(
+		`  monsters available   = ${summary.totals.monsterFilesAvailable}`,
+	);
 	console.log(`  low-confidence (<0.5)= ${summary.totals.lowConfidence}`);
 	console.log("  match-reason distribution:");
-	for (const [r, c] of Object.entries(summary.reasonCounts).sort((a, b) => b[1] - a[1])) {
+	for (const [r, c] of Object.entries(summary.reasonCounts).sort(
+		(a, b) => b[1] - a[1],
+	)) {
 		console.log(`    ${r.padEnd(30)} ${c}`);
 	}
 	if (duplicateTargets.length > 0) {

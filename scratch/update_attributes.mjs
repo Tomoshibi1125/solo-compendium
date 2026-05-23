@@ -3,7 +3,7 @@ import fs from "fs";
 let content = fs.readFileSync("src/data/compendium/jobs.ts", "utf-8");
 
 const updates = {
-  Berserker: `		abilityScoreImprovements: {
+	Berserker: `		abilityScoreImprovements: {
 			strength: 2,
 			vitality: 1,
 		},
@@ -11,7 +11,7 @@ const updates = {
 		speed: 35,
 		languages: ["English", "Primordial"],
 		darkvision: 60,`,
-  Assassin: `		abilityScoreImprovements: {
+	Assassin: `		abilityScoreImprovements: {
 			agility: 2,
 			intelligence: 1,
 		},
@@ -19,7 +19,7 @@ const updates = {
 		speed: 40,
 		languages: ["English", "Undercommon"],
 		darkvision: 120,`,
-  Striker: `		abilityScoreImprovements: {
+	Striker: `		abilityScoreImprovements: {
 			agility: 2,
 			vitality: 1,
 		},
@@ -27,7 +27,7 @@ const updates = {
 		speed: 45,
 		languages: ["English", "Elvish"],
 		darkvision: 60,`,
-  Mage: `		abilityScoreImprovements: {
+	Mage: `		abilityScoreImprovements: {
 			intelligence: 2,
 			sense: 1,
 		},
@@ -35,7 +35,7 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Draconic", "Celestial"],
 		darkvision: 60,`,
-  Esper: `		abilityScoreImprovements: {
+	Esper: `		abilityScoreImprovements: {
 			sense: 2,
 			intelligence: 1,
 		},
@@ -43,7 +43,7 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Deep Speech"],
 		darkvision: 60,`,
-  Revenant: `		abilityScoreImprovements: {
+	Revenant: `		abilityScoreImprovements: {
 			vitality: 2,
 			strength: 1,
 		},
@@ -51,7 +51,7 @@ const updates = {
 		speed: 25,
 		languages: ["English", "Abyssal"],
 		darkvision: 60,`,
-  Summoner: `		abilityScoreImprovements: {
+	Summoner: `		abilityScoreImprovements: {
 			presence: 2,
 			intelligence: 1,
 		},
@@ -59,7 +59,7 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Sylvan", "Infernal"],
 		darkvision: 60,`,
-  Herald: `		abilityScoreImprovements: {
+	Herald: `		abilityScoreImprovements: {
 			presence: 2,
 			vitality: 1,
 		},
@@ -67,7 +67,7 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Celestial"],
 		darkvision: 60,`,
-  Contractor: `		abilityScoreImprovements: {
+	Contractor: `		abilityScoreImprovements: {
 			intelligence: 1,
 			presence: 1,
 			sense: 1,
@@ -76,7 +76,7 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Infernal"],
 		darkvision: 60,`,
-  Stalker: `		abilityScoreImprovements: {
+	Stalker: `		abilityScoreImprovements: {
 			agility: 2,
 			sense: 1,
 		},
@@ -84,7 +84,7 @@ const updates = {
 		speed: 35,
 		languages: ["English", "Undercommon"],
 		darkvision: 90,`,
-  "Holy Knight": `		abilityScoreImprovements: {
+	"Holy Knight": `		abilityScoreImprovements: {
 			strength: 2,
 			presence: 1,
 		},
@@ -92,7 +92,7 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Celestial"],
 		darkvision: 60,`,
-  Technomancer: `		abilityScoreImprovements: {
+	Technomancer: `		abilityScoreImprovements: {
 			intelligence: 2,
 			agility: 1,
 		},
@@ -100,14 +100,14 @@ const updates = {
 		speed: 30,
 		languages: ["English", "Binary", "Dwarvish"],
 		darkvision: 60,`,
-  Idol: `		abilityScoreImprovements: {
+	Idol: `		abilityScoreImprovements: {
 			presence: 2,
 			agility: 1,
 		},
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Sylvan"],
-		darkvision: 60,`
+		darkvision: 60,`,
 };
 
 for (const [jobName, replacement] of Object.entries(updates)) {

@@ -42,7 +42,9 @@ function generateRune(
 		const effObj = item.effects as Record<string, unknown>;
 		effectDesc =
 			(effObj.primary as string) ||
-			(Array.isArray(item.effects) ? (item.effects[0] as string) : (effectDesc as string));
+			(Array.isArray(item.effects)
+				? (item.effects[0] as string)
+				: (effectDesc as string));
 	}
 
 	return {
@@ -59,7 +61,12 @@ function generateRune(
 		source_book: item.source_book || "Manual of Ascension",
 		created_at: item.created_at || new Date().toISOString(),
 		updated_at: new Date().toISOString(),
-		tags: ["rune", "consumable", type.toLowerCase(), ...(Array.isArray(item.tags) ? item.tags : [])],
+		tags: [
+			"rune",
+			"consumable",
+			type.toLowerCase(),
+			...(Array.isArray(item.tags) ? item.tags : []),
+		],
 		image: `/generated/compendium/runes/${item.id}.webp`,
 	};
 }

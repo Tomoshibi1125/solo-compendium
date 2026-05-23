@@ -126,7 +126,10 @@ export const TERMINOLOGY_FIXES = [
 	[/\bundead\s+or\s+aberration\b/g, "anomaly"],
 	[/\bConstruct\s+or\s+Undead\b/g, "Construct or Anomaly"],
 	[/\bconstruct\s+or\s+undead\b/g, "construct or anomaly"],
-	[/\b(creatures?\s+with\s+the\s+)Undead(\s+(?:or\s+\w+\s+)?tag)/g, "$1Anomaly$2"],
+	[
+		/\b(creatures?\s+with\s+the\s+)Undead(\s+(?:or\s+\w+\s+)?tag)/g,
+		"$1Anomaly$2",
+	],
 	[/\bagainst\s+an\s+Undead\b/g, "against an Anomaly"],
 	[/\bagainst\s+the\s+Undead\b/g, "against an Anomaly"],
 	[/\bagainst\s+Undead\b/g, "against Anomalies"],
@@ -398,20 +401,38 @@ export const ARCHETYPE_RULES = [
 	[/\b(launcher|grenade\s*gun|rocket\s*launcher)\b/i, "firearm_launcher"],
 
 	// --- Thrown weapons (MUST be checked first so 'Throwing Axes/Knives/Spears' don't get grabbed by melee rules) ---
-	[/\b(throwing\s*stars?|throwing\s*knives?|throwing\s*axes?|throwing\s*daggers?|throwing\s*spears?|shurikens?|chakrams?|bolas?|darts?|javelins?)\b/i, "ranged_thrown"],
+	[
+		/\b(throwing\s*stars?|throwing\s*knives?|throwing\s*axes?|throwing\s*daggers?|throwing\s*spears?|shurikens?|chakrams?|bolas?|darts?|javelins?)\b/i,
+		"ranged_thrown",
+	],
 
 	// --- Melee bladed ---
 	[/\b(rapiers?|stilettos?|dirks?|kris)\b/i, "melee_blade_finesse"],
 	[/\b(daggers?|knives?|shivs?|tantos?|kunai)\b/i, "melee_blade_finesse"],
-	[/\b(katanas?|sabers?|sabres?|wakizashis?|cutlasses?)\b/i, "melee_blade_versatile"],
+	[
+		/\b(katanas?|sabers?|sabres?|wakizashis?|cutlasses?)\b/i,
+		"melee_blade_versatile",
+	],
 	[/\b(longswords?|broadswords?|battle\s*sword)\b/i, "melee_blade_versatile"],
-	[/\b(claymores?|greatswords?|zweihanders?|two-?handers?|nodachis?)\b/i, "melee_blade_heavy"],
-	[/\b(scythes?|halberds?|glaives?|naginatas?|polearms?|spears?|lances?|tridents?|pikes?)\b/i, "melee_polearm"],
+	[
+		/\b(claymores?|greatswords?|zweihanders?|two-?handers?|nodachis?)\b/i,
+		"melee_blade_heavy",
+	],
+	[
+		/\b(scythes?|halberds?|glaives?|naginatas?|polearms?|spears?|lances?|tridents?|pikes?)\b/i,
+		"melee_polearm",
+	],
 
 	// --- Bludgeon ---
 	[/\b(hammers?|warhammers?|mauls?|sledges?)\b/i, "melee_bludgeon_heavy"],
-	[/\b(maces?|clubs?|cudgels?|flails?|morningstars?|bats?)\b/i, "melee_bludgeon"],
-	[/\b(staves?|staffs?|staff|quarterstaffs?|quarterstaves|bo|cane)\b/i, "melee_staff"],
+	[
+		/\b(maces?|clubs?|cudgels?|flails?|morningstars?|bats?)\b/i,
+		"melee_bludgeon",
+	],
+	[
+		/\b(staves?|staffs?|staff|quarterstaffs?|quarterstaves|bo|cane)\b/i,
+		"melee_staff",
+	],
 
 	// --- Specialty melee (placed BEFORE armor/gear so 'gauntlet' weapons aren't grabbed by 'gauntlet bracer') ---
 	[/\b(gauntlets?|knuckles?|claws?|fists?|tonfas?)\b/i, "melee_gauntlet"],
@@ -420,44 +441,113 @@ export const ARCHETYPE_RULES = [
 	[/\b(sickles?|kamas?)\b/i, "melee_sickle"],
 
 	// --- Ranged non-firearm ---
-	[/\b(longbows?|shortbows?|recurves?|compound\s*bows?|bows?)\b/i, "ranged_bow"],
+	[
+		/\b(longbows?|shortbows?|recurves?|compound\s*bows?|bows?)\b/i,
+		"ranged_bow",
+	],
 	[/\b(crossbows?|repeaters?)\b/i, "ranged_crossbow"],
 
 	// --- Foci / catalysts ---
-	[/\b(focus|focuses|catalysts?|conduits?|orbs?|spheres?|prisms?|lenses?)\b/i, "focus_caster"],
+	[
+		/\b(focus|focuses|catalysts?|conduits?|orbs?|spheres?|prisms?|lenses?)\b/i,
+		"focus_caster",
+	],
 	[/\b(wands?|rods?|sceptres?|scepters?|batons?)\b/i, "focus_wand"],
-	[/\b(grimoires?|tomes?|codices?|codex|spellbooks?|manuals?)\b/i, "focus_tome"],
+	[
+		/\b(grimoires?|tomes?|codices?|codex|spellbooks?|manuals?)\b/i,
+		"focus_tome",
+	],
 
 	// --- Gear / wondrous (must come BEFORE armor so 'Cloak of X' classifies as wondrous attire, not light armor) ---
-	[/\b(amulets?|pendants?|talismans?|charms?|lockets?|necklaces?)\b/i, "gear_amulet"],
+	[
+		/\b(amulets?|pendants?|talismans?|charms?|lockets?|necklaces?)\b/i,
+		"gear_amulet",
+	],
 	[/\b(signets?|signet\s*rings?|rings?|bands?|loops?)\b/i, "gear_ring"],
 	[/\b(bracers?|wristguards?|forearm\s*plates?)\b/i, "gear_bracer"],
 	[/\b(belts?|sashes?|straps?|holsters?|webbings?)\b/i, "gear_belt"],
 	[/\b(boots?|greaves?|sabatons?|footwear|footwraps?)\b/i, "gear_boots"],
-	[/\b(badges?|id\s*chips?|tags?|insignias?|emblems?|credentials?|operator\s*ids?|authentication\s*tokens?|identification\s*plates?)\b/i, "gear_credential"],
-	[/\b(handcuffs|manacles|binders?|restraints?|mana[-\s]*cuffs|mana[-\s]*suppressor\s*cuffs|hardlight\s*cuffs|ankle\s*cuffs|lattice\s*cuffs)\b/i, "gear_restraint"],
-	[/\b(grappling\s*hooks?|crowbars?|pry\s*bars?|pitons?|piton\s*sets?|padlocks?|chisels?|saws?|bedrolls?|tinderboxes?|whetstones?|spyglasses?|hand\s*drills?|repel\s*rigs?|anchor\s*lines?|climbing\s*kits?|climbing\s*cables?|hand\s*mirrors?|mess\s*kits?|ropes?|cords?|tethers?|cables?)\b/i, "gear_utility"],
-	[/\b(field\s*kit|toolkit|medical\s*kit|forensic\s*kit|repair\s*kit|survival\s*kit|triage\s*kit|mana[-\s]*diagnostic\s*kit|lattice\s*toolkit|breach\s*kit|recovery\s*kit|tracking\s*kit|kit[-\s]*bags?|trauma\s*kit)\b/i, "gear_kit"],
-	[/\b(lanterns?|torches?|flashlights?|searchlights?|glow\s*rods?|tactical\s*lights?|lamps?|beacon\s*lights?)\b/i, "gear_light"],
-	[/\b(maps?|atlases?|schematics?|charts?|layout\s*plates?|gate\s*atlases?|survey\s*maps?|recon\s*sheets?|field\s*plates?|coordinate\s*atlases?)\b/i, "gear_navigation"],
-	[/\b(scanners?|recorders?|mana\s*sensors?|sensors?|cameras?|receivers?|tracking\s*drones?|diagnostic\s*tools?|lattice\s*probes?|field\s*computers?|comm\s*sets?|spotter\s*lens(es)?|telemetry\s*devices?)\b/i, "gear_electronics"],
-	[/\b(cloaks?|robes?|garbs?|mantles?|hoods?|greatcoats?|hooded\s*robes?|ceremonial\s*robes?|hunter['']s\s*mantles?|operator['']s\s*coats?|uniforms?|regalias?|raiments?|attires?|tailored\s*suits?|field\s*garbs?)\b/i, "gear_attire"],
+	[
+		/\b(badges?|id\s*chips?|tags?|insignias?|emblems?|credentials?|operator\s*ids?|authentication\s*tokens?|identification\s*plates?)\b/i,
+		"gear_credential",
+	],
+	[
+		/\b(handcuffs|manacles|binders?|restraints?|mana[-\s]*cuffs|mana[-\s]*suppressor\s*cuffs|hardlight\s*cuffs|ankle\s*cuffs|lattice\s*cuffs)\b/i,
+		"gear_restraint",
+	],
+	[
+		/\b(grappling\s*hooks?|crowbars?|pry\s*bars?|pitons?|piton\s*sets?|padlocks?|chisels?|saws?|bedrolls?|tinderboxes?|whetstones?|spyglasses?|hand\s*drills?|repel\s*rigs?|anchor\s*lines?|climbing\s*kits?|climbing\s*cables?|hand\s*mirrors?|mess\s*kits?|ropes?|cords?|tethers?|cables?)\b/i,
+		"gear_utility",
+	],
+	[
+		/\b(field\s*kit|toolkit|medical\s*kit|forensic\s*kit|repair\s*kit|survival\s*kit|triage\s*kit|mana[-\s]*diagnostic\s*kit|lattice\s*toolkit|breach\s*kit|recovery\s*kit|tracking\s*kit|kit[-\s]*bags?|trauma\s*kit)\b/i,
+		"gear_kit",
+	],
+	[
+		/\b(lanterns?|torches?|flashlights?|searchlights?|glow\s*rods?|tactical\s*lights?|lamps?|beacon\s*lights?)\b/i,
+		"gear_light",
+	],
+	[
+		/\b(maps?|atlases?|schematics?|charts?|layout\s*plates?|gate\s*atlases?|survey\s*maps?|recon\s*sheets?|field\s*plates?|coordinate\s*atlases?)\b/i,
+		"gear_navigation",
+	],
+	[
+		/\b(scanners?|recorders?|mana\s*sensors?|sensors?|cameras?|receivers?|tracking\s*drones?|diagnostic\s*tools?|lattice\s*probes?|field\s*computers?|comm\s*sets?|spotter\s*lens(es)?|telemetry\s*devices?)\b/i,
+		"gear_electronics",
+	],
+	[
+		/\b(cloaks?|robes?|garbs?|mantles?|hoods?|greatcoats?|hooded\s*robes?|ceremonial\s*robes?|hunter['']s\s*mantles?|operator['']s\s*coats?|uniforms?|regalias?|raiments?|attires?|tailored\s*suits?|field\s*garbs?)\b/i,
+		"gear_attire",
+	],
 
 	// --- Armor (specific, only mechanical-armor names) ---
-	[/\b(plate\s*armor|battle\s*plate|carapace\s*armor|reinforced\s*plate|heavy\s*cuirass|cuirass|breastplate|field\s*plate|combat\s*plate|bulwark\s*plate|vanguard\s*plate|spaulders|pauldrons|harness\s*plate)\b/i, "armor_heavy"],
-	[/\b(chain\s*mail|chainmail|scale\s*mail|brigandine|chain\s*shirt|mail\s*shirt|mana\s*scale|layered\s*mail|combat\s*mail|service\s*brigandine|half[-\s]*plate)\b/i, "armor_medium"],
-	[/\b(combat\s*vest|tactical\s*coat|mana[-\s]*weave\s*jacket|reinforced\s*robe|stealth\s*suit|light\s*carapace|patrol\s*coat|service\s*robe|leather\s*armor|padded\s*armor|hide\s*armor|combat\s*jacket|armored\s*vest|field\s*cloak|coats?|jackets?|vests?)\b/i, "armor_light"],
-	[/\b(shields?|bucklers?|aegis|bulwarks?|kite\s*shield|round\s*shield|tower\s*shield|patrol\s*shield)\b/i, "armor_shield"],
+	[
+		/\b(plate\s*armor|battle\s*plate|carapace\s*armor|reinforced\s*plate|heavy\s*cuirass|cuirass|breastplate|field\s*plate|combat\s*plate|bulwark\s*plate|vanguard\s*plate|spaulders|pauldrons|harness\s*plate)\b/i,
+		"armor_heavy",
+	],
+	[
+		/\b(chain\s*mail|chainmail|scale\s*mail|brigandine|chain\s*shirt|mail\s*shirt|mana\s*scale|layered\s*mail|combat\s*mail|service\s*brigandine|half[-\s]*plate)\b/i,
+		"armor_medium",
+	],
+	[
+		/\b(combat\s*vest|tactical\s*coat|mana[-\s]*weave\s*jacket|reinforced\s*robe|stealth\s*suit|light\s*carapace|patrol\s*coat|service\s*robe|leather\s*armor|padded\s*armor|hide\s*armor|combat\s*jacket|armored\s*vest|field\s*cloak|coats?|jackets?|vests?)\b/i,
+		"armor_light",
+	],
+	[
+		/\b(shields?|bucklers?|aegis|bulwarks?|kite\s*shield|round\s*shield|tower\s*shield|patrol\s*shield)\b/i,
+		"armor_shield",
+	],
 	[/\b(helms?|helmets?|masks?|visors?|cowls?|greathelm)\b/i, "armor_headgear"],
 
 	// --- Consumables ---
-	[/\b(elixirs?|potions?|tonics?|brews?|draughts?|vials?|phials?|cordials?|salves?|flasks?|restoratives?)\b/i, "consumable_potion"],
-	[/\b(stims?|serums?|injections?|injectors?|doses?|syringes?|adrenal\s*injectors?|reflex\s*stims?|combat\s*injectors?|field\s*stims?|recovery\s*stims?|endurance\s*serums?)\b/i, "consumable_stim"],
-	[/\b(grenades?|charges?|bombs?|mines?|payloads?|detonators?|frag\s*charges?|concussion\s*grenades?|lattice\s*bombs?|emp\s*charges?|mana\s*mines?|smoke\s*charges?|breach\s*charges?)\b/i, "consumable_grenade"],
-	[/\b(scrolls?|inscriptions?|sigil\s*scroll|spell\s*scroll|rune\s*scrolls?|cantrip\s*scrolls?|ward\s*scrolls?|lattice\s*scrolls?|battle\s*scrolls?|sealed\s*inscriptions?|casting\s*scrolls?)\b/i, "consumable_scroll"],
-	[/\b(rations?|food|meals?|stews?|loaves?|jerky|trail\s*mix|stim\s*bar|energy\s*bar|survival\s*bar|recovery\s*pack|field\s*pack|field\s*meal|mre)\b/i, "consumable_ration"],
-	[/\b(antidotes?|cures?|purifiers?|cleansers?|detox|neutralizers?|counter[-\s]*agents?|restorative\s*vials?)\b/i, "consumable_purifier"],
-	[/\b(flares?|signals?|beacons?|locators?|pingers?|smoke\s*signals?|distress\s*beacons?|marker\s*flares?|recall\s*beacons?)\b/i, "consumable_signal"],
+	[
+		/\b(elixirs?|potions?|tonics?|brews?|draughts?|vials?|phials?|cordials?|salves?|flasks?|restoratives?)\b/i,
+		"consumable_potion",
+	],
+	[
+		/\b(stims?|serums?|injections?|injectors?|doses?|syringes?|adrenal\s*injectors?|reflex\s*stims?|combat\s*injectors?|field\s*stims?|recovery\s*stims?|endurance\s*serums?)\b/i,
+		"consumable_stim",
+	],
+	[
+		/\b(grenades?|charges?|bombs?|mines?|payloads?|detonators?|frag\s*charges?|concussion\s*grenades?|lattice\s*bombs?|emp\s*charges?|mana\s*mines?|smoke\s*charges?|breach\s*charges?)\b/i,
+		"consumable_grenade",
+	],
+	[
+		/\b(scrolls?|inscriptions?|sigil\s*scroll|spell\s*scroll|rune\s*scrolls?|cantrip\s*scrolls?|ward\s*scrolls?|lattice\s*scrolls?|battle\s*scrolls?|sealed\s*inscriptions?|casting\s*scrolls?)\b/i,
+		"consumable_scroll",
+	],
+	[
+		/\b(rations?|food|meals?|stews?|loaves?|jerky|trail\s*mix|stim\s*bar|energy\s*bar|survival\s*bar|recovery\s*pack|field\s*pack|field\s*meal|mre)\b/i,
+		"consumable_ration",
+	],
+	[
+		/\b(antidotes?|cures?|purifiers?|cleansers?|detox|neutralizers?|counter[-\s]*agents?|restorative\s*vials?)\b/i,
+		"consumable_purifier",
+	],
+	[
+		/\b(flares?|signals?|beacons?|locators?|pingers?|smoke\s*signals?|distress\s*beacons?|marker\s*flares?|recall\s*beacons?)\b/i,
+		"consumable_signal",
+	],
 ];
 
 export const ARCHETYPE_FALLBACK = "gear_misc";
@@ -541,9 +631,19 @@ const TEMPLATES = {
 		simple_properties: ["ammunition", "light"],
 		range: "Ranged (40/120)",
 		properties: {
-			weapon: { damage: "1d8", damage_type: "piercing", range: 40, finesse: false },
+			weapon: {
+				damage: "1d8",
+				damage_type: "piercing",
+				range: 40,
+				finesse: false,
+			},
 		},
-		effects: { passive: ["Sidearm. Reload (1) on a bonus action.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		effects: {
+			passive: [
+				"Sidearm. Reload (1) on a bonus action.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 	firearm_rifle: (rarity) => ({
 		item_type: "weapon",
@@ -553,8 +653,15 @@ const TEMPLATES = {
 		weapon_type: "martial ranged",
 		simple_properties: ["ammunition", "two-handed"],
 		range: "Ranged (80/240)",
-		properties: { weapon: { damage: "1d10", damage_type: "piercing", range: 80 } },
-		effects: { passive: ["Long-arm. Disadvantage on attacks within 5 ft.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		properties: {
+			weapon: { damage: "1d10", damage_type: "piercing", range: 80 },
+		},
+		effects: {
+			passive: [
+				"Long-arm. Disadvantage on attacks within 5 ft.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 	firearm_shotgun: (rarity) => ({
 		item_type: "weapon",
@@ -564,8 +671,15 @@ const TEMPLATES = {
 		weapon_type: "martial ranged",
 		simple_properties: ["ammunition", "two-handed", "loading"],
 		range: "Ranged (15/60)",
-		properties: { weapon: { damage: "2d6", damage_type: "piercing", range: 15 } },
-		effects: { passive: ["Spread shot. Loading (1 attack per turn).", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		properties: {
+			weapon: { damage: "2d6", damage_type: "piercing", range: 15 },
+		},
+		effects: {
+			passive: [
+				"Spread shot. Loading (1 attack per turn).",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 	firearm_smg: (rarity) => ({
 		item_type: "weapon",
@@ -575,8 +689,15 @@ const TEMPLATES = {
 		weapon_type: "martial ranged",
 		simple_properties: ["ammunition", "light", "burst-fire"],
 		range: "Ranged (40/120)",
-		properties: { weapon: { damage: "1d6", damage_type: "piercing", range: 40 } },
-		effects: { passive: ["Burst fire (3 rd): expend 3 ammo, +1d6 damage on hit.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		properties: {
+			weapon: { damage: "1d6", damage_type: "piercing", range: 40 },
+		},
+		effects: {
+			passive: [
+				"Burst fire (3 rd): expend 3 ammo, +1d6 damage on hit.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 	firearm_launcher: (rarity) => ({
 		item_type: "weapon",
@@ -603,7 +724,9 @@ const TEMPLATES = {
 		damage_type: "piercing",
 		weapon_type: "martial melee",
 		simple_properties: ["light", "finesse"],
-		properties: { weapon: { damage: "1d6", damage_type: "piercing", finesse: true } },
+		properties: {
+			weapon: { damage: "1d6", damage_type: "piercing", finesse: true },
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 	melee_blade_versatile: (rarity) => ({
@@ -613,7 +736,9 @@ const TEMPLATES = {
 		damage_type: "slashing",
 		weapon_type: "martial melee",
 		simple_properties: ["versatile (1d10)"],
-		properties: { weapon: { damage: "1d8", damage_type: "slashing", versatile: "1d10" } },
+		properties: {
+			weapon: { damage: "1d8", damage_type: "slashing", versatile: "1d10" },
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 	melee_blade_heavy: (rarity) => ({
@@ -634,7 +759,12 @@ const TEMPLATES = {
 		weapon_type: "martial melee",
 		simple_properties: ["heavy", "reach", "two-handed"],
 		properties: { weapon: { damage: "1d10", damage_type: "piercing" } },
-		effects: { passive: ["Reach: melee attacks have 10 ft. range.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		effects: {
+			passive: [
+				"Reach: melee attacks have 10 ft. range.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 
 	// --- Bludgeon ---
@@ -645,7 +775,9 @@ const TEMPLATES = {
 		damage_type: "bludgeoning",
 		weapon_type: "martial melee",
 		simple_properties: ["versatile (1d8)"],
-		properties: { weapon: { damage: "1d6", damage_type: "bludgeoning", versatile: "1d8" } },
+		properties: {
+			weapon: { damage: "1d6", damage_type: "bludgeoning", versatile: "1d8" },
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 	melee_bludgeon_heavy: (rarity) => ({
@@ -670,8 +802,15 @@ const TEMPLATES = {
 		damage_type: "bludgeoning",
 		weapon_type: "simple melee",
 		simple_properties: ["versatile (1d8)"],
-		properties: { weapon: { damage: "1d6", damage_type: "bludgeoning", versatile: "1d8" } },
-		effects: { passive: ["Doubles as an arcane focus.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		properties: {
+			weapon: { damage: "1d6", damage_type: "bludgeoning", versatile: "1d8" },
+		},
+		effects: {
+			passive: [
+				"Doubles as an arcane focus.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 
 	// --- Specialty melee ---
@@ -683,7 +822,12 @@ const TEMPLATES = {
 		weapon_type: "simple melee",
 		simple_properties: ["light", "monk"],
 		properties: { weapon: { damage: "1d4", damage_type: "bludgeoning" } },
-		effects: { passive: ["Counts as an unarmed strike for class features.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		effects: {
+			passive: [
+				"Counts as an unarmed strike for class features.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 	melee_whip: (rarity) => ({
 		item_type: "weapon",
@@ -692,8 +836,15 @@ const TEMPLATES = {
 		damage_type: "slashing",
 		weapon_type: "martial melee",
 		simple_properties: ["finesse", "reach"],
-		properties: { weapon: { damage: "1d4", damage_type: "slashing", finesse: true } },
-		effects: { passive: ["Reach: melee attacks have 10 ft. range.", ...bonusPassive(RARITY_BONUS[rarity] || 0)] },
+		properties: {
+			weapon: { damage: "1d4", damage_type: "slashing", finesse: true },
+		},
+		effects: {
+			passive: [
+				"Reach: melee attacks have 10 ft. range.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
+		},
 	}),
 	melee_axe: (rarity) => ({
 		item_type: "weapon",
@@ -702,7 +853,9 @@ const TEMPLATES = {
 		damage_type: "slashing",
 		weapon_type: "martial melee",
 		simple_properties: ["versatile (1d10)"],
-		properties: { weapon: { damage: "1d8", damage_type: "slashing", versatile: "1d10" } },
+		properties: {
+			weapon: { damage: "1d8", damage_type: "slashing", versatile: "1d10" },
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 	melee_sickle: (rarity) => ({
@@ -725,7 +878,9 @@ const TEMPLATES = {
 		weapon_type: "martial ranged",
 		simple_properties: ["ammunition", "two-handed"],
 		range: "Ranged (150/600)",
-		properties: { weapon: { damage: "1d8", damage_type: "piercing", range: 150 } },
+		properties: {
+			weapon: { damage: "1d8", damage_type: "piercing", range: 150 },
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 	ranged_crossbow: (rarity) => ({
@@ -736,7 +891,9 @@ const TEMPLATES = {
 		weapon_type: "martial ranged",
 		simple_properties: ["ammunition", "loading", "two-handed"],
 		range: "Ranged (100/400)",
-		properties: { weapon: { damage: "1d10", damage_type: "piercing", range: 100 } },
+		properties: {
+			weapon: { damage: "1d10", damage_type: "piercing", range: 100 },
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 	ranged_thrown: (rarity) => ({
@@ -747,7 +904,14 @@ const TEMPLATES = {
 		weapon_type: "simple ranged",
 		simple_properties: ["finesse", "thrown"],
 		range: "Ranged (20/60)",
-		properties: { weapon: { damage: "1d4", damage_type: "piercing", finesse: true, range: 20 } },
+		properties: {
+			weapon: {
+				damage: "1d4",
+				damage_type: "piercing",
+				finesse: true,
+				range: 20,
+			},
+		},
 		effects: { passive: bonusPassive(RARITY_BONUS[rarity] || 0) },
 	}),
 
@@ -775,9 +939,19 @@ const TEMPLATES = {
 		range: "Ranged (60/180)",
 		properties: { weapon: { damage: "1d6", damage_type: "force", range: 60 } },
 		effects: {
-			passive: ["Acts as an arcane focus.", ...bonusPassive(RARITY_BONUS[rarity] || 0)],
+			passive: [
+				"Acts as an arcane focus.",
+				...bonusPassive(RARITY_BONUS[rarity] || 0),
+			],
 		},
-		charges: rarity === "common" ? null : { max: rarityChargeCount(rarity), current: rarityChargeCount(rarity), recharge: "long-rest" },
+		charges:
+			rarity === "common"
+				? null
+				: {
+						max: rarityChargeCount(rarity),
+						current: rarityChargeCount(rarity),
+						recharge: "long-rest",
+					},
 	}),
 	focus_tome: (rarity) => ({
 		item_type: "tool",
@@ -813,7 +987,11 @@ const TEMPLATES = {
 		armor_type: "Medium",
 		armor_class: `${13 + (RARITY_BONUS[rarity] || 0)} + Dex modifier (max 2)`,
 		properties: {},
-		effects: { passive: [`Provides AC ${13 + (RARITY_BONUS[rarity] || 0)} + AGI (max +2).`] },
+		effects: {
+			passive: [
+				`Provides AC ${13 + (RARITY_BONUS[rarity] || 0)} + AGI (max +2).`,
+			],
+		},
 	}),
 	armor_heavy: (rarity) => ({
 		item_type: "armor",
@@ -824,7 +1002,9 @@ const TEMPLATES = {
 		strength_requirement: 13,
 		properties: {},
 		effects: {
-			passive: [`Provides AC ${15 + (RARITY_BONUS[rarity] || 0)}. Stealth checks at disadvantage.`],
+			passive: [
+				`Provides AC ${15 + (RARITY_BONUS[rarity] || 0)}. Stealth checks at disadvantage.`,
+			],
 		},
 	}),
 	armor_shield: (rarity) => ({
@@ -833,7 +1013,11 @@ const TEMPLATES = {
 		armor_type: "Shield",
 		armor_class: "+2",
 		properties: {},
-		effects: { passive: [`Provides +${2 + (RARITY_BONUS[rarity] || 0)} AC while wielded.`] },
+		effects: {
+			passive: [
+				`Provides +${2 + (RARITY_BONUS[rarity] || 0)} AC while wielded.`,
+			],
+		},
 	}),
 	armor_headgear: (rarity) => ({
 		item_type: "armor",
@@ -841,7 +1025,9 @@ const TEMPLATES = {
 		armor_type: "Light",
 		armor_class: `${11 + (RARITY_BONUS[rarity] || 0)} + Dex modifier`,
 		properties: {},
-		effects: { passive: ["Headgear: shields the wearer from minor concussive impacts."] },
+		effects: {
+			passive: ["Headgear: shields the wearer from minor concussive impacts."],
+		},
 	}),
 
 	// --- Consumables ---
@@ -866,7 +1052,9 @@ const TEMPLATES = {
 		type: "stim",
 		properties: {},
 		effects: {
-			passive: [`On injection, restore ${rarityHpRange(rarity)} hit points or mana.`],
+			passive: [
+				`On injection, restore ${rarityHpRange(rarity)} hit points or mana.`,
+			],
 			active: [
 				{
 					name: "Inject",
@@ -880,12 +1068,30 @@ const TEMPLATES = {
 	consumable_grenade: (rarity) => ({
 		item_type: "consumable",
 		type: "consumable",
-		damage: rarity === "legendary" ? "6d6" : rarity === "epic" ? "4d6" : rarity === "rare" ? "3d6" : "2d6",
+		damage:
+			rarity === "legendary"
+				? "6d6"
+				: rarity === "epic"
+					? "4d6"
+					: rarity === "rare"
+						? "3d6"
+						: "2d6",
 		damage_type: "force",
 		range: "Thrown (30/90)",
 		simple_properties: ["thrown", "consumable"],
 		properties: {
-			weapon: { damage: rarity === "legendary" ? "6d6" : rarity === "epic" ? "4d6" : rarity === "rare" ? "3d6" : "2d6", damage_type: "force", range: 30 },
+			weapon: {
+				damage:
+					rarity === "legendary"
+						? "6d6"
+						: rarity === "epic"
+							? "4d6"
+							: rarity === "rare"
+								? "3d6"
+								: "2d6",
+				damage_type: "force",
+				range: 30,
+			},
 		},
 		effects: {
 			active: [
@@ -948,7 +1154,8 @@ const TEMPLATES = {
 			active: [
 				{
 					name: "Activate",
-					description: "Action. Burn for 1 minute. Bright light in a 60-ft. radius and dim light for an additional 60 ft.",
+					description:
+						"Action. Burn for 1 minute. Bright light in a 60-ft. radius and dim light for an additional 60 ft.",
 					action: "action",
 					frequency: "at-will",
 				},
@@ -959,7 +1166,9 @@ const TEMPLATES = {
 		item_type: "consumable",
 		type: "consumable",
 		properties: {},
-		effects: { passive: ["A day's nutrition for one Hunter on a cleared sweep."] },
+		effects: {
+			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+		},
 	}),
 
 	// --- Gear ---
@@ -1048,37 +1257,61 @@ const TEMPLATES = {
 		item_type: "tool",
 		type: "wondrous",
 		properties: {},
-		effects: { passive: ["Standard utility kit. Used in extraction, repelling, and lattice-bleed cleanup."] },
+		effects: {
+			passive: [
+				"Standard utility kit. Used in extraction, repelling, and lattice-bleed cleanup.",
+			],
+		},
 	}),
 	gear_kit: () => ({
 		item_type: "tool",
 		type: "wondrous",
 		properties: {},
-		effects: { passive: ["Includes the Bureau's standard-issue toolkit. +2 to relevant tool checks."] },
+		effects: {
+			passive: [
+				"Includes the Bureau's standard-issue toolkit. +2 to relevant tool checks.",
+			],
+		},
 	}),
 	gear_light: () => ({
 		item_type: "tool",
 		type: "wondrous",
 		properties: {},
-		effects: { passive: ["Bright light in a 30-ft. radius and dim light for an additional 30 ft."] },
+		effects: {
+			passive: [
+				"Bright light in a 30-ft. radius and dim light for an additional 30 ft.",
+			],
+		},
 	}),
 	gear_navigation: () => ({
 		item_type: "tool",
 		type: "wondrous",
 		properties: {},
-		effects: { passive: ["+1 to Investigation checks involving terrain, gates, and lattice-bleed mapping."] },
+		effects: {
+			passive: [
+				"+1 to Investigation checks involving terrain, gates, and lattice-bleed mapping.",
+			],
+		},
 	}),
 	gear_electronics: () => ({
 		item_type: "tool",
 		type: "wondrous",
 		properties: {},
-		effects: { passive: ["+1 to Investigation checks involving data analysis and surveillance."] },
+		effects: {
+			passive: [
+				"+1 to Investigation checks involving data analysis and surveillance.",
+			],
+		},
 	}),
 	gear_attire: () => ({
 		item_type: "misc",
 		type: "wondrous",
 		properties: {},
-		effects: { passive: ["+1 to social checks in formal or guild-administrative settings."] },
+		effects: {
+			passive: [
+				"+1 to social checks in formal or guild-administrative settings.",
+			],
+		},
 	}),
 	gear_misc: () => ({
 		item_type: "misc",
@@ -1093,7 +1326,9 @@ export function getTemplate(archetype, rarity) {
 	const out = fn(rarity);
 	// Strip any stray empty passive arrays.
 	if (out?.effects?.passive && Array.isArray(out.effects.passive)) {
-		out.effects.passive = out.effects.passive.filter((s) => typeof s === "string" && s.trim().length > 0);
+		out.effects.passive = out.effects.passive.filter(
+			(s) => typeof s === "string" && s.trim().length > 0,
+		);
 		if (out.effects.passive.length === 0) delete out.effects.passive;
 	}
 	return out;
@@ -1487,7 +1722,8 @@ export function generateFlavor(archetype, name, id) {
 	let group = "weapon";
 	if (archetype.startsWith("armor_")) group = "armor";
 	else if (archetype.startsWith("consumable_")) group = "consumable";
-	else if (archetype.startsWith("gear_") || archetype.startsWith("focus_")) group = "gear";
+	else if (archetype.startsWith("gear_") || archetype.startsWith("focus_"))
+		group = "gear";
 	const pool = FLAVOR_POOL[group] || FLAVOR_POOL.weapon;
 	return pickFrom(pool, `${id}::${name}::flavor`);
 }

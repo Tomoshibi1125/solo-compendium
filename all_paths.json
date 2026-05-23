@@ -1,0 +1,338 @@
+[
+	{
+		"job": "Destroyer",
+		"path": "Path of the Apex Predator"
+	},
+	{
+		"job": "Destroyer",
+		"path": "Path of the Tactician"
+	},
+	{
+		"job": "Destroyer",
+		"path": "Path of the Spell Breaker"
+	},
+	{
+		"job": "Destroyer",
+		"path": "Path of the Bulwark"
+	},
+	{
+		"job": "Destroyer",
+		"path": "Path of the Last Stand"
+	},
+	{
+		"job": "Destroyer",
+		"path": "Path of the Aftershock"
+	},
+	{
+		"job": "Berserker",
+		"path": "Path of the Escalating Resonance"
+	},
+	{
+		"job": "Berserker",
+		"path": "Path of the Gate Beast"
+	},
+	{
+		"job": "Berserker",
+		"path": "Path of the Mana Scars"
+	},
+	{
+		"job": "Berserker",
+		"path": "Path of the Rift Storm"
+	},
+	{
+		"job": "Berserker",
+		"path": "Path of the Absolute Zealot"
+	},
+	{
+		"job": "Berserker",
+		"path": "Path of the Aetheric Anomaly"
+	},
+	{
+		"job": "Assassin",
+		"path": "Path of the Gate Runner"
+	},
+	{
+		"job": "Assassin",
+		"path": "Path of the Terminus"
+	},
+	{
+		"job": "Assassin",
+		"path": "Path of the Weave Infiltrator"
+	},
+	{
+		"job": "Assassin",
+		"path": "Path of the Shadow Herald"
+	},
+	{
+		"job": "Assassin",
+		"path": "Path of the Blade Dancer"
+	},
+	{
+		"job": "Assassin",
+		"path": "Path of the Vanguard Outrider"
+	},
+	{
+		"job": "Striker",
+		"path": "Path of the Kinetic Core"
+	},
+	{
+		"job": "Striker",
+		"path": "Path of the Phantom Step"
+	},
+	{
+		"job": "Striker",
+		"path": "Path of the Aetheric Channeler"
+	},
+	{
+		"job": "Striker",
+		"path": "Path of the Entropic Flow"
+	},
+	{
+		"job": "Striker",
+		"path": "Path of the Blade Conductor"
+	},
+	{
+		"job": "Striker",
+		"path": "Path of the Harmonic Surgeon"
+	},
+	{
+		"job": "Mage",
+		"path": "Path of the Detonation Specialist"
+	},
+	{
+		"job": "Mage",
+		"path": "Path of the Shield Architect"
+	},
+	{
+		"job": "Mage",
+		"path": "Path of the Probability Mandate"
+	},
+	{
+		"job": "Mage",
+		"path": "Path of the Phantasmist"
+	},
+	{
+		"job": "Mage",
+		"path": "Path of the Rift Caller"
+	},
+	{
+		"job": "Mage",
+		"path": "Path of the Matter Weaver"
+	},
+	{
+		"job": "Esper",
+		"path": "Path of the Aetheric Dragon"
+	},
+	{
+		"job": "Esper",
+		"path": "Path of the Aetheric Cascade"
+	},
+	{
+		"job": "Esper",
+		"path": "Path of the Void Resonance"
+	},
+	{
+		"job": "Esper",
+		"path": "Path of the Tempest Core"
+	},
+	{
+		"job": "Esper",
+		"path": "Path of the Absolute Spark"
+	},
+	{
+		"job": "Esper",
+		"path": "Path of the Psionic Breach"
+	},
+	{
+		"job": "Revenant",
+		"path": "Path of the Void Lord"
+	},
+	{
+		"job": "Revenant",
+		"path": "Path of the Entropy Drinker"
+	},
+	{
+		"job": "Revenant",
+		"path": "Path of the Wither Guard"
+	},
+	{
+		"job": "Revenant",
+		"path": "Path of the Entropy Blade"
+	},
+	{
+		"job": "Revenant",
+		"path": "Path of the Plague Weaver"
+	},
+	{
+		"job": "Revenant",
+		"path": "Path of the Threshold Walker"
+	},
+	{
+		"job": "Summoner",
+		"path": "Path of the Biome Architect"
+	},
+	{
+		"job": "Summoner",
+		"path": "Path of the Apex Shifter"
+	},
+	{
+		"job": "Summoner",
+		"path": "Path of the Dream Weaver"
+	},
+	{
+		"job": "Summoner",
+		"path": "Path of the Pack Commander"
+	},
+	{
+		"job": "Summoner",
+		"path": "Path of the Symbiotic Host"
+	},
+	{
+		"job": "Summoner",
+		"path": "Path of the Cosmic Conduit"
+	},
+	{
+		"job": "Herald",
+		"path": "Path of the Restoration Mandate"
+	},
+	{
+		"job": "Herald",
+		"path": "Path of the Radiance Mandate"
+	},
+	{
+		"job": "Herald",
+		"path": "Path of the Combat Mandate"
+	},
+	{
+		"job": "Herald",
+		"path": "Path of the Knowledge Mandate"
+	},
+	{
+		"job": "Herald",
+		"path": "Path of the Storm Mandate"
+	},
+	{
+		"job": "Herald",
+		"path": "Path of the Triage Mandate"
+	},
+	{
+		"job": "Contractor",
+		"path": "Path of the Glamour Weaver"
+	},
+	{
+		"job": "Contractor",
+		"path": "Path of the Infernal Conduit"
+	},
+	{
+		"job": "Contractor",
+		"path": "Path of the Void Whisperer"
+	},
+	{
+		"job": "Contractor",
+		"path": "Path of the Radiant Vessel"
+	},
+	{
+		"job": "Contractor",
+		"path": "Path of the Cursed Blade"
+	},
+	{
+		"job": "Contractor",
+		"path": "Path of the Deep Dweller"
+	},
+	{
+		"job": "Stalker",
+		"path": "Path of the Apex Hunter"
+	},
+	{
+		"job": "Stalker",
+		"path": "Path of the Pack Leader"
+	},
+	{
+		"job": "Stalker",
+		"path": "Path of the Umbral Hunter"
+	},
+	{
+		"job": "Stalker",
+		"path": "Path of the Rift Strider"
+	},
+	{
+		"job": "Stalker",
+		"path": "Path of the Apex Slayer"
+	},
+	{
+		"job": "Stalker",
+		"path": "Path of the Hive Synchronist"
+	},
+	{
+		"job": "Holy Knight",
+		"path": "Path of the Absolute Devotion"
+	},
+	{
+		"job": "Holy Knight",
+		"path": "Path of the Retribution Mandate"
+	},
+	{
+		"job": "Holy Knight",
+		"path": "Path of the Verdant Mandate"
+	},
+	{
+		"job": "Holy Knight",
+		"path": "Path of the Dominance Mandate"
+	},
+	{
+		"job": "Holy Knight",
+		"path": "Path of the Atonement Mandate"
+	},
+	{
+		"job": "Holy Knight",
+		"path": "Path of the Exaltation Mandate"
+	},
+	{
+		"job": "Technomancer",
+		"path": "Design: The Aether Chemist"
+	},
+	{
+		"job": "Technomancer",
+		"path": "Design: The Aether Vessel"
+	},
+	{
+		"job": "Technomancer",
+		"path": "Design: Resonance Siege"
+	},
+	{
+		"job": "Technomancer",
+		"path": "Design: Synchronist Binary"
+	},
+	{
+		"job": "Technomancer",
+		"path": "Design: Swarm Conduit"
+	},
+	{
+		"job": "Technomancer",
+		"path": "Design: Aether Breacher"
+	},
+	{
+		"job": "Idol",
+		"path": "Path of the Lore Resonance"
+	},
+	{
+		"job": "Idol",
+		"path": "Path of the Dance Resonance"
+	},
+	{
+		"job": "Idol",
+		"path": "Path of the Hypnotic Resonance"
+	},
+	{
+		"job": "Idol",
+		"path": "Path of the Blade Resonance"
+	},
+	{
+		"job": "Idol",
+		"path": "Path of the Shadow Resonance"
+	},
+	{
+		"job": "Idol",
+		"path": "Path of the Genesis Resonance"
+	}
+]

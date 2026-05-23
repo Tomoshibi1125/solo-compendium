@@ -31,20 +31,66 @@ const files = [
 
 // Theme-to-canonical-damage-type mapping. First element is the canonical
 // choice for normalization when the theme token is detected in a name.
-const THEME_TO_CANONICAL: Array<{ pattern: RegExp; canonical: string; alternates: string[] }> = [
-	{ pattern: /\b(Chill|Ice|Frost|Arctic|Glacial|Blizzard|Cold)\b/i, canonical: "cold", alternates: ["cold"] },
-	{ pattern: /\b(Fire|Flame|Blaze|Inferno|Scorch|Pyre|Molten|Burning)\b/i, canonical: "fire", alternates: ["fire"] },
-	{ pattern: /\b(Lightning|Thunder|Storm|Tempest|Surge|Shock|Electric|Pulse)\b/i, canonical: "lightning", alternates: ["lightning", "thunder"] },
-	{ pattern: /\b(Shadow|Void|Night|Dark|Umbral|Eclipse|Abyssal)\b/i, canonical: "necrotic", alternates: ["necrotic", "psychic", "cold"] },
-	{ pattern: /\b(Radiant|Sun|Solar|Corona|Holy|Divine|Dawn|Judgment|Light)\b/i, canonical: "radiant", alternates: ["radiant", "fire"] },
-	{ pattern: /\b(Blood|Crimson|Sanguine|Carnage|Gore)\b/i, canonical: "necrotic", alternates: ["necrotic", "slashing", "force"] },
-	{ pattern: /\b(Poison|Toxin|Venom|Plague|Blight)\b/i, canonical: "poison", alternates: ["poison"] },
-	{ pattern: /\b(Psychic|Mind|Psion|Mental|Nightmare)\b/i, canonical: "psychic", alternates: ["psychic"] },
+const THEME_TO_CANONICAL: Array<{
+	pattern: RegExp;
+	canonical: string;
+	alternates: string[];
+}> = [
+	{
+		pattern: /\b(Chill|Ice|Frost|Arctic|Glacial|Blizzard|Cold)\b/i,
+		canonical: "cold",
+		alternates: ["cold"],
+	},
+	{
+		pattern: /\b(Fire|Flame|Blaze|Inferno|Scorch|Pyre|Molten|Burning)\b/i,
+		canonical: "fire",
+		alternates: ["fire"],
+	},
+	{
+		pattern:
+			/\b(Lightning|Thunder|Storm|Tempest|Surge|Shock|Electric|Pulse)\b/i,
+		canonical: "lightning",
+		alternates: ["lightning", "thunder"],
+	},
+	{
+		pattern: /\b(Shadow|Void|Night|Dark|Umbral|Eclipse|Abyssal)\b/i,
+		canonical: "necrotic",
+		alternates: ["necrotic", "psychic", "cold"],
+	},
+	{
+		pattern: /\b(Radiant|Sun|Solar|Corona|Holy|Divine|Dawn|Judgment|Light)\b/i,
+		canonical: "radiant",
+		alternates: ["radiant", "fire"],
+	},
+	{
+		pattern: /\b(Blood|Crimson|Sanguine|Carnage|Gore)\b/i,
+		canonical: "necrotic",
+		alternates: ["necrotic", "slashing", "force"],
+	},
+	{
+		pattern: /\b(Poison|Toxin|Venom|Plague|Blight)\b/i,
+		canonical: "poison",
+		alternates: ["poison"],
+	},
+	{
+		pattern: /\b(Psychic|Mind|Psion|Mental|Nightmare)\b/i,
+		canonical: "psychic",
+		alternates: ["psychic"],
+	},
 	{ pattern: /\b(Acid|Corrosive)\b/i, canonical: "acid", alternates: ["acid"] },
-	{ pattern: /\b(Entropy|Decay|Rot|Wither|Siphon|Drain|Necrotic|Annihilation|Erasure|Termination)\b/i, canonical: "necrotic", alternates: ["necrotic"] },
+	{
+		pattern:
+			/\b(Entropy|Decay|Rot|Wither|Siphon|Drain|Necrotic|Annihilation|Erasure|Termination)\b/i,
+		canonical: "necrotic",
+		alternates: ["necrotic"],
+	},
 	// Deliberately lower priority: "Force/Arcane/Mana" theme falls through to
 	// force only when no other theme wins.
-	{ pattern: /\b(Arcane|Mana|Aether)\b/i, canonical: "force", alternates: ["force"] },
+	{
+		pattern: /\b(Arcane|Mana|Aether)\b/i,
+		canonical: "force",
+		alternates: ["force"],
+	},
 ];
 
 const DAMAGE_TYPE_TOKEN_REGEX =
@@ -109,13 +155,23 @@ function parseEntries(source: string): {
 	for (let i = 0; i < body.length; i += 1) {
 		if (body[i].trim() === "{") {
 			if (currentStart >= 0) {
-				entries.push({ start: currentStart, end: i, name: null, lines: body.slice(currentStart, i) });
+				entries.push({
+					start: currentStart,
+					end: i,
+					name: null,
+					lines: body.slice(currentStart, i),
+				});
 			}
 			currentStart = i;
 		}
 	}
 	if (currentStart >= 0) {
-		entries.push({ start: currentStart, end: body.length, name: null, lines: body.slice(currentStart, body.length) });
+		entries.push({
+			start: currentStart,
+			end: body.length,
+			name: null,
+			lines: body.slice(currentStart, body.length),
+		});
 	}
 
 	for (const entry of entries) {
@@ -140,32 +196,39 @@ function rewriteEntryLines(
 	const updated = entryLines.map((line) => {
 		// Only rewrite lines that are part of mechanics-shaped fields:
 		// damage_profile, damage_type, or a mechanics.attack.type.
-		if (
-			!/(damage_profile|damage_type|"type"|type:)/.test(line)
-		) {
+		if (!/(damage_profile|damage_type|"type"|type:)/.test(line)) {
 			return line;
 		}
 
 		// Special-case mechanics.damage_profile strings that start with a dice
 		// formula followed by a damage type word.
 		if (/damage_profile:\s*"[^"]*"/.test(line)) {
-			return line.replace(/damage_profile:\s*"([^"]*)"/, (_m, profile: string) => {
-				const withReplacedType = profile.replace(DAMAGE_TYPE_TOKEN_REGEX, (token) => {
-					if (alts.includes(token.toLowerCase())) return token;
-					changed = true;
-					return canonical;
-				});
-				return `damage_profile: "${withReplacedType}"`;
-			});
+			return line.replace(
+				/damage_profile:\s*"([^"]*)"/,
+				(_m, profile: string) => {
+					const withReplacedType = profile.replace(
+						DAMAGE_TYPE_TOKEN_REGEX,
+						(token) => {
+							if (alts.includes(token.toLowerCase())) return token;
+							changed = true;
+							return canonical;
+						},
+					);
+					return `damage_profile: "${withReplacedType}"`;
+				},
+			);
 		}
 
 		// mechanics.attack.damage_type: "<type>" or nested attack.type: "<type>"
 		// where the value is a damage type token.
-		return line.replace(/"(fire|cold|lightning|thunder|necrotic|radiant|psychic|force|acid|poison)"/g, (match, current: string) => {
-			if (alts.includes(current.toLowerCase())) return match;
-			changed = true;
-			return `"${canonical}"`;
-		});
+		return line.replace(
+			/"(fire|cold|lightning|thunder|necrotic|radiant|psychic|force|acid|poison)"/g,
+			(match, current: string) => {
+				if (alts.includes(current.toLowerCase())) return match;
+				changed = true;
+				return `"${canonical}"`;
+			},
+		);
 	});
 	return { updated, changed };
 }
@@ -181,7 +244,12 @@ function processFile(absolutePath: string): { changedEntries: number } {
 		const canonical = pickCanonical(entry.name);
 		if (!canonical) continue;
 		const alts = altsFor(entry.name);
-		const { updated, changed } = rewriteEntryLines(entry.lines, entry.name, canonical, alts);
+		const { updated, changed } = rewriteEntryLines(
+			entry.lines,
+			entry.name,
+			canonical,
+			alts,
+		);
 		if (changed) {
 			entry.lines = updated;
 			changedEntries += 1;

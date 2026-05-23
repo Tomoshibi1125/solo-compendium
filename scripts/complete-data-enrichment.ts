@@ -2,10 +2,10 @@ import * as fs from "fs";
 import * as path from "path";
 import { comprehensiveFeats } from "../src/data/compendium/feats-comprehensive";
 import { powers } from "../src/data/compendium/powers";
-import { techniques } from "../src/data/compendium/techniques";
 // Removed rank-a import
 import { sigils } from "../src/data/compendium/sigils";
 import { tattoos } from "../src/data/compendium/tattoos";
+import { techniques } from "../src/data/compendium/techniques";
 
 const filesToProcess = [
 	{
@@ -231,13 +231,11 @@ for (const file of filesToProcess) {
 		const lore = rec.lore as CompendiumLoreObj;
 
 		// Sanitize and fill Lore
-		if (!lore.origin || lore.origin === "")
-			lore.origin = getRandomStr(origins);
+		if (!lore.origin || lore.origin === "") lore.origin = getRandomStr(origins);
 		if (!lore.history || lore.history === "")
 			lore.history =
 				"Its true history remains a heavily guarded Bureau secret.";
-		if (!lore.curse || lore.curse === "")
-			lore.curse = getRandomStr(curses);
+		if (!lore.curse || lore.curse === "") lore.curse = getRandomStr(curses);
 		if (!lore.personality || lore.personality === "")
 			lore.personality = getRandomStr(personalities);
 		if (!lore.current_owner || lore.current_owner === "")
@@ -263,7 +261,9 @@ for (const file of filesToProcess) {
 		rec.lore = lore;
 
 		// Sub-objects
-		const effects = rec.effects as unknown as Record<string, unknown> | undefined;
+		const effects = rec.effects as unknown as
+			| Record<string, unknown>
+			| undefined;
 		if (effects) {
 			if (typeof effects.primary === "string")
 				effects.primary = sanitizeText(effects.primary);

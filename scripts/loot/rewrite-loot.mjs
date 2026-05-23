@@ -66,7 +66,9 @@ function parseItemArrayFile(filePath, exportName) {
 	);
 	const m = text.match(re);
 	if (!m) {
-		throw new Error(`Could not extract array literal for ${exportName} in ${filePath}`);
+		throw new Error(
+			`Could not extract array literal for ${exportName} in ${filePath}`,
+		);
 	}
 	const literal = m[1];
 	// JS object literals do not allow trailing commas in the same way TS does in some configs,
@@ -77,11 +79,24 @@ function parseItemArrayFile(filePath, exportName) {
 	} catch (err) {
 		throw new Error(`Failed to parse ${exportName}: ${err.message}`);
 	}
-	return { text, literal, arr, header: text.slice(0, m.index), tail: text.slice(m.index + m[0].length) };
+	return {
+		text,
+		literal,
+		arr,
+		header: text.slice(0, m.index),
+		tail: text.slice(m.index + m[0].length),
+	};
 }
 
-function writeItemArrayFile(filePath, exportName, items, originalHeader = null, typeName = "Item") {
-	const header = originalHeader || `import type { ${typeName} } from "./items";\n\n`;
+function writeItemArrayFile(
+	filePath,
+	exportName,
+	items,
+	originalHeader = null,
+	typeName = "Item",
+) {
+	const header =
+		originalHeader || `import type { ${typeName} } from "./items";\n\n`;
 	const body = serializeArrayBody(items, 1);
 	const out = `${header.replace(/\n+$/, "\n")}\nexport const ${exportName}: ${typeName}[] = [\n${body},\n];\n`;
 	writeFileSync(filePath, out, "utf8");
@@ -147,14 +162,21 @@ function isBoilerplatePassive(s) {
 }
 
 function patchLore(item, file) {
-	const lore = item.lore && typeof item.lore === "object" ? { ...item.lore } : null;
+	const lore =
+		item.lore && typeof item.lore === "object" ? { ...item.lore } : null;
 	if (!lore) return item;
 
 	// Wipe boilerplate fields - regenerate them themed by name+id.
-	if (typeof lore.current_owner === "string" && BOILERPLATE_LORE_KEYS.current_owner.includes(lore.current_owner)) {
+	if (
+		typeof lore.current_owner === "string" &&
+		BOILERPLATE_LORE_KEYS.current_owner.includes(lore.current_owner)
+	) {
 		lore.current_owner = "";
 	}
-	if (typeof lore.personality === "string" && BOILERPLATE_LORE_KEYS.personality.includes(lore.personality)) {
+	if (
+		typeof lore.personality === "string" &&
+		BOILERPLATE_LORE_KEYS.personality.includes(lore.personality)
+	) {
 		lore.personality = "";
 	}
 	if (
@@ -168,7 +190,8 @@ function patchLore(item, file) {
 	// Scrub stale sovereignty/monarch terms inside lore strings.
 	for (const k of Object.keys(lore)) {
 		if (typeof lore[k] === "string") lore[k] = scrubText(lore[k]);
-		if (Array.isArray(lore[k])) lore[k] = lore[k].map((x) => (typeof x === "string" ? scrubText(x) : x));
+		if (Array.isArray(lore[k]))
+			lore[k] = lore[k].map((x) => (typeof x === "string" ? scrubText(x) : x));
 	}
 	// Also regenerate origin/history if they look templated and identical to the wide pool.
 	const themed = generateLore(item.name, item.id);
@@ -183,7 +206,11 @@ function patchLore(item, file) {
 
 function patchImage(item, file) {
 	const cur = item.image;
-	if (!cur || cur === "" || (typeof cur === "string" && cur.startsWith("/generated/items/"))) {
+	if (
+		!cur ||
+		cur === "" ||
+		(typeof cur === "string" && cur.startsWith("/generated/items/"))
+	) {
 		// Replace placeholder/empty with deterministic image-pool slot.
 		return { ...item, image: assignImage(file, item.id, item.name) };
 	}
@@ -195,13 +222,17 @@ function patchImage(item, file) {
 function patchTextFields(item) {
 	const out = { ...item };
 	if (typeof out.name === "string") out.name = scrubText(out.name);
-	if (typeof out.display_name === "string") out.display_name = scrubText(out.display_name);
-	if (typeof out.description === "string") out.description = scrubText(out.description);
+	if (typeof out.display_name === "string")
+		out.display_name = scrubText(out.display_name);
+	if (typeof out.description === "string")
+		out.description = scrubText(out.description);
 	if (typeof out.flavor === "string") out.flavor = scrubText(out.flavor);
-	if (typeof out.discovery_lore === "string") out.discovery_lore = scrubText(out.discovery_lore);
+	if (typeof out.discovery_lore === "string")
+		out.discovery_lore = scrubText(out.discovery_lore);
 	if (Array.isArray(out.tags)) out.tags = scrubThemeTags(out.tags);
 	else if (out.tags == null) delete out.tags;
-	if (Array.isArray(out.theme_tags)) out.theme_tags = scrubThemeTags(out.theme_tags);
+	if (Array.isArray(out.theme_tags))
+		out.theme_tags = scrubThemeTags(out.theme_tags);
 	else if (out.theme_tags == null) delete out.theme_tags;
 	// Scrub any nested string fields in the entire item (e.g., effect descriptions).
 	deepScrubText(out);
@@ -232,7 +263,10 @@ function patchBoilerplateFlavor(item, file) {
 }
 
 function patchBoilerplateDiscovery(item, file) {
-	if (typeof item.discovery_lore === "string" && item.discovery_lore.length > 0) {
+	if (
+		typeof item.discovery_lore === "string" &&
+		item.discovery_lore.length > 0
+	) {
 		// Heuristic: if it's one of the obvious boilerplate strings, regenerate.
 		const stale = [
 			/^Excavated from the crystallized mana deposit at the center of a depleted Gate core\.$/,
@@ -244,7 +278,10 @@ function patchBoilerplateDiscovery(item, file) {
 			/^Gifted by the Order itself as a reward for completing a hidden quest chain\.$/,
 		];
 		if (stale.some((re) => re.test(item.discovery_lore))) {
-			return { ...item, discovery_lore: generateDiscoveryLore(item.name, item.id) };
+			return {
+				...item,
+				discovery_lore: generateDiscoveryLore(item.name, item.id),
+			};
 		}
 	}
 	return item;
@@ -295,7 +332,10 @@ function processArtifacts() {
 		it = patchLore(it, "artifacts.ts");
 		// Always reassign image for artifacts (most have image: "").
 		if (!it.image || it.image === "" || !isIntentionalImage(it.image)) {
-			it = { ...it, image: assignImage("artifacts.ts", it.id, it.name, "artifact") };
+			it = {
+				...it,
+				image: assignImage("artifacts.ts", it.id, it.name, "artifact"),
+			};
 		}
 		it = patchBoilerplateFlavor(it, "artifacts.ts");
 		// Stamp display_name if missing for legendary entries.
@@ -320,7 +360,8 @@ const BOILERPLATE_LORE_BLANKERS = [
 function applyTextScrub(filePath, extraReplacements = []) {
 	let text = readFileSync(filePath, "utf8");
 	for (const [re, rep] of TERMINOLOGY_FIXES) text = text.replace(re, rep);
-	for (const [re, rep] of BOILERPLATE_LORE_BLANKERS) text = text.replace(re, rep);
+	for (const [re, rep] of BOILERPLATE_LORE_BLANKERS)
+		text = text.replace(re, rep);
 	for (const [re, rep] of extraReplacements) text = text.replace(re, rep);
 	writeFileSync(filePath, text, "utf8");
 	return text.length;
@@ -430,11 +471,15 @@ async function main() {
 	}
 	if (want("tattoos")) {
 		summary.tattoos = TARGETS.tattoos();
-		console.log(`✔ tattoos.ts text-scrubbed (${summary.tattoos} bytes written)`);
+		console.log(
+			`✔ tattoos.ts text-scrubbed (${summary.tattoos} bytes written)`,
+		);
 	}
 	if (want("relics")) {
 		summary.relics = TARGETS.relics();
-		console.log(`✔ relics-comprehensive.ts text-scrubbed (${summary.relics} bytes written)`);
+		console.log(
+			`✔ relics-comprehensive.ts text-scrubbed (${summary.relics} bytes written)`,
+		);
 	}
 	if (want("runes")) {
 		summary.runes = TARGETS.runes();

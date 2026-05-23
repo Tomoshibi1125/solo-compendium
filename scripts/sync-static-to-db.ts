@@ -232,7 +232,8 @@ async function syncSpells() {
 				m.at_higher_levels || m.atHigherLevels || m.higher_levels || null,
 			classes: castToStringArray(m.classes),
 			saving_throw_ability:
-				(m.saving_throw_ability || castToString(m.saving_throw?.ability)) ?? undefined,
+				(m.saving_throw_ability || castToString(m.saving_throw?.ability)) ??
+				undefined,
 			has_attack_roll: m.has_attack_roll || !!m.spell_attack,
 			area_of_effect: castToJson(m.area_of_effect || m.area),
 		});
@@ -372,12 +373,15 @@ async function syncJobs() {
 			display_name: m.display_name || m.name,
 			description: m.description || "",
 			flavor_text: m.flavor || m.flavor_text || null,
-			hit_die: m.hit_die || (m as unknown as { hitDie?: string }).hitDie
-				? Number.parseInt(
-						((m as unknown as { hitDie?: string }).hitDie || "").replace(/\D/g, "").slice(-2) || String(m.hit_die || 8),
-						10,
-				  ) || 8
-				: 8,
+			hit_die:
+				m.hit_die || (m as unknown as { hitDie?: string }).hitDie
+					? Number.parseInt(
+							((m as unknown as { hitDie?: string }).hitDie || "")
+								.replace(/\D/g, "")
+								.slice(-2) || String(m.hit_die || 8),
+							10,
+						) || 8
+					: 8,
 			primary_abilities: (m.primary_abilities || []).map(mapAbility),
 			saving_throw_proficiencies: (m.saving_throw_proficiencies || []).map(
 				mapAbility,
@@ -391,7 +395,9 @@ async function syncJobs() {
 			image_url: m.image_url || m.image || null,
 			awakening_features: castToJson(m.awakening_features),
 			job_traits: castToJson(m.job_traits) || [],
-			racial_traits: castToJson((m as unknown as { racialTraits?: unknown }).racialTraits) || [],
+			racial_traits:
+				castToJson((m as unknown as { racialTraits?: unknown }).racialTraits) ||
+				[],
 			ability_score_improvements: castToJson(m.ability_score_improvements),
 			size: m.size || "Medium",
 			speed: m.speed_walk
@@ -407,7 +413,8 @@ async function syncJobs() {
 			stats: castToJson(m.stats),
 			abilities: castToStringArray(m.abilities),
 			type: m.type || "Combat",
-			source_book: (m as unknown as { source?: string }).source || "Rift Ascendant Canon",
+			source_book:
+				(m as unknown as { source?: string }).source || "Rift Ascendant Canon",
 		});
 	}
 
@@ -459,9 +466,11 @@ async function syncJobPaths() {
 			display_name: m.display_name || m.name,
 			description: m.description || "",
 			flavor_text: m.flavor || m.flavor_text || null,
-			path_level: m.path_level ?? (m as unknown as { level?: number }).level ?? 3,
+			path_level:
+				m.path_level ?? (m as unknown as { level?: number }).level ?? 3,
 			job_id: jobLookup,
-			source_book: (m as unknown as { source?: string }).source || "Rift Ascendant Canon",
+			source_book:
+				(m as unknown as { source?: string }).source || "Rift Ascendant Canon",
 		});
 	}
 

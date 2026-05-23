@@ -109,7 +109,10 @@ function highpass(samples, cutoff) {
 
 /** Band-pass with Q approximation. */
 function bandpass(samples, cutoff, bw) {
-	return highpass(lowpass(samples, Math.min(0.99, cutoff + bw / 2)), Math.max(0.01, cutoff - bw / 2));
+	return highpass(
+		lowpass(samples, Math.min(0.99, cutoff + bw / 2)),
+		Math.max(0.01, cutoff - bw / 2),
+	);
 }
 
 /** Apply ADSR envelope in-place. */
@@ -215,7 +218,8 @@ function pitchSweep(f0, f1, durationSec) {
 
 function normalize(samples, peak = 0.9) {
 	let max = 0;
-	for (let i = 0; i < samples.length; i++) max = Math.max(max, Math.abs(samples[i]));
+	for (let i = 0; i < samples.length; i++)
+		max = Math.max(max, Math.abs(samples[i]));
 	if (max < 1e-6) return samples;
 	return scale(samples, peak / max);
 }
@@ -230,7 +234,10 @@ const SFX = {
 		const base = pitchSweep(180, 90, 0.8);
 		applyEnvelope(base, attackDecay(0.1, 2));
 		const creak = sawtoothWave(220, 0.8);
-		applyEnvelope(creak, (t) => Math.sin(t * Math.PI * 6) * Math.exp(-t * 2) * 0.6);
+		applyEnvelope(
+			creak,
+			(t) => Math.sin(t * Math.PI * 6) * Math.exp(-t * 2) * 0.6,
+		);
 		const creakFiltered = bandpass(creak, 0.15, 0.08);
 		const noise = lowpass(whiteNoise(Math.floor(0.8 * SAMPLE_RATE), 1), 0.1);
 		applyEnvelope(noise, expDecay(4));
@@ -268,7 +275,8 @@ const SFX = {
 			const t = i / n;
 			const cutoff = 0.05 + 0.45 * t;
 			y = y + cutoff * (noise[i] - y);
-			const env = t < 0.7 ? Math.sin(t * Math.PI * 0.7) : Math.exp(-(t - 0.7) * 8);
+			const env =
+				t < 0.7 ? Math.sin(t * Math.PI * 0.7) : Math.exp(-(t - 0.7) * 8);
 			out[i] = y * env * 1.2;
 		}
 		// Sub boom at t=0.7s
@@ -319,7 +327,10 @@ const SFX = {
 			mixInto(out, tone, p.gain);
 		}
 		// Slight shimmer attack
-		const shimmer = highpass(whiteNoise(Math.floor(0.05 * SAMPLE_RATE), 6), 0.5);
+		const shimmer = highpass(
+			whiteNoise(Math.floor(0.05 * SAMPLE_RATE), 6),
+			0.5,
+		);
 		applyEnvelope(shimmer, expDecay(20));
 		mixInto(out, shimmer, 0.3);
 		return normalize(out);
@@ -375,10 +386,15 @@ const SFX = {
 		let nextClick = 0;
 		let clickCount = 0;
 		while (nextClick < n && clickCount < 7) {
-			const clickLen = Math.floor((0.015 + Math.abs(rng()) * 0.01) * SAMPLE_RATE);
+			const clickLen = Math.floor(
+				(0.015 + Math.abs(rng()) * 0.01) * SAMPLE_RATE,
+			);
 			const clickNoise = highpass(whiteNoise(clickLen, 10 + clickCount), 0.2);
 			applyEnvelope(clickNoise, expDecay(40));
-			const resonance = sineWave(400 + Math.abs(rng()) * 300, clickLen / SAMPLE_RATE);
+			const resonance = sineWave(
+				400 + Math.abs(rng()) * 300,
+				clickLen / SAMPLE_RATE,
+			);
 			applyEnvelope(resonance, expDecay(25));
 			for (let i = 0; i < clickLen && nextClick + i < n; i++) {
 				out[nextClick + i] += clickNoise[i] * 0.9 + resonance[i] * 0.4;
@@ -414,7 +430,7 @@ const SFX = {
 			const t = i / n;
 			const cutoff = 0.08 + 0.35 * t;
 			y = y + cutoff * (noise[i] - y);
-			const env = t < 0.05 ? t / 0.05 : (t > 0.4 ? (1 - t) / 0.6 : 1);
+			const env = t < 0.05 ? t / 0.05 : t > 0.4 ? (1 - t) / 0.6 : 1;
 			out[i] = y * env * 1.3;
 		}
 		// Final ring
@@ -434,7 +450,9 @@ const SFX = {
 		const sparkle = highpass(whiteNoise(n, 13), 0.5);
 		applyEnvelope(sparkle, (t) => t * Math.exp(-(1 - t) * 0));
 		mixInto(out, sparkle, 0.4);
-		applyEnvelope(out, (t) => (t < 0.05 ? t / 0.05 : t > 0.8 ? (1 - t) / 0.2 : 1));
+		applyEnvelope(out, (t) =>
+			t < 0.05 ? t / 0.05 : t > 0.8 ? (1 - t) / 0.2 : 1,
+		);
 		return normalize(out);
 	},
 };
@@ -671,7 +689,9 @@ const AMBIENT = {
 			const dripFreq = 600 + Math.abs(rng()) * 400;
 			const dripLen = 0.5;
 			const drip = sineWave(dripFreq, dripLen);
-			applyEnvelope(drip, (u) => (u < 0.02 ? u / 0.02 : Math.exp(-(u - 0.02) * 5)));
+			applyEnvelope(drip, (u) =>
+				u < 0.02 ? u / 0.02 : Math.exp(-(u - 0.02) * 5),
+			);
 			const offset = Math.floor(start * SAMPLE_RATE);
 			for (let i = 0; i < drip.length && offset + i < n; i++) {
 				out[offset + i] += drip[i] * 0.15;
@@ -699,8 +719,13 @@ const AMBIENT = {
 		const rng = makeRng(111);
 		let t = 0.1;
 		while (t < duration - 0.1) {
-			const crackLen = Math.floor((0.005 + Math.abs(rng()) * 0.02) * SAMPLE_RATE);
-			const crack = highpass(whiteNoise(crackLen, 112 + Math.floor(t * 100)), 0.3);
+			const crackLen = Math.floor(
+				(0.005 + Math.abs(rng()) * 0.02) * SAMPLE_RATE,
+			);
+			const crack = highpass(
+				whiteNoise(crackLen, 112 + Math.floor(t * 100)),
+				0.3,
+			);
 			applyEnvelope(crack, expDecay(25));
 			const offset = Math.floor(t * SAMPLE_RATE);
 			const gain = 0.3 + Math.abs(rng()) * 0.3;
@@ -723,7 +748,9 @@ const AMBIENT = {
 		for (const ts of dripTimes) {
 			const dripDur = 0.4;
 			const drip = sineWave(800, dripDur);
-			applyEnvelope(drip, (u) => (u < 0.01 ? u * 100 : Math.exp(-(u - 0.01) * 8)));
+			applyEnvelope(drip, (u) =>
+				u < 0.01 ? u * 100 : Math.exp(-(u - 0.01) * 8),
+			);
 			const offset = Math.floor(ts * SAMPLE_RATE);
 			for (let i = 0; i < drip.length && offset + i < n; i++) {
 				out[offset + i] += drip[i] * 0.25;
@@ -753,8 +780,14 @@ async function main() {
 			const samples = fn();
 			const wav = encodeWav(samples);
 			await writeFile(outPath, wav);
-			results.sfx.push({ name, bytes: wav.length, durationSec: (samples.length / SAMPLE_RATE).toFixed(2) });
-			console.log(`  [sfx] ${name}.wav (${(wav.length / 1024).toFixed(1)} KB, ${(samples.length / SAMPLE_RATE).toFixed(2)}s)`);
+			results.sfx.push({
+				name,
+				bytes: wav.length,
+				durationSec: (samples.length / SAMPLE_RATE).toFixed(2),
+			});
+			console.log(
+				`  [sfx] ${name}.wav (${(wav.length / 1024).toFixed(1)} KB, ${(samples.length / SAMPLE_RATE).toFixed(2)}s)`,
+			);
 		} catch (err) {
 			results.errors.push({ name, type: "sfx", error: String(err) });
 			console.error(`  [sfx] FAILED ${name}:`, err.message);
@@ -771,8 +804,14 @@ async function main() {
 			const samples = fn();
 			const wav = encodeWav(samples);
 			await writeFile(outPath, wav);
-			results.ambient.push({ name, bytes: wav.length, durationSec: (samples.length / SAMPLE_RATE).toFixed(2) });
-			console.log(`  [ambient] ${name}.wav (${(wav.length / 1024).toFixed(1)} KB, ${(samples.length / SAMPLE_RATE).toFixed(2)}s)`);
+			results.ambient.push({
+				name,
+				bytes: wav.length,
+				durationSec: (samples.length / SAMPLE_RATE).toFixed(2),
+			});
+			console.log(
+				`  [ambient] ${name}.wav (${(wav.length / 1024).toFixed(1)} KB, ${(samples.length / SAMPLE_RATE).toFixed(2)}s)`,
+			);
 		} catch (err) {
 			results.errors.push({ name, type: "ambient", error: String(err) });
 			console.error(`  [ambient] FAILED ${name}:`, err.message);
@@ -827,8 +866,12 @@ async function main() {
 	await writeFile(ATTRIBUTION_PATH, attr, "utf8");
 
 	console.log("");
-	console.log(`[audio] Generated ${results.sfx.length} SFX + ${results.ambient.length} ambient files`);
-	console.log(`[audio] Skipped ${results.skipped.length} existing files (use --force to regenerate)`);
+	console.log(
+		`[audio] Generated ${results.sfx.length} SFX + ${results.ambient.length} ambient files`,
+	);
+	console.log(
+		`[audio] Skipped ${results.skipped.length} existing files (use --force to regenerate)`,
+	);
 	if (results.errors.length > 0) {
 		console.log(`[audio] ${results.errors.length} errors`);
 	}

@@ -70,7 +70,8 @@ function indent(level) {
 function serializeValue(value, level) {
 	if (value === null || value === undefined) return "null";
 	if (typeof value === "string") return `"${escapeString(value)}"`;
-	if (typeof value === "number" || typeof value === "boolean") return String(value);
+	if (typeof value === "number" || typeof value === "boolean")
+		return String(value);
 	if (Array.isArray(value)) return serializeArray(value, level);
 	if (typeof value === "object") return serializeObject(value, level);
 	return "null";
@@ -119,6 +120,8 @@ export function serializeItemLiteral(item, baseLevel = 1) {
 
 export function serializeArrayBody(items, baseLevel = 1) {
 	const inner = indent(baseLevel);
-	const parts = items.map((item) => `${inner}${serializeObject(item, baseLevel)}`);
+	const parts = items.map(
+		(item) => `${inner}${serializeObject(item, baseLevel)}`,
+	);
 	return parts.join(",\n");
 }

@@ -96,9 +96,10 @@ test("warden wall authoring: place, change type, and delete wall segments", asyn
 
 	// Empty state + default radio selection
 	await expect(wallPanel.getByText(/no walls placed/i)).toBeVisible();
-	await expect(
-		page.getByTestId("warden-tools-wall-type-wall"),
-	).toHaveAttribute("aria-checked", "true");
+	await expect(page.getByTestId("warden-tools-wall-type-wall")).toHaveAttribute(
+		"aria-checked",
+		"true",
+	);
 
 	// Close the drawer so its overlay doesn't intercept drag events.
 	await closeTransientOverlays();
@@ -113,9 +114,10 @@ test("warden wall authoring: place, change type, and delete wall segments", asyn
 
 	// ── 3. Switch to Door + draw a second wall ──────────────────────────
 	await page.getByTestId("warden-tools-wall-type-door").click();
-	await expect(
-		page.getByTestId("warden-tools-wall-type-door"),
-	).toHaveAttribute("aria-checked", "true");
+	await expect(page.getByTestId("warden-tools-wall-type-door")).toHaveAttribute(
+		"aria-checked",
+		"true",
+	);
 	await closeTransientOverlays();
 
 	await dragWall({ x: 120, y: 260 }, { x: 320, y: 260 });

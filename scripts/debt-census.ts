@@ -7,10 +7,10 @@
  * that carry damage mechanics when their name implies a non-damage effect.
  */
 
-import { spells as allSpells } from "../src/data/compendium/spells/index";
 import { powers as allPowers } from "../src/data/compendium/powers";
-import { techniques as allTechniques } from "../src/data/compendium/techniques";
 import { allRunes } from "../src/data/compendium/runes/index";
+import { spells as allSpells } from "../src/data/compendium/spells/index";
+import { techniques as allTechniques } from "../src/data/compendium/techniques";
 
 type Entry = {
 	id?: string;
@@ -19,12 +19,16 @@ type Entry = {
 	description?: string;
 	rank?: string;
 	attack?: { damage?: unknown; [k: string]: unknown } | undefined;
-	mechanics?: {
-		damage_profile?: unknown;
-		attack?: { damage_type?: unknown } | undefined;
-		[k: string]: unknown;
-	} | undefined;
-	effects?: { primary?: unknown; secondary?: unknown; [k: string]: unknown } | undefined;
+	mechanics?:
+		| {
+				damage_profile?: unknown;
+				attack?: { damage_type?: unknown } | undefined;
+				[k: string]: unknown;
+		  }
+		| undefined;
+	effects?:
+		| { primary?: unknown; secondary?: unknown; [k: string]: unknown }
+		| undefined;
 };
 
 type DatasetEntry = { dataset: string; entry: Entry };
@@ -52,7 +56,9 @@ function crossTierNameCollisions(dataset: string, entries: Entry[]): string[] {
 	for (const [name, rows] of byName) {
 		if (rows.length > 1) {
 			const ranks = rows.map((row) => row.rank ?? "?").join(",");
-			messages.push(`${dataset}: "${name}" appears ${rows.length}× (ranks: ${ranks})`);
+			messages.push(
+				`${dataset}: "${name}" appears ${rows.length}× (ranks: ${ranks})`,
+			);
 		}
 	}
 	return messages;
@@ -102,10 +108,22 @@ function namingCaseMismatches(entries: DatasetEntry[]): string[] {
 const THEME_DAMAGE_MAP: Array<[RegExp, string[]]> = [
 	[/\b(chill|ice|frost|arctic|glacial|blizzard|cold)\b/i, ["cold"]],
 	[/\b(fire|flame|blaze|inferno|scorch|pyre|molten|burning)\b/i, ["fire"]],
-	[/\b(lightning|thunder|storm|tempest|surge|shock|electric)\b/i, ["lightning", "thunder"]],
-	[/\b(shadow|void|night|dark|umbral|eclipse)\b/i, ["necrotic", "psychic", "cold"]],
-	[/\b(radiant|sun|solar|corona|blaze of light|holy|divine|light|dawn)\b/i, ["radiant", "fire"]],
-	[/\b(blood|crimson|sanguine|carnage|gore)\b/i, ["necrotic", "slashing", "force"]],
+	[
+		/\b(lightning|thunder|storm|tempest|surge|shock|electric)\b/i,
+		["lightning", "thunder"],
+	],
+	[
+		/\b(shadow|void|night|dark|umbral|eclipse)\b/i,
+		["necrotic", "psychic", "cold"],
+	],
+	[
+		/\b(radiant|sun|solar|corona|blaze of light|holy|divine|light|dawn)\b/i,
+		["radiant", "fire"],
+	],
+	[
+		/\b(blood|crimson|sanguine|carnage|gore)\b/i,
+		["necrotic", "slashing", "force"],
+	],
 	[/\b(poison|toxin|venom|plague|blight)\b/i, ["poison"]],
 	[/\b(psychic|mind|psion|mental|nightmare)\b/i, ["psychic"]],
 	[/\b(acid|corrosive)\b/i, ["acid"]],
@@ -115,10 +133,13 @@ const THEME_DAMAGE_MAP: Array<[RegExp, string[]]> = [
 
 function collectDamageType(entry: Entry): string | null {
 	const fromAttack = entry.mechanics?.attack?.damage_type;
-	if (typeof fromAttack === "string" && fromAttack.length > 0) return fromAttack;
+	if (typeof fromAttack === "string" && fromAttack.length > 0)
+		return fromAttack;
 	const profile = entry.mechanics?.damage_profile;
 	if (typeof profile === "string") {
-		const m = profile.match(/\b(fire|cold|lightning|thunder|necrotic|radiant|psychic|force|acid|poison|slashing|piercing|bludgeoning)\b/i);
+		const m = profile.match(
+			/\b(fire|cold|lightning|thunder|necrotic|radiant|psychic|force|acid|poison|slashing|piercing|bludgeoning)\b/i,
+		);
 		if (m) return m[1].toLowerCase();
 	}
 	return null;
@@ -202,7 +223,8 @@ function main(): void {
 	console.log("\n=== Naming case inconsistency (sample of 20) ===");
 	const caseMessages = namingCaseMismatches(allEntries);
 	for (const m of caseMessages.slice(0, 20)) console.log("- " + m);
-	if (caseMessages.length > 20) console.log(`... and ${caseMessages.length - 20} more`);
+	if (caseMessages.length > 20)
+		console.log(`... and ${caseMessages.length - 20} more`);
 
 	console.log("\n=== TOTALS ===");
 	const crossTier = datasets.reduce(
@@ -210,8 +232,12 @@ function main(): void {
 		0,
 	);
 	console.log(`cross-tier name collisions: ${crossTier}`);
-	console.log(`damage-type mismatches: ${damageTypeMismatches(allEntries).length}`);
-	console.log(`utility-with-damage: ${utilityNameWithDamage(allEntries).length}`);
+	console.log(
+		`damage-type mismatches: ${damageTypeMismatches(allEntries).length}`,
+	);
+	console.log(
+		`utility-with-damage: ${utilityNameWithDamage(allEntries).length}`,
+	);
 	console.log(`naming case inconsistency: ${caseMessages.length}`);
 }
 

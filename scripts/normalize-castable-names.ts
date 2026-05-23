@@ -30,7 +30,7 @@ const STOPWORDS = new Set([
 const CANONICAL_OVERRIDES: Record<string, string> = {
 	"star-fire": "Star-Fire",
 	"gale-force": "Gale-Force",
-	"bladeshim": "Bladeshim",
+	bladeshim: "Bladeshim",
 };
 
 const files = [
@@ -85,7 +85,9 @@ function titleCase(value: string): string {
 	return parts
 		.map((part, idx) => {
 			if (/^\s+$/.test(part) || part.length === 0) return part;
-			const wordIndex = parts.slice(0, idx).filter((p) => !/^\s+$/.test(p)).length;
+			const wordIndex = parts
+				.slice(0, idx)
+				.filter((p) => !/^\s+$/.test(p)).length;
 			return titleCaseWord(part, wordIndex);
 		})
 		.join("");
@@ -126,7 +128,8 @@ function main(): void {
 	for (const rel of files) {
 		const abs = resolve(cwd, rel);
 		const { updated } = normalizeFile(abs);
-		if (updated > 0) console.log(`${rel}: ${updated} name/display_name entries normalized`);
+		if (updated > 0)
+			console.log(`${rel}: ${updated} name/display_name entries normalized`);
 		total += updated;
 	}
 	console.log(`\nTOTAL normalized: ${total}`);

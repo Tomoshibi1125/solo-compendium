@@ -8,8 +8,8 @@ import type { CompendiumSpell } from "../../../types/compendium";
 export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-0-1-mana-dart",
-        classes: ["Mage", "Stalker"],
-        name: "Mana Dart",
+		classes: ["Mage", "Stalker"],
+		name: "Mana Dart",
 		display_name: "Mana Dart",
 		description:
 			"Shape a shard of raw mana and fling it at a creature within 60 feet. Make a ranged spell attack using Intelligence. On a hit, the target takes 1d10 force damage. The dart ignores half cover.",
@@ -69,8 +69,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-2-resonance-whip",
-        classes: ["Mage", "Idol"],
-        name: "Resonance Whip",
+		classes: ["Mage", "Idol"],
+		name: "Resonance Whip",
 		display_name: "Resonance Whip",
 		description:
 			"Crack a tendril of sonic mana at a creature within 15 feet. Make a melee spell attack using Presence. On a hit, the target takes 1d8 thunder damage. You can then push or pull the target 5 feet.",
@@ -123,8 +123,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-3-grave-chill",
-        classes: ["Revenant", "Idol"],
-        name: "Grave Chill",
+		classes: ["Revenant", "Idol"],
+		name: "Grave Chill",
 		display_name: "Grave Chill",
 		description:
 			"Touch a creature and channel necrotic cold through its body. The target must succeed on a DC 13 Vitality save or take 1d8 necrotic damage and be unable to regain hit points until the start of your next turn.",
@@ -183,8 +183,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-4-lattice-ping",
-        classes: ["Mage", "Technomancer"],
-        name: "Lattice Ping",
+		classes: ["Mage", "Technomancer"],
+		name: "Lattice Ping",
 		display_name: "Lattice Ping",
 		description:
 			"Send a pulse of divination energy through the local mana lattice. You learn the number and general direction of all creatures within 30 feet, even through total cover.",
@@ -237,8 +237,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-5-pact-spark",
-        classes: ["Mage", "Contractor"],
-        name: "Pact Spark",
+		classes: ["Mage", "Contractor"],
+		name: "Pact Spark",
 		display_name: "Pact Spark",
 		description:
 			"A flickering brand of eldritch energy leaps from your hand to a creature within 60 feet. Make a ranged spell attack using Presence. On a hit, the target takes 1d10 force damage.",
@@ -291,8 +291,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-6-aetheric-blade",
-        classes: ["Mage", "Summoner"],
-        name: "Aetheric Blade",
+		classes: ["Mage", "Summoner"],
+		name: "Aetheric Blade",
 		display_name: "Aetheric Blade",
 		description:
 			"Conjure a blade of shimmering mana in your free hand and strike a creature within 5 feet. Melee spell attack using Intelligence; on a hit, 1d8 force damage. The blade vanishes at the end of your next turn.",
@@ -345,8 +345,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-7-mind-spike",
-        classes: ["Esper", "Idol"],
-        name: "Mind Spike",
+		classes: ["Esper", "Idol"],
+		name: "Mind Spike",
 		display_name: "Mind Spike",
 		description:
 			"Drive a needle of psychic pressure into a creature's mind within 60 feet. The target must succeed on a DC 13 Presence saving throw or take 1d8 psychic damage and have disadvantage on its next ability check.",
@@ -406,8 +406,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-8-verdant-touch",
-        classes: ["Summoner", "Idol", "Herald", "Technomancer", "Holy Knight"],
-        name: "Verdant Touch",
+		classes: ["Summoner", "Idol", "Herald", "Technomancer", "Holy Knight"],
+		name: "Verdant Touch",
 		display_name: "Verdant Touch",
 		description:
 			"Touch a creature at 0 HP. The target is stabilized and regains 1 hit point. A small bioluminescent sprout grows from the ground at the point of contact, providing dim light in a 5-foot radius for 1 minute.",
@@ -460,8 +460,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-9-circuit-jolt",
-        classes: ["Mage", "Technomancer"],
-        name: "Circuit Jolt",
+		classes: ["Mage", "Technomancer"],
+		name: "Circuit Jolt",
 		display_name: "Circuit Jolt",
 		description:
 			"Discharge a precise arc of mana-converted electricity from a handheld capacitor at a target within 30 feet. Ranged spell attack using Intelligence. On a hit, 1d8 lightning damage. Advantage on the attack if the target is wearing metal armor.",
@@ -515,8 +515,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-10-oath-flare",
-        classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Oath Flare",
+		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Oath Flare",
 		display_name: "Oath Flare",
 		description:
 			"Speak a word of your oath and your weapon ignites with radiant mana. The next melee weapon attack you make before the end of your next turn deals an extra 1d6 radiant damage. If you hit, the target sheds dim light in a 5-foot radius until the end of your next turn, negating invisibility.",
@@ -577,8 +577,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-11-echolocation-pulse",
-        classes: ["Mage", "Idol", "Stalker", "Technomancer"],
-        name: "Echolocation Pulse",
+		classes: ["Mage", "Idol", "Stalker", "Technomancer"],
+		name: "Echolocation Pulse",
 		display_name: "Echolocation Pulse",
 		description:
 			"Emit a subsonic mana pulse that maps your immediate surroundings. You gain blindsight 10 feet until the end of your next turn. Invisible or hidden creatures within that range are revealed to you.",
@@ -639,8 +639,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-12-entropic-grasp",
-        classes: ["Revenant", "Idol"],
-        name: "Entropic Grasp",
+		classes: ["Revenant", "Idol"],
+		name: "Entropic Grasp",
 		display_name: "Entropic Grasp",
 		description:
 			"Seize a creature and drain its vitality through direct contact. Melee spell attack using Intelligence. On a hit, 1d10 necrotic damage, and you gain temporary hit points equal to half the damage dealt (minimum 1).",
@@ -702,8 +702,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-13-harmonic-shield",
-        classes: ["Mage", "Idol"],
-        name: "Harmonic Shield",
+		classes: ["Mage", "Idol"],
+		name: "Harmonic Shield",
 		display_name: "Harmonic Shield",
 		description:
 			"As a reaction when attacked, hum a defensive harmonic that wraps you in a brief sonic barrier. You gain +2 AC against the triggering attack. If the attack misses due to this bonus, the attacker takes 1d4 thunder damage from resonance feedback.",
@@ -766,8 +766,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-14-rift-spark",
-        classes: ["Mage", "Esper", "Summoner", "Contractor"],
-        name: "Rift Spark",
+		classes: ["Mage", "Esper", "Summoner", "Contractor"],
+		name: "Rift Spark",
 		display_name: "Rift Spark",
 		description:
 			"Tear a micro-rift at a point you can see within 60 feet. A burst of spatial distortion strikes one creature. Ranged spell attack using Sense; on hit, 1d8 force damage. The rift leaves behind a 5-foot square of difficult terrain until the end of your next turn.",
@@ -830,8 +830,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-15-mana-lens",
-        classes: ["Mage", "Summoner", "Contractor", "Herald", "Holy Knight", "Technomancer"],
-        name: "Mana Lens",
+		classes: [
+			"Mage",
+			"Summoner",
+			"Contractor",
+			"Herald",
+			"Holy Knight",
+			"Technomancer",
+		],
+		name: "Mana Lens",
 		display_name: "Mana Lens",
 		description:
 			"Attune your vision to detect ambient mana. For the duration, you can see mana signatures within 30 feet as colored auras: active spells glow blue, enchanted items glow gold, and gate-residue glows red. You have advantage on Arcana checks to identify magical effects you can see.",
@@ -893,8 +900,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-16-mana-bolt",
-        classes: ["Mage", "Technomancer"],
-        name: "Mana Bolt",
+		classes: ["Mage", "Technomancer"],
+		name: "Mana Bolt",
 		display_name: "Mana Bolt",
 		description:
 			"Compress raw mana into a high-velocity bolt and launch it at a creature within range. Ranged spell attack: 3d8 force damage on a hit. On a critical hit, the target's mana circuit destabilizes — it has disadvantage on the next spell it attempts to cast within 1 minute.",
@@ -939,8 +946,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-17-shield-lattice",
-        classes: ["Mage", "Technomancer"],
-        name: "Shield Lattice",
+		classes: ["Mage", "Technomancer"],
+		name: "Shield Lattice",
 		display_name: "Shield Lattice",
 		description:
 			"As a reaction when hit by an attack, raise a shimmering lattice of hardened mana. You gain +5 AC until the start of your next turn, including against the triggering attack. Auto-hit force projectiles (such as Mana Missile Array) are also blocked entirely.",
@@ -986,8 +993,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-18-searing-oath",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Searing Oath",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Searing Oath",
 		display_name: "Searing Oath",
 		description:
 			"Channel your oath into your weapon. The next time you hit a creature with a melee weapon attack during the spell's duration, the attack deals an extra 2d8 radiant damage. Against undead or fiend-type anomalies, the extra damage is 3d8.",
@@ -1031,8 +1038,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-19-hunter-s-brand",
-        classes: ["Mage", "Summoner", "Stalker"],
-        name: "Hunter's Brand",
+		classes: ["Mage", "Summoner", "Stalker"],
+		name: "Hunter's Brand",
 		display_name: "Hunter's Brand",
 		description:
 			"Brand a creature you can see within range with a mana signature visible only to you. Once per turn, you deal an extra 1d6 damage to the branded creature when you hit it. You always know the target's location while it's within 300 feet, even through total cover.",
@@ -1078,8 +1085,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-20-hex-contract",
-        classes: ["Esper", "Revenant", "Contractor", "Idol"],
-        name: "Hex Contract",
+		classes: ["Esper", "Revenant", "Contractor", "Idol"],
+		name: "Hex Contract",
 		display_name: "Hex Contract",
 		description:
 			"Place a pact-sealed curse on a creature within range. Until the spell ends, you deal an extra 1d6 necrotic damage whenever you hit the cursed target. Also choose one ability score; the target has disadvantage on ability checks made with it. If the target drops to 0 HP, you can move the hex to a new creature as a bonus action.",
@@ -1123,8 +1130,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-21-psychic-lance",
-        classes: ["Mage", "Esper", "Idol"],
-        name: "Psychic Lance",
+		classes: ["Mage", "Esper", "Idol"],
+		name: "Psychic Lance",
 		display_name: "Psychic Lance",
 		description:
 			"Drive a focused psychic spike into a creature's consciousness. The target must make a DC 14 Presence save. On a failure, it takes 2d10 psychic damage and is stunned until the end of its next turn. On a success, half damage and no stun.",
@@ -1171,8 +1178,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-22-commanding-hymn",
-        classes: ["Esper", "Revenant", "Idol"],
-        name: "Commanding Hymn",
+		classes: ["Esper", "Revenant", "Idol"],
+		name: "Commanding Hymn",
 		display_name: "Commanding Hymn",
 		description:
 			"Speak a one-word command imbued with harmonic authority. A creature that can hear you within range must make a DC 13 Presence save or obey the command on its next turn. Commands include: Approach, Drop, Flee, Grovel, or Halt. Undead are immune unless they are under the Herald's oath.",
@@ -1228,8 +1235,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-23-frost-lattice",
-        classes: ["Mage", "Idol", "Herald", "Technomancer", "Summoner", "Holy Knight"],
-        name: "Frost Lattice",
+		classes: [
+			"Mage",
+			"Idol",
+			"Herald",
+			"Technomancer",
+			"Summoner",
+			"Holy Knight",
+		],
+		name: "Frost Lattice",
 		display_name: "Frost Lattice",
 		description:
 			"Release a freezing blast of mana-chilled air in a 15-foot cone. Each creature in the area must make a DC 14 Vitality save, taking 2d8 cold damage on a failure (half on success). Failed saves also reduce speed by 10 feet until the end of the target's next turn.",
@@ -1285,8 +1299,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-24-thorn-salvo",
-        classes: ["Summoner", "Contractor", "Idol", "Herald", "Holy Knight"],
-        name: "Thorn Salvo",
+		classes: ["Summoner", "Contractor", "Idol", "Herald", "Holy Knight"],
+		name: "Thorn Salvo",
 		display_name: "Thorn Salvo",
 		description:
 			"Conjure a volley of gate-flora thorns and hurl them at a creature within range. Ranged spell attack using Sense. On a hit, 2d6 piercing damage and the target must succeed on a DC 13 Vitality save or be poisoned until the end of its next turn.",
@@ -1331,8 +1345,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-25-soul-siphon",
-        classes: ["Mage", "Revenant", "Idol"],
-        name: "Soul Siphon",
+		classes: ["Mage", "Revenant", "Idol"],
+		name: "Soul Siphon",
 		display_name: "Soul Siphon",
 		description:
 			"Extend threads of entropic mana toward a creature within 30 feet. The target must make a DC 14 Vitality save, taking 2d8 necrotic damage on a failure (half on success). You regain hit points equal to half the necrotic damage dealt.",
@@ -1387,8 +1401,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-26-aegis-of-the-absolute",
-        classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Aegis of the Absolute",
+		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Aegis of the Absolute",
 		display_name: "Aegis of the Absolute",
 		description:
 			"Bless a willing creature with a protective aura of the Absolute. The target gains temporary hit points equal to 2 + your spellcasting ability modifier and +1 AC while those temporary hit points remain. The ward's golden shimmer is visible in dim light.",
@@ -1440,8 +1454,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-27-scramble-signal",
-        classes: ["Mage", "Esper", "Idol", "Technomancer"],
-        name: "Scramble Signal",
+		classes: ["Mage", "Esper", "Idol", "Technomancer"],
+		name: "Scramble Signal",
 		display_name: "Scramble Signal",
 		description:
 			"Broadcast a corrupted mana frequency that scrambles a creature's sensory processing. The target must make a DC 14 Intelligence save. On a failure, it has disadvantage on attack rolls and can't use reactions for the duration. At the end of each of its turns, the target can repeat the save.",
@@ -1496,8 +1510,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-28-phantom-step",
-        classes: ["Mage", "Esper", "Revenant", "Contractor", "Idol"],
-        name: "Phantom Step",
+		classes: ["Mage", "Esper", "Revenant", "Contractor", "Idol"],
+		name: "Phantom Step",
 		display_name: "Phantom Step",
 		description:
 			"Flicker through local mana-space, teleporting up to 30 feet to an unoccupied space you can see. You leave behind a convincing afterimage at your original location that lasts until the start of your next turn. Creatures that target the afterimage automatically miss.",
@@ -1550,8 +1564,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-29-verdant-grasp",
-        classes: ["Summoner", "Contractor"],
-        name: "Verdant Grasp",
+		classes: ["Summoner", "Contractor"],
+		name: "Verdant Grasp",
 		display_name: "Verdant Grasp",
 		description:
 			"Gate-flora vines erupt from the ground around a creature within range. The target must make a DC 13 Strength save or be restrained for the duration. While restrained, it takes 1d6 piercing damage at the start of each of its turns. It can repeat the save at the end of each turn.",
@@ -1607,8 +1621,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-30-mana-armor",
-        classes: ["Mage"],
-        name: "Mana Armor",
+		classes: ["Mage"],
+		name: "Mana Armor",
 		display_name: "Mana Armor",
 		description:
 			"Encase yourself in a translucent shell of hardened mana. Your base AC becomes 13 + your spellcasting ability modifier for the duration. You can use a shield and still gain this benefit. The spell ends if you don armor or dismiss it as an action.",
@@ -1663,8 +1677,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-31-healing-resonance",
-        classes: ["Mage", "Summoner", "Idol", "Herald", "Holy Knight"],
-        name: "Healing Resonance",
+		classes: ["Mage", "Summoner", "Idol", "Herald", "Holy Knight"],
+		name: "Healing Resonance",
 		display_name: "Healing Resonance",
 		description:
 			"Place your hands on a creature and channel restorative mana. The target regains 1d8 + your spellcasting ability modifier hit points. You can also end one disease or one condition affecting it: blinded, deafened, paralyzed, or poisoned.",
@@ -1708,8 +1722,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-32-thunder-crack",
-        classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Thunder Crack",
+		classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Thunder Crack",
 		display_name: "Thunder Crack",
 		description:
 			"Release a burst of amplified sonic energy centered on yourself. Each creature within 15 feet must make a DC 13 Vitality save, taking 2d6 thunder damage on failure (half on success). The crack is audible out to 300 feet.",
@@ -1758,8 +1772,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-33-necrotic-shroud",
-        classes: ["Mage", "Revenant"],
-        name: "Necrotic Shroud",
+		classes: ["Mage", "Revenant"],
+		name: "Necrotic Shroud",
 		display_name: "Necrotic Shroud",
 		description:
 			"Wreath yourself in a cloak of entropic mana. For the duration, your melee attacks deal an extra 1d4 necrotic damage, and you have resistance to necrotic damage. The shroud dims all light within 5 feet of you to dim light.",
@@ -1814,8 +1828,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-34-wire-trap",
-        classes: ["Mage", "Summoner", "Stalker", "Technomancer"],
-        name: "Wire Trap",
+		classes: ["Mage", "Summoner", "Stalker", "Technomancer"],
+		name: "Wire Trap",
 		display_name: "Wire Trap",
 		description:
 			"Lay an invisible mana-conductive wire across a doorway, hallway, or 10-foot path. The first creature to cross it must make a DC 14 Agility save or take 1d6 lightning damage and be restrained until it uses its action to break free (DC 14 Strength). You are mentally alerted when the trap triggers.",
@@ -1872,8 +1886,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-35-pact-shield",
-        classes: ["Mage", "Contractor"],
-        name: "Pact Shield",
+		classes: ["Mage", "Contractor"],
+		name: "Pact Shield",
 		display_name: "Pact Shield",
 		description:
 			"As a reaction when you take damage, invoke your patron's protection. Reduce the incoming damage by 2d6 + your Presence modifier. If this reduces the damage to 0, the attacker takes 1d4 force damage as the pact retaliates.",
@@ -1925,8 +1939,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-36-gravity-spike",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Gravity Spike",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Gravity Spike",
 		display_name: "Gravity Spike",
 		description:
 			"Intensify gravity in a 5-foot radius around a point within range. Each creature in the area must make a DC 14 Strength save, taking 2d6 force damage and being knocked prone on a failure. Half damage and no prone on success.",
@@ -1975,8 +1989,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-37-signal-flare",
-        classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Signal Flare",
+		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Signal Flare",
 		display_name: "Signal Flare",
 		description:
 			"Launch a flare of radiant mana that hangs in the air at a point within range. The flare illuminates a 20-foot radius with bright light and an additional 20 feet with dim light. Allies within the bright light gain +1 to attack rolls for the duration.",
@@ -2031,8 +2045,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-38-fade-to-shadow",
-        classes: ["Esper", "Revenant", "Idol"],
-        name: "Fade to Shadow",
+		classes: ["Esper", "Revenant", "Idol"],
+		name: "Fade to Shadow",
 		display_name: "Fade to Shadow",
 		description:
 			"Dissolve your visual profile into ambient shadow. While in dim light or darkness, you become invisible for the duration. The spell ends early if you attack, cast another spell, or enter bright light.",
@@ -2086,8 +2100,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-39-mana-missile-array",
-        classes: ["Mage", "Contractor", "Stalker", "Technomancer"],
-        name: "Mana Missile Array",
+		classes: ["Mage", "Contractor", "Stalker", "Technomancer"],
+		name: "Mana Missile Array",
 		display_name: "Mana Missile Array",
 		description:
 			"Deploy a micro-array of three mana-tracking projectiles from your focus device. Each projectile automatically hits a creature you can see within range, dealing 1d4+1 force damage. You can direct all projectiles at one target or split them.",
@@ -2140,8 +2154,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-40-resonance-pulse",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Resonance Pulse",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Resonance Pulse",
 		display_name: "Resonance Pulse",
 		description:
 			"Emit a soothing harmonic pulse that reaches all allies within 30 feet. Up to 6 creatures of your choice regain 1d4 hit points and gain advantage on their next saving throw against being frightened, made before the end of your next turn.",
@@ -2187,8 +2201,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-41-mana-seal",
-        classes: ["Mage", "Contractor", "Technomancer"],
-        name: "Mana Seal",
+		classes: ["Mage", "Contractor", "Technomancer"],
+		name: "Mana Seal",
 		display_name: "Mana Seal",
 		description:
 			"Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana. The seal is invisible but tangible, raising the DC to breach by 10. You and designated allies pass through unimpeded. The seal can be suppressed by a successful Circuit Interrupt for 10 minutes.",
@@ -2242,8 +2256,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-42-triple-ignition",
-        classes: ["Mage"],
-        name: "Triple Ignition",
+		classes: ["Mage"],
+		name: "Triple Ignition",
 		display_name: "Triple Ignition",
 		description:
 			"Compress mana into three superheated projectiles and launch them at targets within range. Make a ranged spell attack for each bolt. On a hit, each deals 2d6 fire damage. You can concentrate all bolts on one target or split them across multiple.",
@@ -2297,8 +2311,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-43-oath-tether",
-        classes: ["Mage", "Idol", "Herald", "Holy Knight", "Technomancer", "Summoner"],
-        name: "Oath Tether",
+		classes: [
+			"Mage",
+			"Idol",
+			"Herald",
+			"Holy Knight",
+			"Technomancer",
+			"Summoner",
+		],
+		name: "Oath Tether",
 		display_name: "Oath Tether",
 		description:
 			"Create a mana-oath tether between yourself and a willing creature. For the duration, the target gains +1 to AC and saving throws and resistance to all damage. However, each time the tethered ally takes damage, the Absolute routes an equal amount to your mana circuit.",
@@ -2351,8 +2372,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-44-misty-blink",
-        classes: ["Mage", "Summoner"],
-        name: "Misty Blink",
+		classes: ["Mage", "Summoner"],
+		name: "Misty Blink",
 		display_name: "Misty Blink",
 		description:
 			"Dissolve into mana-mist and reform at an unoccupied space you can see within 60 feet. If you make an attack immediately after teleporting on the same turn, you have advantage on the attack roll.",
@@ -2407,8 +2428,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-45-entropic-wave",
-        classes: ["Mage", "Revenant", "Idol"],
-        name: "Entropic Wave",
+		classes: ["Mage", "Revenant", "Idol"],
+		name: "Entropic Wave",
 		display_name: "Entropic Wave",
 		description:
 			"Release a wave of accelerated decay in a 30-foot cone. Each creature in the area must make a DC 14 Vitality save, taking 3d8 necrotic damage on failure (half on success). You regain HP equal to the highest single damage die rolled.",
@@ -2463,8 +2484,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-46-resonance-amplifier",
-        classes: ["Mage", "Summoner", "Idol", "Technomancer"],
-        name: "Resonance Amplifier",
+		classes: ["Mage", "Summoner", "Idol", "Technomancer"],
+		name: "Resonance Amplifier",
 		display_name: "Resonance Amplifier",
 		description:
 			"Broadcast an amplified harmonic field in a 30-foot radius. For the duration, each friendly creature in the area (including you) can add 1d4 to every attack roll and saving throw. Your voice or signal transmission carries clearly through any environmental noise within range.",
@@ -2517,8 +2538,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-47-oath-smite",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Oath Smite",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Oath Smite",
 		display_name: "Oath Smite",
 		description:
 			"Charge your weapon with the full weight of your oath. The next melee hit during the spell's duration deals an extra 3d8 radiant damage. The target must also make a DC 14 Presence save or be frightened of you for 1 minute (save ends).",
@@ -2562,8 +2583,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-48-predator-s-mark",
-        classes: ["Mage", "Stalker"],
-        name: "Predator's Mark",
+		classes: ["Mage", "Stalker"],
+		name: "Predator's Mark",
 		display_name: "Predator's Mark",
 		description:
 			"Lock your senses onto a creature you can see. For the duration, you have advantage on Perception and Survival checks to find and track the target. The target cannot benefit from invisibility or half cover against your attacks.",
@@ -2617,8 +2638,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-49-psychic-barrier",
-        classes: ["Mage", "Esper", "Idol"],
-        name: "Psychic Barrier",
+		classes: ["Mage", "Esper", "Idol"],
+		name: "Psychic Barrier",
 		display_name: "Psychic Barrier",
 		description:
 			"As a reaction to taking psychic damage or being targeted by a charm/fear effect, erect a psionic barrier around your consciousness. For the duration, you have resistance to psychic damage and advantage on saves against being charmed, frightened, or stunned.",
@@ -2664,8 +2685,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-50-gate-snare",
-        classes: ["Mage", "Esper", "Summoner", "Contractor", "Stalker"],
-        name: "Gate Snare",
+		classes: ["Mage", "Esper", "Summoner", "Contractor", "Stalker"],
+		name: "Gate Snare",
 		display_name: "Gate Snare",
 		description:
 			"Open micro-rifts around a creature that snap shut like jaws. The target must make a DC 14 Strength save or be restrained by spatial distortion for the duration, taking 2d6 force damage at the start of each of its turns. It can repeat the save at the end of each turn.",
@@ -2722,8 +2743,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-51-pact-chains",
-        classes: ["Revenant", "Summoner", "Contractor"],
-        name: "Pact Chains",
+		classes: ["Revenant", "Summoner", "Contractor"],
+		name: "Pact Chains",
 		display_name: "Pact Chains",
 		description:
 			"Summon spectral chains inscribed with pact sigils that bind a creature within range. The target must make a DC 14 Strength save or be restrained and suffer disadvantage on ability checks for the duration. It takes 2d6 necrotic damage at the start of each of its turns while restrained.",
@@ -2780,8 +2801,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-52-battlefield-harmony",
-        classes: ["Esper", "Idol"],
-        name: "Battlefield Harmony",
+		classes: ["Esper", "Idol"],
+		name: "Battlefield Harmony",
 		display_name: "Battlefield Harmony",
 		description:
 			"Weave a sustaining harmonic that links up to 3 willing creatures within range. For the duration, when a linked creature fails a saving throw, you can use your reaction to let it add 1d6 to the result, potentially changing the outcome. Each creature also gains 5 temp HP when first linked.",
@@ -2836,8 +2857,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-53-mana-turret",
-        classes: ["Mage", "Esper", "Summoner", "Contractor", "Technomancer"],
-        name: "Mana Turret",
+		classes: ["Mage", "Esper", "Summoner", "Contractor", "Technomancer"],
+		name: "Mana Turret",
 		display_name: "Mana Turret",
 		description:
 			"Deploy a compact mana-powered turret at an unoccupied point within range. It has AC 15, 10 HP, and occupies a 5-foot space. On each of your turns, you can use a bonus action to command it to make a ranged spell attack (+INT) dealing 1d8+INT modifier force damage at a target within 60 feet.",
@@ -2892,8 +2913,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-54-hallowed-ground",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Hallowed Ground",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Hallowed Ground",
 		display_name: "Hallowed Ground",
 		description:
 			"Consecrate a 15-foot radius centered on you with the Absolute's protective radiance. Allies within the area gain +2 to AC against attacks from undead and fiend-type anomalies. Undead that enter the area or start their turn there take 1d6 radiant damage.",
@@ -2948,8 +2969,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-55-shadow-transit",
-        classes: ["Mage", "Esper", "Revenant", "Idol"],
-        name: "Shadow Transit",
+		classes: ["Mage", "Esper", "Revenant", "Idol"],
+		name: "Shadow Transit",
 		display_name: "Shadow Transit",
 		description:
 			"Step into a shadow within 5 feet of you and emerge from a different shadow within 60 feet. Both locations must be in dim light or darkness. After teleporting, you have advantage on the first melee attack you make before the end of the turn.",
@@ -3003,8 +3024,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-56-corrosive-aura",
-        classes: ["Mage", "Revenant", "Summoner", "Idol", "Holy Knight", "Technomancer"],
-        name: "Corrosive Aura",
+		classes: [
+			"Mage",
+			"Revenant",
+			"Summoner",
+			"Idol",
+			"Holy Knight",
+			"Technomancer",
+		],
+		name: "Corrosive Aura",
 		display_name: "Corrosive Aura",
 		description:
 			"Emanate an aura of accelerated entropy in a 10-foot radius. Each creature that enters the area for the first time on a turn or starts its turn there must make a DC 14 Vitality save or take 2d4 necrotic damage. Nonmagical objects in the area visibly corrode over the duration.",
@@ -3062,8 +3090,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-57-rift-companion-link",
-        classes: ["Mage", "Esper", "Summoner", "Contractor", "Technomancer"],
-        name: "Rift-Companion Link",
+		classes: ["Mage", "Esper", "Summoner", "Contractor", "Technomancer"],
+		name: "Rift-Companion Link",
 		display_name: "Rift-Companion Link",
 		description:
 			"Form a mana-circuit bridge with a willing gate-creature companion you touch. For the duration, you share thoughts telepathically and can switch sensory perception to the companion's perspective as a bonus action. The linked creature has advantage on attack rolls against anything within 5 feet of you.",
@@ -3124,8 +3152,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-58-kinetic-burst",
-        classes: ["Mage"],
-        name: "Kinetic Burst",
+		classes: ["Mage"],
+		name: "Kinetic Burst",
 		display_name: "Kinetic Burst",
 		description:
 			"Release a spherical shockwave of concentrated kinetic mana centered on yourself. Each creature within 20 feet must make a DC 14 Strength save, taking 3d6 force damage and being pushed 10 feet away on failure. Half damage and no push on success.",
@@ -3172,8 +3200,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-59-deploy-drone",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Deploy Drone",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Deploy Drone",
 		display_name: "Deploy Drone",
 		description:
 			"Deploy a Small mana-powered drone at a point within range. The drone has AC 12, 5 HP, 30 ft fly speed, and can hover. You can see and hear through the drone (bonus action to switch). You can deliver Touch-range spells through the drone as if you were in its space.",
@@ -3234,8 +3262,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-60-hymn-of-courage",
-        classes: ["Esper", "Idol"],
-        name: "Hymn of Courage",
+		classes: ["Esper", "Idol"],
+		name: "Hymn of Courage",
 		display_name: "Hymn of Courage",
 		description:
 			"Begin a stirring vocal performance that radiates courage. For the duration, all friendly creatures within 30 feet are immune to being frightened. Any frightened ally that enters the area or is in the area when you cast this can immediately repeat the save to end the effect.",
@@ -3290,8 +3318,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-61-mana-barrage",
-        classes: ["Mage", "Technomancer"],
-        name: "Mana Barrage",
+		classes: ["Mage", "Technomancer"],
+		name: "Mana Barrage",
 		display_name: "Mana Barrage",
 		description:
 			"Saturate a 20-foot radius sphere centered on a point within range with concentrated thermal mana. Each creature in the area makes a DC 15 Agility save, taking 8d6 fire damage on failure (half on success). Flammable objects not being worn or carried ignite.",
@@ -3347,8 +3375,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-62-revenant-s-embrace",
-        classes: ["Revenant", "Idol"],
-        name: "Revenant's Embrace",
+		classes: ["Revenant", "Idol"],
+		name: "Revenant's Embrace",
 		display_name: "Revenant's Embrace",
 		description:
 			"Release a pulse of entropic hunger in a 30-foot radius. Each creature must make a DC 15 Vitality save: 5d6 necrotic on failure, half on success. You regain HP equal to half the total damage dealt across all targets. Creatures killed by this spell cannot be raised for 24 hours.",
@@ -3404,8 +3432,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-63-pact-hunger",
-        classes: ["Mage", "Esper", "Contractor", "Idol"],
-        name: "Pact Hunger",
+		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		name: "Pact Hunger",
 		display_name: "Pact Hunger",
 		description:
 			"Channel your patron's dread presence through your voice. A creature within range must make a DC 15 Presence save. On failure: 4d8 psychic damage and frightened for the duration. While frightened, the target must use its movement to move away from you. Save at end of each turn.",
@@ -3463,8 +3491,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-64-harmonic-barrage",
-        classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Harmonic Barrage",
+		classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Harmonic Barrage",
 		display_name: "Harmonic Barrage",
 		description:
 			"Project a devastating sonic lance in a 60-foot line, 5 feet wide. Each creature in the line must make a DC 15 Vitality save: 5d6 thunder damage and deafened for 1 round on failure, half damage on success.",
@@ -3522,8 +3550,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-65-phase-strike",
-        classes: ["Mage", "Summoner"],
-        name: "Phase Strike",
+		classes: ["Mage", "Summoner"],
+		name: "Phase Strike",
 		display_name: "Phase Strike",
 		description:
 			"Phase through mana-space to deliver a devastating strike. As a bonus action, mark a creature within 60 feet. Before the end of your next turn, when you make a weapon attack against the marked creature, you teleport to an unoccupied space within 5 feet of it first. The attack deals an extra 3d8 force damage.",
@@ -3576,8 +3604,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-66-absolute-beacon",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Absolute Beacon",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Absolute Beacon",
 		display_name: "Absolute Beacon",
 		description:
 			"Radiate the Absolute's protective light. For the duration, allies within 30 feet gain +2 to attack rolls and saving throws against undead and fiend-type anomalies. Undead and fiends in the area have disadvantage on attack rolls.",
@@ -3632,8 +3660,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-67-mana-overcharge",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Mana Overcharge",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Mana Overcharge",
 		display_name: "Mana Overcharge",
 		description:
 			"Overcharge your mana circuit for one devastating release. The next damaging spell you cast within the duration deals maximum damage instead of rolling damage dice. After that spell resolves, you take 1d6 force damage from circuit backlash.",
@@ -3686,8 +3714,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-68-summon-gate-echo",
-        classes: ["Esper", "Summoner", "Contractor", "Stalker"],
-        name: "Summon Gate Echo",
+		classes: ["Esper", "Summoner", "Contractor", "Stalker"],
+		name: "Summon Gate Echo",
 		display_name: "Summon Gate Echo",
 		description:
 			"Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range. The echo is a Medium creature (AC 14, HP 30, +5 to hit, 2d6+3 damage) that acts on its own initiative and obeys your mental commands (no action required). It vanishes at 0 HP.",
@@ -3741,8 +3769,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-69-circuit-overclock",
-        classes: ["Mage", "Summoner", "Idol", "Technomancer"],
-        name: "Circuit Overclock",
+		classes: ["Mage", "Summoner", "Idol", "Technomancer"],
+		name: "Circuit Overclock",
 		display_name: "Circuit Overclock",
 		description:
 			"Overclock a willing creature's mana circuit, boosting physical performance. For the duration, the target gains +2 AC, advantage on Agility saving throws, and +10 feet movement speed. The spell ends early if the target falls unconscious.",
@@ -3796,8 +3824,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-70-binding-oath",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Binding Oath",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Binding Oath",
 		display_name: "Binding Oath",
 		description:
 			"Invoke your oath to bind a creature to single combat. The target must make a DC 15 Presence save. On failure, it cannot willingly move further from you and takes 2d8 radiant damage each time it attacks a creature other than you. Save at end of each turn.",
@@ -3854,8 +3882,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-71-whisper-network",
-        classes: ["Mage", "Contractor", "Idol"],
-        name: "Whisper Network",
+		classes: ["Mage", "Contractor", "Idol"],
+		name: "Whisper Network",
 		display_name: "Whisper Network",
 		description:
 			"Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with. The creature hears the message in your voice and can reply with 25 words of its own. The spell can reach across gate boundaries.",
@@ -3910,8 +3938,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-72-gravity-well",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Gravity Well",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Gravity Well",
 		display_name: "Gravity Well",
 		description:
 			"Create a 20-foot radius zone of intensified gravity at a point within range. Each creature entering the zone or starting its turn there must make a DC 15 Strength save or take 2d6 force damage and have its speed halved until it leaves. Flying creatures fall.",
@@ -3967,8 +3995,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-73-resonance-cascade",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Resonance Cascade",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Resonance Cascade",
 		display_name: "Resonance Cascade",
 		description:
 			"Release a catastrophic sonic detonation centered on yourself. Each creature within 30 feet (except you) must make a DC 16 Vitality save: 6d8 thunder damage and stunned until end of its next turn on failure, half damage on success. All glass within range shatters.",
@@ -4024,8 +4052,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-74-dimensional-anchor",
-        classes: ["Mage", "Contractor", "Technomancer"],
-        name: "Dimensional Anchor",
+		classes: ["Mage", "Contractor", "Technomancer"],
+		name: "Dimensional Anchor",
 		display_name: "Dimensional Anchor",
 		description:
 			"Launch a mana anchor that pins a creature to its current plane. Make a ranged spell attack. On a hit, the target is barred from teleportation, plane shifting, gate travel, and all extradimensional movement for the duration. If it attempts any such effect, it takes 4d6 force damage.",
@@ -4078,8 +4106,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-75-death-s-harvest",
-        classes: ["Revenant", "Idol"],
-        name: "Death's Harvest",
+		classes: ["Revenant", "Idol"],
+		name: "Death's Harvest",
 		display_name: "Death's Harvest",
 		description:
 			"Exhale a torrent of concentrated entropy in a 30-foot cone. Each creature in the area makes a DC 16 Vitality save: 6d8 necrotic on failure, half on success. For each creature reduced to 0 HP by this spell, you regain 2d8 hit points.",
@@ -4135,8 +4163,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-76-oath-aura",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Oath Aura",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Oath Aura",
 		display_name: "Oath Aura",
 		description:
 			"Radiate your oath's authority. For the duration, you and all friendly creatures within 30 feet add your Presence modifier (minimum +1) to all saving throws. You are also immune to being frightened while concentrating on this spell.",
@@ -4191,8 +4219,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-77-phantom-swarm",
-        classes: ["Esper", "Revenant", "Contractor", "Idol"],
-        name: "Phantom Swarm",
+		classes: ["Esper", "Revenant", "Contractor", "Idol"],
+		name: "Phantom Swarm",
 		display_name: "Phantom Swarm",
 		description:
 			"Manifest three illusory copies of yourself that occupy your space and mirror your movements. Attacks against you randomly target you or a duplicate (d4: 1-3 hits duplicate, 4 hits you). Each duplicate has 1 HP, AC 14, and can deliver melee attacks dealing 1d8 psychic damage using your spell attack modifier.",
@@ -4247,8 +4275,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-78-gate-ward",
-        classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
-        name: "Gate Ward",
+		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		name: "Gate Ward",
 		display_name: "Gate Ward",
 		description:
 			"Erect a translucent 20-foot radius dome at a point within range. For the duration, no creature can teleport into or out of the area, and summoning effects within the dome fail. Creatures inside gain advantage on saves against conjuration spells.",
@@ -4309,8 +4337,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-79-mana-cannon",
-        classes: ["Mage", "Esper", "Technomancer"],
-        name: "Mana Cannon",
+		classes: ["Mage", "Esper", "Technomancer"],
+		name: "Mana Cannon",
 		display_name: "Mana Cannon",
 		description:
 			"Channel maximum output through your focus device and fire a concentrated beam of force at one creature. The target makes a DC 16 Agility save: 6d10 force damage on failure, half on success. If the target fails by 5 or more, it's also knocked prone and stunned until end of its next turn.",
@@ -4372,8 +4400,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-80-enthralling-performance",
-        classes: ["Esper", "Idol"],
-        name: "Enthralling Performance",
+		classes: ["Esper", "Idol"],
+		name: "Enthralling Performance",
 		display_name: "Enthralling Performance",
 		description:
 			"Begin a captivating performance that overwhelms the senses. Up to 5 creatures within 60 feet that can hear you must make a DC 16 Presence save or be charmed for the duration. Charmed creatures regard you as a trusted friend and won't attack you. They can repeat the save if harmed.",
@@ -4430,8 +4458,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-81-pact-gate",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Pact Gate",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Pact Gate",
 		display_name: "Pact Gate",
 		description:
 			"Open two linked portals within range. Willing creatures can move between them freely. Attacks and spells can pass through as if the spaces were adjacent. Unwilling creatures forced through must make a DC 16 Agility save or take 4d6 force damage from spatial shearing.",
@@ -4487,8 +4515,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-82-thorn-fortress",
-        classes: ["Summoner", "Contractor"],
-        name: "Thorn Fortress",
+		classes: ["Summoner", "Contractor"],
+		name: "Thorn Fortress",
 		display_name: "Thorn Fortress",
 		description:
 			"Conjure a thicket of razor-sharp gate-flora in a 20-foot radius centered on a point within range. The area becomes difficult terrain. Each creature entering the area or starting its turn there must make a DC 15 Agility save: 3d6 piercing on failure, half on success.",
@@ -4554,8 +4582,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-83-mana-storm",
-        classes: ["Mage"],
-        name: "Mana Storm",
+		classes: ["Mage"],
+		name: "Mana Storm",
 		display_name: "Mana Storm",
 		description:
 			"Unleash a cataclysmic sphere of raw mana at a point within range. Each creature in a 40-foot radius must make a DC 17 Agility save: 10d6 force damage on failure, half on success. Nonmagical objects are destroyed. The blast leaves a temporary dead-mana zone for 1 round.",
@@ -4611,8 +4639,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-84-raise-gate-dead",
-        classes: ["Revenant", "Contractor", "Idol"],
-        name: "Raise Gate Dead",
+		classes: ["Revenant", "Contractor", "Idol"],
+		name: "Raise Gate Dead",
 		display_name: "Raise Gate Dead",
 		description:
 			"Touch a creature that died within the last 10 days and restore it to life with 1 hit point. The soul must be willing and free to return. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks, decreasing by 1 every 24 hours until eliminated.",
@@ -4664,8 +4692,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-85-pact-dominion",
-        classes: ["Mage", "Esper", "Contractor", "Idol"],
-        name: "Pact Dominion",
+		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		name: "Pact Dominion",
 		display_name: "Pact Dominion",
 		description:
 			"Channel your patron's will directly into a creature's mind. The target makes a DC 17 Presence save. On failure, it is dominated for the duration: you use your action to issue commands and the target obeys to the best of its ability. It repeats the save each time it takes damage.",
@@ -4719,8 +4747,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-86-sonic-annihilation",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Sonic Annihilation",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Sonic Annihilation",
 		display_name: "Sonic Annihilation",
 		description:
 			"Release a devastating wave of amplified harmonic destruction in a 60-foot cone. Each creature must make a DC 17 Vitality save: 8d8 thunder damage, deafened for 1 minute, and stunned until end of their next turn on failure. Half damage and deafened only on success.",
@@ -4776,8 +4804,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-87-absolute-judgment",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Absolute Judgment",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Absolute Judgment",
 		display_name: "Absolute Judgment",
 		description:
 			"Call down a column of the Absolute's judgment on a creature within range. The target makes a DC 17 Vitality save: 8d8 radiant damage on failure (10d8 against undead and fiend-type anomalies), half on success. On failure, the target is also blinded until end of its next turn.",
@@ -4833,8 +4861,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-88-predator-s-web",
-        classes: ["Mage", "Summoner", "Stalker"],
-        name: "Predator's Web",
+		classes: ["Mage", "Summoner", "Stalker"],
+		name: "Predator's Web",
 		display_name: "Predator's Web",
 		description:
 			"Spread a 40-foot cube of near-invisible mana-wire at a point within range. Creatures entering the area must make a DC 17 Agility save or be restrained. Restrained creatures take 4d6 force damage at the start of each turn. They can repeat the save at the end of each turn to escape.",
@@ -4889,8 +4917,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-89-mass-circuit-boost",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Mass Circuit Boost",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Mass Circuit Boost",
 		display_name: "Mass Circuit Boost",
 		description:
 			"Overclock up to 6 willing creatures' mana circuits simultaneously. For the duration, each target gains +2 AC, advantage on Agility saves, +10 feet movement speed, and can take one additional action on each turn (Attack [one attack only], Dash, Disengage, Hide, or Use Object).",
@@ -4945,8 +4973,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-90-gate-fissure",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Gate Fissure",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Gate Fissure",
 		display_name: "Gate Fissure",
 		description:
 			"Tear a rift in local space-time creating a 60-foot long, 10-foot wide, 20-foot deep fissure. Creatures in the area when it opens must make a DC 17 Agility save or fall in, taking 6d6 force damage. The fissure is impassable terrain. Creatures can climb out with a DC 15 Athletics check.",
@@ -5004,8 +5032,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-91-restoration-chorus",
-        classes: ["Mage", "Idol", "Herald", "Technomancer", "Summoner", "Holy Knight"],
-        name: "Restoration Chorus",
+		classes: [
+			"Mage",
+			"Idol",
+			"Herald",
+			"Technomancer",
+			"Summoner",
+			"Holy Knight",
+		],
+		name: "Restoration Chorus",
 		display_name: "Restoration Chorus",
 		description:
 			"Broadcast a restorative harmonic across the mana-lattice, targeting up to 6 creatures within range. Each regains 3d8 + your spellcasting modifier HP. You can also purge one condition from each target: poisoned, blinded, or deafened.",
@@ -5058,8 +5093,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-92-psionic-shockwave",
-        classes: ["Mage", "Esper", "Idol"],
-        name: "Psionic Shockwave",
+		classes: ["Mage", "Esper", "Idol"],
+		name: "Psionic Shockwave",
 		display_name: "Psionic Shockwave",
 		description:
 			"Release a devastating omnidirectional burst of psychic energy. Each creature within 60 feet must make a DC 17 Presence save: 8d6 psychic damage and stunned until end of its next turn on failure, half damage on success. Allies are not exempt unless you exclude them (up to 5).",
@@ -5117,8 +5152,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-93-arc-cascade",
-        classes: ["Mage", "Technomancer"],
-        name: "Arc Cascade",
+		classes: ["Mage", "Technomancer"],
+		name: "Arc Cascade",
 		display_name: "Arc Cascade",
 		description:
 			"Discharge a mana-charged bolt at a creature within range. DC 17 Agility save: 10d8 lightning on failure, half on success. The bolt then arcs through the mana-lattice to up to 3 additional creatures within 30 feet of the first; each saves for 5d8.",
@@ -5182,8 +5217,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-94-entropy-field",
-        classes: ["Revenant", "Idol"],
-        name: "Entropy Field",
+		classes: ["Revenant", "Idol"],
+		name: "Entropy Field",
 		display_name: "Entropy Field",
 		description:
 			"Generate a persistent field of accelerated entropy. Each hostile creature that starts its turn in the 40-foot radius must make a DC 17 Vitality save: 6d6 necrotic on failure, half on success. All healing effects within the area are halved for the duration.",
@@ -5249,8 +5284,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-95-resonance-symphony",
-        classes: ["Esper", "Idol"],
-        name: "Resonance Symphony",
+		classes: ["Esper", "Idol"],
+		name: "Resonance Symphony",
 		display_name: "Resonance Symphony",
 		description:
 			"Perform an overwhelming symphonic broadcast that empowers every ally within 90 feet. For the duration, allies gain +3 to attack rolls, saving throws, and AC, and are immune to being frightened or charmed. Enemies that start their turn in the area have disadvantage on attack rolls.",
@@ -5309,8 +5344,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-96-absolute-barrier",
-        classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Absolute Barrier",
+		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Absolute Barrier",
 		display_name: "Absolute Barrier",
 		description:
 			"Channel the full protective mandate of the Absolute. For the duration, all friendly creatures within 30 feet gain resistance to all damage. However, while concentrating on this spell, you cannot make attacks or cast damaging spells.",
@@ -5371,8 +5406,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-97-disintegration-beam",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Disintegration Beam",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Disintegration Beam",
 		display_name: "Disintegration Beam",
 		description:
 			"Fire a thin green ray of annihilation at a creature within range. Make a ranged spell attack. On a hit, the target takes 10d6+40 force damage. If this reduces the target to 0 HP, it is completely disintegrated along with nonmagical items it carries.",
@@ -5428,8 +5463,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-98-nightmare-pact",
-        classes: ["Esper", "Contractor", "Idol", "Stalker", "Technomancer"],
-        name: "Nightmare Pact",
+		classes: ["Esper", "Contractor", "Idol", "Stalker", "Technomancer"],
+		name: "Nightmare Pact",
 		display_name: "Nightmare Pact",
 		description:
 			"Trap a creature's consciousness in a waking nightmare constructed by your patron. The target must make a DC 17 Presence save at the start of each of its turns: 6d10 psychic damage and paralyzed on failure. On success, the nightmare breaks and the spell ends.",
@@ -5495,8 +5530,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-99-gate-behemoth",
-        classes: ["Esper", "Summoner", "Contractor"],
-        name: "Gate Behemoth",
+		classes: ["Esper", "Summoner", "Contractor"],
+		name: "Gate Behemoth",
 		display_name: "Gate Behemoth",
 		description:
 			"Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning). The behemoth acts on its own initiative and obeys your mental commands. It vanishes at 0 HP or when the spell ends.",
@@ -5549,8 +5584,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-100-umbral-assassination",
-        classes: ["Mage", "Esper", "Idol"],
-        name: "Umbral Assassination",
+		classes: ["Mage", "Esper", "Idol"],
+		name: "Umbral Assassination",
 		display_name: "Umbral Assassination",
 		description:
 			"Vanish into the umbral layer of mana-space. You are invisible for the duration. The first attack you make deals an extra 8d6 damage (your choice of type). After attacking, you immediately teleport up to 30 feet to a space in dim light or darkness.",
@@ -5605,8 +5640,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-101-absolute-wrath",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Absolute Wrath",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Absolute Wrath",
 		display_name: "Absolute Wrath",
 		description:
 			"Channel the Absolute's fury into a blinding detonation of radiant force. Each creature within 60 feet must make a DC 18 Vitality save: 12d6 radiant on failure, half on success. Undead and fiend-type anomalies automatically take maximum damage without a save.",
@@ -5668,8 +5703,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-102-temporal-fracture",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Temporal Fracture",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Temporal Fracture",
 		display_name: "Temporal Fracture",
 		description:
 			"Fracture your personal timeline, existing in two moments simultaneously. You immediately take two full turns (each with action, bonus action, movement, and reaction). After both turns resolve, you are incapacitated and your speed is 0 until the end of your next normal turn as your timeline resyncs.",
@@ -5732,8 +5767,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-103-mana-circuit-harvest",
-        classes: ["Mage", "Revenant", "Idol", "Stalker", "Technomancer"],
-        name: "Mana-Circuit Harvest",
+		classes: ["Mage", "Revenant", "Idol", "Stalker", "Technomancer"],
+		name: "Mana-Circuit Harvest",
 		display_name: "Mana-Circuit Harvest",
 		description:
 			"As a reaction when a creature within 60 feet dies, harvest its collapsing mana circuit into a stabilized echo-cage. While stored, you can (up to 6 times): query the echo for information (it must answer truthfully), drain 2d8 HP from it to heal yourself, or channel its residual energy to cast a spell of 5th level or lower without a slot.",
@@ -5786,8 +5821,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-104-patron-s-avatar",
-        classes: ["Mage", "Summoner", "Contractor", "Idol"],
-        name: "Patron's Avatar",
+		classes: ["Mage", "Summoner", "Contractor", "Idol"],
+		name: "Patron's Avatar",
 		display_name: "Patron's Avatar",
 		description:
 			"Summon a partial manifestation of your pact entity. The avatar appears in an unoccupied space within range (AC 18, HP 120, multiattack: 2 at +10 for 3d8+6, flies 60 ft). It acts on its own initiative, following your general intent. It speaks in your patron's voice.",
@@ -5848,8 +5883,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-105-sonic-apocalypse",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Sonic Apocalypse",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Sonic Apocalypse",
 		display_name: "Sonic Apocalypse",
 		description:
 			"Unleash a reality-shaking wave of amplified harmonic destruction. Each creature in a 90-foot cone must make a DC 18 Vitality save: 12d8 thunder on failure, half on success. Creatures that fail are deafened (permanent until cured by Greater Restoration) and stunned for 1 round.",
@@ -5905,8 +5940,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-106-total-concealment",
-        classes: ["Mage", "Esper", "Idol", "Stalker"],
-        name: "Total Concealment",
+		classes: ["Mage", "Esper", "Idol", "Stalker"],
+		name: "Total Concealment",
 		display_name: "Total Concealment",
 		description:
 			"Become undetectable. You are invisible, inaudible, and immune to divination. Truesight cannot see you. See Invisibility fails. If you attack or cast a spell, you are revealed until the end of your next turn but the spell continues.",
@@ -5961,8 +5996,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-107-gate-leviathan",
-        classes: ["Esper", "Summoner", "Contractor"],
-        name: "Gate Leviathan",
+		classes: ["Esper", "Summoner", "Contractor"],
+		name: "Gate Leviathan",
 		display_name: "Gate Leviathan",
 		description:
 			"Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures). The leviathan obeys mental commands and acts on its own initiative.",
@@ -6017,8 +6052,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-108-psionic-fortress",
-        classes: ["Mage", "Esper", "Contractor", "Idol"],
-        name: "Psionic Fortress",
+		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		name: "Psionic Fortress",
 		display_name: "Psionic Fortress",
 		description:
 			"Erect an impenetrable psionic barrier in a 30-foot radius. Allies within are immune to psychic damage and cannot be charmed, frightened, stunned, or possessed. Any hostile psychic or enchantment effect that would enter the area is automatically dispelled.",
@@ -6079,8 +6114,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-109-orbital-strike",
-        classes: ["Mage", "Contractor", "Technomancer"],
-        name: "Orbital Strike",
+		classes: ["Mage", "Contractor", "Technomancer"],
+		name: "Orbital Strike",
 		display_name: "Orbital Strike",
 		description:
 			"Call down a precision mana-beam from a deployed high-altitude relay. Each creature in a 40-foot radius must make a DC 18 Agility save: 12d6 fire damage on failure, half on success. Structures and objects in the area take double damage. Creatures have no cover benefit from above.",
@@ -6138,8 +6173,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-110-absolute-sunburst",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Absolute Sunburst",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Absolute Sunburst",
 		display_name: "Absolute Sunburst",
 		description:
 			"Call forth a miniature sun at a point within range. 12d8 radiant damage (DC 19 Vitality, half on success) in a 60-foot radius. Magical darkness in the area is dispelled. Undead have disadvantage on the save.",
@@ -6203,8 +6238,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-111-reality-rewrite",
-        classes: ["Mage", "Esper", "Summoner", "Stalker", "Technomancer"],
-        name: "Reality Rewrite",
+		classes: ["Mage", "Esper", "Summoner", "Stalker", "Technomancer"],
+		name: "Reality Rewrite",
 		display_name: "Reality Rewrite",
 		description:
 			"Rewrite a creature's fundamental form. The target must make a DC 19 Presence save or be transformed into a beast of CR 1 or lower for the duration. The target retains its HP but gains the beast's statistics. If reduced to 0 HP in beast form, it reverts with excess damage carrying over.",
@@ -6261,8 +6296,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-112-death-sovereign",
-        classes: ["Revenant", "Idol", "Holy Knight"],
-        name: "Death Sovereign",
+		classes: ["Revenant", "Idol", "Holy Knight"],
+		name: "Death Sovereign",
 		display_name: "Death Sovereign",
 		description:
 			"Become an avatar of entropy. An aura of death extends 60 feet. Hostile creatures starting their turn in the aura make DC 19 Vitality save: 8d8 necrotic on failure, half on success. You heal for half total damage dealt. Creatures killed by the aura rise as zombies under your control at the start of your next turn.",
@@ -6324,8 +6359,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-113-total-domination",
-        classes: ["Esper", "Idol"],
-        name: "Total Domination",
+		classes: ["Esper", "Idol"],
+		name: "Total Domination",
 		display_name: "Total Domination",
 		description:
 			"Seize total control of a creature's mind, overwriting its consciousness. The target must make a DC 19 Presence save. On failure, it is dominated and fights on your behalf using all its abilities. You maintain telepathic control. It repeats the save only when it takes damage.",
@@ -6380,8 +6415,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-114-absolute-genesis",
-        classes: ["Mage", "Summoner"],
-        name: "Absolute Genesis",
+		classes: ["Mage", "Summoner"],
+		name: "Absolute Genesis",
 		display_name: "Absolute Genesis",
 		description:
 			"Invoke the Absolute's primordial creative force. You permanently reshape terrain within a 1-mile radius: raise or lower ground by 100 feet, create or destroy forests, divert rivers, and establish a self-sustaining ecosystem. The change is permanent and indistinguishable from natural terrain.",
@@ -6440,8 +6475,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-115-mana-singularity",
-        classes: ["Mage", "Technomancer"],
-        name: "Mana Singularity",
+		classes: ["Mage", "Technomancer"],
+		name: "Mana Singularity",
 		display_name: "Mana Singularity",
 		description:
 			"Create a point of infinite mana density at a location within range. A 40-foot radius sphere of crushing force appears. Each creature starting its turn in the area makes DC 20 Strength save: 10d10 force damage and pulled 30 feet toward center on failure. Half damage and no pull on success. Nonmagical objects are destroyed.",
@@ -6505,8 +6540,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-116-final-oath",
-        classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
-        name: "Final Oath",
+		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		name: "Final Oath",
 		display_name: "Final Oath",
 		description:
 			"Invoke the ultimate expression of your oath, releasing every particle of mana in your body. All hostile creatures within 120 feet take 20d6 radiant damage (DC 20 Vitality, half on success). All allies in range are fully healed of HP, conditions, and diseases. After resolution, you drop to 0 HP.",
@@ -6568,8 +6603,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-117-absolute-silence",
-        classes: ["Esper", "Idol"],
-        name: "Absolute Silence",
+		classes: ["Esper", "Idol"],
+		name: "Absolute Silence",
 		display_name: "Absolute Silence",
 		description:
 			"Project absolute psychic silence across a 1-mile radius. Every creature in range must make a DC 20 Presence save or fall unconscious for the duration. Creatures that succeed are stunned for 1 round. Unconscious creatures can repeat the save if they take damage.",
@@ -6625,8 +6660,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-118-gate-colossus",
-        classes: ["Esper", "Summoner", "Contractor"],
-        name: "Gate Colossus",
+		classes: ["Esper", "Summoner", "Contractor"],
+		name: "Gate Colossus",
 		display_name: "Gate Colossus",
 		description:
 			"Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar). The colossus obeys your mental commands. When it falls, the rift seals.",
@@ -6685,8 +6720,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-119-eternal-contract",
-        classes: ["Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Eternal Contract",
+		classes: ["Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Eternal Contract",
 		display_name: "Eternal Contract",
 		description:
 			"Touch a creature and invoke the terminal clause of your pact. If the target has fewer than 100 HP, it dies (DC 20 Presence save negates). If it has 100 HP or more, it takes 10d10 necrotic damage (save for half). Creatures killed cannot be resurrected except by Wish or divine intervention.",
@@ -6747,8 +6782,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-120-total-recall",
-        classes: ["Mage", "Contractor", "Technomancer"],
-        name: "Total Recall",
+		classes: ["Mage", "Contractor", "Technomancer"],
+		name: "Total Recall",
 		display_name: "Total Recall",
 		description:
 			"Reset your mana circuit to its fully-charged state. You regain all expended spell slots of 5th level or lower and all uses of class features that normally recharge on a short rest. This spell cannot be cast again until you complete a long rest.",
@@ -6801,8 +6836,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-121-entropy-horizon",
-        classes: ["Mage", "Revenant", "Idol"],
-        name: "Entropy Horizon",
+		classes: ["Mage", "Revenant", "Idol"],
+		name: "Entropy Horizon",
 		display_name: "Entropy Horizon",
 		description:
 			"Become the epicenter of absolute entropy. Each hostile creature that starts its turn within 120 feet makes DC 20 Vitality save: 10d10 necrotic on failure, half on success. All healing within the area is completely suppressed. For each creature killed, subsequent damage rolls gain +1d10.",
@@ -6864,8 +6899,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-122-omniscient-scan",
-        classes: ["Mage", "Technomancer"],
-        name: "Omniscient Scan",
+		classes: ["Mage", "Technomancer"],
+		name: "Omniscient Scan",
 		display_name: "Omniscient Scan",
 		description:
 			"Overload your sensory systems with absolute analytical clarity. You instantly know the exact location, type, CR, current HP, conditions, and active magical effects of every creature within 1 mile. For the next 24 hours, you cannot be surprised and have advantage on initiative rolls.",
@@ -6924,8 +6959,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-123-gate-resonance-spike",
-        classes: ["Mage", "Summoner", "Contractor", "Idol", "Stalker"],
-        name: "Gate Resonance Spike",
+		classes: ["Mage", "Summoner", "Contractor", "Idol", "Stalker"],
+		name: "Gate Resonance Spike",
 		display_name: "Gate Resonance Spike",
 		description:
 			"Fire a pulse calibrated to gate-frequency mana. On hit: 2d8 force damage (3d8 against gate-anomalies). The impact leaves a traceable mana-signature on the target for 1 minute, granting advantage on Stalker tracking checks against it.",
@@ -6970,8 +7005,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-124-lattice-feedback-loop",
-        classes: ["Mage", "Idol", "Herald", "Technomancer", "Summoner", "Holy Knight"],
-        name: "Lattice Feedback Loop",
+		classes: [
+			"Mage",
+			"Idol",
+			"Herald",
+			"Technomancer",
+			"Summoner",
+			"Holy Knight",
+		],
+		name: "Lattice Feedback Loop",
 		display_name: "Lattice Feedback Loop",
 		description:
 			"When struck by a spell, route incoming mana through your circuit's feedback buffer. Reduce damage taken by 1d6+Intelligence modifier. If you reduce more than 10 damage, the original caster must make a DC 13 Vitality save or lose concentration.",
@@ -7016,8 +7058,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-125-mana-thread-snare",
-        classes: ["Mage", "Revenant", "Summoner", "Stalker"],
-        name: "Mana Thread Snare",
+		classes: ["Mage", "Revenant", "Summoner", "Stalker"],
+		name: "Mana Thread Snare",
 		display_name: "Mana Thread Snare",
 		description:
 			"Launch an invisible mana-filament that bonds to a creature within range. DC 13 Agility save to avoid. While connected, you always know the target's exact position — it cannot benefit from invisibility, cover, or concealment against you. The thread breaks if the target moves more than 120 feet away.",
@@ -7065,8 +7107,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-126-awakening-surge",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Awakening Surge",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Awakening Surge",
 		display_name: "Awakening Surge",
 		description:
 			"Touch a willing creature and force-awaken dormant capacity in their mana circuit. For the duration, one ability score of your choice increases by 2 (max 22). When the spell ends, the target gains 1 level of exhaustion as the circuit cools.",
@@ -7110,8 +7152,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-127-rift-echo",
-        classes: ["Mage", "Contractor", "Stalker"],
-        name: "Rift Echo",
+		classes: ["Mage", "Contractor", "Stalker"],
+		name: "Rift Echo",
 		display_name: "Rift Echo",
 		description:
 			"Emit a low-frequency mana pulse that bounces off gate-dimensional boundaries. You instantly learn the location of all anomalies, traps, concealed passages, and dimensional weak points within 60 feet. You also learn the local dimensional stability rating (stable, unstable, collapsing).",
@@ -7157,8 +7199,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-128-circuit-overload",
-        classes: ["Mage", "Technomancer"],
-        name: "Circuit Overload",
+		classes: ["Mage", "Technomancer"],
+		name: "Circuit Overload",
 		display_name: "Circuit Overload",
 		description:
 			"Target a creature's mana circuit and inject a destabilizing charge. DC 14 Intelligence save: 3d8 lightning on failure and the target's next spell within 1 minute costs one additional slot level (a 3rd-level spell requires a 4th-level slot). Constructs and mana-devices take double damage.",
@@ -7205,8 +7247,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-129-patron-s-witness",
-        classes: ["Mage"],
-        name: "Patron's Witness",
+		classes: ["Mage"],
+		name: "Patron's Witness",
 		display_name: "Patron's Witness",
 		description:
 			"Open a two-way sensory channel with your patron entity. For the duration, you can perceive through your patron's awareness within a 1-mile radius, granting you advantage on Perception checks and initiative rolls. Your patron may offer cryptic tactical observations.",
@@ -7250,8 +7292,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-130-mana-siphon-strike",
-        classes: ["Mage", "Revenant"],
-        name: "Mana Siphon Strike",
+		classes: ["Mage", "Revenant"],
+		name: "Mana Siphon Strike",
 		display_name: "Mana Siphon Strike",
 		description:
 			"Channel entropic mana through a melee strike. On hit: 5d8 necrotic damage. You regain HP equal to half the damage dealt. If the target has mana-casting ability, you also recover one expended spell slot of 3rd level or lower.",
@@ -7299,8 +7341,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-131-gate-anchor",
-        classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
-        name: "Gate Anchor",
+		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		name: "Gate Anchor",
 		display_name: "Gate Anchor",
 		description:
 			"Anchor the local mana-lattice to prevent dimensional manipulation. Within a 30-foot radius: no creature can teleport, be summoned, or use dimensional travel. Gate-anomalies cannot phase between dimensional layers. Existing teleportation effects are suppressed.",
@@ -7344,8 +7386,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-132-idol-s-crescendo",
-        classes: ["Mage", "Esper", "Idol"],
-        name: "Idol's Crescendo",
+		classes: ["Mage", "Esper", "Idol"],
+		name: "Idol's Crescendo",
 		display_name: "Idol's Crescendo",
 		description:
 			"Build mana-resonance to a peak and release in a devastating harmonic burst. Enemies within 30 feet: DC 15 Presence save, 4d8 thunder on failure (half on success), charmed for 1 round on failure. Each ally in the area gains temporary HP equal to the damage dealt to the nearest enemy.",
@@ -7392,8 +7434,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-133-dimensional-pocket",
-        classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
-        name: "Dimensional Pocket",
+		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		name: "Dimensional Pocket",
 		display_name: "Dimensional Pocket",
 		description:
 			"Open a stable extradimensional pocket anchored to your mana circuit. The space is 4x4x4 feet and accessible through a shimmering portal in your palm. Objects placed inside have no weight to you. The pocket collapses harmlessly (ejecting contents) if you fall unconscious or die.",
@@ -7440,8 +7482,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-134-mana-circuit-splice",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Mana Circuit Splice",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Mana Circuit Splice",
 		display_name: "Mana Circuit Splice",
 		description:
 			"Splice a temporary mana pathway into a willing creature's circuit, granting it one spell slot of 3rd level or lower. The recipient can use this slot to cast any spell it has directly observed being cast within the last 24 hours, using your spellcasting modifier.",
@@ -7486,8 +7528,17 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-135-anomaly-cage",
-        classes: ["Mage", "Contractor", "Idol", "Herald", "Holy Knight", "Stalker", "Technomancer", "Summoner"],
-        name: "Anomaly Cage",
+		classes: [
+			"Mage",
+			"Contractor",
+			"Idol",
+			"Herald",
+			"Holy Knight",
+			"Stalker",
+			"Technomancer",
+			"Summoner",
+		],
+		name: "Anomaly Cage",
 		display_name: "Anomaly Cage",
 		description:
 			"Construct a cage of interlocking mana-barriers around a gate-type creature. DC 16 Presence save each round or remain trapped; the cage shrinks each round, dealing 2d8 radiant that increases by 1d8 per round. On a successful save, the creature breaks free.",
@@ -7534,8 +7585,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-136-rift-walk",
-        classes: ["Summoner", "Contractor"],
-        name: "Rift Walk",
+		classes: ["Summoner", "Contractor"],
+		name: "Rift Walk",
 		display_name: "Rift Walk",
 		description:
 			"Phase between the material plane and the adjacent gate-dimensional layer. As a bonus action each turn, you can shift layers. While in the gate-layer, you are invisible and incorporeal (can move through objects and creatures). You can't attack or cast offensive spells from the gate-layer. Shifting back ends the invisibility.",
@@ -7581,8 +7632,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-137-bureau-authority-override",
-        classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Technomancer"],
-        name: "Bureau Authority Override",
+		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Technomancer"],
+		name: "Bureau Authority Override",
 		display_name: "Bureau Authority Override",
 		description:
 			"Project an overwhelming aura of Bureau-sanctioned command authority through the mana-lattice. All hostile creatures within 60 feet: DC 17 Presence save. On failure, they must use their reaction to move toward you and have disadvantage on attacks against anyone other than you until the start of your next turn.",
@@ -7630,8 +7681,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-138-mana-storm-nexus",
-        classes: ["Mage"],
-        name: "Mana Storm Nexus",
+		classes: ["Mage"],
+		name: "Mana Storm Nexus",
 		display_name: "Mana Storm Nexus",
 		description:
 			"Detonate a mana-instability at a point within range, creating a swirling 20-foot radius nexus of raw mana-force. Creatures starting their turn in the area are pulled 10 feet toward the center and must make a DC 17 Agility save: 4d10 force on failure, half on success. You can move the nexus 30 feet as a bonus action.",
@@ -7680,8 +7731,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-139-lattice-severance",
-        classes: ["Mage", "Technomancer"],
-        name: "Lattice Severance",
+		classes: ["Mage", "Technomancer"],
+		name: "Lattice Severance",
 		display_name: "Lattice Severance",
 		description:
 			"Isolate a creature's mana circuit from the ambient lattice. DC 18 Intelligence save. On failure, the target is severed: it can't cast spells, use any mana-based ability, or benefit from magical items for the duration. It can repeat the save at the end of each turn.",
@@ -7729,8 +7780,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-140-gate-collapse",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Gate Collapse",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Gate Collapse",
 		display_name: "Gate Collapse",
 		description:
 			"Trigger a controlled collapse of local space-time in a 40-foot radius. DC 19 Agility save: 12d10 force on failure, half on success. All active gates, portals, summoning effects, and dimensional anchors within the area are permanently destroyed. The collapsed zone is difficult terrain for 24 hours.",
@@ -7777,8 +7828,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-141-s-rank-awakening",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "S-Rank Awakening",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "S-Rank Awakening",
 		display_name: "S-Rank Awakening",
 		description:
 			"Force your mana circuit past every safety limiter simultaneously. For 1 minute: all ability scores become 25, you gain 100 temporary HP, you're immune to all conditions, your speed doubles, and you gain an extra action each turn. When the spell ends, you gain 5 levels of exhaustion.",
@@ -7822,8 +7873,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-142-absolute-severance",
-        classes: ["Mage", "Revenant", "Idol", "Technomancer"],
-        name: "Absolute Severance",
+		classes: ["Mage", "Revenant", "Idol", "Technomancer"],
+		name: "Absolute Severance",
 		display_name: "Absolute Severance",
 		description:
 			"Channel the full entropy of your mana circuit into a single devastating touch. Melee spell attack: 14d8 necrotic. The target's HP maximum is reduced by the damage dealt (no save). If maximum HP reaches 0, the creature's mana circuit is permanently annihilated — it cannot be revived by any means short of an Absolute Edict.",
@@ -7870,8 +7921,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-143-quarantine-membrane",
-        classes: ["Mage", "Contractor", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Quarantine Membrane",
+		classes: [
+			"Mage",
+			"Contractor",
+			"Idol",
+			"Herald",
+			"Summoner",
+			"Holy Knight",
+		],
+		name: "Quarantine Membrane",
 		display_name: "Quarantine Membrane",
 		description:
 			"Project a shimmering dome of purified mana in a 20-foot radius. Gate-anomaly creatures cannot enter or pass through the barrier. Awakened creatures and mundane beings pass freely. Spells can cross the barrier normally.",
@@ -7917,8 +7975,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-144-mana-detonation-charge",
-        classes: ["Mage", "Esper"],
-        name: "Mana Detonation Charge",
+		classes: ["Mage", "Esper"],
+		name: "Mana Detonation Charge",
 		display_name: "Mana Detonation Charge",
 		description:
 			"Compress mana into a volatile charge and affix it to a surface. You set the trigger: proximity (creature within 5 feet), timer (1 round to 8 hours), or command word (you speak it within 120 feet). When triggered: 6d6 force in a 15-foot radius, DC 15 AGI save for half.",
@@ -7967,8 +8025,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-145-sympathetic-circuit",
-        classes: ["Mage", "Summoner", "Idol", "Herald", "Technomancer", "Holy Knight"],
-        name: "Sympathetic Circuit",
+		classes: [
+			"Mage",
+			"Summoner",
+			"Idol",
+			"Herald",
+			"Technomancer",
+			"Holy Knight",
+		],
+		name: "Sympathetic Circuit",
 		display_name: "Sympathetic Circuit",
 		description:
 			"Create a sympathetic resonance between up to 3 willing creatures' mana circuits. For the duration, when any linked creature takes damage, the total is divided equally among all linked creatures. When any linked creature receives magical healing, all others regain HP equal to half that healing.",
@@ -8012,8 +8077,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-146-anomaly-mimicry",
-        classes: ["Mage", "Esper", "Summoner", "Contractor", "Idol", "Technomancer"],
-        name: "Anomaly Mimicry",
+		classes: [
+			"Mage",
+			"Esper",
+			"Summoner",
+			"Contractor",
+			"Idol",
+			"Technomancer",
+		],
+		name: "Anomaly Mimicry",
 		display_name: "Anomaly Mimicry",
 		description:
 			"Overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly. You appear to be an anomaly of CR equal to your character level. Gate-anomalies treat you as one of their own (unless you attack them). Awakened creatures who observe you can make a DC 16 Intelligence save to see through the disguise.",
@@ -8059,8 +8131,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-147-unstable-rift-tear",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Unstable Rift Tear",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Unstable Rift Tear",
 		display_name: "Unstable Rift Tear",
 		description:
 			"Tear a 10-foot unstable dimensional rift at a point within range. At the start of each creature's turn within 30 feet, it's pulled 15 feet toward the rift (DC 16 Strength save to resist). Creatures entering the rift or starting their turn inside: DC 16 AGI save, 4d8 force on failure, half on success.",
@@ -8107,8 +8179,16 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-148-ghost-protocol",
-        classes: ["Mage", "Esper", "Summoner", "Contractor", "Idol", "Stalker", "Technomancer"],
-        name: "Ghost Protocol",
+		classes: [
+			"Mage",
+			"Esper",
+			"Summoner",
+			"Contractor",
+			"Idol",
+			"Stalker",
+			"Technomancer",
+		],
+		name: "Ghost Protocol",
 		display_name: "Ghost Protocol",
 		description:
 			"Completely suppress your mana-circuit's broadcast signature. For the duration, you are undetectable by any mana-based detection (divination spells, mana-sight, Anomaly Scan, gate-creature tremorsense). You remain visible to normal senses.",
@@ -8152,8 +8232,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-149-pact-renegotiation",
-        classes: ["Mage", "Esper", "Contractor", "Idol"],
-        name: "Pact Renegotiation",
+		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		name: "Pact Renegotiation",
 		display_name: "Pact Renegotiation",
 		description:
 			"Force-renegotiate the terms of your patron pact for 1 minute, drawing more power than originally agreed. All pact-granted abilities deal +2d6 damage of your pact's damage type, and pact spells cost 1 fewer slot level (minimum 1). After the spell ends, your patron extracts a favour (Warden determines the cost).",
@@ -8198,8 +8278,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-150-mana-cascade-failure",
-        classes: ["Mage", "Esper", "Technomancer"],
-        name: "Mana Cascade Failure",
+		classes: ["Mage", "Esper", "Technomancer"],
+		name: "Mana Cascade Failure",
 		display_name: "Mana Cascade Failure",
 		description:
 			"Trigger a catastrophic feedback cascade in a creature's mana circuit. DC 17 Intelligence save: 8d6 force on failure and the target loses its highest remaining spell slot. If the target has no mana-casting ability, it's stunned until the end of its next turn instead.",
@@ -8246,8 +8326,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-151-gate-layer-overlap",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Gate-Layer Overlap",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Gate-Layer Overlap",
 		display_name: "Gate-Layer Overlap",
 		description:
 			"Force the local gate-dimensional layer to overlap with the material plane. Within 30 feet: the terrain warps (difficult terrain for non-Awakened), gravity fluctuates (ranged attacks have disadvantage), and Summoner-class creatures gain +2 AC and advantage on saves. Gate-anomalies in the area become confused (50% chance of attacking nearest creature instead of intended target).",
@@ -8291,8 +8371,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-152-echo-split",
-        classes: ["Mage", "Esper", "Idol", "Stalker", "Technomancer"],
-        name: "Echo Split",
+		classes: ["Mage", "Esper", "Idol", "Stalker", "Technomancer"],
+		name: "Echo Split",
 		display_name: "Echo Split",
 		description:
 			"Split your mana-circuit output into two bodies: yourself and a perfect echo. The echo has your stats but half your current HP. It acts on your initiative and can take all normal actions. At the start of each turn, you choose which body is 'you' — the other is the echo. If either body drops to 0 HP, it vanishes and the spell ends.",
@@ -8336,8 +8416,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-153-absolute-mandate",
-        classes: ["Mage", "Esper", "Idol", "Technomancer"],
-        name: "Absolute Mandate",
+		classes: ["Mage", "Esper", "Idol", "Technomancer"],
+		name: "Absolute Mandate",
 		display_name: "Absolute Mandate",
 		description:
 			"Channel the Absolute's authority through the mana-lattice as an irrefutable command. All hostile creatures within 60 feet: DC 18 Presence save. On failure, they must obey one simple command: drop weapons, kneel, flee, or freeze. The effect lasts 1 round.",
@@ -8383,8 +8463,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-154-resonance-overwrite",
-        classes: ["Mage", "Summoner", "Idol", "Technomancer"],
-        name: "Resonance Overwrite",
+		classes: ["Mage", "Summoner", "Idol", "Technomancer"],
+		name: "Resonance Overwrite",
 		display_name: "Resonance Overwrite",
 		description:
 			"Rewrite a willing creature's mana-circuit at the fundamental level. Choose one: grant resistance to a damage type, change one saving throw proficiency to a different ability score, or add proficiency in one skill. The change lasts for 1 hour.",
@@ -8428,8 +8508,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-155-circuit-annihilation-wave",
-        classes: ["Mage", "Idol", "Herald", "Technomancer", "Summoner", "Holy Knight"],
-        name: "Circuit Annihilation Wave",
+		classes: [
+			"Mage",
+			"Idol",
+			"Herald",
+			"Technomancer",
+			"Summoner",
+			"Holy Knight",
+		],
+		name: "Circuit Annihilation Wave",
 		display_name: "Circuit Annihilation Wave",
 		description:
 			"Unleash a purging wave of raw mana that annihilates all magical activity in a 60-foot cone. DC 19 Vitality save: 12d8 force on failure, half on success. All active spell effects on creatures in the area are immediately dispelled. Magical items carried by affected creatures are suppressed for 1 minute.",
@@ -8476,8 +8563,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-156-dimensional-lockdown",
-        classes: ["Mage", "Contractor"],
-        name: "Dimensional Lockdown",
+		classes: ["Mage", "Contractor"],
+		name: "Dimensional Lockdown",
 		display_name: "Dimensional Lockdown",
 		description:
 			"Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force. For 24 hours: no new gates can open, no portals can form, all dimensional travel fails, and existing gates are suppressed. This spell requires 10 minutes of preparation and a mana-crystal worth 1000 GP.",
@@ -8522,8 +8609,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-157-mana-circuit-genesis",
-        classes: ["Mage", "Summoner", "Technomancer"],
-        name: "Mana Circuit Genesis",
+		classes: ["Mage", "Summoner", "Technomancer"],
+		name: "Mana Circuit Genesis",
 		display_name: "Mana Circuit Genesis",
 		description:
 			"The ultimate act of creation: force-awaken a latent mana circuit in a mundane creature. After 8 hours of sustained mana infusion, the target permanently becomes an Awakened with one level in a caster job of your choosing. The target retains all existing abilities and gains spellcasting. This spell can only be cast once per year.",
@@ -8567,8 +8654,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-158-mana-pulse-grenade",
-        classes: ["Mage", "Contractor"],
-        name: "Mana Pulse Grenade",
+		classes: ["Mage", "Contractor"],
+		name: "Mana Pulse Grenade",
 		display_name: "Mana Pulse Grenade",
 		description:
 			"Lob a compressed mana charge that detonates on impact. Each creature in a 10-foot radius: DC 13 AGI save, 2d6 force on failure, half on success. Active spell effects of 1st level or lower in the area are automatically dispelled.",
@@ -8617,8 +8704,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-159-lattice-anchor",
-        classes: ["Mage", "Contractor", "Technomancer"],
-        name: "Lattice Anchor",
+		classes: ["Mage", "Contractor", "Technomancer"],
+		name: "Lattice Anchor",
 		display_name: "Lattice Anchor",
 		description:
 			"As a reaction when a creature within 30 feet is targeted by a teleportation or banishment effect, anchor their mana circuit to the local lattice. The displacement fails automatically if it's 3rd level or lower; otherwise the target gains advantage on its save.",
@@ -8664,8 +8751,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-160-ember-trail",
-        classes: ["Mage"],
-        name: "Ember Trail",
+		classes: ["Mage"],
+		name: "Ember Trail",
 		display_name: "Ember Trail",
 		description:
 			"Ignite residual mana in your footsteps. As you move, you leave a 5-foot-wide trail of thermal mana that lasts for the duration. Creatures entering the trail or starting their turn in it: DC 13 AGI save, 1d6 fire on failure.",
@@ -8712,8 +8799,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-161-mana-thorn-barrier",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Mana Thorn Barrier",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Mana Thorn Barrier",
 		display_name: "Mana Thorn Barrier",
 		description:
 			"Summon a dense wall of crystallized gate-flora thorns up to 20 feet long, 10 feet high, and 5 feet thick. It's difficult terrain and provides three-quarters cover. A creature forcing through takes 2d4 piercing per 5 feet of movement within the wall.",
@@ -8762,8 +8849,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-162-mana-tripwire-network",
-        classes: ["Mage", "Esper"],
-        name: "Mana Tripwire Network",
+		classes: ["Mage", "Esper"],
+		name: "Mana Tripwire Network",
 		display_name: "Mana Tripwire Network",
 		description:
 			"Deploy a network of invisible mana-conductive tripwires across a 30-foot area. The first hostile creature to enter the area triggers the network: DC 14 AGI save, 2d8 lightning on failure, restrained until end of its next turn. You receive a telepathic alert.",
@@ -8812,8 +8899,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-163-idol-s-entrance",
-        classes: ["Esper", "Idol"],
-        name: "Idol's Entrance",
+		classes: ["Esper", "Idol"],
+		name: "Idol's Entrance",
 		display_name: "Idol's Entrance",
 		description:
 			"Make an entrance so commanding that every creature within 30 feet turns to face you. Allies are drawn but unaffected. Enemies: DC 14 PRS save or fixated — they can only target you with attacks until end of your next turn. You gain +2 AC against fixated creatures.",
@@ -8861,8 +8948,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-164-pressure-wave",
-        classes: ["Mage"],
-        name: "Pressure Wave",
+		classes: ["Mage"],
+		name: "Pressure Wave",
 		display_name: "Pressure Wave",
 		description:
 			"Release a concentric wave of kinetic mana-force. Each creature within 20 feet: DC 15 STR save, 4d8 force and pushed 15 feet on failure, half damage on success. Unattended objects are flung to the edge of the area.",
@@ -8911,8 +8998,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-165-gate-flora-eruption",
-        classes: ["Summoner", "Contractor"],
-        name: "Gate Flora Eruption",
+		classes: ["Summoner", "Contractor"],
+		name: "Gate Flora Eruption",
 		display_name: "Gate Flora Eruption",
 		description:
 			"Trigger an explosive eruption of gate-dimension flora at a point within range. A 20-foot radius becomes difficult terrain choked with razor-edged crystal vines. Creatures starting their turn there: 3d6 piercing and restrained (DC 15 STR to escape as an action).",
@@ -8961,8 +9048,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-166-pact-brand",
-        classes: ["Mage", "Esper", "Contractor", "Idol", "Technomancer"],
-        name: "Pact Brand",
+		classes: ["Mage", "Esper", "Contractor", "Idol", "Technomancer"],
+		name: "Pact Brand",
 		display_name: "Pact Brand",
 		description:
 			"Imprint your patron's sigil on a creature's mana circuit. DC 15 PRS save. On failure, the brand takes hold for 1 minute: you always know the target's location, and whenever it attacks anyone other than you, it takes 2d6 psychic damage as the pact punishes disobedience.",
@@ -9008,8 +9095,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-167-mana-sentry-platform",
-        classes: ["Mage", "Summoner"],
-        name: "Mana Sentry Platform",
+		classes: ["Mage", "Summoner"],
+		name: "Mana Sentry Platform",
 		display_name: "Mana Sentry Platform",
 		description:
 			"Deploy a Medium mana-powered sentry platform at a point within range. It has AC 15, 30 HP, and fires once per round on your turn (ranged attack +5, 2d8 force, 60-foot range). You can direct its target as a free action.",
@@ -9054,8 +9141,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-168-entropic-reaping",
-        classes: ["Mage", "Revenant", "Idol", "Technomancer"],
-        name: "Entropic Reaping",
+		classes: ["Mage", "Revenant", "Idol", "Technomancer"],
+		name: "Entropic Reaping",
 		display_name: "Entropic Reaping",
 		description:
 			"Unleash a burst of concentrated entropy from your mana circuit. Each creature within 20 feet: DC 16 VIT save, 4d10 necrotic on failure, half on success. You regain HP equal to the highest damage die rolled.",
@@ -9102,8 +9189,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-169-tectonic-slam",
-        classes: ["Mage", "Summoner"],
-        name: "Tectonic Slam",
+		classes: ["Mage", "Summoner"],
+		name: "Tectonic Slam",
 		display_name: "Tectonic Slam",
 		description:
 			"Slam your weapon into the ground, sending a fissure of shattered stone and mana along a 30-foot line. Each creature: DC 16 AGI save, 5d8 force on failure, half on success. The line becomes difficult terrain. Structures take double damage.",
@@ -9152,8 +9239,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-170-anomaly-leash",
-        classes: ["Mage", "Esper", "Contractor", "Idol"],
-        name: "Anomaly Leash",
+		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		name: "Anomaly Leash",
 		display_name: "Anomaly Leash",
 		description:
 			"Project a leash of binding mana onto a gate-anomaly of CR 4 or lower. DC 16 PRS save or the anomaly is dominated for the duration: it obeys your verbal commands, fights for you, and can't willingly move more than 120 feet from you.",
@@ -9199,8 +9286,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-171-radiant-condemnation",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
-        name: "Radiant Condemnation",
+		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		name: "Radiant Condemnation",
 		display_name: "Radiant Condemnation",
 		description:
 			"Call down a focused beam of the Absolute's condemnation. One creature: DC 17 VIT save, 8d8 radiant on failure, half on success. On failure, the target is blinded for 1 round. Undead and fiend-type anomalies automatically take maximum damage.",
@@ -9247,8 +9334,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-172-psionic-bastion",
-        classes: ["Mage", "Esper", "Idol"],
-        name: "Psionic Bastion",
+		classes: ["Mage", "Esper", "Idol"],
+		name: "Psionic Bastion",
 		display_name: "Psionic Bastion",
 		description:
 			"Project a psionic defense bastion of stabilized mana-thought. All allies within 30 feet: immune to psychic damage, immune to being charmed, and advantage on Intelligence and Presence saves.",
@@ -9294,8 +9381,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-173-mana-feedback-bomb",
-        classes: ["Mage", "Contractor"],
-        name: "Mana Feedback Bomb",
+		classes: ["Mage", "Contractor"],
+		name: "Mana Feedback Bomb",
 		display_name: "Mana Feedback Bomb",
 		description:
 			"Launch a mana-calibrated feedback bomb at a point within range. Each creature in a 20-foot radius: DC 17 INT save, 8d8 force on failure, half on success. Creatures with spellcasting ability take an additional 4d8 force. All concentration spells in the area automatically end.",
@@ -9342,8 +9429,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-174-umbral-gateway",
-        classes: ["Mage", "Revenant", "Summoner", "Contractor", "Technomancer"],
-        name: "Umbral Gateway",
+		classes: ["Mage", "Revenant", "Summoner", "Contractor", "Technomancer"],
+		name: "Umbral Gateway",
 		display_name: "Umbral Gateway",
 		description:
 			"Tear two linked portals through the shadow-layer of the mana-lattice. Place one within 5 feet and another at a point within 60 feet that you can see. Any creature that steps into one portal instantly appears at the other. Portals close at the start of your next turn.",
@@ -9387,8 +9474,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-175-bureau-authority-seal",
-        classes: ["Mage", "Esper", "Contractor"],
-        name: "Bureau Authority Seal",
+		classes: ["Mage", "Esper", "Contractor"],
+		name: "Bureau Authority Seal",
 		display_name: "Bureau Authority Seal",
 		description:
 			"Inscribe the Bureau's authority seal on a surface, creating a 60-foot radius ward. Gate-anomalies cannot willingly enter. Teleportation into or out of the area requires a DC 17 Presence save. You receive a telepathic alarm if any creature fails the save or forces entry.",
@@ -9434,8 +9521,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-176-patron-s-judgment",
-        classes: ["Esper", "Revenant", "Contractor"],
-        name: "Patron's Judgment",
+		classes: ["Esper", "Revenant", "Contractor"],
+		name: "Patron's Judgment",
 		display_name: "Patron's Judgment",
 		description:
 			"Channel your patron's displeasure into a devastating psychic condemnation. One creature: DC 18 PRS save, 10d8 psychic on failure, half on success. On failure, the target is also cursed for 1 minute: disadvantage on all saving throws.",
@@ -9482,8 +9569,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-177-revenant-s-domain",
-        classes: ["Revenant", "Idol"],
-        name: "Revenant's Domain",
+		classes: ["Revenant", "Idol"],
+		name: "Revenant's Domain",
 		display_name: "Revenant's Domain",
 		description:
 			"Transform the area around you into a domain of entropy. Hostile creatures starting their turn within 60 feet: DC 18 VIT save, 4d6 necrotic on failure. Allied creatures starting their turn within 60 feet: regain 2d6 HP. Enemy healing within the area is completely suppressed.",
@@ -9531,8 +9618,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-178-total-gate-suppression",
-        classes: ["Mage", "Summoner", "Contractor"],
-        name: "Total Gate Suppression",
+		classes: ["Mage", "Summoner", "Contractor"],
+		name: "Total Gate Suppression",
 		display_name: "Total Gate Suppression",
 		description:
 			"Project a field of total mana-suppression calibrated to gate-frequency signatures. All gate-anomaly creatures within 120 feet: lose all damage resistances and immunities, special abilities are suppressed, and movement speed is halved. Awakened creatures are unaffected.",
@@ -9576,8 +9663,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-179-mana-circuit-transplant",
-        classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
-        name: "Mana Circuit Transplant",
+		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		name: "Mana Circuit Transplant",
 		display_name: "Mana Circuit Transplant",
 		description:
 			"Physically transplant mana-circuit capacity to another Awakened. Transfer up to 3 spell slots (any levels) to a willing creature. The recipient can use these slots as if they were their own, using their own spellcasting ability. Transferred slots vanish after 1 hour if unused.",
@@ -9622,8 +9709,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-180-absolute-sanctuary",
-        classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
-        name: "Absolute Sanctuary",
+		classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
+		name: "Absolute Sanctuary",
 		display_name: "Absolute Sanctuary",
 		description:
 			"Invoke the Absolute's sanctuary over a 30-foot radius. Any creature that attempts to make an attack or cast a harmful spell against a creature within the sanctuary must first make a DC 19 PRS save. On failure, the attack or spell fails and the creature's action is wasted. Creatures that succeed are unaffected for 1 round.",
@@ -9669,8 +9756,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-181-singularity-compression",
-        classes: ["Mage"],
-        name: "Singularity Compression",
+		classes: ["Mage"],
+		name: "Singularity Compression",
 		display_name: "Singularity Compression",
 		description:
 			"Compress mana-density to create a localized gravitational singularity at a point within range. Each creature within 60 feet is pulled 30 feet toward the center at the start of its turn. Creatures within 30 feet: DC 20 STR save, 10d10 force on failure, half on success. Nothing can teleport within 60 feet.",
@@ -9717,8 +9804,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-182-permanent-awakening-seal",
-        classes: ["Mage", "Technomancer"],
-        name: "Permanent Awakening Seal",
+		classes: ["Mage", "Technomancer"],
+		name: "Permanent Awakening Seal",
 		display_name: "Permanent Awakening Seal",
 		description:
 			"Touch a creature and overwrite its mana circuit with a sealing algorithm. DC 20 INT save. On failure, the target's mana circuit is permanently sealed: it loses all spellcasting, powers, techniques, and Awakened abilities. Only an Absolute Edict can reverse it. On success, the target is immune to this spell for 1 year.",
@@ -9764,8 +9851,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-183-cataclysm-protocol",
-        classes: ["Mage"],
-        name: "Cataclysm Protocol",
+		classes: ["Mage"],
+		name: "Cataclysm Protocol",
 		display_name: "Cataclysm Protocol",
 		description:
 			"Deploy three orbital mana-charges via satellite uplink. Each detonates at a point within 1 mile in a 40-foot radius: DC 20 AGI save, 10d6 fire + 10d6 force on failure, half on success. Overlapping areas save once but take damage from each charge. Terrain in blast zones is permanently scarred.",
@@ -9812,8 +9899,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-184-final-breath-of-the-absolute",
-        classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight", "Technomancer"],
-        name: "Final Breath of the Absolute",
+		classes: [
+			"Mage",
+			"Revenant",
+			"Contractor",
+			"Idol",
+			"Holy Knight",
+			"Technomancer",
+		],
+		name: "Final Breath of the Absolute",
 		display_name: "Final Breath of the Absolute",
 		description:
 			"Channel the Absolute's final exhalation through your mana circuit. Every creature within 120 feet is affected: enemies make DC 20 VIT save, 15d8 radiant on failure, half on success. Undead and fiend-type anomalies are instantly destroyed. Allied creatures instead regain HP equal to the damage that would have been dealt to them.",
@@ -9860,8 +9954,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-185-idol-s-grand-finale",
-        classes: ["Mage", "Esper", "Idol", "Technomancer"],
-        name: "Idol's Grand Finale",
+		classes: ["Mage", "Esper", "Idol", "Technomancer"],
+		name: "Idol's Grand Finale",
 		display_name: "Idol's Grand Finale",
 		description:
 			"Perform the ultimate harmonic — a frequency that resonates with the mana-lattice itself. For 1 minute: every ally within 300 feet gains advantage on all rolls and +5 to attack rolls, damage rolls, saves, and checks. Every enemy in range: DC 20 PRS save or incapacitated. After casting, you can't use mana abilities for 7 days.",
@@ -9907,8 +10001,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-186-void-erasure",
-        classes: ["Esper", "Revenant", "Technomancer"],
-        name: "Void Erasure",
+		classes: ["Esper", "Revenant", "Technomancer"],
+		name: "Void Erasure",
 		display_name: "Void Erasure",
 		description:
 			"Channel absolute entropy through a single touch. Melee spell attack: 20d6 necrotic. If this reduces the target to 0 HP, its physical form is erased from reality — no corpse remains. All creatures within 1 mile have their memories of the target suppressed for 24 hours (they forget it existed).",

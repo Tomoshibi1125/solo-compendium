@@ -2,8 +2,8 @@
 // One-shot Phase 1 refactor: ability saves + Jobs + deity-conflict NPC renames.
 // Idempotent — running twice is safe (second pass will find nothing to change).
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
-import { resolve, dirname } from "node:path";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -100,30 +100,21 @@ const replacements = [
 
 	// --- "Sage" context-specific job remaps (per NPC) ---
 	// Dr. Serin Hayashi (was Voss) - Sage → Herald
-	[
-		/(name: "Dr\. Serin Hayashi",[\s\S]*?job: )"Sage"/g,
-		'$1"Herald"',
-	],
+	[/(name: "Dr\. Serin Hayashi",[\s\S]*?job: )"Sage"/g, '$1"Herald"'],
 	// Old Man Crane - Sage → Esper
-	[
-		/(name: "Old Man Crane",[\s\S]*?job: )"Sage"/g,
-		'$1"Esper"',
-	],
+	[/(name: "Old Man Crane",[\s\S]*?job: )"Sage"/g, '$1"Esper"'],
 	// The Catalog (was Archivist) - Sage → Esper
-	[
-		/(name: "The Catalog",[\s\S]*?job: )"Sage"/g,
-		'$1"Esper"',
-	],
+	[/(name: "The Catalog",[\s\S]*?job: )"Sage"/g, '$1"Esper"'],
 	// Professor Lun - Sage → Mage
-	[
-		/(name: "Professor Lun",[\s\S]*?job: )"Sage"/g,
-		'$1"Mage"',
-	],
+	[/(name: "Professor Lun",[\s\S]*?job: )"Sage"/g, '$1"Mage"'],
 
 	// Markdown role-table Sage rows (Chapter 19 NPC compendium)
 	// Crane/Constance = Esper (oracles); others via context. Use per-row anchors:
 	[/\| Old Man Crane \| 10 \| Sage \|/g, "| Old Man Crane | 10 | Esper |"],
-	[/\| Dr\. Serin Hayashi \| 6 \| Sage \|/g, "| Dr. Serin Hayashi | 6 | Herald |"],
+	[
+		/\| Dr\. Serin Hayashi \| 6 \| Sage \|/g,
+		"| Dr. Serin Hayashi | 6 | Herald |",
+	],
 	[/\| Professor Lun \| 6 \| Sage \|/g, "| Professor Lun | 6 | Mage |"],
 	[/\| The Catalog \| 4 \| Sage \|/g, "| The Catalog | 4 | Esper |"],
 ];

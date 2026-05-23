@@ -24,7 +24,10 @@ const ENTRIES: Array<{ file: string; id: string }> = [
 	{ file: "src/data/compendium/powers.ts", id: "invisibility" },
 ];
 
-function findEntryRange(lines: string[], id: string): { start: number; end: number } | null {
+function findEntryRange(
+	lines: string[],
+	id: string,
+): { start: number; end: number } | null {
 	for (let i = 0; i < lines.length; i += 1) {
 		const idMatch = lines[i].match(/^\s*id:\s*"([^"]+)"/);
 		if (!idMatch || idMatch[1] !== id) continue;
@@ -51,7 +54,7 @@ function findEntryRange(lines: string[], id: string): { start: number; end: numb
 function clearDamageRoll(file: string): number {
 	const abs = resolve(process.cwd(), file);
 	const source = readFileSync(abs, "utf8");
-	let lines = source.split("\n");
+	const lines = source.split("\n");
 	let updated = 0;
 	const targets = ENTRIES.filter((e) => e.file === file).map((e) => e.id);
 	for (const id of targets) {
@@ -59,7 +62,10 @@ function clearDamageRoll(file: string): number {
 		if (!range) continue;
 		for (let i = range.start; i < range.end; i += 1) {
 			if (/^\s*damage_roll:\s*"\d+d\d+/.test(lines[i])) {
-				lines[i] = lines[i].replace(/damage_roll:\s*"[^"]*"/, 'damage_roll: "—"');
+				lines[i] = lines[i].replace(
+					/damage_roll:\s*"[^"]*"/,
+					'damage_roll: "—"',
+				);
 				updated += 1;
 			}
 		}

@@ -299,8 +299,6 @@ export function entryHasAccessToken(
 	);
 }
 
-
-
 export function jobCanLearnPowers(jobName: string | null | undefined): boolean {
 	return getJobAbilityAccess(jobName)?.powers ?? false;
 }

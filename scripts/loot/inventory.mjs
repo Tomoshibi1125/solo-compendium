@@ -61,7 +61,10 @@ for (const it of allItems) {
 	byRarity.set(rk, (byRarity.get(rk) || 0) + 1);
 
 	if (typeof it.description === "string") {
-		dupeDescriptions.set(it.description, (dupeDescriptions.get(it.description) || 0) + 1);
+		dupeDescriptions.set(
+			it.description,
+			(dupeDescriptions.get(it.description) || 0) + 1,
+		);
 	}
 	if (typeof it.flavor === "string") {
 		dupeFlavors.set(it.flavor, (dupeFlavors.get(it.flavor) || 0) + 1);
@@ -87,9 +90,15 @@ for (const it of allItems) {
 
 const archetypeReport = [...byArchetype.entries()].sort((a, b) => b[1] - a[1]);
 const rarityReport = [...byRarity.entries()].sort((a, b) => b[1] - a[1]);
-const dupeDescTop = [...dupeDescriptions.entries()].filter(([, n]) => n > 4).sort((a, b) => b[1] - a[1]);
-const dupePassiveTop = [...dupePassives.entries()].filter(([, n]) => n > 5).sort((a, b) => b[1] - a[1]);
-const dupeFlavorTop = [...dupeFlavors.entries()].filter(([, n]) => n > 5).sort((a, b) => b[1] - a[1]);
+const dupeDescTop = [...dupeDescriptions.entries()]
+	.filter(([, n]) => n > 4)
+	.sort((a, b) => b[1] - a[1]);
+const dupePassiveTop = [...dupePassives.entries()]
+	.filter(([, n]) => n > 5)
+	.sort((a, b) => b[1] - a[1]);
+const dupeFlavorTop = [...dupeFlavors.entries()]
+	.filter(([, n]) => n > 5)
+	.sort((a, b) => b[1] - a[1]);
 
 const report = {
 	totals: {
@@ -104,15 +113,22 @@ const report = {
 	items,
 };
 
-writeFileSync(join(__dirname, "inventory-report.json"), JSON.stringify(report, null, 2), "utf8");
+writeFileSync(
+	join(__dirname, "inventory-report.json"),
+	JSON.stringify(report, null, 2),
+	"utf8",
+);
 
 // Print summary
 console.log(`Total items: ${allItems.length}\n`);
 console.log("=== ARCHETYPE COUNTS (sorted desc) ===");
 for (const [a, n] of archetypeReport) console.log(`  ${a.padEnd(28)} ${n}`);
 console.log("\n=== TOP DUPLICATE DESCRIPTIONS (>4) ===");
-for (const [d, n] of dupeDescTop.slice(0, 12)) console.log(`  ${n}× ${d.slice(0, 80)}`);
+for (const [d, n] of dupeDescTop.slice(0, 12))
+	console.log(`  ${n}× ${d.slice(0, 80)}`);
 console.log("\n=== TOP DUPLICATE PASSIVES (>5) ===");
-for (const [d, n] of dupePassiveTop.slice(0, 15)) console.log(`  ${n}× ${d.slice(0, 80)}`);
+for (const [d, n] of dupePassiveTop.slice(0, 15))
+	console.log(`  ${n}× ${d.slice(0, 80)}`);
 console.log("\n=== TOP DUPLICATE FLAVORS (>5) ===");
-for (const [d, n] of dupeFlavorTop.slice(0, 12)) console.log(`  ${n}× ${d.slice(0, 80)}`);
+for (const [d, n] of dupeFlavorTop.slice(0, 12))
+	console.log(`  ${n}× ${d.slice(0, 80)}`);

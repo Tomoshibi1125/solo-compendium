@@ -559,13 +559,17 @@ const CharacterNew = () => {
 		| undefined;
 
 	const jobAwakeningAtCreation = useMemo(() => {
-		const features = staticJobData?.awakeningFeatures ?? (staticJobData as any)?.awakening_features;
+		const features =
+			staticJobData?.awakeningFeatures ??
+			(staticJobData as unknown as Record<string, unknown>)?.awakening_features;
 		if (!features) return [];
-		return features.filter((f: any) => f.level === 1);
+		return features.filter((f: Record<string, unknown>) => f.level === 1);
 	}, [staticJobData]);
 
 	const jobTraitsAtCreation = useMemo(() => {
-		const traits = staticJobData?.jobTraits ?? (staticJobData as any)?.job_traits;
+		const traits =
+			staticJobData?.jobTraits ??
+			(staticJobData as unknown as Record<string, unknown>)?.job_traits;
 		if (!traits) return [];
 		return traits;
 	}, [staticJobData]);
@@ -675,13 +679,15 @@ const CharacterNew = () => {
 						...staticJobData,
 						awakening_features:
 							staticJobData?.awakeningFeatures ??
-							(staticJobData as any)?.awakening_features ??
+							(staticJobData as unknown as Record<string, unknown>)
+								?.awakening_features ??
 							(jobData as { awakening_features?: [] } | undefined)
 								?.awakening_features ??
 							[],
 						job_traits:
 							staticJobData?.jobTraits ??
-							(staticJobData as any)?.job_traits ??
+							(staticJobData as unknown as Record<string, unknown>)
+								?.job_traits ??
 							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
 							[],
 						level_choices: staticJobLedgerData?.levelChoices,
@@ -1866,9 +1872,11 @@ const CharacterNew = () => {
 	}, [canonicalEquipmentEntries]);
 
 	const reviewLoadout = useMemo(() => {
-		const eq = staticJobData?.startingEquipment ?? (staticJobData as any)?.starting_equipment;
+		const eq =
+			staticJobData?.startingEquipment ??
+			(staticJobData as unknown as Record<string, unknown>)?.starting_equipment;
 		if (!eq) return [];
-		return eq.map((group: any, index: number) => {
+		return eq.map((group: unknown[], index: number) => {
 			const name = equipmentChoices[index] ?? group[0];
 			const normalizedName = normalizeCompendiumKey(name);
 			const entry =
@@ -1938,6 +1946,7 @@ const CharacterNew = () => {
 		effectiveAbilities,
 		equipmentChoices,
 		staticJobData?.startingEquipment,
+		(staticJobData as unknown as Record<string, unknown>)?.starting_equipment,
 	]);
 
 	const reviewResolvedStats = useMemo(() => {
@@ -1946,9 +1955,15 @@ const CharacterNew = () => {
 			typeof jobData?.hit_die === "number" && Number.isFinite(jobData.hit_die)
 				? jobData.hit_die
 				: Number.parseInt(
-						((staticJobData as any)?.hitDie ?? (staticJobData as any)?.hit_die ?? (staticJobData as any)?.hit_dice)?.toString().replace("1d", "") ?? "8",
+						(
+							(staticJobData as unknown as Record<string, unknown>)?.hitDie ??
+							(staticJobData as unknown as Record<string, unknown>)?.hit_die ??
+							(staticJobData as unknown as Record<string, unknown>)?.hit_dice
+						)
+							?.toString()
+							.replace("1d", "") ?? "8",
 						10,
-				  );
+					);
 		const speed =
 			typeof staticJobData?.speed === "number" &&
 			Number.isFinite(staticJobData.speed)
@@ -2022,6 +2037,8 @@ const CharacterNew = () => {
 		staticJobData?.saving_throw_proficiencies,
 		staticJobData?.saving_throws,
 		staticJobData?.speed,
+		(staticJobData as unknown as Record<string, unknown>)?.hit_dice,
+		(staticJobData as unknown as Record<string, unknown>)?.hit_die,
 	]);
 
 	return (
@@ -2243,8 +2260,7 @@ const CharacterNew = () => {
 								{requiredSpellChoices > 0 && (
 									<div className="space-y-3">
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
-											Spells ({selectedSpellIds.length}/
-											{requiredSpellChoices})
+											Spells ({selectedSpellIds.length}/{requiredSpellChoices})
 										</Label>
 										{availableSpells.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
@@ -2360,8 +2376,7 @@ const CharacterNew = () => {
 								{requiredPowerChoices > 0 && (
 									<div className="space-y-3">
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
-											Powers ({selectedPowerIds.length}/
-											{requiredPowerChoices})
+											Powers ({selectedPowerIds.length}/{requiredPowerChoices})
 										</Label>
 										{availablePowers.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">

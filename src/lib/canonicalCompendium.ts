@@ -1090,14 +1090,9 @@ function matchesTokenEligibility(
 			)
 		: [];
 	const rawTags = Array.isArray(entry.tags)
-		? entry.tags.filter(
-				(value): value is string => typeof value === "string",
-			)
+		? entry.tags.filter((value): value is string => typeof value === "string")
 		: [];
-	const tagsToChecks = [
-		...explicitClasses,
-		...rawTags,
-	];
+	const tagsToChecks = [...explicitClasses, ...rawTags];
 	return entryHasAccessToken(tagsToChecks, tokens);
 }
 
@@ -1112,14 +1107,9 @@ function matchesTechniqueTokenEligibility(
 			)
 		: [];
 	const rawTags = Array.isArray(entry.tags)
-		? entry.tags.filter(
-				(value): value is string => typeof value === "string",
-			)
+		? entry.tags.filter((value): value is string => typeof value === "string")
 		: [];
-	const tagsToChecks = [
-		...explicitClasses,
-		...rawTags,
-	];
+	const tagsToChecks = [...explicitClasses, ...rawTags];
 	return entryHasAccessToken(tagsToChecks, tokens);
 }
 
@@ -1134,14 +1124,9 @@ function matchesSpellTokenEligibility(
 			)
 		: [];
 	const rawTags = Array.isArray(entry.tags)
-		? entry.tags.filter(
-				(value): value is string => typeof value === "string",
-			)
+		? entry.tags.filter((value): value is string => typeof value === "string")
 		: [];
-	const tagsToChecks = [
-		...explicitClasses,
-		...rawTags,
-	];
+	const tagsToChecks = [...explicitClasses, ...rawTags];
 	return entryHasAccessToken(tagsToChecks, tokens);
 }
 
@@ -1349,8 +1334,9 @@ async function listCanonicalCastablesByType(
 	const results = await listCanonicalEntriesBatch(types, search, accessContext);
 
 	return types.flatMap((type) =>
-		(results.get(type) ?? [])
-			.map((entry) => normalizeCastableEntry(entry, type)),
+		(results.get(type) ?? []).map((entry) =>
+			normalizeCastableEntry(entry, type),
+		),
 	);
 }
 

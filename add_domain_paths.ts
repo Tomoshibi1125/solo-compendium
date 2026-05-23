@@ -1,7 +1,7 @@
-import * as fs from 'fs';
+import * as fs from "fs";
 
-const pathAccessFile = 'src/lib/pathAbilityAccess.ts';
-let content = fs.readFileSync(pathAccessFile, 'utf-8');
+const pathAccessFile = "src/lib/pathAbilityAccess.ts";
+let content = fs.readFileSync(pathAccessFile, "utf-8");
 
 const newGrants = `
 	{
@@ -212,11 +212,14 @@ const newGrants = `
 	},
 `;
 
-const insertIndex = content.lastIndexOf('];');
+const insertIndex = content.lastIndexOf("];");
 if (insertIndex !== -1) {
-    content = content.slice(0, insertIndex) + newGrants + content.slice(insertIndex);
-    fs.writeFileSync(pathAccessFile, content);
-    console.log("Successfully added new curated domain lists based on RA 5e-style mapping!");
+	content =
+		content.slice(0, insertIndex) + newGrants + content.slice(insertIndex);
+	fs.writeFileSync(pathAccessFile, content);
+	console.log(
+		"Successfully added new curated domain lists based on RA 5e-style mapping!",
+	);
 } else {
-    console.log("Could not find insertion point.");
+	console.log("Could not find insertion point.");
 }

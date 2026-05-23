@@ -1,7 +1,9 @@
-import fs from 'fs';
+import fs from "fs";
 
-const SIGIL_DETAIL_PATH = 'c:/Users/jjcal/Documents/solo-compendium/src/components/compendium/SigilDetail.tsx';
-const RUNE_DETAIL_PATH = 'c:/Users/jjcal/Documents/solo-compendium/src/components/compendium/RuneDetail.tsx';
+const SIGIL_DETAIL_PATH =
+	"c:/Users/jjcal/Documents/solo-compendium/src/components/compendium/SigilDetail.tsx";
+const RUNE_DETAIL_PATH =
+	"c:/Users/jjcal/Documents/solo-compendium/src/components/compendium/RuneDetail.tsx";
 
 const sigilDetailContent = `import { BadgeCheck, Info, Shield, Zap } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
@@ -292,14 +294,14 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 `;
 
 function refactorUI() {
-    console.log('Refactoring UI Components via script...');
-    fs.writeFileSync(SIGIL_DETAIL_PATH, sigilDetailContent, 'utf8');
-    fs.writeFileSync(RUNE_DETAIL_PATH, runeDetailContent, 'utf8');
-    console.log('UI Components refactored successfully.');
+	console.log("Refactoring UI Components via script...");
+	fs.writeFileSync(SIGIL_DETAIL_PATH, sigilDetailContent, "utf8");
+	fs.writeFileSync(RUNE_DETAIL_PATH, runeDetailContent, "utf8");
+	console.log("UI Components refactored successfully.");
 }
 
 try {
-    refactorUI();
+	refactorUI();
 } catch (error) {
-    console.error('Error refactoring UI:', error);
+	console.error("Error refactoring UI:", error);
 }

@@ -54,8 +54,10 @@ const PLANS: Plan[] = [
 		id: "regeneration",
 		file: "src/data/compendium/powers.ts",
 		category: "heal",
-		action: "Restores hit points to the caster through lattice-assisted regeneration.",
-		healNote: "Heals 5d4 HP to the caster. Overflow becomes temporary HP for 1 minute.",
+		action:
+			"Restores hit points to the caster through lattice-assisted regeneration.",
+		healNote:
+			"Heals 5d4 HP to the caster. Overflow becomes temporary HP for 1 minute.",
 	},
 	{
 		id: "true-sight",
@@ -65,8 +67,7 @@ const PLANS: Plan[] = [
 			"Pierces illusions and concealment within 30 feet for 1 minute; hidden creatures are revealed to the caster.",
 		onFailedSave:
 			"A concealed creature fails a DC 15 Presence save and loses invisibility or illusory cover against the caster for the duration.",
-		onSuccessfulSave:
-			"A concealed creature succeeds and remains hidden.",
+		onSuccessfulSave: "A concealed creature succeeds and remains hidden.",
 	},
 	{
 		id: "arcane-charm",
@@ -115,7 +116,8 @@ const PLANS: Plan[] = [
 			"Meets the eyes of one creature within 30 feet; if held, the gaze calcifies the target's nervous system.",
 		onFailedSave:
 			"Target fails a DC 15 Strength save and is Paralyzed for 1 minute (save at end of each turn to end).",
-		onSuccessfulSave: "Target succeeds and is immune to this power for 24 hours.",
+		onSuccessfulSave:
+			"Target succeeds and is immune to this power for 24 hours.",
 	},
 	{
 		id: "telepathy",
@@ -189,7 +191,10 @@ const RUNE_PLANS: Plan[] = PLANS.map((plan) => {
 
 // --- Low-level source mutation helpers ---
 
-function findEntryBlock(source: string, id: string): { start: number; end: number } | null {
+function findEntryBlock(
+	source: string,
+	id: string,
+): { start: number; end: number } | null {
 	// Entry opens with `{` at start of line and contains an `id: "<id>"` match.
 	const lines = source.split("\n");
 	for (let i = 0; i < lines.length; i += 1) {
@@ -224,12 +229,14 @@ function findEntryBlock(source: string, id: string): { start: number; end: numbe
 
 function buildUtilityDescription(plan: Plan): string {
 	const fail = plan.onFailedSave ?? "Target fails the save and is affected.";
-	const success = plan.onSuccessfulSave ?? "Target succeeds and resists the effect.";
+	const success =
+		plan.onSuccessfulSave ?? "Target succeeds and resists the effect.";
 	return `${plan.action} ${fail} ${success}`;
 }
 
 function buildHealDescription(plan: Plan): string {
-	const note = plan.healNote ?? "Grants hit points or temporary HP to the caster.";
+	const note =
+		plan.healNote ?? "Grants hit points or temporary HP to the caster.";
 	return `${plan.action} ${note}`;
 }
 
@@ -248,10 +255,16 @@ function replaceLine(
 	return count;
 }
 
-function rewriteEntry(sourceLines: string[], plan: Plan, block: { start: number; end: number }): void {
+function rewriteEntry(
+	sourceLines: string[],
+	plan: Plan,
+	block: { start: number; end: number },
+): void {
 	const entryLines = sourceLines.slice(block.start, block.end);
 	const newDescription =
-		plan.category === "heal" ? buildHealDescription(plan) : buildUtilityDescription(plan);
+		plan.category === "heal"
+			? buildHealDescription(plan)
+			: buildUtilityDescription(plan);
 
 	// 1. description: possibly multi-line; replace by locating the `description:` line
 	//    and joining through the matching closing `",`.
@@ -262,7 +275,8 @@ function rewriteEntry(sourceLines: string[], plan: Plan, block: { start: number;
 			// The next line(s) begin the string literal(s) until a line ending with `",`.
 			const indent = descMatch[1];
 			let j = i + 1;
-			while (j < entryLines.length && !entryLines[j].trim().endsWith('",')) j += 1;
+			while (j < entryLines.length && !entryLines[j].trim().endsWith('",'))
+				j += 1;
 			entryLines.splice(i + 1, j - i, `${indent}\t"${newDescription}",`);
 			break;
 		}
@@ -274,16 +288,26 @@ function rewriteEntry(sourceLines: string[], plan: Plan, block: { start: number;
 	}
 
 	// 2. effects.primary / effects.secondary: simplify to category-specific text.
-	const primary = plan.category === "heal" ? "Restores hit points or grants temp HP." : "Inflicts a non-damage condition on a failed save.";
-	const secondary = plan.category === "heal" ? "No saving throw; self-targeted or willing ally only." : "Utility effect: see saving-throw entry.";
+	const primary =
+		plan.category === "heal"
+			? "Restores hit points or grants temp HP."
+			: "Inflicts a non-damage condition on a failed save.";
+	const secondary =
+		plan.category === "heal"
+			? "No saving throw; self-targeted or willing ally only."
+			: "Utility effect: see saving-throw entry.";
 	replaceLine(
 		entryLines,
-		(l) => /^\s*primary:\s*"/.test(l) && !/primary: "[Rr]estores|primary: "Inflicts/.test(l),
+		(l) =>
+			/^\s*primary:\s*"/.test(l) &&
+			!/primary: "[Rr]estores|primary: "Inflicts/.test(l),
 		(l) => l.replace(/primary:\s*"[^"]*"/, `primary: "${primary}"`),
 	);
 	replaceLine(
 		entryLines,
-		(l) => /^\s*secondary:\s*"/.test(l) && !/secondary: "No saving|secondary: "Utility/.test(l),
+		(l) =>
+			/^\s*secondary:\s*"/.test(l) &&
+			!/secondary: "No saving|secondary: "Utility/.test(l),
 		(l) => l.replace(/secondary:\s*"[^"]*"/, `secondary: "${secondary}"`),
 	);
 
@@ -297,7 +321,10 @@ function rewriteEntry(sourceLines: string[], plan: Plan, block: { start: number;
 		entryLines,
 		(l) => /^\s*damage_profile:\s*"[^"]*\d+d\d+/.test(l),
 		(l) =>
-			l.replace(/damage_profile:\s*"[^"]*"/, `damage_profile: "${plan.category === "heal" ? "self-heal" : "utility"}"`),
+			l.replace(
+				/damage_profile:\s*"[^"]*"/,
+				`damage_profile: "${plan.category === "heal" ? "self-heal" : "utility"}"`,
+			),
 	);
 
 	// 4. For heal entries, add or update mechanics.healing.
@@ -312,7 +339,9 @@ function rewriteEntry(sourceLines: string[], plan: Plan, block: { start: number;
 		}
 		if (mechStart >= 0) {
 			// If already has `healing:` skip; otherwise insert before the matching close.
-			const hasHealing = entryLines.slice(mechStart).some((l) => /^\s*healing:\s*\{/.test(l));
+			const hasHealing = entryLines
+				.slice(mechStart)
+				.some((l) => /^\s*healing:\s*\{/.test(l));
 			if (!hasHealing) {
 				// Find matching close of mechanics.
 				let depth = 0;

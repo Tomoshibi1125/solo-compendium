@@ -75,9 +75,9 @@ export function CharacterLevelUp({
 									: `${currentXP.toLocaleString()} / ${xpNeeded.toLocaleString()} XP`}
 							</p>
 						</div>
-						<Button 
-							onClick={handleLevelUp} 
-							disabled={!canLevelUp && level <= 1} 
+						<Button
+							onClick={handleLevelUp}
+							disabled={!canLevelUp && level <= 1}
 							size="sm"
 						>
 							<Trophy className="w-4 h-4 mr-2" />
