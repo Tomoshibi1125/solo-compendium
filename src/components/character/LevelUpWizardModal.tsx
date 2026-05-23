@@ -2430,7 +2430,7 @@ export const LevelUpWizardModal = ({
 									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
 										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
-											CANTRIP ALIGNMENTS
+											CANTRIPS
 										</Label>
 										<p className="text-sm text-muted-foreground mb-3 font-heading">
 											Choose {requiredCantripChoices} cantrip
@@ -2495,7 +2495,7 @@ export const LevelUpWizardModal = ({
 									<div className="p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20">
 										<Label className="font-resurge text-blue-400 tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
-											POWER INSCRIPTIONS
+											SPELLS
 										</Label>
 										<p className="text-sm text-muted-foreground mb-3 font-heading">
 											Choose {requiredSpellChoices} power inscription
@@ -2634,7 +2634,7 @@ export const LevelUpWizardModal = ({
 									<div className="p-4 rounded-lg bg-gradient-to-r from-cyan-500/10 to-transparent border border-cyan-500/20">
 										<Label className="font-resurge text-cyan-400 tracking-wide flex items-center gap-2 mb-4">
 											<Sparkles className="w-4 h-4" />
-											SYSTEM POWER IMPRINTS
+											POWERS
 										</Label>
 										<p className="text-sm text-muted-foreground mb-3 font-heading">
 											Choose {requiredPowerChoices} power
@@ -2715,7 +2715,7 @@ export const LevelUpWizardModal = ({
 									<div className="p-4 rounded-lg bg-gradient-to-r from-orange-500/10 to-transparent border border-orange-500/20">
 										<Label className="font-resurge text-orange-400 tracking-wide flex items-center gap-2 mb-4">
 											<Swords className="w-4 h-4" />
-											COMBAT TECHNIQUE PROTOCOLS
+											TECHNIQUES
 										</Label>
 										<p className="text-sm text-muted-foreground mb-3 font-heading">
 											Choose {requiredTechniqueChoices} technique

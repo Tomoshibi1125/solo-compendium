@@ -1098,9 +1098,11 @@ function matchesTokenEligibility(
 				(value): value is string => typeof value === "string",
 			)
 		: [];
-	if (explicitClasses.length > 0)
-		return entryHasAccessToken(explicitClasses, tokens);
-	return entryHasAccessToken(getDerivedPowerTags(entry), tokens);
+	const tagsToChecks = [
+		...explicitClasses,
+		...getDerivedPowerTags(entry),
+	];
+	return entryHasAccessToken(tagsToChecks, tokens);
 }
 
 function matchesTechniqueTokenEligibility(
@@ -1113,13 +1115,13 @@ function matchesTechniqueTokenEligibility(
 				(value): value is string => typeof value === "string",
 			)
 		: [];
-	if (explicitClasses.length > 0)
-		return entryHasAccessToken(explicitClasses, tokens);
 	const rawTags = Array.isArray(entry.tags) ? entry.tags : [];
-	return entryHasAccessToken(
-		[...rawTags, ...getDerivedTechniqueTags(entry)],
-		tokens,
-	);
+	const tagsToChecks = [
+		...explicitClasses,
+		...rawTags,
+		...getDerivedTechniqueTags(entry),
+	];
+	return entryHasAccessToken(tagsToChecks, tokens);
 }
 
 function matchesSpellTokenEligibility(
@@ -1132,9 +1134,11 @@ function matchesSpellTokenEligibility(
 				(value): value is string => typeof value === "string",
 			)
 		: [];
-	if (explicitClasses.length > 0)
-		return entryHasAccessToken(explicitClasses, tokens);
-	return entryHasAccessToken(getDerivedSpellTags(entry), tokens);
+	const tagsToChecks = [
+		...explicitClasses,
+		...getDerivedSpellTags(entry),
+	];
+	return entryHasAccessToken(tagsToChecks, tokens);
 }
 
 function getEntrySchoolToken(entry: CanonicalCastableEntry): string | null {

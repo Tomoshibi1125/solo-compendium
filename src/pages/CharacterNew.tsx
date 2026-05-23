@@ -1626,12 +1626,12 @@ const CharacterNew = () => {
 		() =>
 			[
 				{
-					label: "Cantrip Alignments",
+					label: "Cantrips",
 					selected: selectedCantripIds.length,
 					required: requiredCantripChoices,
 				},
 				{
-					label: "Power Inscriptions",
+					label: "Spells",
 					selected: selectedSpellIds.length,
 					required: requiredSpellChoices,
 				},
@@ -1641,12 +1641,12 @@ const CharacterNew = () => {
 					required: requiredSpellbookInscriptions,
 				},
 				{
-					label: "Power Imprints",
+					label: "Powers",
 					selected: selectedPowerIds.length,
 					required: requiredPowerChoices,
 				},
 				{
-					label: "Technique Protocols",
+					label: "Techniques",
 					selected: selectedTechniqueIds.length,
 					required: requiredTechniqueChoices,
 				},
@@ -2195,7 +2195,7 @@ const CharacterNew = () => {
 								{requiredCantripChoices > 0 && (
 									<div className="space-y-3">
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
-											Cantrip Alignments ({selectedCantripIds.length}/
+											Cantrips ({selectedCantripIds.length}/
 											{requiredCantripChoices})
 										</Label>
 										{availableCantrips.length === 0 ? (
@@ -2243,13 +2243,12 @@ const CharacterNew = () => {
 								{requiredSpellChoices > 0 && (
 									<div className="space-y-3">
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
-											Power Inscriptions ({selectedSpellIds.length}/
+											Spells ({selectedSpellIds.length}/
 											{requiredSpellChoices})
 										</Label>
 										{availableSpells.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
-												No lore-matched power inscriptions are available for
-												this job.
+												No lore-matched spells are available for this job.
 											</div>
 										) : (
 											<div className="grid gap-3">
@@ -2361,7 +2360,7 @@ const CharacterNew = () => {
 								{requiredPowerChoices > 0 && (
 									<div className="space-y-3">
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
-											Power Imprints ({selectedPowerIds.length}/
+											Powers ({selectedPowerIds.length}/
 											{requiredPowerChoices})
 										</Label>
 										{availablePowers.length === 0 ? (
@@ -2418,7 +2417,7 @@ const CharacterNew = () => {
 								{requiredTechniqueChoices > 0 && (
 									<div className="space-y-3">
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
-											Technique Protocols ({selectedTechniqueIds.length}/
+											Techniques ({selectedTechniqueIds.length}/
 											{requiredTechniqueChoices})
 										</Label>
 										{availableTechniques.length === 0 ? (
