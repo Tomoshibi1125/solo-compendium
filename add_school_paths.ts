@@ -1,0 +1,156 @@
+import * as fs from 'fs';
+
+const pathAccessFile = 'src/lib/pathAbilityAccess.ts';
+let content = fs.readFileSync(pathAccessFile, 'utf-8');
+
+const newGrants = `
+	{
+		jobName: "Herald",
+		pathName: "Path of the Radiance Mandate",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Evocation"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Herald",
+		pathName: "Path of the Storm Mandate",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Evocation", "Transmutation"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Herald",
+		pathName: "Path of the Knowledge Mandate",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Divination"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Contractor",
+		pathName: "Path of the Radiant Vessel",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Herald"],
+		schools: ["Evocation", "Abjuration"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Esper",
+		pathName: "Path of the Absolute Spark",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Herald"],
+		schools: ["Evocation", "Abjuration"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Technomancer",
+		pathName: "Design: The Aether Chemist",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Herald"],
+		schools: ["Evocation", "Necromancy"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Summoner",
+		pathName: "Path of the Biome Architect",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Transmutation", "Conjuration"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Contractor",
+		pathName: "Path of the Infernal Conduit",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Evocation"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Contractor",
+		pathName: "Path of the Void Whisperer",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Esper"],
+		schools: ["Enchantment", "Illusion"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Contractor",
+		pathName: "Path of the Glamour Weaver",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Idol"],
+		schools: ["Illusion", "Enchantment"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Holy Knight",
+		pathName: "Path of the Absolute Devotion",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Herald"],
+		schools: ["Abjuration"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Holy Knight",
+		pathName: "Path of the Retribution Mandate",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Divination", "Enchantment"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Holy Knight",
+		pathName: "Path of the Verdant Mandate",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Summoner"],
+		schools: ["Transmutation"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+	{
+		jobName: "Stalker",
+		pathName: "Path of the Rift Strider",
+		level: 1,
+		kind: "spell",
+		sourceTokens: ["Mage"],
+		schools: ["Conjuration"],
+		progression: "full",
+		leveledSchoolsOnly: true,
+	},
+`;
+
+const insertIndex = content.lastIndexOf('];');
+if (insertIndex !== -1) {
+    content = content.slice(0, insertIndex) + newGrants + content.slice(insertIndex);
+    fs.writeFileSync(pathAccessFile, content);
+    console.log("Successfully added new path grants based on RA Schools!");
+} else {
+    console.log("Could not find insertion point.");
+}
