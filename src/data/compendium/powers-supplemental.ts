@@ -8,7 +8,7 @@ import type { CompendiumPower } from "../../types/compendium";
 export const powers_supplemental: CompendiumPower[] = [
 	{
 		id: "power-sup-1-1-rampart-shell",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Rampart Shell",
 		display_name: "Rampart Shell",
 		description:
@@ -75,7 +75,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-2-bulwark-stance",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Bulwark Stance",
 		display_name: "Bulwark Stance",
 		description:
@@ -142,7 +142,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-3-titan-s-rebuke",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Titan's Rebuke",
 		display_name: "Titan's Rebuke",
 		description:
@@ -209,7 +209,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-4-fury-surge",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Fury Surge",
 		display_name: "Fury Surge",
 		description:
@@ -276,7 +276,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-5-crimson-howl",
-		classes: ["Berserker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Crimson Howl",
 		display_name: "Crimson Howl",
 		description:
@@ -343,7 +343,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-6-rupture-break",
-		classes: ["Destroyer", "Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Rupture Break",
 		display_name: "Rupture Break",
 		description:
@@ -410,7 +410,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-7-shadow-strike",
-		classes: ["Destroyer", "Assassin", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Shadow Strike",
 		display_name: "Shadow Strike",
 		description:
@@ -485,7 +485,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-8-phantom-lunge",
-		classes: ["Assassin", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Phantom Lunge",
 		display_name: "Phantom Lunge",
 		description:
@@ -560,7 +560,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-9-lethal-precision",
-		classes: ["Assassin", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Lethal Precision",
 		display_name: "Lethal Precision",
 		description:
@@ -635,7 +635,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-10-kinetic-rush",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Kinetic Rush",
 		display_name: "Kinetic Rush",
 		description:
@@ -710,7 +710,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-11-nerve-gate-cascade",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Nerve Gate Cascade",
 		display_name: "Nerve Gate Cascade",
 		description:
@@ -785,7 +785,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-12-shockwave-palm",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Shockwave Palm",
 		display_name: "Shockwave Palm",
 		description:
@@ -860,7 +860,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-13-radiant-intercept",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Radiant Intercept",
 		display_name: "Radiant Intercept",
 		description:
@@ -927,7 +927,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-14-oath-purge",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
 		name: "Oath Purge",
 		display_name: "Oath Purge",
 		description:
@@ -994,7 +994,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-15-divine-bastion",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Divine Bastion",
 		display_name: "Divine Bastion",
 		description:
@@ -1061,7 +1061,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-16-shock-drone",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Shock Drone",
 		display_name: "Shock Drone",
 		description:
@@ -1139,7 +1139,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-17-mana-scan-array",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Mana Scan Array",
 		display_name: "Mana Scan Array",
 		description:
@@ -1217,7 +1217,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-18-overcharge-payload",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Overcharge Payload",
 		display_name: "Overcharge Payload",
 		description:
@@ -1295,7 +1295,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-19-prey-lock",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Prey Lock",
 		display_name: "Prey Lock",
 		description:
@@ -1362,7 +1362,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-20-terrain-ghost",
-		classes: ["Assassin", "Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Terrain Ghost",
 		display_name: "Terrain Ghost",
 		description:
@@ -1429,7 +1429,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-21-resonance-snare",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Resonance Snare",
 		display_name: "Resonance Snare",
 		description:
@@ -1496,7 +1496,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-22-dissonant-strike",
-		classes: ["Destroyer", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Dissonant Strike",
 		display_name: "Dissonant Strike",
 		description:
@@ -1563,7 +1563,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-23-tempo-shift",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Tempo Shift",
 		display_name: "Tempo Shift",
 		description:
@@ -1630,7 +1630,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-24-guided-strike",
-		classes: ["Destroyer", "Holy Knight", "Technomancer"],
+		classes: ["Holy Knight", "Technomancer"],
 		name: "Guided Strike",
 		display_name: "Guided Strike",
 		description:
@@ -1764,7 +1764,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-26-cursed-blade-edge",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Cursed Blade Edge",
 		display_name: "Cursed Blade Edge",
 		description:
@@ -1831,7 +1831,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-27-pact-retaliation",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Pact Retaliation",
 		display_name: "Pact Retaliation",
 		description:
@@ -1898,7 +1898,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-28-withering-touch",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Withering Touch",
 		display_name: "Withering Touch",
 		description:
@@ -1965,7 +1965,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-29-entropic-counter",
-		classes: ["Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Entropic Counter",
 		display_name: "Entropic Counter",
 		description:
@@ -2032,7 +2032,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-30-iron-resolve",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Iron Resolve",
 		display_name: "Iron Resolve",
 		description:
@@ -2108,7 +2108,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-31-second-wind",
-		classes: ["Assassin", "Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Second Wind",
 		display_name: "Second Wind",
 		description:
@@ -2196,7 +2196,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-32-combat-roll",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Combat Roll",
 		display_name: "Combat Roll",
 		description:
@@ -2280,7 +2280,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-33-battle-cry",
-		classes: ["Berserker", "Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Battle Cry",
 		display_name: "Battle Cry",
 		description:
@@ -2355,7 +2355,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-34-marked-for-death",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Marked for Death",
 		display_name: "Marked for Death",
 		description:
@@ -2438,7 +2438,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-35-fortress-pulse",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Fortress Pulse",
 		display_name: "Fortress Pulse",
 		description:
@@ -2505,7 +2505,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-36-berserker-s-fury",
-		classes: ["Berserker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Berserker's Fury",
 		display_name: "Berserker's Fury",
 		description:
@@ -2572,7 +2572,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-37-death-mark",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Death Mark",
 		display_name: "Death Mark",
 		description:
@@ -2647,7 +2647,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-38-velocity-barrage",
-		classes: ["Berserker", "Assassin", "Striker", "Technomancer"],
+		classes: [
+			"Destroyer",
+			"Striker",
+			"Assassin",
+			"Stalker",
+			"Berserker",
+			"Technomancer",
+		],
 		name: "Velocity Barrage",
 		display_name: "Velocity Barrage",
 		description:
@@ -2789,7 +2796,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-40-siege-protocol",
-		classes: ["Destroyer", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Siege Protocol",
 		display_name: "Siege Protocol",
 		description:
@@ -2867,7 +2874,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-41-hunter-s-judgment",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Hunter's Judgment",
 		display_name: "Hunter's Judgment",
 		description:
@@ -2934,7 +2941,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-42-adamantine-shell",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Adamantine Shell",
 		display_name: "Adamantine Shell",
 		description:
@@ -3003,7 +3010,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-43-eruption",
-		classes: ["Berserker", "Technomancer"],
+		classes: [
+			"Destroyer",
+			"Striker",
+			"Assassin",
+			"Stalker",
+			"Berserker",
+			"Technomancer",
+		],
 		name: "Eruption",
 		display_name: "Eruption",
 		description:
@@ -3073,7 +3087,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-44-phantom-army",
-		classes: ["Assassin", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Phantom Army",
 		display_name: "Phantom Army",
 		description:
@@ -3150,7 +3164,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-45-thousand-fists",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Thousand Fists",
 		display_name: "Thousand Fists",
 		description:
@@ -3227,7 +3241,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-46-absolute-sanctum",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Absolute Sanctum",
 		display_name: "Absolute Sanctum",
 		description:
@@ -3296,7 +3310,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-47-arsenal-deploy",
-		classes: ["Destroyer", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Arsenal Deploy",
 		display_name: "Arsenal Deploy",
 		description:
@@ -3376,7 +3390,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-48-apex-predator",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Apex Predator",
 		display_name: "Apex Predator",
 		description:
@@ -3446,7 +3460,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-49-immovable-aegis",
-		classes: ["Destroyer", "Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Immovable Aegis",
 		display_name: "Immovable Aegis",
 		description:
@@ -3522,7 +3536,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-50-cataclysm-overload",
-		classes: ["Berserker", "Technomancer"],
+		classes: [
+			"Destroyer",
+			"Striker",
+			"Assassin",
+			"Stalker",
+			"Berserker",
+			"Technomancer",
+		],
 		name: "Cataclysm Overload",
 		display_name: "Cataclysm Overload",
 		description:
@@ -3591,7 +3612,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-51-death-s-shadow",
-		classes: ["Assassin", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Death's Shadow",
 		display_name: "Death's Shadow",
 		description:
@@ -3669,7 +3690,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-52-infinite-barrage",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Infinite Barrage",
 		display_name: "Infinite Barrage",
 		description:
@@ -3815,7 +3836,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-54-total-arsenal",
-		classes: ["Destroyer", "Stalker", "Technomancer"],
+		classes: ["Holy Knight", "Technomancer"],
 		name: "Total Arsenal",
 		display_name: "Total Arsenal",
 		description:
@@ -3896,7 +3917,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-55-apex-strike",
-		classes: ["Destroyer", "Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Apex Strike",
 		display_name: "Apex Strike",
 		description:
@@ -3965,7 +3986,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-56-world-breaker",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "World Breaker",
 		display_name: "World Breaker",
 		description:
@@ -4034,7 +4055,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-57-nuclear-overload",
-		classes: ["Berserker", "Technomancer"],
+		classes: [
+			"Destroyer",
+			"Striker",
+			"Assassin",
+			"Stalker",
+			"Berserker",
+			"Technomancer",
+		],
 		name: "Nuclear Overload",
 		display_name: "Nuclear Overload",
 		description:
@@ -4104,7 +4132,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-58-reaper-s-sentence",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Reaper's Sentence",
 		display_name: "Reaper's Sentence",
 		description:
@@ -4181,7 +4209,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-59-final-strike",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Final Strike",
 		display_name: "Final Strike",
 		description:
@@ -4258,7 +4286,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-60-absolute-ascension",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Absolute Ascension",
 		display_name: "Absolute Ascension",
 		description:
@@ -4327,7 +4355,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-61-skynet-protocol",
-		classes: ["Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Skynet Protocol",
 		display_name: "Skynet Protocol",
 		description:
@@ -4408,7 +4436,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-62-apex-convergence",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Apex Convergence",
 		display_name: "Apex Convergence",
 		description:
@@ -4479,7 +4507,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-63-fault-line-stomp",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Fault Line Stomp",
 		display_name: "Fault Line Stomp",
 		description:
@@ -4546,7 +4574,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-64-crimson-frenzy",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Crimson Frenzy",
 		display_name: "Crimson Frenzy",
 		description:
@@ -4615,7 +4643,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-65-nerve-strike",
-		classes: ["Destroyer", "Assassin", "Striker", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Nerve Strike",
 		display_name: "Nerve Strike",
 		description:
@@ -4690,7 +4718,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-66-pressure-point-cascade",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Pressure Point Cascade",
 		display_name: "Pressure Point Cascade",
 		description:
@@ -4832,7 +4860,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-68-drone-overwatch",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Drone Overwatch",
 		display_name: "Drone Overwatch",
 		description:
@@ -4912,7 +4940,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-69-prey-sense",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Prey Sense",
 		display_name: "Prey Sense",
 		description:
@@ -4979,7 +5007,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-70-harmonic-ward",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Harmonic Ward",
 		display_name: "Harmonic Ward",
 		description:
@@ -5046,7 +5074,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-71-tether-of-binding",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Tether of Binding",
 		display_name: "Tether of Binding",
 		description:
@@ -5113,7 +5141,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-72-death-s-momentum",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Death's Momentum",
 		display_name: "Death's Momentum",
 		description:
@@ -5180,7 +5208,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-73-seismic-anchor",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Seismic Anchor",
 		display_name: "Seismic Anchor",
 		description:
@@ -5247,7 +5275,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-74-berserker-s-gambit",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Berserker's Gambit",
 		display_name: "Berserker's Gambit",
 		description:
@@ -5314,7 +5342,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-75-phantom-blade-flurry",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Phantom Blade Flurry",
 		display_name: "Phantom Blade Flurry",
 		description:
@@ -5389,7 +5417,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-76-one-inch-collapse",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "One-Inch Collapse",
 		display_name: "One-Inch Collapse",
 		description:
@@ -5464,7 +5492,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-77-covenant-aegis",
-		classes: ["Destroyer", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Covenant Aegis",
 		display_name: "Covenant Aegis",
 		description:
@@ -5531,7 +5559,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-78-payload-deployment",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Payload Deployment",
 		display_name: "Payload Deployment",
 		description:
@@ -5609,7 +5637,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-79-quarry-pindown",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Quarry Pindown",
 		display_name: "Quarry Pindown",
 		description:
@@ -5676,7 +5704,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-80-encore-performance",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Encore Performance",
 		display_name: "Encore Performance",
 		description:
@@ -5743,7 +5771,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-81-blood-pact-escalation",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Blood Pact Escalation",
 		display_name: "Blood Pact Escalation",
 		description:
@@ -5810,7 +5838,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-82-entropy-harvest",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Entropy Harvest",
 		display_name: "Entropy Harvest",
 		description:
@@ -5877,7 +5905,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-83-bulwark-singularity",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Bulwark Singularity",
 		display_name: "Bulwark Singularity",
 		description:
@@ -5946,7 +5974,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-84-annihilation-rush",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Annihilation Rush",
 		display_name: "Annihilation Rush",
 		description:
@@ -6016,7 +6044,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-85-kill-protocol",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Kill Protocol",
 		display_name: "Kill Protocol",
 		description:
@@ -6093,7 +6121,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-86-mana-reactor-core",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Mana Reactor Core",
 		display_name: "Mana Reactor Core",
 		description:
@@ -6173,7 +6201,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-87-absolute-smite",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
 		name: "Absolute Smite",
 		display_name: "Absolute Smite",
 		description:
@@ -6242,7 +6270,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-88-orbital-strike-array",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: [
+			"Destroyer",
+			"Striker",
+			"Assassin",
+			"Stalker",
+			"Berserker",
+			"Technomancer",
+		],
 		name: "Orbital Strike Array",
 		display_name: "Orbital Strike Array",
 		description:
@@ -6322,7 +6357,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-89-idol-s-magnum-opus",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Idol's Magnum Opus",
 		display_name: "Idol's Magnum Opus",
 		description:
@@ -6392,7 +6427,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-90-patron-s-embrace",
-		classes: ["Technomancer"],
+		classes: [
+			"Destroyer",
+			"Striker",
+			"Assassin",
+			"Stalker",
+			"Berserker",
+			"Technomancer",
+		],
 		name: "Patron's Embrace",
 		display_name: "Patron's Embrace",
 		description:
@@ -6461,7 +6503,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-91-final-entropy",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
 		name: "Final Entropy",
 		display_name: "Final Entropy",
 		description:
@@ -6532,7 +6574,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-92-quarry-annihilation",
-		classes: ["Assassin", "Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Quarry Annihilation",
 		display_name: "Quarry Annihilation",
 		description:
@@ -6601,7 +6643,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-93-fortress-mode",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Fortress Mode",
 		display_name: "Fortress Mode",
 		description:
@@ -6670,7 +6712,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-94-terminal-velocity",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Terminal Velocity",
 		display_name: "Terminal Velocity",
 		description:
@@ -6741,7 +6783,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-95-perfect-kill",
-		classes: ["Assassin", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Perfect Kill",
 		display_name: "Perfect Kill",
 		description:
@@ -6818,7 +6860,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-96-eight-gates-release",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Eight Gates Release",
 		display_name: "Eight Gates Release",
 		description:
@@ -6895,7 +6937,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-97-s-rank-smite",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
 		name: "S-Rank Smite",
 		display_name: "S-Rank Smite",
 		description:
@@ -6966,7 +7008,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-98-singularity-engine",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Singularity Engine",
 		display_name: "Singularity Engine",
 		description:
@@ -7049,7 +7091,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-99-predator-supremacy",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Predator Supremacy",
 		display_name: "Predator Supremacy",
 		description:
@@ -7120,7 +7162,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-100-final-chorus",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Final Chorus",
 		display_name: "Final Chorus",
 		description:
@@ -7189,7 +7231,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-101-absolute-pact",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Absolute Pact",
 		display_name: "Absolute Pact",
 		description:
@@ -7261,7 +7303,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-102-gravity-well-slam",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Gravity Well Slam",
 		display_name: "Gravity Well Slam",
 		description:
@@ -7328,7 +7370,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-103-adrenaline-surge",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Adrenaline Surge",
 		display_name: "Adrenaline Surge",
 		description:
@@ -7402,7 +7444,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-104-phantom-decoy",
-		classes: ["Assassin", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Phantom Decoy",
 		display_name: "Phantom Decoy",
 		description:
@@ -7477,7 +7519,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-105-gate-reader",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Gate Reader",
 		display_name: "Gate Reader",
 		description:
@@ -7551,7 +7593,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-106-sacrifice-engine",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Sacrifice Engine",
 		display_name: "Sacrifice Engine",
 		description:
@@ -7618,7 +7660,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-107-resonance-counter",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Resonance Counter",
 		display_name: "Resonance Counter",
 		description:
@@ -7685,7 +7727,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-108-mana-forge",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Mana Forge",
 		display_name: "Mana Forge",
 		description:
@@ -7765,7 +7807,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-109-entropic-feedback",
-		classes: ["Technomancer"],
+		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
 		name: "Entropic Feedback",
 		display_name: "Entropic Feedback",
 		description:
@@ -7834,7 +7876,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-110-herald-s-intervention",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Herald's Intervention",
 		display_name: "Herald's Intervention",
 		description:
@@ -7901,7 +7943,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-111-parallel-processing",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Parallel Processing",
 		display_name: "Parallel Processing",
 		description:
@@ -7969,7 +8011,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-112-war-cry",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "War Cry",
 		display_name: "War Cry",
 		description:
@@ -8043,7 +8085,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-113-execute-protocol",
-		classes: ["Assassin", "Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Execute Protocol",
 		display_name: "Execute Protocol",
 		description:
@@ -8181,7 +8223,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-115-summoner-s-pack",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Summoner's Pack",
 		display_name: "Summoner's Pack",
 		description:
@@ -8248,7 +8290,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-116-mana-recycler",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Mana Recycler",
 		display_name: "Mana Recycler",
 		description:
@@ -8333,7 +8375,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-117-circuit-defibrillator",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Circuit Defibrillator",
 		display_name: "Circuit Defibrillator",
 		description:
@@ -8417,7 +8459,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-118-runic-detonation",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Runic Detonation",
 		display_name: "Runic Detonation",
 		description:
@@ -8486,7 +8528,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-119-commander-s-presence",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Commander's Presence",
 		display_name: "Commander's Presence",
 		description:
@@ -8562,7 +8604,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-120-entropic-avatar",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Entropic Avatar",
 		display_name: "Entropic Avatar",
 		description:
@@ -8634,7 +8676,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-121-esper-ascension",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Esper Ascension",
 		display_name: "Esper Ascension",
 		description:
@@ -8705,7 +8747,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-122-patron-sacrifice",
-		classes: ["Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
 		name: "Patron Sacrifice",
 		display_name: "Patron Sacrifice",
 		description:
@@ -8776,7 +8818,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-123-striker-s-zenith",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Striker's Zenith",
 		display_name: "Striker's Zenith",
 		description:
@@ -8853,7 +8895,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-124-berserker-s-last-stand",
-		classes: ["Berserker", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Berserker's Last Stand",
 		display_name: "Berserker's Last Stand",
 		description:
@@ -8924,7 +8966,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-125-summoner-s-leviathan",
-		classes: ["Striker", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Technomancer"],
 		name: "Summoner's Leviathan",
 		display_name: "Summoner's Leviathan",
 		description:
@@ -8993,7 +9035,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-126-divine-mandate",
-		classes: ["Striker", "Holy Knight", "Technomancer"],
+		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
 		name: "Divine Mandate",
 		display_name: "Divine Mandate",
 		description:

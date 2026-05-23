@@ -1,17 +1,20 @@
-(globalThis as any).__SOLO_COMPENDIUM_ENV__ = {
-	VITE_SUPABASE_URL: "http://localhost",
-	VITE_SUPABASE_ANON_KEY: "key",
-};
-(globalThis as any).import = { meta: { env: {} } };
-
 import { listLearnableSpells } from "./src/lib/canonicalCompendium";
+import { getJobAbilityAccess } from "./src/lib/jobAbilityAccess";
 
-async function main() {
+async function run() {
+	console.log("Job Access:", getJobAbilityAccess("Idol"));
 	const spells = await listLearnableSpells({
 		jobName: "Idol",
 		characterLevel: 1,
 	});
-	console.log("Spells found:", spells.length);
-	spells.forEach((s) => console.log(s.name, "level:", s.power_level));
+	console.log("Found spells for Idol:", spells.length);
+	
+	const cantrips = await listLearnableSpells({
+		jobName: "Idol",
+		characterLevel: 1,
+		maxPowerLevel: 0,
+	});
+	console.log("Found cantrips for Idol:", cantrips.length);
 }
-main().catch(console.error);
+
+run().catch(console.error);

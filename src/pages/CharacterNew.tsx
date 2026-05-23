@@ -562,7 +562,7 @@ const CharacterNew = () => {
 		const features =
 			staticJobData?.awakeningFeatures ??
 			(staticJobData as unknown as Record<string, unknown>)?.awakening_features;
-		if (!features) return [];
+		if (!Array.isArray(features)) return [];
 		return features.filter((f: Record<string, unknown>) => f.level === 1);
 	}, [staticJobData]);
 
@@ -570,8 +570,8 @@ const CharacterNew = () => {
 		const traits =
 			staticJobData?.jobTraits ??
 			(staticJobData as unknown as Record<string, unknown>)?.job_traits;
-		if (!traits) return [];
-		return traits;
+		if (!Array.isArray(traits)) return [];
+		return traits as { name: string; description?: string }[];
 	}, [staticJobData]);
 
 	const { data: paths = [] } = useQuery({
@@ -1875,9 +1875,10 @@ const CharacterNew = () => {
 		const eq =
 			staticJobData?.startingEquipment ??
 			(staticJobData as unknown as Record<string, unknown>)?.starting_equipment;
-		if (!eq) return [];
-		return eq.map((group: unknown[], index: number) => {
-			const name = equipmentChoices[index] ?? group[0];
+		if (!Array.isArray(eq)) return [];
+		return eq.map((group: unknown, index: number) => {
+			const groupArray = Array.isArray(group) ? group : [];
+			const name = equipmentChoices[index] ?? groupArray[0];
 			const normalizedName = normalizeCompendiumKey(name);
 			const entry =
 				canonicalEquipmentByName.get(normalizedName) ??

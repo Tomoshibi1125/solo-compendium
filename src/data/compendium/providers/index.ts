@@ -1166,32 +1166,66 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 			job.primary_abilities ||
 			(job.primaryAbility ? [job.primaryAbility] : null),
 		saving_throw_proficiencies:
-			job.savingThrows || legacyJob.saving_throws || null,
+			job.savingThrows || (legacyJob.saving_throws as string[]) || null,
 		armor_proficiencies:
-			job.armorProficiencies || legacyJob.armor_proficiencies || null,
+			job.armorProficiencies ||
+			(legacyJob.armor_proficiencies as string[]) ||
+			null,
 		weapon_proficiencies:
-			job.weaponProficiencies || legacyJob.weapon_proficiencies || null,
+			job.weaponProficiencies ||
+			(legacyJob.weapon_proficiencies as string[]) ||
+			null,
 		tool_proficiencies:
-			job.toolProficiencies || legacyJob.tool_proficiencies || null,
-		skill_choices: job.skillChoices || legacyJob.skill_choices || null,
+			job.toolProficiencies ||
+			(legacyJob.tool_proficiencies as string[]) ||
+			null,
+		skill_choices:
+			job.skillChoices || (legacyJob.skill_choices as string[]) || null,
 		skill_choice_count: skillChoiceCount,
 		starting_equipment:
-			job.startingEquipment || legacyJob.starting_equipment || null,
+			job.startingEquipment ||
+			(legacyJob.starting_equipment as string[][]) ||
+			null,
 		hit_points_at_first_level:
-			job.hitPointsAtFirstLevel || legacyJob.hitPointsAtFirstLevel || null,
+			job.hitPointsAtFirstLevel ||
+			(legacyJob.hitPointsAtFirstLevel as string) ||
+			null,
 		hit_points_at_higher_levels:
-			job.hitPointsAtHigherLevels || legacyJob.hitPointsAtHigherLevels || null,
+			job.hitPointsAtHigherLevels ||
+			(legacyJob.hitPointsAtHigherLevels as string) ||
+			null,
 		regent_prerequisites: null,
 		spellcasting_ability: job.spellcasting?.ability || null,
 		spellcasting_focus: job.spellcasting?.focus || null,
 		awakening_features:
-			job.awakeningFeatures || legacyJob.awakening_features || null,
-		job_traits: job.jobTraits || legacyJob.job_traits || null,
+			job.awakeningFeatures ||
+			(legacyJob.awakening_features as Array<{
+				name: string;
+				description: string;
+				level: number;
+			}>) ||
+			null,
+		job_traits:
+			job.jobTraits ||
+			(legacyJob.job_traits as Array<{
+				name: string;
+				description: string;
+				type: string;
+				frequency?: string;
+			}>) ||
+			null,
 		ability_score_improvements:
 			job.abilityScoreImprovements ||
-			legacyJob.ability_score_improvements ||
+			(legacyJob.ability_score_improvements as Record<string, number>) ||
 			null,
-		racial_traits: job.racialTraits || legacyJob.racial_traits || null,
+		racial_traits:
+			job.racialTraits ||
+			(legacyJob.racial_traits as Array<{
+				name: string;
+				description: string;
+				type?: string;
+			}>) ||
+			null,
 		natural_weapons: job.naturalWeapons || null,
 		natural_armor: job.naturalArmor || null,
 		resonance_breath: job.resonanceBreath || null,

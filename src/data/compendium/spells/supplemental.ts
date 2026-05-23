@@ -8,7 +8,7 @@ import type { CompendiumSpell } from "../../../types/compendium";
 export const spells_supplemental: CompendiumSpell[] = [
 	{
 		id: "spell-sup-0-1-mana-dart",
-		classes: ["Mage", "Stalker"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Dart",
 		display_name: "Mana Dart",
 		description:
@@ -69,7 +69,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-2-resonance-whip",
-		classes: ["Mage", "Idol"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Resonance Whip",
 		display_name: "Resonance Whip",
 		description:
@@ -123,7 +123,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-3-grave-chill",
-		classes: ["Revenant", "Idol"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Grave Chill",
 		display_name: "Grave Chill",
 		description:
@@ -183,7 +183,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-4-lattice-ping",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Lattice Ping",
 		display_name: "Lattice Ping",
 		description:
@@ -237,7 +237,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-5-pact-spark",
-		classes: ["Mage", "Contractor"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner", "Stalker"],
 		name: "Pact Spark",
 		display_name: "Pact Spark",
 		description:
@@ -291,7 +291,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-6-aetheric-blade",
-		classes: ["Mage", "Summoner"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Aetheric Blade",
 		display_name: "Aetheric Blade",
 		description:
@@ -345,7 +345,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-7-mind-spike",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Mind Spike",
 		display_name: "Mind Spike",
 		description:
@@ -406,7 +406,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-8-verdant-touch",
-		classes: ["Summoner", "Idol", "Herald", "Technomancer", "Holy Knight"],
+		classes: [
+			"Herald",
+			"Holy Knight",
+			"Idol",
+			"Technomancer",
+			"Summoner",
+			"Stalker",
+		],
 		name: "Verdant Touch",
 		display_name: "Verdant Touch",
 		description:
@@ -460,7 +467,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-9-circuit-jolt",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Circuit Jolt",
 		display_name: "Circuit Jolt",
 		description:
@@ -515,7 +522,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-10-oath-flare",
-		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Oath Flare",
 		display_name: "Oath Flare",
 		description:
@@ -577,7 +584,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-11-echolocation-pulse",
-		classes: ["Mage", "Idol", "Stalker", "Technomancer"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Echolocation Pulse",
 		display_name: "Echolocation Pulse",
 		description:
@@ -639,7 +646,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-12-entropic-grasp",
-		classes: ["Revenant", "Idol"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Entropic Grasp",
 		display_name: "Entropic Grasp",
 		description:
@@ -702,7 +709,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-13-harmonic-shield",
-		classes: ["Mage", "Idol"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Harmonic Shield",
 		display_name: "Harmonic Shield",
 		description:
@@ -766,7 +773,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-14-rift-spark",
-		classes: ["Mage", "Esper", "Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Rift Spark",
 		display_name: "Rift Spark",
 		description:
@@ -830,14 +837,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-0-15-mana-lens",
-		classes: [
-			"Mage",
-			"Summoner",
-			"Contractor",
-			"Herald",
-			"Holy Knight",
-			"Technomancer",
-		],
+		classes: ["Mage", "Stalker", "Esper", "Idol", "Summoner"],
 		name: "Mana Lens",
 		display_name: "Mana Lens",
 		description:
@@ -900,7 +900,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-16-mana-bolt",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Bolt",
 		display_name: "Mana Bolt",
 		description:
@@ -946,7 +946,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-17-shield-lattice",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Shield Lattice",
 		display_name: "Shield Lattice",
 		description:
@@ -993,7 +993,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-18-searing-oath",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Searing Oath",
 		display_name: "Searing Oath",
 		description:
@@ -1038,7 +1038,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-19-hunter-s-brand",
-		classes: ["Mage", "Summoner", "Stalker"],
+		classes: ["Mage", "Stalker", "Esper", "Idol", "Summoner"],
 		name: "Hunter's Brand",
 		display_name: "Hunter's Brand",
 		description:
@@ -1085,7 +1085,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-20-hex-contract",
-		classes: ["Esper", "Revenant", "Contractor", "Idol"],
+		classes: [
+			"Mage",
+			"Revenant",
+			"Contractor",
+			"Herald",
+			"Idol",
+			"Esper",
+			"Stalker",
+		],
 		name: "Hex Contract",
 		display_name: "Hex Contract",
 		description:
@@ -1130,7 +1138,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-21-psychic-lance",
-		classes: ["Mage", "Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Psychic Lance",
 		display_name: "Psychic Lance",
 		description:
@@ -1178,7 +1186,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-22-commanding-hymn",
-		classes: ["Esper", "Revenant", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Commanding Hymn",
 		display_name: "Commanding Hymn",
 		description:
@@ -1235,14 +1243,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-23-frost-lattice",
-		classes: [
-			"Mage",
-			"Idol",
-			"Herald",
-			"Technomancer",
-			"Summoner",
-			"Holy Knight",
-		],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Frost Lattice",
 		display_name: "Frost Lattice",
 		description:
@@ -1299,7 +1300,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-24-thorn-salvo",
-		classes: ["Summoner", "Contractor", "Idol", "Herald", "Holy Knight"],
+		classes: ["Mage", "Summoner", "Contractor", "Stalker"],
 		name: "Thorn Salvo",
 		display_name: "Thorn Salvo",
 		description:
@@ -1345,7 +1346,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-25-soul-siphon",
-		classes: ["Mage", "Revenant", "Idol"],
+		classes: ["Herald", "Holy Knight", "Idol", "Revenant", "Contractor"],
 		name: "Soul Siphon",
 		display_name: "Soul Siphon",
 		description:
@@ -1401,7 +1402,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-26-aegis-of-the-absolute",
-		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Aegis of the Absolute",
 		display_name: "Aegis of the Absolute",
 		description:
@@ -1454,7 +1455,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-27-scramble-signal",
-		classes: ["Mage", "Esper", "Idol", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Scramble Signal",
 		display_name: "Scramble Signal",
 		description:
@@ -1510,7 +1511,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-28-phantom-step",
-		classes: ["Mage", "Esper", "Revenant", "Contractor", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Phantom Step",
 		display_name: "Phantom Step",
 		description:
@@ -1564,7 +1565,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-29-verdant-grasp",
-		classes: ["Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor", "Stalker"],
 		name: "Verdant Grasp",
 		display_name: "Verdant Grasp",
 		description:
@@ -1621,7 +1622,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-30-mana-armor",
-		classes: ["Mage"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Mana Armor",
 		display_name: "Mana Armor",
 		description:
@@ -1677,7 +1678,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-31-healing-resonance",
-		classes: ["Mage", "Summoner", "Idol", "Herald", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol", "Revenant", "Contractor"],
 		name: "Healing Resonance",
 		display_name: "Healing Resonance",
 		description:
@@ -1722,7 +1723,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-32-thunder-crack",
-		classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Thunder Crack",
 		display_name: "Thunder Crack",
 		description:
@@ -1772,7 +1773,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-33-necrotic-shroud",
-		classes: ["Mage", "Revenant"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Necrotic Shroud",
 		display_name: "Necrotic Shroud",
 		description:
@@ -1828,7 +1829,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-34-wire-trap",
-		classes: ["Mage", "Summoner", "Stalker", "Technomancer"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Wire Trap",
 		display_name: "Wire Trap",
 		description:
@@ -1886,7 +1887,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-35-pact-shield",
-		classes: ["Mage", "Contractor"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Pact Shield",
 		display_name: "Pact Shield",
 		description:
@@ -1939,7 +1940,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-36-gravity-spike",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Gravity Spike",
 		display_name: "Gravity Spike",
 		description:
@@ -1989,7 +1990,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-37-signal-flare",
-		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Signal Flare",
 		display_name: "Signal Flare",
 		description:
@@ -2045,7 +2046,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-38-fade-to-shadow",
-		classes: ["Esper", "Revenant", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Fade to Shadow",
 		display_name: "Fade to Shadow",
 		description:
@@ -2100,7 +2101,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-39-mana-missile-array",
-		classes: ["Mage", "Contractor", "Stalker", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Missile Array",
 		display_name: "Mana Missile Array",
 		description:
@@ -2154,7 +2155,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-40-resonance-pulse",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Resonance Pulse",
 		display_name: "Resonance Pulse",
 		description:
@@ -2201,7 +2202,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-41-mana-seal",
-		classes: ["Mage", "Contractor", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Mana Seal",
 		display_name: "Mana Seal",
 		description:
@@ -2256,7 +2257,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-42-triple-ignition",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Triple Ignition",
 		display_name: "Triple Ignition",
 		description:
@@ -2311,14 +2312,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-43-oath-tether",
-		classes: [
-			"Mage",
-			"Idol",
-			"Herald",
-			"Holy Knight",
-			"Technomancer",
-			"Summoner",
-		],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Oath Tether",
 		display_name: "Oath Tether",
 		description:
@@ -2372,7 +2366,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-44-misty-blink",
-		classes: ["Mage", "Summoner"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Misty Blink",
 		display_name: "Misty Blink",
 		description:
@@ -2428,7 +2422,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-45-entropic-wave",
-		classes: ["Mage", "Revenant", "Idol"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Entropic Wave",
 		display_name: "Entropic Wave",
 		description:
@@ -2484,7 +2478,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-46-resonance-amplifier",
-		classes: ["Mage", "Summoner", "Idol", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Resonance Amplifier",
 		display_name: "Resonance Amplifier",
 		description:
@@ -2538,7 +2532,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-47-oath-smite",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Oath Smite",
 		display_name: "Oath Smite",
 		description:
@@ -2583,7 +2577,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-48-predator-s-mark",
-		classes: ["Mage", "Stalker"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Predator's Mark",
 		display_name: "Predator's Mark",
 		description:
@@ -2638,7 +2632,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-49-psychic-barrier",
-		classes: ["Mage", "Esper", "Idol"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Psychic Barrier",
 		display_name: "Psychic Barrier",
 		description:
@@ -2685,7 +2679,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-50-gate-snare",
-		classes: ["Mage", "Esper", "Summoner", "Contractor", "Stalker"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Gate Snare",
 		display_name: "Gate Snare",
 		description:
@@ -2743,7 +2737,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-51-pact-chains",
-		classes: ["Revenant", "Summoner", "Contractor"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald", "Summoner"],
 		name: "Pact Chains",
 		display_name: "Pact Chains",
 		description:
@@ -2801,7 +2795,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-52-battlefield-harmony",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Battlefield Harmony",
 		display_name: "Battlefield Harmony",
 		description:
@@ -2857,7 +2851,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-53-mana-turret",
-		classes: ["Mage", "Esper", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner"],
 		name: "Mana Turret",
 		display_name: "Mana Turret",
 		description:
@@ -2913,7 +2907,15 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-54-hallowed-ground",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: [
+			"Herald",
+			"Holy Knight",
+			"Idol",
+			"Revenant",
+			"Contractor",
+			"Esper",
+			"Technomancer",
+		],
 		name: "Hallowed Ground",
 		display_name: "Hallowed Ground",
 		description:
@@ -2969,7 +2971,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-55-shadow-transit",
-		classes: ["Mage", "Esper", "Revenant", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Shadow Transit",
 		display_name: "Shadow Transit",
 		description:
@@ -3027,10 +3029,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		classes: [
 			"Mage",
 			"Revenant",
-			"Summoner",
-			"Idol",
-			"Holy Knight",
+			"Contractor",
+			"Herald",
 			"Technomancer",
+			"Summoner",
+			"Esper",
 		],
 		name: "Corrosive Aura",
 		display_name: "Corrosive Aura",
@@ -3090,7 +3093,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-57-rift-companion-link",
-		classes: ["Mage", "Esper", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Rift-Companion Link",
 		display_name: "Rift-Companion Link",
 		description:
@@ -3152,7 +3155,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-58-kinetic-burst",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Kinetic Burst",
 		display_name: "Kinetic Burst",
 		description:
@@ -3200,7 +3203,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-59-deploy-drone",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Deploy Drone",
 		display_name: "Deploy Drone",
 		description:
@@ -3262,7 +3265,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-60-hymn-of-courage",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Hymn of Courage",
 		display_name: "Hymn of Courage",
 		description:
@@ -3318,7 +3321,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-61-mana-barrage",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Mana Barrage",
 		display_name: "Mana Barrage",
 		description:
@@ -3375,7 +3378,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-62-revenant-s-embrace",
-		classes: ["Revenant", "Idol"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Revenant's Embrace",
 		display_name: "Revenant's Embrace",
 		description:
@@ -3432,7 +3435,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-63-pact-hunger",
-		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Pact Hunger",
 		display_name: "Pact Hunger",
 		description:
@@ -3491,7 +3494,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-64-harmonic-barrage",
-		classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Harmonic Barrage",
 		display_name: "Harmonic Barrage",
 		description:
@@ -3550,7 +3553,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-65-phase-strike",
-		classes: ["Mage", "Summoner"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Phase Strike",
 		display_name: "Phase Strike",
 		description:
@@ -3604,7 +3607,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-66-absolute-beacon",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Absolute Beacon",
 		display_name: "Absolute Beacon",
 		description:
@@ -3660,7 +3663,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-67-mana-overcharge",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Mana Overcharge",
 		display_name: "Mana Overcharge",
 		description:
@@ -3714,7 +3717,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-68-summon-gate-echo",
-		classes: ["Esper", "Summoner", "Contractor", "Stalker"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Summon Gate Echo",
 		display_name: "Summon Gate Echo",
 		description:
@@ -3769,7 +3772,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-69-circuit-overclock",
-		classes: ["Mage", "Summoner", "Idol", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Circuit Overclock",
 		display_name: "Circuit Overclock",
 		description:
@@ -3824,7 +3827,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-70-binding-oath",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: [
+			"Herald",
+			"Holy Knight",
+			"Idol",
+			"Esper",
+			"Stalker",
+			"Contractor",
+		],
 		name: "Binding Oath",
 		display_name: "Binding Oath",
 		description:
@@ -3882,7 +3892,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-71-whisper-network",
-		classes: ["Mage", "Contractor", "Idol"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Whisper Network",
 		display_name: "Whisper Network",
 		description:
@@ -3938,7 +3948,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-72-gravity-well",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Gravity Well",
 		display_name: "Gravity Well",
 		description:
@@ -3995,7 +4005,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-73-resonance-cascade",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Resonance Cascade",
 		display_name: "Resonance Cascade",
 		description:
@@ -4052,7 +4062,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-74-dimensional-anchor",
-		classes: ["Mage", "Contractor", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Dimensional Anchor",
 		display_name: "Dimensional Anchor",
 		description:
@@ -4106,7 +4116,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-75-death-s-harvest",
-		classes: ["Revenant", "Idol"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Death's Harvest",
 		display_name: "Death's Harvest",
 		description:
@@ -4163,7 +4173,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-76-oath-aura",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Oath Aura",
 		display_name: "Oath Aura",
 		description:
@@ -4219,7 +4229,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-77-phantom-swarm",
-		classes: ["Esper", "Revenant", "Contractor", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Phantom Swarm",
 		display_name: "Phantom Swarm",
 		description:
@@ -4275,7 +4285,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-78-gate-ward",
-		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Gate Ward",
 		display_name: "Gate Ward",
 		description:
@@ -4337,7 +4347,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-79-mana-cannon",
-		classes: ["Mage", "Esper", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner"],
 		name: "Mana Cannon",
 		display_name: "Mana Cannon",
 		description:
@@ -4400,7 +4410,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-80-enthralling-performance",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Enthralling Performance",
 		display_name: "Enthralling Performance",
 		description:
@@ -4515,7 +4525,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-82-thorn-fortress",
-		classes: ["Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor", "Stalker"],
 		name: "Thorn Fortress",
 		display_name: "Thorn Fortress",
 		description:
@@ -4582,7 +4592,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-83-mana-storm",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Storm",
 		display_name: "Mana Storm",
 		description:
@@ -4639,7 +4649,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-84-raise-gate-dead",
-		classes: ["Revenant", "Contractor", "Idol"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Raise Gate Dead",
 		display_name: "Raise Gate Dead",
 		description:
@@ -4692,7 +4702,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-85-pact-dominion",
-		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Pact Dominion",
 		display_name: "Pact Dominion",
 		description:
@@ -4747,7 +4757,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-86-sonic-annihilation",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Sonic Annihilation",
 		display_name: "Sonic Annihilation",
 		description:
@@ -4804,7 +4814,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-87-absolute-judgment",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Absolute Judgment",
 		display_name: "Absolute Judgment",
 		description:
@@ -4861,7 +4871,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-88-predator-s-web",
-		classes: ["Mage", "Summoner", "Stalker"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Predator's Web",
 		display_name: "Predator's Web",
 		description:
@@ -4917,7 +4927,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-89-mass-circuit-boost",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Mass Circuit Boost",
 		display_name: "Mass Circuit Boost",
 		description:
@@ -5032,14 +5042,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-91-restoration-chorus",
-		classes: [
-			"Mage",
-			"Idol",
-			"Herald",
-			"Technomancer",
-			"Summoner",
-			"Holy Knight",
-		],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Restoration Chorus",
 		display_name: "Restoration Chorus",
 		description:
@@ -5093,7 +5096,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-92-psionic-shockwave",
-		classes: ["Mage", "Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Psionic Shockwave",
 		display_name: "Psionic Shockwave",
 		description:
@@ -5152,7 +5155,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-93-arc-cascade",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Arc Cascade",
 		display_name: "Arc Cascade",
 		description:
@@ -5217,7 +5220,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-94-entropy-field",
-		classes: ["Revenant", "Idol"],
+		classes: ["Herald", "Holy Knight", "Idol", "Revenant", "Contractor"],
 		name: "Entropy Field",
 		display_name: "Entropy Field",
 		description:
@@ -5284,7 +5287,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-95-resonance-symphony",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Resonance Symphony",
 		display_name: "Resonance Symphony",
 		description:
@@ -5344,7 +5347,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-96-absolute-barrier",
-		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Absolute Barrier",
 		display_name: "Absolute Barrier",
 		description:
@@ -5406,7 +5409,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-97-disintegration-beam",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Disintegration Beam",
 		display_name: "Disintegration Beam",
 		description:
@@ -5463,7 +5466,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-98-nightmare-pact",
-		classes: ["Esper", "Contractor", "Idol", "Stalker", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Nightmare Pact",
 		display_name: "Nightmare Pact",
 		description:
@@ -5530,7 +5533,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-99-gate-behemoth",
-		classes: ["Esper", "Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Gate Behemoth",
 		display_name: "Gate Behemoth",
 		description:
@@ -5584,7 +5587,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-100-umbral-assassination",
-		classes: ["Mage", "Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Umbral Assassination",
 		display_name: "Umbral Assassination",
 		description:
@@ -5640,7 +5643,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-101-absolute-wrath",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Absolute Wrath",
 		display_name: "Absolute Wrath",
 		description:
@@ -5703,7 +5706,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-102-temporal-fracture",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Temporal Fracture",
 		display_name: "Temporal Fracture",
 		description:
@@ -5767,7 +5770,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-103-mana-circuit-harvest",
-		classes: ["Mage", "Revenant", "Idol", "Stalker", "Technomancer"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Mana-Circuit Harvest",
 		display_name: "Mana-Circuit Harvest",
 		description:
@@ -5821,7 +5824,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-104-patron-s-avatar",
-		classes: ["Mage", "Summoner", "Contractor", "Idol"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Patron's Avatar",
 		display_name: "Patron's Avatar",
 		description:
@@ -5883,7 +5886,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-105-sonic-apocalypse",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Sonic Apocalypse",
 		display_name: "Sonic Apocalypse",
 		description:
@@ -5940,7 +5943,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-106-total-concealment",
-		classes: ["Mage", "Esper", "Idol", "Stalker"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Total Concealment",
 		display_name: "Total Concealment",
 		description:
@@ -5996,7 +5999,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-107-gate-leviathan",
-		classes: ["Esper", "Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Gate Leviathan",
 		display_name: "Gate Leviathan",
 		description:
@@ -6052,7 +6055,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-108-psionic-fortress",
-		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Psionic Fortress",
 		display_name: "Psionic Fortress",
 		description:
@@ -6114,7 +6117,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-109-orbital-strike",
-		classes: ["Mage", "Contractor", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Orbital Strike",
 		display_name: "Orbital Strike",
 		description:
@@ -6173,7 +6176,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-110-absolute-sunburst",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Absolute Sunburst",
 		display_name: "Absolute Sunburst",
 		description:
@@ -6238,7 +6241,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-111-reality-rewrite",
-		classes: ["Mage", "Esper", "Summoner", "Stalker", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper", "Stalker"],
 		name: "Reality Rewrite",
 		display_name: "Reality Rewrite",
 		description:
@@ -6296,7 +6299,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-112-death-sovereign",
-		classes: ["Revenant", "Idol", "Holy Knight"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Death Sovereign",
 		display_name: "Death Sovereign",
 		description:
@@ -6359,7 +6362,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-113-total-domination",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Total Domination",
 		display_name: "Total Domination",
 		description:
@@ -6415,7 +6418,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-114-absolute-genesis",
-		classes: ["Mage", "Summoner"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Absolute Genesis",
 		display_name: "Absolute Genesis",
 		description:
@@ -6475,7 +6478,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-115-mana-singularity",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Singularity",
 		display_name: "Mana Singularity",
 		description:
@@ -6540,7 +6543,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-116-final-oath",
-		classes: ["Mage", "Idol", "Herald", "Holy Knight", "Summoner"],
+		classes: ["Herald", "Holy Knight", "Idol", "Revenant", "Contractor"],
 		name: "Final Oath",
 		display_name: "Final Oath",
 		description:
@@ -6603,7 +6606,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-117-absolute-silence",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Absolute Silence",
 		display_name: "Absolute Silence",
 		description:
@@ -6660,7 +6663,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-118-gate-colossus",
-		classes: ["Esper", "Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Gate Colossus",
 		display_name: "Gate Colossus",
 		description:
@@ -6720,7 +6723,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-119-eternal-contract",
-		classes: ["Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Eternal Contract",
 		display_name: "Eternal Contract",
 		description:
@@ -6782,7 +6785,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-120-total-recall",
-		classes: ["Mage", "Contractor", "Technomancer"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Total Recall",
 		display_name: "Total Recall",
 		description:
@@ -6836,7 +6839,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-121-entropy-horizon",
-		classes: ["Mage", "Revenant", "Idol"],
+		classes: ["Herald", "Holy Knight", "Idol", "Revenant", "Contractor"],
 		name: "Entropy Horizon",
 		display_name: "Entropy Horizon",
 		description:
@@ -6899,7 +6902,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-122-omniscient-scan",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Omniscient Scan",
 		display_name: "Omniscient Scan",
 		description:
@@ -6959,7 +6962,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-123-gate-resonance-spike",
-		classes: ["Mage", "Summoner", "Contractor", "Idol", "Stalker"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner", "Stalker"],
 		name: "Gate Resonance Spike",
 		display_name: "Gate Resonance Spike",
 		description:
@@ -7005,14 +7008,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-124-lattice-feedback-loop",
-		classes: [
-			"Mage",
-			"Idol",
-			"Herald",
-			"Technomancer",
-			"Summoner",
-			"Holy Knight",
-		],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Lattice Feedback Loop",
 		display_name: "Lattice Feedback Loop",
 		description:
@@ -7058,7 +7054,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-125-mana-thread-snare",
-		classes: ["Mage", "Revenant", "Summoner", "Stalker"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Mana Thread Snare",
 		display_name: "Mana Thread Snare",
 		description:
@@ -7107,7 +7103,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-126-awakening-surge",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Awakening Surge",
 		display_name: "Awakening Surge",
 		description:
@@ -7152,7 +7148,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-127-rift-echo",
-		classes: ["Mage", "Contractor", "Stalker"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Rift Echo",
 		display_name: "Rift Echo",
 		description:
@@ -7199,7 +7195,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-128-circuit-overload",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Circuit Overload",
 		display_name: "Circuit Overload",
 		description:
@@ -7247,7 +7243,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-129-patron-s-witness",
-		classes: ["Mage"],
+		classes: ["Mage", "Stalker", "Esper", "Idol"],
 		name: "Patron's Witness",
 		display_name: "Patron's Witness",
 		description:
@@ -7292,7 +7288,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-130-mana-siphon-strike",
-		classes: ["Mage", "Revenant"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Mana Siphon Strike",
 		display_name: "Mana Siphon Strike",
 		description:
@@ -7341,7 +7337,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-131-gate-anchor",
-		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Gate Anchor",
 		display_name: "Gate Anchor",
 		description:
@@ -7386,7 +7382,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-132-idol-s-crescendo",
-		classes: ["Mage", "Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Idol's Crescendo",
 		display_name: "Idol's Crescendo",
 		description:
@@ -7434,7 +7430,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-133-dimensional-pocket",
-		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Dimensional Pocket",
 		display_name: "Dimensional Pocket",
 		description:
@@ -7482,7 +7478,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-134-mana-circuit-splice",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Mana Circuit Splice",
 		display_name: "Mana Circuit Splice",
 		description:
@@ -7528,16 +7524,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-135-anomaly-cage",
-		classes: [
-			"Mage",
-			"Contractor",
-			"Idol",
-			"Herald",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-			"Summoner",
-		],
+		classes: ["Herald", "Holy Knight", "Idol", "Esper", "Technomancer"],
 		name: "Anomaly Cage",
 		display_name: "Anomaly Cage",
 		description:
@@ -7585,7 +7572,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-136-rift-walk",
-		classes: ["Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Rift Walk",
 		display_name: "Rift Walk",
 		description:
@@ -7632,7 +7619,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-137-bureau-authority-override",
-		classes: ["Mage", "Esper", "Idol", "Herald", "Holy Knight", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Bureau Authority Override",
 		display_name: "Bureau Authority Override",
 		description:
@@ -7681,7 +7668,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-138-mana-storm-nexus",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Storm Nexus",
 		display_name: "Mana Storm Nexus",
 		description:
@@ -7731,7 +7718,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-139-lattice-severance",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Lattice Severance",
 		display_name: "Lattice Severance",
 		description:
@@ -7828,7 +7815,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-141-s-rank-awakening",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "S-Rank Awakening",
 		display_name: "S-Rank Awakening",
 		description:
@@ -7873,7 +7860,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-142-absolute-severance",
-		classes: ["Mage", "Revenant", "Idol", "Technomancer"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Absolute Severance",
 		display_name: "Absolute Severance",
 		description:
@@ -7921,14 +7908,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-143-quarantine-membrane",
-		classes: [
-			"Mage",
-			"Contractor",
-			"Idol",
-			"Herald",
-			"Summoner",
-			"Holy Knight",
-		],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Quarantine Membrane",
 		display_name: "Quarantine Membrane",
 		description:
@@ -7975,7 +7955,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-144-mana-detonation-charge",
-		classes: ["Mage", "Esper"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner", "Stalker"],
 		name: "Mana Detonation Charge",
 		display_name: "Mana Detonation Charge",
 		description:
@@ -8025,14 +8005,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-145-sympathetic-circuit",
-		classes: [
-			"Mage",
-			"Summoner",
-			"Idol",
-			"Herald",
-			"Technomancer",
-			"Holy Knight",
-		],
+		classes: ["Herald", "Holy Knight", "Idol", "Technomancer", "Summoner"],
 		name: "Sympathetic Circuit",
 		display_name: "Sympathetic Circuit",
 		description:
@@ -8077,14 +8050,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-146-anomaly-mimicry",
-		classes: [
-			"Mage",
-			"Esper",
-			"Summoner",
-			"Contractor",
-			"Idol",
-			"Technomancer",
-		],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor", "Summoner"],
 		name: "Anomaly Mimicry",
 		display_name: "Anomaly Mimicry",
 		description:
@@ -8179,15 +8145,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-148-ghost-protocol",
-		classes: [
-			"Mage",
-			"Esper",
-			"Summoner",
-			"Contractor",
-			"Idol",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor", "Summoner"],
 		name: "Ghost Protocol",
 		display_name: "Ghost Protocol",
 		description:
@@ -8232,7 +8190,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-149-pact-renegotiation",
-		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Pact Renegotiation",
 		display_name: "Pact Renegotiation",
 		description:
@@ -8278,7 +8236,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-150-mana-cascade-failure",
-		classes: ["Mage", "Esper", "Technomancer"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Cascade Failure",
 		display_name: "Mana Cascade Failure",
 		description:
@@ -8371,7 +8329,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-152-echo-split",
-		classes: ["Mage", "Esper", "Idol", "Stalker", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Echo Split",
 		display_name: "Echo Split",
 		description:
@@ -8416,7 +8374,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-153-absolute-mandate",
-		classes: ["Mage", "Esper", "Idol", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Absolute Mandate",
 		display_name: "Absolute Mandate",
 		description:
@@ -8463,7 +8421,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-154-resonance-overwrite",
-		classes: ["Mage", "Summoner", "Idol", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Resonance Overwrite",
 		display_name: "Resonance Overwrite",
 		description:
@@ -8508,14 +8466,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-155-circuit-annihilation-wave",
-		classes: [
-			"Mage",
-			"Idol",
-			"Herald",
-			"Technomancer",
-			"Summoner",
-			"Holy Knight",
-		],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Circuit Annihilation Wave",
 		display_name: "Circuit Annihilation Wave",
 		description:
@@ -8563,7 +8514,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-156-dimensional-lockdown",
-		classes: ["Mage", "Contractor"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Dimensional Lockdown",
 		display_name: "Dimensional Lockdown",
 		description:
@@ -8609,7 +8560,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-157-mana-circuit-genesis",
-		classes: ["Mage", "Summoner", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper"],
 		name: "Mana Circuit Genesis",
 		display_name: "Mana Circuit Genesis",
 		description:
@@ -8654,7 +8605,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-158-mana-pulse-grenade",
-		classes: ["Mage", "Contractor"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Pulse Grenade",
 		display_name: "Mana Pulse Grenade",
 		description:
@@ -8704,7 +8655,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-159-lattice-anchor",
-		classes: ["Mage", "Contractor", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Lattice Anchor",
 		display_name: "Lattice Anchor",
 		description:
@@ -8751,7 +8702,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-1-160-ember-trail",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Summoner"],
 		name: "Ember Trail",
 		display_name: "Ember Trail",
 		description:
@@ -8849,7 +8800,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-162-mana-tripwire-network",
-		classes: ["Mage", "Esper"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Mana Tripwire Network",
 		display_name: "Mana Tripwire Network",
 		description:
@@ -8899,7 +8850,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-2-163-idol-s-entrance",
-		classes: ["Esper", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Idol's Entrance",
 		display_name: "Idol's Entrance",
 		description:
@@ -8948,7 +8899,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-164-pressure-wave",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Pressure Wave",
 		display_name: "Pressure Wave",
 		description:
@@ -8998,7 +8949,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-165-gate-flora-eruption",
-		classes: ["Summoner", "Contractor"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Gate Flora Eruption",
 		display_name: "Gate Flora Eruption",
 		description:
@@ -9048,7 +8999,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-166-pact-brand",
-		classes: ["Mage", "Esper", "Contractor", "Idol", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Pact Brand",
 		display_name: "Pact Brand",
 		description:
@@ -9095,7 +9046,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-3-167-mana-sentry-platform",
-		classes: ["Mage", "Summoner"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Mana Sentry Platform",
 		display_name: "Mana Sentry Platform",
 		description:
@@ -9141,7 +9092,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-168-entropic-reaping",
-		classes: ["Mage", "Revenant", "Idol", "Technomancer"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Entropic Reaping",
 		display_name: "Entropic Reaping",
 		description:
@@ -9189,7 +9140,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-169-tectonic-slam",
-		classes: ["Mage", "Summoner"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Tectonic Slam",
 		display_name: "Tectonic Slam",
 		description:
@@ -9239,7 +9190,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-4-170-anomaly-leash",
-		classes: ["Mage", "Esper", "Contractor", "Idol"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Anomaly Leash",
 		display_name: "Anomaly Leash",
 		description:
@@ -9286,7 +9237,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-171-radiant-condemnation",
-		classes: ["Mage", "Revenant", "Contractor", "Idol", "Holy Knight"],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Radiant Condemnation",
 		display_name: "Radiant Condemnation",
 		description:
@@ -9334,7 +9285,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-172-psionic-bastion",
-		classes: ["Mage", "Esper", "Idol"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Psionic Bastion",
 		display_name: "Psionic Bastion",
 		description:
@@ -9381,7 +9332,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-5-173-mana-feedback-bomb",
-		classes: ["Mage", "Contractor"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Mana Feedback Bomb",
 		display_name: "Mana Feedback Bomb",
 		description:
@@ -9429,7 +9380,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-174-umbral-gateway",
-		classes: ["Mage", "Revenant", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Summoner", "Contractor"],
 		name: "Umbral Gateway",
 		display_name: "Umbral Gateway",
 		description:
@@ -9474,7 +9425,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-6-175-bureau-authority-seal",
-		classes: ["Mage", "Esper", "Contractor"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Bureau Authority Seal",
 		display_name: "Bureau Authority Seal",
 		description:
@@ -9521,7 +9472,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-176-patron-s-judgment",
-		classes: ["Esper", "Revenant", "Contractor"],
+		classes: ["Mage"],
 		name: "Patron's Judgment",
 		display_name: "Patron's Judgment",
 		description:
@@ -9569,7 +9520,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-7-177-revenant-s-domain",
-		classes: ["Revenant", "Idol"],
+		classes: ["Herald", "Holy Knight", "Idol", "Revenant", "Contractor"],
 		name: "Revenant's Domain",
 		display_name: "Revenant's Domain",
 		description:
@@ -9618,7 +9569,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-178-total-gate-suppression",
-		classes: ["Mage", "Summoner", "Contractor"],
+		classes: [
+			"Mage",
+			"Holy Knight",
+			"Esper",
+			"Technomancer",
+			"Summoner",
+			"Stalker",
+		],
 		name: "Total Gate Suppression",
 		display_name: "Total Gate Suppression",
 		description:
@@ -9663,7 +9621,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-179-mana-circuit-transplant",
-		classes: ["Mage", "Summoner", "Contractor", "Technomancer"],
+		classes: ["Mage", "Technomancer", "Summoner", "Esper", "Stalker"],
 		name: "Mana Circuit Transplant",
 		display_name: "Mana Circuit Transplant",
 		description:
@@ -9709,7 +9667,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-8-180-absolute-sanctuary",
-		classes: ["Mage", "Idol", "Herald", "Summoner", "Holy Knight"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Absolute Sanctuary",
 		display_name: "Absolute Sanctuary",
 		description:
@@ -9756,7 +9714,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-181-singularity-compression",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol"],
 		name: "Singularity Compression",
 		display_name: "Singularity Compression",
 		description:
@@ -9804,7 +9762,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-182-permanent-awakening-seal",
-		classes: ["Mage", "Technomancer"],
+		classes: ["Mage", "Holy Knight", "Esper", "Technomancer"],
 		name: "Permanent Awakening Seal",
 		display_name: "Permanent Awakening Seal",
 		description:
@@ -9851,7 +9809,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-183-cataclysm-protocol",
-		classes: ["Mage"],
+		classes: ["Mage", "Esper", "Technomancer", "Idol", "Summoner"],
 		name: "Cataclysm Protocol",
 		display_name: "Cataclysm Protocol",
 		description:
@@ -9899,14 +9857,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-184-final-breath-of-the-absolute",
-		classes: [
-			"Mage",
-			"Revenant",
-			"Contractor",
-			"Idol",
-			"Holy Knight",
-			"Technomancer",
-		],
+		classes: ["Herald", "Holy Knight", "Idol"],
 		name: "Final Breath of the Absolute",
 		display_name: "Final Breath of the Absolute",
 		description:
@@ -9954,7 +9905,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-185-idol-s-grand-finale",
-		classes: ["Mage", "Esper", "Idol", "Technomancer"],
+		classes: ["Mage", "Idol", "Esper", "Stalker", "Contractor"],
 		name: "Idol's Grand Finale",
 		display_name: "Idol's Grand Finale",
 		description:
@@ -10001,7 +9952,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-sup-9-186-void-erasure",
-		classes: ["Esper", "Revenant", "Technomancer"],
+		classes: ["Mage", "Revenant", "Contractor", "Herald"],
 		name: "Void Erasure",
 		display_name: "Void Erasure",
 		description:
