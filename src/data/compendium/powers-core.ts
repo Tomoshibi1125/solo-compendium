@@ -3,7 +3,8 @@ import type { CompendiumPower } from "../../types/compendium";
 export const powers_core: CompendiumPower[] = [
 	{
 		id: "shadow-step",
-		name: "Shadow Step",
+        classes: ["assassin", "stalker", "phase", "shadow", "pursuit", "ambush"],
+        name: "Shadow Step",
 		display_name: "Shadow Step",
 		description:
 			"Teleports the caster up to 60 feet to a point they can see. A hostile creature within 5 feet of the caster's origin must succeed on a DC 15 Presence save or lose its reaction (cannot opportunity-attack the step); on a success the creature may use its reaction against the caster's prior square.",
@@ -59,7 +60,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "regeneration",
-		name: "Regeneration",
+        classes: ["berserker", "stalker", "regeneration", "survival", "holy-knight", "radiant"],
+        name: "Regeneration",
 		display_name: "Regeneration",
 		description:
 			"Restores hit points to the caster through lattice-assisted regeneration. Heals 5d4 HP to the caster. Overflow becomes temporary HP for 1 minute.",
@@ -132,7 +134,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "true-sight",
-		name: "True Sight",
+        classes: ["assassin", "stalker", "terminal-sight", "prey-lock", "ambush", "technomancer", "lattice-interface", "tracking"],
+        name: "True Sight",
 		display_name: "True Sight",
 		description:
 			"Pierces illusions and concealment within 30 feet for 1 minute; hidden creatures are revealed to the caster. A concealed creature fails a DC 15 Presence save and loses invisibility or illusory cover against the caster for the duration. A concealed creature succeeds and remains hidden.",
@@ -199,7 +202,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "arcane-charm",
-		name: "Arcane Charm",
+        classes: ["assassin", "stalker", "technomancer", "stealth"],
+        name: "Arcane Charm",
 		display_name: "Arcane Charm",
 		description:
 			"Wraps one humanoid target within 30 feet in an arcane compulsion for 1 minute. Target fails a DC 15 Sense save and is Charmed by the caster for 1 minute. Target succeeds; it is immune to this power from this caster for 24 hours.",
@@ -262,7 +266,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "bulwark-resilience",
-		name: "Bulwark Resilience",
+        classes: ["destroyer", "holy-knight", "bulwark", "guard", "technomancer", "lattice-interface"],
+        name: "Bulwark Resilience",
 		display_name: "Bulwark Resilience",
 		description:
 			"Weaves a bulwark of lattice-harmonized aegis around the caster or a willing ally within 30 feet. Grants 5d4 temporary HP to the target. Lasts until dissipated or 1 hour elapses.",
@@ -332,7 +337,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "arcane-recovery",
-		name: "Arcane Recovery",
+        classes: ["holy-knight", "stalker", "technomancer", "guard"],
+        name: "Arcane Recovery",
 		display_name: "Arcane Recovery",
 		description:
 			"Reweaves spent lattice threads back into the caster's reserves. Recovers 2d10 + 4 HP worth of ability resource (modeled as HP for audit purposes).",
@@ -405,7 +411,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "lycanthropy",
-		name: "Lycanthropy",
+        classes: ["berserker", "stalker", "survival", "overload", "technomancer", "lattice-interface"],
+        name: "Lycanthropy",
 		display_name: "Lycanthropy",
 		description:
 			"Forces a humanoid target within 30 feet into a beast-form transformation for 1 minute. Target fails a DC 15 Strength save and is Transformed (treated as Incapacitated, cannot cast) for 1 minute. Target succeeds and is immune to this power from this caster for 24 hours.",
@@ -468,7 +475,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "gaze-of-petrification",
-		name: "Gaze of Petrification",
+        classes: ["destroyer", "stalker", "terminal-sight"],
+        name: "Gaze of Petrification",
 		display_name: "Gaze of Petrification",
 		description:
 			"Meets the eyes of one creature within 30 feet; if held, the gaze calcifies the target's nerve lattice. Target fails a DC 15 Strength save and is Paralyzed for 1 minute (save at end of each turn to end). Target succeeds and is immune to this power for 24 hours.",
@@ -532,7 +540,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "telepathy",
-		name: "Telepathy",
+        classes: ["assassin", "stalker", "technomancer", "terminal-sight"],
+        name: "Telepathy",
 		display_name: "Telepathy",
 		description:
 			"Opens a silent two-way mental channel with one creature within 120 feet for 10 minutes. Target fails a DC 15 Vitality save and must communicate with the caster for the duration (may refuse to speak but cannot block the link). Target succeeds and blocks the link.",
@@ -598,7 +607,8 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "invisibility",
-		name: "Invisibility",
+        classes: ["assassin", "stalker", "stealth", "ambush"],
+        name: "Invisibility",
 		display_name: "Invisibility",
 		description:
 			"Renders the caster or a willing ally within 30 feet invisible for up to 1 hour. A creature within 30 feet that witnesses the cast fails a DC 15 Strength save and cannot detect the invisible target until the spell ends. A creature within 30 feet succeeds and perceives the invisible target as a translucent outline.",

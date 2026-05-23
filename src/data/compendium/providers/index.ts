@@ -1120,13 +1120,14 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 }
 
 function transformJob(job: StaticJobSource): StaticCompendiumEntry {
+	const legacyJob = job as any;
 	// Parse hit die number from string like "1d10"
-	const rawHitDie = job.hitDie || job.hit_die;
+	const rawHitDie = job.hitDie || legacyJob.hit_die;
 	const hitDieNumber = rawHitDie
 		? parseInt(rawHitDie.replace(/\D/g, "").slice(-2) || "0", 10)
 		: null;
 	// Skill choice count: 5e standard is 2 for most jobs, 4 for Assassin
-	const rawSkillChoices = job.skillChoices || job.skill_choices;
+	const rawSkillChoices = job.skillChoices || legacyJob.skill_choices;
 	const skillChoiceCount = rawSkillChoices
 		? job.name === "Assassin"
 			? 4
@@ -1159,22 +1160,22 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		primary_abilities:
 			job.primary_abilities ||
 			(job.primaryAbility ? [job.primaryAbility] : null),
-		saving_throw_proficiencies: job.savingThrows || job.saving_throws || null,
-		armor_proficiencies: job.armorProficiencies || job.armor_proficiencies || null,
-		weapon_proficiencies: job.weaponProficiencies || job.weapon_proficiencies || null,
-		tool_proficiencies: job.toolProficiencies || job.tool_proficiencies || null,
-		skill_choices: job.skillChoices || job.skill_choices || null,
+		saving_throw_proficiencies: job.savingThrows || legacyJob.saving_throws || null,
+		armor_proficiencies: job.armorProficiencies || legacyJob.armor_proficiencies || null,
+		weapon_proficiencies: job.weaponProficiencies || legacyJob.weapon_proficiencies || null,
+		tool_proficiencies: job.toolProficiencies || legacyJob.tool_proficiencies || null,
+		skill_choices: job.skillChoices || legacyJob.skill_choices || null,
 		skill_choice_count: skillChoiceCount,
-		starting_equipment: job.startingEquipment || job.starting_equipment || null,
-		hit_points_at_first_level: job.hitPointsAtFirstLevel || job.hitPointsAtFirstLevel || null,
-		hit_points_at_higher_levels: job.hitPointsAtHigherLevels || job.hitPointsAtHigherLevels || null,
+		starting_equipment: job.startingEquipment || legacyJob.starting_equipment || null,
+		hit_points_at_first_level: job.hitPointsAtFirstLevel || legacyJob.hitPointsAtFirstLevel || null,
+		hit_points_at_higher_levels: job.hitPointsAtHigherLevels || legacyJob.hitPointsAtHigherLevels || null,
 		regent_prerequisites: null,
 		spellcasting_ability: job.spellcasting?.ability || null,
 		spellcasting_focus: job.spellcasting?.focus || null,
-		awakening_features: job.awakeningFeatures || job.awakening_features || null,
-		job_traits: job.jobTraits || job.job_traits || null,
-		ability_score_improvements: job.abilityScoreImprovements || job.ability_score_improvements || null,
-		racial_traits: job.racialTraits || job.racial_traits || null,
+		awakening_features: job.awakeningFeatures || legacyJob.awakening_features || null,
+		job_traits: job.jobTraits || legacyJob.job_traits || null,
+		ability_score_improvements: job.abilityScoreImprovements || legacyJob.ability_score_improvements || null,
+		racial_traits: job.racialTraits || legacyJob.racial_traits || null,
 		natural_weapons: job.naturalWeapons || null,
 		natural_armor: job.naturalArmor || null,
 		resonance_breath: job.resonanceBreath || null,

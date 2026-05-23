@@ -6,9 +6,6 @@ import type { Json } from "@/integrations/supabase/types";
 import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
 	entryHasAccessToken,
-	getDerivedPowerTags,
-	getDerivedSpellTags,
-	getDerivedTechniqueTags,
 	getPowerAccessTokens,
 	getSpellAccessTokens,
 	getTechniqueAccessTokens,
@@ -816,25 +813,23 @@ function validateTechniqueCompleteness(
 	const limitations = isJsonRecord(entry.limitations)
 		? (entry.limitations as Record<string, Json>)
 		: null;
-	if (kind !== "spell") {
-		if (!getNonEmptyString(limitations?.uses)) {
-			pushCompletenessIssue(
-				issues,
-				kind,
-				entry,
-				"limitations.uses",
-				"Missing usage limit.",
-			);
-		}
-		if (!getNonEmptyString(limitations?.recharge)) {
-			pushCompletenessIssue(
-				issues,
-				kind,
-				entry,
-				"limitations.recharge",
-				"Missing recharge rule.",
-			);
-		}
+	if (!getNonEmptyString(limitations?.uses)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"limitations.uses",
+			"Missing usage limit.",
+		);
+	}
+	if (!getNonEmptyString(limitations?.recharge)) {
+		pushCompletenessIssue(
+			issues,
+			kind,
+			entry,
+			"limitations.recharge",
+			"Missing recharge rule.",
+		);
 	}
 	const attack = isJsonRecord(mechanics?.attack)
 		? (mechanics?.attack as Record<string, Json>)
@@ -995,10 +990,6 @@ function normalizeCastableEntry(
 					typeof tag === "string" && tag.trim().length > 0,
 			)
 		: [];
-	const derivedTags =
-		canonicalType === "powers"
-			? getDerivedPowerTags(entry)
-			: getDerivedSpellTags(entry);
 	const saveAbility =
 		getNonEmptyString((entry as { save_ability?: unknown }).save_ability) ??
 		getNonEmptyString(
@@ -1052,7 +1043,7 @@ function normalizeCastableEntry(
 			getNonEmptyString((entry as { target?: unknown }).target) ??
 			getNonEmptyString(mechanics?.target),
 		mechanics,
-		tags: Array.from(new Set([...rawTags, ...derivedTags])),
+		tags: Array.from(new Set([...rawTags])),
 	};
 }
 
@@ -1098,9 +1089,14 @@ function matchesTokenEligibility(
 				(value): value is string => typeof value === "string",
 			)
 		: [];
+	const rawTags = Array.isArray(entry.tags)
+		? entry.tags.filter(
+				(value): value is string => typeof value === "string",
+			)
+		: [];
 	const tagsToChecks = [
 		...explicitClasses,
-		...getDerivedPowerTags(entry),
+		...rawTags,
 	];
 	return entryHasAccessToken(tagsToChecks, tokens);
 }
@@ -1115,11 +1111,14 @@ function matchesTechniqueTokenEligibility(
 				(value): value is string => typeof value === "string",
 			)
 		: [];
-	const rawTags = Array.isArray(entry.tags) ? entry.tags : [];
+	const rawTags = Array.isArray(entry.tags)
+		? entry.tags.filter(
+				(value): value is string => typeof value === "string",
+			)
+		: [];
 	const tagsToChecks = [
 		...explicitClasses,
 		...rawTags,
-		...getDerivedTechniqueTags(entry),
 	];
 	return entryHasAccessToken(tagsToChecks, tokens);
 }
@@ -1134,9 +1133,14 @@ function matchesSpellTokenEligibility(
 				(value): value is string => typeof value === "string",
 			)
 		: [];
+	const rawTags = Array.isArray(entry.tags)
+		? entry.tags.filter(
+				(value): value is string => typeof value === "string",
+			)
+		: [];
 	const tagsToChecks = [
 		...explicitClasses,
-		...getDerivedSpellTags(entry),
+		...rawTags,
 	];
 	return entryHasAccessToken(tagsToChecks, tokens);
 }

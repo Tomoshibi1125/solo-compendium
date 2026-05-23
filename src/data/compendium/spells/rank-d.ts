@@ -9,7 +9,8 @@ import type { CompendiumSpell } from "../../../types/compendium";
 export const spells_d: CompendiumSpell[] = [
 	{
 		id: "spell-d-1",
-		name: "Chill Lance",
+        classes: ["mage", "technomancer"],
+        name: "Chill Lance",
 		display_name: "Chill Lance",
 		description:
 			"Draw a spike of crystallized mana from the caster's palm and hurl it at a target within 30 feet. Make a ranged spell attack using Sense to deal 1d10 cold damage, or the target must succeed on a DC 14 Sense saving throw, taking full damage and becoming Frightened for 1 minute on a failure (half damage and no condition on a success).",
@@ -103,7 +104,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-2",
-		name: "Thunder Shackle",
+        classes: ["mage", "technomancer", "holy-knight"],
+        name: "Thunder Shackle",
 		display_name: "Thunder Shackle",
 		description:
 			"Slam the lattice beneath a creature's feet; a 100-foot line erupts with percussive force. The primary target takes a ranged spell attack for 1d10 thunder damage (Presence), and each creature in the line must succeed on a DC 13 Agility save or take full damage and be Stunned until the end of its next turn (on a success, it is pushed 10 feet away instead).",
@@ -198,7 +200,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-3",
-		name: "Tempest Binding",
+        classes: ["mage", "technomancer", "holy-knight"],
+        name: "Tempest Binding",
 		display_name: "Tempest Binding",
 		description:
 			"Drive a ring of storm-charged lattice around a target within 300 feet. Make a ranged spell attack using Sense for 2d8 thunder damage, and the creature must succeed on a DC 13 Agility save or take full damage and fall Prone (half damage on a success). The thunderclap persists as a 20-foot cube for 1 minute, making the ground inside difficult terrain.",
@@ -294,7 +297,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-4",
-		name: "Surge Storm",
+        classes: ["mage", "technomancer"],
+        name: "Surge Storm",
 		display_name: "Surge Storm",
 		description:
 			"Layer a recursive illusion of static and false motion into a 10-foot sphere at the point of impact. Make a melee spell attack using Intelligence for 1d12 lightning damage, and each creature in the sphere must succeed on a DC 12 Strength save or take full damage and be Stunned until the end of its next turn (on a success, pushed 10 feet away instead).",
@@ -389,7 +393,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-5",
-		name: "Sanguine Strike",
+        classes: ["mage"],
+        name: "Sanguine Strike",
 		display_name: "Sanguine Strike",
 		description:
 			"Bleed a thin lattice of the caster's own mana into the air around them. Make a ranged spell attack using Presence within a 10-foot cube centered on the caster for 1d8 necrotic damage, and the target must succeed on a DC 14 Intelligence save or take full damage and be Frightened for 1 minute (half damage, no condition on success).",
@@ -484,7 +489,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-6",
-		name: "Bright Tomb",
+        classes: ["mage", "holy-knight", "technomancer"],
+        name: "Bright Tomb",
 		display_name: "Bright Tomb",
 		description:
 			"Plant a radiant abjuration ward in a 20-foot cube you can see within 30 feet. Make a melee spell attack using Sense for 1d10+3 radiant damage against the first creature to cross the threshold, and the crossing creature must succeed on a DC 12 Presence save or take full damage and fall Prone (half damage on a success). Concentration, lasts until dispelled.",
@@ -577,7 +583,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-7",
-		name: "Arctic Lance",
+        classes: ["mage", "technomancer"],
+        name: "Arctic Lance",
 		display_name: "Arctic Lance",
 		description:
 			"Condense lattice-frozen air into a 60-foot line. Make a ranged spell attack using Sense for 2d6+2 cold damage, and each creature in the line must succeed on a DC 14 Intelligence save or take full damage and fall Prone (half damage on a success). Concentration, lasts 1 round.",
@@ -668,7 +675,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-8",
-		name: "Crimson Cleave",
+        classes: ["mage"],
+        name: "Crimson Cleave",
 		display_name: "Crimson Cleave",
 		description:
 			"Draw a 60-foot line of force through the target point. Make a melee spell attack using Intelligence for 3d4 force damage against every creature the line crosses; creatures adjacent to the line on a critical hit take an additional 1d4. No saving throw.",
@@ -759,7 +767,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-9",
-		name: "Blood Tear",
+        classes: ["esper", "mage", "stalker"],
+        name: "Blood Tear",
 		display_name: "Blood Tear",
 		description:
 			"Thread the caster's own lattice through an echo of their next swing. Make a ranged spell attack using Intelligence against a target within 20 feet for 2d6 necrotic damage. No saving throw; the caster takes 1 point of necrotic damage as the cast resolves.",
@@ -850,7 +859,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-10",
-		name: "Night Storm",
+        classes: ["mage", "technomancer"],
+        name: "Night Storm",
 		display_name: "Night Storm",
 		description:
 			"Call a hemispherical cap of absorptive lattice around a 30-foot line. Make a melee spell attack using Intelligence for 1d10+3 necrotic damage against each creature in the line; no saving throw, concentration not required. Dim light in the area until dispelled.",
@@ -943,7 +953,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-11",
-		name: "Carnage Strike",
+        classes: ["mage"],
+        name: "Carnage Strike",
 		display_name: "Carnage Strike",
 		description:
 			"Release a tight spiral of kinetic force in a 10-foot cube around the caster. Make a ranged spell attack using Sense against one target in the cube for 2d6 force damage, and each creature in the cube must succeed on a DC 12 Agility save or take full damage and fall Prone (no effect on a success).",
@@ -1036,7 +1047,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-12",
-		name: "Entropy Siphon",
+        classes: ["mage"],
+        name: "Entropy Siphon",
 		display_name: "Entropy Siphon",
 		description:
 			"Open a lattice shunt in a 30-foot cone. Make a melee spell attack using Presence against one target in the cone for 1d12 necrotic damage; no saving throw. The caster regains 1d4 HP on hit.",
@@ -1134,7 +1146,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-13",
-		name: "Corona Storm",
+        classes: ["mage", "technomancer"],
+        name: "Corona Storm",
 		display_name: "Corona Storm",
 		description:
 			"Hold the cast for one minute, then release a 20-foot sphere of radiant discharge centered on a point within 150 feet. Make a melee spell attack using Intelligence against one target in the sphere for 1d12 radiant damage, and each other creature in the sphere must succeed on a DC 14 Agility save or take full damage and fall Prone (on a success, pushed 10 feet away).",
@@ -1225,7 +1238,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-14",
-		name: "Lightning Lance",
+        classes: ["mage", "technomancer"],
+        name: "Lightning Lance",
 		display_name: "Lightning Lance",
 		description:
 			"Reach out and discharge the caster's stored lattice as a grounded arc. Make a melee spell attack using Sense for 1d8 lightning damage, and the target must succeed on a DC 12 Strength save or take full damage (no effect on a success). Concentration, lasts 10 minutes.",
@@ -1319,7 +1333,8 @@ export const spells_d: CompendiumSpell[] = [
 	},
 	{
 		id: "spell-d-15",
-		name: "Ice Lance",
+        classes: ["mage", "technomancer"],
+        name: "Ice Lance",
 		display_name: "Ice Lance",
 		description:
 			"Compact a 30-foot line of supercooled air. Make a ranged spell attack using Presence for 2d6 cold damage; no saving throw, concentration not required. The line leaves a strip of difficult terrain until the end of the caster's next turn.",

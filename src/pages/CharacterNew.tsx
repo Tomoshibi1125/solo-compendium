@@ -559,13 +559,13 @@ const CharacterNew = () => {
 		| undefined;
 
 	const jobAwakeningAtCreation = useMemo(() => {
-		const features = staticJobData?.awakeningFeatures ?? staticJobData?.awakening_features;
+		const features = staticJobData?.awakeningFeatures ?? (staticJobData as any)?.awakening_features;
 		if (!features) return [];
-		return features.filter((f) => f.level === 1);
+		return features.filter((f: any) => f.level === 1);
 	}, [staticJobData]);
 
 	const jobTraitsAtCreation = useMemo(() => {
-		const traits = staticJobData?.jobTraits ?? staticJobData?.job_traits;
+		const traits = staticJobData?.jobTraits ?? (staticJobData as any)?.job_traits;
 		if (!traits) return [];
 		return traits;
 	}, [staticJobData]);
@@ -675,13 +675,13 @@ const CharacterNew = () => {
 						...staticJobData,
 						awakening_features:
 							staticJobData?.awakeningFeatures ??
-							staticJobData?.awakening_features ??
+							(staticJobData as any)?.awakening_features ??
 							(jobData as { awakening_features?: [] } | undefined)
 								?.awakening_features ??
 							[],
 						job_traits:
 							staticJobData?.jobTraits ??
-							staticJobData?.job_traits ??
+							(staticJobData as any)?.job_traits ??
 							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
 							[],
 						level_choices: staticJobLedgerData?.levelChoices,
@@ -1866,9 +1866,9 @@ const CharacterNew = () => {
 	}, [canonicalEquipmentEntries]);
 
 	const reviewLoadout = useMemo(() => {
-		const eq = staticJobData?.startingEquipment ?? staticJobData?.starting_equipment;
+		const eq = staticJobData?.startingEquipment ?? (staticJobData as any)?.starting_equipment;
 		if (!eq) return [];
-		return eq.map((group, index) => {
+		return eq.map((group: any, index: number) => {
 			const name = equipmentChoices[index] ?? group[0];
 			const normalizedName = normalizeCompendiumKey(name);
 			const entry =
@@ -1946,7 +1946,7 @@ const CharacterNew = () => {
 			typeof jobData?.hit_die === "number" && Number.isFinite(jobData.hit_die)
 				? jobData.hit_die
 				: Number.parseInt(
-						(staticJobData?.hitDie ?? staticJobData?.hit_die)?.toString().replace("1d", "") ?? "8",
+						((staticJobData as any)?.hitDie ?? (staticJobData as any)?.hit_die ?? (staticJobData as any)?.hit_dice)?.toString().replace("1d", "") ?? "8",
 						10,
 				  );
 		const speed =

@@ -3,7 +3,8 @@ import type { CompendiumTechnique } from "../../types/compendium";
 export const techniques_core: CompendiumTechnique[] = [
 	{
 		id: "guardian-stance",
-		name: "Guardian Stance",
+        classes: ["destroyer", "holy-knight", "guard", "bulwark"],
+        name: "Guardian Stance",
 		display_name: "Guardian Stance",
 		description:
 			"Drops the caster into a defensive stance that channels incoming blows into their resource pool. Grants 4d6 temporary HP to the caster for 1 minute or until struck at 0 HP.",
@@ -56,7 +57,8 @@ export const techniques_core: CompendiumTechnique[] = [
 	},
 	{
 		id: "phase-walk",
-		name: "Phase Walk",
+        classes: ["assassin", "ambush", "precision", "destroyer", "holy-knight", "guard", "bulwark"],
+        name: "Phase Walk",
 		display_name: "Phase Walk",
 		description:
 			"The caster ghost-steps 30 feet through interposing terrain, ignoring difficult-terrain penalties. A creature within 5 feet of the path fails a DC 15 Agility save and cannot trigger opportunity-attacks on the walk. A creature within 5 feet of the path succeeds and retains its reaction.",
@@ -118,7 +120,8 @@ export const techniques_core: CompendiumTechnique[] = [
 	},
 	{
 		id: "guardians-rebuke",
-		name: "Guardian's Rebuke",
+        classes: ["assassin", "ambush", "precision", "striker", "unarmed", "counter-stance", "destroyer", "holy-knight", "guard", "bulwark", "berserker"],
+        name: "Guardian's Rebuke",
 		display_name: "Guardian's Rebuke",
 		description:
 			"Interposes the caster in front of a melee strike targeting an ally within 5 feet. The attacker fails a DC 15 Strength save and has disadvantage on its next attack roll this turn. The attacker succeeds and resolves its attack normally against the original target.",
