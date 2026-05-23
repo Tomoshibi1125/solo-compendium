@@ -456,6 +456,7 @@ const CharacterNew = () => {
 				primary_abilities: (job.primary_abilities ||
 					(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
 				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
+					job.saving_throws ||
 					job.savingThrows ||
 					[]) as AbilityScore[],
 				armor_proficiencies: (job.armor_proficiencies ||
@@ -558,13 +559,15 @@ const CharacterNew = () => {
 		| undefined;
 
 	const jobAwakeningAtCreation = useMemo(() => {
-		if (!staticJobData?.awakeningFeatures) return [];
-		return staticJobData.awakeningFeatures.filter((f) => f.level === 1);
+		const features = staticJobData?.awakeningFeatures ?? staticJobData?.awakening_features;
+		if (!features) return [];
+		return features.filter((f) => f.level === 1);
 	}, [staticJobData]);
 
 	const jobTraitsAtCreation = useMemo(() => {
-		if (!staticJobData?.jobTraits) return [];
-		return staticJobData.jobTraits;
+		const traits = staticJobData?.jobTraits ?? staticJobData?.job_traits;
+		if (!traits) return [];
+		return traits;
 	}, [staticJobData]);
 
 	const { data: paths = [] } = useQuery({
@@ -672,11 +675,13 @@ const CharacterNew = () => {
 						...staticJobData,
 						awakening_features:
 							staticJobData?.awakeningFeatures ??
+							staticJobData?.awakening_features ??
 							(jobData as { awakening_features?: [] } | undefined)
 								?.awakening_features ??
 							[],
 						job_traits:
 							staticJobData?.jobTraits ??
+							staticJobData?.job_traits ??
 							(jobData as { job_traits?: [] } | undefined)?.job_traits ??
 							[],
 						level_choices: staticJobLedgerData?.levelChoices,
@@ -1282,6 +1287,7 @@ const CharacterNew = () => {
 				skill_expertise: skillExpertiseResult.unique,
 				tool_proficiencies: toolsResult.unique,
 				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
+					job.saving_throws ||
 					job.savingThrows ||
 					[]) as AbilityScore[],
 				weapon_proficiencies: weaponsResult.unique,
@@ -1860,9 +1866,9 @@ const CharacterNew = () => {
 	}, [canonicalEquipmentEntries]);
 
 	const reviewLoadout = useMemo(() => {
-		if (!staticJobData?.startingEquipment) return [];
-
-		return staticJobData.startingEquipment.map((group, index) => {
+		const eq = staticJobData?.startingEquipment ?? staticJobData?.starting_equipment;
+		if (!eq) return [];
+		return eq.map((group, index) => {
 			const name = equipmentChoices[index] ?? group[0];
 			const normalizedName = normalizeCompendiumKey(name);
 			const entry =
@@ -1939,7 +1945,10 @@ const CharacterNew = () => {
 		const hitDieSize =
 			typeof jobData?.hit_die === "number" && Number.isFinite(jobData.hit_die)
 				? jobData.hit_die
-				: Number.parseInt(staticJobData?.hitDie?.replace("1d", "") ?? "8", 10);
+				: Number.parseInt(
+						(staticJobData?.hitDie ?? staticJobData?.hit_die)?.toString().replace("1d", "") ?? "8",
+						10,
+				  );
 		const speed =
 			typeof staticJobData?.speed === "number" &&
 			Number.isFinite(staticJobData.speed)

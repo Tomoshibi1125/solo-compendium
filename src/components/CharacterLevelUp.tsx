@@ -75,9 +75,13 @@ export function CharacterLevelUp({
 									: `${currentXP.toLocaleString()} / ${xpNeeded.toLocaleString()} XP`}
 							</p>
 						</div>
-						<Button onClick={handleLevelUp} disabled={!canLevelUp} size="sm">
+						<Button 
+							onClick={handleLevelUp} 
+							disabled={!canLevelUp && level <= 1} 
+							size="sm"
+						>
 							<Trophy className="w-4 h-4 mr-2" />
-							Level Up
+							{canLevelUp ? "Level Up" : "Manage Level"}
 						</Button>
 					</div>
 
@@ -131,6 +135,11 @@ export function CharacterLevelUp({
 						)}
 						{!isMilestone && canLevelUp && (
 							<Badge className="text-xs bg-primary">Ready to level up!</Badge>
+						)}
+						{!isMilestone && !canLevelUp && level > 1 && (
+							<Badge variant="outline" className="text-xs">
+								Can adjust level
+							</Badge>
 						)}
 						{level >= 20 && (
 							<Badge variant="secondary" className="text-xs">

@@ -201,6 +201,9 @@ export const JobStep: React.FC<JobStepProps> = ({
 														{staticJobData.savingThrows
 															?.map(formatRegentVernacular)
 															.join(", ") ||
+															staticJobData.saving_throws
+																?.map(formatRegentVernacular)
+																.join(", ") ||
 															staticJobData.saving_throw_proficiencies
 																?.map(formatRegentVernacular)
 																.join(", ") ||

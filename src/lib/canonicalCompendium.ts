@@ -816,23 +816,25 @@ function validateTechniqueCompleteness(
 	const limitations = isJsonRecord(entry.limitations)
 		? (entry.limitations as Record<string, Json>)
 		: null;
-	if (!getNonEmptyString(limitations?.uses)) {
-		pushCompletenessIssue(
-			issues,
-			kind,
-			entry,
-			"limitations.uses",
-			"Missing usage limit.",
-		);
-	}
-	if (!getNonEmptyString(limitations?.recharge)) {
-		pushCompletenessIssue(
-			issues,
-			kind,
-			entry,
-			"limitations.recharge",
-			"Missing recharge rule.",
-		);
+	if (kind !== "spell") {
+		if (!getNonEmptyString(limitations?.uses)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"limitations.uses",
+				"Missing usage limit.",
+			);
+		}
+		if (!getNonEmptyString(limitations?.recharge)) {
+			pushCompletenessIssue(
+				issues,
+				kind,
+				entry,
+				"limitations.recharge",
+				"Missing recharge rule.",
+			);
+		}
 	}
 	const attack = isJsonRecord(mechanics?.attack)
 		? (mechanics?.attack as Record<string, Json>)

@@ -625,21 +625,19 @@ export default function CharacterSheetV2() {
 							<Sun className="w-3 h-3 mr-1.5 text-orange-400" />
 							Long Rest
 						</Button>
-						{character.level < 20 && (
-							<Button
-								variant="default"
-								size="sm"
-								onClick={() => {
-									if (typeof navigator !== "undefined" && navigator.vibrate)
-										navigator.vibrate([10, 30, 10]); // Multi-pulse for importance
-									onLevelUp();
-								}}
-								className="h-8 shadow-[0_0_15px_rgba(var(--primary),0.3)] uppercase font-mono text-[10px] tracking-widest"
-							>
-								<Zap className="w-3 h-3 mr-1.5" />
-								Level Up
-							</Button>
-						)}
+						<Button
+							variant="default"
+							size="sm"
+							onClick={() => {
+								if (typeof navigator !== "undefined" && navigator.vibrate)
+									navigator.vibrate([10, 30, 10]); // Multi-pulse for importance
+								onLevelUp();
+							}}
+							className="h-8 shadow-[0_0_15px_rgba(var(--primary),0.3)] uppercase font-mono text-[10px] tracking-widest"
+						>
+							<Zap className="w-3 h-3 mr-1.5" />
+							{character.level >= 20 ? "Manage Level" : "Level Up"}
+						</Button>
 					</div>
 				)}
 			</div>
