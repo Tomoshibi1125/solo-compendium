@@ -1350,10 +1350,7 @@ async function listCanonicalCastablesByType(
 
 	return types.flatMap((type) =>
 		(results.get(type) ?? [])
-			.map((entry) => normalizeCastableEntry(entry, type))
-			.filter((entry) =>
-				isAbilityEntryComplete(entry, type === "powers" ? "power" : "spell"),
-			),
+			.map((entry) => normalizeCastableEntry(entry, type)),
 	);
 }
 
@@ -1410,7 +1407,7 @@ export function isCanonicalSpellLearnable(
 	entry: CanonicalCastableEntry,
 	options: LearnableCastableOptions = {},
 ): boolean {
-	if (!isAbilityEntryComplete(entry, "spell")) return false;
+	if (!isWithinBaseCastableLevelCap(entry, options, "spell")) return false;
 	const pathGrants = getActivePathAbilityGrants({
 		jobName: options.jobName,
 		pathName: options.pathName,
@@ -1450,7 +1447,6 @@ export function isCanonicalPowerLearnable(
 	entry: CanonicalCastableEntry,
 	options: LearnableCastableOptions = {},
 ): boolean {
-	if (!isAbilityEntryComplete(entry, "power")) return false;
 	const pathGrants = getActivePathAbilityGrants({
 		jobName: options.jobName,
 		pathName: options.pathName,
