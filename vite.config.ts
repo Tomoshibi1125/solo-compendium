@@ -332,8 +332,6 @@ export default defineConfig(({ mode: _mode }) => {
 								return "router-vendor";
 							}
 							if (normalizedId.includes("/@tanstack/")) return "query-vendor";
-							if (normalizedId.includes("/@supabase/"))
-								return "supabase-vendor";
 							if (normalizedId.includes("/node_modules/@dnd-kit/"))
 								return "dnd-vendor";
 							if (normalizedId.includes("/node_modules/zod/"))
