@@ -29,7 +29,19 @@ interface CampaignSessionRecord {
 	created_by: string | null;
 	created_at: string;
 	updated_at: string;
+	/**
+	 * RFC-5545-subset recurrence rule (e.g. "FREQ=weekly;COUNT=8") for the
+	 * seed row of a recurring series. Migration `20260525121000` adds the
+	 * column; migration `20260526120000` wires it through the upsert RPC.
+	 * Misty Pearl E2: surfaced here so the iCal exporter can collapse
+	 * series into a single VEVENT with an RRULE.
+	 */
+	recurrence_rule?: string | null;
+	/** Child occurrences link back to their seed via this column. */
+	recurrence_parent_id?: string | null;
 }
+
+export type { CampaignSessionRecord };
 
 interface CampaignSessionLogRecord {
 	id: string;
@@ -53,6 +65,19 @@ type UpsertSessionInput = {
 	scheduledFor?: string | null;
 	status?: CampaignSessionStatus | null;
 	location?: string | null;
+	/**
+	 * R5 of Round 2 — RFC-5545-subset recurrence rule string (e.g.
+	 * "FREQ=weekly;COUNT=8"). Set on the seed row of a recurring series.
+	 * Parsed by src/lib/sessionRecurrence.ts. Persisted via the
+	 * `p_recurrence_rule` param added in migration
+	 * `20260526120000_extend_upsert_campaign_session_recurrence.sql`.
+	 */
+	recurrenceRule?: string | null;
+	/**
+	 * R5 of Round 2 — parent session ID linking generated occurrences
+	 * back to the seed. Set on child rows; null on the seed.
+	 */
+	recurrenceParentId?: string | null;
 };
 
 type CreateSessionLogInput = {
@@ -196,7 +221,10 @@ export const useUpsertCampaignSession = () => {
 			}
 			await ensureAuthenticatedUser();
 
-			const { data, error } = await supabase.rpc("upsert_campaign_session", {
+			// RPC params include the recurrence fields added in
+			// `20260526120000_extend_upsert_campaign_session_recurrence.sql`.
+			// Cast through unknown until DB types are regenerated post-deploy.
+			const rpcArgs = {
 				p_campaign_id: input.campaignId,
 				p_session_id: input.sessionId ?? undefined,
 				p_title: input.title ?? undefined,
@@ -204,7 +232,15 @@ export const useUpsertCampaignSession = () => {
 				p_scheduled_for: input.scheduledFor ?? undefined,
 				p_status: input.status ?? undefined,
 				p_location: input.location ?? undefined,
-			});
+				p_recurrence_rule: input.recurrenceRule ?? undefined,
+				p_recurrence_parent_id: input.recurrenceParentId ?? undefined,
+			};
+			const { data, error } = await (
+				supabase.rpc as unknown as (
+					name: string,
+					params: Record<string, unknown>,
+				) => Promise<{ data: unknown; error: Error | null }>
+			)("upsert_campaign_session", rpcArgs);
 
 			if (error) throw error;
 			return {

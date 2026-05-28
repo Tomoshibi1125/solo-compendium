@@ -32,7 +32,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Codified by the Academy of High Magic as elective coursework after demand from non-caster Hunters who needed to evaluate gate loot without a Mage on hand.",
+			"Codified by the Academy of High Magic as elective coursework after demand from non-caster Ascendants who needed to evaluate gate loot without a Mage on hand.",
 		theme_tags: ["intelligence", "identification", "lattice"],
 	},
 	{
@@ -293,7 +293,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Bureau statisticians flagged several Hunters whose combat outcomes deviated from probability models by more than six standard deviations.",
+			"Bureau statisticians flagged several Ascendants whose combat outcomes deviated from probability models by more than six standard deviations.",
 		theme_tags: ["luck", "probability", "reroll"],
 	},
 	{
@@ -358,7 +358,7 @@ export const generalFeats: CompendiumFeat[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"After the third gate-break ambush in a single month, the Bureau mandated point-entry training for all field-certified Hunters rank C and above.",
+			"After the third gate-break ambush in a single month, the Bureau mandated point-entry training for all field-certified Ascendants rank C and above.",
 		theme_tags: ["initiative", "surprise", "vanguard"],
 	},
 	{

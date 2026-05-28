@@ -73,6 +73,10 @@ const getCanonicalLines = (entry: StaticCompendiumEntry): string[] => {
 	const damage = stringifyValue(entry.damage);
 	const damageType = stringifyValue(entry.damage_type);
 	const armorClass = stringifyValue(entry.armor_class);
+	const range = stringifyValue(
+		(entry as { range?: unknown; weapon_range?: unknown }).range ??
+			(entry as { weapon_range?: unknown }).weapon_range,
+	);
 	const equipmentType = stringifyValue(
 		entry.weapon_type ??
 			entry.armor_type ??
@@ -82,10 +86,14 @@ const getCanonicalLines = (entry: StaticCompendiumEntry): string[] => {
 	const properties = getPropertyLabels(entry);
 	const weight = stringifyValue(entry.weight);
 	const rarity = stringifyValue(entry.rarity);
+	const sourceBook = stringifyValue(
+		(entry as { source_book?: unknown }).source_book,
+	);
 
 	if (damage)
 		lines.push(`Damage ${damage}${damageType ? ` ${damageType}` : ""}`);
 	if (armorClass) lines.push(`AC ${armorClass}`);
+	if (range) lines.push(`Range ${range}`);
 	if (equipmentType) lines.push(formatRegentVernacular(equipmentType));
 	if (properties.length > 0)
 		lines.push(properties.map(formatRegentVernacular).join(", "));
@@ -94,6 +102,7 @@ const getCanonicalLines = (entry: StaticCompendiumEntry): string[] => {
 		lines.push(`STR ${entry.strength_requirement}`);
 	if (weight) lines.push(`${weight} lb`);
 	if (rarity) lines.push(formatRegentVernacular(rarity));
+	if (sourceBook) lines.push(formatRegentVernacular(sourceBook));
 
 	return lines;
 };

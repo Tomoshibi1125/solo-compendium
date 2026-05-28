@@ -1,11 +1,123 @@
 import { DEFAULT_SCENE_GRID_OPACITY } from "@/lib/vtt/backgroundTransform";
 import type {
 	LightSource,
+	VTTAnimatedTile,
+	VTTRiftRegion,
 	VTTScene,
+	VTTSceneLevel,
 	VTTTokenBar,
 	VTTTokenInstance,
 	WallSegment,
 } from "@/types/vtt";
+
+// -------------------------------------------------------------------
+// Misty Pearl A2 — Scene Strata (Foundry v14 multi-floor parity).
+// Pure helpers + a backwards-compat normalizer so legacy scenes
+// (authored before A2 shipped) get an implicit single ground stratum.
+// -------------------------------------------------------------------
+
+/** Stable id of the implicit ground stratum used for back-compat. */
+export const DEFAULT_STRATUM_ID = "stratum-ground" as const;
+
+export const createVttSceneLevelId = () => {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
+		return `stratum-${crypto.randomUUID()}`;
+	}
+	return `stratum-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+/**
+ * Returns the scene with at least one stratum. If the input already
+ * has `levels` populated, returns the same reference. Otherwise
+ * synthesizes a single ground stratum that carries every existing
+ * wall / light id so the renderer can keep treating them as
+ * stratum-scoped going forward.
+ */
+export const normalizeVttSceneLevels = (scene: VTTScene): VTTScene => {
+	if (scene.levels && scene.levels.length > 0) return scene;
+	const wallIds = (scene.walls ?? []).map((w) => w.id);
+	const lightIds = (scene.lights ?? []).map((l) => l.id);
+	const ground: VTTSceneLevel = {
+		id: DEFAULT_STRATUM_ID,
+		name: "Surface",
+		elevation: 0,
+		order: 0,
+		visibleToPlayers: true,
+		backgroundImage: scene.backgroundImage,
+		wallIds,
+		lightIds,
+	};
+	return { ...scene, levels: [ground] };
+};
+
+export const addLevelToScene = (
+	scene: VTTScene,
+	level: VTTSceneLevel,
+): VTTScene => ({
+	...scene,
+	levels: [...(scene.levels ?? []), level],
+});
+
+export const updateLevelInScene = (
+	scene: VTTScene,
+	levelId: string,
+	updates: Partial<VTTSceneLevel>,
+): VTTScene => {
+	const levels = scene.levels ?? [];
+	let didChange = false;
+	const next = levels.map((level) => {
+		if (level.id !== levelId) return level;
+		didChange = true;
+		return { ...level, ...updates, id: level.id };
+	});
+	if (!didChange) return scene;
+	return { ...scene, levels: next };
+};
+
+export const removeLevelFromScene = (
+	scene: VTTScene,
+	levelId: string,
+): VTTScene => {
+	const levels = scene.levels ?? [];
+	if (levels.length <= 1) return scene; // refuse to drop the last stratum
+	const next = levels.filter((l) => l.id !== levelId);
+	if (next.length === levels.length) return scene;
+	// Reassign any token still on the removed stratum to the lowest
+	// remaining one so they don't disappear.
+	const fallback = next.reduce((acc, cur) =>
+		cur.order < acc.order ? cur : acc,
+	);
+	const tokens = scene.tokens.map((token) =>
+		token.level === levelId ? { ...token, level: fallback.id } : token,
+	);
+	return { ...scene, levels: next, tokens };
+};
+
+/**
+ * Move a token to the given stratum. Updates `level` and resets
+ * `elevation` to the stratum's elevation. Returns the same reference
+ * when the token id is unknown.
+ */
+export const moveTokenToLevel = (
+	scene: VTTScene,
+	tokenId: string,
+	levelId: string,
+): VTTScene => {
+	const level = (scene.levels ?? []).find((l) => l.id === levelId);
+	if (!level) return scene;
+	let didChange = false;
+	const tokens = scene.tokens.map((token) => {
+		if (token.id !== tokenId) return token;
+		if (token.level === levelId) return token;
+		didChange = true;
+		return { ...token, level: levelId, elevation: level.elevation };
+	});
+	if (!didChange) return scene;
+	return { ...scene, tokens };
+};
 
 export const DEFAULT_SCENE_SETTINGS = {
 	gridSize: 50,
@@ -147,6 +259,122 @@ export const removeWallFromScene = (
 	const nextWalls = walls.filter((wall) => wall.id !== wallId);
 	if (nextWalls.length === walls.length) return scene;
 	return { ...scene, walls: nextWalls };
+};
+
+// -------------------------------------------------------------------
+// Misty Pearl A3 — Rift Region CRUD helpers (Foundry v14 Scene Regions
+// parity). Mirror the wall/light helper pattern: non-mutating, return a
+// new scene object when something actually changed, return the original
+// reference when the target id is unknown.
+// -------------------------------------------------------------------
+
+export const createVttRegionId = () => {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
+		return `region-${crypto.randomUUID()}`;
+	}
+	return `region-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+export const addRegionToScene = (
+	scene: VTTScene,
+	region: VTTRiftRegion,
+): VTTScene => ({
+	...scene,
+	riftRegions: [...(scene.riftRegions ?? []), region],
+});
+
+export const updateRegionInScene = (
+	scene: VTTScene,
+	regionId: string,
+	updates: Partial<VTTRiftRegion>,
+): VTTScene => {
+	const regions = scene.riftRegions ?? [];
+	let didChange = false;
+	const next = regions.map((region) => {
+		if (region.id !== regionId) return region;
+		didChange = true;
+		return { ...region, ...updates, id: region.id };
+	});
+	if (!didChange) return scene;
+	return { ...scene, riftRegions: next };
+};
+
+export const removeRegionFromScene = (
+	scene: VTTScene,
+	regionId: string,
+): VTTScene => {
+	const regions = scene.riftRegions ?? [];
+	const next = regions.filter((region) => region.id !== regionId);
+	if (next.length === regions.length) return scene;
+	return { ...scene, riftRegions: next };
+};
+
+// -------------------------------------------------------------------
+// Misty Pearl B4 — Animated tile CRUD helpers.
+// -------------------------------------------------------------------
+
+export const createVttAnimatedTileId = () => {
+	if (
+		typeof crypto !== "undefined" &&
+		typeof crypto.randomUUID === "function"
+	) {
+		return `tile-${crypto.randomUUID()}`;
+	}
+	return `tile-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+export const addAnimatedTileToScene = (
+	scene: VTTScene,
+	tile: VTTAnimatedTile,
+): VTTScene => ({
+	...scene,
+	animatedTiles: [...(scene.animatedTiles ?? []), tile],
+});
+
+export const updateAnimatedTileInScene = (
+	scene: VTTScene,
+	tileId: string,
+	updates: Partial<VTTAnimatedTile>,
+): VTTScene => {
+	const tiles = scene.animatedTiles ?? [];
+	let didChange = false;
+	const next = tiles.map((tile) => {
+		if (tile.id !== tileId) return tile;
+		didChange = true;
+		return { ...tile, ...updates, id: tile.id };
+	});
+	if (!didChange) return scene;
+	return { ...scene, animatedTiles: next };
+};
+
+export const removeAnimatedTileFromScene = (
+	scene: VTTScene,
+	tileId: string,
+): VTTScene => {
+	const tiles = scene.animatedTiles ?? [];
+	const next = tiles.filter((tile) => tile.id !== tileId);
+	if (next.length === tiles.length) return scene;
+	return { ...scene, animatedTiles: next };
+};
+
+/**
+ * Returns true when the given URL is a video MIME we can render as an
+ * animated tile via Pixi `VideoTexture` / `<video>` element.
+ */
+export const isAnimatedTileUrl = (url: string | undefined): boolean => {
+	if (!url) return false;
+	const lower = url.toLowerCase();
+	return (
+		lower.endsWith(".mp4") ||
+		lower.endsWith(".webm") ||
+		lower.endsWith(".ogv") ||
+		lower.endsWith(".mov") ||
+		lower.endsWith(".gif") ||
+		(lower.endsWith(".webp") && lower.includes("anim"))
+	);
 };
 
 export const getValidActiveTokenId = (

@@ -11,39 +11,39 @@ const DEFAULT_SANDBOX_NPC_IMAGE_URL =
 const JOB_PORTRAIT_URL_BY_JOB: Record<string, string> = {
 	Assassin: "/generated/compendium/jobs/assassin.webp",
 	Berserker: "/generated/compendium/jobs/berserker.webp",
-	Contractor: "/generated/compendium/jobs/warlock.webp",
+	Contractor: "/generated/compendium/jobs/Contractor.webp",
 	Destroyer: "/generated/compendium/jobs/tank.webp",
 	Esper: "/generated/compendium/jobs/warrior.webp",
 	Herald: "/generated/compendium/jobs/healer.webp",
-	"Holy Knight": "/generated/compendium/jobs/paladin.webp",
-	Idol: "/generated/compendium/jobs/bard.webp",
+	"Holy Knight": "/generated/compendium/jobs/Holy Knight.webp",
+	Idol: "/generated/compendium/jobs/Idol.webp",
 	Mage: "/generated/compendium/jobs/mage.webp",
-	Stalker: "/generated/compendium/jobs/ranger.webp",
-	Striker: "/generated/compendium/jobs/monk.webp",
+	Stalker: "/generated/compendium/jobs/Stalker.webp",
+	Striker: "/generated/compendium/jobs/Striker.webp",
 	Summoner: "/generated/compendium/jobs/summoner.webp",
 	Technomancer: "/generated/compendium/jobs/artificer.webp",
-	Revenant: "/generated/compendium/jobs/necromancer.webp",
+	Revenant: "/generated/compendium/jobs/Revenant.webp",
 	Unknown: "/generated/compendium/backgrounds/shadow-realm-exile.webp",
 	Civilian: "/generated/compendium/backgrounds/gate-survivor.webp",
 	Hybrid: "/generated/compendium/backgrounds/void-touched.webp",
-	Guardian: "/generated/compendium/monsters/companion-spectral-knight.webp",
-	Mutant: "/generated/compendium/monsters/companion-void-walker.webp",
+	Guardian: "/generated/compendium/anomalies/companion-spectral-knight.webp",
+	Mutant: "/generated/compendium/anomalies/companion-void-walker.webp",
 	Repository: "/generated/compendium/jobs/artificer.webp",
 	"Beast Companion":
-		"/generated/compendium/monsters/companion-chronal-hound.webp",
+		"/generated/compendium/anomalies/companion-chronal-hound.webp",
 };
 
 const SPECIAL_SANDBOX_NPC_IMAGE_URLS: Record<string, string> = {
 	"npc-anom-001": "/generated/compendium/backgrounds/void-touched.webp",
 	"npc-anom-002":
-		"/generated/compendium/monsters/companion-spectral-knight.webp",
-	"npc-anom-003": "/generated/compendium/monsters/companion-void-walker.webp",
+		"/generated/compendium/anomalies/companion-spectral-knight.webp",
+	"npc-anom-003": "/generated/compendium/anomalies/companion-void-walker.webp",
 	"npc-anom-004": "/generated/compendium/backgrounds/time-walker.webp",
 	"npc-anom-005": "/generated/compendium/jobs/artificer.webp",
-	"npc-anom-006": "/generated/compendium/monsters/companion-chronal-hound.webp",
+	"npc-anom-006": "/generated/compendium/anomalies/companion-chronal-hound.webp",
 	"npc-ind-004": "/generated/compendium/backgrounds/gate-survivor.webp",
 	"npc-ind-006": "/generated/compendium/backgrounds/shadow-realm-exile.webp",
-	"npc-verm-009": "/generated/compendium/jobs/bard.webp",
+	"npc-verm-009": "/generated/compendium/jobs/Idol.webp",
 };
 
 const FACTION_FALLBACK_IMAGE_URLS: Record<string, string> = {
@@ -56,10 +56,10 @@ const FACTION_FALLBACK_IMAGE_URLS: Record<string, string> = {
 };
 
 export const SHADOW_REGENT_TOKEN_IMAGE_URL =
-	"/generated/compendium/monsters/mount-dire-shadow-wolf.webp";
+	"/generated/compendium/anomalies/mount-dire-shadow-wolf.webp";
 
 export const SHADOW_SOLDIER_TOKEN_IMAGE_URL =
-	"/generated/compendium/monsters/companion-spectral-knight.webp";
+	"/generated/compendium/anomalies/companion-spectral-knight.webp";
 
 export function getSandboxNpcPortraitUrl(
 	npc: SandboxNpcAssetDescriptor,

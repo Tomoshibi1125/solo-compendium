@@ -42,6 +42,10 @@ export interface MarketplaceItemRecord {
 	created_at: string;
 	updated_at: string;
 	has_access?: boolean;
+	/** F6: bundle composite item — entitlement fan-outs to children. */
+	is_bundle?: boolean;
+	/** F6: child item IDs when is_bundle is true. */
+	bundled_item_ids?: string[] | null;
 }
 
 interface MarketplaceReviewRecord {
@@ -410,6 +414,63 @@ export const useRecordMarketplaceDownload = () => {
 		onError: (error: Error) => {
 			toast({
 				title: "Download failed",
+				description: error.message,
+				variant: "destructive",
+			});
+		},
+	});
+};
+
+/**
+ * F6 of May 2026 remediation plan — gift a marketplace item to another
+ * user. Calls the `gift_marketplace_item` RPC defined in
+ * `supabase/migrations/20260525122000_add_marketplace_gifting_and_bundles.sql`.
+ * Caller must already be entitled to the item.
+ */
+export const useGiftMarketplaceItem = () => {
+	const queryClient = useQueryClient();
+	const { toast } = useToast();
+
+	return useMutation({
+		mutationFn: async ({
+			itemId,
+			recipientUserId,
+			message,
+		}: {
+			itemId: string;
+			recipientUserId: string;
+			message?: string;
+		}): Promise<{ entitlementId: string }> => {
+			if (!isSupabaseConfigured) {
+				throw new AppError("Supabase not configured", "CONFIG");
+			}
+			await ensureAuthenticatedUser();
+			// RPC types are regenerated after the migration deploys; cast
+			// through unknown until the next types pull. See
+			// supabase/migrations/20260525122000_add_marketplace_gifting_and_bundles.sql.
+			const { data, error } = await (
+				supabase.rpc as unknown as (
+					name: string,
+					params: Record<string, unknown>,
+				) => Promise<{ data: unknown; error: Error | null }>
+			)("gift_marketplace_item", {
+				p_item_id: itemId,
+				p_recipient_user_id: recipientUserId,
+				p_message: message ?? null,
+			});
+			if (error) throw error;
+			return { entitlementId: (data as string) ?? "" };
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: KEY });
+			toast({
+				title: "Gift sent",
+				description: "Recipient now has access to the item.",
+			});
+		},
+		onError: (error: Error) => {
+			toast({
+				title: "Gift failed",
 				description: error.message,
 				variant: "destructive",
 			});

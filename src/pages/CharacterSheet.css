@@ -845,3 +845,27 @@ button[aria-label*="roll"]:hover {
 		padding-bottom: 0.5rem;
 	}
 }
+
+/* F2 of May 2026 remediation plan: per-character sheet themes.
+ * The .sheet-themed-root wrapper carries `data-sheet-theme="..."` plus
+ * inline `--sheet-accent` / `--sheet-accent-soft` / `--sheet-accent-glow`
+ * CSS variables sourced from `src/data/sheetThemes.ts`. Rules here
+ * surface those vars in the sheet's accent surfaces. Keep selectors
+ * shallow so per-theme overrides are easy to extend. */
+.sheet-themed-root {
+	--sheet-accent-fallback: hsl(217, 91%, 60%);
+}
+.sheet-themed-root[data-sheet-theme] [data-theme-accent-text] {
+	color: var(--sheet-accent, var(--sheet-accent-fallback));
+}
+.sheet-themed-root[data-sheet-theme] [data-theme-accent-border] {
+	border-color: var(--sheet-accent, var(--sheet-accent-fallback));
+	box-shadow: 0 0 12px var(--sheet-accent-glow, transparent);
+}
+.sheet-themed-root[data-sheet-theme] [data-theme-accent-bg] {
+	background-color: color-mix(
+		in oklab,
+		var(--sheet-accent, var(--sheet-accent-fallback)) 14%,
+		transparent
+	);
+}

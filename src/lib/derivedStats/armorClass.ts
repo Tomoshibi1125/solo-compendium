@@ -9,6 +9,20 @@ export interface ArmorClassStack {
 	customAcBonus: number;
 }
 
+/**
+ * Legacy feature-stacking AC calculator.
+ *
+ * **Canonical AC is now via `acFormulas.ts:getArmorClass` / the canonical
+ * `calculateAC` path in `useArmorClass.ts`.** This stack still produces
+ * the feature- and custom-modifier bonus terms that feed *into* the
+ * canonical calculator (as `miscACBonus`), so it remains useful as a
+ * bonus aggregator — just no longer the source of the displayed AC.
+ *
+ * @deprecated for direct AC consumption — read `armorClassDetail.total`
+ * from the derived-stats hook instead. The bonus fields
+ * (`featureACBonus`, `customAcBonus`) are still consumed by the
+ * canonical calculator.
+ */
 export function calculateArmorClassStack(input: {
 	baseArmorClass: number;
 	agilityScore: number;

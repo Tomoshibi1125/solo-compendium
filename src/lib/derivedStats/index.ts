@@ -5,3 +5,9 @@ export {
 } from "./attackModifiers";
 export { calculateInitiativeBreakdown } from "./initiative";
 export { calculateSavingThrows } from "./savingThrows";
+export {
+	type DerivedStatsSnapshot,
+	isDerivedCacheStale,
+	persistDerivedStats,
+	resolveHpMax,
+} from "./persistDerivedStats";

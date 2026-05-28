@@ -59,7 +59,7 @@ describe("createSecuredNote", () => {
 });
 
 describe("canViewNote", () => {
-	it("GM can always view", () => {
+	it("Warden can always view", () => {
 		const note = makeNote();
 		expect(canViewNote(note, PLAYER_A, true)).toBe(true);
 	});
@@ -95,7 +95,7 @@ describe("canViewNote", () => {
 });
 
 describe("canEditNote", () => {
-	it("GM can always edit", () => {
+	it("Warden can always edit", () => {
 		const note = makeNote();
 		expect(canEditNote(note, PLAYER_A, true)).toBe(true);
 	});
@@ -124,7 +124,7 @@ describe("canEditNote", () => {
 });
 
 describe("canSeeNoteExists", () => {
-	it("GM always sees note existence", () => {
+	it("Warden always sees note existence", () => {
 		const note = makeNote();
 		expect(canSeeNoteExists(note, PLAYER_A, true)).toBe(true);
 	});
@@ -206,7 +206,7 @@ describe("filterVisibleNotes", () => {
 	const perPlayerNote = grantPlayerPermission(makeNote(), PLAYER_A, "read");
 	const allNotes = [privateNote, sharedNote, perPlayerNote];
 
-	it("GM sees all notes", () => {
+	it("Warden sees all notes", () => {
 		expect(filterVisibleNotes(allNotes, PLAYER_B, true)).toHaveLength(3);
 	});
 
@@ -229,7 +229,7 @@ describe("filterReadableNotes", () => {
 	const sharedNote = shareWithAll(makeNote());
 	const allNotes = [privateNote, sharedNote];
 
-	it("GM can read all", () => {
+	it("Warden can read all", () => {
 		expect(filterReadableNotes(allNotes, PLAYER_A, true)).toHaveLength(2);
 	});
 

@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import {
+	loadNotifications,
+	type Notification,
+	saveNotifications,
+} from "@/hooks/useNotifications";
+import {
 	type Campaign,
 	loadLocalCampaigns,
 	loadLocalMembers,
@@ -584,7 +589,7 @@ export const useRedeemCampaignInvite = () => {
 
 			return campaignId;
 		},
-		onSuccess: () => {
+		onSuccess: (campaignId) => {
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "joined"] });
 			queryClient.invalidateQueries({ queryKey: ["campaigns", "my"] });
 			queryClient.invalidateQueries({ queryKey: ["characters"] });
@@ -592,6 +597,35 @@ export const useRedeemCampaignInvite = () => {
 				title: "Invite accepted",
 				description: "You are now part of the campaign.",
 			});
+
+			// F5 of May 2026 remediation plan — push to the in-app activity
+			// feed so the user sees a persistent record of the join in the
+			// NotificationCenter bell.
+			try {
+				const stored = loadNotifications();
+				const note: Notification = {
+					id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+					type: "success",
+					priority: "normal",
+					title: "Campaign invite accepted",
+					message:
+						"You've joined a new campaign — open it from the Campaigns list.",
+					read: false,
+					createdAt: Date.now(),
+					category: "campaign",
+					action: {
+						label: "Open campaign",
+						onClick: () => {
+							if (typeof window !== "undefined") {
+								window.location.href = `/campaigns/${campaignId}`;
+							}
+						},
+					},
+				};
+				saveNotifications([note, ...stored]);
+			} catch {
+				// notification failure must never block invite acceptance
+			}
 		},
 		onError: (error: Error) => {
 			toast({

@@ -9,7 +9,7 @@ interface ProtocolWardenContext {
 
 /**
  * Transforms mechanical logs (e.g., "Rolled 18 to hit, 12 fire damage")
- * into thematic, flavorful narrative descriptions acting as the Warden (Warden).
+ * into thematic, flavorful narrative descriptions acting as the Warden.
  */
 export async function narrateCombatEvent(
 	mechanicalText: string,
@@ -17,7 +17,7 @@ export async function narrateCombatEvent(
 ): Promise<string> {
 	const config = aiService.getConfiguration();
 
-	const prompt = `You are the AI Warden (Dungeon Master) of a Rift Ascendant campaign. 
+	const prompt = `You are the AI Warden of a Rift Ascendant campaign. 
 Your role is to translate mechanical game actions into evocative, concise narrative descriptions.
 
 MECHANICAL EVENT:

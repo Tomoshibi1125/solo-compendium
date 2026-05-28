@@ -181,3 +181,130 @@ export function buildRaCurrencyItemDescription(currencyId: RaCurrencyId) {
 		? `Bureau-issued ${currency.name}; ${currency.description}`
 		: "Bureau-issued Credits backed by essence reserves.";
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// P1.10: Currency overflow normalization (RA EXCEEDS DDB)
+// ─────────────────────────────────────────────────────────────────────────
+// DDB users have repeatedly requested automatic currency cascading
+// (250 cp → 2 sp 50 cp, etc.). RA shipping this puts us ahead of DDB.
+//
+// RA cascade ratios (decimal):
+//   1 Core   = 1000 Mana
+//   1 Gate   = 100  Mana
+//   1 Crystal = 10  Mana
+//   1 Mana   = 1    Mana (base unit)
+//
+// `normalizeWallet({core, gate, crystal, mana})` cascades upward so each
+// lower denomination holds the residue (mana < 10, crystal < 10, gate <
+// 10). Set `direction: "preserve"` to return values unchanged.
+//
+// Legacy alias accessors accept pp/gp/sp/cp for migration paths and emit
+// the same canonical fields back.
+
+export interface RaWallet {
+	core: number;
+	gate: number;
+	crystal: number;
+	mana: number;
+}
+
+export interface LegacyWallet {
+	pp?: number; // platinum   → core
+	gp?: number; // gold       → gate
+	sp?: number; // silver     → crystal
+	cp?: number; // copper     → mana
+	ep?: number; // electrum   → 5 silver = 50 mana (rolled into crystal)
+}
+
+const DEFAULT_WALLET: RaWallet = { core: 0, gate: 0, crystal: 0, mana: 0 };
+
+/**
+ * Convert a wallet object using legacy keys into the canonical RA shape.
+ * Tolerates partial input; missing keys default to 0. Electrum (5 sp =
+ * 50 cp) is folded into crystal+mana before cascading.
+ */
+export function walletFromLegacy(legacy: LegacyWallet): RaWallet {
+	const ep = legacy.ep ?? 0;
+	return {
+		core: legacy.pp ?? 0,
+		gate: legacy.gp ?? 0,
+		// Electrum: 1 ep = 5 sp (RA: 5 crystal = 50 mana base units).
+		// Roll the electrum value into crystal via base-unit conversion
+		// before cascading so the final wallet remains well-formed.
+		crystal: (legacy.sp ?? 0) + Math.floor((ep * 5) / 1),
+		mana: legacy.cp ?? 0,
+	};
+}
+
+/**
+ * Cascade a wallet so each lower denomination is below its rollover
+ * threshold. The total value in mana base units is preserved exactly.
+ *
+ * Example:
+ *   normalizeWallet({ core: 0, gate: 0, crystal: 0, mana: 250 })
+ *     → { core: 0, gate: 2, crystal: 5, mana: 0 }
+ *
+ * @param direction
+ *   "up" (default) — push residue upward; lowest denomination is the
+ *     remainder. Matches DDB's requested behavior.
+ *   "preserve" — return the input unchanged (escape hatch).
+ */
+export function normalizeWallet(
+	wallet: Partial<RaWallet> & Partial<LegacyWallet>,
+	direction: "up" | "preserve" = "up",
+): RaWallet {
+	const merged: RaWallet = {
+		core: wallet.core ?? 0,
+		gate: wallet.gate ?? 0,
+		crystal: wallet.crystal ?? 0,
+		mana: wallet.mana ?? 0,
+	};
+	// Fold legacy keys (when both are present, canonical wins).
+	if (wallet.pp != null && wallet.core == null) merged.core = wallet.pp;
+	if (wallet.gp != null && wallet.gate == null) merged.gate = wallet.gp;
+	if (wallet.sp != null && wallet.crystal == null) merged.crystal = wallet.sp;
+	if (wallet.cp != null && wallet.mana == null) merged.mana = wallet.cp;
+	if (wallet.ep != null) {
+		// 1 ep = 5 sp = 50 mana
+		merged.mana += (wallet.ep ?? 0) * 50;
+	}
+
+	if (direction === "preserve") return merged;
+
+	// Convert everything to mana base units for an exact-value cascade.
+	const totalMana =
+		merged.core * 1000 +
+		merged.gate * 100 +
+		merged.crystal * 10 +
+		merged.mana;
+
+	const core = Math.floor(totalMana / 1000);
+	let remainder = totalMana - core * 1000;
+	const gate = Math.floor(remainder / 100);
+	remainder -= gate * 100;
+	const crystal = Math.floor(remainder / 10);
+	const mana = remainder - crystal * 10;
+
+	return { core, gate, crystal, mana };
+}
+
+/** Sum of a wallet expressed in mana (base) units. */
+export function walletTotalBaseUnits(wallet: Partial<RaWallet>): number {
+	return (
+		(wallet.core ?? 0) * 1000 +
+		(wallet.gate ?? 0) * 100 +
+		(wallet.crystal ?? 0) * 10 +
+		(wallet.mana ?? 0)
+	);
+}
+
+/** Pretty-print a wallet, hiding zero denominations. */
+export function formatWallet(wallet: Partial<RaWallet>): string {
+	const parts: string[] = [];
+	if (wallet.core) parts.push(`${wallet.core} CC`);
+	if (wallet.gate) parts.push(`${wallet.gate} GC`);
+	if (wallet.crystal) parts.push(`${wallet.crystal} CrC`);
+	if (wallet.mana) parts.push(`${wallet.mana} MC`);
+	return parts.length > 0 ? parts.join(" ") : "0 MC";
+}
+export { DEFAULT_WALLET };

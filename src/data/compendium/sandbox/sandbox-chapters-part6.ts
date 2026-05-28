@@ -252,7 +252,7 @@ A precision workshop. Three workbenches, each with a magnifying mana-lens, engra
 - **NPC**: **Sigilmaster Baek** *(minor NPC — Mage, level 5, canonical-style extension; handwriting matches Bright's, hinting at a shared past)*.
 - **Services** — canonical sigils from \`sigils.ts\`:
   - Engraving fee per sigil: 1,000 Credits (common) → 10,000 Credits (legendary).
-  - Weapon sigils: *Razor Wind, Crushing Mountain, Salamander's Breath, Winter Court, Thunder-Bird, Radiant Truth, Void-Walker, Grandmaster's Edge, Earth-Shatterer, Ranger's Eye, Pierce-Through, Executioner's Swing*.
+  - Weapon sigils: *Razor Wind, Crushing Mountain, Salamander's Breath, Winter Court, Thunder-Bird, Radiant Truth, Void-Walker, Grandmaster's Edge, Earth-Shatterer, Stalker's Eye, Pierce-Through, Executioner's Swing*.
   - Armor sigils: *Aegis, Unyielding, Frost-Ward, Hearth-Fire, Grounded Soul, Zephyr's Tread, Dragon's Scale, True Glacier, Storm-Wall, Obsidian Polish, Cleansed Blood, Silent Guardian, Unmoving Stone, Iron Mind*.
   - Accessory sigils: *Archmage's Clarity, Hawk's Vision, Wind-Walker, Titan's Grasp, Sovereign's Will, Mana Font*.
   - Legendary-tier (**Vermillion Allied only**): *Shadow Regent, Undying Flame*.

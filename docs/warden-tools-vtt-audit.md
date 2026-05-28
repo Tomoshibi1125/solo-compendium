@@ -12,7 +12,7 @@
 | **Standalone Warden tools** | **17 / 18 fully wired**, 1 partial | All 18 routes resolve to real components with persistence and role guards. Session Planner is "thin wrapper around `CampaignSessionsPanel`" (intentional, not a bug). |
 | **VTT Warden surfaces** | **22 / 27 wired**, 3 partial, 2 missing-UI | Engine + rendering layer is rich (Pixi + DOM fallback, walls/lights data path, fog rects, terrain/ambient zones, weather, calibration, layers, atmospheric audio). Light placement exists as 3 hard-coded presets in `WardenToolsPanel`; full configurable light + walls authoring UIs are absent. |
 | **DDB Maps parity** | **High** — encounter→initiative→map flow matches; inline rolls + character integration matches; we add Warden-only broadcast, AI assistant, more generators. |
-| **Roll20 parity** | **Medium-High** — macros (local-only, no remote sync), rollable tables, GM layer (3), turn tracker, jukebox-equivalent, dynamic lighting (engine only — no Warden authoring UI). Token multi-bar missing. |
+| **Roll20 parity** | **Medium-High** — macros (local-only, no remote sync), rollable tables, Warden layer (3), turn tracker, jukebox-equivalent, dynamic lighting (engine only — no Warden authoring UI). Token multi-bar missing. |
 | **Foundry parity** | **Medium** — Pixi stage, fog of war, lighting engine, walls type, scene library, journal, playlists-equivalent (audio manager) all present. **Authoring UX for walls / light placement / vision modes is absent**. Active-effects-on-token model is informal. Multi-token select absent. |
 
 **Top 5 P0 risks** (correctness, not gap):
@@ -82,7 +82,7 @@ Status legend: ✅ wired (real component + persistence + role guard) · 🟡 par
 | V10 | Left rail — Toolbox drawer (tool buttons) | tools `select / fog / draw / effect / note / measure / pointer` (`VTTEnhanced.tsx:3700-3750`) | ✅ | Each renders `aria-pressed`, has icon + label. **Missing**: `walls`, `light` tools. |
 | V11 | Left rail — Map calibration | `@c:\Users\jjcal\Documents\solo-compendium\src\lib\vtt\backgroundTransform.ts` + `VTTEnhanced.tsx:2192-2207` | ✅ | Two-point calibration snaps embedded grid to app grid. `gridOpacity` presets via `GRID_VISIBILITY_PRESETS`. Foundry "scene grid alignment" parity. |
 | V12 | Left rail — Tokens (library + characters) | `Toolbox > Tokens` tab + asset browser `tokens` tab | ✅ | Tested in `vtt-hardening.e2e` (`vtt-tokens-tab-library` + search "Ascendant (E-Rank)"). |
-| V13 | Layer Quick Switch (0-3) | `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\LayerQuickSwitch.tsx` | ✅ | Roll20 4-layer parity (Map / Token / Effect / GM). `data-testid="vtt-layer-select-{0..3}"`, visibility toggle per layer. |
+| V13 | Layer Quick Switch (0-3) | `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\LayerQuickSwitch.tsx` | ✅ | Roll20 4-layer parity (Map / Token / Effect / Warden). `data-testid="vtt-layer-select-{0..3}"`, visibility toggle per layer. |
 | V14 | Right rail — Selected Token panel | `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\TokenActionBar.tsx` + `VTTEnhanced.tsx` | ✅ | HP / AC / size / vis / lock / character link. `data-testid="vtt-active-token-panel"` exposes `data-active-token-pos` for tests. |
 | V15 | Right rail — Initiative panel | `@c:\Users\jjcal\Documents\solo-compendium\src\components\vtt\VTTInitiativePanel.tsx` | ✅ | Linked to `useCampaignCombatSession`. DDB Maps initiative-on-map parity. |
 | V16 | Right rail — Chat panel | `CampaignRollFeed` + dice tray + chat input | ✅ | Real-time roll feed, color-coded message types per memory `74ab4e28`. |
@@ -169,7 +169,7 @@ Legend: ✅ full · 🟡 partial / authoring missing · ❌ absent.
 | 45 | Mood-tagged music | ✅ | ❌ | 🟡 | ✅ | `MOOD_TAGS`. |
 | **Combat & rolls** |
 | 46 | Initiative tracker | ✅ | ✅ | ✅ | ✅ | Standalone + VTT panel. |
-| 47 | Initiative auto-roll for monsters | 🟡 | ✅ | ✅ | ✅ | `InitiativeTracker` supports manual entry + sort; auto-roll TBD. |
+| 47 | Initiative auto-roll for anomalies | 🟡 | ✅ | ✅ | ✅ | `InitiativeTracker` supports manual entry + sort; auto-roll TBD. |
 | 48 | Damage application to selected token | ✅ | ✅ | ✅ | ✅ | `applyDamageMitigation`. |
 | 49 | Concentration tracking | ✅ | 🟡 | 🟡 | ✅ | `useConcentration` hook exists. |
 | 50 | Reactions / legendary tracking | 🟡 | ❌ | 🟡 | ✅ | UI exists in InitiativeTracker but no automation. |
@@ -181,12 +181,12 @@ Legend: ✅ full · 🟡 partial / authoring missing · ❌ absent.
 | 55 | Macros sync across devices | ❌ | ❌ | ✅ | ✅ | Not persisted to remote. |
 | 56 | Rollable tables | ✅ | ❌ | ✅ | ✅ | Multiple categories. |
 | **Permissions / players** |
-| 57 | GM / Token / Map / Effect layers | ✅ | 🟡 | ✅ | ✅ | 4 layers, GM = layer 3 hidden from players. |
+| 57 | Warden / Token / Map / Effect layers | ✅ | 🟡 | ✅ | ✅ | 4 layers, Warden = layer 3 hidden from players. |
 | 58 | Per-player permission toggles | ✅ | 🟡 | ✅ | ✅ | `useVTTSettings` 6 toggles. |
 | 59 | Spectator / projector view | ✅ | ❌ | 🟡 | ✅ | `VTTSpectator.tsx`. |
 | 60 | Player View simulation | ✅ | ✅ | ✅ | ✅ | Top-bar toggle. |
 | **Journal & handouts** |
-| 61 | Journal entries (DM + player visible) | ✅ | ❌ | ✅ | ✅ | |
+| 61 | Journal entries (Warden + player visible) | ✅ | ❌ | ✅ | ✅ | |
 | 62 | Handouts shareable to map | ✅ | ❌ | ✅ | ✅ | `vttRealtime.shareHandout`. |
 | 63 | Wiki / lore browser | ✅ | ❌ | 🟡 | ✅ | `Wiki tab` on campaign detail. |
 | **Realtime & multiplayer** |
@@ -226,7 +226,7 @@ These items are evidence-backed, ranked by user-visible severity:
 | R11 | Architectural | Tokens | Single HP bar; no Mana / custom resource bar. | `VTTTokenInstance` shape in `@c:\Users\jjcal\Documents\solo-compendium\src\types\vtt.ts`. |
 | R12 | Architectural | AoE | Measurement templates are interactive only — cannot drop-and-pin. | `VTTEnhanced.tsx:2253-2270` |
 | R13 | Architectural | Audio | No playlist UI or queue / crossfade. | `useVTTAudio` + `AudioManager` are single-track at a time. |
-| R14 | Architectural | Combat | No initiative auto-roll for monsters; no targeting click-to-resolve. | InitiativeTracker manual entry only. |
+| R14 | Architectural | Combat | No initiative auto-roll for anomalies; no targeting click-to-resolve. | InitiativeTracker manual entry only. |
 | R15 | Reuse | Page consolidation | `WardenToolsPanel` embeds the same NPCGenerator/RiftGenerator/TreasureGenerator/RandomEvent/Relic/Map/Art/Directives the standalone routes serve, via `lazy()`. Working but duplicates glue. | `WardenToolsPanel.tsx:67-102` |
 
 ## Conclusion

@@ -1,5 +1,5 @@
 /* ============================================================
-   SA Warden Command Center — Warden (Warden) Tools
+   SA Warden Command Center — Warden Tools
    Orange/red tactical HUD aesthetic
    ============================================================ */
 
@@ -243,7 +243,7 @@
 	color: hsl(var(--foreground));
 }
 
-/* Warden (Warden) Tool Cards */
+/* Warden Tool Cards */
 .tools-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));

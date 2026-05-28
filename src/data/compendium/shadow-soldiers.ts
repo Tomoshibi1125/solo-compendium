@@ -95,7 +95,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			current_owner: "The Umbral Regent",
 			prior_owners: ["The slain Stonewarden of the Frozen Gate"],
 		},
-		tags: ["umbral-legion", "umbral", "tank", "a-rank", "undead-construct"],
+		tags: ["umbral-legion", "umbral", "tank", "a-rank", "anomaly-construct"],
 		source_book: "Rift Ascendant Canon",
 		rarity: "very_rare",
 		hp: 120,
@@ -125,7 +125,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 					"While above half HP, resistance to all damage and immune to forced movement ≤20 ft.",
 			},
 			{
-				name: "Undead Fortitude",
+				name: "Anomaly Fortitude",
 				description:
 					"When reduced to 0 HP by non-radiant damage, DC 14 Vitality save. Success: drop to 1 HP instead.",
 			},
@@ -199,12 +199,18 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			history:
 				"Deployed exclusively for high-risk eliminations. Guild intelligence has catalogued exactly three confirmed sightings—none of whom survived to report twice.",
 			curse:
-				"Leaves trace shadow-residue on kills detectable by sense-type Hunters (DC 20 Perception).",
+				"Leaves trace shadow-residue on kills detectable by sense-type Ascendants (DC 20 Perception).",
 			personality: "Purposeful and absolute. Executes without hesitation.",
 			current_owner: "The Umbral Regent",
 			prior_owners: ["The Shade of Gate Zero"],
 		},
-		tags: ["umbral-legion", "umbral", "assassin", "a-rank", "undead-construct"],
+		tags: [
+			"umbral-legion",
+			"umbral",
+			"assassin",
+			"a-rank",
+			"anomaly-construct",
+		],
 		source_book: "Rift Ascendant Canon",
 		rarity: "very_rare",
 		hp: 98,
@@ -281,7 +287,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			action_type: "Action",
 			frequency: "Per encounter",
 			lattice_interaction:
-				"Mana resonance cloaking — disrupts detection-type Hunter abilities within 30 ft.",
+				"Mana resonance cloaking — disrupts detection-type Ascendant abilities within 30 ft.",
 		},
 		limitations: {
 			requires_attunement: false,
@@ -303,7 +309,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"It casts with the memory of a mind that no longer exists. The spells are perfectly executed—and entirely hollow.",
 		lore: {
 			origin:
-				"Shaped from the echo-mana of a slain B-Rank Sorcerer anomaly from the Resonance Gate.",
+				"Shaped from the echo-mana of a slain B-Rank Esper anomaly from the Resonance Gate.",
 			history:
 				"Developed after the Regent identified the tactical gap of lacking ranged magical firepower in early Legion deployments.",
 			curse:
@@ -311,9 +317,9 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			personality:
 				"Cold and mechanical. Selects targets using pure threat-assessment logic.",
 			current_owner: "The Umbral Regent",
-			prior_owners: ["The Echo-Sorcerer of the Resonance Gate"],
+			prior_owners: ["The Echo-Esper of the Resonance Gate"],
 		},
-		tags: ["umbral-legion", "umbral", "mage", "b-rank", "undead-construct"],
+		tags: ["umbral-legion", "umbral", "mage", "b-rank", "anomaly-construct"],
 		source_book: "Rift Ascendant Canon",
 		rarity: "rare",
 		hp: 66,
@@ -418,7 +424,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"archer",
 			"ranged",
 			"b-rank",
-			"undead-construct",
+			"anomaly-construct",
 		],
 		source_book: "Rift Ascendant Canon",
 		rarity: "rare",
@@ -517,7 +523,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			current_owner: "The Umbral Regent",
 			prior_owners: ["Various C-Rank anomalies"],
 		},
-		tags: ["umbral-legion", "umbral", "warrior", "c-rank", "undead-construct"],
+		tags: ["umbral-legion", "umbral", "warrior", "c-rank", "anomaly-construct"],
 		source_book: "Rift Ascendant Canon",
 		rarity: "uncommon",
 		hp: 45,
@@ -612,7 +618,7 @@ export const shadowSoldiers: ShadowSoldier[] = [
 			"scout",
 			"recon",
 			"c-rank",
-			"undead-construct",
+			"anomaly-construct",
 		],
 		source_book: "Rift Ascendant Canon",
 		rarity: "uncommon",

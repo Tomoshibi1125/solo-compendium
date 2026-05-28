@@ -51,7 +51,7 @@ const BOOLEAN_TOGGLES: Toggle[] = [
 	},
 	{
 		key: "allowPlayerMonsterInteract",
-		label: "Allow Ascendants to move monster tokens",
+		label: "Allow Ascendants to move anomaly tokens",
 		description:
 			"When OFF, players can only drag their own character tokens. When ON, any player can move any token (DDB default is ON).",
 		type: "boolean",
@@ -152,6 +152,57 @@ export function GameSettingsDrawer({
 								</button>
 							))}
 						</div>
+					</div>
+
+					{/* Misty Pearl B3 — Scene transitions */}
+					<div className="pt-3 border-t border-border/40">
+						<div className="flex items-start justify-between gap-3">
+							<div className="flex-1 min-w-0">
+								<Label
+									htmlFor="vtt-setting-scene-transitions"
+									className="text-sm font-medium"
+								>
+									Scene transitions
+								</Label>
+								<p className="mt-1 text-xs text-foreground/60">
+									When switching scenes, fade through a Bureau Field Brief
+									title card (Foundry v14 parity). Respects reduced-motion.
+								</p>
+							</div>
+							<Switch
+								id="vtt-setting-scene-transitions"
+								checked={settings.sceneTransitionEnabled}
+								onCheckedChange={(checked) =>
+									onChange({ sceneTransitionEnabled: checked })
+								}
+								data-testid="vtt-setting-scene-transitions"
+							/>
+						</div>
+						{settings.sceneTransitionEnabled && (
+							<div className="mt-3">
+								<Label
+									htmlFor="vtt-setting-scene-transition-duration"
+									className="text-xs"
+								>
+									Duration: {(settings.sceneTransitionDurationMs / 1000).toFixed(1)}
+									s
+								</Label>
+								<input
+									id="vtt-setting-scene-transition-duration"
+									type="range"
+									min={600}
+									max={6000}
+									step={100}
+									value={settings.sceneTransitionDurationMs}
+									onChange={(e) =>
+										onChange({
+											sceneTransitionDurationMs: Number(e.target.value) || 2200,
+										})
+									}
+									className="mt-1 w-full accent-primary"
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 			</SheetContent>

@@ -212,16 +212,16 @@ export const fightingStyleFeats: CompendiumFeat[] = [
 	},
 	{
 		id: "fs-anomaly-hunter",
-		name: "Anomaly Hunter",
-		display_name: "Anomaly Hunter",
+		name: "Anomaly Ascendant",
+		display_name: "Anomaly Ascendant",
 		description:
-			"You deal an extra 1d4 damage against aberrations, monstrosities, and creatures with the gate-born tag. You have advantage on Intelligence checks to recall information about gate-born anomalies. Your Aetheric-Sight highlights anatomical vulnerabilities specific to non-humanoid physiology.",
-		flavor: "You've killed enough gate monsters to know where they break.",
+			"You deal an extra 1d4 damage against anomaly, monstrosities, and creatures with the gate-born tag. You have advantage on Intelligence checks to recall information about gate-born anomalies. Your Aetheric-Sight highlights anatomical vulnerabilities specific to non-humanoid physiology.",
+		flavor: "You've killed enough gate anomalies to know where they break.",
 		tags: ["awakened", "feat", "fighting-style", "offensive"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "+1d4 damage vs. aberrations/monstrosities/gate-born.",
+			primary: "+1d4 damage vs. anomaly/monstrosities/gate-born.",
 			secondary: "Advantage on recall checks about anomalies.",
 		},
 		repeatable: false,
@@ -364,7 +364,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Documented in exactly four Hunters in Bureau history — each classified as an extinction-level strategic asset.",
+			"Documented in exactly four Ascendants in Bureau history — each classified as an extinction-level strategic asset.",
 		theme_tags: ["zenith", "absolute", "authority"],
 	},
 	{
@@ -464,7 +464,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Bureau longevity studies revealed that S-Rank Hunters over the age of 80 showed biological markers identical to 25-year-olds.",
+			"Bureau longevity studies revealed that S-Rank Ascendants over the age of 80 showed biological markers identical to 25-year-olds.",
 		theme_tags: ["zenith", "immortality", "endurance"],
 	},
 	{
@@ -564,7 +564,7 @@ export const zenithBoons: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"The Bureau reclassified the phenomenon from 'anomalous re-measurement' to 'Double Awakening' after a D-Rank Hunter's second measurement registered as S-Rank.",
+			"The Bureau reclassified the phenomenon from 'anomalous re-measurement' to 'Double Awakening' after a D-Rank Ascendant's second measurement registered as S-Rank.",
 		theme_tags: ["zenith", "double-awakening", "transcendence"],
 	},
 ];

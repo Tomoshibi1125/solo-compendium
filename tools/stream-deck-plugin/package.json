@@ -1,0 +1,13 @@
+{
+	"name": "rift-ascendant-comm-deck",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Elgato Stream Deck plugin for the Rift Ascendant VTT (Misty Pearl H3).",
+	"type": "module",
+	"scripts": {
+		"build": "tsc plugin.ts --target es2020 --module umd --outFile plugin.js --skipLibCheck"
+	},
+	"devDependencies": {
+		"typescript": "^5.9.3"
+	}
+}

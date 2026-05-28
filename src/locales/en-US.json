@@ -1,0 +1,63 @@
+{
+	"glossary": {
+		"bureau": "Bureau",
+		"warden": "Warden",
+		"ascendant": "Ascendant",
+		"rift": "Rift",
+		"anomaly": "Anomaly",
+		"stratum": "Stratum",
+		"sovereign": "Sovereign",
+		"regent": "Regent",
+		"gate": "Gate",
+		"commnet": "Comm-Net",
+		"system": "System"
+	},
+	"common": {
+		"save": "Save",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"close": "Close",
+		"loading": "Loading…",
+		"error_generic": "Something went wrong. Try again.",
+		"copy": "Copy",
+		"link_copied": "Link copied"
+	},
+	"vtt": {
+		"scene": {
+			"new": "New scene",
+			"none": "No active Rift detected",
+			"transitioning": "Transitioning…",
+			"strata": "Stratum"
+		},
+		"commnet": {
+			"title": "Bureau Comm-Net",
+			"connecting": "Negotiating uplink…",
+			"cloak": "Cloak Channel",
+			"open_channel": "Open Channel",
+			"mask_identity": "Mask Identity",
+			"reveal_identity": "Reveal Identity",
+			"push_burst_hint": "Hold Space to push burst.",
+			"offline": "Uplink offline. Enable from the Warden's session controls."
+		},
+		"region": {
+			"dialog_title": "Rift Region",
+			"dialog_description": "Configure a bounded Anomaly field on the active scene."
+		}
+	},
+	"campaign": {
+		"calendar": {
+			"title": "Bureau Field Calendar",
+			"standard_bureau_time": "Standard Bureau Time",
+			"rift_cycle": "Rift Cycle",
+			"short_rest": "Short rest",
+			"long_rest": "Long rest",
+			"watch": "Watch",
+			"resolve_surge": "Resolve surge"
+		},
+		"field_roster": {
+			"title": "BUREAU FIELD ROSTER",
+			"no_posts": "NO OPEN POSTS",
+			"empty": "No Warden has listed an open campaign right now."
+		}
+	}
+}

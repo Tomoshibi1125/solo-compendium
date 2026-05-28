@@ -45,11 +45,11 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		kind: "spell",
 		sourceTokens: [],
 		entryNames: [
-			"Darkness",
-			"Darkvision",
-			"Pass without Trace",
-			"Silence",
-			"Minor Illusion",
+			"Fade to Shadow",
+			"Phantom Step",
+			"Echolocation Pulse",
+			"Mana Lens",
+			"Misty Blink",
 		],
 		maxLevel: 2,
 	},
@@ -59,7 +59,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 2,
 		kind: "spell",
 		sourceTokens: [],
-		entryNames: ["Minor Illusion"],
+		entryNames: ["Mana Lens"],
 		maxLevel: 0,
 	},
 	{
@@ -69,11 +69,11 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		kind: "spell",
 		sourceTokens: [],
 		entryNames: [
-			"Arms of Hadar",
-			"Calm Emotions",
-			"Hunger of Hadar",
-			"Evard's Black Tentacles",
-			"Telekinesis",
+			"Entropic Grasp",
+			"Mind Spike",
+			"Psychic Barrier",
+			"Kinetic Burst",
+			"Psionic Shockwave",
 		],
 		maxLevel: 5,
 	},
@@ -283,7 +283,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 	},
 	{
 		jobName: "Stalker",
-		pathName: "Path of the Umbral Hunter",
+		pathName: "Path of the Umbral Ascendant",
 		level: 3,
 		kind: "power",
 		sourceTokens: [],
@@ -346,7 +346,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 	},
 	{
 		jobName: "Stalker",
-		pathName: "Path of the Apex Hunter",
+		pathName: "Path of the Apex Ascendant",
 		level: 1,
 		kind: "spell",
 		sourceTokens: [],
@@ -458,7 +458,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 3,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Adrenaline Surge"],
+		entryNames: ["Adrenaline Surge", "Dissonant Strike"],
 		progression: "base",
 	},
 	{
@@ -467,7 +467,25 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 3,
 		kind: "technique",
 		sourceTokens: [],
-		entryNames: ["Anchor Strike"],
+		entryNames: ["Anchor Strike", "Rhythmic Strike"],
+		progression: "base",
+	},
+	{
+		jobName: "Idol",
+		pathName: "Path of the Hypnotic Resonance",
+		level: 7,
+		kind: "power",
+		sourceTokens: [],
+		entryNames: ["Encore Performance"],
+		progression: "base",
+	},
+	{
+		jobName: "Idol",
+		pathName: "Path of the Blade Resonance",
+		level: 3,
+		kind: "technique",
+		sourceTokens: [],
+		entryNames: ["Resonance Slash"],
 		progression: "base",
 	},
 	{
@@ -539,7 +557,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 5,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Hunter's Judgment", "Parallel Processing"],
+		entryNames: ["Ascendant's Judgment", "Parallel Processing"],
 		progression: "base",
 	},
 	{
@@ -656,7 +674,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 9,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Absolute Sanctum", "Adamantine Shell"],
+		entryNames: ["Absolute Sanctum", "Lattice-Stable Composite Shell"],
 		progression: "base",
 	},
 	{
@@ -719,7 +737,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 9,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Adamantine Shell", "Arcane Charm"],
+		entryNames: ["Lattice-Stable Composite Shell", "Arcane Charm"],
 		progression: "base",
 	},
 	{
@@ -1628,7 +1646,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 9,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Absolute Smite", "Adamantine Shell"],
+		entryNames: ["Absolute Smite", "Lattice-Stable Composite Shell"],
 		progression: "base",
 	},
 	{
@@ -1682,7 +1700,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 9,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Adamantine Shell", "Annihilation Rush"],
+		entryNames: ["Lattice-Stable Composite Shell", "Annihilation Rush"],
 		progression: "base",
 	},
 	{
@@ -1875,11 +1893,20 @@ export function getPathGrantMaxAbilityLevel(
 	if (grant.progression === "full") {
 		return getMaxAbilityLevelForJobAtLevel("Mage", characterLevel, "spell");
 	}
-	return getMaxAbilityLevelForJobAtLevel(
+	const base = getMaxAbilityLevelForJobAtLevel(
 		grant.jobName,
 		characterLevel,
 		grant.kind === "technique" ? "power" : grant.kind,
 	);
+	// When a path grant explicitly names entries (entryNames-based hybrid grant)
+	// but the granted job can't naturally learn this ability kind (e.g., Idol on
+	// Path of the Dance Resonance granting powers), the base progression returns
+	// 0 and would block every entry. Fall back to the full-caster progression so
+	// the named entries actually unlock at the right character level.
+	if (base === 0 && grant.entryNames?.length) {
+		return getMaxAbilityLevelForJobAtLevel("Mage", characterLevel, "spell");
+	}
+	return base;
 }
 
 export function getActivePathAbilityGrants(options: {
@@ -1952,4 +1979,33 @@ export function normalizePathAbilityValue(
 	value: string | null | undefined,
 ): string {
 	return normalizeJobAccessToken(value);
+}
+
+/**
+ * True iff the named entry is exclusively path-granted for the given job —
+ * i.e., the entry's name appears in the `entryNames` list of at least one
+ * PATH_ABILITY_GRANTS entry whose jobName matches. Such entries must NOT
+ * be naturally learnable by the job; access is gated on selecting the path.
+ *
+ * Use this to exclude path-exclusive entries from the base eligibility
+ * path in `isCanonicalSpellLearnable`/`isCanonicalPowerLearnable`/
+ * `isCanonicalTechniqueLearnable` when no matching path is selected.
+ */
+export function isEntryPathExclusiveForJob(
+	entryName: string | null | undefined,
+	jobName: string | null | undefined,
+	kind: PathAbilityKind,
+): boolean {
+	if (!entryName || !jobName) return false;
+	const normalizedEntry = normalizePathAbilityValue(entryName);
+	if (!normalizedEntry) return false;
+	const normalizedJob = normalizeJobAccessToken(jobName);
+	return PATH_ABILITY_GRANTS.some(
+		(grant) =>
+			grant.kind === kind &&
+			normalizeJobAccessToken(grant.jobName) === normalizedJob &&
+			grant.entryNames?.some(
+				(name) => normalizePathAbilityValue(name) === normalizedEntry,
+			),
+	);
 }

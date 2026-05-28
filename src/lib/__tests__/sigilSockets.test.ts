@@ -141,7 +141,7 @@ describe("sigil socket rarity ladder", () => {
 				{
 					item_type: "armor",
 					properties: [],
-					name: "Hunter Helm",
+					name: "Ascendant Helm",
 				},
 			),
 		).toBe(true);

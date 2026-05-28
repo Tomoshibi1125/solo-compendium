@@ -3,6 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Brain, Loader2, Send, Sparkles, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { PopOutButton } from "@/components/ui/PopOutButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -137,11 +138,20 @@ export function CampaignChat({ campaignId }: CampaignChatProps) {
 						AI Warden (Auto-Narrate)
 					</Label>
 				</div>
-				<Switch
-					id="auto-narrate"
-					checked={isAutoNarrating}
-					onCheckedChange={setIsAutoNarrating}
-				/>
+				<div className="flex items-center gap-1">
+					<Switch
+						id="auto-narrate"
+						checked={isAutoNarrating}
+						onCheckedChange={setIsAutoNarrating}
+					/>
+					{/* Misty Pearl B2 — pop chat out into a separate window */}
+					<PopOutButton
+						name={`campaign-chat-${campaignId}`}
+						path={`/campaigns/${campaignId}?tab=chat`}
+						label="Pop out campaign chat"
+						data-testid="campaign-chat-popout"
+					/>
+				</div>
 			</div>
 			<ScrollArea className="flex-1 pr-4">
 				<div className="space-y-2">

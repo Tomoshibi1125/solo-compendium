@@ -16,6 +16,22 @@ export interface CharacterSenses {
 	passivePerception: number;
 	passiveInvestigation: number;
 	passiveInsight: number;
+	passiveStealth: number;
+}
+
+/**
+ * Canonical formula for all passive scores.
+ *  passive = 10 + skill modifier (+ optional flat bonus such as Observant +5)
+ *
+ * Per SRD 5e + DDB behavior: a passive score is the equivalent of taking a
+ * 10 on the skill check, so any modifier that applies to the active check
+ * (ability mod + proficiency + expertise + feat bonuses) applies here too.
+ */
+export function computePassiveScore(
+	skillModifier: number,
+	flatBonus: number = 0,
+): number {
+	return 10 + skillModifier + flatBonus;
 }
 
 interface SenseSource {
@@ -104,6 +120,9 @@ export function computeSenses(
 	insightProficient: boolean,
 	perceptionExpertise: boolean = false,
 	observantFeat: boolean = false,
+	dexterityModifier: number = 0,
+	stealthProficient: boolean = false,
+	stealthExpertise: boolean = false,
 ): CharacterSenses {
 	const allSources: SenseSource[] = [...equipmentSenses, ...spellSenses];
 
@@ -175,20 +194,32 @@ export function computeSenses(
 		...allSources.filter((s) => s.sense === "truesight").map((s) => s.range),
 	);
 
-	// Passive scores: 10 + modifier + proficiency (if proficient) + expertise (if expert)
-	const perceptionProf = perceptionProficient ? proficiencyBonus : 0;
-	const perceptionExp = perceptionExpertise ? proficiencyBonus : 0; // expertise adds prof again
+	// Passive scores: 10 + ability modifier + proficiency (if proficient) +
+	// expertise (if expert) + Observant +5 (Perception & Investigation only).
+	// Matches SRD 5e + DDB behavior exactly.
 	const observantBonus = observantFeat ? 5 : 0;
 
-	const passivePerception =
-		10 + wisdomModifier + perceptionProf + perceptionExp + observantBonus;
-	const passiveInvestigation =
-		10 +
+	const perceptionMod =
+		wisdomModifier +
+		(perceptionProficient ? proficiencyBonus : 0) +
+		(perceptionExpertise ? proficiencyBonus : 0);
+	const investigationMod =
 		intelligenceModifier +
-		(investigationProficient ? proficiencyBonus : 0) +
-		observantBonus;
-	const passiveInsight =
-		10 + wisdomModifier + (insightProficient ? proficiencyBonus : 0);
+		(investigationProficient ? proficiencyBonus : 0);
+	const insightMod =
+		wisdomModifier + (insightProficient ? proficiencyBonus : 0);
+	const stealthMod =
+		dexterityModifier +
+		(stealthProficient ? proficiencyBonus : 0) +
+		(stealthExpertise ? proficiencyBonus : 0);
+
+	const passivePerception = computePassiveScore(perceptionMod, observantBonus);
+	const passiveInvestigation = computePassiveScore(
+		investigationMod,
+		observantBonus,
+	);
+	const passiveInsight = computePassiveScore(insightMod);
+	const passiveStealth = computePassiveScore(stealthMod);
 
 	return {
 		darkvision,
@@ -198,6 +229,7 @@ export function computeSenses(
 		passivePerception,
 		passiveInvestigation,
 		passiveInsight,
+		passiveStealth,
 	};
 }
 
@@ -212,5 +244,8 @@ export function formatSenses(senses: CharacterSenses): string {
 		parts.push(`Tremorsense ${senses.tremorsense} ft.`);
 	if (senses.truesight > 0) parts.push(`Truesight ${senses.truesight} ft.`);
 	parts.push(`Passive Perception ${senses.passivePerception}`);
+	parts.push(`Passive Investigation ${senses.passiveInvestigation}`);
+	parts.push(`Passive Insight ${senses.passiveInsight}`);
+	parts.push(`Passive Stealth ${senses.passiveStealth}`);
 	return parts.join(", ");
 }

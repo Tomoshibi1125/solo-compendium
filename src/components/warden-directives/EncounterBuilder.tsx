@@ -422,7 +422,7 @@ export function EncounterBuilder({
 						<div className="grid grid-cols-2 gap-4">
 							<div className="space-y-2">
 								<Label className="text-[10px] uppercase tracking-widest text-muted-foreground">
-									Hunter Rating
+									Ascendant Rating
 								</Label>
 								<Input
 									type="number"

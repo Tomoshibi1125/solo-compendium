@@ -9,6 +9,7 @@ import {
 	RiftHeading,
 } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
+import { PopOutButton } from "@/components/ui/PopOutButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -351,18 +352,28 @@ const VTTJournal = () => {
 		<Layout>
 			<div className="container mx-auto px-4 py-8 max-w-7xl">
 				<div className="mb-6">
-					<Button
-						variant="ghost"
-						onClick={() =>
-							navigate(
-								campaignId ? `/campaigns/${campaignId}` : "/warden-directives",
-							)
-						}
-						className="mb-4"
-					>
-						<ArrowLeft className="w-4 h-4 mr-2" />
-						{campaignId ? "Back to Campaign" : "Back to Warden Tools"}
-					</Button>
+					<div className="flex items-center justify-between mb-4">
+						<Button
+							variant="ghost"
+							onClick={() =>
+								navigate(
+									campaignId ? `/campaigns/${campaignId}` : "/warden-directives",
+								)
+							}
+						>
+							<ArrowLeft className="w-4 h-4 mr-2" />
+							{campaignId ? "Back to Campaign" : "Back to Warden Tools"}
+						</Button>
+						{/* Misty Pearl B2 — pop the System Archives into a separate window */}
+						{campaignId && (
+							<PopOutButton
+								name={`vtt-journal-${campaignId}`}
+								path={`/campaigns/${campaignId}/vtt-journal`}
+								label="Pop out System Archives"
+								data-testid="vtt-journal-popout"
+							/>
+						)}
+					</div>
 					<RiftHeading
 						level={1}
 						variant="sovereign"

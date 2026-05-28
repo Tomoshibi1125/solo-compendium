@@ -34,7 +34,8 @@ export * from "./data/compendium/regentPortraits";
 export * from "./data/compendium/rollableTables";
 export * from "./data/compendium/sandbox/sandbox-sessions";
 export * from "./data/compendium/shadow-soldiers";
-export * from "./data/compendium/staticDataProvider";
+// staticDataProvider deleted — was an orphan duplicate of providers/index.ts
+// missing rollableTables. Canonical source is providers/index.ts. (May 2026 audit M10)
 export * from "./data/compendium/wardenToolConfig";
 export * from "./data/toolCatalogs";
 // --- Hooks ---

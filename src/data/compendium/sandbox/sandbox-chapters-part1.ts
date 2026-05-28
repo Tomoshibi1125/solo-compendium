@@ -358,7 +358,7 @@ Active bounties posted by Guildmaster Orin:
 | Bounty | Target | Reward |
 |--------|--------|--------|
 | Gate Sweep | Clear any unassigned Gate | 500 Credits + core rights |
-| Cult Hunter | Kill 5 Awoko Cult members | 1,000 Credits |
+| Cult Ascendant | Kill 5 Awoko Cult members | 1,000 Credits |
 | The Big Score | Retrieve a B-Rank+ Relic from any Gate | 5,000 Credits |
 | Specimen Capture | Bring a live C-Rank Anomaly to Mother Rust | 2,000 Credits |
 

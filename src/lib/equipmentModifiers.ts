@@ -33,6 +33,50 @@ function getDexCapFromArmorType(armorType: string | undefined): number | null {
 	return null;
 }
 
+/**
+ * Infer the armor type from a list of item properties or armor_type metadata.
+ *
+ * Returns one of: "light" | "medium" | "heavy" | "shield" | "unarmored" | null.
+ * Used by:
+ *  - Equipment step (auto-binds AC formula type when armor is equipped)
+ *  - Canonical AC engine (acFormulas.ts) for armorType→DEX cap mapping
+ *
+ * Accepts either:
+ *  - A direct armor_type string (canonical compendium field), or
+ *  - A list of property strings to parse for type keywords.
+ *
+ * Returns `null` only when no armor classification can be inferred.
+ */
+export type InferredArmorType =
+	| "light"
+	| "medium"
+	| "heavy"
+	| "shield"
+	| "unarmored";
+
+export function inferArmorType(
+	input: string | string[] | null | undefined,
+): InferredArmorType | null {
+	if (!input) return null;
+
+	const tokens =
+		typeof input === "string"
+			? [input]
+			: input.filter((p): p is string => typeof p === "string");
+
+	for (const raw of tokens) {
+		const t = raw.trim().toLowerCase();
+		if (!t) continue;
+		if (t === "shield" || t.includes("shield")) return "shield";
+		if (t === "light" || t.includes("light armor")) return "light";
+		if (t === "medium" || t.includes("medium armor")) return "medium";
+		if (t === "heavy" || t.includes("heavy armor")) return "heavy";
+		if (t === "unarmored" || t === "none") return "unarmored";
+	}
+
+	return null;
+}
+
 function isArmorItem(properties: string[]): boolean {
 	return properties.some((p) => {
 		const lower = p.toLowerCase();
@@ -393,6 +437,15 @@ export function applyEquipmentModifiers(
 		.find((props) => props.some((p) => p.toLowerCase() === "shield"));
 
 	let armorClass = baseAC;
+
+	// NOTE (P0.1 canonical AC):
+	// This block remains for legacy callers that still read
+	// `equipmentMods.armorClass` directly. The canonical AC value shown on
+	// the character sheet comes from `useArmorClass.calculateAC` →
+	// `acFormulas.calculateBestAC`, which handles RA-specific formulas
+	// (Berserker / Striker Unarmored Defense, Mage Armor) and picks the
+	// highest eligible formula. New consumers should ignore this field
+	// and read `armorClassDetail.total` from the derived-stats hook.
 
 	// If armor is equipped, compute 5e AC from its base + Dex (with cap by armor type).
 	// Keep unarmored baseline (10 + Dex) when no armor is equipped.

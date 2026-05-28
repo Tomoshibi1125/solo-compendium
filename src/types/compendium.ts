@@ -277,6 +277,71 @@ export interface CompendiumAnomaly extends BaseCompendiumItem {
 	armor_class?: number;
 	hit_points?: number;
 	challenge_rating?: string | number;
+	/**
+	 * Q4 of Round 3 — universal taming substrate. When set, this anomaly
+	 * may be attempted as a tame target by any character. Path bonuses
+	 * (Pack Leader, Summoner, Contractor, Esper, Synchronist, Hive) layer
+	 * onto whoever ends up controlling it.
+	 */
+	tameable?: {
+		dc: number;
+		ability: "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
+		min_party_rank?: "D" | "C" | "B" | "A" | "S";
+		bond_initial?: number;
+		taming_steps?: string[];
+	};
+}
+
+// ──────────────────────────────────────────────────────────────────────
+// Vehicles & Mounts (Q4 of Round 3 — unified compendium type).
+// Mounts live in this same shape with `vehicle_type === "mount"` so the
+// UI splits them visually while persistence + browsing stay identical.
+// Bonded-anomaly mounts reference an existing CompendiumAnomaly via
+// `anomaly_id`; stats hydrate at runtime — no stat duplication.
+// ──────────────────────────────────────────────────────────────────────
+
+export interface CompendiumVehicleSpeed {
+	land?: number;
+	air?: number;
+	water?: number;
+	rift?: number;
+}
+
+export interface CompendiumVehicleCrewSeat {
+	id: string;
+	name: string; // "Rider", "Pilot", "Gunner", "Helmsman", "Lookout", "Operator"
+	required_proficiency?: string;
+	grants_actions?: string[];
+}
+
+export interface CompendiumVehicleAbility {
+	name: string;
+	description: string;
+	action_type: string;
+}
+
+export interface CompendiumVehicle extends BaseCompendiumItem {
+	vehicle_type: "mount" | "land" | "air" | "water" | "rift";
+	size: "tiny" | "small" | "medium" | "large" | "huge" | "gargantuan";
+	speed: CompendiumVehicleSpeed;
+	armor_class: number;
+	hit_points: { max: number; damage_threshold?: number };
+	/** For mounts — rider + cargo limit. */
+	carry_capacity_lbs?: number;
+	/** For vessels — cargo-hold capacity. */
+	cargo_capacity_lbs?: number;
+	crew_positions?: CompendiumVehicleCrewSeat[];
+	abilities?: CompendiumVehicleAbility[];
+	/** True for mounts that require a bonding ritual or tame check. */
+	bonded?: boolean;
+	/**
+	 * When set, this mount is a thin overlay on an existing anomaly. The
+	 * runtime hydration pulls speed / abilities / stats from the linked
+	 * CompendiumAnomaly. Only meaningful when `vehicle_type === "mount"`.
+	 */
+	anomaly_id?: string;
+	rank?: string;
+	source_book?: string;
 }
 
 export interface CompendiumSpell extends BaseCompendiumItem {
@@ -295,6 +360,7 @@ export interface CompendiumSpell extends BaseCompendiumItem {
 		type: string;
 		ability: string;
 		damage: string;
+		damage_type?: string;
 	} | null;
 	activation?: CompendiumActivation | null;
 	higher_levels?: string | null;

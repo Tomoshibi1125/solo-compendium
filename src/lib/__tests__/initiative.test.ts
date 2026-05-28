@@ -61,7 +61,7 @@ describe("rollMonsterInitiative", () => {
 		expect(rolls).toHaveLength(0);
 	});
 
-	it("rolls only fresh monsters by default (initiative === 0)", () => {
+	it("rolls only fresh anomalies by default (initiative === 0)", () => {
 		const alreadyRolled: InitiativeCandidate = { ...goblin, initiative: 17 };
 		const rolls = rollMonsterInitiative([goblin, alreadyRolled], {
 			rng: seq(0.05, 0.95),
@@ -70,7 +70,7 @@ describe("rollMonsterInitiative", () => {
 		expect(rolls[0].combatantId).toBe("c-goblin");
 	});
 
-	it("re-rolls every monster when rerollAll is true", () => {
+	it("re-rolls every anomaly when rerollAll is true", () => {
 		const alreadyRolled: InitiativeCandidate = {
 			...lich,
 			id: "c-lich2",

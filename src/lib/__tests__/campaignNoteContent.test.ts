@@ -49,12 +49,12 @@ describe("campaignNoteContent", () => {
 
 	it("parses secret blocks into ordered segments", () => {
 		const segments = parseCampaignNoteSegments(
-			"Alpha\n[[secret:GM Only]]Bravo[[/secret]]\nCharlie",
+			"Alpha\n[[secret:Warden Only]]Bravo[[/secret]]\nCharlie",
 		);
 
 		expect(segments).toEqual([
 			{ kind: "text", content: "Alpha\n", id: "text-0" },
-			{ kind: "secret", label: "GM Only", content: "Bravo", id: "secret-1" },
+			{ kind: "secret", label: "Warden Only", content: "Bravo", id: "secret-1" },
 			{ kind: "text", content: "\nCharlie", id: "text-2" },
 		]);
 	});

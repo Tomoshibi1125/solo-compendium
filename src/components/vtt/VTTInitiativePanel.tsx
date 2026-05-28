@@ -21,6 +21,9 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PopOutButton } from "@/components/ui/PopOutButton";
+import { useLiveEncounterScaler } from "@/hooks/useLiveEncounterScaler";
+import { hooks } from "@/lib/hooks/registry";
 import { useToast } from "@/hooks/use-toast";
 import {
 	type Combatant as CombatantRow,
@@ -150,6 +153,9 @@ export function VTTInitiativePanel({
 	const autoRolledIdsRef = useRef<Set<string>>(new Set());
 	const lastAutoRollSessionIdRef = useRef<string | null | undefined>(undefined);
 
+	// Misty Pearl I5 — Bureau Field Calibration analyzer wires in here.
+	const { signal: scalerSignal, analyze: analyzeRound } = useLiveEncounterScaler();
+
 	// Auto-scroll active combatant into view when the turn advances.
 	useEffect(() => {
 		const list = listRef.current;
@@ -186,13 +192,61 @@ export function VTTInitiativePanel({
 		setNewInit("");
 	}, [campaignId, activeSessionId, newName, newInit, upsertCombatants]);
 
+	// Avoid an unused warning when the scaler signal is referenced via
+	// the toast above but not via dependency wiring.
+	void scalerSignal;
+
 	const nextTurn = useCallback(() => {
 		if (!activeSessionId) return;
 		const nextIdx = (currentTurn + 1) % Math.max(sorted.length, 1);
 		const nextRound = nextIdx === 0 ? round + 1 : round;
 
+		// Misty Pearl B1 — emit turn-end so `useTokenEffectEngine` ticks
+		// `rounds`-kind effects on the actor whose turn just ended.
+		const actorEntry = sorted[currentTurn];
+		hooks.emit("combat:turnEnd", {
+			sessionId: activeSessionId,
+			round,
+			actorTokenId: actorEntry?.id ?? null,
+		});
+
 		// Auto-decrement condition durations when a new round starts (Roll20 parity)
 		if (nextIdx === 0 && sorted.length > 0) {
+			// Misty Pearl B1 + I5 — emit round-end on the Bureau Directive
+			// Bus and run the Bureau Field Calibration analyzer.
+			hooks.emit("combat:roundEnd", {
+				sessionId: activeSessionId,
+				round,
+			});
+			if (isWarden) {
+				const partyEntries = sorted.filter((entry) => entry.isHunter);
+				const enemyEntries = sorted.filter((entry) => !entry.isHunter);
+				const result = analyzeRound({
+					sessionId: activeSessionId,
+					round,
+					combatants: [
+						...partyEntries.map((entry) => ({
+							id: entry.id,
+							side: "party" as const,
+							hp: entry.hp ?? 0,
+							maxHp: entry.maxHp ?? entry.hp ?? 1,
+						})),
+						...enemyEntries.map((entry) => ({
+							id: entry.id,
+							side: "enemy" as const,
+							hp: entry.hp ?? 0,
+							maxHp: entry.maxHp ?? entry.hp ?? 1,
+						})),
+					],
+				});
+				if (result.shouldRecommend) {
+					toast({
+						title: `Bureau Field Calibration · ${result.band}`,
+						description: result.recommendation,
+					});
+				}
+			}
+
 			const updatedCombatants = sorted
 				.filter((entry) =>
 					entry.conditions.some(
@@ -250,6 +304,9 @@ export function VTTInitiativePanel({
 		updateSession,
 		ascendantTools,
 		upsertCombatants,
+		analyzeRound,
+		isWarden,
+		toast,
 	]);
 
 	const resetCombat = useCallback(() => {
@@ -262,7 +319,7 @@ export function VTTInitiativePanel({
 	}, [campaignId, activeSessionId, updateSession]);
 
 	// P1-6: shared path for both the auto-roll effect (first-sight only)
-	// and the Re-roll All button (forces every monster).
+	// and the Re-roll All button (forces every anomaly).
 	const rollMonsters = useCallback(
 		(rerollAll: boolean) => {
 			if (!activeSessionId || !isWarden) return;
@@ -307,8 +364,8 @@ export function VTTInitiativePanel({
 			});
 			if (rerollAll) {
 				toast({
-					title: "Monster initiative re-rolled",
-					description: `Rolled ${rolls.length} monster${rolls.length === 1 ? "" : "s"} (1d20 + Dex).`,
+					title: "Anomaly initiative re-rolled",
+					description: `Rolled ${rolls.length} anomaly${rolls.length === 1 ? "" : "s"} (1d20 + Dex).`,
 				});
 			}
 		},
@@ -322,7 +379,7 @@ export function VTTInitiativePanel({
 		],
 	);
 
-	// Auto-roll effect: fires when new monster combatants arrive with no
+	// Auto-roll effect: fires when new anomaly combatants arrive with no
 	// initiative set. Uses the ref-based dedupe so refetches don't trigger
 	// another roll. Warden-only.
 	useEffect(() => {
@@ -339,7 +396,7 @@ export function VTTInitiativePanel({
 	}, [activeSessionId, combatants, isWarden, rollMonsters]);
 
 	// Reset the dedupe set whenever the combat session changes so a new
-	// encounter auto-rolls its fresh monsters.
+	// encounter auto-rolls its fresh anomalies.
 	useEffect(() => {
 		if (lastAutoRollSessionIdRef.current === activeSessionId) return;
 		autoRolledIdsRef.current = new Set();
@@ -422,6 +479,13 @@ export function VTTInitiativePanel({
 					Round {round}
 				</span>
 				<div className="flex gap-1">
+					{/* Misty Pearl B2 — pop out into a separate window */}
+					<PopOutButton
+						name={`vtt-initiative-${campaignId}`}
+						path={`/warden-directives/initiative-tracker?campaignId=${campaignId}`}
+						label="Pop out initiative tracker"
+						data-testid="vtt-initiative-popout"
+					/>
 					{isWarden && (
 						<Button
 							variant="ghost"
@@ -429,8 +493,8 @@ export function VTTInitiativePanel({
 							className="h-8 w-8"
 							onClick={() => rollMonsters(true)}
 							disabled={!combatants.some((c) => !c.isHunter)}
-							title="Re-roll all monster initiative (1d20 + Dex)"
-							aria-label="Re-roll all monster initiative"
+							title="Re-roll all anomaly initiative (1d20 + Dex)"
+							aria-label="Re-roll all anomaly initiative"
 							data-testid="vtt-initiative-reroll-monsters"
 						>
 							<Dices className="h-4 w-4" />

@@ -1,0 +1,1372 @@
+[
+  {
+    "id": "shadow-step",
+    "name": "Shadow Step",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-1-4-fury-surge",
+    "name": "Fury Surge",
+    "currentClasses": [
+      "Berserker",
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-2-5-crimson-howl",
+    "name": "Crimson Howl",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-3-6-rupture-break",
+    "name": "Rupture Break",
+    "currentClasses": [
+      "Berserker",
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-1-7-shadow-strike",
+    "name": "Shadow Strike",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-2-8-phantom-lunge",
+    "name": "Phantom Lunge",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-3-9-lethal-precision",
+    "name": "Lethal Precision",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker",
+      "Technomancer"
+    ],
+    "action": "base-trim"
+  },
+  {
+    "id": "power-sup-1-10-kinetic-rush",
+    "name": "Kinetic Rush",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Destroyer",
+      "Striker"
+    ],
+    "action": "striker"
+  },
+  {
+    "id": "power-sup-2-11-nerve-gate-cascade",
+    "name": "Nerve Gate Cascade",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "power-sup-1-13-radiant-intercept",
+    "name": "Radiant Intercept",
+    "currentClasses": [
+      "Berserker",
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-2-14-oath-purge",
+    "name": "Oath Purge",
+    "currentClasses": [
+      "Assassin",
+      "Holy Knight",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-3-15-divine-bastion",
+    "name": "Divine Bastion",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-1-19-prey-lock",
+    "name": "Prey Lock",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "power-sup-1-26-cursed-blade-edge",
+    "name": "Cursed Blade Edge",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker",
+      "Technomancer"
+    ],
+    "action": "base-trim"
+  },
+  {
+    "id": "power-sup-2-27-pact-retaliation",
+    "name": "Pact Retaliation",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "power-sup-1-28-withering-touch",
+    "name": "Withering Touch",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-2-29-entropic-counter",
+    "name": "Entropic Counter",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker",
+      "Technomancer"
+    ],
+    "action": "base-trim"
+  },
+  {
+    "id": "power-sup-4-36-berserker-s-fury",
+    "name": "Berserker's Fury",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-4-38-velocity-barrage",
+    "name": "Velocity Barrage",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Destroyer",
+      "Striker"
+    ],
+    "action": "striker"
+  },
+  {
+    "id": "power-sup-4-39-crusader-s-judgment",
+    "name": "Crusader's Judgment",
+    "currentClasses": [
+      "Holy Knight",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-4-41-hunter-s-judgment",
+    "name": "Hunter's Judgment",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-5-42-lattice-stable composite-shell",
+    "name": "lattice-stable composite Shell",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "power-sup-5-44-phantom-army",
+    "name": "Phantom Army",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-5-48-apex-predator",
+    "name": "Apex Predator",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "power-sup-6-49-immovable-aegis",
+    "name": "Immovable Aegis",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-6-50-cataclysm-overload",
+    "name": "Cataclysm Overload",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-6-51-death-s-shadow",
+    "name": "Death's Shadow",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-8-57-nuclear-overload",
+    "name": "Nuclear Overload",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-8-58-reaper-s-sentence",
+    "name": "Reaper's Sentence",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker",
+      "Technomancer"
+    ],
+    "action": "base-trim"
+  },
+  {
+    "id": "power-sup-1-65-nerve-strike",
+    "name": "Nerve Strike",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Destroyer",
+      "Striker"
+    ],
+    "action": "striker"
+  },
+  {
+    "id": "power-sup-2-67-circuit-flare",
+    "name": "Circuit Flare",
+    "currentClasses": [
+      "Holy Knight",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "power-sup-2-69-prey-sense",
+    "name": "Prey Sense",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "power-sup-3-74-berserker-s-gambit",
+    "name": "Berserker's Gambit",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-3-75-phantom-blade-flurry",
+    "name": "Phantom Blade Flurry",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-3-77-covenant-aegis",
+    "name": "Covenant Aegis",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-3-79-quarry-pindown",
+    "name": "Quarry Pindown",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "power-sup-4-81-blood-pact-escalation",
+    "name": "Blood Pact Escalation",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "power-sup-5-87-absolute-smite",
+    "name": "Absolute Smite",
+    "currentClasses": [
+      "Assassin",
+      "Holy Knight",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-6-89-idol-s-magnum-opus",
+    "name": "Idol's Magnum Opus",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "idol"
+  },
+  {
+    "id": "power-sup-6-90-patron-s-embrace",
+    "name": "Patron's Embrace",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "power-sup-6-91-final-entropy",
+    "name": "Final Entropy",
+    "currentClasses": [
+      "Assassin",
+      "Revenant",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker",
+      "Technomancer"
+    ],
+    "action": "base-trim"
+  },
+  {
+    "id": "power-sup-6-92-quarry-annihilation",
+    "name": "Quarry Annihilation",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "power-sup-7-94-terminal-velocity",
+    "name": "Terminal Velocity",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Destroyer",
+      "Striker"
+    ],
+    "action": "striker"
+  },
+  {
+    "id": "power-sup-9-97-s-rank-smite",
+    "name": "S-Rank Smite",
+    "currentClasses": [
+      "Assassin",
+      "Holy Knight",
+      "Stalker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-9-99-predator-supremacy",
+    "name": "Predator Supremacy",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "power-sup-9-101-absolute-pact",
+    "name": "Absolute Pact",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "power-sup-2-104-phantom-decoy",
+    "name": "Phantom Decoy",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "power-sup-1-105-gate-reader",
+    "name": "Gate Reader",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "power-sup-5-114-radiant-martyr",
+    "name": "Radiant Martyr",
+    "currentClasses": [
+      "Holy Knight",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "power-sup-5-117-circuit-defibrillator",
+    "name": "Circuit Defibrillator",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "power-sup-7-122-patron-sacrifice",
+    "name": "Patron Sacrifice",
+    "currentClasses": [
+      "Berserker",
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "power-sup-8-124-berserker-s-last-stand",
+    "name": "Berserker's Last Stand",
+    "currentClasses": [
+      "Destroyer",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  },
+  {
+    "id": "power-sup-9-126-divine-mandate",
+    "name": "Divine Mandate",
+    "currentClasses": [
+      "Assassin",
+      "Destroyer",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-1-16-nerve-disruption",
+    "name": "Nerve Disruption",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Destroyer",
+      "Striker"
+    ],
+    "action": "striker"
+  },
+  {
+    "id": "tech-sup-5-18-gate-breaker-fist",
+    "name": "Gate Breaker Fist",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-1-21-smite",
+    "name": "Smite",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-3-22-radiant-cleave",
+    "name": "Radiant Cleave",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-5-23-judgment-strike",
+    "name": "Judgment Strike",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-3-25-emp-burst",
+    "name": "EMP Burst",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-1-27-hamstring",
+    "name": "Hamstring",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "tech-sup-3-28-entangle-shot",
+    "name": "Entangle Shot",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "tech-sup-5-29-predator-s-leap",
+    "name": "Predator's Leap",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "tech-sup-3-31-dance-of-blades",
+    "name": "Dance of Blades",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "idol"
+  },
+  {
+    "id": "tech-sup-5-32-crescendo-finale",
+    "name": "Crescendo Finale",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "idol"
+  },
+  {
+    "id": "tech-sup-1-33-sacred-weapon",
+    "name": "Sacred Weapon",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-5-35-war-god-s-blessing",
+    "name": "War God's Blessing",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-1-36-pact-blade",
+    "name": "Pact Blade",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "tech-sup-3-37-eldritch-riposte",
+    "name": "Eldritch Riposte",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "tech-sup-5-38-patron-s-fury",
+    "name": "Patron's Fury",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "tech-sup-1-39-withering-blade",
+    "name": "Withering Blade",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "tech-sup-1-42-gate-breaker-chop",
+    "name": "Gate Breaker Chop",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-1-43-mana-circuit-rush",
+    "name": "Mana Circuit Rush",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-1-45-riposte-lattice",
+    "name": "Riposte Lattice",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-1-46-sonic-throw",
+    "name": "Sonic Throw",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "idol"
+  },
+  {
+    "id": "tech-sup-3-52-gate-cutter",
+    "name": "Gate Cutter",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-3-54-shadow-execution",
+    "name": "Shadow Execution",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "tech-sup-3-57-quarry-brand",
+    "name": "Quarry Brand",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "hunter"
+  },
+  {
+    "id": "tech-sup-3-58-devotion-guard",
+    "name": "Devotion Guard",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-4-61-pact-weapon-manifest",
+    "name": "Pact Weapon Manifest",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "contractor"
+  },
+  {
+    "id": "tech-sup-5-65-whirlwind-execution",
+    "name": "Whirlwind Execution",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "tech-sup-6-68-resonance-blade-dance",
+    "name": "Resonance Blade Dance",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "idol"
+  },
+  {
+    "id": "tech-sup-6-69-gate-breaker-barrage",
+    "name": "Gate Breaker Barrage",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-8-73-absolute-execution",
+    "name": "Absolute Execution",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "tech-sup-3-83-radiant-bind",
+    "name": "Radiant Bind",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Holy Knight"
+    ],
+    "action": "holy-knight"
+  },
+  {
+    "id": "tech-sup-3-85-kinetic-deflection-field",
+    "name": "Kinetic Deflection Field",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Destroyer",
+      "Striker"
+    ],
+    "action": "striker"
+  },
+  {
+    "id": "tech-sup-4-90-idol-s-duel",
+    "name": "Idol's Duel",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [],
+    "action": "idol"
+  },
+  {
+    "id": "tech-sup-5-91-circuit-breaker-slash",
+    "name": "Circuit Breaker Slash",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Technomancer"
+    ],
+    "action": "technomancer"
+  },
+  {
+    "id": "tech-sup-5-94-shadow-harvest",
+    "name": "Shadow Harvest",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Assassin",
+      "Stalker"
+    ],
+    "action": "stealth"
+  },
+  {
+    "id": "tech-sup-9-103-berserker-s-requiem",
+    "name": "Berserker's Requiem",
+    "currentClasses": [
+      "Assassin",
+      "Berserker",
+      "Destroyer",
+      "Holy Knight",
+      "Stalker",
+      "Striker",
+      "Technomancer"
+    ],
+    "expectedClasses": [
+      "Berserker",
+      "Destroyer"
+    ],
+    "action": "berserker"
+  }
+]

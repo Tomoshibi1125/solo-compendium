@@ -20,7 +20,7 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Paramedic uniforms became standard Hunter Association gear after the First Gate Surge. Every team needs a medic.",
+				"Paramedic uniforms became standard Ascendant Bureau gear after the First Gate Surge. Every team needs a medic.",
 			origin:
 				"Standard Bureau-issued emergency response gear, distributed to medical personnel attached to gate-clearing teams.",
 			personality: "",
@@ -28,7 +28,7 @@ export const items_part1: Item[] = [
 		},
 		flavor: "Run toward the chaos. That's the job.",
 		discovery_lore:
-			"Available from Hunter Association medical supply depots. Unglamorous but essential.",
+			"Available from Ascendant Bureau medical supply depots. Unglamorous but essential.",
 		tags: ["equipment", "area", "offensive", "single-target", "debuff"],
 		theme_tags: ["black-market", "experimental", "elite-tier"],
 		activation: {
@@ -98,8 +98,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -132,13 +132,13 @@ export const items_part1: Item[] = [
 			history:
 				"Upgraded with aetheric stabilization crystals after it was discovered that standard hemostatic agents are less effective on wounds from anomaly attacks.",
 			origin:
-				"Professional-grade trauma gear standard-issued to Hunter Association medical teams after the First Gate Surge.",
+				"Professional-grade trauma gear standard-issued to Ascendant Bureau medical teams after the First Gate Surge.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "15 uses. Make them count.",
 		discovery_lore:
-			"Available at Hunter Association supply depots. Required kit for any certified medic on a gate team.",
+			"Available at Ascendant Bureau supply depots. Required kit for any certified medic on a gate team.",
 		tags: ["equipment", "stealth", "control", "support"],
 		theme_tags: ["mana-overflow", "guild-ops", "ancient-power"],
 		activation: {
@@ -207,8 +207,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -243,11 +243,11 @@ export const items_part1: Item[] = [
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Found washed ashore near a coastal Gate, wrapped in fabric that dissolved upon touch.",
 		tags: ["equipment", "psychic", "single-target"],
@@ -323,8 +323,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -357,14 +357,14 @@ export const items_part1: Item[] = [
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
+			"Appeared in a Ascendant's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "lightning", "necrotic", "defensive"],
 		theme_tags: ["guild-ops", "ancient-power", "urban-combat"],
 		activation: {
@@ -404,7 +404,7 @@ export const items_part1: Item[] = [
 				fingerprint: "7deabe43",
 				payload_complete: true,
 				uniqueness_seed: "bg-cracked-laptop::Cracked-Screen Laptop",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -434,8 +434,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -542,8 +542,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -574,13 +574,13 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "debuff", "buff", "necrotic"],
@@ -652,8 +652,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -685,7 +685,7 @@ export const items_part1: Item[] = [
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -764,8 +764,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -796,17 +796,17 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			origin:
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "debuff", "shadow", "single-target"],
-		theme_tags: ["ancient-power", "dungeon-core", "hunter-bureau"],
+		theme_tags: ["ancient-power", "dungeon-core", "ascendant-bureau"],
 		activation: {
 			type: "passive",
 			consumes_item: false,
@@ -877,8 +877,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -915,7 +915,7 @@ export const items_part1: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "support", "damage", "stealth"],
@@ -987,8 +987,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -1105,8 +1105,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1139,11 +1139,11 @@ export const items_part1: Item[] = [
 			history:
 				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Emerged from a Gate Boss's dissolution cloud, hovering where the creature's heart had been.",
 		tags: ["equipment", "healing", "stealth", "damage"],
@@ -1216,8 +1216,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -1257,7 +1257,7 @@ export const items_part1: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"Binds the fabric of reality. A testament to what Hunters have become.",
+			"Binds the fabric of reality. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "single-target", "stealth"],
@@ -1334,8 +1334,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -1365,7 +1365,7 @@ export const items_part1: Item[] = [
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -1443,8 +1443,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -1560,8 +1560,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1601,9 +1601,9 @@ export const items_part1: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"Ignites the fabric of reality. A testament to what Hunters have become.",
+			"Ignites the fabric of reality. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
+			"Appeared in a Ascendant's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "control", "mobility", "defensive", "support"],
 		theme_tags: ["dimensional-bleed", "elite-tier"],
 		activation: {
@@ -1678,8 +1678,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1788,8 +1788,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -1824,9 +1824,9 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -1905,8 +1905,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1937,9 +1937,9 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -2021,8 +2021,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -2050,7 +2050,7 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			personality: "",
@@ -2059,7 +2059,7 @@ export const items_part1: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		tags: ["equipment", "sustained", "defensive", "utility", "offensive"],
 		theme_tags: ["survival", "regent-era", "rift-energy"],
 		activation: {
@@ -2130,8 +2130,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2167,7 +2167,7 @@ export const items_part1: Item[] = [
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -2250,8 +2250,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2371,8 +2371,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -2407,7 +2407,7 @@ export const items_part1: Item[] = [
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -2487,8 +2487,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2516,9 +2516,9 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -2565,7 +2565,7 @@ export const items_part1: Item[] = [
 				fingerprint: "f6aa3d87",
 				payload_complete: true,
 				uniqueness_seed: "bg-red-pen::Red Grading Pen",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -2595,8 +2595,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2629,11 +2629,11 @@ export const items_part1: Item[] = [
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		tags: ["equipment", "lightning", "shadow"],
@@ -2709,8 +2709,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -2741,9 +2741,9 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -2821,8 +2821,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2937,8 +2937,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2972,7 +2972,7 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			personality: "",
@@ -3058,8 +3058,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3175,8 +3175,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3298,8 +3298,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3330,9 +3330,9 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -3378,7 +3378,7 @@ export const items_part1: Item[] = [
 				fingerprint: "5b95b349",
 				payload_complete: true,
 				uniqueness_seed: "bg-dept-radio::Gate-Zone Department Radio",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -3410,8 +3410,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -3443,15 +3443,15 @@ export const items_part1: Item[] = [
 			curse:
 				"Prolonged use causes the wielder's shadow to move independently, whispering in dead languages.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
-			"Appeared in a Hunter's inventory after a Order notification that no one else could see.",
+			"Appeared in a Ascendant's inventory after a Order notification that no one else could see.",
 		tags: ["equipment", "control", "buff", "burst"],
 		theme_tags: ["forbidden", "elite-tier", "experimental"],
 		activation: {
@@ -3526,8 +3526,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -3560,9 +3560,9 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -3643,8 +3643,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -3723,7 +3723,7 @@ export const items_part1: Item[] = [
 				fingerprint: "2ed7205f",
 				payload_complete: true,
 				uniqueness_seed: "bg-deescalation-guide::Crisis De-Escalation Guide",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -3757,8 +3757,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3788,7 +3788,7 @@ export const items_part1: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			personality: "",
@@ -3870,8 +3870,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3907,7 +3907,7 @@ export const items_part1: Item[] = [
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -3990,8 +3990,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4027,7 +4027,7 @@ export const items_part1: Item[] = [
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -4110,8 +4110,8 @@ export const items_part1: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},

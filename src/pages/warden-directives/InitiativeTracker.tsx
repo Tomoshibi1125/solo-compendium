@@ -75,7 +75,7 @@ interface Combatant {
 	damage_immunities?: string[];
 	damage_vulnerabilities?: string[];
 	advancedConditions: ConditionEntry[];
-	/** Dex modifier used for auto-rolled monster initiative (P1-6). */
+	/** Dex modifier used for auto-rolled anomaly initiative (P1-6). */
 	dexMod?: number;
 }
 
@@ -748,7 +748,7 @@ const InitiativeTracker = () => {
 		});
 	}, [sortedCombatants, round]);
 
-	// P1-6: dedupe set so refetches don't re-roll already-auto-rolled monsters.
+	// P1-6: dedupe set so refetches don't re-roll already-auto-rolled anomalies.
 	const autoRolledIdsRef = useRef<Set<string>>(new Set());
 	const lastAutoRollSessionIdRef = useRef<string | null | undefined>(undefined);
 
@@ -768,8 +768,8 @@ const InitiativeTracker = () => {
 				}
 				if (rerollAll) {
 					toast({
-						title: "Monster initiative re-rolled",
-						description: `Rolled ${rolls.length} monster${rolls.length === 1 ? "" : "s"} (1d20 + Dex).`,
+						title: "Anomaly initiative re-rolled",
+						description: `Rolled ${rolls.length} anomaly${rolls.length === 1 ? "" : "s"} (1d20 + Dex).`,
 					});
 				}
 				return prev.map((combatant) => {
@@ -781,7 +781,7 @@ const InitiativeTracker = () => {
 		[toast],
 	);
 
-	// Auto-roll effect: trigger for any monster with initiative=0 that
+	// Auto-roll effect: trigger for any anomaly with initiative=0 that
 	// hasn't been auto-rolled in this session.
 	useEffect(() => {
 		const hasUnrolled = combatants.some(
@@ -794,7 +794,7 @@ const InitiativeTracker = () => {
 	}, [combatants, rollMonsters]);
 
 	// Reset dedupe set when switching combat sessions so new encounters
-	// auto-roll their fresh monsters.
+	// auto-roll their fresh anomalies.
 	useEffect(() => {
 		const activeSessionId = activeCombatSession?.id;
 		if (lastAutoRollSessionIdRef.current === activeSessionId) return;
@@ -1215,9 +1215,9 @@ const InitiativeTracker = () => {
 										variant="outline"
 										onClick={() => rollMonsters(true)}
 										disabled={!combatants.some((c) => !c.isHunter)}
-										aria-label="Re-roll all monster initiative"
+										aria-label="Re-roll all anomaly initiative"
 										data-testid="initiative-reroll-monsters"
-										title="Re-roll all monster initiative (1d20 + Dex)"
+										title="Re-roll all anomaly initiative (1d20 + Dex)"
 									>
 										<Dices className="w-4 h-4 mr-2" />
 										Re-roll

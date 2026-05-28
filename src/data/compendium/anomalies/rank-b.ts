@@ -168,13 +168,13 @@
 	{
 		id: "anomaly-0013",
 		name: "Eternal Shadow Revenant",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 287,
 		ac: 23,
 		image: "/generated/compendium/anomalies/anomaly-0013.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -200,7 +200,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -391,13 +391,13 @@
 	{
 		id: "anomaly-0028",
 		name: "Corrupted Shadow Lurker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 1055,
 		ac: 29,
 		image: "/generated/compendium/anomalies/anomaly-0028.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -423,7 +423,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -601,13 +601,13 @@
 	{
 		id: "anomaly-0043",
 		name: "Blessed Abyssal Horror",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 982,
 		ac: 12,
 		image: "/generated/compendium/anomalies/anomaly-0043.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -633,7 +633,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -837,13 +837,13 @@
 	{
 		id: "anomaly-0058",
 		name: "Blessed Shadow Assassin",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 517,
 		ac: 20,
 		image: "/generated/compendium/anomalies/anomaly-0058.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -869,7 +869,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1073,13 +1073,13 @@
 	{
 		id: "anomaly-0073",
 		name: "Cursed Shadow Revenant",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 905,
 		ac: 18,
 		image: "/generated/compendium/anomalies/anomaly-0073.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1105,7 +1105,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1322,13 +1322,13 @@
 	{
 		id: "anomaly-0088",
 		name: "Ancient Shadow Lurker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 137,
 		ac: 25,
 		image: "/generated/compendium/anomalies/anomaly-0088.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -1354,7 +1354,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1545,13 +1545,13 @@
 	{
 		id: "anomaly-0103",
 		name: "Primordial Abyssal Horror",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 406,
 		ac: 12,
 		image: "/generated/compendium/anomalies/anomaly-0103.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -1577,7 +1577,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1781,13 +1781,13 @@
 	{
 		id: "anomaly-0118",
 		name: "Primordial Shadow Assassin",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 1089,
 		ac: 20,
 		image: "/generated/compendium/anomalies/anomaly-0118.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1813,7 +1813,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2017,13 +2017,13 @@
 	{
 		id: "anomaly-0133",
 		name: "Supreme Shadow Revenant",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 1079,
 		ac: 10,
 		image: "/generated/compendium/anomalies/anomaly-0133.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2049,7 +2049,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2240,13 +2240,13 @@
 	{
 		id: "anomaly-0148",
 		name: "Legendary Shadow Lurker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 349,
 		ac: 17,
 		image: "/generated/compendium/anomalies/anomaly-0148.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2272,7 +2272,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2489,13 +2489,13 @@
 	{
 		id: "anomaly-0163",
 		name: "Mythic Abyssal Horror",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 802,
 		ac: 21,
 		image: "/generated/compendium/anomalies/anomaly-0163.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2521,7 +2521,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2725,13 +2725,13 @@
 	{
 		id: "anomaly-0178",
 		name: "Mythic Shadow Assassin",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 669,
 		ac: 10,
 		image: "/generated/compendium/anomalies/anomaly-0178.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2757,7 +2757,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2961,13 +2961,13 @@
 	{
 		id: "anomaly-0193",
 		name: "Divine Shadow Revenant",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 541,
 		ac: 28,
 		image: "/generated/compendium/anomalies/anomaly-0193.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2993,7 +2993,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3210,13 +3210,13 @@
 	{
 		id: "anomaly-0208",
 		name: "Infernal Shadow Lurker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 741,
 		ac: 15,
 		image: "/generated/compendium/anomalies/anomaly-0208.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3242,7 +3242,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3446,13 +3446,13 @@
 	{
 		id: "anomaly-0223",
 		name: "Celestial Abyssal Horror",
-		type: "Demon",
+		type: "anomaly",
 		rank: "B",
 		hp: 124,
 		ac: 12,
 		image: "/generated/compendium/anomalies/anomaly-0223.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -3478,7 +3478,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3695,13 +3695,13 @@
 	{
 		id: "anomaly-0238",
 		name: "Celestial Shadow Assassin",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "B",
 		hp: 490,
 		ac: 24,
 		image: "/generated/compendium/anomalies/anomaly-0238.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This B rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3727,7 +3727,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",

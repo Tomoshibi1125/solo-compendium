@@ -4,7 +4,7 @@
  * Seeded into the Notes tab on sandbox import with `is_shared=false` so
  * they are private to the Warden. Split between the 5 canonical Warden
  * secrets (foreshadowing beats referenced elsewhere in the module) and 5
- * new DM-only plot levers (true identity, cult infiltration, optional
+ * new Warden-only plot levers (true identity, cult infiltration, optional
  * escape hatches).
  *
  * Schema maps 1:1 to the `campaign_notes` table.
@@ -22,7 +22,7 @@ export const sandboxWardenNotes: SandboxWardenNote[] = [
 		title: "Secret 1 — The Regent Wears the Party's Faces",
 		category: "warden-secret",
 		content: [
-			"**DM ONLY.** The Regent is a fused composite of the PCs' _un-awakened_ selves — the timelines in which they never escaped the Memory-Care Wing. Each PC, when they reach the Archive of His Self (Floor −2), will see their own reflection in a different mirror, aged and hollowed out.",
+			"**Warden ONLY.** The Regent is a fused composite of the PCs' _un-awakened_ selves — the timelines in which they never escaped the Memory-Care Wing. Each PC, when they reach the Archive of His Self (Floor −2), will see their own reflection in a different mirror, aged and hollowed out.",
 			"",
 			"**Mechanics:** When the Regent attacks a PC for the first time, that PC must make a WIS save (DC 16) or gain 1 level of Identity-Erosion (see Pressure Clock). The save is _automatic_ the second time.",
 			"",
@@ -33,44 +33,44 @@ export const sandboxWardenNotes: SandboxWardenNote[] = [
 		title: "Secret 2 — Commander Park Knows About the Wing",
 		category: "warden-secret",
 		content: [
-			"**DM ONLY.** Park was _there_ when the Memory-Care Wing was commissioned. He signed off on the Diagnosed project. He does not remember this consciously — the Bureau used aetheric redaction on its own senior officers — but it is in his encrypted personal files.",
+			"**Warden ONLY.** Park was _there_ when the Memory-Care Wing was commissioned. He signed off on the Diagnosed project. He does not remember this consciously — the Bureau used aetheric redaction on its own senior officers — but it is in his encrypted personal files.",
 			"",
 			"**Trigger:** If the party reaches Rep Trusted with Bureau and passes a DC 18 Investigation on his office at Bureau HQ, they find the redacted files. Park breaks.",
 			"",
-			"**Payoff:** Park can either sacrifice himself to shut down the Wing permanently (Session 5 climax), or go rogue and side with the Awoko Cult. Player choice via Park's next Rep threshold.",
+			"**Payoff:** Park can either sacrifice himself to shut down the Wing permanently (Session 5 climax), or go Assassin and side with the Awoko Cult. Player choice via Park's next Rep threshold.",
 		].join("\n"),
 	},
 	{
 		title: "Secret 3 — The Awoko Cult Is Right (Partially)",
 		category: "warden-secret",
 		content: [
-			"**DM ONLY.** The cult's core thesis — that names are power and the Bureau is stripping them — is _factually correct_. Their solution (mass sacrifice to rebuild a collective identity) is catastrophically wrong.",
+			"**Warden ONLY.** The cult's core thesis — that names are power and the Bureau is stripping them — is _factually correct_. Their solution (mass sacrifice to rebuild a collective identity) is catastrophically wrong.",
 			"",
 			"If the party pushes back against the cult without engaging their diagnosis, Rep with the independent / anomaly-adjacent factions _drops_ because those factions see the cult as truthful.",
 			"",
-			"**DM hook:** A PC who reaches Identity-Erosion level 2 will start seeing cult graffiti that _was not there before_. Use this as a soft foreshadow.",
+			"**Warden hook:** A PC who reaches Identity-Erosion level 2 will start seeing cult graffiti that _was not there before_. Use this as a soft foreshadow.",
 		].join("\n"),
 	},
 	{
 		title: "Secret 4 — Squad Seven Is Still Alive (Sort Of)",
 		category: "warden-secret",
 		content: [
-			"**DM ONLY.** The Anomaly wearing Sgt. Min-ho's name tag in the Hollow Subway is Min-ho, fused at the cellular level with a tunnel-fungus colony. He is aware. He is in pain. He is still technically a Bureau operative.",
+			"**Warden ONLY.** The Anomaly wearing Sgt. Min-ho's name tag in the Hollow Subway is Min-ho, fused at the cellular level with a tunnel-fungus colony. He is aware. He is in pain. He is still technically a Bureau operative.",
 			"",
-			"**DM choice:** If the party passes a DC 20 Medicine check + spends 8 hours, they can extract a coherent Min-ho mind into a jar-vessel (see Relic: Soul-Jar). This unlocks Yoon's full loyalty and a hidden Bureau endgame path.",
+			"**Warden choice:** If the party passes a DC 20 Medicine check + spends 8 hours, they can extract a coherent Min-ho mind into a jar-vessel (see Relic: Soul-Jar). This unlocks Yoon's full loyalty and a hidden Bureau endgame path.",
 		].join("\n"),
 	},
 	{
 		title: "Secret 5 — The 14-Day Timeline Is Real",
 		category: "warden-secret",
 		content: [
-			"**DM ONLY.** The roaming S-Rank Anomaly (see sandbox-timeline) _will_ breach the District on Day 14 regardless of party action. The timeline is not a Warden bluff — it fires.",
+			"**Warden ONLY.** The roaming S-Rank Anomaly (see sandbox-timeline) _will_ breach the District on Day 14 regardless of party action. The timeline is not a Warden bluff — it fires.",
 			"",
 			"If the party has not reached the Regent's Domain by then, the Domain comes to them: S-Rank crashes through the Bureau HQ roof. Adjust encounter accordingly — do not fudge the deadline.",
 		].join("\n"),
 	},
 
-	// ── New DM-only plot beats ──────────────────────────────────────────────
+	// ── New Warden-only plot beats ──────────────────────────────────────────────
 	{
 		title: "Plot Beat — The Diagnosed Wants to Be Forgotten",
 		category: "plot-beat",

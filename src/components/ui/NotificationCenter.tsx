@@ -23,6 +23,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { type Notification, useNotifications } from "@/hooks/useNotifications";
+import { useUserNotifications } from "@/hooks/useUserNotifications";
 import { cn } from "@/lib/utils";
 
 const TYPE_ICONS = {
@@ -137,14 +138,31 @@ function NotificationItem({
 export function NotificationCenter() {
 	const [open, setOpen] = useState(false);
 	const {
-		notifications,
-		unreadCount,
-		markAsRead,
+		notifications: localNotifications,
+		unreadCount: localUnreadCount,
+		markAsRead: markAsReadLocal,
 		markAllAsRead,
 		removeNotification,
 		clearAll,
 		clearRead,
 	} = useNotifications();
+	// R6 of Round 2 — merge server-backed inbox with local cache. The
+	// server hook already mirrors rows into localStorage on success, so
+	// `localNotifications` becomes a superset. We use the server unread
+	// count when the user is authenticated.
+	const {
+		notifications: serverNotifications,
+		unreadCount: serverUnreadCount,
+		markReadOnServer,
+	} = useUserNotifications();
+
+	const useServer = serverNotifications.length > 0;
+	const notifications = useServer ? serverNotifications : localNotifications;
+	const unreadCount = useServer ? serverUnreadCount : localUnreadCount;
+	const markAsRead = (id: string) => {
+		if (useServer) markReadOnServer(id);
+		markAsReadLocal(id);
+	};
 
 	const unreadNotifications = notifications.filter((n) => !n.read);
 	const readNotifications = notifications.filter((n) => n.read);

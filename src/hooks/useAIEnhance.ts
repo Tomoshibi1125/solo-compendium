@@ -1,5 +1,5 @@
 /**
- * Shared hook for AI-enhanced content generation across all Warden (Warden) tools.
+ * Shared hook for AI-enhanced content generation across all Warden tools.
  * Uses the user's configured default AI provider (Gemini primary, Pollinations fallback).
  */
 

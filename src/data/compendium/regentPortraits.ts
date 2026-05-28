@@ -21,37 +21,37 @@ export const REGENT_PORTRAITS_DATA: RegentPortraitDescriptor[] = [
 	{
 		regentId: "steel_regent",
 		name: "Steel Regent",
-		imageUrl: "/generated/compendium/jobs/paladin.webp",
+		imageUrl: "/generated/compendium/jobs/Holy Knight.webp",
 		tags: ["regent", "steel", "iron", "defense"],
 	},
 	{
 		regentId: "destruction_regent",
 		name: "Destruction Regent",
-		imageUrl: "/generated/compendium/monsters/companion-spirit-guardian.webp",
+		imageUrl: "/generated/compendium/anomalies/companion-spirit-guardian.webp",
 		tags: ["regent", "destruction", "dragon", "apocalypse"],
 	},
 	{
 		regentId: "war_regent",
 		name: "War Regent",
-		imageUrl: "/generated/compendium/monsters/mount-dire-shadow-wolf.webp",
+		imageUrl: "/generated/compendium/anomalies/mount-dire-shadow-wolf.webp",
 		tags: ["regent", "war", "command", "shadow"],
 	},
 	{
 		regentId: "frost_regent",
 		name: "Frost Regent",
-		imageUrl: "/generated/compendium/monsters/companion-frost-wyrmling.webp",
+		imageUrl: "/generated/compendium/anomalies/companion-frost-wyrmling.webp",
 		tags: ["regent", "frost", "ice", "winter"],
 	},
 	{
 		regentId: "beast_regent",
 		name: "Beast Regent",
-		imageUrl: "/generated/compendium/monsters/companion-thorn-beast.webp",
+		imageUrl: "/generated/compendium/anomalies/companion-thorn-beast.webp",
 		tags: ["regent", "beast", "alpha", "wild"],
 	},
 	{
 		regentId: "plague_regent",
 		name: "Plague Regent",
-		imageUrl: "/generated/compendium/monsters/companion-plague-hound.webp",
+		imageUrl: "/generated/compendium/anomalies/companion-plague-hound.webp",
 		tags: ["regent", "plague", "disease", "miasma"],
 	},
 	{
@@ -63,13 +63,13 @@ export const REGENT_PORTRAITS_DATA: RegentPortraitDescriptor[] = [
 	{
 		regentId: "mimic_regent",
 		name: "Mimic Regent",
-		imageUrl: "/generated/compendium/monsters/companion-void-walker.webp",
+		imageUrl: "/generated/compendium/anomalies/companion-void-walker.webp",
 		tags: ["regent", "mimic", "shapeshift", "adaptation"],
 	},
 	{
 		regentId: "blood_regent",
 		name: "Blood Regent",
-		imageUrl: "/generated/compendium/monsters/companion-blood-boar.webp",
+		imageUrl: "/generated/compendium/anomalies/companion-blood-boar.webp",
 		tags: ["regent", "blood", "hemomancy", "sanguine"],
 	},
 	{

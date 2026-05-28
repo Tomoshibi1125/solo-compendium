@@ -1,4 +1,4 @@
-import { Brain, Dice6, Eye, Search } from "lucide-react";
+import { Brain, Dice6, Eye, Footprints, Search } from "lucide-react";
 import {
 	Tooltip,
 	TooltipContent,
@@ -151,6 +151,17 @@ export function ProficiencySidebar({
 							</div>
 							<span className="text-sm font-display font-bold text-white">
 								{skills.Insight?.passive ?? 10}
+							</span>
+						</div>
+						<div className="flex items-center justify-between p-2 bg-obsidian-charcoal/40 border border-primary/10 rounded-[2px]">
+							<div className="flex items-center gap-2">
+								<Footprints className="w-3.5 h-3.5 text-primary/60" />
+								<span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+									Stealth
+								</span>
+							</div>
+							<span className="text-sm font-display font-bold text-white">
+								{skills.Stealth?.passive ?? 10}
 							</span>
 						</div>
 					</div>

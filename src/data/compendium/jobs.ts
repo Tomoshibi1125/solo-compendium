@@ -249,7 +249,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Fighting Style",
 				description:
-					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Hunter, Lattice-Infused Striking, Striker Stance).",
+					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Ascendant, Lattice-Infused Striking, Striker Stance).",
 			},
 			{
 				level: 2,
@@ -1120,7 +1120,7 @@ export const jobs: Job[] = [
 				damage: "1d4",
 				damage_type: "bludgeoning",
 				description:
-					"Kinetic-channeled unarmed strikes — scale with your monk unarmed-damage progression.",
+					"Kinetic-channeled unarmed strikes — scale with your Striker unarmed-damage progression.",
 			},
 		],
 		abilities: [
@@ -1139,7 +1139,7 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/jobs/monk.webp",
+		image: "/generated/compendium/jobs/Striker.webp",
 		stats: {
 			strength: 13,
 			agility: 15,
@@ -1335,7 +1335,7 @@ export const jobs: Job[] = [
 					unlockLevel: 1,
 					uses: "at-will",
 					description:
-						"Index one wizard cantrip of your choice from the lattice at Awakening. You may cast it at will using Intelligence as your spellcasting ability.",
+						"Index one Mage cantrip of your choice from the lattice at Awakening. You may cast it at will using Intelligence as your spellcasting ability.",
 				},
 			],
 		},
@@ -1381,7 +1381,7 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "B",
 		description:
-			"The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of a Sorcerer, their connection to the Aetheric-Weave is raw and volatileâ€”mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.",
+			"The Esper is an Awakened identity that specializes in the Reality Distorter and Unfiltered Vessel mandate. As the SA version of a Esper, their connection to the Aetheric-Weave is raw and volatileâ€”mana bleeds from their body like radiation, reshaping reality through sheer willpower. In modern society, Espers are celebrities and pariahs in equal measure; their aetheric flares reshape the tapestry of existence with absolute authority.",
 		hitDie: "1d6",
 		primaryAbility: "Presence",
 		saving_throws: ["Vitality", "Presence"],
@@ -1567,7 +1567,7 @@ export const jobs: Job[] = [
 					unlockLevel: 3,
 					uses: { value: 1, per: "long-rest" },
 					description:
-						"Release a 30-ft line of aetheric force from your forehead. Each creature in the line makes a Sense save or takes 3d6 force damage (half on success). Keyed to your sorcerer-origin spark.",
+						"Release a 30-ft line of aetheric force from your forehead. Each creature in the line makes a Sense save or takes 3d6 force damage (half on success). Keyed to your Esper-origin spark.",
 				},
 			],
 		},
@@ -1684,7 +1684,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aetheric-Sight: Entropy-Tuned",
 				description:
-					"You perceive the fading life-force and structural decay of all things. Sense dying creatures and undead within 120 ft, even through walls. Know the exact health of any creature below half their maximum.",
+					"You perceive the fading life-force and structural decay of all things. Sense dying creatures and anomaly within 120 ft, even through walls. Know the exact health of any creature below half their maximum.",
 				type: "passive",
 			},
 			{
@@ -1805,7 +1805,7 @@ export const jobs: Job[] = [
 			{
 				name: "Aura of the Grave",
 				description:
-					"Sense trait. Low-intelligence gate anomalies and undead ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
+					"Sense trait. Low-intelligence gate anomalies and anomaly ignore you unless you attack them first, perceiving your mana signature as part of the environment.",
 				type: "sense",
 			},
 		],
@@ -1843,7 +1843,7 @@ export const jobs: Job[] = [
 			},
 		],
 		spellbook: { atCreation: 6, perLevel: 2, label: "Reaper's Ledger" },
-		image: "/generated/compendium/jobs/necromancer.webp",
+		image: "/generated/compendium/jobs/Revenant.webp",
 		stats: {
 			strength: 8,
 			agility: 14,
@@ -2049,7 +2049,7 @@ export const jobs: Job[] = [
 			{
 				name: "Empathic Resonance",
 				description:
-					"Sense trait. You can feel the emotional state and surface intent of any creature (including monsters and anomalies) within 30 ft.",
+					"Sense trait. You can feel the emotional state and surface intent of any creature (including anomalies and anomalies) within 30 ft.",
 				type: "sense",
 			},
 		],
@@ -2103,7 +2103,7 @@ export const jobs: Job[] = [
 		description:
 			"The Holy Knight is an Awakened identity that specializes in the Oath-Bound Enforcer and Absolute Covenant mandate. As an Ascendant of this lineage, they serve as the ultimate guardians of modern society, their power fueled by a binding oath to the Absolute itselfâ€”a literal covenant inscribed into their mana pathways. They work as guild leaders, Ascendant Bureau enforcement officers, and public defenders against gate threats. The oath grants devastating combat power, but break its tenets and the power is revoked painfully. They channel radiant Absolute energy through weapons, heal allies, and project protective auras.",
 		hitDie: "1d10",
-		primaryAbility: "Strength",
+		primaryAbility: "Presence",
 		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Athletics",
@@ -2126,7 +2126,7 @@ export const jobs: Job[] = [
 			{
 				name: "Oath Sense",
 				description:
-					"Your covenant pings threats to the Absolute's order like a sensory alert â€” your phone buzzes with [HOSTILE ENTITY DETECTED] when fiends, celestials, or undead are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
+					"Your covenant pings threats to the Absolute's order like a sensory alert â€” your phone buzzes with [HOSTILE ENTITY DETECTED] when anomaly, celestials, or anomaly are within 60 ft. Know type and location. 1 + Presence mod uses per long rest.",
 				level: 1,
 			},
 			{
@@ -2169,7 +2169,7 @@ export const jobs: Job[] = [
 		languages: ["English", "Ancient Hebrew"],
 		darkvision: 60,
 		specialSenses: [
-			"Divine Sense (detect the presence of celestials, fiends, and undead within 60 ft; 1/short rest)",
+			"Divine Sense (detect the presence of celestials, anomaly, and anomaly within 60 ft; 1/short rest)",
 		],
 		damage_resistances: ["radiant"],
 		startingEquipment: [
@@ -2197,7 +2197,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Oath Sense",
 				description:
-					"Your covenant pings hostile entities. Detect celestials, fiends, and undead within 60 ft and know their type. 1 + Presence mod uses per long rest.",
+					"Your covenant pings hostile entities. Detect celestials, anomaly, and anomaly within 60 ft and know their type. 1 + Presence mod uses per long rest.",
 			},
 			{
 				level: 1,
@@ -2215,13 +2215,13 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Fighting Style",
 				description:
-					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Hunter, Lattice-Infused Striking, Striker Stance).",
+					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Ascendant, Lattice-Infused Striking, Striker Stance).",
 			},
 			{
 				level: 2,
 				name: "Covenant Strike",
 				description:
-					"On melee hit, channel your oath's power through the weapon â€” it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs undead/fiends. Target's speed reduced by 10 ft until your next turn. Gate-raid streamers' audiences go wild for Covenant Strike clips.",
+					"On melee hit, channel your oath's power through the weapon â€” it flares with golden light visible from blocks away. Expend a slot: 2d8 radiant + 1d8 per slot above 1st (max 5d8). +1d8 vs anomaly/anomaly. Target's speed reduced by 10 ft until your next turn. Gate-raid streamers' audiences go wild for Covenant Strike clips.",
 			},
 			{
 				level: 3,
@@ -2357,7 +2357,7 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/jobs/paladin.webp",
+		image: "/generated/compendium/jobs/Holy Knight.webp",
 		stats: {
 			strength: 15,
 			agility: 10,
@@ -2976,7 +2976,7 @@ export const jobs: Job[] = [
 				filter: { restrictTo: "any-list" },
 			},
 		],
-		image: "/generated/compendium/jobs/bard.webp",
+		image: "/generated/compendium/jobs/Idol.webp",
 		stats: {
 			strength: 8,
 			agility: 14,
@@ -3093,7 +3093,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Receive Signal",
 				description:
-					"As a bonus action, detect the presence and type of celestials, fiends, and undead within 60 ft. Uses = Sense mod per long rest.",
+					"As a bonus action, detect the presence and type of celestials, anomaly, and anomaly within 60 ft. Uses = Sense mod per long rest.",
 			},
 			{
 				level: 1,
@@ -3114,9 +3114,9 @@ export const jobs: Job[] = [
 			},
 			{
 				level: 5,
-				name: "Broadcast Undead",
+				name: "Broadcast Anomaly",
 				description:
-					"When you Receive Signal, undead and fiends of CR 1/2 or lower within 30 ft must save or be destroyed. Higher CR thresholds unlock with level.",
+					"When you Receive Signal, anomaly and anomaly of CR 1/2 or lower within 30 ft must save or be destroyed. Higher CR thresholds unlock with level.",
 			},
 			{
 				level: 6,
@@ -3134,7 +3134,7 @@ export const jobs: Job[] = [
 				level: 10,
 				name: "Absolute Intervention",
 				description:
-					"Once per long rest, implore the Absolute directly for aid — the DM determines the form of intervention (heal, damage, teleport, revelation). At 20th, the intervention is automatic.",
+					"Once per long rest, implore the Absolute directly for aid — the Warden determines the form of intervention (heal, damage, teleport, revelation). At 20th, the intervention is automatic.",
 			},
 			{
 				level: 12,
@@ -3208,7 +3208,7 @@ export const jobs: Job[] = [
 					unlockLevel: 1,
 					uses: "at-will",
 					description:
-						"Channel a cleric cantrip of your choice (at Awakening) — the Absolute's transmission flows through your tuned cortex. Uses Presence as your spellcasting ability.",
+						"Channel a Herald cantrip of your choice (at Awakening) — the Absolute's transmission flows through your tuned cortex. Uses Presence as your spellcasting ability.",
 				},
 				{
 					name: "Covenant Restoration",
@@ -3226,7 +3226,7 @@ export const jobs: Job[] = [
 			"Receive Signal",
 			"Channel Absolute",
 			"Mandate",
-			"Broadcast Undead",
+			"Broadcast Anomaly",
 			"Absolute Intervention",
 		],
 		levelChoices: [
@@ -3359,7 +3359,7 @@ export const jobs: Job[] = [
 				level: 1,
 				name: "Pact Bargain",
 				description:
-					"Choose your patron: Archfey (glamour), Fiend (infernal), Great Old One (void), or Celestial (radiant). Patron features at 1st, 6th, 10th, and 14th level.",
+					"Choose your patron: Archfey (glamour), Anomaly (infernal), Great Old One (void), or Celestial (radiant). Patron features at 1st, 6th, 10th, and 14th level.",
 			},
 			{
 				level: 1,
@@ -3495,7 +3495,7 @@ export const jobs: Job[] = [
 					unlockLevel: 3,
 					uses: { value: 1, per: "long-rest" },
 					description:
-						"When you fail a saving throw, your patron intervenes as a reaction: reroll with advantage. The patron may later demand a minor service in return (DM's discretion).",
+						"When you fail a saving throw, your patron intervenes as a reaction: reroll with advantage. The patron may later demand a minor service in return (Warden's discretion).",
 				},
 			],
 		},
@@ -3572,7 +3572,7 @@ export const jobs: Job[] = [
 				source: "Contract Invocations",
 			},
 		],
-		image: "/generated/compendium/jobs/warlock.webp",
+		image: "/generated/compendium/jobs/Contractor.webp",
 		stats: {
 			strength: 8,
 			agility: 12,
@@ -3592,7 +3592,7 @@ export const jobs: Job[] = [
 		description:
 			"The Stalker is an Awakened identity that specializes in the Dimensional Predator mandate. As an Ascendant of this lineage, their body was restructured for pursuit — their leg musculature, lung capacity, and cardiovascular system are optimized for sustained high-speed chase, and their aetheric sense is permanently tuned to dimensional anomalies. In the modern world, Stalkers are the Bureau's preferred bounty and extraction specialists; they work alone, they always catch their mark, and when their name appears on a contract the global bounty network goes quiet.",
 		hitDie: "1d10",
-		primaryAbility: "Agility",
+		primaryAbility: "Sense",
 		saving_throws: ["Strength", "Agility"],
 		skillChoices: [
 			"Beast Taming",
@@ -3698,7 +3698,7 @@ export const jobs: Job[] = [
 				level: 2,
 				name: "Fighting Style",
 				description:
-					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Hunter, Lattice-Infused Striking, Striker Stance).",
+					"Choose one Fighting Style from the RA Fighting Style catalog. Options include the five kept baselines (Defense, Dueling, Great Weapon Fighting, Protection, Two-Weapon Fighting) and the six RA-native additions (Gunslinger, Suppressive Fire, Burst Discipline, Anomaly Ascendant, Lattice-Infused Striking, Striker Stance).",
 			},
 			{
 				level: 3,
@@ -3869,7 +3869,7 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/jobs/ranger.webp",
+		image: "/generated/compendium/jobs/Stalker.webp",
 		stats: {
 			strength: 12,
 			agility: 15,

@@ -692,3 +692,29 @@ h3 {
 		margin-top: 1rem;
 	}
 }
+
+
+/* ------------------------------------------------------------------ */
+/* Misty Pearl D1 — Broadcast Stream mode (OBS browser source).        */
+/* `body.stream-mode` is toggled by `pages/Stream.tsx` on mount/unmount */
+/* so global app chrome (background gradient, fonts) drops to a fully  */
+/* transparent canvas that composites cleanly inside OBS, Streamlabs,  */
+/* and Twitch Studio.                                                  */
+/* ------------------------------------------------------------------ */
+body.stream-mode,
+body.stream-mode html,
+body.stream-mode #root,
+body.stream-mode [data-radix-popper-content-wrapper] {
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+body.stream-mode .sa-theme-bg,
+body.stream-mode .app-background {
+	display: none !important;
+}
+
+body.stream-mode {
+	color-scheme: dark;
+}
+

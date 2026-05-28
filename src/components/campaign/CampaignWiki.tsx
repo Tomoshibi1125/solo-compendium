@@ -70,7 +70,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 			const matchSearch =
 				article.title.toLowerCase().includes(search.toLowerCase()) ||
 				article.category.toLowerCase().includes(search.toLowerCase());
-			// Players can only see public articles, Warden (Warden) sees all
+			// Players can only see public articles, Warden sees all
 			const matchVisibility = hasWardenAccess ? true : article.is_public;
 			return matchSearch && matchVisibility;
 		});

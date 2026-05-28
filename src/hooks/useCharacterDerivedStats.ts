@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { type ACBreakdown, calculateAC } from "@/hooks/useArmorClass";
 import type { CanonicalEquipmentMap } from "@/hooks/useCanonicalEquipmentMap";
 import { findCanonicalForRow } from "@/hooks/useCanonicalEquipmentMap";
@@ -23,13 +23,18 @@ import {
 	calculateArmorClassStack,
 	calculateInitiativeBreakdown,
 	calculateSavingThrows,
+	persistDerivedStats,
+	resolveHpMax,
 } from "@/lib/derivedStats";
 import {
 	calculateCarryingCapacity,
 	calculateEncumbrance,
 	calculateTotalWeight,
 } from "@/lib/encumbrance";
-import { applyEquipmentModifiers } from "@/lib/equipmentModifiers";
+import {
+	applyEquipmentModifiers,
+	inferArmorType,
+} from "@/lib/equipmentModifiers";
 import { computeAttacksPerAction } from "@/lib/featEffectParser";
 import {
 	applySigilBonuses,
@@ -155,7 +160,7 @@ export function useCharacterDerivedStats(
 	const regentIds = options?.regentIds ?? [];
 	const runeKnowledge = options?.runeKnowledge ?? [];
 	const tattoos = options?.tattoos ?? [];
-	return useMemo(() => {
+	const memoized = useMemo(() => {
 		if (!character) return null;
 
 		const baseStats = calculateCharacterStats({
@@ -381,13 +386,20 @@ export function useCharacterDerivedStats(
 		const customSpeedBonus = sumCustomModifiers(customModifiers, "speed");
 		const customHpMaxBonus = sumCustomModifiers(customModifiers, "hp-max");
 
+		// hp_max_override (set by Warden intervention or homebrew) wins over
+		// the engine-computed value. resolveHpMax returns hp_max_override
+		// when present, otherwise the cached hp_max column.
+		const resolvedHpMax = resolveHpMax(
+			character as { hp_max?: number | null; hp_max_override?: number | null },
+		);
+
 		const calculatedStats = {
 			...baseStats,
 			initiative: initiativeBreakdown.calculatedStatsInitiative,
 			savingThrows: finalSavingThrows,
 			armorClass: armorClassStack.displayedArmorClass,
 			speed: Math.max(0, finalSpeed + customSpeedBonus),
-			hpMax: Math.max(1, (character.hp_max ?? 1) + customHpMaxBonus),
+			hpMax: Math.max(1, resolvedHpMax + customHpMaxBonus),
 			encumbrance,
 		};
 
@@ -523,25 +535,67 @@ export function useCharacterDerivedStats(
 			return fromRow ? parseInt(fromRow, 10) : 10;
 		};
 
-		const extractArmorCategory = (): "none" | "light" | "medium" | "heavy" => {
-			const canonCategory = canonicalArmor?.armor_type?.toLowerCase();
-			if (
-				canonCategory &&
-				["light", "medium", "heavy"].includes(canonCategory)
-			) {
-				return canonCategory as "light" | "medium" | "heavy";
-			}
-			const rowCategory = armorItem
-				? getEquipmentProperties(armorItem)
-						.find((p) =>
-							["light", "medium", "heavy"].some((tag) =>
-								p.toLowerCase().includes(tag),
-							),
-						)
-						?.toLowerCase()
-				: undefined;
-			return (rowCategory as "light" | "medium" | "heavy") ?? "none";
+		// A2/A3: Extract the actual magical enhancement bonus (+1/+2/+3) from
+		// an equipped item rather than assuming a flat +1. Reads a `+N` token
+		// from the item name or its properties, plus an explicit canonical
+		// magic_bonus field when present. Returns 0 for non-magical gear.
+		const extractMagicBonus = (
+			item: EquipmentRow | undefined,
+			canonical?: ReturnType<typeof findCanonicalForRow> | null,
+		): number => {
+			if (!item) return 0;
+			// Explicit canonical field wins when available.
+			const canonBonus = (
+				canonical as { magic_bonus?: number | null } | null | undefined
+			)?.magic_bonus;
+			if (typeof canonBonus === "number" && canonBonus > 0) return canonBonus;
+			// Parse "+N" from the name (e.g. "Plate Armor +2", "Shield +1").
+			const fromName = item.name?.match(/\+(\d+)/)?.[1];
+			if (fromName) return parseInt(fromName, 10);
+			// Parse "+N" from any property string.
+			const fromProps = getEquipmentProperties(item)
+				.map((p) => p.match(/\+(\d+)/)?.[1])
+				.find(Boolean);
+			return fromProps ? parseInt(fromProps, 10) : 0;
 		};
+
+		const extractArmorCategory = (): "none" | "light" | "medium" | "heavy" => {
+			// P1.6: Use the canonical inferArmorType helper so the AC
+			// engine, equipment step, and proficiency warnings all read
+			// from a single classifier. Canonical compendium armor_type
+			// takes precedence; falls back to row property parsing.
+			const fromCanonical = inferArmorType(canonicalArmor?.armor_type);
+			if (
+				fromCanonical &&
+				(fromCanonical === "light" ||
+					fromCanonical === "medium" ||
+					fromCanonical === "heavy")
+			) {
+				return fromCanonical;
+			}
+			const fromProps = armorItem
+				? inferArmorType(getEquipmentProperties(armorItem))
+				: null;
+			if (
+				fromProps &&
+				(fromProps === "light" ||
+					fromProps === "medium" ||
+					fromProps === "heavy")
+			) {
+				return fromProps;
+			}
+			return "none";
+		};
+
+		// Misc AC bonus = feature stacking (custom modifiers like Cloak of
+		// Protection +1) + sigil delta over baseline. Routed in as
+		// otherBonuses so the canonical AC engine takes "highest of all
+		// valid formulas + flat bonuses" — matching DDB's behavior.
+		const sigilACDelta = Math.max(0, sigilBonuses.ac - baseStats.armorClass);
+		const miscACBonusForCanonical =
+			armorClassStack.customAcBonus +
+			armorClassStack.featureACBonus +
+			sigilACDelta;
 
 		const armorClassDetail = calculateAC(
 			finalAbilities.AGI,
@@ -550,11 +604,8 @@ export function useCharacterDerivedStats(
 						name: armorItem.name,
 						baseAC: extractArmorBaseAC(),
 						category: extractArmorCategory(),
-						magicalBonus: getEquipmentProperties(armorItem).some((p) =>
-							p.toLowerCase().includes("magic"),
-						)
-							? 1
-							: 0, // heuristic
+						// A2: real enhancement bonus (+1/+2/+3), not a flat +1.
+						magicalBonus: extractMagicBonus(armorItem, canonicalArmor),
 						stealthDisadvantage:
 							canonicalArmor?.stealth_disadvantage ?? undefined,
 						strengthRequirement:
@@ -564,16 +615,39 @@ export function useCharacterDerivedStats(
 			shieldItem
 				? {
 						name: shieldItem.name,
-						acBonus: 2, // Standard
+						// A3: base +2 plus any magical shield enhancement.
+						acBonus:
+							2 +
+							extractMagicBonus(
+								shieldItem,
+								canonicalEquipmentMap
+									? findCanonicalForRow(canonicalEquipmentMap, shieldItem.name)
+									: null,
+							),
 					}
 				: null,
-			armorClassStack.customAcBonus +
-				sigilBonuses.ac -
-				(sigilBonuses.ac === baseStats.armorClass
-					? baseStats.armorClass
-					: sigilBonuses.ac), // Re-derive bonuses
+			miscACBonusForCanonical,
 			finalAbilities.STR,
+			{
+				// Enable canonical multi-formula path (Berserker/Striker
+				// Unarmored Defense, Mage Armor) by passing job + full
+				// ability scores. acFormulas.ts:calculateBestAC picks the
+				// highest eligible formula automatically.
+				job: character.job ?? null,
+				abilities: finalAbilities,
+				// Mage Armor active state: contributed via the active spells
+				// system as a customModifier; passing false here defers to
+				// the misc-bonus path. Future enhancement: thread the
+				// activeSpells boolean through the hook signature.
+				mageArmorActive: false,
+			},
 		);
+
+		// Canonical AC: overwrite the legacy armorClassStack value with
+		// the multi-formula result so the displayed AC matches the
+		// breakdown shown in the tooltip. This is the single source of
+		// truth — DDB's "evaluate all valid formulas, take highest" model.
+		calculatedStats.armorClass = armorClassDetail.total;
 
 		const encumbranceMax = Math.max(
 			calculatedStats.encumbrance.carryingCapacity,
@@ -629,7 +703,15 @@ export function useCharacterDerivedStats(
 			name: character.name,
 			level: character.level,
 			jobs: character.job
-				? [{ job: character.job, level: character.level, hitDie: 8 }]
+				? [
+						{
+							job: character.job,
+							level: character.level,
+							// A1: use the character's real hit die (Destroyer d12,
+							// Mage d6, etc.) instead of a hardcoded d8.
+							hitDie: character.hit_dice_size || 8,
+						},
+					]
 				: [],
 			abilities: character.abilities,
 			savingThrowProficiencies: (character.saving_throw_proficiencies ||
@@ -741,4 +823,35 @@ export function useCharacterDerivedStats(
 		runeKnowledge,
 		tattoos,
 	]);
+
+	// ─── P0.2: Denormalized cache write-through ─────────────────────
+	// Whenever the engine output changes, persist the derived snapshot
+	// back to the `characters` row so external readers (VTT token sync,
+	// party dashboard, API consumers) see fresh values without re-running
+	// the engine. Best-effort — see persistDerivedStats JSDoc.
+	const characterId = character?.id ?? null;
+	const cacheAC = memoized?.calculatedStats.armorClass ?? null;
+	const cacheSpeed = memoized?.finalSpeed ?? null;
+	const cacheInitiative = memoized?.finalInitiative ?? null;
+	const cacheHpMax = memoized?.calculatedStats.hpMax ?? null;
+
+	useEffect(() => {
+		if (
+			!characterId ||
+			cacheAC === null ||
+			cacheSpeed === null ||
+			cacheInitiative === null ||
+			cacheHpMax === null
+		) {
+			return;
+		}
+		void persistDerivedStats(characterId, {
+			armorClass: cacheAC,
+			speed: cacheSpeed,
+			initiative: cacheInitiative,
+			hpMax: cacheHpMax,
+		});
+	}, [characterId, cacheAC, cacheSpeed, cacheInitiative, cacheHpMax]);
+
+	return memoized;
 }

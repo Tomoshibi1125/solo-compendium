@@ -14,6 +14,7 @@ import { normalizeCharacterResources } from "@/lib/characterResources";
 import {
 	type CharacterSheetState,
 	createDefaultCharacterSheetState,
+	type SheetNoteSection,
 } from "@/lib/characterSheetState";
 import { normalizeCustomModifiers } from "@/lib/customModifiers";
 import { getErrorMessage, logErrorWithContext } from "@/lib/errorHandling";
@@ -220,6 +221,25 @@ export function useCharacterSheetState(characterId: string) {
 			const nextUi = {
 				...current.ui,
 				activeTab: tab,
+			};
+			void saveSheetState({ ui: nextUi });
+		},
+		[query.data, saveSheetState],
+	);
+
+	// F3 of May 2026 remediation plan: per-section inline notes (DDB
+	// parity). Persists inside the existing `resources.ui` JSON blob
+	// so no schema change is needed.
+	const setSectionNote = useCallback(
+		(section: SheetNoteSection, value: string) => {
+			const current = (query.data as CharacterSheetState) || defaultState;
+			const nextNotes = {
+				...(current.ui.sectionNotes || {}),
+				[section]: value,
+			};
+			const nextUi = {
+				...current.ui,
+				sectionNotes: nextNotes,
 			};
 			void saveSheetState({ ui: nextUi });
 		},
@@ -435,6 +455,7 @@ export function useCharacterSheetState(characterId: string) {
 			saveSheetState,
 			setModal,
 			setActiveTab,
+			setSectionNote,
 			onAddCondition,
 			onRemoveCondition,
 			onExhaustionChange,
@@ -449,6 +470,7 @@ export function useCharacterSheetState(characterId: string) {
 			saveSheetState,
 			setModal,
 			setActiveTab,
+			setSectionNote,
 			onAddCondition,
 			onRemoveCondition,
 			onExhaustionChange,

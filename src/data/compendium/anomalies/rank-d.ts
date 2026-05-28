@@ -171,13 +171,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0016",
 		name: "Eternal Ancient Lich",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 169,
 		ac: 25,
 		image: "/generated/compendium/anomalies/anomaly-0016.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -203,7 +203,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -253,7 +253,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0021",
-		name: "Corrupted Shadow Demon",
+		name: "Corrupted Shadow anomaly",
 		type: "Humanoid",
 		rank: "D",
 		hp: 264,
@@ -407,13 +407,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0031",
 		name: "Corrupted Abyssal Titan",
-		type: "Demon",
+		type: "anomaly",
 		rank: "D",
 		hp: 493,
 		ac: 14,
 		image: "/generated/compendium/anomalies/anomaly-0031.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -439,7 +439,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -572,7 +572,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0041",
-		name: "Blessed Shadow Demon",
+		name: "Blessed Shadow anomaly",
 		type: "Dragon",
 		rank: "D",
 		hp: 169,
@@ -656,13 +656,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0046",
 		name: "Blessed Ancient Dragon",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 583,
 		ac: 20,
 		image: "/generated/compendium/anomalies/anomaly-0046.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -688,7 +688,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -878,14 +878,14 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0061",
-		name: "Cursed Shadow Demon",
-		type: "Demon",
+		name: "Cursed Shadow anomaly",
+		type: "anomaly",
 		rank: "D",
 		hp: 671,
 		ac: 12,
 		image: "/generated/compendium/anomalies/anomaly-0061.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -911,7 +911,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1128,13 +1128,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0076",
 		name: "Cursed Ancient Lich",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 825,
 		ac: 17,
 		image: "/generated/compendium/anomalies/anomaly-0076.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1160,7 +1160,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1210,7 +1210,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0081",
-		name: "Ancient Shadow Demon",
+		name: "Ancient Shadow anomaly",
 		type: "Humanoid",
 		rank: "D",
 		hp: 563,
@@ -1351,13 +1351,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0091",
 		name: "Ancient Abyssal Titan",
-		type: "Demon",
+		type: "anomaly",
 		rank: "D",
 		hp: 477,
 		ac: 23,
 		image: "/generated/compendium/anomalies/anomaly-0091.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1383,7 +1383,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1503,7 +1503,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0101",
-		name: "Primordial Shadow Demon",
+		name: "Primordial Shadow anomaly",
 		type: "Dragon",
 		rank: "D",
 		hp: 813,
@@ -1587,13 +1587,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0106",
 		name: "Primordial Ancient Dragon",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 258,
 		ac: 25,
 		image: "/generated/compendium/anomalies/anomaly-0106.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1619,7 +1619,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1835,14 +1835,14 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0121",
-		name: "Supreme Shadow Demon",
-		type: "Demon",
+		name: "Supreme Shadow anomaly",
+		type: "anomaly",
 		rank: "D",
 		hp: 161,
 		ac: 17,
 		image: "/generated/compendium/anomalies/anomaly-0121.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1868,7 +1868,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2072,13 +2072,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0136",
 		name: "Supreme Ancient Lich",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 331,
 		ac: 24,
 		image: "/generated/compendium/anomalies/anomaly-0136.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2104,7 +2104,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2154,7 +2154,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0141",
-		name: "Legendary Shadow Demon",
+		name: "Legendary Shadow anomaly",
 		type: "Humanoid",
 		rank: "D",
 		hp: 275,
@@ -2308,13 +2308,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0151",
 		name: "Legendary Abyssal Titan",
-		type: "Demon",
+		type: "anomaly",
 		rank: "D",
 		hp: 607,
 		ac: 18,
 		image: "/generated/compendium/anomalies/anomaly-0151.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2340,7 +2340,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2460,7 +2460,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0161",
-		name: "Mythic Shadow Demon",
+		name: "Mythic Shadow anomaly",
 		type: "Dragon",
 		rank: "D",
 		hp: 424,
@@ -2531,13 +2531,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0166",
 		name: "Mythic Ancient Dragon",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 478,
 		ac: 22,
 		image: "/generated/compendium/anomalies/anomaly-0166.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2563,7 +2563,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2766,14 +2766,14 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0181",
-		name: "Divine Shadow Demon",
-		type: "Demon",
+		name: "Divine Shadow anomaly",
+		type: "anomaly",
 		rank: "D",
 		hp: 1055,
 		ac: 23,
 		image: "/generated/compendium/anomalies/anomaly-0181.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2799,7 +2799,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3003,13 +3003,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0196",
 		name: "Divine Ancient Lich",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 955,
 		ac: 20,
 		image: "/generated/compendium/anomalies/anomaly-0196.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3035,7 +3035,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3085,7 +3085,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0201",
-		name: "Infernal Shadow Demon",
+		name: "Infernal Shadow anomaly",
 		type: "Humanoid",
 		rank: "D",
 		hp: 395,
@@ -3239,13 +3239,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0211",
 		name: "Infernal Abyssal Titan",
-		type: "Demon",
+		type: "anomaly",
 		rank: "D",
 		hp: 704,
 		ac: 15,
 		image: "/generated/compendium/anomalies/anomaly-0211.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3271,7 +3271,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3391,7 +3391,7 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0221",
-		name: "Celestial Shadow Demon",
+		name: "Celestial Shadow anomaly",
 		type: "Dragon",
 		rank: "D",
 		hp: 606,
@@ -3475,13 +3475,13 @@ export const anomalies_d = [
 	{
 		id: "anomaly-0226",
 		name: "Celestial Ancient Dragon",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "D",
 		hp: 122,
 		ac: 20,
 		image: "/generated/compendium/anomalies/anomaly-0226.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -3507,7 +3507,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3697,14 +3697,14 @@ export const anomalies_d = [
 	},
 	{
 		id: "anomaly-0241",
-		name: "Eternal Shadow Demon",
-		type: "Demon",
+		name: "Eternal Shadow anomaly",
+		type: "anomaly",
 		rank: "D",
 		hp: 489,
 		ac: 22,
 		image: "/generated/compendium/anomalies/anomaly-0241.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This D rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3730,7 +3730,7 @@ export const anomalies_d = [
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",

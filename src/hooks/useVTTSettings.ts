@@ -15,6 +15,14 @@ export interface VTTSettings {
 	allowPlayerMonsterInteract: boolean;
 	allowPlayerFogBrush: boolean;
 	wheelBehavior: "zoom" | "scroll";
+	/**
+	 * Misty Pearl B3 — Scene Transitions. When enabled, switching the
+	 * active scene runs a fade-out / title-card / fade-in overlay
+	 * (Foundry v14 parity).
+	 */
+	sceneTransitionEnabled: boolean;
+	/** Total duration of the transition envelope in ms (clamped 600–6000). */
+	sceneTransitionDurationMs: number;
 }
 
 export const DEFAULT_VTT_SETTINGS: VTTSettings = {
@@ -24,6 +32,8 @@ export const DEFAULT_VTT_SETTINGS: VTTSettings = {
 	allowPlayerMonsterInteract: false,
 	allowPlayerFogBrush: false,
 	wheelBehavior: "zoom",
+	sceneTransitionEnabled: false,
+	sceneTransitionDurationMs: 2200,
 };
 
 export type VTTSessionState = "started" | "paused" | "ended";

@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import "./lib/i18n"; // Misty Pearl H1 — i18n bootstrap (registers locales).
 import { verifyCoreDependencies } from "./lib/maintenance/DependencyProof";
 
 // ZERO LEGACY CERTIFICATION: Ensure all engine dependencies are registered and used.

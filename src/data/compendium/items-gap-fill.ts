@@ -25,7 +25,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
 			personality: "",
@@ -33,7 +33,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Logged on the requisition manifest. Trusted on the line.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -108,8 +108,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -219,8 +219,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -259,7 +259,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -336,8 +336,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -456,8 +456,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -568,8 +568,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -608,7 +608,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "gear"],
@@ -687,8 +687,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -721,7 +721,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -798,8 +798,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -834,7 +834,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -915,8 +915,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -1036,8 +1036,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1075,7 +1075,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -1159,8 +1159,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1279,8 +1279,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1400,8 +1400,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1520,8 +1520,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1558,7 +1558,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -1642,8 +1642,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1765,8 +1765,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -1801,13 +1801,13 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "gear"],
@@ -1885,8 +1885,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2007,8 +2007,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2049,7 +2049,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -2128,8 +2128,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2248,8 +2248,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2371,8 +2371,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2408,11 +2408,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "gear"],
@@ -2491,8 +2491,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2612,8 +2612,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2665,7 +2665,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "gear"],
@@ -2761,8 +2761,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2809,7 +2809,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -2910,8 +2910,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -2957,9 +2957,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -3060,8 +3060,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3108,7 +3108,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -3206,8 +3206,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3259,9 +3259,9 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -3356,8 +3356,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3409,7 +3409,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "gear"],
@@ -3505,8 +3505,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3652,8 +3652,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3699,13 +3699,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -3797,8 +3797,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -3843,7 +3843,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Stamped at a Bureau forge in Incheon and field-tested in a B-rank clear.",
 			personality: "",
@@ -3944,8 +3944,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4094,8 +4094,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4146,7 +4146,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "gear"],
@@ -4243,8 +4243,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4392,8 +4392,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4439,7 +4439,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
@@ -4448,7 +4448,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -4542,8 +4542,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4688,8 +4688,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4736,11 +4736,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "gear"],
@@ -4837,8 +4837,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -4892,7 +4892,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Boring kit. Boring kit comes home.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -4984,8 +4984,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5031,7 +5031,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
 			personality: "",
@@ -5133,8 +5133,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5279,8 +5279,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5428,8 +5428,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5578,8 +5578,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5724,8 +5724,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5770,7 +5770,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
@@ -5873,8 +5873,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -5925,7 +5925,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "gear"],
@@ -6020,8 +6020,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -6074,7 +6074,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -6168,8 +6168,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -6213,7 +6213,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
 			personality: "",
@@ -6314,8 +6314,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -6368,7 +6368,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -6461,8 +6461,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -6478,7 +6478,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_ring_common_0",
 		name: "Trainee Rune Ring",
 		description:
-			"A simple ring that rewards a Hunter who knows what to look for.",
+			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "common",
 		type: "ring",
 		image: "/generated/compendium/items/item-0884.webp",
@@ -6503,7 +6503,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "gear"],
@@ -6580,8 +6580,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -6622,7 +6622,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -6697,8 +6697,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -6740,7 +6740,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -6815,8 +6815,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -6858,7 +6858,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -6933,8 +6933,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7044,8 +7044,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -7160,8 +7160,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -7194,11 +7194,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Resurfaced after twenty years in deep storage during a Bureau cleanup of legacy lockers.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "gear"],
@@ -7269,8 +7269,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7387,8 +7387,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7404,7 +7404,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_ring_uncommon_0",
 		name: "Lattice-Stable Stone Ring",
 		description:
-			"A simple ring that rewards a Hunter who knows what to look for.",
+			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "uncommon",
 		type: "ring",
 		image: "/generated/compendium/items/item-0745.webp",
@@ -7424,7 +7424,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
@@ -7511,8 +7511,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7549,13 +7549,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -7630,8 +7630,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7754,8 +7754,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7771,7 +7771,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_ring_uncommon_3",
 		name: "Mana-Treated Band",
 		description:
-			"A simple ring that rewards a Hunter who knows what to look for.",
+			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "uncommon",
 		type: "ring",
 		image: "/generated/compendium/items/item-0510.webp",
@@ -7878,8 +7878,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -7997,8 +7997,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8117,8 +8117,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8134,7 +8134,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_ring_uncommon_6",
 		name: "Veteran Signet",
 		description:
-			"A simple ring that rewards a Hunter who knows what to look for.",
+			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "uncommon",
 		type: "ring",
 		image: "/generated/compendium/items/item-0299.webp",
@@ -8159,7 +8159,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -8238,8 +8238,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8275,13 +8275,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -8358,8 +8358,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8476,8 +8476,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8597,8 +8597,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8639,7 +8639,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -8720,8 +8720,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8841,8 +8841,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -8961,8 +8961,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9081,8 +9081,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9118,11 +9118,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "gear"],
@@ -9201,8 +9201,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9321,8 +9321,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9359,7 +9359,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -9445,8 +9445,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9489,7 +9489,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -9566,8 +9566,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9618,7 +9618,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "gear"],
@@ -9711,8 +9711,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -9728,7 +9728,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_ring_rare_1",
 		name: "Toxic Band",
 		description:
-			"A simple ring that rewards a Hunter who knows what to look for.",
+			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "rare",
 		type: "ring",
 		image: "/generated/compendium/items/item-0894.webp",
@@ -9760,7 +9760,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -9862,8 +9862,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10011,8 +10011,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10161,8 +10161,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10310,8 +10310,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10358,7 +10358,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -10457,8 +10457,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10511,7 +10511,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "gear"],
@@ -10608,8 +10608,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10754,8 +10754,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10807,7 +10807,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "gear"],
@@ -10904,8 +10904,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -10953,7 +10953,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -11054,8 +11054,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -11101,7 +11101,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -11200,8 +11200,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -11254,7 +11254,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "gear"],
@@ -11349,8 +11349,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -11397,7 +11397,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -11496,8 +11496,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -11551,7 +11551,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -11646,8 +11646,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -11693,7 +11693,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
@@ -11795,8 +11795,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -11849,7 +11849,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -11944,8 +11944,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12090,8 +12090,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12238,8 +12238,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12287,7 +12287,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -12384,8 +12384,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12432,7 +12432,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
 			personality: "",
 			prior_owners: [],
@@ -12534,8 +12534,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12589,7 +12589,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -12682,8 +12682,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12735,7 +12735,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -12830,8 +12830,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -12877,15 +12877,15 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -12978,8 +12978,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -13033,7 +13033,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -13126,8 +13126,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -13273,8 +13273,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -13328,7 +13328,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -13419,8 +13419,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -13466,7 +13466,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -13563,8 +13563,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -13709,8 +13709,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -13762,7 +13762,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Found in the back of a Guild's recovered-effects locker during inheritance review.",
 		tags: ["equipment", "gear"],
@@ -13855,8 +13855,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -14002,8 +14002,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -14056,7 +14056,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -14152,8 +14152,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -14204,9 +14204,9 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -14299,8 +14299,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -14337,7 +14337,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -14411,8 +14411,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -14427,7 +14427,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_1",
 		name: "Service-Grade Sash",
-		description: "A miscellaneous item from the Bureau-supplied Hunter kit.",
+		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0018.webp",
@@ -14447,7 +14447,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -14528,8 +14528,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -14561,7 +14561,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Forged in Bureau Forge Bay 12 from ichor-grade alloys harvested mid-clear.",
 			personality: "",
@@ -14569,7 +14569,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Boring kit. Boring kit comes home.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -14643,8 +14643,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -14659,7 +14659,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_3",
 		name: "Bureau-Issue Tactical Sash",
-		description: "A miscellaneous item from the Bureau-supplied Hunter kit.",
+		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0524.webp",
@@ -14679,7 +14679,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -14760,8 +14760,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -14777,7 +14777,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_belt_common_4",
 		name: "Service Belt",
 		description:
-			"A standard Hunter combat belt with built-in holster compatibility.",
+			"A standard Ascendant combat belt with built-in holster compatibility.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0095.webp",
@@ -14795,13 +14795,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Logged on the requisition manifest. Trusted on the line.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -14873,8 +14873,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -14889,7 +14889,8 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_5",
 		name: "Cadet's Combat Sash",
-		description: "A miscellaneous piece of Hunter Bureau quartermaster issue.",
+		description:
+			"A miscellaneous piece of Ascendant Bureau quartermaster issue.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0614.webp",
@@ -14990,8 +14991,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -15028,11 +15029,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "gear"],
@@ -15109,8 +15110,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15135,7 +15136,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 		},
@@ -15144,7 +15145,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Salvaged from a partially-collapsed gate during a recovery sweep.",
 			personality: "",
@@ -15152,7 +15153,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Boring kit. Boring kit comes home.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -15192,7 +15193,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "8fc2d599",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_belt_uncommon_1::Sanctioned Tactical Sash",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -15210,15 +15211,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
 				passive_effects: [
-					"A miscellaneous piece of standard Hunter kit.",
+					"A miscellaneous piece of standard Ascendant kit.",
 					"On a hit, the next ally's attack against the same target has advantage until the start of your next turn.",
 				],
 			},
@@ -15227,8 +15228,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15346,8 +15347,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15465,8 +15466,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15503,7 +15504,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -15587,8 +15588,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15622,7 +15623,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Recovered from a black-market shipment intercepted by Bureau agents.",
 			personality: "",
@@ -15705,8 +15706,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15742,7 +15743,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -15823,8 +15824,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15859,7 +15860,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
 			personality: "",
@@ -15944,8 +15945,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -15979,7 +15980,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
@@ -16063,8 +16064,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16080,7 +16081,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_belt_uncommon_9",
 		name: "Frontier Cinch Belt",
 		description:
-			"A standard Hunter combat belt with built-in holster compatibility.",
+			"A standard Ascendant combat belt with built-in holster compatibility.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0047.webp",
@@ -16107,7 +16108,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -16183,8 +16184,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16329,8 +16330,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16374,7 +16375,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
@@ -16382,7 +16383,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Small enough to forget. Big enough to matter when it counts.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -16474,8 +16475,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16521,7 +16522,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -16619,8 +16620,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16671,7 +16672,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "gear"],
@@ -16764,8 +16765,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16911,8 +16912,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -16965,9 +16966,9 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -17061,8 +17062,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -17210,8 +17211,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -17357,8 +17358,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -17393,7 +17394,7 @@ export const items_gap_fill: Item[] = [
 				},
 			],
 			passive: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"Critical hits with this item bypass damage resistance.",
 			],
 		},
@@ -17459,7 +17460,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "708d24fb",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_belt_epic_0::Crownbearer's Tactical Sash",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -17477,7 +17478,7 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"Critical hits with this item bypass damage resistance.",
 			],
 			resolution: {
@@ -17490,9 +17491,9 @@ export const items_gap_fill: Item[] = [
 						dc: null,
 					},
 				],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
 				passive_effects: [
-					"A miscellaneous piece of standard Hunter kit.",
+					"A miscellaneous piece of standard Ascendant kit.",
 					"Critical hits with this item bypass damage resistance.",
 				],
 			},
@@ -17501,8 +17502,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -17549,7 +17550,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -17647,8 +17648,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -17796,8 +17797,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -17941,8 +17942,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -18087,8 +18088,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -18133,9 +18134,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -18234,8 +18235,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -18268,7 +18269,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Salvaged from a partially-collapsed gate during a recovery sweep.",
 			personality: "",
@@ -18276,7 +18277,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -18351,8 +18352,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -18460,8 +18461,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -18495,7 +18496,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
@@ -18579,8 +18580,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -18616,7 +18617,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -18698,8 +18699,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -18816,8 +18817,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -18850,9 +18851,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -18933,8 +18934,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19052,8 +19053,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19172,8 +19173,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19293,8 +19294,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19338,7 +19339,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -19416,8 +19417,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19536,8 +19537,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19577,7 +19578,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "gear"],
@@ -19657,8 +19658,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19775,8 +19776,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19820,7 +19821,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -19897,8 +19898,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -19932,7 +19933,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
@@ -20015,8 +20016,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -20133,8 +20134,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -20186,9 +20187,9 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -20283,8 +20284,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -20331,7 +20332,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Hand-finished by a Bureau master artificer working out of the Seoul Forge District.",
 			personality: "",
@@ -20434,8 +20435,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -20582,8 +20583,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -20733,8 +20734,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -20782,7 +20783,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -20880,8 +20881,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21027,8 +21028,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21175,8 +21176,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21324,8 +21325,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21371,7 +21372,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
 			personality: "",
@@ -21474,8 +21475,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21522,12 +21523,12 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "gear"],
@@ -21622,8 +21623,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21767,8 +21768,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21815,7 +21816,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -21912,8 +21913,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -21966,7 +21967,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -22062,8 +22063,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -22209,8 +22210,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -22252,7 +22253,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Small enough to forget. Big enough to matter when it counts.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -22327,8 +22328,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -22364,13 +22365,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -22445,8 +22446,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -22562,8 +22563,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -22603,7 +22604,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "gear"],
@@ -22680,8 +22681,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -22722,7 +22723,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "gear"],
@@ -22799,8 +22800,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -22835,7 +22836,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -22917,8 +22918,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -22960,7 +22961,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Recovered during the post-clear sweep of a B-rank facility seal.",
 		tags: ["equipment", "gear"],
@@ -23040,8 +23041,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23160,8 +23161,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23282,8 +23283,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23319,7 +23320,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
 			personality: "",
@@ -23406,8 +23407,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23443,11 +23444,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -23526,8 +23527,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23562,7 +23563,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Hand-finished by a Bureau master artificer working out of the Seoul Forge District.",
 			personality: "",
@@ -23570,7 +23571,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Small enough to forget. Big enough to matter when it counts.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -23647,8 +23648,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23684,7 +23685,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Passed quietly between three guildhalls before settling into the Bureau's surplus cycle.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -23768,8 +23769,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -23892,8 +23893,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24014,8 +24015,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24135,8 +24136,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24150,7 +24151,7 @@ export const items_gap_fill: Item[] = [
 	},
 	{
 		id: "gap_gear_attire_uncommon_10",
-		name: "Adept's Hunter's Mantle",
+		name: "Adept's Ascendant's Mantle",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "uncommon",
@@ -24218,7 +24219,7 @@ export const items_gap_fill: Item[] = [
 			audit: {
 				fingerprint: "7c28809d",
 				payload_complete: true,
-				uniqueness_seed: "gap_gear_attire_uncommon_10::Adept's Hunter's Mantle",
+				uniqueness_seed: "gap_gear_attire_uncommon_10::Adept's Ascendant's Mantle",
 				variant_note:
 					"Tailored uniform. Conveys formal Bureau status; +2 to Intimidation checks against civilians.",
 			},
@@ -24232,7 +24233,7 @@ export const items_gap_fill: Item[] = [
 				archetype: "gear_attire",
 				canon_basis: "RA enhanced catalog",
 				distinguishing_rule:
-					"Adept's Hunter's Mantle keys standard gear attire rules through signature d8bdf37e.",
+					"Adept's Ascendant's Mantle keys standard gear attire rules through signature d8bdf37e.",
 				role: "utility",
 				signature: "d8bdf37e",
 				theme: "standard",
@@ -24256,8 +24257,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24292,7 +24293,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
 			personality: "",
@@ -24377,8 +24378,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24524,8 +24525,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24671,8 +24672,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24720,7 +24721,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -24821,8 +24822,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -24972,8 +24973,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -25119,8 +25120,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -25174,7 +25175,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -25267,8 +25268,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -25316,7 +25317,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -25417,8 +25418,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -25466,7 +25467,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -25567,8 +25568,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -25718,8 +25719,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -25771,7 +25772,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -25864,8 +25865,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26014,8 +26015,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26060,7 +26061,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Acquired from a Bureau-stamped supplier under a long-term contract.",
 			personality: "",
@@ -26068,7 +26069,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -26161,8 +26162,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26307,8 +26308,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26457,8 +26458,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26608,8 +26609,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26756,8 +26757,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26904,8 +26905,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -26921,7 +26922,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_common_0",
 		name: "Service-Grade Wristguard",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0269.webp",
@@ -27023,8 +27024,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -27140,8 +27141,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27157,7 +27158,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_common_2",
 		name: "Modern Forearm Plate",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0267.webp",
@@ -27181,7 +27182,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -27256,8 +27257,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -27371,8 +27372,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27491,8 +27492,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27612,8 +27613,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27647,7 +27648,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
 			personality: "",
@@ -27732,8 +27733,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27776,7 +27777,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -27853,8 +27854,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27891,7 +27892,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -27974,8 +27975,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -27991,7 +27992,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_uncommon_5",
 		name: "Renegade Forearm Plate",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0457.webp",
@@ -28094,8 +28095,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28120,7 +28121,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"+1 to attack rolls when at full HP.",
 			],
 		},
@@ -28131,7 +28132,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -28177,7 +28178,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "9f8f9a17",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_bracer_uncommon_6::Field-Tested Cuff",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -28195,15 +28196,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"+1 to attack rolls when at full HP.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
 				passive_effects: [
-					"A miscellaneous piece of standard Hunter kit.",
+					"A miscellaneous piece of standard Ascendant kit.",
 					"+1 to attack rolls when at full HP.",
 				],
 			},
@@ -28212,8 +28213,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28333,8 +28334,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28350,7 +28351,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_rare_0",
 		name: "Shadow Sigil Bracer",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0450.webp",
@@ -28380,7 +28381,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
@@ -28484,8 +28485,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28501,7 +28502,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_rare_1",
 		name: "Frost Bracer",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0811.webp",
@@ -28539,7 +28540,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Small enough to forget. Big enough to matter when it counts.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -28634,8 +28635,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28780,8 +28781,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28833,7 +28834,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -28930,8 +28931,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -28947,7 +28948,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_rare_4",
 		name: "Aetheric Forearm Plate",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0014.webp",
@@ -28984,7 +28985,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "gear"],
@@ -29081,8 +29082,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -29098,7 +29099,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_bracer_rare_5",
 		name: "Tempered Bracer",
 		description:
-			"A Bureau-issued forearm guard for Hunters operating melee-forward.",
+			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0527.webp",
@@ -29130,7 +29131,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -29229,8 +29230,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -29380,8 +29381,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -29526,8 +29527,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -29672,8 +29673,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -29688,7 +29689,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_0",
 		name: "Patrol Gate Atlas",
-		description: "A small piece of standard Hunter kit.",
+		description: "A small piece of standard Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0524.webp",
@@ -29708,7 +29709,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Passed quietly between three guildhalls before settling into the Bureau's surplus cycle.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -29789,8 +29790,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -29833,7 +29834,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -29908,8 +29909,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -29924,7 +29925,8 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_2",
 		name: "Modern Gate Atlas",
-		description: "A miscellaneous piece of Hunter Bureau quartermaster issue.",
+		description:
+			"A miscellaneous piece of Ascendant Bureau quartermaster issue.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0274.webp",
@@ -29933,7 +29935,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "tool",
 		properties: {},
 		effects: {
-			passive: ["A miscellaneous piece of standard Hunter kit."],
+			passive: ["A miscellaneous piece of standard Ascendant kit."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -29989,7 +29991,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "b0a4e37e",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_navigation_common_2::Modern Gate Atlas",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -30006,20 +30008,20 @@ export const items_gap_fill: Item[] = [
 				signature: "4e19e703",
 				theme: "standard",
 			},
-			passive_rules: ["A miscellaneous piece of standard Hunter kit."],
+			passive_rules: ["A miscellaneous piece of standard Ascendant kit."],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
-				passive_effects: ["A miscellaneous piece of standard Hunter kit."],
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
+				passive_effects: ["A miscellaneous piece of standard Ascendant kit."],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -30061,7 +30063,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -30136,8 +30138,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -30152,7 +30154,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_4",
 		name: "Service-Grade Gate Atlas",
-		description: "A small piece of standard Hunter kit.",
+		description: "A small piece of standard Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0080.webp",
@@ -30161,16 +30163,16 @@ export const items_gap_fill: Item[] = [
 		item_type: "tool",
 		properties: {},
 		effects: {
-			passive: ["A miscellaneous piece of standard Hunter kit."],
+			passive: ["A miscellaneous piece of standard Ascendant kit."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -30217,7 +30219,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_gear_navigation_common_4::Service-Grade Gate Atlas",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -30234,20 +30236,20 @@ export const items_gap_fill: Item[] = [
 				signature: "b8ad1465",
 				theme: "standard",
 			},
-			passive_rules: ["A miscellaneous piece of standard Hunter kit."],
+			passive_rules: ["A miscellaneous piece of standard Ascendant kit."],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
-				passive_effects: ["A miscellaneous piece of standard Hunter kit."],
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
+				passive_effects: ["A miscellaneous piece of standard Ascendant kit."],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -30363,8 +30365,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -30483,8 +30485,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -30603,8 +30605,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -30647,7 +30649,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -30725,8 +30727,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -30849,8 +30851,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -30898,13 +30900,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -30999,8 +31001,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -31044,9 +31046,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -31145,8 +31147,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -31262,8 +31264,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -31381,8 +31383,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -31498,8 +31500,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -31542,7 +31544,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -31617,8 +31619,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -31735,8 +31737,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -31866,8 +31868,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -31986,8 +31988,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -32107,8 +32109,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -32227,8 +32229,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -32263,9 +32265,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -32348,8 +32350,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -32400,7 +32402,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "gear"],
@@ -32495,8 +32497,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -32543,7 +32545,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -32644,8 +32646,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -32671,7 +32673,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			],
 		},
 		source: "Gap-Fill Catalog",
@@ -32679,14 +32681,14 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "gear"],
@@ -32730,7 +32732,7 @@ export const items_gap_fill: Item[] = [
 				uniqueness_seed:
 					"gap_gear_credential_common_0::Inspector's Identification Plate",
 				variant_note:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -32748,15 +32750,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				passive_effects: [
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				],
 			},
 			rules_payload_version: "ra-item-v1",
@@ -32764,8 +32766,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -32781,7 +32783,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_credential_common_1",
 		name: "Provisional Credential",
 		description:
-			"An identification badge linked to a Hunter's official record.",
+			"An identification badge linked to a Ascendant's official record.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0050.webp",
@@ -32799,7 +32801,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
@@ -32882,8 +32884,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -32909,7 +32911,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			],
 		},
 		source: "Gap-Fill Catalog",
@@ -32924,9 +32926,9 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -32968,7 +32970,7 @@ export const items_gap_fill: Item[] = [
 				uniqueness_seed:
 					"gap_gear_credential_common_2::Reinforced Authentication Token",
 				variant_note:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -32986,15 +32988,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				passive_effects: [
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				],
 			},
 			rules_payload_version: "ra-item-v1",
@@ -33002,8 +33004,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -33019,7 +33021,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_credential_common_3",
 		name: "Bureau-Approved Credential",
 		description:
-			"A laminated identity tag stamped with the Hunter Association seal.",
+			"A laminated identity tag stamped with the Ascendant Bureau seal.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0556.webp",
@@ -33037,14 +33039,14 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Acquired from a Bureau-stamped supplier under a long-term contract.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -33122,8 +33124,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -33139,7 +33141,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_credential_uncommon_0",
 		name: "Bonded Badge",
 		description:
-			"An identification badge linked to a Hunter's official record.",
+			"An identification badge linked to a Ascendant's official record.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0702.webp",
@@ -33149,7 +33151,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				"Once per long rest, when you take damage, you may halve it as a reaction.",
 			],
 		},
@@ -33164,7 +33166,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "gear"],
@@ -33207,7 +33209,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_credential_uncommon_0::Bonded Badge",
 				variant_note:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -33225,16 +33227,16 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				"Once per long rest, when you take damage, you may halve it as a reaction.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				passive_effects: [
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 					"Once per long rest, when you take damage, you may halve it as a reaction.",
 				],
 			},
@@ -33243,8 +33245,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -33260,7 +33262,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_credential_uncommon_1",
 		name: "Reclaimed ID Chip",
 		description:
-			"An identification badge linked to a Hunter's official record.",
+			"An identification badge linked to a Ascendant's official record.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0183.webp",
@@ -33270,7 +33272,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				"+1 to Investigation and Insight checks while attuned.",
 			],
 		},
@@ -33329,7 +33331,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_credential_uncommon_1::Reclaimed ID Chip",
 				variant_note:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -33347,16 +33349,16 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+				"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				"+1 to Investigation and Insight checks while attuned.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
 				non_damage_resolution:
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 				passive_effects: [
-					"Bureau-recognized ID. Grants access to controlled facilities and Hunter-only districts.",
+					"Bureau-recognized ID. Grants access to controlled facilities and Ascendant-only districts.",
 					"+1 to Investigation and Insight checks while attuned.",
 				],
 			},
@@ -33365,8 +33367,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -33382,7 +33384,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_credential_uncommon_2",
 		name: "Field-Tested Insignia",
 		description:
-			"A Hunter's operating credential, valid in Bureau-controlled districts.",
+			"A Ascendant's operating credential, valid in Bureau-controlled districts.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0192.webp",
@@ -33403,11 +33405,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Catalogued at a Bureau intake desk after a routine third-party deposit.",
 		tags: ["equipment", "gear"],
@@ -33487,8 +33489,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -33523,11 +33525,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "gear"],
@@ -33604,8 +33606,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -33621,7 +33623,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_kit_common_1",
 		name: "Service-Grade Tracking Kit",
 		description:
-			"A field-issued working kit, stamped with the Hunter Association seal.",
+			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0383.webp",
@@ -33647,7 +33649,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Small enough to forget. Big enough to matter when it counts.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -33722,8 +33724,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -33842,8 +33844,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -33955,8 +33957,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -33972,7 +33974,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_kit_common_4",
 		name: "Recruit's Forensic Kit",
 		description:
-			"A field-issued working kit, stamped with the Hunter Association seal.",
+			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0330.webp",
@@ -33997,7 +33999,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "gear"],
@@ -34074,8 +34076,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -34091,7 +34093,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_kit_uncommon_0",
 		name: "Operative's Triage Kit",
 		description:
-			"A field-issued working kit, stamped with the Hunter Association seal.",
+			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0295.webp",
@@ -34118,7 +34120,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -34194,8 +34196,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -34211,7 +34213,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_kit_uncommon_1",
 		name: "Renegade Survival Kit",
 		description:
-			"A field-issued working kit, stamped with the Hunter Association seal.",
+			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0814.webp",
@@ -34232,13 +34234,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Featured in a Bureau training video as an example of safe field maintenance.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -34314,8 +34316,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -34357,7 +34359,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -34434,8 +34436,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -34472,7 +34474,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -34555,8 +34557,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -34572,7 +34574,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_kit_rare_0",
 		name: "Hexbound Breach Kit",
 		description:
-			"A specialized kit, calibrated for Hunter Bureau operational standards.",
+			"A specialized kit, calibrated for Ascendant Bureau operational standards.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-1001.webp",
@@ -34703,8 +34705,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -34720,7 +34722,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_kit_rare_1",
 		name: "Glacial Recovery Kit",
 		description:
-			"A field-issued working kit, stamped with the Hunter Association seal.",
+			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0240.webp",
@@ -34853,8 +34855,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -34973,8 +34975,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -35089,8 +35091,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -35128,7 +35130,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "gear"],
@@ -35206,8 +35208,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -35325,8 +35327,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -35444,8 +35446,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -35482,11 +35484,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Surfaced from a private collection following the owner's retirement.",
 		tags: ["equipment", "gear"],
@@ -35566,8 +35568,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -35689,8 +35691,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -35811,8 +35813,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -35854,7 +35856,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -35932,8 +35934,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -35970,7 +35972,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Passed quietly between three guildhalls before settling into the Bureau's surplus cycle.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -36054,8 +36056,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -36102,7 +36104,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -36205,8 +36207,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -36259,7 +36261,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -36356,8 +36358,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -36402,7 +36404,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
 			personality: "",
@@ -36505,8 +36507,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -36653,8 +36655,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -36774,8 +36776,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -36791,7 +36793,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_restraint_common_1",
 		name: "Service Manacles",
 		description:
-			"Bureau-graded handcuffs designed to hold up to A-rank Hunters.",
+			"Bureau-graded handcuffs designed to hold up to A-rank Ascendants.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0135.webp",
@@ -36809,7 +36811,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -36892,8 +36894,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -36909,7 +36911,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_restraint_common_2",
 		name: "Standard-Pattern Binders",
 		description:
-			"Bureau-graded handcuffs designed to hold up to A-rank Hunters.",
+			"Bureau-graded handcuffs designed to hold up to A-rank Ascendants.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0128.webp",
@@ -36927,7 +36929,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Acquired from a Bureau-stamped supplier under a long-term contract.",
 			personality: "",
@@ -37011,8 +37013,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -37055,7 +37057,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -37132,8 +37134,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -37159,7 +37161,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"Once per short rest, end one condition affecting you (charmed, frightened, poisoned).",
 			],
 		},
@@ -37217,7 +37219,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "085a6dd1",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_restraint_uncommon_1::Adept's Cuffs",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -37235,15 +37237,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"Once per short rest, end one condition affecting you (charmed, frightened, poisoned).",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
 				passive_effects: [
-					"A miscellaneous piece of standard Hunter kit.",
+					"A miscellaneous piece of standard Ascendant kit.",
 					"Once per short rest, end one condition affecting you (charmed, frightened, poisoned).",
 				],
 			},
@@ -37252,8 +37254,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -37298,7 +37300,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Salvaged from a partially-collapsed gate during a recovery sweep.",
 			personality: "",
@@ -37399,8 +37401,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -37415,7 +37417,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_0",
 		name: "Field-Issue Spyglass",
-		description: "A miscellaneous item from the Bureau-supplied Hunter kit.",
+		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0438.webp",
@@ -37433,9 +37435,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -37516,8 +37518,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -37551,7 +37553,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Recovered from a black-market shipment intercepted by Bureau agents.",
 			personality: "",
@@ -37634,8 +37636,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -37651,7 +37653,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_common_2",
 		name: "Patrol Piton Set",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0960.webp",
@@ -37671,13 +37673,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Logged on the requisition manifest. Trusted on the line.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -37752,8 +37754,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -37769,7 +37771,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_common_3",
 		name: "Cadet's Hand Mirror",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0689.webp",
@@ -37795,7 +37797,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -37870,8 +37872,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -37911,9 +37913,9 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -37988,8 +37990,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -38106,8 +38108,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -38123,7 +38125,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_common_6",
 		name: "Bureau-Issue Mess Kit",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0372.webp",
@@ -38224,8 +38226,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -38241,7 +38243,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_common_7",
 		name: "Bureau-Issue Saw",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0229.webp",
@@ -38342,8 +38344,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -38388,7 +38390,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -38471,8 +38473,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -38488,7 +38490,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_common_9",
 		name: "Modern Mess Kit",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0487.webp",
@@ -38514,7 +38516,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Small enough to forget. Big enough to matter when it counts.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -38589,8 +38591,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -38630,7 +38632,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "gear"],
@@ -38707,8 +38709,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -38744,7 +38746,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -38826,8 +38828,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -38946,8 +38948,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -39064,8 +39066,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39106,7 +39108,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "gear"],
@@ -39185,8 +39187,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39202,7 +39204,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_uncommon_1",
 		name: "Veteran Hand Drill",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0214.webp",
@@ -39221,7 +39223,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
 			personality: "",
@@ -39230,7 +39232,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -39307,8 +39309,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39343,7 +39345,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -39429,8 +39431,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39561,8 +39563,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39577,7 +39579,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_4",
 		name: "Adept's Spyglass",
-		description: "A small piece of standard Hunter kit.",
+		description: "A small piece of standard Ascendant kit.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0003.webp",
@@ -39587,7 +39589,7 @@ export const items_gap_fill: Item[] = [
 		properties: {},
 		effects: {
 			passive: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"On a critical hit, regain 1 HP per Hit Die spent today.",
 			],
 		},
@@ -39645,7 +39647,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "38a12b39",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_utility_uncommon_4::Adept's Spyglass",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -39663,15 +39665,15 @@ export const items_gap_fill: Item[] = [
 				theme: "standard",
 			},
 			passive_rules: [
-				"A miscellaneous piece of standard Hunter kit.",
+				"A miscellaneous piece of standard Ascendant kit.",
 				"On a critical hit, regain 1 HP per Hit Die spent today.",
 			],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
 				passive_effects: [
-					"A miscellaneous piece of standard Hunter kit.",
+					"A miscellaneous piece of standard Ascendant kit.",
 					"On a critical hit, regain 1 HP per Hit Die spent today.",
 				],
 			},
@@ -39680,8 +39682,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39727,7 +39729,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -39812,8 +39814,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39829,7 +39831,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_rare_0",
 		name: "Dreamfire Anchor Line",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0633.webp",
@@ -39866,7 +39868,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -39959,8 +39961,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -39976,7 +39978,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_gear_utility_rare_1",
 		name: "Lunar Repel Rig",
 		description:
-			"A Bureau-standard utility implement. Belongs in every Hunter's go-bag.",
+			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "rare",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0904.webp",
@@ -40107,8 +40109,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -40141,7 +40143,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -40217,8 +40219,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -40242,7 +40244,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "tool",
 		properties: {},
 		effects: {
-			passive: ["A miscellaneous piece of standard Hunter kit."],
+			passive: ["A miscellaneous piece of standard Ascendant kit."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -40257,7 +40259,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -40297,7 +40299,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "b0a4e37e",
 				payload_complete: true,
 				uniqueness_seed: "gap_gear_misc_common_1::Conscript's Pocket Token",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -40314,20 +40316,20 @@ export const items_gap_fill: Item[] = [
 				signature: "d1df75af",
 				theme: "standard",
 			},
-			passive_rules: ["A miscellaneous piece of standard Hunter kit."],
+			passive_rules: ["A miscellaneous piece of standard Ascendant kit."],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
-				passive_effects: ["A miscellaneous piece of standard Hunter kit."],
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
+				passive_effects: ["A miscellaneous piece of standard Ascendant kit."],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -40342,7 +40344,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_2",
 		name: "Field-Issue Quartermaster's Token",
-		description: "A miscellaneous item from the Bureau-supplied Hunter kit.",
+		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0716.webp",
@@ -40351,7 +40353,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "tool",
 		properties: {},
 		effects: {
-			passive: ["A miscellaneous piece of standard Hunter kit."],
+			passive: ["A miscellaneous piece of standard Ascendant kit."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -40407,7 +40409,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_gear_misc_common_2::Field-Issue Quartermaster's Token",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -40424,20 +40426,20 @@ export const items_gap_fill: Item[] = [
 				signature: "5999ba63",
 				theme: "standard",
 			},
-			passive_rules: ["A miscellaneous piece of standard Hunter kit."],
+			passive_rules: ["A miscellaneous piece of standard Ascendant kit."],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
-				passive_effects: ["A miscellaneous piece of standard Hunter kit."],
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
+				passive_effects: ["A miscellaneous piece of standard Ascendant kit."],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -40452,7 +40454,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_3",
 		name: "Service Quartermaster's Token",
-		description: "A miscellaneous item from the Bureau-supplied Hunter kit.",
+		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0573.webp",
@@ -40461,7 +40463,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "tool",
 		properties: {},
 		effects: {
-			passive: ["A miscellaneous piece of standard Hunter kit."],
+			passive: ["A miscellaneous piece of standard Ascendant kit."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -40470,14 +40472,14 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -40518,7 +40520,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_gear_misc_common_3::Service Quartermaster's Token",
-				variant_note: "A miscellaneous piece of standard Hunter kit.",
+				variant_note: "A miscellaneous piece of standard Ascendant kit.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -40535,20 +40537,20 @@ export const items_gap_fill: Item[] = [
 				signature: "888f9f0f",
 				theme: "standard",
 			},
-			passive_rules: ["A miscellaneous piece of standard Hunter kit."],
+			passive_rules: ["A miscellaneous piece of standard Ascendant kit."],
 			resolution: {
 				type: "equipment_utility",
 				active_options: [],
-				non_damage_resolution: "A miscellaneous piece of standard Hunter kit.",
-				passive_effects: ["A miscellaneous piece of standard Hunter kit."],
+				non_damage_resolution: "A miscellaneous piece of standard Ascendant kit.",
+				passive_effects: ["A miscellaneous piece of standard Ascendant kit."],
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -40579,9 +40581,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -40656,8 +40658,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -40672,7 +40674,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_uncommon_0",
 		name: "Salvaged Service Coin",
-		description: "A small piece of standard Hunter kit.",
+		description: "A small piece of standard Ascendant kit.",
 		rarity: "uncommon",
 		type: "wondrous",
 		image: "/generated/compendium/items/item-0971.webp",
@@ -40777,8 +40779,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -40896,8 +40898,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -41017,8 +41019,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -41166,8 +41168,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -41222,7 +41224,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -41315,8 +41317,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -41464,8 +41466,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -41603,8 +41605,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -41659,13 +41661,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Half pharmacology, half hope.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -41752,8 +41754,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -41797,7 +41799,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Hand-finished by a Bureau master artificer working out of the Seoul Forge District.",
 			personality: "",
@@ -41805,7 +41807,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Read the label. Then drink anyway.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -41892,8 +41894,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -42031,8 +42033,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42087,7 +42089,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -42181,8 +42183,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42236,15 +42238,15 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "It's not pretty going down. It's prettier than the alternative.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -42332,8 +42334,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42394,7 +42396,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Shelf life is a guideline. Trust the cap, not the date.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -42482,8 +42484,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42544,7 +42546,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Calm hands, steady draw, full vial. Pick at least two.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -42632,8 +42634,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42689,7 +42691,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -42783,8 +42785,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42845,7 +42847,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "For the part of the fight that comes after the fight.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -42933,8 +42935,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -42989,7 +42991,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -43083,8 +43085,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -43235,8 +43237,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -43386,8 +43388,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -43442,7 +43444,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
@@ -43537,8 +43539,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -43690,8 +43692,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -43843,8 +43845,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -43892,9 +43894,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -43988,8 +43990,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -44046,7 +44048,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -44139,8 +44141,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -44289,8 +44291,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -44347,7 +44349,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -44441,8 +44443,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -44498,7 +44500,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -44591,8 +44593,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -44637,7 +44639,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -44728,8 +44730,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -44864,8 +44866,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -44915,7 +44917,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "You'll know it worked. You'll know if it didn't.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -45000,8 +45002,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -45017,7 +45019,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_signal_common_3",
 		name: "Issue-Standard Distress Beacon",
 		description:
-			"A short-burn locator beacon. Standard kit for any Hunter operating beyond comms.",
+			"A short-burn locator beacon. Standard kit for any Ascendant operating beyond comms.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0065.webp",
@@ -45137,8 +45139,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -45274,8 +45276,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -45318,7 +45320,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Forged in Bureau Forge Bay 12 from ichor-grade alloys harvested mid-clear.",
 			personality: "",
@@ -45410,8 +45412,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -45427,7 +45429,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_signal_uncommon_1",
 		name: "Operative's Recall Beacon",
 		description:
-			"A Bureau-coded signal flare visible to Hunter receivers within the operating area.",
+			"A Bureau-coded signal flare visible to Ascendant receivers within the operating area.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0302.webp",
@@ -45456,7 +45458,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -45547,8 +45549,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -45564,7 +45566,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_signal_uncommon_2",
 		name: "Field-Tested Recall Beacon",
 		description:
-			"A short-burn locator beacon. Standard kit for any Hunter operating beyond comms.",
+			"A short-burn locator beacon. Standard kit for any Ascendant operating beyond comms.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0529.webp",
@@ -45684,8 +45686,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -45701,7 +45703,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_signal_rare_0",
 		name: "Sanguine Signal Beacon",
 		description:
-			"A short-burn locator beacon. Standard kit for any Hunter operating beyond comms.",
+			"A short-burn locator beacon. Standard kit for any Ascendant operating beyond comms.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0161.webp",
@@ -45729,14 +45731,14 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "For the part of the fight that comes after the fight.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -45820,8 +45822,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -45955,8 +45957,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -45972,7 +45974,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_common_1",
 		name: "Modern Sealed Inscription",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0514.webp",
@@ -46007,7 +46009,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "For the part of the fight that comes after the fight.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -46091,8 +46093,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -46226,8 +46228,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -46271,7 +46273,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -46361,8 +46363,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -46496,8 +46498,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -46541,7 +46543,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -46631,8 +46633,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -46767,8 +46769,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -46813,7 +46815,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Featured in a Bureau training video as an example of safe field maintenance.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -46903,8 +46905,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -47038,8 +47040,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -47174,8 +47176,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -47218,7 +47220,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Salvaged from a collapsed B-rank gate in the old Cheongdam district.",
 			personality: "",
@@ -47310,8 +47312,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -47327,7 +47329,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_uncommon_1",
 		name: "Decorated Rune Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0191.webp",
@@ -47362,7 +47364,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's expensive, but cheaper than a coffin.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -47446,8 +47448,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -47492,7 +47494,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -47581,8 +47583,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -47717,8 +47719,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -47852,8 +47854,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -47895,7 +47897,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Forged in Bureau Forge Bay 12 from ichor-grade alloys harvested mid-clear.",
 			personality: "",
@@ -47903,7 +47905,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Triage in a glass. Don't waste it.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -47987,8 +47989,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48004,7 +48006,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_uncommon_6",
 		name: "Field-Tested Battle Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0380.webp",
@@ -48123,8 +48125,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48167,7 +48169,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
 			personality: "",
@@ -48259,8 +48261,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48304,7 +48306,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Resurfaced after twenty years in deep storage during a Bureau cleanup of legacy lockers.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -48394,8 +48396,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48446,7 +48448,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "The Bureau's standard answer to 'how are we still alive?'",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -48530,8 +48532,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48574,7 +48576,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
@@ -48582,7 +48584,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Triage in a glass. Don't waste it.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -48666,8 +48668,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48710,7 +48712,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Salvaged from a collapsed B-rank gate in the old Cheongdam district.",
 			personality: "",
@@ -48802,8 +48804,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -48938,8 +48940,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49074,8 +49076,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49125,7 +49127,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "One dose. Make it count.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -49209,8 +49211,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49252,9 +49254,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -49343,8 +49345,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49393,7 +49395,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's not pretty going down. It's prettier than the alternative.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -49477,8 +49479,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49523,7 +49525,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -49613,8 +49615,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49659,7 +49661,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -49749,8 +49751,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49885,8 +49887,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -49931,13 +49933,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Read the label. Then drink anyway.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -50020,8 +50022,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50157,8 +50159,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50294,8 +50296,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50340,7 +50342,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
@@ -50432,8 +50434,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50478,7 +50480,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -50567,8 +50569,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50703,8 +50705,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50841,8 +50843,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -50894,7 +50896,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "You'll know it worked. You'll know if it didn't.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -50979,8 +50981,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51115,8 +51117,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51168,7 +51170,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's expensive, but cheaper than a coffin.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -51251,8 +51253,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51268,7 +51270,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_rare_12",
 		name: "Stargazer's Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0079.webp",
@@ -51387,8 +51389,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51404,7 +51406,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_rare_13",
 		name: "Lightseeker's Casting Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0342.webp",
@@ -51524,8 +51526,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51569,7 +51571,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
@@ -51577,7 +51579,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's expensive, but cheaper than a coffin.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -51661,8 +51663,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51678,7 +51680,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_rare_15",
 		name: "Lightseeker's Lattice Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0268.webp",
@@ -51708,7 +51710,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -51798,8 +51800,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51935,8 +51937,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -51982,7 +51984,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -52072,8 +52074,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52127,7 +52129,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Shelf life is a guideline. Trust the cap, not the date.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -52212,8 +52214,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52259,7 +52261,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -52350,8 +52352,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52395,7 +52397,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
 			personality: "",
@@ -52487,8 +52489,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52504,7 +52506,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_epic_3",
 		name: "Resonant Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "epic",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0088.webp",
@@ -52534,7 +52536,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -52623,8 +52625,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52676,7 +52678,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Half pharmacology, half hope.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -52759,8 +52761,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52895,8 +52897,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -52947,7 +52949,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Read the label. Then drink anyway.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -53031,8 +53033,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53169,8 +53171,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53186,7 +53188,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_epic_8",
 		name: "Eclipse Ward Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "epic",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0647.webp",
@@ -53307,8 +53309,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53353,7 +53355,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -53442,8 +53444,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53459,7 +53461,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_scroll_legendary_0",
 		name: "Regent-Slayer's Scroll",
 		description:
-			"A casting scroll with the Hunter Association's authentication seal.",
+			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "legendary",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0623.webp",
@@ -53494,7 +53496,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Read the label. Then drink anyway.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -53578,8 +53580,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53625,7 +53627,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -53715,8 +53717,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53759,7 +53761,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -53851,8 +53853,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -53989,8 +53991,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -54005,7 +54007,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_0",
 		name: "Provisional Stim Bar",
-		description: "A Hunter-grade injector. Burns hot and fast. Trust the cap.",
+		description: "A Ascendant-grade injector. Burns hot and fast. Trust the cap.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0753.webp",
@@ -54119,8 +54121,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -54145,7 +54147,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -54200,7 +54202,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "d535f1ac",
 				payload_complete: true,
 				uniqueness_seed: "gap_consumable_ration_common_1::Service-Grade Ration",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54217,22 +54219,22 @@ export const items_gap_fill: Item[] = [
 				signature: "5616326f",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -54257,14 +54259,14 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Forged in Bureau Forge Bay 12 from ichor-grade alloys harvested mid-clear.",
 			personality: "",
@@ -54312,7 +54314,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "d535f1ac",
 				payload_complete: true,
 				uniqueness_seed: "gap_consumable_ration_common_2::Provisional MRE",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54329,22 +54331,22 @@ export const items_gap_fill: Item[] = [
 				signature: "78a7a508",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -54369,7 +54371,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -54378,7 +54380,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -54425,7 +54427,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_consumable_ration_common_3::Bureau-Approved Field Meal",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54442,22 +54444,22 @@ export const items_gap_fill: Item[] = [
 				signature: "1c8ee07a",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -54473,7 +54475,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_ration_common_4",
 		name: "Provisional Ration",
 		description:
-			"A vacuum-sealed nutrition pack. One day's calories for a single Hunter.",
+			"A vacuum-sealed nutrition pack. One day's calories for a single Ascendant.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0293.webp",
@@ -54482,7 +54484,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -54537,7 +54539,7 @@ export const items_gap_fill: Item[] = [
 				fingerprint: "d535f1ac",
 				payload_complete: true,
 				uniqueness_seed: "gap_consumable_ration_common_4::Provisional Ration",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54554,22 +54556,22 @@ export const items_gap_fill: Item[] = [
 				signature: "57db6499",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -54594,7 +54596,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -54650,7 +54652,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_consumable_ration_common_5::Bureau-Approved Recovery Pack",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54667,22 +54669,22 @@ export const items_gap_fill: Item[] = [
 				signature: "e33b071f",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -54707,7 +54709,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -54763,7 +54765,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_consumable_ration_uncommon_0::Frontier Field Pack",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54780,22 +54782,22 @@ export const items_gap_fill: Item[] = [
 				signature: "a71b0ab4",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -54811,7 +54813,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_ration_uncommon_1",
 		name: "Sanctioned Recovery Pack",
 		description:
-			"A vacuum-sealed nutrition pack. One day's calories for a single Hunter.",
+			"A vacuum-sealed nutrition pack. One day's calories for a single Ascendant.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0905.webp",
@@ -54820,7 +54822,7 @@ export const items_gap_fill: Item[] = [
 		item_type: "consumable",
 		properties: {},
 		effects: {
-			passive: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive: ["A day's nutrition for one Ascendant on a cleared sweep."],
 		},
 		source: "Gap-Fill Catalog",
 		lore: {
@@ -54829,7 +54831,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -54876,7 +54878,7 @@ export const items_gap_fill: Item[] = [
 				payload_complete: true,
 				uniqueness_seed:
 					"gap_consumable_ration_uncommon_1::Sanctioned Recovery Pack",
-				variant_note: "A day's nutrition for one Hunter on a cleared sweep.",
+				variant_note: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			formulas: {
 				effect_formula: "explicit non-damage item effect",
@@ -54893,22 +54895,22 @@ export const items_gap_fill: Item[] = [
 				signature: "1ff5b655",
 				theme: "standard",
 			},
-			passive_rules: ["A day's nutrition for one Hunter on a cleared sweep."],
+			passive_rules: ["A day's nutrition for one Ascendant on a cleared sweep."],
 			resolution: {
 				type: "consumable",
 				damage_type: null,
 				consumes_item: true,
 				damage_formula: null,
 				save: null,
-				use_rule: "A day's nutrition for one Hunter on a cleared sweep.",
+				use_rule: "A day's nutrition for one Ascendant on a cleared sweep.",
 			},
 			rules_payload_version: "ra-item-v1",
 			source_integrity: {
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55038,8 +55040,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55084,7 +55086,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -55175,8 +55177,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -55303,8 +55305,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55349,7 +55351,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -55439,8 +55441,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55482,13 +55484,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "It's expensive, but cheaper than a coffin.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -55567,8 +55569,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55703,8 +55705,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55720,7 +55722,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_potion_uncommon_2",
 		name: "Specialist's Elixir",
 		description:
-			"A Hunter-grade restorative; sealed against ambient mana decay.",
+			"A Ascendant-grade restorative; sealed against ambient mana decay.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0558.webp",
@@ -55747,7 +55749,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
@@ -55840,8 +55842,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -55857,7 +55859,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_potion_uncommon_3",
 		name: "Bonded Draught",
 		description:
-			"A Hunter-grade restorative; sealed against ambient mana decay.",
+			"A Ascendant-grade restorative; sealed against ambient mana decay.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0295.webp",
@@ -55886,13 +55888,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "You'll know it worked. You'll know if it didn't.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -55976,8 +55978,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56021,7 +56023,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -56111,8 +56113,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56239,8 +56241,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56283,7 +56285,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -56368,8 +56370,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56422,7 +56424,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "You'll know it worked. You'll know if it didn't.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -56507,8 +56509,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56524,7 +56526,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_potion_rare_2",
 		name: "Lightseeker's Potion",
 		description:
-			"A pocket-sized recovery potion. Standard kit for any Hunter on assignment.",
+			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0416.webp",
@@ -56644,8 +56646,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56661,7 +56663,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_potion_rare_3",
 		name: "Stormcaller Potion",
 		description:
-			"A Hunter-grade restorative; sealed against ambient mana decay.",
+			"A Ascendant-grade restorative; sealed against ambient mana decay.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0145.webp",
@@ -56779,8 +56781,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56827,7 +56829,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -56918,8 +56920,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -56963,7 +56965,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -56971,7 +56973,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Half pharmacology, half hope.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -57053,8 +57055,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -57189,8 +57191,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -57235,7 +57237,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -57323,8 +57325,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -57451,8 +57453,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -57580,8 +57582,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -57623,7 +57625,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -57709,8 +57711,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -57750,7 +57752,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
 			personality: "",
 			prior_owners: [],
@@ -57837,8 +57839,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -57854,7 +57856,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_purifier_common_2",
 		name: "Trainee Restorative Vial",
 		description:
-			"A pocket-sized recovery potion. Standard kit for any Hunter on assignment.",
+			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0144.webp",
@@ -57966,8 +57968,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -58016,7 +58018,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Triage in a glass. Don't waste it.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -58097,8 +58099,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -58146,7 +58148,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "One dose. Make it count.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -58226,8 +58228,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -58269,7 +58271,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -58355,8 +58357,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -58492,8 +58494,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -58542,7 +58544,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's expensive, but cheaper than a coffin.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -58623,8 +58625,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -58677,7 +58679,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Calm hands, steady draw, full vial. Pick at least two.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -58761,8 +58763,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -58806,7 +58808,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Acquired from a Bureau-stamped supplier under a long-term contract.",
 			personality: "",
@@ -58896,8 +58898,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -58912,7 +58914,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_common_0",
 		name: "Bureau-Approved Endurance Serum",
-		description: "A medical-grade stim, calibrated for Hunter physiology.",
+		description: "A medical-grade stim, calibrated for Ascendant physiology.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0019.webp",
@@ -59032,8 +59034,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -59048,7 +59050,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_common_1",
 		name: "Patrol Injector",
-		description: "A medical-grade stim, calibrated for Hunter physiology.",
+		description: "A medical-grade stim, calibrated for Ascendant physiology.",
 		rarity: "common",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0946.webp",
@@ -59167,8 +59169,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -59303,8 +59305,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -59439,8 +59441,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -59482,7 +59484,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
 			personality: "",
@@ -59574,8 +59576,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -59708,8 +59710,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -59724,7 +59726,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_2",
 		name: "Lattice-Stable Adrenal Injector",
-		description: "A Hunter-grade injector. Burns hot and fast. Trust the cap.",
+		description: "A Ascendant-grade injector. Burns hot and fast. Trust the cap.",
 		rarity: "uncommon",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0904.webp",
@@ -59750,7 +59752,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -59836,8 +59838,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -59973,8 +59975,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60015,9 +60017,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -60105,8 +60107,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60241,8 +60243,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60380,8 +60382,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60433,7 +60435,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Calm hands, steady draw, full vial. Pick at least two.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -60518,8 +60520,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60535,7 +60537,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_consumable_stim_rare_2",
 		name: "Hexbound Endurance Serum",
 		description:
-			"A high-uptake injector used by frontline Hunters under sustained fire.",
+			"A high-uptake injector used by frontline Ascendants under sustained fire.",
 		rarity: "rare",
 		type: "consumable",
 		image: "/generated/compendium/items/item-0422.webp",
@@ -60655,8 +60657,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60705,7 +60707,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "For the part of the fight that comes after the fight.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -60786,8 +60788,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60839,7 +60841,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Triage in a glass. Don't waste it.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -60924,8 +60926,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -60970,13 +60972,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Triage in a glass. Don't waste it.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "consumable"],
 		theme_tags: [],
 		activation: {
@@ -61060,8 +61062,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -61093,13 +61095,13 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Re-discovered in a deep-storage Bureau crate during an unrelated audit.",
 		tags: ["equipment", "focus"],
@@ -61171,8 +61173,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -61188,7 +61190,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_common_1",
 		name: "Modern Conduit",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "common",
 		type: "focus",
 		image: "/generated/compendium/items/item-0338.webp",
@@ -61208,7 +61210,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -61289,8 +61291,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -61406,8 +61408,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -61423,7 +61425,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_common_3",
 		name: "Service Mana Crystal",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "common",
 		type: "focus",
 		image: "/generated/compendium/items/item-0836.webp",
@@ -61444,7 +61446,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -61527,8 +61529,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -61544,7 +61546,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_uncommon_0",
 		name: "Black-Market Orb",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "uncommon",
 		type: "focus",
 		image: "/generated/compendium/items/item-0110.webp",
@@ -61563,9 +61565,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -61648,8 +61650,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -61691,7 +61693,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -61767,8 +61769,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -61784,7 +61786,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_uncommon_2",
 		name: "Operative's Caster's Bead",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "uncommon",
 		type: "focus",
 		image: "/generated/compendium/items/item-0352.webp",
@@ -61805,7 +61807,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -61888,8 +61890,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -61925,7 +61927,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
 			personality: "",
@@ -61934,7 +61936,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Cheap, ubiquitous, and sometimes the only thing between you and a black bag.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -62013,8 +62015,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62030,7 +62032,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_uncommon_4",
 		name: "Hardened Conduit",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "uncommon",
 		type: "focus",
 		image: "/generated/compendium/items/item-0546.webp",
@@ -62049,7 +62051,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
@@ -62133,8 +62135,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62169,7 +62171,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a black-market shipment intercepted by Bureau agents.",
 			personality: "",
@@ -62254,8 +62256,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62301,7 +62303,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -62400,8 +62402,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62454,7 +62456,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -62548,8 +62550,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62565,7 +62567,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_rare_2",
 		name: "Frost Sigil Focus",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "rare",
 		type: "focus",
 		image: "/generated/compendium/items/item-0598.webp",
@@ -62598,7 +62600,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Resurfaced after twenty years in deep storage during a Bureau cleanup of legacy lockers.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -62699,8 +62701,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62849,8 +62851,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -62866,7 +62868,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_focus_caster_rare_4",
 		name: "Lunar Prism",
 		description:
-			"A spellcasting focus shaped to channel a Hunter's mana lattice cleanly.",
+			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "rare",
 		type: "focus",
 		image: "/generated/compendium/items/item-0524.webp",
@@ -62897,7 +62899,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -62996,8 +62998,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -63050,7 +63052,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -63143,8 +63145,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -63188,9 +63190,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -63289,8 +63291,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -63337,7 +63339,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -63437,8 +63439,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -63491,7 +63493,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Logged on the requisition manifest. Trusted on the line.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -63584,8 +63586,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -63635,7 +63637,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "You don't carry it to be seen. You carry it to come back.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -63707,8 +63709,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -63837,8 +63839,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -63880,15 +63882,15 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -63960,8 +63962,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64003,7 +64005,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Sourced from the post-clear loot dispersion of a successful A-rank gate operation.",
 			personality: "",
@@ -64083,8 +64085,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64130,7 +64132,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -64214,8 +64216,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64268,7 +64270,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "focus"],
@@ -64349,8 +64351,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64398,7 +64400,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -64482,8 +64484,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64534,7 +64536,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "focus"],
@@ -64615,8 +64617,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64664,13 +64666,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Featured in a Bureau training video as an example of safe field maintenance.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Issue-grade. Not flashy, just thorough.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -64749,8 +64751,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -64882,8 +64884,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65015,8 +65017,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65068,7 +65070,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Quiet, until it isn't.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -65147,8 +65149,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65206,13 +65208,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Bureau-issue. Inventoried. Forgotten.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -65309,8 +65311,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65366,7 +65368,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -65374,7 +65376,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Boring kit. Boring kit comes home.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -65470,8 +65472,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65529,14 +65531,14 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"It's not glamour. It's the difference between a clear and a casualty.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -65633,8 +65635,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65696,7 +65698,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "focus"],
@@ -65795,8 +65797,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -65955,8 +65957,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66118,8 +66120,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66179,7 +66181,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -66282,8 +66284,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66444,8 +66446,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66605,8 +66607,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66768,8 +66770,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66832,7 +66834,7 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "focus"],
@@ -66930,8 +66932,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -66989,7 +66991,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Resurfaced after twenty years in deep storage during a Bureau cleanup of legacy lockers.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -67093,8 +67095,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -67253,8 +67255,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -67311,11 +67313,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "focus"],
@@ -67412,8 +67414,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -67530,8 +67532,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -67640,8 +67642,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -67675,7 +67677,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Resurfaced after twenty years in deep storage during a Bureau cleanup of legacy lockers.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -67750,8 +67752,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -67785,7 +67787,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
@@ -67868,8 +67870,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -67992,8 +67994,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68116,8 +68118,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68238,8 +68240,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68362,8 +68364,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68406,7 +68408,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Designed by people who survived. Issued to people who hope to.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -68483,8 +68485,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68521,7 +68523,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -68604,8 +68606,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68660,7 +68662,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Standard kit for those who plan to come back.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -68755,8 +68757,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68905,8 +68907,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -68958,7 +68960,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "Belongs in the bottom of every Hunter's go-bag.",
+		flavor: "Belongs in the bottom of every Ascendant's go-bag.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "focus"],
@@ -69055,8 +69057,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -69203,8 +69205,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -69258,7 +69260,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Boring kit. Boring kit comes home.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "focus"],
 		theme_tags: [],
 		activation: {
@@ -69351,8 +69353,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -69399,7 +69401,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -69498,8 +69500,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -69645,8 +69647,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -69692,7 +69694,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -69789,8 +69791,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -69920,8 +69922,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -70044,8 +70046,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70090,7 +70092,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -70168,8 +70170,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70220,7 +70222,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It will only ever be as deadly as the hand that holds it.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -70292,8 +70294,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -70309,7 +70311,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_ranged_bow_uncommon_0",
 		name: "Veteran Reflex Bow",
 		description:
-			"A high-tension ranged weapon favored by tracker-class Hunters.",
+			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0563.webp",
@@ -70426,8 +70428,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70475,7 +70477,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -70560,8 +70562,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70609,7 +70611,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Tagged at the gate seal during the Bureau's standard cataloging sweep.",
 		tags: ["equipment", "ranged"],
@@ -70683,8 +70685,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70736,7 +70738,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Reported on a salvage manifest filed two weeks after the clear that produced it.",
 		tags: ["equipment", "ranged"],
@@ -70816,8 +70818,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70863,7 +70865,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
 			personality: "",
@@ -70949,8 +70951,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -70966,7 +70968,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_ranged_bow_uncommon_5",
 		name: "Sanctioned Shortbow",
 		description:
-			"A high-tension ranged weapon favored by tracker-class Hunters.",
+			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0014.webp",
@@ -71073,8 +71075,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -71132,13 +71134,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "It rewards the steady, punishes the loud.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -71232,8 +71234,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -71249,7 +71251,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_ranged_bow_rare_1",
 		name: "Lightseeker's Bow",
 		description:
-			"A high-tension ranged weapon favored by tracker-class Hunters.",
+			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0228.webp",
@@ -71388,8 +71390,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -71453,7 +71455,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Tested in the dark, blooded in the bright.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -71547,8 +71549,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -71606,7 +71608,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -71704,8 +71706,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -71762,7 +71764,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -71866,8 +71868,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -71926,7 +71928,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -72026,8 +72028,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72092,7 +72094,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It does the job. That's all the Bureau asks of it.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -72186,8 +72188,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72203,7 +72205,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_ranged_bow_legendary_0",
 		name: "Apex-Forged Field Bow",
 		description:
-			"A high-tension ranged weapon favored by tracker-class Hunters.",
+			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0788.webp",
@@ -72242,7 +72244,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
@@ -72343,8 +72345,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72389,7 +72391,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -72468,8 +72470,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72592,8 +72594,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72640,7 +72642,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -72724,8 +72726,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72776,7 +72778,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Don't trust a weapon you can't put down.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -72849,8 +72851,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -72896,7 +72898,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -72983,8 +72985,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73118,8 +73120,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73252,8 +73254,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73386,8 +73388,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73434,7 +73436,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Salvaged from a partially-collapsed gate during a recovery sweep.",
 			personality: "",
@@ -73442,7 +73444,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Honest steel. The kind that never apologizes.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -73523,8 +73525,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73571,7 +73573,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -73655,8 +73657,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73713,7 +73715,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin: "Recovered from a Bureau-cleared safehouse during a Guild raid.",
 			personality: "",
 			prior_owners: [],
@@ -73721,7 +73723,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Sized for the wielder who finishes fights, not the one who starts them.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -73817,8 +73819,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -73981,8 +73983,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74141,8 +74143,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74158,7 +74160,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_ranged_crossbow_rare_3",
 		name: "Ember Recurve Crossbow",
 		description:
-			"A high-tension ranged weapon favored by tracker-class Hunters.",
+			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0258.webp",
@@ -74303,8 +74305,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74363,7 +74365,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -74466,8 +74468,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74528,7 +74530,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Honest steel. The kind that never apologizes.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "ranged"],
 		theme_tags: [],
 		activation: {
@@ -74618,8 +74620,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74665,11 +74667,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "ranged"],
@@ -74744,8 +74746,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74791,11 +74793,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "ranged"],
@@ -74870,8 +74872,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -74917,7 +74919,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -74997,8 +74999,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -75122,8 +75124,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75247,8 +75249,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75296,7 +75298,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -75379,8 +75381,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75510,8 +75512,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75645,8 +75647,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75694,7 +75696,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -75776,8 +75778,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75933,8 +75935,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -75993,7 +75995,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -76093,8 +76095,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -76144,7 +76146,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Carried by people who know the difference between a kill and a survival.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -76216,8 +76218,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -76261,7 +76263,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -76344,8 +76346,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -76468,8 +76470,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -76591,8 +76593,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -76638,7 +76640,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -76724,8 +76726,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -76846,8 +76848,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -76979,8 +76981,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77112,8 +77114,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77246,8 +77248,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77379,8 +77381,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77510,8 +77512,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77646,8 +77648,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77807,8 +77809,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -77964,8 +77966,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78125,8 +78127,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78188,7 +78190,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It will only ever be as deadly as the hand that holds it.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -78282,8 +78284,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78337,9 +78339,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -78438,8 +78440,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78495,13 +78497,13 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "melee"],
@@ -78600,8 +78602,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78664,7 +78666,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Tested in the dark, blooded in the bright.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -78758,8 +78760,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78814,7 +78816,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
 			personality: "",
@@ -78916,8 +78918,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -78978,7 +78980,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Don't trust a weapon you can't put down.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -79071,8 +79073,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -79230,8 +79232,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -79280,7 +79282,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It does the job. That's all the Bureau asks of it.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -79356,8 +79358,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -79398,7 +79400,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
@@ -79483,8 +79485,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -79500,7 +79502,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_versatile_common_2",
 		name: "Quartermaster's Battle Blade",
 		description:
-			"A standard sidearm blade for Hunters who prefer steel to firearms.",
+			"A standard sidearm blade for Ascendants who prefer steel to firearms.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0139.webp",
@@ -79528,13 +79530,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Built to hit. Built to keep working.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -79607,8 +79609,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -79740,8 +79742,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -79786,7 +79788,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -79873,8 +79875,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -79919,7 +79921,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Acquired from a Bureau-stamped supplier under a long-term contract.",
 			personality: "",
@@ -80007,8 +80009,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -80140,8 +80142,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -80204,7 +80206,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Tested in the dark, blooded in the bright.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -80298,8 +80300,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -80361,7 +80363,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Honest steel. The kind that never apologizes.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -80458,8 +80460,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -80475,7 +80477,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_versatile_rare_2",
 		name: "Wraithtouched Katana",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0556.webp",
@@ -80516,7 +80518,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Passed quietly between three guildhalls before settling into the Bureau's surplus cycle.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -80617,8 +80619,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -80776,8 +80778,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -80835,7 +80837,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -80937,8 +80939,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -81000,7 +81002,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It will only ever be as deadly as the hand that holds it.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -81096,8 +81098,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -81113,7 +81115,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_finesse_common_0",
 		name: "Bureau-Stamped Tanto",
 		description:
-			"A light blade balanced for finesse strikes. Common in close-quarters Hunter loadouts.",
+			"A light blade balanced for finesse strikes. Common in close-quarters Ascendant loadouts.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0793.webp",
@@ -81220,8 +81222,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -81264,7 +81266,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -81342,8 +81344,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -81386,7 +81388,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Hand-finished by a Bureau master artificer working out of the Seoul Forge District.",
 			personality: "",
@@ -81471,8 +81473,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -81516,7 +81518,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
 			personality: "",
@@ -81603,8 +81605,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -81620,7 +81622,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_finesse_uncommon_1",
 		name: "Operative's Kunai",
 		description:
-			"A light blade balanced for finesse strikes. Common in close-quarters Hunter loadouts.",
+			"A light blade balanced for finesse strikes. Common in close-quarters Ascendant loadouts.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0241.webp",
@@ -81657,7 +81659,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Reliable. Honest. Mean when it has to be.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -81737,8 +81739,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -81781,7 +81783,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -81860,8 +81862,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -81985,8 +81987,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -82050,7 +82052,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Sized for the wielder who finishes fights, not the one who starts them.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -82144,8 +82146,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -82161,7 +82163,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_blade_finesse_rare_1",
 		name: "Toxic Combat Knife",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0583.webp",
@@ -82201,7 +82203,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Recovered from a black-market shipment intercepted by Bureau agents.",
 			personality: "",
@@ -82209,7 +82211,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It will only ever be as deadly as the hand that holds it.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -82306,8 +82308,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -82459,8 +82461,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -82620,8 +82622,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -82678,7 +82680,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -82781,8 +82783,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -82846,7 +82848,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Don't trust a weapon you can't put down.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -82941,8 +82943,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83069,8 +83071,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -83115,7 +83117,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -83198,8 +83200,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83245,7 +83247,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -83330,8 +83332,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83381,9 +83383,9 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -83462,8 +83464,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83509,7 +83511,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -83594,8 +83596,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83752,8 +83754,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83913,8 +83915,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -83968,7 +83970,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Pulled from an unsanctioned weapons cache during a Guild Inspector raid.",
 			personality: "",
@@ -84073,8 +84075,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -84231,8 +84233,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -84354,8 +84356,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -84405,7 +84407,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Tested in the dark, blooded in the bright.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -84477,8 +84479,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -84599,8 +84601,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -84722,8 +84724,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -84843,8 +84845,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -84890,7 +84892,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Passed quietly between three guildhalls before settling into the Bureau's surplus cycle.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -84977,8 +84979,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85112,8 +85114,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85244,8 +85246,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85375,8 +85377,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85423,7 +85425,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -85508,8 +85510,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85629,8 +85631,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85791,8 +85793,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -85948,8 +85950,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -86008,7 +86010,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -86111,8 +86113,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -86169,7 +86171,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "melee"],
@@ -86259,8 +86261,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -86317,13 +86319,13 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Sourced from the post-clear loot dispersion of a successful A-rank gate operation.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "melee"],
@@ -86422,8 +86424,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -86582,8 +86584,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -86636,9 +86638,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -86738,8 +86740,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -86900,8 +86902,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87026,8 +87028,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87148,8 +87150,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -87195,7 +87197,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -87280,8 +87282,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87297,7 +87299,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_bludgeon_heavy_uncommon_1",
 		name: "Adept's Bludgeon",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0661.webp",
@@ -87413,8 +87415,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87458,7 +87460,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
 			personality: "",
@@ -87546,8 +87548,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87604,7 +87606,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -87704,8 +87706,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87721,7 +87723,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_bludgeon_heavy_rare_1",
 		name: "Voidtouched Greatmaul",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-1003.webp",
@@ -87861,8 +87863,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -87918,7 +87920,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Made a brief appearance in a guild quartermaster's leaving inventory dispute.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -88021,8 +88023,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88075,7 +88077,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -88175,8 +88177,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88298,8 +88300,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88315,7 +88317,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_common_1",
 		name: "Standard-Pattern Bo Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0778.webp",
@@ -88343,7 +88345,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -88421,8 +88423,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88472,7 +88474,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Don't trust a weapon you can't put down.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -88549,8 +88551,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88566,7 +88568,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_common_3",
 		name: "Standard Reach Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-1020.webp",
@@ -88675,8 +88677,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88808,8 +88810,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88825,7 +88827,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_uncommon_1",
 		name: "Lattice-Stable Battle Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0807.webp",
@@ -88944,8 +88946,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -88991,7 +88993,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -89075,8 +89077,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89092,7 +89094,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_uncommon_3",
 		name: "Bonded Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0521.webp",
@@ -89207,8 +89209,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89339,8 +89341,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89356,7 +89358,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_uncommon_5",
 		name: "Operative's Bo Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0835.webp",
@@ -89393,7 +89395,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Reliable. Honest. Mean when it has to be.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -89471,8 +89473,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89529,13 +89531,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Heavy in the hand. Heavier in consequence.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -89629,8 +89631,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89787,8 +89789,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89804,7 +89806,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_rare_2",
 		name: "Lightseeker's Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0382.webp",
@@ -89844,11 +89846,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Was set aside by a Guild quartermaster who 'meant to do something with it.'",
 		tags: ["equipment", "melee"],
@@ -89945,8 +89947,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -89962,7 +89964,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_rare_3",
 		name: "Skyveil Bo Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0119.webp",
@@ -90104,8 +90106,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -90121,7 +90123,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_rare_4",
 		name: "Ember Combat Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0332.webp",
@@ -90163,7 +90165,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -90265,8 +90267,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -90321,7 +90323,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Hand-built in a clandestine Daejeon workshop and sold through the gray market.",
 			personality: "",
@@ -90426,8 +90428,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -90443,7 +90445,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_epic_1",
 		name: "Nebular Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "epic",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0718.webp",
@@ -90585,8 +90587,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -90602,7 +90604,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_staff_legendary_0",
 		name: "Crownbearer's Heir Casting Staff",
 		description:
-			"A long staff used by hybrid Mage-classed Hunters in close-quarter exchanges.",
+			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0143.webp",
@@ -90649,7 +90651,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Sized for the wielder who finishes fights, not the one who starts them.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -90745,8 +90747,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -90790,7 +90792,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -90872,8 +90874,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -90915,7 +90917,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -90996,8 +90998,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -91050,7 +91052,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Heavy in the hand. Heavier in consequence.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -91128,8 +91130,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -91145,7 +91147,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_sickle_uncommon_1",
 		name: "Renegade Reaping Blade",
 		description:
-			"A standard sidearm blade for Hunters who prefer steel to firearms.",
+			"A standard sidearm blade for Ascendants who prefer steel to firearms.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0206.webp",
@@ -91175,7 +91177,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -91257,8 +91259,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -91299,15 +91301,15 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "It rewards the steady, punishes the loud.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -91381,8 +91383,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -91538,8 +91540,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -91693,8 +91695,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -91855,8 +91857,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -91896,7 +91898,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Stamped at a Bureau forge in Incheon and field-tested in a B-rank clear.",
 			personality: "",
@@ -91904,7 +91906,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Don't trust a weapon you can't put down.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -91976,8 +91978,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -92019,14 +92021,14 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"Sized for the wielder who finishes fights, not the one who starts them.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -92098,8 +92100,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -92220,8 +92222,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -92263,7 +92265,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -92341,8 +92343,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -92383,7 +92385,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Acquired from a Bureau-stamped supplier under a long-term contract.",
 			personality: "",
@@ -92463,8 +92465,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -92594,8 +92596,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -92722,8 +92724,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -92772,7 +92774,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Pulled out of a sealed cache during a Guild succession dispute.",
 		tags: ["equipment", "melee"],
@@ -92850,8 +92852,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -92896,7 +92898,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Resurfaced after twenty years in deep storage during a Bureau cleanup of legacy lockers.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -92980,8 +92982,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93103,8 +93105,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93161,13 +93163,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -93263,8 +93265,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93324,7 +93326,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Showed up on a Bureau auction list after the original owner's contract lapsed.",
 		tags: ["equipment", "melee"],
@@ -93420,8 +93422,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93477,7 +93479,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -93579,8 +93581,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93635,7 +93637,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
@@ -93739,8 +93741,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93895,8 +93897,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -93956,7 +93958,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It rewards the steady, punishes the loud.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -94046,8 +94048,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -94203,8 +94205,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -94220,7 +94222,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_axe_legendary_0",
 		name: "Dawnbringer's Greataxe",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-1017.webp",
@@ -94259,7 +94261,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Manufactured by a Bureau-licensed artificer cell operating under contract.",
 			personality: "",
@@ -94361,8 +94363,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -94492,8 +94494,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -94538,7 +94540,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Stayed in service longer than expected, primarily because nothing newer was available.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -94622,8 +94624,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -94669,7 +94671,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -94755,8 +94757,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -94803,7 +94805,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Shifted between three Bureau quartermaster depots over a five-year period.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -94890,8 +94892,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95022,8 +95024,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95079,7 +95081,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -95181,8 +95183,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95237,7 +95239,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Recovered from a Guild's deep-storage archive after a leadership audit.",
 			personality: "",
@@ -95341,8 +95343,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95396,13 +95398,13 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Forged in Bureau Forge Bay 12 from ichor-grade alloys harvested mid-clear.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Pulled out of a B-rank gate's last-room loot pile by a recovery team.",
 		tags: ["equipment", "melee"],
@@ -95501,8 +95503,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95631,8 +95633,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95678,7 +95680,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -95761,8 +95763,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -95778,7 +95780,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_melee_whip_uncommon_0",
 		name: "Frontier Combat Whip",
 		description:
-			"A control-class weapon for Hunters who prefer winning fights without finishing them.",
+			"A control-class weapon for Ascendants who prefer winning fights without finishing them.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0692.webp",
@@ -95809,7 +95811,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Recommissioned three times across its service life. Inspected at every reissue.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -95895,8 +95897,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96027,8 +96029,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96159,8 +96161,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96217,7 +96219,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -96318,8 +96320,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96377,7 +96379,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -96480,8 +96482,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96597,8 +96599,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -96726,8 +96728,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -96847,8 +96849,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96885,7 +96887,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -96968,8 +96970,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -96985,7 +96987,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_armor_light_uncommon_2",
 		name: "Operative's Combat Vest",
 		description:
-			"A light, flexible armor weave. Standard kit for stealth-focused Hunters.",
+			"A light, flexible armor weave. Standard kit for stealth-focused Ascendants.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0645.webp",
@@ -97096,8 +97098,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97138,7 +97140,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -97228,8 +97230,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97279,7 +97281,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from the Bureau Vault-7 evidence locker after the Jeju Outbreak.",
 			personality: "",
@@ -97379,8 +97381,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97428,12 +97430,12 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Showed up in pawn shops across three districts before the Bureau issued a recall.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "gear"],
@@ -97530,8 +97532,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97584,9 +97586,9 @@ export const items_gap_fill: Item[] = [
 			prior_owners: [],
 		},
 		flavor:
-			"What you carry tells the Bureau what kind of Hunter you intend to be.",
+			"What you carry tells the Bureau what kind of Ascendant you intend to be.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "gear"],
 		theme_tags: [],
 		activation: {
@@ -97681,8 +97683,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97730,7 +97732,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
 			personality: "",
@@ -97827,8 +97829,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97978,8 +97980,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -97995,7 +97997,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_armor_medium_common_0",
 		name: "Issue-Standard Half-Plate",
 		description:
-			"A balanced armor system suited to second-line Hunters and skirmisher tanks.",
+			"A balanced armor system suited to second-line Ascendants and skirmisher tanks.",
 		rarity: "common",
 		type: "armor",
 		image: "/generated/compendium/items/item-0621.webp",
@@ -98102,8 +98104,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -98227,8 +98229,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -98265,7 +98267,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
 			personality: "",
@@ -98274,7 +98276,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Steel between you and the world. Not always enough; usually enough.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -98353,8 +98355,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -98393,7 +98395,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -98478,8 +98480,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -98494,7 +98496,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_0",
 		name: "Sanctioned Service Brigandine",
-		description: "A balanced armor weave suited to most Hunter classes.",
+		description: "A balanced armor weave suited to most Ascendant classes.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0844.webp",
@@ -98605,8 +98607,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -98733,8 +98735,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -98860,8 +98862,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -98988,8 +98990,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99029,7 +99031,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Featured in a Bureau training video as an example of safe field maintenance.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -99116,8 +99118,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99132,7 +99134,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_5",
 		name: "Mana-Treated Chain Shirt",
-		description: "A balanced armor weave suited to most Hunter classes.",
+		description: "A balanced armor weave suited to most Ascendant classes.",
 		rarity: "uncommon",
 		type: "armor",
 		image: "/generated/compendium/items/item-0137.webp",
@@ -99246,8 +99248,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99293,7 +99295,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "You feel naked the day you take it off.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -99374,8 +99376,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99422,7 +99424,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Steel between you and the world. Not always enough; usually enough.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -99506,8 +99508,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99655,8 +99657,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99704,7 +99706,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -99803,8 +99805,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99853,7 +99855,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Salvaged from a collapsed B-rank gate in the old Cheongdam district.",
 			personality: "",
@@ -99952,8 +99954,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -99968,7 +99970,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_3",
 		name: "Frost Combat Mail",
-		description: "A balanced armor weave suited to most Hunter classes.",
+		description: "A balanced armor weave suited to most Ascendant classes.",
 		rarity: "rare",
 		type: "armor",
 		image: "/generated/compendium/items/item-0709.webp",
@@ -100009,7 +100011,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "You don't notice it until you do. Then it's already saved you.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -100100,8 +100102,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -100250,8 +100252,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -100308,7 +100310,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Comfort is a luxury. Coming back is the requirement.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -100397,8 +100399,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -100456,7 +100458,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's been hit so you don't have to be.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -100547,8 +100549,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -100604,7 +100606,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's been hit so you don't have to be.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -100695,8 +100697,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -100712,7 +100714,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_armor_medium_epic_2",
 		name: "Tempest Mail Shirt",
 		description:
-			"A balanced armor system suited to second-line Hunters and skirmisher tanks.",
+			"A balanced armor system suited to second-line Ascendants and skirmisher tanks.",
 		rarity: "epic",
 		type: "armor",
 		image: "/generated/compendium/items/item-0235.webp",
@@ -100753,7 +100755,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Built by Bureau artificers who've patched real wounds.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -100845,8 +100847,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -100902,7 +100904,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Comfort is a luxury. Coming back is the requirement.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -100992,8 +100994,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -101118,8 +101120,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -101165,7 +101167,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Pull the straps tight. Trust the maker.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -101244,8 +101246,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -101364,8 +101366,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -101493,8 +101495,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -101535,7 +101537,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -101621,8 +101623,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -101749,8 +101751,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -101800,7 +101802,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
 			personality: "",
@@ -101899,8 +101901,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -102050,8 +102052,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -102201,8 +102203,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -102352,8 +102354,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -102403,7 +102405,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Constructed in Bureau-affiliated ateliers from gate-recovered raw materials.",
 			personality: "",
@@ -102503,8 +102505,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -102561,7 +102563,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Worn down at the seams. That's how you know it works.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -102652,8 +102654,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -102776,8 +102778,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -102822,7 +102824,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It's been hit so you don't have to be.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -102901,8 +102903,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -102947,7 +102949,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It won't make you faster. It'll just make sure you walk out.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -103026,8 +103028,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -103065,7 +103067,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Logged in over a hundred E-to-C clears before being adopted as a quartermaster default.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -103150,8 +103152,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -103188,9 +103190,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -103277,8 +103279,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -103406,8 +103408,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -103444,9 +103446,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
-				"Logged into the Hunter Association's master inventory the day it was first sold.",
+				"Logged into the Ascendant Bureau's master inventory the day it was first sold.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -103532,8 +103534,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -103660,8 +103662,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -103789,8 +103791,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -103827,7 +103829,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -103915,8 +103917,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -103956,13 +103958,13 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor: "Comfort is a luxury. Coming back is the requirement.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -104043,8 +104045,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104089,7 +104091,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "The cost of standing the line is right here, on your shoulders.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -104169,8 +104171,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104222,7 +104224,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Briefly classified for export until the Guild Inspectors lifted the embargo.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -104319,8 +104321,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104368,7 +104370,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
 			personality: "",
@@ -104377,7 +104379,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"What's left of you after it's done its job is what you started with.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -104468,8 +104470,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104618,8 +104620,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104677,7 +104679,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"What's left of you after it's done its job is what you started with.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -104769,8 +104771,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104917,8 +104919,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -104969,7 +104971,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Featured in a Bureau training video as an example of safe field maintenance.",
 			origin:
-				"Surfaced in the Hunter Bureau's quartermaster log after a mid-tier extraction.",
+				"Surfaced in the Ascendant Bureau's quartermaster log after a mid-tier extraction.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -105066,8 +105068,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -105116,7 +105118,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Crafted by a defector ex-Guild forgewright operating out of a Manila workshop.",
 			personality: "",
@@ -105215,8 +105217,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -105269,7 +105271,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -105366,8 +105368,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -105512,8 +105514,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -105569,7 +105571,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"What's left of you after it's done its job is what you started with.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -105659,8 +105661,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -105783,8 +105785,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -105907,8 +105909,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -105944,7 +105946,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Pulled from a foreign Guild's stockpile after a cooperation agreement was signed.",
 			personality: "",
@@ -106031,8 +106033,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -106071,7 +106073,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw use in two named clears and one unnamed one no one talks about.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -106158,8 +106160,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -106286,8 +106288,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -106326,7 +106328,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Noted in the official record as 'standard issue' for second-line Bureau auxiliaries.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -106414,8 +106416,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -106462,7 +106464,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Steel between you and the world. Not always enough; usually enough.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -106546,8 +106548,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -106586,7 +106588,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Came up in a Bureau audit and survived the resulting paperwork.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -106674,8 +106676,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -106722,9 +106724,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Procured through the Hunter Association's gray-market quartermaster network.",
+				"Procured through the Ascendant Bureau's gray-market quartermaster network.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -106820,8 +106822,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -106869,7 +106871,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from the Bureau Vault-7 evidence locker after the Jeju Outbreak.",
 			personality: "",
@@ -106878,7 +106880,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"What's left of you after it's done its job is what you started with.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -106970,8 +106972,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -107019,7 +107021,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Quietly stockpiled by the Hunter Association after an A-rank cascade exposed gaps in standard kit.",
+				"Quietly stockpiled by the Ascendant Bureau after an A-rank cascade exposed gaps in standard kit.",
 			origin:
 				"Salvaged from a collapsed B-rank gate in the old Cheongdam district.",
 			personality: "",
@@ -107119,8 +107121,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -107268,8 +107270,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -107414,8 +107416,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -107470,7 +107472,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Built by Bureau artificers who've patched real wounds.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -107560,8 +107562,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -107617,7 +107619,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Steel between you and the world. Not always enough; usually enough.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "armor"],
 		theme_tags: [],
 		activation: {
@@ -107708,8 +107710,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -107758,7 +107760,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Logged at a Bureau weigh-station after a routine post-clear inventory.",
 		tags: ["equipment", "firearm"],
@@ -107832,8 +107834,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -107885,7 +107887,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Carried by people who know the difference between a kill and a survival.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -107958,8 +107960,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -107975,7 +107977,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_pistol_common_2",
 		name: "Standard Sidearm",
 		description:
-			"A compact firearm machined to standard Hunter Bureau tolerances. Fits any standard-issue holster.",
+			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0476.webp",
@@ -108082,8 +108084,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -108099,7 +108101,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_pistol_common_3",
 		name: "Service Magnum",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "common",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0333.webp",
@@ -108133,7 +108135,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It will only ever be as deadly as the hand that holds it.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -108208,8 +108210,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -108343,8 +108345,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -108391,7 +108393,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Used in a controlled recovery operation that became the Bureau's textbook example.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -108475,8 +108477,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -108532,7 +108534,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Heavy in the hand. Heavier in consequence.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -108613,8 +108615,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -108662,7 +108664,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Marked for retirement twice; pulled back into rotation by quartermaster discretion.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -108748,8 +108750,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -108799,7 +108801,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Reliable. Honest. Mean when it has to be.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -108873,8 +108875,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -108920,14 +108922,14 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Cited in two Bureau accident reports as 'performed within tolerance.'",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"Carried by people who know the difference between a kill and a survival.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -109003,8 +109005,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -109020,7 +109022,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_pistol_rare_0",
 		name: "Ember Holdout Pistol",
 		description:
-			"A compact firearm machined to standard Hunter Bureau tolerances. Fits any standard-issue holster.",
+			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0325.webp",
@@ -109166,8 +109168,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -109326,8 +109328,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -109488,8 +109490,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -109505,7 +109507,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_pistol_rare_3",
 		name: "Aetheric Combat Pistol",
 		description:
-			"A compact firearm machined to standard Hunter Bureau tolerances. Fits any standard-issue holster.",
+			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0994.webp",
@@ -109652,8 +109654,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -109717,7 +109719,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Built to hit. Built to keep working.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -109813,8 +109815,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -109875,11 +109877,11 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Pulled from the gear locker of a mid-rank Hunter declared MIA during a C-rank sweep.",
+				"Pulled from the gear locker of a mid-rank Ascendant declared MIA during a C-rank sweep.",
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Identified during a mid-tier auction after the Bureau cleared its provenance.",
 		tags: ["equipment", "firearm"],
@@ -109978,8 +109980,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -110141,8 +110143,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -110158,7 +110160,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_pistol_legendary_0",
 		name: "Singular Combat Pistol",
 		description:
-			"A compact firearm machined to standard Hunter Bureau tolerances. Fits any standard-issue holster.",
+			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "legendary",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0844.webp",
@@ -110201,7 +110203,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -110302,8 +110304,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -110426,8 +110428,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -110553,8 +110555,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -110677,8 +110679,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -110723,7 +110725,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was once misattributed in a post-clear report; the correction is still in the record.",
 			origin:
-				"Issued to a B-rank Hunter on first deployment and never replaced.",
+				"Issued to a B-rank Ascendant on first deployment and never replaced.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -110804,8 +110806,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -110851,7 +110853,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Drew the eye of the Bureau quartermaster after surviving three consecutive gate clears.",
 			personality: "",
@@ -110937,8 +110939,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -110993,7 +110995,7 @@ export const items_gap_fill: Item[] = [
 		flavor:
 			"Sized for the wielder who finishes fights, not the one who starts them.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -111071,8 +111073,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111120,7 +111122,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -111204,8 +111206,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111250,7 +111252,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
 				"Recovered from a sealed Guild Vault after a Bureau audit ordered the doors opened.",
 			personality: "",
@@ -111336,8 +111338,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111470,8 +111472,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111603,8 +111605,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111765,8 +111767,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111927,8 +111929,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -111985,9 +111987,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -112089,8 +112091,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -112251,8 +112253,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -112309,7 +112311,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Hand-finished by a Bureau master artificer working out of the Seoul Forge District.",
 			personality: "",
@@ -112317,7 +112319,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "It will only ever be as deadly as the hand that holds it.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -112413,8 +112415,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -112470,7 +112472,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Looted from a mid-rank Anomaly nest cleared by Strike Team Echo.",
 			personality: "",
@@ -112572,8 +112574,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -112733,8 +112735,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -112859,8 +112861,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -112984,8 +112986,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -113109,8 +113111,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -113154,7 +113156,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Passed quietly between three guildhalls before settling into the Bureau's surplus cycle.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -113236,8 +113238,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -113285,7 +113287,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Saw heavy rotation among second-strike teams during the Busan Incident.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -113370,8 +113372,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -113423,7 +113425,7 @@ export const items_gap_fill: Item[] = [
 			personality: "",
 			prior_owners: [],
 		},
-		flavor: "What survives a Hunter's tour usually outlives the Hunter.",
+		flavor: "What survives a Ascendant's tour usually outlives the Ascendant.",
 		discovery_lore:
 			"Surfaced when a Guild quartermaster did a five-year locker audit.",
 		tags: ["equipment", "firearm"],
@@ -113504,8 +113506,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -113637,8 +113639,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -113770,8 +113772,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -113817,9 +113819,9 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Earned a footnote in the Hunter Association's quarterly equipment audit.",
+				"Earned a footnote in the Ascendant Bureau's quarterly equipment audit.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -113904,8 +113906,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -113969,7 +113971,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Honest steel. The kind that never apologizes.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -114064,8 +114066,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -114128,7 +114130,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Reliable. Honest. Mean when it has to be.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "melee"],
 		theme_tags: [],
 		activation: {
@@ -114222,8 +114224,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -114288,7 +114290,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Not pretty. Not elegant. Effective.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -114384,8 +114386,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -114542,8 +114544,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -114588,7 +114590,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Figured in a debriefing hearing after a clear went sideways in an unstable Gate.",
 			origin:
-				"Issued from the Bureau's mid-tier Hunter requisition channel after standard certification.",
+				"Issued from the Bureau's mid-tier Ascendant requisition channel after standard certification.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -114666,8 +114668,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -114798,8 +114800,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -114921,8 +114923,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -114973,7 +114975,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Heavy in the hand. Heavier in consequence.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -115045,8 +115047,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115062,7 +115064,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_smg_uncommon_0",
 		name: "Reissue SMG",
 		description:
-			"A short-barrel automatic. Burst-fire selectors give Hunters control in tight spaces.",
+			"A short-barrel automatic. Burst-fire selectors give Ascendants control in tight spaces.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0451.webp",
@@ -115100,7 +115102,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Heavy in the hand. Heavier in consequence.",
 		discovery_lore:
-			"Logged in a Hunter's after-action report as 'recovered with the rest of the load.'",
+			"Logged in a Ascendant's after-action report as 'recovered with the rest of the load.'",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -115179,8 +115181,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115196,7 +115198,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_smg_uncommon_1",
 		name: "Sanctioned Compact SMG",
 		description:
-			"A short-barrel automatic. Burst-fire selectors give Hunters control in tight spaces.",
+			"A short-barrel automatic. Burst-fire selectors give Ascendants control in tight spaces.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0346.webp",
@@ -115313,8 +115315,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115447,8 +115449,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115464,7 +115466,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_smg_uncommon_3",
 		name: "Refit PDW",
 		description:
-			"A standard sidearm blade for Hunters who prefer steel to firearms.",
+			"A standard sidearm blade for Ascendants who prefer steel to firearms.",
 		rarity: "uncommon",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0852.webp",
@@ -115579,8 +115581,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115743,8 +115745,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115760,7 +115762,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_smg_rare_1",
 		name: "Stargazer's Submachine Gun",
 		description:
-			"A short-barrel automatic. Burst-fire selectors give Hunters control in tight spaces.",
+			"A short-barrel automatic. Burst-fire selectors give Ascendants control in tight spaces.",
 		rarity: "rare",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0444.webp",
@@ -115800,7 +115802,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Found embedded in a rift-touched alley wall in the post-gate Seoul reclamation zone.",
 			personality: "",
@@ -115903,8 +115905,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -115959,7 +115961,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Hunters' survival.",
+				"Mentioned in the post-mortem on the Cheongdam cascade event as critical to two Ascendants' survival.",
 			origin:
 				"Reverse-engineered by Bureau artificers from materials harvested in a lattice-bleed event.",
 			personality: "",
@@ -116061,8 +116063,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -116078,7 +116080,7 @@ export const items_gap_fill: Item[] = [
 		id: "gap_firearm_smg_epic_0",
 		name: "Worldbreaker's PDW",
 		description:
-			"A reliable mid-weight blade â€” the kind every Hunter learns on, and many never replace.",
+			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "epic",
 		type: "weapon",
 		image: "/generated/compendium/items/item-0714.webp",
@@ -116118,7 +116120,7 @@ export const items_gap_fill: Item[] = [
 			current_owner: "",
 			curse: "",
 			history:
-				"Catalogued in the Hunter Bureau's standard equipment registry after a six-month field trial.",
+				"Catalogued in the Ascendant Bureau's standard equipment registry after a six-month field trial.",
 			origin:
 				"Sourced from the post-clear loot dispersion of a successful A-rank gate operation.",
 			personality: "",
@@ -116221,8 +116223,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -116352,8 +116354,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -116481,8 +116483,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: true,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: true,
 			},
@@ -116530,14 +116532,14 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Tested through a Guild's three-tier review and approved for sustained use.",
 			origin:
-				"Bought at auction by a private guild and re-issued to a Hunter strike team.",
+				"Bought at auction by a private guild and re-issued to a Ascendant strike team.",
 			personality: "",
 			prior_owners: [],
 		},
 		flavor:
 			"Carried by people who know the difference between a kill and a survival.",
 		discovery_lore:
-			"Found by a B-rank Hunter on a bounty assignment in a half-cleared gate annex.",
+			"Found by a B-rank Ascendant on a bounty assignment in a half-cleared gate annex.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -116616,8 +116618,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -116751,8 +116753,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -116799,7 +116801,7 @@ export const items_gap_fill: Item[] = [
 			history:
 				"Was the subject of a dismissed bidding war between two mid-tier Guilds.",
 			origin:
-				"Brokered to a Hunter Association quartermaster by a vetted second-hand seller.",
+				"Brokered to a Ascendant Bureau quartermaster by a vetted second-hand seller.",
 			personality: "",
 			prior_owners: [],
 		},
@@ -116884,8 +116886,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -117047,8 +117049,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -117113,7 +117115,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Quiet, until it isn't.",
 		discovery_lore:
-			"Brought to Bureau attention by a freelance Hunter's anonymous tip.",
+			"Brought to Bureau attention by a freelance Ascendant's anonymous tip.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -117210,8 +117212,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},
@@ -117276,7 +117278,7 @@ export const items_gap_fill: Item[] = [
 		},
 		flavor: "Don't trust a weapon you can't put down.",
 		discovery_lore:
-			"Walked out of the gate in the bottom of a Hunter's pack, mostly forgotten.",
+			"Walked out of the gate in the bottom of a Ascendant's pack, mostly forgotten.",
 		tags: ["equipment", "firearm"],
 		theme_tags: [],
 		activation: {
@@ -117373,8 +117375,8 @@ export const items_gap_fill: Item[] = [
 				allows_5e_baseline: false,
 				canon_guardrails: [
 					"Use RA ability names in formulas.",
-					"Preserve gate, Hunter Bureau, mana lattice, and anomaly terminology.",
-					"Do not substitute unrelated fantasy species, monarch, or D&D class lore.",
+					"Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.",
+					"Do not substitute unrelated fantasy species, regent, or D&D class lore.",
 				],
 				ra_specific_mundane: false,
 			},

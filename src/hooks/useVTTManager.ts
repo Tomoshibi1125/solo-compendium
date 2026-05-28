@@ -166,14 +166,19 @@ export function useVTTManager() {
 					data: { publicUrl },
 				} = supabase.storage.from("compendium-images").getPublicUrl(filePath);
 
-				// Create token record
+				// Create token record.
+				// D2: campaign_id is the canonical campaign reference
+				// (migration 20260528000600). session_id is retained for
+				// backward compatibility / NOT NULL until RLS prefers
+				// campaign_id (migration 20260528000700).
 				const { data: token, error: tokenError } = await supabase
 					.from("vtt_tokens")
 					.insert({
 						name: file.name,
 						image_url: publicUrl,
 						created_by: user.id,
-						session_id: campaignId, // Use session_id as campaign reference for now
+						session_id: campaignId,
+						campaign_id: campaignId,
 						token_type: assetType,
 						color: "#ffffff",
 						x: 0,

@@ -65,6 +65,8 @@ export function SpellsList({
 	const [addDialogOpen, setAddDialogOpen] = useState(false);
 	const [filterLevel, setFilterLevel] = useState("all");
 	const [filterPrepared, setFilterPrepared] = useState("all");
+	// B2/P1.5: per-spell chosen upcast level (defaults to the spell's level).
+	const [upcastChoice, setUpcastChoice] = useState<Record<string, number>>({});
 
 	const countedSpells = spells.filter((spell) => spell.counts_against_limit);
 	const spellcastingAbility = character
@@ -156,7 +158,10 @@ export function SpellsList({
 		});
 	};
 
-	const handleCastSpell = async (spell: CharacterSpell) => {
+	const handleCastSpell = async (
+		spell: CharacterSpell,
+		castAtLevel?: number,
+	) => {
 		const displayName = formatRegentVernacular(spell.name);
 
 		if (spell.uses_max !== null) {
@@ -193,6 +198,10 @@ export function SpellsList({
 					description: spell.description,
 					higherLevels: spell.higher_levels,
 				},
+				// B2/P1.5: pass the chosen upcast level + base damage so the
+				// hook can auto-scale damage when cast above the spell's level.
+				castAtLevel: castAtLevel ?? spell.spell_level,
+				baseDamage: spell.spell?.damage_roll ?? null,
 				characterId,
 				characterName: character?.name || "Character",
 				jobName: character?.job || null,
@@ -512,14 +521,61 @@ export function SpellsList({
 													</label>
 												</div>
 												{spell.is_prepared && (
-													<Button
-														variant="outline"
-														size="sm"
-														onClick={() => handleCastSpell(spell)}
-														className="text-xs"
-													>
-														Cast
-													</Button>
+													<div className="flex items-center gap-1">
+														{/* B2/P1.5: upcast level picker — only for leveled
+														    spells that have higher slots available. */}
+														{spell.spell_level > 0 &&
+															spellCasting &&
+															(() => {
+																const levels = spellCasting.getUpcastLevels({
+																	id: spell.id,
+																	name: spell.name,
+																	level: spell.spell_level,
+																	isRitual: spell.ritual,
+																	isConcentration: spell.concentration,
+																	castingTime: spell.casting_time,
+																	range: spell.range,
+																	duration: spell.duration,
+																	description: spell.description,
+																	higherLevels: spell.higher_levels,
+																});
+																if (levels.length <= 1) return null;
+																return (
+																	<select
+																		aria-label="Cast at level"
+																		className="h-8 rounded border bg-background text-xs px-1"
+																		value={
+																			upcastChoice[spell.id] ?? spell.spell_level
+																		}
+																		onChange={(e) =>
+																			setUpcastChoice((prev) => ({
+																				...prev,
+																				[spell.id]: parseInt(e.target.value, 10),
+																			}))
+																		}
+																	>
+																		{levels.map((lvl) => (
+																			<option key={lvl} value={lvl}>
+																				Lv {lvl}
+																			</option>
+																		))}
+																	</select>
+																);
+															})()}
+														<Button
+															variant="outline"
+															size="sm"
+															onClick={() =>
+																handleCastSpell(
+																	spell,
+																	upcastChoice[spell.id] ?? spell.spell_level,
+																)
+															}
+															className="text-xs"
+														>
+															Cast
+														</Button>
+													</div>
 												)}
 												<Button
 													variant="ghost"

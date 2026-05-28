@@ -149,9 +149,12 @@ function ActionCardComponent({
 					const outcome = resolveAttack(payload, 10);
 					if (outcome.kind === "attack") {
 						const attackVal = outcome.attackTotal;
-						message = `${displayName} Attack: ${attackVal} (vs AC 10)`;
+						const critPrefix = outcome.criticalHit ? "💥 CRITICAL HIT! " : "";
+						message = `${critPrefix}${displayName} Attack: ${attackVal} (vs AC 10)`;
 						if (outcome.damageTotal) {
-							message += ` | Damage: ${outcome.damageTotal}`;
+							message += ` | Damage: ${outcome.damageTotal}${
+								outcome.criticalHit ? " (dice doubled)" : ""
+							}`;
 						}
 						formula = payload.attack.roll;
 					}

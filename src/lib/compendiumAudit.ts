@@ -89,16 +89,16 @@ const templatedPhrasePatterns: RegExp[] = [
 	// Sigil stock authoring phrases
 	/its true history remains a heavily guarded bureau secret/i,
 	/deeply territorial\.?$/i,
-	/circulating in the underground hunter markets/i,
+	/circulating in the underground ascendant markets/i,
 	// Tattoo stock authoring phrases
-	/inked by rogue alchemists looking to push hunter flesh/i,
+	/inked by rogue alchemists looking to push ascendant flesh/i,
 	/highly regulated by the international guild association/i,
 	/widespread among underground syndicates/i,
 	/focus your intent on the glyph/i,
 	// Cross-dataset stock flavor
 	/silent, hungry\.?$/i,
-	/appeared in a hunter's inventory after a system notification/i,
-	/the manifestation of true hunter authority/i,
+	/appeared in a ascendant's inventory after a system notification/i,
+	/the manifestation of true ascendant authority/i,
 	/the world itself shudders/i,
 	/commands the certainty of outcomes/i,
 ];

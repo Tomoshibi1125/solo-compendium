@@ -3170,6 +3170,7 @@ export type Database = {
 					created_at: string;
 					death_save_failures: number | null;
 					death_save_successes: number | null;
+					derived_stats_cached_at: string | null;
 					exhaustion_level: number;
 					experience: number;
 					gemini_state: Json | null;
@@ -3178,6 +3179,7 @@ export type Database = {
 					hit_dice_size: number;
 					hp_current: number;
 					hp_max: number;
+					hp_max_override: number | null;
 					hp_temp: number;
 					id: string;
 					immunities: string[] | null;
@@ -3236,6 +3238,7 @@ export type Database = {
 					created_at?: string;
 					death_save_failures?: number | null;
 					death_save_successes?: number | null;
+					derived_stats_cached_at?: string | null;
 					exhaustion_level?: number;
 					experience?: number;
 					gemini_state?: Json | null;
@@ -3244,6 +3247,7 @@ export type Database = {
 					hit_dice_size?: number;
 					hp_current?: number;
 					hp_max?: number;
+					hp_max_override?: number | null;
 					hp_temp?: number;
 					id?: string;
 					immunities?: string[] | null;
@@ -3302,6 +3306,7 @@ export type Database = {
 					created_at?: string;
 					death_save_failures?: number | null;
 					death_save_successes?: number | null;
+					derived_stats_cached_at?: string | null;
 					exhaustion_level?: number;
 					experience?: number;
 					gemini_state?: Json | null;
@@ -3310,6 +3315,7 @@ export type Database = {
 					hit_dice_size?: number;
 					hp_current?: number;
 					hp_max?: number;
+					hp_max_override?: number | null;
 					hp_temp?: number;
 					id?: string;
 					immunities?: string[] | null;
@@ -8254,6 +8260,7 @@ export type Database = {
 			};
 			vtt_tokens: {
 				Row: {
+					campaign_id: string | null;
 					color: string | null;
 					created_at: string | null;
 					created_by: string;
@@ -8275,6 +8282,7 @@ export type Database = {
 					y: number;
 				};
 				Insert: {
+					campaign_id?: string | null;
 					color?: string | null;
 					created_at?: string | null;
 					created_by: string;
@@ -8296,6 +8304,7 @@ export type Database = {
 					y?: number;
 				};
 				Update: {
+					campaign_id?: string | null;
 					color?: string | null;
 					created_at?: string | null;
 					created_by?: string;
@@ -8317,6 +8326,13 @@ export type Database = {
 					y?: number;
 				};
 				Relationships: [
+					{
+						foreignKeyName: "vtt_tokens_campaign_id_fkey";
+						columns: ["campaign_id"];
+						isOneToOne: false;
+						referencedRelation: "campaigns";
+						referencedColumns: ["id"];
+					},
 					{
 						foreignKeyName: "vtt_tokens_session_id_fkey";
 						columns: ["session_id"];

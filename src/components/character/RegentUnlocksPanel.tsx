@@ -191,34 +191,78 @@ export function RegentUnlocksPanel({
 			| undefined;
 		if (!abilities) return availableLockedRegents.slice(0, 3);
 
-		const strength = abilities.STR || 10;
-		const agility = abilities.AGI || 10;
-		const vitality = abilities.VIT || 10;
-		const intelligence = abilities.INT || 10;
-		const sense = abilities.SENSE || 10;
-		const presence = abilities.PRE || 10;
+		// D3: thematic matching. Each regent theme has an ability affinity;
+		// score a candidate by the SUM of the character's scores in its
+		// affine abilities, plus a bonus when the theme aligns with the
+		// character's job emphasis. This surfaces regents that actually fit
+		// the build (a high-STR Berserker sees Strength/War/Titan themes
+		// first) instead of the previous char-code noise.
+		const abilityOf = (key: string) => abilities[key] || 10;
 
-		// Simple heuristic:
-		// Martial sum (Str + Dex + Con) vs Caster sum (Int + Wis + Cha)
-		const martialSum = strength + agility + vitality;
-		const casterSum = intelligence + sense + presence;
+		// theme (lowercased) → abilities it draws on
+		const THEME_AFFINITY: Record<string, string[]> = {
+			shadow: ["AGI", "PRE"],
+			umbral: ["AGI", "PRE"],
+			dragon: ["STR", "PRE"],
+			beast: ["STR", "VIT"],
+			frost: ["INT", "SENSE"],
+			destruction: ["STR", "INT"],
+			steel: ["VIT", "STR"],
+			war: ["STR", "PRE"],
+			radiant: ["PRE", "SENSE"],
+			plague: ["VIT", "INT"],
+			gravity: ["INT", "SENSE"],
+			spatial: ["INT", "SENSE"],
+			mimic: ["AGI", "INT"],
+			blood: ["VIT", "STR"],
+			titan: ["STR", "VIT"],
+		};
 
-		// Sort regents by some thematic relevance
-		const shuffled = [...availableLockedRegents].sort((a, b) => {
-			// Deterministic based on character stats and regent ID length
-			const aId = a.id || "";
-			const bId = b.id || "";
-			const weightA =
-				martialSum * (aId.charCodeAt(0) || 1) +
-				casterSum * (aId.charCodeAt(aId.length - 1) || 1);
-			const weightB =
-				martialSum * (bId.charCodeAt(0) || 1) +
-				casterSum * (bId.charCodeAt(bId.length - 1) || 1);
-			return weightB - weightA;
+		// Job → thematic keywords it favors (bonus when a regent matches).
+		const jobThemeBonus: Record<string, string[]> = {
+			berserker: ["war", "titan", "beast", "destruction"],
+			destroyer: ["destruction", "war", "titan"],
+			mage: ["frost", "gravity", "spatial"],
+			technomancer: ["steel", "spatial", "gravity"],
+			esper: ["gravity", "spatial", "mimic"],
+			striker: ["shadow", "beast"],
+			assassin: ["shadow", "umbral", "blood"],
+			stalker: ["beast", "shadow"],
+			"holy knight": ["radiant", "war"],
+			herald: ["radiant", "plague"],
+			summoner: ["beast", "blood"],
+			revenant: ["umbral", "plague", "blood"],
+			idol: ["radiant", "mimic"],
+			contractor: ["mimic", "shadow"],
+		};
+		const job = (character?.job ?? "").trim().toLowerCase();
+		const favored = new Set(jobThemeBonus[job] ?? []);
+
+		const scoreOf = (theme: string | null): number => {
+			const t = (theme ?? "").trim().toLowerCase();
+			const affinity = THEME_AFFINITY[t];
+			// Base: sum of affine ability scores (or overall average for
+			// unknown themes so they still rank sensibly).
+			const base = affinity
+				? affinity.reduce((sum, ab) => sum + abilityOf(ab), 0)
+				: (abilityOf("STR") +
+						abilityOf("AGI") +
+						abilityOf("VIT") +
+						abilityOf("INT") +
+						abilityOf("SENSE") +
+						abilityOf("PRE")) /
+					3;
+			// Job alignment bonus.
+			return base + (favored.has(t) ? 12 : 0);
+		};
+
+		const ranked = [...availableLockedRegents].sort((a, b) => {
+			const diff = scoreOf(b.theme) - scoreOf(a.theme);
+			// Stable tie-break by name so the list is deterministic.
+			return diff !== 0 ? diff : (a.name || "").localeCompare(b.name || "");
 		});
 
-		// Take top 3
-		return shuffled.slice(0, 3);
+		return ranked.slice(0, 3);
 	}, [availableLockedRegents, character]);
 
 	const handleUnlock = () => {

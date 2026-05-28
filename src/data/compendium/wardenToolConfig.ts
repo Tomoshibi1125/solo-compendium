@@ -131,14 +131,14 @@ export const TREASURE_MATERIALS: Record<GateRank, readonly string[]> = {
 	],
 	B: [
 		"Elite Echo-Core",
-		"Mithril-Fused Ingot",
+		"anomaly-grade alloy-Fused Ingot",
 		"Pure Aether-Crystal",
 		"Hyper-Condensed Umbral-Thin",
 		"Stable Rift-Shard",
 	],
 	A: [
 		"Eternal-Grade Echo-Core",
-		"Adamantine-Fused Ingot",
+		"lattice-stable composite-Fused Ingot",
 		"Perfect Aether-Crystal",
 		"Singularity-Grade Umbral-Thin",
 		"Massive Rift-Core",

@@ -17,6 +17,7 @@ import type { RealtimeChannel } from "@supabase/supabase-js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
+import { hooks } from "@/lib/hooks/registry";
 import {
 	type ChatParticipant,
 	createPing,
@@ -652,6 +653,9 @@ export function useVTTRealtime({
 	const eventHandlersRef = useRef<Map<string, Set<(payload: unknown) => void>>>(
 		new Map(),
 	);
+	// Misty Pearl G1 — last-known scene id, used to populate `previousSceneId`
+	// on the Bureau Directive Bus when a scene change broadcast fires.
+	const currentSceneIdRef = useRef<string | null>(null);
 
 	// Stable channel name
 	const channelName = useMemo(
@@ -712,6 +716,13 @@ export function useVTTRealtime({
 				type: "token_move",
 				payload: { tokenId, x, y, movedBy: userId },
 			});
+			// Misty Pearl G1 — Bureau Directive Bus emit.
+			hooks.emit("token:moved", {
+				tokenId,
+				sceneId: currentSceneIdRef.current ?? "",
+				from: null,
+				to: { x, y },
+			});
 		},
 		[broadcast, userId],
 	);
@@ -732,6 +743,10 @@ export function useVTTRealtime({
 	const broadcastTokenAdd = useCallback(
 		(token: import("@/types/vtt").VTTTokenInstance) => {
 			broadcast({ type: "token_add", payload: { token, addedBy: userId } });
+			hooks.emit("token:created", {
+				tokenId: token.id,
+				sceneId: currentSceneIdRef.current ?? "",
+			});
 		},
 		[broadcast, userId],
 	);
@@ -741,6 +756,10 @@ export function useVTTRealtime({
 			broadcast({
 				type: "token_remove",
 				payload: { tokenId, removedBy: userId },
+			});
+			hooks.emit("token:removed", {
+				tokenId,
+				sceneId: currentSceneIdRef.current ?? "",
 			});
 		},
 		[broadcast, userId],
@@ -763,8 +782,16 @@ export function useVTTRealtime({
 				type: "scene_change",
 				payload: { sceneId, changedBy: userId },
 			});
+			// Misty Pearl G1 — track previous scene id so listeners can diff.
+			const previousSceneId = currentSceneIdRef.current;
+			currentSceneIdRef.current = sceneId;
+			hooks.emit("scene:changed", {
+				previousSceneId,
+				nextSceneId: sceneId,
+				campaignId: campaignId ?? "",
+			});
 		},
-		[broadcast, userId],
+		[broadcast, userId, campaignId],
 	);
 
 	const broadcastSceneSync = useCallback(

@@ -35,7 +35,7 @@ const EncounterBuilderPage = () => {
 					<ManaFlowText variant="rift" speed="slow" className="font-heading">
 						Synthesize combat matrices and calculate probability of unit
 						neutralization. Balance multi-planar entities against identified
-						hunter ratings.
+						ascendant ratings.
 					</ManaFlowText>
 				</div>
 

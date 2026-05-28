@@ -13,6 +13,7 @@ import {
 import { useAutoBackup } from "@/hooks/useCharacterBackup";
 import { useCharacterDerivedStats } from "@/hooks/useCharacterDerivedStats";
 import {
+	featureEffectsToCustomModifiers,
 	featureModifiersToCustomModifiers,
 	useCharacterFeatures,
 } from "@/hooks/useCharacterFeatures";
@@ -217,12 +218,21 @@ export function useCharacterPageModel() {
 		() => [
 			...normalizeCustomModifiers(sheetState.customModifiers),
 			...featureModifiersToCustomModifiers(charFeatures),
+			// B4/P1.9: structured feat effects (Tough +2 HP/level, etc.) that
+			// flat modifiers can't express — per-level HP scaling, preset
+			// fallback for feats authored without explicit modifiers.
+			...featureEffectsToCustomModifiers(charFeatures, character?.level ?? 1),
 			// D&D Beyond parity: persisted active spells (Bless, Shield of
 			// Faith, Haste, …) project into customModifiers so derived stats
 			// pick up their bonuses without the engine knowing about spells.
 			...activeSpellsToCustomModifiers(characterActiveSpells),
 		],
-		[sheetState.customModifiers, charFeatures, characterActiveSpells],
+		[
+			sheetState.customModifiers,
+			charFeatures,
+			characterActiveSpells,
+			character?.level,
+		],
 	);
 
 	const undoRedo = useCharacterUndoRedo(character ?? null);

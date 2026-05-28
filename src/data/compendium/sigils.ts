@@ -87,7 +87,7 @@ export const sigils: CompendiumSigil[] = [
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "The weight of the earth.",
 		mechanics: {
@@ -284,7 +284,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Engineered in the Siberian dead-zones where frost magic is key to survival.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Held by a Assassin guild.",
@@ -614,7 +614,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Developed by healers attempting to keep critically wounded Hunters alive long enough for Evacuation.",
+				"Developed by healers attempting to keep critically wounded Ascendants alive long enough for Evacuation.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Dormant and silent.",
@@ -679,11 +679,11 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Invented after a tragic eruption of a Red Gate composed of volcanic anomalies.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Cooler heads prevail.",
 		mechanics: {
@@ -742,8 +742,8 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Favored by hunters operating in the Siberian outposts, where freezing to death is a greater threat than monsters.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+				"Favored by ascendants operating in the Siberian outposts, where freezing to death is a greater threat than anomalies.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Currently unaccounted for.",
@@ -810,7 +810,7 @@ export const sigils: CompendiumSigil[] = [
 			curse: "",
 			personality: "Proud and unyielding.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "The storm breaks upon me.",
 		mechanics: {
@@ -873,7 +873,7 @@ export const sigils: CompendiumSigil[] = [
 			history: "Archived in the Guild's secured inscription reference.",
 			curse: "",
 			personality: "Dormant and silent.",
-			current_owner: "Held by licensed Hunter Guild supply offices.",
+			current_owner: "Held by licensed Ascendant Guild supply offices.",
 			prior_owners: ["Guild Master Kael"],
 		},
 		flavor: "Weightless steps.",
@@ -999,13 +999,13 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
-				"An essential component for Stalker-class Hunters defending the Safe Zones.",
+				"An essential component for Stalker-class Ascendants defending the Safe Zones.",
 			history:
 				"Catalogued in the Technomancer Guild's closed-reference volume.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Nothing escapes your gaze.",
 		mechanics: {
@@ -1065,13 +1065,13 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Academy of High Magic",
 		lore: {
 			origin:
-				"A favorite among Assassin-class Hunters looking for the perfect opening.",
+				"A favorite among Assassin-class Ascendants looking for the perfect opening.",
 			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Requires a calibrated socket to stabilize.",
 			current_owner: "Held by a Assassin guild.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Strike first.",
 		mechanics: {
@@ -1264,12 +1264,12 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"Extremely rare; typically awarded only to National-Level Hunters.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+				"Extremely rare; typically awarded only to National-Level Ascendants.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Resonates only with lattice-compatible host items.",
 			current_owner: "Held by a Assassin guild.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "An unending well of power.",
 		mechanics: {
@@ -1339,7 +1339,7 @@ export const sigils: CompendiumSigil[] = [
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Currently unaccounted for.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Serve me in death.",
 		mechanics: {
@@ -1402,7 +1402,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Holylight Cathedral",
 		lore: {
 			origin:
-				"The ultimate safeguard for Hunters entering uncharted Red Gates.",
+				"The ultimate safeguard for Ascendants entering uncharted Red Gates.",
 			history: "Entered into the Bureau's controlled-inscription ledger.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
@@ -1536,7 +1536,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Invented to survive encounters with Ice-type anomalies beyond the Northern Rifts.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Chaotic and unpredictable.",
 			current_owner: "Lost to the depths of a high-tier dungeon.",
@@ -1666,7 +1666,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Crucial for fighting the acid-spitting Arachnids of Sector D gates.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Resonates only with lattice-compatible host items.",
 			current_owner: "Wielded by Holy Knights.",
@@ -1796,11 +1796,11 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Favored by operatives exploring pre-gate ruin-gates where sound triggers traps.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Aggressive and volatile.",
 			current_owner: "Heavily guarded in the Bureau's Armory.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Quiet resilience.",
 		mechanics: {
@@ -1861,7 +1861,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"An absolute requirement to survive a high-tier Telekinetic anomaly's assault.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Held by a Assassin guild.",
@@ -1981,7 +1981,7 @@ export const sigils: CompendiumSigil[] = [
 		id: "sigil-mastery-blade",
 		name: "Sigil of the Grandmaster's Edge",
 		description:
-			"Attunes a bladed weapon to perfectly seek the path of least resistance through monster hide.",
+			"Attunes a bladed weapon to perfectly seek the path of least resistance through anomaly hide.",
 		rarity: "very_rare",
 		can_inscribe_on: ["weapon"],
 		effect_description:
@@ -1992,7 +1992,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"The pinnacle of cutting augmentation, designed by an elite Guild Master who broke too many swords.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
 			current_owner: "Distributed by Bureau-certified inscription workshops.",
@@ -2123,11 +2123,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "Ensured a 100% kill rate for the Guild's elite archer division.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Sorrowful, weeping mana.",
 			current_owner: "Wielded by Holy Knights.",
-			prior_owners: ["Hunter Academy Reference Collection"],
+			prior_owners: ["Ascendant Academy Reference Collection"],
 		},
 		flavor: "There's nowhere to hide.",
 		mechanics: {
@@ -2256,7 +2256,7 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin:
-				"For when you absolutely must cleave the monster in two on the first swing.",
+				"For when you absolutely must cleave the anomaly in two on the first swing.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Hungry for ambient magic.",
@@ -2452,11 +2452,11 @@ export const sigils: CompendiumSigil[] = [
 		source_book: "Ascendant Bureau Armory",
 		lore: {
 			origin: "For when you need to outrun an angry S-Rank anomaly.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Dormant and silent.",
 			current_owner: "Wielded by Holy Knights.",
-			prior_owners: ["Warden Thorne", "A-Rank Hunter 'Ghost'"],
+			prior_owners: ["Warden Thorne", "A-Rank Ascendant 'Ghost'"],
 		},
 		flavor: "Catch me if you can.",
 		mechanics: {
@@ -2517,7 +2517,7 @@ export const sigils: CompendiumSigil[] = [
 		tags: ["sigil", "accessory", "presence"],
 		source_book: "Ascendant Bureau Armory",
 		lore: {
-			origin: "Monsters feed on fear; this sigil starves them.",
+			origin: "Anomalies feed on fear; this sigil starves them.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
 			curse: "",
 			personality: "Coldly analytical.",
@@ -2584,7 +2584,7 @@ export const sigils: CompendiumSigil[] = [
 		lore: {
 			origin:
 				"Favored by solo-tank specialists holding the front line of Rift breaks.",
-			history: "Documented in the Hunter Bureau's archivist-access manual.",
+			history: "Documented in the Ascendant Bureau's archivist-access manual.",
 			curse: "",
 			personality: "Resonates only with lattice-compatible host items.",
 			current_owner: "Wielded by Holy Knights.",

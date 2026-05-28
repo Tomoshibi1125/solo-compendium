@@ -135,18 +135,18 @@ To match the **power level and theme** of Solo Leveling Monarchs while fitting o
 - Should feel like **S-Rank** powers
 - Should grant abilities that are **qualitatively different** from standard class features
 - Should be **game-changers** in combat and exploration
-- Should reflect the **modern urban fantasy** setting (gates, hunters, System)
+- Should reflect the **modern urban fantasy** setting (gates, ascendants, System)
 
 ### Modern Urban Fantasy Adaptation
 
-Instead of fantasy monsters, Regents are:
+Instead of fantasy anomalies, Regents are:
 - **System-granted sovereign powers** unlocked through gate trials
 - **Protocol Warden-verified** achievements (Warden approval)
 - **Thematically modern**: HUD overlays, smartphone integration, social media impact
 - **Lore tie-in**: Each Regent is tied to a specific **gate dungeon** or **dimensional rift**
 
 **Example Flavor:**
-> "Your phone displays [SHADOW SOVEREIGN PROTOCOL UNLOCKED]. The Hunter Bureau's database updates your classification to S-Rank. Security footage shows shadows bending around you even in broad daylight. Your System HUD now has a [SHADOW STORAGE] menu with infinite capacity."
+> "Your phone displays [SHADOW SOVEREIGN PROTOCOL UNLOCKED]. The Ascendant Bureau's database updates your classification to S-Rank. Security footage shows shadows bending around you even in broad daylight. Your System HUD now has a [SHADOW STORAGE] menu with infinite capacity."
 
 ---
 

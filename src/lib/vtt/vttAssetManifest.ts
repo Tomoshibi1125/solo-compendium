@@ -460,7 +460,7 @@ export const MAP_ASSETS: VTTAsset[] = [
 	// ── New SA-Themed Painterly Battle Maps (AI Generated) ──
 	{
 		id: "map-hunters-guild-tavern",
-		name: "Hunter's Guild Tavern",
+		name: "Ascendant's Guild Tavern",
 		category: "map",
 		path: "/generated/maps/premade/hunters-guild-tavern.png",
 		tags: ["tavern", "guild", "social", "interior", "painterly"],
@@ -1411,7 +1411,7 @@ export const ALL_ASSETS: VTTAsset[] = [
 	...MUSIC_ASSETS,
 ];
 
-/** Asset count summary for Warden (Warden) dashboard */
+/** Asset count summary for Warden dashboard */
 export function getAssetSummary(): Record<AssetCategory, number> {
 	const summary = {} as Record<AssetCategory, number>;
 	for (const asset of ALL_ASSETS) {

@@ -153,7 +153,7 @@ export const comprehensiveSkills: Skill[] = [
 			"Grapple and restrain opponents",
 			"Crowd control",
 		],
-		synergies: ["Monk Training", "Brawler Style", "Improved Grapple"],
+		synergies: ["Striker Training", "Brawler Style", "Improved Grapple"],
 		source: "Rift Ascendant Canon",
 	},
 	{

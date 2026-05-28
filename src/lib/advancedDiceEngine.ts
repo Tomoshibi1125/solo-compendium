@@ -6,6 +6,7 @@
  */
 
 import { AppError } from "@/lib/appError";
+import { getProficiencyBonus } from "@/lib/5eRulesEngine";
 
 interface DiceRoll {
 	dice: number;
@@ -139,6 +140,50 @@ export function rollWithAdvantage(
 		isNatural20: rolls.some((r) => r === 20),
 		isNatural1: rolls.some((r) => r === 1),
 		droppedRolls,
+	};
+}
+
+/**
+ * Post-process a roll result to apply critical-hit dice doubling.
+ *
+ * D&D Beyond parity (and SRD 5e correctness): on a critical hit, ALL
+ * damage dice are doubled, but flat modifiers (ability mod, magic +N,
+ * Hex, Ascendant's Mark, etc.) are **not** doubled. This helper takes an
+ * existing RollResult and produces a new one with the dice rolled again
+ * (additional set of dice rolls of the same size and count).
+ *
+ * Hook points for future expansion:
+ *  - Brutal Critical (Barbarian/Berserker): extra die per crit level.
+ *  - Savage Attacks (Half-Orc/RA equivalent): reroll lowest die.
+ *  These are intentionally not implemented yet; surface via the
+ *  `extraDice` parameter when needed.
+ */
+export function applyCritical(
+	roll: RollResult,
+	extraDice: number = 0,
+): RollResult {
+	// Parse the original formula to recover dice count + sides
+	const parsed = parseFormula(roll.formula);
+	const additionalDiceCount = parsed.dice + extraDice;
+	const additionalRolls: number[] = [];
+	for (let i = 0; i < additionalDiceCount; i++) {
+		additionalRolls.push(rollDie(parsed.sides));
+	}
+	const newRolls = [...roll.rolls, ...additionalRolls];
+	const newTotal = newRolls.reduce((sum, r) => sum + r, 0);
+	const newResult = newTotal + (roll.modifier ?? 0);
+	return {
+		...roll,
+		rolls: newRolls,
+		total: newTotal,
+		result: newResult,
+		criticalMultiplier: 2,
+		isNatural20: roll.isNatural20 || additionalRolls.some((r) => r === 20),
+		// Callers needing the delta can compute it as
+		// `newTotal - originalRoll.total`.
+		droppedRolls: roll.droppedRolls,
+		explodedRolls: roll.explodedRolls,
+		rerolledRolls: roll.rerolledRolls,
 	};
 }
 
@@ -493,7 +538,7 @@ export function applyProficiencyBonus(
 	roll: RollResult,
 	level: number,
 ): RollResult {
-	const proficiencyBonus = Math.ceil(level / 4) + 1;
+	const proficiencyBonus = getProficiencyBonus(level);
 	const newModifier = roll.modifier + proficiencyBonus;
 	const newTotal = roll.total + proficiencyBonus;
 

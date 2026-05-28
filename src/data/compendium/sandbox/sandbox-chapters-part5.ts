@@ -50,11 +50,11 @@ When the Regent falls (Chapter 16 / Megadungeon Room 15), the Warden selects a *
 
 **Alternative A-rank drops** (for non-finale endgame kills, e.g., the Executioner, the Awoko Sanctum boss, the Obsidian Spire Floor 20 guardian):
 - **Kamish's Wrath** (artifact_1) — legendary twin daggers.
-- **Demon King's Longsword** (artifact_2) — two-handed lightning blade.
+- **Regent of Dread's Longsword** (artifact_2) — two-handed lightning blade.
 - **Lightning Blade** (relics-comprehensive) — rapier finesse option.
 - **Frost Axe** (relics-comprehensive) — two-handed cold option.
 - **Abyssal Plate Armor** (relics-comprehensive) — armor for the tank.
-- **Dragon Scale Mail** (relics-comprehensive) — armor with breath-weapon recharge.
+- **Lattice-Scale Mail** (relics-comprehensive) — armor with breath-weapon recharge.
 - **Bloodstone Amulet** (relics-comprehensive) — accessory for shadow builds.
 
 **Mythic-tier (Warden's discretion, secret endings, multi-campaign arcs)**:
@@ -82,7 +82,7 @@ Each B-Rank+ Gate drops one specific sigil. Each A-Rank Gate drops two. These ar
 
 **Awoko Sanctum** (Chapter — part7) drops the ritual-counter pair: *Sigil of the Crimson Weeping* + *Sigil of the Cleansed Blood* already covered above; the Sanctum's **unique** drop is *Sigil of the Shadow Regent* (legendary) — if the party already claimed it from the Obsidian Spire, replace with *Sigil of the Iron Mind* (sigil-res-psychic-2).
 
-**Weapon-mastery sigils** (Grandmaster's Edge, Earth-Shatterer, Ranger's Eye, Pierce-Through, Executioner's Swing): rewards for **Chapter 24 Mana Reading Card 1** (Spark / second Awakening). The NPC who performs the Awakening affixes the sigil to the PC's primary weapon.
+**Weapon-mastery sigils** (Grandmaster's Edge, Earth-Shatterer, Stalker's Eye, Pierce-Through, Executioner's Swing): rewards for **Chapter 24 Mana Reading Card 1** (Spark / second Awakening). The NPC who performs the Awakening affixes the sigil to the PC's primary weapon.
 
 ## IV. Tattoo Parlour — Downtime Rewards *(tattoos.ts)*
 
@@ -93,7 +93,7 @@ In **Chapter 7: Downtime**, the Vermillion Guild tattooist *(see part 6 Vermilli
 | Destroyer | **Regent's Heartbeat** | tattoo_1 |
 | Berserker | **Impact Reservoir** | tattoo_5 |
 | Assassin | **Predator's Gaze** | tattoo_6 |
-| Striker | **Hunter's Acuity** | tattoo_3 |
+| Striker | **Ascendant's Acuity** | tattoo_3 |
 | Mage | **Flame Exhaust** | tattoo_7 |
 | Esper | **Blind-Sight Resonance** | tattoo_11 |
 | Revenant | **Blood-Iron Seal** | tattoo_9 |
@@ -163,12 +163,12 @@ Existing module text uses descriptive encounter names (e.g., "The Frost Sovereig
 | Module Encounter | Canonical Anomaly Stat | Source |
 |------------------|------------------------|--------|
 | Frost Sovereign (Frozen Citadel B-Rank boss) | *Corrupted Celestial Serpent (Elemental)* | anomalies/rank-s.ts (anomaly-0030) — **downscale HP to 180 for B-Rank** |
-| Abyssal Leviathan (Sunken Tunnels B-Rank boss) | *Corrupted Celestial Guardian (Demon)* | anomalies/rank-s.ts (anomaly-0025) — downscale HP |
+| Abyssal Leviathan (Sunken Tunnels B-Rank boss) | *Corrupted Celestial Guardian (anomaly)* | anomalies/rank-s.ts (anomaly-0025) — downscale HP |
 | Mycelium Hive Queen (Fungal Depths D-Rank boss) | Use rank-d.ts closest Beast-type | anomalies/rank-d.ts |
 | Executioner (roaming, Ch. 19) | *Eternal Celestial Phoenix (Humanoid)* | anomalies/rank-s.ts (anomaly-0015) |
 | Megadungeon Room 4 (Chapel) sub-boss | *Corrupted Celestial Herald* | anomalies/rank-s.ts — downscale |
 | Megadungeon Room 10 (Archivist's Cell) | *Eternal Celestial Herald (Beast)* | anomalies/rank-s.ts (anomaly-0020) |
-| Megadungeon Room 13 (Army of Unmoving) | *Eternal Celestial Serpent (Undead)* | anomalies/rank-s.ts (anomaly-0010) |
+| Megadungeon Room 13 (Army of Unmoving) | *Eternal Celestial Serpent (Anomaly)* | anomalies/rank-s.ts (anomaly-0010) |
 
 ## IX. Spell / Technique / Power Cross-Reference *(spells/, techniques.ts, powers.ts)*
 
@@ -359,8 +359,8 @@ A circular ritual chamber. The floor is inscribed with an Awoko ritual sigil the
 
 - **Encounter** *(Warden's choice)*:
   - If **The Hollow Mother** is still alive (Warden has been running the "inheriting the Regent" twist, Warden Secret: Hollow Mother's Plan): here is her Phase 1. Pull her loadout from \`sandbox-npcs.ts\` npc-awoko-001 + \`spells/rank-a.ts\` (Void / Necrotic S-tier) + \`techniques.ts\` Awoko rituals.
-  - If The Hollow Mother is dead: **1× Corrupted Celestial Guardian (Demon)** (anomalies/rank-s.ts, anomaly-0025, full strength — this is Floor −3).
-- **Drop**: **Abyssal Plate Armor** (relics-comprehensive.ts) — on The Hollow Mother's body OR beneath the Demon Guardian's throne.
+  - If The Hollow Mother is dead: **1× Corrupted Celestial Guardian (anomaly)** (anomalies/rank-s.ts, anomaly-0025, full strength — this is Floor −3).
+- **Drop**: **Abyssal Plate Armor** (relics-comprehensive.ts) — on The Hollow Mother's body OR beneath the anomaly Guardian's throne.
 - **Awoko relic**: **Sigil of the Crimson Weeping** (sigils.ts, sigil-bleeding-1) — scratched into the ritual sigil's center-stone; any PC may pry it out.
 - **Deity flavor**: Marthos. The Dragon-King of Void is the author of every Anomaly that eats blood; this room is his.
 
@@ -382,7 +382,7 @@ Exactly as depicted in **Mika's First Drawing** *(canonical handout, \`sandbox-h
 
 - **Skill challenge**: 3 successes before 2 failures on **DC 14 Sense (Stealth-adjacent) / DC 14 Agility (balance on glass shards) / DC 14 Presence (do not be seen grieving)** checks. Each PC contributes one check.
   - **Success**: the party crosses silently; the army does not wake.
-  - **Failure**: **1× Eternal Celestial Serpent (Undead)** (anomalies/rank-s.ts, anomaly-0010) peels out of the formation. The rest do NOT wake — yet. If the party also fails to defeat the Serpent before a second PC rolls, a second Serpent joins.
+  - **Failure**: **1× Eternal Celestial Serpent (Anomaly)** (anomalies/rank-s.ts, anomaly-0010) peels out of the formation. The rest do NOT wake — yet. If the party also fails to defeat the Serpent before a second PC rolls, a second Serpent joins.
 - **Reward**: if the party crosses with **3 clean successes** (no failures), they gain **+1 Rift Favor** each.
 - **Narrative prop**: The party may recognize, in the frozen ranks, Anomalies they previously killed in earlier Gates. The Regent remembers every Anomaly that ever manifested under his mana signature. They are all his.
 - **Deity flavor**: Marthos. The Dragon-King commands armies; this is his reserve.

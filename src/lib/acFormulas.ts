@@ -242,3 +242,29 @@ export function createACContext(params: {
 		mageArmorActive: params.mageArmorActive ?? false,
 	};
 }
+
+/**
+ * Canonical AC entry point.
+ *
+ * One-call helper that builds an ACContext, evaluates every eligible
+ * formula (Unarmored, Berserker UD, Striker UD, Armored, Mage Armor, plus
+ * any custom formulas supplied), and returns the highest result.
+ *
+ * Matches DDB's stated behavior: "evaluate all valid AC calculations
+ * available to the character and take the higher value."
+ *
+ * Prefer this over `calculateBestAC` when you have the raw character
+ * inputs and just want a single number plus a breakdown.
+ */
+export function getArmorClass(params: {
+	abilities: Record<AbilityScore, number>;
+	job: string;
+	equippedArmor?: EquipmentACData | null;
+	equippedShield?: EquipmentACData | null;
+	miscACBonus?: number;
+	mageArmorActive?: boolean;
+	customFormulas?: ACFormula[];
+}): ACResult {
+	const ctx = createACContext(params);
+	return calculateBestAC(ctx, params.customFormulas ?? []);
+}

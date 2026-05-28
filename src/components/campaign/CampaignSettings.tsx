@@ -2,8 +2,10 @@ import {
 	AlertTriangle,
 	Download,
 	Loader2,
+	MessageSquare,
 	RefreshCw,
 	Save,
+	Send,
 	Shield,
 	Sparkles,
 	Trash2,
@@ -41,6 +43,8 @@ import {
 	useRegenerateShareCode,
 	useUpdateCampaign,
 } from "@/hooks/useCampaigns";
+import { useNotifyDiscord } from "@/hooks/useNotifyDiscord";
+import { BureauDirectiveExtensionsPanel } from "@/components/campaign/BureauDirectiveExtensionsPanel";
 import type { Json } from "@/integrations/supabase/types";
 import {
 	getAutomatedCombat,
@@ -71,6 +75,28 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 	const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 	const [deleteConfirmText, setDeleteConfirmText] = useState("");
 
+	// Misty Pearl E3 — Discord webhook bridge.
+	const [discordWebhookUrl, setDiscordWebhookUrl] = useState(
+		campaign?.discord_webhook_url ?? "",
+	);
+	const [discordTesting, setDiscordTesting] = useState(false);
+	const { notify } = useNotifyDiscord();
+
+	// Misty Pearl G2 — Discord two-way bot.
+	const [discordAppId, setDiscordAppId] = useState(
+		campaign?.discord_app_id ?? "",
+	);
+	const [discordPublicKey, setDiscordPublicKey] = useState(
+		campaign?.discord_public_key ?? "",
+	);
+
+	// Misty Pearl I3 — Comm-Net LiveKit SFU opt-in.
+	const [livekitUrl, setLivekitUrl] = useState(campaign?.livekit_url ?? "");
+	const [livekitApiKey, setLivekitApiKey] = useState(
+		campaign?.livekit_api_key ?? "",
+	);
+	const [livekitApiSecret, setLivekitApiSecret] = useState("");
+
 	const { injectSandbox, isInjecting, progressString } =
 		useCampaignSandboxInjector(campaignId);
 
@@ -86,6 +112,14 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 			setContentSharingEnabled(
 				(settings?.content_sharing_enabled as boolean) ?? false,
 			);
+			setDiscordWebhookUrl(campaign.discord_webhook_url ?? "");
+			setDiscordAppId(campaign.discord_app_id ?? "");
+			setDiscordPublicKey(campaign.discord_public_key ?? "");
+			setLivekitUrl(campaign.livekit_url ?? "");
+			setLivekitApiKey(campaign.livekit_api_key ?? "");
+			// Secret never round-trips; cleared on hydrate so the user
+			// only writes a new value when they explicitly type one in.
+			setLivekitApiSecret("");
 		}
 	}, [campaign]);
 
@@ -132,6 +166,19 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 						automated_combat: automatedCombat,
 						content_sharing_enabled: contentSharingEnabled,
 					},
+					// Misty Pearl E3 — trim and null out empty URLs so the
+					// edge function never tries to POST to an empty string.
+					discord_webhook_url: discordWebhookUrl.trim() || null,
+					// Misty Pearl G2 — Discord two-way bot configuration.
+					discord_app_id: discordAppId.trim() || null,
+					discord_public_key: discordPublicKey.trim() || null,
+					// Misty Pearl I3 — Comm-Net LiveKit SFU opt-in. Secret
+					// only sent when the user typed a fresh value.
+					livekit_url: livekitUrl.trim() || null,
+					livekit_api_key: livekitApiKey.trim() || null,
+					...(livekitApiSecret.trim()
+						? { livekit_api_secret: livekitApiSecret.trim() }
+						: {}),
 				},
 			},
 			{
@@ -164,6 +211,35 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 
 	const handleRegenerateShareCode = () => {
 		regenerateShareCode.mutate(campaignId);
+	};
+
+	// Misty Pearl E3 — Send a test message through the configured webhook.
+	const handleTestDiscord = async () => {
+		setDiscordTesting(true);
+		try {
+			const result = await notify({
+				campaignId,
+				kind: "test",
+				payload: { actor: name || "Warden" },
+			});
+			if (result.delivered) {
+				toast({
+					title: "Test relay delivered",
+					description: "Check your Discord channel.",
+				});
+			} else {
+				toast({
+					title: "Test relay not delivered",
+					description:
+						result.reason === "no_webhook_configured"
+							? "Save the webhook URL first, then try again."
+							: result.error || "Discord webhook did not accept the message.",
+					variant: "destructive",
+				});
+			}
+		} finally {
+			setDiscordTesting(false);
+		}
 	};
 
 	if (loadingAccess) {
@@ -270,6 +346,191 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							</SelectContent>
 						</Select>
 					</div>
+
+					{/* Misty Pearl E3 — Discord Uplink */}
+					<div className="p-3 bg-muted/50 rounded space-y-2">
+						<div className="flex items-center gap-2">
+							<MessageSquare className="w-4 h-4 text-primary" />
+							<Label
+								htmlFor="discord-webhook-url"
+								className="font-heading font-semibold"
+							>
+								Discord Uplink
+							</Label>
+						</div>
+						<p className="text-xs text-muted-foreground">
+							Optional. Paste a Discord channel webhook URL to mirror session
+							reminders and Warden broadcasts into a Discord guild. The
+							webhook URL is treated as low-sensitivity — anyone with it can
+							post to the channel.
+						</p>
+						<div className="flex gap-2">
+							<Input
+								id="discord-webhook-url"
+								type="url"
+								inputMode="url"
+								placeholder="https://discord.com/api/webhooks/..."
+								value={discordWebhookUrl}
+								onChange={(e) => setDiscordWebhookUrl(e.target.value)}
+								data-testid="discord-webhook-url-input"
+								className="flex-1"
+							/>
+							<Button
+								type="button"
+								variant="outline"
+								size="sm"
+								onClick={handleTestDiscord}
+								disabled={discordTesting || !discordWebhookUrl.trim()}
+								aria-label="Send a test message to Discord"
+								data-testid="discord-webhook-test-btn"
+							>
+								{discordTesting ? (
+									<Loader2 className="w-4 h-4 animate-spin" />
+								) : (
+									<Send className="w-4 h-4" />
+								)}
+								<span className="ml-2 hidden sm:inline">Test</span>
+							</Button>
+						</div>
+					</div>
+
+					{/* Misty Pearl G2 — Discord Two-Way Bot */}
+					<div className="p-3 bg-muted/50 rounded space-y-2">
+						<div className="flex items-center gap-2">
+							<MessageSquare className="w-4 h-4 text-primary" />
+							<Label
+								htmlFor="discord-app-id"
+								className="font-heading font-semibold"
+							>
+								Discord Two-Way Bot
+							</Label>
+						</div>
+						<p className="text-xs text-muted-foreground">
+							Optional. Register a Discord application in the{" "}
+							<a
+								href="https://discord.com/developers/applications"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline text-primary"
+							>
+								Developer Portal
+							</a>
+							, paste the Application ID and Public Key below, point its
+							Interactions Endpoint at the{" "}
+							<code className="text-[10px] bg-muted px-1">
+								/discord-command?campaign={campaignId}
+							</code>{" "}
+							Supabase function, then run{" "}
+							<code className="text-[10px] bg-muted px-1">
+								scripts/register-discord-commands.ts
+							</code>{" "}
+							once. Operatives link with{" "}
+							<code className="text-[10px] bg-muted px-1">
+								/link code:&lt;share-code&gt;
+							</code>
+							.
+						</p>
+						<div>
+							<Label htmlFor="discord-app-id" className="text-xs">
+								Application ID
+							</Label>
+							<Input
+								id="discord-app-id"
+								value={discordAppId}
+								onChange={(e) => setDiscordAppId(e.target.value)}
+								placeholder="e.g. 1234567890123456789"
+								className="mt-1 font-mono text-xs"
+								data-testid="discord-app-id-input"
+							/>
+						</div>
+						<div>
+							<Label htmlFor="discord-public-key" className="text-xs">
+								Public Key (hex)
+							</Label>
+							<Input
+								id="discord-public-key"
+								value={discordPublicKey}
+								onChange={(e) => setDiscordPublicKey(e.target.value)}
+								placeholder="64-char hex from the Application's General Information tab"
+								className="mt-1 font-mono text-xs"
+								data-testid="discord-public-key-input"
+							/>
+						</div>
+					</div>
+
+					{/* Misty Pearl I3 — Comm-Net LiveKit transport */}
+					<div className="p-3 bg-muted/50 rounded space-y-2">
+						<div className="flex items-center gap-2">
+							<MessageSquare className="w-4 h-4 text-primary" />
+							<Label
+								htmlFor="livekit-url"
+								className="font-heading font-semibold"
+							>
+								Comm-Net SFU (LiveKit) — optional
+							</Label>
+						</div>
+						<p className="text-xs text-muted-foreground">
+							Default Comm-Net is mesh P2P (great for ≤6 operatives). For
+							larger parties or mobile-heavy tables, point a{" "}
+							<a
+								href="https://livekit.io"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="underline text-primary"
+							>
+								LiveKit
+							</a>{" "}
+							server here (free Cloud tier or MIT self-host). Tokens are
+							minted server-side by the{" "}
+							<code className="text-[10px] bg-muted px-1">
+								mint-livekit-token
+							</code>{" "}
+							edge function; the secret never reaches the browser.
+						</p>
+						<div>
+							<Label htmlFor="livekit-url" className="text-xs">
+								URL
+							</Label>
+							<Input
+								id="livekit-url"
+								type="url"
+								inputMode="url"
+								placeholder="wss://your-livekit.example.com"
+								value={livekitUrl}
+								onChange={(e) => setLivekitUrl(e.target.value)}
+								className="mt-1 font-mono text-xs"
+								data-testid="livekit-url-input"
+							/>
+						</div>
+						<div>
+							<Label htmlFor="livekit-api-key" className="text-xs">
+								API Key
+							</Label>
+							<Input
+								id="livekit-api-key"
+								placeholder="APIxxxxxxxxx"
+								value={livekitApiKey}
+								onChange={(e) => setLivekitApiKey(e.target.value)}
+								className="mt-1 font-mono text-xs"
+								data-testid="livekit-api-key-input"
+							/>
+						</div>
+						<div>
+							<Label htmlFor="livekit-api-secret" className="text-xs">
+								API Secret (write-only — leave blank to keep current)
+							</Label>
+							<Input
+								id="livekit-api-secret"
+								type="password"
+								autoComplete="new-password"
+								placeholder="Set once; never displayed back."
+								value={livekitApiSecret}
+								onChange={(e) => setLivekitApiSecret(e.target.value)}
+								className="mt-1 font-mono text-xs"
+								data-testid="livekit-api-secret-input"
+							/>
+						</div>
+					</div>
 				</div>
 				<div className="pt-4 border-t border-border space-y-3">
 					<Button
@@ -291,6 +552,9 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 					</Button>
 				</div>
 			</AscendantWindow>
+
+			{/* Misty Pearl G3 — Bureau Directive Extensions (modules) */}
+			<BureauDirectiveExtensionsPanel campaignId={campaignId} />
 
 			{/* Share Code Management */}
 			<AscendantWindow title="SHARE CODE MANAGEMENT" className="flex flex-col">

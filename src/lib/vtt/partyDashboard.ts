@@ -384,8 +384,8 @@ export function getEncounterThresholds(members: PartyMember[]): {
 }
 
 /**
- * Estimate adjusted encounter XP based on number of monsters.
- * Per DMG: multiply total XP by a factor based on monster count vs party size.
+ * Estimate adjusted encounter XP based on number of anomalies.
+ * Per DMG: multiply total XP by a factor based on anomaly count vs party size.
  */
 export function getEncounterMultiplier(
 	monsterCount: number,

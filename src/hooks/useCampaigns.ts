@@ -20,6 +20,30 @@ export interface Campaign {
 	created_at: string;
 	updated_at: string;
 	settings: Record<string, unknown>;
+	/**
+	 * Misty Pearl E3 — optional Discord webhook URL for cross-channel
+	 * notifications. Warden-only-editable via the campaign settings UI;
+	 * relayed by the `notify-discord` edge function. NULL = disabled.
+	 */
+	discord_webhook_url?: string | null;
+	/**
+	 * Misty Pearl G2 — Discord Application id for the two-way bot
+	 * (slash commands). NULL = bot disabled.
+	 */
+	discord_app_id?: string | null;
+	/**
+	 * Misty Pearl G2 — Discord Application public key (hex). Used to
+	 * Ed25519-verify incoming interaction webhooks. NULL = bot disabled.
+	 */
+	discord_public_key?: string | null;
+	/**
+	 * Misty Pearl I3 — LiveKit SFU URL (wss://...). When set, the
+	 * Comm-Net transport selector defaults to `livekit` for this
+	 * campaign. NULL = mesh trystero transport.
+	 */
+	livekit_url?: string | null;
+	/** Misty Pearl I3 — LiveKit API key (NOT secret). */
+	livekit_api_key?: string | null;
 }
 
 export interface CampaignMember {
@@ -36,6 +60,16 @@ type CampaignUpdate = {
 	description?: string | null;
 	is_active?: boolean;
 	settings?: Record<string, unknown>;
+	/** Misty Pearl E3 — Discord webhook bridge. Null clears the value. */
+	discord_webhook_url?: string | null;
+	/** Misty Pearl G2 — Discord two-way bot. */
+	discord_app_id?: string | null;
+	discord_public_key?: string | null;
+	/** Misty Pearl I3 — LiveKit SFU opt-in. The API secret is set via the
+	 *  Supabase dashboard or CLI separately; the client never sees it. */
+	livekit_url?: string | null;
+	livekit_api_key?: string | null;
+	livekit_api_secret?: string | null;
 };
 
 const CAMPAIGNS_KEY = "solo-compendium.campaigns.v1";
@@ -770,15 +804,38 @@ export const useUpdateCampaign = () => {
 				throw new AppError("Not authenticated", "AUTH_REQUIRED");
 			}
 
+			// Misty Pearl E3 — Discord webhook bridge: the column exists per
+			// migration `20260528000000_add_campaign_discord_webhook.sql` but
+			// the Supabase types haven't been regenerated yet, so we widen the
+			// update payload via cast for that one field.
+			const updatePayload: Record<string, unknown> = {
+				name: updates.name,
+				description: updates.description,
+				is_active: updates.is_active,
+				settings: updates.settings,
+			};
+			if (updates.discord_webhook_url !== undefined) {
+				updatePayload.discord_webhook_url = updates.discord_webhook_url;
+			}
+			if (updates.discord_app_id !== undefined) {
+				updatePayload.discord_app_id = updates.discord_app_id;
+			}
+			if (updates.discord_public_key !== undefined) {
+				updatePayload.discord_public_key = updates.discord_public_key;
+			}
+			if (updates.livekit_url !== undefined) {
+				updatePayload.livekit_url = updates.livekit_url;
+			}
+			if (updates.livekit_api_key !== undefined) {
+				updatePayload.livekit_api_key = updates.livekit_api_key;
+			}
+			if (updates.livekit_api_secret !== undefined) {
+				updatePayload.livekit_api_secret = updates.livekit_api_secret;
+			}
 			const { data, error } = await supabase
 				.from("campaigns")
-				.update({
-					name: updates.name,
-					description: updates.description,
-					is_active: updates.is_active,
-					settings:
-						updates.settings as Database["public"]["Tables"]["campaigns"]["Row"]["settings"],
-				})
+				// biome-ignore lint/suspicious/noExplicitAny: see Misty Pearl E3 note above
+				.update(updatePayload as any)
 				.eq("id", campaignId)
 				.select()
 				.single();

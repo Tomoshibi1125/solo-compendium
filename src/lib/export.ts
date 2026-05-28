@@ -227,13 +227,40 @@ export async function downloadCharacterJSON(
  *
  * Opens the live character sheet in a new tab in print mode and triggers
  * the browser's native print dialog. Users get the standard "Save as PDF"
- * option from any modern browser — a true PDF without bundling jsPDF/pdfkit.
+ * option from any modern browser.
  */
 export function exportCharacterPDF(
 	characterId: string,
 	options: { shareToken?: string | null } = {},
 ): void {
 	printCharacterSheet(characterId, options);
+}
+
+/**
+ * C1: True downloadable PDF file — fetches the character row and renders a
+ * structured character-sheet PDF via pdf-lib, then triggers a direct file
+ * download (no print dialog). This is the DDB-parity "Export to PDF."
+ */
+export async function downloadCharacterPdfFile(characterId: string): Promise<void> {
+	const { data: character, error } = await supabase
+		.from("characters")
+		.select("*")
+		.eq("id", characterId)
+		.single();
+	if (error || !character) {
+		throw new AppError("Character not found for PDF export", "NOT_FOUND");
+	}
+	const { generateCharacterPdf } = await import("@/lib/characterPdf");
+	const bytes = await generateCharacterPdf(character as Character);
+	const blob = new Blob([bytes as BlobPart], { type: "application/pdf" });
+	const url = URL.createObjectURL(blob);
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = `${(character.name || "character").replace(/[^a-z0-9]/gi, "_")}.pdf`;
+	document.body.appendChild(a);
+	a.click();
+	a.remove();
+	URL.revokeObjectURL(url);
 }
 
 /**

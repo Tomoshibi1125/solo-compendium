@@ -340,7 +340,7 @@ This Gate's pocket dimension is an underground ocean. The tunnels are partially 
 - **Leviathan Scale Shield** (rare Relic): +2 shield, resistance to cold damage. Worth 3,500 Credits.
 - **Regent Relic of the Abyss** (if placed here by divination): Around the Leviathan's neck like a collar.
 - **Canon X-Ref (Ch. 27)**: guaranteed drops — *Sigil of the Winter Court* + *Sigil of the Hearth-Fire* (sigils.ts, sigil-frost-1 + sigil-res-cold-1). Hot-cold mirror pair.
-- **Alt-anomaly stat**: use *Corrupted Celestial Guardian (Demon)* from anomalies/rank-s.ts (anomaly-0025) for the Abyssal Leviathan, downscaled to B-Rank HP.
+- **Alt-anomaly stat**: use *Corrupted Celestial Guardian (anomaly)* from anomalies/rank-s.ts (anomaly-0025) for the Abyssal Leviathan, downscaled to B-Rank HP.
 
 > **Deity flavor**: Sylph, *The Eternal of Transfiguration*. The tunnels are Gate-wind veins; Sylph's breath pushes against every hull seal the Bureau ever tried to hold.`,
 	},
@@ -398,7 +398,7 @@ This Gate's pocket dimension is an underground ocean. The tunnels are partially 
   - *Ice Throne Regeneration*: While within 30 ft. of the throne, regenerates 10 HP/round
   - *Summon Guard* (2/day): Awakens 2 frozen Anomalies from the barracks (use Frost Sentinel stats)
 - **Phase 2** (at 50% HP): The Sovereign shatters its own throne, ending regeneration but gaining *Frost Nova*: 40 ft. radius, 6d8 cold, DC 16 Dex half. Uses immediately upon triggering.
-- **Tactics**: Stays near throne for regeneration. Uses Flash Freeze on melee fighters, then focuses ranged characters.
+- **Tactics**: Stays near throne for regeneration. Uses Flash Freeze on melee Destroyer, then focuses ranged characters.
 - **Weakness**: Fire damage. 15+ fire in one hit cracks the ice armor (−2 AC permanently, stacks).
 
 #### Loot
@@ -525,7 +525,7 @@ The Regent's Domain is a single massive arena — a throne room 500 ft. across w
 
 ### The Regent's Three Phases
 
-#### Phase 1: The Shadow Monarch (100% – 60% HP)
+#### Phase 1: The Shadow Regent (100% – 60% HP)
 - **HP**: 300 (adjusted by Relic count — see Chapter 2) | **AC**: 20 | **Speed**: 40 ft., fly 60 ft.
 - **Abilities**:
   - *Multiattack*: 3 shadow blade attacks (+12 to hit, 2d12+6 necrotic)

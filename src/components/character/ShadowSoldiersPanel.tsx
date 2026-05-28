@@ -16,6 +16,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -377,6 +378,20 @@ export function ShadowSoldiersPanel({
 											)}
 										>
 											{css.is_summoned ? "Dismiss" : "ASCEND"}
+										</Button>
+										<Button
+											size="sm"
+											variant="outline"
+											asChild
+											className="ml-2 border-fuchsia-300/40 hover:border-fuchsia-300 hover:bg-fuchsia-300/10"
+											data-testid={`open-companion-sheet-${css.id}`}
+											title="Open full companion sub-sheet"
+										>
+											<Link
+												to={`/characters/${characterId}/companions/${css.id}`}
+											>
+												Open Sheet
+											</Link>
 										</Button>
 									</div>
 

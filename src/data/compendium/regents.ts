@@ -140,7 +140,7 @@ export const regents: Regent[] = [
 				level: 8,
 				name: "Death's Command",
 				description:
-					"You can command any undead creature, regardless of its origin or power.",
+					"You can command any anomaly creature, regardless of its origin or power.",
 				type: "action",
 				frequency: "at-will",
 			},
@@ -148,7 +148,7 @@ export const regents: Regent[] = [
 				level: 9,
 				name: "Death's Authority",
 				description:
-					"As an action, force all undead within 300 feet to make a Sense save (DC 20) or become your loyal servants.",
+					"As an action, force all anomaly within 300 feet to make a Sense save (DC 20) or become your loyal servants.",
 				type: "action",
 				frequency: "once-per-day",
 			},
@@ -184,7 +184,7 @@ export const regents: Regent[] = [
 				level: 11,
 				name: "Death God",
 				description:
-					"You become a living embodiment of death, able to command all undead and determine the fate of souls.",
+					"You become a living embodiment of death, able to command all anomaly and determine the fate of souls.",
 				type: "passive",
 			},
 			{
@@ -532,7 +532,7 @@ export const regents: Regent[] = [
 			{
 				name: "Seraphim Wings",
 				description:
-					"As a bonus action, manifest 6 wings of white flame. Fly 120 ft. Light up 300 ft radius. Evil/fiend/undead within 60 ft must save or be blinded + 6d8 radiant damage per turn.",
+					"As a bonus action, manifest 6 wings of white flame. Fly 120 ft. Light up 300 ft radius. Evil/anomaly/anomaly within 60 ft must save or be blinded + 6d8 radiant damage per turn.",
 				type: "bonus-action",
 				frequency: "long-rest",
 				power_level: 5,
@@ -540,7 +540,7 @@ export const regents: Regent[] = [
 			{
 				name: "Purification Flame",
 				description:
-					"As an action, target a creature or area to purge all diseases, curses, and fiendish influence. Undead take 10d10 radiant damage. This mirrors the Regent of White Flames' holy domain.",
+					"As an action, target a creature or area to purge all diseases, curses, and fiendish influence. Anomaly take 10d10 radiant damage. This mirrors the Regent of White Flames' holy domain.",
 				type: "action",
 				frequency: "short-rest",
 				power_level: 2,
@@ -572,7 +572,7 @@ export const regents: Regent[] = [
 			{
 				name: "Purification Authority",
 				description:
-					"As an action, force all fiends or undead within 300 feet to make a Sense save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
+					"As an action, force all anomaly or anomaly within 300 feet to make a Sense save (DC 22) or be instantly banished or destroyed. This reflects your command over the spiritual realms.",
 				type: "action",
 				frequency: "once-per-day",
 				power_level: 9,
@@ -762,7 +762,7 @@ export const regents: Regent[] = [
 				"Immune to fire and radiant damage",
 				"Can see through any smoke or magical darkness",
 				"White fire automatically purifies any area you stand in",
-				"Fiends and undead are automatically hostile toward you",
+				"Anomaly and anomaly are automatically hostile toward you",
 			],
 			restrictions: [
 				"Requires Warden verification of quest completion",
@@ -1269,7 +1269,7 @@ export const regents: Regent[] = [
 		id: "destruction_regent",
 		name: "Destruction Regent",
 		title: "Destruction Regent (Regent of Destruction)",
-		theme: "Primordial Destruction and Draconic Apocalypse",
+		theme: "Primordial Destruction and regent-tier Apocalypse",
 		description:
 			"Incarnation of primordial destruction, sharing the catastrophic power of Marthos, the Dragon-King of Void. You are the Ascendant's necessary delete-command, capable of transforming into the dragon of apocalypse whose breath erases corrupted reality. As the mortal anchor for the Void Weaver, you represent the inevitable end and the Next Beginning.",
 		rank: "S",
@@ -1280,7 +1280,7 @@ export const regents: Regent[] = [
 			"destruction",
 			"annihilation",
 			"dragon",
-			"solar-draconic",
+			"solar-regent-tier",
 			"apocalypse",
 		],
 		created_at: "2026-01-13T22:03:39.601Z",
@@ -1362,7 +1362,7 @@ export const regents: Regent[] = [
 			{
 				name: "Calamity Wings",
 				description:
-					"Manifest draconic wings. Fly 90 ft. Wing buffet (30-ft cone, STR save or 6d6 + knocked prone). Hurricanes form from your wingbeats.",
+					"Manifest regent-tier wings. Fly 90 ft. Wing buffet (30-ft cone, STR save or 6d6 + knocked prone). Hurricanes form from your wingbeats.",
 				type: "passive",
 				frequency: "at-will",
 				power_level: 10,

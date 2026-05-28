@@ -85,13 +85,13 @@
 	{
 		id: "anomaly-0007",
 		name: "Eternal Void Wraith",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 737,
 		ac: 13,
 		image: "/generated/compendium/anomalies/anomaly-0007.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -117,7 +117,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -321,13 +321,13 @@
 	{
 		id: "anomaly-0022",
 		name: "Corrupted Void Beast",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 579,
 		ac: 27,
 		image: "/generated/compendium/anomalies/anomaly-0022.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -353,7 +353,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -557,13 +557,13 @@
 	{
 		id: "anomaly-0037",
 		name: "Corrupted Void Devourer",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 191,
 		ac: 28,
 		image: "/generated/compendium/anomalies/anomaly-0037.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -589,7 +589,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -793,13 +793,13 @@
 	{
 		id: "anomaly-0052",
 		name: "Blessed Void Stalker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 573,
 		ac: 12,
 		image: "/generated/compendium/anomalies/anomaly-0052.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -825,7 +825,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1042,13 +1042,13 @@
 	{
 		id: "anomaly-0067",
 		name: "Cursed Void Wraith",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 929,
 		ac: 23,
 		image: "/generated/compendium/anomalies/anomaly-0067.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1074,7 +1074,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1278,13 +1278,13 @@
 	{
 		id: "anomaly-0082",
 		name: "Ancient Void Beast",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 806,
 		ac: 17,
 		image: "/generated/compendium/anomalies/anomaly-0082.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1310,7 +1310,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1514,13 +1514,13 @@
 	{
 		id: "anomaly-0097",
 		name: "Ancient Void Devourer",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 765,
 		ac: 28,
 		image: "/generated/compendium/anomalies/anomaly-0097.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -1546,7 +1546,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1750,13 +1750,13 @@
 	{
 		id: "anomaly-0112",
 		name: "Primordial Void Stalker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 688,
 		ac: 25,
 		image: "/generated/compendium/anomalies/anomaly-0112.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1782,7 +1782,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1986,13 +1986,13 @@
 	{
 		id: "anomaly-0127",
 		name: "Supreme Void Wraith",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 341,
 		ac: 18,
 		image: "/generated/compendium/anomalies/anomaly-0127.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2018,7 +2018,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2222,13 +2222,13 @@
 	{
 		id: "anomaly-0142",
 		name: "Legendary Void Beast",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 647,
 		ac: 15,
 		image: "/generated/compendium/anomalies/anomaly-0142.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2254,7 +2254,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2458,13 +2458,13 @@
 	{
 		id: "anomaly-0157",
 		name: "Legendary Void Devourer",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 278,
 		ac: 10,
 		image: "/generated/compendium/anomalies/anomaly-0157.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -2490,7 +2490,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2681,13 +2681,13 @@
 	{
 		id: "anomaly-0172",
 		name: "Mythic Void Stalker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 742,
 		ac: 22,
 		image: "/generated/compendium/anomalies/anomaly-0172.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2713,7 +2713,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2917,13 +2917,13 @@
 	{
 		id: "anomaly-0187",
 		name: "Divine Void Wraith",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 737,
 		ac: 10,
 		image: "/generated/compendium/anomalies/anomaly-0187.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2949,7 +2949,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3166,13 +3166,13 @@
 	{
 		id: "anomaly-0202",
 		name: "Infernal Void Beast",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 983,
 		ac: 16,
 		image: "/generated/compendium/anomalies/anomaly-0202.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3198,7 +3198,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3415,13 +3415,13 @@
 	{
 		id: "anomaly-0217",
 		name: "Infernal Void Devourer",
-		type: "Demon",
+		type: "anomaly",
 		rank: "C",
 		hp: 132,
 		ac: 23,
 		image: "/generated/compendium/anomalies/anomaly-0217.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3447,7 +3447,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3638,13 +3638,13 @@
 	{
 		id: "anomaly-0232",
 		name: "Celestial Void Stalker",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "C",
 		hp: 756,
 		ac: 25,
 		image: "/generated/compendium/anomalies/anomaly-0232.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This C rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3670,7 +3670,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",

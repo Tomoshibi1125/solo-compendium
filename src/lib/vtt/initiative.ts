@@ -1,16 +1,16 @@
 /**
  * VTT Initiative auto-roll (P1-6)
  *
- * Pure helpers for rolling monster initiative when the tracker is opened.
+ * Pure helpers for rolling anomaly initiative when the tracker is opened.
  * Kept isolated from React/Supabase so it can be unit-tested in ~1 ms
  * with a mocked RNG.
  *
  * Rules (DDB Maps + Roll20 + Foundry parity):
- *   - Only rolls for non-hunter (monster / NPC) combatants.
+ *   - Only rolls for non-hunter (anomaly / NPC) combatants.
  *   - By default, skips any combatant that already has a non-zero
  *     `initiative` so re-opening the tracker doesn't overwrite the
  *     Warden's manual entries. Pass `rerollAll: true` to force a
- *     re-roll across every monster.
+ *     re-roll across every anomaly.
  *   - Uses `combatant.dexMod ?? 0` as the d20 modifier.
  */
 
@@ -44,7 +44,7 @@ export interface RollMonsterInitiativeOptions {
 	 */
 	rng?: () => number;
 	/**
-	 * When `true`, re-roll every monster — even ones with initiative
+	 * When `true`, re-roll every anomaly — even ones with initiative
 	 * already set. When `false` (default), only fresh combatants
 	 * (`initiative === 0`) are rolled.
 	 */
@@ -60,7 +60,7 @@ export function rollD20(rng: () => number = Math.random): number {
 }
 
 /**
- * Returns one `InitiativeRoll` per monster that should be auto-rolled.
+ * Returns one `InitiativeRoll` per anomaly that should be auto-rolled.
  * The return value is always a fresh array; combatants not rolled are
  * absent from the result (callers still need to preserve them in their
  * own scene/session state).

@@ -22,7 +22,7 @@ export const spells_d: CompendiumSpell[] = [
 			curse: "",
 			personality:
 				"Quiet and precise; the spell hums faintly against metal within arm's reach.",
-			current_owner: "Distributed openly to Bureau-licensed Rank D Hunters.",
+			current_owner: "Distributed openly to Bureau-licensed Rank D Ascendants.",
 			prior_owners: [
 				"Medic-3 of the Harbin Recovery Team",
 				"Gate Bureau archivist S. Ro",
@@ -100,7 +100,7 @@ export const spells_d: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"The first verified cast on record: an E-rank medic froze a collapsed stairwell open long enough for her squad to climb out.",
-		theme_tags: ["hunter-bureau", "post-awakening", "gate-recovery"],
+		theme_tags: ["ascendant-bureau", "post-awakening", "gate-recovery"],
 	},
 	{
 		id: "spell-d-2",
@@ -119,7 +119,7 @@ export const spells_d: CompendiumSpell[] = [
 				"Impatient; the air pressure spikes the moment the casting gesture begins.",
 			current_owner: "Open Bureau training manual, Rank D volume.",
 			prior_owners: [
-				"Hunter K. Yun of the Seoul Third Wall",
+				"Ascendant K. Yun of the Seoul Third Wall",
 				"Bureau Research Team Echo-9",
 			],
 		},
@@ -195,7 +195,7 @@ export const spells_d: CompendiumSpell[] = [
 			scaling: "Scales with character level",
 		},
 		discovery_lore:
-			"A rookie Hunter's panic cast opened a clean exit through three collapsed load-bearing walls.",
+			"A rookie Ascendant's panic cast opened a clean exit through three collapsed load-bearing walls.",
 		theme_tags: ["post-awakening", "dimensional-bleed", "rescue-ops"],
 	},
 	{
@@ -400,7 +400,7 @@ export const spells_d: CompendiumSpell[] = [
 			"Bleed a thin lattice of the caster's own mana into the air around them. Make a ranged spell attack using Presence within a 10-foot cube centered on the caster for 1d8 necrotic damage, and the target must succeed on a DC 14 Intelligence save or take full damage and be Frightened for 1 minute (half damage, no condition on success).",
 		lore: {
 			origin:
-				"Taught only in Bureau-adjacent Hunter orders that track Awakened bloodline inheritance.",
+				"Taught only in Bureau-adjacent Ascendant orders that track Awakened bloodline inheritance.",
 			history:
 				"Documented as early as the First Wall era; the casting gesture has remained unchanged across three decades of practitioners.",
 			curse: "",
@@ -485,7 +485,7 @@ export const spells_d: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Recovered casting notes describe the gesture as 'a contract with your own blood; do not sign lightly.'",
-		theme_tags: ["hunter-bureau", "shadow-domain", "legacy-lineage"],
+		theme_tags: ["ascendant-bureau", "shadow-domain", "legacy-lineage"],
 	},
 	{
 		id: "spell-d-6",
@@ -506,14 +506,14 @@ export const spells_d: CompendiumSpell[] = [
 			origin:
 				"Designed by the Bureau's Archive Guard to delay breach runners long enough for reinforcements to arrive.",
 			history:
-				"Considered standard issue at Hunter Academy as of the third graduating class post-Awakening.",
+				"Considered standard issue at Ascendant Academy as of the third graduating class post-Awakening.",
 			curse: "",
 			personality:
 				"Patient; the ward hums only when something alive approaches it.",
 			current_owner: "Archive Guard entry-level training.",
 			prior_owners: [
 				"Archive Guard Captain H. Ji",
-				"Hunter Academy Instructor S. Moon",
+				"Ascendant Academy Instructor S. Moon",
 			],
 		},
 		flavor: "A door made of light that only ever opens outward, and only once.",
@@ -692,7 +692,7 @@ export const spells_d: CompendiumSpell[] = [
 			origin:
 				"A hand-stabilized variant of a Bureau demolition cantrip, refined for close-quarters Gate work.",
 			history:
-				"Became the default 'first-breach' cast after the Fifth Wall Incident, where three Hunters cleared a 60-foot corridor simultaneously.",
+				"Became the default 'first-breach' cast after the Fifth Wall Incident, where three Ascendants cleared a 60-foot corridor simultaneously.",
 			curse: "",
 			personality:
 				"Forthright; the line is briefly visible as a red thread before the damage resolves.",
@@ -727,12 +727,7 @@ export const spells_d: CompendiumSpell[] = [
 			ability: "Intelligence",
 			damage: "3d4",
 		},
-		saving_throw: {
-			ability: "",
-			dc: 0,
-			success: "",
-			failure: "",
-		},
+		saving_throw: null,
 		atHigherLevels:
 			"Each rank above D adds +1d4 force and extends the line by 20 feet. At rank A+, the line also pushes each struck creature 5 feet away from the caster.",
 		higher_levels:
@@ -757,12 +752,7 @@ export const spells_d: CompendiumSpell[] = [
 				damage: "3d4",
 				damage_type: "force",
 			},
-			saving_throw: {
-				ability: "",
-				dc: 0,
-				success: "",
-				failure: "",
-			},
+			saving_throw: null,
 			action: "1 reaction",
 			ability: "Intelligence",
 			save: "",
@@ -771,7 +761,7 @@ export const spells_d: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"The cast gesture is identical to a standard Bureau salute, which investigators say is not a coincidence.",
-		theme_tags: ["gate-breach", "hunter-bureau", "demolition"],
+		theme_tags: ["gate-breach", "ascendant-bureau", "demolition"],
 	},
 	{
 		id: "spell-d-9",
@@ -790,14 +780,14 @@ export const spells_d: CompendiumSpell[] = [
 			"Thread the caster's own lattice through an echo of their next swing. Make a ranged spell attack using Intelligence against a target within 20 feet for 2d6 necrotic damage. No saving throw; the caster takes 1 point of necrotic damage as the cast resolves.",
 		lore: {
 			origin:
-				"Developed by mid-career Hunters whose casting stat outpaces their physical combat training.",
+				"Developed by mid-career Ascendants whose casting stat outpaces their physical combat training.",
 			history:
 				"Formally catalogued by the Bureau Divination wing after three independent casters described identical self-damage feedback.",
 			curse: "",
 			personality:
 				"Self-critical; the caster always flinches a fraction of a second before the target reacts.",
 			current_owner: "Rank D divination-track casters.",
-			prior_owners: ["Divination Scholar B. Noh", "Field Hunter Y. Jeong"],
+			prior_owners: ["Divination Scholar B. Noh", "Field Ascendant Y. Jeong"],
 		},
 		flavor:
 			"A precise wound, dealt at arm's length by a hand that isn't there.",
@@ -827,12 +817,7 @@ export const spells_d: CompendiumSpell[] = [
 			ability: "Intelligence",
 			damage: "2d6",
 		},
-		saving_throw: {
-			ability: "",
-			dc: 0,
-			success: "",
-			failure: "",
-		},
+		saving_throw: null,
 		atHigherLevels:
 			"Each rank above D adds +2d6 necrotic. Self-damage scales with rank: 1 at D, 2 at B, 3 at A, 5 at S.",
 		higher_levels:
@@ -857,12 +842,7 @@ export const spells_d: CompendiumSpell[] = [
 				damage: "2d6",
 				damage_type: "necrotic",
 			},
-			saving_throw: {
-				ability: "",
-				dc: 0,
-				success: "",
-				failure: "",
-			},
+			saving_throw: null,
 			action: "1 bonus action",
 			ability: "Intelligence",
 			save: "",
@@ -921,12 +901,7 @@ export const spells_d: CompendiumSpell[] = [
 			ability: "Intelligence",
 			damage: "1d10+3",
 		},
-		saving_throw: {
-			ability: "",
-			dc: 0,
-			success: "",
-			failure: "",
-		},
+		saving_throw: null,
 		atHigherLevels:
 			"Each rank above D adds +1d10 necrotic. At rank B+, the line becomes a 30-foot cube.",
 		higher_levels:
@@ -951,12 +926,7 @@ export const spells_d: CompendiumSpell[] = [
 				damage: "1d10+3",
 				damage_type: "necrotic",
 			},
-			saving_throw: {
-				ability: "",
-				dc: 0,
-				success: "",
-				failure: "",
-			},
+			saving_throw: null,
 			action: "1 reaction",
 			ability: "Intelligence",
 			save: "",
@@ -1110,12 +1080,7 @@ export const spells_d: CompendiumSpell[] = [
 			ability: "Presence",
 			damage: "1d12",
 		},
-		saving_throw: {
-			ability: "",
-			dc: 0,
-			success: "",
-			failure: "",
-		},
+		saving_throw: null,
 		atHigherLevels:
 			"Each rank above D adds +2d4 necrotic and +1d4 to the caster's heal. At rank A+, the cone widens to 60 feet.",
 		higher_levels:
@@ -1140,12 +1105,7 @@ export const spells_d: CompendiumSpell[] = [
 				damage: "1d12",
 				damage_type: "necrotic",
 			},
-			saving_throw: {
-				ability: "",
-				dc: 0,
-				success: "",
-				failure: "",
-			},
+			saving_throw: null,
 			action: "1 bonus action",
 			ability: "Presence",
 			save: "",
@@ -1345,7 +1305,7 @@ export const spells_d: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Used by more medics than combatants; the lance is the fastest Bureau-legal way to stop a runaway Shadow-Class puppeteer's thread.",
-		theme_tags: ["bureau-medic", "hunter-bureau", "shadow-adjacent"],
+		theme_tags: ["bureau-medic", "ascendant-bureau", "shadow-adjacent"],
 	},
 	{
 		id: "spell-d-15",
@@ -1365,7 +1325,7 @@ export const spells_d: CompendiumSpell[] = [
 				"Predictable; the lance lands within a six-inch tolerance of the caster's intended point.",
 			current_owner: "Rank D Bureau entry-level curriculum.",
 			prior_owners: [
-				"Hunter Academy Cold-Track Instructor",
+				"Ascendant Academy Cold-Track Instructor",
 				"Arctic Lance lineage casters",
 			],
 		},
@@ -1396,12 +1356,7 @@ export const spells_d: CompendiumSpell[] = [
 			ability: "Presence",
 			damage: "2d6",
 		},
-		saving_throw: {
-			ability: "",
-			dc: 0,
-			success: "",
-			failure: "",
-		},
+		saving_throw: null,
 		atHigherLevels:
 			"Upcasting adds 1d6 cold per additional rank and extends the difficult-terrain strip by 1 round per rank above D.",
 		higher_levels:
@@ -1426,12 +1381,7 @@ export const spells_d: CompendiumSpell[] = [
 				damage: "2d6",
 				damage_type: "cold",
 			},
-			saving_throw: {
-				ability: "",
-				dc: 0,
-				success: "",
-				failure: "",
-			},
+			saving_throw: null,
 			action: "1 minute",
 			ability: "Presence",
 			save: "",
@@ -1440,6 +1390,6 @@ export const spells_d: CompendiumSpell[] = [
 		},
 		discovery_lore:
 			"Instructors teach Ice Lance first because its failure mode is boringly safe: misses land harmlessly, at most chipping tile.",
-		theme_tags: ["entry-curriculum", "hunter-academy", "cold-track"],
+		theme_tags: ["entry-curriculum", "ascendant-academy", "cold-track"],
 	},
 ];

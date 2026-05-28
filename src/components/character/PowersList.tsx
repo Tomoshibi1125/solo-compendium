@@ -316,7 +316,7 @@ export function PowersList({
 			.trackCustomFeatureUsage(characterId, power.name, "activate", "RA")
 			.catch(console.error);
 
-		// Optional campaign roll log (kept from legacy path so DM/party views
+		// Optional campaign roll log (kept from legacy path so Warden/party views
 		// still see a "power used" entry in the dice log).
 		if (campaignId && power.power_level > 0) {
 			rollInCampaign(campaignId, {

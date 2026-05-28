@@ -4,6 +4,35 @@ import {
 } from "@/lib/characterResources";
 import type { CustomModifier } from "@/lib/customModifiers";
 
+/**
+ * Canonical sheet sections that support inline freeform notes. F3 of the
+ * May 2026 remediation plan — DDB parity. Each section can carry one
+ * stored note string. Persists inside `character_sheet_state.resources.ui`
+ * to reuse the existing JSON column (no new schema needed).
+ */
+export type SheetNoteSection =
+	| "description"
+	| "equipment"
+	| "features"
+	| "spells"
+	| "powers"
+	| "techniques"
+	| "runes"
+	| "conditions"
+	| "notes";
+
+export const SHEET_NOTE_SECTIONS: ReadonlyArray<SheetNoteSection> = [
+	"description",
+	"equipment",
+	"features",
+	"spells",
+	"powers",
+	"techniques",
+	"runes",
+	"conditions",
+	"notes",
+];
+
 export interface CharacterSheetState {
 	resources: CharacterResources;
 	customModifiers: CustomModifier[];
@@ -17,6 +46,9 @@ export interface CharacterSheetState {
 			health: boolean;
 		};
 		activeTab?: string;
+		/** Per-section freeform notes (DDB parity, F3). Keys are bounded by
+		 * `SheetNoteSection`. Values are markdown / plain text. */
+		sectionNotes?: Partial<Record<SheetNoteSection, string>>;
 	};
 }
 
@@ -34,6 +66,7 @@ export function createDefaultCharacterSheetState(): CharacterSheetState {
 				health: false,
 			},
 			activeTab: "actions",
+			sectionNotes: {},
 		},
 	};
 }

@@ -296,7 +296,9 @@ export function createLocalCharacter(
 
 		hp_current: data.hp_current ?? 1,
 		hp_max: data.hp_max ?? 1,
+		hp_max_override: data.hp_max_override ?? null,
 		hp_temp: data.hp_temp ?? 0,
+		derived_stats_cached_at: data.derived_stats_cached_at ?? null,
 
 		hit_dice_current: data.hit_dice_current ?? 1,
 		hit_dice_max: data.hit_dice_max ?? 1,

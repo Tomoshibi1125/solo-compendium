@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacterChoiceTotals } from "@/hooks/useCharacterChoiceTotals";
 import { useCharacter } from "@/hooks/useCharacters";
 import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useSpells } from "@/hooks/useSpells";
@@ -44,9 +45,18 @@ export function AddSpellDialog({
 	characterId: string;
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
-	const { addSpell } = useSpells(characterId);
+	const { addSpell, spells: knownSpells = [] } = useSpells(characterId);
 	const { data: character } = useCharacter(characterId);
+	const { data: choiceTotals } = useCharacterChoiceTotals(characterId);
 	const { toast } = useToast();
+	const knownCantripCount = useMemo(
+		() => knownSpells.filter((s) => (s.spell_level ?? 0) === 0).length,
+		[knownSpells],
+	);
+	const knownSpellCount = useMemo(
+		() => knownSpells.filter((s) => (s.spell_level ?? 0) > 0).length,
+		[knownSpells],
+	);
 	const { data: campaignId = null } = useQuery<string | null>({
 		queryKey: ["add-spell-campaign-id", characterId],
 		queryFn: () => getCharacterCampaignId(characterId),
@@ -199,7 +209,19 @@ export function AddSpellDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[80vh] min-h-0 overflow-hidden flex flex-col">
 				<DialogHeader>
-					<DialogTitle>Add Spell</DialogTitle>
+					<DialogTitle className="flex items-center gap-2 flex-wrap">
+						<span>Add Spell</span>
+						{choiceTotals && choiceTotals.spells > 0 && (
+							<Badge variant="outline" className="text-xs">
+								Spells: {knownSpellCount} / {choiceTotals.spells}
+							</Badge>
+						)}
+						{choiceTotals && choiceTotals.cantrips > 0 && (
+							<Badge variant="outline" className="text-xs">
+								Cantrips: {knownCantripCount} / {choiceTotals.cantrips}
+							</Badge>
+						)}
+					</DialogTitle>
 					<DialogDescription>
 						Search and add spells from the compendium
 					</DialogDescription>
@@ -255,6 +277,18 @@ export function AddSpellDialog({
 												{spell.concentration && (
 													<Badge variant="destructive" className="text-xs">
 														Concentration
+													</Badge>
+												)}
+												{(spell as { source_book?: string | null })
+													.source_book && (
+													<Badge
+														variant="secondary"
+														className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+													>
+														{formatRegentVernacular(
+															(spell as { source_book?: string | null })
+																.source_book as string,
+														)}
 													</Badge>
 												)}
 											</div>

@@ -130,12 +130,23 @@ function BackgroundChipGroup({
 	label,
 	values,
 	variant = "secondary",
+	alreadyGranted,
+	alreadyGrantedSource,
 }: {
 	label: string;
 	values: string[];
 	variant?: "default" | "secondary" | "outline";
+	/** F8 of May 2026 remediation plan — values already granted by an
+	 * earlier wizard step (e.g. Job → Background dup detection). Chips
+	 * that match (case-insensitive) get a yellow border + tooltip. */
+	alreadyGranted?: string[];
+	alreadyGrantedSource?: string;
 }) {
 	if (values.length === 0) return null;
+
+	const grantedLookup = new Set(
+		(alreadyGranted ?? []).map((v) => v.trim().toLowerCase()),
+	);
 
 	return (
 		<div className="space-y-1">
@@ -143,15 +154,34 @@ function BackgroundChipGroup({
 				{label}
 			</Label>
 			<div className="flex flex-wrap gap-2 mt-1">
-				{values.map((value) => (
-					<Badge
-						key={`${label}-${value}`}
-						variant={variant}
-						className="text-[10px] h-5 bg-primary/10 border-primary/20"
-					>
-						{formatRegentVernacular(value)}
-					</Badge>
-				))}
+				{values.map((value) => {
+					const isDup = grantedLookup.has(value.trim().toLowerCase());
+					return (
+						<Badge
+							key={`${label}-${value}`}
+							variant={variant}
+							className={
+								isDup
+									? "text-[10px] h-5 bg-amber-500/10 border-amber-400/60 text-amber-200"
+									: "text-[10px] h-5 bg-primary/10 border-primary/20"
+							}
+							title={
+								isDup
+									? `Already granted by ${alreadyGrantedSource ?? "another step"} — will be de-duplicated on create.`
+									: undefined
+							}
+							aria-label={
+								isDup
+									? `${value} — duplicate of ${alreadyGrantedSource ?? "earlier"} grant`
+									: undefined
+							}
+							data-already-granted={isDup ? "true" : undefined}
+						>
+							{formatRegentVernacular(value)}
+							{isDup && <span className="ml-1">⚠</span>}
+						</Badge>
+					);
+				})}
 			</div>
 		</div>
 	);
@@ -243,12 +273,20 @@ interface BackgroundStepProps {
 	selectedBackground: string;
 	onBackgroundChange: (backgroundId: string) => void;
 	allBackgrounds: (Background & { _homebrew?: boolean })[];
+	/** F8 of May 2026 remediation plan — proficiencies already granted by
+	 * the Job step, used to flag duplicates inline. */
+	jobGrantedSkills?: string[];
+	jobGrantedTools?: string[];
+	jobName?: string;
 }
 
 export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 	selectedBackground,
 	onBackgroundChange,
 	allBackgrounds,
+	jobGrantedSkills,
+	jobGrantedTools,
+	jobName,
 }) => {
 	const selectedBackgroundData = allBackgrounds.find(
 		(b) => b.id === selectedBackground,
@@ -318,12 +356,23 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 
 					{selectedBackgroundData && (
 						<div className="p-5 rounded-lg bg-black/40 border border-primary/10 space-y-4">
-							<h4 className="font-heading font-semibold text-lg text-primary">
-								{formatRegentVernacular(
-									selectedBackgroundData.display_name ||
-										selectedBackgroundData.name,
-								)}
-							</h4>
+							<div className="flex justify-between items-start gap-3">
+								<h4 className="font-heading font-semibold text-lg text-primary">
+									{formatRegentVernacular(
+										selectedBackgroundData.display_name ||
+											selectedBackgroundData.name,
+									)}
+								</h4>
+								<Badge
+									variant="secondary"
+									className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+								>
+									{formatRegentVernacular(
+										(selectedBackgroundData as { source_book?: string | null })
+											.source_book ?? "Rift Ascendant Canon",
+									)}
+								</Badge>
+							</div>
 							<AscendantText className="block text-sm text-muted-foreground leading-relaxed italic">
 								{formatRegentVernacular(selectedBackgroundData.description)}
 							</AscendantText>
@@ -332,11 +381,15 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 								<BackgroundChipGroup
 									label="Neural Patterns (Skills)"
 									values={selectedBackgroundData.skill_proficiencies ?? []}
+									alreadyGranted={jobGrantedSkills}
+									alreadyGrantedSource={jobName ? `Job: ${jobName}` : "Job"}
 								/>
 
 								<BackgroundChipGroup
 									label="Functional Tools (Utility)"
 									values={selectedBackgroundData.tool_proficiencies ?? []}
+									alreadyGranted={jobGrantedTools}
+									alreadyGrantedSource={jobName ? `Job: ${jobName}` : "Job"}
 								/>
 
 								<BackgroundChipGroup

@@ -58,7 +58,7 @@ interface FusionResponseData {
 // 1. On quest unlock, AI presents 3 regent choices
 // 2. Choices are based on character's stats, job, playstyle
 // 3. Player picks ONE regent
-// 4. When Warden (Warden) unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
+// 4. When Warden unlocks second quest, AI presents 3 NEW choices (cannot pick same regent twice)
 // 5. Player picks ONE more regent (MAX 2 REGENTS TOTAL)
 // 6. If martial picks caster regent (or vice versa), AI adapts it for compatibility
 // 7. When player has 2 regents, they can fuse via Gemini Protocol

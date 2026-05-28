@@ -195,6 +195,31 @@ export const TERMINOLOGY_FIXES = [
 	// The Technomancer class is its own term and never spelled "artificer" in canon.
 
 	// =========================================================
+	// Bureau / Association / Academy org-name fixes (RA canon).
+	// "Hunter Bureau" / "Hunter Association" / "Hunter Academy" /
+	// "Hunter Conference" are NOT RA-canon organisation names. RA uses
+	// "Ascendant Bureau" / "Ascendant Academy" / "Ascendant Conference".
+	// Profession-style "Hunter" / "Hunters" (e.g. "Shadow-Class Hunter",
+	// "Hunter strike team", "Hunter Association's") stays untouched — only
+	// the org-name composites are scrubbed here. Possessive variants run
+	// first so the bare-noun rules don't strip the apostrophe context.
+	// =========================================================
+	[/\bHunter\s+Bureau['’]s\b/g, "Ascendant Bureau's"],
+	[/\bHunter\s+Association['’]s\b/g, "Ascendant Bureau's"],
+	[/\bHunter\s+Bureaus\b/g, "Ascendant Bureaus"],
+	[/\bhunter\s+bureaus\b/g, "ascendant bureaus"],
+	[/\bHunter\s+Associations\b/g, "Ascendant Bureaus"],
+	[/\bhunter\s+associations\b/g, "ascendant bureaus"],
+	[/\bHunter\s+Bureau\b/g, "Ascendant Bureau"],
+	[/\bhunter\s+bureau\b/g, "ascendant bureau"],
+	[/\bHunter\s+Association\b/g, "Ascendant Bureau"],
+	[/\bhunter\s+association\b/g, "ascendant bureau"],
+	[/\bHunter\s+Academy\b/g, "Ascendant Academy"],
+	[/\bhunter\s+academy\b/g, "ascendant academy"],
+	[/\bHunter\s+Conference\b/g, "Ascendant Conference"],
+	[/\bhunter\s+conference\b/g, "ascendant conference"],
+
+	// =========================================================
 	// Misc setting fixes
 	// =========================================================
 	[/\bholy water\b/gi, "purification compound"],
@@ -207,6 +232,10 @@ export const THEME_TAG_FIXES = {
 	"monarch-era": "regent-era",
 	"sovereign-era": "regent-era",
 	"sovereignty-wars": "regent-wars",
+	"hunter-bureau": "ascendant-bureau",
+	"hunter-academy": "ascendant-academy",
+	"hunter-association": "ascendant-bureau",
+	"hunter-conference": "ascendant-conference",
 };
 
 export function scrubText(s) {

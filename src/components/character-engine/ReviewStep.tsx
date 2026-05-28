@@ -4,6 +4,7 @@ import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getAbilityModifier } from "@/lib/5eRulesEngine";
 import type { RiftFavorOption } from "@/lib/riftFavor";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { Job, StaticJob } from "@/types/character";
@@ -112,7 +113,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 	).map(([label, values]) => ({ label, values }));
 	const proficiencyBonus = resolvedStats?.proficiencyBonus ?? 2;
 	const initiative =
-		resolvedStats?.initiative ?? Math.floor((effectiveAbilities.AGI - 10) / 2);
+		resolvedStats?.initiative ?? getAbilityModifier(effectiveAbilities.AGI);
 	const speed = resolvedStats?.speed ?? staticJobData?.speed ?? 30;
 	const riftFavorMax = resolvedStats?.riftFavorMax ?? 3;
 	const riftFavorDie = resolvedStats?.riftFavorDie ?? 4;
@@ -231,8 +232,8 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 								<div className="grid grid-cols-3 gap-3">
 									{(Object.keys(ABILITY_NAMES) as AbilityScore[]).map(
 										(ability) => {
-											const modifier = Math.floor(
-												(effectiveAbilities[ability] - 10) / 2,
+											const modifier = getAbilityModifier(
+												effectiveAbilities[ability],
 											);
 											return (
 												<div
@@ -272,7 +273,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										<span className="block text-[9px] text-muted-foreground">
 											1d{hitDieSize}{" "}
 											{formatSigned(
-												Math.floor((effectiveAbilities.VIT - 10) / 2),
+												getAbilityModifier(effectiveAbilities.VIT),
 											)}
 										</span>
 									</div>
@@ -286,7 +287,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										<span className="block text-[9px] text-muted-foreground">
 											10{" "}
 											{formatSigned(
-												Math.floor((effectiveAbilities.AGI - 10) / 2),
+												getAbilityModifier(effectiveAbilities.AGI),
 											)}
 										</span>
 									</div>

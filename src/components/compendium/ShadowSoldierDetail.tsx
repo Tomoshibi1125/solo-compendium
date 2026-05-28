@@ -3,6 +3,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { getAbilityModifier } from "@/lib/characterCalculations";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumShadowSoldier } from "@/types/compendium";
@@ -54,8 +55,10 @@ const getRarityStyle = (rarity?: string) => {
 	}
 };
 
+// Canonical ability modifier display: delegates to engine helper.
+// M6 in docs/ui-canon-parity-audit-2026-05.md.
 function getAbilityMod(score: number): string {
-	const mod = Math.floor((score - 10) / 2);
+	const mod = getAbilityModifier(score);
 	return mod >= 0 ? `+${mod}` : `${mod}`;
 }
 

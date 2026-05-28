@@ -277,6 +277,62 @@ export const useSendCampaignMessage = () => {
 				.single();
 
 			if (error) throw error;
+
+			// R6 of Round 2 — fan out chat mentions to the user_notifications
+			// inbox. Scan content for `@<member-name>` tokens and produce a
+			// `mention` notification for each recipient. Best-effort: failures
+			// must not block the chat send.
+			try {
+				const matches = (content || "").match(/@[A-Za-z0-9_-]{2,40}/g);
+				if (matches && matches.length > 0) {
+					const { data: members } = await supabase
+						.from("campaign_members")
+						.select("user_id, characters(name)")
+						.eq("campaign_id", campaignId);
+					const memberRows =
+						(members as
+							| Array<{
+									user_id: string;
+									characters: { name: string | null } | null;
+							  }>
+							| null) || [];
+					const seen = new Set<string>();
+					for (const token of matches) {
+						const handle = token.slice(1).toLowerCase();
+						const recipient = memberRows.find(
+							(m) =>
+								m.user_id !== user.id &&
+								(m.characters?.name ?? "").toLowerCase().includes(handle),
+						);
+						if (!recipient || seen.has(recipient.user_id)) continue;
+						seen.add(recipient.user_id);
+						await (
+							supabase.rpc as unknown as (
+								name: string,
+								params: Record<string, unknown>,
+							) => Promise<{ data: unknown; error: Error | null }>
+						)("add_user_notification", {
+							p_user_id: recipient.user_id,
+							p_type: "mention",
+							p_title: `Mentioned in campaign chat`,
+							p_message: content.length > 120
+								? `${content.slice(0, 117)}…`
+								: content,
+							p_priority: "normal",
+							p_category: "campaign",
+							p_payload: { campaign_id: campaignId },
+							p_link: `/campaigns/${campaignId}`,
+							p_expires_at: null,
+						});
+					}
+				}
+			} catch (mentionErr) {
+				// Logged but never bubbles — chat must keep working.
+				if (typeof console !== "undefined") {
+					console.warn("Mention notification fan-out failed", mentionErr);
+				}
+			}
+
 			return data as CampaignMessage;
 		},
 		onSuccess: (_, variables) => {

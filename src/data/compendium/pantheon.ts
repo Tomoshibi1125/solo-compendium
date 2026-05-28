@@ -452,7 +452,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Marthos is the inevitable end. Where Kael Voss raises the fallen, Marthos erases them from existence entirely. He commands the Infinite Calamity — a legion of draconic entities that serve as the world's final reckoning. When a gate breaks and a city falls, when corruption spreads too deep for the Ascendant Bureau to contain — Marthos arrives. His Void-Breath does not merely kill; it unmakes. Matter, mana, memory — all dissolve. He is not evil. He is the wildfire that clears the dead forest so new growth can begin.",
+		lore: "Marthos is the inevitable end. Where Kael Voss raises the fallen, Marthos erases them from existence entirely. He commands the Infinite Calamity — a legion of regent-tier entities that serve as the world's final reckoning. When a gate breaks and a city falls, when corruption spreads too deep for the Ascendant Bureau to contain — Marthos arrives. His Void-Breath does not merely kill; it unmakes. Matter, mana, memory — all dissolve. He is not evil. He is the wildfire that clears the dead forest so new growth can begin.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		tags: [],
@@ -587,7 +587,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Vaelen was once a rival eternal who sought to overthrow Kael Voss and claim the supreme throne. After being defeated, he was bound as the ultimate challenge for ascendants who seek true combat mastery. He oversees the Cataclysm Gates — the most dangerous S-Rank dungeons — and the combat trials that push an ascendant beyond their limits. Vaelen embodies the sheer speed and devastating power of lightning-warfare. His approval is the mark of the strongest fighters in history. The Ascendant Bureau uses his trials as the final benchmark for Zenith-class certification.",
+		lore: "Vaelen was once a rival eternal who sought to overthrow Kael Voss and claim the supreme throne. After being defeated, he was bound as the ultimate challenge for ascendants who seek true combat mastery. He oversees the Cataclysm Gates — the most dangerous S-Rank dungeons — and the combat trials that push an ascendant beyond their limits. Vaelen embodies the sheer speed and devastating power of lightning-warfare. His approval is the mark of the strongest Destroyer in history. The Ascendant Bureau uses his trials as the final benchmark for Zenith-class certification.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		tags: [],
@@ -696,7 +696,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Evolution is the soul's way of reaching the Zenith.",
 			"Adapt to the dungeon, or the dungeon adapts you.",
 		],
-		worshippers: "Summoners, druids, gate ecologists, and survivalists.",
+		worshippers: "Summoners, Summoner, gate ecologists, and survivalists.",
 		temples:
 			"The Living Hives — colossal biological structures that grow like ancient trees and house millions of evolved gate organisms.",
 		home_realm: "The Swarm-Heart",
@@ -1082,7 +1082,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		specializations: ["Beast", "Umbral", "Trickery"],
 		dogma: [
 			"Trust the instinct — your soul knows before the Rift alerts you.",
-			"The umbral darkness is the hunter's greatest ally; wait for the opening.",
+			"The umbral darkness is the ascendant's greatest ally; wait for the opening.",
 			"Be the apex predator of your domain — rank means nothing to fangs.",
 		],
 		worshippers: "Stalkers, Assassins, beast-tamers, and solo-gate ascendants.",
@@ -1110,7 +1110,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 		image_url: "/images/compendium/placeholder.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
-		lore: "Nyx embodies the raw, animalistic survival instinct that the Rift cannot quantify. Stats, ranks, skills — none of it matters if your instincts are dull. He teaches that the hunter's gut is faster than any Order notification, and that the kill comes not from power but from patience. He is the master of umbral-walking and beast-transformation, able to become one with the darkness and strike without warning. The Ascendant Bureau's most elite Stalkers revere Nyx. They say the best ascendants don't rely on their Aether-sight — they rely on the cold feeling at the back of their neck.",
+		lore: "Nyx embodies the raw, animalistic survival instinct that the Rift cannot quantify. Stats, ranks, skills — none of it matters if your instincts are dull. He teaches that the ascendant's gut is faster than any Order notification, and that the kill comes not from power but from patience. He is the master of umbral-walking and beast-transformation, able to become one with the darkness and strike without warning. The Ascendant Bureau's most elite Stalkers revere Nyx. They say the best ascendants don't rely on their Aether-sight — they rely on the cold feeling at the back of their neck.",
 		source: "Rift Ascendant Core",
 		source_book: "Manual of Ascension",
 		tags: [],
@@ -1215,7 +1215,7 @@ export const PRIME_PANTHEON: CompendiumDeity[] = [
 			"Even in war, there is grace — find it, or lose yourself.",
 		],
 		worshippers:
-			"Bards, artists, Ascendant Bureau counselors, and those who keep the peace between gate raids.",
+			"Idol, artists, Ascendant Bureau counselors, and those who keep the peace between gate raids.",
 		temples:
 			"The Galleries of Echoes — breathtaking halls where mana is woven into sensory masterpieces that heal the spirit.",
 		home_realm: "The Muse's Realm",

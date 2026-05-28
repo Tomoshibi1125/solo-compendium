@@ -1,7 +1,9 @@
 import {
 	Download,
 	Edit,
+	Gift,
 	Package,
+	Package2,
 	Plus,
 	Save,
 	Search,
@@ -13,6 +15,14 @@ import { useMemo, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -30,6 +40,7 @@ import {
 	type MarketplaceItemType,
 	type MarketplacePriceType,
 	useDeleteMarketplaceItem,
+	useGiftMarketplaceItem,
 	useMarketplaceItems,
 	useRecordMarketplaceDownload,
 	useSaveMarketplaceItem,
@@ -92,6 +103,40 @@ export function MarketplaceWorkbench() {
 	const deleteItem = useDeleteMarketplaceItem();
 	const recordDownload = useRecordMarketplaceDownload();
 	const submitReview = useUpsertMarketplaceReview();
+	const giftItem = useGiftMarketplaceItem();
+
+	// F6 of May 2026 remediation plan — gift modal state.
+	const [giftItemTarget, setGiftItemTarget] =
+		useState<MarketplaceItemRecord | null>(null);
+	const [giftRecipientId, setGiftRecipientId] = useState("");
+	const [giftMessage, setGiftMessage] = useState("");
+
+	const handleGift = async () => {
+		if (!giftItemTarget) return;
+		const recipientTrim = giftRecipientId.trim();
+		if (!recipientTrim) {
+			toast({
+				title: "Recipient required",
+				description: "Paste the recipient's user ID before sending.",
+				variant: "destructive",
+			});
+			return;
+		}
+		await giftItem
+			.mutateAsync({
+				itemId: giftItemTarget.id,
+				recipientUserId: recipientTrim,
+				message: giftMessage.trim() || undefined,
+			})
+			.then(() => {
+				setGiftItemTarget(null);
+				setGiftRecipientId("");
+				setGiftMessage("");
+			})
+			.catch(() => {
+				// useGiftMarketplaceItem surfaces its own toast on error.
+			});
+	};
 
 	const resetForm = () => {
 		setEditingId(null);
@@ -436,6 +481,30 @@ export function MarketplaceWorkbench() {
 												<Plus className="w-4 h-4 mr-2" />
 												Add to Compendium
 											</Button>
+											<Button
+												size="sm"
+												variant="outline"
+												onClick={() => {
+													setGiftItemTarget(item);
+													setGiftRecipientId("");
+													setGiftMessage("");
+												}}
+												data-testid={`marketplace-gift-btn-${item.id}`}
+												aria-label={`Gift ${item.title}`}
+											>
+												<Gift className="w-4 h-4 mr-2" />
+												Gift
+											</Button>
+											{item.is_bundle && (
+												<Badge
+													variant="outline"
+													className="gap-1 text-fuchsia-300 border-fuchsia-400/40"
+													data-testid={`marketplace-bundle-pill-${item.id}`}
+												>
+													<Package2 className="w-3 h-3" />
+													Bundle ({item.bundled_item_ids?.length ?? 0})
+												</Badge>
+											)}
 											{isOwner && (
 												<>
 													<Button
@@ -681,6 +750,80 @@ export function MarketplaceWorkbench() {
 					</div>
 				</AscendantWindow>
 			</TabsContent>
+			<Dialog
+				open={giftItemTarget !== null}
+				onOpenChange={(open) => {
+					if (!open) {
+						setGiftItemTarget(null);
+						setGiftRecipientId("");
+						setGiftMessage("");
+					}
+				}}
+			>
+				<DialogContent
+					className="max-w-md"
+					data-testid="marketplace-gift-dialog"
+				>
+					<DialogHeader>
+						<DialogTitle className="flex items-center gap-2">
+							<Gift className="w-5 h-5 text-fuchsia-300" />
+							Gift {giftItemTarget?.title}
+						</DialogTitle>
+						<DialogDescription>
+							Send this item to another player. They get access immediately —
+							no payment required.
+						</DialogDescription>
+					</DialogHeader>
+					<div className="space-y-3 py-2">
+						<div className="space-y-2">
+							<Label htmlFor="gift-recipient">Recipient user ID</Label>
+							<Input
+								id="gift-recipient"
+								value={giftRecipientId}
+								onChange={(e) => setGiftRecipientId(e.target.value)}
+								placeholder="00000000-0000-0000-0000-000000000000"
+								data-testid="marketplace-gift-recipient"
+							/>
+							<p className="text-xs text-muted-foreground">
+								Ask the recipient for their user ID from their profile page.
+							</p>
+						</div>
+						<div className="space-y-2">
+							<Label htmlFor="gift-message">Message (optional)</Label>
+							<Textarea
+								id="gift-message"
+								rows={2}
+								value={giftMessage}
+								onChange={(e) => setGiftMessage(e.target.value)}
+								placeholder="A short note to include with the gift."
+								data-testid="marketplace-gift-message"
+							/>
+						</div>
+						{giftItemTarget?.is_bundle && (
+							<div className="rounded border border-fuchsia-400/30 bg-fuchsia-500/10 px-2 py-1.5 text-xs text-fuchsia-200">
+								This is a bundle — the recipient also gets access to{" "}
+								{giftItemTarget.bundled_item_ids?.length ?? 0} bundled items.
+							</div>
+						)}
+					</div>
+					<DialogFooter>
+						<Button
+							variant="ghost"
+							onClick={() => setGiftItemTarget(null)}
+							disabled={giftItem.isPending}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={handleGift}
+							disabled={giftItem.isPending || !giftRecipientId.trim()}
+							data-testid="marketplace-gift-confirm"
+						>
+							{giftItem.isPending ? "Sending…" : "Send gift"}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
 		</Tabs>
 	);
 }

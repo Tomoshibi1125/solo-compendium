@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { QuickAscendantWizard } from "@/components/character-engine/QuickAscendantWizard";
 import { AttributesStep } from "@/components/character-engine/AttributesStep";
 import { BackgroundStep } from "@/components/character-engine/BackgroundStep";
 import {
@@ -55,6 +56,7 @@ import {
 import {
 	calculateCharacterStats,
 	calculateHPMax,
+	getAbilityModifier,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
 import {
@@ -360,6 +362,7 @@ const CharacterNew = () => {
 
 	const [currentStep, setCurrentStep] = useState<Step>("concept");
 	const [loading, setLoading] = useState(false);
+	const [quickAscendantOpen, setQuickAscendantOpen] = useState(false);
 
 	// Character data state
 	const [name, setName] = useState("");
@@ -1206,7 +1209,7 @@ const CharacterNew = () => {
 			if (!job || !bgData) throw new Error("Enhanced data missing");
 
 			const level = 1;
-			const vitModifier = Math.floor((effectiveAbilities.VIT - 10) / 2);
+			const vitModifier = getAbilityModifier(effectiveAbilities.VIT);
 			const hitDieSize =
 				typeof dbJob.hit_die === "number" && Number.isFinite(dbJob.hit_die)
 					? dbJob.hit_die
@@ -1287,7 +1290,7 @@ const CharacterNew = () => {
 				sense: creationAbilities.SENSE,
 				pre: creationAbilities.PRE,
 				proficiency_bonus: 2,
-				armor_class: 10 + Math.floor((effectiveAbilities.AGI - 10) / 2),
+				armor_class: 10 + getAbilityModifier(effectiveAbilities.AGI),
 				hp_current: hpMax,
 				hp_max: hpMax,
 				hit_dice_current: 1,
@@ -1994,7 +1997,7 @@ const CharacterNew = () => {
 		const skillExpertise = Array.from(
 			new Set(selectedSpecialistTraining.map(normalizeSkillId)),
 		);
-		const baseArmorClass = 10 + Math.floor((effectiveAbilities.AGI - 10) / 2);
+		const baseArmorClass = 10 + getAbilityModifier(effectiveAbilities.AGI);
 		const stats = calculateCharacterStats({
 			level: 1,
 			abilities: effectiveAbilities,
@@ -2049,7 +2052,7 @@ const CharacterNew = () => {
 	return (
 		<Layout>
 			<div className="container py-8 max-w-4xl animate-in fade-in duration-700">
-				<div className="flex items-center gap-4 mb-8">
+				<div className="flex items-center gap-4 mb-8 flex-wrap">
 					<Button
 						variant="ghost"
 						size="sm"
@@ -2063,7 +2066,23 @@ const CharacterNew = () => {
 						Protocol:{" "}
 						<span className="text-primary italic">Initialization</span>
 					</h1>
+					<div className="ml-auto">
+						<Button
+							onClick={() => setQuickAscendantOpen(true)}
+							variant="outline"
+							className="gap-2"
+							data-testid="quick-ascendant-launcher"
+							title="Spin up a level-1 Ascendant in ~10 clicks (RA Quickbuilder)"
+						>
+							<Zap className="w-4 h-4" />
+							Quick Ascendant
+						</Button>
+					</div>
 				</div>
+				<QuickAscendantWizard
+					open={quickAscendantOpen}
+					onOpenChange={setQuickAscendantOpen}
+				/>
 
 				<CharacterWizard
 					steps={wizardSteps}
@@ -2138,6 +2157,12 @@ const CharacterNew = () => {
 							selectedBackground={selectedBackground}
 							onBackgroundChange={setSelectedBackground}
 							allBackgrounds={allBackgrounds}
+							jobGrantedSkills={selectedSkills}
+							jobGrantedTools={
+								(staticJobData as { tool_proficiencies?: string[] } | null)
+									?.tool_proficiencies ?? []
+							}
+							jobName={allJobs.find((j) => j.id === selectedJob)?.name}
 						/>
 					)}
 
@@ -2667,9 +2692,9 @@ const CharacterNew = () => {
 							hpMax={calculateHPMax(
 								1,
 								jobData?.hit_die || 8,
-								Math.floor((effectiveAbilities.VIT - 10) / 2),
+								getAbilityModifier(effectiveAbilities.VIT),
 							)}
-							baseAC={10 + Math.floor((effectiveAbilities.AGI - 10) / 2)}
+							baseAC={10 + getAbilityModifier(effectiveAbilities.AGI)}
 							loading={loading}
 							onCreate={handleCreate}
 							jobASI={jobASI}

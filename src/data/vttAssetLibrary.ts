@@ -240,7 +240,7 @@ const PREMADE_MAPS: VTTAsset[] = [
 	// ── New SA-Themed Painterly Battle Maps ──
 	{
 		id: "map-hunters-guild-tavern",
-		name: "Hunter's Guild Tavern",
+		name: "Ascendant's Guild Tavern",
 		category: "map",
 		imageUrl: "/generated/maps/premade/hunters-guild-tavern.png",
 		tags: ["tavern", "guild", "social", "interior"],

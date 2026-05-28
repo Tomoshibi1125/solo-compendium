@@ -1,0 +1,117 @@
+{
+	"Name": "Rift Ascendant Comm Deck",
+	"Description": "Elgato Stream Deck companion for the Rift Ascendant VTT. Hot-keys for scene switching, Comm-Net mute, ping, dice rolls, music cues, scene transitions, and Bureau Field Brief overlays.",
+	"Author": "Bureau Engineering",
+	"Version": "1.0.0",
+	"SDKVersion": 2,
+	"OS": [
+		{ "Platform": "mac", "MinimumVersion": "10.15" },
+		{ "Platform": "windows", "MinimumVersion": "10" }
+	],
+	"Software": { "MinimumVersion": "6.5" },
+	"Category": "Tabletop",
+	"CategoryIcon": "icons/category",
+	"Icon": "icons/plugin",
+	"URL": "https://github.com/rift-ascendant/stream-deck-plugin",
+	"PropertyInspectorPath": "inspector.html",
+	"CodePathWin": "plugin.exe",
+	"CodePathMac": "plugin",
+	"DefaultWindowSize": [500, 650],
+	"Actions": [
+		{
+			"UUID": "com.riftascendant.comm-deck.scene-switch",
+			"Name": "Switch Rift Scene",
+			"Tooltip": "Push the configured scene to LIVE for every connected operative.",
+			"Icon": "icons/scene",
+			"States": [
+				{ "Image": "icons/scene", "TitleAlignment": "bottom" }
+			]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.commnet-mute",
+			"Name": "Cloak Channel",
+			"Tooltip": "Toggle Comm-Net mute (Cloak Channel / Open Channel).",
+			"Icon": "icons/mic",
+			"States": [
+				{ "Image": "icons/mic", "TitleAlignment": "bottom" },
+				{ "Image": "icons/mic-off", "TitleAlignment": "bottom" }
+			]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.ping",
+			"Name": "Bureau Ping",
+			"Tooltip": "Drop a ping on the active Rift scene at the saved coordinate.",
+			"Icon": "icons/ping",
+			"States": [{ "Image": "icons/ping", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.dice-roll",
+			"Name": "Field Roll",
+			"Tooltip": "Roll a saved formula (default 1d20) and broadcast through Comm-Net.",
+			"Icon": "icons/dice",
+			"States": [{ "Image": "icons/dice", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.transition",
+			"Name": "Scene Transition",
+			"Tooltip": "Trigger a Bureau Field Brief title-card transition.",
+			"Icon": "icons/transition",
+			"States": [{ "Image": "icons/transition", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.music-next",
+			"Name": "Next Music Track",
+			"Tooltip": "Advance the campaign playlist queue.",
+			"Icon": "icons/music",
+			"States": [{ "Image": "icons/music", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.player-view",
+			"Name": "Player View",
+			"Tooltip": "Toggle Player View (Simulate Ascendant) on the active Rift.",
+			"Icon": "icons/eye",
+			"States": [
+				{ "Image": "icons/eye", "TitleAlignment": "bottom" },
+				{ "Image": "icons/eye-off", "TitleAlignment": "bottom" }
+			]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.fog-clear",
+			"Name": "Reveal Fog Region",
+			"Tooltip": "Clear fog inside the saved Rift Region.",
+			"Icon": "icons/fog",
+			"States": [{ "Image": "icons/fog", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.broadcast",
+			"Name": "Warden Broadcast",
+			"Tooltip": "Fire a saved Bureau Broadcast macro to every operative.",
+			"Icon": "icons/broadcast",
+			"States": [{ "Image": "icons/broadcast", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.calendar-rest",
+			"Name": "Take Long Rest",
+			"Tooltip": "Advance the Bureau Field Calendar by 8 hours; ticks Rift cycle pip.",
+			"Icon": "icons/rest",
+			"States": [{ "Image": "icons/rest", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.encounter-pulse",
+			"Name": "Field Calibration",
+			"Tooltip": "Open the Bureau Field Calibration recommendation for the active encounter.",
+			"Icon": "icons/calibration",
+			"States": [{ "Image": "icons/calibration", "TitleAlignment": "bottom" }]
+		},
+		{
+			"UUID": "com.riftascendant.comm-deck.commnet-ptt",
+			"Name": "Push Burst",
+			"Tooltip": "Hold-to-talk on Comm-Net while the key is depressed.",
+			"Icon": "icons/burst",
+			"States": [
+				{ "Image": "icons/burst", "TitleAlignment": "bottom" },
+				{ "Image": "icons/burst-active", "TitleAlignment": "bottom" }
+			]
+		}
+	]
+}

@@ -21,6 +21,7 @@ import {
 	setPendingResolution,
 } from "@/lib/actionResolution";
 import { getAnomalyImageSrc } from "@/lib/anomalyImageResolver";
+import { getAbilityModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 
@@ -76,8 +77,11 @@ const gateRankColors: Record<
 	},
 };
 
+// Canonical ability modifier display: delegates to the engine helper so
+// any future change (e.g. NaN guard) propagates consistently. M6 in
+// docs/ui-canon-parity-audit-2026-05.md.
 const getModifier = (score: number) => {
-	const mod = Math.floor((score - 10) / 2);
+	const mod = getAbilityModifier(score);
 	return mod >= 0 ? `+${mod}` : `${mod}`;
 };
 

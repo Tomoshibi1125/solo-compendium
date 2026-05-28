@@ -2,7 +2,7 @@
 
 ## Overview
 
-**System Ascendant** is a **modern urban fantasy d20 system** inspired by Korean manhwa like *Solo Leveling*. It uses **5e mechanics as the engine** but with **thematic reskins and custom systems** for a world where dimensional gates, hunters, and the mysterious "System" replace traditional fantasy.
+**System Ascendant** is a **modern urban fantasy d20 system** inspired by Korean manhwa like *Solo Leveling*. It uses **5e mechanics as the engine** but with **thematic reskins and custom systems** for a world where dimensional gates, ascendants, and the mysterious "System" replace traditional fantasy.
 
 ---
 
@@ -31,11 +31,11 @@
 |--------|------------------|-------|
 | Class | **Job** | Destroyer, Mage, Esper, etc. |
 | Subclass | **Path** | Specializations within jobs |
-| Spell | **Power** | Thematic abilities with spell mechanics |
+| Spell | **Spell / Power / Technique** | **Three distinct categories** per RA canon (`docs/rift-ascendant-world-lore.md:213`). Powers use the Job's primary ability (`getJobPrimaryAbility`), Spells use the Job's spellcasting ability (`getSpellcastingAbility`), Techniques are martial maneuvers gated by Strength/Agility. See "Spell System Differences" below for the canonical type split. |
 | Magic Item | **Relic** | Dimensional artifacts and System rewards |
-| Spell Slots | **Power Slots** | Same slot progression tables |
+| Spell Slots | **Spell Slots** | Same slot progression tables — applies to Spells only. Powers use a per-rest charge model (`computePowerUses`); Techniques use `uses_per_rest_formula`. |
 | STR/DEX/CON/INT/WIS/CHA | **STR/AGI/VIT/INT/SENSE/PRE** | Renamed abilities, same formulas |
-| Inspiration | **System Favor** | Enhanced version with multiple uses |
+| Inspiration | **Rift Favor** | Enhanced version with multiple uses. Canonical labels live in `src/lib/riftFavor.ts:24-100`. |
 
 ### Ability Score Mapping
 
@@ -69,15 +69,21 @@
 | 11-16 | 5         | d8       |
 | 17-20 | 6         | d10      |
 
-**Usage Options** (from `5eRulesEngine.ts:300`):
-1. **System Boost** (1 pt) - Add favor die to d20 roll (like inspiration)
-2. **System Override** (1 pt) - Reroll failed d20
-3. **System Recovery** (1 pt, Level 3+) - End one condition as bonus action
+**Usage Options** (canonical labels from `src/lib/riftFavor.ts:24-100`):
+1. **Rift Boost** (1 pt) - Add favor die to d20 roll (like inspiration)
+2. **Rift Override** (1 pt) - Reroll failed d20
+3. **Rift Recovery** (1 pt, Level 3+) - End one condition as bonus action
 4. **Death Defiance** (2 pts, Level 5+) - Drop to 1 HP instead of 0 (once/long rest)
-5. **System Insight** (1 pt) - Learn creature's AC, HP %, resistances
+5. **Rift Insight** (1 pt) - Learn creature's AC, HP %, resistances
 6. **Flash Step** (1 pt, Level 5+) - Teleport 10 ft as part of movement
 7. **Critical Surge** (2 pts, Level 9+) - Convert hit to crit (once/long rest)
 8. **Party Link** (1 pt, Level 7+) - Telepathy + advantage on initiative for allies
+
+> **Canon lock:** The "System Boost / System Override / …" labels used in earlier
+> drafts of this doc were stale. RA canon (the source-of-truth labels in
+> `riftFavor.ts`) uses "**Rift** Boost / Override / Recovery / Insight". The
+> `5eRulesEngine.ts:SYSTEM_FAVOR_OPTIONS` array also drifted from canon and is
+> tracked as a follow-up cleanup; do **not** copy its label strings.
 
 **Implementation in Engine:**
 ```typescript
@@ -172,7 +178,7 @@ function parseAwakeningEffects(feature, jobLevel): Effect[] {
 jobTraits: [
   {
     name: "Gate Breaker",
-    description: "Deal double damage to objects. Advantage on saves vs fear from gate monsters.",
+    description: "Deal double damage to objects. Advantage on saves vs fear from gate anomalies.",
     type: "resistance"
   },
   {
@@ -300,11 +306,11 @@ function calculateGeminiStatBonuses(regent1, regent2, fusionType): StatBonuses {
 **What It Is:** Korean manhwa-style power classification
 
 **Ranks:**
-- **D-Rank** - Entry-level hunters (city-tier threats)
-- **C-Rank** - Experienced hunters (regional threats)
-- **B-Rank** - Elite hunters (national threats)
-- **A-Rank** - Top-tier hunters (continental threats)
-- **S-Rank** - National level hunters (world-ending threats)
+- **D-Rank** - Entry-level ascendants (city-tier threats)
+- **C-Rank** - Experienced ascendants (regional threats)
+- **B-Rank** - Elite ascendants (national threats)
+- **A-Rank** - Top-tier ascendants (continental threats)
+- **S-Rank** - National level ascendants (world-ending threats)
 
 **Application:**
 - **Jobs have ranks** - `rank: 'D' | 'C' | 'B' | 'A' | 'S'`
@@ -319,8 +325,8 @@ function calculateGeminiStatBonuses(regent1, regent2, fusionType): StatBonuses {
 
 **Thematic Changes** (no mechanical difference):
 - **Gates** = Dimensional rifts instead of dungeons
-- **Hunters** = Player characters instead of adventurers
-- **Hunter Bureau** = Government guild registry instead of adventurer's guild
+- **Ascendants** = Player characters instead of adventurers
+- **Ascendant Bureau** = Government guild registry instead of adventurer's guild
 - **System Interface** = AR-like HUD overlay for abilities
 - **Mana** = Visible energy (glowing veins, crystallized bones) instead of invisible magic
 - **Smartphones, CCTV, social media** = Modern tech integrated into abilities
@@ -332,33 +338,31 @@ function calculateGeminiStatBonuses(regent1, regent2, fusionType): StatBonuses {
 
 ## Spell System Differences
 
-### Powers vs Spells
+### Three distinct ability-expression categories
 
-**Same Mechanics:**
-- Spell slots, spell levels, concentration, ritual casting
-- Spellcasting ability, spell save DC, spell attack bonus
+Per Rift Ascendant canon (`docs/rift-ascendant-world-lore.md:213` — "Powers,
+Spells, and Techniques: usable expressions of mana") and the engine types
+in `src/types/compendium.ts:282/312/334`, RA has **three** distinct
+ability types — they are **not** reskins of each other.
 
-**Thematic Reskin:**
-```typescript
-interface Power {
-  // Standard 5e spell structure
-  level: number; // 0-9
-  school: string; // "Shadow", "Void", "Abyssal" (instead of "Evocation", "Necromancy")
-  castingTime: string;
-  range: string | { type: string; value: number; unit: string };
-  components: { verbal: boolean; somatic: boolean; material: boolean | string };
-  duration: string | { type: string; time?: string };
-  concentration: boolean;
-  ritual: boolean;
+| Type | RA file | Identifier | Resource model | Casting ability |
+|---|---|---|---|---|
+| **Spell** | `CompendiumSpell` (`compendium.ts:282`) | `level: 0..9` (cantrip..rank-9) | Spell slot consumption (`spell_slots` table, `calculateSpellSlotsForLevel`) | Job's **spellcasting ability** via `getSpellcastingAbility(job)` |
+| **Power** | `CompendiumPower` (`compendium.ts:312`) | `power_level: "Innate" \| "Cantrip" \| "Tier N"` (NOT `level: 0..9`) | Per-rest charges via `computePowerUses`; native rate 3 / long rest | Job's **primary ability** via `getJobPrimaryAbility(job)` (`powerActionFormulas.ts:9-23`) |
+| **Technique** | `CompendiumTechnique` (`compendium.ts:334`) | `level_requirement: N` + `style` | `uses_per_rest_formula` (Stamina-style); no spell slots | Higher of STR / AGI modifier (per `techniqueActionFormula.ts`) |
 
-  // System Ascendant additions
-  type: 'Attack' | 'Defense' | 'Utility' | 'Healing'; // Tactical classification
-  rank: 'D' | 'C' | 'B' | 'A' | 'S'; // Power tier
-  essenceRequirement?: string; // Replaces material components
-  hunterClass?: string[]; // Job restrictions
-  systemAwakening?: boolean; // Requires awakening to use
-}
-```
+**Shared 5e-shaped formulas:**
+- Spell: `attack = PB + spellcasting_mod`, `DC = 8 + PB + spellcasting_mod` (`calculateSpellAttackBonus / calculateSpellSaveDC` in `5eCharacterCalculations.ts:196, 209`).
+- Power: `attack = PB + primary_mod`, `DC = 8 + PB + primary_mod` (`resolvePowerActionFormula` in `powerActionFormulas.ts`).
+- Technique: `attack = PB + max(STR_mod, AGI_mod)`, `DC = 8 + PB + max(...)` (`resolveTechniqueUseFormula`).
+
+**Compendium counts (May 2026):** ~201 Spells, ~136 Powers, ~111 Techniques — independently authored, independently filtered (`listLearnableSpells / Powers / Techniques`), independently surfaced in `AddSpellDialog / AddPowerDialog / AddTechniqueDialog`.
+
+> **Canon lock:** Earlier drafts of this doc claimed "Spell → Power is a
+> reskin" and that Powers carry `level: 0-9`. Both contradict RA canon and
+> the engine. The actual `CompendiumPower` interface (see file) declares
+> `power_level: string`, `power_type`, `has_attack_roll`, `has_save` —
+> none of which exist on `CompendiumSpell`.
 
 ### Essence vs Material Components
 

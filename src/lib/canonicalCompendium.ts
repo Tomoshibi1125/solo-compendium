@@ -18,6 +18,7 @@ import {
 	getActivePathAbilityGrants,
 	getEffectiveMaxAbilityLevel,
 	getPathGrantMaxAbilityLevel,
+	isEntryPathExclusiveForJob,
 	normalizePathAbilityValue,
 	type PathAbilityGrant,
 } from "@/lib/pathAbilityAccess";
@@ -36,6 +37,7 @@ export const staticCanonicalEntryTypes = [
 	"backgrounds",
 	"conditions",
 	"regents",
+	// Q4 of Round 3 — vehicles & mounts registry (44 entries).
 	"feats",
 	"skills",
 	"equipment",
@@ -1393,7 +1395,10 @@ export function isCanonicalSpellLearnable(
 	entry: CanonicalCastableEntry,
 	options: LearnableCastableOptions = {},
 ): boolean {
-	if (!isWithinBaseCastableLevelCap(entry, options, "spell")) return false;
+	// NOTE: do NOT early-return on base level cap here — path grants can grant
+	// access to spells above the job's natural caster progression (e.g., a
+	// non-caster Destroyer learning a level-1 Mage spell via Path of the Spell
+	// Breaker at character level 3).
 	const pathGrants = getActivePathAbilityGrants({
 		jobName: options.jobName,
 		pathName: options.pathName,
@@ -1415,6 +1420,11 @@ export function isCanonicalSpellLearnable(
 	);
 	if (pathGrantAllowed) return true;
 	if (!isWithinBaseCastableLevelCap(entry, options, "spell")) return false;
+	// Entries that are exclusively path-granted for this job must not appear
+	// in the base/natural learnable list — selecting the path is the only way.
+	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "spell")) {
+		return false;
+	}
 	const accessTokens = getSpellAccessTokens(
 		options.jobName,
 		options.pathName,
@@ -1454,6 +1464,11 @@ export function isCanonicalPowerLearnable(
 	);
 	if (pathGrantAllowed) return true;
 	if (!isWithinBaseCastableLevelCap(entry, options, "power")) return false;
+	// Entries that are exclusively path-granted for this job must not appear
+	// in the base/natural learnable list — selecting the path is the only way.
+	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "power")) {
+		return false;
+	}
 	const accessTokens = getPowerAccessTokens(
 		options.jobName,
 		options.pathName,
@@ -1766,6 +1781,11 @@ export function isCanonicalTechniqueLearnable(
 		pathGrantMatchesTechniqueEntry(entry, grant, options.characterLevel),
 	);
 	if (pathGrantAllowed) return true;
+	// Entries that are exclusively path-granted for this job must not appear
+	// in the base/natural learnable list — selecting the path is the only way.
+	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "technique")) {
+		return false;
+	}
 	const accessTokens = getTechniqueAccessTokens(
 		options.jobName,
 		options.pathName,

@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacterChoiceTotals } from "@/hooks/useCharacterChoiceTotals";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
@@ -51,9 +52,10 @@ export function AddPowerDialog({
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [levelTab, setLevelTab] = useState<string>("all");
-	const { addPower } = usePowers(characterId);
+	const { addPower, powers: knownPowers = [] } = usePowers(characterId);
 	const { toast } = useToast();
 	const { data: character } = useCharacter(characterId);
+	const { data: choiceTotals } = useCharacterChoiceTotals(characterId);
 	const ascendantTools = useAscendantTools();
 	const { grantedAbilityNames, grantedAbilityRefs } =
 		useRuneGrantedAbilities(characterId);
@@ -264,7 +266,14 @@ export function AddPowerDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[80vh] min-h-0 overflow-hidden flex flex-col">
 				<DialogHeader>
-					<DialogTitle>Add Power</DialogTitle>
+					<DialogTitle className="flex items-center gap-2 flex-wrap">
+						<span>Add Power</span>
+						{choiceTotals && choiceTotals.powers > 0 && (
+							<Badge variant="outline" className="text-xs">
+								{knownPowers.length} / {choiceTotals.powers} known
+							</Badge>
+						)}
+					</DialogTitle>
 					<DialogDescription>
 						Search and add powers from the compendium
 					</DialogDescription>
@@ -351,6 +360,18 @@ export function AddPowerDialog({
 															{src}
 														</Badge>
 													))}
+													{(power as { source_book?: string | null })
+														.source_book && (
+														<Badge
+															variant="secondary"
+															className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+														>
+															{formatRegentVernacular(
+																(power as { source_book?: string | null })
+																	.source_book as string,
+															)}
+														</Badge>
+													)}
 												</div>
 												{power.description && (
 													<p className="text-xs text-muted-foreground line-clamp-2">

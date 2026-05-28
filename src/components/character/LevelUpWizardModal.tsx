@@ -44,6 +44,7 @@ import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
+import { getAbilityModifier } from "@/lib/5eRulesEngine";
 import { getLevelingMode } from "@/lib/campaignSettings";
 import {
 	type CanonicalCastableEntry,
@@ -1097,7 +1098,7 @@ export const LevelUpWizardModal = ({
 	}
 
 	// Calculate HP increase (DDB / 5e parity — see levelUpCalculations.ts).
-	const vitModifier = Math.floor((character.abilities.VIT - 10) / 2);
+	const vitModifier = getAbilityModifier(character.abilities.VIT);
 	const hitDieSize = character.hit_dice_size;
 	const averageHP = calculateAverageHPGain(hitDieSize, vitModifier);
 	const maxHP = calculateMaxHPGain(hitDieSize, vitModifier);
@@ -1109,10 +1110,10 @@ export const LevelUpWizardModal = ({
 		try {
 			const levelsLost = character.level - newLevel;
 			const hitDieSize = character.hit_dice_size ?? 8;
-			const vitMod = Math.floor((character.abilities.VIT - 10) / 2);
+			const vitMod = getAbilityModifier(character.abilities.VIT);
 			const avgHpPerLevel = Math.max(
 				1,
-				Math.floor(hitDieSize / 2) + 1 + vitMod,
+				calculateAverageHPGain(hitDieSize, vitMod),
 			);
 			const hpReduction = avgHpPerLevel * levelsLost;
 			const newHP = Math.max(1, (character.hp_max ?? 1) - hpReduction);
@@ -2053,9 +2054,9 @@ export const LevelUpWizardModal = ({
 														Prof. Bonus
 													</span>
 													<span className="font-resurge text-lg">
-														+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
+														+{calculateProficiencyBonusForLevel(character.level)} {"->"}{" "}
 														<span className="text-red-400">
-															+{Math.ceil(newLevel / 4) + 1}
+															+{calculateProficiencyBonusForLevel(newLevel)}
 														</span>
 													</span>
 												</div>
@@ -3110,9 +3111,9 @@ export const LevelUpWizardModal = ({
 													Proficiency Bonus
 												</span>
 												<span className="font-resurge text-lg">
-													+{Math.ceil(character.level / 4) + 1} {"->"}{" "}
+													+{calculateProficiencyBonusForLevel(character.level)} {"->"}{" "}
 													<span className="text-resurge">
-														+{Math.ceil(newLevel / 4) + 1}
+														+{calculateProficiencyBonusForLevel(newLevel)}
 													</span>
 												</span>
 											</div>

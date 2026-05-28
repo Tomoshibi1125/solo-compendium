@@ -6,6 +6,7 @@ interface SensesDisplayProps {
 	passivePerception: number;
 	passiveInvestigation: number;
 	passiveInsight: number;
+	passiveStealth?: number;
 }
 
 export function SensesDisplay({
@@ -13,14 +14,18 @@ export function SensesDisplay({
 	passivePerception,
 	passiveInvestigation,
 	passiveInsight,
+	passiveStealth,
 }: SensesDisplayProps) {
+	const showStealth = typeof passiveStealth === "number";
 	return (
 		<div className="rounded-lg border p-4 space-y-3">
 			<h2 className="text-sm font-semibold text-muted-foreground flex items-center gap-1.5">
 				<Eye className="h-4 w-4" /> Senses
 			</h2>
 
-			<div className="grid grid-cols-3 gap-2 text-center">
+			<div
+				className={`grid gap-2 text-center ${showStealth ? "grid-cols-4" : "grid-cols-3"}`}
+			>
 				<div className="rounded border p-2 bg-muted/30">
 					<div className="text-[10px] text-muted-foreground">
 						Passive Perception
@@ -39,6 +44,14 @@ export function SensesDisplay({
 					</div>
 					<div className="text-lg font-bold">{passiveInsight}</div>
 				</div>
+				{showStealth && (
+					<div className="rounded border p-2 bg-muted/30">
+						<div className="text-[10px] text-muted-foreground">
+							Passive Stealth
+						</div>
+						<div className="text-lg font-bold">{passiveStealth}</div>
+					</div>
+				)}
 			</div>
 
 			{senses.length > 0 && (

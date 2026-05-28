@@ -23,12 +23,12 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Pins the cast's result to one deterministic branch. The line between Hunter and monster.",
+			"Pins the cast's result to one deterministic branch. The line between Ascendant and anomaly.",
 		discovery_lore:
-			"Recorded in the Hunter's inventory during their last resupply.",
+			"Recorded in the Ascendant's inventory during their last resupply.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Initiated via the bearer's conditioned trigger state.",
@@ -133,12 +133,12 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Devours the concept of distance. Proof that some things cannot be survived.",
 		discovery_lore:
-			"Entered into the Hunter's inventory via standard requisition.",
+			"Entered into the Ascendant's inventory via standard requisition.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Channel mana through the ink circuits",
@@ -220,8 +220,8 @@ export const tattoos: CompendiumTattoo[] = [
 	},
 	{
 		id: "tattoo_3",
-		name: "Hunter's Acuity",
-		display_name: "Hunter's Acuity",
+		name: "Ascendant's Acuity",
+		display_name: "Ascendant's Acuity",
 		description:
 			"Quickens the mind and reflexes using raw magical energy. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "uncommon",
@@ -238,10 +238,10 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Inverts the dimensional barrier. A testament to what Hunters have become.",
+			"Inverts the dimensional barrier. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -346,7 +346,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Ignites the last defense of the unprepared. The breaking point of all resistance.",
@@ -448,13 +448,13 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor: "Warps the laws of physics. A whisper from the edge of oblivion.",
 		discovery_lore:
@@ -559,7 +559,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Purges the chains of mortality. Evolution compressed into a single, violent instant.",
@@ -660,17 +660,17 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Mirrors the threshold of human potential. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Called up through a practiced activation pose.",
@@ -760,7 +760,7 @@ export const tattoos: CompendiumTattoo[] = [
 		name: "Wind-Shear Cloak",
 		display_name: "Wind-Shear Cloak",
 		description:
-			"A wind-magic weave that helps the Hunter cut through the air. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"A wind-magic weave that helps the Ascendant cut through the air. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "uncommon",
 		attunement: true,
 		body_part: "Legs",
@@ -775,7 +775,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Erases the boundary between life and death. The reason S-Rank Gates are feared.",
@@ -884,7 +884,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Absorbs the threshold of human potential. The breaking point of all resistance.",
@@ -990,12 +990,12 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Warps the dimensional barrier. Evolution compressed into a single, violent instant.",
 		discovery_lore:
-			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+			"Materialized on a Ascendant's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Speak the tattoo's true name",
@@ -1095,7 +1095,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Dissolves the silence between heartbeats. A whisper from the edge of oblivion.",
@@ -1196,16 +1196,16 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Rends the certainty of outcomes. A testament to what Hunters have become.",
+			"Rends the certainty of outcomes. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -1310,7 +1310,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Purges the concept of distance. Proof that some things cannot be survived.",
@@ -1412,17 +1412,17 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Erases the chains of mortality. A whisper from the edge of oblivion.",
 		discovery_lore:
-			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+			"Located by a detection-type Ascendant whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Channel mana through the ink circuits",
@@ -1524,7 +1524,7 @@ export const tattoos: CompendiumTattoo[] = [
 				"The user becomes unable to dream, replaced by visions of the void between Gates.",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Purges the chains of mortality. A whisper from the edge of oblivion.",
@@ -1635,7 +1635,7 @@ export const tattoos: CompendiumTattoo[] = [
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Corrodes the threshold of human potential. A beautiful catastrophe measured in milliseconds.",
@@ -1737,13 +1737,13 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Eclipses the illusion of safety. A beautiful catastrophe measured in milliseconds.",
@@ -1847,18 +1847,18 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Reclaims the illusion of safety. A testament to what Hunters have become.",
+			"Reclaims the illusion of safety. A testament to what Ascendants have become.",
 		discovery_lore:
-			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Flex the tattooed muscle group",
@@ -1961,7 +1961,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Binds the silence between heartbeats. Evolution compressed into a single, violent instant.",
@@ -2062,12 +2062,12 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Warps the architect's design. The breaking point of all resistance.",
@@ -2175,7 +2175,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Crushes the architecture of the soul. Evolution compressed into a single, violent instant.",
@@ -2281,7 +2281,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Inverts the boundary between life and death. Evolution compressed into a single, violent instant.",
@@ -2387,7 +2387,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Ignites the laws of physics. The death of hesitation, made manifest.",
@@ -2498,12 +2498,12 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Reclaims the laws of physics. Proof that some things cannot be survived.",
 		discovery_lore:
-			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+			"Materialized on a Ascendant's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Channel mana through the ink circuits",
@@ -2604,13 +2604,13 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Corrodes the fabric of reality. The last thing many anomalies ever see.",
@@ -2716,7 +2716,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Rends the flow of causality. The breaking point of all resistance.",
@@ -2818,12 +2818,12 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Silences the last defense of the unprepared. Evolution compressed into a single, violent instant.",
@@ -2930,7 +2930,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Dissolves the remnants of a dead world. The death of hesitation, made manifest.",
@@ -3031,16 +3031,16 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Shatters the remnants of a dead world. A testament to what Hunters have become.",
+			"Shatters the remnants of a dead world. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -3143,11 +3143,11 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
-		flavor: "Rends the laws of physics. The line between Hunter and monster.",
+		flavor: "Rends the laws of physics. The line between Ascendant and anomaly.",
 		discovery_lore:
-			"Entered into the Hunter's inventory via standard requisition.",
+			"Entered into the Ascendant's inventory via standard requisition.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Flex the tattooed muscle group",
@@ -3244,14 +3244,14 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse:
 				"Each activation permanently reduces the user's maximum HP by 1, imperceptible until it's too late.",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Purges the dimensional barrier. A whisper from the edge of oblivion.",
@@ -3352,15 +3352,15 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Warps the remnants of a dead world. A testament to what Hunters have become.",
+			"Warps the remnants of a dead world. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Gifted by the System itself as a reward for completing a hidden quest chain.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -3463,7 +3463,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Annihilates the threshold of human potential. The death of hesitation, made manifest.",
@@ -3564,14 +3564,14 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse:
 				"Causes mild paranoia after extended use; the user becomes convinced they are being watched through mirrors.",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Inverts the last defense of the unprepared. A beautiful catastrophe measured in milliseconds.",
@@ -3678,12 +3678,12 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Shatters the remnants of a dead world. The breaking point of all resistance.",
 		discovery_lore:
-			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+			"Located by a detection-type Ascendant whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Initiated via the bearer's conditioned trigger state.",
@@ -3788,12 +3788,12 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Rends the illusion of safety. Evolution compressed into a single, violent instant.",
 		discovery_lore:
-			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+			"Located by a detection-type Ascendant whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Speak the tattoo's true name",
@@ -3892,7 +3892,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Mirrors the flow of causality. The breaking point of all resistance.",
@@ -4000,10 +4000,10 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Annihilates the threshold of human potential. A testament to what Hunters have become.",
+			"Annihilates the threshold of human potential. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Found pulsing with residual mana in the aftermath of a Gate break, half-buried in shattered concrete.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -4102,17 +4102,17 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Mirrors the illusion of safety. The last thing many anomalies ever see.",
 		discovery_lore:
-			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+			"Materialized on a Ascendant's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Press your palm against the design",
@@ -4217,10 +4217,10 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
-			"Eclipses the architect's design. A testament to what Hunters have become.",
+			"Eclipses the architect's design. A testament to what Ascendants have become.",
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -4319,13 +4319,13 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Erases the boundary between life and death. A whisper from the edge of oblivion.",
@@ -4432,7 +4432,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Corrodes the architecture of the soul. The last thing many anomalies ever see.",
@@ -4537,13 +4537,13 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Eclipses the threshold of human potential. The breaking point of all resistance.",
@@ -4648,7 +4648,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Devours the dimensional barrier. Evolution compressed into a single, violent instant.",
@@ -4739,7 +4739,7 @@ export const tattoos: CompendiumTattoo[] = [
 		name: "Resurrection Grace",
 		display_name: "Resurrection Grace",
 		description:
-			"Resurrect a fallen Hunter, permanently sacrificing the ink. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Resurrect a fallen Ascendant, permanently sacrificing the ink. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Heart",
@@ -4754,7 +4754,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Condemns the fabric of reality. The breaking point of all resistance.",
@@ -4856,17 +4856,17 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Produced in compliance with Hunter Bureau augmentation standards.",
-			history: "Reviewed periodically under the Hunter augmentation license.",
+				"Produced in compliance with Ascendant Bureau augmentation standards.",
+			history: "Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Sanctifies the silence between heartbeats. The last thing many anomalies ever see.",
 		discovery_lore:
-			"Materialized on a Hunter's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
+			"Materialized on a Ascendant's workbench overnight, leaving scorch marks in the shape of unknown glyphs.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Called up through a practiced activation pose.",
@@ -4968,7 +4968,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Inverts the silence between heartbeats. The reason S-Rank Gates are feared.",
@@ -5076,7 +5076,7 @@ export const tattoos: CompendiumTattoo[] = [
 			personality: "Disciplined in its at-rest state.",
 			current_owner:
 				"Available through the Bureau's open augmentation catalog.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Shatters the certainty of outcomes. The last thing many anomalies ever see.",
@@ -5178,13 +5178,13 @@ export const tattoos: CompendiumTattoo[] = [
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
-				"Developed by Bureau-licensed alchemical tattooists for field Hunters.",
+				"Developed by Bureau-licensed alchemical tattooists for field Ascendants.",
 			history: "Subject to Bureau augmentation oversight and annual review.",
 			curse: "",
 			personality: "Neutral in personality profile.",
 			current_owner:
-				"Widely issued to qualifying Hunters through Bureau studios.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+				"Widely issued to qualifying Ascendants through Bureau studios.",
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Rends the chains of mortality. The reason S-Rank Gates are feared.",
@@ -5290,11 +5290,11 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor: "Rends the illusion of safety. The reason S-Rank Gates are feared.",
 		discovery_lore:
-			"Discovered by an E-Rank Hunter who stumbled into an unmarked side passage during a routine dungeon clear.",
+			"Discovered by an E-Rank Ascendant who stumbled into an unmarked side passage during a routine dungeon clear.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
 		mechanics: {
 			action_type: "Press your palm against the design",
@@ -5380,7 +5380,7 @@ export const tattoos: CompendiumTattoo[] = [
 		name: "Regent's Authority",
 		display_name: "Regent's Authority",
 		description:
-			"Force any being of lower Hunter rank to kneel. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
+			"Force any being of lower Ascendant rank to kneel. This ink weaves directly into the subject's soul, imbuing their physical form with the essence of slain dungeon beasts.",
 		rarity: "legendary",
 		attunement: true,
 		body_part: "Neck",
@@ -5395,7 +5395,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Quiet between activations.",
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Erases the flow of causality. Proof that some things cannot be survived.",
@@ -5501,7 +5501,7 @@ export const tattoos: CompendiumTattoo[] = [
 			curse: "",
 			personality: "Unobtrusive while not being used.",
 			current_owner: "Applied routinely to qualifying field operatives.",
-			prior_owners: ["Guild Outcasts", "Assassin Hunters"],
+			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
 		flavor:
 			"Mirrors the boundary between life and death. The last thing many anomalies ever see.",

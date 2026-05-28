@@ -384,9 +384,9 @@ export const JOB_PROGRESSION_FIXTURES = {
 		pathUnlockLevel: 3,
 		pathCount: 6,
 		pathNames: [
-			"Path of the Apex Hunter",
+			"Path of the Apex Ascendant",
 			"Path of the Pack Leader",
-			"Path of the Umbral Hunter",
+			"Path of the Umbral Ascendant",
 			"Path of the Rift Strider",
 			"Path of the Apex Slayer",
 			"Path of the Hive Synchronist",

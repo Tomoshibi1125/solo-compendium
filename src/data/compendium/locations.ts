@@ -6,7 +6,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "dungeon-core", "regent-era"],
+		theme_tags: ["ascendant-bureau", "dungeon-core", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -114,7 +114,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"An ancient dungeon carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. The Eternal Shadow Dungeon is a training ground for D-rank ascendants, featuring shifting corridors that reconfigure themselves and walls that whisper forgotten secrets. Those who venture here report seeing their own shadows move independently and hearing voices that promise power at a terrible cost.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -230,7 +230,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A massive fortress that floats in the void between dimensions, its towers constructed from crystallized nothingness. The Eternal Void Fortress was once the stronghold of a void regent who sought to erase all existence from reality. Now abandoned, it serves as a proving ground for C-rank ascendants who must navigate anti-gravity chambers and reality-warping traps while avoiding the void remnants that still patrol its halls.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -250,7 +250,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -345,9 +345,9 @@ export const locations: CompendiumLocation[] = [
 		type: "City",
 		rank: "B",
 		description:
-			"A sprawling city built within the caldera of an active volcano, where demons and mortals once coexisted in an uneasy alliance. The Abyssal Metropolis is now a ruin of obsidian streets and magma-flooded districts, home to B-rank ascendants seeking demonic artifacts. The city's central spire contains the throne room where the Demon King once held court, and many claim his essence still lingers, tempting visitors with promises of power.",
+			"A sprawling city built within the caldera of an active volcano, where anomaly and mortals once coexisted in an uneasy alliance. The Abyssal Metropolis is now a ruin of obsidian streets and magma-flooded districts, home to B-rank ascendants seeking demonic artifacts. The city's central spire contains the throne room where the Regent of Dread once held court, and many claim his essence still lingers, tempting visitors with promises of power.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -468,7 +468,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"An ancient forest where trees grow upside down from a crimson sky and their roots drink from rivers of liquid shadow. The Eternal Demonic Realm is a pocket dimension where demonic nature has evolved beyond mortal comprehension. A-rank ascendants who enter this realm find themselves hunted by predator plants that sing death songs and must navigate through groves where time flows backward, revealing glimpses of ancient demonic battles.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -593,7 +593,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A divine palace carved from the peak of a mountain that pierces the veil between dimensions, its spires touching the celestial realm. The Eternal Celestial Palace was built by the first gods as a bridge between mortal and divine existence. Now it serves as the ultimate testing ground for S-rank ascendants, who must ascend through seven celestial trials while avoiding the celestial guardians that still protect its sacred halls from unworthy mortals.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -709,7 +709,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A desecrated temple where shadow priests once conducted rituals to breach the dimensional barriers. Now D-rank ascendants must navigate through halls where prayers echo backward and sacred symbols writhe with forbidden knowledge.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -732,7 +732,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -825,12 +825,12 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0007",
-		name: "Eternal Ancient Temple",
+		name: "Eternal pre-gate ruins",
 		type: "Dungeon",
 		rank: "C",
 		description:
 			"A multi-level dungeon complex where reality itself becomes unstable, causing gravity to shift and time to flow erratically. C-rank ascendants who venture here must contend with rooms that exist in multiple dimensions simultaneously and corridors that lead to different versions of the same place.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -848,7 +848,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
 				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
@@ -946,7 +946,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A fortress that was once the seat of a umbral regent's power, now split across seven different dimensions. B-rank ascendants must navigate through versions of the same castle that exist simultaneously, each with different dangers and secrets.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -1063,7 +1063,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A city that has achieved a form of transcendence, existing simultaneously in multiple dimensions and time periods. A-rank ascendants who enter must navigate through streets where reality itself is fluid and where the buildings remember everyone who has ever lived or died within them.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -1085,7 +1085,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -1184,7 +1184,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"An ancient forest that serves as the heart of all shadow dimensions, where the trees are older than time and the shadows hold the memories of creation itself. S-rank explorers who enter find themselves walking through the birthplace of nightmares and the graveyard of gods.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -1206,9 +1206,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1304,7 +1304,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A jagged mountain that pierces the veil between worlds, its peaks constantly shifting between material and shadow forms. D-rank climbers who reach the summit report seeing visions of alternate realities and hearing the voices of their shadow selves.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -1426,7 +1426,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A temple complex where the boundaries between sacred and profane have dissolved, creating spaces where divine energy and shadow magic merge into something new and terrible. C-rank ascendants who enter must navigate through chambers where the laws of physics are merely suggestions.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -1450,7 +1450,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1546,7 +1546,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"An extensive dungeon network that serves as a proving ground for B-rank ascendants, featuring intelligent traps that learn from their victims and corridors that actively resist intrusion. The dungeon's central core houses a fragment of pure shadow energy that warps reality around it.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -1663,7 +1663,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A fortress that exists outside normal time, simultaneously existing in past, present, and future. A-rank visitors must navigate through halls where history repeats itself and where the actions they take in one time period affect all others.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -1687,7 +1687,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1784,7 +1784,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A city that exists as a manifestation of collective consciousness, where the thoughts and dreams of all who have ever lived take physical form. S-rank ascendants who enter must navigate through streets where reality itself is shaped by belief and where the impossible becomes possible.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -1813,7 +1813,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -1910,7 +1910,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A corrupted forest where the trees have turned to shadow and the wildlife has adapted to eternal twilight. D-rank ascendants must navigate through groves where the very air tries to steal their memories and replace them with fragments of forgotten nightmares.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -1932,9 +1932,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2031,7 +2031,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A mountain that exists simultaneously in multiple dimensions, its peak touching different versions of reality. C-rank climbers who ascend its slopes must choose which reality to commit to at each fork in the path, knowing that wrong choices lead to dimensions from which there is no return.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -2151,7 +2151,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A temple complex that serves as a nexus point for multiple shadow dimensions, where different versions of reality overlap and merge. B-rank ascendants who enter must navigate through spaces where the laws of magic are broken and remade constantly.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -2272,7 +2272,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists as a living entity, constantly evolving and adapting to challenge those who enter. A-rank ascendants must contend with the dungeon's intelligence, which learns from their tactics and creates new challenges specifically designed to exploit their weaknesses.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -2389,7 +2389,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A fortress that serves as the final bastion between the mortal realm and forces that could unmake reality itself. S-rank visitors must navigate through halls where the laws of the universe are broken and remade, where even the shadows hold power over creation and destruction.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -2418,7 +2418,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2515,7 +2515,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A ruined city swallowed by the abyssal realm during an ancient cataclysm. Now its broken streets serve as a training ground for D-rank ascendants, where the ghosts of former citizens still reenact their final moments in eternal loops.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -2539,7 +2539,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -2635,7 +2635,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A forest where the trees have memories and the shadows tell stories of futures that might have been. C-rank explorers find themselves walking through groves that exist in multiple time periods simultaneously, where past and future merge into an eternal present.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -2643,7 +2643,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["black-market", "hunter-bureau"],
+		theme_tags: ["black-market", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -2751,7 +2751,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A mountain range that exists as a single entity, its peaks connected by underground tunnels that shift and reshape themselves. B-rank climbers must contend with the mountain's awareness, which actively works to prevent anyone from reaching its sacred summits.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -2868,7 +2868,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A temple complex that exists as a bridge between mortal and divine realms, where the boundaries between sacred and shadow have merged. A-rank ascendants who enter must navigate through chambers where the gods themselves fear to tread.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -2989,7 +2989,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"The ultimate dungeon, a living labyrinth that exists as a test of worthiness for those who would challenge the gods themselves. S-rank ascendants who enter must face manifestations of their own fears and doubts, given form by the dungeon's consciousness.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -3018,7 +3018,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3114,7 +3114,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A crumbling castle where the last shadow lord made his final stand against the forces of light. The castle's foundations are built upon layers of forgotten history, and D-rank ascendants who explore its halls often discover rooms that exist outside normal space.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -3230,13 +3230,13 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0027",
-		name: "Lost Ancient Temple",
+		name: "Lost pre-gate ruins",
 		type: "City",
 		rank: "C",
 		description:
 			"A city that exists in the space between heartbeats, where buildings phase in and out of existence and the streets rearrange themselves when no one is watching. C-rank ascendants who spend too much here risk becoming part of the city's eternal cycle of appearance and disappearance.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -3356,7 +3356,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"An ancient forest that has achieved consciousness and now actively hunts those who enter its domain. B-rank ascendants find themselves stalked by trees that can move through shadows and plants that feed on fear and doubt.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -3381,7 +3381,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3478,7 +3478,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A mountain that pierces the veil between dimensions, its peak touching the realm of pure shadow. A-rank climbers who reach the summit find themselves standing at the crossroads of infinite realities, where every choice creates new universes.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -3500,9 +3500,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -3599,7 +3599,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"The ultimate temple, a place where the boundaries between all realities dissolve and where the divine and shadow merge into a single, terrible truth. S-rank ascendants who enter must confront the nature of power itself and decide whether they are worthy to wield it.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -3611,7 +3611,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "rift-energy"],
+		theme_tags: ["ascendant-bureau", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -3719,7 +3719,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"An ancient dungeon carved from solid shadow stone, where the barriers between the mortal realm and the shadow dimension grow thin. This D-rank dungeon features shifting corridors that reconfigure themselves and walls that whisper forgotten secrets.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -3840,7 +3840,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A floating castle suspended in the void between dimensions, its towers constructed from crystallized regret and its foundations built upon broken promises. C-rank visitors must navigate anti-gravity chambers and reality-warping traps while avoiding the void remnants that patrol its halls.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -3863,7 +3863,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -3962,7 +3962,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A sprawling metropolis built within a pocket dimension where the laws of nature are merely suggestions. B-rank visitors must navigate through districts where gravity changes direction, time flows at different speeds, and the buildings themselves are alive and hungry.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -4087,7 +4087,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"An ancient forest that serves as a gateway to other dimensions, where the trees are doorways and the shadows are pathways to other worlds. A-rank explorers find themselves walking through groves that exist in multiple realities simultaneously.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -4095,7 +4095,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["forbidden", "hunter-bureau", "elite-tier"],
+		theme_tags: ["forbidden", "ascendant-bureau", "elite-tier"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -4105,7 +4105,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -4203,7 +4203,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A mountain that exists as the axis around which all dimensions turn, its peak touching the realm of pure creation and its foundations rooted in the void of nonexistence. S-rank climbers who ascend must face the fundamental truths of existence itself.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -4221,9 +4221,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4319,7 +4319,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -4436,7 +4436,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -4557,7 +4557,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -4579,9 +4579,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4677,7 +4677,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -4697,7 +4697,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -4794,7 +4794,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -4920,7 +4920,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -4937,7 +4937,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "mana-overflow", "rift-energy"],
+		theme_tags: ["ascendant-bureau", "mana-overflow", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -5045,7 +5045,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -5065,7 +5065,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5162,7 +5162,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -5282,7 +5282,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -5300,7 +5300,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -5398,7 +5398,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -5514,7 +5514,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -5625,12 +5625,12 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0047",
-		name: "Hidden Ancient Temple",
+		name: "Hidden pre-gate ruins",
 		type: "Mountain",
 		rank: "C",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -5752,7 +5752,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -5872,7 +5872,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -5895,9 +5895,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -5993,7 +5993,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -6018,7 +6018,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6115,7 +6115,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -6137,9 +6137,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6235,7 +6235,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -6351,7 +6351,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -6359,7 +6359,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "experimental"],
+		theme_tags: ["ascendant-bureau", "experimental"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6369,7 +6369,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -6467,7 +6467,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -6475,7 +6475,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["mana-overflow", "modern-warfare", "hunter-bureau"],
+		theme_tags: ["mana-overflow", "modern-warfare", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -6485,7 +6485,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
 				"Records indicate this was used by the original Clearing Party that neutralized the first S-Rank Gate on Korean soil.",
 			curse: "",
@@ -6583,7 +6583,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -6704,7 +6704,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -6821,7 +6821,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -6845,7 +6845,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -6941,7 +6941,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -7057,7 +7057,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -7070,7 +7070,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "mana-overflow"],
+		theme_tags: ["ascendant-bureau", "mana-overflow"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -7179,7 +7179,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -7300,7 +7300,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -7425,7 +7425,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -7541,7 +7541,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -7559,7 +7559,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
@@ -7657,7 +7657,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -7774,7 +7774,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -7801,7 +7801,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -7899,7 +7899,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -7917,7 +7917,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -8010,12 +8010,12 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0067",
-		name: "Forbidden Ancient Temple",
+		name: "Forbidden pre-gate ruins",
 		type: "Dungeon",
 		rank: "C",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -8040,7 +8040,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8136,7 +8136,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -8144,7 +8144,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["shadow-domain", "hunter-bureau"],
+		theme_tags: ["shadow-domain", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -8154,9 +8154,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8252,7 +8252,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -8270,7 +8270,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -8368,7 +8368,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -8484,7 +8484,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -8502,9 +8502,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8601,7 +8601,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -8722,7 +8722,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -8744,9 +8744,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -8842,7 +8842,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -8860,7 +8860,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"A-Rank appraiser Guild Master Ryker personally verified its authenticity before it entered general circulation.",
 			curse: "",
@@ -8958,7 +8958,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -9079,7 +9079,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -9195,7 +9195,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -9218,7 +9218,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -9317,7 +9317,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -9339,7 +9339,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -9437,7 +9437,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -9553,7 +9553,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -9561,7 +9561,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["classified", "hunter-bureau", "ancient-power"],
+		theme_tags: ["classified", "ascendant-bureau", "ancient-power"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -9571,9 +9571,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9669,7 +9669,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -9687,9 +9687,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -9785,7 +9785,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -9901,7 +9901,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -9921,7 +9921,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10017,7 +10017,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -10042,7 +10042,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -10138,7 +10138,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -10146,7 +10146,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "modern-warfare"],
+		theme_tags: ["ascendant-bureau", "modern-warfare"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -10254,7 +10254,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -10365,13 +10365,13 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0087",
-		name: "Sacred Ancient Temple",
+		name: "Sacred pre-gate ruins",
 		type: "City",
 		rank: "C",
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -10398,7 +10398,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -10497,7 +10497,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -10519,7 +10519,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
@@ -10617,7 +10617,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -10635,7 +10635,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -10733,7 +10733,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -10751,7 +10751,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -10849,7 +10849,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -10966,7 +10966,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -11087,7 +11087,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -11109,9 +11109,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11208,7 +11208,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -11328,7 +11328,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -11450,7 +11450,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -11570,7 +11570,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -11595,7 +11595,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11691,7 +11691,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -11711,7 +11711,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11808,7 +11808,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -11820,7 +11820,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "gate-zone", "shadow-domain"],
+		theme_tags: ["ascendant-bureau", "gate-zone", "shadow-domain"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -11832,7 +11832,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -11928,7 +11928,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -12049,7 +12049,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -12067,7 +12067,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
@@ -12165,7 +12165,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -12185,7 +12185,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12281,7 +12281,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -12299,9 +12299,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12397,7 +12397,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -12417,7 +12417,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -12514,7 +12514,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -12536,7 +12536,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -12634,7 +12634,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -12652,7 +12652,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -12745,12 +12745,12 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0107",
-		name: "Cursed Ancient Temple",
+		name: "Cursed pre-gate ruins",
 		type: "Mountain",
 		rank: "C",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -12866,7 +12866,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -12987,7 +12987,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -13108,7 +13108,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -13131,9 +13131,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13229,7 +13229,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -13247,7 +13247,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -13345,7 +13345,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -13466,7 +13466,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -13486,7 +13486,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Excavated from a pocket dimension that existed for exactly one hour before collapsing.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13583,7 +13583,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -13607,7 +13607,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13704,7 +13704,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -13728,7 +13728,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13824,7 +13824,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -13844,7 +13844,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Woven from the screams of a Gate Boss that achieved sentience moments before death.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -13940,7 +13940,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -13960,7 +13960,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14057,7 +14057,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -14086,7 +14086,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14183,7 +14183,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -14207,7 +14207,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14303,7 +14303,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -14326,9 +14326,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14425,7 +14425,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -14452,9 +14452,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14550,7 +14550,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -14568,7 +14568,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -14667,7 +14667,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -14691,7 +14691,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14787,7 +14787,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -14795,7 +14795,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["mana-overflow", "hunter-bureau"],
+		theme_tags: ["mana-overflow", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -14807,7 +14807,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -14903,7 +14903,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -15019,7 +15019,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -15044,7 +15044,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15135,13 +15135,13 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0127",
-		name: "Ancient Ancient Temple",
+		name: "Ancient pre-gate ruins",
 		type: "Dungeon",
 		rank: "C",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -15168,7 +15168,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -15267,7 +15267,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -15291,7 +15291,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15387,7 +15387,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -15405,9 +15405,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15503,7 +15503,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -15625,7 +15625,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -15654,7 +15654,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15750,7 +15750,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -15770,7 +15770,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -15866,7 +15866,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -15982,7 +15982,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -16098,7 +16098,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -16106,7 +16106,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["dungeon-core", "hunter-bureau", "rift-energy"],
+		theme_tags: ["dungeon-core", "ascendant-bureau", "rift-energy"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -16116,7 +16116,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -16215,7 +16215,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -16237,7 +16237,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -16335,7 +16335,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -16353,7 +16353,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"Archaeological evidence suggests ancient civilizations may have accessed similar power through ritual sacrifice.",
 			curse: "",
@@ -16451,7 +16451,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -16471,7 +16471,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16567,7 +16567,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -16592,7 +16592,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16689,7 +16689,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -16713,7 +16713,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16809,7 +16809,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -16829,7 +16829,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Reconstructed from fragments scattered across seven different C-Rank dungeons.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -16925,7 +16925,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -17046,7 +17046,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -17167,7 +17167,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -17185,7 +17185,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -17284,7 +17284,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -17306,7 +17306,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Field reports indicate prolonged exposure causes minor spatial distortions in a three-meter radius.",
 			curse: "",
@@ -17405,7 +17405,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -17429,7 +17429,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17520,12 +17520,12 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0147",
-		name: "Primordial Ancient Temple",
+		name: "Primordial pre-gate ruins",
 		type: "City",
 		rank: "C",
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -17545,7 +17545,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17641,7 +17641,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -17661,7 +17661,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17757,7 +17757,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -17780,9 +17780,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -17878,7 +17878,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -17994,7 +17994,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -18014,7 +18014,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18110,7 +18110,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -18128,7 +18128,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -18226,7 +18226,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -18239,7 +18239,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "black-market", "guild-ops"],
+		theme_tags: ["ascendant-bureau", "black-market", "guild-ops"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -18347,7 +18347,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -18367,7 +18367,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18463,7 +18463,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -18481,7 +18481,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -18580,7 +18580,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -18700,7 +18700,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -18725,7 +18725,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -18822,7 +18822,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -18947,7 +18947,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -18965,9 +18965,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19063,7 +19063,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -19184,7 +19184,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -19207,7 +19207,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -19306,7 +19306,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -19426,7 +19426,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -19444,9 +19444,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19543,7 +19543,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -19567,7 +19567,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19663,7 +19663,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -19779,7 +19779,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -19799,7 +19799,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -19890,13 +19890,13 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0167",
-		name: "Supreme Ancient Temple",
+		name: "Supreme pre-gate ruins",
 		type: "Mountain",
 		rank: "C",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -19920,7 +19920,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20016,7 +20016,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -20036,7 +20036,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20132,7 +20132,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -20157,7 +20157,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Crystallized from raw mana overflow during the catastrophic Seoul Gate Breach of Year 7.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20253,7 +20253,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -20278,7 +20278,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20374,7 +20374,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -20490,7 +20490,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -20508,9 +20508,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -20607,7 +20607,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -20727,7 +20727,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -20844,7 +20844,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -20866,7 +20866,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -20965,7 +20965,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -21090,7 +21090,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -21113,7 +21113,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -21211,7 +21211,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -21332,7 +21332,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -21340,7 +21340,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["modern-warfare", "post-awakening", "hunter-bureau"],
+		theme_tags: ["modern-warfare", "post-awakening", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -21350,9 +21350,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21448,7 +21448,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -21468,7 +21468,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Gifted by a dying Regent as payment for a debt that predates human civilization.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21564,7 +21564,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -21589,7 +21589,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21685,7 +21685,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -21703,9 +21703,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21801,7 +21801,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -21821,7 +21821,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Unearthed by a mining Guild operating in the mana-saturated quarries of the Australian Outback.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -21917,7 +21917,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -21940,9 +21940,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22038,7 +22038,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -22154,7 +22154,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -22270,13 +22270,13 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0187",
-		name: "Legendary Ancient Temple",
+		name: "Legendary pre-gate ruins",
 		type: "Dungeon",
 		rank: "C",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -22293,7 +22293,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["rift-energy", "post-awakening", "hunter-bureau"],
+		theme_tags: ["rift-energy", "post-awakening", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -22303,7 +22303,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -22402,7 +22402,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -22522,7 +22522,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -22547,7 +22547,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Distilled from the ambient mana of a Red Gate that refused to close for seventeen days.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22643,7 +22643,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -22661,9 +22661,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -22759,7 +22759,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -22876,7 +22876,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -23001,7 +23001,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -23117,7 +23117,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -23233,7 +23233,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -23354,7 +23354,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -23476,7 +23476,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -23500,7 +23500,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Salvaged from the corpse of an S-Rank anomaly that breached containment in the European Dead Zone.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -23596,7 +23596,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -23717,7 +23717,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -23834,7 +23834,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -23959,7 +23959,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -23979,7 +23979,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24075,7 +24075,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -24196,7 +24196,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -24219,7 +24219,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -24317,7 +24317,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -24342,7 +24342,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Translated from forbidden shadow-language inscriptions found in a Regent's throne room.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24438,7 +24438,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -24554,7 +24554,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -24670,13 +24670,13 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0207",
-		name: "Mythic Ancient Temple",
+		name: "Mythic pre-gate ruins",
 		type: "City",
 		rank: "C",
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -24700,7 +24700,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Extracted from the dimensional residue of a collapsed B-Rank Gate in downtown Seoul.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -24796,7 +24796,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -24814,7 +24814,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
 				"Historical analysis suggests this predates the modern Gate system by several centuries.",
 			curse: "",
@@ -24912,7 +24912,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -25028,7 +25028,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -25053,7 +25053,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Manifested spontaneously during a double-dungeon event in the American Midwest.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25150,7 +25150,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -25275,7 +25275,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary castle that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -25288,7 +25288,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "regent-era"],
+		theme_tags: ["ascendant-bureau", "regent-era"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25300,7 +25300,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25396,7 +25396,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -25414,9 +25414,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25512,7 +25512,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary forest that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -25537,7 +25537,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Discovered embedded in the spine of a petrified World Tree fragment found in Scandinavia.",
 			history:
-				"First documented during the Second Awakening Wave, when Hunters worldwide reported spontaneous power surges.",
+				"First documented during the Second Awakening Wave, when Ascendants worldwide reported spontaneous power surges.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -25633,7 +25633,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -25656,7 +25656,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -25755,7 +25755,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -25772,7 +25772,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["elite-tier", "shadow-domain", "hunter-bureau"],
+		theme_tags: ["elite-tier", "shadow-domain", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -25782,7 +25782,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -25880,7 +25880,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "C",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -26001,7 +26001,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary castle that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -26024,7 +26024,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -26123,7 +26123,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -26145,7 +26145,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Reverse-engineered from Architect combat data recovered by the Hunter Bureau's R&D division.",
+				"Reverse-engineered from Architect combat data recovered by the Ascendant Bureau's R&D division.",
 			history:
 				"Multiple Guilds have attempted to replicate this; all reproductions have proven inferior to the original.",
 			curse: "",
@@ -26243,7 +26243,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary forest that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -26268,7 +26268,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Created by an unnamed Awakened blacksmith who fed their own life force into the forge.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26365,7 +26365,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary mountain that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -26387,7 +26387,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Found clutched in the hand of a petrified E-Rank Hunter who had been missing for three years.",
+				"Found clutched in the hand of a petrified E-Rank Ascendant who had been missing for three years.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -26486,7 +26486,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -26606,7 +26606,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -26624,7 +26624,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -26722,7 +26722,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary castle that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -26742,7 +26742,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Confiscated from a black-market dealer operating in the shadow districts of Manila.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26838,7 +26838,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary city that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -26863,7 +26863,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Decoded from ancient sigil-stones found beneath the ruins of a pre-Awakening temple in Kyoto.",
 			history:
-				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Hunter warfare.",
+				"This was one of twelve artifacts recovered from the infamous Kamish Raid that changed modern Ascendant warfare.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -26959,7 +26959,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary forest that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -26979,7 +26979,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"The European Hunter Council maintains a standing bounty for information regarding its original creator.",
+				"The European Ascendant Council maintains a standing bounty for information regarding its original creator.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27070,12 +27070,12 @@ export const locations: CompendiumLocation[] = [
 		rarity: "common",
 		cr: "0",
 		id: "location-0227",
-		name: "Divine Ancient Temple",
+		name: "Divine pre-gate ruins",
 		type: "Mountain",
 		rank: "C",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -27093,7 +27093,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Recovered from the personal vault of a National-Level Hunter who vanished during the First Calamity.",
+				"Recovered from the personal vault of a National-Level Ascendant who vanished during the First Calamity.",
 			history:
 				"Combat logs from the Busan Incident show this was used to hold a Gate breach for forty-seven minutes.",
 			curse: "",
@@ -27191,7 +27191,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary temple that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -27307,7 +27307,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -27325,7 +27325,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"The first recorded use caused a localized reality fracture that took a specialized team forty hours to repair.",
 			curse: "",
@@ -27424,7 +27424,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary castle that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -27446,9 +27446,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27545,7 +27545,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -27562,7 +27562,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["post-awakening", "hunter-bureau"],
+		theme_tags: ["post-awakening", "ascendant-bureau"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -27574,7 +27574,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Born from a Order glitch that briefly merged two overlapping Gate instances.",
 			history:
-				"Originally developed as a countermeasure against Regent-class entities during the Sovereignty Wars.",
+				"Originally developed as a countermeasure against Regent-class entities during the Regent Wars.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27671,7 +27671,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary forest that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -27698,9 +27698,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"The Japanese Hunter Association attempted to classify this as a national treasure to prevent export.",
+				"The Japanese Ascendant Bureau attempted to classify this as a national treasure to prevent export.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27796,7 +27796,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -27816,7 +27816,7 @@ export const locations: CompendiumLocation[] = [
 			origin:
 				"Formed naturally in a mana vein so dense that reality itself began to crystallize around it.",
 			history:
-				"The Hunter Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
+				"The Ascendant Bureau classified this as a Level-4 threat vector before it was repurposed for field operations.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -27912,7 +27912,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary temple that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -27930,7 +27930,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Leaked through a micro-rift that appeared inside the International Hunter Conference hall.",
+				"Leaked through a micro-rift that appeared inside the International Ascendant Conference hall.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -28028,7 +28028,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "S",
 		description:
 			"A legendary dungeon that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -28051,9 +28051,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
-				"The American Hunter Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
+				"The American Ascendant Bureau's Project: Starfall attempted to weaponize this before the program was defunded.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -28149,7 +28149,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "D",
 		description:
 			"A legendary castle that exists in the abyssal realm. This D rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -28271,7 +28271,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary city that exists in the abyssal realm. This C rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -28293,7 +28293,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Pulled from the dreams of a comatose S-Rank Hunter by a team of psychic-type Awakened.",
+				"Pulled from the dreams of a comatose S-Rank Ascendant by a team of psychic-type Awakened.",
 			history:
 				"This was the subject of a bidding war between three S-Rank Guilds that nearly escalated to armed conflict.",
 			curse: "",
@@ -28391,7 +28391,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary forest that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts", "Abyssal Horrors"],
+		encounters: ["Shadow anomaly", "Void Beasts", "Abyssal Horrors"],
 		treasures: [
 			"Shadow Items",
 			"Ancient Artifacts",
@@ -28414,7 +28414,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Stolen from a Guild vault during the Three-Day War between rival Korean Hunter factions.",
+				"Stolen from a Guild vault during the Three-Day War between rival Korean Ascendant factions.",
 			history:
 				"This technique was banned by the International Guild Association for eighteen months before being reclassified.",
 			curse: "",
@@ -28512,7 +28512,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "A",
 		description:
 			"A legendary mountain that exists in the abyssal realm. This A rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts"],
 	},
 	{
@@ -28530,7 +28530,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
 				"Intelligence reports link this to the Shadow Regent's army, though the connection remains unconfirmed.",
 			curse: "",
@@ -28629,7 +28629,7 @@ export const locations: CompendiumLocation[] = [
 		description:
 			"A legendary temple that exists in the abyssal realm. This S rank location is filled with powerful enemies and valuable treasures.",
 		encounters: [
-			"Shadow Demons",
+			"Shadow anomaly",
 			"Void Beasts",
 			"Abyssal Horrors",
 			"Demonic Knights",
@@ -28641,7 +28641,7 @@ export const locations: CompendiumLocation[] = [
 		updated_at: "2024-04-06",
 		source_kind: "Warden Authority",
 		source_name: "Rift Compendium",
-		theme_tags: ["hunter-bureau", "classified"],
+		theme_tags: ["ascendant-bureau", "classified"],
 		generated_reason: "Direct Rift Extraction",
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
@@ -28749,7 +28749,7 @@ export const locations: CompendiumLocation[] = [
 		rank: "B",
 		description:
 			"A legendary city that exists in the abyssal realm. This B rank location is filled with powerful enemies and valuable treasures.",
-		encounters: ["Shadow Demons", "Void Beasts"],
+		encounters: ["Shadow anomaly", "Void Beasts"],
 		treasures: ["Shadow Items", "Ancient Artifacts", "Divine Relics"],
 	},
 	{
@@ -28767,7 +28767,7 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Synthesized in the clandestine laboratories beneath the Chinese Hunter Bureau headquarters.",
+				"Synthesized in the clandestine laboratories beneath the Chinese Ascendant Bureau headquarters.",
 			history:
 				"Originally thought to be a failed experiment, it was rediscovered when a junior researcher noticed anomalous readings.",
 			curse: "",
@@ -29021,9 +29021,9 @@ export const locations: CompendiumLocation[] = [
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
 			origin:
-				"Emerged from the Hunter Association's classified Project: Lattice Break experiments.",
+				"Emerged from the Ascendant Bureau's classified Project: Lattice Break experiments.",
 			history:
-				"Guild archives show at least three S-Rank Hunters have died attempting to master its full potential.",
+				"Guild archives show at least three S-Rank Ascendants have died attempting to master its full potential.",
 			curse: "",
 			personality: "",
 			current_owner: "",
@@ -29123,7 +29123,7 @@ export const locations: CompendiumLocation[] = [
 			"Supreme Abyssal Deity",
 			"Eternal Shadow Council",
 			"Void God Generals",
-			"Abyssal Demon Lords",
+			"Abyssal Regent of Dreads",
 			"Shadow Titan Guards",
 		],
 		treasures: [

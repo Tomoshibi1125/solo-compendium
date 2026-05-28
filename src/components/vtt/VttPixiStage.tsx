@@ -6,6 +6,7 @@ import {
 	Graphics,
 	Sprite,
 	Text,
+	Texture,
 	Ticker,
 } from "pixi.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -74,6 +75,8 @@ type PlacedToken = {
 		opacity?: number;
 		blendMode?: TokenBlendMode;
 	};
+	/** Misty Pearl A2 — stratum id the token currently occupies. */
+	level?: string;
 };
 
 type SceneLike = {
@@ -87,6 +90,20 @@ type SceneLike = {
 	fogOfWar: boolean;
 	fogData?: boolean[][];
 	tokenVisionRevealsFog?: boolean;
+	/** Misty Pearl B4 polish — per-scene animated tile overlays. */
+	animatedTiles?: Array<{
+		id: string;
+		src: string;
+		x: number;
+		y: number;
+		width: number;
+		height: number;
+		loop: boolean;
+		level?: string;
+		opacity?: number;
+	}>;
+	/** Misty Pearl A2 — stratum metadata (subset used by gating). */
+	levels?: Array<{ id: string; wallIds: string[]; lightIds: string[] }>;
 };
 
 type VttPixiStageProps = {
@@ -121,6 +138,12 @@ type VttPixiStageProps = {
 	onStageReady?: (app: Application, effectsContainer: Container) => void;
 	/** Called when Pixi fails to initialize after all retry attempts */
 	onInitError?: (err: unknown) => void;
+	/**
+	 * Misty Pearl A2 — active stratum id. When set, tokens whose `level`
+	 * differs render at reduced opacity so the Warden can focus on one
+	 * floor at a time. Null = single-stratum / no gating (back-compat).
+	 */
+	activeStratumId?: string | null;
 };
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
@@ -240,6 +263,7 @@ export function VttPixiStage({
 	weather = "none",
 	onStageReady,
 	onInitError,
+	activeStratumId = null,
 }: VttPixiStageProps) {
 	const canvasHostRef = useRef<HTMLElement | null>(null);
 	const appRef = useRef<Application | null>(null);
@@ -758,18 +782,57 @@ export function VttPixiStage({
 		const renderBackground = async () => {
 			bg.removeChildren();
 			if (!scene?.backgroundImage || !effectiveVisibleLayers[0]) return;
+			const backgroundTransform = getVttBackgroundTransform({
+				sceneWidth: scene.width ?? 0,
+				sceneHeight: scene.height ?? 0,
+				gridSize,
+				zoom,
+				backgroundScale: scene.backgroundScale,
+				backgroundOffsetX: scene.backgroundOffsetX,
+				backgroundOffsetY: scene.backgroundOffsetY,
+			});
+			// Misty Pearl B4 — animated / video background branch.
+			// Pixi v8 accepts a `<video>` element as a texture source.
+			const isVideo = /\.(mp4|webm|ogv|mov)(\?|#|$)/i.test(
+				scene.backgroundImage,
+			);
 			try {
+				if (isVideo) {
+					const video = document.createElement("video");
+					video.src = scene.backgroundImage;
+					video.loop = true;
+					video.muted = true;
+					video.playsInline = true;
+					video.autoplay = true;
+					video.crossOrigin = "anonymous";
+					// Browser autoplay policies require muted + a user gesture.
+					// We're already muted; play() may still reject — we swallow.
+					video.play().catch(() => {});
+					await new Promise<void>((resolve) => {
+						const onLoaded = () => {
+							video.removeEventListener("loadeddata", onLoaded);
+							resolve();
+						};
+						video.addEventListener("loadeddata", onLoaded);
+						// Safety timeout: don't hang the renderer if metadata stalls.
+						window.setTimeout(resolve, 4000);
+					});
+					if (!renderActive) return;
+					const videoTexture = Texture.from(video);
+					const sprite = Sprite.from(videoTexture);
+					sprite.x = backgroundTransform.offsetXPx;
+					sprite.y = backgroundTransform.offsetYPx;
+					sprite.width = backgroundTransform.imageWidthPx;
+					sprite.height = backgroundTransform.imageHeightPx;
+					sprite.alpha = 0.95;
+					bg.addChild(sprite);
+					if (canvasHostRef.current) {
+						canvasHostRef.current.dataset.bgLoaded = "video";
+					}
+					return;
+				}
 				const texture = await Assets.load(scene.backgroundImage);
 				if (!renderActive) return;
-				const backgroundTransform = getVttBackgroundTransform({
-					sceneWidth: scene.width ?? 0,
-					sceneHeight: scene.height ?? 0,
-					gridSize,
-					zoom,
-					backgroundScale: scene.backgroundScale,
-					backgroundOffsetX: scene.backgroundOffsetX,
-					backgroundOffsetY: scene.backgroundOffsetY,
-				});
 				const sprite = Sprite.from(texture as never);
 				sprite.x = backgroundTransform.offsetXPx;
 				sprite.y = backgroundTransform.offsetYPx;
@@ -782,6 +845,58 @@ export function VttPixiStage({
 				}
 			} catch (err) {
 				console.warn("[VTT] Failed to load background image:", err);
+			}
+		};
+
+		// Misty Pearl B4 polish — animated tile overlays. Sit above the
+		// background but below tokens. Per-stratum alpha gating mirrors
+		// the wall/light/token logic in A2.
+		const renderAnimatedTiles = async () => {
+			const tiles = scene?.animatedTiles ?? [];
+			if (tiles.length === 0) return;
+			for (const tile of tiles) {
+				const isVideo = /\.(mp4|webm|ogv|mov)(\?|#|$)/i.test(tile.src);
+				try {
+					let texture: unknown;
+					if (isVideo) {
+						const video = document.createElement("video");
+						video.src = tile.src;
+						video.loop = tile.loop;
+						video.muted = true;
+						video.playsInline = true;
+						video.autoplay = true;
+						video.crossOrigin = "anonymous";
+						video.play().catch(() => {});
+						await new Promise<void>((resolve) => {
+							const onLoaded = () => {
+								video.removeEventListener("loadeddata", onLoaded);
+								resolve();
+							};
+							video.addEventListener("loadeddata", onLoaded);
+							window.setTimeout(resolve, 4000);
+						});
+						if (!renderActive) return;
+						texture = Texture.from(video);
+					} else {
+						texture = await Assets.load(tile.src);
+						if (!renderActive) return;
+					}
+					const sprite = Sprite.from(texture as never);
+					sprite.x = tile.x * zoom;
+					sprite.y = tile.y * zoom;
+					sprite.width = tile.width * zoom;
+					sprite.height = tile.height * zoom;
+					const stratumDim =
+						tile.level &&
+						activeStratumId &&
+						tile.level !== activeStratumId
+							? 0.25
+							: 1;
+					sprite.alpha = (tile.opacity ?? 1) * stratumDim;
+					bg.addChild(sprite);
+				} catch (err) {
+					console.warn("[VTT] Failed to load animated tile:", err);
+				}
 			}
 		};
 
@@ -1040,26 +1155,54 @@ export function VttPixiStage({
 			wallsLayer.removeChildren();
 			if (!walls || walls.length === 0) return;
 
-			const wg = new Graphics();
-			// Walls are drawn in blueish-grey for Warden, mostly invisible for players but we draw them for both right now
-			// so players know why they can't see past it (or we can hide for players). Let's make them subtle for players.
 			const wallColor = isWarden ? 0xef4444 : 0x000000;
-			const wallAlpha = isWarden ? 0.8 : 0.3;
+			const baseAlpha = isWarden ? 0.8 : 0.3;
+			const dimAlpha = baseAlpha * 0.25;
 
-			for (const wall of walls) {
-				wg.moveTo(wall.x1 * gridSize * zoom, wall.y1 * gridSize * zoom);
-				wg.lineTo(wall.x2 * gridSize * zoom, wall.y2 * gridSize * zoom);
+			// Misty Pearl A2 — split walls into active-stratum / inactive-
+			// stratum buckets so off-floor walls render dimmed. Falls back
+			// to a single graphics blob for legacy single-stratum scenes.
+			const levels = (scene as { levels?: Array<{ id: string; wallIds: string[] }> })
+				?.levels;
+			const wallStratum = new Map<string, string>();
+			if (levels && levels.length > 0 && activeStratumId) {
+				for (const level of levels) {
+					for (const wallId of level.wallIds) {
+						wallStratum.set(wallId, level.id);
+					}
+				}
 			}
 
-			wg.stroke({
-				width: 4,
-				color: wallColor,
-				alpha: wallAlpha,
-				join: "miter",
-				cap: "square",
-			});
+			const drawBucket = (bucket: typeof walls, alpha: number) => {
+				if (bucket.length === 0) return;
+				const wg = new Graphics();
+				for (const wall of bucket) {
+					wg.moveTo(wall.x1 * gridSize * zoom, wall.y1 * gridSize * zoom);
+					wg.lineTo(wall.x2 * gridSize * zoom, wall.y2 * gridSize * zoom);
+				}
+				wg.stroke({
+					width: 4,
+					color: wallColor,
+					alpha,
+					join: "miter",
+					cap: "square",
+				});
+				wallsLayer.addChild(wg);
+			};
 
-			wallsLayer.addChild(wg);
+			if (wallStratum.size === 0) {
+				drawBucket(walls, baseAlpha);
+				return;
+			}
+			const active: typeof walls = [];
+			const inactive: typeof walls = [];
+			for (const wall of walls) {
+				const stratum = wallStratum.get(wall.id);
+				if (stratum && stratum !== activeStratumId) inactive.push(wall);
+				else active.push(wall);
+			}
+			drawBucket(inactive, dimAlpha);
+			drawBucket(active, baseAlpha);
 		};
 
 		const renderFog = () => {
@@ -1102,11 +1245,27 @@ export function VttPixiStage({
 			const step = gridSize * zoom;
 			const visibilityWalls = scaleWallsForPixiVisibility(walls, step);
 
+			// Misty Pearl A2 — per-stratum gating for lights.
+			const levels = (
+				scene as { levels?: Array<{ id: string; lightIds: string[] }> }
+			)?.levels;
+			const lightStratum = new Map<string, string>();
+			if (levels && levels.length > 0 && activeStratumId) {
+				for (const level of levels) {
+					for (const lightId of level.lightIds) {
+						lightStratum.set(lightId, level.id);
+					}
+				}
+			}
+
 			for (const light of lightSources) {
 				const cx = (light.x + 0.5) * step;
 				const cy = (light.y + 0.5) * step;
 				const rBright = light.brightRadius * step;
 				const rDim = light.dimRadius * step;
+				const stratum = lightStratum.get(light.id);
+				const stratumAlpha =
+					stratum && activeStratumId && stratum !== activeStratumId ? 0.25 : 1;
 
 				const vision = {
 					tokenId: light.id,
@@ -1128,14 +1287,14 @@ export function VttPixiStage({
 				lightG.circle(cx, cy, rDim);
 				lightG.fill({
 					color: Number(light.color.replace("#", "0x")),
-					alpha: light.intensity * 0.3,
+					alpha: light.intensity * 0.3 * stratumAlpha,
 				});
 
 				// Draw bright light
 				lightG.circle(cx, cy, rBright);
 				lightG.fill({
 					color: Number(light.color.replace("#", "0x")),
-					alpha: light.intensity * 0.7,
+					alpha: light.intensity * 0.7 * stratumAlpha,
 				});
 
 				if (polygon.vertices.length > 0) {
@@ -1221,6 +1380,12 @@ export function VttPixiStage({
 				container.zIndex = token.layer * 10 + 10;
 				container.eventMode = "static";
 				container.cursor = token.locked ? "default" : "pointer";
+				// Misty Pearl A2 — Strata gating. Tokens on inactive strata
+				// render dimmed so the Warden can focus on one floor. Null
+				// activeStratumId or tokens without a level fall through.
+				if (activeStratumId && token.level && token.level !== activeStratumId) {
+					container.alpha = 0.25;
+				}
 
 				const tokenBg = new Graphics();
 				if (!isOverlayToken) {
@@ -1322,7 +1487,9 @@ export function VttPixiStage({
 				if (!isOverlayToken) {
 					const showSelectedBars =
 						isSelected || activeInitiativeTokenId === token.id;
-					// Only show bars if token is selected/hovered (or always if Warden config dictates, but for now selected)
+					// D2: bar visibility is config-driven — "always" shows for
+					// everyone, "owner" shows to the token's owner, Warden always
+					// sees bars, and otherwise bars appear on selection/active turn.
 					const globalBarVisible =
 						isWarden ||
 						token.barVisibility === "always" ||
@@ -1504,6 +1671,7 @@ export function VttPixiStage({
 		};
 
 		void renderBackground();
+		void renderAnimatedTiles();
 		renderWeather();
 		renderGrid();
 		renderWalls();
@@ -1538,6 +1706,7 @@ export function VttPixiStage({
 		updateToken,
 		zoom,
 		fx.particleCount,
+		activeStratumId,
 	]);
 
 	useEffect(() => {

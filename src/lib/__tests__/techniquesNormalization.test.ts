@@ -86,10 +86,31 @@ describe("techniques data normalization", () => {
 		expect(duplicates).toEqual([]);
 	});
 
-	it("supplemental techniques declare explicit class eligibility", () => {
+	it("supplemental techniques declare explicit class eligibility (or empty for path-grant-only)", () => {
 		expect(techniques_supplemental.length).toBeGreaterThan(0);
 		for (const technique of techniques_supplemental) {
-			expect(technique.classes?.length ?? 0, technique.id).toBeGreaterThan(0);
+			expect(Array.isArray(technique.classes), technique.id).toBe(true);
+		}
+	});
+
+	it("no technique classes[] contains a full-caster or pact-caster job that has techniques:false", () => {
+		const CASTER_JOBS_WITHOUT_TECHNIQUES = [
+			"Mage",
+			"Esper",
+			"Revenant",
+			"Summoner",
+			"Idol",
+			"Herald",
+			"Contractor",
+		];
+		for (const technique of techniques) {
+			const classes = Array.isArray(technique.classes) ? technique.classes : [];
+			for (const caster of CASTER_JOBS_WITHOUT_TECHNIQUES) {
+				expect(
+					classes.includes(caster),
+					`Technique ${technique.id} (${technique.name}) wrongly lists ${caster} in classes[]; full/pact-casters reach techniques only via PATH_ABILITY_GRANTS`,
+				).toBe(false);
+			}
 		}
 	});
 

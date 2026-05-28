@@ -259,6 +259,19 @@ describe("Spell catalog — required fields", () => {
 		expect(missingClasses.map((spell) => spell.id)).toEqual([]);
 	});
 
+	it("no spell classes[] contains a martial-only job", () => {
+		const MARTIAL_ONLY_JOBS = ["Destroyer", "Berserker", "Assassin", "Striker"];
+		for (const spell of spells) {
+			const classes = Array.isArray(spell.classes) ? spell.classes : [];
+			for (const martial of MARTIAL_ONLY_JOBS) {
+				expect(
+					classes.includes(martial),
+					`Spell ${spell.id} (${spell.name}) wrongly lists ${martial} in classes[]; martial-only jobs reach spells only via PATH_ABILITY_GRANTS / rune absorption`,
+				).toBe(false);
+			}
+		}
+	});
+
 	it("every spell's components object declares verbal/somatic/material booleans", () => {
 		for (const spell of spells) {
 			const components = spell.components as

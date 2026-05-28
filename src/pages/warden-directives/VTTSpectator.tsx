@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
  *
  *   - No Warden drawers / token library / AI pad / asset browser
  *   - Respects fog of war
- *   - Hides Warden-only drawings / the GM layer
+ *   - Hides Warden-only drawings / the Warden layer
  *   - Still shows pings and shared drawings
  *
  * Follows whichever scene the live campaign is currently on.
@@ -184,7 +184,7 @@ const VTTSpectator = () => {
 											0: true,
 											1: true,
 											2: true,
-											3: false, // never render GM layer to spectators
+											3: false, // never render Warden layer to spectators
 										}}
 										activeTokenId={null}
 										setActiveTokenId={() => undefined}

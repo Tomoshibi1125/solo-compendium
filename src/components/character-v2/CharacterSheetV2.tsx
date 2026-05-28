@@ -4,10 +4,14 @@ import {
 	Copy,
 	Crown,
 	Ghost,
+	Palette,
+	Printer,
+	Redo2,
 	Shield,
 	Sparkles,
 	Sun,
 	Swords,
+	Undo2,
 	Wand2,
 	Zap,
 } from "lucide-react";
@@ -23,20 +27,33 @@ import { CharacterDetailRollsPanel } from "@/components/character/CharacterDetai
 import { CharacterEditDialog } from "@/components/character/CharacterEditDialog";
 import { CharacterExtrasPanel } from "@/components/character/CharacterExtrasPanel";
 import { CurrencyManager } from "@/components/character/CurrencyManager";
+import { CustomActionsList } from "@/components/character/CustomActionsList";
+import { CustomSkillsList } from "@/components/character/CustomSkillsList";
+import { VehiclesPanel } from "@/components/character/VehiclesPanel";
 import { EquipmentList } from "@/components/character/EquipmentList";
 import { ExportDialog } from "@/components/character/ExportDialog";
 import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
 import { FeaturesList } from "@/components/character/FeaturesList";
 import { HomebrewFeatureApplicator } from "@/components/character/HomebrewFeatureApplicator";
+import { InlineSectionNote } from "@/components/character/InlineSectionNote";
+import { JobResourcePools } from "@/components/character/JobResourcePools";
 import { JournalPanel } from "@/components/character/JournalPanel";
+import { LanguagesPanel } from "@/components/character/LanguagesPanel";
 import { LevelUpWizardModal } from "@/components/character/LevelUpWizardModal";
+import { LimitedUseAggregator } from "@/components/character/LimitedUseAggregator";
+import { PathFeaturesDisplay } from "@/components/character/PathFeaturesDisplay";
 import { RegentFeaturesDisplay } from "@/components/character/RegentFeaturesDisplay";
 import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
 import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
 import { RunesList } from "@/components/character/RunesList";
 import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
+import {
+	SheetThemeDialog,
+	type SheetThemePreview,
+} from "@/components/character/SheetThemeDialog";
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { TattoosList } from "@/components/character/TattoosList";
+import { ToolProficienciesPanel } from "@/components/character/ToolProficienciesPanel";
 import { AbilitiesPanel } from "@/components/character-v2/AbilitiesPanel";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
@@ -62,6 +79,11 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+	buildSheetThemeStyle,
+	DEFAULT_SHEET_THEME_ID,
+	getSheetTheme,
+} from "@/data/sheetThemes";
 import { useCharacterPageModel } from "@/hooks/useCharacterPageModel";
 import { type RegentUnlock, useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import type { Json } from "@/integrations/supabase/types";
@@ -70,7 +92,11 @@ import {
 	getProficiencyBonus,
 } from "@/lib/characterCalculations";
 import { calculateTotalTempHP } from "@/lib/characterResources";
-import { getXPProgress, type LevelingType } from "@/lib/experience";
+import {
+	checkLevelUpEligibility,
+	getXPProgress,
+	type LevelingType,
+} from "@/lib/experience";
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { cn } from "@/lib/utils";
 import { QuestLog } from "@/pages/ascendant-tools/QuestLog";
@@ -116,6 +142,7 @@ export default function CharacterSheetV2() {
 		ascendantTools,
 		concentration,
 		deathSaves,
+		undoRedo,
 	} = pm;
 
 	const {
@@ -138,6 +165,55 @@ export default function CharacterSheetV2() {
 
 	// Scroll Header Visibility State
 	const [showScrollHeader, setShowScrollHeader] = useState(false);
+	const [themeDialogOpen, setThemeDialogOpen] = useState(false);
+	// Q1 of Round 3 — live theme preview. Overrides the persisted
+	// character theme values while the SheetThemeDialog is open.
+	const [themePreview, setThemePreview] = useState<SheetThemePreview | null>(
+		null,
+	);
+
+	// R2 of Round 2 — auto-push character snapshots so Undo/Redo has a
+	// trail. We push on every `character` ref change (post update success).
+	useEffect(() => {
+		if (character && undoRedo) {
+			undoRedo.pushState(character, "Auto-snapshot");
+		}
+		// `character` reference identity changes on each successful update;
+		// `undoRedo.pushState` is stable per useCallback.
+	}, [character, undoRedo]);
+
+	// R2 — global Ctrl+Z / Ctrl+Shift+Z shortcuts inside the sheet.
+	useEffect(() => {
+		if (!undoRedo) return;
+		const handler = (e: KeyboardEvent) => {
+			const target = e.target as HTMLElement | null;
+			// Skip when typing in an input/textarea/contenteditable.
+			if (
+				target &&
+				(target.tagName === "INPUT" ||
+					target.tagName === "TEXTAREA" ||
+					target.isContentEditable)
+			) {
+				return;
+			}
+			const isMod = e.ctrlKey || e.metaKey;
+			if (!isMod || e.key !== "z" && e.key !== "Z") return;
+			e.preventDefault();
+			if (e.shiftKey) {
+				const restored = undoRedo.redo();
+				if (restored) {
+					updateCharacter.mutate({ id: restored.id, data: restored });
+				}
+			} else {
+				const restored = undoRedo.undo();
+				if (restored) {
+					updateCharacter.mutate({ id: restored.id, data: restored });
+				}
+			}
+		};
+		window.addEventListener("keydown", handler);
+		return () => window.removeEventListener("keydown", handler);
+	}, [undoRedo, updateCharacter]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -183,6 +259,17 @@ export default function CharacterSheetV2() {
 	const xpProgress = character
 		? getXPProgress(character.experience || 0)
 		: { current: 0, next: 300, percent: 0 };
+	// P1.11: XP threshold eligibility — surface a "Level Up Available" cue
+	// when accumulated XP has crossed the next-level threshold (XP mode only).
+	// Does not auto-promote — the player still gates the decision via the
+	// Level Up wizard, matching DDB behavior.
+	const levelUpEligibility = character
+		? checkLevelUpEligibility(
+				character.level || 1,
+				character.experience || 0,
+				levelingType,
+			)
+		: { canLevelUp: false, availableLevel: 1, currentLevel: 1, xpToNext: 0 };
 
 	if (isLoading) {
 		return (
@@ -394,12 +481,20 @@ export default function CharacterSheetV2() {
 
 	// We pass down specific native actions/elements rather than taking them from props!
 	const actions = (
-		<ActionsList
-			characterId={character.id}
-			campaignId={campaignId ?? undefined}
-			onSelectDetail={(detail) => onSelectDetail(detail, "Action", Swords)}
-			attacksPerAction={stats.attacksPerAction}
-		/>
+		<div className="space-y-6">
+			<ActionsList
+				characterId={character.id}
+				campaignId={campaignId ?? undefined}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Action", Swords)}
+				attacksPerAction={stats.attacksPerAction}
+			/>
+			<CustomActionsList
+				characterId={character.id}
+				stats={stats.calculatedStats}
+				abilities={stats.finalAbilities}
+				readOnly={isReadOnly}
+			/>
+		</div>
 	);
 	const powers = (
 		<AbilitiesPanel
@@ -411,11 +506,24 @@ export default function CharacterSheetV2() {
 			}
 		/>
 	);
+	const sectionNotes = sheetController.state.ui.sectionNotes || {};
+	const handleSectionNote = (
+		section: Parameters<typeof sheetController.setSectionNote>[0],
+		value: string,
+	) => sheetController.setSectionNote(section, value);
+
 	const inventory = (
 		<div className="space-y-6">
 			<EquipmentList
 				characterId={character.id}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Item", Shield)}
+			/>
+			<InlineSectionNote
+				section="equipment"
+				label="Inventory"
+				value={sectionNotes.equipment ?? ""}
+				onChange={(v) => handleSectionNote("equipment", v)}
+				readOnly={isReadOnly}
 			/>
 			<TattoosList
 				characterId={character.id}
@@ -430,8 +538,19 @@ export default function CharacterSheetV2() {
 				characterId={character.id}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Feature", Zap)}
 			/>
+			<InlineSectionNote
+				section="features"
+				label="Features & Traits"
+				value={sectionNotes.features ?? ""}
+				onChange={(v) => handleSectionNote("features", v)}
+				readOnly={isReadOnly}
+			/>
 			<FeatureChoicesPanel characterId={character.id} />
 			<HomebrewFeatureApplicator characterId={character.id} />
+			<PathFeaturesDisplay
+				characterId={character.id}
+				onSelectDetail={(detail) => onSelectDetail(detail, "Path", Sparkles)}
+			/>
 			<RegentFeaturesDisplay
 				characterId={character.id}
 				characterLevel={character.level || 1}
@@ -440,6 +559,9 @@ export default function CharacterSheetV2() {
 				onSelectDetail={(detail) => onSelectDetail(detail, "Regent", Crown)}
 			/>
 			<RegentUnlocksPanel characterId={character.id} />
+			<LimitedUseAggregator characterId={character.id} />
+			<LanguagesPanel characterId={character.id} />
+			<ToolProficienciesPanel characterId={character.id} />
 			<RunesList
 				characterId={character.id}
 				campaignId={campaignId ?? undefined}
@@ -451,11 +573,29 @@ export default function CharacterSheetV2() {
 				campaignId={campaignId ?? undefined}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
 			/>
+			<VehiclesPanel
+				characterId={character.id}
+				readOnly={isReadOnly}
+			/>
 		</div>
 	);
 	const bio = (
 		<>
 			<JournalPanel characterId={character.id} />
+			<InlineSectionNote
+				section="description"
+				label="Description"
+				value={sectionNotes.description ?? ""}
+				onChange={(v) => handleSectionNote("description", v)}
+				readOnly={isReadOnly}
+			/>
+			<InlineSectionNote
+				section="notes"
+				label="Freeform Notes"
+				value={sectionNotes.notes ?? ""}
+				onChange={(v) => handleSectionNote("notes", v)}
+				readOnly={isReadOnly}
+			/>
 			<CharacterBackupPanel characterId={character.id} />
 			<RollHistoryPanel characterId={character.id} />
 		</>
@@ -464,6 +604,7 @@ export default function CharacterSheetV2() {
 	const extras = (
 		<>
 			<CharacterExtrasPanel characterId={character.id} />
+			<JobResourcePools characterId={character.id} />
 			<SpellSlotsDisplay
 				characterId={character.id}
 				job={character.job}
@@ -633,10 +774,85 @@ export default function CharacterSheetV2() {
 									navigator.vibrate([10, 30, 10]); // Multi-pulse for importance
 								onLevelUp();
 							}}
-							className="h-8 shadow-[0_0_15px_rgba(var(--primary),0.3)] uppercase font-mono text-[10px] tracking-widest"
+							title={
+								levelUpEligibility.canLevelUp
+									? `Level Up available — enough XP for level ${levelUpEligibility.availableLevel}`
+									: undefined
+							}
+							className={`relative h-8 uppercase font-mono text-[10px] tracking-widest ${
+								levelUpEligibility.canLevelUp
+									? "shadow-[0_0_22px_rgba(var(--primary),0.6)] animate-pulse"
+									: "shadow-[0_0_15px_rgba(var(--primary),0.3)]"
+							}`}
 						>
 							<Zap className="w-3 h-3 mr-1.5" />
 							{character.level >= 20 ? "Manage Level" : "Level Up"}
+							{levelUpEligibility.canLevelUp && (
+								<span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+									<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75" />
+									<span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
+								</span>
+							)}
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => setThemeDialogOpen(true)}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-customize-btn"
+							title="Customize sheet theme + backdrop"
+							aria-label="Customize sheet appearance"
+						>
+							<Palette className="w-3 h-3 mr-1.5 text-fuchsia-300" />
+							Customize
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => {
+								const restored = undoRedo?.undo();
+								if (restored)
+									updateCharacter.mutate({ id: restored.id, data: restored });
+							}}
+							disabled={!undoRedo?.canUndo()}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-undo-btn"
+							title="Undo (Ctrl+Z)"
+							aria-label="Undo last sheet change"
+						>
+							<Undo2 className="w-3 h-3 mr-1.5" />
+							Undo
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => {
+								const restored = undoRedo?.redo();
+								if (restored)
+									updateCharacter.mutate({ id: restored.id, data: restored });
+							}}
+							disabled={!undoRedo?.canRedo()}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-redo-btn"
+							title="Redo (Ctrl+Shift+Z)"
+							aria-label="Redo last sheet change"
+						>
+							<Redo2 className="w-3 h-3 mr-1.5" />
+							Redo
+						</Button>
+						<Button
+							variant="ghost"
+							size="sm"
+							onClick={() => {
+								if (typeof window !== "undefined") window.print();
+							}}
+							className="h-8 border-primary/20 bg-black/20 hover:bg-primary/10 transition-colors uppercase font-mono text-[10px] tracking-widest"
+							data-testid="sheet-print-btn"
+							title="Print sheet"
+							aria-label="Print character sheet"
+						>
+							<Printer className="w-3 h-3 mr-1.5" />
+							Print
 						</Button>
 					</div>
 				)}
@@ -662,7 +878,44 @@ export default function CharacterSheetV2() {
 					showScrollHeader ? "translate-y-0" : "-translate-y-full",
 				)}
 			/>
-			<div className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8">
+			<div
+				className="flex flex-col gap-6 animate-in fade-in duration-500 max-w-7xl mx-auto px-4 py-8 sheet-themed-root"
+				data-sheet-theme={
+					themePreview?.sheet_theme ??
+					((character as { sheet_theme?: string | null }).sheet_theme ||
+						DEFAULT_SHEET_THEME_ID)
+				}
+				data-sheet-preview={themePreview ? "true" : undefined}
+				style={(() => {
+					// Q1 of Round 3 — themePreview wins over persisted values so
+					// the sheet renders the in-progress theme live while the
+					// dialog is open. Cleared on dialog close.
+					const themeId =
+						themePreview?.sheet_theme ??
+						((character as { sheet_theme?: string | null }).sheet_theme ||
+							DEFAULT_SHEET_THEME_ID);
+					const accent =
+						themePreview?.sheet_accent ??
+						((character as { sheet_accent?: string | null }).sheet_accent ||
+							null);
+					const backdrop =
+						themePreview?.sheet_backdrop ??
+						((character as { sheet_backdrop?: string | null })
+							.sheet_backdrop || null);
+					const base = buildSheetThemeStyle(getSheetTheme(themeId), accent);
+					if (backdrop) {
+						return {
+							...base,
+							backgroundImage: `linear-gradient(rgba(8,8,12,0.85), rgba(8,8,12,0.92)), url('${backdrop}')`,
+							backgroundSize: "cover",
+							backgroundPosition: "center",
+							backgroundRepeat: "no-repeat",
+							backgroundAttachment: "fixed",
+						};
+					}
+					return base;
+				})()}
+			>
 				{/* Unified Header */}
 				{characterHeader}
 
@@ -717,6 +970,21 @@ export default function CharacterSheetV2() {
 							onRollSkill={onRollSkill}
 							senses={senses}
 							defenses={defenses}
+						/>
+						<CustomSkillsList
+							characterId={character.id}
+							abilities={stats.finalAbilities}
+							proficiencyBonus={getProficiencyBonus(character.level || 1)}
+							readOnly={isReadOnly}
+							onRoll={(skill, modifier) => {
+								rollAndRecord({
+									title: `${skill.name} (Custom)`,
+									formula: "1d20",
+									rollType: "skill_check",
+									context: `Custom skill: ${skill.name}`,
+									modifier,
+								});
+							}}
 						/>
 					</aside>
 
@@ -975,6 +1243,39 @@ export default function CharacterSheetV2() {
 					open={persistentModals.edit}
 					onOpenChange={(open) => sheetController.setModal("edit", open)}
 					character={character}
+				/>
+				<SheetThemeDialog
+					open={themeDialogOpen}
+					onOpenChange={setThemeDialogOpen}
+					onPreviewChange={setThemePreview}
+					character={{
+						id: character.id,
+						sheet_theme:
+							(character as { sheet_theme?: string | null }).sheet_theme ??
+							null,
+						sheet_backdrop:
+							(character as { sheet_backdrop?: string | null })
+								.sheet_backdrop ?? null,
+						sheet_accent:
+							(character as { sheet_accent?: string | null }).sheet_accent ??
+							null,
+					}}
+					onSave={async (patch) => {
+						await new Promise<void>((resolve, reject) => {
+							updateCharacter.mutate(
+								{
+									id: character.id,
+									data: patch as unknown as Parameters<
+										typeof updateCharacter.mutate
+									>[0]["data"],
+								},
+								{
+									onSuccess: () => resolve(),
+									onError: (err) => reject(err),
+								},
+							);
+						});
+					}}
 				/>
 
 				<Dialog

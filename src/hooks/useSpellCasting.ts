@@ -29,6 +29,7 @@ import {
 	createActiveSpellEffect,
 	hasKnownEffects,
 } from "@/lib/spellEffectPipeline";
+import { applyUpcastToFormula } from "@/lib/upcastScaling";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -59,6 +60,8 @@ interface CastSpellParams {
 	pathName: string | null;
 	level: number;
 	campaignId: string | null;
+	/** Base damage formula (e.g. "8d6"), used to surface upcast scaling. */
+	baseDamage?: string | null;
 }
 
 interface CastSpellResult {
@@ -249,8 +252,24 @@ export function useSpellCasting(
 			// without explicit duration metadata stay null (until-dispelled).
 			persistKnownEffects(spell.isConcentration ? 100 : null);
 
-			const upcastNote =
-				castAtLevel > spell.level ? ` (upcast at level ${castAtLevel})` : "";
+			// P1.5: surface auto-upcast damage scaling in the cast message.
+			// applyUpcastToFormula parses the spell's higher_levels text and
+			// appends the additional dice (e.g. "8d6" → "8d6+2d6" at +2).
+			let upcastNote = "";
+			if (castAtLevel > spell.level) {
+				upcastNote = ` (upcast at level ${castAtLevel})`;
+				if (params.baseDamage) {
+					const scaled = applyUpcastToFormula(
+						params.baseDamage,
+						spell.level,
+						castAtLevel,
+						spell.higherLevels,
+					);
+					if (scaled !== params.baseDamage) {
+						upcastNote += ` — damage ${scaled}`;
+					}
+				}
+			}
 			return {
 				success: true,
 				slotExpended: true,

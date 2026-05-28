@@ -397,6 +397,7 @@ interface StaticDataProvider {
 	getRollableTables: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
 type StaticRollableTableSource = {
@@ -622,7 +623,7 @@ type StaticSpellSource = {
 // Spell normalization helpers â€” derive missing 5e fields from existing data
 // ---------------------------------------------------------------------------
 const SCHOOL_KEYWORDS: [RegExp, string][] = [
-	[/shadow|necrot|death|undead|wither|drain|blight|curse|soul/i, "Necromancy"],
+	[/shadow|necrot|death|anomaly|wither|drain|blight|curse|soul/i, "Necromancy"],
 	[
 		/void|ward|shield|barrier|protect|banish|counter|dispel|abjur/i,
 		"Abjuration",
@@ -634,7 +635,7 @@ const SCHOOL_KEYWORDS: [RegExp, string][] = [
 	[/heal|restore|cure|mend|revive|resurrect|vitality|regenerat/i, "Evocation"],
 	[/holy|divine|celestial|sacred|smite|purif/i, "Evocation"],
 	[
-		/summon|conjur|demon|abyssal|portal|gate|call|manifest|rift/i,
+		/summon|conjur|anomaly|abyssal|portal|gate|call|manifest|rift/i,
 		"Conjuration",
 	],
 	[/illus|phantom|mirage|invis|disguise|mirror|decep/i, "Illusion"],
@@ -2454,6 +2455,44 @@ export const staticDataProvider: StaticDataProvider = {
 			home_realm: deity.home_realm,
 			relationships: deity.relationships || [],
 		}));
+	},
+	// Q4 of Round 3 — vehicles & mounts. Cast to StaticCompendiumEntry
+	// for the wide-bag registry; consumers re-narrow to CompendiumVehicle
+	// via the canonicalCompendium helpers.
+	getVehicles: async (search?: string) => {
+		const { allVehicles } = await import("@/data/compendium/vehicles");
+		type V = (typeof allVehicles)[number];
+		const filtered = filterBySearch<V>(allVehicles, search, [
+			"name",
+			"display_name",
+			"description",
+		]);
+		return filtered.map(
+			(v: V) =>
+				({
+					id: v.id,
+					name: v.name,
+					display_name: v.display_name,
+					description: v.description || "",
+					created_at: new Date().toISOString(),
+					tags: [v.vehicle_type, v.size, v.rank].filter(
+						Boolean,
+					) as string[],
+					source_book: v.source_book ?? "Rift Ascendant Canon",
+					rank: v.rank,
+					vehicle_type: v.vehicle_type,
+					size: v.size,
+					speed: v.speed,
+					armor_class: v.armor_class,
+					hit_points: v.hit_points,
+					carry_capacity_lbs: v.carry_capacity_lbs,
+					cargo_capacity_lbs: v.cargo_capacity_lbs,
+					crew_positions: v.crew_positions,
+					abilities: v.abilities,
+					bonded: v.bonded,
+					anomaly_id: v.anomaly_id,
+				}) as unknown as StaticCompendiumEntry,
+		);
 	},
 };
 

@@ -209,7 +209,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-4-fury-surge",
-		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
+		classes: ["Berserker", "Destroyer"],
 		name: "Fury Surge",
 		display_name: "Fury Surge",
 		description:
@@ -276,7 +276,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-5-crimson-howl",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Berserker", "Destroyer"],
 		name: "Crimson Howl",
 		display_name: "Crimson Howl",
 		description:
@@ -343,7 +343,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-6-rupture-break",
-		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
+		classes: ["Berserker", "Destroyer"],
 		name: "Rupture Break",
 		display_name: "Rupture Break",
 		description:
@@ -410,7 +410,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-7-shadow-strike",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Shadow Strike",
 		display_name: "Shadow Strike",
 		description:
@@ -485,7 +485,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-8-phantom-lunge",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Phantom Lunge",
 		display_name: "Phantom Lunge",
 		description:
@@ -560,7 +560,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-9-lethal-precision",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker", "Technomancer"],
 		name: "Lethal Precision",
 		display_name: "Lethal Precision",
 		description:
@@ -635,7 +635,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-10-kinetic-rush",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker"],
 		name: "Kinetic Rush",
 		display_name: "Kinetic Rush",
 		description:
@@ -710,7 +710,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-11-nerve-gate-cascade",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Technomancer"],
 		name: "Nerve Gate Cascade",
 		display_name: "Nerve Gate Cascade",
 		description:
@@ -860,7 +860,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-13-radiant-intercept",
-		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Radiant Intercept",
 		display_name: "Radiant Intercept",
 		description:
@@ -927,11 +927,11 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-14-oath-purge",
-		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Oath Purge",
 		display_name: "Oath Purge",
 		description:
-			"Channel your oath into a burst of purifying light. One creature within 30 feet must make a DC 14 Presence save: 3d8 radiant damage on failure, half on success. If the target is undead or fiend-type, it also has disadvantage on attack rolls until the end of its next turn.",
+			"Channel your oath into a burst of purifying light. One creature within 30 feet must make a DC 14 Presence save: 3d8 radiant damage on failure, half on success. If the target is anomaly-type, it also has disadvantage on attack rolls until the end of its next turn.",
 		lore: {
 			origin:
 				"An Oath Purge cast inside a shadow-filled gate instantly illuminated the entire chamber. Every shadow anomaly was visible.",
@@ -948,7 +948,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Radiant damage + undead/fiend debuff.",
+			primary: "Radiant damage + anomaly/anomaly debuff.",
 			secondary: "Damage increases by 1d6 per level above 2st.",
 		},
 		power_type: "Innate",
@@ -979,7 +979,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				ability: "Presence",
 				dc: 14,
 				success: "Half damage and no rider.",
-				failure: "Radiant damage + undead/fiend debuff.",
+				failure: "Radiant damage + anomaly/anomaly debuff.",
 			},
 		},
 		limitations: {
@@ -994,7 +994,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-15-divine-bastion",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Divine Bastion",
 		display_name: "Divine Bastion",
 		description:
@@ -1295,7 +1295,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-19-prey-lock",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Prey Lock",
 		display_name: "Prey Lock",
 		description:
@@ -1764,7 +1764,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-26-cursed-blade-edge",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker", "Technomancer"],
 		name: "Cursed Blade Edge",
 		display_name: "Cursed Blade Edge",
 		description:
@@ -1831,7 +1831,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-27-pact-retaliation",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: [],
 		name: "Pact Retaliation",
 		display_name: "Pact Retaliation",
 		description:
@@ -1898,7 +1898,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-28-withering-touch",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Withering Touch",
 		display_name: "Withering Touch",
 		description:
@@ -1965,7 +1965,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-29-entropic-counter",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker", "Technomancer"],
 		name: "Entropic Counter",
 		display_name: "Entropic Counter",
 		description:
@@ -2505,7 +2505,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-36-berserker-s-fury",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Berserker", "Destroyer"],
 		name: "Berserker's Fury",
 		display_name: "Berserker's Fury",
 		description:
@@ -2647,14 +2647,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-38-velocity-barrage",
-		classes: [
-			"Destroyer",
-			"Striker",
-			"Assassin",
-			"Stalker",
-			"Berserker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Striker"],
 		name: "Velocity Barrage",
 		display_name: "Velocity Barrage",
 		description:
@@ -2729,11 +2722,11 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-39-crusader-s-judgment",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Crusader's Judgment",
 		display_name: "Crusader's Judgment",
 		description:
-			"Channel your oath into a devastating melee strike. On your next hit, deal weapon damage plus 5d8 radiant damage. If the target is undead or a fiend, the extra damage is 6d8 and it must make a DC 16 Presence save or be banished to its native plane for 1 minute.",
+			"Channel your oath into a devastating melee strike. On your next hit, deal weapon damage plus 5d8 radiant damage. If the target is anomaly or a anomaly, the extra damage is 6d8 and it must make a DC 16 Presence save or be banished to its native plane for 1 minute.",
 		lore: {
 			origin:
 				"Three confirmed banishments on record. All three targets returned after 1 minute. All three were immediately engaged again.",
@@ -2874,9 +2867,9 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-41-hunter-s-judgment",
-		classes: ["Destroyer", "Striker", "Technomancer"],
-		name: "Hunter's Judgment",
-		display_name: "Hunter's Judgment",
+		classes: ["Holy Knight"],
+		name: "Ascendant's Judgment",
+		display_name: "Ascendant's Judgment",
 		description:
 			"After tracking a creature for at least 1 minute, declare judgment. For the next hour, you have advantage on all attack rolls against the target, can't be surprised by it, and your critical hit range against it expands to 19-20.",
 		lore: {
@@ -2941,14 +2934,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-42-adamantine-shell",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
-		name: "Adamantine Shell",
-		display_name: "Adamantine Shell",
+		classes: ["Technomancer"],
+		name: "Lattice-Stable Composite Shell",
+		display_name: "Lattice-Stable Composite Shell",
 		description:
 			"Encase yourself in ultra-dense mana for 1 minute. You gain resistance to all damage except psychic, immunity to critical hits, and any creature that hits you with a melee attack takes 3d6 force damage.",
 		lore: {
 			origin:
-				"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in Adamantine Shell. She described it as 'warm.'",
+				"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in lattice-stable composite Shell. She described it as 'warm.'",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -3005,7 +2998,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in Adamantine Shell. She described it as 'warm.'",
+			"A Destroyer survived a direct hit from an S-Rank gate boss's breath weapon while in lattice-stable composite Shell. She described it as 'warm.'",
 		theme_tags: ["guard", "destroyer"],
 	},
 	{
@@ -3087,7 +3080,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-44-phantom-army",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Phantom Army",
 		display_name: "Phantom Army",
 		description:
@@ -3248,7 +3241,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Create a 15-foot radius zone of absolute protection for 1 minute. Allies inside gain +3 AC, advantage on all saves, and resistance to all damage. Hostile creatures entering take 4d8 radiant and must make a DC 17 Presence save or be pushed out.",
 		lore: {
 			origin:
-				"A Holy Knight's Absolute Sanctum held against a Monarch-class anomaly's area attack. The anomaly adjusted its targeting.",
+				"A Holy Knight's Absolute Sanctum held against a Regent-class anomaly's area attack. The anomaly adjusted its targeting.",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -3305,7 +3298,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"A Holy Knight's Absolute Sanctum held against a Monarch-class anomaly's area attack. The anomaly adjusted its targeting.",
+			"A Holy Knight's Absolute Sanctum held against a Regent-class anomaly's area attack. The anomaly adjusted its targeting.",
 		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
@@ -3390,7 +3383,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-48-apex-predator",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Apex Predator",
 		display_name: "Apex Predator",
 		description:
@@ -3460,7 +3453,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-49-immovable-aegis",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Immovable Aegis",
 		display_name: "Immovable Aegis",
 		description:
@@ -3536,14 +3529,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-50-cataclysm-overload",
-		classes: [
-			"Destroyer",
-			"Striker",
-			"Assassin",
-			"Stalker",
-			"Berserker",
-			"Technomancer",
-		],
+		classes: ["Berserker", "Destroyer"],
 		name: "Cataclysm Overload",
 		display_name: "Cataclysm Overload",
 		description:
@@ -3612,7 +3598,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-51-death-s-shadow",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Death's Shadow",
 		display_name: "Death's Shadow",
 		description:
@@ -3771,7 +3757,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		name: "Warhammer of the Absolute",
 		display_name: "Warhammer of the Absolute",
 		description:
-			"Summon a Huge spectral hammer of radiant mana. Make a melee spell attack (Presence) against a creature: 10d10 radiant damage on a hit. Undead/fiends take max damage. The impact creates a 15-foot radius zone of consecrated ground for 1 minute (enemies have disadvantage on saves).",
+			"Summon a Huge spectral hammer of radiant mana. Make a melee spell attack (Presence) against a creature: 10d10 radiant damage on a hit. Anomaly/anomaly take max damage. The impact creates a 15-foot radius zone of consecrated ground for 1 minute (enemies have disadvantage on saves).",
 		lore: {
 			origin:
 				"The hammer manifests for exactly 0.3 seconds. The consecrated ground lasts considerably longer.",
@@ -3993,7 +3979,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Channel all defensive energy into a single apocalyptic counter-strike. As a reaction when hit, negate all damage from the attack and respond with 12d12 force damage (no save). The impact creates a 30-foot crater and all creatures within are knocked prone.",
 		lore: {
 			origin:
-				"One confirmed use against a Monarch-class anomaly. The Monarch reconsidered its life choices.",
+				"One confirmed use against a Regent-class anomaly. The Regent reconsidered its life choices.",
 			history:
 				"Catalogued in the Bureau's epic-tier compendium after field validation.",
 			curse: "",
@@ -4050,19 +4036,12 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"One confirmed use against a Monarch-class anomaly. The Monarch reconsidered its life choices.",
+			"One confirmed use against a Regent-class anomaly. The Regent reconsidered its life choices.",
 		theme_tags: ["guard", "destroyer"],
 	},
 	{
 		id: "power-sup-8-57-nuclear-overload",
-		classes: [
-			"Destroyer",
-			"Striker",
-			"Assassin",
-			"Stalker",
-			"Berserker",
-			"Technomancer",
-		],
+		classes: ["Berserker", "Destroyer"],
 		name: "Nuclear Overload",
 		display_name: "Nuclear Overload",
 		description:
@@ -4132,7 +4111,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-58-reaper-s-sentence",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker", "Technomancer"],
 		name: "Reaper's Sentence",
 		display_name: "Reaper's Sentence",
 		description:
@@ -4643,7 +4622,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-65-nerve-strike",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Striker"],
 		name: "Nerve Strike",
 		display_name: "Nerve Strike",
 		description:
@@ -4793,14 +4772,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-67-circuit-flare",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Technomancer"],
 		name: "Circuit Flare",
 		display_name: "Circuit Flare",
 		description:
-			"As a bonus action, ignite your mana circuit's radiant output. For 1 minute, your melee attacks deal +1d6 radiant and shed bright light 10 feet. Undead and fiends that start their turn within 5 feet take 1d4 radiant.",
+			"As a bonus action, ignite your mana circuit's radiant output. For 1 minute, your melee attacks deal +1d6 radiant and shed bright light 10 feet. Anomaly and anomaly that start their turn within 5 feet take 1d4 radiant.",
 		lore: {
 			origin:
-				"The Absolute's radiance channeled through a weapon is described as 'warm.' Undead describe it as 'terminal.'",
+				"The Absolute's radiance channeled through a weapon is described as 'warm.' Anomaly describe it as 'terminal.'",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -4814,7 +4793,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "+1d6 radiant melee, light aura, passive undead damage.",
+			primary: "+1d6 radiant melee, light aura, passive anomaly damage.",
 			secondary: "Damage increases by 1d6 per level above 2st.",
 		},
 		power_type: "Innate",
@@ -4845,7 +4824,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				ability: "Presence",
 				dc: 14,
 				success: "Half damage and no rider.",
-				failure: "+1d6 radiant melee, light aura, passive undead damage.",
+				failure: "+1d6 radiant melee, light aura, passive anomaly damage.",
 			},
 		},
 		limitations: {
@@ -4855,7 +4834,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"The Absolute's radiance channeled through a weapon is described as 'warm.' Undead describe it as 'terminal.'",
+			"The Absolute's radiance channeled through a weapon is described as 'warm.' Anomaly describe it as 'terminal.'",
 		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
@@ -4940,7 +4919,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-69-prey-sense",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Prey Sense",
 		display_name: "Prey Sense",
 		description:
@@ -5275,7 +5254,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-74-berserker-s-gambit",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Berserker", "Destroyer"],
 		name: "Berserker's Gambit",
 		display_name: "Berserker's Gambit",
 		description:
@@ -5342,7 +5321,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-75-phantom-blade-flurry",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Phantom Blade Flurry",
 		display_name: "Phantom Blade Flurry",
 		description:
@@ -5492,7 +5471,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-77-covenant-aegis",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Covenant Aegis",
 		display_name: "Covenant Aegis",
 		description:
@@ -5637,7 +5616,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-3-79-quarry-pindown",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Quarry Pindown",
 		display_name: "Quarry Pindown",
 		description:
@@ -5771,7 +5750,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-4-81-blood-pact-escalation",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: [],
 		name: "Blood Pact Escalation",
 		display_name: "Blood Pact Escalation",
 		description:
@@ -6201,14 +6180,14 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-87-absolute-smite",
-		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Absolute Smite",
 		display_name: "Absolute Smite",
 		description:
-			"Channel the Absolute's full judgment through your weapon. Next melee hit deals +6d8 radiant damage (+8d8 vs undead/fiends). The target must make a DC 17 PRS save or be stunned for 1 round. If the target is killed, it cannot be raised by any means below 7th level.",
+			"Channel the Absolute's full judgment through your weapon. Next melee hit deals +6d8 radiant damage (+8d8 vs anomaly/anomaly). The target must make a DC 17 PRS save or be stunned for 1 round. If the target is killed, it cannot be raised by any means below 7th level.",
 		lore: {
 			origin:
-				"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank undead anomalies. The Absolute doesn't allow encores.",
+				"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank anomaly anomalies. The Absolute doesn't allow encores.",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -6265,7 +6244,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank undead anomalies. The Absolute doesn't allow encores.",
+			"Three confirmed kills using Absolute Smite have resulted in permanent termination of S-Rank anomaly anomalies. The Absolute doesn't allow encores.",
 		theme_tags: ["radiant", "holy-knight"],
 	},
 	{
@@ -6357,7 +6336,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-89-idol-s-magnum-opus",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: [],
 		name: "Idol's Magnum Opus",
 		display_name: "Idol's Magnum Opus",
 		description:
@@ -6427,14 +6406,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-90-patron-s-embrace",
-		classes: [
-			"Destroyer",
-			"Striker",
-			"Assassin",
-			"Stalker",
-			"Berserker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Patron's Embrace",
 		display_name: "Patron's Embrace",
 		description:
@@ -6503,7 +6475,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-91-final-entropy",
-		classes: ["Revenant", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker", "Technomancer"],
 		name: "Final Entropy",
 		display_name: "Final Entropy",
 		description:
@@ -6574,7 +6546,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-6-92-quarry-annihilation",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Quarry Annihilation",
 		display_name: "Quarry Annihilation",
 		description:
@@ -6712,7 +6684,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-94-terminal-velocity",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Striker"],
 		name: "Terminal Velocity",
 		display_name: "Terminal Velocity",
 		description:
@@ -6937,11 +6909,11 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-97-s-rank-smite",
-		classes: ["Holy Knight", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "S-Rank Smite",
 		display_name: "S-Rank Smite",
 		description:
-			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Undead and fiends are instantly destroyed regardless of HP.",
+			"The ultimate expression of the Absolute's judgment. Next melee hit deals +12d8 radiant. The target's mana circuit is permanently scarred: it loses access to its highest-level ability permanently. Anomaly and anomaly are instantly destroyed regardless of HP.",
 		lore: {
 			origin:
 				"Bureau records: one confirmed S-Rank Smite. The Holy Knight collapsed after. The S-Rank gate boss was already dust.",
@@ -6959,7 +6931,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary:
-				"+12d8 radiant + permanent ability loss + instant undead/fiend kill.",
+				"+12d8 radiant + permanent ability loss + instant anomaly/anomaly kill.",
 			secondary:
 				"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
 		},
@@ -6993,7 +6965,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				dc: 20,
 				success: "Half damage and no rider.",
 				failure:
-					"+12d8 radiant + permanent ability loss + instant undead/fiend kill.",
+					"+12d8 radiant + permanent ability loss + instant anomaly/anomaly kill.",
 			},
 		},
 		limitations: {
@@ -7091,7 +7063,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-99-predator-supremacy",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Predator Supremacy",
 		display_name: "Predator Supremacy",
 		description:
@@ -7231,7 +7203,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-101-absolute-pact",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: [],
 		name: "Absolute Pact",
 		display_name: "Absolute Pact",
 		description:
@@ -7444,7 +7416,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-2-104-phantom-decoy",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Assassin", "Stalker"],
 		name: "Phantom Decoy",
 		display_name: "Phantom Decoy",
 		description:
@@ -7519,7 +7491,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-1-105-gate-reader",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Technomancer"],
 		name: "Gate Reader",
 		display_name: "Gate Reader",
 		description:
@@ -8092,7 +8064,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"When you hit a creature that is below half its maximum HP, you can trigger Execute Protocol. The attack deals an additional 5d10 damage. If the target has 30 HP or fewer after the bonus damage, it dies instantly.",
 		lore: {
 			origin:
-				"Bureau Hunter rankings weight Execute Protocol proficiency heavily. The ability to finish targets is 'operationally critical.'",
+				"Bureau Ascendant rankings weight Execute Protocol proficiency heavily. The ability to finish targets is 'operationally critical.'",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
@@ -8149,12 +8121,12 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau Hunter rankings weight Execute Protocol proficiency heavily. The ability to finish targets is 'operationally critical.'",
+			"Bureau Ascendant rankings weight Execute Protocol proficiency heavily. The ability to finish targets is 'operationally critical.'",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
 		id: "power-sup-5-114-radiant-martyr",
-		classes: ["Holy Knight", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Radiant Martyr",
 		display_name: "Radiant Martyr",
 		description:
@@ -8375,7 +8347,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-5-117-circuit-defibrillator",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Technomancer"],
 		name: "Circuit Defibrillator",
 		display_name: "Circuit Defibrillator",
 		description:
@@ -8747,7 +8719,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-7-122-patron-sacrifice",
-		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
+		classes: [],
 		name: "Patron Sacrifice",
 		display_name: "Patron Sacrifice",
 		description:
@@ -8895,7 +8867,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-8-124-berserker-s-last-stand",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Berserker", "Destroyer"],
 		name: "Berserker's Last Stand",
 		display_name: "Berserker's Last Stand",
 		description:
@@ -9035,7 +9007,7 @@ export const powers_supplemental: CompendiumPower[] = [
 	},
 	{
 		id: "power-sup-9-126-divine-mandate",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Holy Knight"],
 		name: "Divine Mandate",
 		display_name: "Divine Mandate",
 		description:

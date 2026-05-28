@@ -1,4 +1,4 @@
-import { Coins, Edit2, Minus, Plus } from "lucide-react";
+import { ArrowUpNarrowWide, Coins, Edit2, Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
@@ -8,8 +8,10 @@ import { useEquipment } from "@/hooks/useEquipment";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import {
 	buildRaCurrencyItemDescription,
+	normalizeWallet,
 	RA_CURRENCY_TYPES,
 	type RaCurrencyId,
+	type RaWallet,
 } from "@/lib/currency";
 import { cn } from "@/lib/utils";
 
@@ -90,6 +92,65 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 		}
 	};
 
+	// P1.10: Consolidate Credits — cascade overflow upward (10 Mana → 1
+	// Crystal, 10 Crystal → 1 Gate, 10 Gate → 1 Core) preserving total
+	// value. RA exceeds DDB here (DDB has long-requested this).
+	const handleConsolidate = async () => {
+		const wallet: RaWallet = {
+			core: getCurrency("core")?.quantity || 0,
+			gate: getCurrency("gate")?.quantity || 0,
+			crystal: getCurrency("crystal")?.quantity || 0,
+			mana: getCurrency("mana")?.quantity || 0,
+		};
+		const normalized = normalizeWallet(wallet);
+
+		// Nothing to do if already consolidated.
+		const unchanged = (["core", "gate", "crystal", "mana"] as const).every(
+			(k) => normalized[k] === wallet[k],
+		);
+		if (unchanged) {
+			toast({
+				title: "Already consolidated",
+				description: "Your Credits are already in their highest denominations.",
+			});
+			return;
+		}
+
+		try {
+			for (const type of RA_CURRENCY_TYPES) {
+				const target = normalized[type.id];
+				const existing = getCurrency(type.id);
+				if (existing) {
+					if ((existing.quantity || 0) !== target) {
+						await updateEquipment({
+							id: existing.id,
+							updates: { quantity: target },
+						});
+					}
+				} else if (target > 0) {
+					await addEquipment({
+						character_id: characterId,
+						name: type.name,
+						item_type: "currency",
+						quantity: target,
+						weight: 0.02,
+						description: buildRaCurrencyItemDescription(type.id),
+					});
+				}
+			}
+			toast({
+				title: "Credits consolidated",
+				description: "Overflow cascaded into higher denominations.",
+			});
+		} catch {
+			toast({
+				title: "Error",
+				description: "Failed to consolidate Credits.",
+				variant: "destructive",
+			});
+		}
+	};
+
 	const handleSetCurrency = async (type: RaCurrencyId, amount: number) => {
 		const existing = getCurrency(type);
 		const currencyType = RA_CURRENCY_TYPES.find((t) => t.id === type);
@@ -137,10 +198,22 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 	return (
 		<AscendantWindow title="RIFT REWARDS">
 			<div className="space-y-3">
-				<p className="text-xs text-muted-foreground mb-4">
-					Track Bureau-issued Credits earned from contracts, salvage exchange,
-					and campaign rewards.
-				</p>
+				<div className="flex items-start justify-between gap-2 mb-4">
+					<p className="text-xs text-muted-foreground">
+						Track Bureau-issued Credits earned from contracts, salvage
+						exchange, and campaign rewards.
+					</p>
+					<Button
+						size="sm"
+						variant="outline"
+						className="shrink-0 gap-1.5"
+						onClick={handleConsolidate}
+						title="Cascade overflow into higher denominations (10 Mana → 1 Crystal, etc.)"
+					>
+						<ArrowUpNarrowWide className="w-3.5 h-3.5" />
+						Consolidate
+					</Button>
+				</div>
 				{RA_CURRENCY_TYPES.map((type) => {
 					const currency = getCurrency(type.id);
 					const quantity = currency?.quantity || 0;

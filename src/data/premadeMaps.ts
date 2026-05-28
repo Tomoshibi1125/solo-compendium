@@ -278,7 +278,7 @@ const PREMADE_MAPS: PremadeMap[] = [
 	},
 	{
 		id: "hunters-guild-tavern",
-		name: "Hunter's Guild Tavern",
+		name: "Ascendant's Guild Tavern",
 		description:
 			"Warm candlelit tavern interior with bar, tables, fireplace, and back rooms. A favorite haunt of Ascendants between Gate dives.",
 		path: "/generated/maps/premade/hunters-guild-tavern.png",
@@ -353,7 +353,7 @@ const PREMADE_MAPS: PremadeMap[] = [
 		id: "gatewatch-marketplace",
 		name: "Gatewatch Marketplace",
 		description:
-			"Open-air hunter's market with vendor stalls, a central fountain plaza, and narrow alley exits between stone buildings.",
+			"Open-air ascendant's market with vendor stalls, a central fountain plaza, and narrow alley exits between stone buildings.",
 		path: "/generated/maps/premade/gatewatch-marketplace.png",
 		thumbnail: "/generated/maps/premade/gatewatch-marketplace.png",
 		grid: GRID_48,

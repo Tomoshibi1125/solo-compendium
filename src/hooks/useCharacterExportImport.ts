@@ -1176,15 +1176,27 @@ export function useCharacterExport() {
 	const exportCharacterPdf = useCallback(
 		async (
 			characterId: string,
-			options: { shareToken?: string | null } = {},
+			options: { shareToken?: string | null; usePrintDialog?: boolean } = {},
 		) => {
 			try {
-				const { exportCharacterPDF } = await import("@/lib/export");
-				exportCharacterPDF(characterId, options);
+				// C1: default to a true downloadable PDF file (pdf-lib). The
+				// print-dialog path is retained behind `usePrintDialog` for
+				// users who want the full styled sheet via the browser.
+				if (options.usePrintDialog) {
+					const { exportCharacterPDF } = await import("@/lib/export");
+					exportCharacterPDF(characterId, options);
+					toast({
+						title: "Print dialog opened",
+						description:
+							"Use your browser's print dialog → 'Save as PDF' to export.",
+					});
+					return true;
+				}
+				const { downloadCharacterPdfFile } = await import("@/lib/export");
+				await downloadCharacterPdfFile(characterId);
 				toast({
-					title: "Print dialog opened",
-					description:
-						"Use your browser's print dialog → 'Save as PDF' to export.",
+					title: "PDF exported",
+					description: "Your character sheet PDF has been downloaded.",
 				});
 				return true;
 			} catch (error) {

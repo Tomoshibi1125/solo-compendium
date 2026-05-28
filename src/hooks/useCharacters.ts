@@ -313,6 +313,30 @@ export const useUpdateCharacter = () => {
 			} = await supabase.auth.getUser();
 			if (!user) throw new AppError("Not authenticated", "AUTH_REQUIRED");
 
+			// Capture previous XP / level so we can detect level-readiness
+			// transitions (R6 of Round 2: level-up notification producer).
+			let prevXP: number | null = null;
+			let prevLevel: number | null = null;
+			try {
+				const { data: prev } = await supabase
+					.from("characters")
+					.select("experience, level")
+					.eq("id", id)
+					.eq("user_id", user.id)
+					.maybeSingle();
+				prevXP =
+					typeof (prev as { experience?: number } | null)?.experience ===
+					"number"
+						? ((prev as { experience?: number }).experience as number)
+						: null;
+				prevLevel =
+					typeof (prev as { level?: number } | null)?.level === "number"
+						? ((prev as { level?: number }).level as number)
+						: null;
+			} catch {
+				// silent — readiness producer is best-effort
+			}
+
 			const { data: character, error } = await supabase
 				.from("characters")
 				.update({
@@ -328,6 +352,50 @@ export const useUpdateCharacter = () => {
 				logErrorWithContext(error, "useUpdateCharacter");
 				throw error;
 			}
+
+			// R6: detect XP threshold crossing and produce a level-readiness
+			// notification on the character owner's inbox. Best-effort — must
+			// not block character updates.
+			try {
+				const updated = character as
+					| { experience?: number; level?: number; name?: string }
+					| null;
+				const nextXP = updated?.experience ?? null;
+				const nextLevel = updated?.level ?? null;
+				if (
+					nextXP != null &&
+					nextLevel != null &&
+					nextLevel < 20 &&
+					prevXP != null &&
+					prevLevel === nextLevel
+				) {
+					const { getXPForLevel } = await import("@/lib/experience");
+					const threshold = getXPForLevel(nextLevel + 1);
+					if (prevXP < threshold && nextXP >= threshold) {
+						await (
+							supabase.rpc as unknown as (
+								name: string,
+								params: Record<string, unknown>,
+							) => Promise<{ data: unknown; error: Error | null }>
+						)("add_user_notification", {
+							p_user_id: user.id,
+							p_type: "level_ready",
+							p_title: `Level up ready for ${updated?.name ?? "your Ascendant"}`,
+							p_message: `Reached the XP threshold for level ${nextLevel + 1}. Open the sheet to advance.`,
+							p_priority: "high",
+							p_category: "character",
+							p_payload: { character_id: id },
+							p_link: `/characters/${id}`,
+							p_expires_at: null,
+						});
+					}
+				}
+			} catch (readinessErr) {
+				if (typeof console !== "undefined") {
+					console.warn("Level-readiness producer failed", readinessErr);
+				}
+			}
+
 			return character;
 		},
 		// Optimistic calculation: immediately patch the character's properties

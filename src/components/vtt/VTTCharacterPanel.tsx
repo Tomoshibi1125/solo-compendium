@@ -64,7 +64,7 @@ interface VTTCharacterPanelProps {
 	onRoll: RollFn;
 	/** Callback to send a text message to VTT chat. Typically vttRealtime.sendChatMessage */
 	onChat: ChatFn;
-	/** If true, the panel is read-only (e.g. Warden (Warden) viewing a player's character) */
+	/** If true, the panel is read-only (e.g. Warden viewing a player's character) */
 	readOnly?: boolean;
 	/** Compact mode hides some sections */
 	compact?: boolean;

@@ -10,7 +10,7 @@ export const chaptersPart4: SandboxChapter[] = [
 		title: "Chapter 0: Day Zero — The Memory-Care Wing (Intro Adventure)",
 		content: `# Day Zero — The Memory-Care Wing
 
-> *"A Gate that feeds on memory is not a monster. It is a mirror. And the Regent of Yongsan has been staring into this particular one for half a century."*
+> *"A Gate that feeds on memory is not a anomaly. It is a mirror. And the Regent of Yongsan has been staring into this particular one for half a century."*
 > — Dr. Serin Hayashi, private margin-note on the Regent Research Brief
 
 ## Running This Chapter
@@ -88,7 +88,7 @@ The corridor *lengthens as they walk*. Ten steps should be enough. They will wal
 > **Read Aloud (Walking)**:
 > *"A photograph on the wall catches your eye. A Bureau officer holding a child on his shoulders. The child is laughing. You walk past. Twenty feet later, there is another photograph — the same man, older, his hair greyed, the child gone. You have not stopped walking forward. You have not turned around. And yet the photographs are aging as you pass."*
 
-- **Monster — The Forgetting** *(D-Rank Anomaly, swarm)*: halfway down, a cluster of blurred humanoid silhouettes detaches from the photographs. They are the shape of the people who have been forgotten by the residents.
+- **Anomaly — The Forgetting** *(D-Rank Anomaly, swarm)*: halfway down, a cluster of blurred humanoid silhouettes detaches from the photographs. They are the shape of the people who have been forgotten by the residents.
 - HP 22 *(swarm)* | AC 12 | Speed 30 ft. | vulnerable to radiant
 - **Multiattack.** Two chill-touch attacks. +4 to hit, 1d4 cold + on hit: DC 13 Sense save or forget a short-term fact (last 5 min of the corridor — mechanically: disadvantage on next check).
 - **Unravel** *(reaction)*: when reduced below half HP, the swarm splits into two halves (each HP 11). When either half reaches 0 HP, it doesn't die — it *goes home*, fading back into a photograph.
@@ -823,7 +823,7 @@ This appendix provides full stat blocks for named threats referenced throughout 
 ### The Regent *(S-Rank Gate — The Regent's Domain Final Boss)*
 *The throne. The hunger. The homecoming.*
 
-#### Phase 1 — The Shadow Monarch (100% → 60% HP)
+#### Phase 1 — The Shadow Regent (100% → 60% HP)
 
 | Stat | Value |
 |------|-------|

@@ -5,7 +5,7 @@
 // - 6 RA-native styles tied to RA-specific gear properties (firearms, burst-fire,
 //   striker gauntlets, Anomaly creature tag, elemental damage types).
 // Archery dropped in favor of Gunslinger. Natural Explorer dropped in favor of
-// Anomaly Hunter + Stalker's existing Favored Terrain class feature.
+// Anomaly Ascendant + Stalker's existing Favored Terrain class feature.
 
 export type FightingStyleSource = "dnd-baseline" | "ra-native";
 
@@ -128,7 +128,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 	},
 	{
 		id: "anomaly-hunter",
-		name: "Anomaly Hunter",
+		name: "Anomaly Ascendant",
 		description:
 			"You gain a +1 bonus to attack and damage rolls against creatures with the Anomaly tag. Per the Ascendant Bureau's canonical threat taxonomy, this covers gate-spawn, void-remnants, and dimension-bleed entities.",
 		source: "ra-native",

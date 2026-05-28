@@ -7,6 +7,7 @@ import {
 	Clock,
 	Cloud,
 	Cog,
+	FileInput,
 	GripVertical,
 	Heart,
 	Image,
@@ -27,6 +28,10 @@ import {
 	X,
 	Zap,
 } from "lucide-react";
+import {
+	parseUvttFile,
+	type UvttImportResult,
+} from "@/lib/vtt/uvttImport";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -128,6 +133,12 @@ interface VTTAssetBrowserProps {
 	) => Promise<VTTAsset | null>;
 	onDeleteAsset?: (asset: VTTAsset) => Promise<boolean>;
 	readOnly?: boolean;
+	/**
+	 * Misty Pearl F1 — fires when a `.dd2vtt` / `.uvtt` Dungeondraft /
+	 * Dungeon Alchemist file is imported. Consumer should call
+	 * `addScene(result.scene)` and broadcast.
+	 */
+	onImportUvttScene?: (result: UvttImportResult) => void;
 }
 
 export function VTTAssetBrowser({
@@ -140,6 +151,7 @@ export function VTTAssetBrowser({
 	onUploadAsset,
 	onDeleteAsset,
 	readOnly,
+	onImportUvttScene,
 }: VTTAssetBrowserProps) {
 	const { toast } = useToast();
 	const { user } = useAuth();
@@ -500,7 +512,7 @@ export function VTTAssetBrowser({
 
 			{/* Upload section */}
 			{!readOnly && (
-				<div className="flex gap-1.5">
+				<div className="flex flex-wrap gap-1.5">
 					<input
 						ref={uploadRef}
 						type="file"
@@ -548,6 +560,50 @@ export function VTTAssetBrowser({
 						<Upload className="w-3 h-3 mr-1" />
 						Upload Token
 					</Button>
+					{onImportUvttScene && (
+						<Button
+							variant="outline"
+							size="sm"
+							className="flex-1 text-[10px] h-7"
+							onClick={() => {
+								const input = document.createElement("input");
+								input.type = "file";
+								input.accept = ".dd2vtt,.uvtt,application/json";
+								input.onchange = async (e) => {
+									const file = (e.target as HTMLInputElement).files?.[0];
+									if (!file) return;
+									try {
+										const result = await parseUvttFile(file, {
+											sceneName: file.name
+												.replace(/\.(dd2vtt|uvtt)$/i, "")
+												.trim(),
+										});
+										onImportUvttScene(result);
+										toast({
+											title: "Bureau Cartography Intake",
+											description:
+												result.warnings.length > 0
+													? result.warnings.join(" ")
+													: `Imported "${result.scene.name}" with ${result.scene.walls.length} wall segments and ${result.scene.lights.length} lights.`,
+										});
+									} catch (err) {
+										toast({
+											title: "Map intake failed",
+											description:
+												err instanceof Error ? err.message : String(err),
+											variant: "destructive",
+										});
+									}
+								};
+								input.click();
+							}}
+							data-testid="vtt-asset-browser-import-uvtt"
+							title="Import a .dd2vtt or .uvtt file from Dungeondraft / Dungeon Alchemist"
+						>
+							<FileInput className="w-3 h-3 mr-1" />
+							Import .dd2vtt
+						</Button>
+					)}
 				</div>
 			)}
 

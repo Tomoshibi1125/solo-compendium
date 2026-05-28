@@ -9,7 +9,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Gate Survivor",
 		display_name: "Gate Survivor",
 		description:
-			"You survived a gate break before your Awakening — the ambient mana scarred your nervous system into a permanent state of threat-readiness. You have advantage on saving throws against being frightened by gate-born anomalies and aberrations. Your hit point maximum increases by your character level.",
+			"You survived a gate break before your Awakening — the ambient mana scarred your nervous system into a permanent state of threat-readiness. You have advantage on saving throws against being frightened by gate-born anomalies and anomaly. Your hit point maximum increases by your character level.",
 		flavor:
 			"The sirens went off at 3 AM. By dawn, half the district was rubble. You walked out.",
 		tags: ["awakened", "feat", "awakening", "defensive"],
@@ -70,12 +70,12 @@ const awakeningFeats: CompendiumFeat[] = [
 	},
 	{
 		id: "street-hunter",
-		name: "Street Hunter",
-		display_name: "Street Hunter",
+		name: "Street Ascendant",
+		display_name: "Street Ascendant",
 		description:
 			"You learned to fight in the unregulated gate-adjacent districts before the Bureau found you. You ignore difficult terrain in urban environments. You have advantage on Stealth checks in crowds of 10 or more people, and you can use a bonus action to Hide when within 5 feet of two or more non-hostile creatures.",
 		flavor:
-			"Licensed hunters clear gates. Street hunters clear everything else.",
+			"Licensed ascendants clear gates. Street ascendants clear everything else.",
 		tags: ["awakened", "feat", "awakening", "mobility"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -98,7 +98,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"The Bureau eventually formalized this as a training module after E-Rank street hunters consistently outperformed licensed C-Ranks in urban gate-break scenarios.",
+			"The Bureau eventually formalized this as a training module after E-Rank street ascendants consistently outperformed licensed C-Ranks in urban gate-break scenarios.",
 		theme_tags: ["urban", "stealth", "street"],
 	},
 	{
@@ -131,7 +131,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"First catalogued after a D-Rank Hunter in Busan alerted authorities to a forming gate six hours before any Bureau sensor detected it.",
+			"First catalogued after a D-Rank Ascendant in Busan alerted authorities to a forming gate six hours before any Bureau sensor detected it.",
 		theme_tags: ["detection", "mana", "perception"],
 	},
 	{
@@ -139,7 +139,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		name: "Guild Medic Training",
 		display_name: "Guild Medic Training",
 		description:
-			"You completed field medic certification through a licensed Hunter Guild. When you use a Healer's Kit to stabilize a creature, that creature also regains 1 hit point. You can spend one use of a Healer's Kit as an action to restore hit dice equal to your proficiency bonus to a willing creature, which it can immediately spend to heal.",
+			"You completed field medic certification through a licensed Ascendant Guild. When you use a Healer's Kit to stabilize a creature, that creature also regains 1 hit point. You can spend one use of a Healer's Kit as an action to restore hit dice equal to your proficiency bonus to a willing creature, which it can immediately spend to heal.",
 		flavor:
 			"The Guild pays for the certification. The gate teaches you how to use it.",
 		tags: ["awakened", "feat", "awakening", "healing"],
@@ -197,7 +197,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: [],
 		},
 		discovery_lore:
-			"Evolved informally among independent Hunters who couldn't afford Guild support teams and had to clear low-rank gates solo for income.",
+			"Evolved informally among independent Ascendants who couldn't afford Guild support teams and had to clear low-rank gates solo for income.",
 		theme_tags: ["dungeon", "exploration", "spatial"],
 	},
 	{
@@ -303,7 +303,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		description:
 			"You have contacts in the unregulated Awakened underground — dealers in gate-harvested materials, unlicensed rune crafters, and off-book information brokers. You can locate black market vendors in any settlement with a population above 10,000 by spending 1 hour and making a Presence (Persuasion) or Intelligence (Investigation) check (DC 12). You buy and sell gate-harvested materials at 20% better rates than standard Guild prices.",
 		flavor:
-			"The Bureau doesn't sell Rank-A runestones to E-Rank hunters. The underground does.",
+			"The Bureau doesn't sell Rank-A runestones to E-Rank ascendants. The underground does.",
 		tags: ["awakened", "feat", "awakening", "social"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -369,7 +369,7 @@ const awakeningFeats: CompendiumFeat[] = [
 		display_name: "Anomaly Harvester",
 		description:
 			"You know how to extract useful materials from slain gate creatures before their bodies dissolve. When a gate-born creature is reduced to 0 HP within 30 feet of you, you can use your reaction to harvest one material component (gate-crystal shard, mana core, or reagent) before dissolution. You have advantage on Intelligence (Nature) or Intelligence (Arcana) checks to identify anomaly weaknesses, resistances, and drop tables.",
-		flavor: "Most hunters let the loot dissolve. You carry the right jars.",
+		flavor: "Most ascendants let the loot dissolve. You carry the right jars.",
 		tags: ["awakened", "feat", "awakening", "crafting"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
@@ -392,7 +392,7 @@ const awakeningFeats: CompendiumFeat[] = [
 			conditions: ["Gate-born creature must be within 30 feet"],
 		},
 		discovery_lore:
-			"Pioneered by low-rank hunters who couldn't afford Guild equipment and learned to recycle anomaly remains into field-expedient tools.",
+			"Pioneered by low-rank ascendants who couldn't afford Guild equipment and learned to recycle anomaly remains into field-expedient tools.",
 		theme_tags: ["crafting", "harvesting", "anomaly"],
 	},
 ];

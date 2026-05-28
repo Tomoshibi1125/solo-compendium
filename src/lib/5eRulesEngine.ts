@@ -390,8 +390,13 @@ export interface CharacterAction {
 	properties?: string[];
 }
 
-// Standard 5e utility functions with Rift Ascendant flavor
+// Standard 5e utility functions with Rift Ascendant flavor.
+// NOTE: kept in sync with `src/types/core-rules.ts:getAbilityModifier`.
+// Both include the NaN/Infinity guard to prevent character-sheet NaN
+// propagation when ability scores are temporarily unset during creation.
+// See `docs/ui-canon-parity-audit-2026-05.md` finding M3.
 export function getAbilityModifier(score: number): number {
+	if (!Number.isFinite(score)) return 0;
 	return Math.floor((score - 10) / 2);
 }
 
@@ -427,7 +432,7 @@ const SYSTEM_FAVOR_OPTIONS: RiftFavorOption[] = [
 		description:
 			"The Rift augments your action. Add your Rift Favor die to one ability check, attack roll, or saving throw.",
 		rulesText:
-			"Before or after rolling a d20 for an ability check, attack roll, or saving throw, roll your Rift Favor die and add the result to the total. You must decide to use this before the Warden (Warden) declares the outcome.",
+			"Before or after rolling a d20 for an ability check, attack roll, or saving throw, roll your Rift Favor die and add the result to the total. You must decide to use this before the Warden declares the outcome.",
 		minLevel: 1,
 	},
 	// ── Thematic extras ──

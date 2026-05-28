@@ -1,8 +1,10 @@
 import { formatDistanceToNow } from "date-fns";
 import {
 	Calendar,
+	CalendarDays,
 	Loader2,
 	Plus,
+	Repeat,
 	Save,
 	ScrollText,
 	Sparkles,
@@ -24,8 +26,10 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useCampaign } from "@/hooks/useCampaigns";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
+import { useNotifyDiscord } from "@/hooks/useNotifyDiscord";
 import {
 	type CampaignSessionLogType,
 	type CampaignSessionStatus,
@@ -35,6 +39,16 @@ import {
 	useDeleteCampaignSession,
 	useUpsertCampaignSession,
 } from "@/hooks/useCampaignSessions";
+import {
+	buildIcsForCampaignSessions,
+	downloadIcsBlob,
+	type IcalSessionInput,
+} from "@/lib/sessionIcalExport";
+import {
+	generateRecurrenceSchedule,
+	type RecurrenceFrequency,
+	serializeRecurrenceRule,
+} from "@/lib/sessionRecurrence";
 
 const STATUS_OPTIONS: CampaignSessionStatus[] = [
 	"planned",
@@ -60,21 +74,60 @@ export function CampaignSessionsPanel({
 	canManage,
 }: CampaignSessionsPanelProps) {
 	const { toast } = useToast();
+	const { data: campaign } = useCampaign(campaignId);
 	const { data: sessions = [], isLoading: sessionsLoading } =
 		useCampaignSessions(campaignId);
 	const { data: logs = [], isLoading: logsLoading } =
 		useCampaignSessionLogs(campaignId);
+
+	// Misty Pearl E2 — iCal export. Anyone with read access to the
+	// sessions can subscribe to the calendar; we don't gate behind
+	// `canManage`.
+	const handleExportIcs = () => {
+		try {
+			const inputs: IcalSessionInput[] = sessions.map((s) => ({
+				id: s.id,
+				title: s.title,
+				description: s.description,
+				scheduled_for: s.scheduled_for,
+				location: s.location,
+				recurrence_rule: s.recurrence_rule ?? null,
+				recurrence_parent_id: s.recurrence_parent_id ?? null,
+			}));
+			const text = buildIcsForCampaignSessions(inputs, {
+				campaignName: campaign?.name ?? "Rift Ascendant Campaign",
+			});
+			downloadIcsBlob(text, campaign?.name ?? `campaign-${campaignId}`);
+			toast({
+				title: "Calendar exported",
+				description: "Subscribe in Google / Apple / Outlook Calendar.",
+			});
+		} catch (error) {
+			console.error("[CampaignSessionsPanel] iCal export failed:", error);
+			toast({
+				title: "Export failed",
+				description: "Couldn't generate the calendar file. Try again.",
+				variant: "destructive",
+			});
+		}
+	};
 
 	const upsertSession = useUpsertCampaignSession();
 	const deleteSession = useDeleteCampaignSession();
 	const addLog = useAddCampaignSessionLog();
 	const sendMessage = useSendCampaignMessage();
 	const { injectSandbox, isInjecting } = useCampaignSandboxInjector(campaignId);
+	const { notify: notifyDiscord } = useNotifyDiscord();
 
 	const [sessionTitle, setSessionTitle] = useState("");
 	const [sessionDescription, setSessionDescription] = useState("");
 	const [sessionScheduledFor, setSessionScheduledFor] = useState("");
 	const [sessionLocation, setSessionLocation] = useState("");
+	// F4 of May 2026 remediation plan — recurring session scheduling.
+	const [isRecurring, setIsRecurring] = useState(false);
+	const [recurringFrequency, setRecurringFrequency] =
+		useState<RecurrenceFrequency>("weekly");
+	const [recurringCount, setRecurringCount] = useState<number>(8);
 
 	const [logSessionId, setLogSessionId] = useState("none");
 	const [logType, setLogType] = useState<CampaignSessionLogType>("session");
@@ -100,28 +153,106 @@ export function CampaignSessionsPanel({
 			return;
 		}
 
-		await upsertSession.mutateAsync({
-			campaignId,
-			title: sessionTitle.trim(),
-			description: sessionDescription.trim() || null,
-			scheduledFor: sessionScheduledFor
-				? new Date(sessionScheduledFor).toISOString()
-				: null,
-			location: sessionLocation.trim() || null,
-			status: "planned",
-		});
+		const titleTrim = sessionTitle.trim();
+		const descriptionTrim = sessionDescription.trim() || null;
+		const locationTrim = sessionLocation.trim() || null;
+		const seedIso = sessionScheduledFor
+			? new Date(sessionScheduledFor).toISOString()
+			: null;
 
-		await sendMessage
-			.mutateAsync({
+		// Recurring path: only valid when we have a scheduled date.
+		if (isRecurring && seedIso) {
+			const safeCount = Math.max(1, Math.min(52, recurringCount || 1));
+			const schedule = generateRecurrenceSchedule(new Date(seedIso), {
+				frequency: recurringFrequency,
+				count: safeCount,
+			});
+			const ruleString = serializeRecurrenceRule({
+				frequency: recurringFrequency,
+				count: safeCount,
+			});
+
+			// R5 of Round 2 — seed row carries the rule; children link to seed
+			// via recurrenceParentId. RPC now accepts both params (migration
+			// 20260526120000).
+			let seedSessionId: string | null = null;
+			for (let idx = 0; idx < schedule.length; idx++) {
+				const occurrenceIso = schedule[idx];
+				const occurrenceTitle =
+					idx === 0 ? titleTrim : `${titleTrim} (#${idx + 1})`;
+				const result = await upsertSession.mutateAsync({
+					campaignId,
+					title: occurrenceTitle,
+					description: descriptionTrim,
+					scheduledFor: occurrenceIso,
+					location: locationTrim,
+					status: "planned",
+					recurrenceRule: idx === 0 ? ruleString : null,
+					recurrenceParentId: idx === 0 ? null : seedSessionId,
+				});
+				if (idx === 0) {
+					seedSessionId = result?.sessionId ?? null;
+				}
+			}
+
+			toast({
+				title: "Recurring sessions scheduled",
+				description: `Created ${schedule.length} ${recurringFrequency} sessions starting ${new Date(seedIso).toLocaleString()}.`,
+			});
+
+			await sendMessage
+				.mutateAsync({
+					campaignId,
+					content: `**Campaign**: ${schedule.length} recurring "${titleTrim}" sessions scheduled (${recurringFrequency}).`,
+				})
+				.catch(console.error);
+
+			// Misty Pearl E3 — fire-and-forget Discord relay for the seed.
+			notifyDiscord({
 				campaignId,
-				content: `**Campaign**: A new session has been scheduled - "${sessionTitle.trim()}"`,
-			})
-			.catch(console.error);
+				kind: "session_scheduled",
+				payload: {
+					title: titleTrim,
+					date: new Date(seedIso).toLocaleString(),
+				},
+			}).catch(console.error);
+		} else {
+			await upsertSession.mutateAsync({
+				campaignId,
+				title: titleTrim,
+				description: descriptionTrim,
+				scheduledFor: seedIso,
+				location: locationTrim,
+				status: "planned",
+			});
+
+			await sendMessage
+				.mutateAsync({
+					campaignId,
+					content: `**Campaign**: A new session has been scheduled - "${titleTrim}"`,
+				})
+				.catch(console.error);
+
+			// Misty Pearl E3 — fire-and-forget Discord relay.
+			if (seedIso) {
+				notifyDiscord({
+					campaignId,
+					kind: "session_scheduled",
+					payload: {
+						title: titleTrim,
+						date: new Date(seedIso).toLocaleString(),
+					},
+				}).catch(console.error);
+			}
+		}
 
 		setSessionTitle("");
 		setSessionDescription("");
 		setSessionScheduledFor("");
 		setSessionLocation("");
+		setIsRecurring(false);
+		setRecurringFrequency("weekly");
+		setRecurringCount(8);
 	};
 
 	const changeStatus = async (
@@ -183,6 +314,19 @@ export function CampaignSessionsPanel({
 	return (
 		<div className="space-y-6" data-testid="campaign-sessions-panel">
 			<AscendantWindow title="SESSION SCHEDULE">
+				<div className="mb-4 flex flex-wrap items-center justify-end gap-2">
+					<Button
+						variant="outline"
+						size="sm"
+						className="gap-2"
+						onClick={handleExportIcs}
+						aria-label="Export sessions to .ics calendar file"
+						data-testid="campaign-sessions-export-ics"
+					>
+						<CalendarDays className="w-4 h-4" />
+						Export Calendar (.ics)
+					</Button>
+				</div>
 				{canManage && (
 					<div className="mb-6 rounded-lg border border-border bg-muted/30 p-4 space-y-3">
 						<h3 className="font-heading font-semibold flex items-center gap-2">
@@ -232,9 +376,86 @@ export function CampaignSessionsPanel({
 								/>
 							</div>
 						</div>
-						<Button onClick={createSession} disabled={upsertSession.isPending}>
+						<div className="flex items-center gap-3 pt-1">
+							<div className="flex items-center gap-2">
+								<Switch
+									id="session-recurring"
+									checked={isRecurring}
+									onCheckedChange={(value) => setIsRecurring(Boolean(value))}
+									aria-label="Schedule recurring sessions"
+									data-testid="session-recurring-toggle"
+								/>
+								<Label
+									htmlFor="session-recurring"
+									className="flex items-center gap-1.5 cursor-pointer"
+								>
+									<Repeat className="w-4 h-4" />
+									Recurring
+								</Label>
+							</div>
+							{isRecurring && (
+								<div className="flex items-center gap-2 flex-wrap">
+									<Select
+										value={recurringFrequency}
+										onValueChange={(value) =>
+											setRecurringFrequency(value as RecurrenceFrequency)
+										}
+									>
+										<SelectTrigger
+											className="w-[140px]"
+											data-testid="session-recurring-frequency"
+										>
+											<SelectValue />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="weekly">Weekly</SelectItem>
+											<SelectItem value="biweekly">Bi-weekly</SelectItem>
+											<SelectItem value="monthly">Monthly</SelectItem>
+										</SelectContent>
+									</Select>
+									<Input
+										type="number"
+										min={1}
+										max={52}
+										value={recurringCount}
+										onChange={(e) =>
+											setRecurringCount(
+												Math.max(
+													1,
+													Math.min(
+														52,
+														Number.parseInt(e.target.value, 10) || 1,
+													),
+												),
+											)
+										}
+										className="w-20"
+										aria-label="Number of occurrences"
+										data-testid="session-recurring-count"
+									/>
+									<span className="text-xs text-muted-foreground">
+										occurrence{recurringCount > 1 ? "s" : ""}
+									</span>
+								</div>
+							)}
+						</div>
+						{isRecurring && !sessionScheduledFor && (
+							<p className="text-xs text-amber-400">
+								Set a Scheduled For date to enable recurring scheduling.
+							</p>
+						)}
+						<Button
+							onClick={createSession}
+							disabled={
+								upsertSession.isPending ||
+								(isRecurring && !sessionScheduledFor)
+							}
+							data-testid="session-save-btn"
+						>
 							<Save className="w-4 h-4 mr-2" />
-							Save Session
+							{isRecurring && sessionScheduledFor
+								? `Save ${recurringCount} Sessions`
+								: "Save Session"}
 						</Button>
 					</div>
 				)}

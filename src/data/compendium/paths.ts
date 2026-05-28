@@ -1897,12 +1897,12 @@ export const paths: Path[] = [
 			skills: ["Mana Flow"],
 		},
 		description:
-			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial gate dragonsâ€”ancient masters of the Absolute who predated even the current cycle of Gates. Their spirit manifests as elemental fury, their very cells crystallizing into draconic mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
+			"The Aetheric Dragon mandate awakens in those whose anomalous resonance carries the signature of the primordial gate dragonsâ€”ancient masters of the Absolute who predated even the current cycle of Gates. Their spirit manifests as elemental fury, their very cells crystallizing into regent-tier mana-scales that hum with the power of a dying star. They are not merely casters; they are living manifestations of the Absolute's primal rage.",
 		features: [
 			{
-				name: "Draconic Resonance",
+				name: "regent-tier Resonance",
 				description:
-					"Choose an aetheric dragon type. Double prof bonus on PRE checks with draconic beings. Instinctively understand the ancient Primordial tongue.",
+					"Choose an aetheric dragon type. Double prof bonus on PRE checks with regent-tier beings. Instinctively understand the ancient Primordial tongue.",
 				level: 1,
 			},
 			{
@@ -1924,9 +1924,9 @@ export const paths: Path[] = [
 				level: 14,
 			},
 			{
-				name: "Draconic Mandate",
+				name: "regent-tier Mandate",
 				description:
-					"Action: 60-ft aura of draconic pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Mandate-Flux.",
+					"Action: 60-ft aura of regent-tier pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Mandate-Flux.",
 				level: 18,
 			},
 		],
@@ -3822,7 +3822,7 @@ export const paths: Path[] = [
 	},
 	{
 		id: "stalker--apex-hunter",
-		name: "Path of the Apex Hunter",
+		name: "Path of the Apex Ascendant",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
@@ -3832,10 +3832,10 @@ export const paths: Path[] = [
 			skills: ["Survival", "Perception"],
 		},
 		description:
-			"The Apex Hunter mandate is held by those who have mastered the art of exploiting the physical vulnerabilities of the Absolute's most dangerous entities. They do not just hunt; they analyze the aetheric structure of their prey, adapting their strikes to counteract specific threat profiles. In the modern world, the Apex Hunter is the supreme field operative, capable of neutralizing entities that ignore conventional force.",
+			"The Apex Ascendant mandate is held by those who have mastered the art of exploiting the physical vulnerabilities of the Absolute's most dangerous entities. They do not just hunt; they analyze the aetheric structure of their prey, adapting their strikes to counteract specific threat profiles. In the modern world, the Apex Ascendant is the supreme field operative, capable of neutralizing entities that ignore conventional force.",
 		features: [
 			{
-				name: "Hunter's Resonance",
+				name: "Ascendant's Resonance",
 				description:
 					"Choose one specialty: Giant Slayer (extra damage vs large entities), Horde Breaker (additional strikes vs multiple targets), or Absolute Will (advantage against mental intrusion).",
 				level: 3,
@@ -3938,7 +3938,7 @@ export const paths: Path[] = [
 	},
 	{
 		id: "stalker--umbral-hunter",
-		name: "Path of the Umbral Hunter",
+		name: "Path of the Umbral Ascendant",
 		jobId: "stalker",
 		jobName: "Stalker",
 		tier: 2,
@@ -3948,7 +3948,7 @@ export const paths: Path[] = [
 			skills: ["Stealth", "Perception"],
 		},
 		description:
-			"The Umbral Hunter mandate is for those who have mastered the zero-light resonance of the highest-rank gates. They do not just hide in shadow; they become one with the void, manifesting as an invisible predator that strikes with absolute lethality from the darkness. In the modern world, the Umbral Hunter is the supreme assassin of the Stalker lineage, their very existence a ghost story in the halls of the Absolute.",
+			"The Umbral Ascendant mandate is for those who have mastered the zero-light resonance of the highest-rank gates. They do not just hide in shadow; they become one with the void, manifesting as an invisible predator that strikes with absolute lethality from the darkness. In the modern world, the Umbral Ascendant is the supreme assassin of the Stalker lineage, their very existence a ghost story in the halls of the Absolute.",
 		features: [
 			{
 				name: "Absolute Ambush",
@@ -3969,7 +3969,7 @@ export const paths: Path[] = [
 				level: 7,
 			},
 			{
-				name: "Hunter's Flurry",
+				name: "Ascendant's Flurry",
 				description:
 					"If your strike misses, the Absolute realigns your path for an immediate follow-up strike.",
 				level: 11,
@@ -4343,7 +4343,7 @@ export const paths: Path[] = [
 			{
 				name: "Absolute Resonance: Turn the Entropic",
 				description:
-					"Action: entropic entities (fey/fiends) within 30 ft make SENSE save or are turned for 1 min.",
+					"Action: entropic entities (fey/anomaly) within 30 ft make SENSE save or are turned for 1 min.",
 				level: 3,
 			},
 			{

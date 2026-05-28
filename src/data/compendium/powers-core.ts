@@ -3,14 +3,7 @@ import type { CompendiumPower } from "../../types/compendium";
 export const powers_core: CompendiumPower[] = [
 	{
 		id: "shadow-step",
-		classes: [
-			"Destroyer",
-			"Striker",
-			"Assassin",
-			"Stalker",
-			"Berserker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Shadow Step",
 		display_name: "Shadow Step",
 		description:
@@ -83,7 +76,7 @@ export const powers_core: CompendiumPower[] = [
 				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: [
 				"A dead Guild Master",
-				"Hunter Academy Reference Collection",
+				"Ascendant Academy Reference Collection",
 			],
 		},
 		flavor: "The Bureau tried to ban this. They failed.",
@@ -156,7 +149,7 @@ export const powers_core: CompendiumPower[] = [
 				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: [
 				"A dead Guild Master",
-				"Hunter Academy Reference Collection",
+				"Ascendant Academy Reference Collection",
 			],
 		},
 		flavor:
@@ -339,7 +332,7 @@ export const powers_core: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Located by a detection-type Hunter whose radar ability triggered on an otherwise empty room.",
+			"Located by a detection-type Ascendant whose radar ability triggered on an otherwise empty room.",
 		theme_tags: ["forbidden", "regent-era", "elite-tier"],
 	},
 	{
@@ -359,7 +352,7 @@ export const powers_core: CompendiumPower[] = [
 				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: [
 				"A dead Guild Master",
-				"Hunter Academy Reference Collection",
+				"Ascendant Academy Reference Collection",
 			],
 		},
 		flavor:
@@ -414,7 +407,7 @@ export const powers_core: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Sold by a mysterious merchant who appears only during full moons near active Gate sites.",
-		theme_tags: ["hunter-bureau", "experimental"],
+		theme_tags: ["ascendant-bureau", "experimental"],
 	},
 	{
 		id: "lycanthropy",
@@ -562,7 +555,7 @@ export const powers_core: CompendiumPower[] = [
 				"Available to Bureau-certified casters at the appropriate rank.",
 			prior_owners: [
 				"A dead Guild Master",
-				"Hunter Academy Reference Collection",
+				"Ascendant Academy Reference Collection",
 			],
 		},
 		flavor: "An efficient overflow of stored mana.",
@@ -610,7 +603,7 @@ export const powers_core: CompendiumPower[] = [
 		},
 		discovery_lore:
 			"Excavated from the crystallized mana deposit at the center of a depleted Gate core.",
-		theme_tags: ["urban-combat", "guild-ops", "hunter-bureau"],
+		theme_tags: ["urban-combat", "guild-ops", "ascendant-bureau"],
 	},
 	{
 		id: "invisibility",

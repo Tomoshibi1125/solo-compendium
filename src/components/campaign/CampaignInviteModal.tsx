@@ -1,6 +1,14 @@
 import { formatDistanceToNow } from "date-fns";
-import { Copy, Link as LinkIcon, Plus, Trash2, Users } from "lucide-react";
-import { useState } from "react";
+import {
+	Copy,
+	Download,
+	Link as LinkIcon,
+	Plus,
+	Trash2,
+	Users,
+} from "lucide-react";
+import QRCode from "react-qr-code";
+import { useRef, useState } from "react";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -64,6 +72,10 @@ export function CampaignInviteModal({
 	const [inviteEmail, setInviteEmail] = useState("");
 	const [revokeReason] = useState("");
 
+	// Misty Pearl E1 — QR code rasterization for "Save as PNG".
+	const qrWrapRef = useRef<HTMLDivElement | null>(null);
+	const shareUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/campaigns/join/${campaign.share_code}`;
+
 	const handleCreateInvite = async () => {
 		const expiresAt = inviteExpiresAt
 			? new Date(inviteExpiresAt).toISOString()
@@ -98,12 +110,75 @@ export function CampaignInviteModal({
 	};
 
 	const handleCopyShareLink = async () => {
-		const shareUrl = `${window.location.origin}/campaigns/join/${campaign.share_code}`;
 		await navigator.clipboard.writeText(shareUrl);
 		toast({
 			title: "Global Share Link Copied",
 			description: "Anyone with this link can attempt to join the campaign.",
 		});
+	};
+
+	// Misty Pearl E1 — Rasterize the SVG QR to a PNG download via canvas.
+	const handleSaveQr = () => {
+		const svg = qrWrapRef.current?.querySelector("svg");
+		if (!svg) {
+			toast({
+				title: "QR not ready",
+				description: "Try again in a moment.",
+				variant: "destructive",
+			});
+			return;
+		}
+		try {
+			const svgData = new XMLSerializer().serializeToString(svg);
+			// Encode as data URL so canvas can paint it without a CORS hop.
+			const svgBlob = new Blob([svgData], {
+				type: "image/svg+xml;charset=utf-8",
+			});
+			const url = URL.createObjectURL(svgBlob);
+			const img = new Image();
+			img.onload = () => {
+				const size = 768;
+				const canvas = document.createElement("canvas");
+				canvas.width = size;
+				canvas.height = size;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) {
+					URL.revokeObjectURL(url);
+					return;
+				}
+				// Transparent background so the QR drops cleanly on any theme.
+				ctx.clearRect(0, 0, size, size);
+				ctx.drawImage(img, 0, 0, size, size);
+				URL.revokeObjectURL(url);
+				canvas.toBlob((blob) => {
+					if (!blob) return;
+					const dlUrl = URL.createObjectURL(blob);
+					const link = document.createElement("a");
+					link.href = dlUrl;
+					link.download = `${campaign.share_code}-invite-qr.png`;
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+					URL.revokeObjectURL(dlUrl);
+				}, "image/png");
+			};
+			img.onerror = () => {
+				URL.revokeObjectURL(url);
+				toast({
+					title: "QR export failed",
+					description: "Couldn't rasterize the QR. Copy the link instead.",
+					variant: "destructive",
+				});
+			};
+			img.src = url;
+		} catch (error) {
+			console.error("[CampaignInviteModal] QR save failed:", error);
+			toast({
+				title: "QR export failed",
+				description: "Couldn't save the QR. Copy the link instead.",
+				variant: "destructive",
+			});
+		}
 	};
 
 	return (
@@ -144,7 +219,29 @@ export function CampaignInviteModal({
 								This code never expires and can be used by anyone to immediately
 								join your campaign directly as an Ascendant.
 							</AscendantText>
-							<div className="flex justify-center gap-3 pt-4">
+
+							{/* Misty Pearl E1 — QR for mobile scanning */}
+							<div className="flex flex-col items-center gap-3 pt-2">
+								<div
+									ref={qrWrapRef}
+									className="inline-block rounded-md border border-primary/30 bg-background/60 p-3"
+									aria-label={`QR code for ${campaign.name} invite`}
+									data-testid="campaign-invite-qr"
+								>
+									<QRCode
+										value={shareUrl}
+										size={192}
+										fgColor="#facc15"
+										bgColor="transparent"
+										level="M"
+									/>
+								</div>
+								<p className="text-[10px] text-muted-foreground max-w-xs">
+									Scan with a phone camera to open the join page instantly.
+								</p>
+							</div>
+
+							<div className="flex flex-wrap justify-center gap-3 pt-4">
 								<Button onClick={() => handleCopyJoinCode(campaign.share_code)}>
 									<Copy className="w-4 h-4 mr-2" />
 									Copy Code
@@ -152,6 +249,15 @@ export function CampaignInviteModal({
 								<Button variant="outline" onClick={handleCopyShareLink}>
 									<LinkIcon className="w-4 h-4 mr-2" />
 									Copy Join URL
+								</Button>
+								<Button
+									variant="outline"
+									onClick={handleSaveQr}
+									aria-label="Save QR code as PNG"
+									data-testid="campaign-invite-qr-download"
+								>
+									<Download className="w-4 h-4 mr-2" />
+									Save QR
 								</Button>
 							</div>
 						</div>

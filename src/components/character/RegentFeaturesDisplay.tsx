@@ -39,7 +39,7 @@ export function RegentFeaturesDisplay({
 						Regent Features
 					</CardTitle>
 					<CardDescription>
-						No regent unlocked. Complete quests and have your Warden (Warden)
+						No regent unlocked. Complete quests and have your Warden
 						unlock a regent for you.
 					</CardDescription>
 				</CardHeader>
@@ -47,7 +47,7 @@ export function RegentFeaturesDisplay({
 					<div className="text-center py-8 text-muted-foreground">
 						<Lock className="w-12 h-12 mx-auto mb-4 opacity-50" />
 						<p className="text-sm">
-							Regent abilities are locked until unlocked by your Warden (Warden)
+							Regent abilities are locked until unlocked by your Warden
 						</p>
 						<p className="text-xs mt-2">
 							Complete the required quest to unlock regent features
@@ -59,20 +59,77 @@ export function RegentFeaturesDisplay({
 	}
 
 	const getRegentFeatures = () => {
-		if (!regentData || !regentData.class_features) return [];
+		if (!regentData) return [];
 
-		return regentData.class_features
-			.filter((f) => f.level <= regentLevel)
-			.map((f) => ({
+		// The static regents (src/data/compendium/regents.ts) carry richer fields
+		// (`abilities`, `features`) that the supabase-derived `CompendiumRegent`
+		// type does not expose — cast for the additional surface so the UI can
+		// render martial-themed regents (Radiant/Steel/Destruction/War).
+		const extended = regentData as typeof regentData & {
+			abilities?: Array<{
+				name: string;
+				description: string;
+				type: "passive" | "active" | "action" | "bonus-action" | "reaction";
+				frequency?: string;
+				power_level?: number;
+			}>;
+			features?: Array<{
+				name: string;
+				description: string;
+				power_level?: number;
+			}>;
+		};
+
+		const classFeatureEntries =
+			regentData.class_features
+				?.filter((f) => f.level <= regentLevel)
+				.map((f) => ({
+					name: f.name,
+					description: f.description,
+					type: f.type,
+					frequency: f.frequency,
+					level: f.level,
+					power_level: undefined as number | undefined,
+				})) ?? [];
+
+		// Many non-spellcasting regents (radiant/steel/destruction/war/etc.) store
+		// content in `abilities[]` (level-agnostic, gated by power_level instead)
+		// and/or `features[]` (passive trait descriptions). Surface both so those
+		// regents don't render as empty cards.
+		const abilityEntries =
+			extended.abilities?.map((a) => ({
+				name: a.name,
+				description: a.description,
+				type: a.type,
+				frequency: a.frequency,
+				level: 0,
+				power_level: a.power_level,
+			})) ?? [];
+
+		const featureEntries =
+			extended.features?.map((f) => ({
 				name: f.name,
 				description: f.description,
-				type: f.type,
-				frequency: f.frequency,
-				level: f.level,
-			}));
+				type: "passive" as const,
+				frequency: undefined,
+				level: 0,
+				power_level: f.power_level,
+			})) ?? [];
+
+		const seen = new Set<string>();
+		return [
+			...classFeatureEntries,
+			...abilityEntries,
+			...featureEntries,
+		].filter((entry) => {
+			if (seen.has(entry.name)) return false;
+			seen.add(entry.name);
+			return true;
+		});
 	};
 
 	const regentFeatures = getRegentFeatures();
+	const additionalSpells = regentData?.spellcasting?.additional_spells ?? [];
 
 	return (
 		<Card className={cn("w-full", className)}>
@@ -140,9 +197,16 @@ export function RegentFeaturesDisplay({
 											{feature.frequency}
 										</Badge>
 									)}
-									<Badge variant="outline" className="text-xs">
-										Lvl {feature.level}
-									</Badge>
+									{feature.level > 0 && (
+										<Badge variant="outline" className="text-xs">
+											Lvl {feature.level}
+										</Badge>
+									)}
+									{feature.power_level !== undefined && (
+										<Badge variant="secondary" className="text-xs">
+											PL {feature.power_level}
+										</Badge>
+									)}
 								</div>
 								<div className="text-sm text-muted-foreground line-clamp-2">
 									<AutoLinkText text={feature.description || ""} />
@@ -176,6 +240,22 @@ export function RegentFeaturesDisplay({
 								);
 							})}
 						</div>
+						{additionalSpells.length > 0 && (
+							<div className="space-y-2">
+								<h5 className="text-sm font-medium">Regent-Granted Spells</h5>
+								<div className="flex flex-wrap gap-2">
+									{additionalSpells.map((spellName) => (
+										<Badge
+											key={spellName}
+											variant="outline"
+											className="text-xs"
+										>
+											{spellName}
+										</Badge>
+									))}
+								</div>
+							</div>
+						)}
 					</div>
 				)}
 

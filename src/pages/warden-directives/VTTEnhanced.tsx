@@ -22,6 +22,9 @@ import {
 	MessageSquare,
 	Minus,
 	MousePointer2,
+	Box,
+	Hexagon,
+	Mic,
 	Pause,
 	Pencil,
 	Play,
@@ -109,6 +112,10 @@ import {
 	LightSourceConfigDialog,
 	type LightSourceConfigDialogProps,
 } from "@/components/vtt/LightSourceConfigDialog";
+import { RegionConfigDialog } from "@/components/vtt/RegionConfigDialog";
+import { AnimatedTilesPanel } from "@/components/vtt/AnimatedTilesPanel";
+import { StrataDrawer } from "@/components/vtt/StrataDrawer";
+import { StrataSelector } from "@/components/vtt/StrataSelector";
 import { SessionControlsMenu } from "@/components/vtt/SessionControlsMenu";
 import { TokenActionBar } from "@/components/vtt/TokenActionBar";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
@@ -122,8 +129,10 @@ import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
 import { VTTSceneLibrary } from "@/components/vtt/VTTSceneLibrary";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
+import { SceneTransition } from "@/components/vtt/SceneTransition";
 import { VttDomFallbackSurface } from "@/components/vtt/VttDomFallbackSurface";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
+import { CommNetPanel } from "@/components/vtt/CommNetPanel";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import {
 	WardenToolsPanel as ProtocolWardenTools,
@@ -167,7 +176,11 @@ import {
 	vttAudioManager,
 } from "@/hooks/useVTTAudio";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
+import { useVTTRegionEngine } from "@/hooks/useVTTRegionEngine";
 import { useVTTSettings } from "@/hooks/useVTTSettings";
+import { useTokenEffectEngine } from "@/hooks/useTokenEffectEngine";
+import { useCampaign } from "@/hooks/useCampaigns";
+import { useLiveKitToken } from "@/hooks/useLiveKitToken";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Playlist } from "@/lib/audio/types";
 import { useAuth } from "@/lib/auth/authContext";
@@ -217,6 +230,7 @@ import {
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import {
 	addLightToScene,
+	addRegionToScene,
 	addWallToScene,
 	buildDefaultVttScene,
 	computeVttHydration,
@@ -231,8 +245,10 @@ import {
 	normalizeVttScene,
 	removeAssetFromVttScenes,
 	removeLightFromScene,
+	removeRegionFromScene,
 	removeWallFromScene,
 	updateLightInScene,
+	updateRegionInScene,
 	updateWallInScene,
 	upsertVttScene,
 } from "@/lib/vtt/sceneState";
@@ -256,6 +272,15 @@ import "./VTTEnhanced.css";
 const WardenDirectiveMatrix = React.lazy(() =>
 	import("@/components/warden-directives/WardenDirectiveMatrix").then((m) => ({
 		default: m.WardenDirectiveMatrix,
+	})),
+);
+
+// Misty Pearl C1 — lazy-load the 3D Spatial Strata Viewer so the
+// three.js + R3F bundle only enters the critical path when a Warden
+// flips into Labs / 3D mode.
+const LazyVttThreeStage = React.lazy(() =>
+	import("@/components/vtt/VttThreeStage").then((m) => ({
+		default: m.VttThreeStage,
 	})),
 );
 
@@ -823,7 +848,18 @@ const VTTEnhanced = () => {
 		| "pointer"
 		| "light"
 		| "wall"
+		| "region"
 	>("select");
+	// Misty Pearl A3 — Rift Region authoring state.
+	const [regionDialogOpen, setRegionDialogOpen] = useState(false);
+	const [regionDialogTarget, setRegionDialogTarget] = useState<
+		import("@/types/vtt").VTTRiftRegion | null
+	>(null);
+	// Misty Pearl A2 — Currently-focused Stratum id. Null falls back to the
+	// scene's default stratum.
+	const [activeStratumId, setActiveStratumId] = useState<string | null>(null);
+	// Misty Pearl C1 — Labs / Spatial Strata Viewer toggle.
+	const [viewMode, setViewMode] = useState<"2d" | "3d">("2d");
 	// Light authoring dialog state. When `lightDialogTargetId` is null we're
 	// creating a new light at `lightDialogSeed`; otherwise we're editing the
 	// scene light with that id.
@@ -1274,6 +1310,47 @@ const VTTEnhanced = () => {
 		setSessionState,
 	} = useVTTSettings(campaignId ?? null);
 
+	// Misty Pearl I3 — mint a LiveKit token only when the campaign has
+	// provisioned an SFU. Falls back to trystero mesh otherwise.
+	const { data: campaignRow } = useCampaign(campaignId ?? "");
+	const commnetLiveKit = useLiveKitToken({
+		campaignId: campaignId ?? null,
+		sessionId: sessionId ?? null,
+		enabled:
+			!!campaignId &&
+			!!campaignRow?.livekit_url &&
+			sessionStatus.state !== "ended",
+	});
+
+	// Misty Pearl A3 — Rift Region runtime engine wiring.
+	useVTTRegionEngine({
+		enabled: !!currentScene,
+		tokens: currentScene?.tokens ?? EMPTY_ARRAY,
+		regions: currentScene?.riftRegions,
+		onEvent: (event) => {
+			if (event.kind === "whisper_warden") {
+				toast({
+					title: "Rift Region",
+					description: event.message,
+				});
+			} else if (event.kind === "damage_on_enter") {
+				toast({
+					title: "Anomaly field hit",
+					description: `Token ${event.tokenId.slice(0, 6)} takes ${event.dice} ${event.damageType} on entry.`,
+				});
+			}
+		},
+	});
+
+	// Misty Pearl B1 — Active Effects v2 lifecycle engine.
+	useTokenEffectEngine({
+		enabled: !!currentScene,
+		tokens: currentScene?.tokens ?? EMPTY_ARRAY,
+		applyTokenEffects: (tokenId, effects) => {
+			updateToken(tokenId, { effects });
+		},
+	});
+
 	// Handle realtime events
 	useEffect(() => {
 		const unsubSceneChange = vttRealtime.on("scene_change", (payload) => {
@@ -1323,7 +1400,7 @@ const VTTEnhanced = () => {
 		() => ({
 			...visibleLayers,
 			// Map layer (0) always visible for Warden — matches Foundry/Roll20/DDB
-			// where the GM always sees the background map regardless of layer toggles.
+			// where the Warden always sees the background map regardless of layer toggles.
 			0: isWarden ? true : visibleLayers[0],
 			3: isWarden ? visibleLayers[3] : false,
 		}),
@@ -3065,6 +3142,34 @@ const VTTEnhanced = () => {
 				return;
 			}
 
+			// Misty Pearl A3 — click-to-author. Seeds a small 4-vertex square
+			// region centered on the tap (~2 grid units per side) and opens
+			// the config dialog so the Warden can tune the name / color /
+			// behaviors. Polygon vertex editing comes in a follow-up pass —
+			// MVP authoring needs a single click, not a polygon-draw mode.
+			if (selectedTool === "region" && isWarden && currentScene) {
+				const cx = grid.gridX * gridSize;
+				const cy = grid.gridY * gridSize;
+				const half = gridSize * 2;
+				const seedRegion = {
+					id: `region-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+					name: "Rift Region",
+					polygon: [
+						{ x: cx - half, y: cy - half },
+						{ x: cx + half, y: cy - half },
+						{ x: cx + half, y: cy + half },
+						{ x: cx - half, y: cy + half },
+					],
+					color: "#7c3aed",
+					opacity: 0.35,
+					visibleToPlayers: true,
+					behaviors: [],
+				};
+				setRegionDialogTarget(seedRegion);
+				setRegionDialogOpen(true);
+				return;
+			}
+
 			if (selectedTool === "note" && isWarden) {
 				const text = noteText.trim();
 				if (!text) {
@@ -4410,6 +4515,14 @@ const VTTEnhanced = () => {
 										</DropdownMenuContent>
 									</DropdownMenu>
 								</div>
+								{/* Misty Pearl A2 — Scene Strata selector (only renders when multi-floor) */}
+								{currentScene && (
+									<StrataSelector
+										scene={currentScene}
+										activeLevelId={activeStratumId}
+										onChange={setActiveStratumId}
+									/>
+								)}
 								<Badge
 									variant={vttRealtime.isConnected ? "default" : "destructive"}
 									className="text-[10px] inline-flex items-center gap-1 shrink-0"
@@ -4442,6 +4555,32 @@ const VTTEnhanced = () => {
 						}
 						right={
 							<>
+								{/* Misty Pearl C1 — Labs / Spatial Mode toggle */}
+								{isActualWarden && (
+									<Button
+										data-testid="vtt-spatial-mode-toggle"
+										variant="outline"
+										size="sm"
+										onClick={() => setViewMode(viewMode === "3d" ? "2d" : "3d")}
+										className={cn(
+											"h-8 text-[11px] px-2",
+											viewMode === "3d"
+												? "border-primary text-primary"
+												: "text-foreground/70",
+										)}
+										title={
+											viewMode === "3d"
+												? "Exit Spatial Mode (Labs)"
+												: "Enter Spatial Strata Viewer (Labs)"
+										}
+										aria-label="Toggle Spatial Strata Viewer"
+									>
+										<Box className="w-3.5 h-3.5" aria-hidden />
+										<span className="hidden md:inline ml-1.5">
+											{viewMode === "3d" ? "2D" : "3D Labs"}
+										</span>
+									</Button>
+								)}
 								{isActualWarden && (
 									<Button
 										data-testid="vtt-player-view-toggle"
@@ -4755,6 +4894,20 @@ const VTTEnhanced = () => {
 												}}
 											/>
 										</AscendantWindow>
+										{/* Misty Pearl A2 — Strata authoring (multi-floor scene CRUD) */}
+										{isWarden && currentScene && (
+											<StrataDrawer
+												scene={currentScene}
+												onSceneChange={(next) => updateScene(next)}
+											/>
+										)}
+										{/* Misty Pearl B4 polish — Animated tile management */}
+										{isWarden && currentScene && (
+											<AnimatedTilesPanel
+												scene={currentScene}
+												onSceneChange={(next) => updateScene(next)}
+											/>
+										)}
 										<AscendantWindow title="SCENES" compact density="compact">
 											<div className="space-y-1 max-h-40 overflow-y-auto">
 												{scenes.map((scene) => (
@@ -4889,6 +5042,7 @@ const VTTEnhanced = () => {
 														{ key: "note", label: "Note", Icon: FileText },
 														{ key: "light", label: "Light", Icon: Lightbulb },
 														{ key: "wall", label: "Wall", Icon: BrickWall },
+														{ key: "region", label: "Region", Icon: Hexagon },
 														{ key: "measure", label: "Measure", Icon: Ruler },
 														{ key: "pointer", label: "Point", Icon: Radio },
 													] as const
@@ -6380,6 +6534,23 @@ const VTTEnhanced = () => {
 													projection.
 												</AscendantText>
 											</div>
+										) : viewMode === "3d" && isWarden ? (
+											// Misty Pearl C1 — Spatial Strata Viewer (Labs).
+											<React.Suspense
+												fallback={
+													<div
+														className="absolute inset-0 flex items-center justify-center text-xs text-foreground/60"
+														data-testid="vtt-spatial-loading"
+													>
+														Bureau Cartography — booting Spatial Mode…
+													</div>
+												}
+											>
+												<LazyVttThreeStage
+													scene={currentScene}
+													isWarden={isWarden}
+												/>
+											</React.Suspense>
 										) : pixiInitFailed ? (
 											<VttDomFallbackSurface
 												scene={currentScene}
@@ -6425,8 +6596,17 @@ const VTTEnhanced = () => {
 												onTokenDragStart={handlePixiTokenDragStart}
 												onTokenDragEnd={handlePixiTokenDragEnd}
 												onInitError={onPixiInitError}
+												activeStratumId={activeStratumId}
 											/>
 										)}
+										{/* Misty Pearl B3 — Scene transition overlay */}
+										<SceneTransition
+											sceneId={currentScene?.id ?? null}
+											enabled={vttSettings.sceneTransitionEnabled}
+											title={currentScene?.transitionTitle}
+											sceneName={currentScene?.name}
+											durationMs={vttSettings.sceneTransitionDurationMs}
+										/>
 										{selectionMarqueeRect &&
 											(selectionMarqueeRect.width > 2 ||
 												selectionMarqueeRect.height > 2) && (
@@ -6913,6 +7093,12 @@ const VTTEnhanced = () => {
 											icon: Radio,
 											label: "Broadcast",
 											testId: "vtt-rail-right-broadcast",
+										},
+										{
+											id: "commnet",
+											icon: Mic,
+											label: "Comm-Net",
+											testId: "vtt-rail-right-commnet",
 										},
 										{
 											id: "ai",
@@ -7853,7 +8039,7 @@ const VTTEnhanced = () => {
 																					Controllers
 																				</SelectItem>
 																				<SelectItem value="gm">
-																					GM Only
+																					Warden Only
 																				</SelectItem>
 																			</SelectContent>
 																		</Select>
@@ -8837,6 +9023,14 @@ const VTTEnhanced = () => {
 												customAssets={customAssets}
 												onUploadAsset={uploadCustomAsset}
 												onDeleteAsset={deleteCustomAsset}
+												onImportUvttScene={(result) => {
+													setScenes((prev) => [...prev, result.scene]);
+													setCurrentScene(result.scene);
+													toast({
+														title: "Bureau Cartography Intake complete",
+														description: `Scene "${result.scene.name}" indexed with ${result.scene.walls.length} wall segments and ${result.scene.lights.length} lights.`,
+													});
+												}}
 												onUseAsMap={(imageUrl, name) => {
 													if (currentScene) {
 														updateScene({
@@ -8953,6 +9147,24 @@ const VTTEnhanced = () => {
 										<WardenBroadcastPanel
 											campaignId={campaignId || ""}
 											sessionId={sessionId || ""}
+										/>
+									</TabsContent>
+
+									{/* Misty Pearl A1 + I3 — Comm-Net voice/video rail tab. */}
+									{/* When the campaign has provisioned a LiveKit server, the */}
+									{/* hook mints + uses the SFU token automatically; otherwise */}
+									{/* it falls back to the trystero mesh transport. */}
+									<TabsContent value="commnet" className="space-y-2">
+										<CommNetPanel
+											campaignId={campaignId || null}
+											sessionId={sessionId || null}
+											enabled={!!campaignId && sessionStatus.state !== "ended"}
+											enableVideo={false}
+											transport={
+												commnetLiveKit?.snapshot ? "livekit" : "trystero"
+											}
+											livekitUrl={commnetLiveKit?.snapshot?.url}
+											livekitToken={commnetLiveKit?.snapshot?.token}
 										/>
 									</TabsContent>
 
@@ -9525,6 +9737,31 @@ const VTTEnhanced = () => {
 			/>
 			{/* Configurable light authoring dialog (P1-1, Foundry parity) */}
 			{isWarden && <LightSourceConfigDialog {...lightDialogProps} />}
+			{/* Misty Pearl A3 — Rift Region authoring dialog */}
+			{isWarden && (
+				<RegionConfigDialog
+					open={regionDialogOpen}
+					region={regionDialogTarget}
+					onClose={() => {
+						setRegionDialogOpen(false);
+						setRegionDialogTarget(null);
+					}}
+					onSave={(region) => {
+						if (!currentScene) return;
+						const existing =
+							currentScene.riftRegions?.some((r) => r.id === region.id) ??
+							false;
+						const next = existing
+							? updateRegionInScene(currentScene, region.id, region)
+							: addRegionToScene(currentScene, region);
+						updateScene(next);
+					}}
+					onDelete={(regionId) => {
+						if (!currentScene) return;
+						updateScene(removeRegionFromScene(currentScene, regionId));
+					}}
+				/>
+			)}
 		</Layout>
 	);
 };

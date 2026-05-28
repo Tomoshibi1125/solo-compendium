@@ -217,7 +217,7 @@ export interface ActiveSpellEffect {
 export interface CharacterJob {
 	job: string; // Rift Ascendant job name (Destroyer, Mage, etc.)
 	path?: string; // Rift Ascendant subclass/path name (level 3, automatic)
-	regent?: string; // Regent path ID (quest-gated, Warden (Warden) unlocks)
+	regent?: string; // Regent path ID (quest-gated, Warden unlocks)
 	gemini?: {
 		id?: string;
 		sovereignId?: string;
@@ -1620,8 +1620,8 @@ export function computeCharacterStats(
 	// 10. Compute spell slots
 	const spellSlots = computeSpellSlots(base.jobs, base.level);
 
-	// 11. Compute passive perception
-	const _passivePerception = 10 + skills.perception.modifier;
+	// 11. Passive scores: computed by computeSenses below (step 17). No
+	// duplicate path here — single source of truth is the senses engine.
 
 	// Encumbrance already computed above (step 12)
 
@@ -1672,6 +1672,9 @@ export function computeCharacterStats(
 		base.skillProficiencies.includes("insight"),
 		base.skillExpertise.includes("perception"),
 		base.features.some((f) => f.name.toLowerCase() === "observant"),
+		abilityModifiers.AGI, // dexterity-equivalent modifier for passive stealth
+		base.skillProficiencies.includes("stealth"),
+		base.skillExpertise.includes("stealth"),
 	);
 
 	// 18. Compute attacks per action (Extra Attack from Job/Regent â€” Foundry parity)

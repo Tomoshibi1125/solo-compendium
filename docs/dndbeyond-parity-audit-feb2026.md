@@ -45,7 +45,7 @@
 
 | # | Feature | Description |
 |---|---------|-------------|
-| E1 | Encounter Builder | Build encounters from monster compendium, CR/difficulty budget |
+| E1 | Encounter Builder | Build encounters from anomaly compendium, CR/difficulty budget |
 | E2 | Initiative Tracker | Manage turn order, HP, conditions for all combatants |
 | E3 | Combat Session Sync | Persist combat state to campaign (round, turn, combatants) |
 | E4 | Encounter → Initiative Handoff | Deploy built encounter directly into initiative tracker |
@@ -56,7 +56,7 @@
 | # | Feature | Description |
 |---|---------|-------------|
 | V1 | Map Display / VTT Canvas | Grid-based map with token placement, fog of war |
-| V2 | Token Management | PC/NPC/monster tokens with drag-and-drop, token library |
+| V2 | Token Management | PC/NPC/anomaly tokens with drag-and-drop, token library |
 | V3 | Campaign-Scoped VTT | VTT state saved per-campaign with journal integration |
 | V4 | Player Map View | Players see shared map state in real-time |
 
@@ -64,7 +64,7 @@
 
 | # | Feature | Description |
 |---|---------|-------------|
-| S1 | Compendium Browse/Search | Browse and search all SRD content (monsters, spells, items, classes, etc.) |
+| S1 | Compendium Browse/Search | Browse and search all SRD content (anomalies, spells, items, classes, etc.) |
 | S2 | Compendium Detail View | Full detail page per entry with stats, descriptions, mechanics |
 | S3 | Sourcebook Entitlement Enforcement | Filter compendium/character options by owned sourcebooks |
 | S4 | Favorites / Bookmarks | Bookmark compendium entries for quick access |
@@ -73,7 +73,7 @@
 
 | # | Feature | Description |
 |---|---------|-------------|
-| H1 | Homebrew Creation | Create custom classes, spells, items, monsters with structured editor |
+| H1 | Homebrew Creation | Create custom classes, spells, items, anomalies with structured editor |
 | H2 | Homebrew Management | Edit, version, publish/archive homebrew content |
 | H3 | Homebrew Sharing | Share homebrew publicly or within campaign scope |
 | H4 | Homebrew in Character Flows | Use homebrew content during character creation/level-up |
@@ -164,7 +164,7 @@
 |---|---------|--------|----------|
 | K1 | Campaign Creation | ✅ | `Campaigns.tsx` — create dialog, `useCreateCampaign` mutation |
 | K2 | Invite System | ✅ | `useCampaignInvites.ts` — create/redeem/revoke invites, join codes, email invites, audit logs |
-| K3 | Campaign Member Management | ✅ | `useCampaignMembers`, `CampaignProtocolControls`, member roles (hunter/co-system) |
+| K3 | Campaign Member Management | ✅ | `useCampaignMembers`, `CampaignProtocolControls`, member roles (ascendant/co-system) |
 | K4 | Campaign Settings | ✅ | `CampaignSettings` component, leveling mode, settings JSON on campaign record |
 | K5 | Campaign Chat | ✅ | `useCampaignChat.ts` — realtime via Supabase postgres_changes, local fallback, message types |
 | K6 | Campaign Notes | ✅ | `useCampaignNotes.ts` — create/update/delete, categories, shared flag, local fallback |
@@ -177,7 +177,7 @@
 
 | # | Feature | Status | Evidence |
 |---|---------|--------|----------|
-| E1 | Encounter Builder | ✅ | `EncounterBuilder.tsx` — monster search, CR budget, sourcebook filtering |
+| E1 | Encounter Builder | ✅ | `EncounterBuilder.tsx` — anomaly search, CR budget, sourcebook filtering |
 | E2 | Initiative Tracker | ✅ | `InitiativeTracker.tsx` — turn order, HP, conditions management |
 | E3 | Combat Session Sync | ✅ | `useCampaignCombat.ts` — campaign_combat_sessions + campaign_combatants with offline queue |
 | E4 | Encounter → Initiative Handoff | ✅ | EncounterBuilder sends to combat session, navigates to InitiativeTracker with campaignId+sessionId |
@@ -296,14 +296,14 @@
 **Current state:** Combat sessions can be ended via `useEndCombatSession`, but there is no dedicated UI for calculating and distributing XP/loot after an encounter.
 
 **Missing behavior:**
-- Calculate total XP from defeated monsters
+- Calculate total XP from defeated anomalies
 - Split XP evenly across party members
 - Award loot items to specific characters
 - Integration with campaign leveling mode (XP vs milestone)
 
 **Implementation proposal:**
 1. Add `EncounterRewards` component shown when combat session status becomes `ended`
-2. Compute XP from encounter monster CRs (data available in encounter builder)
+2. Compute XP from encounter anomaly CRs (data available in encounter builder)
 3. Provide party member selector and distribution mode (equal/custom)
 4. Call `useUpdateCharacter` to increment XP on each selected character
 5. Optionally log reward event via `campaign_session` log

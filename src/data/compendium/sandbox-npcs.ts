@@ -107,7 +107,7 @@ const bureauSentinels: SandboxNPC[] = [
 		personality:
 			"Anxious, detail-oriented, secretly compassionate. Complains constantly about supply shortages but will slip extra rations to injured Ascendants when no one is looking.",
 		motivation:
-			"Survive. She's not a fighter and knows it. If the outpost falls, she wants to be somewhere else entirely.",
+			"Survive. She's not a Destroyer and knows it. If the outpost falls, she wants to be somewhere else entirely.",
 		backstory:
 			"Lin was a logistics clerk at Bureau Central before being reassigned to the Restricted Zone three weeks before the Gate Surge locked down. She's technically not military — just an administrator trapped in a warzone. She's adapted by becoming indispensable.",
 		keyAbilities: [
@@ -172,7 +172,7 @@ const bureauSentinels: SandboxNPC[] = [
 			hpPerLevel: 8,
 			levelAbilities: {
 				6: "Pack Tactics (advantage when ally is adjacent)",
-				8: "Tunnel Fighter (no disadvantage in cramped spaces)",
+				8: "Tunnel Destroyer (no disadvantage in cramped spaces)",
 				10: "Executioner's Mark (track one target across any distance)",
 			},
 		},
@@ -649,7 +649,7 @@ const vermillionGuild: SandboxNPC[] = [
 	{
 		id: "npc-verm-007",
 		name: "Ash & Ember (The Twins)",
-		title: "Dual Rogues",
+		title: "Dual Assassin",
 		faction: "vermillion_guild",
 		level: 3,
 		job: "Striker",
@@ -875,7 +875,7 @@ const awokoCult: SandboxNPC[] = [
 		motivation:
 			"Serve the Regent. Karn has been promised he will be the first to 'ascend' when the Regent awakens. He doesn't understand this means obliteration.",
 		backstory:
-			"Karn was a professional MMA fighter who was losing his mind to CTE. The Cult's rituals halted his deterioration — or so he believes. In truth, the Regent's influence has replaced his damaged neurons with something else entirely.",
+			"Karn was a professional MMA Destroyer who was losing his mind to CTE. The Cult's rituals halted his deterioration — or so he believes. In truth, the Regent's influence has replaced his damaged neurons with something else entirely.",
 		keyAbilities: [
 			"Blood Rage (double damage while below 50% HP)",
 			"Ritual Brands (resist fire and necrotic damage)",
@@ -1126,7 +1126,7 @@ const independents: SandboxNPC[] = [
 		backstory:
 			"Gregor was a parish priest in a poor neighborhood. When the Gates opened, he refused to evacuate, staying to tend the wounded and bury the dead. His faith gives him access to genuine divine magic — proof that something beyond the Gates cares about humanity.",
 		keyAbilities: [
-			"Sanctify Ground (40ft zone: undead/anomalies take 2d6 radiant/round)",
+			"Sanctify Ground (40ft zone: anomaly/anomalies take 2d6 radiant/round)",
 			"Blessing (grant +1d4 to all rolls for one ally, 10 minutes)",
 			"Heal (restore 3d10 HP, 3/day)",
 		],
@@ -1364,7 +1364,7 @@ const independents: SandboxNPC[] = [
 	{
 		id: "npc-ind-009",
 		name: "Iron Belle",
-		title: "Prize Fighter",
+		title: "Prize Destroyer",
 		faction: "independent",
 		level: 7,
 		job: "Destroyer",
@@ -1389,7 +1389,7 @@ const independents: SandboxNPC[] = [
 		guildAffiliation: null,
 		location: "Hub: Vermillion Guild Hall",
 		questHook:
-			"Two fighters who lost to Belle in the ring disappeared the next day. She thinks the Cult is taking them during the post-fight recovery period.",
+			"Two Destroyer who lost to Belle in the ring disappeared the next day. She thinks the Cult is taking them during the post-fight recovery period.",
 		leveling: {
 			xp: 0,
 			xpToNextLevel: 2000,

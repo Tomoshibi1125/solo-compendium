@@ -1123,15 +1123,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-16-nerve-disruption",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Striker"],
 		name: "Nerve Disruption",
 		display_name: "Nerve Disruption",
 		description:
@@ -1271,15 +1263,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-18-gate-breaker-fist",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Gate Breaker Fist",
 		display_name: "Gate Breaker Fist",
 		description:
@@ -1494,19 +1478,11 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-21-smite",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Smite",
 		display_name: "Smite",
 		description:
-			"Channel your oath through your weapon. On your next hit, deal an extra 2d8 radiant damage. Against undead or fiends, 3d8 instead.",
+			"Channel your oath through your weapon. On your next hit, deal an extra 2d8 radiant damage. Against anomaly or anomaly, 3d8 instead.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
@@ -1522,7 +1498,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "Bonus radiant damage, extra vs undead/fiends.",
+			primary: "Bonus radiant damage, extra vs anomaly/anomaly.",
 			secondary: "Damage scales: 1d8 radiant at level 1.",
 		},
 		type: "Combat Arts",
@@ -1553,7 +1529,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				ability: "Presence",
 				dc: 13,
 				success: "Half damage and no rider.",
-				failure: "Bonus radiant damage, extra vs undead/fiends.",
+				failure: "Bonus radiant damage, extra vs anomaly/anomaly.",
 			},
 		},
 		limitations: {
@@ -1568,15 +1544,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-22-radiant-cleave",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Radiant Cleave",
 		display_name: "Radiant Cleave",
 		description:
@@ -1642,19 +1610,11 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-23-judgment-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Judgment Strike",
 		display_name: "Judgment Strike",
 		description:
-			"On your next melee hit, deal weapon damage plus 6d8 radiant. The target must make DC 17 PRS save or be blinded until end of its next turn. If it's undead/fiend, it's also paralyzed for 1 round on a failed save.",
+			"On your next melee hit, deal weapon damage plus 6d8 radiant. The target must make DC 17 PRS save or be blinded until end of its next turn. If it's anomaly/anomaly, it's also paralyzed for 1 round on a failed save.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
@@ -1794,15 +1754,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-25-emp-burst",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "EMP Burst",
 		display_name: "EMP Burst",
 		description:
@@ -1950,15 +1902,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-27-hamstring",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Hamstring",
 		display_name: "Hamstring",
 		description:
@@ -2024,15 +1968,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-28-entangle-shot",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Entangle Shot",
 		display_name: "Entangle Shot",
 		description:
@@ -2098,15 +2034,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-29-predator-s-leap",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Predator's Leap",
 		display_name: "Predator's Leap",
 		description:
@@ -2247,15 +2175,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-31-dance-of-blades",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Dance of Blades",
 		display_name: "Dance of Blades",
 		description:
@@ -2322,15 +2242,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-32-crescendo-finale",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Crescendo Finale",
 		display_name: "Crescendo Finale",
 		description:
@@ -2397,15 +2309,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-33-sacred-weapon",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Sacred Weapon",
 		display_name: "Sacred Weapon",
 		description:
@@ -2545,15 +2449,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-35-war-god-s-blessing",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "War God's Blessing",
 		display_name: "War God's Blessing",
 		description:
@@ -2619,15 +2515,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-36-pact-blade",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Pact Blade",
 		display_name: "Pact Blade",
 		description:
@@ -2693,15 +2581,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-37-eldritch-riposte",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Eldritch Riposte",
 		display_name: "Eldritch Riposte",
 		description:
@@ -2767,15 +2647,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-38-patron-s-fury",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Patron's Fury",
 		display_name: "Patron's Fury",
 		description:
@@ -2841,15 +2713,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-39-withering-blade",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Withering Blade",
 		display_name: "Withering Blade",
 		description:
@@ -3063,15 +2927,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-42-gate-breaker-chop",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Gate Breaker Chop",
 		display_name: "Gate Breaker Chop",
 		description:
@@ -3145,15 +3001,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-43-mana-circuit-rush",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Mana Circuit Rush",
 		display_name: "Mana Circuit Rush",
 		description:
@@ -3309,15 +3157,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-45-riposte-lattice",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Riposte Lattice",
 		display_name: "Riposte Lattice",
 		description:
@@ -3391,15 +3231,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-46-sonic-throw",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Sonic Throw",
 		display_name: "Sonic Throw",
 		description:
@@ -3878,15 +3710,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-52-gate-cutter",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Gate Cutter",
 		display_name: "Gate Cutter",
 		description:
@@ -4028,15 +3852,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-54-shadow-execution",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Shadow Execution",
 		display_name: "Shadow Execution",
 		description:
@@ -4261,15 +4077,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-57-quarry-brand",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Quarry Brand",
 		display_name: "Quarry Brand",
 		description:
@@ -4336,15 +4144,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-58-devotion-guard",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Devotion Guard",
 		display_name: "Devotion Guard",
 		description:
@@ -4564,15 +4364,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-61-pact-weapon-manifest",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Pact Weapon Manifest",
 		display_name: "Pact Weapon Manifest",
 		description:
@@ -4867,15 +4659,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-65-whirlwind-execution",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Whirlwind Execution",
 		display_name: "Whirlwind Execution",
 		description:
@@ -5108,15 +4892,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-68-resonance-blade-dance",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Resonance Blade Dance",
 		display_name: "Resonance Blade Dance",
 		description:
@@ -5184,15 +4960,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-69-gate-breaker-barrage",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Gate Breaker Barrage",
 		display_name: "Gate Breaker Barrage",
 		description:
@@ -5500,15 +5268,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-73-absolute-execution",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Absolute Execution",
 		display_name: "Absolute Execution",
 		description:
@@ -6300,15 +6060,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-83-radiant-bind",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Radiant Bind",
 		display_name: "Radiant Bind",
 		description:
@@ -6464,15 +6216,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-85-kinetic-deflection-field",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Striker"],
 		name: "Kinetic Deflection Field",
 		display_name: "Kinetic Deflection Field",
 		description:
@@ -6866,15 +6610,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-90-idol-s-duel",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Idol's Duel",
 		display_name: "Idol's Duel",
 		description:
@@ -6941,15 +6677,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-91-circuit-breaker-slash",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Circuit Breaker Slash",
 		display_name: "Circuit Breaker Slash",
 		description:
@@ -7180,15 +6908,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-94-shadow-harvest",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Shadow Harvest",
 		display_name: "Shadow Harvest",
 		description:
@@ -7581,7 +7301,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		name: "Absolute Cleave",
 		display_name: "Absolute Cleave",
 		description:
-			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Undead and fiends that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
+			"Deliver a sweeping attack infused with the Absolute's judgment. All creatures in a 15-foot cone: melee attack roll, 6d10 radiant on hit. Anomaly and anomaly that are hit by this attack and have 50 HP or fewer are instantly destroyed.",
 		lore: {
 			origin:
 				"Developed through Holy Knight combat doctrine and field-tested in gate operations.",
@@ -7604,7 +7324,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
 		effects: {
-			primary: "6d10 radiant cone + instant undead/fiend kill threshold.",
+			primary: "6d10 radiant cone + instant anomaly/anomaly kill threshold.",
 			secondary: "Damage scales: 7d8 bludgeoning at level 7.",
 		},
 		type: "Combat Arts",
@@ -7636,7 +7356,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				ability: "Agility",
 				dc: 18,
 				success: "Half damage and no rider.",
-				failure: "6d10 radiant cone + instant undead/fiend kill threshold.",
+				failure: "6d10 radiant cone + instant anomaly/anomaly kill threshold.",
 			},
 		},
 		limitations: {
@@ -7888,15 +7608,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-103-berserker-s-requiem",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker", "Destroyer"],
 		name: "Berserker's Requiem",
 		display_name: "Berserker's Requiem",
 		description:

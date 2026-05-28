@@ -17,7 +17,7 @@ RA maps D&D Beyond concepts to Rift Ascendant mechanics as follows:
 | DDB concept | RA concept | Persistence target |
 |---|---|---|
 | Character | Ascendant | `characters` row plus character-owned child rows |
-| DM | Warden | campaign/user permissions and Warden tools |
+| Warden | Warden | campaign/user permissions and Warden tools |
 | Class | Job | canonical `job_id` plus display snapshot |
 | Race/species | Job lineage layer | embedded Job traits; no literal D&D species table required |
 | Subclass | Path | canonical `path_id` plus display snapshot |
@@ -40,7 +40,7 @@ Canonical persistence means:
 This audit used current public D&D Beyond materials as capability references rather than content sources.
 
 - **D&D Beyond 2026 roadmap**: DDB is rebuilding its game platform around modular, scalable, data-defined rules with faster character updates, rules validation, source/content access, and a revamped builder.
-- **Quickbuilder 2026 post**: Quickbuilder targets level 1 creation, smart defaults, full device support, reduced rule expertise requirements, flexible customization, DM-controlled rules, and mistake prevention such as duplicate proficiency detection.
+- **Quickbuilder 2026 post**: Quickbuilder targets level 1 creation, smart defaults, full device support, reduced rule expertise requirements, flexible customization, Warden-controlled rules, and mistake prevention such as duplicate proficiency detection.
 - **DDB first-character builder article**: standard builder covers class, class level, multiclass, spells, background, species, ability score methods, and starting equipment automation.
 - **DDB character-sheet resource**: sheet tracks hit points, equipment, spells, abilities, level-up, clickable rolls, portraits, backgrounds/themes, and marketplace/source content access.
 

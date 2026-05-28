@@ -9,6 +9,10 @@ import {
 	listLocalFeatures,
 	removeLocalFeature,
 } from "@/lib/guestStore";
+import { FEAT_EFFECT_PRESETS, type FeatureEffect } from "@/types/featureEffects";
+
+/** Loosened FeatureEffect shape for rows that may carry an authored effects array. */
+type FeatureEffectLike = FeatureEffect;
 
 export interface CharacterFeature {
 	id: string;
@@ -262,4 +266,101 @@ export function featureModifiersToCustomModifiers(
 		}
 	}
 	return result;
+}
+
+/**
+ * P1.9/B4 — Bake structured feat effects into CustomModifier[].
+ *
+ * For each active feature, resolve its structured effects (a `effects`
+ * array on the row when authored, else the canonical `FEAT_EFFECT_PRESETS`
+ * keyed by feat name). This is the path that handles things a flat
+ * `modifiers` entry can't express — notably **per-level** HP scaling
+ * (Tough = +2 HP × character level). Numeric effects map onto existing
+ * CustomModifier types; non-numeric effects (save proficiency, passive-
+ * only bonuses) are returned separately for the engine to apply.
+ *
+ * Feats that already carry explicit `modifiers` are NOT double-counted:
+ * presets are only consulted when a feature has no `modifiers` of the
+ * equivalent type.
+ */
+export function featureEffectsToCustomModifiers(
+	features: CharacterFeature[],
+	characterLevel: number,
+): CustomModifier[] {
+	const result: CustomModifier[] = [];
+	for (const feature of features) {
+		if (!feature.is_active) continue;
+
+		// Prefer an authored structured `effects` array; fall back to the
+		// canonical preset keyed by the feat's display name.
+		const structured =
+			(feature as unknown as { effects?: FeatureEffectLike[] }).effects ??
+			FEAT_EFFECT_PRESETS[feature.name] ??
+			null;
+		if (!structured) continue;
+
+		// Skip preset HP if the feature already authored an hp-max modifier
+		// (avoid double counting).
+		const hasAuthoredHpMod = (feature.modifiers ?? []).some(
+			(m) => m.type === "hp-max" || m.type === "hp_max",
+		);
+
+		for (const effect of structured) {
+			switch (effect.kind) {
+				case "hp_per_level":
+					if (hasAuthoredHpMod) break;
+					result.push(
+						mkMod(feature, "hp-max", effect.value * characterLevel),
+					);
+					break;
+				case "hp_flat":
+					if (hasAuthoredHpMod) break;
+					result.push(mkMod(feature, "hp-max", effect.value));
+					break;
+				case "ability_score":
+					result.push(mkMod(feature, "ability", effect.value, effect.target));
+					break;
+				case "ac_bonus":
+					result.push(mkMod(feature, "ac_bonus", effect.value));
+					break;
+				case "speed_bonus":
+					result.push(mkMod(feature, "speed_bonus", effect.value));
+					break;
+				case "initiative_bonus":
+					result.push(mkMod(feature, "initiative_bonus", effect.value));
+					break;
+				case "attack_bonus":
+					result.push(mkMod(feature, "attack_bonus", effect.value));
+					break;
+				case "damage_bonus":
+					result.push(mkMod(feature, "damage_bonus", effect.value));
+					break;
+				// passive_bonus, save_proficiency, proficiency, expertise,
+				// resistance, advantage, resource_grant, spell_grant are
+				// non-flat-numeric and applied by their respective engines
+				// (sensesEngine for passives, save-proficiency list for
+				// Resilient, etc.). Not emitted as numeric customModifiers.
+				default:
+					break;
+			}
+		}
+	}
+	return result;
+}
+
+function mkMod(
+	feature: CharacterFeature,
+	type: CustomModifierType,
+	value: number,
+	target?: string,
+): CustomModifier {
+	return {
+		id: `${feature.id}-fx-${type}-${target || "all"}`,
+		type,
+		target: target || null,
+		value,
+		source: feature.name,
+		condition: null,
+		enabled: true,
+	};
 }

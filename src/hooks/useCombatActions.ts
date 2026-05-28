@@ -12,16 +12,15 @@ import { useSpells } from "@/hooks/useSpells";
 import { useTattoos } from "@/hooks/useTattoos";
 import { useTechniques } from "@/hooks/useTechniques";
 import type { ActionResolutionPayload } from "@/lib/actionResolution";
-import {
-	getProficiencyBonus,
-	getSpellcastingAbility,
-} from "@/lib/characterCalculations";
+import { scaleCantripDamage } from "@/lib/cantripScaling";
+import { getProficiencyBonus } from "@/lib/characterCalculations";
 import { buildItemProperties } from "@/lib/characterCreation";
 import { sumCustomModifiers } from "@/lib/customModifiers";
 import {
 	appendAbilityModifierToDamageFormula,
 	resolvePowerActionFormula,
 } from "@/lib/powerActionFormulas";
+import { resolveSpellActionFormula } from "@/lib/spellActionFormulas";
 import { resolveWeaponActionFormula } from "@/lib/weaponActionFormulas";
 import type { CompendiumPower, CompendiumTechnique } from "@/types/compendium";
 import { type AbilityScore, getAbilityModifier } from "@/types/core-rules";
@@ -32,6 +31,24 @@ import {
 import { useCharacterDerivedStats } from "./useCharacterDerivedStats";
 
 type JsonMechanics = Record<string, unknown>;
+
+/**
+ * D5 — Brutal Critical extra weapon dice on a crit, by job + level.
+ * Berserker/Destroyer (RA Barbarian analogs) gain +1 die at L9, +2 at
+ * L13, +3 at L17. Other jobs get 0. Returns the extra die count layered
+ * on top of the standard crit doubling.
+ */
+function getBrutalCriticalDice(
+	job: string | null | undefined,
+	level: number,
+): number {
+	const j = (job ?? "").trim().toLowerCase();
+	if (j !== "berserker" && j !== "destroyer") return 0;
+	if (level >= 17) return 3;
+	if (level >= 13) return 2;
+	if (level >= 9) return 1;
+	return 0;
+}
 
 interface ActiveFeature {
 	name?: string;
@@ -237,6 +254,15 @@ export const useCombatActions = (characterId: string) => {
 			);
 		});
 
+		// D5: Brutal Critical — Berserker/Destroyer add extra weapon dice on a
+		// crit, scaling by level (L9 +1, L13 +2, L17 +3), mirroring the
+		// Barbarian feature. Surfaced on the attack payload as critExtraDice
+		// so actionResolution rolls the extra dice only on a natural 20.
+		const brutalCritDice = getBrutalCriticalDice(
+			character.job,
+			character.level ?? 1,
+		);
+
 		weapons.forEach((w) => {
 			const canonical = findCanonicalForRow(canonicalEquipmentMap, w.name);
 			const canonicalProps = canonical
@@ -320,7 +346,10 @@ export const useCombatActions = (characterId: string) => {
 					name: w.name,
 					source: { type: "item", entryId: w.id },
 					kind: "attack",
-					attack: { roll: formula.attackRoll },
+					attack: {
+						roll: formula.attackRoll,
+						...(brutalCritDice > 0 ? { critExtraDice: brutalCritDice } : {}),
+					},
 					damage: { roll: formula.damageRoll, type: damageType },
 				},
 				sourceId: w.id,
@@ -420,20 +449,38 @@ export const useCombatActions = (characterId: string) => {
 			const spellData = s.spell as unknown as CompendiumPower | undefined;
 			if (!spellData) return;
 
-			const spellFormula = resolvePowerActionFormula({
+			// Spells use the canonical spellcasting ability map (per Job),
+			// NOT the Job's primary ability. See `spellActionFormulas.ts`
+			// and the design note in `powerActionFormulas.ts:9-23`.
+			const spellFormula = resolveSpellActionFormula({
 				job: character.job,
 				abilities: derivedStats.finalAbilities,
-				proficiencyBonus: profBonus,
+				level: character.level ?? 1,
 				attackBonus: customPowerAttackBonus,
 				dcBonus: customPowerDcBonus,
-				abilityOverride: getSpellcastingAbility(
-					character.job,
-				) as AbilityScore | null,
 			});
 			const mechanics = (spellData.mechanics as unknown as JsonMechanics) || {};
 			const target = spellData.target || (mechanics.target as string) || "";
+			// P1.4: Cantrip damage scales by CHARACTER level at L5/11/17.
+			// Apply scaling BEFORE appending the ability modifier so a base
+			// "1d10" cantrip becomes "2d10 +3" at level 5 with INT 16,
+			// matching DDB exactly. Non-cantrips (power_level > 0) pass
+			// through unchanged here — upcast scaling is handled separately.
+			// CompendiumPower stores level in `power_level`; character row
+			// may also carry `spell_level` for legacy reasons.
+			const spellLevelRaw =
+				(spellData as { power_level?: number }).power_level ??
+				(s as unknown as { spell_level?: number }).spell_level ??
+				0;
+			const isCantrip = spellLevelRaw === 0;
+			const baseDamageFormula = isCantrip
+				? scaleCantripDamage(
+						spellData.damage_roll ?? "",
+						character.level ?? 1,
+					)
+				: spellData.damage_roll;
 			const damageRoll = appendAbilityModifierToDamageFormula(
-				spellData.damage_roll,
+				baseDamageFormula,
 				spellFormula.abilityModifier,
 			);
 			const spellKind = spellData.has_attack_roll
@@ -464,7 +511,7 @@ export const useCombatActions = (characterId: string) => {
 				saveAbility: (spellData.save_ability as AbilityScore) || undefined,
 				damageRoll,
 				damageType: spellData.damage_type || undefined,
-				formulaAbility: spellFormula.ability,
+				formulaAbility: spellFormula.ability ?? undefined,
 				formulaAbilityModifier: spellFormula.abilityModifier,
 				attackRoll: spellFormula.attackRoll,
 				payload: {

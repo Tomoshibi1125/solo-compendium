@@ -1,6 +1,15 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Loader2, Moon, Sun, Trash2, TrendingUp, X } from "lucide-react";
+import {
+	GitCompare,
+	Loader2,
+	Moon,
+	Sun,
+	Trash2,
+	TrendingUp,
+	X,
+} from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -32,10 +41,18 @@ export function BulkActionsBar({
 }: BulkActionsBarProps) {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 	const [isDeleting, setIsDeleting] = useState(false);
 	const [isLevelingUp, setIsLevelingUp] = useState(false);
 	const [isResting, setIsResting] = useState(false);
 	const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+
+	const canCompare = selectedIds.size >= 2 && selectedIds.size <= 4;
+	const handleCompare = () => {
+		if (!canCompare) return;
+		const ids = Array.from(selectedIds).join(",");
+		navigate(`/characters/compare?ids=${ids}`);
+	};
 
 	const handleBulkDelete = async () => {
 		setIsDeleting(true);
@@ -150,6 +167,23 @@ export function BulkActionsBar({
 					{selectedIds.size} selected
 				</Badge>
 				<div className="flex gap-2">
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={handleCompare}
+						disabled={!canCompare || isLevelingUp || isResting || isDeleting}
+						title={
+							canCompare
+								? `Compare ${selectedIds.size} Ascendants side-by-side`
+								: "Select 2 to 4 Ascendants to compare"
+						}
+						aria-label="Compare selected Ascendants"
+						data-testid="bulk-action-compare"
+						className="gap-2"
+					>
+						<GitCompare className="w-4 h-4" />
+						Compare
+					</Button>
 					<Button
 						variant="outline"
 						size="sm"

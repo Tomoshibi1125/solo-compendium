@@ -586,7 +586,7 @@ const AscendantMapView = ({
 
 	const gridSize = currentScene?.gridSize ?? 50;
 
-	// Visible tokens (player only sees visible tokens, not Warden (Warden) layer)
+	// Visible tokens (player only sees visible tokens, not Warden layer)
 	const visibleTokens = useMemo(() => {
 		if (!currentScene?.tokens) return [];
 		return currentScene.tokens.filter((t) => t.visible && t.layer !== 3);

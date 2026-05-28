@@ -1,13 +1,16 @@
 import type React from "react";
+import { getAbilityModifier } from "@/lib/characterCalculations";
 import type { CompendiumAnomaly } from "@/types/compendium";
 
 interface StatBlockProps {
 	Anomaly: CompendiumAnomaly;
 }
 
+// Canonical ability modifier display: delegates to engine helper.
+// M6 in docs/ui-canon-parity-audit-2026-05.md.
 const getModifier = (val: number | undefined) => {
 	if (val === undefined) return "+0";
-	const mod = Math.floor((val - 10) / 2);
+	const mod = getAbilityModifier(val);
 	return mod >= 0 ? `+${mod}` : mod;
 };
 

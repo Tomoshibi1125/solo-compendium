@@ -19,7 +19,9 @@ import { CampaignCharacters } from "@/components/campaign/CampaignCharacters";
 import { CampaignChat } from "@/components/campaign/CampaignChat";
 import { CampaignHandouts } from "@/components/campaign/CampaignHandouts";
 import { CampaignInviteModal } from "@/components/campaign/CampaignInviteModal";
+import { CampaignCalendarPanel } from "@/components/campaign/CampaignCalendarPanel";
 import { CampaignNotes } from "@/components/campaign/CampaignNotes";
+import { SessionReplayPanel } from "@/components/campaign/SessionReplayPanel";
 import { CampaignProtocolControls } from "@/components/campaign/CampaignProtocolControls";
 import { CampaignRegentOversight } from "@/components/campaign/CampaignRegentOversight";
 import { CampaignRollFeed } from "@/components/campaign/CampaignRollFeed";
@@ -642,8 +644,18 @@ const CampaignDetail = () => {
 							<CampaignChat campaignId={id || ""} />
 						</TabsContent>
 
-						<TabsContent value="sessions">
+						<TabsContent value="sessions" className="space-y-6">
 							<CampaignSessionsPanel
+								campaignId={id || ""}
+								canManage={hasWardenAccess}
+							/>
+							{/* Misty Pearl H5 — In-world calendar */}
+							<CampaignCalendarPanel
+								campaignId={id || ""}
+								canManage={hasWardenAccess}
+							/>
+							{/* Misty Pearl H4 — Bureau Field Recorder */}
+							<SessionReplayPanel
 								campaignId={id || ""}
 								canManage={hasWardenAccess}
 							/>

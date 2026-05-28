@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useCharacterChoiceTotals } from "@/hooks/useCharacterChoiceTotals";
 import { useCharacter } from "@/hooks/useCharacters";
 import {
 	isRuneGranted,
@@ -39,8 +40,10 @@ export function AddTechniqueDialog({
 	characterId: string;
 }) {
 	const [searchQuery, setSearchQuery] = useState("");
-	const { addTechnique } = useTechniques(characterId);
+	const { addTechnique, techniques: knownTechniques = [] } =
+		useTechniques(characterId);
 	const { data: character } = useCharacter(characterId);
+	const { data: choiceTotals } = useCharacterChoiceTotals(characterId);
 	const { grantedAbilityNames, grantedAbilityRefs } =
 		useRuneGrantedAbilities(characterId);
 	const { toast } = useToast();
@@ -146,7 +149,15 @@ export function AddTechniqueDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-2xl max-h-[80vh] min-h-0 overflow-hidden flex flex-col">
 				<DialogHeader>
-					<DialogTitle>Discover Technique</DialogTitle>
+					<DialogTitle className="flex items-center gap-2 flex-wrap">
+						<span>Discover Technique</span>
+						{choiceTotals && choiceTotals.techniques > 0 && (
+							<Badge variant="outline" className="text-xs">
+								{(knownTechniques ?? []).length} / {choiceTotals.techniques}{" "}
+								known
+							</Badge>
+						)}
+					</DialogTitle>
 					<DialogDescription>
 						Search and learn techniques from the compendium
 					</DialogDescription>
@@ -221,6 +232,18 @@ export function AddTechniqueDialog({
 															{src}
 														</Badge>
 													))}
+													{(tech as { source_book?: string | null })
+														.source_book && (
+														<Badge
+															variant="secondary"
+															className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+														>
+															{formatRegentVernacular(
+																(tech as { source_book?: string | null })
+																	.source_book as string,
+															)}
+														</Badge>
+													)}
 												</div>
 												{tech.description && (
 													<p className="text-xs text-muted-foreground line-clamp-2 mt-1">

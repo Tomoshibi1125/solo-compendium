@@ -229,14 +229,14 @@ describe("canonicalCompendium resolver", () => {
 		expect(
 			isCanonicalPowerLearnable(shadowStrike, {
 				jobName: "Stalker",
-				pathName: "Path of the Umbral Hunter",
+				pathName: "Path of the Umbral Ascendant",
 				characterLevel: 2,
 			}),
 		).toBe(false);
 		expect(
 			isCanonicalPowerLearnable(shadowStrike, {
 				jobName: "Stalker",
-				pathName: "Path of the Umbral Hunter",
+				pathName: "Path of the Umbral Ascendant",
 				characterLevel: 3,
 			}),
 		).toBe(true);

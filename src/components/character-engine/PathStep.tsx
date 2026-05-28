@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { formatActivationText } from "@/lib/canonicalCompendium";
 import { formatRegentVernacular } from "@/lib/vernacular";
+import { AbilityAccessPreview } from "./AbilityAccessPreview";
 
 interface PathFeature {
 	name: string;
@@ -42,6 +43,10 @@ interface PathRow {
 	stats?: PathStats | null;
 	features?: PathFeature[] | null;
 	abilities?: PathAbility[] | null;
+	source_book?: string | null;
+	source?: string | null;
+	jobName?: string | null;
+	job_name?: string | null;
 }
 
 interface PathStepProps {
@@ -224,14 +229,44 @@ export const PathStep: React.FC<PathStepProps> = ({
 					{selectedPathData && (
 						<div className="p-5 rounded-lg bg-black/40 border border-primary/10 space-y-6">
 							<div className="space-y-4">
-								<h4 className="font-heading font-semibold text-lg text-primary">
-									{formatRegentVernacular(
-										selectedPathData.display_name || selectedPathData.name,
-									)}
-								</h4>
+								<div className="flex justify-between items-start gap-3">
+									<h4 className="font-heading font-semibold text-lg text-primary">
+										{formatRegentVernacular(
+											selectedPathData.display_name || selectedPathData.name,
+										)}
+									</h4>
+									<Badge
+										variant="secondary"
+										className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+									>
+										{formatRegentVernacular(
+											selectedPathData.source_book ??
+												selectedPathData.source ??
+												"Rift Ascendant Canon",
+										)}
+									</Badge>
+								</div>
 								<AscendantText className="block text-sm text-muted-foreground leading-relaxed italic">
 									{formatRegentVernacular(selectedPathData.description)}
 								</AscendantText>
+
+								{(selectedPathData.jobName ?? selectedPathData.job_name) && (
+									<AbilityAccessPreview
+										jobName={
+											selectedPathData.jobName ?? selectedPathData.job_name
+										}
+										pathName={selectedPathData.name}
+										characterLevel={Math.max(
+											3,
+											selectedPathData.path_level ??
+												selectedPathData.requirements?.level ??
+												3,
+										)}
+										pathDeltaOnly
+										title="Path-Granted Access"
+										subtitle="Abilities this path unlocks beyond your job's baseline."
+									/>
+								)}
 
 								<div className="grid grid-cols-2 gap-4 py-3 border-y border-primary/5">
 									<div className="space-y-1">

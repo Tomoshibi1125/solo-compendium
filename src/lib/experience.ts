@@ -87,6 +87,49 @@ export function getLevelFromXP(xp: number): number {
 	return level;
 }
 
+/**
+ * P1.11 — XP threshold eligibility check.
+ *
+ * Determines whether a character has accumulated enough XP to advance.
+ * Mirrors DDB behavior: XP crossing a threshold does NOT auto-promote;
+ * it surfaces a "Level Up Available" CTA so the player still gates the
+ * decision (picking HP, ASI/feat, new features, etc.).
+ *
+ * @param currentLevel  The character's current level (1..20)
+ * @param totalXP       The character's accumulated XP
+ * @param levelingMode  When "milestone", always returns canLevelUp=false
+ *                      (milestone campaigns don't auto-eligibility-check).
+ */
+export function checkLevelUpEligibility(
+	currentLevel: number,
+	totalXP: number,
+	levelingMode: LevelingType = "xp",
+): {
+	canLevelUp: boolean;
+	availableLevel: number;
+	currentLevel: number;
+	xpToNext: number;
+} {
+	const safeLevel = Math.max(1, Math.min(20, currentLevel));
+	if (levelingMode !== "xp" || safeLevel >= 20) {
+		return {
+			canLevelUp: false,
+			availableLevel: safeLevel,
+			currentLevel: safeLevel,
+			xpToNext: 0,
+		};
+	}
+	const eligibleLevel = getLevelFromXP(totalXP);
+	const canLevelUp = eligibleLevel > safeLevel;
+	const nextThreshold = XP_THRESHOLDS[safeLevel + 1] ?? totalXP;
+	return {
+		canLevelUp,
+		availableLevel: canLevelUp ? eligibleLevel : safeLevel,
+		currentLevel: safeLevel,
+		xpToNext: Math.max(0, nextThreshold - totalXP),
+	};
+}
+
 export function getXPForLevel(level: number): number {
 	return XP_THRESHOLDS[level] || 0;
 }

@@ -79,11 +79,26 @@ export async function searchWithRPC(
 }
 
 /**
- * Hybrid search: Use full-text search when available, fallback to ILIKE
- * This provides the best of both worlds
+ * Hybrid search: real Postgres full-text search for longer queries,
+ * ILIKE for short queries (1-2 chars) and as a fallback.
+ *
+ * D1: For queries ≥ 3 chars we use PostgREST's `.textSearch()` with the
+ * `websearch` parser (`websearch_to_tsquery`) on the primary text field
+ * — Postgres applies `to_tsvector` automatically, so no tsvector column
+ * is required and ranking/stemming work out of the box. If the supplied
+ * query builder doesn't expose `.textSearch` (e.g. a stubbed/offline
+ * client), we transparently fall back to ILIKE so callers never break.
  */
 interface OrCapableQuery<T> {
 	or: (filters: string) => T;
+}
+
+interface TextSearchCapableQuery<T> {
+	textSearch: (
+		column: string,
+		query: string,
+		options?: { type?: "plain" | "phrase" | "websearch"; config?: string },
+	) => T;
 }
 
 export function hybridSearchQuery<T extends OrCapableQuery<T>>(
@@ -96,17 +111,29 @@ export function hybridSearchQuery<T extends OrCapableQuery<T>>(
 		return baseQuery;
 	}
 
-	// For short queries (1-2 chars), ILIKE is better
-	if (searchQuery.length <= 2 || !useFullText) {
-		return baseQuery.or(
+	const ilike = () =>
+		baseQuery.or(
 			searchFields.map((field) => `${field}.ilike.%${searchQuery}%`).join(","),
 		);
+
+	// Short queries: ILIKE prefix matching beats stemmed FTS.
+	if (searchQuery.length <= 2 || !useFullText) {
+		return ilike();
 	}
 
-	// For longer queries, prefer full-text search via RPC
-	// But for now, use ILIKE as fallback until RPC is integrated
-	// The RPC functions should be called directly from components
-	return baseQuery.or(
-		searchFields.map((field) => `${field}.ilike.%${searchQuery}%`).join(","),
-	);
+	// Longer queries: prefer real Postgres FTS via websearch_to_tsquery on
+	// the primary field. Feature-detect textSearch so offline/guest stubs
+	// fall back gracefully.
+	const maybeFts = baseQuery as unknown as Partial<TextSearchCapableQuery<T>>;
+	if (typeof maybeFts.textSearch === "function") {
+		const primaryField = searchFields[0] ?? "name";
+		const cleaned = normalizeSearchText(searchQuery);
+		if (!cleaned) return ilike();
+		return maybeFts.textSearch(primaryField, cleaned, {
+			type: "websearch",
+		});
+	}
+
+	// No FTS support on this builder — ILIKE fallback.
+	return ilike();
 }

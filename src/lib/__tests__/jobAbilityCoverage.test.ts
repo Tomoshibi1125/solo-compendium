@@ -7,6 +7,18 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "../canonicalCompendium";
+import { PATH_ABILITY_GRANTS } from "../pathAbilityAccess";
+
+// Entries that exist in the catalog but are intentionally not learnable by
+// any job naturally and are not granted by any path. They remain in the
+// catalog so they remain rune-target-able (see runeAutomation / useAbsorbRune).
+const RUNE_ONLY_POWER_IDS = new Set<string>([
+	"power-sup-6-89-idol-s-magnum-opus",
+]);
+const RUNE_ONLY_TECHNIQUE_IDS = new Set<string>([
+	"tech-sup-3-31-dance-of-blades",
+	"tech-sup-6-68-resonance-blade-dance",
+]);
 
 const MARTIAL_JOBS = ["Destroyer", "Berserker", "Assassin", "Striker"];
 const HALF_CASTERS = ["Holy Knight", "Technomancer", "Stalker"];
@@ -150,9 +162,42 @@ describe("Job ability coverage audit", () => {
 			);
 		}
 
-		const unseenPowers = powers.filter((p) => !seen.powers.has(p.id));
+		// Also scan hybrid path grants so abilities reachable only via PATH_ABILITY_GRANTS
+		// are counted as "seen" (this is how full-casters and pact-casters gain hybrid
+		// power/technique access on specific paths).
+		const jobPathPairs = new Set<string>();
+		for (const grant of PATH_ABILITY_GRANTS) {
+			jobPathPairs.add(`${grant.jobName}::${grant.pathName}`);
+		}
+		for (const pair of jobPathPairs) {
+			const [job, path] = pair.split("::");
+			const p = await listLearnablePowers({
+				jobName: job,
+				pathName: path,
+				characterLevel: 20,
+			});
+			const t = await listLearnableTechniques({
+				jobName: job,
+				pathName: path,
+				characterLevel: 20,
+			});
+			const s = await listLearnableSpells({
+				jobName: job,
+				pathName: path,
+				characterLevel: 20,
+			});
+			for (const entry of p) seen.powers.add(entry.id);
+			for (const entry of t) seen.techniques.add(entry.id ?? entry.name);
+			for (const entry of s) seen.spells.add(entry.id);
+		}
+
+		const unseenPowers = powers.filter(
+			(p) => !seen.powers.has(p.id) && !RUNE_ONLY_POWER_IDS.has(p.id),
+		);
 		const unseenTechniques = techniques.filter(
-			(t) => !seen.techniques.has(t.id ?? t.name),
+			(t) =>
+				!seen.techniques.has(t.id ?? t.name) &&
+				!RUNE_ONLY_TECHNIQUE_IDS.has(t.id ?? ""),
 		);
 		const unseenSpells = allSpells.filter(
 			(spell) => !seen.spells.has(spell.id),
@@ -281,6 +326,169 @@ describe("Job ability coverage audit", () => {
 					`${job} rank-${rank} spell count`,
 				).toBeGreaterThanOrEqual(minimum);
 			}
+		}
+	});
+});
+
+describe("Job ability access — base-path exclusion rules", () => {
+	const CASTER_FLAVORED_NAME =
+		/\b(?:oath|pact|eldritch|divine|smite|sacred)\b/i;
+
+	it("Destroyer has no learnable spells and no caster-flavored powers/techniques", async () => {
+		const spellsList = await listLearnableSpells({ jobName: "Destroyer" });
+		expect(spellsList).toHaveLength(0);
+		const powersList = await listLearnablePowers({ jobName: "Destroyer" });
+		const techniquesList = await listLearnableTechniques({
+			jobName: "Destroyer",
+		});
+		const leakedPowers = powersList.filter((p) =>
+			CASTER_FLAVORED_NAME.test(p.name),
+		);
+		const leakedTechs = techniquesList.filter((t) =>
+			CASTER_FLAVORED_NAME.test(t.name),
+		);
+		expect(
+			leakedPowers.map((p) => p.name),
+			"Destroyer power leak",
+		).toEqual([]);
+		expect(
+			leakedTechs.map((t) => t.name),
+			"Destroyer technique leak",
+		).toEqual([]);
+	});
+
+	it("Berserker has no learnable spells and no caster-flavored powers/techniques", async () => {
+		const spellsList = await listLearnableSpells({ jobName: "Berserker" });
+		expect(spellsList).toHaveLength(0);
+		const powersList = await listLearnablePowers({ jobName: "Berserker" });
+		const techniquesList = await listLearnableTechniques({
+			jobName: "Berserker",
+		});
+		const leakedPowers = powersList.filter((p) =>
+			CASTER_FLAVORED_NAME.test(p.name),
+		);
+		const leakedTechs = techniquesList.filter((t) =>
+			CASTER_FLAVORED_NAME.test(t.name),
+		);
+		expect(
+			leakedPowers.map((p) => p.name),
+			"Berserker power leak",
+		).toEqual([]);
+		expect(
+			leakedTechs.map((t) => t.name),
+			"Berserker technique leak",
+		).toEqual([]);
+	});
+
+	for (const job of ["Assassin", "Striker"]) {
+		it(`${job} has no caster-flavored powers/techniques`, async () => {
+			const powersList = await listLearnablePowers({ jobName: job });
+			const techniquesList = await listLearnableTechniques({ jobName: job });
+			const leakedPowers = powersList.filter((p) =>
+				CASTER_FLAVORED_NAME.test(p.name),
+			);
+			const leakedTechs = techniquesList.filter((t) =>
+				CASTER_FLAVORED_NAME.test(t.name),
+			);
+			expect(
+				leakedPowers.map((p) => p.name),
+				`${job} power leak`,
+			).toEqual([]);
+			expect(
+				leakedTechs.map((t) => t.name),
+				`${job} technique leak`,
+			).toEqual([]);
+		});
+	}
+
+	it("Idol without a hybrid path has no learnable powers or techniques", async () => {
+		const powersList = await listLearnablePowers({ jobName: "Idol" });
+		const techniquesList = await listLearnableTechniques({ jobName: "Idol" });
+		expect(powersList).toHaveLength(0);
+		expect(techniquesList).toHaveLength(0);
+	});
+
+	it("Contractor without a hybrid path has no learnable powers or techniques", async () => {
+		const powersList = await listLearnablePowers({ jobName: "Contractor" });
+		const techniquesList = await listLearnableTechniques({
+			jobName: "Contractor",
+		});
+		expect(powersList).toHaveLength(0);
+		expect(techniquesList).toHaveLength(0);
+	});
+});
+
+describe("Job ability access — hybrid path grant coverage", () => {
+	it("Idol on Path of the Dance Resonance at level 17 unlocks the full granted entry list", async () => {
+		const powersList = await listLearnablePowers({
+			jobName: "Idol",
+			pathName: "Path of the Dance Resonance",
+			characterLevel: 17,
+		});
+		const techniquesList = await listLearnableTechniques({
+			jobName: "Idol",
+			pathName: "Path of the Dance Resonance",
+			characterLevel: 17,
+		});
+		const powerNames = new Set(powersList.map((p) => p.name));
+		const techniqueNames = new Set(techniquesList.map((t) => t.name));
+		const expectedPowers = [
+			"Adrenaline Surge",
+			"Berserker's Fury",
+			"Absolute Smite",
+			"Absolute Ascension",
+			"Absolute Pact",
+		];
+		const expectedTechniques = [
+			"Anchor Strike",
+			"Arterial Cut",
+			"Anchor Slam",
+			"Absolute Cleave",
+			"Absolute Execution",
+		];
+		for (const name of expectedPowers) {
+			expect(
+				powerNames.has(name),
+				`Dance Resonance L17 missing power "${name}"`,
+			).toBe(true);
+		}
+		for (const name of expectedTechniques) {
+			expect(
+				techniqueNames.has(name),
+				`Dance Resonance L17 missing technique "${name}"`,
+			).toBe(true);
+		}
+	});
+
+	it("Contractor on Path of the Cursed Blade unlocks pact-themed powers and techniques", async () => {
+		const powersList = await listLearnablePowers({
+			jobName: "Contractor",
+			pathName: "Path of the Cursed Blade",
+			characterLevel: 17,
+		});
+		const techniquesList = await listLearnableTechniques({
+			jobName: "Contractor",
+			pathName: "Path of the Cursed Blade",
+			characterLevel: 17,
+		});
+		const powerNames = new Set(powersList.map((p) => p.name));
+		const techniqueNames = new Set(techniquesList.map((t) => t.name));
+		const expectedPowers = [
+			"Cursed Blade Edge",
+			"Pact Retaliation",
+			"Absolute Pact",
+		];
+		const expectedTechniques = ["Pact Blade", "Eldritch Riposte"];
+		for (const name of expectedPowers) {
+			expect(powerNames.has(name), `Cursed Blade missing power "${name}"`).toBe(
+				true,
+			);
+		}
+		for (const name of expectedTechniques) {
+			expect(
+				techniqueNames.has(name),
+				`Cursed Blade missing technique "${name}"`,
+			).toBe(true);
 		}
 	});
 });

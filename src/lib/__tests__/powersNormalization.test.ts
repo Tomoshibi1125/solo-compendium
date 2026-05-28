@@ -106,10 +106,31 @@ describe("Power catalog — coverage", () => {
 		}
 	});
 
-	it("supplemental powers declare explicit class eligibility", () => {
+	it("supplemental powers declare explicit class eligibility (or empty for path-grant-only)", () => {
 		expect(powers_supplemental.length).toBeGreaterThan(0);
 		for (const power of powers_supplemental) {
-			expect(power.classes?.length ?? 0, power.id).toBeGreaterThan(0);
+			expect(Array.isArray(power.classes), power.id).toBe(true);
+		}
+	});
+
+	it("no power classes[] contains a full-caster or pact-caster job that has powers:false", () => {
+		const CASTER_JOBS_WITHOUT_POWERS = [
+			"Mage",
+			"Esper",
+			"Revenant",
+			"Summoner",
+			"Idol",
+			"Herald",
+			"Contractor",
+		];
+		for (const power of powers) {
+			const classes = Array.isArray(power.classes) ? power.classes : [];
+			for (const caster of CASTER_JOBS_WITHOUT_POWERS) {
+				expect(
+					classes.includes(caster),
+					`Power ${power.id} (${power.name}) wrongly lists ${caster} in classes[]; full/pact-casters reach powers only via PATH_ABILITY_GRANTS`,
+				).toBe(false);
+			}
 		}
 	});
 });

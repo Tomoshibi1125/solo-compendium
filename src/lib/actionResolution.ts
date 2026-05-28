@@ -1,6 +1,38 @@
 import { rollDiceString } from "@/lib/diceRoller";
 import { rollCheck } from "@/lib/rollEngine";
 
+/**
+ * B1/D5 — Roll damage with optional critical-hit dice doubling.
+ *
+ * On a crit, ALL damage dice are doubled but flat modifiers are NOT
+ * (SRD 5e + DDB correct). We achieve this by doubling the dice count in
+ * every `NdM` term of the formula and leaving trailing `+N` untouched.
+ * `extraDice` adds further weapon dice for Brutal Critical-style features
+ * (uses the first dice term's die size).
+ */
+function rollDamageFormula(
+	formula: string,
+	isCritical: boolean,
+	extraDice = 0,
+): { rolls: number[]; result: number } {
+	if (!isCritical) {
+		const r = rollDiceString(formula);
+		return { rolls: r.rolls, result: r.result };
+	}
+	// Double every dice term (e.g. "2d6+1d8+3" → "4d6+2d8+3").
+	let doubled = formula.replace(
+		/(\d+)d(\d+)/gi,
+		(_m, n: string, s: string) => `${parseInt(n, 10) * 2}d${s}`,
+	);
+	// Brutal Critical / Savage extra dice: append N dice of the first term's size.
+	if (extraDice > 0) {
+		const firstDie = formula.match(/\d+d(\d+)/i)?.[1];
+		if (firstDie) doubled = `${doubled}+${extraDice}d${firstDie}`;
+	}
+	const r = rollDiceString(doubled);
+	return { rolls: r.rolls, result: r.result };
+}
+
 export type ResolutionKind =
 	| "attack"
 	| "save"
@@ -28,6 +60,13 @@ export type ActionResolutionPayload = {
 	attack?: {
 		roll: string;
 		rollMode?: "normal" | "advantage" | "disadvantage";
+		/** Force a critical hit (e.g. a guaranteed-crit feature). */
+		forceCritical?: boolean;
+		/**
+		 * Extra weapon dice added on a crit beyond the standard doubling —
+		 * Brutal Critical (Berserker/Destroyer) etc. (D5).
+		 */
+		critExtraDice?: number;
 	};
 	save?: {
 		dc: number;
@@ -77,6 +116,7 @@ export type ResolutionOutcome =
 			attackD20: [number] | [number, number];
 			targetAC: number;
 			hit: boolean;
+			criticalHit?: boolean;
 			damageTotal?: number;
 			damageRolls?: number[];
 	  }
@@ -148,14 +188,20 @@ export function resolveAttack(
 	};
 
 	const d20Mod = parseD20Modifier(payload.attack.roll);
-	const attack =
-		d20Mod !== null
-			? (() => {
-					return rollD20(d20Mod);
-				})()
-			: rollDiceString(payload.attack.roll);
+	const isStandardD20 = d20Mod !== null;
+	const attack = isStandardD20
+		? rollD20(d20Mod as number)
+		: rollDiceString(payload.attack.roll);
 
-	const hit = attack.result >= targetAC;
+	// B1: critical hit when the kept d20 is a natural 20 (standard attack
+	// rolls only) or the action forces a crit. Natural-1 is never a crit.
+	const naturalD20 = isStandardD20
+		? (attack as { d20?: number }).d20
+		: undefined;
+	const isCritical =
+		Boolean(payload.attack.forceCritical) || naturalD20 === 20;
+
+	const hit = isCritical || attack.result >= targetAC;
 
 	if (!hit || !payload.damage) {
 		return {
@@ -169,10 +215,15 @@ export function resolveAttack(
 					: ([attack.rolls?.[0] ?? attack.total] as [number]),
 			targetAC,
 			hit,
+			criticalHit: isCritical && hit,
 		};
 	}
 
-	const damage = rollDiceString(payload.damage.roll);
+	const damage = rollDamageFormula(
+		payload.damage.roll,
+		isCritical,
+		payload.attack.critExtraDice ?? 0,
+	);
 	return {
 		kind: "attack",
 		attackRoll: attack.total,
@@ -184,6 +235,7 @@ export function resolveAttack(
 				: ([attack.rolls?.[0] ?? attack.total] as [number]),
 		targetAC,
 		hit,
+		criticalHit: isCritical,
 		damageTotal: damage.result,
 		damageRolls: damage.rolls,
 	};

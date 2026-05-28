@@ -5,7 +5,7 @@
  * declares the Anomaly roster (name, quantity, baseline stats) and the
  * hazards / rewards Warden should surface. The injector writes into
  * `campaign_encounters` (header) + `campaign_encounter_entries` (one row
- * per entry in `monsters`).
+ * per entry in `anomalies`).
  */
 
 export type SandboxEncounterDifficulty =
@@ -160,7 +160,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		monsters: [
 			{ name: "Verdant Stalker", quantity: 6, hp: 45, ac: 14, initiative: 4 },
 			{
-				name: "Thorn-Cleric (Awoko)",
+				name: "Thorn-Herald (Awoko)",
 				quantity: 1,
 				hp: 80,
 				ac: 15,

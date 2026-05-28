@@ -7,7 +7,10 @@ import type { AbilityScore } from "./5eRulesEngine";
 import {
 	getAbilityModifier,
 	getProficiencyBonus as getProficiencyBonusFromRules,
+	getRiftFavorDie,
+	getRiftFavorMax,
 } from "./5eRulesEngine";
+import { computePassiveScore } from "./sensesEngine";
 
 // Re-export for convenience
 const getProficiencyBonus = getProficiencyBonusFromRules;
@@ -145,8 +148,11 @@ export function calculateCharacterStats(
 	// Speed (standard 5e default 30, can be modified by race/features)
 	const speed = stats.speed ?? 30;
 
-	// Passive Perception (standard 5e: 10 + Perception skill)
-	const passivePerception = 10 + (skills.perception || 0);
+	// Passive Perception — canonical formula via computePassiveScore.
+	// This lightweight calculator does not have access to job/feat senses, so
+	// we only fold in the perception skill modifier; the full senses engine
+	// path in characterEngine.ts adds Observant feat, Job/Regent senses, etc.
+	const passivePerception = computePassiveScore(skills.perception || 0);
 
 	// Carrying capacity (standard 5e: STR score × 15)
 	const carryingCapacity = abilities.STR * 15;
@@ -176,11 +182,20 @@ export function calculateCharacterStats(
 	};
 }
 
-// Calculate HP max using standard 5e formula
+// Calculate HP max using standard 5e formula.
+//
+// P1.9: when a list of structured FeatureEffects is supplied, this
+// function also bakes in `hp_per_level` (e.g. Tough's +2 per level) and
+// `hp_flat` contributions. Callers that pass `null` / `undefined` for
+// the third arg get the legacy behavior — backward compatible.
 export function calculateHPMax(
 	level: number,
 	hitDieSize: number,
 	conModifier: number,
+	structuredEffects?:
+		| Array<{ kind: string; value?: number }>
+		| null
+		| undefined,
 ): number {
 	// First level: full hit die + VIT modifier (standard 5e)
 	const firstLevelHP = hitDieSize + conModifier;
@@ -190,7 +205,21 @@ export function calculateHPMax(
 	const averagePerLevel = Math.floor(hitDieSize / 2) + 1 + conModifier;
 	const subsequentHP = subsequentLevels * averagePerLevel;
 
-	return firstLevelHP + subsequentHP;
+	// Structured effect contributions (P1.9):
+	//   hp_per_level → scales with character level (e.g. Tough +2/level)
+	//   hp_flat      → one-time bump (e.g. Dwarven Toughness analogue)
+	let effectHp = 0;
+	if (structuredEffects && structuredEffects.length > 0) {
+		for (const e of structuredEffects) {
+			if (e.kind === "hp_per_level" && typeof e.value === "number") {
+				effectHp += e.value * level;
+			} else if (e.kind === "hp_flat" && typeof e.value === "number") {
+				effectHp += e.value;
+			}
+		}
+	}
+
+	return firstLevelHP + subsequentHP + effectHp;
 }
 
 // Calculate Spell Save DC (standard 5e: 8 + PB + spellcasting ability modifier)
@@ -533,21 +562,11 @@ export function getSpellsPreparedLimit(
 	return null;
 }
 
-// Rift Favor calculations (mapped to various 5e inspiration mechanics)
-export function getRiftFavorDie(level: number): number {
-	if (level <= 4) return 4;
-	if (level <= 10) return 6;
-	if (level <= 16) return 8;
-	return 10;
-}
-
-export function getRiftFavorMax(level: number): number {
-	// Aligned with unified engine: 3/4/5/6 by tier (Rift Ascendant canonical formula)
-	if (level <= 4) return 3;
-	if (level <= 10) return 4;
-	if (level <= 16) return 5;
-	return 6;
-}
+// Rift Favor calculations re-exported from `5eRulesEngine.ts` so a single
+// canonical source owns the formula. See `docs/ui-canon-parity-audit-2026-05.md`
+// finding L1 (duplicate definitions consolidated 2026-05). Imported into
+// the top of this module too — for in-file use plus public re-export.
+export { getRiftFavorDie, getRiftFavorMax };
 
 /**
  * Calculate cantrips known limit (standard 5e progression)

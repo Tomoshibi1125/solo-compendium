@@ -85,13 +85,13 @@
 	{
 		id: "anomaly-0010",
 		name: "Eternal Celestial Serpent",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 724,
 		ac: 12,
 		image: "/generated/compendium/anomalies/anomaly-0010.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -117,7 +117,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -334,13 +334,13 @@
 	{
 		id: "anomaly-0025",
 		name: "Corrupted Celestial Guardian",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 979,
 		ac: 22,
 		image: "/generated/compendium/anomalies/anomaly-0025.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -366,7 +366,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -557,13 +557,13 @@
 	{
 		id: "anomaly-0040",
 		name: "Corrupted Celestial Herald",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 198,
 		ac: 10,
 		image: "/generated/compendium/anomalies/anomaly-0040.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -589,7 +589,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -767,13 +767,13 @@
 	{
 		id: "anomaly-0055",
 		name: "Blessed Celestial Phoenix",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 1060,
 		ac: 15,
 		image: "/generated/compendium/anomalies/anomaly-0055.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light"],
 		stats: {
@@ -799,7 +799,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1003,13 +1003,13 @@
 	{
 		id: "anomaly-0070",
 		name: "Cursed Celestial Serpent",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 365,
 		ac: 23,
 		image: "/generated/compendium/anomalies/anomaly-0070.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1035,7 +1035,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1252,13 +1252,13 @@
 	{
 		id: "anomaly-0085",
 		name: "Ancient Celestial Guardian",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 1098,
 		ac: 21,
 		image: "/generated/compendium/anomalies/anomaly-0085.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light"],
 		stats: {
@@ -1284,7 +1284,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1475,13 +1475,13 @@
 	{
 		id: "anomaly-0100",
 		name: "Ancient Celestial Herald",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 752,
 		ac: 16,
 		image: "/generated/compendium/anomalies/anomaly-0100.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1507,7 +1507,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1685,13 +1685,13 @@
 	{
 		id: "anomaly-0115",
 		name: "Primordial Celestial Phoenix",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 752,
 		ac: 11,
 		image: "/generated/compendium/anomalies/anomaly-0115.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -1717,7 +1717,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -1895,13 +1895,13 @@
 	{
 		id: "anomaly-0130",
 		name: "Supreme Celestial Serpent",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 536,
 		ac: 13,
 		image: "/generated/compendium/anomalies/anomaly-0130.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -1927,7 +1927,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2144,13 +2144,13 @@
 	{
 		id: "anomaly-0145",
 		name: "Legendary Celestial Guardian",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 530,
 		ac: 28,
 		image: "/generated/compendium/anomalies/anomaly-0145.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2176,7 +2176,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2367,13 +2367,13 @@
 	{
 		id: "anomaly-0160",
 		name: "Legendary Celestial Herald",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 162,
 		ac: 15,
 		image: "/generated/compendium/anomalies/anomaly-0160.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2399,7 +2399,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2590,13 +2590,13 @@
 	{
 		id: "anomaly-0175",
 		name: "Mythic Celestial Phoenix",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 142,
 		ac: 10,
 		image: "/generated/compendium/anomalies/anomaly-0175.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2622,7 +2622,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -2800,13 +2800,13 @@
 	{
 		id: "anomaly-0190",
 		name: "Divine Celestial Serpent",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 612,
 		ac: 17,
 		image: "/generated/compendium/anomalies/anomaly-0190.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -2832,7 +2832,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3049,13 +3049,13 @@
 	{
 		id: "anomaly-0205",
 		name: "Infernal Celestial Guardian",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 103,
 		ac: 13,
 		image: "/generated/compendium/anomalies/anomaly-0205.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -3081,7 +3081,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3285,13 +3285,13 @@
 	{
 		id: "anomaly-0220",
 		name: "Infernal Celestial Herald",
-		type: "Undead",
+		type: "Anomaly",
 		rank: "S",
 		hp: 505,
 		ac: 14,
 		image: "/generated/compendium/anomalies/anomaly-0220.webp",
 		description:
-			"A fearsome Undead that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome Anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
 		weaknesses: ["Light", "Holy Damage"],
 		stats: {
@@ -3317,7 +3317,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Undead Instinct",
+				name: "Anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3534,13 +3534,13 @@
 	{
 		id: "anomaly-0235",
 		name: "Celestial Celestial Phoenix",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 575,
 		ac: 11,
 		image: "/generated/compendium/anomalies/anomaly-0235.webp",
 		description:
-			"A fearsome Demon that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
+			"A fearsome anomaly that serves the shadow armies. This S rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
 		weaknesses: ["Light"],
 		stats: {
@@ -3566,7 +3566,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",
@@ -3700,13 +3700,13 @@
 	{
 		id: "anomaly-0601",
 		name: "Eternal Shadow Overlord",
-		type: "Demon",
+		type: "anomaly",
 		rank: "S",
 		hp: 650,
 		ac: 32,
 		image: "/generated/compendium/anomalies/anomaly-0601.webp",
 		description:
-			"An eternal overlord of shadows that commands legions of darkness. This S rank demon possesses godlike power and threatens the very fabric of reality.",
+			"An eternal overlord of shadows that commands legions of darkness. This S rank anomaly possesses godlike power and threatens the very fabric of reality.",
 		abilities: [
 			"Eternal Shadow Dominion",
 			"Void Reality Warp",
@@ -3736,7 +3736,7 @@
 				frequency: "at-will",
 			},
 			{
-				name: "Demon Instinct",
+				name: "anomaly Instinct",
 				description:
 					"When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage.",
 				action: "passive",

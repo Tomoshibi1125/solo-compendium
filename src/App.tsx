@@ -86,6 +86,8 @@ const CharacterSheet = lazy(
 	() => import("./components/character-v2/CharacterSheetV2"),
 );
 const CharacterNew = lazy(() => import("./pages/CharacterNew"));
+const CharacterCompare = lazy(() => import("./pages/CharacterCompare"));
+const CompanionSheet = lazy(() => import("./pages/CompanionSheet"));
 const Admin = lazy(() => import("./pages/Admin"));
 const ContentAudit = lazy(() => import("./pages/admin/ContentAudit"));
 const ArtGeneration = lazy(() => import("./pages/admin/ArtGeneration"));
@@ -155,6 +157,8 @@ const Campaigns = lazy(() => import("./pages/Campaigns"));
 const CampaignDetail = lazy(() => import("./pages/CampaignDetail"));
 const CampaignBookView = lazy(() => import("./pages/CampaignBookView"));
 const CampaignJoin = lazy(() => import("./pages/CampaignJoin"));
+const Stream = lazy(() => import("./pages/Stream"));
+const FieldRoster = lazy(() => import("./pages/FieldRoster"));
 const CampaignSessionPlay = lazy(() => import("./pages/CampaignSessionPlay"));
 const Guilds = lazy(() => import("./pages/Guilds"));
 const GuildDetail = lazy(() => import("./pages/GuildDetail"));
@@ -427,6 +431,22 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<CharacterNew />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/characters/compare"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<CharacterCompare />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/characters/:characterId/companions/:soldierLinkId"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<CompanionSheet />
 						</Suspense>
 					}
 				/>
@@ -832,6 +852,24 @@ const AppContent = () => {
 					element={
 						<Suspense fallback={<PageLoader />}>
 							<CampaignBookView />
+						</Suspense>
+					}
+				/>
+				{/* Misty Pearl D1 — Broadcast Stream (OBS / Twitch Studio browser source) */}
+				<Route
+					path="/campaigns/:id/stream/:viewMode"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<Stream />
+						</Suspense>
+					}
+				/>
+				{/* Misty Pearl E4 — Field Roster (public campaign discovery) */}
+				<Route
+					path="/field-roster"
+					element={
+						<Suspense fallback={<PageLoader />}>
+							<FieldRoster />
 						</Suspense>
 					}
 				/>

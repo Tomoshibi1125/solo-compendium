@@ -176,7 +176,7 @@ At first, responders thought each incident was local:
 
 Then the Anomalies came through.
 
-Some were beasts. Some were intelligent. Some were fragments of ecosystems. Some were shaped like grief, hunger, memory, or law. Humanity learned the word Anomaly because monster was too small and alien was too inaccurate.
+Some were beasts. Some were intelligent. Some were fragments of ecosystems. Some were shaped like grief, hunger, memory, or law. Humanity learned the word Anomaly because anomaly was too small and alien was too inaccurate.
 
 The Gates were not all the same. Some were stable portals. Some were pocket-embedded mirrors. Some were full dungeons. Some were sealed domains waiting to mature. Some were only cracks, leaking mana sickness into streets and hospitals.
 
@@ -400,7 +400,7 @@ The Seoul Cascade became the Bureau’s shame and the Guilds’ founding argumen
 
 A second Regent-class event ended differently. A strike team led by White Heron sealed the Regent rather than destroying it. The Gate closed permanently, but the entity may still exist within, sleeping.
 
-This event matters because it proves Regents are not merely monsters to be slain.
+This event matters because it proves Regents are not merely anomalies to be slain.
 
 They can be sealed.
 
@@ -454,7 +454,7 @@ In the current era, the public believes the Gate system is understood.
 
 This is false.
 
-The Bureau can measure Ranks, but not destiny. It can classify Anomalies, but not explain why grief becomes a monster. It can license Ascendants, but not tell them why the System chose them. It can confiscate Runes, but not stop the Eternals from leaving fingerprints inside every Gate.
+The Bureau can measure Ranks, but not destiny. It can classify Anomalies, but not explain why grief becomes a anomaly. It can license Ascendants, but not tell them why the System chose them. It can confiscate Runes, but not stop the Eternals from leaving fingerprints inside every Gate.
 
 Then Yongsan begins to pulse.
 
@@ -568,7 +568,7 @@ The things that came through were named Anomalies because no older word survived
 
 Then humans began to Awaken.
 
-A nurse sealed wounds with light. A boxer cracked Gate-stone with his bare hands. A student saw equations burning over a monster’s heart. A singer calmed a shelter with one shaking note. A widower stepped into a dungeon and came back with someone else’s shadow.
+A nurse sealed wounds with light. A boxer cracked Gate-stone with his bare hands. A student saw equations burning over a anomaly’s heart. A singer calmed a shelter with one shaking note. A widower stepped into a dungeon and came back with someone else’s shadow.
 
 The System gave them Jobs. The Bureau gave them licenses. The world gave them impossible expectations.
 

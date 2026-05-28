@@ -18,6 +18,7 @@ import type { Job, StaticJob } from "@/types/character";
 import { EARTH_LANGUAGES } from "@/types/character";
 import type { AbilityScore } from "@/types/core-rules";
 import { ABILITY_NAMES } from "@/types/core-rules";
+import { AbilityAccessPreview } from "./AbilityAccessPreview";
 
 interface JobStepProps {
 	selectedJob: string;
@@ -119,17 +120,35 @@ export const JobStep: React.FC<JobStepProps> = ({
 											jobData.display_name || jobData.name,
 										)}
 									</h4>
-									<Badge
-										variant="outline"
-										className="text-[10px] uppercase border-primary/40 text-primary/80"
-									>
-										Rank 1 Protocol
-									</Badge>
+									<div className="flex flex-col gap-1 items-end">
+										<Badge
+											variant="outline"
+											className="text-[10px] uppercase border-primary/40 text-primary/80"
+										>
+											Rank 1 Protocol
+										</Badge>
+										<Badge
+											variant="secondary"
+											className="text-[9px] uppercase bg-primary/10 text-primary/70 border-primary/20"
+										>
+											{formatRegentVernacular(
+												(jobData as { source_book?: string | null })
+													.source_book ?? "Rift Ascendant Canon",
+											)}
+										</Badge>
+									</div>
 								</div>
 
 								<AscendantText className="block text-sm text-muted-foreground leading-relaxed italic">
 									{formatRegentVernacular(jobData.description)}
 								</AscendantText>
+
+								<AbilityAccessPreview
+									jobName={jobData.name}
+									characterLevel={1}
+									title="Grants Access At Level 1"
+									subtitle="A sample of the abilities you'll be able to learn from this job."
+								/>
 
 								{/* Primary Header Summary */}
 								<div className="grid grid-cols-2 gap-4 py-3 border-y border-primary/5">
