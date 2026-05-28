@@ -48,7 +48,7 @@ CREATE POLICY cta_select
 		OR EXISTS (
 			SELECT 1 FROM public.campaigns c
 				WHERE c.id = campaign_tamed_anomalies.campaign_id
-					AND c.owner_id = auth.uid()
+					AND c.warden_id = auth.uid()
 		)
 	);
 
@@ -78,7 +78,7 @@ CREATE POLICY cta_update
 		OR EXISTS (
 			SELECT 1 FROM public.campaigns c
 				WHERE c.id = campaign_tamed_anomalies.campaign_id
-					AND c.owner_id = auth.uid()
+					AND c.warden_id = auth.uid()
 		)
 	);
 
@@ -189,7 +189,7 @@ BEGIN
 					AND cm.user_id = v_caller
 		) AND NOT EXISTS (
 			SELECT 1 FROM public.campaigns c
-				WHERE c.id = p_campaign_id AND c.owner_id = v_caller
+				WHERE c.id = p_campaign_id AND c.warden_id = v_caller
 		) THEN
 			RAISE EXCEPTION 'NOT_CAMPAIGN_MEMBER';
 		END IF;
@@ -257,7 +257,7 @@ BEGIN
 				AND cm.user_id = v_caller
 	) AND NOT EXISTS (
 		SELECT 1 FROM public.campaigns c
-			WHERE c.id = v_campaign_id AND c.owner_id = v_caller
+			WHERE c.id = v_campaign_id AND c.warden_id = v_caller
 	) THEN
 		RAISE EXCEPTION 'NOT_CAMPAIGN_MEMBER';
 	END IF;
@@ -300,7 +300,7 @@ BEGIN
 				OR EXISTS (
 					SELECT 1 FROM public.campaigns c
 						WHERE c.id = campaign_tamed_anomalies.campaign_id
-							AND c.owner_id = v_caller
+							AND c.warden_id = v_caller
 				)
 			);
 END;

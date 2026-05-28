@@ -72,7 +72,7 @@ CREATE POLICY campaign_vehicles_select
 		OR EXISTS (
 			SELECT 1 FROM public.campaigns c
 				WHERE c.id = campaign_vehicles.campaign_id
-					AND c.owner_id = auth.uid()
+					AND c.warden_id = auth.uid()
 		)
 	);
 
@@ -84,7 +84,7 @@ CREATE POLICY campaign_vehicles_write
 		EXISTS (
 			SELECT 1 FROM public.campaigns c
 				WHERE c.id = campaign_vehicles.campaign_id
-					AND c.owner_id = auth.uid()
+					AND c.warden_id = auth.uid()
 		)
 	);
 

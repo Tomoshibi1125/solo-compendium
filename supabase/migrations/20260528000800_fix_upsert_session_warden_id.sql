@@ -1,15 +1,11 @@
--- R5 of Round 2 remediation: persist recurrence_rule + recurrence_parent_id
--- through the upsert_campaign_session RPC. The columns already exist from
--- `20260525121000_add_recurring_session_columns.sql`, but the RPC's
--- signature never grew to accept them — the client was silently dropping
--- the rule string.
---
--- This migration replaces the existing function body to add two optional
--- params. Function signature changes use DROP + CREATE per Supabase guidance.
-
-DROP FUNCTION IF EXISTS public.upsert_campaign_session(
-	uuid, uuid, text, text, timestamptz, text, text
-);
+-- Corrective migration: 20260526120000 reintroduced a stale `owner_id`
+-- reference inside upsert_campaign_session's permission check. The
+-- campaigns table's owner column is `warden_id` (see 20260528000700 and
+-- the generated types). Because the bad reference lives in a plpgsql
+-- function body it was not validated at apply time, but it raises
+-- `column "owner_id" does not exist` at runtime whenever a non-Warden
+-- caller reaches the ownership fallback. Re-create the function with the
+-- correct column. Signature is unchanged, so CREATE OR REPLACE is safe.
 
 CREATE OR REPLACE FUNCTION public.upsert_campaign_session(
 	p_campaign_id uuid,
@@ -100,6 +96,3 @@ $$;
 GRANT EXECUTE ON FUNCTION public.upsert_campaign_session(
 	uuid, uuid, text, text, timestamptz, text, text, text, uuid
 ) TO authenticated;
-
-COMMENT ON FUNCTION public.upsert_campaign_session IS
-	'Create / update a campaign session. R5: now persists optional recurrence_rule + recurrence_parent_id added by 20260525121000. Errors: AUTH_REQUIRED, CAMPAIGN_SESSION_FORBIDDEN, INVALID_SESSION_STATUS, SESSION_TITLE_REQUIRED, SESSION_NOT_FOUND.';

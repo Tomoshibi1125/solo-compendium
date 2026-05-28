@@ -50,7 +50,7 @@ CREATE POLICY "Campaign members can read account links"
     OR EXISTS (
       SELECT 1 FROM public.campaigns
       WHERE campaigns.id = discord_account_links.campaign_id
-        AND campaigns.owner_id = auth.uid()
+        AND campaigns.warden_id = auth.uid()
     )
   );
 
@@ -91,7 +91,7 @@ CREATE POLICY "Wardens read Discord command audit"
     OR EXISTS (
       SELECT 1 FROM public.campaigns
       WHERE campaigns.id = discord_command_audit.campaign_id
-        AND campaigns.owner_id = auth.uid()
+        AND campaigns.warden_id = auth.uid()
     )
   );
 

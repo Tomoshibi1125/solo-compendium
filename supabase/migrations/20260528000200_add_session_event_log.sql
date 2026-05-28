@@ -43,7 +43,7 @@ CREATE POLICY "Campaign members can read session events"
 		OR EXISTS (
 			SELECT 1 FROM public.campaigns
 			WHERE campaigns.id = campaign_session_events.campaign_id
-				AND campaigns.owner_id = auth.uid()
+				AND campaigns.warden_id = auth.uid()
 		)
 	);
 
@@ -62,7 +62,7 @@ CREATE POLICY "Wardens can write session events"
 		OR EXISTS (
 			SELECT 1 FROM public.campaigns
 			WHERE campaigns.id = campaign_session_events.campaign_id
-				AND campaigns.owner_id = auth.uid()
+				AND campaigns.warden_id = auth.uid()
 		)
 	);
 

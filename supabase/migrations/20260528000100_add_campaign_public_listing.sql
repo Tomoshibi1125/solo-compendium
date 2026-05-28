@@ -58,11 +58,11 @@ BEGIN
   IF COALESCE((NEW.public_listing ->> 'enabled')::boolean, false) IS FALSE THEN
     RETURN NEW;
   END IF;
-  v_owner := NEW.owner_id;
+  v_owner := NEW.warden_id;
   IF v_owner IS NULL THEN RETURN NEW; END IF;
   SELECT count(*) INTO v_count
     FROM public.campaigns
-    WHERE owner_id = v_owner
+    WHERE warden_id = v_owner
       AND id <> NEW.id
       AND (public_listing ->> 'enabled')::boolean IS TRUE;
   IF v_count >= 3 THEN
