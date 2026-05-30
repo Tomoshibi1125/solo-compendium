@@ -177,7 +177,9 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 	// theme word ("Radiant") before hitting an ambiguous secondary word
 	// ("Pulse").
 	{
-		pattern: /\b(Radiant|Sun|Solar|Corona|Holy|Divine|Dawn|Judgment)\b/i,
+		// "Judgment" intentionally omitted: it is element-agnostic (a judgment can
+		// be radiant, force, psychic, etc.) and produced false positives.
+		pattern: /\b(Radiant|Sun|Solar|Corona|Holy|Divine|Dawn)\b/i,
 		expected: ["radiant", "fire"],
 	},
 	{
@@ -188,7 +190,12 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 		pattern: /\b(Fire|Flame|Blaze|Inferno|Scorch|Pyre|Molten|Burning)\b/i,
 		expected: ["fire"],
 	},
-	{ pattern: /\b(Poison|Toxin|Venom|Plague|Blight)\b/i, expected: ["poison"] },
+	{
+		// "Plague" / "Blight" omitted: both read just as naturally as necrotic
+		// decay as poison, so they are not reliable poison-only signals.
+		pattern: /\b(Poison|Toxin|Venom)\b/i,
+		expected: ["poison"],
+	},
 	{
 		pattern: /\b(Psychic|Mind|Psion|Mental|Nightmare)\b/i,
 		expected: ["psychic"],
@@ -199,19 +206,30 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 		expected: ["necrotic", "psychic", "cold", "slashing"],
 	},
 	{
-		pattern: /\b(Blood|Crimson|Sanguine|Carnage|Gore)\b/i,
+		// "Crimson" omitted: it is a colour descriptor (often paired with sonic /
+		// kinetic effects like a war-cry "Crimson Howl") rather than a reliable
+		// blood-damage signal. Explicit blood words stay.
+		pattern: /\b(Blood|Sanguine|Carnage|Gore)\b/i,
 		expected: ["necrotic", "slashing", "force", "fire"],
 	},
 	{
-		pattern:
-			/\b(Entropy|Decay|Rot|Wither|Siphon|Drain|Necrotic|Annihilation|Erasure|Termination)\b/i,
+		// "Annihilation" / "Erasure" / "Termination" omitted: they denote
+		// destruction in general (force/thunder/etc. are equally valid), not
+		// necrotic specifically.
+		pattern: /\b(Entropy|Decay|Rot|Wither|Siphon|Drain|Necrotic)\b/i,
 		expected: ["necrotic"],
 	},
 	{
 		pattern: /\b(Lightning|Thunder|Storm|Tempest|Shock|Electric)\b/i,
 		expected: ["lightning", "thunder"],
 	},
-	{ pattern: /\b(Arcane|Mana|Aether)\b/i, expected: ["force"] },
+	{
+		// "Mana" omitted: it is the universal magic prefix in RA and attaches to
+		// abilities of every damage type (incl. physical mana-laced strikes), so
+		// it is not a reliable force signal. "Arcane"/"Aether" stay.
+		pattern: /\b(Arcane|Aether)\b/i,
+		expected: ["force"],
+	},
 ];
 
 // Utility/support name tokens — entries matching any of these should not

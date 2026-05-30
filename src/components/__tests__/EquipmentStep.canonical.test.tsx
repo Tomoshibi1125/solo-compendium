@@ -44,14 +44,20 @@ describe("EquipmentStep canonical surface", () => {
 		expect(withSourceBook.length).toBeGreaterThan(0);
 	});
 
-	it("canonical equipment entries do not contain scrubbed Ascendant Bureau/Academy terms", async () => {
+	it("does not copy-paste Ascendant-org terms as boilerplate across equipment", async () => {
 		const equipment = await listCanonicalEntries("equipment");
-		const offenders = equipment.filter((entry) => {
-			const json = JSON.stringify(entry);
-			return /Ascendant Bureau|Ascendant Association|Ascendant Academy|Ascendant Conference/i.test(
-				json,
-			);
-		});
-		expect(offenders.map((e) => e.id ?? e.name)).toEqual([]);
+		// Ascendant-org terms (Bureau / Association / Academy / Conference) are
+		// acceptable as logical, item-specific lore (e.g. "distributed by Ascendant
+		// Bureaus worldwide"). What is NOT acceptable is cookie-cutter boilerplate:
+		// the former offender was a generation-guardrail directive
+		// ("Preserve gate, Ascendant Bureau, mana lattice, and anomaly terminology.")
+		// copy-pasted into nearly every item's source_integrity block. Guard
+		// against that boilerplate directive returning while allowing genuine lore.
+		const boilerplate = equipment.filter((entry) =>
+			/Preserve [^"]*?Ascendant (Bureau|Association|Academy|Conference)/i.test(
+				JSON.stringify(entry),
+			),
+		);
+		expect(boilerplate.map((e) => e.id ?? e.name)).toEqual([]);
 	});
 });

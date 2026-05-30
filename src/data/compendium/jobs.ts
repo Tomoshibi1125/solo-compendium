@@ -1633,10 +1633,10 @@ export const jobs: Job[] = [
 		type: "Job",
 		rank: "A",
 		description:
-			"The Revenant is an Awakened identity granted the mandate of the Marthos Reaper. As an Ascendant of this lineage, they are the living vessels of the Void-Breath, authorized by the Dragon-King Marthos to unmake the corrupted and the fallen. They do not merely kill; they dissolve the very essence of their enemies into the entropy layer. In modern society, Revenants are figures of cold aweâ€”where they walk, the air grows still and the weak-hearted feel the weight of their mortal end. They are the ultimate cleanup crew for the Ascendant Bureau, tasked with erasing gate breaks that threaten to consume reality.",
-		hitDie: "1d6",
+			"The Revenant is an Awakened identity bound to the End-Cycle mandate of Marthos, the Dragon-King of Void and Harbinger of Annihilation. As an Ascendant of this lineage, their body no longer runs on life - it runs on death. Sustained by the Void-Breath and by Remnants (fragments of severed life-essence reclaimed at the instant a creature dies), the Revenant is an unarmored drain tank that holds the line by feeding on the dying around it. They wear no armor and need none; entropy itself sheathes them, and the wounds that would fell others only deepen the harvest. The Ascendant Bureau deploys Revenants as immovable anchors at the worst gate breaks - the figure who walks into annihilation and walks back out, fuller than before.",
+		hitDie: "1d8",
 		primaryAbility: "Intelligence",
-		saving_throws: ["Intelligence", "Sense"],
+		saving_throws: ["Intelligence", "Vitality"],
 		skillChoices: [
 			"Mana Flow",
 			"Dimensional Lore",
@@ -1656,49 +1656,43 @@ export const jobs: Job[] = [
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
-				name: "Mandate of the End-Cycle",
+				name: "Entropy-Tuned Sight",
 				description:
-					"Your Awakening occurred at the threshold of the Void. Your physiology is saturated with entropy-mana, granting you resistance to necrotic and force damage. You do not need to breathe, eat, or drink, and you have advantage on saves against being unmade.",
+					"Your Awakening tuned your senses to decay. You perceive the fading life-force and structural rot of all things: you sense dying creatures and anomalies within 120 ft, even through walls, and you know the exact remaining hit points of any creature that is below half its maximum.",
 				level: 1,
 			},
 			{
-				name: "Reaper's Resilience",
+				name: "Voice of the Reaped",
 				description:
-					"You have already touched the Voidâ€”you have the hospital records to prove it from your moment of Awakening. Advantage on death saves. When stabilized, regain 1 HP instead of 0. Immune to the frightened condition.",
+					"The recently dead recognize you as a Mandated Reaper of Marthos. You can speak with the lingering echoes of any creature that died within the past day; they answer truthfully and treat you as their rightful warden, which Bureau investigators often exploit.",
 				level: 1,
 			},
 			{
-				name: "Void-Dissension Aura",
+				name: "Unhallowed Wake",
 				description:
-					"The Aetheric-Weave surrounding you is destabilized by your presence. Nonmagical objects and lifeforms within 10 ft suffer accelerated decay. Non-Awakened individuals feel a primal urge to keep their distance; milk spoils and batteries drain in your wake.",
+					"The Aetheric-Weave frays in your presence. Nonmagical food spoils, flames gutter, and the non-Awakened feel a primal urge to keep their distance. You have advantage on Presence (Intimidation) checks against creatures that can see you and are not immune to fear.",
 				level: 1,
-			},
-			{
-				name: "Soul Reaping",
-				description:
-					"When you deal necrotic damage, the target's life force is reaped into your vessel as raw mana. Regain HP = half the necrotic dealt. Once per turn.",
-				level: 14,
 			},
 		],
 		jobTraits: [
 			{
-				name: "Aetheric-Sight: Entropy-Tuned",
+				name: "Harvester's Patience",
 				description:
-					"You perceive the fading life-force and structural decay of all things. Sense dying creatures and anomaly within 120 ft, even through walls. Know the exact health of any creature below half their maximum.",
-				type: "passive",
-			},
-			{
-				name: "Necrotic Shell",
-				description:
-					"Your reconstructed body is saturated with entropy â€” bioweapons, radiation, and necrotic attacks treat you like a wall. Resistance to necrotic damage. Immune to HP max reduction effects.",
+					"Necrosis is your native state. You are immune to effects that would reduce your hit point maximum, and while dying you automatically stabilize at the start of each of your turns.",
 				type: "resistance",
 			},
 			{
-				name: "Voice of the Void",
+				name: "Remnant Sense",
 				description:
-					"Speak with the lingering echoes of the deceased at will. The dead recognize you as a Mandated Reaper and answer truthfully. Cold case detectives and Bureau investigators often seek your insight.",
+					"You always know how many Remnants you currently hold. As a bonus action, sense whether a creature you can see is above or below half its hit points and whether it is currently marked for the reaping.",
 				type: "active",
 				frequency: "at-will",
+			},
+			{
+				name: "Carrion Anchor",
+				description:
+					"Low-intelligence gate anomalies read your mana-signature as part of the dead environment and ignore you unless you attack them first or harvest a Remnant within their sight.",
+				type: "passive",
 			},
 		],
 		abilityScoreImprovements: { vitality: 2, strength: 1 },
@@ -1714,35 +1708,42 @@ export const jobs: Job[] = [
 			["Scholar's Pack", "Explorer's Pack"],
 			["Grimoire"],
 		],
-		hitPointsAtFirstLevel: "6 + your Vitality modifier",
+		hitPointsAtFirstLevel: "8 + your Vitality modifier",
 		hitPointsAtHigherLevels:
-			"1d6 (or 4) + your Vitality modifier per level after 1st",
+			"1d8 (or 5) + your Vitality modifier per level after 1st",
 		spellcasting: {
 			ability: "Intelligence",
-			focus: "Arcane focus or grimoire",
-			cantripsKnown: [
-				3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-			],
-			spellSlots: FULL_CASTER_SLOTS,
+			focus: "Reaper's Ledger or arcane focus",
+			spellSlots: HALF_CASTER_SLOTS,
 		},
+		powersKnown: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
+		techniquesKnown: [
+			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
+		],
 		classFeatures: [
 			{
 				level: 1,
-				name: "Rite of Dissolution",
+				name: "Gravebound Flesh",
 				description:
-					"Perform specialized entropy rites using Intelligence â€” your grimoire is a record of everything reaped. Your necrotic rites ignore resistance. Below half HP, your power surges: your spell save DC increases by 1.",
+					"Entropy sheathes you in place of armor. While you wear no armor, your AC equals 10 + your Intelligence modifier + your Vitality modifier (you may still use a shield). Sustained by the Void-Breath, you no longer need to breathe, eat, drink, or sleep; you have resistance to necrotic damage and advantage on death saving throws.",
 			},
 			{
 				level: 1,
-				name: "Final Harvest",
+				name: "Remnant Harvest",
 				description:
-					"When a creature falls within 60 ft, you passively absorb its fading resonance. Gain temp HP = creature's Rank (level equivalent) + Intelligence mod. Once per round.",
+					"You reclaim the severed life-essence of the dying. Once per turn, when a creature dies within 5 feet of you or you deal necrotic damage to a creature marked for the reaping, you bank 1 Remnant. You can hold a number of Remnants equal to your Intelligence modifier + your proficiency bonus (minimum 1). Any necrotic damage you deal marks that creature for the reaping until the end of your next turn.",
 			},
 			{
 				level: 2,
-				name: "Reaping Specialization",
+				name: "Reaper's Ledger",
 				description:
-					"Choose a Reaping discipline â€” each manifests differently in the field. Half cost/time to copy necromancy rites. When you unmake a target with a necromancy rite, decay chain-reacts: one creature within 10 ft takes necrotic damage equal to your INT mod. Features at 2nd, 6th, 10th, and 14th.",
+					"You inscribe the End-Cycle litanies into the Reaper's Ledger and learn to fight as both caster and martial. You gain half-caster spellcasting using Intelligence (preparing spells from your Ledger), and you begin learning martial powers and techniques drawn from the shared awakened pool. Your spells, powers, and techniques all advance on the half-caster track, reaching their 5th tier at 17th level.",
+			},
+			{
+				level: 3,
+				name: "Marked for the Reaping",
+				description:
+					"Your mark becomes a death sentence. Once per turn, when you deal necrotic damage to a creature marked for the reaping, it takes additional necrotic damage equal to your proficiency bonus. When a marked creature dies, you may move the mark to another creature you can see within 30 feet as part of the same turn.",
 			},
 			{
 				level: 4,
@@ -1750,43 +1751,40 @@ export const jobs: Job[] = [
 				description: "You gain this at 4th, 8th, 12th, 16th, and 19th level.",
 			},
 			{
-				level: 6,
-				name: "Entropy Discipline Feature",
-				description: "Feature from your Entropy Specialization.",
-			},
-			{
-				level: 8,
-				name: "Breath of Dissolution",
+				level: 5,
+				name: "Mortal Harvest",
 				description:
-					"Once per long rest, emit a 20-ft radius field of accelerated entropyâ€”the signature of Marthos's Void-Breath. For 1 min: enemies starting their turn in it take necrotic damage equal to your proficiency bonus + INT mod. Enemy healing in the field is halved.",
+					"You convert harvested death into endurance. When you deal necrotic or force damage, you can spend Remnants (no action required): each Remnant restores 1d8 + your Intelligence modifier hit points to you, or grants that many temporary hit points to you or an ally within 5 feet. You may spend a number of Remnants this way each turn up to your proficiency bonus.",
 			},
 			{
-				level: 10,
-				name: "Entropy Discipline Feature",
-				description: "Feature from your Entropy Specialization.",
-			},
-			{
-				level: 14,
-				name: "Entropy Discipline Feature",
-				description: "Feature from your Entropy Specialization.",
-			},
-			{
-				level: 16,
-				name: "Death's Door",
+				level: 7,
+				name: "Entropic Bulwark",
 				description:
-					"When you drop to 0 HP, you don't fall unconscious until the end of your next turn â€” you've been dead before and it holds no power over you. Act normally during this time. Regain any HP before then to stabilize. Once per long rest.",
+					"The decay around you blunts incoming force. As a reaction when you or a creature within 5 feet takes damage, you can spend 1 Remnant to reduce that damage by 1d8 + your Vitality modifier, and the attacker (if within reach) becomes marked for the reaping.",
 			},
 			{
-				level: 18,
-				name: "Permanent Reaping",
+				level: 9,
+				name: "Aetheric Realignment",
 				description:
-					"Choose one 1st and one 2nd-level spell. These are permanently attuned to your internal resonance â€” cast them without a slot, at will. They exist as ambient flows within your consciousness.",
+					"You bend the fraying Aetheric-Weave back into your favor. When you fail a saving throw, you can spend 1 Remnant to reroll it and must take the new result. You can use this only once per turn.",
+			},
+			{
+				level: 11,
+				name: "Borrowed Breath",
+				description:
+					"You have died before; it holds no authority over you. Once per long rest, when you would drop to 0 hit points, you can spend 2 Remnants to drop to 1 hit point instead and immediately mark every creature within 10 feet for the reaping.",
+			},
+			{
+				level: 13,
+				name: "Harvest Surge",
+				description:
+					"Your reaping outpaces the dying. Remnant Harvest can trigger twice per turn instead of once, and each die you roll for Mortal Harvest becomes 1d10 instead of 1d8.",
 			},
 			{
 				level: 20,
-				name: "Zenith Avatar of Marthos",
+				name: "Zenith Mandate",
 				description:
-					"Your status as an Ascendant is recognized globally at the Zenith Rank: [RANK: S â€” AVATAR OF THE VOID-BREATH]. Breath of Dissolution becomes at-will. Below half HP, your necrotic rites deal bonus damage equal to your INT mod. The Ascendant Bureau lists you as a localized end-cycle occurrence. You are the final harvest.",
+					"You are recognized at the Zenith Rank as a living instrument of Marthos, Harbinger of Annihilation [RANK: S - AVATAR OF THE END-CYCLE]. As an action, channel the End-Cycle mandate for 1 minute: Remnant Harvest ignores its per-turn limit, all healing and temporary hit points from Mortal Harvest are maximized, and any creature that dies within 30 feet of you grants you a Remnant even beyond your normal maximum. Once per long rest.",
 			},
 		],
 		racialTraits: [
@@ -1820,26 +1818,19 @@ export const jobs: Job[] = [
 		],
 		climb_speed: 20,
 		abilities: [
-			"Entropy Mandate",
-			"Death Harvest",
-			"Entropy Specialization",
-			"Decay Field",
-			"Death's Door",
+			"Gravebound Flesh",
+			"Remnant Harvest",
+			"Reaper's Ledger",
+			"Mortal Harvest",
+			"Zenith Mandate",
 		],
 		levelChoices: [
+			{ level: 1, type: "power", count: 2, source: "Reaper's Ledger" },
 			{
 				level: 1,
-				type: "cantrip",
-				count: 3,
-				source: "Rite of Dissolution",
-				filter: { restrictTo: "job-list" },
-			},
-			{
-				level: 18,
-				type: "permanent-reaping",
+				type: "technique",
 				count: 2,
-				source: "Permanent Reaping",
-				filter: { maxLevel: 2 },
+				source: "Reaper's Ledger",
 			},
 		],
 		spellbook: { atCreation: 6, perLevel: 2, label: "Reaper's Ledger" },
@@ -2996,7 +2987,7 @@ export const jobs: Job[] = [
 		description:
 			"The Herald is an Awakened identity that specializes in the Absolute Transmission mandate. As an Ascendant of this lineage, their nervous system was restructured at Awakening into a living antenna — a receiver tuned to the Absolute's broadcast, translating sanctified resonance into restorative, radiant, and reality-correcting mantras. In the modern world, Heralds are the Ascendant Bureau's field chaplains and raid medics; their very presence re-anchors an ally's vitals, and their mantras can mend shattered bones or incinerate unholy anomalies with equal authority. They are the bridge between civilians and the Absolute's will.",
 		hitDie: "1d8",
-		primaryAbility: "Sense",
+		primaryAbility: "Presence",
 		saving_throws: ["Sense", "Presence"],
 		skillChoices: [
 			"Dimensional Lore",
@@ -3055,7 +3046,7 @@ export const jobs: Job[] = [
 				type: "passive",
 			},
 		],
-		abilityScoreImprovements: { sense: 2, presence: 1 },
+		abilityScoreImprovements: { presence: 2, sense: 1 },
 		size: "medium",
 		speed: 30,
 		languages: ["English", "Liturgical Latin"],
@@ -3592,7 +3583,7 @@ export const jobs: Job[] = [
 		description:
 			"The Stalker is an Awakened identity that specializes in the Dimensional Predator mandate. As an Ascendant of this lineage, their body was restructured for pursuit — their leg musculature, lung capacity, and cardiovascular system are optimized for sustained high-speed chase, and their aetheric sense is permanently tuned to dimensional anomalies. In the modern world, Stalkers are the Bureau's preferred bounty and extraction specialists; they work alone, they always catch their mark, and when their name appears on a contract the global bounty network goes quiet.",
 		hitDie: "1d10",
-		primaryAbility: "Sense",
+		primaryAbility: "Agility",
 		saving_throws: ["Strength", "Agility"],
 		skillChoices: [
 			"Beast Taming",

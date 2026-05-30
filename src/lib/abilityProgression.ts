@@ -20,17 +20,12 @@ export function getSpellProgressionForAbilityJob(
 	const jobName = typeof job === "string" ? job : job?.name;
 	const normalized = normalizeAbilityProgressionJobName(jobName);
 
-	const fullCasters = [
-		"mage",
-		"revenant",
-		"herald",
-		"esper",
-		"summoner",
-		"idol",
-	];
+	const fullCasters = ["mage", "herald", "esper", "summoner", "idol"];
 	if (fullCasters.includes(normalized)) return "full";
 
-	const halfCasters = ["holy knight", "stalker", "technomancer"];
+	// Revenant is a half-caster (drain-tank rework): caps both spells and
+	// martial powers at 5th level via the half progression below.
+	const halfCasters = ["holy knight", "stalker", "technomancer", "revenant"];
 	if (halfCasters.includes(normalized)) return "half";
 
 	if (normalized === "contractor") return "pact";

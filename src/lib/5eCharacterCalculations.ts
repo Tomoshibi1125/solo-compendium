@@ -263,6 +263,12 @@ export function getCasterType(
 	const jobName = typeof job === "string" ? job : job?.name;
 	if (!jobName) return "none";
 
+	// Revenant is a hybrid half-caster (spells + martial powers/techniques),
+	// reclassified from full-caster as part of the unarmored-drain-tank rework.
+	// This early return takes precedence over the Revenant→Wizard identity map
+	// below (which is now unreached for caster-type purposes).
+	if (jobName === "Revenant") return "half";
+
 	// Full casters (standard 5e)
 	const fullCasters = ["Wizard", "Cleric", "Druid", "Sorcerer", "Bard"];
 	// Half casters (standard 5e)
@@ -545,11 +551,16 @@ export function getSpellsPreparedLimit(
 	const spellcastingAbility = getSpellcastingAbility(job);
 	if (!spellcastingAbility) return null;
 
+	// Revenant is a half-caster (drain-tank rework): prepared count uses
+	// half-caster math (ability modifier + half level, minimum 1).
+	if (jobName === "Revenant") {
+		return Math.max(1, abilityModifier + Math.floor(level / 2));
+	}
+
 	// Prepared casters: ability modifier + level (minimum 1) - standard 5e
 	const preparedCasters = [
 		"Mage",
 		"Technomancer",
-		"Revenant",
 		"Stalker",
 		"Herald",
 		"Holy Knight",

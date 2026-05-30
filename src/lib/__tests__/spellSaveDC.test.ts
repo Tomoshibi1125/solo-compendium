@@ -196,12 +196,23 @@ describe("spell known/prepared count formulas", () => {
 		["Mage", 1, -1, 1],
 		["Mage", 5, 4, 9],
 		["Technomancer", 2, 3, 5],
-		["Revenant", 7, 2, 9],
 		["Stalker", 9, 4, 13],
 		["Herald", 10, 5, 15],
 		["Holy Knight", 13, 1, 14],
 		["Summoner", 20, 3, 23],
 	])("%s level %i prepares max(1, level + ability mod)", (jobName, level, abilityModifier, expected) => {
+		expect(getSpellsPreparedLimit(jobName, level, abilityModifier)).toBe(
+			expected,
+		);
+	});
+
+	// Revenant is a half-caster (drain-tank rework): prepared count uses
+	// half-caster math, max(1, ability mod + floor(level / 2)).
+	it.each([
+		["Revenant", 1, 3, 3],
+		["Revenant", 7, 2, 5],
+		["Revenant", 20, 4, 14],
+	])("%s level %i prepares max(1, ability mod + half level) as a half-caster", (jobName, level, abilityModifier, expected) => {
 		expect(getSpellsPreparedLimit(jobName, level, abilityModifier)).toBe(
 			expected,
 		);

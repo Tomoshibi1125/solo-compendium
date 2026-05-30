@@ -123,15 +123,43 @@ function parseUses(
 	) {
 		return null;
 	}
+	// A leading explicit count ("3/long rest", "2/short rest") wins outright.
 	const numericMatch = normalized.match(/^(\d+)/);
 	if (numericMatch) return Number(numericMatch[1]);
-	if (normalized.includes("proficiency") || normalized.includes("prof")) {
-		const bonusMatch = normalized.match(/\+\s*(\d+)/);
-		return context.proficiencyBonus + (bonusMatch ? Number(bonusMatch[1]) : 0);
+
+	// 5e per-use scaling. Detect the building blocks anywhere in the string so
+	// authored formulas read naturally, e.g.:
+	//   "Proficiency bonus/short rest"            => PB
+	//   "PB + main stat mod/long rest"            => PB + primary ability mod
+	//   "Intelligence modifier/long rest"         => primary ability mod (>=1)
+	//   "level/long rest"                          => character level
+	// Mirrors the Math.max(1, …) clamp used by computeCrossClassUses so an
+	// ability-only formula never yields zero uses for a dump-stat caster.
+	const stat = context.primaryStatModifier ?? 0;
+	const hasProficiency =
+		normalized.includes("proficiency") || /\bpb\b|\bprof\b/.test(normalized);
+	const hasAbilityMod =
+		/\bmod(?:ifier)?\b/.test(normalized) ||
+		normalized.includes("main stat") ||
+		normalized.includes("primary stat") ||
+		normalized.includes("ability mod") ||
+		/\b(str|dex|con|int|wis|cha|strength|agility|vitality|intelligence|sense|presence)\b/.test(
+			normalized,
+		);
+	const flatBonusMatch = normalized.match(/\+\s*(\d+)/);
+	const flatBonus = flatBonusMatch ? Number(flatBonusMatch[1]) : 0;
+
+	if (hasProficiency && hasAbilityMod) {
+		return Math.max(1, context.proficiencyBonus + stat + flatBonus);
+	}
+	if (hasAbilityMod) {
+		return Math.max(1, stat + flatBonus);
+	}
+	if (hasProficiency) {
+		return Math.max(1, context.proficiencyBonus + flatBonus);
 	}
 	if (normalized.includes("level")) {
-		const bonusMatch = normalized.match(/\+\s*(\d+)/);
-		return context.level + (bonusMatch ? Number(bonusMatch[1]) : 0);
+		return Math.max(1, context.level + flatBonus);
 	}
 	return 1;
 }

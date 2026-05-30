@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	auditCanonicalAbilityCompleteness,
 	isAbilityEntryComplete,
 	isCanonicalPowerLearnable,
 	isCanonicalSpellLearnable,
@@ -537,5 +538,20 @@ describe("canonicalCompendium resolver", () => {
 				(entry) => (entry.level_requirement ?? entry.level ?? 0) <= 1,
 			),
 		).toBe(true);
+	});
+
+	it("the entire ability catalog is complete — zero errors AND zero warnings", async () => {
+		const issues = await auditCanonicalAbilityCompleteness();
+		const errors = issues.filter((issue) => issue.severity === "error");
+		const warnings = issues.filter((issue) => issue.severity === "warning");
+		expect(
+			errors.map((e) => `${e.kind}:${e.name}:${e.field}`),
+			"completeness errors",
+		).toEqual([]);
+		// Locks Phase 2A: no vestigial placeholder-damage attack blocks may return.
+		expect(
+			warnings.map((w) => `${w.kind}:${w.name}:${w.field}`),
+			"completeness warnings",
+		).toEqual([]);
 	});
 });

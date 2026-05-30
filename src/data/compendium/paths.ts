@@ -1221,9 +1221,9 @@ export const paths: Path[] = [
 			{
 				name: "Essence Lockdown",
 				description:
-					"VIT save or stunned until end of your next turn. 3 Mandate-Flux.",
+					"VIT save or stunned until end of your next turn. 3 Impulse.",
 				recharge: 0,
-				cost: "3 Mandate-Flux",
+				cost: "3 Impulse",
 			},
 		],
 		stats: {
@@ -1253,7 +1253,7 @@ export const paths: Path[] = [
 			{
 				name: "Shadow Resonance",
 				description:
-					"2 Mandate-Flux: cast Darkness, Darkvision, Pass without Trace, or Silence through your aetheric network. Learn Minor Illusion cantrip.",
+					"2 Impulse: cast Darkness, Darkvision, Pass without Trace, or Silence through your aetheric network. Learn Minor Illusion cantrip.",
 				level: 3,
 			},
 			{
@@ -1279,9 +1279,9 @@ export const paths: Path[] = [
 			{
 				name: "Phantom Barrage",
 				description:
-					"Teleport between up to 3 creatures within 60 ft, unarmed strike each. Start/end in dim light/darkness. 3 Mandate-Flux.",
+					"Teleport between up to 3 creatures within 60 ft, unarmed strike each. Start/end in dim light/darkness. 3 Impulse.",
 				recharge: 0,
-				cost: "3 Mandate-Flux",
+				cost: "3 Impulse",
 			},
 		],
 		stats: {
@@ -1337,9 +1337,9 @@ export const paths: Path[] = [
 			{
 				name: "Omni-Burst",
 				description:
-					"30-ft cone: 2d6 fire+2d6 cold+2d6 lightning+2d6 force. 5 Mandate-Flux.",
+					"30-ft cone: 2d6 fire+2d6 cold+2d6 lightning+2d6 force. 5 Impulse.",
 				recharge: 0,
-				cost: "5 Mandate-Flux",
+				cost: "5 Impulse",
 			},
 		],
 		stats: {
@@ -1381,7 +1381,7 @@ export const paths: Path[] = [
 			{
 				name: "Harmonic Correction",
 				description:
-					"When you have disadvantage on check/attack/save, spend 2 Mandate-Flux to cancel it. The Absolute realigns to favor your chaos.",
+					"When you have disadvantage on check/attack/save, spend 2 Impulse to cancel it. The Absolute realigns to favor your chaos.",
 				level: 11,
 			},
 			{
@@ -1439,7 +1439,7 @@ export const paths: Path[] = [
 			{
 				name: "Resonance Honing",
 				description:
-					"Bonus action: spend 1-3 Mandate-Flux, granting your nonmagical bonded weapon an equal bonus to attack/damage for 1 min. You vibrate the blade at a molecular level.",
+					"Bonus action: spend 1-3 Impulse, granting your nonmagical bonded weapon an equal bonus to attack/damage for 1 min. You vibrate the blade at a molecular level.",
 				level: 11,
 			},
 			{
@@ -1453,9 +1453,9 @@ export const paths: Path[] = [
 			{
 				name: "Blade Tempest",
 				description:
-					"Attack every creature within 10 ft with bonded weapon. Each hit: weapon + 2 Spirit Combat dice. 4 Mandate-Flux.",
+					"Attack every creature within 10 ft with bonded weapon. Each hit: weapon + 2 Spirit Combat dice. 4 Impulse.",
 				recharge: 0,
-				cost: "4 Mandate-Flux",
+				cost: "4 Impulse",
 			},
 		],
 		stats: {
@@ -1514,7 +1514,7 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Resurrection",
 				description:
-					"Touch a creature that died within 24 hours: spend 5 Mandate-Flux to restart its internal resonance. Returns to life with 4d10+SENSE mod HP, cured of all physical conditions. Once/long rest.",
+					"Touch a creature that died within 24 hours: spend 5 Impulse to restart its internal resonance. Returns to life with 4d10+SENSE mod HP, cured of all physical conditions. Once/long rest.",
 				level: 17,
 			},
 		],
@@ -1522,9 +1522,9 @@ export const paths: Path[] = [
 			{
 				name: "Aetheric Heal",
 				description:
-					"Touch an ally: restore 2d8+SENSE mod HP and purge one condition by realigning their aetheric pathways. 2 Mandate-Flux.",
+					"Touch an ally: restore 2d8+SENSE mod HP and purge one condition by realigning their aetheric pathways. 2 Impulse.",
 				recharge: 0,
-				cost: "2 Mandate-Flux",
+				cost: "2 Impulse",
 			},
 		],
 		stats: {
@@ -1914,7 +1914,7 @@ export const paths: Path[] = [
 			{
 				name: "Elemental Affinity",
 				description:
-					"When you manifest a spell matching your dragon's resonance, add PRE mod to the effect. Spend 1 Mandate-Flux for resistance to that element for 1 hour.",
+					"When you manifest a spell matching your dragon's resonance, add PRE mod to the effect. Spend 1 Flux for resistance to that element for 1 hour.",
 				level: 6,
 			},
 			{
@@ -1926,7 +1926,7 @@ export const paths: Path[] = [
 			{
 				name: "regent-tier Mandate",
 				description:
-					"Action: 60-ft aura of regent-tier pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Mandate-Flux.",
+					"Action: 60-ft aura of regent-tier pressure. PRE save or charmed/frightened. 1 min, concentration. 5 Flux.",
 				level: 18,
 			},
 		],
@@ -1934,9 +1934,9 @@ export const paths: Path[] = [
 			{
 				name: "Dragon Breath",
 				description:
-					"30-ft cone or 60-ft line: 4d8 damage of your resonance type, AGI save for half. 3 Mandate-Flux.",
+					"30-ft cone or 60-ft line: 4d8 damage of your resonance type, AGI save for half. 3 Flux.",
 				recharge: 0,
-				cost: "3 Mandate-Flux",
+				cost: "3 Flux",
 			},
 		],
 		stats: {
@@ -1978,7 +1978,7 @@ export const paths: Path[] = [
 			{
 				name: "Probability Realignment",
 				description:
-					"Reaction: when a visible creature makes an attack or save, spend 2 Mandate-Flux to roll 1d4 and adjust their result. You nudge the local fate-branch.",
+					"Reaction: when a visible creature makes an attack or save, spend 2 Flux to roll 1d4 and adjust their result. You nudge the local fate-branch.",
 				level: 6,
 			},
 			{
@@ -2283,54 +2283,117 @@ export const paths: Path[] = [
 	},
 	{
 		id: "revenant--void-lord",
-		name: "Path of the Void Lord",
+		name: "Path of the Void Eater",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "void-lord",
+		pathType: "void-eater",
 		requirements: {
 			level: 2,
 			skills: ["Mana Flow", "Medicine"],
 		},
 		description:
-			"The Void Lord mandate is for those who treat offensive entropy as a fundamental cosmic law. They do not just kill; they accelerate the chain reaction of the Absolute's decay, turning every fallen foe into a resonator for necrotic fury. In the containment of high-density gates, they are the indispensable reapers who ensure that the longer a fight persists, the more the environment itself rebels against the living.",
+			"The Void Eater answers Marthos's hunger without restraint: entropy is not a tool but an appetite. Where other Revenants harvest the dying, the Void Eater hastens the dying, treating a wounded foe as a feast half-served. Their necrosis pours through the flimsy wards of the living, and every kill only sharpens the next. The Ascendant Bureau fields them when a gate must be emptied rather than held - the longer the fight lasts, the less of the enemy remains.",
 		features: [
 			{
-				name: "Efficient Entropy",
+				name: "Unresisted Decay",
 				description:
-					"Absolute insight into the cessation of resonance. Your Essence Harvest restores additional HP = 2Ã— spell level when you destroy with a 1st+ spell (3Ã— for necrotic).",
+					"Your necrotic damage ignores resistance, and a creature already below half its hit points has vulnerability to your necrotic damage.",
 				level: 2,
 			},
 			{
-				name: "Cascading Decay",
+				name: "Feast of the Fallen",
 				description:
-					"When you destroy a creature with a spell, entropy chain-reacts: all creatures within 10 ft of the remains take necrotic damage = spell level + INT mod. If this kills another, it chains again.",
+					"Once per turn, when a creature marked for the reaping drops to 0 hit points, you reclaim 2 Remnants instead of 1, and your next necrotic spell or power this turn deals additional necrotic damage equal to your Intelligence modifier.",
 				level: 2,
 			},
 			{
-				name: "Absolute Rot",
+				name: "Chain of Endings",
 				description:
-					"Your necrotic manifestations eat through physical and aetheric defenses. When you deal necrotic damage, the target's AC is reduced by 1 until the end of your next turn.",
+					"When you reduce a creature to 0 hit points with necrotic damage, entropy leaps to the nearest creature within 15 feet, dealing necrotic damage equal to your Revenant level and marking it for the reaping. If this reduces that creature to 0, the chain continues.",
 				level: 6,
 			},
 			{
-				name: "Remnant Detonation",
+				name: "Execute the Withering",
 				description:
-					"Action: target a fallen remnant within 60 ft. It detonates in a 15-ft radius as stored entropy explodes outward. Creatures take necrotic damage = 2d8 + Revenant level. Prof uses/long rest.",
+					"As a bonus action, spend 2 Remnants to pass sentence on a creature marked for the reaping that is below one-quarter of its hit points: it must succeed on a Vitality save or drop to 0 hit points, taking 4d10 + your Intelligence modifier necrotic damage on a success instead.",
 				level: 10,
 			},
 			{
-				name: "Void Cascade",
+				name: "Mass Annihilation",
 				description:
-					"When your Cascading Decay chains to a third or subsequent target, the damage increases by 1d8 per link. Your decay is exponential.",
+					"Whenever you reduce a creature to 0 hit points with a necrotic spell or score a critical hit with one, every other creature marked for the reaping within 30 feet takes necrotic damage equal to half your Revenant level. Marks that survive are renewed.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Mass Detonation",
+				name: "Devour the Remnant",
 				description:
-					"Detonate up to 3 fallen remnants simultaneously. Each explodes for 3d8+INT mod necrotic in 15 ft. Overlapping areas stack. Once/long rest.",
+					"Action: detonate a corpse or a creature marked for the reaping within 60 feet. Each creature in a 15-foot radius takes 4d8 + your Intelligence modifier necrotic damage (Vitality save for half) and is marked for the reaping; you reclaim 1 Remnant for each creature reduced to 0. Once per long rest.",
+				recharge: 3,
+				cost: "Action",
+			},
+		],
+		stats: {
+			primaryAttribute: "Intelligence",
+			secondaryAttribute: "Intelligence",
+			bonusStats: {
+				intelligence: 3,
+			},
+		},
+		source: "Ascendant Compendium",
+	},
+	{
+		id: "revenant--entropy-drinker",
+		name: "Path of the Black Blood",
+		jobId: "revenant",
+		jobName: "Revenant",
+		tier: 2,
+		pathType: "black-blood",
+		requirements: {
+			level: 2,
+			skills: ["Mana Flow", "Persuasion"],
+		},
+		description:
+			"The Black Blood walks the oldest bargain of the End-Cycle: pay in your own life and entropy repays it tenfold. Their veins run with congealed Remnant-essence that they spend freely, wounding themselves to deepen the harvest and turning every blow they suffer into slow, crawling recovery. They are the Revenants who simply refuse to fall, buoyed by a tide of blood - their own and their enemies' - that never quite runs dry.",
+		features: [
+			{
+				name: "Blood Price",
+				description:
+					"Once on each of your turns when you cast a spell or use a power, you may take necrotic damage equal to your Revenant level (this damage cannot be reduced or prevented) to add your Intelligence modifier to that ability's damage and mark each creature it hits for the reaping.",
+				level: 2,
+			},
+			{
+				name: "Crimson Leech",
+				description:
+					"Once per turn, when you deal necrotic damage to a creature marked for the reaping, you regain hit points equal to 1 + the number of Remnants you currently hold.",
+				level: 2,
+			},
+			{
+				name: "Wounds That Feed",
+				description:
+					"Whenever you take damage, you gain healing over time: at the start of each of your next two turns you regain hit points equal to half the damage taken, to a maximum of your Revenant level per turn.",
+				level: 6,
+			},
+			{
+				name: "Overflow",
+				description:
+					"Whenever healing would raise you above your hit point maximum, the excess becomes temporary hit points (up to your Intelligence modifier + your Revenant level) and you may immediately bank 1 Remnant.",
+				level: 10,
+			},
+			{
+				name: "Crimson Surge",
+				description:
+					"While you are below half your hit point maximum, your Crimson Leech healing doubles and your Blood Price costs no hit points. The nearer you stand to death, the more death sustains you.",
+				level: 14,
+			},
+		],
+		abilities: [
+			{
+				name: "Hemorrhage",
+				description:
+					"Action: a creature within 30 feet must make a Vitality save or take 4d8 necrotic damage and begin bleeding for 1 minute (repeating the save at the end of each of its turns to end the effect). While it bleeds, you regain hit points equal to half the bleed damage each round. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
@@ -2346,111 +2409,47 @@ export const paths: Path[] = [
 		source: "Ascendant Compendium",
 	},
 	{
-		id: "revenant--entropy-drinker",
-		name: "Path of the Entropy Drinker",
-		jobId: "revenant",
-		jobName: "Revenant",
-		tier: 2,
-		pathType: "entropy-drinker",
-		requirements: {
-			level: 2,
-			skills: ["Mana Flow", "Persuasion"],
-		},
-		description:
-			"The Entropy Drinker mandate is held by those who have learned to siphon the Absolute's decaying frequency to sustain their own physical vessel. They do not just damage their foes; they feed upon them, converting the local entropic field into a source of personal vitality. In the elite guilds, they are often seen as unsettling but necessary assets who can endure and thrive in environments that would wither any other Ascendant.",
-		features: [
-			{
-				name: "Vitality Siphon",
-				description:
-					"When you deal necrotic damage with a spell, gain temp HP = half the damage dealt. Your entropic field passively converts enemy life force into sustenance.",
-				level: 2,
-			},
-			{
-				name: "Absolute Weakening",
-				description:
-					"Creatures that start their turn within 10 ft of you have disadvantage on their next physical check/save. Your presence saps the local resonance.",
-				level: 2,
-			},
-			{
-				name: "Entropic Leech",
-				description:
-					"Reaction when a creature within 30 ft regains HP: you steal half the healing for yourself as temp HP. Prof uses/long rest.",
-				level: 6,
-			},
-			{
-				name: "Resonance Adaptation",
-				description:
-					"While you have temp HP from a Revenant feature, you have resistance to the damage type of the last spell you manifested.",
-				level: 10,
-			},
-			{
-				name: "Total Consumption",
-				description:
-					"Action: target one creature within 30 ft. For 1 minute, it takes 3d6 necrotic at the start of its turn and you regain HP. VIT save ends. Once/long rest.",
-				level: 14,
-			},
-		],
-		abilities: [
-			{
-				name: "Essence Drain Burst",
-				description:
-					"All creatures within 15 ft: VIT save or take 3d8 necrotic. You regain HP = total damage dealt. Once/short rest.",
-				recharge: 1,
-				cost: "Action",
-			},
-		],
-		stats: {
-			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Presence",
-			bonusStats: {
-				intelligence: 2,
-				charisma: 1,
-			},
-		},
-		source: "Ascendant Compendium",
-	},
-	{
 		id: "revenant--wither-guard",
-		name: "Path of the Wither Guard",
+		name: "Path of the Hollow King",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "wither-guard",
+		pathType: "hollow-king",
 		requirements: {
 			level: 2,
 			skills: ["Mana Flow", "Athletics"],
 		},
 		description:
-			"The Wither Guard mandate elevates an Ascendant to the position of an entropic bulwark. They weave defensive fields of decay that corrode incoming manifestations and weaponize the Absolute's cessation as a barrier. While other Revenants seek to harvest, the Guard seeks to containâ€”ensuring that nothing hostile can survive the concentrated entropic pressure of their presence.",
+			"The Hollow King rules the front line from a throne of decay. They draw every eye and every blade, daring the enemy to spend itself against an entropy that cannot be outlasted. What strikes their allies, they take instead; what strikes them, they turn to dust. Marthos's mandate names them wardens of the threshold - the immovable dead who hold the breach while the living do their work behind.",
 		features: [
 			{
-				name: "Absolute Deflection",
+				name: "Decree of the Hollow Throne",
 				description:
-					"Reaction when targeted: entropy corrodes the manifestation. +2 AC or +4 to save. Until end of next turn, can only manifest cantrips.",
+					"As a bonus action, exert your dread authority in a 15-foot aura until the start of your next turn: each enemy that starts its turn in the aura or enters it is marked for the reaping, and marked enemies have disadvantage on attack rolls against creatures other than you.",
 				level: 2,
 			},
 			{
-				name: "Entropic Reflexes",
+				name: "Throne Ward",
 				description:
-					"Your reconstructed vessel processes entropic data as pure instinct. Add INT mod to initiative.",
+					"When a creature you can see within 10 feet takes damage, you can use your reaction to take that damage instead; you may then spend 1 Remnant to reduce it by 1d8 + your Vitality modifier.",
 				level: 2,
 			},
 			{
-				name: "Corrosive Counter",
+				name: "Grave-Cold Presence",
 				description:
-					"When you successfully counter a spell, the Absolute absorbs it as a charge. Spend to add 1/2 Revenant level necrotic damage to any Revenant manifestation.",
+					"Enemies marked by your Decree have their speed halved while inside the aura, and the first time each turn one of them hits you, it takes necrotic damage equal to your Intelligence modifier.",
 				level: 6,
 			},
 			{
-				name: "Focus of Decay",
+				name: "Unbreakable Vigil",
 				description:
-					"While concentrating on a mandate, your entropic field reinforces your focus: +2 AC and +2 to all saves.",
+					"While at least one enemy is marked for the reaping, you have resistance to all damage dealt by marked creatures, and you cannot be moved, knocked prone, or banished against your will.",
 				level: 10,
 			},
 			{
-				name: "Withering Retribution",
+				name: "Crown of Cessation",
 				description:
-					"When you use Absolute Deflection, raw entropy lashes back: up to 3 creatures take half Revenant level necrotic damage and have speed reduced by 10 ft.",
+					"When you are reduced to half your hit point maximum or lower, your Decree aura expands to 30 feet and enemies marked within it must succeed on a Presence save or be unable to take reactions. The throne does not fall.",
 				level: 14,
 			},
 		],
@@ -2458,7 +2457,7 @@ export const paths: Path[] = [
 			{
 				name: "Entropy Carapace",
 				description:
-					"Encase yourself in crystallized decay: +3 AC for 1 min. Melee attackers take 1d8 necrotic and have disadvantage on attacks. Once/long rest.",
+					"Bonus action: encase yourself in crystallized decay for 1 minute. You gain temporary hit points equal to your Revenant level + your Vitality modifier and +3 AC, and any creature that hits you with a melee attack takes 1d8 necrotic damage and is marked for the reaping. Once per long rest.",
 				recharge: 3,
 				cost: "Bonus action",
 			},
@@ -2475,122 +2474,127 @@ export const paths: Path[] = [
 	},
 	{
 		id: "revenant--entropy-blade",
-		name: "Path of the Entropy Blade",
+		name: "Path of the Grave Shepherd",
 		jobId: "revenant",
 		jobName: "Revenant",
 		tier: 2,
-		pathType: "entropy-blade",
+		pathType: "grave-shepherd",
 		requirements: {
 			level: 2,
-			skills: ["Mana Flow", "Acrobatics"],
+			skills: ["Mana Flow", "Cosmic Lore"],
 		},
 		description:
-			"The Entropy Blade mandate allows an Ascendant to channel the Absolute's decay through physical steel. They do not just fight; they perform a lethal close-range dance where every strike ages matter on contact. Steel rusts, flesh withers, and the very air around their blade turns to a freezing entropic mist. They are the most mobile of the Revenant lineages, phasing through their own decay field to deliver strikes from impossible angles.",
+			"The Grave Shepherd does on a battlefield what Marthos does on a cosmic scale: it reaps the fallen and sets them to work. Rather than scatter its harvest, the Shepherd binds a single great Remnant into an elite thrall - a risen champion stitched from the strongest dead - and commands it as an extension of its own will. Few in number but terrible in strength, the Shepherd's risen turn every casualty into a reinforcement.",
 		features: [
 			{
-				name: "Absolute Dance",
+				name: "Command the Risen",
 				description:
-					"Bonus action: activate Absolute Dance (1 min). +INT mod AC, +10 ft speed, advantage on Acrobatics, +INT mod to VIT concentration saves. 2 uses/short rest.",
+					"As an action, spend 3 Remnants to raise one elite thrall from a corpse or a creature marked for the reaping that died within the last minute. The thrall obeys you, acts on your turn, shares your necrotic resistance, and has hit points equal to five times your Revenant level. You may have one thrall at a time (two at 14th level).",
 				level: 2,
 			},
 			{
-				name: "Corroding Manifestation",
+				name: "Shepherd's Bond",
 				description:
-					"Attack twice per Attack action. One attack can be replaced with a cantrip. On hit, the target's nonmagical equipment loses 1 structural AC permanently.",
+					"Your thrall uses your spell save DC and proficiency bonus. While it is within 30 feet of you, you may use your reaction to have it move up to its speed and make one attack, or interpose itself to take an attack aimed at you.",
+				level: 2,
+			},
+			{
+				name: "Corpse Harvest",
+				description:
+					"When a creature dies within 30 feet of you or your thrall, you may bank 1 Remnant and your thrall regains hit points equal to your Intelligence modifier. As a bonus action, spend 1 Remnant to empower the thrall: its next attack deals additional necrotic damage equal to your Revenant level.",
 				level: 6,
 			},
 			{
-				name: "Entropic Guard",
+				name: "Two-Soul Tether",
 				description:
-					"While dancing, reaction when damaged: expend a spell slot, reduce damage by 5Ã— slot level as entropy absorbs the impact.",
+					"Your thrall may take two actions on each of its turns, and when it would drop to 0 hit points you may spend 1 Remnant to keep it at 1 hit point instead.",
 				level: 10,
 			},
 			{
-				name: "Lethal Termination",
+				name: "Legion of One",
 				description:
-					"While dancing, add INT mod to melee damage as necrotic. Targets hit cannot regain HP until the start of your next turn. You have severed their cellular repair.",
+					"You may command two elite thralls at once, and once per turn when a creature marked for the reaping dies you may raise it as a temporary lesser risen that acts until the end of your next turn at no Remnant cost.",
 				level: 14,
 			},
 		],
 		abilities: [
 			{
-				name: "Void Dance",
+				name: "Reaping Decree",
 				description:
-					"While active: teleport 15 ft before each strike through your own entropic field. Each hit deals 1d6 extra necrotic. 1 min, once/long rest.",
-				recharge: 3,
-				cost: "Bonus action",
-			},
-		],
-		stats: {
-			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Agility",
-			bonusStats: {
-				intelligence: 2,
-				dexterity: 1,
-			},
-		},
-		source: "Ascendant Compendium",
-	},
-	{
-		id: "revenant--plague-weaver",
-		name: "Path of the Plague Weaver",
-		jobId: "revenant",
-		jobName: "Revenant",
-		tier: 2,
-		pathType: "plague-weaver",
-		requirements: {
-			level: 2,
-			skills: ["Mana Flow", "Medicine"],
-		},
-		description:
-			"The Plague Weaver mandate elevates entropy to the level of a virulent contagion. They do not just target individuals; they manifest entropic plagues that cascade through enemy ranks, jumping from one host to another like a sentient virus. In the containment mandates of the modern world, the Weaver is often seen as a walking pandemic vector, though their ability to dissolve entire gate encounters into decaying sludge is unsurpassed.",
-		features: [
-			{
-				name: "Entropic Contagion",
-				description:
-					"When you deal necrotic damage, you can mark a carrier. At the start of its turn, those within 5 ft take necrotic damage = INT mod. Mark lasts 1 min.",
-				level: 2,
-			},
-			{
-				name: "Contagious Insight",
-				description:
-					"Your entropic manifestations spread with surgical efficiency. Add INT mod to initiative. Save DC for your conditions increases by 1.",
-				level: 2,
-			},
-			{
-				name: "Plague Burst",
-				description:
-					"Action: detonate all active Contagion marks. Each carrier and those within 10 ft take 2d6 necrotic. Marks are consumed. INT uses/long rest.",
-				level: 6,
-			},
-			{
-				name: "Viral Realignment",
-				description:
-					"When a creature fails a save against your mandate while marked, the mark jumps to one additional target within 30 ft. Your plague is self-replicating.",
-				level: 10,
-			},
-			{
-				name: "Total Contagion",
-				description:
-					"Once/long rest, your next necrotic manifestation automÃ¡ticamente marks every recipient. Carriers have disadvantage on saves against your mandates.",
-				level: 14,
-			},
-		],
-		abilities: [
-			{
-				name: "Patient Zero",
-				description:
-					"Touch a creature: it becomes a central carrier for 1 min. Those within 15 ft take 2d8 necrotic and are marked. Once/long rest.",
+					"Action: your thrall and every risen ally within 60 feet immediately move up to their speed and make one attack with advantage; each creature reduced to 0 hit points by this grants you 1 Remnant. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},
 		],
 		stats: {
 			primaryAttribute: "Intelligence",
-			secondaryAttribute: "Sense",
+			secondaryAttribute: "Intelligence",
+			bonusStats: {
+				intelligence: 3,
+			},
+		},
+		source: "Ascendant Compendium",
+	},
+	{
+		id: "revenant--plague-weaver",
+		name: "Path of the Dread Veil",
+		jobId: "revenant",
+		jobName: "Revenant",
+		tier: 2,
+		pathType: "dread-veil",
+		requirements: {
+			level: 2,
+			skills: ["Mana Flow", "Intimidation"],
+		},
+		description:
+			"The Dread Veil wears Marthos's terror like a shroud. Where they walk, the Void-Breath thickens until the bravest find their hands shaking and their courage rotting from within. They need not strike a foe that has already surrendered to despair - and those who flee only die tired. Bureau handlers deploy the Veil to break a gate's defenders before a single real blow is struck.",
+		features: [
+			{
+				name: "Shroud of the Veil",
+				description:
+					"As a bonus action, unfurl a 15-foot aura of dread until the start of your next turn. Each enemy that starts its turn in the aura must succeed on a Presence save or be frightened of you until the end of its next turn and marked for the reaping.",
+				level: 2,
+			},
+			{
+				name: "Withering Courage",
+				description:
+					"A creature frightened by you cannot take reactions, and the first time each turn it deals damage while frightened, that damage is reduced by your Intelligence modifier.",
+				level: 2,
+			},
+			{
+				name: "Paralytic Dread",
+				description:
+					"As a bonus action, spend 1 Remnant to lock a frightened creature you can see within 30 feet in place: its speed becomes 0 and it has disadvantage on saves to end the fear until the start of your next turn.",
+				level: 6,
+			},
+			{
+				name: "Contagion of Fear",
+				description:
+					"When a creature frightened by you fails a saving throw, the fear spreads: one other creature within 10 feet of it must succeed on a Presence save or also become frightened of you and marked for the reaping.",
+				level: 10,
+			},
+			{
+				name: "Terror Pulse",
+				description:
+					"When you reduce a frightened creature to 0 hit points, every enemy within 30 feet must succeed on a Presence save or become frightened of you until the end of their next turn. Frightened creatures have vulnerability to your necrotic damage.",
+				level: 14,
+			},
+		],
+		abilities: [
+			{
+				name: "Maw of the Void",
+				description:
+					"Action: every enemy in a 30-foot cone must make a Presence save. On a failure a creature is frightened for 1 minute (repeating the save at the end of each of its turns) and takes 3d8 necrotic damage; on a success it takes half damage and is marked for the reaping. Once per long rest.",
+				recharge: 3,
+				cost: "Action",
+			},
+		],
+		stats: {
+			primaryAttribute: "Intelligence",
+			secondaryAttribute: "Presence",
 			bonusStats: {
 				intelligence: 2,
-				wisdom: 1,
+				charisma: 1,
 			},
 		},
 		source: "Ascendant Compendium",
@@ -2607,36 +2611,36 @@ export const paths: Path[] = [
 			skills: ["Mana Flow", "Insight"],
 		},
 		description:
-			"The Threshold Walker mandate is a rare and heavy burden, granted to those who stand on the exact boundary between existence and the void. They alone among the Revenants have learned to reverse the Absolute's entropic flow, pulling allies back from the brink or shoving enemies over it with equal conviction. They are the supreme arbiters of life and death, treated with equal parts reverence and fear by all who understand the cold logic of the threshold.",
+			"The Threshold Walker stands where Marthos and Solara contend - on the exact line between the End-Cycle and the next dawn. Alone among Revenants, they can run the harvest backward, pouring reclaimed Remnants into failing allies and dragging the newly dead back across the threshold. To friends they are a cold mercy; to enemies, the hand that decides the moment has come.",
 		features: [
 			{
 				name: "Reverse Entropy",
 				description:
-					"When you manifest a necrotic mandate, you can choose to reverse its flow: the effect heals instead of damaging. You are the only Revenant capable of such realignment.",
+					"When you would deal necrotic damage with a spell or power, you may instead convert it to healing, restoring that many hit points divided as you choose among creatures within range.",
 				level: 2,
 			},
 			{
-				name: "Aetheric Sight (Death)",
+				name: "Death-Sight",
 				description:
-					"You see the exact HP and mortality variable of all creatures within 120 ft. Your connection to the threshold is absolute.",
+					"You know the current hit points and any death-relevant conditions of every creature within 120 feet, and you always know which creatures are marked for the reaping.",
 				level: 2,
 			},
 			{
-				name: "Pull from the Brink",
+				name: "Threshold Pull",
 				description:
-					"Reaction when ally drops to 0 HP: they drop to 1 HP instead and gain temp HP. You have physically dragged them back. Prof uses/long rest.",
+					"As a reaction when an ally within 30 feet drops to 0 hit points, spend 1 Remnant to bring them to 1 hit point and grant them temporary hit points equal to your Intelligence modifier + your Revenant level.",
 				level: 6,
 			},
 			{
-				name: "Absolute Cessation",
+				name: "Mercy and Judgment",
 				description:
-					"When you deal necrotic damage to a creature below half HP, deal extra damage = Revenant level. You accelerate their transition to the void.",
+					"Your Reverse Entropy healing adds your Intelligence modifier, and your necrotic damage against a creature below half its hit points increases by your Intelligence modifier. You ease allies on and enemies off the threshold with the same gesture.",
 				level: 10,
 			},
 			{
 				name: "Arbiter's Decree",
 				description:
-					"Touch a dead creature: return it to life with HP + INT mod. OR touch a living creature: 10d6 necrotic as you shove it through the gate. You choose resonance or void.",
+					"As an action, pass judgment on one creature within 30 feet: a creature dead no longer than 1 hour returns to life with hit points equal to your Revenant level + your Intelligence modifier, or a living creature must succeed on a Vitality save or take 10d8 necrotic damage as you shove it across the threshold. Once per long rest.",
 				level: 14,
 			},
 		],
@@ -2644,7 +2648,7 @@ export const paths: Path[] = [
 			{
 				name: "Threshold Pulse",
 				description:
-					"30-ft radius: all allies regain 2d8 HP, all enemies take 2d8 necrotic. You are the center of the life-death axis. Once/long rest.",
+					"Action: in a 30-foot radius centered on you, allies regain 2d8 + your Intelligence modifier hit points and enemies take 2d8 + your Intelligence modifier necrotic damage (Vitality save for half). You are the fulcrum of the life-death axis. Once per long rest.",
 				recharge: 3,
 				cost: "Action",
 			},

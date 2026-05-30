@@ -1269,7 +1269,7 @@ export const regents: Regent[] = [
 		id: "destruction_regent",
 		name: "Destruction Regent",
 		title: "Destruction Regent (Regent of Destruction)",
-		theme: "Primordial Destruction and regent-tier Apocalypse",
+		theme: "Primordial Destruction and Draconic Apocalypse",
 		description:
 			"Incarnation of primordial destruction, sharing the catastrophic power of Marthos, the Dragon-King of Void. You are the Ascendant's necessary delete-command, capable of transforming into the dragon of apocalypse whose breath erases corrupted reality. As the mortal anchor for the Void Weaver, you represent the inevitable end and the Next Beginning.",
 		rank: "S",

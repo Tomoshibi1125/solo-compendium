@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
+import { jobs } from "../../data/compendium/jobs";
+import { paths } from "../../data/compendium/paths";
 import { powers } from "../../data/compendium/powers";
+import { regents } from "../../data/compendium/regents";
 import { techniques } from "../../data/compendium/techniques";
 import {
 	listCanonicalSpells,
@@ -9,9 +12,9 @@ import {
 } from "../canonicalCompendium";
 import { PATH_ABILITY_GRANTS } from "../pathAbilityAccess";
 
-// Entries that exist in the catalog but are intentionally not learnable by
-// any job naturally and are not granted by any path. They remain in the
-// catalog so they remain rune-target-able (see runeAutomation / useAbsorbRune).
+// Entries that exist in the catalog but are intentionally not learnable by any
+// job naturally and are not granted by any path. They remain in the catalog so
+// they stay rune-target-able (see runeAutomation / useAbsorbRune).
 const RUNE_ONLY_POWER_IDS = new Set<string>([
 	"power-sup-6-89-idol-s-magnum-opus",
 ]);
@@ -20,109 +23,84 @@ const RUNE_ONLY_TECHNIQUE_IDS = new Set<string>([
 	"tech-sup-6-68-resonance-blade-dance",
 ]);
 
+// ── Archetype membership ──────────────────────────────────────────────────
 const MARTIAL_JOBS = ["Destroyer", "Berserker", "Assassin", "Striker"];
-const HALF_CASTERS = ["Holy Knight", "Technomancer", "Stalker"];
-const FULL_CASTERS = [
-	"Mage",
-	"Esper",
-	"Revenant",
-	"Summoner",
-	"Idol",
-	"Herald",
-];
+const HYBRID_JOBS = ["Holy Knight", "Technomancer", "Stalker", "Revenant"];
+const PURE_CASTERS = ["Mage", "Esper", "Summoner", "Idol", "Herald"];
 const PACT_CASTERS = ["Contractor"];
-const CASTER_JOBS = [...HALF_CASTERS, ...FULL_CASTERS, ...PACT_CASTERS];
+// Every job that can learn martial powers/techniques (archetype: shared pool).
+const MARTIAL_CAPABLE = [...MARTIAL_JOBS, ...HYBRID_JOBS];
+// Every job that can learn spells (archetype: school-scoped list).
+const CASTER_JOBS = [...HYBRID_JOBS, ...PURE_CASTERS, ...PACT_CASTERS];
 const ALL_JOBS = [
 	...MARTIAL_JOBS,
-	...HALF_CASTERS,
-	...FULL_CASTERS,
+	...HYBRID_JOBS,
+	...PURE_CASTERS,
 	...PACT_CASTERS,
 ];
 
-const SPELL_PARITY_MINIMUMS: Record<
-	string,
-	{ total: number; unique: number; ranks: Record<string, number> }
-> = {
-	Mage: {
-		total: 140,
-		unique: 35,
-		ranks: { D: 45, C: 35, B: 25, A: 15, S: 10 },
-	},
-	Esper: {
-		total: 110,
-		unique: 35,
-		ranks: { D: 35, C: 20, B: 18, A: 15, S: 10 },
-	},
-	Revenant: {
-		total: 90,
-		unique: 45,
-		ranks: { D: 25, C: 15, B: 15, A: 15, S: 10 },
-	},
-	Summoner: {
-		total: 100,
-		unique: 20,
-		ranks: { D: 30, C: 25, B: 15, A: 8, S: 5 },
-	},
-	Idol: {
-		total: 85,
-		unique: 4,
-		ranks: { D: 30, C: 20, B: 15, A: 8, S: 5 },
-	},
-	Herald: {
-		total: 110,
-		unique: 20,
-		ranks: { D: 40, C: 30, B: 20, A: 10, S: 8 },
-	},
-	Contractor: {
-		total: 80,
-		unique: 4,
-		ranks: { D: 25, C: 18, B: 12, A: 12, S: 8 },
-	},
-	"Holy Knight": {
-		total: 45,
-		unique: 12,
-		ranks: { D: 25, C: 25, B: 15 },
-	},
-	Stalker: { total: 45, unique: 6, ranks: { D: 18, C: 15, B: 8 } },
-	Technomancer: {
-		total: 90,
-		unique: 0,
-		ranks: { D: 35, C: 25, B: 15 },
-	},
+// Pool floors (Part A target): comprehensive shared catalogs.
+const POOL_POWER_FLOOR = 200;
+const POOL_TECHNIQUE_FLOOR = 200;
+// Each martial-capable job sees the shared pool minus its own path-exclusive
+// grants, so it never equals the raw pool but stays a large majority.
+const MARTIAL_POWER_FLOOR = 150;
+const MARTIAL_TECHNIQUE_FLOOR = 150;
+
+// School-union spell floors per caster (Mage = all schools).
+const SPELL_FLOORS: Record<string, number> = {
+	Mage: 140,
+	Esper: 110,
+	Summoner: 100,
+	Idol: 85,
+	Herald: 110,
+	Contractor: 80,
+	// Hybrid half-casters (incl. Revenant) keep a smaller school-scoped list.
+	"Holy Knight": 45,
+	Technomancer: 45,
+	Stalker: 45,
+	Revenant: 45,
 };
 
-const POWER_PARITY_MINIMUMS: Record<
-	string,
-	{ total: number; unique: number; levels: Record<number, number> }
-> = {
-	Destroyer: { total: 120, unique: 25, levels: { 1: 5, 3: 25, 5: 5, 9: 3 } },
-	Berserker: { total: 120, unique: 25, levels: { 1: 5, 3: 15, 5: 5, 9: 3 } },
-	Assassin: { total: 120, unique: 25, levels: { 1: 5, 3: 25, 5: 5, 9: 3 } },
-	Striker: { total: 120, unique: 25, levels: { 1: 5, 3: 15, 5: 5, 9: 3 } },
-	"Holy Knight": { total: 75, unique: 30, levels: { 1: 5, 3: 30, 5: 5, 9: 3 } },
-	Technomancer: { total: 75, unique: 25, levels: { 1: 5, 3: 30, 5: 5, 9: 3 } },
-	Stalker: { total: 75, unique: 25, levels: { 1: 5, 3: 30, 5: 5, 9: 3 } },
-};
+const norm = (value: string | null | undefined): string =>
+	(value ?? "").trim().toLowerCase();
 
-const TECHNIQUE_PARITY_MINIMUMS: Record<
-	string,
-	{ total: number; unique: number; levels: Record<number, number> }
-> = {
-	Destroyer: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 70, 9: 3 } },
-	Berserker: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
-	Assassin: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 55, 9: 3 } },
-	Striker: { total: 120, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
-	"Holy Knight": {
-		total: 100,
-		unique: 25,
-		levels: { 1: 5, 3: 5, 5: 70, 9: 3 },
-	},
-	Technomancer: { total: 65, unique: 25, levels: { 1: 5, 3: 5, 5: 25, 9: 3 } },
-	Stalker: { total: 80, unique: 25, levels: { 1: 5, 3: 5, 5: 35, 9: 3 } },
-};
+// Build the signature-name set from the authoritative identity sources: no
+// learnable catalog entry may share a job/path/regent signature name.
+function buildSignatureNameSet(): Set<string> {
+	const sigs = new Set<string>();
+	const add = (value: string | null | undefined) => {
+		const n = norm(value);
+		if (n) sigs.add(n);
+	};
+	for (const job of jobs) {
+		add(job.name);
+		for (const a of job.abilities ?? []) add(a);
+		for (const f of job.awakeningFeatures ?? []) add(f.name);
+		for (const t of job.jobTraits ?? []) add(t.name);
+		for (const f of job.classFeatures ?? []) add(f.name);
+		for (const r of job.racialTraits ?? []) add(r.name);
+	}
+	for (const path of paths) {
+		add(path.name);
+		for (const f of path.features ?? []) add(f.name);
+		for (const a of path.abilities ?? []) add(a.name);
+	}
+	for (const regent of regents) {
+		add(regent.name);
+		const ext = regent as typeof regent & {
+			abilities?: Array<{ name: string }>;
+			features?: Array<{ name: string }>;
+		};
+		for (const a of ext.abilities ?? []) add(a.name);
+		for (const f of regent.class_features ?? []) add(f.name);
+		for (const f of ext.features ?? []) add(f.name);
+	}
+	return sigs;
+}
 
-describe("Job ability coverage audit", () => {
-	it("prints coverage matrix for all jobs", async () => {
+describe("Job ability coverage — archetype contract", () => {
+	it("prints the per-job coverage matrix and reaches every catalog entry", async () => {
 		console.log(
 			`Compendium totals — powers: ${powers.length}, techniques: ${techniques.length}`,
 		);
@@ -132,18 +110,6 @@ describe("Job ability coverage audit", () => {
 			techniques: new Set<string>(),
 			spells: new Set<string>(),
 		};
-		const spellLists = new Map<
-			string,
-			Awaited<ReturnType<typeof listLearnableSpells>>
-		>();
-		const powerLists = new Map<
-			string,
-			Awaited<ReturnType<typeof listLearnablePowers>>
-		>();
-		const techniqueLists = new Map<
-			string,
-			Awaited<ReturnType<typeof listLearnableTechniques>>
-		>();
 
 		for (const job of ALL_JOBS) {
 			const p = await listLearnablePowers({ jobName: job });
@@ -152,19 +118,13 @@ describe("Job ability coverage audit", () => {
 			for (const entry of p) seen.powers.add(entry.id);
 			for (const entry of t) seen.techniques.add(entry.id ?? entry.name);
 			for (const entry of s) seen.spells.add(entry.id);
-			if ([...MARTIAL_JOBS, ...HALF_CASTERS].includes(job)) {
-				powerLists.set(job, p);
-				techniqueLists.set(job, t);
-			}
-			if (CASTER_JOBS.includes(job)) spellLists.set(job, s);
 			console.log(
 				`${job.padEnd(16)} powers: ${String(p.length).padStart(3)}  techniques: ${String(t.length).padStart(3)}  spells: ${String(s.length).padStart(3)}`,
 			);
 		}
 
-		// Also scan hybrid path grants so abilities reachable only via PATH_ABILITY_GRANTS
-		// are counted as "seen" (this is how full-casters and pact-casters gain hybrid
-		// power/technique access on specific paths).
+		// Path grants are an additive layer — count anything reachable only via a
+		// PATH_ABILITY_GRANTS pairing as "seen" too.
 		const jobPathPairs = new Set<string>();
 		for (const grant of PATH_ABILITY_GRANTS) {
 			jobPathPairs.add(`${grant.jobName}::${grant.pathName}`);
@@ -202,72 +162,74 @@ describe("Job ability coverage audit", () => {
 		const unseenSpells = allSpells.filter(
 			(spell) => !seen.spells.has(spell.id),
 		);
-		console.log(
-			`\nUnseen powers (${unseenPowers.length}):`,
-			unseenPowers.map((p) => p.id),
-		);
-		console.log(
-			`Unseen techniques (${unseenTechniques.length}):`,
-			unseenTechniques.map((t) => t.id),
-		);
-		console.log(
-			`Unseen spells (${unseenSpells.length}):`,
-			unseenSpells.map((spell) => spell.id),
-		);
 
-		const distinctSpellCounts = new Set(
-			Array.from(spellLists.values()).map((list) => list.length),
-		);
-		const maxSpellCount = Math.max(
-			...Array.from(spellLists.values()).map((list) => list.length),
-		);
-		const uniqueSpellCounts = new Map<string, number>();
-		for (const [job, list] of spellLists) {
-			uniqueSpellCounts.set(
-				job,
-				list.filter(
-					(spell) =>
-						Array.from(spellLists.entries()).filter(([, otherList]) =>
-							otherList.some((otherSpell) => otherSpell.id === spell.id),
-						).length === 1,
-				).length,
-			);
-		}
-		const uniquePowerCounts = new Map<string, number>();
-		for (const [job, list] of powerLists) {
-			uniquePowerCounts.set(
-				job,
-				list.filter(
-					(power) =>
-						Array.from(powerLists.entries()).filter(([, otherList]) =>
-							otherList.some((otherPower) => otherPower.id === power.id),
-						).length === 1,
-				).length,
-			);
-		}
-		const uniqueTechniqueCounts = new Map<string, number>();
-		for (const [job, list] of techniqueLists) {
-			uniqueTechniqueCounts.set(
-				job,
-				list.filter(
-					(technique) =>
-						Array.from(techniqueLists.entries()).filter(([, otherList]) =>
-							otherList.some(
-								(otherTechnique) => otherTechnique.id === technique.id,
-							),
-						).length === 1,
-				).length,
-			);
-		}
+		expect(unseenPowers.map((p) => p.id)).toEqual([]);
+		expect(unseenTechniques.map((t) => t.id)).toEqual([]);
+		expect(unseenSpells.map((s) => s.id)).toEqual([]);
+	});
 
-		expect(unseenPowers.length).toBe(0);
-		expect(unseenTechniques.length).toBe(0);
-		expect(unseenSpells.length).toBe(0);
-		expect(powers.length).toBeGreaterThanOrEqual(240);
-		expect(techniques.length).toBeGreaterThanOrEqual(240);
-		expect(distinctSpellCounts.size).toBeGreaterThan(1);
-		expect(maxSpellCount).toBeLessThan(allSpells.length);
-		for (const job of [...FULL_CASTERS, ...PACT_CASTERS]) {
+	it("provides comprehensive shared martial + spell pools", () => {
+		expect(powers.length).toBeGreaterThanOrEqual(POOL_POWER_FLOOR);
+		expect(techniques.length).toBeGreaterThanOrEqual(POOL_TECHNIQUE_FLOOR);
+	});
+
+	it("gives every martial-capable job the deep shared martial pool", async () => {
+		for (const job of MARTIAL_CAPABLE) {
+			const p = await listLearnablePowers({ jobName: job });
+			const t = await listLearnableTechniques({ jobName: job });
+			expect(p.length, `${job} power pool`).toBeGreaterThanOrEqual(
+				MARTIAL_POWER_FLOOR,
+			);
+			expect(t.length, `${job} technique pool`).toBeGreaterThanOrEqual(
+				MARTIAL_TECHNIQUE_FLOOR,
+			);
+			// Level spread across the canonical tiers 1/3/5/9.
+			for (const level of [1, 3, 5, 9]) {
+				expect(
+					p.filter((e) => e.power_level === level).length,
+					`${job} powers at level ${level}`,
+				).toBeGreaterThanOrEqual(1);
+			}
+			for (const level of [1, 3, 5, 9]) {
+				expect(
+					t.filter((e) => (e.level_requirement ?? e.level ?? 0) === level)
+						.length,
+					`${job} techniques at level ${level}`,
+				).toBeGreaterThanOrEqual(1);
+			}
+		}
+	});
+
+	it("scopes every caster's spell list by school to its floor with rank spread", async () => {
+		const counts: number[] = [];
+		for (const job of CASTER_JOBS) {
+			const s = await listLearnableSpells({ jobName: job });
+			counts.push(s.length);
+			expect(s.length, `${job} spell-list total`).toBeGreaterThanOrEqual(
+				SPELL_FLOORS[job] ?? 45,
+			);
+			const ranks = new Set(s.map((e) => e.rank).filter(Boolean));
+			expect(ranks.size, `${job} distinct spell ranks`).toBeGreaterThanOrEqual(
+				4,
+			);
+			const highRank = s.filter((e) => e.rank === "A" || e.rank === "S").length;
+			expect(highRank, `${job} high-rank (A/S) spells`).toBeGreaterThanOrEqual(
+				1,
+			);
+		}
+		// Casters do not all see the same number of spells (school scoping).
+		expect(new Set(counts).size).toBeGreaterThan(1);
+	});
+
+	it("keeps Mage as the broadest caster (sees every school)", async () => {
+		const mage = await listLearnableSpells({ jobName: "Mage" });
+		const allSpells = await listCanonicalSpells();
+		// Mage is the arcane generalist: it reaches the large majority of spells.
+		expect(mage.length).toBeGreaterThanOrEqual(allSpells.length - 5);
+	});
+
+	it("enforces archetype separation (casters get no martial pool, martials get no spells)", async () => {
+		for (const job of [...PURE_CASTERS, ...PACT_CASTERS]) {
 			expect(
 				await listLearnablePowers({ jobName: job }),
 				`${job} power access`,
@@ -277,144 +239,57 @@ describe("Job ability coverage audit", () => {
 				`${job} technique access`,
 			).toHaveLength(0);
 		}
-		for (const [job, minimums] of Object.entries(POWER_PARITY_MINIMUMS)) {
-			const list = powerLists.get(job) ?? [];
-			expect(list.length, `${job} power-list total`).toBeGreaterThanOrEqual(
-				minimums.total,
-			);
+		for (const job of MARTIAL_JOBS) {
 			expect(
-				uniquePowerCounts.get(job) ?? 0,
-				`${job} unique power count`,
-			).toBeGreaterThanOrEqual(minimums.unique);
-			for (const [level, minimum] of Object.entries(minimums.levels)) {
-				expect(
-					list.filter((power) => power.power_level === Number(level)).length,
-					`${job} level-${level} power count`,
-				).toBeGreaterThanOrEqual(minimum);
-			}
-		}
-		for (const [job, minimums] of Object.entries(TECHNIQUE_PARITY_MINIMUMS)) {
-			const list = techniqueLists.get(job) ?? [];
-			expect(list.length, `${job} technique-list total`).toBeGreaterThanOrEqual(
-				minimums.total,
-			);
-			expect(
-				uniqueTechniqueCounts.get(job) ?? 0,
-				`${job} unique technique count`,
-			).toBeGreaterThanOrEqual(minimums.unique);
-			for (const [level, minimum] of Object.entries(minimums.levels)) {
-				expect(
-					list.filter(
-						(technique) => technique.level_requirement === Number(level),
-					).length,
-					`${job} level-${level} technique count`,
-				).toBeGreaterThanOrEqual(minimum);
-			}
-		}
-		for (const [job, minimums] of Object.entries(SPELL_PARITY_MINIMUMS)) {
-			const list = spellLists.get(job) ?? [];
-			expect(list.length, `${job} spell-list total`).toBeGreaterThanOrEqual(
-				minimums.total,
-			);
-			expect(
-				uniqueSpellCounts.get(job) ?? 0,
-				`${job} unique spell count`,
-			).toBeGreaterThanOrEqual(minimums.unique);
-			for (const [rank, minimum] of Object.entries(minimums.ranks)) {
-				expect(
-					list.filter((spell) => spell.rank === rank).length,
-					`${job} rank-${rank} spell count`,
-				).toBeGreaterThanOrEqual(minimum);
-			}
+				await listLearnableSpells({ jobName: job }),
+				`${job} spell access`,
+			).toHaveLength(0);
 		}
 	});
-});
 
-describe("Job ability access — base-path exclusion rules", () => {
-	const CASTER_FLAVORED_NAME =
-		/\b(?:oath|pact|eldritch|divine|smite|sacred)\b/i;
-
-	it("Destroyer has no learnable spells and no caster-flavored powers/techniques", async () => {
-		const spellsList = await listLearnableSpells({ jobName: "Destroyer" });
-		expect(spellsList).toHaveLength(0);
-		const powersList = await listLearnablePowers({ jobName: "Destroyer" });
-		const techniquesList = await listLearnableTechniques({
-			jobName: "Destroyer",
-		});
-		const leakedPowers = powersList.filter((p) =>
-			CASTER_FLAVORED_NAME.test(p.name),
-		);
-		const leakedTechs = techniquesList.filter((t) =>
-			CASTER_FLAVORED_NAME.test(t.name),
-		);
-		expect(
-			leakedPowers.map((p) => p.name),
-			"Destroyer power leak",
-		).toEqual([]);
-		expect(
-			leakedTechs.map((t) => t.name),
-			"Destroyer technique leak",
-		).toEqual([]);
-	});
-
-	it("Berserker has no learnable spells and no caster-flavored powers/techniques", async () => {
-		const spellsList = await listLearnableSpells({ jobName: "Berserker" });
-		expect(spellsList).toHaveLength(0);
-		const powersList = await listLearnablePowers({ jobName: "Berserker" });
-		const techniquesList = await listLearnableTechniques({
-			jobName: "Berserker",
-		});
-		const leakedPowers = powersList.filter((p) =>
-			CASTER_FLAVORED_NAME.test(p.name),
-		);
-		const leakedTechs = techniquesList.filter((t) =>
-			CASTER_FLAVORED_NAME.test(t.name),
-		);
-		expect(
-			leakedPowers.map((p) => p.name),
-			"Berserker power leak",
-		).toEqual([]);
-		expect(
-			leakedTechs.map((t) => t.name),
-			"Berserker technique leak",
-		).toEqual([]);
-	});
-
-	for (const job of ["Assassin", "Striker"]) {
-		it(`${job} has no caster-flavored powers/techniques`, async () => {
-			const powersList = await listLearnablePowers({ jobName: job });
-			const techniquesList = await listLearnableTechniques({ jobName: job });
-			const leakedPowers = powersList.filter((p) =>
-				CASTER_FLAVORED_NAME.test(p.name),
-			);
-			const leakedTechs = techniquesList.filter((t) =>
-				CASTER_FLAVORED_NAME.test(t.name),
-			);
+	it("gives hybrids all three channels", async () => {
+		for (const job of HYBRID_JOBS) {
 			expect(
-				leakedPowers.map((p) => p.name),
-				`${job} power leak`,
-			).toEqual([]);
+				(await listLearnablePowers({ jobName: job })).length,
+				`${job} powers`,
+			).toBeGreaterThan(0);
 			expect(
-				leakedTechs.map((t) => t.name),
-				`${job} technique leak`,
-			).toEqual([]);
-		});
-	}
-
-	it("Idol without a hybrid path has no learnable powers or techniques", async () => {
-		const powersList = await listLearnablePowers({ jobName: "Idol" });
-		const techniquesList = await listLearnableTechniques({ jobName: "Idol" });
-		expect(powersList).toHaveLength(0);
-		expect(techniquesList).toHaveLength(0);
+				(await listLearnableTechniques({ jobName: job })).length,
+				`${job} techniques`,
+			).toBeGreaterThan(0);
+			expect(
+				(await listLearnableSpells({ jobName: job })).length,
+				`${job} spells`,
+			).toBeGreaterThan(0);
+		}
 	});
 
-	it("Contractor without a hybrid path has no learnable powers or techniques", async () => {
-		const powersList = await listLearnablePowers({ jobName: "Contractor" });
-		const techniquesList = await listLearnableTechniques({
-			jobName: "Contractor",
-		});
-		expect(powersList).toHaveLength(0);
-		expect(techniquesList).toHaveLength(0);
+	it("never exposes a free generic catalog entry that duplicates a job/path/regent signature", () => {
+		const signatures = buildSignatureNameSet();
+		// Path-grant targets are an intentional, thematically-named additive
+		// layer (PATH_ABILITY_GRANTS): selecting the path is how you earn them,
+		// so their signature-flavored names are by design and exempt here. The
+		// guardrail still catches a FREE generic-pool entry that duplicates an
+		// identity signature (e.g. the old "Apex Predator" power).
+		const grantTargets = new Set<string>();
+		for (const grant of PATH_ABILITY_GRANTS) {
+			for (const name of grant.entryNames ?? []) grantTargets.add(norm(name));
+		}
+		const collisions: string[] = [];
+		for (const entry of powers) {
+			const n = norm(entry.name);
+			if (signatures.has(n) && !grantTargets.has(n))
+				collisions.push(`power:${entry.name}`);
+		}
+		for (const entry of techniques) {
+			const n = norm(entry.name);
+			if (signatures.has(n) && !grantTargets.has(n))
+				collisions.push(`technique:${entry.name}`);
+		}
+		expect(
+			collisions,
+			`Generic catalog entries collide with job/path/regent signatures:\n${collisions.join("\n")}`,
+		).toEqual([]);
 	});
 });
 

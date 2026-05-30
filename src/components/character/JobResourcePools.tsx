@@ -1,4 +1,13 @@
-import { Flame, Music, Radio, Skull, Sparkles, Zap } from "lucide-react";
+import {
+	Crosshair,
+	Flame,
+	Gauge,
+	Music,
+	Radio,
+	Skull,
+	Sparkles,
+	Zap,
+} from "lucide-react";
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,6 +35,9 @@ interface JobResourceDef {
 	icon: React.ComponentType<{ className?: string }>;
 	maxFromCharacter: (character: {
 		level?: number | null;
+		strength?: number | null;
+		agility?: number | null;
+		vitality?: number | null;
 		presence?: number | null;
 		intelligence?: number | null;
 		sense?: number | null;
@@ -71,11 +83,16 @@ const JOB_RESOURCES: JobResourceDef[] = [
 	},
 	{
 		jobMatch: (job) => job.toLowerCase() === "revenant",
-		id: "harvest-pool",
-		label: "Reaper's Harvest",
-		description: "Temp HP banked from creatures falling near you.",
+		id: "remnant-pool",
+		label: "Remnants",
+		description:
+			"Severed life-essence reclaimed at the instant of death under Marthos's End-Cycle mandate. Spend to heal, gain temporary HP, blunt incoming damage, reroll a failed save, or refuse death.",
 		icon: Skull,
-		maxFromCharacter: (c) => Math.max(1, (c.level ?? 1) + mod(c.intelligence)),
+		maxFromCharacter: (c) => {
+			const lvl = c.level ?? 1;
+			const prof = 2 + Math.floor((lvl - 1) / 4);
+			return Math.max(1, mod(c.intelligence) + prof);
+		},
 		recovery: "long-rest",
 	},
 	{
@@ -96,6 +113,60 @@ const JOB_RESOURCES: JobResourceDef[] = [
 		description: "Once per short rest, invoke your oath's authority.",
 		icon: Flame,
 		maxFromCharacter: () => 1,
+		recovery: "short-rest",
+	},
+	{
+		// Berserker — Overload State (2/long rest, scaling toward unlimited at
+		// 20th per the class feature). Stored Feedback rides on top in play.
+		jobMatch: (job) => job.toLowerCase() === "berserker",
+		id: "overload-charges",
+		label: "Overload",
+		description:
+			"Trigger an Absolute Surge: melee bonus, damage resistance, and temporary HP while overloaded. Stored Feedback releases on your next hit.",
+		icon: Flame,
+		maxFromCharacter: (c) => {
+			const lvl = c.level ?? 1;
+			if (lvl >= 20) return 99;
+			return lvl >= 17 ? 4 : lvl >= 6 ? 3 : 2;
+		},
+		recovery: "long-rest",
+	},
+	{
+		// Striker — Impulse points = Striker level, recharged on a short rest
+		// (Rite of Speed / Force / Iron each spend 1).
+		jobMatch: (job) => job.toLowerCase() === "striker",
+		id: "impulse-points",
+		label: "Impulse Points",
+		description:
+			"Channel kinetic mana through your nerve gates — spend on Rites of Speed, Force, or Iron.",
+		icon: Gauge,
+		maxFromCharacter: (c) => Math.max(1, c.level ?? 1),
+		recovery: "short-rest",
+	},
+	{
+		// Destroyer — Adrenaline (Adrenal Flux / Adrenaline Burst, recovered on a
+		// short rest). Proficiency-bonus uses approximates the once/short-rest
+		// surge that scales with tier.
+		jobMatch: (job) => job.toLowerCase() === "destroyer",
+		id: "adrenaline-surge",
+		label: "Adrenaline",
+		description:
+			"Overclock your mana-fueled adrenal core: surge damage and absorb impact as built-in spirit armor.",
+		icon: Zap,
+		maxFromCharacter: (c) => 2 + Math.floor(((c.level ?? 1) - 1) / 4),
+		recovery: "short-rest",
+	},
+	{
+		// Assassin — Killing Focus. The class has no single named pool; this
+		// models the Aetheric-Mark / Essence-Harvest economy as an AGI-scaled
+		// short-rest focus (flagged for review).
+		jobMatch: (job) => job.toLowerCase() === "assassin",
+		id: "killing-focus",
+		label: "Killing Focus",
+		description:
+			"Predatory focus spent to apply Aetheric Marks and convert kills into renewed lethality.",
+		icon: Crosshair,
+		maxFromCharacter: (c) => Math.max(1, mod(c.agility)),
 		recovery: "short-rest",
 	},
 ];
@@ -134,6 +205,9 @@ export function JobResourcePools({
 	const handleCreate = (def: JobResourceDef) => {
 		const max = def.maxFromCharacter({
 			level: character.level,
+			strength: (character as { strength?: number | null }).strength,
+			agility: (character as { agility?: number | null }).agility,
+			vitality: (character as { vitality?: number | null }).vitality,
 			presence: (character as { presence?: number | null }).presence,
 			intelligence: (character as { intelligence?: number | null })
 				.intelligence,

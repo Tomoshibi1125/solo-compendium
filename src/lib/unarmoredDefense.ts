@@ -1,4 +1,4 @@
-export type UnarmoredDefenseJob = "Striker" | "Berserker";
+export type UnarmoredDefenseJob = "Striker" | "Berserker" | "Revenant";
 
 export function getUnarmoredDefenseBaseAC(
 	jobName: string | null | undefined,
@@ -18,6 +18,16 @@ export function getUnarmoredDefenseBaseAC(
 		const vit = abilities.VIT ?? 10;
 		const vitMod = Math.floor((vit - 10) / 2);
 		return base + vitMod;
+	}
+
+	if (normalized === "revenant") {
+		// Unarmored Requiem: 10 + INT + VIT, with no AGI base (the entropy-sheathed
+		// drain tank keys off its caster stat and durability, not finesse).
+		const int = abilities.INT ?? 10;
+		const vit = abilities.VIT ?? 10;
+		const intMod = Math.floor((int - 10) / 2);
+		const vitMod = Math.floor((vit - 10) / 2);
+		return 10 + intMod + vitMod;
 	}
 
 	return null;

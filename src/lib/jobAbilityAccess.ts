@@ -115,12 +115,17 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		techniqueTags: [],
 	},
 	revenant: {
-		kind: "full-caster",
+		// Drain-tank rework: Revenant is now a hybrid half-caster that gains
+		// spells AND martial powers/techniques (like Holy Knight / Stalker /
+		// Technomancer). Under the archetype model it inherits the whole martial
+		// pool via membership; the tags below only feed the additive path/regent
+		// layer and dialog "access" badges.
+		kind: "half-caster",
 		spells: true,
-		powers: false,
-		techniques: false,
-		powerTags: [],
-		techniqueTags: [],
+		powers: true,
+		techniques: true,
+		powerTags: ["revenant", "entropy", "guard"],
+		techniqueTags: ["revenant", "entropy", "vanguard"],
 	},
 	summoner: {
 		kind: "full-caster",
@@ -214,6 +219,25 @@ const JOB_ACCESS: Record<string, JobAbilityAccess> = {
 		powerTags: [],
 		techniqueTags: [],
 	},
+};
+
+// ─────────────────────────────────────────────────────────────────────────
+// Archetype model — caster spell access is gated by SCHOOL, not by job-name
+// token. Every spellcasting job sees a generous, thematic set of schools;
+// Mage (the arcane generalist) sees every school via the "*" sentinel.
+// Keyed by the same normalized job-lookup form as JOB_ACCESS.
+// ─────────────────────────────────────────────────────────────────────────
+const CASTER_SCHOOLS: Record<string, string[]> = {
+	mage: ["*"],
+	esper: ["evocation", "transmutation", "divination", "enchantment"],
+	revenant: ["necromancy", "abjuration", "transmutation"],
+	summoner: ["conjuration", "transmutation", "divination"],
+	idol: ["enchantment", "illusion", "evocation"],
+	herald: ["abjuration", "evocation", "divination"],
+	contractor: ["conjuration", "necromancy", "enchantment", "illusion"],
+	"holy knight": ["abjuration", "evocation"],
+	technomancer: ["transmutation", "evocation", "abjuration", "divination"],
+	stalker: ["conjuration", "transmutation", "divination"],
 };
 
 export function normalizeJobAccessToken(
@@ -311,4 +335,32 @@ export function jobCanLearnTechniques(
 
 export function jobCanLearnSpells(jobName: string | null | undefined): boolean {
 	return getJobAbilityAccess(jobName)?.spells ?? false;
+}
+
+/**
+ * The set of spell schools a caster job can learn from. Returns null for
+ * non-casters. The "*" sentinel (Mage) means "every school".
+ */
+export function getCasterSchools(
+	jobName: string | null | undefined,
+): string[] | null {
+	const access = getJobAbilityAccess(jobName);
+	if (!access?.spells) return null;
+	return CASTER_SCHOOLS[normalizeJobLookup(jobName)] ?? [];
+}
+
+/**
+ * Archetype spell gating: does the given school fall within the caster job's
+ * allowed school set? Mage ("*") matches every school.
+ */
+export function spellSchoolMatchesJob(
+	school: string | null | undefined,
+	jobName: string | null | undefined,
+): boolean {
+	const schools = getCasterSchools(jobName);
+	if (!schools) return false;
+	if (schools.includes("*")) return true;
+	const normalized = (school ?? "").trim().toLowerCase();
+	if (!normalized) return false;
+	return schools.includes(normalized);
 }

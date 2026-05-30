@@ -97,7 +97,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "+2 AC, advantage on STR saves, retaliation.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -112,7 +112,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Vitality",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -298,7 +298,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "AoE frighten + thunder damage.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -313,7 +313,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "3d6",
 		damage_type: "thunder",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -507,7 +507,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Teleport + ambush strike + reaction denial.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -522,7 +522,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Sense",
 		damage_roll: "3d6",
 		damage_type: "necrotic",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -732,7 +732,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Triple attack + conditional stun.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -747,7 +747,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Vitality",
 		damage_roll: "3d6",
 		damage_type: "bludgeoning",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -949,7 +949,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Radiant damage + anomaly/anomaly debuff.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -964,7 +964,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "3d6",
 		damage_type: "radiant",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -1164,7 +1164,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Mass detect + anti-invisibility + HP scan.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -1179,7 +1179,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -1296,13 +1296,13 @@ export const powers_supplemental: CompendiumPower[] = [
 	{
 		id: "power-sup-1-19-prey-lock",
 		classes: ["Assassin", "Stalker"],
-		name: "Prey Lock",
-		display_name: "Prey Lock",
+		name: "Quarry Bind",
+		display_name: "Quarry Bind",
 		description:
 			"Mark a creature you can see within 90 feet. For 1 hour, you know the target's direction and distance while within 1 mile. Your first attack each turn against the marked target deals an extra 1d6 damage of your weapon's type.",
 		lore: {
 			origin:
-				"A Stalker's prey lock has never been successfully broken by a target. The record for evasion is 47 minutes.",
+				"A disciplined hunter's quarry bind has never been successfully broken by a target. The record for evasion is 47 minutes.",
 			history:
 				"Catalogued in the Bureau's common-tier compendium after field validation.",
 			curse: "",
@@ -1384,7 +1384,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Terrain mastery + stealth advantage + speed.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -1399,7 +1399,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -1585,7 +1585,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Speed burst + free movement + advantage.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -1600,7 +1600,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -1719,7 +1719,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Reactive radiant damage + push.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -1734,7 +1734,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "radiant",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -1853,7 +1853,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Reactive force damage + frighten.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -1868,7 +1868,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -1987,7 +1987,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Reactive necrotic + weapon debuff.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -2002,7 +2002,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "necrotic",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2227,7 +2227,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Evasive reaction + repositioning.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -2242,7 +2242,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2310,7 +2310,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Mass buff: advantage on attack + save bonus.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -2325,7 +2325,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Vitality",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2460,7 +2460,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Massive damage reduction + AoE push/prone.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2475,7 +2475,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2527,7 +2527,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Damage buff + advantage + resistance.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2542,7 +2542,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Vitality",
 		damage_roll: "5d6",
 		damage_type: "fire",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2594,7 +2594,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Sustained damage buff + anti-heal + kill stealth.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2609,7 +2609,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Sense",
 		damage_roll: "5d6",
 		damage_type: "necrotic",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2669,7 +2669,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Six attacks + conditional stun.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2684,7 +2684,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Vitality",
 		damage_roll: "5d6",
 		damage_type: "bludgeoning",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2744,7 +2744,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Massive radiant smite + conditional banishment.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2759,7 +2759,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "5d6",
 		damage_type: "radiant",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2814,7 +2814,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Sustained AoE line damage.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2829,7 +2829,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Agility",
 		damage_roll: "5d6",
 		damage_type: "lightning",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -2889,7 +2889,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Extended advantage + crit expansion.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -2904,7 +2904,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -3322,7 +3322,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				"Technomancer Training Division",
 			],
 		},
-		flavor: "Full loadout. All systems green.",
+		flavor: "Full loadout. All channels green.",
 		tags: ["awakened", "power", "device", "Conjuration", "Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
@@ -3384,23 +3384,22 @@ export const powers_supplemental: CompendiumPower[] = [
 	{
 		id: "power-sup-5-48-apex-predator",
 		classes: ["Assassin", "Stalker"],
-		name: "Apex Predator",
-		display_name: "Apex Predator",
+		name: "Killing Tempo",
+		display_name: "Killing Tempo",
 		description:
-			"Enter a heightened predatory state for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
+			"Enter a heightened combat trance for 1 minute. Your movement speed doubles, you have advantage on all attack rolls, you can't be surprised, and your first hit each turn deals an extra 3d6 damage. You must make a DC 15 Presence save at the end of the duration or gain 1 level of exhaustion.",
 		lore: {
 			origin:
-				"Bureau combat analysts rate a Stalker in Apex Predator state as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
+				"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
 			history:
 				"Catalogued in the Bureau's rare-tier compendium after field validation.",
 			curse: "",
 			personality: "Focused; the mana signature is distinctive.",
 			current_owner:
-				"Available to Bureau-certified Stalkers at the appropriate rank.",
-			prior_owners: ["Bureau Combat Archives", "Stalker Training Division"],
+				"Available to Bureau-certified combatants at the appropriate rank.",
+			prior_owners: ["Bureau Combat Archives", "Vanguard Training Division"],
 		},
-		flavor:
-			"The apex predator doesn't announce itself. You just stop existing.",
+		flavor: "Move first. Move last. Move always.",
 		tags: ["awakened", "power", "tracking", "Transmutation", "Stalker"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
@@ -3448,7 +3447,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"Bureau combat analysts rate a Stalker in Apex Predator state as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
+			"Bureau combat analysts rate an awakened in full Killing Tempo as 'equivalent to a B-Rank gate boss.' The comparison is conservative.",
 		theme_tags: ["tracking", "stalker"],
 	},
 	{
@@ -4623,8 +4622,8 @@ export const powers_supplemental: CompendiumPower[] = [
 	{
 		id: "power-sup-1-65-nerve-strike",
 		classes: ["Destroyer", "Striker"],
-		name: "Nerve Strike",
-		display_name: "Nerve Strike",
+		name: "Synapse Jab",
+		display_name: "Synapse Jab",
 		description:
 			"As part of a melee attack, target a nerve cluster. On hit, deal normal damage + 1d8 necrotic. Target must make DC 13 VIT save or have disadvantage on its next attack roll as pain disrupts its motor control.",
 		lore: {
@@ -4794,7 +4793,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "+1d6 radiant melee, light aura, passive anomaly damage.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -4809,7 +4808,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "3d6",
 		damage_type: "radiant",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -4865,7 +4864,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		effects: {
 			primary:
 				"Drone fires 1d8 lightning/turn; explodes for 2d6 on destruction.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -4880,7 +4879,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "lightning",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -4941,7 +4940,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Track + HP read + 1d6 bonus damage.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -4956,7 +4955,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -5008,7 +5007,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "+1 AC, thunder resistance, emergency temp HP burst.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -5023,7 +5022,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -5075,7 +5074,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Movement leash + teleport suppression.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -5090,7 +5089,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "3d6",
 		damage_type: "psychic",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -5142,7 +5141,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "On-kill: temp HP + free move + bonus damage.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -5157,7 +5156,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "necrotic",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -5545,7 +5544,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			"Launch a guided mana-payload that detonates at a point within 120 feet. Each creature in a 20-foot radius: DC 15 AGI save, 4d8 fire on failure, half on success. Constructs and gate-tech in the area take double damage.",
 		lore: {
 			origin:
-				"The payload guidance system is accurate to within 6 inches. Bureau munitions teams consider this 'adequate.'",
+				"The payload guidance array is accurate to within 6 inches. Bureau munitions teams consider this 'adequate.'",
 			history:
 				"Catalogued in the Bureau's uncommon-tier compendium after field validation.",
 			curse: "",
@@ -5557,7 +5556,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				"Technomancer Training Division",
 			],
 		},
-		flavor: "Guidance system locked. Payload away. Cover your ears.",
+		flavor: "Guidance array locked. Payload away. Cover your ears.",
 		tags: ["awakened", "power", "device", "Evocation", "Technomancer"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
@@ -5611,7 +5610,7 @@ export const powers_supplemental: CompendiumPower[] = [
 			conditions: ["Must be conscious"],
 		},
 		discovery_lore:
-			"The payload guidance system is accurate to within 6 inches. Bureau munitions teams consider this 'adequate.'",
+			"The payload guidance array is accurate to within 6 inches. Bureau munitions teams consider this 'adequate.'",
 		theme_tags: ["device", "technomancer"],
 	},
 	{
@@ -5705,7 +5704,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Repeat a spell (3rd or lower) at half potency, no slot cost.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -5720,7 +5719,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -5772,7 +5771,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Trade HP for +damage and +DC on pact spells.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -5787,7 +5786,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -5839,7 +5838,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "On-death within 30 ft: heal + stacking attack bonus.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -5853,12 +5852,12 @@ export const powers_supplemental: CompendiumPower[] = [
 		has_save: false,
 		save_ability: "Strength",
 		damage_roll: "5d6",
-		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		damage_type: "necrotic",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "5d6 force",
+			damage_profile: "5d6 necrotic",
 			range: "Self",
 			type: "entropy",
 			action: "1 bonus action",
@@ -6119,7 +6118,7 @@ export const powers_supplemental: CompendiumPower[] = [
 				"Technomancer Training Division",
 			],
 		},
-		flavor: "Reactor online. All systems at 200%. Proceed.",
+		flavor: "Reactor online. All channels at 200%. Proceed.",
 		tags: ["awakened", "power", "device", "Transmutation", "Technomancer"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
@@ -7297,7 +7296,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Pull + prone + AC scaling.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -7312,7 +7311,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -7438,7 +7437,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Invisibility + decoy + psychic explosion on decoy death.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -7453,7 +7452,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Sense",
 		damage_roll: "3d6",
 		damage_type: "psychic",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -7654,7 +7653,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Reaction damage reduction + counter damage.",
-			secondary: "Damage increases by 1d6 per level above 2st.",
+			secondary: "Damage increases by 1d6 per level above 2nd.",
 		},
 		power_type: "Innate",
 		power_level: 2,
@@ -7669,7 +7668,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "3d6",
 		damage_type: "thunder",
-		higher_levels: "Damage increases by 1d6 per level above 2st.",
+		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -7725,7 +7724,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		effects: {
 			primary:
 				"Create +1 weapon/armor or add 1d6 elemental to existing weapon.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -7740,7 +7739,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -7937,7 +7936,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Dual concentration + advantage on mental checks + exhaustion.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -7952,7 +7951,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -8012,7 +8011,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Mass fear (enemies) + temp HP and advantage (allies).",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -8027,7 +8026,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Presence",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -8217,7 +8216,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "3 scout creatures + Help action + explosive death.",
-			secondary: "Damage increases by 1d6 per level above 4rd.",
+			secondary: "Damage increases by 1d6 per level above 4th.",
 		},
 		power_type: "Innate",
 		power_level: 4,
@@ -8232,7 +8231,7 @@ export const powers_supplemental: CompendiumPower[] = [
 		save_ability: "Strength",
 		damage_roll: "5d6",
 		damage_type: "force",
-		higher_levels: "Damage increases by 1d6 per level above 4rd.",
+		higher_levels: "Damage increases by 1d6 per level above 4th.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
@@ -9044,13 +9043,13 @@ export const powers_supplemental: CompendiumPower[] = [
 		has_save: true,
 		save_ability: "Presence",
 		damage_roll: "10d6",
-		damage_type: "force",
+		damage_type: "radiant",
 		higher_levels:
 			"At 9th level, damage increases by 2d6 and the rider effect's duration doubles.",
 		components: { verbal: true, somatic: true, material: false },
 		mechanics: {
 			duration: "Concentration, up to 1 minute",
-			damage_profile: "10d6 force",
+			damage_profile: "10d6 radiant",
 			range: "Self",
 			type: "radiant",
 			action: "1 action",

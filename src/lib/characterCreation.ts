@@ -413,18 +413,11 @@ export function getSpellProgressionForJob(job: JobReference): SpellProgression {
 	const normalized = normalizeJobName(jobName);
 
 	// Full casters
-	const fullCasters = [
-		"mage",
-		"revenant",
-		"herald",
-		"esper",
-		"summoner",
-		"idol",
-	];
+	const fullCasters = ["mage", "herald", "esper", "summoner", "idol"];
 	if (fullCasters.includes(normalized)) return "full";
 
-	// Half casters
-	const halfCasters = ["holy knight", "stalker", "technomancer"];
+	// Half casters (Revenant reclassified full→half in the drain-tank rework)
+	const halfCasters = ["holy knight", "stalker", "technomancer", "revenant"];
 	if (halfCasters.includes(normalized)) return "half";
 
 	// Pact caster

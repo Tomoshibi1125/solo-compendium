@@ -33,6 +33,9 @@ const MARTIAL_HYBRID_JOB_IDS = new Set([
 	"holy-knight",
 	"technomancer",
 	"stalker",
+	// Revenant is now a hybrid half-caster (drain-tank rework): it gains
+	// powers + techniques alongside spells, so it carries both progression arrays.
+	"revenant",
 ]);
 
 const FS_EXPECTED_IDS = [

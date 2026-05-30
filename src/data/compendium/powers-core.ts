@@ -101,14 +101,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "self-heal",
 			type: "divine",
 			lattice_interaction: "Resonance amplification",
-			attack: {
-				type: "radiant",
-				mode: "melee",
-				resolution: "automatic",
-				modifier: "Intelligence",
-				damage: "—",
-				damage_type: "radiant",
-			},
 			saving_throw: {
 				ability: "Vitality",
 				dc: 13,
@@ -175,14 +167,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "utility",
 			type: "awakening",
 			lattice_interaction: "Lattice bypass — raw power",
-			attack: {
-				type: "acid",
-				mode: "melee",
-				resolution: "automatic",
-				modifier: "Agility",
-				damage: "—",
-				damage_type: "acid",
-			},
 			saving_throw: {
 				ability: "Presence",
 				dc: 12,
@@ -239,14 +223,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "utility",
 			type: "awakening",
 			lattice_interaction: "Standard channel",
-			attack: {
-				type: "force",
-				mode: "aura",
-				resolution: "ability_check",
-				modifier: "Presence",
-				damage: "—",
-				damage_type: "force",
-			},
 			saving_throw: {
 				ability: "Sense",
 				dc: 15,
@@ -304,14 +280,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "self-heal",
 			type: "monstrous",
 			lattice_interaction: "Lattice bypass — raw power",
-			attack: {
-				type: "necrotic",
-				mode: "aura",
-				resolution: "saving_throw",
-				modifier: "Presence",
-				damage: "—",
-				damage_type: "necrotic",
-			},
 			saving_throw: {
 				ability: "Strength",
 				dc: 21,
@@ -378,14 +346,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "self-heal",
 			type: "awakening",
 			lattice_interaction: "Ambient mana absorption",
-			attack: {
-				type: "force",
-				mode: "aura",
-				resolution: "saving_throw",
-				modifier: "Agility",
-				damage: "—",
-				damage_type: "force",
-			},
 			saving_throw: {
 				ability: "Strength",
 				dc: 13,
@@ -448,14 +408,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "utility",
 			type: "monstrous",
 			lattice_interaction: "Lattice bypass — raw power",
-			attack: {
-				type: "cold",
-				mode: "melee",
-				resolution: "automatic",
-				modifier: "Sense",
-				damage: "—",
-				damage_type: "cold",
-			},
 			saving_throw: {
 				ability: "Presence",
 				dc: 14,
@@ -513,14 +465,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "utility",
 			type: "innate",
 			lattice_interaction: "Standard channel",
-			attack: {
-				type: "thunder",
-				mode: "melee",
-				resolution: "ability_check",
-				modifier: "Strength",
-				damage: "—",
-				damage_type: "thunder",
-			},
 			saving_throw: {
 				ability: "Presence",
 				dc: 18,
@@ -580,14 +524,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "utility",
 			type: "awakening",
 			lattice_interaction: "Direct mana circuit injection",
-			attack: {
-				type: "psychic",
-				mode: "self",
-				resolution: "automatic",
-				modifier: "Agility",
-				damage: "—",
-				damage_type: "psychic",
-			},
 			saving_throw: {
 				ability: "Vitality",
 				dc: 11,
@@ -645,14 +581,6 @@ export const powers_core: CompendiumPower[] = [
 			damage_profile: "utility",
 			type: "awakening",
 			lattice_interaction: "Ambient mana absorption",
-			attack: {
-				type: "acid",
-				mode: "ranged",
-				resolution: "ability_check",
-				modifier: "Intelligence",
-				damage: "—",
-				damage_type: "acid",
-			},
 			saving_throw: {
 				ability: "Vitality",
 				dc: 10,

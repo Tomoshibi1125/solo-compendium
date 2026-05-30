@@ -77,6 +77,76 @@ describe("per-rest charge helpers", () => {
 		});
 	});
 
+	it("resolves the 5e prof + main-stat formula and short-rest cadence", () => {
+		expect(
+			computePowerUses(
+				{
+					limitations: {
+						uses: "PB + main stat mod/short rest",
+						recharge: "short rest",
+					},
+				},
+				character,
+			),
+		).toEqual({
+			abilityKind: "power",
+			// proficiency bonus (3) + primary stat modifier (4) = 7
+			usesMax: 7,
+			recharge: "short-rest",
+			isAtWill: false,
+		});
+	});
+
+	it("resolves an ability-modifier-only formula and clamps to at least 1", () => {
+		expect(
+			computeTechniqueUses(
+				{
+					limitations: {
+						uses: "Intelligence modifier/long rest",
+						recharge: "long rest",
+					},
+				},
+				character,
+			),
+		).toEqual({
+			abilityKind: "technique",
+			usesMax: 4,
+			recharge: "long-rest",
+			isAtWill: false,
+		});
+		// Dump-stat caster still gets a single use (never zero).
+		expect(
+			computeTechniqueUses(
+				{
+					limitations: {
+						uses: "main stat mod/long rest",
+						recharge: "long rest",
+					},
+				},
+				{ level: 1, proficiencyBonus: 2, primaryStatModifier: -1 },
+			).usesMax,
+		).toBe(1);
+	});
+
+	it("resolves a proficiency-only formula and short-rest cadence", () => {
+		expect(
+			computePowerUses(
+				{
+					limitations: {
+						uses: "Proficiency bonus/short rest",
+						recharge: "short rest",
+					},
+				},
+				character,
+			),
+		).toEqual({
+			abilityKind: "power",
+			usesMax: 3,
+			recharge: "short-rest",
+			isAtWill: false,
+		});
+	});
+
 	it("treats at-will abilities as unlimited with no automatic recharge", () => {
 		expect(
 			computePowerUses({ limitations: { uses: "At-Will" } }, character),

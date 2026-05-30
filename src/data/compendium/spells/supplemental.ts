@@ -963,7 +963,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "mage", "technomancer", "defensive"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "As a reaction when hit by an attack, raise a shimmering lattice of hardened mana.", secondary: "" },
+		effects: {
+			primary:
+				"As a reaction when hit by an attack, raise a shimmering lattice of hardened mana.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Abjuration",
 		casting_time: "1 reaction",
@@ -1055,7 +1059,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "stalker", "tracking", "concentration"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Brand a creature you can see within range with a mana signature visible only to you.", secondary: "" },
+		effects: {
+			primary:
+				"Brand a creature you can see within range with a mana signature visible only to you.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Divination",
 		casting_time: "1 bonus action",
@@ -1110,7 +1118,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "contractor", "curse", "pact"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Place a pact-sealed curse on a creature within range.", secondary: "" },
+		effects: {
+			primary: "Place a pact-sealed curse on a creature within range.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Enchantment",
 		casting_time: "1 bonus action",
@@ -1166,7 +1177,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d10 per level above 1st.",
 		higher_levels: "Damage increases by 1d10 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -1222,7 +1240,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 13, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 13,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 2nd level, affects one additional creature within range.",
 		higher_levels:
@@ -1280,7 +1305,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 1st.",
 		higher_levels: "Damage increases by 1d8 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -1382,7 +1414,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 1st.",
 		higher_levels: "Damage increases by 1d8 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -1427,7 +1466,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Bless a willing creature with a protective aura of the Absolute.", secondary: "" },
+		effects: {
+			primary:
+				"Bless a willing creature with a protective aura of the Absolute.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -1491,7 +1534,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Intelligence", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 3rd level, also imposes disadvantage on ability checks.",
 		higher_levels: "At 3rd level, also imposes disadvantage on ability checks.",
@@ -1537,7 +1587,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Flicker through local mana-space, teleporting up to 30 feet to an unoccupied space you can see.", secondary: "" },
+		effects: {
+			primary:
+				"Flicker through local mana-space, teleporting up to 30 feet to an unoccupied space you can see.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Illusion",
 		casting_time: "1 bonus action",
@@ -1601,7 +1655,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 13, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 13,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 2nd level, affects a 10-foot square. At 4th level, damage increases to 2d6.",
 		higher_levels:
@@ -1648,7 +1709,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Encase yourself in a translucent shell of hardened mana.", secondary: "" },
+		effects: {
+			primary: "Encase yourself in a translucent shell of hardened mana.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -1695,7 +1759,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "herald", "summoner", "idol", "healing"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Place your hands on a creature and channel restorative mana.", secondary: "" },
+		effects: {
+			primary: "Place your hands on a creature and channel restorative mana.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Evocation",
 		casting_time: "1 action",
@@ -1751,7 +1818,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 13, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 13,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d6 per level above 1st. At 3rd level, also pushes failed saves 10 feet.",
 		higher_levels:
@@ -1799,7 +1873,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Wreath yourself in a cloak of entropic mana.", secondary: "" },
+		effects: {
+			primary: "Wreath yourself in a cloak of entropic mana.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Necromancy",
 		casting_time: "1 bonus action",
@@ -1865,7 +1942,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 2nd level, damage increases to 2d6 and affects a 15-foot area.",
 		higher_levels:
@@ -1912,7 +1996,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "As a reaction when you take damage, invoke your patron's protection.", secondary: "" },
+		effects: {
+			primary:
+				"As a reaction when you take damage, invoke your patron's protection.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Abjuration",
 		casting_time: "1 reaction",
@@ -1968,7 +2056,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d6 per level above 1st. At 3rd level, radius increases to 10 feet.",
 		higher_levels:
@@ -2016,7 +2111,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Launch a flare of radiant mana that hangs in the air at a point within range.", secondary: "" },
+		effects: {
+			primary:
+				"Launch a flare of radiant mana that hangs in the air at a point within range.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Evocation",
 		casting_time: "1 bonus action",
@@ -2071,7 +2170,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Dissolve your visual profile into ambient shadow.", secondary: "" },
+		effects: {
+			primary: "Dissolve your visual profile into ambient shadow.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Illusion",
 		casting_time: "1 action",
@@ -2172,7 +2274,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "idol", "healing", "area", "morale"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Emit a soothing harmonic pulse that reaches all allies within 30 feet.", secondary: "" },
+		effects: {
+			primary:
+				"Emit a soothing harmonic pulse that reaches all allies within 30 feet.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Evocation",
 		casting_time: "1 action",
@@ -2227,7 +2333,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana.", secondary: "" },
+		effects: {
+			primary:
+				"Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -2338,7 +2448,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Create a mana-oath tether between yourself and a willing creature.", secondary: "" },
+		effects: {
+			primary:
+				"Create a mana-oath tether between yourself and a willing creature.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -2392,7 +2506,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Dissolve into mana-mist and reform at an unoccupied space you can see within 60 feet.", secondary: "" },
+		effects: {
+			primary:
+				"Dissolve into mana-mist and reform at an unoccupied space you can see within 60 feet.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Conjuration",
 		casting_time: "1 bonus action",
@@ -2458,7 +2576,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 2nd.",
 		higher_levels: "Damage increases by 1d8 per level above 2nd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -2504,7 +2629,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Broadcast an amplified harmonic field in a 30-foot radius.", secondary: "" },
+		effects: {
+			primary: "Broadcast an amplified harmonic field in a 30-foot radius.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -2549,7 +2677,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "holy-knight", "radiant", "smite", "fear"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Charge your weapon with the full weight of your oath.", secondary: "" },
+		effects: {
+			primary: "Charge your weapon with the full weight of your oath.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Evocation",
 		casting_time: "1 bonus action",
@@ -2602,7 +2733,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Lock your senses onto a creature you can see.", secondary: "" },
+		effects: {
+			primary: "Lock your senses onto a creature you can see.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Divination",
 		casting_time: "1 bonus action",
@@ -2649,7 +2783,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D", "esper", "psionic", "defense", "mental"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "As a reaction to taking psychic damage or being targeted by a charm/fear effect, erect a psionic barrier around your consciousness.", secondary: "" },
+		effects: {
+			primary:
+				"As a reaction to taking psychic damage or being targeted by a charm/fear effect, erect a psionic barrier around your consciousness.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Abjuration",
 		casting_time: "1 reaction",
@@ -2715,7 +2853,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 4th level, affects a 10-foot radius. At 6th level, damage increases to 3d6.",
 		higher_levels:
@@ -2773,7 +2918,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 4th level, you can chain a second creature within 10 feet of the first.",
 		higher_levels:
@@ -2821,7 +2973,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Weave a sustaining harmonic that links up to 3 willing creatures within range.", secondary: "" },
+		effects: {
+			primary:
+				"Weave a sustaining harmonic that links up to 3 willing creatures within range.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Enchantment",
 		casting_time: "1 action",
@@ -2941,7 +3097,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Consecrate a 15-foot radius centered on you with the Absolute's protective radiance.", secondary: "" },
+		effects: {
+			primary:
+				"Consecrate a 15-foot radius centered on you with the Absolute's protective radiance.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -2996,7 +3156,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Step into a shadow within 5 feet of you and emerge from a different shadow within 60 feet.", secondary: "" },
+		effects: {
+			primary:
+				"Step into a shadow within 5 feet of you and emerge from a different shadow within 60 feet.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Illusion",
 		casting_time: "1 bonus action",
@@ -3071,7 +3235,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d4 per level above 2nd. At 4th level, radius extends to 15 feet.",
 		higher_levels:
@@ -3081,7 +3252,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "Self (10-foot radius)",
 			type: "Transmutation",
-			damage_profile: "2d4 necrotic",
+			damage_profile: "2d4 acid",
 			action: "1 action",
 			ability: "Intelligence",
 			save: "Vitality",
@@ -3119,7 +3290,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Form a mana-circuit bridge with a willing gate-creature companion you touch.", secondary: "" },
+		effects: {
+			primary:
+				"Form a mana-circuit bridge with a willing gate-creature companion you touch.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Divination",
 		casting_time: "1 action",
@@ -3183,7 +3358,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d6 per level above 2nd.",
 		higher_levels: "Damage increases by 1d6 per level above 2nd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -3229,7 +3411,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Deploy a Small mana-powered drone at a point within range.", secondary: "" },
+		effects: {
+			primary: "Deploy a Small mana-powered drone at a point within range.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -3291,7 +3476,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Begin a stirring vocal performance that radiates courage.", secondary: "" },
+		effects: {
+			primary: "Begin a stirring vocal performance that radiates courage.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Enchantment",
 		casting_time: "1 action",
@@ -3358,7 +3546,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d6 per level above 3rd.",
 		higher_levels: "Damage increases by 1d6 per level above 3rd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -3415,7 +3610,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d6 per level above 3rd.",
 		higher_levels: "Damage increases by 1d6 per level above 3rd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -3472,7 +3674,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 5th level, affects up to 3 creatures within 10 feet of each other.",
 		higher_levels:
@@ -3531,7 +3740,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d6 per level above 3rd. At 5th level, line width increases to 10 feet.",
 		higher_levels:
@@ -3579,7 +3795,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Phase through mana-space to deliver a devastating strike.", secondary: "" },
+		effects: {
+			primary: "Phase through mana-space to deliver a devastating strike.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Conjuration",
 		casting_time: "1 bonus action",
@@ -3633,7 +3852,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Radiate the Absolute's protective light.", secondary: "" },
+		effects: {
+			primary: "Radiate the Absolute's protective light.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Evocation",
 		casting_time: "1 action",
@@ -3689,7 +3911,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Overcharge your mana circuit for one devastating release.", secondary: "" },
+		effects: {
+			primary: "Overcharge your mana circuit for one devastating release.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Transmutation",
 		casting_time: "1 bonus action",
@@ -3742,7 +3967,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range.", secondary: "" },
+		effects: {
+			primary:
+				"Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -3797,7 +4026,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Overclock a willing creature's mana circuit, boosting physical performance.", secondary: "" },
+		effects: {
+			primary:
+				"Overclock a willing creature's mana circuit, boosting physical performance.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -3871,7 +4104,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 5th level, the target also has disadvantage on attacks against creatures other than you.",
 		higher_levels:
@@ -3918,7 +4158,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with.", secondary: "" },
+		effects: {
+			primary:
+				"Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Divination",
 		casting_time: "1 action",
@@ -3985,7 +4229,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d6 per level above 3rd.",
 		higher_levels: "Damage increases by 1d6 per level above 3rd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4042,7 +4293,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 4th.",
 		higher_levels: "Damage increases by 1d8 per level above 4th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4166,7 +4424,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 4th.",
 		higher_levels: "Damage increases by 1d8 per level above 4th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4279,7 +4544,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 6th level, create 5 duplicates.",
 		higher_levels: "At 6th level, create 5 duplicates.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4324,7 +4596,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Erect a translucent 20-foot radius dome at a point within range.", secondary: "" },
+		effects: {
+			primary:
+				"Erect a translucent 20-foot radius dome at a point within range.",
+			secondary: "",
+		},
 		level: 4,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -4373,7 +4649,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			current_owner: "Bureau Archives.",
 			prior_owners: [],
 		},
-		flavor: "All systems nominal. All safeties off. Fire.",
+		flavor: "All channels nominal. All safeties off. Fire.",
 		tags: [
 			"awakened",
 			"magic",
@@ -4397,7 +4673,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d10 per level above 4th.",
 		higher_levels: "Damage increases by 1d10 per level above 4th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4460,7 +4743,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 6th level, charmed creatures also follow simple non-harmful instructions.",
 		higher_levels:
@@ -4518,7 +4808,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 6th level, range extends to 120 feet.",
 		higher_levels: "At 6th level, range extends to 120 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4576,7 +4873,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 6th level, damage increases to 4d6 and the thicket also provides three-quarters cover to creatures inside.",
 		higher_levels:
@@ -4642,7 +4946,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 2d6 per level above 5th.",
 		higher_levels: "Damage increases by 2d6 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4650,7 +4961,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Instantaneous",
 			range: "150 feet",
 			type: "Evocation",
-			damage_profile: "10d6 force",
+			damage_profile: "10d6 lightning",
 			action: "1 action",
 			ability: "Intelligence",
 			save: "Agility",
@@ -4687,7 +4998,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Touch a creature that died within the last 10 days and restore it to life with 1 hit point.", secondary: "" },
+		effects: {
+			primary:
+				"Touch a creature that died within the last 10 days and restore it to life with 1 hit point.",
+			secondary: "",
+		},
 		level: 5,
 		school: "Necromancy",
 		casting_time: "1 minute",
@@ -4751,7 +5066,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 7th level, duration extends to 1 hour.",
 		higher_levels: "At 7th level, duration extends to 1 hour.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4807,7 +5129,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 5th.",
 		higher_levels: "Damage increases by 1d8 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4864,7 +5193,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 5th.",
 		higher_levels: "Damage increases by 1d8 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4927,7 +5263,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 7th level, the web also suppresses teleportation.",
 		higher_levels: "At 7th level, the web also suppresses teleportation.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4972,7 +5315,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Overclock up to 6 willing creatures' mana circuits simultaneously.", secondary: "" },
+		effects: {
+			primary:
+				"Overclock up to 6 willing creatures' mana circuits simultaneously.",
+			secondary: "",
+		},
 		level: 5,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -5039,7 +5386,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 7th level, length extends to 100 feet and damage increases to 8d6.",
 		higher_levels:
@@ -5087,7 +5441,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Broadcast a restorative harmonic across the mana-lattice, targeting up to 6 creatures within range.", secondary: "" },
+		effects: {
+			primary:
+				"Broadcast a restorative harmonic across the mana-lattice, targeting up to 6 creatures within range.",
+			secondary: "",
+		},
 		level: 5,
 		school: "Evocation",
 		casting_time: "1 bonus action",
@@ -5152,7 +5510,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d6 per level above 5th. At 7th level, you can exclude up to 10 creatures.",
 		higher_levels:
@@ -5212,7 +5577,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "One additional arc per level above 6th.",
 		higher_levels: "One additional arc per level above 6th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -5277,7 +5649,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 8th level, damage increases to 8d6 and healing is fully suppressed.",
 		higher_levels:
@@ -5332,7 +5711,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Perform an overwhelming symphonic broadcast that empowers every ally within 90 feet.", secondary: "" },
+		effects: {
+			primary:
+				"Perform an overwhelming symphonic broadcast that empowers every ally within 90 feet.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Enchantment",
 		casting_time: "1 action",
@@ -5392,7 +5775,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Channel the full protective mandate of the Absolute.", secondary: "" },
+		effects: {
+			primary: "Channel the full protective mandate of the Absolute.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -5465,7 +5851,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: { type: "ranged", ability: "Intelligence", damage: "10d6+40" },
-		saving_throw: { ability: "Agility", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 3d6 per level above 6th.",
 		higher_levels: "Damage increases by 3d6 per level above 6th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -5523,7 +5916,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 8th level, the target has disadvantage on the first save.",
 		higher_levels:
@@ -5578,7 +5978,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).", secondary: "" },
+		effects: {
+			primary:
+				"Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).",
+			secondary: "",
+		},
 		level: 6,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -5632,7 +6036,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Vanish into the umbral layer of mana-space.", secondary: "" },
+		effects: {
+			primary: "Vanish into the umbral layer of mana-space.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Illusion",
 		casting_time: "1 bonus action",
@@ -5699,7 +6106,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 2d6 per level above 7th.",
 		higher_levels: "Damage increases by 2d6 per level above 7th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -5752,7 +6166,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Fracture your personal timeline, existing in two moments simultaneously.", secondary: "" },
+		effects: {
+			primary:
+				"Fracture your personal timeline, existing in two moments simultaneously.",
+			secondary: "",
+		},
 		level: 7,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -5815,7 +6233,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "As a reaction when a creature within 60 feet dies, harvest its collapsing mana circuit into a stabilized echo-cage.", secondary: "" },
+		effects: {
+			primary:
+				"As a reaction when a creature within 60 feet dies, harvest its collapsing mana circuit into a stabilized echo-cage.",
+			secondary: "",
+		},
 		level: 7,
 		school: "Necromancy",
 		casting_time: "1 reaction",
@@ -5869,7 +6291,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Summon a partial manifestation of your pact entity.", secondary: "" },
+		effects: {
+			primary: "Summon a partial manifestation of your pact entity.",
+			secondary: "",
+		},
 		level: 7,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -5942,7 +6367,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 9th level, damage increases to 16d8.",
 		higher_levels: "At 9th level, damage increases to 16d8.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6044,7 +6476,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).", secondary: "" },
+		effects: {
+			primary:
+				"Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
+			secondary: "",
+		},
 		level: 7,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -6100,7 +6536,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Erect an impenetrable psionic barrier in a 30-foot radius.", secondary: "" },
+		effects: {
+			primary: "Erect an impenetrable psionic barrier in a 30-foot radius.",
+			secondary: "",
+		},
 		level: 7,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -6173,7 +6612,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 9th level, damage increases to 16d6 and radius to 60 feet.",
 		higher_levels:
@@ -6233,7 +6679,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 2d8 at 9th level.",
 		higher_levels: "Damage increases by 2d8 at 9th level.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6297,7 +6750,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 9th level, the transformation becomes permanent until dispelled.",
 		higher_levels:
@@ -6355,7 +6815,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 9th level, damage increases to 10d8.",
 		higher_levels: "At 9th level, damage increases to 10d8.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6418,7 +6885,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 9th level, duration extends to 24 hours.",
 		higher_levels: "At 9th level, duration extends to 24 hours.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6441,7 +6915,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Absolute Genesis",
 		display_name: "Absolute Genesis",
 		description:
-			"Invoke the Absolute's primordial creative force. You permanently reshape terrain within a 1-mile radius: raise or lower ground by 100 feet, create or destroy forests, divert rivers, and establish a self-sustaining ecosystem. The change is permanent and indistinguishable from natural terrain.",
+			"Invoke the Absolute's primordial creative force. You permanently reshape terrain within a 1-mile radius: raise or lower ground by 100 feet, create or destroy forests, divert rivers, and establish a self-sustaining biome. The change is permanent and indistinguishable from natural terrain.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6463,7 +6937,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Invoke the Absolute's primordial creative force.", secondary: "" },
+		effects: {
+			primary: "Invoke the Absolute's primordial creative force.",
+			secondary: "",
+		},
 		level: 9,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -6535,7 +7012,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6599,7 +7083,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6662,7 +7153,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6708,7 +7206,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).", secondary: "" },
+		effects: {
+			primary:
+				"Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).",
+			secondary: "",
+		},
 		level: 9,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -6779,7 +7281,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6830,7 +7339,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Reset your mana circuit to its fully-charged state.", secondary: "" },
+		effects: {
+			primary: "Reset your mana circuit to its fully-charged state.",
+			secondary: "",
+		},
 		level: 9,
 		school: "Divination",
 		casting_time: "1 action",
@@ -6895,7 +7407,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -6925,7 +7444,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		name: "Omniscient Scan",
 		display_name: "Omniscient Scan",
 		description:
-			"Overload your sensory systems with absolute analytical clarity. You instantly know the exact location, type, CR, current HP, conditions, and active magical effects of every creature within 1 mile. For the next 24 hours, you cannot be surprised and have advantage on initiative rolls.",
+			"Overload your sensory channels with absolute analytical clarity. You instantly know the exact location, type, CR, current HP, conditions, and active magical effects of every creature within 1 mile. For the next 24 hours, you cannot be surprised and have advantage on initiative rolls.",
 		lore: {
 			origin: "Documented in the Rift Ascendant compendium.",
 			history: "",
@@ -6947,7 +7466,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Overload your sensory systems with absolute analytical clarity.", secondary: "" },
+		effects: {
+			primary:
+				"Overload your sensory channels with absolute analytical clarity.",
+			secondary: "",
+		},
 		level: 9,
 		school: "Divination",
 		casting_time: "1 action",
@@ -7044,7 +7567,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "When struck by a spell, route incoming mana through your circuit's feedback buffer.", secondary: "" },
+		effects: {
+			primary:
+				"When struck by a spell, route incoming mana through your circuit's feedback buffer.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Abjuration",
 		casting_time: "1 reaction",
@@ -7101,7 +7628,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 13, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 13,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 3rd level, the thread also reveals the target's current HP percentage.",
 		higher_levels:
@@ -7139,7 +7673,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Touch a willing creature and force-awaken dormant capacity in their mana circuit.", secondary: "" },
+		effects: {
+			primary:
+				"Touch a willing creature and force-awaken dormant capacity in their mana circuit.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -7184,7 +7722,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Emit a low-frequency mana pulse that bounces off gate-dimensional boundaries.", secondary: "" },
+		effects: {
+			primary:
+				"Emit a low-frequency mana pulse that bounces off gate-dimensional boundaries.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Divination",
 		casting_time: "1 action",
@@ -7242,7 +7784,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Intelligence", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 2nd.",
 		higher_levels: "Damage increases by 1d8 per level above 2nd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -7279,7 +7828,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Open a two-way sensory channel with your patron entity.", secondary: "" },
+		effects: {
+			primary: "Open a two-way sensory channel with your patron entity.",
+			secondary: "",
+		},
 		level: 2,
 		school: "Divination",
 		casting_time: "1 action",
@@ -7373,7 +7925,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Anchor the local mana-lattice to prevent dimensional manipulation.", secondary: "" },
+		effects: {
+			primary:
+				"Anchor the local mana-lattice to prevent dimensional manipulation.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -7429,7 +7985,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 3rd.",
 		higher_levels: "Damage increases by 1d8 per level above 3rd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -7467,7 +8030,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Open a stable extradimensional pocket anchored to your mana circuit.", secondary: "" },
+		effects: {
+			primary:
+				"Open a stable extradimensional pocket anchored to your mana circuit.",
+			secondary: "",
+		},
 		level: 4,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -7515,7 +8082,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Splice a temporary mana pathway into a willing creature's circuit, granting it one spell slot of 3rd level or lower.", secondary: "" },
+		effects: {
+			primary:
+				"Splice a temporary mana pathway into a willing creature's circuit, granting it one spell slot of 3rd level or lower.",
+			secondary: "",
+		},
 		level: 4,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -7571,7 +8142,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 6th level, initial damage increases to 4d8.",
 		higher_levels: "At 6th level, initial damage increases to 4d8.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -7608,7 +8186,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Phase between the material plane and the adjacent gate-dimensional layer.", secondary: "" },
+		effects: {
+			primary:
+				"Phase between the material plane and the adjacent gate-dimensional layer.",
+			secondary: "",
+		},
 		level: 5,
 		school: "Conjuration",
 		casting_time: "1 bonus action",
@@ -7666,7 +8248,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 7th level, also grants you resistance to all damage until your next turn.",
 		higher_levels:
@@ -7715,7 +8304,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 8th level, radius increases to 30 feet and damage to 6d10.",
 		higher_levels:
@@ -7725,7 +8321,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "120 feet",
 			type: "Evocation",
-			damage_profile: "4d10 force",
+			damage_profile: "4d10 lightning",
 			action: "1 action",
 			ability: "Intelligence",
 			save: "Agility",
@@ -7765,7 +8361,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Intelligence", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 9th level, the target also loses resistance to non-magical damage.",
 		higher_levels:
@@ -7814,7 +8417,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -7851,7 +8461,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "S"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Force your mana circuit past every safety limiter simultaneously.", secondary: "" },
+		effects: {
+			primary:
+				"Force your mana circuit past every safety limiter simultaneously.",
+			secondary: "",
+		},
 		level: 9,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -7907,7 +8521,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: { type: "melee", ability: "Intelligence", damage: "14d8" },
-		saving_throw: { ability: "Vitality", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -7944,7 +8565,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Project a shimmering dome of purified mana in a 20-foot radius.", secondary: "" },
+		effects: {
+			primary:
+				"Project a shimmering dome of purified mana in a 20-foot radius.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -8002,7 +8627,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 2d6 per level above 3rd. At 5th level, plant 2 charges per cast.",
 		higher_levels:
@@ -8041,7 +8673,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Create a sympathetic resonance between up to 3 willing creatures' mana circuits.", secondary: "" },
+		effects: {
+			primary:
+				"Create a sympathetic resonance between up to 3 willing creatures' mana circuits.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -8086,7 +8722,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly.", secondary: "" },
+		effects: {
+			primary:
+				"Overwrite your mana-circuit's broadcast signature to mimic a gate-anomaly.",
+			secondary: "",
+		},
 		level: 4,
 		school: "Illusion",
 		casting_time: "1 action",
@@ -8144,7 +8784,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 6th level, pull distance increases to 25 feet.",
 		higher_levels: "At 6th level, pull distance increases to 25 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -8181,7 +8828,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Completely suppress your mana-circuit's broadcast signature.", secondary: "" },
+		effects: {
+			primary: "Completely suppress your mana-circuit's broadcast signature.",
+			secondary: "",
+		},
 		level: 4,
 		school: "Illusion",
 		casting_time: "1 action",
@@ -8227,7 +8877,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Force-renegotiate the terms of your patron pact for 1 minute, drawing more power than originally agreed.", secondary: "" },
+		effects: {
+			primary:
+				"Force-renegotiate the terms of your patron pact for 1 minute, drawing more power than originally agreed.",
+			secondary: "",
+		},
 		level: 5,
 		school: "Enchantment",
 		casting_time: "1 action",
@@ -8283,7 +8937,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Intelligence", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d6 per level above 5th.",
 		higher_levels: "Damage increases by 1d6 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -8320,7 +8981,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Force the local gate-dimensional layer to overlap with the material plane.", secondary: "" },
+		effects: {
+			primary:
+				"Force the local gate-dimensional layer to overlap with the material plane.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -8365,7 +9030,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Split your mana-circuit output into two bodies: yourself and a perfect echo.", secondary: "" },
+		effects: {
+			primary:
+				"Split your mana-circuit output into two bodies: yourself and a perfect echo.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Illusion",
 		casting_time: "1 action",
@@ -8421,7 +9090,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 9th level, the command lasts 2 rounds.",
 		higher_levels: "At 9th level, the command lasts 2 rounds.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -8457,7 +9133,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "A"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Rewrite a willing creature's mana-circuit at the fundamental level.", secondary: "" },
+		effects: {
+			primary:
+				"Rewrite a willing creature's mana-circuit at the fundamental level.",
+			secondary: "",
+		},
 		level: 7,
 		school: "Transmutation",
 		casting_time: "1 action",
@@ -8513,7 +9193,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -8551,7 +9238,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "A"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force.", secondary: "" },
+		effects: {
+			primary:
+				"Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force.",
+			secondary: "",
+		},
 		level: 8,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -8596,7 +9287,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "S"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "The ultimate act of creation: force-awaken a latent mana circuit in a mundane creature.", secondary: "" },
+		effects: {
+			primary:
+				"The ultimate act of creation: force-awaken a latent mana circuit in a mundane creature.",
+			secondary: "",
+		},
 		level: 9,
 		school: "Transmutation",
 		casting_time: "8 hours",
@@ -8652,7 +9347,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 13, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 13,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d6 per level above 1st. Auto-dispel threshold increases by 1 level per 2 levels.",
 		higher_levels:
@@ -8691,7 +9393,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "D"],
 		rarity: "common",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "As a reaction when a creature within 30 feet is targeted by a teleportation or banishment effect, anchor their mana circuit to the local lattice.", secondary: "" },
+		effects: {
+			primary:
+				"As a reaction when a creature within 30 feet is targeted by a teleportation or banishment effect, anchor their mana circuit to the local lattice.",
+			secondary: "",
+		},
 		level: 1,
 		school: "Abjuration",
 		casting_time: "1 reaction",
@@ -8749,7 +9455,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 13, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 13,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d6 per level above 1st.",
 		higher_levels: "Damage increases by 1d6 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -8797,7 +9510,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 4th level, thorns are also poisonous: creatures damaged must save vs poison.",
 		higher_levels:
@@ -8847,7 +9567,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 4th level, the network can trigger twice before depleting.",
 		higher_levels:
@@ -8897,7 +9624,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 14, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 14,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 4th level, fixated enemies also have disadvantage on attacks.",
 		higher_levels:
@@ -8946,7 +9680,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"Damage increases by 1d8 per level above 3rd. At 5th, push extends to 30 feet.",
 		higher_levels:
@@ -8996,7 +9737,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 5th level, radius extends to 30 feet and damage increases to 5d6.",
 		higher_levels:
@@ -9046,7 +9794,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 15, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 15,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 5th level, psychic damage increases to 4d6.",
 		higher_levels: "At 5th level, psychic damage increases to 4d6.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9082,7 +9837,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "C"],
 		rarity: "uncommon",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Deploy a Medium mana-powered sentry platform at a point within range.", secondary: "" },
+		effects: {
+			primary:
+				"Deploy a Medium mana-powered sentry platform at a point within range.",
+			secondary: "",
+		},
 		level: 3,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -9139,7 +9898,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d10 per level above 4th.",
 		higher_levels: "Damage increases by 1d10 per level above 4th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9187,7 +9953,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels:
 			"At 6th level, line extends to 60 feet and damage increases to 7d8.",
 		higher_levels:
@@ -9237,7 +10010,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 16, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 16,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 6th level, affects CR 6 or lower. At 8th, CR 8.",
 		higher_levels: "At 6th level, affects CR 6 or lower. At 8th, CR 8.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9273,7 +10053,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "", secondary: "" },
+		effects: {
+			primary:
+				"8d8 radiant; the target is blinded for 1 round on a failed save.",
+			secondary: "Anomalies and anomaly-type creatures take maximum damage.",
+		},
 		level: 5,
 		school: "Evocation",
 		casting_time: "1 action",
@@ -9284,7 +10068,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 1d8 per level above 5th.",
 		higher_levels: "Damage increases by 1d8 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9321,7 +10112,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Project a psionic defense bastion of stabilized mana-thought.", secondary: "" },
+		effects: {
+			primary: "Project a psionic defense bastion of stabilized mana-thought.",
+			secondary: "",
+		},
 		level: 5,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -9379,7 +10173,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: { ability: "Intelligence", dc: 17, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 17,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "Damage increases by 2d8 per level above 5th.",
 		higher_levels: "Damage increases by 2d8 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9416,7 +10217,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Tear two linked portals through the shadow-layer of the mana-lattice.", secondary: "" },
+		effects: {
+			primary:
+				"Tear two linked portals through the shadow-layer of the mana-lattice.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Conjuration",
 		casting_time: "1 action",
@@ -9461,7 +10266,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "B"],
 		rarity: "rare",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Inscribe the Bureau's authority seal on a surface, creating a 60-foot radius ward.", secondary: "" },
+		effects: {
+			primary:
+				"Inscribe the Bureau's authority seal on a surface, creating a 60-foot radius ward.",
+			secondary: "",
+		},
 		level: 6,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -9519,7 +10328,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 9th level, the curse also reduces AC by 3.",
 		higher_levels: "At 9th level, the curse also reduces AC by 3.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9568,7 +10384,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 18, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 18,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "At 9th level, necrotic damage increases to 6d6.",
 		higher_levels: "At 9th level, necrotic damage increases to 6d6.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9612,7 +10435,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "A"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Project a field of total mana-suppression calibrated to gate-frequency signatures.", secondary: "" },
+		effects: {
+			primary:
+				"Project a field of total mana-suppression calibrated to gate-frequency signatures.",
+			secondary: "",
+		},
 		level: 8,
 		school: "Abjuration",
 		casting_time: "1 action",
@@ -9658,7 +10485,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "A"],
 		rarity: "epic",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "Physically transplant mana-circuit capacity to another Awakened.", secondary: "" },
+		effects: {
+			primary:
+				"Physically transplant mana-circuit capacity to another Awakened.",
+			secondary: "",
+		},
 		level: 8,
 		school: "Transmutation",
 		casting_time: "1 minute",
@@ -9714,7 +10545,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "A",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 19, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 19,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9750,7 +10588,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "S"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "", secondary: "" },
+		effects: {
+			primary:
+				"10d10 force within 30 feet; creatures are pulled 30 feet toward the center at the start of each turn.",
+			secondary: "No creature can teleport within 60 feet for the duration.",
+		},
 		level: 9,
 		school: "Evocation",
 		casting_time: "1 action",
@@ -9761,7 +10603,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Strength", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Strength",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9809,7 +10658,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Intelligence", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9856,7 +10712,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Agility", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Agility",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9893,7 +10756,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		tags: ["awakened", "magic", "S"],
 		rarity: "legendary",
 		source_book: "Rift Ascendant Canon",
-		effects: { primary: "", secondary: "" },
+		effects: {
+			primary:
+				"15d8 radiant to enemies within 120 feet; allies instead regain that much HP.",
+			secondary: "Anomalies within range are destroyed outright.",
+		},
 		level: 9,
 		school: "Evocation",
 		casting_time: "1 action",
@@ -9904,7 +10771,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Vitality", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Vitality",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -9952,7 +10826,14 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "S",
 		attack: null,
-		saving_throw: { ability: "Presence", dc: 20, success: "Target takes half damage and resists the secondary effect on a successful save.", failure: "Target takes full damage and suffers the spell's primary effect on a failed save." },
+		saving_throw: {
+			ability: "Presence",
+			dc: 20,
+			success:
+				"Target takes half damage and resists the secondary effect on a successful save.",
+			failure:
+				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+		},
 		atHigherLevels: "",
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },

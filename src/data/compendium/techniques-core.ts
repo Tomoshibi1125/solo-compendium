@@ -109,14 +109,6 @@ export const techniques_core: CompendiumTechnique[] = [
 			damage_profile: "utility",
 			ability: "Intelligence",
 			lattice_interaction: "Body-lattice synchronization",
-			attack: {
-				type: "bludgeoning",
-				mode: "both",
-				resolution: "unarmed_strike",
-				modifier: "Agility",
-				damage: "—",
-				damage_type: "bludgeoning",
-			},
 			saving_throw: {
 				ability: "Agility",
 				dc: 8,
@@ -181,14 +173,6 @@ export const techniques_core: CompendiumTechnique[] = [
 			damage_profile: "utility",
 			ability: "Intelligence",
 			lattice_interaction: "Ki-channeled strike",
-			attack: {
-				type: "slashing",
-				mode: "melee",
-				resolution: "unarmed_strike",
-				modifier: "Strength",
-				damage: "—",
-				damage_type: "slashing",
-			},
 			saving_throw: {
 				ability: "Strength",
 				dc: 12,

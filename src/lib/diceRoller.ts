@@ -45,23 +45,38 @@ function rollDie(sides: number): number {
  * Roll dice from a string (e.g., "1d20+3", "2d6")
  */
 export function rollDiceString(diceStr: string): DiceRoll {
-	const { count, sides, modifier } = parseDiceString(diceStr);
-	const rolls: number[] = [];
-
-	for (let i = 0; i < count; i++) {
-		rolls.push(rollDie(sides));
+	const normalized = diceStr.replace(/\s+/g, "");
+	// Support compound expressions with multiple dice terms and flat modifiers
+	// (e.g. a crit-doubled "4d6+3+2d6" from Brutal Critical). The single-term
+	// regex in parseDiceString only captured the first die + one modifier and
+	// silently dropped any later terms, undercounting crit/extra-dice damage.
+	const diceTerms = normalized.match(/[+-]?\d+d\d+/gi);
+	if (!diceTerms || diceTerms.length === 0) {
+		const { count, sides, modifier } = parseDiceString(diceStr);
+		const rolls: number[] = [];
+		for (let i = 0; i < count; i++) rolls.push(rollDie(sides));
+		const total = rolls.reduce((sum, roll) => sum + roll, 0);
+		return { dice: diceStr, rolls, modifier, total, result: total + modifier };
 	}
 
-	const total = rolls.reduce((sum, roll) => sum + roll, 0);
-	const result = total + modifier;
+	const rolls: number[] = [];
+	for (const term of diceTerms) {
+		const sign = term.startsWith("-") ? -1 : 1;
+		const [, n, s] = term.match(/(\d+)d(\d+)/i) ?? [];
+		const count = parseInt(n ?? "0", 10);
+		const sides = parseInt(s ?? "0", 10);
+		for (let i = 0; i < count; i++) rolls.push(sign * rollDie(sides));
+	}
 
-	return {
-		dice: diceStr,
-		rolls,
-		modifier,
-		total,
-		result,
-	};
+	// Sum every flat modifier term (the numbers not attached to a `d`).
+	const withoutDice = normalized.replace(/[+-]?\d+d\d+/gi, "");
+	const modifier = (withoutDice.match(/[+-]?\d+/g) ?? []).reduce(
+		(sum, n) => sum + parseInt(n, 10),
+		0,
+	);
+
+	const total = rolls.reduce((sum, roll) => sum + roll, 0);
+	return { dice: diceStr, rolls, modifier, total, result: total + modifier };
 }
 
 /**

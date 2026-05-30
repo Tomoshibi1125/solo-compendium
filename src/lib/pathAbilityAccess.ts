@@ -566,7 +566,7 @@ export const PATH_ABILITY_GRANTS: readonly PathAbilityGrant[] = [
 		level: 9,
 		kind: "power",
 		sourceTokens: [],
-		entryNames: ["Apex Predator", "Arcane Recovery"],
+		entryNames: ["Killing Tempo", "Arcane Recovery"],
 		progression: "base",
 	},
 	{

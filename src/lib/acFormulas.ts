@@ -7,6 +7,7 @@
  * - Unarmored: 10 + AGI_mod
  * - Berserker Unarmored Defense: 10 + AGI_mod + VIT_mod (no armor)
  * - Striker Unarmored Defense: 10 + AGI_mod + SENSE_mod (no armor)
+ * - Revenant Unarmored Requiem: 10 + INT_mod + VIT_mod (no armor)
  * - Light Armor: armor_base + AGI_mod
  * - Medium Armor: armor_base + min(AGI_mod, 2)
  * - Heavy Armor: armor_base (no AGI)
@@ -16,6 +17,7 @@
  * Rift Ascendant Job mapping:
  * - Berserker → Barbarian Unarmored Defense (10 + AGI + VIT)
  * - Striker → Monk Unarmored Defense (10 + AGI + SENSE)
+ * - Revenant → Unarmored Requiem (10 + INT + VIT), the entropy-sheathed drain tank
  */
 
 import type { AbilityScore } from "./5eRulesEngine";
@@ -113,6 +115,22 @@ const STRIKER_UNARMORED: ACFormula = {
 	},
 };
 
+const REVENANT_UNARMORED: ACFormula = {
+	id: "revenant_ud",
+	name: "Revenant Unarmored Requiem",
+	source: "job:revenant",
+	description: "10 + INT modifier + VIT modifier (no armor)",
+	calculate: (ctx) => {
+		if (ctx.equippedArmor) return null;
+		if (ctx.job.toLowerCase() !== "revenant") return null;
+		return (
+			10 +
+			getAbilityModifier(ctx.abilities.INT) +
+			getAbilityModifier(ctx.abilities.VIT)
+		);
+	},
+};
+
 const ARMORED: ACFormula = {
 	id: "armored",
 	name: "Armored",
@@ -161,6 +179,7 @@ export const AC_FORMULAS: ACFormula[] = [
 	UNARMORED_BASE,
 	BERSERKER_UNARMORED,
 	STRIKER_UNARMORED,
+	REVENANT_UNARMORED,
 	ARMORED,
 	MAGE_ARMOR,
 ];

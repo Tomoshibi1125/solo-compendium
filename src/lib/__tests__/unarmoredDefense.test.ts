@@ -18,6 +18,15 @@ describe("Unarmored Defense", () => {
 		expect(ac).toBe(16);
 	});
 
+	test("Revenant uses 10 + INT mod + VIT mod (ignores AGI)", () => {
+		const ac = getUnarmoredDefenseBaseAC("Revenant", {
+			AGI: 18, // +4 — must be ignored for the Unarmored Requiem
+			INT: 16, // +3
+			VIT: 14, // +2
+		});
+		expect(ac).toBe(15);
+	});
+
 	test("Other jobs return null", () => {
 		const ac = getUnarmoredDefenseBaseAC("Mage", {
 			AGI: 18,

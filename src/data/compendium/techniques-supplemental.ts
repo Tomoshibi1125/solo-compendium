@@ -6100,7 +6100,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "3d8 bludgeoning",
+			damage_profile: "3d8 radiant",
 			range: "Self",
 			type: "defensive",
 			action: "1 action",
@@ -6113,7 +6113,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				resolution: "martial_attack",
 				modifier: "Presence",
 				damage: "3d8",
-				damage_type: "bludgeoning",
+				damage_type: "radiant",
 			},
 			saving_throw: {
 				ability: "Agility",
@@ -6469,8 +6469,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			"Stalker",
 			"Technomancer",
 		],
-		name: "Void Step",
-		display_name: "Void Step",
+		name: "Rift Cut",
+		display_name: "Rift Cut",
 		description:
 			"Teleport up to 60 feet to an unoccupied space you can see. If you appear within 5 feet of a creature, you can make one melee attack with advantage. On hit: normal damage + 3d8 necrotic as void energy bleeds through.",
 		lore: {
@@ -6948,7 +6948,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "5d8 bludgeoning",
+			damage_profile: "5d8 necrotic",
 			range: "Self",
 			type: "offensive",
 			action: "1 action",
@@ -6961,7 +6961,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				resolution: "martial_attack",
 				modifier: "Agility",
 				damage: "5d8",
-				damage_type: "bludgeoning",
+				damage_type: "necrotic",
 			},
 			saving_throw: {
 				ability: "Agility",
@@ -7255,7 +7255,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "7d8 bludgeoning",
+			damage_profile: "7d8 necrotic",
 			range: "Self",
 			type: "offensive",
 			action: "1 action",
@@ -7268,7 +7268,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				resolution: "martial_attack",
 				modifier: "Strength",
 				damage: "7d8",
-				damage_type: "bludgeoning",
+				damage_type: "necrotic",
 			},
 			saving_throw: {
 				ability: "Agility",
@@ -7868,7 +7868,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "9d8 bludgeoning",
+			damage_profile: "9d8 radiant",
 			range: "Self",
 			type: "defensive",
 			action: "1 action",
@@ -7881,7 +7881,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				resolution: "martial_attack",
 				modifier: "Presence",
 				damage: "9d8",
-				damage_type: "bludgeoning",
+				damage_type: "radiant",
 			},
 			saving_throw: {
 				ability: "Agility",
@@ -8020,7 +8020,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 		components: { verbal: false, somatic: true, material: false },
 		mechanics: {
 			duration: "Instantaneous",
-			damage_profile: "9d8 bludgeoning",
+			damage_profile: "9d8 necrotic",
 			range: "Self",
 			type: "offensive",
 			action: "1 action",
@@ -8028,12 +8028,12 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			lattice_interaction:
 				"9-tier offensive reinforced by trained mana control",
 			attack: {
-				type: "bludgeoning",
+				type: "necrotic",
 				mode: "melee",
 				resolution: "martial_attack",
 				modifier: "Strength",
 				damage: "9d8",
-				damage_type: "bludgeoning",
+				damage_type: "necrotic",
 			},
 			saving_throw: {
 				ability: "Agility",

@@ -6,13 +6,13 @@ import type { Json } from "@/integrations/supabase/types";
 import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
 	entryHasAccessToken,
-	getPowerAccessTokens,
 	getSpellAccessTokens,
 	getTechniqueAccessTokens,
 	jobCanLearnPowers,
 	jobCanLearnSpells,
 	jobCanLearnTechniques,
 	normalizeJobAccessToken,
+	spellSchoolMatchesJob,
 } from "@/lib/jobAbilityAccess";
 import {
 	getActivePathAbilityGrants,
@@ -1425,18 +1425,13 @@ export function isCanonicalSpellLearnable(
 	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "spell")) {
 		return false;
 	}
-	const accessTokens = getSpellAccessTokens(
-		options.jobName,
-		options.pathName,
-		options.regentNames,
-	);
-	const baseAllowed =
-		accessTokens.length === 0
-			? !options.jobName
-			: jobCanLearnSpells(options.jobName)
-				? matchesSpellTokenEligibility(entry, accessTokens)
-				: false;
-	return baseAllowed;
+	// Archetype model: a caster's base spell list is gated by SCHOOL, not by a
+	// job-name token. Path/regent grants remain an additive layer (handled
+	// above). With no job context we surface everything.
+	if (!options.jobName) return true;
+	if (!jobCanLearnSpells(options.jobName)) return false;
+	const spellSchool = getNonEmptyString((entry as { school?: unknown }).school);
+	return spellSchoolMatchesJob(spellSchool, options.jobName);
 }
 
 export function isCanonicalPowerLearnable(
@@ -1469,15 +1464,10 @@ export function isCanonicalPowerLearnable(
 	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "power")) {
 		return false;
 	}
-	const accessTokens = getPowerAccessTokens(
-		options.jobName,
-		options.pathName,
-		options.regentNames,
-	);
-	const baseAllowed = jobCanLearnPowers(options.jobName)
-		? matchesTokenEligibility(entry, accessTokens)
-		: false;
-	return baseAllowed;
+	// Archetype model: any martial-capable job sees the ENTIRE shared martial
+	// power pool. Path/regent grants are additive (handled above); per-job tag
+	// matching is retired for base eligibility.
+	return jobCanLearnPowers(options.jobName);
 }
 
 export async function findCanonicalCastableByName(
@@ -1786,19 +1776,20 @@ export function isCanonicalTechniqueLearnable(
 	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "technique")) {
 		return false;
 	}
-	const accessTokens = getTechniqueAccessTokens(
-		options.jobName,
-		options.pathName,
-		options.regentNames,
-	);
+	// A technique may pin itself to a specific class via class_requirement; honor
+	// that when present (none do today, but the gate stays defensive).
 	const classRequirement = getTechniqueClassRequirement(entry);
 	if (classRequirement) {
+		const accessTokens = getTechniqueAccessTokens(
+			options.jobName,
+			options.pathName,
+			options.regentNames,
+		);
 		return accessTokens.includes(normalizeEligibilityToken(classRequirement));
 	}
-	const baseAllowed = jobCanLearnTechniques(options.jobName)
-		? matchesTechniqueTokenEligibility(entry, accessTokens)
-		: false;
-	return baseAllowed;
+	// Archetype model: any martial-capable job sees the ENTIRE shared technique
+	// pool. Path/regent grants are additive (handled above).
+	return jobCanLearnTechniques(options.jobName);
 }
 
 export async function listLearnableTechniques(

@@ -15,6 +15,16 @@ type AbilityEntry = CompendiumSpell | CompendiumPower | CompendiumTechnique;
 const RUNE_CROSS_CLASS_TEXT =
 	"Cross-Class Adaptation: If the learned ability is outside your native access (Job or unlocked Regent), uses per long rest = max(1, proficiency bonus + primary stat modifier + rune rarity bonus). Native-access abilities follow their normal recharge.";
 
+// Treat empty/whitespace-only (or too-thin) source strings as missing so the
+// generated rune always falls back to a fully-fleshed template. Some catalog
+// entries carry an empty discovery_lore or a terse flavor (e.g. "No retreat.")
+// which `??` would otherwise pass straight through.
+function nonEmpty(value: unknown, minLength = 1): string | undefined {
+	return typeof value === "string" && value.trim().length >= minLength
+		? value
+		: undefined;
+}
+
 function slugifyRuneRef(value: string): string {
 	return value
 		.trim()
@@ -193,7 +203,7 @@ function makeCatalogAuthoredRune(
 		teaches: { kind, ref: entry.id },
 		description,
 		flavor:
-			entry.flavor ??
+			nonEmpty(entry.flavor, 21) ??
 			`A rune-cut mnemonic crystal that pulses with the exact cadence of ${entry.name}.`,
 		tags: [
 			"awakened",
@@ -254,7 +264,7 @@ function makeCatalogAuthoredRune(
 			],
 		},
 		discovery_lore:
-			entry.discovery_lore ??
+			nonEmpty(entry.discovery_lore, 41) ??
 			`Recovered from a stabilized Gate echo where ${entry.name} had been etched into the local mana lattice deeply enough for runewrights to preserve it.`,
 		image: entry.image ?? entry.image_url ?? undefined,
 		higher_levels: `When the bearer naturally unlocks ${rank}, this rune's dedicated slot becomes a general extra ${rank} slot of the same type.`,
