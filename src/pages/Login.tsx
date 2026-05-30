@@ -117,8 +117,6 @@ export default function Login() {
 			className="min-h-screen bg-transparent flex items-center justify-center p-4"
 			data-ra-zone="auth"
 		>
-
-
 			{/* Umbral Energy Effects */}
 			<div className="absolute inset-0 pointer-events-none">
 				<div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary rounded-full filter blur-3xl opacity-10 animate-pulse" />

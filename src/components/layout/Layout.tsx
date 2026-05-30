@@ -5,7 +5,6 @@ import { useAccessibility } from "../../hooks/useAccessibility";
 import { useWardenA } from "../../hooks/usePWA";
 import { cn } from "../../lib/utils";
 import { OfflineStatus, WardenAInstallPrompt } from "../pwa/PWAComponents";
-import { CosmicBackground } from "../ui/CosmicBackground";
 import { OfflineBanner } from "../ui/OfflineBanner";
 import { WardenChatbot } from "../warden-directives/WardenChatbot";
 

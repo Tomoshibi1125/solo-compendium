@@ -6,7 +6,7 @@ import { useMemo } from "react";
  */
 export function RiftOverlay() {
 	// Prevents re-renders of the static overlay parts
-	const ScanLines = null;
+	const _ScanLines = null;
 	const Grain = useMemo(
 		() => <div className="ascendant-overlay-grain" aria-hidden="true" />,
 		[],

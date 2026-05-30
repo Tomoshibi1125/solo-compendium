@@ -7,7 +7,6 @@ import {
 	RiftHeading,
 } from "@/components/ui/AscendantText";
 import { Button } from "@/components/ui/button";
-import { CosmicBackground } from "@/components/ui/CosmicBackground";
 import EnhancedCard from "@/components/ui/EnhancedCard";
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { RiftManifestation } from "@/components/ui/RiftManifestation";
