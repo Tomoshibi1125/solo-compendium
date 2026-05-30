@@ -1,18 +1,27 @@
-import { useEffect, useMemo, useRef } from "react";
+import type { ISourceOptions } from "@tsparticles/engine";
+import type { IParticlesProps } from "@tsparticles/react";
+import { motion } from "framer-motion";
+import {
+	type ComponentType,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { usePerformanceProfile } from "@/lib/performanceProfile";
 import { cn } from "@/lib/utils";
 import { DynamicStyle } from "./DynamicStyle";
 import { GateEnergyFlow } from "./GateEnergyFlow";
 
-interface HexNode {
+interface RiftCrack {
 	id: number;
 	x: number;
 	y: number;
-	size: number;
 	rotation: number;
-	opacity: number;
-	animationDelay: number;
-	color: string;
+	width: number;
+	height: number;
+	delay: number;
+	duration: number;
 }
 
 interface AshParticle {
@@ -39,76 +48,54 @@ export const CosmicBackground = ({
 	className,
 }: CosmicBackgroundProps) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
-	const ashRef = useRef<HTMLDivElement>(null);
-	const hexRef = useRef<HTMLDivElement>(null);
-	const { reducedMotion, tier } = usePerformanceProfile();
+	const { reducedMotion, fx, tier } = usePerformanceProfile();
+	const [ParticlesComponent, setParticlesComponent] =
+		useState<ComponentType<IParticlesProps> | null>(null);
 
 	const reduceEffects = reducedMotion || tier === "low";
 	const finalIntensity = reduceEffects ? "low" : intensity;
 	const enableAnimation = animated && !reducedMotion;
 
-	// Generate hex nodes based on variant and intensity
-	const hexNodes = useMemo(() => {
-		const nodes: HexNode[] = [];
-		const nodeCount =
-			finalIntensity === "high" ? 12 : finalIntensity === "medium" ? 8 : 4;
+	// Accent colors per variant
+	const accentHex =
+		variant === "gate"
+			? "#3b8cff"
+			: variant === "shadow"
+				? "#6b46c1"
+				: "#9d4edd"; // amethyst for sovereign/default
 
-		for (let i = 0; i < nodeCount; i++) {
-			let color = "";
-			switch (variant) {
-				case "gate":
-					color = `hsl(${200 + i * 10}, 80%, ${50 + i * 5}%)`; // Blue-cyan spectrum
-					break;
-				case "sovereign":
-					color = `hsl(${270 + i * 5}, 85%, ${55 + i * 5}%)`; // Amethyst spectrum
-					break;
-				case "shadow":
-					color = `hsl(${260}, 40%, ${20 + i * 10}%)`; // Deep obsidian-purple
-					break;
-				default:
-					color = `hsl(${275}, 80%, 65%)`; // Default Amethyst
-			}
-
-			// Add a few Stellar Cyan nodes for contrast
-			if (i % 3 === 0 && variant !== "shadow") {
-				color = `hsl(195, 90%, 65%)`; // Stellar Cyan Accent
-			}
-
-			nodes.push({
-				id: i,
-				x: Math.random() * 110 - 5, // Allow slight overflow
-				y: Math.random() * 110 - 5,
-				size: Math.random() * 150 + 50,
-				rotation: Math.random() * 360,
-				opacity: Math.random() * 0.15 + 0.05,
-				animationDelay: Math.random() * 10,
-				color,
-			});
-		}
-		return nodes;
-	}, [variant, finalIntensity]);
-
-	// Generate ash particles (rising upwards instead of drifting randomly)
-	const ashParticles = useMemo(() => {
-		const particles: AshParticle[] = [];
-		const particleCount =
-			finalIntensity === "high" ? 40 : finalIntensity === "medium" ? 25 : 10;
-
-		for (let i = 0; i < particleCount; i++) {
-			particles.push({
-				id: i,
-				x: Math.random() * 100,
-				y: Math.random() * 120 - 10, // Start slightly below screen
-				size: Math.random() * 4 + 1, // Sharp, small particles
-				opacity: Math.random() * 0.4 + 0.1,
-				speed: Math.random() * 15 + 10, // Ascend speed
-				drift: Math.random() * 20 - 10, // Sideways drift amount
-			});
-		}
-		return particles;
+	// ── Rift crack fractures (framer-motion) ─────────────────────
+	const riftCracks = useMemo<RiftCrack[]>(() => {
+		if (finalIntensity === "low") return [];
+		const count = finalIntensity === "high" ? 6 : 3;
+		return Array.from({ length: count }, (_, i) => ({
+			id: i,
+			x: 10 + Math.random() * 80,
+			y: 10 + Math.random() * 80,
+			rotation: Math.random() * 50 - 25,
+			width: Math.random() * 140 + 60,
+			height: Math.random() * 2 + 1,
+			delay: i * 1.4 + Math.random() * 3,
+			duration: Math.random() * 4 + 5,
+		}));
 	}, [finalIntensity]);
 
-	// Canvas animation for data streams / sharp circuit lines
+	// ── Mana ash particles (framer-motion) ───────────────────────
+	const ashParticles = useMemo<AshParticle[]>(() => {
+		const count =
+			finalIntensity === "high" ? 40 : finalIntensity === "medium" ? 22 : 8;
+		return Array.from({ length: count }, (_, i) => ({
+			id: i,
+			x: Math.random() * 100,
+			y: Math.random() * 100,
+			size: Math.random() * 3.5 + 1,
+			opacity: Math.random() * 0.5 + 0.15,
+			speed: Math.random() * 18 + 12,
+			drift: Math.random() * 16 - 8,
+		}));
+	}, [finalIntensity]);
+
+	// ── Canvas: animated gate energy streams ─────────────────────
 	useEffect(() => {
 		if (!canvasRef.current || !enableAnimation || finalIntensity === "low")
 			return;
@@ -117,100 +104,161 @@ export const CosmicBackground = ({
 		const ctx = canvas.getContext("2d");
 		if (!ctx) return;
 
-		const resizeCanvas = () => {
+		const resize = () => {
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
 		};
+		resize();
+		window.addEventListener("resize", resize);
 
-		resizeCanvas();
-		window.addEventListener("resize", resizeCanvas);
-
-		let animationId: number;
-		let _time = 0;
-
-		// Data stream configuration
-		const streams = Array.from({ length: 8 }, (_, _i) => ({
-			x: Math.random() * canvas.width,
-			y: Math.random() * canvas.height,
-			length: Math.random() * 200 + 100,
-			speed: Math.random() * 2 + 1,
+		const streamCount = finalIntensity === "high" ? 10 : 6;
+		const streams = Array.from({ length: streamCount }, () => ({
+			x: Math.random() * window.innerWidth,
+			y: Math.random() * window.innerHeight,
+			length: Math.random() * 220 + 80,
+			speed: Math.random() * 1.4 + 0.5,
 			horizontal: Math.random() > 0.5,
-			color: variant === "sovereign" ? "#9d4edd" : "#67e8f9", // Amethyst or Cyan
+			color: Math.random() > 0.5 ? accentHex : "#00d4ff",
 		}));
 
-		const animate = () => {
-			_time += 0.01;
-			// Dark trailing effect for light trails
-			ctx.fillStyle = "rgba(10, 10, 15, 0.1)"; // Dark obsidian fade
+		let animId: number;
+		const draw = () => {
+			// Dark trailing fade for ghost trails
+			ctx.fillStyle = "rgba(7, 3, 18, 0.07)";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-			// Draw background grid lightly
-			ctx.strokeStyle = "rgba(103, 232, 249, 0.03)";
-			ctx.lineWidth = 1;
-
-			// Draw angular data streams
 			ctx.globalCompositeOperation = "screen";
-			streams.forEach((stream) => {
-				ctx.beginPath();
-				ctx.moveTo(stream.x, stream.y);
 
-				if (stream.horizontal) {
-					ctx.lineTo(stream.x + stream.length, stream.y);
-					stream.x += stream.speed;
-					if (stream.x > canvas.width) {
-						stream.x = -stream.length;
-						stream.y = Math.random() * canvas.height;
+			for (const s of streams) {
+				ctx.beginPath();
+				ctx.moveTo(s.x, s.y);
+				if (s.horizontal) {
+					ctx.lineTo(s.x + s.length, s.y);
+					s.x += s.speed;
+					if (s.x > canvas.width) {
+						s.x = -s.length;
+						s.y = Math.random() * canvas.height;
 					}
 				} else {
-					ctx.lineTo(stream.x, stream.y + stream.length);
-					stream.y -= stream.speed; // Move up
-					if (stream.y + stream.length < 0) {
-						stream.y = canvas.height;
-						stream.x = Math.random() * canvas.width;
+					ctx.lineTo(s.x, s.y + s.length);
+					s.y -= s.speed;
+					if (s.y + s.length < 0) {
+						s.y = canvas.height;
+						s.x = Math.random() * canvas.width;
 					}
 				}
 
-				const grad = stream.horizontal
-					? ctx.createLinearGradient(
-							stream.x,
-							stream.y,
-							stream.x + stream.length,
-							stream.y,
-						)
-					: ctx.createLinearGradient(
-							stream.x,
-							stream.y,
-							stream.x,
-							stream.y + stream.length,
-						);
-
-				grad.addColorStop(0, "rgba(0,0,0,0)");
-				grad.addColorStop(0.5, stream.color);
-				grad.addColorStop(1, "rgba(0,0,0,0)");
-
-				ctx.strokeStyle = grad;
-				ctx.lineWidth = 2;
+				const g = s.horizontal
+					? ctx.createLinearGradient(s.x, s.y, s.x + s.length, s.y)
+					: ctx.createLinearGradient(s.x, s.y, s.x, s.y + s.length);
+				g.addColorStop(0, "rgba(0,0,0,0)");
+				g.addColorStop(0.5, s.color);
+				g.addColorStop(1, "rgba(0,0,0,0)");
+				ctx.strokeStyle = g;
+				ctx.lineWidth = 1.5;
 				ctx.stroke();
 
-				// Occasional 90-degree branch
-				if (Math.random() < 0.01) {
-					stream.horizontal = !stream.horizontal;
-				}
-			});
+				// Occasional 90-degree branch — feels like gate circuit energy
+				if (Math.random() < 0.008) s.horizontal = !s.horizontal;
+			}
+
 			ctx.globalCompositeOperation = "source-over";
-
-			animationId = requestAnimationFrame(animate);
+			animId = requestAnimationFrame(draw);
 		};
-
-		animate();
+		draw();
 
 		return () => {
-			window.removeEventListener("resize", resizeCanvas);
-			if (animationId) {
-				cancelAnimationFrame(animationId);
-			}
+			window.removeEventListener("resize", resize);
+			cancelAnimationFrame(animId);
 		};
-	}, [enableAnimation, finalIntensity, variant]);
+	}, [enableAnimation, finalIntensity, accentHex]);
+
+	// ── tsParticles: mana embers + dimensional links ──────────────
+	useEffect(() => {
+		if (!fx.enableTsparticles) {
+			setParticlesComponent(null);
+			return;
+		}
+		let active = true;
+		(async () => {
+			try {
+				const [{ initParticlesEngine, Particles }, { loadSlim }] =
+					await Promise.all([
+						import("@tsparticles/react"),
+						import("@tsparticles/slim"),
+					]);
+				await initParticlesEngine(async (engine) => {
+					await loadSlim(engine);
+				});
+				if (active) setParticlesComponent(() => Particles);
+			} catch {
+				if (active) setParticlesComponent(null);
+			}
+		})();
+		return () => {
+			active = false;
+		};
+	}, [fx.enableTsparticles]);
+
+	const particlesOptions = useMemo<ISourceOptions>(
+		() => ({
+			fullScreen: { enable: false },
+			fpsLimit: 60,
+			detectRetina: true,
+			background: { color: { value: "transparent" } },
+			particles: {
+				number: {
+					value:
+						finalIntensity === "high"
+							? 80
+							: finalIntensity === "medium"
+								? 45
+								: 20,
+					density: { enable: true, area: 900 },
+				},
+				// Mana embers: amethyst + stellar cyan + soft violet
+				color: { value: [accentHex, "#00d4ff", "#c084fc", "#67e8f9"] },
+				opacity: {
+					value: { min: 0.08, max: 0.55 },
+					animation: { enable: true, speed: 0.5, sync: false },
+				},
+				size: { value: { min: 1, max: 3.5 } },
+				move: {
+					enable: true,
+					direction: "top" as const, // ascend like mana rising from gates
+					speed: { min: 0.3, max: 1.1 },
+					random: true,
+					outModes: { default: "out" as const },
+				},
+				links: {
+					enable: finalIntensity !== "low",
+					distance: 140,
+					opacity: 0.1,
+					width: 1,
+					color: accentHex,
+					triangles: {
+						enable: finalIntensity === "high",
+						opacity: 0.03,
+					},
+				},
+				twinkle: {
+					particles: {
+						enable: true,
+						frequency: 0.04,
+						opacity: 1,
+						color: { value: "#ffffff" },
+					},
+				},
+			},
+			interactivity: {
+				events: {
+					onHover: { enable: true, mode: "repulse" as const },
+					resize: { delay: 0 },
+				},
+				modes: { repulse: { distance: 100, duration: 0.4 } },
+			},
+		}),
+		[finalIntensity, accentHex],
+	);
 
 	return (
 		<div
@@ -219,111 +267,117 @@ export const CosmicBackground = ({
 				className,
 			)}
 		>
-			{/* Base canvas for data streams */}
+			{/* ── Layer 1: RA Hero — atmospheric base ──────────────── */}
+			<div
+				className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+				style={{
+					backgroundImage: "url('/ui-art/rift-gate-hero.png')",
+					opacity:
+						finalIntensity === "high"
+							? 0.14
+							: finalIntensity === "medium"
+								? 0.09
+								: 0.05,
+				}}
+			/>
+
+			{/* ── Layer 2: Canvas gate energy streams ──────────────── */}
 			<DynamicStyle
 				as="canvas"
 				ref={canvasRef}
 				className="absolute inset-0 w-full h-full"
-				vars={{ opacity: finalIntensity === "low" ? 0.3 : 0.8 }}
+				vars={{ opacity: finalIntensity === "low" ? 0.25 : 0.7 }}
 			/>
 
-			{/* Floating System Hexagons */}
-			<div ref={hexRef} className="absolute inset-0 overflow-hidden">
-				{hexNodes.map((node) => (
-					<DynamicStyle
-						key={node.id}
-						className={cn(
-							"absolute flex items-center justify-center",
-							enableAnimation && "animate-spin-slow",
-						)}
-						vars={{
-							left: `${node.x}%`,
-							top: `${node.y}%`,
-							width: `${node.size}px`,
-							height: `${node.size}px`,
-							opacity: node.opacity,
-							animationDelay: enableAnimation
-								? `${node.animationDelay}s`
-								: undefined,
-							animationDuration: enableAnimation
-								? `${40 + node.id * 10}s`
-								: undefined,
-							animationDirection: node.id % 2 === 0 ? "normal" : "reverse",
-						}}
-					>
-						{/* CSS Hexagon shape */}
-						<DynamicStyle
-							as="svg"
-							viewBox="0 0 100 100"
-							className="w-full h-full overflow-visible"
-						>
-							<title>Hexagon Theme Background Overlay</title>
-							<DynamicStyle
-								as="polygon"
-								points="50 3, 93 28, 93 72, 50 97, 7 72, 7 28"
-								fill="none"
-								stroke={node.color}
-								strokeWidth="1"
-								className={cn(enableAnimation && "animate-pulse")}
-								vars={{
-									filter: `drop-shadow(0 0 10px ${node.color})`,
-									animationDuration: `${3 + (node.id % 3)}s`,
-								}}
-							/>
-							{/* Inner geometric accent */}
-							{node.id % 2 === 0 && (
-								<DynamicStyle
-									as="circle"
-									cx="50"
-									cy="50"
-									r="3"
-									fill={node.color}
-									className={cn(enableAnimation && "animate-ping")}
-									vars={{ animationDuration: "4s" }}
-								/>
-							)}
-						</DynamicStyle>
-					</DynamicStyle>
-				))}
-			</div>
+			{/* ── Layer 3: tsParticles mana embers + gate links ─────── */}
+			{ParticlesComponent && (
+				<div className="absolute inset-0 w-full h-full">
+					<ParticlesComponent
+						id="ra-cosmic-particles"
+						options={particlesOptions}
+						className="w-full h-full"
+					/>
+				</div>
+			)}
 
-			{/* Sharp Umbral Ash / Cyan Particles (Rising) */}
-			<div ref={ashRef} className="absolute inset-0 overflow-hidden">
-				{ashParticles.map((particle) => (
-					<DynamicStyle
-						key={particle.id}
-						className="absolute bg-accent rounded-sm shadow-[0_0_8px_hsl(var(--accent))]" // Sharp square particles
-						vars={{
-							left: `${particle.x}%`,
-							top: `${particle.y}%`,
-							width: `${particle.size}px`,
-							height: `${particle.size}px`,
-							opacity: particle.opacity,
-							transform: enableAnimation
-								? `translate(${particle.drift}vw, -120vh) rotate(${particle.drift * 20}deg)`
-								: undefined,
-							transition: enableAnimation
-								? `transform ${particle.speed}s linear infinite`
-								: undefined,
-							animationDelay: enableAnimation
-								? `-${particle.id}s` // Negative delay to start mid-animation
-								: undefined,
+			{/* ── Layer 4: Framer-motion rift crack fractures ───────── */}
+			{enableAnimation &&
+				riftCracks.map((crack) => (
+					<motion.div
+						key={crack.id}
+						className="absolute pointer-events-none"
+						style={{
+							left: `${crack.x}%`,
+							top: `${crack.y}%`,
+							rotate: crack.rotation,
+							width: crack.width,
+							height: crack.height,
+							background: `linear-gradient(90deg, transparent 0%, ${accentHex} 40%, #00d4ff 60%, transparent 100%)`,
+							boxShadow: `0 0 8px 2px ${accentHex}80, 0 0 24px 6px ${accentHex}25`,
+							transformOrigin: "center",
+						}}
+						initial={{ scaleX: 0, opacity: 0 }}
+						animate={{
+							scaleX: [0, 1, 1, 0],
+							opacity: [0, 0.8, 0.5, 0],
+						}}
+						transition={{
+							duration: crack.duration,
+							delay: crack.delay,
+							repeat: Number.POSITIVE_INFINITY,
+							repeatDelay: Math.random() * 8 + 5,
+							ease: "easeInOut",
 						}}
 					/>
 				))}
-			</div>
 
-			{/* Base Vignette fading to Obsidian */}
-			<DynamicStyle
-				as="div"
+			{/* ── Layer 5: Ascending mana ash (framer-motion) ───────── */}
+			{!reduceEffects && (
+				<div className="absolute inset-0 overflow-hidden pointer-events-none">
+					{ashParticles.map((p) => (
+						<motion.div
+							key={p.id}
+							className="absolute rounded-sm"
+							style={{
+								left: `${p.x}%`,
+								bottom: "-12px",
+								width: `${p.size}px`,
+								height: `${p.size}px`,
+								background: p.id % 2 === 0 ? accentHex : "#00d4ff",
+								boxShadow: `0 0 6px ${p.id % 2 === 0 ? accentHex : "#00d4ff"}`,
+								opacity: p.opacity,
+							}}
+							animate={
+								enableAnimation
+									? {
+											y: [0, -(window.innerHeight + 30)],
+											x: [0, p.drift * 12],
+											opacity: [p.opacity, 0],
+											rotate: [0, p.drift * 20],
+										}
+									: {}
+							}
+							transition={{
+								duration: p.speed,
+								delay: p.id * 0.35,
+								repeat: Number.POSITIVE_INFINITY,
+								ease: "linear",
+							}}
+						/>
+					))}
+				</div>
+			)}
+
+			{/* ── Layer 6: Obsidian radial vignette ────────────────── */}
+			<div
 				className="absolute inset-0"
-				vars={{
+				style={{
 					background:
-						"radial-gradient(circle at center, transparent 30%, hsl(var(--background)) 100%)",
+						"radial-gradient(ellipse at center, transparent 20%, hsl(var(--background) / 0.65) 65%, hsl(var(--background)) 100%)",
 				}}
 			/>
 
-			{/* Gate energy flows for gate variant */}
+			{/* ── Layer 7: Gate energy flow (gate variant only) ─────── */}
 			{variant === "gate" && (
 				<GateEnergyFlow
 					tier="e"

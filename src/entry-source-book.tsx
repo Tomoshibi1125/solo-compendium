@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SourceBook from "./pages/compendium/SourceBook";
 import "./index.css";
 import "./styles/ascendant-ui.css";
-import "./styles/sa-theme.css";
+import "./styles/ra-theme.css";
 import "./styles/source-book.css";
 
 const rootElement = document.getElementById("root");

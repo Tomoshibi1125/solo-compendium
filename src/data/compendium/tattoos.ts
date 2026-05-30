@@ -661,7 +661,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
@@ -1413,7 +1414,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
@@ -2063,7 +2065,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
@@ -2819,7 +2822,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
@@ -3145,7 +3149,8 @@ export const tattoos: CompendiumTattoo[] = [
 			current_owner: "Common at Guild-authorized dermal-mod clinics.",
 			prior_owners: ["Guild Outcasts", "Assassin Ascendants"],
 		},
-		flavor: "Rends the laws of physics. The line between Ascendant and anomaly.",
+		flavor:
+			"Rends the laws of physics. The line between Ascendant and anomaly.",
 		discovery_lore:
 			"Entered into the Ascendant's inventory via standard requisition.",
 		theme_tags: ["hunter-mod", "mana-blood", "boss-essence"],
@@ -3353,7 +3358,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
@@ -4103,7 +4109,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",
@@ -4320,7 +4327,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
 			personality: "Inert until intentionally engaged.",
@@ -4857,7 +4865,8 @@ export const tattoos: CompendiumTattoo[] = [
 		lore: {
 			origin:
 				"Produced in compliance with Ascendant Bureau augmentation standards.",
-			history: "Reviewed periodically under the Ascendant augmentation license.",
+			history:
+				"Reviewed periodically under the Ascendant augmentation license.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
 			current_owner: "A standard augmentation offering at licensed studios.",

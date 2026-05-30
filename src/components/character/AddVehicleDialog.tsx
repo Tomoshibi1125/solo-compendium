@@ -47,8 +47,10 @@ export function AddVehicleDialog({
 	const bindSwipeClose = useDialogSwipeClose(() => onOpenChange(false));
 
 	const visible = useMemo(() => {
-		if (filter === "mount") return catalog.filter((v) => v.vehicle_type === "mount");
-		if (filter === "vehicle") return catalog.filter((v) => v.vehicle_type !== "mount");
+		if (filter === "mount")
+			return catalog.filter((v) => v.vehicle_type === "mount");
+		if (filter === "vehicle")
+			return catalog.filter((v) => v.vehicle_type !== "mount");
 		return catalog;
 	}, [catalog, filter]);
 
@@ -80,15 +82,17 @@ export function AddVehicleDialog({
 						Add Vehicle or Mount
 					</DialogTitle>
 					<DialogDescription>
-						Pick from the {catalog.length}-entry RA catalog. Mounts and
-						vehicles share the same data model; choose the entry that fits
-						your campaign.
+						Pick from the {catalog.length}-entry RA catalog. Mounts and vehicles
+						share the same data model; choose the entry that fits your campaign.
 					</DialogDescription>
 				</DialogHeader>
 
 				<div className="flex items-center gap-2 mb-2">
 					<Label className="text-xs">Filter:</Label>
-					<Select value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
+					<Select
+						value={filter}
+						onValueChange={(v) => setFilter(v as typeof filter)}
+					>
 						<SelectTrigger className="w-32 h-8">
 							<SelectValue />
 						</SelectTrigger>

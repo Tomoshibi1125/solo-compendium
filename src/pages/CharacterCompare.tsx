@@ -270,9 +270,7 @@ export default function CharacterCompare() {
 												label="Initiative"
 												values={selected.map((c) => {
 													const agiMod = getAbilityModifier(c.abilities.AGI);
-													return agiMod >= 0
-														? `+${agiMod}`
-														: `${agiMod}`;
+													return agiMod >= 0 ? `+${agiMod}` : `${agiMod}`;
 												})}
 												keys={keys}
 											/>
@@ -335,8 +333,7 @@ export default function CharacterCompare() {
 															c.abilities[ability],
 														);
 														const profs =
-															(c.saving_throw_proficiencies as string[]) ||
-															[];
+															(c.saving_throw_proficiencies as string[]) || [];
 														const isProf = profs.includes(ability);
 														const pb = getProficiencyBonus(c.level);
 														const total = baseMod + (isProf ? pb : 0);

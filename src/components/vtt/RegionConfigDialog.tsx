@@ -23,10 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { RegionPolygonEditor } from "@/components/vtt/RegionPolygonEditor";
 import { RIFT_REGION_PRESETS } from "@/lib/vtt/regions";
-import type {
-	VTTRegionBehavior,
-	VTTRiftRegion,
-} from "@/types/vtt";
+import type { VTTRegionBehavior, VTTRiftRegion } from "@/types/vtt";
 
 /**
  * Misty Pearl A3 — Rift Region authoring dialog.
@@ -77,10 +74,7 @@ export function RegionConfigDialog({
 		});
 	};
 
-	const setBehavior = (
-		index: number,
-		next: VTTRegionBehavior | null,
-	) => {
+	const setBehavior = (index: number, next: VTTRegionBehavior | null) => {
 		const list = draft.behaviors.slice();
 		if (next === null) list.splice(index, 1);
 		else list[index] = next;
@@ -185,81 +179,86 @@ export function RegionConfigDialog({
 								No behaviors yet. Add one below or apply a preset.
 							</p>
 						)}
-						{draft.behaviors.map((b, i) => (
-							<div
-								key={`${b.kind}-${i}`}
-								className="rounded-md border border-border/60 bg-muted/30 p-3 space-y-2"
-							>
-								<div className="flex items-center justify-between">
-									<span className="font-mono text-xs uppercase">{b.kind}</span>
-									<Button
-										size="icon"
-										variant="ghost"
-										className="h-7 w-7 text-destructive"
-										onClick={() => setBehavior(i, null)}
-									>
-										<Trash2 className="w-3.5 h-3.5" />
-									</Button>
-								</div>
-								{b.kind === "damage_on_enter" && (
-									<div className="grid grid-cols-2 gap-2">
-										<Input
-											value={b.dice}
-											onChange={(e) =>
-												setBehavior(i, { ...b, dice: e.target.value })
-											}
-											placeholder="2d6"
-										/>
-										<Input
-											value={b.damageType}
-											onChange={(e) =>
-												setBehavior(i, { ...b, damageType: e.target.value })
-											}
-											placeholder="necrotic"
-										/>
+						{draft.behaviors.map((b, i) => {
+							const itemKey = `beh-${i}`;
+							return (
+								<div
+									key={itemKey}
+									className="rounded-md border border-border/60 bg-muted/30 p-3 space-y-2"
+								>
+									<div className="flex items-center justify-between">
+										<span className="font-mono text-xs uppercase">
+											{b.kind}
+										</span>
+										<Button
+											size="icon"
+											variant="ghost"
+											className="h-7 w-7 text-destructive"
+											onClick={() => setBehavior(i, null)}
+										>
+											<Trash2 className="w-3.5 h-3.5" />
+										</Button>
 									</div>
-								)}
-								{b.kind === "difficult_terrain" && (
-									<Input
-										type="number"
-										min={1}
-										step={0.5}
-										value={b.multiplier}
-										onChange={(e) =>
-											setBehavior(i, {
-												...b,
-												multiplier: Number(e.target.value) || 1,
-											})
-										}
-									/>
-								)}
-								{b.kind === "whisper_warden" && (
-									<Textarea
-										rows={2}
-										value={b.message}
-										onChange={(e) =>
-											setBehavior(i, { ...b, message: e.target.value })
-										}
-									/>
-								)}
-								{b.kind === "apply_condition" && (
-									<Input
-										value={b.condition}
-										onChange={(e) =>
-											setBehavior(i, { ...b, condition: e.target.value })
-										}
-									/>
-								)}
-								{b.kind === "play_sound" && (
-									<Input
-										value={b.soundId}
-										onChange={(e) =>
-											setBehavior(i, { ...b, soundId: e.target.value })
-										}
-									/>
-								)}
-							</div>
-						))}
+									{b.kind === "damage_on_enter" && (
+										<div className="grid grid-cols-2 gap-2">
+											<Input
+												value={b.dice}
+												onChange={(e) =>
+													setBehavior(i, { ...b, dice: e.target.value })
+												}
+												placeholder="2d6"
+											/>
+											<Input
+												value={b.damageType}
+												onChange={(e) =>
+													setBehavior(i, { ...b, damageType: e.target.value })
+												}
+												placeholder="necrotic"
+											/>
+										</div>
+									)}
+									{b.kind === "difficult_terrain" && (
+										<Input
+											type="number"
+											min={1}
+											step={0.5}
+											value={b.multiplier}
+											onChange={(e) =>
+												setBehavior(i, {
+													...b,
+													multiplier: Number(e.target.value) || 1,
+												})
+											}
+										/>
+									)}
+									{b.kind === "whisper_warden" && (
+										<Textarea
+											rows={2}
+											value={b.message}
+											onChange={(e) =>
+												setBehavior(i, { ...b, message: e.target.value })
+											}
+										/>
+									)}
+									{b.kind === "apply_condition" && (
+										<Input
+											value={b.condition}
+											onChange={(e) =>
+												setBehavior(i, { ...b, condition: e.target.value })
+											}
+										/>
+									)}
+									{b.kind === "play_sound" && (
+										<Input
+											value={b.soundId}
+											onChange={(e) =>
+												setBehavior(i, { ...b, soundId: e.target.value })
+											}
+										/>
+									)}
+								</div>
+							);
+						})}
 						<div className="flex flex-wrap gap-1.5 pt-2">
 							{(
 								[

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BureauDirectiveExtensionsPanel } from "@/components/campaign/BureauDirectiveExtensionsPanel";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,7 +45,6 @@ import {
 	useUpdateCampaign,
 } from "@/hooks/useCampaigns";
 import { useNotifyDiscord } from "@/hooks/useNotifyDiscord";
-import { BureauDirectiveExtensionsPanel } from "@/components/campaign/BureauDirectiveExtensionsPanel";
 import type { Json } from "@/integrations/supabase/types";
 import {
 	getAutomatedCombat,
@@ -360,9 +360,9 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 						</div>
 						<p className="text-xs text-muted-foreground">
 							Optional. Paste a Discord channel webhook URL to mirror session
-							reminders and Warden broadcasts into a Discord guild. The
-							webhook URL is treated as low-sensitivity — anyone with it can
-							post to the channel.
+							reminders and Warden broadcasts into a Discord guild. The webhook
+							URL is treated as low-sensitivity — anyone with it can post to the
+							channel.
 						</p>
 						<div className="flex gap-2">
 							<Input
@@ -470,8 +470,8 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							</Label>
 						</div>
 						<p className="text-xs text-muted-foreground">
-							Default Comm-Net is mesh P2P (great for ≤6 operatives). For
-							larger parties or mobile-heavy tables, point a{" "}
+							Default Comm-Net is mesh P2P (great for ≤6 operatives). For larger
+							parties or mobile-heavy tables, point a{" "}
 							<a
 								href="https://livekit.io"
 								target="_blank"
@@ -480,8 +480,8 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 							>
 								LiveKit
 							</a>{" "}
-							server here (free Cloud tier or MIT self-host). Tokens are
-							minted server-side by the{" "}
+							server here (free Cloud tier or MIT self-host). Tokens are minted
+							server-side by the{" "}
 							<code className="text-[10px] bg-muted px-1">
 								mint-livekit-token
 							</code>{" "}

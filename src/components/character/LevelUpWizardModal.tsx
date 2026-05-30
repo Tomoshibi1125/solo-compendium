@@ -2054,7 +2054,9 @@ export const LevelUpWizardModal = ({
 														Prof. Bonus
 													</span>
 													<span className="font-resurge text-lg">
-														+{calculateProficiencyBonusForLevel(character.level)} {"->"}{" "}
+														+
+														{calculateProficiencyBonusForLevel(character.level)}{" "}
+														{"->"}{" "}
 														<span className="text-red-400">
 															+{calculateProficiencyBonusForLevel(newLevel)}
 														</span>
@@ -3111,7 +3113,8 @@ export const LevelUpWizardModal = ({
 													Proficiency Bonus
 												</span>
 												<span className="font-resurge text-lg">
-													+{calculateProficiencyBonusForLevel(character.level)} {"->"}{" "}
+													+{calculateProficiencyBonusForLevel(character.level)}{" "}
+													{"->"}{" "}
 													<span className="text-resurge">
 														+{calculateProficiencyBonusForLevel(newLevel)}
 													</span>

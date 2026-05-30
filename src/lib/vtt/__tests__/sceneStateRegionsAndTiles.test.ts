@@ -16,11 +16,7 @@ import {
 	updateAnimatedTileInScene,
 	updateRegionInScene,
 } from "@/lib/vtt/sceneState";
-import type {
-	VTTAnimatedTile,
-	VTTRiftRegion,
-	VTTScene,
-} from "@/types/vtt";
+import type { VTTAnimatedTile, VTTRiftRegion, VTTScene } from "@/types/vtt";
 
 const baseScene = (): VTTScene => ({
 	id: "scene-1",

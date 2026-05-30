@@ -23,8 +23,8 @@ import {
 	mapHomebrewFeatForRuntime,
 } from "@/lib/homebrewRuntime";
 import {
-	parsePrerequisiteText,
 	type PrereqCharacterContext,
+	parsePrerequisiteText,
 	validatePrereq,
 } from "@/lib/prerequisites";
 import { getCharacterCampaignId } from "@/lib/sourcebookAccess";
@@ -32,8 +32,8 @@ import {
 	formatRegentVernacular,
 	normalizeRegentSearch,
 } from "@/lib/vernacular";
-import type { AbilityScore } from "@/types/core-rules";
 import type { CompendiumFeat } from "@/types/compendium";
+import type { AbilityScore } from "@/types/core-rules";
 
 interface PrereqEvaluation {
 	met: boolean;

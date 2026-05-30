@@ -45,7 +45,9 @@ const CAMP_KEY = (id: string) => ["campaign-vehicles", id] as const;
 
 export function useCharacterVehicles(characterId: string | undefined) {
 	return useQuery({
-		queryKey: characterId ? CHAR_KEY(characterId) : ["character-vehicles", "_none"],
+		queryKey: characterId
+			? CHAR_KEY(characterId)
+			: ["character-vehicles", "_none"],
 		queryFn: async () => {
 			if (!characterId || !isSupabaseConfigured)
 				return [] as CharacterVehicleRow[];
@@ -62,7 +64,9 @@ export function useCharacterVehicles(characterId: string | undefined) {
 
 export function useCampaignVehicles(campaignId: string | undefined) {
 	return useQuery({
-		queryKey: campaignId ? CAMP_KEY(campaignId) : ["campaign-vehicles", "_none"],
+		queryKey: campaignId
+			? CAMP_KEY(campaignId)
+			: ["campaign-vehicles", "_none"],
 		queryFn: async () => {
 			if (!campaignId || !isSupabaseConfigured)
 				return [] as CampaignVehicleRow[];
@@ -89,26 +93,26 @@ export function useAddCharacterVehicle() {
 		}) => {
 			if (!isSupabaseConfigured)
 				throw new AppError("Supabase not configured", "CONFIG");
-			const { data, error } = await (
-				supabase
-					.from("character_vehicles" as never)
-					.insert({
-						character_id: input.characterId,
-						vehicle_id: input.vehicleId,
-						nickname: input.nickname ?? null,
-						current_hp: input.initialHp,
-					} as never)
-					.select()
-					.single() as unknown as Promise<{
-					data: CharacterVehicleRow;
-					error: Error | null;
-				}>
-			);
+			const { data, error } = await (supabase
+				.from("character_vehicles" as never)
+				.insert({
+					character_id: input.characterId,
+					vehicle_id: input.vehicleId,
+					nickname: input.nickname ?? null,
+					current_hp: input.initialHp,
+				} as never)
+				.select()
+				.single() as unknown as Promise<{
+				data: CharacterVehicleRow;
+				error: Error | null;
+			}>);
 			if (error) throw error;
 			return data;
 		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: CHAR_KEY(variables.characterId) });
+			queryClient.invalidateQueries({
+				queryKey: CHAR_KEY(variables.characterId),
+			});
 			toast({ title: "Vehicle added" });
 		},
 	});
@@ -122,18 +126,18 @@ export function useUpdateCharacterVehicleHP() {
 			vehicleLinkId: string;
 			currentHp: number;
 		}) => {
-			const { error } = await (
-				supabase
-					.from("character_vehicles" as never)
-					.update({ current_hp: input.currentHp } as never)
-					.eq("id", input.vehicleLinkId) as unknown as Promise<{
-					error: Error | null;
-				}>
-			);
+			const { error } = await (supabase
+				.from("character_vehicles" as never)
+				.update({ current_hp: input.currentHp } as never)
+				.eq("id", input.vehicleLinkId) as unknown as Promise<{
+				error: Error | null;
+			}>);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: CHAR_KEY(variables.characterId) });
+			queryClient.invalidateQueries({
+				queryKey: CHAR_KEY(variables.characterId),
+			});
 		},
 	});
 }
@@ -141,19 +145,22 @@ export function useUpdateCharacterVehicleHP() {
 export function useDeleteCharacterVehicle() {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: async (input: { characterId: string; vehicleLinkId: string }) => {
-			const { error } = await (
-				supabase
-					.from("character_vehicles" as never)
-					.delete()
-					.eq("id", input.vehicleLinkId) as unknown as Promise<{
-					error: Error | null;
-				}>
-			);
+		mutationFn: async (input: {
+			characterId: string;
+			vehicleLinkId: string;
+		}) => {
+			const { error } = await (supabase
+				.from("character_vehicles" as never)
+				.delete()
+				.eq("id", input.vehicleLinkId) as unknown as Promise<{
+				error: Error | null;
+			}>);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {
-			queryClient.invalidateQueries({ queryKey: CHAR_KEY(variables.characterId) });
+			queryClient.invalidateQueries({
+				queryKey: CHAR_KEY(variables.characterId),
+			});
 		},
 	});
 }

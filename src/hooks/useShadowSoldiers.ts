@@ -311,19 +311,17 @@ export function useUpdateSoldierConditions() {
 			shadowSoldierId: string;
 			conditions: SoldierCondition[];
 		}) => {
-			const { data, error } = await (
-				supabase
-					.from("character_shadow_soldiers")
-					.update({
-						conditions: params.conditions as unknown as never,
-					} as never)
-					.eq("id", params.shadowSoldierId)
-					.select()
-					.single() as unknown as Promise<{
-					data: unknown;
-					error: Error | null;
-				}>
-			);
+			const { data, error } = await (supabase
+				.from("character_shadow_soldiers")
+				.update({
+					conditions: params.conditions as unknown as never,
+				} as never)
+				.eq("id", params.shadowSoldierId)
+				.select()
+				.single() as unknown as Promise<{
+				data: unknown;
+				error: Error | null;
+			}>);
 			if (error) throw error;
 			return data;
 		},
@@ -343,17 +341,15 @@ export function useUpdateSoldierInitiative() {
 			shadowSoldierId: string;
 			initiative: number | null;
 		}) => {
-			const { data, error } = await (
-				supabase
-					.from("character_shadow_soldiers")
-					.update({ initiative: params.initiative } as never)
-					.eq("id", params.shadowSoldierId)
-					.select()
-					.single() as unknown as Promise<{
-					data: unknown;
-					error: Error | null;
-				}>
-			);
+			const { data, error } = await (supabase
+				.from("character_shadow_soldiers")
+				.update({ initiative: params.initiative } as never)
+				.eq("id", params.shadowSoldierId)
+				.select()
+				.single() as unknown as Promise<{
+				data: unknown;
+				error: Error | null;
+			}>);
 			if (error) throw error;
 			return data;
 		},
@@ -373,17 +369,15 @@ export function useUpdateSoldierNotes() {
 			shadowSoldierId: string;
 			notes: string;
 		}) => {
-			const { data, error } = await (
-				supabase
-					.from("character_shadow_soldiers")
-					.update({ notes: params.notes } as never)
-					.eq("id", params.shadowSoldierId)
-					.select()
-					.single() as unknown as Promise<{
-					data: unknown;
-					error: Error | null;
-				}>
-			);
+			const { data, error } = await (supabase
+				.from("character_shadow_soldiers")
+				.update({ notes: params.notes } as never)
+				.eq("id", params.shadowSoldierId)
+				.select()
+				.single() as unknown as Promise<{
+				data: unknown;
+				error: Error | null;
+			}>);
 			if (error) throw error;
 			return data;
 		},
@@ -403,19 +397,17 @@ export function useUpdateSoldierMaxHp() {
 			shadowSoldierId: string;
 			maxHpOverride: number | null;
 		}) => {
-			const { data, error } = await (
-				supabase
-					.from("character_shadow_soldiers")
-					.update({
-						max_hp_override: params.maxHpOverride,
-					} as never)
-					.eq("id", params.shadowSoldierId)
-					.select()
-					.single() as unknown as Promise<{
-					data: unknown;
-					error: Error | null;
-				}>
-			);
+			const { data, error } = await (supabase
+				.from("character_shadow_soldiers")
+				.update({
+					max_hp_override: params.maxHpOverride,
+				} as never)
+				.eq("id", params.shadowSoldierId)
+				.select()
+				.single() as unknown as Promise<{
+				data: unknown;
+				error: Error | null;
+			}>);
 			if (error) throw error;
 			return data;
 		},

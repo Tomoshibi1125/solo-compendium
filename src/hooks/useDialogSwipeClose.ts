@@ -17,11 +17,7 @@ import { useDrag } from "@use-gesture/react";
 
 export function useDialogSwipeClose(onClose: () => void) {
 	return useDrag(
-		({
-			swipe: [, swipeY],
-		}: {
-			swipe: [number, number];
-		}) => {
+		({ swipe: [, swipeY] }: { swipe: [number, number] }) => {
 			if (swipeY > 0) {
 				onClose();
 			}

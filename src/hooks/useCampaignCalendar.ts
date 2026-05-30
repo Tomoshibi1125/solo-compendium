@@ -14,16 +14,18 @@ import {
 	CAMPAIGN_CALENDAR_DEFAULTS,
 	type CampaignClock,
 	normalizeCampaignClock,
-	resetRiftCycle,
 	type RestKind,
+	resetRiftCycle,
 } from "@/lib/campaignCalendar";
 
 const STATE_KEY = "campaign_calendar_v1";
 
 export function useCampaignCalendar(campaignId: string | null | undefined) {
-	const { state: raw, setState: setRaw, isLoading } = useCampaignToolState<
-		CampaignClock
-	>(campaignId ?? null, STATE_KEY, {
+	const {
+		state: raw,
+		setState: setRaw,
+		isLoading,
+	} = useCampaignToolState<CampaignClock>(campaignId ?? null, STATE_KEY, {
 		initialState: CAMPAIGN_CALENDAR_DEFAULTS,
 	});
 

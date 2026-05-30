@@ -40,7 +40,8 @@ const SPECIAL_SANDBOX_NPC_IMAGE_URLS: Record<string, string> = {
 	"npc-anom-003": "/generated/compendium/anomalies/companion-void-walker.webp",
 	"npc-anom-004": "/generated/compendium/backgrounds/time-walker.webp",
 	"npc-anom-005": "/generated/compendium/jobs/artificer.webp",
-	"npc-anom-006": "/generated/compendium/anomalies/companion-chronal-hound.webp",
+	"npc-anom-006":
+		"/generated/compendium/anomalies/companion-chronal-hound.webp",
 	"npc-ind-004": "/generated/compendium/backgrounds/gate-survivor.webp",
 	"npc-ind-006": "/generated/compendium/backgrounds/shadow-realm-exile.webp",
 	"npc-verm-009": "/generated/compendium/jobs/Idol.webp",

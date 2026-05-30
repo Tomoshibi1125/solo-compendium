@@ -114,7 +114,7 @@ const THEME_ICONS: Partial<Record<DiceTheme, LucideIcon>> = {
 	"regent-regent": Gem,
 	"supreme-deity": ZapIcon,
 	"gate-portal": Flame,
-	"system-interface": Sparkles,
+	"mana-circuit": Sparkles,
 	"resurge-violet": Gem,
 	"regent-gold": Crown,
 };
@@ -138,7 +138,7 @@ const THEME_SWATCH_CLASSES: Partial<
 	"regent-regent": { icon: "text-solar-glow", bar: "bg-solar-glow/40" },
 	"supreme-deity": { icon: "text-shadow-blue", bar: "bg-shadow-blue/40" },
 	"gate-portal": { icon: "text-red-400", bar: "bg-red-400/40" },
-	"system-interface": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
+	"mana-circuit": { icon: "text-emerald-400", bar: "bg-emerald-400/40" },
 	"resurge-violet": {
 		icon: "text-resurge-violet",
 		bar: "bg-resurge-violet/40",

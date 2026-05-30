@@ -30,7 +30,9 @@ export interface StrataDrawerProps {
 
 export function StrataDrawer({ scene, onSceneChange }: StrataDrawerProps) {
 	const normalized = normalizeVttSceneLevels(scene);
-	const levels = (normalized.levels ?? []).slice().sort((a, b) => b.order - a.order);
+	const levels = (normalized.levels ?? [])
+		.slice()
+		.sort((a, b) => b.order - a.order);
 
 	const [newName, setNewName] = useState("");
 	const [newElevation, setNewElevation] = useState(0);
@@ -39,7 +41,9 @@ export function StrataDrawer({ scene, onSceneChange }: StrataDrawerProps) {
 		const order = (levels[0]?.order ?? 0) + 1;
 		const level: VTTSceneLevel = {
 			id: createVttSceneLevelId(),
-			name: newName.trim() || `Stratum ${newElevation >= 0 ? "+" : ""}${newElevation}`,
+			name:
+				newName.trim() ||
+				`Stratum ${newElevation >= 0 ? "+" : ""}${newElevation}`,
 			elevation: newElevation,
 			order,
 			visibleToPlayers: true,
@@ -60,8 +64,8 @@ export function StrataDrawer({ scene, onSceneChange }: StrataDrawerProps) {
 			<div className="space-y-3" data-testid="vtt-strata-drawer">
 				<p className="text-xs text-muted-foreground">
 					Stack multiple floors in one Rift. Token movement between strata
-					happens through the action bar; rendering dims inactive strata so
-					the Warden can focus on one floor at a time.
+					happens through the action bar; rendering dims inactive strata so the
+					Warden can focus on one floor at a time.
 				</p>
 
 				<div className="space-y-1.5">
@@ -75,7 +79,9 @@ export function StrataDrawer({ scene, onSceneChange }: StrataDrawerProps) {
 								<Input
 									className="h-7 text-xs flex-1"
 									value={level.name}
-									onChange={(e) => patchLevel(level.id, { name: e.target.value })}
+									onChange={(e) =>
+										patchLevel(level.id, { name: e.target.value })
+									}
 								/>
 								<Input
 									className="h-7 w-16 text-xs"
@@ -164,9 +170,7 @@ export function StrataDrawer({ scene, onSceneChange }: StrataDrawerProps) {
 							className="h-7 w-16 text-xs"
 							type="number"
 							value={newElevation}
-							onChange={(e) =>
-								setNewElevation(Number(e.target.value) || 0)
-							}
+							onChange={(e) => setNewElevation(Number(e.target.value) || 0)}
 							title="Elevation"
 						/>
 						<Button

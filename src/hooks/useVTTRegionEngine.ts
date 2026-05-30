@@ -16,10 +16,7 @@ import {
 	evaluateRiftRegionEntry,
 	type RegionEffectEvent,
 } from "@/lib/vtt/regions";
-import type {
-	VTTRiftRegion,
-	VTTTokenInstance,
-} from "@/types/vtt";
+import type { VTTRiftRegion, VTTTokenInstance } from "@/types/vtt";
 
 export interface UseVTTRegionEngineOptions {
 	enabled: boolean;

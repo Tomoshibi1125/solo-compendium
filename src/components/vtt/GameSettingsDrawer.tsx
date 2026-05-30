@@ -165,8 +165,8 @@ export function GameSettingsDrawer({
 									Scene transitions
 								</Label>
 								<p className="mt-1 text-xs text-foreground/60">
-									When switching scenes, fade through a Bureau Field Brief
-									title card (Foundry v14 parity). Respects reduced-motion.
+									When switching scenes, fade through a Bureau Field Brief title
+									card (Foundry v14 parity). Respects reduced-motion.
 								</p>
 							</div>
 							<Switch
@@ -184,8 +184,8 @@ export function GameSettingsDrawer({
 									htmlFor="vtt-setting-scene-transition-duration"
 									className="text-xs"
 								>
-									Duration: {(settings.sceneTransitionDurationMs / 1000).toFixed(1)}
-									s
+									Duration:{" "}
+									{(settings.sceneTransitionDurationMs / 1000).toFixed(1)}s
 								</Label>
 								<input
 									id="vtt-setting-scene-transition-duration"

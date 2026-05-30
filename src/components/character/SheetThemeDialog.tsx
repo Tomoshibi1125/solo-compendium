@@ -22,8 +22,8 @@ import {
 	getSheetTheme,
 	SHEET_THEMES,
 } from "@/data/sheetThemes";
-import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { useToast } from "@/hooks/use-toast";
+import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { cn } from "@/lib/utils";
 
 interface CharacterRecord {

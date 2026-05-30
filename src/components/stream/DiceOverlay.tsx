@@ -1,5 +1,5 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useCampaignMessages } from "@/hooks/useCampaignChat";
 
 /**
@@ -20,7 +20,9 @@ interface ParsedRoll {
 	when: number;
 }
 
-function parseRollMessage(raw: string): { formula: string; result: string } | null {
+function parseRollMessage(
+	raw: string,
+): { formula: string; result: string } | null {
 	// Try to match patterns produced by the in-app dice roller:
 	//   "rolled `1d20+5` → **15**"
 	//   "Kael rolled 1d20+5 = 17"

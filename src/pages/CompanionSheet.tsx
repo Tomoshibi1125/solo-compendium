@@ -73,12 +73,13 @@ export default function CompanionSheet() {
 		return Array.isArray(raw) ? (raw as SoldierCondition[]) : [];
 	}, [link]);
 
-	const initialNotes = (link as { notes?: string | null } | undefined)?.notes ?? "";
+	const initialNotes =
+		(link as { notes?: string | null } | undefined)?.notes ?? "";
 	const initialInitiative =
 		(link as { initiative?: number | null } | undefined)?.initiative ?? null;
 	const persistedMaxHp =
-		(link as { max_hp_override?: number | null } | undefined)?.max_hp_override ??
-		null;
+		(link as { max_hp_override?: number | null } | undefined)
+			?.max_hp_override ?? null;
 
 	const [notes, setNotes] = useState(initialNotes);
 	const [initiative, setInitiative] = useState<string>(

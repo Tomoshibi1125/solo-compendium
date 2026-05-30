@@ -241,7 +241,9 @@ export function exportCharacterPDF(
  * structured character-sheet PDF via pdf-lib, then triggers a direct file
  * download (no print dialog). This is the DDB-parity "Export to PDF."
  */
-export async function downloadCharacterPdfFile(characterId: string): Promise<void> {
+export async function downloadCharacterPdfFile(
+	characterId: string,
+): Promise<void> {
 	const { data: character, error } = await supabase
 		.from("characters")
 		.select("*")

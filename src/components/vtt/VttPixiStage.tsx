@@ -887,9 +887,7 @@ export function VttPixiStage({
 					sprite.width = tile.width * zoom;
 					sprite.height = tile.height * zoom;
 					const stratumDim =
-						tile.level &&
-						activeStratumId &&
-						tile.level !== activeStratumId
+						tile.level && activeStratumId && tile.level !== activeStratumId
 							? 0.25
 							: 1;
 					sprite.alpha = (tile.opacity ?? 1) * stratumDim;
@@ -1162,8 +1160,9 @@ export function VttPixiStage({
 			// Misty Pearl A2 — split walls into active-stratum / inactive-
 			// stratum buckets so off-floor walls render dimmed. Falls back
 			// to a single graphics blob for legacy single-stratum scenes.
-			const levels = (scene as { levels?: Array<{ id: string; wallIds: string[] }> })
-				?.levels;
+			const levels = (
+				scene as { levels?: Array<{ id: string; wallIds: string[] }> }
+			)?.levels;
 			const wallStratum = new Map<string, string>();
 			if (levels && levels.length > 0 && activeStratumId) {
 				for (const level of levels) {

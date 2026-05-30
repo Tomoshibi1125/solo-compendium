@@ -61,12 +61,18 @@ export interface ControllerBonuses {
 
 const PACK_LEADER_PATTERNS = [/pack[\s-]?leader/i];
 const SUMMONER_PATTERNS = [/^summoner/i, /biome[\s-]?bond/i];
-const CONTRACTOR_PATTERNS = [/^contractor/i, /pact[\s-]?of[\s-]?the[\s-]?chain/i];
+const CONTRACTOR_PATTERNS = [
+	/^contractor/i,
+	/pact[\s-]?of[\s-]?the[\s-]?chain/i,
+];
 const ESPER_PATTERNS = [/^esper/i, /entity[\s-]?shift/i];
 const SYNCHRONIST_PATTERNS = [/synchronist[\s-]?binary/i];
 const HIVE_PATTERNS = [/hive[\s-]?synchronist/i];
 
-function matchesAny(text: string | null | undefined, patterns: RegExp[]): boolean {
+function matchesAny(
+	text: string | null | undefined,
+	patterns: RegExp[],
+): boolean {
 	if (!text) return false;
 	return patterns.some((p) => p.test(text));
 }
@@ -122,7 +128,9 @@ export function getControllerBonuses(
 		result.passiveBoosts.push("Binary fighting unit — shared reflex");
 	}
 	if (result.hasHive) {
-		result.passiveBoosts.push("Hive resilience: damage taken halved when summoned");
+		result.passiveBoosts.push(
+			"Hive resilience: damage taken halved when summoned",
+		);
 	}
 	return result;
 }

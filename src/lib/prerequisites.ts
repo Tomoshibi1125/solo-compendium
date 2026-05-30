@@ -113,7 +113,9 @@ export function validatePrereq(
 		const have = new Set(
 			(character.features ?? []).map((f) => normalize(f.name)),
 		);
-		const matched = spec.requiredFeature.some((req) => have.has(normalize(req)));
+		const matched = spec.requiredFeature.some((req) =>
+			have.has(normalize(req)),
+		);
 		if (!matched) {
 			missing.push(`Requires feature: ${spec.requiredFeature.join(" or ")}.`);
 		}
@@ -174,8 +176,9 @@ export function parsePrerequisiteText(
 
 		// "Ability NN or higher" / "NN Ability"
 		for (const [pat, ability] of ABILITY_NAMES) {
-			const m = seg.match(new RegExp(`(?:${pat.source}).*?(\\d+)`, "i"))
-				?? seg.match(new RegExp(`(\\d+).*?(?:${pat.source})`, "i"));
+			const m =
+				seg.match(new RegExp(`(?:${pat.source}).*?(\\d+)`, "i")) ??
+				seg.match(new RegExp(`(\\d+).*?(?:${pat.source})`, "i"));
 			if (m) {
 				const min = Number.parseInt(m[1], 10);
 				if (Number.isFinite(min)) {
@@ -194,7 +197,10 @@ export function parsePrerequisiteText(
 		// "Level NN"
 		const levelMatch = seg.match(/level\s+(\d+)/i);
 		if (levelMatch) {
-			spec.minLevel = Math.max(spec.minLevel ?? 0, Number.parseInt(levelMatch[1], 10));
+			spec.minLevel = Math.max(
+				spec.minLevel ?? 0,
+				Number.parseInt(levelMatch[1], 10),
+			);
 			continue;
 		}
 

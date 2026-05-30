@@ -9,10 +9,7 @@ vi.mock("@/lib/export", () => ({
 }));
 
 import { ExportDialog } from "@/components/character/ExportDialog";
-import {
-	downloadCharacterJSON,
-	exportCharacterPDF,
-} from "@/lib/export";
+import { downloadCharacterJSON, exportCharacterPDF } from "@/lib/export";
 
 (
 	globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
@@ -58,9 +55,7 @@ const queryButtonByText = (text: string): HTMLButtonElement | null => {
 	const buttons = Array.from(
 		document.querySelectorAll<HTMLButtonElement>("button"),
 	);
-	return (
-		buttons.find((b) => (b.textContent || "").includes(text)) ?? null
-	);
+	return buttons.find((b) => (b.textContent || "").includes(text)) ?? null;
 };
 
 describe("ExportDialog (smoke wiring)", () => {
@@ -150,9 +145,7 @@ describe("ExportDialog (smoke wiring)", () => {
 
 		// Print and Open-in-new-tab buttons must be available in preview mode
 		expect(
-			document.querySelector(
-				'[data-testid="export-print-from-preview"]',
-			),
+			document.querySelector('[data-testid="export-print-from-preview"]'),
 		).toBeTruthy();
 		expect(queryButtonByText("Open in new tab")).toBeTruthy();
 
@@ -285,11 +278,7 @@ describe("ExportDialog (smoke wiring)", () => {
 
 		const onOpenChange = vi.fn();
 		const { unmount } = mount(
-			<ExportDialog
-				open
-				onOpenChange={onOpenChange}
-				character={tokenless}
-			/>,
+			<ExportDialog open onOpenChange={onOpenChange} character={tokenless} />,
 		);
 
 		const previewBtn = document.querySelector<HTMLButtonElement>(

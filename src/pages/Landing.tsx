@@ -39,7 +39,7 @@ const Landing = () => {
 
 	return (
 		<div className="relative min-h-screen overflow-hidden bg-black text-white selection:bg-primary/30 selection:text-primary">
-			{/* System Initialization Overlay */}
+			{/* Rift Initialization Overlay */}
 			{isInitializing && (
 				<div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
 					<div className="absolute inset-0 bg-[linear-gradient(rgba(155,109,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(155,109,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
@@ -50,13 +50,13 @@ const Landing = () => {
 							dimensional
 							className="mb-4 text-center"
 						>
-							System Integration
+							Rift Synchronization
 						</RiftHeading>
 						<div className="h-1 w-64 bg-primary/20 rounded-full overflow-hidden border border-primary/40 relative">
-							<div className="absolute top-0 bottom-0 left-0 bg-primary sa-progress-bar-animated w-full" />
+							<div className="absolute top-0 bottom-0 left-0 bg-primary ra-progress-bar-animated w-full" />
 						</div>
 						<p className="mt-4 text-xs font-mono text-center opacity-70 animate-pulse">
-							Synchronizing magical cores...
+							Calibrating rift frequencies...
 						</p>
 					</div>
 				</div>
@@ -79,7 +79,7 @@ const Landing = () => {
 								speed="slow"
 								className="text-sm uppercase tracking-[0.3em] opacity-80"
 							>
-								System status: online
+								Rift status: active
 							</ManaFlowText>
 						</div>
 						<RiftHeading
@@ -121,10 +121,10 @@ const Landing = () => {
 					</div>
 					<div className="flex-1">
 						<div className="relative">
-							{/* System Hologram Display */}
+							{/* Rift Gate Display */}
 							<RiftManifestation
 								variant="default"
-								title="SYSTEM CORE"
+								title="GATE MONITOR"
 								className="mb-8 relative shadow-[0_0_50px_hsl(var(--accent)/0.1)] group"
 							>
 								<div className="absolute -inset-1 bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
@@ -184,8 +184,8 @@ const Landing = () => {
 							<div className="relative">
 								<div className="absolute inset-0 bg-gate-national/20 blur-3xl animate-dimensional-pulse" />
 								<OptimizedImage
-									src="/ui-art/system-interface.webp"
-									alt="System Interface"
+									src="/ui-art/rift-gate-hero.png"
+									alt="Rift Ascendant — dimensional gates tearing through the city skyline"
 									className="relative rounded-lg border border-gate-s/30 shadow-2xl shadow-gate-s/20"
 									size="large"
 								/>
@@ -230,7 +230,7 @@ const Landing = () => {
 				<section className="mx-auto max-w-6xl px-6 pb-16">
 					<div className="text-center mb-12">
 						<RiftHeading level={2} variant="sovereign" dimensional>
-							Ascendant Protocol: Active
+							Rift Protocol: Active
 						</RiftHeading>
 						<AscendantText
 							variant="body"

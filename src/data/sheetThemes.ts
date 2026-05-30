@@ -4,7 +4,7 @@
  * Each theme sets the sheet root's `--sheet-accent` CSS variable plus a
  * light variant. Themes are intentionally named in RA canon — no D&D
  * 5e palette names. All accent hues are pulled from existing tokens in
- * `src/styles/sa-theme.css` so the rest of the app stays cohesive.
+ * `src/styles/ra-theme.css` so the rest of the app stays cohesive.
  *
  * Add a new theme: append a row here, no migration required.
  */

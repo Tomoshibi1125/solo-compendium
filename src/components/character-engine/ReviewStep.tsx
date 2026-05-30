@@ -272,9 +272,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										</span>
 										<span className="block text-[9px] text-muted-foreground">
 											1d{hitDieSize}{" "}
-											{formatSigned(
-												getAbilityModifier(effectiveAbilities.VIT),
-											)}
+											{formatSigned(getAbilityModifier(effectiveAbilities.VIT))}
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">
@@ -286,9 +284,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({
 										</span>
 										<span className="block text-[9px] text-muted-foreground">
 											10{" "}
-											{formatSigned(
-												getAbilityModifier(effectiveAbilities.AGI),
-											)}
+											{formatSigned(getAbilityModifier(effectiveAbilities.AGI))}
 										</span>
 									</div>
 									<div className="p-3 rounded bg-black/40 border border-primary/10 text-center">

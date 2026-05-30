@@ -11,13 +11,13 @@
  * features in the host integration.
  */
 import {
+	type LocalParticipant,
 	type Participant,
 	type RemoteParticipant,
 	type RemoteTrackPublication,
 	Room,
-	type Track,
-	type LocalParticipant,
 	RoomEvent,
+	type Track,
 } from "livekit-client";
 
 export interface LiveKitTransportOptions {

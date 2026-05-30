@@ -115,10 +115,13 @@ export default function Login() {
 	return (
 		<div
 			className="min-h-screen bg-background flex items-center justify-center p-4"
-			data-sa-zone="auth"
+			data-ra-zone="auth"
 		>
 			{/* Background Art */}
-			<div className="absolute inset-0 bg-cover bg-center opacity-20 login-page-bg" />
+			<div
+				className="absolute inset-0 bg-cover bg-center opacity-15"
+				style={{ backgroundImage: "url('/ui-art/rift-gate-hero.png')" }}
+			/>
 
 			{/* Hex grid + data rain overlays */}
 			<div className="absolute inset-0 pointer-events-none">
@@ -163,12 +166,12 @@ export default function Login() {
 					<ManaFlowText variant="rift" speed="slow" className="text-lg">
 						{isSignUp
 							? "Initiate Awakening Protocol"
-							: "Restore System Connection"}
+							: "Restore Rift Connection"}
 					</ManaFlowText>
 				</div>
 
-				{/* Login Form — SA glassmorphic card */}
-				<div className="sa-card p-8 ascendant-materialize">
+				{/* Login Form — RA glassmorphic card */}
+				<div className="ra-card p-8 ascendant-materialize">
 					{oauthEnabled && (
 						<div className="mb-6 space-y-4">
 							<OAuthButtons
@@ -177,7 +180,7 @@ export default function Login() {
 							/>
 							<div className="relative">
 								<div className="absolute inset-0 flex items-center">
-									<div className="w-full sa-divider"></div>
+									<div className="w-full ra-divider"></div>
 								</div>
 								<div className="relative flex justify-center text-xs">
 									<span className="bg-card/80 px-2 text-muted-foreground font-heading tracking-wider uppercase text-[0.65rem]">
@@ -194,7 +197,7 @@ export default function Login() {
 								type="button"
 								onClick={() => setRole("ascendant")}
 								aria-label="Select Ascendant role"
-								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all ra-btn-glow ${
 									role === "ascendant"
 										? "bg-primary text-primary-foreground shadow-lg shadow-primary/50 border border-primary/60"
 										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-primary/30"
@@ -207,7 +210,7 @@ export default function Login() {
 								type="button"
 								onClick={() => setRole("warden")}
 								aria-label="Select Warden role"
-								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all sa-btn-glow ${
+								className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-[2px] font-heading font-medium tracking-wider uppercase transition-all ra-btn-glow ${
 									role === "warden"
 										? "bg-shadow-purple text-white shadow-lg shadow-shadow-purple/50 border border-shadow-purple/60"
 										: "bg-secondary border border-border text-muted-foreground hover:bg-secondary/80 hover:border-shadow-purple/30"
@@ -254,7 +257,7 @@ export default function Login() {
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 								className="w-full px-4 py-3 bg-black/40 backdrop-blur-md border border-primary/30 rounded-[2px] text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/60 shadow-[inset_0_0_8px_rgba(0,0,0,0.5)] transition-all font-body"
-								placeholder="ascendant@system-ascendant.world"
+								placeholder="ascendant@rift-ascendant.world"
 								required
 							/>
 						</div>
@@ -311,7 +314,7 @@ export default function Login() {
 						<button
 							type="submit"
 							disabled={loading || oauthLoading}
-							className="w-full bg-gradient-to-r from-primary to-shadow-blue text-primary-foreground font-heading font-bold py-3 px-4 rounded-[2px] hover:from-primary/90 hover:to-shadow-blue/90 transition-all duration-200 shadow-lg shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed tracking-wider uppercase sa-btn-glow"
+							className="w-full bg-gradient-to-r from-primary to-shadow-blue text-primary-foreground font-heading font-bold py-3 px-4 rounded-[2px] hover:from-primary/90 hover:to-shadow-blue/90 transition-all duration-200 shadow-lg shadow-primary/40 disabled:opacity-50 disabled:cursor-not-allowed tracking-wider uppercase ra-btn-glow"
 						>
 							{loading ? (
 								<span className="flex items-center justify-center gap-2">
@@ -330,7 +333,7 @@ export default function Login() {
 							<div className="space-y-3">
 								<div className="relative">
 									<div className="absolute inset-0 flex items-center">
-										<div className="w-full sa-divider"></div>
+										<div className="w-full ra-divider"></div>
 									</div>
 									<div className="relative flex justify-center text-xs">
 										<span className="bg-card/80 px-2 text-muted-foreground font-heading tracking-wider uppercase text-[0.65rem]">
@@ -341,7 +344,7 @@ export default function Login() {
 								<button
 									type="button"
 									onClick={handleContinueAsGuest}
-									className="w-full bg-primary/10 border border-primary/50 text-primary font-heading font-bold py-3 px-4 rounded-[2px] hover:border-primary hover:bg-primary/20 transition-all duration-200 tracking-wider uppercase sa-btn-glow"
+									className="w-full bg-primary/10 border border-primary/50 text-primary font-heading font-bold py-3 px-4 rounded-[2px] hover:border-primary hover:bg-primary/20 transition-all duration-200 tracking-wider uppercase ra-btn-glow"
 								>
 									Continue as Guest (
 									{role === "warden" ? "Warden" : "Ascendant"})

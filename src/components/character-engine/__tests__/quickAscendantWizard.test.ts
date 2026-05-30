@@ -43,7 +43,14 @@ describe("placeStandardArray", () => {
 	});
 
 	it("places primary first across all 6 canonical primaries", () => {
-		for (const ability of ["STR", "AGI", "VIT", "INT", "SENSE", "PRE"] as const) {
+		for (const ability of [
+			"STR",
+			"AGI",
+			"VIT",
+			"INT",
+			"SENSE",
+			"PRE",
+		] as const) {
 			const result = placeStandardArray(ability);
 			expect(result[ability]).toBe(15);
 		}

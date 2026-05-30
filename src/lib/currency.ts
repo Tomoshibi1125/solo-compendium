@@ -273,10 +273,7 @@ export function normalizeWallet(
 
 	// Convert everything to mana base units for an exact-value cascade.
 	const totalMana =
-		merged.core * 1000 +
-		merged.gate * 100 +
-		merged.crystal * 10 +
-		merged.mana;
+		merged.core * 1000 + merged.gate * 100 + merged.crystal * 10 + merged.mana;
 
 	const core = Math.floor(totalMana / 1000);
 	let remainder = totalMana - core * 1000;

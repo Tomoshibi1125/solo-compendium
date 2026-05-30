@@ -34,7 +34,9 @@ interface ImageSegmenter {
 	segmentForVideo(
 		image: HTMLVideoElement | OffscreenCanvas,
 		timestamp: number,
-		callback: (result: { categoryMask?: { getAsUint8Array(): Uint8Array } }) => void,
+		callback: (result: {
+			categoryMask?: { getAsUint8Array(): Uint8Array };
+		}) => void,
 	): void;
 	close(): void;
 }

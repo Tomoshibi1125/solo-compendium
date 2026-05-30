@@ -4,7 +4,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { moduleHost, type ModuleManifest } from "@/lib/modules/host";
+import { type ModuleManifest, moduleHost } from "@/lib/modules/host";
 
 /**
  * Misty Pearl G3 — Bureau Directive Extensions install panel.
@@ -60,7 +60,8 @@ function validateManifest(raw: unknown): ModuleManifest {
 		throw new Error("Manifest must be a JSON object.");
 	}
 	const m = raw as Partial<ModuleManifest>;
-	if (typeof m.id !== "string" || !m.id) throw new Error("Manifest missing id.");
+	if (typeof m.id !== "string" || !m.id)
+		throw new Error("Manifest missing id.");
 	if (typeof m.name !== "string" || !m.name)
 		throw new Error("Manifest missing name.");
 	if (typeof m.version !== "string" || !m.version)
@@ -69,7 +70,8 @@ function validateManifest(raw: unknown): ModuleManifest {
 		throw new Error("Manifest missing author.");
 	if (typeof m.bundleUrl !== "string" || !m.bundleUrl)
 		throw new Error("Manifest missing bundleUrl.");
-	if (!Array.isArray(m.hooks)) throw new Error("Manifest hooks must be an array.");
+	if (!Array.isArray(m.hooks))
+		throw new Error("Manifest hooks must be an array.");
 	if (!Array.isArray(m.actions))
 		throw new Error("Manifest actions must be an array.");
 	for (const hook of m.hooks) {
@@ -95,8 +97,7 @@ function validateManifest(raw: unknown): ModuleManifest {
 }
 
 const STORAGE_PREFIX = "bureau.modules";
-const storageKey = (campaignId: string) =>
-	`${STORAGE_PREFIX}.${campaignId}.v1`;
+const storageKey = (campaignId: string) => `${STORAGE_PREFIX}.${campaignId}.v1`;
 
 function readPersisted(campaignId: string): InstalledRow[] {
 	if (typeof window === "undefined") return [];
@@ -141,8 +142,7 @@ export function BureauDirectiveExtensionsPanel({
 		};
 		// Only on mount/unmount — subsequent state changes route through
 		// the toggle handlers below.
-		// biome-ignore lint/correctness/useExhaustiveDependencies: bootstrap
-	}, []);
+	}, [rows]);
 
 	const handleFile = async (file: File) => {
 		try {
@@ -211,10 +211,9 @@ export function BureauDirectiveExtensionsPanel({
 
 	return (
 		<AscendantWindow title="BUREAU DIRECTIVE EXTENSIONS">
-			<div
+			<section
 				className="space-y-3"
 				data-testid="bureau-directive-extensions-panel"
-				role="region"
 				aria-label="Bureau Directive Extensions"
 			>
 				<p className="text-xs text-muted-foreground">
@@ -303,7 +302,7 @@ export function BureauDirectiveExtensionsPanel({
 						</div>
 					))}
 				</div>
-			</div>
+			</section>
 		</AscendantWindow>
 	);
 }

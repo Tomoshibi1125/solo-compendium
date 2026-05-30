@@ -98,10 +98,9 @@ export function CommNetPanel({
 	}, [enabled, mode, pushToTalk]);
 
 	return (
-		<div
+		<section
 			className="space-y-3 p-2"
 			data-testid="commnet-panel"
-			role="region"
 			aria-label="Bureau Comm-Net controls"
 		>
 			<div>
@@ -118,9 +117,7 @@ export function CommNetPanel({
 						</p>
 					)}
 					{connecting && (
-						<p className="text-xs text-amber-300 mt-1">
-							Negotiating uplink…
-						</p>
+						<p className="text-xs text-amber-300 mt-1">Negotiating uplink…</p>
 					)}
 					{error && (
 						<p className="text-xs text-destructive mt-1" role="alert">
@@ -195,7 +192,7 @@ export function CommNetPanel({
 					>
 						<Sparkles className="w-3 h-3" aria-hidden /> Field Cloak
 					</p>
-					<div
+					<fieldset
 						className="inline-flex rounded-md border border-border/60 overflow-hidden text-[10px]"
 						aria-labelledby="commnet-bg-label"
 					>
@@ -225,7 +222,7 @@ export function CommNetPanel({
 						>
 							Blur
 						</button>
-					</div>
+					</fieldset>
 					<p className="text-[10px] text-muted-foreground">
 						On-device person segmentation via MediaPipe. No cloud calls.
 					</p>
@@ -255,7 +252,7 @@ export function CommNetPanel({
 					)}
 				</div>
 			)}
-		</div>
+		</section>
 	);
 }
 
@@ -281,8 +278,7 @@ function CommNetPeerTile({
 	}, [peer.stream]);
 
 	const hasVideo =
-		!!peer.stream &&
-		peer.stream.getVideoTracks().some((t) => t.enabled);
+		!!peer.stream && peer.stream.getVideoTracks().some((t) => t.enabled);
 	const volumePct = Math.round(peer.volume * 100);
 
 	return (
@@ -315,8 +311,9 @@ function CommNetPeerTile({
 				</div>
 			</div>
 			{!muted && peer.stream && (
-				// eslint-disable-next-line jsx-a11y/media-has-caption -- realtime stream
-				<audio ref={audioRef} autoPlay />
+				<audio ref={audioRef} autoPlay>
+					<track kind="captions" />
+				</audio>
 			)}
 		</div>
 	);

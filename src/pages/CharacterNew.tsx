@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { QuickAscendantWizard } from "@/components/character-engine/QuickAscendantWizard";
 import { AttributesStep } from "@/components/character-engine/AttributesStep";
 import { BackgroundStep } from "@/components/character-engine/BackgroundStep";
 import {
@@ -16,6 +15,7 @@ import { ImprintOptionCard } from "@/components/character-engine/ImprintOptionCa
 import { JobStep } from "@/components/character-engine/JobStep";
 import { PathStep } from "@/components/character-engine/PathStep";
 import { PersonaStep } from "@/components/character-engine/PersonaStep";
+import { QuickAscendantWizard } from "@/components/character-engine/QuickAscendantWizard";
 import { ReviewStep } from "@/components/character-engine/ReviewStep";
 import { Layout } from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";

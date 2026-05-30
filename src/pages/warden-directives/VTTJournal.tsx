@@ -9,11 +9,11 @@ import {
 	RiftHeading,
 } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
-import { PopOutButton } from "@/components/ui/PopOutButton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PopOutButton } from "@/components/ui/PopOutButton";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignRole } from "@/hooks/useCampaigns";
@@ -357,7 +357,9 @@ const VTTJournal = () => {
 							variant="ghost"
 							onClick={() =>
 								navigate(
-									campaignId ? `/campaigns/${campaignId}` : "/warden-directives",
+									campaignId
+										? `/campaigns/${campaignId}`
+										: "/warden-directives",
 								)
 							}
 						>

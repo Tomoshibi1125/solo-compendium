@@ -29,7 +29,6 @@ import { CharacterExtrasPanel } from "@/components/character/CharacterExtrasPane
 import { CurrencyManager } from "@/components/character/CurrencyManager";
 import { CustomActionsList } from "@/components/character/CustomActionsList";
 import { CustomSkillsList } from "@/components/character/CustomSkillsList";
-import { VehiclesPanel } from "@/components/character/VehiclesPanel";
 import { EquipmentList } from "@/components/character/EquipmentList";
 import { ExportDialog } from "@/components/character/ExportDialog";
 import { FeatureChoicesPanel } from "@/components/character/FeatureChoicesPanel";
@@ -54,6 +53,7 @@ import {
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { TattoosList } from "@/components/character/TattoosList";
 import { ToolProficienciesPanel } from "@/components/character/ToolProficienciesPanel";
+import { VehiclesPanel } from "@/components/character/VehiclesPanel";
 import { AbilitiesPanel } from "@/components/character-v2/AbilitiesPanel";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { Layout } from "@/components/layout/Layout";
@@ -197,7 +197,7 @@ export default function CharacterSheetV2() {
 				return;
 			}
 			const isMod = e.ctrlKey || e.metaKey;
-			if (!isMod || e.key !== "z" && e.key !== "Z") return;
+			if (!isMod || (e.key !== "z" && e.key !== "Z")) return;
 			e.preventDefault();
 			if (e.shiftKey) {
 				const restored = undoRedo.redo();
@@ -573,10 +573,7 @@ export default function CharacterSheetV2() {
 				campaignId={campaignId ?? undefined}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Shadow", Ghost)}
 			/>
-			<VehiclesPanel
-				characterId={character.id}
-				readOnly={isReadOnly}
-			/>
+			<VehiclesPanel characterId={character.id} readOnly={isReadOnly} />
 		</div>
 	);
 	const bio = (
@@ -900,8 +897,8 @@ export default function CharacterSheetV2() {
 							null);
 					const backdrop =
 						themePreview?.sheet_backdrop ??
-						((character as { sheet_backdrop?: string | null })
-							.sheet_backdrop || null);
+						((character as { sheet_backdrop?: string | null }).sheet_backdrop ||
+							null);
 					const base = buildSheetThemeStyle(getSheetTheme(themeId), accent);
 					if (backdrop) {
 						return {

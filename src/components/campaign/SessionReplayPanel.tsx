@@ -67,16 +67,15 @@ export function SessionReplayPanel({
 
 	return (
 		<AscendantWindow title="BUREAU FIELD RECORDER">
-			<div
+			<section
 				className="space-y-3"
 				data-testid="session-replay-panel"
-				role="region"
 				aria-label="Bureau Field Recorder"
 			>
 				<p className="text-xs text-muted-foreground">
-					Scrub through past Bureau events. The replay feeds the Directive
-					Bus so the Rift stage, initiative tracker, and chat reconstruct
-					the moment automatically.
+					Scrub through past Bureau events. The replay feeds the Directive Bus
+					so the Rift stage, initiative tracker, and chat reconstruct the moment
+					automatically.
 				</p>
 
 				<div className="flex flex-wrap items-center gap-2">
@@ -183,7 +182,7 @@ export function SessionReplayPanel({
 						archive automatically once a session starts.
 					</p>
 				)}
-			</div>
+			</section>
 		</AscendantWindow>
 	);
 }

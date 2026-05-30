@@ -290,12 +290,10 @@ export const useSendCampaignMessage = () => {
 						.select("user_id, characters(name)")
 						.eq("campaign_id", campaignId);
 					const memberRows =
-						(members as
-							| Array<{
-									user_id: string;
-									characters: { name: string | null } | null;
-							  }>
-							| null) || [];
+						(members as Array<{
+							user_id: string;
+							characters: { name: string | null } | null;
+						}> | null) || [];
 					const seen = new Set<string>();
 					for (const token of matches) {
 						const handle = token.slice(1).toLowerCase();
@@ -315,9 +313,8 @@ export const useSendCampaignMessage = () => {
 							p_user_id: recipient.user_id,
 							p_type: "mention",
 							p_title: `Mentioned in campaign chat`,
-							p_message: content.length > 120
-								? `${content.slice(0, 117)}…`
-								: content,
+							p_message:
+								content.length > 120 ? `${content.slice(0, 117)}…` : content,
 							p_priority: "normal",
 							p_category: "campaign",
 							p_payload: { campaign_id: campaignId },

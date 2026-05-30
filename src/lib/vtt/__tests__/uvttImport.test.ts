@@ -23,9 +23,9 @@ describe("parseUvttDocument", () => {
 	});
 
 	it("rejects unsupported format versions", () => {
-		expect(() =>
-			parseUvttDocument({ ...baseDoc, format: 5 }),
-		).toThrow(/unsupported format/);
+		expect(() => parseUvttDocument({ ...baseDoc, format: 5 })).toThrow(
+			/unsupported format/,
+		);
 	});
 
 	it("computes scene width/height from map_size * pixels_per_grid", () => {
@@ -158,7 +158,9 @@ describe("parseUvttDocument", () => {
 
 		const noImage = parseUvttDocument(baseDoc);
 		expect(noImage.backgroundDataUrl).toBeNull();
-		expect(noImage.warnings.some((w) => /no embedded image/.test(w))).toBe(true);
+		expect(noImage.warnings.some((w) => /no embedded image/.test(w))).toBe(
+			true,
+		);
 	});
 
 	it("defaults missing intensity to 0.85 and clamps to 0..1", () => {

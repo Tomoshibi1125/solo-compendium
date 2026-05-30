@@ -474,10 +474,7 @@ export const useCombatActions = (characterId: string) => {
 				0;
 			const isCantrip = spellLevelRaw === 0;
 			const baseDamageFormula = isCantrip
-				? scaleCantripDamage(
-						spellData.damage_roll ?? "",
-						character.level ?? 1,
-					)
+				? scaleCantripDamage(spellData.damage_roll ?? "", character.level ?? 1)
 				: spellData.damage_roll;
 			const damageRoll = appendAbilityModifierToDamageFormula(
 				baseDamageFormula,

@@ -1,5 +1,5 @@
-import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { CampaignStreamRoot } from "@/components/stream/StreamRoot";
 
 /**

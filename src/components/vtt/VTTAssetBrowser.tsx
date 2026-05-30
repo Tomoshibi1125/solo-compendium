@@ -28,10 +28,6 @@ import {
 	X,
 	Zap,
 } from "lucide-react";
-import {
-	parseUvttFile,
-	type UvttImportResult,
-} from "@/lib/vtt/uvttImport";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -50,6 +46,7 @@ import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth/authContext";
 import { compressImage } from "@/lib/imageOptimization";
 import { cn } from "@/lib/utils";
+import { parseUvttFile, type UvttImportResult } from "@/lib/vtt/uvttImport";
 
 const CATEGORY_ICONS: Record<VTTAssetCategory, React.ReactNode> = {
 	map: <MapPin className="w-3 h-3" />,

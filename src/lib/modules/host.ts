@@ -20,7 +20,7 @@
  * change the message contract, audit the host validators to prevent
  * a module from triggering an action it shouldn't have access to.
  */
-import { hooks, type HookKind } from "@/lib/hooks/registry";
+import { type HookKind, hooks } from "@/lib/hooks/registry";
 
 export interface ModuleManifest {
 	id: string;
@@ -48,11 +48,7 @@ export type ModuleUiSlot = "right-rail-tab" | "left-rail-section";
 
 interface HostMessage {
 	id?: string;
-	type:
-		| "hook:fire"
-		| "ack:subscribe"
-		| "ack:action"
-		| "scene:snapshot";
+	type: "hook:fire" | "ack:subscribe" | "ack:action" | "scene:snapshot";
 	payload?: unknown;
 }
 

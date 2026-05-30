@@ -357,9 +357,11 @@ export const useUpdateCharacter = () => {
 			// notification on the character owner's inbox. Best-effort — must
 			// not block character updates.
 			try {
-				const updated = character as
-					| { experience?: number; level?: number; name?: string }
-					| null;
+				const updated = character as {
+					experience?: number;
+					level?: number;
+					name?: string;
+				} | null;
 				const nextXP = updated?.experience ?? null;
 				const nextLevel = updated?.level ?? null;
 				if (

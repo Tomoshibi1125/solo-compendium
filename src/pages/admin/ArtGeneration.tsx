@@ -157,7 +157,7 @@ export default function ArtGenerationAdmin() {
 			entityId: "test-shadow-beast",
 			variant: "portrait" as const,
 			title: "Test Shadow Beast",
-			tags: ["dark", "manhwa", "anime", "system ascendant", "test"],
+			tags: ["dark", "manhwa", "anime", "rift ascendant", "test"],
 			description: "A test creature for art generation",
 			rarityOrCR: "CR 1",
 			environment: "dark realm",
@@ -259,7 +259,7 @@ export default function ArtGenerationAdmin() {
 				entityId: "goblin-shadow",
 				variant: "portrait" as const,
 				title: "Shadow Goblin",
-				tags: ["dark", "manhwa", "anime", "system ascendant"],
+				tags: ["dark", "manhwa", "anime", "rift ascendant"],
 				description: "A menacing goblin with shadow abilities",
 			},
 			{

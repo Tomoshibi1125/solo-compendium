@@ -198,8 +198,7 @@ export function resolveAttack(
 	const naturalD20 = isStandardD20
 		? (attack as { d20?: number }).d20
 		: undefined;
-	const isCritical =
-		Boolean(payload.attack.forceCritical) || naturalD20 === 20;
+	const isCritical = Boolean(payload.attack.forceCritical) || naturalD20 === 20;
 
 	const hit = isCritical || attack.result >= targetAC;
 

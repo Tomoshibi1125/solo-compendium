@@ -1,4 +1,8 @@
-import { Billboard, Image as DreiImage, OrbitControls } from "@react-three/drei";
+import {
+	Billboard,
+	Image as DreiImage,
+	OrbitControls,
+} from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useMemo } from "react";
 import { sceneToThreeDescriptor } from "@/lib/vtt/threeAdapters";
@@ -35,9 +39,7 @@ function TokenBillboard({ token }: { token: ThreeToken }) {
 
 	if (!token.imageUrl) {
 		return (
-			<group
-				position={[token.position.x, token.position.y, token.position.z]}
-			>
+			<group position={[token.position.x, token.position.y, token.position.z]}>
 				{box}
 			</group>
 		);

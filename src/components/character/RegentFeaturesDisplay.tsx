@@ -39,8 +39,8 @@ export function RegentFeaturesDisplay({
 						Regent Features
 					</CardTitle>
 					<CardDescription>
-						No regent unlocked. Complete quests and have your Warden
-						unlock a regent for you.
+						No regent unlocked. Complete quests and have your Warden unlock a
+						regent for you.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>

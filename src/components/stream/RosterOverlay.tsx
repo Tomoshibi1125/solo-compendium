@@ -24,7 +24,9 @@ export function RosterOverlay({ campaignId }: RosterOverlayProps) {
 			</p>
 			<div className="rounded-md border border-[var(--stream-accent)]/40 bg-black/65 backdrop-blur-sm p-3 space-y-1">
 				{members.length === 0 && (
-					<p className="text-xs text-white/60 italic">No operatives registered.</p>
+					<p className="text-xs text-white/60 italic">
+						No operatives registered.
+					</p>
 				)}
 				{members.map((member) => (
 					<div

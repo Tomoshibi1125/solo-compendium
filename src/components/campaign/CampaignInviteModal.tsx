@@ -7,8 +7,8 @@ import {
 	Trash2,
 	Users,
 } from "lucide-react";
-import QRCode from "react-qr-code";
 import { useRef, useState } from "react";
+import QRCode from "react-qr-code";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -225,6 +225,7 @@ export function CampaignInviteModal({
 								<div
 									ref={qrWrapRef}
 									className="inline-block rounded-md border border-primary/30 bg-background/60 p-3"
+									role="img"
 									aria-label={`QR code for ${campaign.name} invite`}
 									data-testid="campaign-invite-qr"
 								>

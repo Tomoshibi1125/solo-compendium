@@ -5,8 +5,8 @@
  * exploding dice, and advanced mechanics
  */
 
-import { AppError } from "@/lib/appError";
 import { getProficiencyBonus } from "@/lib/5eRulesEngine";
+import { AppError } from "@/lib/appError";
 
 interface DiceRoll {
 	dice: number;

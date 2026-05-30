@@ -14,9 +14,7 @@ const square = (x: number, y: number, size: number) => [
 	{ x, y: y + size },
 ];
 
-const makeRegion = (
-	overrides: Partial<VTTRiftRegion> = {},
-): VTTRiftRegion => ({
+const makeRegion = (overrides: Partial<VTTRiftRegion> = {}): VTTRiftRegion => ({
 	id: "r1",
 	name: "Test Zone",
 	polygon: square(0, 0, 100),
@@ -39,7 +37,10 @@ describe("pointInRegion", () => {
 	it("returns false for degenerate polygons", () => {
 		expect(pointInRegion({ x: 0, y: 0 }, [])).toBe(false);
 		expect(
-			pointInRegion({ x: 0, y: 0 }, [{ x: 0, y: 0 }, { x: 10, y: 10 }]),
+			pointInRegion({ x: 0, y: 0 }, [
+				{ x: 0, y: 0 },
+				{ x: 10, y: 10 },
+			]),
 		).toBe(false);
 	});
 });

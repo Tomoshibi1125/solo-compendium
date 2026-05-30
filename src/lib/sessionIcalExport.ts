@@ -66,9 +66,7 @@ function toRfc5545Freq(freq: RecurrenceFrequency): string {
  * Convert an ISO datetime string into the [Y, M, D, h, m] tuple shape
  * `ics` expects. Months are 1-indexed in the ics API.
  */
-function isoToDateArray(
-	iso: string,
-): [number, number, number, number, number] {
+function isoToDateArray(iso: string): [number, number, number, number, number] {
 	const d = new Date(iso);
 	return [
 		d.getUTCFullYear(),

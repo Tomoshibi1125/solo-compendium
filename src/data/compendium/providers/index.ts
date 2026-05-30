@@ -2475,9 +2475,7 @@ export const staticDataProvider: StaticDataProvider = {
 					display_name: v.display_name,
 					description: v.description || "",
 					created_at: new Date().toISOString(),
-					tags: [v.vehicle_type, v.size, v.rank].filter(
-						Boolean,
-					) as string[],
+					tags: [v.vehicle_type, v.size, v.rank].filter(Boolean) as string[],
 					source_book: v.source_book ?? "Rift Ascendant Canon",
 					rank: v.rank,
 					vehicle_type: v.vehicle_type,

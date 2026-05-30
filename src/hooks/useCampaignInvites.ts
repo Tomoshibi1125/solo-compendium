@@ -1,17 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import {
-	loadNotifications,
-	type Notification,
-	saveNotifications,
-} from "@/hooks/useNotifications";
-import {
 	type Campaign,
 	loadLocalCampaigns,
 	loadLocalMembers,
 	saveLocalCampaigns,
 	saveLocalMembers,
 } from "@/hooks/useCampaigns";
+import {
+	loadNotifications,
+	type Notification,
+	saveNotifications,
+} from "@/hooks/useNotifications";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";

@@ -43,10 +43,11 @@ const CHARACTER_KEY = (characterId: string) =>
 
 export function useCampaignTamedAnomalies(campaignId: string | undefined) {
 	return useQuery({
-		queryKey: campaignId ? CAMPAIGN_KEY(campaignId) : ["campaign-tamed-anomalies", "_none"],
+		queryKey: campaignId
+			? CAMPAIGN_KEY(campaignId)
+			: ["campaign-tamed-anomalies", "_none"],
 		queryFn: async () => {
-			if (!campaignId || !isSupabaseConfigured)
-				return [] as TamedAnomalyRow[];
+			if (!campaignId || !isSupabaseConfigured) return [] as TamedAnomalyRow[];
 			const { data, error } = await supabase
 				.from("campaign_tamed_anomalies" as never)
 				.select("*")
@@ -64,8 +65,7 @@ export function useCharacterTamedAnomalies(characterId: string | undefined) {
 			? CHARACTER_KEY(characterId)
 			: ["character-tamed-anomalies", "_none"],
 		queryFn: async () => {
-			if (!characterId || !isSupabaseConfigured)
-				return [] as TamedAnomalyRow[];
+			if (!characterId || !isSupabaseConfigured) return [] as TamedAnomalyRow[];
 			const { data, error } = await supabase
 				.from("character_tamed_anomalies" as never)
 				.select("*")
@@ -208,14 +208,12 @@ export function useUpdateTamedHP() {
 			const tableName = input.campaignId
 				? "campaign_tamed_anomalies"
 				: "character_tamed_anomalies";
-			const { error } = await (
-				supabase
-					.from(tableName as never)
-					.update({ current_hp: input.currentHp } as never)
-					.eq("id", input.tamedId) as unknown as Promise<{
-					error: Error | null;
-				}>
-			);
+			const { error } = await (supabase
+				.from(tableName as never)
+				.update({ current_hp: input.currentHp } as never)
+				.eq("id", input.tamedId) as unknown as Promise<{
+				error: Error | null;
+			}>);
 			if (error) throw error;
 		},
 		onSuccess: (_, variables) => {

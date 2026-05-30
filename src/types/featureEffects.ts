@@ -166,7 +166,9 @@ export function isFeatureEffect(value: unknown): value is FeatureEffect {
  * +2 HP/level (and any homebrew equivalent) bakes into the displayed
  * max HP automatically.
  */
-export function sumHpPerLevel(effects: FeatureEffect[] | null | undefined): number {
+export function sumHpPerLevel(
+	effects: FeatureEffect[] | null | undefined,
+): number {
 	if (!effects) return 0;
 	let total = 0;
 	for (const e of effects) {

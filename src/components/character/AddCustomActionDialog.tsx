@@ -24,10 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
-import {
-	type CustomAction,
-	createCustomAction,
-} from "@/lib/customActions";
+import { type CustomAction, createCustomAction } from "@/lib/customActions";
 import type { AbilityScore } from "@/types/core-rules";
 
 interface AddCustomActionDialogProps {
@@ -102,8 +99,7 @@ export function AddCustomActionDialog({
 					name: name.trim(),
 					actionType,
 					attackType,
-					attackAbility:
-						attackType !== "none" ? attackAbility : undefined,
+					attackAbility: attackType !== "none" ? attackAbility : undefined,
 					attackBonus: attackType !== "none" ? "auto" : undefined,
 					damageDice: damageDice.trim() || undefined,
 					damageType: damageType.trim() || undefined,
@@ -119,8 +115,7 @@ export function AddCustomActionDialog({
 					name: name.trim(),
 					actionType,
 					attackType,
-					attackAbility:
-						attackType !== "none" ? attackAbility : undefined,
+					attackAbility: attackType !== "none" ? attackAbility : undefined,
 					attackBonus: attackType !== "none" ? "auto" : undefined,
 					damageDice: damageDice.trim() || undefined,
 					damageType: damageType.trim() || undefined,
@@ -150,9 +145,9 @@ export function AddCustomActionDialog({
 						{initial ? "Edit Custom Action" : "Add Custom Action"}
 					</DialogTitle>
 					<DialogDescription>
-						Auto-calculates attack bonus, damage formula, and save DC from
-						your stats. Set attack to "Auto" with an ability and the formula
-						uses your proficiency bonus + ability modifier.
+						Auto-calculates attack bonus, damage formula, and save DC from your
+						stats. Set attack to "Auto" with an ability and the formula uses
+						your proficiency bonus + ability modifier.
 					</DialogDescription>
 				</DialogHeader>
 
@@ -196,9 +191,7 @@ export function AddCustomActionDialog({
 							<Select
 								value={attackType}
 								onValueChange={(v) =>
-									setAttackType(
-										v as NonNullable<CustomAction["attackType"]>,
-									)
+									setAttackType(v as NonNullable<CustomAction["attackType"]>)
 								}
 							>
 								<SelectTrigger id="custom-action-attack-type">
@@ -267,9 +260,7 @@ export function AddCustomActionDialog({
 							<Select
 								value={damageAbility || "_none"}
 								onValueChange={(v) =>
-									setDamageAbility(
-										v === "_none" ? "" : (v as AbilityScore),
-									)
+									setDamageAbility(v === "_none" ? "" : (v as AbilityScore))
 								}
 							>
 								<SelectTrigger id="custom-action-damage-ability">
@@ -292,9 +283,7 @@ export function AddCustomActionDialog({
 							<Select
 								value={saveAbility || "_none"}
 								onValueChange={(v) =>
-									setSaveAbility(
-										v === "_none" ? "" : (v as AbilityScore),
-									)
+									setSaveAbility(v === "_none" ? "" : (v as AbilityScore))
 								}
 							>
 								<SelectTrigger id="custom-action-save-ability">

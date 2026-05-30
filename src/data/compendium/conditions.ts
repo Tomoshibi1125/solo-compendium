@@ -1,4 +1,4 @@
-﻿// Conditions Compendium - Authoritative Rift Ascendant Content
+// Conditions Compendium - Authoritative Rift Ascendant Content
 // Status effects and conditions that affect characters in combat and exploration
 // Based on SRD 5e conditions with Rift Ascendant themed additions
 
@@ -268,7 +268,7 @@ export const conditions: Condition[] = [
 		source: "SRD 5.1",
 	},
 
-	// SYSTEM ASCENDANT THEMED CONDITIONS
+	// RIFT ASCENDANT THEMED CONDITIONS
 	{
 		id: "shadow-corrupted",
 		name: "Shadow Corrupted",

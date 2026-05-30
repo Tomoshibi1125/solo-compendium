@@ -118,7 +118,7 @@ export function useSessionReplay({
 			const elapsedMs = (now - lastTs) * speedRef.current;
 			lastTs = now;
 			if (events.length === 0) return;
-			let nextCursor = cursorRef.current;
+			const nextCursor = cursorRef.current;
 			let consumed = 0;
 			const startTs = events[0]?.created_at
 				? Date.parse(events[0].created_at)
@@ -138,9 +138,11 @@ export function useSessionReplay({
 				consumed += 1;
 			}
 			if (consumed > 0) {
-				setCursor(nextCursor + consumed > events.length - 1
-					? targetMs - startTs
-					: targetMs - startTs);
+				setCursor(
+					nextCursor + consumed > events.length - 1
+						? targetMs - startTs
+						: targetMs - startTs,
+				);
 			}
 			if (nextCursor + consumed >= events.length) {
 				setPlaying(false);

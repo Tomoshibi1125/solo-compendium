@@ -14,12 +14,12 @@
  */
 
 import { useMemo } from "react";
+import type { AbilityScore } from "@/lib/5eRulesEngine";
 import {
 	type ACContext,
 	calculateBestAC,
 	type EquipmentACData,
 } from "@/lib/acFormulas";
-import type { AbilityScore } from "@/lib/5eRulesEngine";
 import { getAbilityModifier } from "@/types/core-rules";
 
 // ---------------------------------------------------------------------------

@@ -1,74 +1,74 @@
-/* ============================================================
-   Rift Ascendant — Global Dungeon Ascendant Aesthetic v2
-   Glassmorphism · Neon Glows · Angular Frames · Holographic HUD
+﻿/* ============================================================
+   Rift Ascendant â€” Global Dungeon Ascendant Aesthetic v2
+   Glassmorphism Â· Neon Glows Â· Angular Frames Â· Holographic HUD
    ============================================================
    Zones:
-     [data-sa-zone="character"]  — Purple/violet ascendant profile
-     [data-sa-zone="warden"]         — Red/orange warden command center
-     [data-sa-zone="campaign"]   — Blue/teal campaign hall
-     [data-sa-zone="compendium"] — Gold/amber knowledge archive
-     [data-sa-zone="player"]     — Cyan/green ascendant toolkit
-     [data-sa-zone="auth"]       — Deep purple gate awakening
-     (default)                   — Base purple SA theme
+     [data-ra-zone="character"]  â€” Purple/violet ascendant profile
+     [data-ra-zone="warden"]         â€” Red/orange warden command center
+     [data-ra-zone="campaign"]   â€” Blue/teal campaign hall
+     [data-ra-zone="compendium"] â€” Gold/amber knowledge archive
+     [data-ra-zone="player"]     â€” Cyan/green ascendant toolkit
+     [data-ra-zone="auth"]       â€” Deep purple gate awakening
+     (default)                   â€” Base purple RA theme
    ============================================================ */
 
 /* --- Zone Accent Variables --- */
 :root {
-	--sa-accent: 275 72% 59%;
-	--sa-accent-rgb: 157, 78, 221;
-	--sa-accent-secondary: 190 100% 50%;
-	--sa-accent-secondary-rgb: 0, 212, 255;
-	--sa-glow-intensity: 0.35;
+	--ra-accent: 275 72% 59%;
+	--ra-accent-rgb: 157, 78, 221;
+	--ra-accent-secondary: 190 100% 50%;
+	--ra-accent-secondary-rgb: 0, 212, 255;
+	--ra-glow-intensity: 0.35;
 }
 
-[data-sa-zone="character"] {
-	--sa-accent: 275 72% 59%;
-	--sa-accent-rgb: 157, 78, 221;
-	--sa-accent-secondary: 190 100% 50%;
-	--sa-accent-secondary-rgb: 0, 212, 255;
+[data-ra-zone="character"] {
+	--ra-accent: 275 72% 59%;
+	--ra-accent-rgb: 157, 78, 221;
+	--ra-accent-secondary: 190 100% 50%;
+	--ra-accent-secondary-rgb: 0, 212, 255;
 }
 
-[data-sa-zone="warden"] {
-	--sa-accent: 15 90% 55%;
-	--sa-accent-rgb: 234, 88, 12;
-	--sa-accent-secondary: 0 85% 55%;
-	--sa-accent-secondary-rgb: 229, 29, 29;
+[data-ra-zone="warden"] {
+	--ra-accent: 15 90% 55%;
+	--ra-accent-rgb: 234, 88, 12;
+	--ra-accent-secondary: 0 85% 55%;
+	--ra-accent-secondary-rgb: 229, 29, 29;
 }
 
-[data-sa-zone="campaign"] {
-	--sa-accent: 210 85% 58%;
-	--sa-accent-rgb: 59, 140, 255;
-	--sa-accent-secondary: 190 100% 50%;
-	--sa-accent-secondary-rgb: 0, 212, 255;
+[data-ra-zone="campaign"] {
+	--ra-accent: 210 85% 58%;
+	--ra-accent-rgb: 59, 140, 255;
+	--ra-accent-secondary: 190 100% 50%;
+	--ra-accent-secondary-rgb: 0, 212, 255;
 }
 
-[data-sa-zone="compendium"] {
-	--sa-accent: 43 95% 60%;
-	--sa-accent-rgb: 251, 191, 36;
-	--sa-accent-secondary: 30 85% 54%;
-	--sa-accent-secondary-rgb: 243, 127, 28;
+[data-ra-zone="compendium"] {
+	--ra-accent: 43 95% 60%;
+	--ra-accent-rgb: 251, 191, 36;
+	--ra-accent-secondary: 30 85% 54%;
+	--ra-accent-secondary-rgb: 243, 127, 28;
 }
 
-[data-sa-zone="player"] {
-	--sa-accent: 145 75% 45%;
-	--sa-accent-rgb: 29, 206, 116;
-	--sa-accent-secondary: 190 100% 50%;
-	--sa-accent-secondary-rgb: 0, 212, 255;
+[data-ra-zone="player"] {
+	--ra-accent: 145 75% 45%;
+	--ra-accent-rgb: 29, 206, 116;
+	--ra-accent-secondary: 190 100% 50%;
+	--ra-accent-secondary-rgb: 0, 212, 255;
 }
 
-[data-sa-zone="auth"] {
-	--sa-accent: 275 80% 65%;
-	--sa-accent-rgb: 168, 85, 247;
-	--sa-accent-secondary: 275 72% 59%;
-	--sa-accent-secondary-rgb: 157, 78, 221;
-	--sa-glow-intensity: 0.55;
+[data-ra-zone="auth"] {
+	--ra-accent: 275 80% 65%;
+	--ra-accent-rgb: 168, 85, 247;
+	--ra-accent-secondary: 275 72% 59%;
+	--ra-accent-secondary-rgb: 157, 78, 221;
+	--ra-glow-intensity: 0.55;
 }
 
 /* ============================================================
    Global Keyframes
    ============================================================ */
 
-@keyframes sa-global-scan {
+@keyframes ra-global-scan {
 	0% {
 		background-position: 200% 0;
 	}
@@ -78,7 +78,7 @@
 	}
 }
 
-@keyframes sa-pulse-border {
+@keyframes ra-pulse-border {
 	0%,
 	100% {
 		opacity: 0.5;
@@ -89,18 +89,18 @@
 	}
 }
 
-@keyframes sa-glow-breathe {
+@keyframes ra-glow-breathe {
 	0%,
 	100% {
-		box-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.25);
+		box-shadow: 0 0 8px rgba(var(--ra-accent-rgb), 0.25);
 	}
 
 	50% {
-		box-shadow: 0 0 22px rgba(var(--sa-accent-rgb), 0.55);
+		box-shadow: 0 0 22px rgba(var(--ra-accent-rgb), 0.55);
 	}
 }
 
-@keyframes sa-shimmer {
+@keyframes ra-shimmer {
 	0% {
 		background-position: -200% center;
 	}
@@ -110,7 +110,7 @@
 	}
 }
 
-@keyframes sa-float {
+@keyframes ra-float {
 	0%,
 	100% {
 		transform: translateY(0px);
@@ -122,13 +122,13 @@
 }
 
 /* ============================================================
-   SA Scan Line (top accent on major containers)
+   RA Scan Line (top accent on major containers)
    ============================================================ */
-.sa-scan-border {
+.ra-scan-border {
 	position: relative;
 }
 
-.sa-scan-border::before {
+.ra-scan-border::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -138,27 +138,27 @@
 	background: linear-gradient(
 		90deg,
 		transparent 0%,
-		rgba(var(--sa-accent-rgb), 0.9) 30%,
-		rgba(var(--sa-accent-secondary-rgb), 0.7) 50%,
-		rgba(var(--sa-accent-rgb), 0.9) 70%,
+		rgba(var(--ra-accent-rgb), 0.9) 30%,
+		rgba(var(--ra-accent-secondary-rgb), 0.7) 50%,
+		rgba(var(--ra-accent-rgb), 0.9) 70%,
 		transparent 100%
 	);
 	background-size: 200% 100%;
 	z-index: 1;
 }
 
-.sa-scan-border--animated::before {
-	animation: sa-global-scan 4s linear infinite;
+.ra-scan-border--animated::before {
+	animation: ra-global-scan 4s linear infinite;
 }
 
 /* ============================================================
-   SA Card — Glassmorphic floating panel
+   RA Card â€” Glassmorphic floating panel
    ============================================================ */
-.sa-card {
+.ra-card {
 	background: rgba(10, 6, 25, 0.75); /* Fallback for no backdrop-filter */
 	-webkit-backdrop-filter: blur(12px) saturate(1.5);
 	backdrop-filter: blur(12px) saturate(1.5);
-	border: 1px solid rgba(var(--sa-accent-rgb), 0.18);
+	border: 1px solid rgba(var(--ra-accent-rgb), 0.18);
 	border-radius: 0.75rem;
 	position: relative;
 	overflow: hidden;
@@ -169,7 +169,7 @@
 }
 
 /* Top neon scan edge */
-.sa-card::before {
+.ra-card::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -178,15 +178,15 @@
 	height: 1px;
 	background: linear-gradient(
 		90deg,
-		rgba(var(--sa-accent-rgb), 0.5),
-		rgba(var(--sa-accent-secondary-rgb), 0.35)
+		rgba(var(--ra-accent-rgb), 0.5),
+		rgba(var(--ra-accent-secondary-rgb), 0.35)
 	);
 	opacity: 0.6;
 	transition: opacity 0.25s;
 }
 
 /* Faint inner cyan shine (refraction layer) */
-.sa-card::after {
+.ra-card::after {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -195,7 +195,7 @@
 	left: 0;
 	background: linear-gradient(
 		135deg,
-		rgba(var(--sa-accent-secondary-rgb), 0.04) 0%,
+		rgba(var(--ra-accent-secondary-rgb), 0.04) 0%,
 		transparent 50%,
 		transparent 100%
 	);
@@ -203,38 +203,38 @@
 	border-radius: inherit;
 }
 
-.sa-card:hover {
-	border-color: rgba(var(--sa-accent-rgb), 0.38);
+.ra-card:hover {
+	border-color: rgba(var(--ra-accent-rgb), 0.38);
 	box-shadow:
-		0 4px 20px rgba(var(--sa-accent-rgb), calc(var(--sa-glow-intensity) * 0.5)),
-		0 0 0 1px rgba(var(--sa-accent-rgb), 0.1),
-		inset 0 1px 0 rgba(var(--sa-accent-secondary-rgb), 0.08);
+		0 4px 20px rgba(var(--ra-accent-rgb), calc(var(--ra-glow-intensity) * 0.5)),
+		0 0 0 1px rgba(var(--ra-accent-rgb), 0.1),
+		inset 0 1px 0 rgba(var(--ra-accent-secondary-rgb), 0.08);
 	transform: translateY(-1px);
 }
 
-.sa-card:hover::before {
+.ra-card:hover::before {
 	opacity: 1;
 }
 
 /* ============================================================
-   SA Panel — Zone-aware glassmorphic system window
+   RA Panel â€” Zone-aware glassmorphic rift window
    ============================================================ */
-.sa-panel {
+.ra-panel {
 	background: rgba(7, 4, 18, 0.85); /* Fallback */
 	-webkit-backdrop-filter: blur(20px) saturate(1.6);
 	backdrop-filter: blur(20px) saturate(1.6);
-	border: 1px solid rgba(var(--sa-accent-rgb), 0.14);
+	border: 1px solid rgba(var(--ra-accent-rgb), 0.14);
 	border-radius: 1rem;
 	box-shadow:
 		0 8px 32px rgba(0, 0, 0, 0.4),
-		0 0 60px rgba(var(--sa-accent-rgb), 0.04),
-		inset 0 0 30px rgba(var(--sa-accent-rgb), 0.02);
+		0 0 60px rgba(var(--ra-accent-rgb), 0.04),
+		inset 0 0 30px rgba(var(--ra-accent-rgb), 0.02);
 	position: relative;
 	overflow: hidden;
 }
 
 /* Top gradient sheen */
-.sa-panel::before {
+.ra-panel::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -244,28 +244,28 @@
 	background: linear-gradient(
 		90deg,
 		transparent,
-		rgba(var(--sa-accent-rgb), 0.5),
-		rgba(var(--sa-accent-secondary-rgb), 0.35),
-		rgba(var(--sa-accent-rgb), 0.5),
+		rgba(var(--ra-accent-rgb), 0.5),
+		rgba(var(--ra-accent-secondary-rgb), 0.35),
+		rgba(var(--ra-accent-rgb), 0.5),
 		transparent
 	);
 }
 
 /* ============================================================
-   SA Page Header — Cinematic hero bar with angled corners
+   RA Page Header â€” Cinematic hero bar with angled corners
    ============================================================ */
-.sa-page-header {
+.ra-page-header {
 	position: relative;
 	background: linear-gradient(
 		135deg,
 		rgba(7, 3, 18, 0.97) 0%,
-		rgba(var(--sa-accent-rgb), 0.1) 45%,
-		rgba(var(--sa-accent-secondary-rgb), 0.04) 65%,
+		rgba(var(--ra-accent-rgb), 0.1) 45%,
+		rgba(var(--ra-accent-secondary-rgb), 0.04) 65%,
 		rgba(5, 2, 15, 0.97) 100%
 	);
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
-	border: 1px solid rgba(var(--sa-accent-rgb), 0.22);
+	border: 1px solid rgba(var(--ra-accent-rgb), 0.22);
 	border-radius: 1rem;
 	padding: 1.5rem;
 	overflow: hidden;
@@ -280,7 +280,7 @@
 }
 
 /* Animated top scanner line */
-.sa-page-header::before {
+.ra-page-header::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -290,18 +290,18 @@
 	background: linear-gradient(
 		90deg,
 		transparent 0%,
-		rgba(var(--sa-accent-rgb), 0.9) 25%,
-		rgba(var(--sa-accent-secondary-rgb), 0.8) 50%,
-		rgba(var(--sa-accent-rgb), 0.9) 75%,
+		rgba(var(--ra-accent-rgb), 0.9) 25%,
+		rgba(var(--ra-accent-secondary-rgb), 0.8) 50%,
+		rgba(var(--ra-accent-rgb), 0.9) 75%,
 		transparent 100%
 	);
 	background-size: 200% 100%;
-	animation: sa-global-scan 4s linear infinite;
+	animation: ra-global-scan 4s linear infinite;
 	z-index: 2;
 }
 
 /* Bottom faint underline */
-.sa-page-header::after {
+.ra-page-header::after {
 	content: "";
 	position: absolute;
 	bottom: 0;
@@ -311,41 +311,41 @@
 	background: linear-gradient(
 		90deg,
 		transparent,
-		rgba(var(--sa-accent-rgb), 0.25),
-		rgba(var(--sa-accent-secondary-rgb), 0.15),
-		rgba(var(--sa-accent-rgb), 0.25),
+		rgba(var(--ra-accent-rgb), 0.25),
+		rgba(var(--ra-accent-secondary-rgb), 0.15),
+		rgba(var(--ra-accent-rgb), 0.25),
 		transparent
 	);
 }
 
 /* ============================================================
-   SA Section Title — Small neon label
+   RA Section Title â€” Small neon label
    ============================================================ */
-.sa-section-title {
+.ra-section-title {
 	font-size: 0.68rem;
 	font-weight: 800;
 	text-transform: uppercase;
 	letter-spacing: 0.14em;
-	color: rgba(var(--sa-accent-rgb), 0.85);
-	text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.4);
+	color: rgba(var(--ra-accent-rgb), 0.85);
+	text-shadow: 0 0 8px rgba(var(--ra-accent-rgb), 0.4);
 }
 
 /* ============================================================
-   SA Stat Display — Holographic number readout
+   RA Stat Display â€” Holographic number readout
    ============================================================ */
-.sa-stat {
+.ra-stat {
 	font-family: var(--font-display, ui-monospace, monospace);
 	font-weight: 700;
 	color: #fff;
 	text-shadow:
-		0 0 6px rgba(var(--sa-accent-rgb), 0.5),
-		0 0 14px rgba(var(--sa-accent-rgb), 0.25);
+		0 0 6px rgba(var(--ra-accent-rgb), 0.5),
+		0 0 14px rgba(var(--ra-accent-rgb), 0.25);
 }
 
 /* ============================================================
-   SA Badge — Angled rank/rarity chip
+   RA Badge â€” Angled rank/rarity chip
    ============================================================ */
-.sa-badge {
+.ra-badge {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.25rem;
@@ -354,21 +354,21 @@
 	font-weight: 800;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	border: 1px solid rgba(var(--sa-accent-rgb), 0.35);
-	background: rgba(var(--sa-accent-rgb), 0.2); /* Fallback */
+	border: 1px solid rgba(var(--ra-accent-rgb), 0.35);
+	background: rgba(var(--ra-accent-rgb), 0.2); /* Fallback */
 	-webkit-backdrop-filter: blur(4px);
 	backdrop-filter: blur(4px);
-	color: rgba(var(--sa-accent-rgb), 1);
-	text-shadow: 0 0 6px rgba(var(--sa-accent-rgb), 0.4);
+	color: rgba(var(--ra-accent-rgb), 1);
+	text-shadow: 0 0 6px rgba(var(--ra-accent-rgb), 0.4);
 	clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 	border-radius: 0;
 	padding-right: 0.7rem;
 }
 
 /* ============================================================
-   SA Button Glow — Pulsing interactive element glow
+   RA Button Glow â€” Pulsing interactive element glow
    ============================================================ */
-.sa-btn-glow {
+.ra-btn-glow {
 	transition:
 		box-shadow 0.25s ease,
 		border-color 0.25s ease,
@@ -376,91 +376,91 @@
 	position: relative;
 }
 
-.sa-btn-glow:hover {
+.ra-btn-glow:hover {
 	box-shadow:
-		0 0 10px rgba(var(--sa-accent-rgb), 0.35),
-		0 0 22px rgba(var(--sa-accent-rgb), 0.15),
-		inset 0 1px 0 rgba(var(--sa-accent-secondary-rgb), 0.1);
-	border-color: rgba(var(--sa-accent-rgb), 0.5);
+		0 0 10px rgba(var(--ra-accent-rgb), 0.35),
+		0 0 22px rgba(var(--ra-accent-rgb), 0.15),
+		inset 0 1px 0 rgba(var(--ra-accent-secondary-rgb), 0.1);
+	border-color: rgba(var(--ra-accent-rgb), 0.5);
 	transform: translateY(-1px);
 }
 
-.sa-btn-glow:active {
+.ra-btn-glow:active {
 	transform: translateY(0px);
 }
 
 /* ============================================================
-   SA Tab Bar — System terminal tab strip
+   RA Tab Bar â€” Rift interface tab strip
    ============================================================ */
-.sa-tabs [role="tablist"] {
+.ra-tabs [role="tablist"] {
 	background: rgba(7, 4, 18, 0.8); /* Fallback */
 	-webkit-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);
 }
 
-.sa-tabs [role="tab"][data-state="active"] {
-	background: rgba(var(--sa-accent-rgb), 0.14);
-	border-color: rgba(var(--sa-accent-rgb), 0.28);
+.ra-tabs [role="tab"][data-state="active"] {
+	background: rgba(var(--ra-accent-rgb), 0.14);
+	border-color: rgba(var(--ra-accent-rgb), 0.28);
 	box-shadow:
-		0 0 12px rgba(var(--sa-accent-rgb), 0.15),
-		inset 0 1px 0 rgba(var(--sa-accent-rgb), 0.2);
+		0 0 12px rgba(var(--ra-accent-rgb), 0.15),
+		inset 0 1px 0 rgba(var(--ra-accent-rgb), 0.2);
 	color: #fff;
-	text-shadow: 0 0 8px rgba(var(--sa-accent-rgb), 0.35);
+	text-shadow: 0 0 8px rgba(var(--ra-accent-rgb), 0.35);
 }
 
-.sa-tabs [role="tab"]:hover:not([data-state="active"]) {
-	background: rgba(var(--sa-accent-rgb), 0.07);
-	color: rgba(var(--sa-accent-rgb), 0.9);
+.ra-tabs [role="tab"]:hover:not([data-state="active"]) {
+	background: rgba(var(--ra-accent-rgb), 0.07);
+	color: rgba(var(--ra-accent-rgb), 0.9);
 }
 
 /* ============================================================
-   SA Input — Neon focus ring
+   RA Input â€” Neon focus ring
    ============================================================ */
-.sa-input:focus {
-	border-color: rgba(var(--sa-accent-rgb), 0.55);
+.ra-input:focus {
+	border-color: rgba(var(--ra-accent-rgb), 0.55);
 	box-shadow:
-		0 0 0 2px rgba(var(--sa-accent-rgb), 0.15),
-		0 0 8px rgba(var(--sa-accent-rgb), 0.1);
+		0 0 0 2px rgba(var(--ra-accent-rgb), 0.15),
+		0 0 8px rgba(var(--ra-accent-rgb), 0.1);
 	outline: none;
 }
 
 /* ============================================================
-   SA Progress Bar — Animated energy fill
+   RA Progress Bar â€” Animated energy fill
    ============================================================ */
-.sa-progress {
+.ra-progress {
 	width: 100%;
 	height: 5px;
 	border-radius: 3px;
-	background: rgba(var(--sa-accent-rgb), 0.08);
+	background: rgba(var(--ra-accent-rgb), 0.08);
 	overflow: hidden;
 	position: relative;
 }
 
-.sa-progress::before {
+.ra-progress::before {
 	content: "";
 	position: absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: rgba(var(--sa-accent-secondary-rgb), 0.04);
+	background: rgba(var(--ra-accent-secondary-rgb), 0.04);
 }
 
-.sa-progress-fill {
+.ra-progress-fill {
 	height: 100%;
 	border-radius: 3px;
 	background: linear-gradient(
 		90deg,
-		rgba(var(--sa-accent-rgb), 0.95),
-		rgba(var(--sa-accent-secondary-rgb), 0.8)
+		rgba(var(--ra-accent-rgb), 0.95),
+		rgba(var(--ra-accent-secondary-rgb), 0.8)
 	);
-	box-shadow: 0 0 6px rgba(var(--sa-accent-rgb), 0.4);
+	box-shadow: 0 0 6px rgba(var(--ra-accent-rgb), 0.4);
 	transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 }
 
 /* Shimmer effect on filled bar */
-.sa-progress-fill::after {
+.ra-progress-fill::after {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -473,27 +473,27 @@
 		rgba(255, 255, 255, 0.25),
 		transparent
 	);
-	animation: sa-shimmer 2.5s linear infinite;
+	animation: ra-shimmer 2.5s linear infinite;
 }
 
 /* ============================================================
-   SA Divider — Neon separator line
+   RA Divider â€” Neon separator line
    ============================================================ */
-.sa-divider {
+.ra-divider {
 	height: 1px;
 	background: linear-gradient(
 		90deg,
 		transparent 0%,
-		rgba(var(--sa-accent-rgb), 0.35) 30%,
-		rgba(var(--sa-accent-secondary-rgb), 0.2) 50%,
-		rgba(var(--sa-accent-rgb), 0.35) 70%,
+		rgba(var(--ra-accent-rgb), 0.35) 30%,
+		rgba(var(--ra-accent-secondary-rgb), 0.2) 50%,
+		rgba(var(--ra-accent-rgb), 0.35) 70%,
 		transparent 100%
 	);
 	margin: 1rem 0;
 	position: relative;
 }
 
-.sa-divider::after {
+.ra-divider::after {
 	content: "";
 	position: absolute;
 	top: -1px;
@@ -501,44 +501,44 @@
 	transform: translateX(-50%);
 	width: 4px;
 	height: 3px;
-	background: rgba(var(--sa-accent-secondary-rgb), 0.8);
+	background: rgba(var(--ra-accent-secondary-rgb), 0.8);
 	border-radius: 50%;
-	box-shadow: 0 0 4px rgba(var(--sa-accent-secondary-rgb), 0.6);
+	box-shadow: 0 0 4px rgba(var(--ra-accent-secondary-rgb), 0.6);
 }
 
 /* ============================================================
-   SA Glow Text — Neon text with layered shadow
+   RA Glow Text â€” Neon text with layered shadow
    ============================================================ */
-.sa-glow-text {
-	color: rgba(var(--sa-accent-rgb), 1);
+.ra-glow-text {
+	color: rgba(var(--ra-accent-rgb), 1);
 	text-shadow:
-		0 0 6px rgba(var(--sa-accent-rgb), 0.6),
-		0 0 16px rgba(var(--sa-accent-rgb), 0.3),
-		0 0 30px rgba(var(--sa-accent-rgb), 0.12);
+		0 0 6px rgba(var(--ra-accent-rgb), 0.6),
+		0 0 16px rgba(var(--ra-accent-rgb), 0.3),
+		0 0 30px rgba(var(--ra-accent-rgb), 0.12);
 }
 
 /* Animated breathe variant */
-.sa-glow-text--pulse {
-	animation: sa-glow-breathe 2.5s ease-in-out infinite;
+.ra-glow-text--pulse {
+	animation: ra-glow-breathe 2.5s ease-in-out infinite;
 }
 
 /* ============================================================
-   SA Data Grid Row Hover
+   RA Data Grid Row Hover
    ============================================================ */
-.sa-row:hover {
-	background: rgba(var(--sa-accent-rgb), 0.05);
-	border-color: rgba(var(--sa-accent-rgb), 0.22);
-	box-shadow: inset 2px 0 0 rgba(var(--sa-accent-rgb), 0.4);
+.ra-row:hover {
+	background: rgba(var(--ra-accent-rgb), 0.05);
+	border-color: rgba(var(--ra-accent-rgb), 0.22);
+	box-shadow: inset 2px 0 0 rgba(var(--ra-accent-rgb), 0.4);
 }
 
 /* ============================================================
-   SA Holographic Overlay — Faint grid overlay for panels
+   RA Grid Overlay â€” Faint grid overlay for panels
    ============================================================ */
-.sa-holo-grid {
+.ra-holo-grid {
 	position: relative;
 }
 
-.sa-holo-grid::before {
+.ra-holo-grid::before {
 	content: "";
 	position: absolute;
 	top: 0;
@@ -546,10 +546,10 @@
 	bottom: 0;
 	left: 0;
 	background-image:
-		linear-gradient(rgba(var(--sa-accent-rgb), 0.03) 1px, transparent 1px),
+		linear-gradient(rgba(var(--ra-accent-rgb), 0.03) 1px, transparent 1px),
 		linear-gradient(
 			90deg,
-			rgba(var(--sa-accent-rgb), 0.03) 1px,
+			rgba(var(--ra-accent-rgb), 0.03) 1px,
 			transparent 1px
 		);
 	background-size: 24px 24px;
@@ -559,29 +559,29 @@
 }
 
 /* ============================================================
-   SA Corner Bracket — Geometric corner accent (use with relative pos)
+   RA Corner Bracket â€” Geometric corner accent (use with relative pos)
    ============================================================ */
-.sa-corner-brackets {
+.ra-corner-brackets {
 	position: relative;
 }
 
-.sa-corner-brackets::before,
-.sa-corner-brackets::after {
+.ra-corner-brackets::before,
+.ra-corner-brackets::after {
 	content: "";
 	position: absolute;
 	width: 12px;
 	height: 12px;
-	border-color: rgba(var(--sa-accent-rgb), 0.55);
+	border-color: rgba(var(--ra-accent-rgb), 0.55);
 	border-style: solid;
 }
 
-.sa-corner-brackets::before {
+.ra-corner-brackets::before {
 	top: -1px;
 	left: -1px;
 	border-width: 2px 0 0 2px;
 }
 
-.sa-corner-brackets::after {
+.ra-corner-brackets::after {
 	bottom: -1px;
 	right: -1px;
 	border-width: 0 2px 2px 0;
@@ -591,56 +591,56 @@
    Zone-Specific Page Header Overrides
    ============================================================ */
 
-[data-sa-zone="warden"] .sa-page-header {
+[data-ra-zone="warden"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
 		rgba(20, 5, 5, 0.97) 0%,
-		rgba(var(--sa-accent-rgb), 0.12) 45%,
-		rgba(var(--sa-accent-secondary-rgb), 0.05) 65%,
+		rgba(var(--ra-accent-rgb), 0.12) 45%,
+		rgba(var(--ra-accent-secondary-rgb), 0.05) 65%,
 		rgba(15, 3, 3, 0.97) 100%
 	);
 }
 
 /* Campaign: Alliance Guild Hall */
-[data-sa-zone="campaign"] .sa-page-header {
+[data-ra-zone="campaign"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
 		rgba(4, 10, 22, 0.97) 0%,
-		rgba(var(--sa-accent-rgb), 0.1) 45%,
-		rgba(var(--sa-accent-secondary-rgb), 0.06) 65%,
+		rgba(var(--ra-accent-rgb), 0.1) 45%,
+		rgba(var(--ra-accent-secondary-rgb), 0.06) 65%,
 		rgba(3, 8, 18, 0.97) 100%
 	);
 }
 
 /* Compendium: Knowledge Archive */
-[data-sa-zone="compendium"] .sa-page-header {
+[data-ra-zone="compendium"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
 		rgba(18, 13, 3, 0.97) 0%,
-		rgba(var(--sa-accent-rgb), 0.08) 45%,
-		rgba(var(--sa-accent-secondary-rgb), 0.04) 65%,
+		rgba(var(--ra-accent-rgb), 0.08) 45%,
+		rgba(var(--ra-accent-secondary-rgb), 0.04) 65%,
 		rgba(14, 9, 2, 0.97) 100%
 	);
 }
 
 /* Ascendant Tools: Ascendant Toolkit */
-[data-sa-zone="player"] .sa-page-header {
+[data-ra-zone="player"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
 		rgba(3, 14, 9, 0.97) 0%,
-		rgba(var(--sa-accent-rgb), 0.1) 45%,
-		rgba(var(--sa-accent-secondary-rgb), 0.06) 65%,
+		rgba(var(--ra-accent-rgb), 0.1) 45%,
+		rgba(var(--ra-accent-secondary-rgb), 0.06) 65%,
 		rgba(2, 10, 6, 0.97) 100%
 	);
 }
 
 /* Auth: Ascendant Awakening */
-[data-sa-zone="auth"] .sa-page-header {
+[data-ra-zone="auth"] .ra-page-header {
 	background: linear-gradient(
 		135deg,
 		rgba(12, 4, 22, 0.97) 0%,
-		rgba(var(--sa-accent-rgb), 0.15) 45%,
-		rgba(var(--sa-accent-secondary-rgb), 0.06) 65%,
+		rgba(var(--ra-accent-rgb), 0.15) 45%,
+		rgba(var(--ra-accent-secondary-rgb), 0.06) 65%,
 		rgba(8, 2, 18, 0.97) 100%
 	);
 }
@@ -650,70 +650,70 @@
    ============================================================ */
 
 /* AscendantWindow cards get zone-aware borders */
-[data-sa-zone] .border-border {
-	border-color: rgba(var(--sa-accent-rgb), 0.12);
+[data-ra-zone] .border-border {
+	border-color: rgba(var(--ra-accent-rgb), 0.12);
 }
 
 /* Zone-aware focus rings */
-[data-sa-zone] *:focus-visible {
-	outline: 2px solid rgba(var(--sa-accent-rgb), 0.65);
+[data-ra-zone] *:focus-visible {
+	outline: 2px solid rgba(var(--ra-accent-rgb), 0.65);
 	outline-offset: 2px;
 }
 
 /* Badge zone coloring */
-[data-sa-zone] .badge-zone {
-	border-color: rgba(var(--sa-accent-rgb), 0.35);
-	color: rgba(var(--sa-accent-rgb), 1);
-	text-shadow: 0 0 5px rgba(var(--sa-accent-rgb), 0.35);
+[data-ra-zone] .badge-zone {
+	border-color: rgba(var(--ra-accent-rgb), 0.35);
+	color: rgba(var(--ra-accent-rgb), 1);
+	text-shadow: 0 0 5px rgba(var(--ra-accent-rgb), 0.35);
 }
 
 /* Scrollbar styling */
-[data-sa-zone] *::-webkit-scrollbar {
+[data-ra-zone] *::-webkit-scrollbar {
 	width: 4px;
 	height: 4px;
 }
 
-[data-sa-zone] *::-webkit-scrollbar-track {
-	background: rgba(var(--sa-accent-rgb), 0.04);
+[data-ra-zone] *::-webkit-scrollbar-track {
+	background: rgba(var(--ra-accent-rgb), 0.04);
 }
 
-[data-sa-zone] *::-webkit-scrollbar-thumb {
-	background: rgba(var(--sa-accent-rgb), 0.25);
+[data-ra-zone] *::-webkit-scrollbar-thumb {
+	background: rgba(var(--ra-accent-rgb), 0.25);
 	border-radius: 2px;
 }
 
-[data-sa-zone] *::-webkit-scrollbar-thumb:hover {
-	background: rgba(var(--sa-accent-rgb), 0.45);
+[data-ra-zone] *::-webkit-scrollbar-thumb:hover {
+	background: rgba(var(--ra-accent-rgb), 0.45);
 }
 
 /* ============================================================
    Reduced Motion
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-	.sa-scan-border--animated::before,
-	.sa-page-header::before,
-	.sa-progress-fill::after {
+	.ra-scan-border--animated::before,
+	.ra-page-header::before,
+	.ra-progress-fill::after {
 		animation: none;
 	}
 
-	.sa-card:hover,
-	.sa-btn-glow:hover {
+	.ra-card:hover,
+	.ra-btn-glow:hover {
 		transform: none;
 	}
 
-	.sa-glow-text--pulse {
+	.ra-glow-text--pulse {
 		animation: none;
 	}
 }
 
-.reduce-motion .sa-scan-border--animated::before,
-.reduce-motion .sa-page-header::before,
-.reduce-motion .sa-progress-fill::after {
+.reduce-motion .ra-scan-border--animated::before,
+.reduce-motion .ra-page-header::before,
+.reduce-motion .ra-progress-fill::after {
 	animation: none;
 }
 
-.reduce-motion .sa-card:hover,
-.reduce-motion .sa-btn-glow:hover {
+.reduce-motion .ra-card:hover,
+.reduce-motion .ra-btn-glow:hover {
 	transform: none;
 }
 
@@ -721,10 +721,10 @@
    Print
    ============================================================ */
 @media print {
-	.sa-page-header,
-	.sa-scan-border,
-	.sa-panel,
-	.sa-card {
+	.ra-page-header,
+	.ra-scan-border,
+	.ra-panel,
+	.ra-card {
 		background: white;
 		border-color: #ccc;
 		-webkit-backdrop-filter: none;
@@ -737,19 +737,19 @@
 		left: 0;
 	}
 
-	.sa-page-header::before,
-	.sa-page-header::after,
-	.sa-scan-border::before,
-	.sa-panel::before,
-	.sa-card::before,
-	.sa-card::after,
-	.sa-divider::after,
-	.sa-holo-grid::before {
+	.ra-page-header::before,
+	.ra-page-header::after,
+	.ra-scan-border::before,
+	.ra-panel::before,
+	.ra-card::before,
+	.ra-card::after,
+	.ra-divider::after,
+	.ra-holo-grid::before {
 		display: none;
 	}
 }
 
-@keyframes sa-progress-bar {
+@keyframes ra-progress-bar {
 	0% {
 		transform: scaleX(0);
 	}
@@ -764,7 +764,7 @@
 	}
 }
 
-.sa-progress-bar-animated {
+.ra-progress-bar-animated {
 	transform-origin: left;
-	animation: sa-progress-bar 2s ease-out forwards;
+	animation: ra-progress-bar 2s ease-out forwards;
 }

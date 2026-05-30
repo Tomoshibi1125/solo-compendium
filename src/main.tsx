@@ -8,7 +8,7 @@ import { verifyCoreDependencies } from "./lib/maintenance/DependencyProof";
 // ZERO LEGACY CERTIFICATION: Ensure all engine dependencies are registered and used.
 verifyCoreDependencies();
 import "./styles/ascendant-ui.css";
-import "./styles/sa-theme.css";
+import "./styles/ra-theme.css";
 import "./styles/dropdown-opacity-fix.css";
 import "./styles/app-performance.css";
 

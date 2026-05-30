@@ -26,10 +26,9 @@ export function CampaignCalendarPanel({
 
 	return (
 		<AscendantWindow title="BUREAU FIELD CALENDAR">
-			<div
+			<section
 				className="space-y-3"
 				data-testid="campaign-calendar-panel"
-				role="region"
 				aria-label="Bureau Field Calendar"
 			>
 				<div>
@@ -42,7 +41,6 @@ export function CampaignCalendarPanel({
 					<p
 						className="font-heading text-xl tracking-wide"
 						data-testid="campaign-calendar-clock"
-						aria-labelledby="campaign-calendar-time-label"
 						aria-live="polite"
 					>
 						{formatClock(clock)}
@@ -58,7 +56,6 @@ export function CampaignCalendarPanel({
 					<p
 						className="font-mono text-base text-amber-300"
 						data-testid="campaign-calendar-pip"
-						aria-labelledby="campaign-calendar-pip-label"
 						aria-live="polite"
 					>
 						{formatRiftCyclePip(clock)}
@@ -126,7 +123,7 @@ export function CampaignCalendarPanel({
 						</div>
 					</div>
 				)}
-			</div>
+			</section>
 		</AscendantWindow>
 	);
 }

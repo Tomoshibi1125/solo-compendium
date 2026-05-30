@@ -22,11 +22,7 @@ import {
 	createVttSceneId,
 	DEFAULT_SCENE_SETTINGS,
 } from "@/lib/vtt/sceneState";
-import type {
-	LightSource,
-	VTTScene,
-	WallSegment,
-} from "@/types/vtt";
+import type { LightSource, VTTScene, WallSegment } from "@/types/vtt";
 
 // -------------------------------------------------------------------
 // UVTT schema (subset we consume — the format is small but loose).
@@ -191,7 +187,11 @@ export function parseUvttDocument(
 	// -------------------------------
 	if (Array.isArray(doc.portals)) {
 		for (const portal of doc.portals) {
-			if (!portal || !Array.isArray(portal.bounds) || portal.bounds.length < 2) {
+			if (
+				!portal ||
+				!Array.isArray(portal.bounds) ||
+				portal.bounds.length < 2
+			) {
 				continue;
 			}
 			const a = portal.bounds[0];

@@ -4,9 +4,9 @@ import {
 	clearCombatEndEffects,
 	clearLongRestEffects,
 	resolveTokenStats,
+	TOKEN_EFFECT_PRESETS,
 	tickMinuteEffects,
 	tickRoundEffects,
-	TOKEN_EFFECT_PRESETS,
 } from "@/lib/vtt/tokenEffects";
 import type { TokenEffect } from "@/types/vtt";
 
@@ -81,9 +81,7 @@ describe("resolveTokenStats", () => {
 		});
 		expect(stats.resistances).toEqual(["fire"]);
 		expect(stats.conditions.sort()).toEqual(["frightened", "prone"]);
-		expect(stats.advantages).toEqual([
-			{ rollType: "save", tag: "fear" },
-		]);
+		expect(stats.advantages).toEqual([{ rollType: "save", tag: "fear" }]);
 		expect(stats.hpRegen).toEqual(["1d4"]);
 	});
 
@@ -193,14 +191,16 @@ describe("clearLongRestEffects / clearCombatEndEffects", () => {
 			effect({ id: "ce", durationKind: "until_combat_end", modifiers: [] }),
 			effect({ id: "p", durationKind: "permanent", modifiers: [] }),
 		];
-		expect(clearLongRestEffects(list).map((e) => e.id).sort()).toEqual([
-			"ce",
-			"p",
-		]);
-		expect(clearCombatEndEffects(list).map((e) => e.id).sort()).toEqual([
-			"lr",
-			"p",
-		]);
+		expect(
+			clearLongRestEffects(list)
+				.map((e) => e.id)
+				.sort(),
+		).toEqual(["ce", "p"]);
+		expect(
+			clearCombatEndEffects(list)
+				.map((e) => e.id)
+				.sort(),
+		).toEqual(["lr", "p"]);
 	});
 });
 

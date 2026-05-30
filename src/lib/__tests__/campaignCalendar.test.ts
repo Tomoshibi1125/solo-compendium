@@ -16,9 +16,9 @@ describe("normalizeCampaignClock", () => {
 	});
 
 	it("clamps pip to 0..7", () => {
-		expect(normalizeCampaignClock({ iso: "", riftCyclePip: 99 }).riftCyclePip).toBe(
-			7,
-		);
+		expect(
+			normalizeCampaignClock({ iso: "", riftCyclePip: 99 }).riftCyclePip,
+		).toBe(7);
 		expect(
 			normalizeCampaignClock({ iso: "", riftCyclePip: -5 }).riftCyclePip,
 		).toBe(0);

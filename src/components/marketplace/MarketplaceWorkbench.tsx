@@ -770,8 +770,8 @@ export function MarketplaceWorkbench() {
 							Gift {giftItemTarget?.title}
 						</DialogTitle>
 						<DialogDescription>
-							Send this item to another player. They get access immediately —
-							no payment required.
+							Send this item to another player. They get access immediately — no
+							payment required.
 						</DialogDescription>
 					</DialogHeader>
 					<div className="space-y-3 py-2">

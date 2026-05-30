@@ -79,8 +79,7 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 									</div>
 								);
 							}
-							const maxHp =
-								row.max_hp_override ?? catalogEntry.hit_points.max;
+							const maxHp = row.max_hp_override ?? catalogEntry.hit_points.max;
 							const hpPercent = Math.min(
 								100,
 								Math.max(0, (row.current_hp / maxHp) * 100),

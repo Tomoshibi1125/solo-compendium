@@ -46,8 +46,8 @@ function useMediaQuery(query: string): boolean {
 	return matches;
 }
 
-// Derive SA zone from current route
-function useSAZone(): string {
+// Derive RA zone from current route
+function useRAZone(): string {
 	const location = useLocation();
 	const path = location.pathname;
 	if (
@@ -72,7 +72,7 @@ function useSAZone(): string {
 export function Layout({ children, className, fullBleed }: LayoutProps) {
 	const embedded = useEmbedded();
 	const { reducedMotion, highContrast } = useAccessibility();
-	const saZone = useSAZone();
+	const raZone = useRAZone();
 	const {
 		isInstallable,
 		isInstalled,
@@ -105,7 +105,7 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 		return (
 			<div
 				className={cn("relative overflow-hidden w-full", className)}
-				data-sa-zone={saZone}
+				data-ra-zone={raZone}
 			>
 				{children || <Outlet />}
 			</div>
@@ -113,7 +113,7 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 	}
 
 	return (
-		<div className={cn(layoutClasses, "relative")} data-sa-zone={saZone}>
+		<div className={cn(layoutClasses, "relative")} data-ra-zone={raZone}>
 			{/* Offline connectivity banner */}
 			<OfflineBanner />
 			{/* Global Cosmic Architecture */}
@@ -155,7 +155,7 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 				syncQueueLength={syncQueueLength}
 			/>
 
-			{saZone === "warden" && <WardenChatbot />}
+			{raZone === "warden" && <WardenChatbot />}
 		</div>
 	);
 }

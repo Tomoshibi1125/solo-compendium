@@ -13,13 +13,9 @@
  */
 
 import { describe, expect, it } from "vitest";
-import {
-	getArmorClass,
-} from "@/lib/acFormulas";
-import {
-	applyCritical,
-	rollCritical,
-} from "@/lib/advancedDiceEngine";
+import { calculateHPMax } from "@/lib/5eCharacterCalculations";
+import { getArmorClass } from "@/lib/acFormulas";
+import { applyCritical, rollCritical } from "@/lib/advancedDiceEngine";
 import {
 	formatWallet,
 	normalizeWallet,
@@ -27,22 +23,15 @@ import {
 	walletTotalBaseUnits,
 } from "@/lib/currency";
 import { checkLevelUpEligibility } from "@/lib/experience";
+import { parsePrerequisiteText, validatePrereq } from "@/lib/prerequisites";
+import { computePassiveScore, computeSenses } from "@/lib/sensesEngine";
+import { applyUpcastToFormula, parseUpcastScaling } from "@/lib/upcastScaling";
 import {
-	parsePrerequisiteText,
-	validatePrereq,
-} from "@/lib/prerequisites";
-import {
-	applyUpcastToFormula,
-	parseUpcastScaling,
-} from "@/lib/upcastScaling";
-import { calculateHPMax } from "@/lib/5eCharacterCalculations";
-import {
-	type FeatureEffect,
 	FEAT_EFFECT_PRESETS,
+	type FeatureEffect,
 	sumHpFlat,
 	sumHpPerLevel,
 } from "@/types/featureEffects";
-import { computePassiveScore, computeSenses } from "@/lib/sensesEngine";
 
 describe("P0.1 — Canonical AC (acFormulas.getArmorClass)", () => {
 	it("picks highest of Unarmored vs Berserker UD for a Berserker", () => {
@@ -189,19 +178,13 @@ describe("P1.8 — Prerequisite validation", () => {
 	};
 
 	it("returns ok for satisfied prereq", () => {
-		const result = validatePrereq(
-			{ minAbility: { INT: 13 } },
-			ctx,
-		);
+		const result = validatePrereq({ minAbility: { INT: 13 } }, ctx);
 		expect(result.ok).toBe(true);
 		expect(result.missing).toEqual([]);
 	});
 
 	it("lists missing ability requirements", () => {
-		const result = validatePrereq(
-			{ minAbility: { STR: 13 } },
-			ctx,
-		);
+		const result = validatePrereq({ minAbility: { STR: 13 } }, ctx);
 		expect(result.ok).toBe(false);
 		expect(result.missing[0]).toContain("STR 13+");
 	});

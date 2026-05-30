@@ -204,8 +204,7 @@ export function computeSenses(
 		(perceptionProficient ? proficiencyBonus : 0) +
 		(perceptionExpertise ? proficiencyBonus : 0);
 	const investigationMod =
-		intelligenceModifier +
-		(investigationProficient ? proficiencyBonus : 0);
+		intelligenceModifier + (investigationProficient ? proficiencyBonus : 0);
 	const insightMod =
 		wisdomModifier + (insightProficient ? proficiencyBonus : 0);
 	const stealthMod =

@@ -4,6 +4,7 @@ import {
 	ArrowRight,
 	BookOpen,
 	Bot,
+	Box,
 	BrickWall,
 	ChevronDown,
 	Circle,
@@ -14,17 +15,16 @@ import {
 	Eye,
 	EyeOff,
 	FileText,
+	Hexagon,
 	Image as ImageIcon,
 	Layers,
 	Lightbulb,
 	MapPin,
 	Maximize2,
 	MessageSquare,
+	Mic,
 	Minus,
 	MousePointer2,
-	Box,
-	Hexagon,
-	Mic,
 	Pause,
 	Pencil,
 	Play,
@@ -101,6 +101,8 @@ import {
 	SheetTitle,
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnimatedTilesPanel } from "@/components/vtt/AnimatedTilesPanel";
+import { CommNetPanel } from "@/components/vtt/CommNetPanel";
 import {
 	ConnectedPlayersPopover,
 	type ConnectedUser,
@@ -113,10 +115,10 @@ import {
 	type LightSourceConfigDialogProps,
 } from "@/components/vtt/LightSourceConfigDialog";
 import { RegionConfigDialog } from "@/components/vtt/RegionConfigDialog";
-import { AnimatedTilesPanel } from "@/components/vtt/AnimatedTilesPanel";
+import { SceneTransition } from "@/components/vtt/SceneTransition";
+import { SessionControlsMenu } from "@/components/vtt/SessionControlsMenu";
 import { StrataDrawer } from "@/components/vtt/StrataDrawer";
 import { StrataSelector } from "@/components/vtt/StrataSelector";
-import { SessionControlsMenu } from "@/components/vtt/SessionControlsMenu";
 import { TokenActionBar } from "@/components/vtt/TokenActionBar";
 import { VTTAssetBrowser } from "@/components/vtt/VTTAssetBrowser";
 import { VTTCharacterPanel } from "@/components/vtt/VTTCharacterPanel";
@@ -129,10 +131,8 @@ import { VTTPointerOverlay } from "@/components/vtt/VTTPointerOverlay";
 import { VTTSceneLibrary } from "@/components/vtt/VTTSceneLibrary";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
-import { SceneTransition } from "@/components/vtt/SceneTransition";
 import { VttDomFallbackSurface } from "@/components/vtt/VttDomFallbackSurface";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
-import { CommNetPanel } from "@/components/vtt/CommNetPanel";
 import { WardenBroadcastPanel } from "@/components/vtt/WardenBroadcastPanel";
 import {
 	WardenToolsPanel as ProtocolWardenTools,
@@ -153,15 +153,18 @@ import { useToast } from "@/hooks/use-toast";
 import { useCampaignCombatSession } from "@/hooks/useCampaignCombat";
 import {
 	type CampaignMember,
+	useCampaign,
 	useCampaignMembers,
 	useCampaignRole,
 } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useLiveKitToken } from "@/hooks/useLiveKitToken";
 import {
 	type TargetedApplyResult,
 	useTargetedDamageApply,
 } from "@/hooks/useTargetedDamageApply";
+import { useTokenEffectEngine } from "@/hooks/useTokenEffectEngine";
 import {
 	readLocalToolState,
 	useCampaignToolState,
@@ -178,9 +181,6 @@ import {
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { useVTTRegionEngine } from "@/hooks/useVTTRegionEngine";
 import { useVTTSettings } from "@/hooks/useVTTSettings";
-import { useTokenEffectEngine } from "@/hooks/useTokenEffectEngine";
-import { useCampaign } from "@/hooks/useCampaigns";
-import { useLiveKitToken } from "@/hooks/useLiveKitToken";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Playlist } from "@/lib/audio/types";
 import { useAuth } from "@/lib/auth/authContext";

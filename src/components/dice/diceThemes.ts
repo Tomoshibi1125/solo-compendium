@@ -9,7 +9,7 @@ export type DiceTheme =
 	| "regent-regent"
 	| "supreme-deity"
 	| "gate-portal"
-	| "system-interface"
+	| "mana-circuit"
 	| "resurge-violet"
 	| "regent-gold";
 
@@ -158,14 +158,14 @@ export const DICE_THEMES: Record<DiceTheme, DiceThemeConfig> = {
 		bloomFieldOpacity: 0.68,
 		bloomFieldScale: 2.14,
 	},
-	"system-interface": {
-		baseColor: "#064e3b", // Dark system green
-		emissiveColor: "#10b981", // System interface green
+	"mana-circuit": {
+		baseColor: "#064e3b", // Dark mana green
+		emissiveColor: "#10b981", // Mana circuit green
 		glowIntensity: 0.85,
 		metalness: 0.85,
 		roughness: 0.15,
 		particleColor: "#34d399",
-		name: "System Interface",
+		name: "Mana Circuit",
 		accentColor: "#059669",
 		trayColor: "#042f24",
 		bloomFieldOpacity: 0.18,

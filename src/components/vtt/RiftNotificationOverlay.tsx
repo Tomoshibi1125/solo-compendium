@@ -100,7 +100,7 @@ export const RiftNotificationOverlay: React.FC<
 						exit={{ opacity: 0, scale: 1.1, y: 30, filter: "blur(20px)" }}
 						transition={{ type: "spring", damping: 20, stiffness: 100 }}
 						className={cn(
-							"relative sa-card p-1 overflow-hidden pointer-events-auto",
+							"relative ra-card p-1 overflow-hidden pointer-events-auto",
 							"border-t-2 bg-[#0a0619]/95 backdrop-blur-3xl",
 							THEMES[activeNote.message_type as BroadcastTheme]?.color.replace(
 								"text-",
@@ -140,7 +140,7 @@ export const RiftNotificationOverlay: React.FC<
 								</span>
 							</div>
 
-							<h2 className="text-xl md:text-2xl font-heading font-bold text-white text-center mb-4 sa-glow-text">
+							<h2 className="text-xl md:text-2xl font-heading font-bold text-white text-center mb-4 ra-glow-text">
 								{activeNote.message}
 							</h2>
 

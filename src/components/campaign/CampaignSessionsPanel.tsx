@@ -26,10 +26,8 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useCampaign } from "@/hooks/useCampaigns";
 import { useSendCampaignMessage } from "@/hooks/useCampaignChat";
 import { useCampaignSandboxInjector } from "@/hooks/useCampaignSandboxInjector";
-import { useNotifyDiscord } from "@/hooks/useNotifyDiscord";
 import {
 	type CampaignSessionLogType,
 	type CampaignSessionStatus,
@@ -39,6 +37,8 @@ import {
 	useDeleteCampaignSession,
 	useUpsertCampaignSession,
 } from "@/hooks/useCampaignSessions";
+import { useCampaign } from "@/hooks/useCampaigns";
+import { useNotifyDiscord } from "@/hooks/useNotifyDiscord";
 import {
 	buildIcsForCampaignSessions,
 	downloadIcsBlob,
@@ -447,8 +447,7 @@ export function CampaignSessionsPanel({
 						<Button
 							onClick={createSession}
 							disabled={
-								upsertSession.isPending ||
-								(isRecurring && !sessionScheduledFor)
+								upsertSession.isPending || (isRecurring && !sessionScheduledFor)
 							}
 							data-testid="session-save-btn"
 						>

@@ -828,7 +828,8 @@ const vehiclesRealWorld: CompendiumVehicle[] = [
 		abilities: [
 			{
 				name: "Subway Warding",
-				description: "Resistance to all damage from C-rank-and-below anomalies.",
+				description:
+					"Resistance to all damage from C-rank-and-below anomalies.",
 				action_type: "passive",
 			},
 		],
@@ -1100,8 +1101,7 @@ const vehiclesRare: CompendiumVehicle[] = [
 			},
 			{
 				name: "Broadside (Gunner)",
-				description:
-					"Gunner action: 4d10 force damage in a 60-ft line.",
+				description: "Gunner action: 4d10 force damage in a 60-ft line.",
 				action_type: "action",
 			},
 		],

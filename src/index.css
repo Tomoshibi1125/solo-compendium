@@ -6,11 +6,10 @@
 
 @theme {
 	/* ── Fonts ─────────────────────────────────────────────── */
-	--font-display: "Orbitron", monospace;
+	--font-display: "Rajdhani", sans-serif;
 	--font-heading: "Rajdhani", sans-serif;
-	--font-body: "Space Grotesk", sans-serif;
-	--font-heading: "Share Tech Mono", monospace;
-	--font-resurge: "Orbitron", monospace;
+	--font-body: "Inter", "Space Grotesk", sans-serif;
+	--font-resurge: "Rajdhani", sans-serif;
 
 	/* ── Rift Ascendant: Protocol Palette ────────────────── */
 	--color-shadow-blue: hsl(var(--shadow-blue));
@@ -693,7 +692,6 @@ h3 {
 	}
 }
 
-
 /* ------------------------------------------------------------------ */
 /* Misty Pearl D1 — Broadcast Stream mode (OBS browser source).        */
 /* `body.stream-mode` is toggled by `pages/Stream.tsx` on mount/unmount */
@@ -705,16 +703,15 @@ body.stream-mode,
 body.stream-mode html,
 body.stream-mode #root,
 body.stream-mode [data-radix-popper-content-wrapper] {
-	background: transparent !important;
-	background-color: transparent !important;
+	background: transparent;
+	background-color: transparent;
 }
 
 body.stream-mode .sa-theme-bg,
 body.stream-mode .app-background {
-	display: none !important;
+	display: none;
 }
 
 body.stream-mode {
 	color-scheme: dark;
 }
-

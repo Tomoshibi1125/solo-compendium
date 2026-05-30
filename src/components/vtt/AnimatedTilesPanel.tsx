@@ -64,18 +64,17 @@ export function AnimatedTilesPanel({
 
 	return (
 		<AscendantWindow title="ANIMATED TILES">
-			<div
+			<section
 				className="space-y-3"
 				data-testid="vtt-animated-tiles-panel"
-				role="region"
 				aria-label="Animated tiles"
 			>
 				<p className="text-xs text-muted-foreground">
 					Drop a video URL (
 					<code className="text-[10px] bg-muted px-1">.mp4</code>,{" "}
-					<code className="text-[10px] bg-muted px-1">.webm</code>) or
-					animated webp / gif onto the active Rift. Tiles render above the
-					map background and below tokens.
+					<code className="text-[10px] bg-muted px-1">.webm</code>) or animated
+					webp / gif onto the active Rift. Tiles render above the map background
+					and below tokens.
 				</p>
 
 				<div className="space-y-1.5">
@@ -98,9 +97,7 @@ export function AnimatedTilesPanel({
 								<Input
 									className="h-7 text-xs flex-1"
 									value={tile.src}
-									onChange={(e) =>
-										patchTile(tile.id, { src: e.target.value })
-									}
+									onChange={(e) => patchTile(tile.id, { src: e.target.value })}
 									placeholder="https://example.com/flames.webm"
 								/>
 								<Button
@@ -259,7 +256,7 @@ export function AnimatedTilesPanel({
 						</Button>
 					</div>
 				</div>
-			</div>
+			</section>
 		</AscendantWindow>
 	);
 }

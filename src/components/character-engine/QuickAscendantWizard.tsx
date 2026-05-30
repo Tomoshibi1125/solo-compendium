@@ -195,7 +195,8 @@ export function QuickAscendantWizard({
 		setCreating(true);
 		try {
 			// Primary ability resolution (engine map).
-			const primary = (job.primary_ability as AbilityScore | undefined) ??
+			const primary =
+				(job.primary_ability as AbilityScore | undefined) ??
 				getJobPrimaryAbility(job.name);
 			const abilities = placeStandardArray(primary ?? null);
 
@@ -263,11 +264,10 @@ export function QuickAscendantWizard({
 				skill_proficiencies: skills.unique,
 				skill_expertise: [],
 				tool_proficiencies: tools.unique,
-				saving_throw_proficiencies:
-					(job.saving_throw_proficiencies ||
-						job.saving_throws ||
-						job.savingThrows ||
-						[]) as AbilityScore[],
+				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
+					job.saving_throws ||
+					job.savingThrows ||
+					[]) as AbilityScore[],
 				weapon_proficiencies: weapons.unique,
 				armor_proficiencies: armors.unique,
 				speed,
@@ -275,10 +275,7 @@ export function QuickAscendantWizard({
 
 			// Persist ability scores into per-character storage.
 			if (isLocalCharacterId(character.id)) {
-				setLocalAbilities(
-					character.id,
-					abilities as Record<string, number>,
-				);
+				setLocalAbilities(character.id, abilities as Record<string, number>);
 			} else {
 				const updates = ALL_ABILITIES.map((ability) => ({
 					character_id: character.id,
@@ -365,10 +362,7 @@ export function QuickAscendantWizard({
 				<div className="space-y-4 py-2">
 					<div className="space-y-2">
 						<Label htmlFor="quick-job">Job</Label>
-						<Select
-							value={selectedJobId}
-							onValueChange={setSelectedJobId}
-						>
+						<Select value={selectedJobId} onValueChange={setSelectedJobId}>
 							<SelectTrigger
 								id="quick-job"
 								data-testid="quick-ascendant-job-select"
@@ -448,8 +442,8 @@ export function QuickAscendantWizard({
 
 					<p className="text-xs text-muted-foreground">
 						Standard array [15, 14, 13, 12, 10, 8] placed on your primary
-						ability automatically. Starting equipment, level-1 features, and
-						the Job's awakening benefit are all granted on create.
+						ability automatically. Starting equipment, level-1 features, and the
+						Job's awakening benefit are all granted on create.
 					</p>
 				</div>
 

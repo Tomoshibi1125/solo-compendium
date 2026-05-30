@@ -43,7 +43,9 @@ const asString = (v: unknown): string => (typeof v === "string" ? v : "");
 const asStringArray = (v: unknown): string[] =>
 	Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
 const asInt = (v: unknown, fallback = 0): number =>
-	typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.round(v)) : fallback;
+	typeof v === "number" && Number.isFinite(v)
+		? Math.max(0, Math.round(v))
+		: fallback;
 
 function normalizeListing(row: PublicListingRow): FieldRosterListing {
 	const p = row.public_listing ?? {};

@@ -18,14 +18,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type React from "react";
 import { act, useEffect, useRef } from "react";
 import { createRoot } from "react-dom/client";
-import {
-	afterEach,
-	beforeEach,
-	describe,
-	expect,
-	it,
-	vi,
-} from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/integrations/supabase/client", () => ({
 	isSupabaseConfigured: false,
@@ -39,14 +32,14 @@ vi.mock("@/hooks/useCharacterActiveSpells", () => ({
 	useAddActiveSpell: () => ({ mutateAsync: vi.fn(async () => undefined) }),
 }));
 
+import { useSpellCasting } from "@/hooks/useSpellCasting";
+import type { SpellSlotData } from "@/hooks/useSpellSlots";
 import {
 	type ActionResolutionPayload,
 	resolveAttack,
 } from "@/lib/actionResolution";
 import { checkLevelUpEligibility } from "@/lib/experience";
 import { printCharacterSheet } from "@/lib/export";
-import { useSpellCasting } from "@/hooks/useSpellCasting";
-import type { SpellSlotData } from "@/hooks/useSpellSlots";
 
 (
 	globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
@@ -245,11 +238,7 @@ describe("T2 — Upcast picker rule (useSpellCasting.getUpcastLevels)", () => {
 	});
 
 	it("includes higher slot levels with available current uses", () => {
-		const fn = captureUpcastLevels([
-			slot(1, 4),
-			slot(2, 3),
-			slot(3, 2),
-		]);
+		const fn = captureUpcastLevels([slot(1, 4), slot(2, 3), slot(3, 2)]);
 		expect(fn(buildSpell(1))).toEqual([1, 2, 3]);
 		expect(fn(buildSpell(2))).toEqual([2, 3]);
 		expect(fn(buildSpell(3))).toEqual([3]);
@@ -265,11 +254,7 @@ describe("T2 — Upcast picker rule (useSpellCasting.getUpcastLevels)", () => {
 	});
 
 	it("never returns a slot level lower than the spell's base level", () => {
-		const fn = captureUpcastLevels([
-			slot(1, 4),
-			slot(2, 3),
-			slot(3, 2),
-		]);
+		const fn = captureUpcastLevels([slot(1, 4), slot(2, 3), slot(3, 2)]);
 		expect(fn(buildSpell(2))).not.toContain(1);
 		expect(fn(buildSpell(3))).not.toContain(1);
 		expect(fn(buildSpell(3))).not.toContain(2);
@@ -323,9 +308,7 @@ describe("T4 — printCharacterSheet URL composition", () => {
 	let openSpy: ReturnType<typeof vi.spyOn>;
 
 	beforeEach(() => {
-		openSpy = vi
-			.spyOn(window, "open")
-			.mockImplementation(() => null);
+		openSpy = vi.spyOn(window, "open").mockImplementation(() => null);
 	});
 
 	afterEach(() => {

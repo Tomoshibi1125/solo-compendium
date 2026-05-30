@@ -26,14 +26,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Room } from "trystero";
 import { joinRoom as joinSupabaseRoom } from "trystero/supabase";
 import {
+	connectLiveKit,
+	type LiveKitTransportHandle,
+} from "@/lib/commnet/livekitTransport";
+import {
 	createVirtualBackgroundPipeline,
 	type VirtualBackgroundKind,
 	type VirtualBackgroundPipeline,
 } from "@/lib/commnet/virtualBackground";
-import {
-	connectLiveKit,
-	type LiveKitTransportHandle,
-} from "@/lib/commnet/livekitTransport";
 
 const SUPABASE_URL =
 	(import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? "";
@@ -138,9 +138,7 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 	const [peers, setPeers] = useState<CommNetPeer[]>([]);
 	const [localStream, setLocalStream] = useState<MediaStream | null>(null);
 	const [micEnabled, setMicEnabled] = useState(true);
-	const [camEnabled, setCamEnabled] = useState(
-		Boolean(mediaConstraints.video),
-	);
+	const [camEnabled, setCamEnabled] = useState(Boolean(mediaConstraints.video));
 	const [mode, setModeState] = useState<CommNetMode>("always");
 	const [error, setError] = useState<Error | null>(null);
 	const [connecting, setConnecting] = useState(false);
@@ -193,7 +191,9 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 				return;
 			}
 			if (cancelled) {
-				rawStream.getTracks().forEach((t) => t.stop());
+				for (const t of rawStream.getTracks()) {
+					t.stop();
+				}
 				return;
 			}
 			rawStreamRef.current = rawStream;
@@ -204,12 +204,13 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 			let stream = rawStream;
 			if (virtualBackground && rawStream.getVideoTracks().length > 0) {
 				try {
-					const pipeline = await createVirtualBackgroundPipeline(
-						virtualBackground,
-					);
+					const pipeline =
+						await createVirtualBackgroundPipeline(virtualBackground);
 					if (cancelled) {
 						pipeline.stop();
-						rawStream.getTracks().forEach((t) => t.stop());
+						for (const t of rawStream.getTracks()) {
+							t.stop();
+						}
 						return;
 					}
 					bgPipelineRef.current = pipeline;
@@ -246,9 +247,7 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 							);
 						},
 						onPeerLeave: (peerId) => {
-							setPeers((current) =>
-								current.filter((p) => p.peerId !== peerId),
-							);
+							setPeers((current) => current.filter((p) => p.peerId !== peerId));
 						},
 						onPeerStream: (peerId, remote) => {
 							setPeers((current) =>
@@ -261,7 +260,9 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 					});
 					if (cancelled) {
 						await handle.leave();
-						stream.getTracks().forEach((t) => t.stop());
+						for (const t of stream.getTracks()) {
+							t.stop();
+						}
 						return;
 					}
 					liveKitRef.current = handle;
@@ -271,9 +272,7 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 				} catch (e) {
 					if (cancelled) return;
 					setError(
-						e instanceof Error
-							? e
-							: new Error("Failed to connect to LiveKit."),
+						e instanceof Error ? e : new Error("Failed to connect to LiveKit."),
 					);
 					setConnecting(false);
 					return;
@@ -292,21 +291,23 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 			} catch (e) {
 				if (cancelled) return;
 				setError(
-					e instanceof Error
-						? e
-						: new Error("Failed to join Comm-Net room."),
+					e instanceof Error ? e : new Error("Failed to join Comm-Net room."),
 				);
 				setConnecting(false);
 				return;
 			}
 			if (cancelled) {
 				room.leave().catch(() => {});
-				stream.getTracks().forEach((t) => t.stop());
+				for (const t of stream.getTracks()) {
+					t.stop();
+				}
 				return;
 			}
 			roomRef.current = room;
 
-			room.addStream(stream).forEach((p) => p.catch(() => {}));
+			for (const p of room.addStream(stream)) {
+				p.catch(() => {});
+			}
 
 			room.onPeerJoin((peerId) => {
 				setPeers((current) => {
@@ -335,9 +336,11 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 				try {
 					const ctx =
 						audioContextRef.current ??
-						new (window.AudioContext ??
+						new (
+							window.AudioContext ??
 							(window as unknown as { webkitAudioContext: typeof AudioContext })
-								.webkitAudioContext)();
+								.webkitAudioContext
+						)();
 					audioContextRef.current = ctx;
 					const source = ctx.createMediaStreamSource(remote);
 					const analyser = ctx.createAnalyser();
@@ -381,9 +384,15 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 			}
 			if (room) room.leave().catch(() => {});
 			if (lk) lk.leave().catch(() => {});
-			if (stream) stream.getTracks().forEach((t) => t.stop());
+			if (stream) {
+				for (const t of stream.getTracks()) {
+					t.stop();
+				}
+			}
 			if (rawStream && rawStream !== stream) {
-				rawStream.getTracks().forEach((t) => t.stop());
+				for (const t of rawStream.getTracks()) {
+					t.stop();
+				}
 			}
 			setPeers([]);
 			setLocalStream(null);
@@ -449,7 +458,8 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 	useEffect(() => {
 		if (!localStream) return;
 		if (mode === "always") applyMicEnabled(micEnabled);
-		else if (mode === "ptt") applyMicEnabled(micEnabled && pttActiveRef.current);
+		else if (mode === "ptt")
+			applyMicEnabled(micEnabled && pttActiveRef.current);
 	}, [mode, micEnabled, localStream, applyMicEnabled]);
 
 	// -------------------------------------------------------------------
@@ -481,17 +491,16 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 			const track = camStream.getVideoTracks()[0];
 			if (!track) return;
 			stream.addTrack(track);
-			roomRef.current
-				?.addTrack(track, stream)
-				.forEach((p) => p.catch(() => {}));
+			const promises = roomRef.current?.addTrack(track, stream);
+			if (promises) {
+				for (const p of promises) {
+					p.catch(() => {});
+				}
+			}
 			setCamEnabled(true);
 			setLocalStream(stream);
 		} catch (e) {
-			setError(
-				e instanceof Error
-					? e
-					: new Error("Failed to start camera."),
-			);
+			setError(e instanceof Error ? e : new Error("Failed to start camera."));
 		}
 	}, []);
 
@@ -518,7 +527,11 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 	const leave = useCallback(() => {
 		roomRef.current?.leave().catch(() => {});
 		roomRef.current = null;
-		localStreamRef.current?.getTracks().forEach((t) => t.stop());
+		if (localStreamRef.current) {
+			for (const t of localStreamRef.current.getTracks()) {
+				t.stop();
+			}
+		}
 		localStreamRef.current = null;
 		setLocalStream(null);
 		setPeers([]);

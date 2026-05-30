@@ -80,8 +80,7 @@ export function resolveSpellActionFormula(
 	const abilityModifier = getAbilityModifier(score);
 	const attackBonus =
 		abilityModifier + proficiencyBonus + (input.attackBonus ?? 0);
-	const saveDC =
-		8 + abilityModifier + proficiencyBonus + (input.dcBonus ?? 0);
+	const saveDC = 8 + abilityModifier + proficiencyBonus + (input.dcBonus ?? 0);
 	return {
 		ability,
 		abilityModifier,

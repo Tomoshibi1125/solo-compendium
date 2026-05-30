@@ -66,7 +66,8 @@ export default function FieldRoster() {
 					>
 						<div className="space-y-3 flex-1">
 							<p className="text-sm text-foreground/90">
-								{listing.description || "A Rift Ascendant campaign seeking field operatives."}
+								{listing.description ||
+									"A Rift Ascendant campaign seeking field operatives."}
 							</p>
 							<div className="flex flex-wrap gap-1">
 								{listing.system_tags.slice(0, 6).map((tag) => (

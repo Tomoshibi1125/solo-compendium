@@ -32,9 +32,7 @@ interface Viewbox {
 	scale: number;
 }
 
-function computeViewbox(
-	polygon: Array<{ x: number; y: number }>,
-): Viewbox {
+function computeViewbox(polygon: Array<{ x: number; y: number }>): Viewbox {
 	if (polygon.length === 0) {
 		return { minX: -100, minY: -100, width: 200, height: 200, scale: 1 };
 	}
@@ -136,10 +134,9 @@ export function RegionPolygonEditor({
 	};
 
 	return (
-		<div
+		<section
 			className="space-y-2"
 			data-testid="region-polygon-editor"
-			role="region"
 			aria-label="Region polygon editor"
 		>
 			<p className="text-xs text-muted-foreground">
@@ -174,14 +171,17 @@ export function RegionPolygonEditor({
 						if (!next) return null;
 						const mid = { x: (p.x + next.x) / 2, y: (p.y + next.y) / 2 };
 						return (
-							<g key={`mid-${i}`}>
+							<g key={`mid-${mid.x}-${mid.y}`}>
 								<circle
 									cx={mid.x}
 									cy={mid.y}
 									r={6}
-									className="fill-muted stroke-primary cursor-pointer"
+									className="fill-muted stroke-primary cursor-pointer outline-none focus:stroke-amber-400"
 									strokeWidth={1}
-									onClick={() => insertVertexBetween(i)}
+									onPointerDown={(e) => {
+										e.preventDefault();
+										insertVertexBetween(i);
+									}}
 								/>
 								<text
 									x={mid.x}
@@ -196,7 +196,7 @@ export function RegionPolygonEditor({
 					})}
 					{/* Vertex handles */}
 					{screenPoints.map((p, i) => (
-						<g key={`v-${i}`}>
+						<g key={`v-${p.x}-${p.y}`}>
 							<circle
 								cx={p.x}
 								cy={p.y}
@@ -216,7 +216,7 @@ export function RegionPolygonEditor({
 			<div className="space-y-1.5 max-h-32 overflow-y-auto">
 				{polygon.map((v, i) => (
 					<div
-						key={`vrow-${i}-${v.x}-${v.y}`}
+						key={`vrow-${v.x}-${v.y}`}
 						className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground"
 					>
 						<span className="w-6 text-right">#{i}</span>
@@ -245,7 +245,7 @@ export function RegionPolygonEditor({
 					</div>
 				))}
 			</div>
-		</div>
+		</section>
 	);
 }
 

@@ -200,8 +200,8 @@ export function CurrencyManager({ characterId }: { characterId: string }) {
 			<div className="space-y-3">
 				<div className="flex items-start justify-between gap-2 mb-4">
 					<p className="text-xs text-muted-foreground">
-						Track Bureau-issued Credits earned from contracts, salvage
-						exchange, and campaign rewards.
+						Track Bureau-issued Credits earned from contracts, salvage exchange,
+						and campaign rewards.
 					</p>
 					<Button
 						size="sm"

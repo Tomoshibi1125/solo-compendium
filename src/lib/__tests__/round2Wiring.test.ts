@@ -10,14 +10,14 @@
  */
 
 import { describe, expect, it } from "vitest";
+import type { CharacterFeature } from "@/hooks/useCharacterFeatures";
+import { featureEffectsToCustomModifiers } from "@/hooks/useCharacterFeatures";
 import {
 	type ActionResolutionPayload,
 	resolveAttack,
 } from "@/lib/actionResolution";
-import { hybridSearchQuery } from "@/lib/fullTextSearch";
-import { featureEffectsToCustomModifiers } from "@/hooks/useCharacterFeatures";
-import type { CharacterFeature } from "@/hooks/useCharacterFeatures";
 import { sumCustomModifiers } from "@/lib/customModifiers";
+import { hybridSearchQuery } from "@/lib/fullTextSearch";
 
 const mkFeature = (over: Partial<CharacterFeature>): CharacterFeature => ({
 	id: "feat-1",
@@ -104,9 +104,7 @@ describe("B4 — feat-effect → customModifier bridge", () => {
 
 	it("does not emit HP when the feature already authored an hp-max modifier", () => {
 		const feat = mkFeature({
-			modifiers: [
-				{ type: "hp-max", value: 99, source: "explicit" },
-			],
+			modifiers: [{ type: "hp-max", value: 99, source: "explicit" }],
 		});
 		const mods = featureEffectsToCustomModifiers([feat], 5);
 		// The preset hp_per_level is skipped to avoid double counting.

@@ -30,7 +30,7 @@ interface AscendantWindowProps {
 	onHeaderClick?: () => void;
 	/**
 	 * Visual density of the panel chrome. `full` (default) keeps the complete
-	 * System-Ascendant theme (backdrop blur, scan lines, animated shadow pulse,
+	 * Rift Ascendant theme (backdrop blur, scan lines, animated shadow pulse,
 	 * four large corner brackets). `compact` strips the heavy overlays and
 	 * uses a solid-ish background with only two small corner hints — intended
 	 * for nested stacked panels (VTT sidebars) where the full chrome hurts
@@ -124,7 +124,7 @@ export function AscendantWindow({
 				"relative border rounded-lg transition-all duration-300 w-full max-w-full",
 				isCompactDensity
 					? "bg-card/95 sw-root hover:border-open/50"
-					: "bg-gradient-to-br backdrop-blur-2xl sa-panel ascendant-panel hologram-flicker sw-root hover:border-open/50",
+					: "bg-gradient-to-br backdrop-blur-2xl ra-panel ascendant-panel hologram-flicker sw-root hover:border-open/50",
 				variantStyles[variant],
 				animated && !isCompactDensity && "animate-shadow-pulse",
 				id && "scroll-mt-4",

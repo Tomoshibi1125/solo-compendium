@@ -18,7 +18,12 @@
  * Pure module: no React, no Supabase, no DOM, no network.
  */
 
-export type EncounterDifficultyBand = "trivial" | "easy" | "fair" | "hard" | "deadly";
+export type EncounterDifficultyBand =
+	| "trivial"
+	| "easy"
+	| "fair"
+	| "hard"
+	| "deadly";
 
 export interface CombatantSnapshot {
 	id: string;
@@ -101,9 +106,11 @@ export function analyzeCombatRound(
 	else band = "fair";
 
 	let suggestedScale = 1;
-	if (band === "deadly") suggestedScale = 0.7; // soften remaining HP
+	if (band === "deadly")
+		suggestedScale = 0.7; // soften remaining HP
 	else if (band === "hard") suggestedScale = 0.85;
-	else if (band === "trivial") suggestedScale = 1.4; // beef up
+	else if (band === "trivial")
+		suggestedScale = 1.4; // beef up
 	else if (band === "easy") suggestedScale = 1.15;
 
 	const recommendation = buildRecommendation(
@@ -139,7 +146,6 @@ function buildRecommendation(
 			return `Bureau Field Calibration: Party at ${partyPct}%, enemies down to ${enemyPct}%. A reinforcement wave or environmental hazard would restore pressure.`;
 		case "trivial":
 			return `Bureau Field Calibration: Party barely scratched (${partyPct}%) and enemies nearly cleared (${enemyPct}%). Consider adding a Sovereign-tier reinforcement or skipping to narrative resolution.`;
-		case "fair":
 		default:
 			return `Bureau Field Calibration: Encounter is tracking on-curve. No adjustment recommended.`;
 	}

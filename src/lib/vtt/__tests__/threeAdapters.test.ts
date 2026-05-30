@@ -29,9 +29,7 @@ describe("sceneToThreeDescriptor", () => {
 	it("converts wall pixel coords into grid units", () => {
 		const d = sceneToThreeDescriptor(
 			baseScene({
-				walls: [
-					{ id: "w1", x1: 0, y1: 0, x2: 100, y2: 0, type: "wall" },
-				],
+				walls: [{ id: "w1", x1: 0, y1: 0, x2: 100, y2: 0, type: "wall" }],
 			}),
 		);
 		expect(d.walls).toHaveLength(1);

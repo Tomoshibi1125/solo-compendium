@@ -17,10 +17,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useCharacterSheetState } from "@/hooks/useCharacterSheetState";
 import type { CalculatedStats } from "@/lib/5eCharacterCalculations";
-import {
-	type CustomAction,
-	resolveAction,
-} from "@/lib/customActions";
+import { type CustomAction, resolveAction } from "@/lib/customActions";
 import type { AbilityScore } from "@/types/core-rules";
 
 interface CustomActionsListProps {
@@ -123,7 +120,10 @@ export function CustomActionsList({
 																: "Other"}
 											</Badge>
 											{action.attackType && action.attackType !== "none" && (
-												<Badge variant="secondary" className="text-[10px] gap-1">
+												<Badge
+													variant="secondary"
+													className="text-[10px] gap-1"
+												>
 													<Swords className="w-3 h-3" />
 													{action.attackType}
 												</Badge>

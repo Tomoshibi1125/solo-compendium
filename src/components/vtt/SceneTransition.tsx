@@ -41,7 +41,9 @@ const clampDuration = (n: number) =>
 
 const prefersReducedMotion = () => {
 	if (typeof window === "undefined") return false;
-	return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+	return (
+		window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false
+	);
 };
 
 export function SceneTransition({
@@ -77,7 +79,7 @@ export function SceneTransition({
 
 	const total = clampDuration(durationMs);
 	const fadeSec = total / 3 / 1000;
-	const holdSec = total / 3 / 1000;
+	const _holdSec = total / 3 / 1000;
 
 	return (
 		<AnimatePresence>
@@ -93,7 +95,12 @@ export function SceneTransition({
 					exit={{ opacity: 0 }}
 					transition={{
 						duration: total / 1000,
-						times: [0, fadeSec / (total / 1000), 1 - fadeSec / (total / 1000), 1],
+						times: [
+							0,
+							fadeSec / (total / 1000),
+							1 - fadeSec / (total / 1000),
+							1,
+						],
 						ease: "easeInOut",
 					}}
 					className="pointer-events-none absolute inset-0 z-[60] flex items-center justify-center bg-gradient-to-b from-black via-black/95 to-black"

@@ -545,12 +545,16 @@ export function SpellsList({
 																		aria-label="Cast at level"
 																		className="h-8 rounded border bg-background text-xs px-1"
 																		value={
-																			upcastChoice[spell.id] ?? spell.spell_level
+																			upcastChoice[spell.id] ??
+																			spell.spell_level
 																		}
 																		onChange={(e) =>
 																			setUpcastChoice((prev) => ({
 																				...prev,
-																				[spell.id]: parseInt(e.target.value, 10),
+																				[spell.id]: parseInt(
+																					e.target.value,
+																					10,
+																				),
 																			}))
 																		}
 																	>

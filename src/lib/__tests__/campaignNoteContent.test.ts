@@ -54,7 +54,12 @@ describe("campaignNoteContent", () => {
 
 		expect(segments).toEqual([
 			{ kind: "text", content: "Alpha\n", id: "text-0" },
-			{ kind: "secret", label: "Warden Only", content: "Bravo", id: "secret-1" },
+			{
+				kind: "secret",
+				label: "Warden Only",
+				content: "Bravo",
+				id: "secret-1",
+			},
 			{ kind: "text", content: "\nCharlie", id: "text-2" },
 		]);
 	});

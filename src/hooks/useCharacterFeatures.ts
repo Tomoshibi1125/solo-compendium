@@ -9,7 +9,10 @@ import {
 	listLocalFeatures,
 	removeLocalFeature,
 } from "@/lib/guestStore";
-import { FEAT_EFFECT_PRESETS, type FeatureEffect } from "@/types/featureEffects";
+import {
+	FEAT_EFFECT_PRESETS,
+	type FeatureEffect,
+} from "@/types/featureEffects";
 
 /** Loosened FeatureEffect shape for rows that may carry an authored effects array. */
 type FeatureEffectLike = FeatureEffect;
@@ -309,9 +312,7 @@ export function featureEffectsToCustomModifiers(
 			switch (effect.kind) {
 				case "hp_per_level":
 					if (hasAuthoredHpMod) break;
-					result.push(
-						mkMod(feature, "hp-max", effect.value * characterLevel),
-					);
+					result.push(mkMod(feature, "hp-max", effect.value * characterLevel));
 					break;
 				case "hp_flat":
 					if (hasAuthoredHpMod) break;

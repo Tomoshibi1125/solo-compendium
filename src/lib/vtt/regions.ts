@@ -13,10 +13,7 @@
  * "Healing Spring".
  */
 import robustPointInPolygon from "robust-point-in-polygon";
-import type {
-	VTTRegionBehavior,
-	VTTRiftRegion,
-} from "@/types/vtt";
+import type { VTTRegionBehavior, VTTRiftRegion } from "@/types/vtt";
 
 /** Event emitted by a region's behavior. The host dispatches these. */
 export type RegionEffectEvent =
@@ -110,9 +107,7 @@ export function evaluateRiftRegionEntry(args: {
 	for (const region of args.regions) {
 		const inNow = pointInRegion(args.next, region.polygon);
 		if (!inNow) continue;
-		const wasIn = args.prev
-			? pointInRegion(args.prev, region.polygon)
-			: false;
+		const wasIn = args.prev ? pointInRegion(args.prev, region.polygon) : false;
 		if (wasIn) continue; // not a fresh entry
 		for (const behavior of region.behaviors) {
 			const event = behaviorToEvent(args.tokenId, region.id, behavior);

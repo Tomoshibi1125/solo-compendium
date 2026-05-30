@@ -22,8 +22,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PopOutButton } from "@/components/ui/PopOutButton";
-import { useLiveEncounterScaler } from "@/hooks/useLiveEncounterScaler";
-import { hooks } from "@/lib/hooks/registry";
 import { useToast } from "@/hooks/use-toast";
 import {
 	type Combatant as CombatantRow,
@@ -32,7 +30,9 @@ import {
 	useUpsertCombatants,
 } from "@/hooks/useCampaignCombat";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useLiveEncounterScaler } from "@/hooks/useLiveEncounterScaler";
 import type { Json } from "@/integrations/supabase/types";
+import { hooks } from "@/lib/hooks/registry";
 import { cn } from "@/lib/utils";
 import { rollMonsterInitiative } from "@/lib/vtt/initiative";
 
@@ -154,7 +154,8 @@ export function VTTInitiativePanel({
 	const lastAutoRollSessionIdRef = useRef<string | null | undefined>(undefined);
 
 	// Misty Pearl I5 — Bureau Field Calibration analyzer wires in here.
-	const { signal: scalerSignal, analyze: analyzeRound } = useLiveEncounterScaler();
+	const { signal: scalerSignal, analyze: analyzeRound } =
+		useLiveEncounterScaler();
 
 	// Auto-scroll active combatant into view when the turn advances.
 	useEffect(() => {

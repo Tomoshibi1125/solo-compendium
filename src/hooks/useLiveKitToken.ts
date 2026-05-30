@@ -64,9 +64,7 @@ export function useLiveKitToken(
 			});
 		} catch (e) {
 			setError(
-				e instanceof Error
-					? e
-					: new Error("Failed to mint LiveKit token"),
+				e instanceof Error ? e : new Error("Failed to mint LiveKit token"),
 			);
 		} finally {
 			setIsLoading(false);
