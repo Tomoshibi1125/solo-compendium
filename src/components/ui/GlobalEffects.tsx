@@ -263,7 +263,7 @@ export const GlobalEffects = () => {
 				<div className="ambient-glow-violet ambient-glow-3" />
 			</div>
 			{/* Rift Scan Line */}
-			{fx.enableScanline && <div className="rift-scan-line" />}
+			{/* Scanlines removed to favor the fully rendered background image */}
 		</>
 	);
 };

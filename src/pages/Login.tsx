@@ -114,20 +114,10 @@ export default function Login() {
 
 	return (
 		<div
-			className="min-h-screen bg-background flex items-center justify-center p-4"
+			className="min-h-screen bg-transparent flex items-center justify-center p-4"
 			data-ra-zone="auth"
 		>
-			{/* Background Art */}
-			<div
-				className="absolute inset-0 bg-cover bg-center opacity-15"
-				style={{ backgroundImage: "url('/ui-art/rift-gate-hero.png')" }}
-			/>
 
-			{/* Hex grid + data rain overlays */}
-			<div className="absolute inset-0 pointer-events-none">
-				<div className="absolute inset-0 hex-grid-overlay opacity-[0.03]" />
-				<div className="absolute inset-0 data-rain-overlay opacity-[0.02]" />
-			</div>
 
 			{/* Umbral Energy Effects */}
 			<div className="absolute inset-0 pointer-events-none">

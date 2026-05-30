@@ -6,10 +6,7 @@ import { useMemo } from "react";
  */
 export function RiftOverlay() {
 	// Prevents re-renders of the static overlay parts
-	const ScanLines = useMemo(
-		() => <div className="ascendant-overlay-scanlines" aria-hidden="true" />,
-		[],
-	);
+	const ScanLines = null;
 	const Grain = useMemo(
 		() => <div className="ascendant-overlay-grain" aria-hidden="true" />,
 		[],
@@ -21,7 +18,6 @@ export function RiftOverlay() {
 
 	return (
 		<>
-			{ScanLines}
 			{Grain}
 			{Chromatic}
 			{/* Subtle corner vignettes or other system decorations can be added here */}

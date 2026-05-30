@@ -87,7 +87,7 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 
 	// Responsive layout classes
 	const layoutClasses = cn(
-		"min-h-screen flex flex-col bg-background",
+		"min-h-screen flex flex-col bg-transparent",
 		isMobile && "mobile-layout",
 		isTablet && "tablet-layout",
 		isDesktop && "desktop-layout",
@@ -116,14 +116,7 @@ export function Layout({ children, className, fullBleed }: LayoutProps) {
 		<div className={cn(layoutClasses, "relative")} data-ra-zone={raZone}>
 			{/* Offline connectivity banner */}
 			<OfflineBanner />
-			{/* Global Cosmic Architecture */}
-			<div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-				<CosmicBackground
-					variant="shadow"
-					intensity="low"
-					animated={!reducedMotion}
-				/>
-			</div>
+			{/* Global Cosmic Architecture removed to avoid double rendering with App.tsx */}
 
 			<a
 				href="#main-content"

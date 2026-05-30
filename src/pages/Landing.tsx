@@ -38,11 +38,10 @@ const Landing = () => {
 	}, []);
 
 	return (
-		<div className="relative min-h-screen overflow-hidden bg-black text-white selection:bg-primary/30 selection:text-primary">
+		<div className="relative min-h-screen overflow-hidden bg-transparent text-white selection:bg-primary/30 selection:text-primary">
 			{/* Rift Initialization Overlay */}
 			{isInitializing && (
 				<div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black">
-					<div className="absolute inset-0 bg-[linear-gradient(rgba(155,109,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(155,109,255,0.05)_1px,transparent_1px)] bg-[size:20px_20px]" />
 					<div className="relative z-10 font-heading tracking-widest text-primary drop-shadow-[0_0_10px_currentColor] animate-pulse">
 						<RiftHeading
 							level={1}
@@ -61,8 +60,6 @@ const Landing = () => {
 					</div>
 				</div>
 			)}
-
-			<CosmicBackground variant="sovereign" intensity="high" animated />
 
 			{/* Enhanced Background Effects */}
 			<div className="absolute inset-0 pointer-events-none">
@@ -184,8 +181,8 @@ const Landing = () => {
 							<div className="relative">
 								<div className="absolute inset-0 bg-gate-national/20 blur-3xl animate-dimensional-pulse" />
 								<OptimizedImage
-									src="/ui-art/rift-gate-hero.png"
-									alt="Rift Ascendant — dimensional gates tearing through the city skyline"
+									src="/ui-art/gate-portal-3d.webp"
+									alt="Rift Gate Interface"
 									className="relative rounded-lg border border-gate-s/30 shadow-2xl shadow-gate-s/20"
 									size="large"
 								/>

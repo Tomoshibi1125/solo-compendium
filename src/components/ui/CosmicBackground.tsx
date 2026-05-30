@@ -269,17 +269,19 @@ export const CosmicBackground = ({
 		>
 			{/* ── Layer 1: RA Hero — atmospheric base ──────────────── */}
 			<div
-				className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+				className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
 				style={{
 					backgroundImage: "url('/ui-art/rift-gate-hero.png')",
 					opacity:
 						finalIntensity === "high"
-							? 0.14
+							? 0.75
 							: finalIntensity === "medium"
-								? 0.09
-								: 0.05,
+								? 0.6
+								: 0.4,
 				}}
 			/>
+			{/* Dark overlay to ensure text legibility */}
+			<div className="absolute inset-0 bg-black/40" />
 
 			{/* ── Layer 2: Canvas gate energy streams ──────────────── */}
 			<DynamicStyle
