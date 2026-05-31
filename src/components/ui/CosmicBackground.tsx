@@ -274,14 +274,14 @@ export const CosmicBackground = ({
 					backgroundImage: "url('/ui-art/rift-gate-hero.png')",
 					opacity:
 						finalIntensity === "high"
-							? 0.75
+							? 0.95
 							: finalIntensity === "medium"
-								? 0.6
-								: 0.4,
+								? 0.8
+								: 0.5,
 				}}
 			/>
 			{/* Dark overlay to ensure text legibility */}
-			<div className="absolute inset-0 bg-black/40" />
+			<div className="absolute inset-0 bg-black/20" />
 
 			{/* ── Layer 2: Canvas gate energy streams ──────────────── */}
 			<DynamicStyle
@@ -375,7 +375,7 @@ export const CosmicBackground = ({
 				className="absolute inset-0"
 				style={{
 					background:
-						"radial-gradient(ellipse at center, transparent 20%, hsl(var(--background) / 0.65) 65%, hsl(var(--background)) 100%)",
+						"radial-gradient(ellipse at center, transparent 40%, hsl(var(--background) / 0.5) 80%, hsl(var(--background)) 100%)",
 				}}
 			/>
 

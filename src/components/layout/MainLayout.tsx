@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { AppSidebar } from "@/components/navigation/AppSidebar";
 import { GlobalCharacterHUD } from "@/components/navigation/GlobalCharacterHUD";
 import { NavBar } from "@/components/navigation/NavBar";
-import { RiftOverlay } from "@/components/ui/RiftOverlay";
 import { cn } from "@/lib/utils";
 
 interface MainLayoutProps {
@@ -17,9 +16,7 @@ export function MainLayout({ children, className }: MainLayoutProps) {
 
 	return (
 		<div className="min-h-[100dvh] w-full flex bg-transparent selection:bg-primary/30 relative">
-			{/* Global System Visual Effects */}
-			<RiftOverlay />
-
+			{/* Global System Visual Effects handled by CosmicBackground + GlobalEffects in App.tsx */}
 			{/* Unified Sidebar (Rail/Drawer) */}
 			<AppSidebar />
 

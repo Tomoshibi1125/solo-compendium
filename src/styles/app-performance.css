@@ -162,10 +162,7 @@ img[loading="lazy"] {
 		transition: opacity 0.15s ease;
 	}
 
-	html body .holographic-flicker,
-	html body .ascendant-overlay-scanlines,
-	html body .ascendant-overlay-chromatic,
-	html body .ascendant-overlay-grain {
+	html body .holographic-flicker {
 		animation: none;
 		opacity: 0;
 	}
@@ -316,17 +313,11 @@ img[loading="lazy"] {
 	}
 }
 
-html[data-performance-tier="low"] .ascendant-overlay-scanlines,
-html[data-performance-tier="low"] .ascendant-overlay-grain,
-html[data-performance-tier="low"] .ascendant-overlay-chromatic,
 html[data-performance-tier="low"] .rift-scan-line {
 	display: none;
 }
 
 @media (pointer: coarse), (max-width: 767px) {
-	html body .ascendant-overlay-scanlines,
-	html body .ascendant-overlay-grain,
-	html body .ascendant-overlay-chromatic,
 	html body .rift-scan-line {
 		display: none;
 	}
@@ -344,10 +335,7 @@ html[data-performance-tier="low"] .rift-scan-line {
 /* ── 15. Print Optimization ──────────────────────────────────────────── */
 
 @media print {
-	/* Remove ALL decorative overlays */
-	html body .ascendant-overlay-scanlines,
-	html body .ascendant-overlay-chromatic,
-	html body .ascendant-overlay-grain,
+	/* Remove ALL decorative overlays and chrome */
 	html body .holographic-flicker,
 	html body nav,
 	html body header,
