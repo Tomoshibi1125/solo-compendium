@@ -78,8 +78,7 @@ export function useSessionReplay({
 		const load = async () => {
 			setIsLoading(true);
 			const query = supabase
-				// biome-ignore lint/suspicious/noExplicitAny: pre-typegen table
-				.from("campaign_session_events" as any)
+				.from("campaign_session_events" as never)
 				.select("*")
 				.eq("campaign_id", campaignId)
 				.order("created_at", { ascending: true })

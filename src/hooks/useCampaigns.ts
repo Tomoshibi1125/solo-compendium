@@ -834,8 +834,7 @@ export const useUpdateCampaign = () => {
 			}
 			const { data, error } = await supabase
 				.from("campaigns")
-				// biome-ignore lint/suspicious/noExplicitAny: see Misty Pearl E3 note above
-				.update(updatePayload as any)
+				.update(updatePayload as never)
 				.eq("id", campaignId)
 				.select()
 				.single();

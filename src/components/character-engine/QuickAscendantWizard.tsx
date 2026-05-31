@@ -166,12 +166,6 @@ export function QuickAscendantWizard({
 		}
 	}, [pathsForJob, selectedPathId]);
 
-	// Reset Path when Job changes.
-	// biome-ignore lint/correctness/useExhaustiveDependencies: intentional reset on Job change
-	useEffect(() => {
-		setSelectedPathId("");
-	}, [selectedJobId]);
-
 	// Auto-pick first Background.
 	useEffect(() => {
 		if (backgrounds.length > 0 && !selectedBackgroundId) {
@@ -362,7 +356,13 @@ export function QuickAscendantWizard({
 				<div className="space-y-4 py-2">
 					<div className="space-y-2">
 						<Label htmlFor="quick-job">Job</Label>
-						<Select value={selectedJobId} onValueChange={setSelectedJobId}>
+						<Select
+							value={selectedJobId}
+							onValueChange={(val) => {
+								setSelectedJobId(val);
+								setSelectedPathId("");
+							}}
+						>
 							<SelectTrigger
 								id="quick-job"
 								data-testid="quick-ascendant-job-select"

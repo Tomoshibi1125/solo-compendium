@@ -83,8 +83,7 @@ export function useFieldRoster() {
 		queryFn: async (): Promise<FieldRosterListing[]> => {
 			if (!isSupabaseConfigured) return [];
 			const { data, error } = await supabase
-				// biome-ignore lint/suspicious/noExplicitAny: view not yet in generated types
-				.from("campaigns_public_listings" as any)
+				.from("campaigns_public_listings" as never)
 				.select("id, name, share_code, public_listing, updated_at")
 				.order("updated_at", { ascending: false })
 				.limit(120);
