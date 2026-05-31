@@ -495,6 +495,28 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 				)}
 			</AscendantWindow>
 
+			{/* Weapon Choices (DDB-style "choose one" per group) */}
+			{data.weapon_choices && data.weapon_choices.length > 0 && (
+				<AscendantWindow title="WEAPON CHOICES">
+					<ul className="space-y-2">
+						{data.weapon_choices.map((group, i) => (
+							<li
+								key={`wc-${group.join("-")}`}
+								className="flex items-start gap-2"
+							>
+								<span className="text-primary font-heading">
+									({String.fromCharCode(97 + i)})
+								</span>
+								<span className="font-heading">
+									{group.length > 1 ? "Choose one: " : ""}
+									{group.map(formatRegentVernacular).join(" / ")}
+								</span>
+							</li>
+						))}
+					</ul>
+				</AscendantWindow>
+			)}
+
 			{/* Starting Equipment */}
 			{data.starting_equipment && data.starting_equipment.length > 0 && (
 				<AscendantWindow title="STARTING EQUIPMENT">

@@ -148,6 +148,12 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 	backgroundEquipment,
 }) => {
 	const [showAllStats, setShowAllStats] = useState(false);
+	// DDB-style weapon-loadout picks, keyed by weaponChoices group index. Kept
+	// local (the parent only owns startingEquipment choices); both fold into the
+	// staged loadout for display.
+	const [weaponChoicePicks, setWeaponChoicePicks] = useState<
+		Record<number, string>
+	>({});
 	const { data: canonicalEntries = [] } = useQuery({
 		queryKey: ["creation-canonical-equipment"],
 		queryFn: async () => {
@@ -430,6 +436,103 @@ export const EquipmentStep: React.FC<EquipmentStepProps> = ({
 					</div>
 				</div>
 			</AscendantWindow>
+
+			{/* Weapon Loadout — DDB-style canon weapon choices for this job */}
+			{staticJobData.weaponChoices &&
+				staticJobData.weaponChoices.length > 0 && (
+					<AscendantWindow title="MODEL ARMAMENT: WEAPON LOADOUT">
+						<AscendantText className="block text-sm text-muted-foreground italic pl-3 border-l-2 border-primary/30 mb-4">
+							Select your starting weapon for each slot, drawn from your model's
+							certified proficiencies.
+						</AscendantText>
+						<div className="space-y-4">
+							{staticJobData.weaponChoices.map(
+								(group: string[], groupIndex: number) => {
+									const chosen = weaponChoicePicks[groupIndex] ?? group[0];
+									return (
+										<div
+											key={`wpn-group-${group.join("-").replace(/\s/g, "")}`}
+											className="p-4 rounded-lg border border-primary/10 bg-black/40 space-y-3"
+										>
+											{group.length === 1 ? (
+												<div className="flex items-center gap-3">
+													<div className="w-1.5 h-1.5 rounded-full bg-primary" />
+													<span className="font-heading font-semibold text-sm text-primary/80">
+														{group[0]}
+													</span>
+													<CanonicalEquipmentDetails
+														matches={getCanonicalMatches(
+															chosen,
+															canonicalEntries,
+															canonicalByName,
+														)}
+														showAllStats={showAllStats}
+													/>
+												</div>
+											) : (
+												<div className="space-y-3">
+													<div className="flex justify-between items-center mb-1">
+														<Label className="text-[10px] uppercase tracking-widest text-primary/40 font-bold">
+															Weapon Selection
+														</Label>
+														<Badge
+															variant="outline"
+															className="text-[8px] uppercase tracking-tighter border-primary/20"
+														>
+															Select One
+														</Badge>
+													</div>
+													<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+														{group.map((option) => (
+															<button
+																key={option}
+																type="button"
+																onClick={() =>
+																	setWeaponChoicePicks((prev) => ({
+																		...prev,
+																		[groupIndex]: option,
+																	}))
+																}
+																className={cn(
+																	"text-left p-3 rounded border transition-all flex items-start gap-3",
+																	chosen === option
+																		? "border-primary/60 bg-primary/10 text-primary-foreground"
+																		: "border-primary/5 bg-black/40 text-muted-foreground hover:border-primary/20 hover:bg-black/60",
+																)}
+															>
+																<div
+																	className={cn(
+																		"w-3 h-3 rounded-full border flex-shrink-0 transition-all mt-0.5",
+																		chosen === option
+																			? "border-primary bg-primary scale-110"
+																			: "border-primary/20 bg-transparent",
+																	)}
+																/>
+																<div className="min-w-0">
+																	<span className="font-heading text-xs tracking-tight">
+																		{option}
+																	</span>
+																	<CanonicalEquipmentDetails
+																		matches={getCanonicalMatches(
+																			option,
+																			canonicalEntries,
+																			canonicalByName,
+																		)}
+																		showAllStats={showAllStats}
+																	/>
+																</div>
+															</button>
+														))}
+													</div>
+												</div>
+											)}
+										</div>
+									);
+								},
+							)}
+						</div>
+					</AscendantWindow>
+				)}
 		</div>
 	);
 };

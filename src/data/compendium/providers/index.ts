@@ -156,7 +156,7 @@ export interface StaticCompendiumEntry {
 	int?: number | null;
 	sense?: number | null;
 	pre?: number | null;
-	saving_throws?: Record<string, number> | null;
+	saving_throws?: string[] | Record<string, number> | null;
 	skills?: Record<string, number> | Record<string, Json> | null;
 	damage_vulnerabilities?: string[] | null;
 	damage_resistances?: string[] | null;
@@ -353,6 +353,12 @@ export interface StaticCompendiumEntry {
 	spell_attack?: Record<string, Json> | null;
 	area?: Record<string, Json> | null;
 	hit_dice?: string | null;
+	// Job display-detail aliases (compendium JobDetail page).
+	hp_at_level_1?: string | null;
+	hp_at_higher_levels?: string | null;
+	weapon_choices?: string[][] | null;
+	darkvision?: number | null;
+	specialSenses?: string[] | null;
 	progression_table?: Record<string, Json> | null;
 	dangers?: string[] | null;
 	suggested_characteristics?: Record<string, Json> | null;
@@ -582,6 +588,17 @@ type StaticJobSource = {
 	climb_speed?: number;
 	swim_speed?: number;
 	fly_speed?: number;
+	// Senses / defenses (snake_case in jobs.ts) consumed by JobDetail — passed
+	// through so the compendium page can render them.
+	darkvision?: number;
+	specialSenses?: string[];
+	damage_resistances?: string[];
+	damage_immunities?: string[];
+	condition_immunities?: string[];
+	// DDB-style weapon-choice groups (canon-derived; rendered read-only on the
+	// compendium page and interactively in the character builder).
+	weaponChoices?: string[][];
+	regentRequirements?: { quest_completion?: string; warden_approval?: boolean };
 	source?: string;
 };
 
@@ -1198,6 +1215,44 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		regent_prerequisites: null,
 		spellcasting_ability: job.spellcasting?.ability || null,
 		spellcasting_focus: job.spellcasting?.focus || null,
+		// ── Display-name aliases for the compendium JobDetail page ──────────────
+		// JobDetail reads these display names; the DB-shaped names above stay for
+		// the character builder/engine. Additive — no consumer loses a field.
+		hit_dice: rawHitDie || null,
+		saving_throws:
+			job.savingThrows || (legacyJob.saving_throws as string[]) || null,
+		hp_at_level_1:
+			job.hitPointsAtFirstLevel ||
+			(legacyJob.hitPointsAtFirstLevel as string) ||
+			null,
+		hp_at_higher_levels:
+			job.hitPointsAtHigherLevels ||
+			(legacyJob.hitPointsAtHigherLevels as string) ||
+			null,
+		regent_requirements:
+			job.regentRequirements ||
+			(legacyJob.regent_requirements as {
+				quest_completion?: string;
+				warden_approval?: boolean;
+			}) ||
+			null,
+		// Senses / defenses (passed through from the snake_case source fields).
+		darkvision: typeof job.darkvision === "number" ? job.darkvision : undefined,
+		specialSenses: job.specialSenses || null,
+		damage_resistances:
+			job.damage_resistances ||
+			(legacyJob.damage_resistances as string[]) ||
+			null,
+		damage_immunities:
+			job.damage_immunities ||
+			(legacyJob.damage_immunities as string[]) ||
+			null,
+		condition_immunities:
+			job.condition_immunities ||
+			(legacyJob.condition_immunities as string[]) ||
+			null,
+		// DDB-style weapon-choice groups (canon-derived in jobs.ts).
+		weapon_choices: job.weaponChoices || null,
 		awakening_features:
 			job.awakeningFeatures ||
 			(legacyJob.awakening_features as Array<{
@@ -1635,6 +1690,9 @@ function transformRegent(regent: StaticRegentSource): StaticCompendiumEntry {
 		regent_features: (regent.features as Array<Record<string, Json>>) || null,
 		regent_mechanics: (regent.mechanics as Record<string, Json>) || null,
 		regent_requirements: (regent.requirements as Record<string, Json>) || null,
+		// Display-name aliases for RegentDetail (reads `features`/`mechanics`).
+		features: (regent.features as Array<Record<string, Json>>) || null,
+		mechanics: (regent.mechanics as Record<string, Json>) || null,
 		// Derived 5e-style class features for all regents
 		class_features: classFeatures,
 	};

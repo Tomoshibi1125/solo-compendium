@@ -20,6 +20,9 @@ export interface Job extends AuthoritativeStaticJob {
 	skillChoices: string[];
 	armorProficiencies: string[];
 	weaponProficiencies: string[];
+	// DDB-style "choose one" weapon groups, derived from this job's canon
+	// weaponProficiencies + startingEquipment. Each inner array is one pick.
+	weaponChoices?: string[][];
 	tool_proficiencies: string[];
 	toolProficiencies?: string[];
 	awakeningFeatures: { name: string; description: string; level: number }[];
@@ -162,6 +165,10 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["All armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
+		weaponChoices: [
+			["Longsword", "Battleaxe", "Warhammer", "Greatsword"],
+			["Light Crossbow", "Javelin"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -405,6 +412,10 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
+		weaponChoices: [
+			["Greataxe", "Battleaxe", "Maul"],
+			["Handaxe", "Javelin"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -666,6 +677,11 @@ export const jobs: Job[] = [
 			"Rapiers",
 			"Shortswords",
 		],
+		weaponChoices: [
+			["Rapier", "Shortsword"],
+			["Shortbow", "Hand Crossbow"],
+			["Dagger"],
+		],
 		tool_proficiencies: ["Thieves' tools"],
 		awakeningFeatures: [
 			{
@@ -912,6 +928,10 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: [],
 		weaponProficiencies: ["Simple weapons", "Shortswords"],
+		weaponChoices: [
+			["Shortsword", "Handaxe"],
+			["Darts (10)", "Sling"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -1177,6 +1197,7 @@ export const jobs: Job[] = [
 			"Quarterstaffs",
 			"Light crossbows",
 		],
+		weaponChoices: [["Quarterstaff", "Dagger"]],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -1401,6 +1422,7 @@ export const jobs: Job[] = [
 			"Quarterstaffs",
 			"Light crossbows",
 		],
+		weaponChoices: [["Light Crossbow", "Dagger"], ["Quarterstaff"]],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -1653,6 +1675,10 @@ export const jobs: Job[] = [
 			"Quarterstaffs",
 			"Light crossbows",
 		],
+		weaponChoices: [
+			["Quarterstaff", "Dagger"],
+			["Sickle", "Light Crossbow"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -1878,6 +1904,10 @@ export const jobs: Job[] = [
 			"Sickles",
 			"Slings",
 			"Spears",
+		],
+		weaponChoices: [
+			["Spear", "Scimitar"],
+			["Mace", "Quarterstaff"],
 		],
 		tool_proficiencies: ["Herbalism kit"],
 		awakeningFeatures: [
@@ -2106,6 +2136,10 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["All armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
+		weaponChoices: [
+			["Longsword", "Warhammer", "Battleaxe"],
+			["Javelin", "Light Crossbow"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -2381,6 +2415,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons"],
+		weaponChoices: [["Handaxe", "Dagger"], ["Light Crossbow"]],
 		tool_proficiencies: [
 			"Thieves' tools",
 			"Tinker's tools",
@@ -2687,6 +2722,10 @@ export const jobs: Job[] = [
 			"Longswords",
 			"Rapiers",
 			"Shortswords",
+		],
+		weaponChoices: [
+			["Rapier", "Longsword", "Dagger"],
+			["Hand Crossbow", "Dagger"],
 		],
 		tool_proficiencies: ["Three musical instruments"],
 		awakeningFeatures: [
@@ -2998,6 +3037,10 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons"],
+		weaponChoices: [
+			["Mace", "Warhammer"],
+			["Light Crossbow", "Any simple weapon"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -3269,6 +3312,7 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor"],
 		weaponProficiencies: ["Simple weapons"],
+		weaponChoices: [["Any simple weapon", "Light Crossbow"], ["Dagger"]],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{
@@ -3597,6 +3641,10 @@ export const jobs: Job[] = [
 		],
 		armorProficiencies: ["Light armor", "Medium armor", "Shields"],
 		weaponProficiencies: ["Simple weapons", "Martial weapons"],
+		weaponChoices: [
+			["Two Shortswords", "Two Simple Melee Weapons"],
+			["Longbow", "Shortbow"],
+		],
 		tool_proficiencies: [],
 		awakeningFeatures: [
 			{

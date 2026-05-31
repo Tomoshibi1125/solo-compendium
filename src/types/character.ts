@@ -145,6 +145,7 @@ export interface StaticJob {
 	armor_proficiencies?: string[];
 	weaponProficiencies?: string[];
 	weapon_proficiencies?: string[];
+	weaponChoices?: string[][];
 	toolProficiencies?: string[];
 	tool_proficiencies?: string[];
 	skillChoices?: string[];

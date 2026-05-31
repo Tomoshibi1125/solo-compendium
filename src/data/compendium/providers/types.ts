@@ -53,7 +53,9 @@ export interface StaticCompendiumEntry {
 	int?: number | null;
 	sense?: number | null;
 	pre?: number | null;
-	saving_throws?: Record<string, number> | null;
+	// Jobs surface saving throws as a display array (["Intelligence","Vitality"]);
+	// statblocks elsewhere use the numeric record. Allow both.
+	saving_throws?: string[] | Record<string, number> | null;
 	skills?: Record<string, number> | Record<string, Json> | null;
 	damage_vulnerabilities?: string[] | null;
 	damage_resistances?: string[] | null;
@@ -203,6 +205,12 @@ export interface StaticCompendiumEntry {
 	spell_attack?: Record<string, Json> | null;
 	area?: Record<string, Json> | null;
 	hit_dice?: string | null;
+	// Job display-detail aliases (compendium JobDetail page).
+	hp_at_level_1?: string | null;
+	hp_at_higher_levels?: string | null;
+	darkvision?: number | null;
+	specialSenses?: string[] | null;
+	weapon_choices?: string[][] | null;
 	progression_table?: Record<string, Json> | null;
 	dangers?: string[] | null;
 	suggested_characteristics?: Record<string, Json> | null;

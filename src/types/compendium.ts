@@ -589,6 +589,8 @@ export interface CompendiumJob extends BaseCompendiumItem {
 	tool_proficiencies: string[];
 	armor_proficiencies: string[];
 	weapon_proficiencies: string[];
+	// DDB-style "choose one" weapon groups (canon-derived; rendered on JobDetail).
+	weapon_choices?: string[][];
 	skill_choices: string[];
 	type: string;
 	natural_weapons?: Array<{
