@@ -216,7 +216,7 @@ const DAMAGE_THEME_POLICIES: DamageThemePolicy[] = [
 		// "Annihilation" / "Erasure" / "Termination" omitted: they denote
 		// destruction in general (force/thunder/etc. are equally valid), not
 		// necrotic specifically.
-		pattern: /\b(Entropy|Decay|Rot|Wither|Siphon|Drain|Necrotic)\b/i,
+		pattern: /\b(Entropy|Decay|Rot|Wither|Siphon|Drain|Necrotic|Grave)\b/i,
 		expected: ["necrotic"],
 	},
 	{
@@ -246,6 +246,13 @@ const UTILITY_NAME_TOKENS: RegExp[] = [
 	/\b(lycanthrop|shapeshift|polymorph|transform)/i,
 	/\b(petrif|paralysis|stun|freeze mind)/i,
 ];
+
+// Explicit attack-verb name tokens. An ability named with one of these is
+// intentionally a damage ability (e.g. "Phase Strike", "Void Bolt"), so the
+// utility-name-with-damage heuristic must not flag it even when the name also
+// carries a movement/utility-flavored word such as "phase" or "step".
+const ATTACK_NAME_TOKENS =
+	/\b(strike|smite|bolt|blast|slash|stab|pierc|crush|shot|burst|lance|cleave|rend|barrage|volley|slam|sever|impale|skewer)\b/i;
 
 const DAMAGE_TYPE_PROFILE_REGEX =
 	/\b(fire|cold|lightning|thunder|necrotic|radiant|psychic|force|acid|poison|slashing|piercing|bludgeoning)\b/i;
@@ -688,6 +695,19 @@ function auditDamageThemeMismatch(
 	const damageType = collectDamageType(entry);
 	if (!damageType) return;
 
+	// Exemption for resistance sigils: they are intentionally themed as opposites
+	// of what they resist (e.g., Frost-Ward resists fire, Hearth-Fire resists cold).
+	// Check if the entry is a resistance sigil by looking at effect_description.
+	const effectDesc = getString(
+		(entry as { effect_description?: unknown }).effect_description,
+	);
+	const isResistanceSigil =
+		dataset === "sigils" &&
+		effectDesc !== null &&
+		(/Reduces all \w+ damage taken by/i.test(effectDesc) ||
+			/Grants Resistance to \w+ damage/i.test(effectDesc));
+	if (isResistanceSigil) return;
+
 	// Primary theme = the policy whose pattern matches earliest in the name.
 	// For compound names like "Frost Judgment" or "Night Storm" this anchors
 	// on the first word (Frost / Night) rather than a secondary theme word.
@@ -721,6 +741,9 @@ function auditUtilityWithDamage(
 	const name = getString(entry.name);
 	if (!name) return;
 	if (!hasDamageRoll(entry)) return;
+	// An explicit attack verb in the name (Strike, Bolt, Smite, ...) marks the
+	// ability as an intended damage option, so its damage roll is expected.
+	if (ATTACK_NAME_TOKENS.test(name)) return;
 	for (const token of UTILITY_NAME_TOKENS) {
 		if (token.test(name)) {
 			addIssue(issues, {

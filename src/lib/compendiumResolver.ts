@@ -29,6 +29,7 @@ import type {
 	CompendiumSpell,
 	CompendiumTattoo,
 	CompendiumTechnique,
+	CompendiumVehicle,
 } from "@/types/compendium";
 
 export const entryTypes = [
@@ -56,6 +57,7 @@ export const entryTypes = [
 	"deities",
 	"pantheon",
 	"npcs",
+	"vehicles",
 ] as const;
 
 export type EntryType = (typeof entryTypes)[number];
@@ -77,7 +79,8 @@ export type CompendiumEntity =
 	| CompendiumRelic
 	| CompendiumRune
 	| CompendiumSovereign
-	| CompendiumDeity;
+	| CompendiumDeity
+	| CompendiumVehicle;
 
 export type { StaticDataProvider };
 

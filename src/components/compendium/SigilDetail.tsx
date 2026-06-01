@@ -1,5 +1,7 @@
 import { BadgeCheck, Info, Shield, Zap } from "lucide-react";
+import type { DragEvent } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -12,9 +14,29 @@ interface SigilDetailProps {
 export const SigilDetail = ({ data }: SigilDetailProps) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 
+	const handleSigilDragStart = (e: DragEvent<HTMLDivElement>) => {
+		const dragData = {
+			type: "sigil",
+			id: data.id,
+			name: displayName,
+			rarity: data.rarity,
+			effect: data.effect_description,
+		};
+		e.dataTransfer.setData("application/json", JSON.stringify(dragData));
+		e.dataTransfer.effectAllowed = "copy";
+	};
+
 	return (
-		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-			<AscendantWindow className="relative overflow-hidden border-primary/20 bg-background/40 backdrop-blur-xl">
+		<div
+			className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700"
+			draggable
+			onDragStart={handleSigilDragStart}
+			data-testid="sigil-detail-draggable"
+		>
+			<AscendantWindow
+				className="relative overflow-hidden border-primary/20 bg-background/40 backdrop-blur-xl"
+				actions={<ShareToVTTButton itemType="Sigil" itemName={displayName} />}
+			>
 				<div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 				<div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
@@ -41,6 +63,11 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 								>
 									{data.rarity} Sigil
 								</Badge>
+								{data.source_book && (
+									<Badge variant="outline">
+										{formatRegentVernacular(data.source_book)}
+									</Badge>
+								)}
 								{data.tags?.map((tag) => (
 									<Badge
 										key={tag}
@@ -146,17 +173,30 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 				<div>
 					<AscendantWindow title="SOURCE" className="bg-background/20 h-full">
 						<div className="space-y-6">
-							<div className="flex items-start gap-4 p-4 rounded-xl bg-muted/20 border border-muted-foreground/10">
-								<Info className="w-5 h-5 text-muted-foreground mt-1" />
-								<div>
-									<h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-										Publication
+							{data.source_book && (
+								<div className="flex items-start gap-4 p-4 rounded-xl bg-muted/20 border border-muted-foreground/10">
+									<Info className="w-5 h-5 text-muted-foreground mt-1" />
+									<div>
+										<h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+											Publication
+										</h4>
+										<p className="text-sm font-medium">
+											{formatRegentVernacular(data.source_book)}
+										</p>
+									</div>
+								</div>
+							)}
+
+							{data.discovery_lore && (
+								<div className="space-y-2">
+									<h4 className="text-xs font-bold uppercase tracking-wider text-primary/60">
+										Discovery
 									</h4>
-									<p className="text-sm font-medium">
-										{data.source_book || "Unknown Source"}
+									<p className="text-xs text-muted-foreground leading-relaxed italic">
+										<AutoLinkText text={data.discovery_lore} />
 									</p>
 								</div>
-							</div>
+							)}
 
 							{data.lore && (
 								<div className="space-y-2">

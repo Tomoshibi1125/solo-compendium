@@ -19,14 +19,14 @@ export const techniques_core: CompendiumTechnique[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Standardized from a Guild Vanguard bracing drill used to anchor a collapsing front line.",
 			curse: "",
-			personality: "Neutral in personality profile.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
+			personality:
+				"Steadfast; it settles the wielder's stance before a blow lands.",
+			current_owner: "Drilled into vanguard and shield-line specialists.",
+			prior_owners: ["The Bulwark Company", "Bureau Shared-Materiel Archive"],
 		},
-		flavor: "An entry in the Ascendant Bureau's approved catalog.",
+		flavor: "Take the hit so the line doesn't break.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
@@ -81,20 +81,21 @@ export const techniques_core: CompendiumTechnique[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Reconstructed from a Stalker infiltration kata for slipping a guarded perimeter.",
 			curse: "",
-			personality: "Neutral in personality profile.",
+			personality:
+				"Restless; the wielder's outline blurs a half-second before they move.",
 			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
+				"Practiced by skirmishers who fight where the ground won't cooperate.",
+			prior_owners: ["The Driftstep School", "Bureau Shared-Materiel Archive"],
 		},
-		flavor: "An entry in the Ascendant Bureau's approved catalog.",
+		flavor: "Here, then there. The wall was a suggestion.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary: "Creatures near the path save to retain their reactions.",
 		},
 		type: "Combat Arts",
 		style: "Guild Vanguard",
@@ -111,9 +112,11 @@ export const techniques_core: CompendiumTechnique[] = [
 			lattice_interaction: "Body-lattice synchronization",
 			saving_throw: {
 				ability: "Agility",
-				dc: 8,
-				success: "Half damage",
-				failure: "Full damage",
+				dc: 15,
+				success:
+					"Retains its reaction and may take opportunity attacks normally.",
+				failure:
+					"Cannot take opportunity attacks against the caster during the walk.",
 			},
 		},
 		limitations: {
@@ -144,21 +147,25 @@ export const techniques_core: CompendiumTechnique[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Developed at the Academy of High Magic as a specialized interposition technique for close-quarters Gate defense.",
 			curse:
 				"Prolonged wielders report hearing a second heartbeat that doesn't match their own.",
-			personality: "Neutral in personality profile.",
+			personality: "Protective; flares when allies take damage nearby.",
 			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
+				"Assigned to Bureau front-line Vanguard squads for active Gate deployment.",
+			prior_owners: [
+				"Academy of High Magic Combat Division",
+				"Bureau Front-Line Archives",
+			],
 		},
-		flavor: "A tuned release of accumulated resonance.",
+		flavor: "She didn't dodge. She stepped in front.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary:
+				"The attacker remains focused on the primary target if the maneuver fails.",
 		},
 		type: "Combat Arts",
 		style: "Guild Vanguard",
@@ -175,9 +182,9 @@ export const techniques_core: CompendiumTechnique[] = [
 			lattice_interaction: "Ki-channeled strike",
 			saving_throw: {
 				ability: "Strength",
-				dc: 12,
-				success: "No effect",
-				failure: "Full damage and prone",
+				dc: 15,
+				success: "Resolves its attack normally against the original target.",
+				failure: "Has disadvantage on its next attack roll this turn.",
 			},
 		},
 		limitations: {

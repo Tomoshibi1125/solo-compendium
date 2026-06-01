@@ -111,6 +111,7 @@ const categories = [
 	{ id: "artifacts", name: "Artifacts", icon: Crown },
 	{ id: "equipment", name: "Equipment", icon: Swords },
 	{ id: "items", name: "Items", icon: Package },
+	{ id: "vehicles", name: "Vehicles & Mounts", icon: ArrowUpDown },
 	{ id: "tattoos", name: "Tattoos", icon: Heart },
 	{ id: "pantheon", name: "Pantheon", icon: Crown },
 	{ id: "locations", name: "Locations", icon: MapPin },

@@ -149,8 +149,25 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 	const rarityStyle = item.rarity
 		? rarityStyles[item.rarity.toLowerCase()]
 		: undefined;
-	const weapon = item.properties?.weapon;
-	const magical = item.properties?.magical;
+	// Static-data items expose combat stats as top-level canonical fields
+	// (damage / damage_type / weapon_type / armor_class / armor_type), while
+	// DB-shaped items nest them under properties.weapon / properties.magical.
+	// Read both so authored data always renders instead of showing blanks.
+	const nestedProperties =
+		item.properties && !Array.isArray(item.properties) ? item.properties : null;
+	const weaponDamage =
+		nestedProperties?.weapon?.damage ??
+		(item.damage !== null && item.damage !== undefined
+			? String(item.damage)
+			: undefined);
+	const weaponDamageType =
+		nestedProperties?.weapon?.damageType ?? item.damage_type ?? undefined;
+	const weapon: NonNullable<ItemData["properties"]>["weapon"] =
+		nestedProperties?.weapon ??
+		(weaponDamage || item.weapon_type
+			? { damage: weaponDamage, damageType: weaponDamageType }
+			: undefined);
+	const magical = nestedProperties?.magical;
 	const rulesIdentity = getMechanicsRecord(item.mechanics, "identity");
 	const rulesAction = getMechanicsRecord(item.mechanics, "action_economy");
 	const rulesTargeting = getMechanicsRecord(item.mechanics, "targeting");
@@ -357,6 +374,24 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 						)}
 					</AscendantWindow>
 				)}
+				{(item.armor_class !== null && item.armor_class !== undefined) ||
+				item.armor_type ? (
+					<AscendantWindow title="ARMOR CLASS" compact>
+						<div className="flex items-center gap-2">
+							<Shield className="w-5 h-5 text-blue-400" />
+							<span className="font-heading">
+								{item.armor_class !== null && item.armor_class !== undefined
+									? String(item.armor_class)
+									: "—"}
+							</span>
+						</div>
+						{item.armor_type && (
+							<span className="text-xs text-muted-foreground">
+								{formatRegentVernacular(String(item.armor_type))}
+							</span>
+						)}
+					</AscendantWindow>
+				) : null}
 			</div>
 
 			{data.requirements && (

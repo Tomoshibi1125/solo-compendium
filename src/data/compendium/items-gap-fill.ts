@@ -7,6 +7,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_0",
 		name: "Tactical Crystal Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "common",
 		type: "amulet",
@@ -124,6 +125,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_1",
 		name: "Cadet's Stone Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "common",
@@ -235,6 +237,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_2",
 		name: "Inspector's Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "common",
 		type: "amulet",
@@ -352,6 +355,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_3",
 		name: "Modern Lattice Pendant",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "common",
@@ -472,6 +476,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_4",
 		name: "Issue-Standard Crystal Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "An amulet sealed against ambient lattice-bleed.",
 		rarity: "common",
 		type: "amulet",
@@ -584,6 +589,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_5",
 		name: "Inspector's Lattice Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "common",
 		type: "amulet",
@@ -703,6 +709,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_6",
 		name: "Bureau-Stamped Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "An amulet sealed against ambient lattice-bleed.",
 		rarity: "common",
 		type: "amulet",
@@ -814,6 +821,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_common_7",
 		name: "Inspector's Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "common",
 		type: "amulet",
@@ -931,6 +939,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_0",
 		name: "Renegade Necklace",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "uncommon",
@@ -1052,6 +1061,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_1",
 		name: "Mana-Treated Cord Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "uncommon",
@@ -1175,6 +1185,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_2",
 		name: "Decorated Charm",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -1295,6 +1306,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_3",
 		name: "Black-Market Amulet",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "uncommon",
@@ -1416,6 +1428,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_4",
 		name: "Reclaimed Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -1536,6 +1549,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_5",
 		name: "Mana-Treated Necklace",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -1658,6 +1672,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_6",
 		name: "Custom-Forged Bone Pendant",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "uncommon",
@@ -1781,6 +1796,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_7",
 		name: "Reissue Pendant",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "uncommon",
@@ -1901,6 +1917,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_8",
 		name: "Salvaged Mana Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -2023,6 +2040,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_9",
 		name: "Custom-Forged Cord Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "uncommon",
@@ -2144,6 +2162,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_10",
 		name: "Hardened Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -2264,6 +2283,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_11",
 		name: "Lattice-Stable Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -2387,6 +2407,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_12",
 		name: "Sworn Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "An amulet sealed against ambient lattice-bleed.",
 		rarity: "uncommon",
 		type: "amulet",
@@ -2507,6 +2528,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_uncommon_13",
 		name: "Field-Tested Talisman",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "uncommon",
@@ -2628,6 +2650,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_0",
 		name: "Stormcaller Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "rare",
 		type: "amulet",
@@ -2777,6 +2800,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_1",
 		name: "Frost Mana Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "rare",
 		type: "amulet",
@@ -2926,6 +2950,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_2",
 		name: "Sanguine Sigil Amulet",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "rare",
 		type: "amulet",
@@ -3076,6 +3101,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_3",
 		name: "Oathbound Locket",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "rare",
@@ -3222,6 +3248,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_4",
 		name: "Frost Cord Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "rare",
@@ -3372,6 +3399,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_5",
 		name: "Aetheric Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "rare",
 		type: "amulet",
@@ -3521,6 +3549,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_6",
 		name: "Lightseeker's Crystal Pendant",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "rare",
@@ -3668,6 +3697,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_7",
 		name: "Skyveil Crystal Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A simple pendant that becomes anything but, once attuned.",
 		rarity: "rare",
 		type: "amulet",
@@ -3813,6 +3843,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_8",
 		name: "Wraithtouched Stone Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "rare",
@@ -3960,6 +3991,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_9",
 		name: "Tempered Lattice Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "rare",
 		type: "amulet",
@@ -4110,6 +4142,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_10",
 		name: "Manaforged Talisman",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "rare",
 		type: "amulet",
@@ -4259,6 +4292,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_11",
 		name: "Ember Talisman",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "rare",
 		type: "amulet",
@@ -4408,6 +4442,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_12",
 		name: "Shadow Necklace",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "rare",
@@ -4558,6 +4593,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_rare_13",
 		name: "Lunar Cord Charm",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "rare",
 		type: "amulet",
@@ -4704,6 +4740,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_0",
 		name: "Starlight Talisman",
+		source_book: "Rift Ascendant Canon",
 		description: "An amulet sealed against ambient lattice-bleed.",
 		rarity: "epic",
 		type: "amulet",
@@ -4853,6 +4890,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_1",
 		name: "Ascendant Stone Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn talisman whose sigil-work is older than the gates themselves.",
 		rarity: "epic",
@@ -5000,6 +5038,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_2",
 		name: "Sanctified Locket",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "epic",
@@ -5149,6 +5188,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_3",
 		name: "Apocalypse Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "epic",
 		type: "amulet",
@@ -5295,6 +5335,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_4",
 		name: "Wyrmflame Lattice Pendant",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "epic",
 		type: "amulet",
@@ -5444,6 +5485,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_5",
 		name: "Tempest Mana Locket",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "epic",
 		type: "amulet",
@@ -5594,6 +5636,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_6",
 		name: "Apocalypse Cord Charm",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "epic",
 		type: "amulet",
@@ -5740,6 +5783,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_epic_7",
 		name: "Eclipse Cord Charm",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-metal pendant balanced for sustained attunement.",
 		rarity: "epic",
 		type: "amulet",
@@ -5889,6 +5933,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_legendary_0",
 		name: "Echo of Origin Stone Charm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neck-worn focus that resonates lightly with the bearer's mana.",
 		rarity: "legendary",
@@ -6036,6 +6081,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_legendary_1",
 		name: "Regent-Slayer's Stone Charm",
+		source_book: "Rift Ascendant Canon",
 		description: "An amulet sealed against ambient lattice-bleed.",
 		rarity: "legendary",
 		type: "amulet",
@@ -6184,6 +6230,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_legendary_2",
 		name: "Genesis Stone Charm",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "legendary",
 		type: "amulet",
@@ -6330,6 +6377,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_amulet_legendary_3",
 		name: "Origin-Crowned Necklace",
+		source_book: "Rift Ascendant Canon",
 		description: "A pendant inscribed with a mana-stable sigil.",
 		rarity: "legendary",
 		type: "amulet",
@@ -6477,6 +6525,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_0",
 		name: "Trainee Rune Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "common",
@@ -6596,6 +6645,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_1",
 		name: "Modern Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "common",
 		type: "ring",
@@ -6713,6 +6763,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_2",
 		name: "Provisional Inset Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-cataloged ring linked to a single bearer at a time.",
 		rarity: "common",
 		type: "ring",
@@ -6831,6 +6882,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_3",
 		name: "Reinforced Twin Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "common",
 		type: "ring",
@@ -6949,6 +7001,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_4",
 		name: "Conscript's Loop",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "common",
@@ -7060,6 +7113,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_5",
 		name: "Bureau-Approved Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "common",
 		type: "ring",
@@ -7176,6 +7230,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_6",
 		name: "Patrol Loop",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "common",
 		type: "ring",
@@ -7285,6 +7340,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_common_7",
 		name: "Reinforced Rune Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "common",
@@ -7403,6 +7459,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_0",
 		name: "Lattice-Stable Stone Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "uncommon",
@@ -7527,6 +7584,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_1",
 		name: "Sworn Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "uncommon",
@@ -7646,6 +7704,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_2",
 		name: "Mana-Treated Rune Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "uncommon",
 		type: "ring",
@@ -7770,6 +7829,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_3",
 		name: "Mana-Treated Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "uncommon",
@@ -7894,6 +7954,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_4",
 		name: "Bonded Rune Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "uncommon",
 		type: "ring",
@@ -8013,6 +8074,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_5",
 		name: "Black-Market Twin Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-cataloged ring linked to a single bearer at a time.",
 		rarity: "uncommon",
 		type: "ring",
@@ -8133,6 +8195,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_6",
 		name: "Veteran Signet",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "uncommon",
@@ -8254,6 +8317,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_7",
 		name: "Specialist's Stone Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "uncommon",
 		type: "ring",
@@ -8374,6 +8438,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_8",
 		name: "Field-Tested Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "uncommon",
 		type: "ring",
@@ -8492,6 +8557,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_9",
 		name: "Salvaged Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "uncommon",
@@ -8613,6 +8679,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_10",
 		name: "Mana-Treated Sealed Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "uncommon",
 		type: "ring",
@@ -8736,6 +8803,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_11",
 		name: "Decorated Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "uncommon",
@@ -8857,6 +8925,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_12",
 		name: "Sworn Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "uncommon",
 		type: "ring",
@@ -8977,6 +9046,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_13",
 		name: "Black-Market Stone Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "uncommon",
 		type: "ring",
@@ -9097,6 +9167,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_14",
 		name: "Sanctioned Inset Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "uncommon",
 		type: "ring",
@@ -9217,6 +9288,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_15",
 		name: "Black-Market Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "uncommon",
@@ -9337,6 +9409,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_16",
 		name: "Mana-Treated Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "uncommon",
 		type: "ring",
@@ -9461,6 +9534,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_uncommon_17",
 		name: "Adept's Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "uncommon",
@@ -9582,6 +9656,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_0",
 		name: "Tempered Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "rare",
 		type: "ring",
@@ -9727,6 +9802,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_1",
 		name: "Toxic Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A simple ring that rewards a Ascendant who knows what to look for.",
 		rarity: "rare",
@@ -9878,6 +9954,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_2",
 		name: "Shadow Bound Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "rare",
 		type: "ring",
@@ -10027,6 +10104,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_3",
 		name: "Sanguine Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "rare",
 		type: "ring",
@@ -10177,6 +10255,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_4",
 		name: "Umbral Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "rare",
 		type: "ring",
@@ -10326,6 +10405,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_5",
 		name: "Aetheric Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-cataloged ring linked to a single bearer at a time.",
 		rarity: "rare",
 		type: "ring",
@@ -10473,6 +10553,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_6",
 		name: "Crimson Loop",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "rare",
@@ -10624,6 +10705,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_7",
 		name: "Tempered Bound Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "rare",
 		type: "ring",
@@ -10770,6 +10852,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_8",
 		name: "Phantom Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "rare",
 		type: "ring",
@@ -10920,6 +11003,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_9",
 		name: "Glacial Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "rare",
@@ -11070,6 +11154,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_10",
 		name: "Lunar Twin Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "rare",
 		type: "ring",
@@ -11216,6 +11301,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_11",
 		name: "Glacial Twin Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "rare",
@@ -11365,6 +11451,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_12",
 		name: "Phantom Rune Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-cataloged ring linked to a single bearer at a time.",
 		rarity: "rare",
 		type: "ring",
@@ -11512,6 +11599,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_13",
 		name: "Phantom Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "rare",
 		type: "ring",
@@ -11662,6 +11750,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_14",
 		name: "Lightseeker's Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "rare",
@@ -11811,6 +11900,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_15",
 		name: "Stormcaller Inset Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "rare",
 		type: "ring",
@@ -11960,6 +12050,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_16",
 		name: "Oathbound Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "rare",
 		type: "ring",
@@ -12106,6 +12197,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_rare_17",
 		name: "Hexbound Bound Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "rare",
@@ -12254,6 +12346,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_0",
 		name: "Wyrmflame Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "epic",
@@ -12400,6 +12493,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_1",
 		name: "Inferno Loop",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "epic",
@@ -12550,6 +12644,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_2",
 		name: "Inferno Bound Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "epic",
@@ -12698,6 +12793,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_3",
 		name: "Resonant Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "epic",
@@ -12846,6 +12942,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_4",
 		name: "Worldbreaker's Mana Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "epic",
@@ -12994,6 +13091,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_5",
 		name: "Abyssal Mana Band",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "epic",
@@ -13142,6 +13240,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_6",
 		name: "Wyrmflame Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "epic",
 		type: "ring",
@@ -13289,6 +13388,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_7",
 		name: "Archon's Inset Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting band with mana-conductive tracery on the inner face.",
 		rarity: "epic",
@@ -13435,6 +13535,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_8",
 		name: "Apocalypse Crested Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "epic",
 		type: "ring",
@@ -13579,6 +13680,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_epic_9",
 		name: "Singularity Signet",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "epic",
 		type: "ring",
@@ -13725,6 +13827,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_legendary_0",
 		name: "World-Eater Sealed Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "legendary",
@@ -13871,6 +13974,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_legendary_1",
 		name: "Genesis Hammered Band",
+		source_book: "Rift Ascendant Canon",
 		description: "A worked-band ring fitted to the bearer at attunement.",
 		rarity: "legendary",
 		type: "ring",
@@ -14018,6 +14122,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_legendary_2",
 		name: "Doombound Inset Ring",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A signet ring used to identify the bearer to certain detectors.",
 		rarity: "legendary",
@@ -14168,6 +14273,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_ring_legendary_3",
 		name: "First-Awakened Bound Ring",
+		source_book: "Rift Ascendant Canon",
 		description: "A bound ring with a sigil etched along the inner band.",
 		rarity: "legendary",
 		type: "ring",
@@ -14315,6 +14421,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_0",
 		name: "Inspector's Holster",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-issue load belt sized for standard kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -14427,6 +14534,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_1",
 		name: "Service-Grade Sash",
+		source_book: "Rift Ascendant Canon",
 		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -14544,6 +14652,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_2",
 		name: "Reinforced Battle Strap",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty utility belt with quick-release attachment points.",
 		rarity: "common",
@@ -14659,6 +14768,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_3",
 		name: "Bureau-Issue Tactical Sash",
+		source_book: "Rift Ascendant Canon",
 		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -14776,6 +14886,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_4",
 		name: "Service Belt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard Ascendant combat belt with built-in holster compatibility.",
 		rarity: "common",
@@ -14889,6 +15000,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_common_5",
 		name: "Cadet's Combat Sash",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A miscellaneous piece of Ascendant Bureau quartermaster issue.",
 		rarity: "common",
@@ -15007,6 +15119,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_0",
 		name: "Hardened Holster",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty utility belt with quick-release attachment points.",
 		rarity: "uncommon",
@@ -15126,6 +15239,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_1",
 		name: "Sanctioned Tactical Sash",
+		source_book: "Rift Ascendant Canon",
 		description: "A field accessory. Cataloged but not classified.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -15245,6 +15359,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_2",
 		name: "Salvaged Buckled Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced combat sash with mana-stable buckle hardware.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -15364,6 +15479,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_3",
 		name: "Frontier Combat Belt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty utility belt with quick-release attachment points.",
 		rarity: "uncommon",
@@ -15483,6 +15599,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_4",
 		name: "Mana-Treated Operator Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-issue load belt sized for standard kit.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -15605,6 +15722,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_5",
 		name: "Renegade Webbing",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced belt with magnetic and physical clip points.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -15723,6 +15841,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_6",
 		name: "Field-Tested Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced belt with magnetic and physical clip points.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -15841,6 +15960,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_7",
 		name: "Sanctioned Sash",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard-issue accessory in any Bureau quartermaster's inventory.",
 		rarity: "uncommon",
@@ -15962,6 +16082,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_8",
 		name: "Decorated Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced combat sash with mana-stable buckle hardware.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -16081,6 +16202,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_uncommon_9",
 		name: "Frontier Cinch Belt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard Ascendant combat belt with built-in holster compatibility.",
 		rarity: "uncommon",
@@ -16201,6 +16323,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_0",
 		name: "Stargazer's Cinch Belt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty utility belt with quick-release attachment points.",
 		rarity: "rare",
@@ -16347,6 +16470,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_1",
 		name: "Hexbound Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced combat sash with mana-stable buckle hardware.",
 		rarity: "rare",
 		type: "wondrous",
@@ -16492,6 +16616,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_2",
 		name: "Voidtouched Combat Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-issue load belt sized for standard kit.",
 		rarity: "rare",
 		type: "wondrous",
@@ -16637,6 +16762,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_3",
 		name: "Skyveil Cinch Belt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty utility belt with quick-release attachment points.",
 		rarity: "rare",
@@ -16782,6 +16908,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_4",
 		name: "Phantom Battle Strap",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced combat sash with mana-stable buckle hardware.",
 		rarity: "rare",
 		type: "wondrous",
@@ -16929,6 +17056,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_5",
 		name: "Umbral Operator Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced belt with magnetic and physical clip points.",
 		rarity: "rare",
 		type: "wondrous",
@@ -17079,6 +17207,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_6",
 		name: "Frost Utility Belt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty utility belt with quick-release attachment points.",
 		rarity: "rare",
@@ -17228,6 +17357,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_rare_7",
 		name: "Umbral Combat Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced belt with magnetic and physical clip points.",
 		rarity: "rare",
 		type: "wondrous",
@@ -17375,6 +17505,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_epic_0",
 		name: "Crownbearer's Tactical Sash",
+		source_book: "Rift Ascendant Canon",
 		description: "A piece of Bureau-quartermastered field gear.",
 		rarity: "epic",
 		type: "wondrous",
@@ -17520,6 +17651,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_epic_1",
 		name: "Resonant Buckled Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced belt with magnetic and physical clip points.",
 		rarity: "epic",
 		type: "wondrous",
@@ -17666,6 +17798,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_epic_2",
 		name: "Doom-Forged Cinch Belt",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced belt with magnetic and physical clip points.",
 		rarity: "epic",
 		type: "wondrous",
@@ -17815,6 +17948,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_epic_3",
 		name: "Nebular Holster",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-issue load belt sized for standard kit.",
 		rarity: "epic",
 		type: "wondrous",
@@ -17960,6 +18094,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_legendary_0",
 		name: "Apex-Forged Sash",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard-issue accessory in any Bureau quartermaster's inventory.",
 		rarity: "legendary",
@@ -18106,6 +18241,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_belt_legendary_1",
 		name: "Regent's Combat Sash",
+		source_book: "Rift Ascendant Canon",
 		description: "A field accessory. Cataloged but not classified.",
 		rarity: "legendary",
 		type: "wondrous",
@@ -18253,6 +18389,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_common_0",
 		name: "Patrol Patrol Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "common",
 		type: "wondrous",
@@ -18370,6 +18507,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_common_1",
 		name: "Issue-Standard Footwraps",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "common",
 		type: "wondrous",
@@ -18479,6 +18617,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_common_2",
 		name: "Standard-Pattern Service Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "common",
@@ -18598,6 +18737,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_common_3",
 		name: "Service-Grade Marching Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Lightweight tactical footwear designed for extended gate operations.",
 		rarity: "common",
@@ -18717,6 +18857,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_common_4",
 		name: "Provisional Sprint Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "common",
 		type: "wondrous",
@@ -18835,6 +18976,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_common_5",
 		name: "Recruit's Service Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "common",
 		type: "wondrous",
@@ -18952,6 +19094,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_0",
 		name: "Veteran Tread Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Reinforced field boots with mana-treated soles for traction in lattice zones.",
 		rarity: "uncommon",
@@ -19071,6 +19214,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_1",
 		name: "Sanctioned Combat Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -19191,6 +19335,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_2",
 		name: "Veteran Service Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Reinforced field boots with mana-treated soles for traction in lattice zones.",
 		rarity: "uncommon",
@@ -19312,6 +19457,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_3",
 		name: "Lattice-Stable Tactical Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -19435,6 +19581,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_4",
 		name: "Hardened Stride Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "uncommon",
@@ -19555,6 +19702,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_5",
 		name: "Black-Market Marching Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -19676,6 +19824,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_6",
 		name: "Adept's Combat Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -19794,6 +19943,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_7",
 		name: "Renegade Marching Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "uncommon",
@@ -19916,6 +20066,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_8",
 		name: "Refit Footwraps",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -20034,6 +20185,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_uncommon_9",
 		name: "Decorated Field Greaves",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -20152,6 +20304,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_0",
 		name: "Glacial Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "rare",
 		type: "wondrous",
@@ -20302,6 +20455,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_1",
 		name: "Riftforged Tactical Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Reinforced field boots with mana-treated soles for traction in lattice zones.",
 		rarity: "rare",
@@ -20453,6 +20607,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_2",
 		name: "Crimson Footwraps",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "rare",
@@ -20601,6 +20756,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_3",
 		name: "Toxic Field Greaves",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Lightweight tactical footwear designed for extended gate operations.",
 		rarity: "rare",
@@ -20752,6 +20908,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_4",
 		name: "Hexbound Tread Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Reinforced field boots with mana-treated soles for traction in lattice zones.",
 		rarity: "rare",
@@ -20899,6 +21056,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_5",
 		name: "Lunar Footwraps",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "rare",
@@ -21046,6 +21204,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_6",
 		name: "Aetheric Footwraps",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "rare",
 		type: "wondrous",
@@ -21194,6 +21353,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_rare_7",
 		name: "Riftbound Patrol Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "rare",
@@ -21343,6 +21503,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_epic_0",
 		name: "Inferno Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "epic",
 		type: "wondrous",
@@ -21493,6 +21654,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_epic_1",
 		name: "Singularity Patrol Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "epic",
 		type: "wondrous",
@@ -21641,6 +21803,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_epic_2",
 		name: "Apocalypse Patrol Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Reinforced field boots with mana-treated soles for traction in lattice zones.",
 		rarity: "epic",
@@ -21786,6 +21949,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_epic_3",
 		name: "Nebular Sprint Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Combat boots issued by the Bureau quartermaster.",
 		rarity: "epic",
 		type: "wondrous",
@@ -21931,6 +22095,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_legendary_0",
 		name: "Cursed Combat Boots",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-grade boots reinforced at the ankle and instep for sustained gate work.",
 		rarity: "legendary",
@@ -22081,6 +22246,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_boots_legendary_1",
 		name: "Singular Boots",
+		source_book: "Rift Ascendant Canon",
 		description: "Stealth-treated combat boots with sound-dampening soles.",
 		rarity: "legendary",
 		type: "wondrous",
@@ -22228,6 +22394,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_common_0",
 		name: "Standard-Pattern Cloak",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "common",
@@ -22346,6 +22513,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_common_1",
 		name: "Standard-Pattern Regalia",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "common",
@@ -22464,6 +22632,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_common_2",
 		name: "Patrol Robe",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "common",
 		type: "wondrous",
@@ -22581,6 +22750,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_common_3",
 		name: "Patrol Mantle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "common",
@@ -22699,6 +22869,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_common_4",
 		name: "Patrol Field Garb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "common",
@@ -22818,6 +22989,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_common_5",
 		name: "Patrol Hood",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "common",
 		type: "wondrous",
@@ -22936,6 +23108,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_0",
 		name: "Custom-Forged Operator's Coat",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "uncommon",
@@ -23059,6 +23232,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_1",
 		name: "Refit Mantle",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -23179,6 +23353,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_2",
 		name: "Black-Market Ceremonial Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "uncommon",
@@ -23301,6 +23476,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_3",
 		name: "Mana-Treated Regalia",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "uncommon",
@@ -23425,6 +23601,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_4",
 		name: "Renegade Greatcoat",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -23545,6 +23722,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_5",
 		name: "Reclaimed Field Garb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "uncommon",
@@ -23666,6 +23844,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_6",
 		name: "Hardened Field Garb",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -23787,6 +23966,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_7",
 		name: "Lattice-Stable Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "uncommon",
@@ -23911,6 +24091,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_8",
 		name: "Refit Hood",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "uncommon",
@@ -24033,6 +24214,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_9",
 		name: "Sanctioned Regalia",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "uncommon",
@@ -24154,6 +24336,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_10",
 		name: "Adept's Ascendant's Mantle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "uncommon",
@@ -24276,6 +24459,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_uncommon_11",
 		name: "Sworn Operator's Coat",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "uncommon",
@@ -24397,6 +24581,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_0",
 		name: "Skyveil Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -24544,6 +24729,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_1",
 		name: "Tempered Mantle",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "rare",
 		type: "wondrous",
@@ -24691,6 +24877,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_2",
 		name: "Umbral Mantle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -24841,6 +25028,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_3",
 		name: "Shadow Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -24992,6 +25180,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_4",
 		name: "Lightseeker's Cloak",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -25139,6 +25328,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_5",
 		name: "Voidtouched Hooded Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "rare",
@@ -25287,6 +25477,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_6",
 		name: "Umbral Robe",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "rare",
 		type: "wondrous",
@@ -25437,6 +25628,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_7",
 		name: "Sanguine Field Garb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -25587,6 +25779,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_8",
 		name: "Ember Uniform",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -25738,6 +25931,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_rare_9",
 		name: "Stargazer's Operator's Coat",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "rare",
 		type: "wondrous",
@@ -25884,6 +26078,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_epic_0",
 		name: "Doom-Forged Operator's Coat",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "epic",
 		type: "wondrous",
@@ -26034,6 +26229,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_epic_1",
 		name: "Archon's Mantle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "epic",
@@ -26181,6 +26377,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_epic_2",
 		name: "Cataclysmic Robe",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "epic",
 		type: "wondrous",
@@ -26327,6 +26524,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_epic_3",
 		name: "Abyssal Hooded Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "epic",
@@ -26477,6 +26675,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_epic_4",
 		name: "Tempest Hood",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "epic",
@@ -26628,6 +26827,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_legendary_0",
 		name: "Dawnbringer's Ceremonial Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "legendary",
@@ -26776,6 +26976,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_attire_legendary_1",
 		name: "First-Awakened Cloak",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "legendary",
@@ -26924,6 +27125,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_common_0",
 		name: "Service-Grade Wristguard",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "common",
@@ -27043,6 +27245,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_common_1",
 		name: "Inspector's Patrol Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "common",
 		type: "wondrous",
@@ -27160,6 +27363,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_common_2",
 		name: "Modern Forearm Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "common",
@@ -27276,6 +27480,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_common_3",
 		name: "Trainee Hardened Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "common",
 		type: "wondrous",
@@ -27391,6 +27596,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_0",
 		name: "Frontier Hardened Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -27511,6 +27717,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_1",
 		name: "Refit Forearm Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wrist-worn focus and protective plate combined into one piece.",
 		rarity: "uncommon",
@@ -27632,6 +27839,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_2",
 		name: "Sworn Sigil Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -27752,6 +27960,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_3",
 		name: "Adept's Patrol Bracer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wrist-worn focus and protective plate combined into one piece.",
 		rarity: "uncommon",
@@ -27873,6 +28082,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_4",
 		name: "Refit Hardened Bracer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wrist-worn focus and protective plate combined into one piece.",
 		rarity: "uncommon",
@@ -27994,6 +28204,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_5",
 		name: "Renegade Forearm Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "uncommon",
@@ -28114,6 +28325,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_6",
 		name: "Field-Tested Cuff",
+		source_book: "Rift Ascendant Canon",
 		description: "A field accessory. Cataloged but not classified.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -28233,6 +28445,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_uncommon_7",
 		name: "Black-Market Forearm Plate",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -28354,6 +28567,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_rare_0",
 		name: "Shadow Sigil Bracer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
@@ -28505,6 +28719,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_rare_1",
 		name: "Frost Bracer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
@@ -28655,6 +28870,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_rare_2",
 		name: "Tempered Combat Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "rare",
 		type: "wondrous",
@@ -28801,6 +29017,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_rare_3",
 		name: "Umbral Hardened Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "rare",
 		type: "wondrous",
@@ -28951,6 +29168,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_rare_4",
 		name: "Aetheric Forearm Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
@@ -29102,6 +29320,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_rare_5",
 		name: "Tempered Bracer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "rare",
@@ -29250,6 +29469,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_epic_0",
 		name: "Doom-Forged Sigil Bracer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wrist-worn focus and protective plate combined into one piece.",
 		rarity: "epic",
@@ -29401,6 +29621,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_epic_1",
 		name: "Nebular Sigil Bracer",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "epic",
 		type: "wondrous",
@@ -29547,6 +29768,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_bracer_epic_2",
 		name: "Hierophant's Wristguard",
+		source_book: "Rift Ascendant Canon",
 		description: "A reinforced bracer with mild armor weave on the inner face.",
 		rarity: "epic",
 		type: "wondrous",
@@ -29693,6 +29915,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_0",
 		name: "Patrol Gate Atlas",
+		source_book: "Rift Ascendant Canon",
 		description: "A small piece of standard Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -29810,6 +30033,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_1",
 		name: "Patrol Chart",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A schematic with overlay support for lattice-stress fault lines.",
 		rarity: "common",
@@ -29929,6 +30153,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_2",
 		name: "Modern Gate Atlas",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A miscellaneous piece of Ascendant Bureau quartermaster issue.",
 		rarity: "common",
@@ -30041,6 +30266,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_3",
 		name: "Bureau-Approved Map",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A schematic with overlay support for lattice-stress fault lines.",
 		rarity: "common",
@@ -30159,6 +30385,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_4",
 		name: "Service-Grade Gate Atlas",
+		source_book: "Rift Ascendant Canon",
 		description: "A small piece of standard Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -30270,6 +30497,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_common_5",
 		name: "Standard-Pattern Survey Map",
+		source_book: "Rift Ascendant Canon",
 		description: "A folding atlas of cleared and contested gate sites.",
 		rarity: "common",
 		type: "wondrous",
@@ -30387,6 +30615,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_uncommon_0",
 		name: "Renegade Recon Sheet",
+		source_book: "Rift Ascendant Canon",
 		description: "A field reference for gate-affected geography.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -30507,6 +30736,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_uncommon_1",
 		name: "Refit Schematic",
+		source_book: "Rift Ascendant Canon",
 		description: "A field reference for gate-affected geography.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -30627,6 +30857,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_uncommon_2",
 		name: "Reclaimed Layout Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A schematic with overlay support for lattice-stress fault lines.",
 		rarity: "uncommon",
@@ -30749,6 +30980,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_uncommon_3",
 		name: "Lattice-Stable Recon Sheet",
+		source_book: "Rift Ascendant Canon",
 		description: "A field reference for gate-affected geography.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -30873,6 +31105,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_rare_0",
 		name: "Riftbound Layout Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A schematic with overlay support for lattice-stress fault lines.",
 		rarity: "rare",
@@ -31023,6 +31256,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_navigation_rare_1",
 		name: "Hexbound Survey Map",
+		source_book: "Rift Ascendant Canon",
 		description: "A map or chart with Bureau-cataloged terrain notations.",
 		rarity: "rare",
 		type: "wondrous",
@@ -31169,6 +31403,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_common_0",
 		name: "Recruit's Bullseye Lantern",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat-grade flashlight with extended-burn battery.",
 		rarity: "common",
 		type: "wondrous",
@@ -31286,6 +31521,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_common_1",
 		name: "Bureau-Stamped Hooded Lantern",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec illuminator with a wide-beam optic and recharge port.",
 		rarity: "common",
@@ -31405,6 +31641,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_common_2",
 		name: "Bureau-Stamped Lamp",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat-grade flashlight with extended-burn battery.",
 		rarity: "common",
 		type: "wondrous",
@@ -31522,6 +31759,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_common_3",
 		name: "Inspector's Lantern",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec illuminator with a wide-beam optic and recharge port.",
 		rarity: "common",
@@ -31641,6 +31879,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_common_4",
 		name: "Bureau-Issue Pocket Lantern",
+		source_book: "Rift Ascendant Canon",
 		description: "A handheld lamp tuned to cut through anomaly fog.",
 		rarity: "common",
 		type: "wondrous",
@@ -31759,6 +31998,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_common_5",
 		name: "Field-Issue Glow Rod",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "common",
@@ -31890,6 +32130,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_uncommon_0",
 		name: "Specialist's Tactical Light",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat-grade flashlight with extended-burn battery.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -32010,6 +32251,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_uncommon_1",
 		name: "Adept's Tactical Light",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A handheld light source. Mana-stable in lattice-bleed environments.",
 		rarity: "uncommon",
@@ -32131,6 +32373,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_uncommon_2",
 		name: "Renegade Beacon Light",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-issue lantern. Reliable in any gate.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -32251,6 +32494,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_uncommon_3",
 		name: "Bonded Lamp",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A handheld light source. Mana-stable in lattice-bleed environments.",
 		rarity: "uncommon",
@@ -32372,6 +32616,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_rare_0",
 		name: "Voidtouched Beacon Light",
+		source_book: "Rift Ascendant Canon",
 		description: "A handheld lamp tuned to cut through anomaly fog.",
 		rarity: "rare",
 		type: "wondrous",
@@ -32519,6 +32764,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_light_rare_1",
 		name: "Riftbound Hooded Lantern",
+		source_book: "Rift Ascendant Canon",
 		description: "A handheld lamp tuned to cut through anomaly fog.",
 		rarity: "rare",
 		type: "wondrous",
@@ -32668,6 +32914,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_common_0",
 		name: "Inspector's Identification Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued credential. Grants identity verification at controlled checkpoints.",
 		rarity: "common",
@@ -32788,6 +33035,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_common_1",
 		name: "Provisional Credential",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An identification badge linked to a Ascendant's official record.",
 		rarity: "common",
@@ -32906,6 +33154,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_common_2",
 		name: "Reinforced Authentication Token",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-coded ID chip for use in lattice-secured facilities.",
 		rarity: "common",
@@ -33026,6 +33275,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_common_3",
 		name: "Bureau-Approved Credential",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A laminated identity tag stamped with the Ascendant Bureau seal.",
 		rarity: "common",
@@ -33146,6 +33396,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_uncommon_0",
 		name: "Bonded Badge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An identification badge linked to a Ascendant's official record.",
 		rarity: "uncommon",
@@ -33267,6 +33518,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_uncommon_1",
 		name: "Reclaimed ID Chip",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An identification badge linked to a Ascendant's official record.",
 		rarity: "uncommon",
@@ -33389,6 +33641,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_credential_uncommon_2",
 		name: "Field-Tested Insignia",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Ascendant's operating credential, valid in Bureau-controlled districts.",
 		rarity: "uncommon",
@@ -33511,6 +33764,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_common_0",
 		name: "Field-Issue Tracking Kit",
+		source_book: "Rift Ascendant Canon",
 		description: "A purpose-specific kit assembled by Bureau quartermasters.",
 		rarity: "common",
 		type: "wondrous",
@@ -33628,6 +33882,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_common_1",
 		name: "Service-Grade Tracking Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "common",
@@ -33746,6 +34001,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_common_2",
 		name: "Provisional Lattice Toolkit",
+		source_book: "Rift Ascendant Canon",
 		description: "A purpose-specific kit assembled by Bureau quartermasters.",
 		rarity: "common",
 		type: "wondrous",
@@ -33866,6 +34122,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_common_3",
 		name: "Bureau-Stamped Medical Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field kit with the Bureau's standard tooling for its intended purpose.",
 		rarity: "common",
@@ -33979,6 +34236,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_common_4",
 		name: "Recruit's Forensic Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "common",
@@ -34098,6 +34356,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_uncommon_0",
 		name: "Operative's Triage Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "uncommon",
@@ -34218,6 +34477,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_uncommon_1",
 		name: "Renegade Survival Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "uncommon",
@@ -34338,6 +34598,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_uncommon_2",
 		name: "Operative's Field Kit",
+		source_book: "Rift Ascendant Canon",
 		description: "A toolkit, complete and inspection-stamped.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -34458,6 +34719,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_uncommon_3",
 		name: "Field-Tested Breach Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field kit with the Bureau's standard tooling for its intended purpose.",
 		rarity: "uncommon",
@@ -34579,6 +34841,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_rare_0",
 		name: "Hexbound Breach Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A specialized kit, calibrated for Ascendant Bureau operational standards.",
 		rarity: "rare",
@@ -34727,6 +34990,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_kit_rare_1",
 		name: "Glacial Recovery Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued working kit, stamped with the Ascendant Bureau seal.",
 		rarity: "rare",
@@ -34877,6 +35141,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_common_0",
 		name: "Trainee Mana Sensor",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade recorder with mana-stable memory media.",
 		rarity: "common",
 		type: "wondrous",
@@ -34997,6 +35262,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_common_1",
 		name: "Field-Issue Receiver",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scanner used to detect mana traces and anomalous signatures.",
 		rarity: "common",
@@ -35113,6 +35379,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_common_2",
 		name: "Cadet's Tracking Drone",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A specialized field-electronics tool used in surveillance and trace-gathering work.",
 		rarity: "common",
@@ -35230,6 +35497,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_common_3",
 		name: "Standard-Pattern Recorder",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scanner used to detect mana traces and anomalous signatures.",
 		rarity: "common",
@@ -35349,6 +35617,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_common_4",
 		name: "Recruit's Diagnostic Tool",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A specialized field-electronics tool used in surveillance and trace-gathering work.",
 		rarity: "common",
@@ -35468,6 +35737,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_uncommon_0",
 		name: "Specialist's Spotter Lens",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scanner used to detect mana traces and anomalous signatures.",
 		rarity: "uncommon",
@@ -35590,6 +35860,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_uncommon_1",
 		name: "Specialist's Recorder",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A specialized field-electronics tool used in surveillance and trace-gathering work.",
 		rarity: "uncommon",
@@ -35713,6 +35984,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_uncommon_2",
 		name: "Custom-Forged Diagnostic Tool",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A specialized field-electronics tool used in surveillance and trace-gathering work.",
 		rarity: "uncommon",
@@ -35835,6 +36107,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_uncommon_3",
 		name: "Field-Tested Field Computer",
+		source_book: "Rift Ascendant Canon",
 		description: "A handheld surveillance or recording device.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -35956,6 +36229,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_uncommon_4",
 		name: "Hardened Spotter Lens",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scanner used to detect mana traces and anomalous signatures.",
 		rarity: "uncommon",
@@ -36078,6 +36352,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_rare_0",
 		name: "Manaforged Telemetry Device",
+		source_book: "Rift Ascendant Canon",
 		description: "A handheld surveillance or recording device.",
 		rarity: "rare",
 		type: "wondrous",
@@ -36229,6 +36504,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_rare_1",
 		name: "Ember Receiver",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field electronics kit calibrated for lattice-stable operation.",
 		rarity: "rare",
@@ -36380,6 +36656,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_rare_2",
 		name: "Ember Recorder",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade recorder with mana-stable memory media.",
 		rarity: "rare",
 		type: "wondrous",
@@ -36529,6 +36806,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_electronics_epic_0",
 		name: "Resonant Comm Set",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field electronics kit calibrated for lattice-stable operation.",
 		rarity: "epic",
@@ -36677,6 +36955,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_restraint_common_0",
 		name: "Provisional Mana Cuffs",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of restraints calibrated to suppress mana-bound bodily augmentation.",
 		rarity: "common",
@@ -36798,6 +37077,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_restraint_common_1",
 		name: "Service Manacles",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Bureau-graded handcuffs designed to hold up to A-rank Ascendants.",
 		rarity: "common",
@@ -36916,6 +37196,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_restraint_common_2",
 		name: "Standard-Pattern Binders",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Bureau-graded handcuffs designed to hold up to A-rank Ascendants.",
 		rarity: "common",
@@ -37035,6 +37316,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_restraint_uncommon_0",
 		name: "Sworn Ankle Cuffs",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of restraints calibrated to suppress mana-bound bodily augmentation.",
 		rarity: "uncommon",
@@ -37156,6 +37438,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_restraint_uncommon_1",
 		name: "Adept's Cuffs",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An ordinary piece of working gear. Logged on the manifest, valued in the field.",
 		rarity: "uncommon",
@@ -37277,6 +37560,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_restraint_rare_0",
 		name: "Hexbound Manacles",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A restraint device tuned to dampen the wearer's mana lattice.",
 		rarity: "rare",
@@ -37424,6 +37708,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_0",
 		name: "Field-Issue Spyglass",
+		source_book: "Rift Ascendant Canon",
 		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -37541,6 +37826,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_1",
 		name: "Reinforced Tether",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A multi-purpose field tool used in extraction and rappelling work.",
 		rarity: "common",
@@ -37659,6 +37945,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_2",
 		name: "Patrol Piton Set",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
@@ -37777,6 +38064,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_3",
 		name: "Cadet's Hand Mirror",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
@@ -37895,6 +38183,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_4",
 		name: "Bureau-Approved Chisel",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A general utility kit. Cordage, clips, anchors, and basic field tools.",
 		rarity: "common",
@@ -38013,6 +38302,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_5",
 		name: "Field-Issue Chisel",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A multi-purpose field tool used in extraction and rappelling work.",
 		rarity: "common",
@@ -38131,6 +38421,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_6",
 		name: "Bureau-Issue Mess Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
@@ -38249,6 +38540,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_7",
 		name: "Bureau-Issue Saw",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
@@ -38367,6 +38659,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_8",
 		name: "Reinforced Hammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive impact weapon balanced for sweeping strikes and structural breaks.",
 		rarity: "common",
@@ -38496,6 +38789,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_9",
 		name: "Modern Mess Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "common",
@@ -38614,6 +38908,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_10",
 		name: "Bureau-Stamped Whetstone",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A multi-purpose field tool used in extraction and rappelling work.",
 		rarity: "common",
@@ -38732,6 +39027,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_11",
 		name: "Field-Issue Rope",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A general utility kit. Cordage, clips, anchors, and basic field tools.",
 		rarity: "common",
@@ -38851,6 +39147,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_12",
 		name: "Bureau-Stamped Climbing Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A multi-purpose field tool used in extraction and rappelling work.",
 		rarity: "common",
@@ -38971,6 +39268,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_common_13",
 		name: "Reinforced Crowbar",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A general utility kit. Cordage, clips, anchors, and basic field tools.",
 		rarity: "common",
@@ -39089,6 +39387,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_0",
 		name: "Reclaimed Hand Mirror",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A general utility kit. Cordage, clips, anchors, and basic field tools.",
 		rarity: "uncommon",
@@ -39210,6 +39509,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_1",
 		name: "Veteran Hand Drill",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "uncommon",
@@ -39332,6 +39632,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_2",
 		name: "Refit Bedroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A multi-purpose field tool used in extraction and rappelling work.",
 		rarity: "uncommon",
@@ -39454,6 +39755,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_3",
 		name: "Frontier Hammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy maul with a Bureau-stamped haft and a head heavy enough to dent gate steel.",
 		rarity: "uncommon",
@@ -39586,6 +39888,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_4",
 		name: "Adept's Spyglass",
+		source_book: "Rift Ascendant Canon",
 		description: "A small piece of standard Ascendant kit.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -39706,6 +40009,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_uncommon_5",
 		name: "Sanctioned Hammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive impact weapon balanced for sweeping strikes and structural breaks.",
 		rarity: "uncommon",
@@ -39838,6 +40142,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_rare_0",
 		name: "Dreamfire Anchor Line",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "rare",
@@ -39985,6 +40290,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_utility_rare_1",
 		name: "Lunar Repel Rig",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-standard utility implement. Belongs in every Ascendant's go-bag.",
 		rarity: "rare",
@@ -40133,6 +40439,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_0",
 		name: "Standard-Pattern Quartermaster's Token",
+		source_book: "Rift Ascendant Canon",
 		description: "A piece of Bureau-quartermastered field gear.",
 		rarity: "common",
 		type: "wondrous",
@@ -40243,6 +40550,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_1",
 		name: "Conscript's Pocket Token",
+		source_book: "Rift Ascendant Canon",
 		description: "A field accessory. Cataloged but not classified.",
 		rarity: "common",
 		type: "wondrous",
@@ -40353,6 +40661,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_2",
 		name: "Field-Issue Quartermaster's Token",
+		source_book: "Rift Ascendant Canon",
 		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -40464,6 +40773,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_3",
 		name: "Service Quartermaster's Token",
+		source_book: "Rift Ascendant Canon",
 		description: "A miscellaneous item from the Bureau-supplied Ascendant kit.",
 		rarity: "common",
 		type: "wondrous",
@@ -40576,6 +40886,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_common_4",
 		name: "Trainee Marker",
+		source_book: "Rift Ascendant Canon",
 		description: "A piece of Bureau-quartermastered field gear.",
 		rarity: "common",
 		type: "wondrous",
@@ -40685,6 +40996,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_uncommon_0",
 		name: "Salvaged Service Coin",
+		source_book: "Rift Ascendant Canon",
 		description: "A small piece of standard Ascendant kit.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -40806,6 +41118,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_uncommon_1",
 		name: "Veteran Bureau Marker",
+		source_book: "Rift Ascendant Canon",
 		description: "A field accessory. Cataloged but not classified.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -40925,6 +41238,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_gear_misc_uncommon_2",
 		name: "Bonded Insignia",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued credential. Grants identity verification at controlled checkpoints.",
 		rarity: "uncommon",
@@ -41046,6 +41360,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_common_0",
 		name: "Modern Charge",
+		source_book: "Rift Ascendant Canon",
 		description: "A mana-charged explosive. Detonates on contact or fuse.",
 		rarity: "common",
 		type: "consumable",
@@ -41195,6 +41510,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_common_1",
 		name: "Conscript's Charge",
+		source_book: "Rift Ascendant Canon",
 		description: "A compact throwable explosive with a Bureau-coded fuse.",
 		rarity: "common",
 		type: "consumable",
@@ -41344,6 +41660,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_common_2",
 		name: "Tactical Mana Mine",
+		source_book: "Rift Ascendant Canon",
 		description: "A breach-class throwable for forced-entry operations.",
 		rarity: "common",
 		type: "consumable",
@@ -41493,6 +41810,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_common_3",
 		name: "Standard Bomb",
+		source_book: "Rift Ascendant Canon",
 		description: "A breach-class throwable for forced-entry operations.",
 		rarity: "common",
 		type: "consumable",
@@ -41632,6 +41950,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_common_4",
 		name: "Patrol Payload",
+		source_book: "Rift Ascendant Canon",
 		description: "A compact throwable explosive with a Bureau-coded fuse.",
 		rarity: "common",
 		type: "consumable",
@@ -41781,6 +42100,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_common_5",
 		name: "Cadet's Mana Mine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-yield throwable. Bureau-restricted to B-rank teams and above.",
 		rarity: "common",
@@ -41921,6 +42241,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_0",
 		name: "Salvaged Grenade",
+		source_book: "Rift Ascendant Canon",
 		description: "A breach-class throwable for forced-entry operations.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -42060,6 +42381,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_1",
 		name: "Reclaimed Frag Charge",
+		source_book: "Rift Ascendant Canon",
 		description: "A breach-class throwable for forced-entry operations.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -42210,6 +42532,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_2",
 		name: "Black-Market Concussion Grenade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A directional charge designed to clear cover and break anomaly formations.",
 		rarity: "uncommon",
@@ -42361,6 +42684,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_3",
 		name: "Salvaged Concussion Grenade",
+		source_book: "Rift Ascendant Canon",
 		description: "A compact throwable explosive with a Bureau-coded fuse.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -42511,6 +42835,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_4",
 		name: "Renegade Breach Charge",
+		source_book: "Rift Ascendant Canon",
 		description: "A high-yield ordnance round packaged for hand-delivery.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -42661,6 +42986,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_5",
 		name: "Custom-Forged Charge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-yield throwable. Bureau-restricted to B-rank teams and above.",
 		rarity: "uncommon",
@@ -42812,6 +43138,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_6",
 		name: "Sanctioned Concussion Grenade",
+		source_book: "Rift Ascendant Canon",
 		description: "A compact throwable explosive with a Bureau-coded fuse.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -42962,6 +43289,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_uncommon_7",
 		name: "Specialist's Lattice Bomb",
+		source_book: "Rift Ascendant Canon",
 		description: "A mana-charged explosive. Detonates on contact or fuse.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -43112,6 +43440,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_rare_0",
 		name: "Phantom Breach Charge",
+		source_book: "Rift Ascendant Canon",
 		description: "A breach-class throwable for forced-entry operations.",
 		rarity: "rare",
 		type: "consumable",
@@ -43264,6 +43593,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_rare_1",
 		name: "Skyveil Mana Mine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-yield throwable. Bureau-restricted to B-rank teams and above.",
 		rarity: "rare",
@@ -43415,6 +43745,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_rare_2",
 		name: "Sanguine Bomb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A directional charge designed to clear cover and break anomaly formations.",
 		rarity: "rare",
@@ -43566,6 +43897,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_rare_3",
 		name: "Toxic Detonator",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-yield throwable. Bureau-restricted to B-rank teams and above.",
 		rarity: "rare",
@@ -43719,6 +44051,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_rare_4",
 		name: "Toxic Charge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-yield throwable. Bureau-restricted to B-rank teams and above.",
 		rarity: "rare",
@@ -43872,6 +44205,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_rare_5",
 		name: "Umbral Smoke Charge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-yield throwable. Bureau-restricted to B-rank teams and above.",
 		rarity: "rare",
@@ -44017,6 +44351,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_epic_0",
 		name: "Worldbreaker's Mine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A force grenade tuned to disrupt anomaly cohesion in a small radius.",
 		rarity: "epic",
@@ -44168,6 +44503,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_epic_1",
 		name: "Nebular Smoke Charge",
+		source_book: "Rift Ascendant Canon",
 		description: "A high-yield ordnance round packaged for hand-delivery.",
 		rarity: "epic",
 		type: "consumable",
@@ -44318,6 +44654,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_epic_2",
 		name: "Cataclysmic Breach Charge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A force grenade tuned to disrupt anomaly cohesion in a small radius.",
 		rarity: "epic",
@@ -44470,6 +44807,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_grenade_legendary_0",
 		name: "Genesis Mine",
+		source_book: "Rift Ascendant Canon",
 		description: "A mana-charged explosive. Detonates on contact or fuse.",
 		rarity: "legendary",
 		type: "consumable",
@@ -44620,6 +44958,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_common_0",
 		name: "Standard Recall Beacon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bright-burn signal flare, mana-stable in lattice-bleed conditions.",
 		rarity: "common",
@@ -44757,6 +45096,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_common_1",
 		name: "Bureau-Issue Locator",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bright-burn signal flare, mana-stable in lattice-bleed conditions.",
 		rarity: "common",
@@ -44893,6 +45233,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_common_2",
 		name: "Bureau-Approved Flare",
+		source_book: "Rift Ascendant Canon",
 		description: "A signaling device. Burns on a single-use timer.",
 		rarity: "common",
 		type: "consumable",
@@ -45029,6 +45370,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_common_3",
 		name: "Issue-Standard Distress Beacon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-burn locator beacon. Standard kit for any Ascendant operating beyond comms.",
 		rarity: "common",
@@ -45166,6 +45508,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_common_4",
 		name: "Provisional Distress Beacon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bright-burn signal flare, mana-stable in lattice-bleed conditions.",
 		rarity: "common",
@@ -45303,6 +45646,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_uncommon_0",
 		name: "Veteran Locator",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bright-burn signal flare, mana-stable in lattice-bleed conditions.",
 		rarity: "uncommon",
@@ -45439,6 +45783,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_uncommon_1",
 		name: "Operative's Recall Beacon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-coded signal flare visible to Ascendant receivers within the operating area.",
 		rarity: "uncommon",
@@ -45576,6 +45921,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_uncommon_2",
 		name: "Field-Tested Recall Beacon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-burn locator beacon. Standard kit for any Ascendant operating beyond comms.",
 		rarity: "uncommon",
@@ -45713,6 +46059,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_signal_rare_0",
 		name: "Sanguine Signal Beacon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-burn locator beacon. Standard kit for any Ascendant operating beyond comms.",
 		rarity: "rare",
@@ -45849,6 +46196,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_0",
 		name: "Tactical Sealed Inscription",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "common",
 		type: "consumable",
@@ -45984,6 +46332,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_1",
 		name: "Modern Sealed Inscription",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "common",
@@ -46120,6 +46469,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_2",
 		name: "Patrol Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "common",
 		type: "consumable",
@@ -46255,6 +46605,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_3",
 		name: "Standard-Pattern Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "common",
 		type: "consumable",
@@ -46390,6 +46741,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_4",
 		name: "Modern Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "common",
@@ -46525,6 +46877,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_5",
 		name: "Field-Issue Rune Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "common",
 		type: "consumable",
@@ -46660,6 +47013,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_6",
 		name: "Service-Grade Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "common",
@@ -46796,6 +47150,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_7",
 		name: "Provisional Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "common",
@@ -46932,6 +47287,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_8",
 		name: "Tactical Lattice Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "common",
 		type: "consumable",
@@ -47067,6 +47423,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_common_9",
 		name: "Trainee Lattice Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An inked sigil-scroll designed to discharge once and burn clean.",
 		rarity: "common",
@@ -47203,6 +47560,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_0",
 		name: "Mana-Treated Lattice Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "uncommon",
@@ -47339,6 +47697,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_1",
 		name: "Decorated Rune Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "uncommon",
@@ -47475,6 +47834,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_2",
 		name: "Reissue Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "uncommon",
@@ -47610,6 +47970,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_3",
 		name: "Veteran Rune Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "uncommon",
@@ -47746,6 +48107,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_4",
 		name: "Custom-Forged Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -47881,6 +48243,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_5",
 		name: "Sworn Sealed Inscription",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -48016,6 +48379,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_6",
 		name: "Field-Tested Battle Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "uncommon",
@@ -48152,6 +48516,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_7",
 		name: "Lattice-Stable Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "uncommon",
@@ -48288,6 +48653,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_8",
 		name: "Adept's Cantrip Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -48423,6 +48789,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_9",
 		name: "Decorated Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "uncommon",
@@ -48559,6 +48926,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_10",
 		name: "Field-Tested Sigil Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "uncommon",
@@ -48695,6 +49063,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_11",
 		name: "Specialist's Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "uncommon",
@@ -48831,6 +49200,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_12",
 		name: "Operative's Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An inked sigil-scroll designed to discharge once and burn clean.",
 		rarity: "uncommon",
@@ -48967,6 +49337,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_13",
 		name: "Field-Tested Lattice Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded one-use scroll. Mana-stabilized for transport.",
 		rarity: "uncommon",
@@ -49103,6 +49474,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_14",
 		name: "Sworn Sigil Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -49238,6 +49610,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_15",
 		name: "Adept's Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -49372,6 +49745,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_16",
 		name: "Sanctioned Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -49506,6 +49880,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_uncommon_17",
 		name: "Bonded Battle Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded one-use scroll. Mana-stabilized for transport.",
 		rarity: "uncommon",
@@ -49642,6 +50017,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_0",
 		name: "Tempered Lattice Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "rare",
 		type: "consumable",
@@ -49778,6 +50154,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_1",
 		name: "Dreamfire Spell Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded one-use scroll. Mana-stabilized for transport.",
 		rarity: "rare",
@@ -49914,6 +50291,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_2",
 		name: "Hexbound Spell Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "rare",
 		type: "consumable",
@@ -50049,6 +50427,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_3",
 		name: "Skyveil Sealed Inscription",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "rare",
@@ -50186,6 +50565,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_4",
 		name: "Phantom Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "rare",
 		type: "consumable",
@@ -50323,6 +50703,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_5",
 		name: "Glacial Spell Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "rare",
@@ -50461,6 +50842,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_6",
 		name: "Skyveil Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "rare",
 		type: "consumable",
@@ -50596,6 +50978,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_7",
 		name: "Tempered Rune Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An inked sigil-scroll designed to discharge once and burn clean.",
 		rarity: "rare",
@@ -50732,6 +51115,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_8",
 		name: "Riftbound Sigil Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "rare",
@@ -50870,6 +51254,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_9",
 		name: "Stormcaller Rune Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "rare",
 		type: "consumable",
@@ -51008,6 +51393,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_10",
 		name: "Lunar Sealed Inscription",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "rare",
 		type: "consumable",
@@ -51144,6 +51530,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_11",
 		name: "Lunar Battle Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "rare",
@@ -51280,6 +51667,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_12",
 		name: "Stargazer's Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "rare",
@@ -51416,6 +51804,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_13",
 		name: "Lightseeker's Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "rare",
@@ -51553,6 +51942,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_14",
 		name: "Ember Spell Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "rare",
 		type: "consumable",
@@ -51690,6 +52080,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_15",
 		name: "Lightseeker's Lattice Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "rare",
@@ -51827,6 +52218,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_16",
 		name: "Toxic Inscription",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "rare",
 		type: "consumable",
@@ -51964,6 +52356,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_rare_17",
 		name: "Tempered Sealed Inscription",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "rare",
@@ -52101,6 +52494,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_0",
 		name: "Doom-Forged Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded one-use scroll. Mana-stabilized for transport.",
 		rarity: "epic",
@@ -52241,6 +52635,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_1",
 		name: "Dimensional Inscription",
+		source_book: "Rift Ascendant Canon",
 		description: "A consumable inscription. Reading consumes the scroll.",
 		rarity: "epic",
 		type: "consumable",
@@ -52379,6 +52774,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_2",
 		name: "Cataclysmic Cantrip Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded one-use scroll. Mana-stabilized for transport.",
 		rarity: "epic",
@@ -52516,6 +52912,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_3",
 		name: "Resonant Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "epic",
@@ -52652,6 +53049,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_4",
 		name: "Hierophant's Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-licensed spell scroll, sealed against ambient mana decay.",
 		rarity: "epic",
@@ -52788,6 +53186,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_5",
 		name: "Nebular Casting Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scroll of inscribed magic, packaged for one-shot battlefield use.",
 		rarity: "epic",
@@ -52924,6 +53323,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_6",
 		name: "Crownbearer's Rune Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "epic",
 		type: "consumable",
@@ -53060,6 +53460,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_7",
 		name: "Inferno Cantrip Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An inked sigil-scroll designed to discharge once and burn clean.",
 		rarity: "epic",
@@ -53198,6 +53599,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_8",
 		name: "Eclipse Ward Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "epic",
@@ -53336,6 +53738,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_epic_9",
 		name: "Nebular Battle Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "epic",
 		type: "consumable",
@@ -53471,6 +53874,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_legendary_0",
 		name: "Regent-Slayer's Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A casting scroll with the Ascendant Bureau's authentication seal.",
 		rarity: "legendary",
@@ -53607,6 +54011,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_legendary_1",
 		name: "Genesis Sigil Scroll",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An inked sigil-scroll designed to discharge once and burn clean.",
 		rarity: "legendary",
@@ -53744,6 +54149,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_legendary_2",
 		name: "Architect's Battle Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "legendary",
 		type: "consumable",
@@ -53880,6 +54286,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_scroll_legendary_3",
 		name: "Cursed Scroll",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-use scroll inscribed with a rank-appropriate spell.",
 		rarity: "legendary",
 		type: "consumable",
@@ -54018,6 +54425,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_0",
 		name: "Provisional Stim Bar",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Ascendant-grade injector. Burns hot and fast. Trust the cap.",
 		rarity: "common",
@@ -54149,6 +54557,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_1",
 		name: "Service-Grade Ration",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard-issue Bureau ration. Edible. Filling. Forgettable.",
 		rarity: "common",
@@ -54263,6 +54672,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_2",
 		name: "Provisional MRE",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard-issue Bureau ration. Edible. Filling. Forgettable.",
 		rarity: "common",
@@ -54377,6 +54787,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_3",
 		name: "Bureau-Approved Field Meal",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field ration packaged for extended sweeps. Two-year shelf life.",
 		rarity: "common",
@@ -54492,6 +54903,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_4",
 		name: "Provisional Ration",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A vacuum-sealed nutrition pack. One day's calories for a single Ascendant.",
 		rarity: "common",
@@ -54606,6 +55018,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_common_5",
 		name: "Bureau-Approved Recovery Pack",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard-issue Bureau ration. Edible. Filling. Forgettable.",
 		rarity: "common",
@@ -54721,6 +55134,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_uncommon_0",
 		name: "Frontier Field Pack",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard-issue Bureau ration. Edible. Filling. Forgettable.",
 		rarity: "uncommon",
@@ -54836,6 +55250,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_ration_uncommon_1",
 		name: "Sanctioned Recovery Pack",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A vacuum-sealed nutrition pack. One day's calories for a single Ascendant.",
 		rarity: "uncommon",
@@ -54951,6 +55366,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_common_0",
 		name: "Quartermaster's Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small flask of medicinal potion. Drink slow if you can. Drink fast if you can't.",
 		rarity: "common",
@@ -55082,6 +55498,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_common_1",
 		name: "Quartermaster's Draught",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A clear-glass restorative phial sealed with a Bureau quartermaster stamp.",
 		rarity: "common",
@@ -55219,6 +55636,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_common_2",
 		name: "Provisional Elixir",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small flask of medicinal potion. Drink slow if you can. Drink fast if you can't.",
 		rarity: "common",
@@ -55347,6 +55765,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_common_3",
 		name: "Conscript's Phial",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-grade restorative used during extraction and post-fight recovery.",
 		rarity: "common",
@@ -55483,6 +55902,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_uncommon_0",
 		name: "Decorated Phial",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-grade restorative used during extraction and post-fight recovery.",
 		rarity: "uncommon",
@@ -55611,6 +56031,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_uncommon_1",
 		name: "Refit Draught",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small flask of medicinal potion. Drink slow if you can. Drink fast if you can't.",
 		rarity: "uncommon",
@@ -55747,6 +56168,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_uncommon_2",
 		name: "Specialist's Elixir",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Ascendant-grade restorative; sealed against ambient mana decay.",
 		rarity: "uncommon",
@@ -55884,6 +56306,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_uncommon_3",
 		name: "Bonded Draught",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Ascendant-grade restorative; sealed against ambient mana decay.",
 		rarity: "uncommon",
@@ -56020,6 +56443,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_uncommon_4",
 		name: "Sworn Draught",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-licensed restorative draught.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -56155,6 +56579,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_uncommon_5",
 		name: "Decorated Salve",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-stable potion. The Bureau's standard answer to early-fight injuries.",
 		rarity: "uncommon",
@@ -56283,6 +56708,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_rare_0",
 		name: "Hexbound Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small flask of medicinal potion. Drink slow if you can. Drink fast if you can't.",
 		rarity: "rare",
@@ -56412,6 +56838,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_rare_1",
 		name: "Ember Cordial",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An alchemist-licensed restorative. Mana-conductive, fast-absorbing.",
 		rarity: "rare",
@@ -56551,6 +56978,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_rare_2",
 		name: "Lightseeker's Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment.",
 		rarity: "rare",
@@ -56688,6 +57116,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_rare_3",
 		name: "Stormcaller Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Ascendant-grade restorative; sealed against ambient mana decay.",
 		rarity: "rare",
@@ -56823,6 +57252,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_rare_4",
 		name: "Frost Draught",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A flask of mana-stable medicinal compound for in-field recovery.",
 		rarity: "rare",
@@ -56962,6 +57392,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_rare_5",
 		name: "Riftforged Flask",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small flask of medicinal potion. Drink slow if you can. Drink fast if you can't.",
 		rarity: "rare",
@@ -57097,6 +57528,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_epic_0",
 		name: "Cataclysmic Potion",
+		source_book: "Rift Ascendant Canon",
 		description: "A regulated emergency draught. Quick draw, reliable effect.",
 		rarity: "epic",
 		type: "consumable",
@@ -57233,6 +57665,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_epic_1",
 		name: "Sanctified Flask",
+		source_book: "Rift Ascendant Canon",
 		description: "A regulated emergency draught. Quick draw, reliable effect.",
 		rarity: "epic",
 		type: "consumable",
@@ -57367,6 +57800,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_epic_2",
 		name: "Cataclysmic Draught",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-issued potion. Bitter, fast-acting, reliable.",
 		rarity: "epic",
 		type: "consumable",
@@ -57495,6 +57929,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_potion_legendary_0",
 		name: "Origin-Crowned Draught",
+		source_book: "Rift Ascendant Canon",
 		description: "A regulated emergency draught. Quick draw, reliable effect.",
 		rarity: "legendary",
 		type: "consumable",
@@ -57624,6 +58059,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_common_0",
 		name: "Quartermaster's Purifier",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neutralizing agent calibrated for gate-acquired contamination.",
 		rarity: "common",
@@ -57753,6 +58189,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_common_1",
 		name: "Quartermaster's Cleanser",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded antidote calibrated for the most common gate-acquired afflictions.",
 		rarity: "common",
@@ -57881,6 +58318,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_common_2",
 		name: "Trainee Restorative Vial",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment.",
 		rarity: "common",
@@ -58010,6 +58448,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_common_3",
 		name: "Service Purifier",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neutralizing agent calibrated for gate-acquired contamination.",
 		rarity: "common",
@@ -58141,6 +58580,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_uncommon_0",
 		name: "Salvaged Cleanser",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neutralizing agent calibrated for gate-acquired contamination.",
 		rarity: "uncommon",
@@ -58270,6 +58710,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_uncommon_1",
 		name: "Renegade Antidote",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neutralizing agent calibrated for gate-acquired contamination.",
 		rarity: "uncommon",
@@ -58399,6 +58840,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_uncommon_2",
 		name: "Decorated Counter-Agent",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A neutralizing agent calibrated for gate-acquired contamination.",
 		rarity: "uncommon",
@@ -58536,6 +58978,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_uncommon_3",
 		name: "Custom-Forged Restorative Vial",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-grade restorative used during extraction and post-fight recovery.",
 		rarity: "uncommon",
@@ -58667,6 +59110,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_rare_0",
 		name: "Umbral Cleanser",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued purifier. Standard kit for medics and forward observers.",
 		rarity: "rare",
@@ -58805,6 +59249,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_purifier_rare_1",
 		name: "Glacial Purifier",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-issued purifier. Standard kit for medics and forward observers.",
 		rarity: "rare",
@@ -58940,6 +59385,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_common_0",
 		name: "Bureau-Approved Endurance Serum",
+		source_book: "Rift Ascendant Canon",
 		description: "A medical-grade stim, calibrated for Ascendant physiology.",
 		rarity: "common",
 		type: "consumable",
@@ -59076,6 +59522,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_common_1",
 		name: "Patrol Injector",
+		source_book: "Rift Ascendant Canon",
 		description: "A medical-grade stim, calibrated for Ascendant physiology.",
 		rarity: "common",
 		type: "consumable",
@@ -59211,6 +59658,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_common_2",
 		name: "Conscript's Syringe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fit auto-injector calibrated for fast subcutaneous delivery.",
 		rarity: "common",
@@ -59347,6 +59795,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_common_3",
 		name: "Bureau-Issue Serum",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field stim packaged in a one-use injector. Standard medic kit.",
 		rarity: "common",
@@ -59483,6 +59932,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_0",
 		name: "Adept's Serum",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-stamped emergency injector. Last-resort kit.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -59618,6 +60068,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_1",
 		name: "Adept's Field Stim",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-stamped emergency injector. Last-resort kit.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -59752,6 +60203,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_2",
 		name: "Lattice-Stable Adrenal Injector",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Ascendant-grade injector. Burns hot and fast. Trust the cap.",
 		rarity: "uncommon",
@@ -59881,6 +60333,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_3",
 		name: "Salvaged Combat Injector",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field stim packaged in a one-use injector. Standard medic kit.",
 		rarity: "uncommon",
@@ -60018,6 +60471,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_4",
 		name: "Specialist's Combat Injector",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A medical stim packed for one-handed application during a fight.",
 		rarity: "uncommon",
@@ -60150,6 +60604,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_uncommon_5",
 		name: "Specialist's Endurance Serum",
+		source_book: "Rift Ascendant Canon",
 		description: "A pre-measured combat stim with Bureau-coded markings.",
 		rarity: "uncommon",
 		type: "consumable",
@@ -60286,6 +60741,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_rare_0",
 		name: "Shadow Combat Injector",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field stim packaged in a one-use injector. Standard medic kit.",
 		rarity: "rare",
@@ -60425,6 +60881,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_rare_1",
 		name: "Toxic Dose",
+		source_book: "Rift Ascendant Canon",
 		description: "A pre-measured combat stim with Bureau-coded markings.",
 		rarity: "rare",
 		type: "consumable",
@@ -60563,6 +61020,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_rare_2",
 		name: "Hexbound Endurance Serum",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-uptake injector used by frontline Ascendants under sustained fire.",
 		rarity: "rare",
@@ -60700,6 +61158,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_rare_3",
 		name: "Aetheric Adrenal Injector",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fit auto-injector calibrated for fast subcutaneous delivery.",
 		rarity: "rare",
@@ -60831,6 +61290,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_epic_0",
 		name: "Tempest Syringe",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-stamped emergency injector. Last-resort kit.",
 		rarity: "epic",
 		type: "consumable",
@@ -60969,6 +61429,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_consumable_stim_epic_1",
 		name: "Cataclysmic Stim",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-stamped emergency injector. Last-resort kit.",
 		rarity: "epic",
 		type: "consumable",
@@ -61105,6 +61566,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_common_0",
 		name: "Conscript's Channel Stone",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard arcane focus used by Mages, Espers, and other channeling classes.",
 		rarity: "common",
@@ -61216,6 +61678,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_common_1",
 		name: "Modern Conduit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "common",
@@ -61334,6 +61797,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_common_2",
 		name: "Service-Grade Conduit",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "common",
 		type: "focus",
@@ -61451,6 +61915,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_common_3",
 		name: "Service Mana Crystal",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "common",
@@ -61572,6 +62037,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_uncommon_0",
 		name: "Black-Market Orb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "uncommon",
@@ -61693,6 +62159,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_uncommon_1",
 		name: "Bonded Prism",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "uncommon",
 		type: "focus",
@@ -61812,6 +62279,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_uncommon_2",
 		name: "Operative's Caster's Bead",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "uncommon",
@@ -61933,6 +62401,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_uncommon_3",
 		name: "Decorated Mana Crystal",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard arcane focus used by Mages, Espers, and other channeling classes.",
 		rarity: "uncommon",
@@ -62058,6 +62527,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_uncommon_4",
 		name: "Hardened Conduit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "uncommon",
@@ -62178,6 +62648,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_uncommon_5",
 		name: "Hardened Catalyst",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard arcane focus used by Mages, Espers, and other channeling classes.",
 		rarity: "uncommon",
@@ -62299,6 +62770,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_rare_0",
 		name: "Dreamfire Channel Stone",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "rare",
 		type: "focus",
@@ -62445,6 +62917,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_rare_1",
 		name: "Glacial Catalyst",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "rare",
 		type: "focus",
@@ -62593,6 +63066,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_rare_2",
 		name: "Frost Sigil Focus",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "rare",
@@ -62744,6 +63218,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_rare_3",
 		name: "Riftbound Orb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard arcane focus used by Mages, Espers, and other channeling classes.",
 		rarity: "rare",
@@ -62894,6 +63369,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_rare_4",
 		name: "Lunar Prism",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly.",
 		rarity: "rare",
@@ -63041,6 +63517,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_epic_0",
 		name: "Archon's Conduit",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "epic",
 		type: "focus",
@@ -63188,6 +63665,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_epic_1",
 		name: "Archon's Sigil Focus",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "epic",
 		type: "focus",
@@ -63334,6 +63812,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_epic_2",
 		name: "Dimensional Lattice Crystal",
+		source_book: "Rift Ascendant Canon",
 		description: "A focus crystal cut to Bureau-graded purity standards.",
 		rarity: "epic",
 		type: "focus",
@@ -63482,6 +63961,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_caster_legendary_0",
 		name: "Origin-Crowned Focus",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard arcane focus used by Mages, Espers, and other channeling classes.",
 		rarity: "legendary",
@@ -63629,6 +64109,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_common_0",
 		name: "Field-Issue Conductor",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile mid-weight blade. Handles single- and two-handed equally well.",
 		rarity: "common",
@@ -63752,6 +64233,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_common_1",
 		name: "Bureau-Stamped Baton",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "common",
 		type: "weapon",
@@ -63882,6 +64364,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_common_2",
 		name: "Patrol Casting Baton",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "common",
 		type: "weapon",
@@ -64005,6 +64488,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_common_3",
 		name: "Modern Sigil Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "common",
 		type: "weapon",
@@ -64128,6 +64612,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_0",
 		name: "Veteran Conductor",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade longsword with a mana-conductive crossguard.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -64259,6 +64744,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_1",
 		name: "Salvaged Rod",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "uncommon",
@@ -64394,6 +64880,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_2",
 		name: "Operative's Rod",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "uncommon",
@@ -64527,6 +65014,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_3",
 		name: "Black-Market Sceptre",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -64660,6 +65148,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_4",
 		name: "Hardened Casting Baton",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "uncommon",
@@ -64794,6 +65283,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_5",
 		name: "Adept's Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -64927,6 +65417,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_6",
 		name: "Reclaimed Sceptre",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -65060,6 +65551,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_uncommon_7",
 		name: "Bonded Conductor",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -65192,6 +65684,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_0",
 		name: "Umbral Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "rare",
 		type: "weapon",
@@ -65354,6 +65847,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_1",
 		name: "Shadow Rod",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "rare",
 		type: "weapon",
@@ -65515,6 +66009,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_2",
 		name: "Umbral Casting Baton",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "rare",
 		type: "weapon",
@@ -65678,6 +66173,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_3",
 		name: "Glacial Sceptre",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "rare",
 		type: "weapon",
@@ -65840,6 +66336,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_4",
 		name: "Wraithtouched Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "rare",
 		type: "weapon",
@@ -66000,6 +66497,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_5",
 		name: "Umbral Mana Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "rare",
 		type: "weapon",
@@ -66163,6 +66661,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_6",
 		name: "Umbral Baton",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "rare",
@@ -66327,6 +66826,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_rare_7",
 		name: "Oathbound Baton",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "rare",
@@ -66489,6 +66989,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_epic_0",
 		name: "Eclipse Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "epic",
 		type: "weapon",
@@ -66650,6 +67151,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_epic_1",
 		name: "Starlight Casting Baton",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wand cut from gate-resonant alloy. Holds a small charge of cast spells.",
 		rarity: "epic",
@@ -66813,6 +67315,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_epic_2",
 		name: "Abyssal Rod",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "epic",
 		type: "weapon",
@@ -66975,6 +67478,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_epic_3",
 		name: "Tempest Baton",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "epic",
 		type: "weapon",
@@ -67138,6 +67642,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_legendary_0",
 		name: "Endless Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A short channeling wand suitable for ranged spell delivery.",
 		rarity: "legendary",
 		type: "weapon",
@@ -67298,6 +67803,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_wand_legendary_1",
 		name: "Architect's Wand",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision focus wand favored by control-style Mages.",
 		rarity: "legendary",
 		type: "weapon",
@@ -67457,6 +67963,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_common_0",
 		name: "Standard Tome",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "common",
@@ -67575,6 +68082,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_common_1",
 		name: "Trainee Casting Codex",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "common",
@@ -67685,6 +68193,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_common_2",
 		name: "Issue-Standard Tome",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reference codex used by long-form casters between encounters.",
 		rarity: "common",
@@ -67795,6 +68304,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_common_3",
 		name: "Standard-Pattern Codex",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "common",
@@ -67913,6 +68423,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_uncommon_0",
 		name: "Renegade Mana Manual",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bound reference tome that doubles as a written arcane focus.",
 		rarity: "uncommon",
@@ -68037,6 +68548,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_uncommon_1",
 		name: "Adept's Mana Manual",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "uncommon",
@@ -68161,6 +68673,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_uncommon_2",
 		name: "Frontier Sigil Tome",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "uncommon",
@@ -68283,6 +68796,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_uncommon_3",
 		name: "Mana-Treated Tome",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reference codex used by long-form casters between encounters.",
 		rarity: "uncommon",
@@ -68407,6 +68921,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_uncommon_4",
 		name: "Sworn Spellbook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bound reference tome that doubles as a written arcane focus.",
 		rarity: "uncommon",
@@ -68528,6 +69043,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_uncommon_5",
 		name: "Sanctioned Grimoire",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bound reference tome that doubles as a written arcane focus.",
 		rarity: "uncommon",
@@ -68649,6 +69165,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_rare_0",
 		name: "Ember Mana Manual",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reference codex used by long-form casters between encounters.",
 		rarity: "rare",
@@ -68800,6 +69317,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_rare_1",
 		name: "Glacial Reference Codex",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reference codex used by long-form casters between encounters.",
 		rarity: "rare",
@@ -68950,6 +69468,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_rare_2",
 		name: "Manaforged Manual",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bound reference tome that doubles as a written arcane focus.",
 		rarity: "rare",
@@ -69100,6 +69619,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_rare_3",
 		name: "Riftbound Inscribed Manual",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reference codex used by long-form casters between encounters.",
 		rarity: "rare",
@@ -69248,6 +69768,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_rare_4",
 		name: "Skyveil Reference Codex",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "rare",
@@ -69396,6 +69917,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_epic_0",
 		name: "Resonant Codex",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bound reference tome that doubles as a written arcane focus.",
 		rarity: "epic",
@@ -69543,6 +70065,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_epic_1",
 		name: "Apocalypse Tome",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A bound reference tome that doubles as a written arcane focus.",
 		rarity: "epic",
@@ -69690,6 +70213,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_focus_tome_legendary_0",
 		name: "Origin-Crowned Tome",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A grimoire of Bureau-approved cantrips and rank-appropriate spells.",
 		rarity: "legendary",
@@ -69834,6 +70358,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_common_0",
 		name: "Standard Combat Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "common",
@@ -69965,6 +70490,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_common_1",
 		name: "Inspector's Composite Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow capable of throwing arrows past 600 ft. with technique.",
 		rarity: "common",
@@ -70089,6 +70615,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_common_2",
 		name: "Provisional Field Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow capable of throwing arrows past 600 ft. with technique.",
 		rarity: "common",
@@ -70213,6 +70740,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_common_3",
 		name: "Conscript's Recurve Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "common",
@@ -70337,6 +70865,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_uncommon_0",
 		name: "Veteran Reflex Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "uncommon",
@@ -70471,6 +71000,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_uncommon_1",
 		name: "Operative's Reflex Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "uncommon",
@@ -70605,6 +71135,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_uncommon_2",
 		name: "Black-Market Compound Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "uncommon",
@@ -70728,6 +71259,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_uncommon_3",
 		name: "Sanctioned Reflex Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "uncommon",
@@ -70861,6 +71393,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_uncommon_4",
 		name: "Custom-Forged Longbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow capable of throwing arrows past 600 ft. with technique.",
 		rarity: "uncommon",
@@ -70994,6 +71527,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_uncommon_5",
 		name: "Sanctioned Shortbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "uncommon",
@@ -71118,6 +71652,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_rare_0",
 		name: "Hexbound Composite Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "rare",
@@ -71277,6 +71812,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_rare_1",
 		name: "Lightseeker's Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "rare",
@@ -71433,6 +71969,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_rare_2",
 		name: "Frost Combat Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "rare",
@@ -71592,6 +72129,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_rare_3",
 		name: "Oathbound Longbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow capable of throwing arrows past 600 ft. with technique.",
 		rarity: "rare",
@@ -71749,6 +72287,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_rare_4",
 		name: "Sanguine Compound Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "rare",
@@ -71911,6 +72450,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_epic_0",
 		name: "Abyssal Field Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow capable of throwing arrows past 600 ft. with technique.",
 		rarity: "epic",
@@ -72071,6 +72611,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_epic_1",
 		name: "Starlight Longbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "epic",
@@ -72231,6 +72772,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_bow_legendary_0",
 		name: "Apex-Forged Field Bow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "legendary",
@@ -72388,6 +72930,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_common_0",
 		name: "Standard Heavy Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced crossbow used by hybrid teams operating in firearm-restricted zones.",
 		rarity: "common",
@@ -72513,6 +73056,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_common_1",
 		name: "Modern Repeater",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A ranged weapon that splits the difference between firearm stopping power and bow silence.",
 		rarity: "common",
@@ -72637,6 +73181,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_common_2",
 		name: "Field-Issue Light Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy crossbow with reinforced limbs. Long reload, high impact.",
 		rarity: "common",
@@ -72769,6 +73314,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_common_3",
 		name: "Inspector's Heavy Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A ranged weapon that splits the difference between firearm stopping power and bow silence.",
 		rarity: "common",
@@ -72894,6 +73440,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_uncommon_0",
 		name: "Veteran Field Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced crossbow used by hybrid teams operating in firearm-restricted zones.",
 		rarity: "uncommon",
@@ -73028,6 +73575,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_uncommon_1",
 		name: "Hardened Auto-Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy crossbow with reinforced limbs. Long reload, high impact.",
 		rarity: "uncommon",
@@ -73163,6 +73711,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_uncommon_2",
 		name: "Specialist's Auto-Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced crossbow used by hybrid teams operating in firearm-restricted zones.",
 		rarity: "uncommon",
@@ -73297,6 +73846,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_uncommon_3",
 		name: "Sanctioned Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy crossbow with reinforced limbs. Long reload, high impact.",
 		rarity: "uncommon",
@@ -73431,6 +73981,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_uncommon_4",
 		name: "Mana-Treated Recurve Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A composite bow tuned for silent engagements outside Bureau-designated lethal zones.",
 		rarity: "uncommon",
@@ -73568,6 +74119,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_uncommon_5",
 		name: "Salvaged Auto-Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A ranged weapon that splits the difference between firearm stopping power and bow silence.",
 		rarity: "uncommon",
@@ -73700,6 +74252,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_rare_0",
 		name: "Glacial Field Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy crossbow with reinforced limbs. Long reload, high impact.",
 		rarity: "rare",
@@ -73862,6 +74415,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_rare_1",
 		name: "Riftforged Field Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced crossbow used by hybrid teams operating in firearm-restricted zones.",
 		rarity: "rare",
@@ -74026,6 +74580,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_rare_2",
 		name: "Voidtouched Heavy Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A ranged weapon that splits the difference between firearm stopping power and bow silence.",
 		rarity: "rare",
@@ -74186,6 +74741,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_rare_3",
 		name: "Ember Recurve Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-tension ranged weapon favored by tracker-class Ascendants.",
 		rarity: "rare",
@@ -74348,6 +74904,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_epic_0",
 		name: "Dimensional Field Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy crossbow with reinforced limbs. Long reload, high impact.",
 		rarity: "epic",
@@ -74511,6 +75068,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_crossbow_epic_1",
 		name: "Ascendant Field Crossbow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A ranged weapon that splits the difference between firearm stopping power and bow silence.",
 		rarity: "epic",
@@ -74663,6 +75221,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_common_0",
 		name: "Provisional Throwing Stars",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Light throwing weapons favored by Assassins and shadow specialists.",
 		rarity: "common",
@@ -74789,6 +75348,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_common_1",
 		name: "Inspector's Throwing Stars",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-issued throwing implements suitable for off-hand and stealth applications.",
 		rarity: "common",
@@ -74915,6 +75475,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_common_2",
 		name: "Bureau-Issue Throwing Spears",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Light throwing weapons favored by Assassins and shadow specialists.",
 		rarity: "common",
@@ -75042,6 +75603,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_common_3",
 		name: "Field-Issue Throwing Spears",
+		source_book: "Rift Ascendant Canon",
 		description: "A set of thrown weapons balanced for finesse strikes.",
 		rarity: "common",
 		type: "weapon",
@@ -75167,6 +75729,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_common_4",
 		name: "Quartermaster's Darts",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Light throwing weapons favored by Assassins and shadow specialists.",
 		rarity: "common",
@@ -75292,6 +75855,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_uncommon_0",
 		name: "Custom-Forged Throwing Stars",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Light throwing weapons favored by Assassins and shadow specialists.",
 		rarity: "uncommon",
@@ -75424,6 +75988,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_uncommon_1",
 		name: "Renegade Javelins",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Light throwing weapons favored by Assassins and shadow specialists.",
 		rarity: "uncommon",
@@ -75555,6 +76120,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_uncommon_2",
 		name: "Black-Market Throwing Axes",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-issued throwing implements suitable for off-hand and stealth applications.",
 		rarity: "uncommon",
@@ -75690,6 +76256,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_uncommon_3",
 		name: "Black-Market Chakram",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Light throwing weapons favored by Assassins and shadow specialists.",
 		rarity: "uncommon",
@@ -75821,6 +76388,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_rare_0",
 		name: "Skyveil Throwing Stars",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-issued throwing implements suitable for off-hand and stealth applications.",
 		rarity: "rare",
@@ -75978,6 +76546,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_ranged_thrown_rare_1",
 		name: "Crimson Javelins",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-issued throwing implements suitable for off-hand and stealth applications.",
 		rarity: "rare",
@@ -76138,6 +76707,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_common_0",
 		name: "Patrol Two-Hander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed greatsword forged from mana-stable composite alloy.",
 		rarity: "common",
@@ -76261,6 +76831,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_common_1",
 		name: "Bureau-Stamped War Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "common",
@@ -76389,6 +76960,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_common_2",
 		name: "Bureau-Stamped Zweihander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy two-handed blade built for armored anomalies and gate-bosses.",
 		rarity: "common",
@@ -76513,6 +77085,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_common_3",
 		name: "Service War Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "common",
@@ -76636,6 +77209,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_0",
 		name: "Operative's Zweihander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-mass blade designed to overpower B-rank and higher anomalies.",
 		rarity: "uncommon",
@@ -76769,6 +77343,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_1",
 		name: "Frontier Claymore",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy claymore with a counter-weighted pommel for sweeping arcs.",
 		rarity: "uncommon",
@@ -76891,6 +77466,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_2",
 		name: "Mana-Treated Reaver Sword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "uncommon",
@@ -77024,6 +77600,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_3",
 		name: "Reclaimed Zweihander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced two-handed blade â€” chosen by tanks who hit before they get hit.",
 		rarity: "uncommon",
@@ -77157,6 +77734,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_4",
 		name: "Operative's Falchion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "uncommon",
@@ -77291,6 +77869,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_5",
 		name: "Black-Market Bastard Sword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-tested broadsword balanced for sustained engagements.",
 		rarity: "uncommon",
@@ -77424,6 +78003,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_6",
 		name: "Refit War Blade",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -77555,6 +78135,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_uncommon_7",
 		name: "Lattice-Stable Bastard Sword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "uncommon",
@@ -77691,6 +78272,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_rare_0",
 		name: "Manaforged Claymore",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A great-blade balanced so the wielder's strength sets the pace.",
 		rarity: "rare",
@@ -77852,6 +78434,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_rare_1",
 		name: "Voidtouched Two-Hander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive blade with a reinforced spine. Slow, but it rarely needs a second swing.",
 		rarity: "rare",
@@ -78009,6 +78592,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_rare_2",
 		name: "Glacial Claymore",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive blade with a reinforced spine. Slow, but it rarely needs a second swing.",
 		rarity: "rare",
@@ -78170,6 +78754,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_rare_3",
 		name: "Aetheric Nodachi",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A great-blade balanced so the wielder's strength sets the pace.",
 		rarity: "rare",
@@ -78327,6 +78912,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_rare_4",
 		name: "Wraithtouched Reaver Sword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "rare",
@@ -78483,6 +79069,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_rare_5",
 		name: "Crimson Bastard Sword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced blade with a fuller groove that channels excess kinetic mana.",
 		rarity: "rare",
@@ -78645,6 +79232,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_epic_0",
 		name: "Singularity Falchion",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "epic",
 		type: "weapon",
@@ -78803,6 +79391,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_epic_1",
 		name: "Singularity Zweihander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed greatsword forged from mana-stable composite alloy.",
 		rarity: "epic",
@@ -78961,6 +79550,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_epic_2",
 		name: "Worldbreaker's Greatsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed greatsword forged from mana-stable composite alloy.",
 		rarity: "epic",
@@ -79116,6 +79706,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_heavy_legendary_0",
 		name: "Regent's Two-Hander",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced two-handed blade â€” chosen by tanks who hit before they get hit.",
 		rarity: "legendary",
@@ -79275,6 +79866,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_common_0",
 		name: "Quartermaster's Wakizashi",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade longsword with a mana-conductive crossguard.",
 		rarity: "common",
 		type: "weapon",
@@ -79401,6 +79993,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_common_1",
 		name: "Bureau-Stamped Longsword",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade longsword with a mana-conductive crossguard.",
 		rarity: "common",
 		type: "weapon",
@@ -79528,6 +80121,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_common_2",
 		name: "Quartermaster's Battle Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard sidearm blade for Ascendants who prefer steel to firearms.",
 		rarity: "common",
@@ -79652,6 +80246,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_uncommon_0",
 		name: "Salvaged Katana",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-tested broadsword balanced for sustained engagements.",
 		rarity: "uncommon",
@@ -79785,6 +80380,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_uncommon_1",
 		name: "Custom-Forged Cutlass",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "uncommon",
@@ -79918,6 +80514,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_uncommon_2",
 		name: "Renegade Broadsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile mid-weight blade. Handles single- and two-handed equally well.",
 		rarity: "uncommon",
@@ -80052,6 +80649,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_uncommon_3",
 		name: "Black-Market Longsword",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -80185,6 +80783,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_rare_0",
 		name: "Phantom Wakizashi",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile mid-weight blade. Handles single- and two-handed equally well.",
 		rarity: "rare",
@@ -80343,6 +80942,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_rare_1",
 		name: "Riftforged Longsword",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "rare",
 		type: "weapon",
@@ -80503,6 +81103,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_rare_2",
 		name: "Wraithtouched Katana",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "rare",
@@ -80662,6 +81263,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_epic_0",
 		name: "Crownbearer's Cutlass",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade longsword with a mana-conductive crossguard.",
 		rarity: "epic",
 		type: "weapon",
@@ -80821,6 +81423,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_epic_1",
 		name: "Sanctified Katana",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "epic",
 		type: "weapon",
@@ -80982,6 +81585,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_versatile_legendary_0",
 		name: "Endless Service Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced blade with a fuller groove that channels excess kinetic mana.",
 		rarity: "legendary",
@@ -81141,6 +81745,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_common_0",
 		name: "Bureau-Stamped Tanto",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A light blade balanced for finesse strikes. Common in close-quarters Ascendant loadouts.",
 		rarity: "common",
@@ -81265,6 +81870,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_common_1",
 		name: "Patrol Rapier",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision-balanced knife with a mana-treated edge.",
 		rarity: "common",
 		type: "weapon",
@@ -81387,6 +81993,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_common_2",
 		name: "Inspector's Rapier",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision-balanced knife with a mana-treated edge.",
 		rarity: "common",
 		type: "weapon",
@@ -81516,6 +82123,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_uncommon_0",
 		name: "Specialist's Dagger",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision-balanced knife with a mana-treated edge.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -81648,6 +82256,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_uncommon_1",
 		name: "Operative's Kunai",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A light blade balanced for finesse strikes. Common in close-quarters Ascendant loadouts.",
 		rarity: "uncommon",
@@ -81782,6 +82391,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_uncommon_2",
 		name: "Operative's Field Knife",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade longsword with a mana-conductive crossguard.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -81905,6 +82515,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_uncommon_3",
 		name: "Black-Market Shortsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile mid-weight blade. Handles single- and two-handed equally well.",
 		rarity: "uncommon",
@@ -82030,6 +82641,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_rare_0",
 		name: "Lightseeker's Kunai",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision-balanced knife with a mana-treated edge.",
 		rarity: "rare",
 		type: "weapon",
@@ -82189,6 +82801,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_rare_1",
 		name: "Toxic Combat Knife",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "rare",
@@ -82351,6 +82964,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_rare_2",
 		name: "Lightseeker's Throwing Dagger",
+		source_book: "Rift Ascendant Canon",
 		description: "A set of thrown weapons balanced for finesse strikes.",
 		rarity: "rare",
 		type: "weapon",
@@ -82504,6 +83118,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_epic_0",
 		name: "Sanctified Dagger",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision short blade favored by Strikers and Assassins.",
 		rarity: "epic",
 		type: "weapon",
@@ -82665,6 +83280,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_epic_1",
 		name: "Inferno Kunai",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision short blade favored by Strikers and Assassins.",
 		rarity: "epic",
 		type: "weapon",
@@ -82826,6 +83442,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_blade_finesse_legendary_0",
 		name: "Regent's Combat Knife",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "legendary",
@@ -82986,6 +83603,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_common_0",
 		name: "Recruit's Reach Spear",
+		source_book: "Rift Ascendant Canon",
 		description: "A reach weapon used by Bureau gate-line teams.",
 		rarity: "common",
 		type: "weapon",
@@ -83114,6 +83732,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_common_1",
 		name: "Issue-Standard Pike",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A halberd-class polearm cut for sweeping arcs and thrust finishes.",
 		rarity: "common",
@@ -83243,6 +83862,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_uncommon_0",
 		name: "Reissue Spear",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed reach weapon used to break melee lines and protect spellcasters.",
 		rarity: "uncommon",
@@ -83375,6 +83995,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_uncommon_1",
 		name: "Custom-Forged War Pike",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed reach weapon used to break melee lines and protect spellcasters.",
 		rarity: "uncommon",
@@ -83507,6 +84128,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_uncommon_2",
 		name: "Refit Reach Spear",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed reach weapon â€” good against fast, low-ground anomalies.",
 		rarity: "uncommon",
@@ -83639,6 +84261,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_rare_0",
 		name: "Skyveil Reach Spear",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced spear with a reinforced shaft and mana-conductive head.",
 		rarity: "rare",
@@ -83797,6 +84420,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_rare_1",
 		name: "Glacial Reach Spear",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A halberd-class polearm cut for sweeping arcs and thrust finishes.",
 		rarity: "rare",
@@ -83958,6 +84582,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_rare_2",
 		name: "Umbral Spear",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-issue spear designed for second-rank engagement.",
 		rarity: "rare",
 		type: "weapon",
@@ -84118,6 +84743,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_polearm_epic_0",
 		name: "Archon's Trident",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long-reach polearm balanced for crowd control and formation work.",
 		rarity: "epic",
@@ -84276,6 +84902,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_common_0",
 		name: "Tactical Cudgel",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A flanged mace built for piercing through medium armor and carapace plate.",
 		rarity: "common",
@@ -84399,6 +85026,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_common_1",
 		name: "Conscript's Truncheon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-tested broadsword balanced for sustained engagements.",
 		rarity: "common",
@@ -84522,6 +85150,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_common_2",
 		name: "Service Club",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A blunt weapon designed to break shielded anomalies and unarmored targets alike.",
 		rarity: "common",
@@ -84644,6 +85273,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_common_3",
 		name: "Bureau-Stamped Mace",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-haft impact weapon. Brutal at arm's length, useless past it.",
 		rarity: "common",
@@ -84767,6 +85397,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_common_4",
 		name: "Conscript's Spiked Mace",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A flanged mace built for piercing through medium armor and carapace plate.",
 		rarity: "common",
@@ -84888,6 +85519,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_uncommon_0",
 		name: "Field-Tested Combat Mace",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-issued mace common among Bureau second-line teams.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -85022,6 +85654,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_uncommon_1",
 		name: "Mana-Treated Truncheon",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -85157,6 +85790,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_uncommon_2",
 		name: "Decorated Mace",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced impact weapon with a mana-treated head.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -85289,6 +85923,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_uncommon_3",
 		name: "Salvaged Flail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A blunt weapon designed to break shielded anomalies and unarmored targets alike.",
 		rarity: "uncommon",
@@ -85420,6 +86055,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_uncommon_4",
 		name: "Custom-Forged Mace",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-haft impact weapon. Brutal at arm's length, useless past it.",
 		rarity: "uncommon",
@@ -85553,6 +86189,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_uncommon_5",
 		name: "Adept's Club",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced impact weapon with a mana-treated head.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -85674,6 +86311,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_rare_0",
 		name: "Frost War Pick",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "rare",
@@ -85836,6 +86474,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_rare_1",
 		name: "Dreamfire Morningstar",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-issued mace common among Bureau second-line teams.",
 		rarity: "rare",
 		type: "weapon",
@@ -85993,6 +86632,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_rare_2",
 		name: "Aetheric Morningstar",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-haft impact weapon. Brutal at arm's length, useless past it.",
 		rarity: "rare",
@@ -86156,6 +86796,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_rare_3",
 		name: "Stargazer's Truncheon",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "rare",
 		type: "weapon",
@@ -86304,6 +86945,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_rare_4",
 		name: "Aetheric Mace",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced cudgel suited to dealing with armored, low-mobility threats.",
 		rarity: "rare",
@@ -86467,6 +87109,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_epic_0",
 		name: "Archon's Club",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A flanged mace built for piercing through medium armor and carapace plate.",
 		rarity: "epic",
@@ -86627,6 +87270,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_epic_1",
 		name: "Apocalypse Flail",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced impact weapon with a mana-treated head.",
 		rarity: "epic",
 		type: "weapon",
@@ -86783,6 +87427,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_legendary_0",
 		name: "Cursed Truncheon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "legendary",
@@ -86945,6 +87590,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_common_0",
 		name: "Service-Grade Bludgeon",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "common",
 		type: "weapon",
@@ -87071,6 +87717,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_common_1",
 		name: "Tactical Sledge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy maul with a Bureau-stamped haft and a head heavy enough to dent gate steel.",
 		rarity: "common",
@@ -87193,6 +87840,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_uncommon_0",
 		name: "Frontier Warhammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed crusher tuned for breaking armor, walls, and anomaly carapace alike.",
 		rarity: "uncommon",
@@ -87325,6 +87973,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_uncommon_1",
 		name: "Adept's Bludgeon",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "uncommon",
@@ -87458,6 +88107,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_uncommon_2",
 		name: "Salvaged Battle Hammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A two-handed crusher tuned for breaking armor, walls, and anomaly carapace alike.",
 		rarity: "uncommon",
@@ -87591,6 +88241,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_rare_0",
 		name: "Toxic Crusher",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-tested broadsword balanced for sustained engagements.",
 		rarity: "rare",
@@ -87749,6 +88400,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_rare_1",
 		name: "Voidtouched Greatmaul",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "rare",
@@ -87906,6 +88558,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_rare_2",
 		name: "Phantom Maul",
+		source_book: "Rift Ascendant Canon",
 		description: "A two-handed warhammer built to crater armored targets.",
 		rarity: "rare",
 		type: "weapon",
@@ -88066,6 +88719,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_bludgeon_heavy_epic_0",
 		name: "Archon's Bludgeon",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-grade longsword with a mana-conductive crossguard.",
 		rarity: "epic",
 		type: "weapon",
@@ -88220,6 +88874,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_common_0",
 		name: "Recruit's Reach Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced quarterstaff suitable for both martial and channeling use.",
 		rarity: "common",
@@ -88343,6 +88998,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_common_1",
 		name: "Standard-Pattern Bo Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "common",
@@ -88466,6 +89122,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_common_2",
 		name: "Standard Battle Staff",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced staff that doubles as an arcane focus.",
 		rarity: "common",
 		type: "weapon",
@@ -88594,6 +89251,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_common_3",
 		name: "Standard Reach Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "common",
@@ -88720,6 +89378,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_uncommon_0",
 		name: "Sanctioned Bo Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced quarterstaff suitable for both martial and channeling use.",
 		rarity: "uncommon",
@@ -88853,6 +89512,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_uncommon_1",
 		name: "Lattice-Stable Battle Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "uncommon",
@@ -88989,6 +89649,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_uncommon_2",
 		name: "Refit Battle Staff",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced staff that doubles as an arcane focus.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -89120,6 +89781,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_uncommon_3",
 		name: "Bonded Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "uncommon",
@@ -89252,6 +89914,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_uncommon_4",
 		name: "Adept's Combat Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced quarterstaff suitable for both martial and channeling use.",
 		rarity: "uncommon",
@@ -89384,6 +90047,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_uncommon_5",
 		name: "Operative's Bo Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "uncommon",
@@ -89516,6 +90180,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_rare_0",
 		name: "Wraithtouched Casting Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced quarterstaff suitable for both martial and channeling use.",
 		rarity: "rare",
@@ -89674,6 +90339,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_rare_1",
 		name: "Voidtouched Reach Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced quarterstaff suitable for both martial and channeling use.",
 		rarity: "rare",
@@ -89832,6 +90498,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_rare_2",
 		name: "Lightseeker's Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "rare",
@@ -89990,6 +90657,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_rare_3",
 		name: "Skyveil Bo Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "rare",
@@ -90149,6 +90817,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_rare_4",
 		name: "Ember Combat Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "rare",
@@ -90310,6 +90979,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_epic_0",
 		name: "Abyssal Staff",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced staff that doubles as an arcane focus.",
 		rarity: "epic",
 		type: "weapon",
@@ -90471,6 +91141,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_epic_1",
 		name: "Nebular Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "epic",
@@ -90630,6 +91301,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_staff_legendary_0",
 		name: "Crownbearer's Heir Casting Staff",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long staff used by hybrid Mage-classed Ascendants in close-quarter exchanges.",
 		rarity: "legendary",
@@ -90790,6 +91462,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_common_0",
 		name: "Issue-Standard Reaping Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "common",
@@ -90917,6 +91590,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_common_1",
 		name: "Bureau-Stamped Twin Sickles",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small reaping blade used for harvesting anomaly cores in the field.",
 		rarity: "common",
@@ -91041,6 +91715,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_uncommon_0",
 		name: "Frontier Kama",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small reaping blade used for harvesting anomaly cores in the field.",
 		rarity: "uncommon",
@@ -91173,6 +91848,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_uncommon_1",
 		name: "Renegade Reaping Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard sidearm blade for Ascendants who prefer steel to firearms.",
 		rarity: "uncommon",
@@ -91302,6 +91978,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_uncommon_2",
 		name: "Reissue Kama",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short curved blade. Light, fast, and well-suited to dual-wielding.",
 		rarity: "uncommon",
@@ -91426,6 +92103,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_rare_0",
 		name: "Sanguine Twin Sickles",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A finesse-edge weapon traditionally paired with shadow techniques.",
 		rarity: "rare",
@@ -91583,6 +92261,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_rare_1",
 		name: "Wraithtouched Reaping Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A field-tested broadsword balanced for sustained engagements.",
 		rarity: "rare",
@@ -91738,6 +92417,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_sickle_epic_0",
 		name: "Tempest Kama",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short curved blade. Light, fast, and well-suited to dual-wielding.",
 		rarity: "epic",
@@ -91900,6 +92580,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_common_0",
 		name: "Recruit's Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "common",
 		type: "weapon",
@@ -92021,6 +92702,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_common_1",
 		name: "Tactical War Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "common",
 		type: "weapon",
@@ -92143,6 +92825,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_common_2",
 		name: "Trainee Tomahawk",
+		source_book: "Rift Ascendant Canon",
 		description: "A two-edged axe weighted for sustained cleaving.",
 		rarity: "common",
 		type: "weapon",
@@ -92265,6 +92948,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_common_3",
 		name: "Cadet's War Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "common",
 		type: "weapon",
@@ -92386,6 +93070,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_uncommon_0",
 		name: "Reissue Tomahawk",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -92508,6 +93193,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_uncommon_1",
 		name: "Decorated Hand Axe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced battle-axe. Versatile, brutal, and easy to maintain in the field.",
 		rarity: "uncommon",
@@ -92639,6 +93325,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_uncommon_2",
 		name: "Operative's Field Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -92767,6 +93454,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_uncommon_3",
 		name: "Decorated War Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -92895,6 +93583,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_uncommon_4",
 		name: "Hardened Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -93025,6 +93714,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_uncommon_5",
 		name: "Sworn Field Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -93148,6 +93838,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_rare_0",
 		name: "Riftbound Greataxe",
+		source_book: "Rift Ascendant Canon",
 		description: "A saber cut for fluid offense and parry-driven defense.",
 		rarity: "rare",
 		type: "weapon",
@@ -93308,6 +93999,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_rare_1",
 		name: "Wraithtouched War Axe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced battle-axe. Versatile, brutal, and easy to maintain in the field.",
 		rarity: "rare",
@@ -93465,6 +94157,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_rare_2",
 		name: "Aetheric Hand Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-axe forged to Bureau quartermaster standards.",
 		rarity: "rare",
 		type: "weapon",
@@ -93624,6 +94317,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_rare_3",
 		name: "Toxic War Axe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced battle-axe. Versatile, brutal, and easy to maintain in the field.",
 		rarity: "rare",
@@ -93784,6 +94478,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_rare_4",
 		name: "Skyveil Hand Axe",
+		source_book: "Rift Ascendant Canon",
 		description: "A two-edged axe weighted for sustained cleaving.",
 		rarity: "rare",
 		type: "weapon",
@@ -93940,6 +94635,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_epic_0",
 		name: "Singularity Axe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced battle-axe. Versatile, brutal, and easy to maintain in the field.",
 		rarity: "epic",
@@ -94091,6 +94787,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_epic_1",
 		name: "Archon's Tomahawk",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced battle-axe. Versatile, brutal, and easy to maintain in the field.",
 		rarity: "epic",
@@ -94248,6 +94945,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_axe_legendary_0",
 		name: "Dawnbringer's Greataxe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "legendary",
@@ -94406,6 +95104,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_common_0",
 		name: "Quartermaster's Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced gauntlet that turns unarmed strikes into solid kinetic blows.",
 		rarity: "common",
@@ -94537,6 +95236,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_common_1",
 		name: "Bureau-Stamped Battle Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors.",
 		rarity: "common",
@@ -94667,6 +95367,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_uncommon_0",
 		name: "Reclaimed Knuckles",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors.",
 		rarity: "uncommon",
@@ -94800,6 +95501,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_uncommon_1",
 		name: "Mana-Treated Battle Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description: "Heavy bracer-knuckles with mana-treated impact plates.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -94935,6 +95637,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_uncommon_2",
 		name: "Veteran Claws",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-combat gauntlet favored by Strikers and unarmed-Mage hybrids.",
 		rarity: "uncommon",
@@ -95067,6 +95770,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_rare_0",
 		name: "Wraithtouched Combat Knuckles",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-combat gauntlet favored by Strikers and unarmed-Mage hybrids.",
 		rarity: "rare",
@@ -95226,6 +95930,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_rare_1",
 		name: "Phantom Battle Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description: "Articulated combat gauntlets that double as a martial focus.",
 		rarity: "rare",
 		type: "weapon",
@@ -95386,6 +96091,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_gauntlet_epic_0",
 		name: "Dimensional Strike Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description: "Articulated combat gauntlets that double as a martial focus.",
 		rarity: "epic",
 		type: "weapon",
@@ -95546,6 +96252,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_common_0",
 		name: "Quartermaster's Kusarigama",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long flexible weapon with a finesse grip. Reach without weight.",
 		rarity: "common",
@@ -95676,6 +96383,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_common_1",
 		name: "Tactical Kusarigama",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long flexible weapon with a finesse grip. Reach without weight.",
 		rarity: "common",
@@ -95806,6 +96514,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_uncommon_0",
 		name: "Frontier Combat Whip",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A control-class weapon for Ascendants who prefer winning fights without finishing them.",
 		rarity: "uncommon",
@@ -95940,6 +96649,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_uncommon_1",
 		name: "Specialist's Cord Whip",
+		source_book: "Rift Ascendant Canon",
 		description: "A flexible reach weapon braided from mana-treated cord.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -96072,6 +96782,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_uncommon_2",
 		name: "Black-Market Kusarigama",
+		source_book: "Rift Ascendant Canon",
 		description: "A weighted whip for trip, disarm, and grappling work.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -96204,6 +96915,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_rare_0",
 		name: "Wraithtouched Kusarigama",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
 		rarity: "rare",
@@ -96363,6 +97075,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_melee_whip_rare_1",
 		name: "Ember Combat Whip",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A finesse reach weapon â€” surprising on first contact, devastating with practice.",
 		rarity: "rare",
@@ -96525,6 +97238,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_common_0",
 		name: "Recruit's Reinforced Robe",
+		source_book: "Rift Ascendant Canon",
 		description: "Standard Bureau-issue clothing for non-combat duties.",
 		rarity: "common",
 		type: "wondrous",
@@ -96642,6 +97356,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_common_1",
 		name: "Conscript's Mana-Weave Jacket",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact tactical layer designed for fast movers operating inside C-rank gates.",
 		rarity: "common",
@@ -96771,6 +97486,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_uncommon_0",
 		name: "Adept's Field Cloak",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "uncommon",
@@ -96892,6 +97608,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_uncommon_1",
 		name: "Field-Tested Field Cloak",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "uncommon",
@@ -97013,6 +97730,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_uncommon_2",
 		name: "Operative's Combat Vest",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A light, flexible armor weave. Standard kit for stealth-focused Ascendants.",
 		rarity: "uncommon",
@@ -97141,6 +97859,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_uncommon_3",
 		name: "Reissue Mana-Weave Jacket",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting armor jacket cut from mana-treated synthetic fiber.",
 		rarity: "uncommon",
@@ -97273,6 +97992,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_rare_0",
 		name: "Ember Patrol Coat",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A modern Bureau armor jacket built for fast extraction and door-to-door work.",
 		rarity: "rare",
@@ -97424,6 +98144,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_rare_1",
 		name: "Riftforged Service Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A piece of formal or working attire suited to Bureau social settings.",
 		rarity: "rare",
@@ -97575,6 +98296,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_rare_2",
 		name: "Shadow Reinforced Robe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A non-armored outfit appropriate for guild-administrative work.",
 		rarity: "rare",
@@ -97726,6 +98448,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_epic_0",
 		name: "Hierophant's Combat Vest",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A close-fitting armor jacket cut from mana-treated synthetic fiber.",
 		rarity: "epic",
@@ -97872,6 +98595,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_light_legendary_0",
 		name: "Doombound Combat Vest",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A flexible armor cloak shaped to sit unobtrusively under Bureau-issue uniforms.",
 		rarity: "legendary",
@@ -98023,6 +98747,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_common_0",
 		name: "Issue-Standard Half-Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced armor system suited to second-line Ascendants and skirmisher tanks.",
 		rarity: "common",
@@ -98147,6 +98872,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_common_1",
 		name: "Trainee Scale Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "common",
@@ -98272,6 +98998,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_common_2",
 		name: "Inspector's Mail Shirt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced brigandine layer built to mesh with standard Bureau combat gear.",
 		rarity: "common",
@@ -98398,6 +99125,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_common_3",
 		name: "Inspector's Chain Shirt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "common",
@@ -98523,6 +99251,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_0",
 		name: "Sanctioned Service Brigandine",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced armor weave suited to most Ascendant classes.",
 		rarity: "uncommon",
 		type: "armor",
@@ -98650,6 +99379,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_1",
 		name: "Black-Market Brigandine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "uncommon",
@@ -98778,6 +99508,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_2",
 		name: "Decorated Half-Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scale-and-plate composite providing solid protection without crippling mobility.",
 		rarity: "uncommon",
@@ -98905,6 +99636,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_3",
 		name: "Custom-Forged Half-Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced mid-weight armor used by gate-line second-strike teams.",
 		rarity: "uncommon",
@@ -99033,6 +99765,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_4",
 		name: "Veteran Brigandine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "uncommon",
@@ -99161,6 +99894,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_5",
 		name: "Mana-Treated Chain Shirt",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced armor weave suited to most Ascendant classes.",
 		rarity: "uncommon",
 		type: "armor",
@@ -99291,6 +100025,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_6",
 		name: "Reissue Service Brigandine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "uncommon",
@@ -99419,6 +100154,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_uncommon_7",
 		name: "Lattice-Stable Combat Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced scale-mail composite tuned for long-engagement durability.",
 		rarity: "uncommon",
@@ -99551,6 +100287,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_0",
 		name: "Riftforged Scale Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced brigandine layer built to mesh with standard Bureau combat gear.",
 		rarity: "rare",
@@ -99700,6 +100437,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_1",
 		name: "Stormcaller Layered Mail",
+		source_book: "Rift Ascendant Canon",
 		description: "A mid-weight chainmail shirt rated for B-rank engagements.",
 		rarity: "rare",
 		type: "armor",
@@ -99848,6 +100586,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_2",
 		name: "Sanguine Combat Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "rare",
@@ -99997,6 +100736,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_3",
 		name: "Frost Combat Mail",
+		source_book: "Rift Ascendant Canon",
 		description: "A balanced armor weave suited to most Ascendant classes.",
 		rarity: "rare",
 		type: "armor",
@@ -100145,6 +100885,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_4",
 		name: "Crimson Layered Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced scale-mail composite tuned for long-engagement durability.",
 		rarity: "rare",
@@ -100295,6 +101036,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_rare_5",
 		name: "Voidtouched Half-Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern tactical armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "rare",
@@ -100442,6 +101184,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_epic_0",
 		name: "Doom-Forged Combat Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A scale-and-plate composite providing solid protection without crippling mobility.",
 		rarity: "epic",
@@ -100592,6 +101335,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_epic_1",
 		name: "Apocalypse Service Brigandine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A medium armor of layered scale and reinforced cloth. The standard Bureau loadout.",
 		rarity: "epic",
@@ -100740,6 +101484,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_epic_2",
 		name: "Tempest Mail Shirt",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced armor system suited to second-line Ascendants and skirmisher tanks.",
 		rarity: "epic",
@@ -100890,6 +101635,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_medium_legendary_0",
 		name: "Genesis Service Brigandine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced mid-weight armor used by gate-line second-strike teams.",
 		rarity: "legendary",
@@ -101037,6 +101783,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_common_0",
 		name: "Bureau-Approved Bulwark Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches.",
 		rarity: "common",
@@ -101163,6 +101910,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_common_1",
 		name: "Patrol Reinforced Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Heavy Bureau-stamped plate. Designed to be hit. Designed to keep working when it is.",
 		rarity: "common",
@@ -101289,6 +102037,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_uncommon_0",
 		name: "Reclaimed Field Plate",
+		source_book: "Rift Ascendant Canon",
 		description: "A field reference for gate-affected geography.",
 		rarity: "uncommon",
 		type: "wondrous",
@@ -101409,6 +102158,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_uncommon_1",
 		name: "Hardened Carapace Armor",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches.",
 		rarity: "uncommon",
@@ -101538,6 +102288,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_uncommon_2",
 		name: "Reissue Vanguard Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced battle-plate composed of layered ichor-treated sections.",
 		rarity: "uncommon",
@@ -101666,6 +102417,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_uncommon_3",
 		name: "Decorated Combat Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy plate-and-scale shell built for sustained engagements with armored anomalies.",
 		rarity: "uncommon",
@@ -101794,6 +102546,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_rare_0",
 		name: "Frost Heavy Cuirass",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-rank tank's plate, built to hold a line through C-to-A engagement waves.",
 		rarity: "rare",
@@ -101944,6 +102697,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_rare_1",
 		name: "Crimson Heavy Cuirass",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy armor system with sectional plating and a mana-conductive backing layer.",
 		rarity: "rare",
@@ -102095,6 +102849,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_rare_2",
 		name: "Crimson Plate Armor",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced heavy armor shell. Designed for line-holders and gate-breach teams.",
 		rarity: "rare",
@@ -102246,6 +103001,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_epic_0",
 		name: "Tempest Bulwark Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-rank tank's plate, built to hold a line through C-to-A engagement waves.",
 		rarity: "epic",
@@ -102397,6 +103153,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_epic_1",
 		name: "Sanctified Battle Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced heavy armor shell. Designed for line-holders and gate-breach teams.",
 		rarity: "epic",
@@ -102548,6 +103305,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_heavy_legendary_0",
 		name: "Singular Reinforced Plate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy mana-stable carapace built around composite plating and ichor-treated joints.",
 		rarity: "legendary",
@@ -102697,6 +103455,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_common_0",
 		name: "Modern Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "common",
 		type: "armor",
@@ -102821,6 +103580,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_common_1",
 		name: "Reinforced Tower Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "common",
@@ -102946,6 +103706,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_common_2",
 		name: "Inspector's Patrol Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "common",
@@ -103071,6 +103832,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_common_3",
 		name: "Standard Kite Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "common",
 		type: "armor",
@@ -103195,6 +103957,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_0",
 		name: "Bonded Patrol Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "uncommon",
 		type: "armor",
@@ -103322,6 +104085,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_1",
 		name: "Custom-Forged Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "uncommon",
@@ -103451,6 +104215,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_2",
 		name: "Reissue Combat Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "uncommon",
 		type: "armor",
@@ -103577,6 +104342,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_3",
 		name: "Adept's Bulwark",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "uncommon",
@@ -103705,6 +104471,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_4",
 		name: "Field-Tested Combat Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "uncommon",
@@ -103834,6 +104601,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_5",
 		name: "Renegade Patrol Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "uncommon",
 		type: "armor",
@@ -103960,6 +104728,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_6",
 		name: "Custom-Forged Combat Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "uncommon",
@@ -104088,6 +104857,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_uncommon_7",
 		name: "Adept's Tower Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "uncommon",
 		type: "armor",
@@ -104214,6 +104984,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_rare_0",
 		name: "Crimson Buckler",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "rare",
@@ -104364,6 +105135,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_rare_1",
 		name: "Umbral Kite Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "rare",
 		type: "armor",
@@ -104513,6 +105285,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_rare_2",
 		name: "Ember Combat Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "rare",
@@ -104663,6 +105436,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_rare_3",
 		name: "Ember Buckler",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced shield. Standard kit for line-holders inside high-rank gates.",
 		rarity: "rare",
@@ -104814,6 +105588,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_rare_4",
 		name: "Umbral Patrol Shield",
+		source_book: "Rift Ascendant Canon",
 		description: "A composite shield with mana-stable plating.",
 		rarity: "rare",
 		type: "armor",
@@ -104962,6 +105737,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_rare_5",
 		name: "Oathbound Tower Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced shield. Standard kit for line-holders inside high-rank gates.",
 		rarity: "rare",
@@ -105111,6 +105887,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_epic_0",
 		name: "Eclipse Round Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "epic",
@@ -105260,6 +106037,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_epic_1",
 		name: "Doom-Forged Patrol Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced shield. Standard kit for line-holders inside high-rank gates.",
 		rarity: "epic",
@@ -105411,6 +106189,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_epic_2",
 		name: "Cataclysmic Kite Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "epic",
@@ -105557,6 +106336,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_shield_legendary_0",
 		name: "Origin-Crowned Tower Shield",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued buckler shaped for both melee and ranged defense.",
 		rarity: "legendary",
@@ -105704,6 +106484,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_common_0",
 		name: "Trainee Operator Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "common",
 		type: "armor",
@@ -105828,6 +106609,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_common_1",
 		name: "Reinforced Combat Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "common",
 		type: "armor",
@@ -105952,6 +106734,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_common_2",
 		name: "Conscript's Greathelm",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "common",
 		type: "armor",
@@ -106076,6 +106859,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_uncommon_0",
 		name: "Sworn Reinforced Mask",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "uncommon",
 		type: "armor",
@@ -106203,6 +106987,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_uncommon_1",
 		name: "Specialist's Field Cowl",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "uncommon",
 		type: "armor",
@@ -106331,6 +107116,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_uncommon_2",
 		name: "Hardened Operator Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "uncommon",
 		type: "armor",
@@ -106459,6 +107245,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_uncommon_3",
 		name: "Lattice-Stable Operator Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "Reinforced headgear with mana-treated impact lining.",
 		rarity: "uncommon",
 		type: "armor",
@@ -106591,6 +107378,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_uncommon_4",
 		name: "Sanctioned Operator Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "uncommon",
 		type: "armor",
@@ -106719,6 +107507,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_rare_0",
 		name: "Tempered Tactical Visor",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "rare",
 		type: "armor",
@@ -106865,6 +107654,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_rare_1",
 		name: "Toxic Combat Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "rare",
 		type: "armor",
@@ -107015,6 +107805,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_rare_2",
 		name: "Frost Greathelm",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "rare",
 		type: "armor",
@@ -107164,6 +107955,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_rare_3",
 		name: "Sanguine Reinforced Mask",
+		source_book: "Rift Ascendant Canon",
 		description: "Reinforced headgear with mana-treated impact lining.",
 		rarity: "rare",
 		type: "armor",
@@ -107313,6 +108105,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_epic_0",
 		name: "Ascendant Patrol Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "epic",
 		type: "armor",
@@ -107459,6 +108252,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_epic_1",
 		name: "Apocalypse Patrol Helm",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "epic",
 		type: "armor",
@@ -107605,6 +108399,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_armor_headgear_legendary_0",
 		name: "Echo of Origin Reinforced Mask",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "legendary",
 		type: "armor",
@@ -107753,6 +108548,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_common_0",
 		name: "Conscript's Revolver",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates.",
 		rarity: "common",
@@ -107877,6 +108673,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_common_1",
 		name: "Standard Suppressed Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced service pistol favored by C-rank strike teams. Stable in lattice-bleed conditions.",
 		rarity: "common",
@@ -108003,6 +108800,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_common_2",
 		name: "Standard Sidearm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "common",
@@ -108127,6 +108925,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_common_3",
 		name: "Service Magnum",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "common",
@@ -108253,6 +109052,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_uncommon_0",
 		name: "Field-Tested Combat Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced sidearm with a Bureau-stamped frame and ichor-resistant action.",
 		rarity: "uncommon",
@@ -108388,6 +109188,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_uncommon_1",
 		name: "Salvaged Snub-Frame",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "uncommon",
@@ -108520,6 +109321,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_uncommon_2",
 		name: "Lattice-Stable Suppressed Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates.",
 		rarity: "uncommon",
@@ -108658,6 +109460,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_uncommon_3",
 		name: "Custom-Forged Service Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates.",
 		rarity: "uncommon",
@@ -108793,6 +109596,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_uncommon_4",
 		name: "Renegade Magnum",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "uncommon",
@@ -108918,6 +109722,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_uncommon_5",
 		name: "Reclaimed Magnum",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "uncommon",
@@ -109048,6 +109853,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_rare_0",
 		name: "Ember Holdout Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "rare",
@@ -109211,6 +110017,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_rare_1",
 		name: "Skyveil Holdout Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced sidearm with a Bureau-stamped frame and ichor-resistant action.",
 		rarity: "rare",
@@ -109371,6 +110178,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_rare_2",
 		name: "Aetheric Revolver",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel handgun tuned for fast draw and reliable function inside cramped gate corridors.",
 		rarity: "rare",
@@ -109533,6 +110341,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_rare_3",
 		name: "Aetheric Combat Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "rare",
@@ -109697,6 +110506,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_rare_4",
 		name: "Manaforged Sidearm",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec sidearm tuned for close-quarters work inside collapsed gates.",
 		rarity: "rare",
@@ -109858,6 +110668,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_epic_0",
 		name: "Dimensional Suppressed Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced service pistol favored by C-rank strike teams. Stable in lattice-bleed conditions.",
 		rarity: "epic",
@@ -110023,6 +110834,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_epic_1",
 		name: "Doom-Forged Revolver",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced sidearm with a Bureau-stamped frame and ichor-resistant action.",
 		rarity: "epic",
@@ -110186,6 +110998,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_pistol_legendary_0",
 		name: "Singular Combat Pistol",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "legendary",
@@ -110347,6 +111160,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_common_0",
 		name: "Standard Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "common",
@@ -110471,6 +111285,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_common_1",
 		name: "Bureau-Approved Auto-Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters.",
 		rarity: "common",
@@ -110598,6 +111413,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_common_2",
 		name: "Trainee Marksman Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "common",
@@ -110722,6 +111538,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_common_3",
 		name: "Standard-Pattern Marksman Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "common",
@@ -110849,6 +111666,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_uncommon_0",
 		name: "Operative's Auto-Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A precision rifle with mana-stable optics. Effective against armored anomalies at extended range.",
 		rarity: "uncommon",
@@ -110982,6 +111800,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_uncommon_1",
 		name: "Sworn Auto-Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "uncommon",
@@ -111116,6 +111935,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_uncommon_2",
 		name: "Black-Market Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "uncommon",
@@ -111249,6 +112069,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_uncommon_3",
 		name: "Frontier Bullpup",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "uncommon",
@@ -111381,6 +112202,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_uncommon_4",
 		name: "Reclaimed Service Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters.",
 		rarity: "uncommon",
@@ -111515,6 +112337,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_uncommon_5",
 		name: "Veteran Marksman Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "uncommon",
@@ -111648,6 +112471,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_rare_0",
 		name: "Umbral Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A precision rifle with mana-stable optics. Effective against armored anomalies at extended range.",
 		rarity: "rare",
@@ -111810,6 +112634,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_rare_1",
 		name: "Frost Combat Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters.",
 		rarity: "rare",
@@ -111972,6 +112797,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_rare_2",
 		name: "Sanguine Service Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "rare",
@@ -112134,6 +112960,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_rare_3",
 		name: "Glacial Bullpup",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile mid-weight blade. Handles single- and two-handed equally well.",
 		rarity: "rare",
@@ -112296,6 +113123,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_epic_0",
 		name: "Starlight Marksman Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters.",
 		rarity: "epic",
@@ -112458,6 +113286,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_epic_1",
 		name: "Archon's Combat Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued service rifle, balanced for accuracy over rate of fire.",
 		rarity: "epic",
@@ -112617,6 +113446,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_rifle_legendary_0",
 		name: "Origin-Crowned Carbine",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A precision rifle with mana-stable optics. Effective against armored anomalies at extended range.",
 		rarity: "legendary",
@@ -112778,6 +113608,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_common_0",
 		name: "Reinforced Sawed-Off",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "common",
@@ -112904,6 +113735,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_common_1",
 		name: "Standard-Pattern Shotgun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec scattergun favored for clearing nests and tight gate corridors.",
 		rarity: "common",
@@ -113029,6 +113861,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_common_2",
 		name: "Service-Grade Scattergun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel breaching weapon. Devastating in close quarters; useless past thirty feet.",
 		rarity: "common",
@@ -113154,6 +113987,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_common_3",
 		name: "Bureau-Stamped Sawed-Off",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "common",
@@ -113281,6 +114115,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_uncommon_0",
 		name: "Black-Market Scattergun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel breaching weapon. Devastating in close quarters; useless past thirty feet.",
 		rarity: "uncommon",
@@ -113415,6 +114250,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_uncommon_1",
 		name: "Field-Tested Auto-Shotgun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced pump-action shotgun. Standard kit for breach-and-clear operations.",
 		rarity: "uncommon",
@@ -113549,6 +114385,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_uncommon_2",
 		name: "Reclaimed Scattergun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel breaching weapon. Devastating in close quarters; useless past thirty feet.",
 		rarity: "uncommon",
@@ -113682,6 +114519,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_uncommon_3",
 		name: "Frontier Pump-Action",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "uncommon",
@@ -113815,6 +114653,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_uncommon_4",
 		name: "Reissue Combat Shotgun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel breaching weapon. Devastating in close quarters; useless past thirty feet.",
 		rarity: "uncommon",
@@ -113949,6 +114788,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_rare_0",
 		name: "Skyveil Breaching Shotgun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec scattergun favored for clearing nests and tight gate corridors.",
 		rarity: "rare",
@@ -114109,6 +114949,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_rare_1",
 		name: "Hexbound Sawed-Off",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "rare",
@@ -114267,6 +115108,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_rare_2",
 		name: "Riftbound Auto-Shotgun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-spec scattergun favored for clearing nests and tight gate corridors.",
 		rarity: "rare",
@@ -114429,6 +115271,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_shotgun_epic_0",
 		name: "Holy Pump-Action",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile blade â€” single-handed for speed, two-handed for finishing strokes.",
 		rarity: "epic",
@@ -114587,6 +115430,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_common_0",
 		name: "Field-Issue Submachine Gun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued PDW. High rate of fire, modest stopping power, easy reloads.",
 		rarity: "common",
@@ -114711,6 +115555,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_common_1",
 		name: "Bureau-Approved Submachine Gun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued PDW. High rate of fire, modest stopping power, easy reloads.",
 		rarity: "common",
@@ -114843,6 +115688,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_common_2",
 		name: "Bureau-Approved PDW",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile cutting blade with a tempered edge and Bureau service marks.",
 		rarity: "common",
@@ -114966,6 +115812,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_common_3",
 		name: "Service-Grade SMG",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact submachine gun tuned for sustained-fire engagements.",
 		rarity: "common",
@@ -115090,6 +115937,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_uncommon_0",
 		name: "Reissue SMG",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel automatic. Burst-fire selectors give Ascendants control in tight spaces.",
 		rarity: "uncommon",
@@ -115224,6 +116072,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_uncommon_1",
 		name: "Sanctioned Compact SMG",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel automatic. Burst-fire selectors give Ascendants control in tight spaces.",
 		rarity: "uncommon",
@@ -115358,6 +116207,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_uncommon_2",
 		name: "Operative's Compact SMG",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued PDW. High rate of fire, modest stopping power, easy reloads.",
 		rarity: "uncommon",
@@ -115492,6 +116342,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_uncommon_3",
 		name: "Refit PDW",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A standard sidearm blade for Ascendants who prefer steel to firearms.",
 		rarity: "uncommon",
@@ -115624,6 +116475,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_rare_0",
 		name: "Aetheric Compact SMG",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact submachine gun tuned for sustained-fire engagements.",
 		rarity: "rare",
@@ -115788,6 +116640,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_rare_1",
 		name: "Stargazer's Submachine Gun",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short-barrel automatic. Burst-fire selectors give Ascendants control in tight spaces.",
 		rarity: "rare",
@@ -115948,6 +116801,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_rare_2",
 		name: "Ember PDW",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A mid-weight longsword with a Bureau-stamped pommel and reinforced grip.",
 		rarity: "rare",
@@ -116106,6 +116960,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_smg_epic_0",
 		name: "Worldbreaker's PDW",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade â€” the kind every Ascendant learns on, and many never replace.",
 		rarity: "epic",
@@ -116266,6 +117121,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_common_0",
 		name: "Modern Grenade Launcher",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy ordnance launcher reserved for A-rank breaches. Use sparingly.",
 		rarity: "common",
@@ -116397,6 +117253,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_common_1",
 		name: "Trainee Grenade Launcher",
+		source_book: "Rift Ascendant Canon",
 		description: "A high-explosive launcher with Bureau-coded safety locks.",
 		rarity: "common",
 		type: "weapon",
@@ -116526,6 +117383,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_uncommon_0",
 		name: "Sworn Rocket Launcher",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy ordnance launcher reserved for A-rank breaches. Use sparingly.",
 		rarity: "uncommon",
@@ -116661,6 +117519,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_uncommon_1",
 		name: "Veteran Rocket Launcher",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A shoulder-mount projectile launcher tuned for armored and clustered anomalies.",
 		rarity: "uncommon",
@@ -116796,6 +117655,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_uncommon_2",
 		name: "Renegade Rocket Launcher",
+		source_book: "Rift Ascendant Canon",
 		description: "A high-explosive launcher with Bureau-coded safety locks.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -116929,6 +117789,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_rare_0",
 		name: "Manaforged Field Launcher",
+		source_book: "Rift Ascendant Canon",
 		description: "A high-explosive launcher with Bureau-coded safety locks.",
 		rarity: "rare",
 		type: "weapon",
@@ -117092,6 +117953,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_rare_1",
 		name: "Umbral Grenade Launcher",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A shoulder-mount projectile launcher tuned for armored and clustered anomalies.",
 		rarity: "rare",
@@ -117255,6 +118117,7 @@ export const items_gap_fill: Item[] = [
 	{
 		id: "gap_firearm_launcher_epic_0",
 		name: "Sanctified Grenade Launcher",
+		source_book: "Rift Ascendant Canon",
 		description: "A high-explosive launcher with Bureau-coded safety locks.",
 		rarity: "epic",
 		type: "weapon",

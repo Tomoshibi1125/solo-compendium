@@ -3434,10 +3434,10 @@ export const powers_supplemental: CompendiumPower[] = [
 			lattice_interaction:
 				"5-tier tracking stabilized through gate-lattice resonance",
 			saving_throw: {
-				ability: "Strength",
-				dc: 17,
-				success: "Half damage and no rider.",
-				failure: "Ultimate hunting mode with exhaustion risk.",
+				ability: "Presence",
+				dc: 15,
+				success: "Avoids exhaustion at end of duration.",
+				failure: "Gains 1 level of exhaustion.",
 			},
 		},
 		limitations: {

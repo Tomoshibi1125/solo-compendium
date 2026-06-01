@@ -10,6 +10,7 @@
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Json } from "@/integrations/supabase/types";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
+import { deriveSpellResolution } from "@/lib/spellMechanicsDerivation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 import type { CompendiumDeity } from "@/types/compendium";
 
@@ -1335,44 +1336,96 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 			? spell.effects
 			: derivedEffects
 	) as Record<string, Json>;
-	const mechanicsValue = (
+	const baseMechanics: Record<string, Json> =
 		spell.mechanics && typeof spell.mechanics === "object"
-			? spell.mechanics
-			: (spell as Record<string, Json>).spellAttack
-				? { attack: (spell as Record<string, Json>).spellAttack }
-				: {
-						saving_throw: { ability: "agility", effect: "half damage" },
-					}
-	) as Record<string, Json>;
+			? { ...(spell.mechanics as Record<string, Json>) }
+			: {};
+
+	// Promote any authored top-level resolution blocks into mechanics so the
+	// single mechanics path renders them and the resolution check is accurate.
+	// (spells/index.ts strips attack/saving_throw out of mechanics into the
+	// top level, so without this an authored attack spell would look empty.)
+	const topAttack = (spell as Record<string, Json>).attack;
+	const topSpellAttack = (spell as Record<string, Json>).spellAttack;
+	const topSavingThrow = (spell as Record<string, Json>).saving_throw;
+	if (!baseMechanics.attack && topAttack && typeof topAttack === "object") {
+		baseMechanics.attack = topAttack;
+	} else if (
+		!baseMechanics.attack &&
+		topSpellAttack &&
+		typeof topSpellAttack === "object"
+	) {
+		baseMechanics.attack = topSpellAttack;
+	}
+	if (
+		!baseMechanics.saving_throw &&
+		topSavingThrow &&
+		typeof topSavingThrow === "object"
+	) {
+		baseMechanics.saving_throw = topSavingThrow;
+	}
+
 	const hasResolutionBlock = Boolean(
-		mechanicsValue.attack ||
-			mechanicsValue.saving_throw ||
-			mechanicsValue.healing ||
-			mechanicsValue.utility ||
-			mechanicsValue.resolution,
+		baseMechanics.attack ||
+			baseMechanics.saving_throw ||
+			baseMechanics.healing ||
+			baseMechanics.utility ||
+			baseMechanics.resolution,
 	);
-	const resolvedMechanics = hasResolutionBlock
-		? mechanicsValue
-		: ({
-				...mechanicsValue,
-				utility: {
-					type: "explicit_effect",
-					ability:
-						typeof mechanicsValue.ability === "string"
-							? mechanicsValue.ability
-							: "spellcasting",
-					resolution:
-						typeof effectsValue.primary === "string" && effectsValue.primary
-							? effectsValue.primary
-							: spell.description,
-					formula:
-						typeof mechanicsValue.scaling === "string"
-							? mechanicsValue.scaling
-							: spell.higher_levels ||
-								spell.atHigherLevels ||
-								"No damage formula; resolves through the described non-damage effect.",
-				},
-			} as Record<string, Json>);
+
+	let resolvedMechanics: Record<string, Json>;
+	if (hasResolutionBlock) {
+		resolvedMechanics = baseMechanics;
+	} else {
+		// Parse the AUTHORED description for real attack/save/healing rules
+		// instead of fabricating a generic placeholder. Only the genuinely
+		// non-mechanical (pure utility) spells fall through to a utility block,
+		// which now references the authored effect text.
+		const derived = deriveSpellResolution({
+			description: spell.description,
+			effect: typeof spell.effect === "string" ? spell.effect : null,
+			type: typeof spell.type === "string" ? spell.type : null,
+			effects: {
+				primary:
+					typeof effectsValue.primary === "string"
+						? effectsValue.primary
+						: null,
+			},
+		});
+		const merged: Record<string, Json> = { ...baseMechanics };
+		if (derived.damage_profile && typeof merged.damage_profile !== "string") {
+			merged.damage_profile = derived.damage_profile;
+		}
+		if (derived.attack) merged.attack = derived.attack as unknown as Json;
+		if (derived.saving_throw) {
+			merged.saving_throw = derived.saving_throw as unknown as Json;
+		}
+		if (derived.healing) merged.healing = derived.healing as unknown as Json;
+
+		const derivedHasResolution = Boolean(
+			merged.attack || merged.saving_throw || merged.healing,
+		);
+		if (!derivedHasResolution) {
+			merged.utility = {
+				type: "explicit_effect",
+				ability:
+					typeof baseMechanics.ability === "string"
+						? baseMechanics.ability
+						: "spellcasting",
+				resolution:
+					typeof effectsValue.primary === "string" && effectsValue.primary
+						? effectsValue.primary
+						: spell.description,
+				formula:
+					typeof baseMechanics.scaling === "string"
+						? baseMechanics.scaling
+						: spell.higher_levels ||
+							spell.atHigherLevels ||
+							"Resolves through the described non-damage effect.",
+			};
+		}
+		resolvedMechanics = merged;
+	}
 
 	return {
 		id: spell.id || spell.name.toLowerCase().replace(/\s+/g, "-"),

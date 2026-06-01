@@ -32,6 +32,7 @@ export interface Relic {
 	armor_type?: string;
 	requirements?: Record<string, string | number>;
 	source?: string;
+	source_book?: string;
 	effects?: Record<string, string>;
 }
 
@@ -39,6 +40,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "regents-shadow-dagger",
 		name: "Regent's Shadow Dagger",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A jagged shard of the First Singularity, wreathed in flickering black mana. It does not cut flesh; it deletes the spatial coordinates of whatever it touches.",
 		rarity: "legendary",
@@ -242,6 +244,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "bloodthirsty-greatsword",
 		name: "Bloodthirsty Greatsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A jagged black slab of iron that hums with the rhythm of a heartbeat. It does not just cut; it drinks.",
 		rarity: "very_rare",
@@ -421,6 +424,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "lightning-blade",
 		name: "Lightning Blade",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A rapier forged from a solidified lightning strike, vibrating with ultra-high frequency mana.",
 		rarity: "legendary",
@@ -612,6 +616,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "frost-axe",
 		name: "Frost Axe",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to freeze reality. It allows the wielder to manifest a cryogenic field that can shatter any proximity-based dimensional distortion.",
 		rarity: "very_rare",
@@ -803,6 +808,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "skywyrms-gauntlet",
 		name: "Skywyrm's Gauntlet",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"The legendary gauntlet of the Umbral Regent, containing the power to command shadows and bend reality.",
 		rarity: "mythic",
@@ -1014,6 +1020,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "abyssal-plate",
 		name: "Abyssal Plate Armor",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Armor forged in the deepest shadows, offering protection while enhancing shadow abilities.",
 		rarity: "legendary",
@@ -1183,6 +1190,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "lattice-scale-mail",
 		name: "Lattice-Scale Mail",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Armor crafted from the scales of an ancient anomaly, offering exceptional protection and anomaly-like abilities.",
 		rarity: "legendary",
@@ -1347,6 +1355,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "rulers-authority",
 		name: "Architect's Authority",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An artifact that grants the bearer command over lesser shadows and the respect of all beings.",
 		rarity: "legendary",
@@ -1543,6 +1552,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "bloodstone-amulet",
 		name: "Bloodstone Amulet",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An amulet that enhances shadow manipulation abilities and protects against shadow corruption.",
 		rarity: "epic",
@@ -1707,6 +1717,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "dimensional-compass",
 		name: "Dimensional Compass",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compass that points toward dimensional disturbances and can guide through abyssal realms.",
 		rarity: "very_rare",
@@ -1883,6 +1894,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "crown-of-sense",
 		name: "Crown of Sense",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		rarity: "legendary",
@@ -2064,6 +2076,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "shadow-orb",
 		name: "Shadow Orb",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		rarity: "epic",
@@ -2241,6 +2254,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "time-turner",
 		name: "Time Turner",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to suspend reality. It allows the wielder to manifest a recursive field that can accelerate any proximity-based dimensional distortion.",
 		rarity: "mythic",
@@ -2446,6 +2460,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "essence-potion",
 		name: "Essence Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A potion containing concentrated life essence that can heal wounds and enhance abilities.",
 		rarity: "rare",
@@ -2573,6 +2588,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "shadow-elixir",
 		name: "Shadow Elixir",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to nullify reality. It allows the wielder to manifest a umbral field that can devour any proximity-based dimensional distortion.",
 		rarity: "very_rare",
@@ -2700,6 +2716,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "anomaly-blood-potion",
 		name: "anomaly Blood Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to siphon reality. It allows the wielder to manifest a sanguine field that can clot any proximity-based dimensional distortion.",
 		rarity: "legendary",
@@ -2827,6 +2844,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "shadow-lens",
 		name: "Shadow Lens",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A protocol-enhanced lens that can see through shadows and reveal hidden things.",
 		rarity: "rare",
@@ -2972,6 +2990,7 @@ export const comprehensiveRelics: Relic[] = [
 	{
 		id: "essence-collector",
 		name: "Essence Collector",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"This Legendary-Rank artifact vibrates with the power to mandate reality. It allows the wielder to manifest a fundamental field that can decree any proximity-based dimensional distortion.",
 		rarity: "very_rare",

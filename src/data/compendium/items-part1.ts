@@ -4,6 +4,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-emr-uniform",
 		name: "Emergency Medical Responder Uniform",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A fire-resistant, high-visibility uniform worn by emergency medical technicians. Features reflective strips, reinforced elbows, and multiple utility pockets. Surprisingly durable against minor aetheric burns.",
 		rarity: "common",
@@ -114,6 +115,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-trauma-kit",
 		name: "First-Aid Trauma Kit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A professional-grade trauma kit containing tourniquets, chest seals, hemostatic gauze, airway management tools, and aetheric stabilization crystals added post-awakening. Functions as a Healer's Kit with 15 uses.",
 		rarity: "common",
@@ -223,6 +225,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-phantom-pager",
 		name: "Phantom Pager",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pre-gate-era pager that still buzzes with phantom alerts. Sometimes it picks up frequencies from nearby rifts, providing a few seconds' warning before dimensional instability spikes. Old paramedics swear by them.",
 		rarity: "uncommon",
@@ -339,6 +342,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-cracked-laptop",
 		name: "Cracked-Screen Laptop",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A battered laptop with a spiderweb crack across the screen. Still functional, loaded with spreadsheet software, encrypted corporate data, and a surprisingly useful offline database of guild regulations.",
 		rarity: "common",
@@ -450,6 +454,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-company-badge",
 		name: "Dissolved Corporation ID Badge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A laminated ID badge from a corporation that no longer exists. The magnetic strip still works on some old security systems. A reminder of the world before gates.",
 		rarity: "common",
@@ -558,6 +563,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-business-suit",
 		name: "Crumpled Business Suit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A once-crisp business suit now wrinkled and worn from gate-zone exposure. Still passable for formal occasions. The jacket pockets are reinforced from years of carrying too many pens.",
 		rarity: "common",
@@ -668,6 +674,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-safety-vest",
 		name: "Reinforced Safety Vest",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A high-visibility safety vest with mana-threaded reflective strips. Post-gate modifications include aetheric shielding mesh in the lining. Provides minimal protection but excellent visibility.",
 		rarity: "common",
@@ -780,6 +787,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-dented-hardhat",
 		name: "Dented Hard Hat",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A well-worn hard hat covered in scuff marks and dents from falling debris. The interior padding has been replaced with impact-absorbing gel salvaged from gate-beast shells.",
 		rarity: "common",
@@ -893,6 +901,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-heavy-multitool",
 		name: "Heavy-Duty Multi-Tool",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An industrial-grade multi-tool with pliers, wire cutters, screwdrivers, a bottle opener, and a small pry bar. Built to survive construction sites and gate zones alike.",
 		rarity: "common",
@@ -1003,6 +1012,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-press-badge",
 		name: "Weathered Press Badge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A laminated press badge from a major news outlet. Faded but still recognizable. Opens doors that would otherwise stay shut, and commands a begrudging respect from officials.",
 		rarity: "common",
@@ -1121,6 +1131,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-voice-recorder",
 		name: "Digital Voice Recorder",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A professional digital voice recorder with hours of gate-break interviews, eyewitness accounts, and field notes. The batteries last seemingly forever, and it picks up aetheric interference patterns.",
 		rarity: "common",
@@ -1232,6 +1243,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-encrypted-notebook",
 		name: "Encrypted Contact Notebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A leather-bound notebook filled with contacts, encrypted notes, source information, and hastily sketched gate-zone maps. Written in a personal shorthand that only you can decipher.",
 		rarity: "common",
@@ -1350,6 +1362,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-market-stall",
 		name: "Collapsible Market Stall",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A lightweight, foldable aluminum frame with a canvas awning. Sets up in under 2 minutes. Has survived three gate-storms and countless turf wars. Smells faintly of fried food.",
 		rarity: "common",
@@ -1459,6 +1472,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-lucky-coin",
 		name: "Lucky First-Sale Coin",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A battered coin from your very first sale. You've carried it every day since. It's probably not magical, but you've never had a truly bad day while carrying it. Probably.",
 		rarity: "common",
@@ -1576,6 +1590,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-customer-ledger",
 		name: "Customer Ledger",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A dog-eared ledger filled with regular customer names, preferences, debts owed, and favors to collect. An invaluable network resource disguised as a worn notebook.",
 		rarity: "common",
@@ -1694,6 +1709,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-security-uniform",
 		name: "Reinforced Security Uniform",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A private security uniform with kevlar-lined panels and guild-standard reinforcement patches. The badge is from a company that was absorbed into the Ascendant Bureau.",
 		rarity: "common",
@@ -1804,6 +1820,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-tactical-flashlight",
 		name: "Tactical Flashlight Baton",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy-duty flashlight that doubles as a baton. Military-grade LED with 1000 lumens. The weighted aluminum body makes it an effective improvised weapon (1d4 bludgeoning).",
 		rarity: "common",
@@ -1921,6 +1938,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-guild-radio",
 		name: "Modified Security Radio",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A worn security radio jury-rigged to pick up guild tactical frequencies and emergency broadcasts. Range: 5 miles in urban environments, less in gate zones.",
 		rarity: "common",
@@ -2037,6 +2055,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-delivery-uniform",
 		name: "Reflective Delivery Uniform",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A battered delivery uniform with reflective strips and padding at the knees and elbows. Designed for long hours on the road. The company logo has been scratched off.",
 		rarity: "common",
@@ -2146,6 +2165,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-gate-gps",
 		name: "Gate-Zone GPS Device",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A GPS device jury-rigged for navigation through gate-damaged urban zones. Crowd-sourced data from other drivers keeps the maps updated with rift locations, blocked roads, and safe passages.",
 		rarity: "uncommon",
@@ -2266,6 +2286,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-thermal-bag",
 		name: "Aetheric Thermal Bag",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An insulated delivery bag modified with aetheric cold crystals. Originally for keeping food fresh, now used to transport rift potions, unstable reagents, and temperature-sensitive materials.",
 		rarity: "common",
@@ -2387,6 +2408,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-teacher-satchel",
 		name: "Teacher's Leather Satchel",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A worn leather satchel containing a class roster from a school that no longer exists, graded papers, and a collection of educational materials. The strap has been repaired twice.",
 		rarity: "common",
@@ -2503,6 +2525,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-red-pen",
 		name: "Red Grading Pen",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A well-used red pen. You mark everything with it out of habit—maps, notes, enemy weaknesses. Something about circling errors in red ink feels deeply satisfying.",
 		rarity: "common",
@@ -2611,6 +2634,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-ironic-textbook",
 		name: "World History Textbook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A worn textbook on world history, now painfully ironic given how much the world has changed. Still useful as a reference for pre-gate geography, politics, and cultural context.",
 		rarity: "common",
@@ -2725,6 +2749,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-oil-coveralls",
 		name: "Oil-Stained Coveralls",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Durable work coveralls permanently stained with motor oil, hydraulic fluid, and aetheric residue. Fire-resistant (sort of) and covered in useful pockets.",
 		rarity: "common",
@@ -2837,6 +2862,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-rune-wrenches",
 		name: "Rune-Modified Wrench Set",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A portable toolbox containing wrenches, screwdrivers, and pliers that have been etched with minor reinforcement runes. They never rust and provide better grip on aetherically charged components.",
 		rarity: "uncommon",
@@ -2953,6 +2979,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-aetheric-scanner",
 		name: "Aetheric Diagnostic Scanner",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An automotive diagnostic scanner that sometimes picks up aetheric frequencies. The screen glitches near rifts, displaying energy readings that experienced mechanics have learned to interpret.",
 		rarity: "uncommon",
@@ -3074,6 +3101,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-fire-jacket",
 		name: "Guild-Reinforced Tactical Jacket",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A fire-resistant tactical jacket upgraded with guild-standard aetheric shielding. The Nomex outer layer has been treated with rift-crystal dust, providing enhanced heat protection.",
 		rarity: "uncommon",
@@ -3191,6 +3219,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-halligan-bar",
 		name: "Halligan Bar",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A firefighter's breaching tool—a steel bar with a claw, blade, and pike. Used for forcing open doors, breaking through walls, and prying apart wreckage. An effective improvised weapon.",
 		rarity: "common",
@@ -3314,6 +3343,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-dept-radio",
 		name: "Gate-Zone Department Radio",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A department radio modified for gate-zone frequencies. Hardened against aetheric interference. Can communicate with other radios within 3 miles, or 1 mile inside a gate.",
 		rarity: "common",
@@ -3426,6 +3456,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-case-binder",
 		name: "Case File Binder",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A worn binder originally used for case files, now repurposed for anomaly reports, refugee tracking, and contact management. Color-coded tabs and meticulous organization.",
 		rarity: "common",
@@ -3542,6 +3573,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-govt-id",
 		name: "Government-Issued ID",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A government social services ID that still opens some doors—literally. The lamination is peeling, but the barcode still works at Bureau-affiliated facilities.",
 		rarity: "common",
@@ -3659,6 +3691,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-deescalation-guide",
 		name: "Crisis De-Escalation Guide",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pocket-sized guide to crisis intervention techniques. Dog-eared, highlighted, and annotated with personal notes. Includes chapters on PTSD, aetheric shock syndrome, and post-awakening trauma.",
 		rarity: "common",
@@ -3773,6 +3806,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-tactical-vest",
 		name: "Department-Issue Tactical Vest",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced tactical vest from the police department, dented from a gate-creature encounter. The ceramic plates have been swapped for aetheric-dampening inserts by the Ascendant Bureau.",
 		rarity: "uncommon",
@@ -3886,6 +3920,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-mana-handcuffs",
 		name: "Mana-Inert Handcuffs",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Specially forged handcuffs treated with mana-dampening alloy. A restrained creature has disadvantage on attempts to cast spells or use mana-based abilities. Standard issue for Bureau enforcement.",
 		rarity: "uncommon",
@@ -4006,6 +4041,7 @@ export const items_part1: Item[] = [
 	{
 		id: "bg-police-badge",
 		name: "Ascendant Bureau Badge",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A police badge that has been reissued by the Ascendant Bureau. Carries weight with both civilian law enforcement and guild security. The shield design incorporates a stylized rift sigil.",
 		rarity: "common",

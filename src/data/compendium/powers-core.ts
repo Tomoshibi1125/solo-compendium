@@ -11,12 +11,11 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"First recorded when an Assassin-class regent stepped between two heartbeats to slip a collapsing C-Rank gate.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Guild Rotating Issue Cabinet"],
+			current_owner: "Taught within Assassin and Stalker tradecraft circles.",
+			prior_owners: ["The Nightveil Syndicate", "Guild Rotating Issue Cabinet"],
 		},
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: ["awakened", "magic", "power"],
@@ -68,14 +67,14 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Reverse-engineered from the regenerative biology of a Siberian gate-beast that refused to stay dead.",
 			curse:
 				"Creates a sympathetic bond with the nearest Gate; the user feels physical pain when Gates are destroyed.",
 			personality: "Unobtrusive while not being used.",
 			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
+				"Fielded by frontline Destroyers and Berserkers who outlast their wounds.",
 			prior_owners: [
-				"A dead Guild Master",
+				"The Crimson Vanguard",
 				"Ascendant Academy Reference Collection",
 			],
 		},
@@ -134,13 +133,12 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Extracted from a slain Beast-Class anomaly.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Logged after a Stalker used it to unmask a shapeshifting anomaly mid-negotiation.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
+			current_owner: "Standard issue for anomaly-hunting strike teams.",
 			prior_owners: [
-				"A dead Guild Master",
+				"The Clearsight Lodge",
 				"Ascendant Academy Reference Collection",
 			],
 		},
@@ -151,7 +149,7 @@ export const powers_core: CompendiumPower[] = [
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary: "On a success the concealed creature remains hidden.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -169,9 +167,10 @@ export const powers_core: CompendiumPower[] = [
 			lattice_interaction: "Lattice bypass — raw power",
 			saving_throw: {
 				ability: "Presence",
-				dc: 12,
-				success: "Partial effect",
-				failure: "Full damage",
+				dc: 15,
+				success: "Remains hidden from the caster.",
+				failure:
+					"Loses invisibility or illusory cover against the caster for the duration.",
 			},
 		},
 		limitations: {
@@ -194,12 +193,11 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Refined from an Idol-class crowd-pacification routine the Bureau later restricted.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Guild Rotating Issue Cabinet"],
+			current_owner: "Circulated quietly among negotiators and infiltrators.",
+			prior_owners: ["The Silver Tongue Cabal", "Guild Rotating Issue Cabinet"],
 		},
 		flavor: "A Bureau-validated combat pattern.",
 		tags: ["awakened", "magic", "power"],
@@ -207,7 +205,8 @@ export const powers_core: CompendiumPower[] = [
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary:
+				"On a success the target resists and is immune to this power from this caster for 24 hours.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -226,8 +225,9 @@ export const powers_core: CompendiumPower[] = [
 			saving_throw: {
 				ability: "Sense",
 				dc: 15,
-				success: "No effect",
-				failure: "Full damage",
+				success:
+					"Unaffected, and immune to this power from this caster for 24 hours.",
+				failure: "Charmed by the caster for 1 minute.",
 			},
 		},
 		limitations: {
@@ -250,12 +250,11 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Uncovered in an S-Rank Red Gate in Siberia.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Developed from aegis-lattice shielding salvaged in a Siberian red gate.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Bureau Shared-Materiel Archive"],
+			current_owner: "Relied on by Technomancer support specialists.",
+			prior_owners: ["The Ironhold Compact", "Bureau Shared-Materiel Archive"],
 		},
 		flavor:
 			"Commands the remnants of a dead world. The last thing many anomalies ever see.",
@@ -313,13 +312,12 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "A relic of the Shadow Legion.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Pieced together from Shadow Legion field notes on lattice-thread reclamation.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
+			current_owner: "Favored by casters who fight long past their reserves.",
 			prior_owners: [
-				"A dead Guild Master",
+				"The Shadow Legion remnant",
 				"Ascendant Academy Reference Collection",
 			],
 		},
@@ -379,12 +377,11 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Developed by the Academy of High Magic.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Recorded after a Destroyer forced a rampaging anomaly into a controllable beast-shape.",
 			curse: "",
-			personality: "Neutral in personality profile.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Bureau Artifact Vault"],
+			personality: "Restless; the lattice strains against the imposed shape.",
+			current_owner: "Restricted to sanctioned containment specialists.",
+			prior_owners: ["The Beastbinder Order", "Bureau Containment Archive"],
 		},
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: ["awakened", "magic", "power"],
@@ -392,7 +389,8 @@ export const powers_core: CompendiumPower[] = [
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary:
+				"On a success the target resists and is immune to this power from this caster for 24 hours.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -409,10 +407,12 @@ export const powers_core: CompendiumPower[] = [
 			type: "monstrous",
 			lattice_interaction: "Lattice bypass — raw power",
 			saving_throw: {
-				ability: "Presence",
-				dc: 14,
-				success: "No effect",
-				failure: "Full damage",
+				ability: "Strength",
+				dc: 15,
+				success:
+					"Unaffected, and immune to this power from this caster for 24 hours.",
+				failure:
+					"Transformed for 1 minute (treated as Incapacitated and unable to cast).",
 			},
 		},
 		limitations: {
@@ -435,12 +435,11 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Catalogued after a Striker halted a gate-beast charge with a single locked stare.",
 			curse: "",
 			personality: "Disciplined in its at-rest state.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Guild Rotating Issue Cabinet"],
+			current_owner: "Held by elite vanguard who duel apex anomalies.",
+			prior_owners: ["The Stonewatch", "Guild Rotating Issue Cabinet"],
 		},
 		flavor:
 			"Mirrors the flow of causality. The death of hesitation, made manifest.",
@@ -449,7 +448,7 @@ export const powers_core: CompendiumPower[] = [
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary: "On a success the target resists and is immune for 24 hours.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -466,10 +465,11 @@ export const powers_core: CompendiumPower[] = [
 			type: "innate",
 			lattice_interaction: "Standard channel",
 			saving_throw: {
-				ability: "Presence",
-				dc: 18,
-				success: "Partial effect",
-				failure: "Full effect and prone",
+				ability: "Strength",
+				dc: 15,
+				success: "Unaffected, and immune to this power for 24 hours.",
+				failure:
+					"Paralyzed for 1 minute; repeats the save at the end of each of its turns to end the effect.",
 			},
 		},
 		limitations: {
@@ -492,13 +492,12 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Passed down by a forgotten Guild Master.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"Traced to Esper interrogation doctrine before it spread to field command.",
 			curse: "",
 			personality: "Unobtrusive while not being used.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
+			current_owner: "Used by squad leaders to coordinate in total silence.",
 			prior_owners: [
-				"A dead Guild Master",
+				"The Whisper Choir",
 				"Ascendant Academy Reference Collection",
 			],
 		},
@@ -508,7 +507,7 @@ export const powers_core: CompendiumPower[] = [
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary: "On a success the target blocks the link.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -526,9 +525,10 @@ export const powers_core: CompendiumPower[] = [
 			lattice_interaction: "Direct mana circuit injection",
 			saving_throw: {
 				ability: "Vitality",
-				dc: 11,
-				success: "No effect",
-				failure: "Full effect and prone",
+				dc: 15,
+				success: "Blocks the link; no channel opens.",
+				failure:
+					"A two-way mental channel opens for the duration; it may refuse to speak but can't block the link.",
 			},
 		},
 		limitations: {
@@ -551,12 +551,11 @@ export const powers_core: CompendiumPower[] = [
 		lore: {
 			origin: "Forged by the Ascendant Bureau in secret.",
 			history:
-				"Catalogued in the Bureau's standard rank-appropriate compendium.",
+				"A black-project light-bending routine that leaked out of a sealed Bureau lab.",
 			curse: "",
 			personality: "Inert until intentionally engaged.",
-			current_owner:
-				"Available to Bureau-certified casters at the appropriate rank.",
-			prior_owners: ["A dead Guild Master", "Bureau Shared-Materiel Archive"],
+			current_owner: "Coveted by infiltrators and assassins alike.",
+			prior_owners: ["The Veiled Hand", "Bureau Shared-Materiel Archive"],
 		},
 		flavor:
 			"Dissolves the laws of physics. The reason S-Rank Gates are feared.",
@@ -565,7 +564,8 @@ export const powers_core: CompendiumPower[] = [
 		source_book: "Ascendant Core Rulebook",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
-			secondary: "Utility effect: see saving-throw entry.",
+			secondary:
+				"On a success a nearby observer sees only a translucent outline.",
 		},
 		power_type: "Innate",
 		power_level: 3,
@@ -582,10 +582,10 @@ export const powers_core: CompendiumPower[] = [
 			type: "awakening",
 			lattice_interaction: "Ambient mana absorption",
 			saving_throw: {
-				ability: "Vitality",
-				dc: 10,
-				success: "No effect",
-				failure: "Full damage",
+				ability: "Strength",
+				dc: 15,
+				success: "Perceives the invisible target as a translucent outline.",
+				failure: "Cannot detect the invisible target until the power ends.",
 			},
 		},
 		limitations: {

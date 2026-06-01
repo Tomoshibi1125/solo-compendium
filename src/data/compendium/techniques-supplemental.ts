@@ -213,7 +213,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 			},
 			saving_throw: {
 				ability: "Strength",
-				dc: 17,
+				dc: 16,
 				success: "Half damage and no rider.",
 				failure: "AoE force + prone + terrain.",
 			},
@@ -880,8 +880,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				damage_type: "slashing",
 			},
 			saving_throw: {
-				ability: "Sense",
-				dc: 15,
+				ability: "Vitality",
+				dc: 14,
 				success: "Half damage and no rider.",
 				failure: "Initial damage + persistent bleed.",
 			},
@@ -955,8 +955,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				damage_type: "necrotic",
 			},
 			saving_throw: {
-				ability: "Sense",
-				dc: 17,
+				ability: "Vitality",
+				dc: 16,
 				success: "Half damage and no rider.",
 				failure: "Massive precision damage + debilitating poison.",
 			},
@@ -2291,8 +2291,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				damage_type: "thunder",
 			},
 			saving_throw: {
-				ability: "Presence",
-				dc: 17,
+				ability: "Vitality",
+				dc: 16,
 				success: "Half damage and no rider.",
 				failure: "Triple attack + conditional AoE stun.",
 			},
@@ -6592,8 +6592,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				damage_type: "bludgeoning",
 			},
 			saving_throw: {
-				ability: "Agility",
-				dc: 15,
+				ability: "Strength",
+				dc: 16,
 				success: "Half damage and no rider.",
 				failure: "4d6 force + prone in 20 ft + structure damage.",
 			},
@@ -6659,8 +6659,8 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 				damage_type: "bludgeoning",
 			},
 			saving_throw: {
-				ability: "Agility",
-				dc: 15,
+				ability: "Presence",
+				dc: 16,
 				success: "Half damage and no rider.",
 				failure: "Forced 1v1 + 2d8 thunder bonus + temp HP to allies on kill.",
 			},

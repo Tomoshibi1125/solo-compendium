@@ -32,6 +32,7 @@ import { SpellDetail } from "@/components/compendium/SpellDetail";
 import { TableOfContents } from "@/components/compendium/TableOfContents";
 import { TattooDetail } from "@/components/compendium/TattooDetail";
 import { TechniqueDetail } from "@/components/compendium/TechniqueDetail";
+import { VehicleDetail } from "@/components/compendium/VehicleDetail";
 import { Layout } from "@/components/layout/Layout";
 import { AscendantText } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -70,6 +71,7 @@ import type {
 	CompendiumSpell,
 	CompendiumTattoo,
 	CompendiumTechnique,
+	CompendiumVehicle,
 } from "@/types/compendium";
 
 // Unused type helpers removed for standardization. Using raw compendium types directly.
@@ -275,6 +277,14 @@ const CompendiumDetail = () => {
 				{ id: "tattoo-effects", title: "Circuit Effects", level: 2 },
 				{ id: "tattoo-description", title: "System Recognition", level: 2 },
 			);
+		} else if (type === "vehicles") {
+			items.push(
+				{ id: "vehicle-stats", title: "Core Stats", level: 2 },
+				{ id: "vehicle-speed", title: "Speed", level: 2 },
+				{ id: "vehicle-crew", title: "Crew Positions", level: 2 },
+				{ id: "vehicle-abilities", title: "Abilities", level: 2 },
+				{ id: "vehicle-lore", title: "Lore", level: 2 },
+			);
 		}
 
 		return items;
@@ -374,6 +384,10 @@ const CompendiumDetail = () => {
 			case "deities": {
 				const e = entry as CompendiumDeity;
 				return <DeityDetail data={e} />;
+			}
+			case "vehicles": {
+				const e = entry as CompendiumVehicle;
+				return <VehicleDetail data={e} />;
 			}
 			default:
 				return (

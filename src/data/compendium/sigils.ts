@@ -26,21 +26,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Cut through the noise.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to fire damage",
-				"Active: Deal 1d8 lightning damage to attacker when hit (passive trigger)",
+				"Passive: Ignores first 2 points of target's damage reduction or physical resistance on each hit",
 			],
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 11 (Void Stylus)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Blindness",
+			damage_profile: "Ignores DR/resistance, no direct damage bonus",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
@@ -60,11 +59,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { damage_bonus: 1 },
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"Recovered from the corpse of a wind-elemental anomaly that had been hunting Ascendants in the Northern Rifts.",
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+			primary:
+				"Ignores first 2 points of damage reduction or physical resistance on weapon hits",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -91,22 +91,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The weight of the earth.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to cold damage",
-				"Active: Create dim light in 20-foot radius for 10 minutes (at will)",
+				"Passive: On critical hit, target must succeed on DC 15 Strength save or fall Prone (Large or smaller only)",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: weapon",
 				"Inscription DC: 12 (Shadow Quill)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, adds Prone on crit",
+			condition: "Prone",
+			ability: "Strength",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -125,11 +124,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { attack_bonus: 1 },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		discovery_lore:
+			"Salvaged from the crushed gravity-crystals of an Old World ruin where a gravity-golem anomaly had been dormant for centuries.",
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"On critical hit, target falls Prone (DC 15 Strength save, Large or smaller)",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -156,21 +156,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "They won't stop bleeding.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Cannot be surprised while conscious",
-				"Active: Cast Shield as a reaction (1/short rest)",
+				"Passive: Slashing or piercing hits cause target to bleed, losing 1d4 HP at start of their next turn",
 			],
 			restrictions: [
-				"Socket type: armor",
+				"Socket type: weapon",
 				"Inscription DC: 12 (Rift Calligraphy Brush)",
 				"Material cost: 100 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
+			damage_profile: "Adds 1d4 necrotic bleed damage over time",
+			condition: "Bleeding",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
@@ -193,11 +192,12 @@ export const sigils: CompendiumSigil[] = [
 			damage_bonus: "1d4 necrotic",
 			traits: ["Bleeding (1d4, 1 round)"],
 		},
-		discovery_lore: "Recovered after a massive Guild raid.",
+		discovery_lore:
+			"Confiscated from a rogue Technomancer operating in the Amazon Rift Zone who was using it to torture captured anomalies.",
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary:
+				"Slashing/piercing hits cause 1d4 bleed damage at start of target's next turn",
+			secondary: "Bleeding damage is necrotic type",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -227,22 +227,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Burn away the impurities.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Active (bonus action) / 1/short rest",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "Bonus action to activate",
 			special_abilities: [
-				"Passive: Cannot be surprised while conscious",
-				"Active: Reduce incoming damage by 1d10 as a reaction (Proficiency/long rest)",
+				"Active: Imbue next weapon attack with +2d6 fire damage, bypasses standard fire resistance (1/short rest)",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: weapon",
 				"Inscription DC: 15 (Shadow Quill)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
-			ability: "Sense",
+			damage_profile: "+2d6 fire damage on activated attack",
+			condition: "Burning",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -261,11 +260,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {},
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"Extracted from the crystallized heart of a Fire-Class Anomaly during the Johannesburg raid, refined by Academy pyromancers.",
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Activated attack deals +2d6 fire damage, bypasses standard fire resistance",
+			secondary: "Bonus action to activate, 1/short rest",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -292,21 +292,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The chill of the grave.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +1 to attack rolls",
-				"Active: Create dim light in 20-foot radius for 10 minutes (at will)",
+				"Passive: On hit, target's movement speed reduced by 5 feet until end of their next turn (does not stack)",
 			],
 			restrictions: [
-				"Socket type: helm",
+				"Socket type: weapon",
 				"Inscription DC: 15 (Void Stylus)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Blindness",
+			damage_profile: "No direct damage bonus, adds slow effect",
+			condition: "Slowed",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
@@ -325,12 +324,13 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Slow (10ft, 1 round)"] },
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		passive_bonuses: { traits: ["Slow (5ft, 1 round)"] },
+		discovery_lore:
+			"Engineered by Siberian survivalists in the dead-zones where frost magic is essential for anomaly containment.",
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+			primary:
+				"On hit, target movement speed reduced by 5 feet until end of their next turn (does not stack)",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -360,22 +360,23 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The storm's fury.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Active (bonus action) / 1/short rest",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "Bonus action to activate",
 			special_abilities: [
-				"Passive: Cannot be surprised while conscious",
-				"Active: Grant one ally within 30 feet temporary HP equal to your level (1/short rest)",
+				"Passive: If you hit same target twice in one turn, deal 1d8 lightning damage to adjacent enemy",
+				"Active: Next attack deals +2d8 lightning damage, target cannot take reactions until start of their next turn (1/short rest)",
 			],
 			restrictions: [
-				"Socket type: helm",
+				"Socket type: weapon",
 				"Inscription DC: 13 (Arcane Chisel)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
-			ability: "Intelligence",
+			damage_profile:
+				"+2d8 lightning on activated attack, 1d8 lightning splash on double-hit",
+			condition: "Stunned",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Arcane Chisel — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -394,11 +395,13 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {},
-		discovery_lore: "Recovered after a massive Guild raid.",
+		discovery_lore:
+			"Adapted from traditional shamanic runes by Guild enchanters studying storm-elemental anomalies in the Pacific Rim.",
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
+			primary:
+				"Activated attack deals +2d8 lightning damage, target loses reactions until start of next turn",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+				"Double-hit on same target deals 1d8 lightning damage to adjacent enemy",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -428,21 +431,22 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The light burns away the rot.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed) / Active (action) / 1/long rest",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive) / Action to activate",
 			special_abilities: [
-				"Passive: Advantage on death saving throws",
-				"Active: Heal 2d8+2 HP as a bonus action (1/short rest)",
+				"Passive: Against Anomaly or Shadow-type anomalies, weapon damage die increases by one step (1d6→1d8, 1d8→1d10, etc.)",
+				"Active: Emit 15ft radiant pulse dealing 3d8 radiant damage (CON save DC 15 for half) to anomalies (1/long rest)",
 			],
 			restrictions: [
-				"Socket type: accessory",
+				"Socket type: weapon",
 				"Inscription DC: 13 (Shadow Quill)",
 				"Material cost: 500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
+			damage_profile:
+				"Damage die step increase vs anomalies, 3d8 radiant burst on activation",
+			condition: "Blinded",
 			ability: "Sense",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
@@ -462,11 +466,13 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { damage_bonus: "1d6 radiant" },
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		discovery_lore:
+			"Sanctified by Holylight Cathedral High Priests during the purging of S-Rank gates in the Eastern Rift Zone.",
 		effects: {
-			primary: "Deals 2d4 physical or magical damage on hit.",
+			primary:
+				"Against Anomaly/Shadow types, weapon damage die increases by one step",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"Active: 15ft radiant pulse deals 3d8 radiant damage (CON DC 15 half), 1/long rest",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -493,22 +499,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Silence is a weapon.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to cold damage",
-				"Active: Automatically succeed on next ability check of a chosen type (1/long rest)",
+				"Passive: Weapon attacks make no sound and give off no light, do not break stealth when drawing",
 			],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: weapon",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, adds stealth properties",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -527,11 +532,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { traits: ["Advantage on Stealth checks"] },
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"Carved from obsidian bone shards of stealth-type assassins from the Shadow Domain, recovered by Bureau agents.",
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary:
+				"Weapon attacks make no sound/light, do not break stealth when drawing",
+			secondary: "Advantage on Stealth checks while weapon is equipped",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -558,21 +564,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The shield holds.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +2 to Intelligence checks",
-				"Active: Add 1d8 radiant damage to weapon attacks for 1 minute (1/long rest)",
+				"Passive: Reduces damage taken from ranged weapon attacks by 3",
 			],
 			restrictions: [
-				"Socket type: weapon",
+				"Socket type: armor or shield",
 				"Inscription DC: 17 (Crystal Engraver)",
 				"Material cost: 50 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
+			damage_profile:
+				"No direct damage bonus, reduces incoming ranged damage by 3",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Crystal Engraver — bonds with item's mana lattice",
@@ -592,11 +598,11 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { ac_bonus: 1 },
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"Standard issue for Guild operatives facing Anomaly archers and magical artillery in the Eastern Rift Zone.",
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary: "Reduces damage taken from ranged weapon attacks by 3",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -623,21 +629,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Hold the line.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +1 to AC",
-				"Active: Gain +2 AC for 1 minute (1/long rest)",
+				"Passive: While below 50% max HP, gain +1 bonus to Armor Class",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: armor",
 				"Inscription DC: 13 (Rift Calligraphy Brush)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
+			damage_profile:
+				"No direct damage bonus, conditional AC bonus when below 50% HP",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
@@ -656,12 +662,12 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Advantage on death saving throws"] },
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		passive_bonuses: { traits: ["+1 AC when below 50% max HP"] },
+		discovery_lore:
+			"Developed by Bureau healers attempting to keep critically wounded Ascendants alive long enough for Evacuation from Hell-Class gates.",
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary: "While below 50% max HP, gain +1 bonus to Armor Class",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -687,22 +693,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Cooler heads prevail.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
-			special_abilities: [
-				"Passive: +2 to Sense (Perception)",
-				"Active: Gain +2 AC for 1 minute (1/long rest)",
-			],
+			action: "None (passive)",
+			special_abilities: ["Passive: Reduces all Fire damage taken by 5"],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: armor",
 				"Inscription DC: 12 (Crystal Engraver)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
-			ability: "Intelligence",
+			damage_profile:
+				"No direct damage bonus, reduces incoming Fire damage by 5",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Crystal Engraver — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -720,12 +724,12 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Resistance: Fire"] },
-		discovery_lore: "Discovered encoded in an ancient grimoire.",
+		passive_bonuses: { traits: ["Fire damage reduction: 5"] },
+		discovery_lore:
+			"Invented after a tragic eruption of a Red Gate composed of volcanic anomalies, now standard issue for fire-zone operations.",
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary: "Reduces all Fire damage taken by 5",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -751,22 +755,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The cold will not claim me.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
-			special_abilities: [
-				"Passive: Resistance to lightning damage",
-				"Active: Impose disadvantage on next attack against you (Proficiency/long rest)",
-			],
+			action: "None (passive)",
+			special_abilities: ["Passive: Reduces all Cold damage taken by 5"],
 			restrictions: [
-				"Socket type: shield",
+				"Socket type: armor",
 				"Inscription DC: 20 (Arcane Chisel)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
-			ability: "Intelligence",
+			damage_profile:
+				"No direct damage bonus, reduces incoming Cold damage by 5",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Arcane Chisel — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -784,12 +786,12 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Resistance: Cold"] },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		passive_bonuses: { traits: ["Cold damage reduction: 5"] },
+		discovery_lore:
+			"Favored by Siberian outpost Ascendants where freezing to death is a greater threat than anomalies, now standard issue for cold-zone operations.",
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary: "Reduces all Cold damage taken by 5",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -814,21 +816,19 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The storm breaks upon me.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
-			special_abilities: [
-				"Passive: Ignore difficult terrain",
-				"Active: Teleport 15 feet as a bonus action (Proficiency/long rest)",
-			],
+			action: "None (passive)",
+			special_abilities: ["Passive: Reduces all Lightning damage taken by 5"],
 			restrictions: [
-				"Socket type: weapon",
+				"Socket type: armor",
 				"Inscription DC: 21 (Void Stylus)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
+			damage_profile:
+				"No direct damage bonus, reduces incoming Lightning damage by 5",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
@@ -847,12 +847,12 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Resistance: Lightning"] },
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		passive_bonuses: { traits: ["Lightning damage reduction: 5"] },
+		discovery_lore:
+			"Built by reverse-engineering the scales of the Storm anomaly after a catastrophic Pacific Rim event, now standard issue for storm-zone operations.",
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary: "Reduces all Lightning damage taken by 5",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -878,22 +878,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Weightless steps.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to fire damage",
-				"Active: Add 1d8 radiant damage to weapon attacks for 1 minute (1/long rest)",
+				"Passive: Ignore difficult terrain penalties created by rubble or natural ground",
 			],
 			restrictions: [
-				"Socket type: armor",
+				"Socket type: armor or boots",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
 				"Material cost: 250 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, movement utility",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -912,11 +911,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { speed_bonus: 10 },
-		discovery_lore: "Discovered encoded in an ancient grimoire.",
+		discovery_lore:
+			"An agile enhancement favored by the Guild's scouting corps for navigating treacherous dungeon environments and collapsed ruins.",
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Ignore difficult terrain penalties from rubble or natural ground",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -943,21 +943,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Perfect clarity.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Darkvision 30 feet",
-				"Active: Gain +2 AC for 1 minute (1/long rest)",
+				"Passive: Advantage on Intelligence (Investigation) checks to identify enemy weaknesses",
 			],
 			restrictions: [
-				"Socket type: shield",
+				"Socket type: accessory or helmet",
 				"Inscription DC: 17 (Arcane Chisel)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
+			damage_profile: "No direct damage bonus, investigative utility",
+			condition: "None",
 			ability: "Intelligence",
 			lattice_interaction:
 				"Inscribed using Arcane Chisel — bonds with item's mana lattice",
@@ -977,11 +976,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { intelligence_bonus: 1 },
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"Created by an Academy mage attempting to decode the language of the Rifts, now used by intelligence analysts studying anomaly patterns.",
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary:
+				"Advantage on Intelligence (Investigation) checks to identify enemy weaknesses",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -1009,22 +1009,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Nothing escapes your gaze.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to necrotic damage",
-				"Active: Create a 10-foot zone of difficult terrain (2/long rest)",
+				"Passive: Cannot be surprised by visible enemies, ranged attacks ignore half cover",
 			],
 			restrictions: [
-				"Socket type: accessory",
+				"Socket type: accessory or goggles",
 				"Inscription DC: 19 (Void Stylus)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
-			ability: "Agility",
+			damage_profile: "No direct damage bonus, combat awareness utility",
+			condition: "None",
+			ability: "Sense",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1043,11 +1042,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { wisdom_bonus: 1 },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		discovery_lore:
+			"An essential component for Stalker-class Ascendants defending the Safe Zones, recovered from a fallen guardian's equipment.",
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary:
+				"Cannot be surprised by visible enemies, ranged attacks ignore half cover",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -1075,22 +1075,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Strike first.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Darkvision 30 feet",
-				"Active: Heal 2d8+2 HP as a bonus action (1/short rest)",
+				"Passive: When taking the ready action, can move up to 10 feet as part of the reaction",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: accessory or armor",
 				"Inscription DC: 18 (Arcane Chisel)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Paralysis",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, tactical movement utility",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Arcane Chisel — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1109,11 +1108,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { dexterity_bonus: 1 },
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"A favorite among Assassin-class Ascendants looking for the perfect opening, recovered from a Guild armory after a failed assassination attempt.",
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary:
+				"When taking the ready action, can move up to 10 feet as part of the reaction",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1140,22 +1140,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Unbreakable strength.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +5 temporary HP on short rest",
-				"Active: Create dim light in 20-foot radius for 10 minutes (at will)",
+				"Passive: Count as one size category larger for grappling, shoving, and carrying capacity",
 			],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: accessory or gloves",
 				"Inscription DC: 14 (Arcane Chisel)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, physical enhancement utility",
+			condition: "None",
+			ability: "Strength",
 			lattice_interaction:
 				"Inscribed using Arcane Chisel — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1174,11 +1173,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { strength_bonus: 1 },
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"Used by Holy Knights to physically wrestle dungeon bosses to the ground, recovered from a battlefield where a S-Rank anomaly was subdued.",
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Count as one size category larger for grappling, shoving, and carrying capacity",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1205,22 +1205,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Bow before authority.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +2 to Sense (Perception)",
-				"Active: Cast Shield as a reaction (1/short rest)",
+				"Passive: Hostile creatures must succeed on DC 13 Sense check to target you if another ally is within 5 feet",
 			],
 			restrictions: [
-				"Socket type: accessory",
+				"Socket type: accessory or cloak",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
 				"Material cost: 500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, defensive aura utility",
+			condition: "None",
+			ability: "Presence",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1239,11 +1238,12 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { charisma_bonus: 1 },
-		discovery_lore: "Discovered encoded in an ancient grimoire.",
+		discovery_lore:
+			"Reserved for Guild Masters and those who lead raids into the Abyss, recovered from a fallen commander's cloak.",
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Hostile creatures must succeed on DC 13 Sense check to target you if ally within 5 feet",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -1273,22 +1273,22 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "An unending well of power.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed) / Active (bonus action) / 1/long rest",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive) / Bonus action to activate",
 			special_abilities: [
-				"Passive: +1 to saving throws",
-				"Active: Gain advantage on next saving throw (2/short rest)",
+				"Passive: On critical hit, recover 1 expended Job resource or spell slot of level 1",
+				"Active: Recover one expended spell slot of 3rd level or lower (1/long rest)",
 			],
 			restrictions: [
-				"Socket type: helm",
+				"Socket type: accessory or amulet",
 				"Inscription DC: 16 (Shadow Quill)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
-			ability: "Agility",
+			damage_profile: "No direct damage bonus, resource recovery utility",
+			condition: "None",
+			ability: "Intelligence",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1309,11 +1309,13 @@ export const sigils: CompendiumSigil[] = [
 		passive_bonuses: {
 			traits: ["Mana Regeneration (+1 spell slot recovery on short rest)"],
 		},
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"Awarded only to National-Level Ascendants for exceptional service, recovered from a Bureau vault after the holder's retirement.",
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
+			primary:
+				"On critical hit, recover 1 expended Job resource or level 1 spell slot",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"Active: Recover one spell slot of 3rd level or lower (bonus action, 1/long rest)",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1343,21 +1345,22 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Serve me in death.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type:
+				"Passive (socketed) / Active (bonus action) / Proficiency/long rest",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive) / Bonus action to activate",
 			special_abilities: [
-				"Passive: +2 to Agility checks",
-				"Active: Teleport 15 feet as a bonus action (Proficiency/long rest)",
+				"Passive: Any humanoid killed by this weapon instantly rises as a Shadow Minion under your control for 1 minute",
+				"Active: Teleport up to 30 feet to unoccupied space in dim light or darkness (Proficiency/long rest)",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: weapon",
 				"Inscription DC: 17 (Mana Etching Needle)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
+			damage_profile: "+2d6 necrotic damage, shadow minion summon on kill",
+			condition: "Frightened",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
@@ -1377,11 +1380,13 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { attack_bonus: 2, damage_bonus: "2d6 necrotic" },
-		discovery_lore: "Discovered encoded in an ancient grimoire.",
+		discovery_lore:
+			"A forbidden artifact from the Shadow Legion Archives, recovered by Bureau agents after its previous wielder lost their mind to the whispering dark.",
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
+			primary:
+				"Humanoid killed by this weapon rises as Shadow Minion under your control for 1 minute",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+				"Active: Teleport up to 30 feet to space in dim light or darkness (bonus action, Proficiency/long rest)",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1411,22 +1416,24 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Refuse to fall.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type:
+				"Passive (socketed) / Triggered (when dropped to 0 HP) / 1/long rest",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive) / Triggers on dropping to 0 HP",
 			special_abilities: [
-				"Passive: Resistance to cold damage",
-				"Active: Move 10 additional feet without provoking opportunity attacks (at will)",
+				"Passive: If attack would reduce you to 0 HP, instead reduce to 1 HP and release 20ft fiery explosion (4d10 Fire damage, DEX DC 15 half)",
+				"Active: When dropped to 0 HP, instead drop to 1 HP and gain temporary HP equal to your level (1/long rest)",
 			],
 			restrictions: [
 				"Socket type: armor",
 				"Inscription DC: 21 (Crystal Engraver)",
 				"Material cost: 50 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
-			ability: "Agility",
+			damage_profile:
+				"No direct damage bonus, defensive trigger with 4d10 Fire explosion",
+			condition: "Burning",
+			ability: "Vitality",
 			lattice_interaction:
 				"Inscribed using Crystal Engraver — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1447,11 +1454,13 @@ export const sigils: CompendiumSigil[] = [
 		passive_bonuses: {
 			traits: ["Undying Flame: Drop to 1 HP instead of 0 (1/long rest)"],
 		},
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"The ultimate safeguard for Ascendants entering uncharted Red Gates, blessed by Holylight Cathedral High Priests.",
 		effects: {
-			primary: "Deals 1d12 physical or magical damage on hit.",
+			primary:
+				"If attack would reduce to 0 HP, instead reduce to 1 HP and release 20ft fiery explosion (4d10 Fire, DEX DC 15 half)",
 			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+				"When dropped to 0 HP, instead drop to 1 HP and gain temporary HP equal to level (1/long rest)",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -1479,21 +1488,20 @@ export const sigils: CompendiumSigil[] = [
 		flavor:
 			"Corrodes the certainty of outcomes. The death of hesitation, made manifest.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +5 feet movement speed",
-				"Active: Create dim light in 20-foot radius for 10 minutes (at will)",
+				"Passive: Grants Resistance to Fire damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: helm",
+				"Socket type: armor",
 				"Inscription DC: 19 (Shadow Quill)",
 				"Material cost: 500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
+			damage_profile: "No direct damage bonus, Fire resistance/immunity",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
@@ -1512,12 +1520,15 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Immunity: Fire"] },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		passive_bonuses: {
+			traits: ["Fire resistance (upgrades to immunity if already resistant)"],
+		},
+		discovery_lore:
+			"A necessity when traversing the deeper layers of Hell-Class gates, recovered from a fallen Ascendant's armor.",
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Grants Resistance to Fire damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1544,21 +1555,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The freeze breaks against you.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +1 to attack rolls",
-				"Active: Reduce incoming damage by 1d10 as a reaction (Proficiency/long rest)",
+				"Passive: Grants Resistance to Cold damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: weapon",
+				"Socket type: armor",
 				"Inscription DC: 21 (Crystal Engraver)",
 				"Material cost: 50 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Lethargy",
+			damage_profile: "No direct damage bonus, Cold resistance/immunity",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Crystal Engraver — bonds with item's mana lattice",
@@ -1577,12 +1587,15 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Immunity: Cold"] },
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		passive_bonuses: {
+			traits: ["Cold resistance (upgrades to immunity if already resistant)"],
+		},
+		discovery_lore:
+			"Invented to survive encounters with Ice-type anomalies beyond the Northern Rifts, recovered from a Siberian outpost.",
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Lethargy for 1 round.",
+			primary:
+				"Grants Resistance to Cold damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -1609,22 +1622,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "The storm ignored.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to lightning damage",
-				"Active: Gain +2 AC for 1 minute (1/long rest)",
+				"Passive: Grants Resistance to Lightning damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: accessory",
+				"Socket type: armor",
 				"Inscription DC: 17 (Void Stylus)",
 				"Material cost: 250 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, Lightning resistance/immunity",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1642,12 +1654,17 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Immunity: Lightning"] },
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		passive_bonuses: {
+			traits: [
+				"Lightning resistance (upgrades to immunity if already resistant)",
+			],
+		},
+		discovery_lore:
+			"Carved into the shields of Holy Knights facing storm-elemental bosses, recovered from a battlefield shrine.",
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary:
+				"Grants Resistance to Lightning damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -1674,22 +1691,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Nothing sticks.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to lightning damage",
-				"Active: Grant one ally within 30 feet temporary HP equal to your level (1/short rest)",
+				"Passive: Grants Resistance to Acid damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: armor",
 				"Inscription DC: 11 (Arcane Chisel)",
 				"Material cost: 50 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, Acid resistance/immunity",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Arcane Chisel — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1707,12 +1723,15 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Immunity: Acid"] },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		passive_bonuses: {
+			traits: ["Acid resistance (upgrades to immunity if already resistant)"],
+		},
+		discovery_lore:
+			"Crucial for fighting the acid-spitting Arachnids of Sector D gates, recovered from a contaminated zone.",
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary:
+				"Grants Resistance to Acid damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1739,22 +1758,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "A pure heart.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to lightning damage",
-				"Active: Deal 1d8 lightning damage to attacker when hit (passive trigger)",
+				"Passive: Grants Resistance to Poison damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: helm",
+				"Socket type: armor",
 				"Inscription DC: 12 (Rift Calligraphy Brush)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Paralysis",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, Poison resistance/immunity",
+			condition: "None",
+			ability: "Vitality",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1772,12 +1790,15 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Immunity: Poison"] },
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		passive_bonuses: {
+			traits: ["Poison resistance (upgrades to immunity if already resistant)"],
+		},
+		discovery_lore:
+			"Derived from the antidote protocols used in the Amazon Rift Zone, recovered from a Bureau medical facility.",
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary:
+				"Grants Resistance to Poison damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1804,22 +1825,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Quiet resilience.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to fire damage",
-				"Active: Gain advantage on next saving throw (2/short rest)",
+				"Passive: Grants Resistance to Thunder damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: armor",
 				"Inscription DC: 13 (Mana Etching Needle)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, Thunder resistance/immunity",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -1837,12 +1857,17 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Immunity: Thunder"] },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		passive_bonuses: {
+			traits: [
+				"Thunder resistance (upgrades to immunity if already resistant)",
+			],
+		},
+		discovery_lore:
+			"Favored by operatives exploring pre-gate ruin-gates where sound triggers traps, recovered from a sealed tomb.",
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary:
+				"Grants Resistance to Thunder damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1869,21 +1894,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Unbreakable presence.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to fire damage",
-				"Active: Create dim light in 20-foot radius for 10 minutes (at will)",
+				"Passive: Grants Resistance to Force damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: armor",
 				"Inscription DC: 18 (Shadow Quill)",
 				"Material cost: 500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Paralysis",
+			damage_profile: "No direct damage bonus, Force resistance/immunity",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
@@ -1902,12 +1926,15 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Resistance: Force"] },
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		passive_bonuses: {
+			traits: ["Force resistance (upgrades to immunity if already resistant)"],
+		},
+		discovery_lore:
+			"An absolute requirement to survive a high-tier Telekinetic anomaly's assault, recovered from a crushed containment chamber.",
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary:
+				"Grants Resistance to Force damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -1935,21 +1962,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "My thoughts are my own.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to psychic damage",
-				"Active: Heal 2d8+2 HP as a bonus action (1/short rest)",
+				"Passive: Grants Resistance to Psychic damage; if already have resistance, gain Immunity instead",
 			],
 			restrictions: [
-				"Socket type: armor",
+				"Socket type: armor or helmet",
 				"Inscription DC: 18 (Mana Etching Needle)",
 				"Material cost: 250 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Fear",
+			damage_profile: "No direct damage bonus, Psychic resistance/immunity",
+			condition: "None",
 			ability: "Intelligence",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
@@ -1968,12 +1994,17 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: { traits: ["Resistance: Psychic"] },
-		discovery_lore: "Recovered after a massive Guild raid.",
+		passive_bonuses: {
+			traits: [
+				"Psychic resistance (upgrades to immunity if already resistant)",
+			],
+		},
+		discovery_lore:
+			"Constructed after an Illithid-variant gate resulted in hundreds of mind-controlled casualties, recovered from a quarantine zone.",
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Fear for 1 round.",
+			primary:
+				"Grants Resistance to Psychic damage; if already have resistance, gain Immunity instead",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -2000,22 +2031,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Nothing stands in the way.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Cannot be surprised while conscious",
-				"Active: Create a 10-foot zone of difficult terrain (2/long rest)",
+				"Passive: Slashing attacks ignore slashing resistance and treat immunity as resistance",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: weapon",
 				"Inscription DC: 10 (Void Stylus)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Blindness",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, resistance penetration utility",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2035,13 +2065,14 @@ export const sigils: CompendiumSigil[] = [
 		},
 		passive_bonuses: {
 			attack_bonus: 2,
-			traits: ["Ignore slashing resistance"],
+			traits: ["Ignore slashing resistance, treat immunity as resistance"],
 		},
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"The pinnacle of cutting augmentation designed by an elite Guild Master, recovered from a master armorer's workshop.",
 		effects: {
-			primary: "Deals 3d12 + 6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+			primary:
+				"Slashing attacks ignore slashing resistance and treat immunity as resistance",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -2068,22 +2099,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Shatter their foundations.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +5 temporary HP on short rest",
-				"Active: Deal 2d6 bonus fire damage on next hit (2/short rest)",
+				"Passive: Bludgeoning attacks push targets 10 feet backward on a hit",
 			],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: weapon",
 				"Inscription DC: 19 (Mana Etching Needle)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Blindness",
-			ability: "Agility",
+			damage_profile: "No direct damage bonus, knockback utility",
+			condition: "None",
+			ability: "Strength",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2102,11 +2132,11 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { attack_bonus: 2, traits: ["Push 10ft on hit"] },
-		discovery_lore: "Discovered encoded in an ancient grimoire.",
+		discovery_lore:
+			"Built for Holy Knights dealing with heavily armored stone golems, recovered from a battlefield against golem anomalies.",
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+			primary: "Bludgeoning attacks push targets 10 feet backward on a hit",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -2131,22 +2161,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "There's nowhere to hide.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to necrotic damage",
-				"Active: Reduce incoming damage by 1d10 as a reaction (Proficiency/long rest)",
+				"Passive: Ranged attacks ignore half and three-quarters cover entirely",
 			],
 			restrictions: [
-				"Socket type: accessory",
+				"Socket type: weapon",
 				"Inscription DC: 13 (Mana Etching Needle)",
 				"Material cost: 250 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Paralysis",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, cover penetration utility",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2168,11 +2197,11 @@ export const sigils: CompendiumSigil[] = [
 			attack_bonus: 2,
 			traits: ["Ignore half/three-quarters cover"],
 		},
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"Ensured a 100% kill rate for the Guild's elite archer division, recovered from a Guild armory.",
 		effects: {
-			primary: "Deals 1d10 + 2 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "Ranged attacks ignore half and three-quarters cover entirely",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -2198,21 +2227,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Distance is safety.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +1d6 to first damage roll each turn",
-				"Active: Cast Shield as a reaction (1/short rest)",
+				"Passive: Attacks at 10-foot reach or 20-foot range deal additional 1d6 piercing damage",
 			],
 			restrictions: [
-				"Socket type: shield",
+				"Socket type: weapon",
 				"Inscription DC: 19 (Rift Calligraphy Brush)",
 				"Material cost: 250 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
+			damage_profile: "+1d6 piercing damage at 10-foot reach or 20-foot range",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Rift Calligraphy Brush — bonds with item's mana lattice",
@@ -2235,11 +2263,12 @@ export const sigils: CompendiumSigil[] = [
 			damage_bonus: "1d6 piercing",
 			traits: ["Reach bonus damage"],
 		},
-		discovery_lore: "Recovered after a massive Guild raid.",
+		discovery_lore:
+			"Keeps the deadliest horrors exactly an arm's length away, recovered from a Guild polearm specialist's equipment.",
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary:
+				"Attacks at 10-foot reach or 20-foot range deal additional 1d6 piercing damage",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -2265,22 +2294,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "A heavy toll.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed) / Active (declare reckless) / 1/turn",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive) / Declare reckless attack (1/turn)",
 			special_abilities: [
-				"Passive: +1d6 to first damage roll each turn",
-				"Active: Teleport 15 feet as a bonus action (Proficiency/long rest)",
+				"Passive: Once per turn, can declare reckless attack; on hit, target is stunned until their turn",
 			],
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 19 (Void Stylus)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Blindness",
-			ability: "Agility",
+			damage_profile: "No direct damage bonus, stun on reckless hit",
+			condition: "Stunning",
+			ability: "Strength",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2302,11 +2330,12 @@ export const sigils: CompendiumSigil[] = [
 			damage_bonus: 3,
 			traits: ["Stun on declared reckless attack (1/turn)"],
 		},
-		discovery_lore: "Unearthed from the ashes of a collapsed Rift.",
+		discovery_lore:
+			"For when you absolutely must cleave the anomaly in two on the first swing, recovered from a Guild executioner's axe.",
 		effects: {
-			primary: "Deals 3d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+			primary:
+				"Once per turn, can declare reckless attack; on hit, target is stunned until their turn",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -2332,22 +2361,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Precision of the unseen.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +1d4 to initiative rolls",
-				"Active: Grant one ally within 30 feet temporary HP equal to your level (1/short rest)",
+				"Passive: Spells requiring attack roll score critical hit on 19 or 20",
 			],
 			restrictions: [
 				"Socket type: weapon",
 				"Inscription DC: 12 (Shadow Quill)",
 				"Material cost: 100 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Paralysis",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, spell crit expansion utility",
+			condition: "None",
+			ability: "Intelligence",
 			lattice_interaction:
 				"Inscribed using Shadow Quill — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2366,11 +2394,11 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { traits: ["Spell crits on 19-20"] },
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		discovery_lore:
+			"The mage's ultimate catalyst, recovered from a Guild-credentialed materiel counter after a high-profile acquisition.",
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "Spells requiring attack roll score critical hit on 19 or 20",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -2397,22 +2425,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Refuse to yield.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +5 temporary HP on short rest",
-				"Active: Automatically succeed on next ability check of a chosen type (1/long rest)",
+				"Passive: Increases Maximum HP by Character Level x 2",
 			],
 			restrictions: [
-				"Socket type: accessory",
+				"Socket type: armor or accessory",
 				"Inscription DC: 10 (Void Stylus)",
 				"Material cost: 500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Paralysis",
-			ability: "Intelligence",
+			damage_profile: "No direct damage bonus, HP increase utility",
+			condition: "None",
+			ability: "Vitality",
 			lattice_interaction:
 				"Inscribed using Void Stylus — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2431,11 +2458,11 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: { speed_bonus: 5, ac_bonus: 1 },
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		discovery_lore:
+			"Stolen from a regenerating Troll boss inside an A-Rank labyrinth, recovered by Bureau agents.",
 		effects: {
-			primary: "Deals 1d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Paralysis for 1 round.",
+			primary: "Increases Maximum HP by Character Level x 2",
+			secondary: "None",
 		},
 		image: "/generated/effects/darkness-shroud.webp",
 	},
@@ -2460,21 +2487,18 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Catch me if you can.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
-			special_abilities: [
-				"Passive: +1d4 to initiative rolls",
-				"Active: Deal 2d6 bonus fire damage on next hit (2/short rest)",
-			],
+			action: "None (passive)",
+			special_abilities: ["Passive: Base walking speed increases by 10 feet"],
 			restrictions: [
-				"Socket type: shield",
+				"Socket type: armor or boots",
 				"Inscription DC: 12 (Crystal Engraver)",
 				"Material cost: 1,000 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Blindness",
+			damage_profile: "No direct damage bonus, movement speed utility",
+			condition: "None",
 			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Crystal Engraver — bonds with item's mana lattice",
@@ -2494,14 +2518,13 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d6 physical or magical damage on hit.",
+			speed_bonus: 10,
 		},
-		discovery_lore: "Recovered after a massive Guild raid.",
+		discovery_lore:
+			"For when you need to outrun an angry S-Rank anomaly, recovered from a Holy Knight's escape kit.",
 		effects: {
-			primary: "Deals 2d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Blindness for 1 round.",
+			primary: "Base walking speed increases by 10 feet",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -2526,22 +2549,21 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Look terror in the eye.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: +2 to Strength checks",
-				"Active: Deal 2d6 bonus fire damage on next hit (2/short rest)",
+				"Passive: Entirely immune to the Frightened condition",
 			],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: accessory",
 				"Inscription DC: 19 (Mana Etching Needle)",
 				"Material cost: 100 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, fear immunity utility",
+			condition: "None",
+			ability: "Presence",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2560,14 +2582,13 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 2d8 physical or magical damage on hit.",
+			traits: ["Immunity: Frightened"],
 		},
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"Anomalies feed on fear; this sigil starves them, recovered from a Bureau Armory vault.",
 		effects: {
-			primary: "Deals 2d8 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary: "Entirely immune to the Frightened condition",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -2592,22 +2613,19 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Like hitting a mountain.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
-			special_abilities: [
-				"Passive: Resistance to cold damage",
-				"Active: Gain advantage on next saving throw (2/short rest)",
-			],
+			action: "None (passive)",
+			special_abilities: ["Passive: Grants permanent +2 to Armor Class"],
 			restrictions: [
-				"Socket type: boots",
+				"Socket type: armor",
 				"Inscription DC: 11 (Crystal Engraver)",
 				"Material cost: 50 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
-			ability: "Sense",
+			damage_profile: "No direct damage bonus, AC increase utility",
+			condition: "None",
+			ability: "Agility",
 			lattice_interaction:
 				"Inscribed using Crystal Engraver — bonds with item's mana lattice",
 			stat_bonuses: {},
@@ -2626,14 +2644,13 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 4d10 physical or magical damage on hit.",
+			ac_bonus: 2,
 		},
-		discovery_lore: "Traded for thirty vials of anomaly ichor.",
+		discovery_lore:
+			"Favored by solo-tank specialists holding the front line of Rift breaks, recovered from a fallen tank's armor.",
 		effects: {
-			primary: "Deals 4d10 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary: "Grants permanent +2 to Armor Class",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},
@@ -2659,21 +2676,20 @@ export const sigils: CompendiumSigil[] = [
 		},
 		flavor: "Nothing remains hidden.",
 		mechanics: {
-			action_type: "Passive (socketed) / See active ability",
+			action_type: "Passive (socketed)",
 			type: "Sigil",
 			duration: "While socketed/inscribed",
-			action: "None (passive) / Varies (active)",
+			action: "None (passive)",
 			special_abilities: [
-				"Passive: Resistance to psychic damage",
-				"Active: Create a 10-foot zone of difficult terrain (2/long rest)",
+				"Passive: Can perceive invisible creatures and illusions for what they truly are within 30 feet",
 			],
 			restrictions: [
-				"Socket type: gloves",
+				"Socket type: helmet or accessory",
 				"Inscription DC: 11 (Mana Etching Needle)",
 				"Material cost: 2,500 Gate Credits",
 			],
-			damage_profile: "See active effect",
-			condition: "Stunning",
+			damage_profile: "No direct damage bonus, true sight utility",
+			condition: "None",
 			ability: "Sense",
 			lattice_interaction:
 				"Inscribed using Mana Etching Needle — bonds with item's mana lattice",
@@ -2693,14 +2709,14 @@ export const sigils: CompendiumSigil[] = [
 			charges: 0,
 		},
 		passive_bonuses: {
-			effect: "Enhances the wielder's resilience.",
-			combat_advantage: "Deals 1d6 physical or magical damage on hit.",
+			traits: ["True sight 30ft"],
 		},
-		discovery_lore: "Found pinned to a monstrous corpse.",
+		discovery_lore:
+			"Bypasses the cloaking mechanisms of Class-A stalker anomalies, recovered from a Guild scout's helmet.",
 		effects: {
-			primary: "Deals 1d6 physical or magical damage on hit.",
-			secondary:
-				"Target must make a standard DC saving throw or suffer Stunning for 1 round.",
+			primary:
+				"Can perceive invisible creatures and illusions for what they truly are within 30 feet",
+			secondary: "None",
 		},
 		image: "/generated/effects/arcane-sigil.webp",
 	},

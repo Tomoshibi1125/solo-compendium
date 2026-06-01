@@ -171,6 +171,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "1 round",
 			range: "Touch",
 			type: "Necromancy",
+			damage_profile: "1d8 necrotic",
 			action: "1 action",
 			ability: "Intelligence",
 			save: "Vitality",
@@ -394,6 +395,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Instantaneous",
 			range: "60 feet",
 			type: "Enchantment",
+			damage_profile: "1d8 psychic",
 			action: "1 action",
 			ability: "Presence",
 			save: "Presence",
@@ -1243,10 +1245,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 13,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "The creature shrugs off the command.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"On its next turn the creature must obey the one-word command (Approach, Drop, Flee, Grovel, or Halt).",
 		},
 		atHigherLevels:
 			"At 2nd level, affects one additional creature within range.",
@@ -1537,10 +1538,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Intelligence",
 			dc: 14,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Its senses stay clear; no effect.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"It has disadvantage on attack rolls and can't use reactions for the duration, and can repeat the save at the end of each of its turns.",
 		},
 		atHigherLevels:
 			"At 3rd level, also imposes disadvantage on ability checks.",
@@ -1658,10 +1658,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Strength",
 			dc: 13,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Not restrained, and it takes no damage.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Restrained for the duration; it takes 1d6 piercing at the start of each of its turns and can repeat the save at the end of each turn.",
 		},
 		atHigherLevels:
 			"At 2nd level, affects a 10-foot square. At 4th level, damage increases to 2d6.",
@@ -1672,6 +1671,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "30 feet",
 			type: "Conjuration",
+			damage_profile: "1d6 piercing",
 			action: "1 action",
 			ability: "Sense",
 			save: "Strength",
@@ -2691,7 +2691,12 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: null,
+		saving_throw: {
+			ability: "Presence",
+			dc: 14,
+			success: "Not frightened.",
+			failure: "Frightened of you for 1 minute (save ends).",
+		},
 		atHigherLevels: "Extra damage increases by 1d8 per level above 2nd.",
 		higher_levels: "Extra damage increases by 1d8 per level above 2nd.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -2699,6 +2704,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Evocation",
+			damage_profile: "3d8 radiant",
 			action: "1 bonus action",
 			ability: "Presence",
 			scaling: "Scales with character level",
@@ -4107,10 +4113,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 15,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Unaffected by the oath.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Bound to single combat: it can't willingly move farther from you and takes 2d8 radiant each time it attacks a creature other than you. It repeats the save at the end of each of its turns.",
 		},
 		atHigherLevels:
 			"At 5th level, the target also has disadvantage on attacks against creatures other than you.",
@@ -4121,6 +4126,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "30 feet",
 			type: "Enchantment",
+			damage_profile: "2d8 radiant",
 			action: "1 action",
 			ability: "Presence",
 			save: "Presence",
@@ -4544,14 +4550,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: {
-			ability: "Presence",
-			dc: 16,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
-			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
-		},
+		saving_throw: null,
 		atHigherLevels: "At 6th level, create 5 duplicates.",
 		higher_levels: "At 6th level, create 5 duplicates.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -4559,10 +4558,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Illusion",
+			damage_profile: "1d8 psychic",
 			action: "1 action",
 			ability: "Presence",
-			save: "Presence",
-			dc: 16,
 			scaling: "Scales with character level",
 		},
 		discovery_lore: "",
@@ -4746,10 +4744,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 16,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Unmoved by the performance.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Charmed for the duration; it regards you as a trusted friend and won't attack you, and can repeat the save if harmed.",
 		},
 		atHigherLevels:
 			"At 6th level, charmed creatures also follow simple non-harmful instructions.",
@@ -5069,10 +5066,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 17,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "It resists your patron's will.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Dominated for the duration; you spend your action to issue commands and it obeys, repeating the save each time it takes damage.",
 		},
 		atHigherLevels: "At 7th level, duration extends to 1 hour.",
 		higher_levels: "At 7th level, duration extends to 1 hour.",
@@ -5266,10 +5262,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Agility",
 			dc: 17,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Not restrained, and it takes no damage.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Restrained; it takes 4d6 force at the start of each of its turns and can repeat the save at the end of each turn to escape.",
 		},
 		atHigherLevels: "At 7th level, the web also suppresses teleportation.",
 		higher_levels: "At 7th level, the web also suppresses teleportation.",
@@ -5278,6 +5273,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 hour",
 			range: "120 feet",
 			type: "Conjuration",
+			damage_profile: "4d6 force",
 			action: "1 action",
 			ability: "Sense",
 			save: "Agility",
@@ -6753,10 +6749,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 19,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Its form holds; no transformation.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Transformed into a beast of CR 1 or lower for the duration — it keeps its HP but uses the beast's statistics, reverting at 0 HP with excess damage carrying over.",
 		},
 		atHigherLevels:
 			"At 9th level, the transformation becomes permanent until dispelled.",
@@ -6888,10 +6883,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 19,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "It resists the mental seizure.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Dominated; it fights on your behalf using all its abilities under your telepathic control, repeating the save only when it takes damage.",
 		},
 		atHigherLevels: "At 9th level, duration extends to 24 hours.",
 		higher_levels: "At 9th level, duration extends to 24 hours.",
@@ -7285,9 +7279,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 			ability: "Presence",
 			dc: 20,
 			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+				"The pact fails to claim it; a target with 100 HP or more still takes half (5d10) necrotic damage.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"A target with fewer than 100 HP dies outright; a target with 100 HP or more takes 10d10 necrotic damage. The slain can't be resurrected except by Wish or divine intervention.",
 		},
 		atHigherLevels: "",
 		higher_levels: "",
@@ -7296,6 +7290,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Instantaneous",
 			range: "Touch",
 			type: "Necromancy",
+			damage_profile: "10d10 necrotic",
 			action: "1 action",
 			ability: "Intelligence",
 			save: "Presence",
@@ -7582,7 +7577,12 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "D",
 		attack: null,
-		saving_throw: null,
+		saving_throw: {
+			ability: "Vitality",
+			dc: 13,
+			success: "The original caster keeps concentration.",
+			failure: "The original caster loses concentration.",
+		},
 		atHigherLevels: "Reduction increases by 1d6 per level above 1st.",
 		higher_levels: "Reduction increases by 1d6 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
@@ -7631,10 +7631,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Agility",
 			dc: 13,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "It avoids the filament; no bond forms.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Bonded for the duration: you always know its exact position and it can't benefit from invisibility, cover, or concealment against you (the thread breaks beyond 120 feet).",
 		},
 		atHigherLevels:
 			"At 3rd level, the thread also reveals the target's current HP percentage.",
@@ -8251,10 +8250,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 17,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "It ignores the command aura.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"It must use its reaction to move toward you and has disadvantage on attacks against anyone other than you until the start of your next turn.",
 		},
 		atHigherLevels:
 			"At 7th level, also grants you resistance to all damage until your next turn.",
@@ -8364,10 +8362,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Intelligence",
 			dc: 18,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Its mana circuit stays connected.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Severed for the duration: it can't cast spells, use mana-based abilities, or benefit from magical items, and can repeat the save at the end of each turn.",
 		},
 		atHigherLevels:
 			"At 9th level, the target also loses resistance to non-magical damage.",
@@ -8737,7 +8734,12 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "C",
 		attack: null,
-		saving_throw: null,
+		saving_throw: {
+			ability: "Intelligence",
+			dc: 16,
+			success: "Sees through the disguise.",
+			failure: "Is fooled and treats you as a genuine anomaly.",
+		},
 		atHigherLevels:
 			"At 6th level, you also gain the movement modes of the mimicked creature type.",
 		higher_levels:
@@ -9093,10 +9095,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 18,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "It defies the mandate.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"It must obey one simple command — drop weapons, kneel, flee, or freeze — for 1 round.",
 		},
 		atHigherLevels: "At 9th level, the command lasts 2 rounds.",
 		higher_levels: "At 9th level, the command lasts 2 rounds.",
@@ -9627,10 +9628,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 14,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Unfixated; it acts normally.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Fixated until the end of your next turn — it can only target you with attacks, and you gain +2 AC against it.",
 		},
 		atHigherLevels:
 			"At 4th level, fixated enemies also have disadvantage on attacks.",
@@ -9797,10 +9797,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 15,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Unbranded; no effect takes hold.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"Branded for 1 minute: you always know the target's location, and it takes 2d6 psychic each time it attacks a creature other than you.",
 		},
 		atHigherLevels: "At 5th level, psychic damage increases to 4d6.",
 		higher_levels: "At 5th level, psychic damage increases to 4d6.",
@@ -9809,6 +9808,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			duration: "Concentration, up to 1 minute",
 			range: "90 feet",
 			type: "Enchantment",
+			damage_profile: "2d6 psychic",
 			action: "1 bonus action",
 			ability: "Presence",
 			save: "Presence",
@@ -10013,10 +10013,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 16,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "The anomaly resists the leash.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"The anomaly is dominated for the duration: it obeys your verbal commands, fights for you, and can't willingly move more than 120 feet from you.",
 		},
 		atHigherLevels: "At 6th level, affects CR 6 or lower. At 8th, CR 8.",
 		higher_levels: "At 6th level, affects CR 6 or lower. At 8th, CR 8.",
@@ -10281,7 +10280,12 @@ export const spells_supplemental: CompendiumSpell[] = [
 		ritual: false,
 		rank: "B",
 		attack: null,
-		saving_throw: null,
+		saving_throw: {
+			ability: "Presence",
+			dc: 17,
+			success: "The teleport succeeds.",
+			failure: "The teleport fails and you receive a telepathic alarm.",
+		},
 		atHigherLevels:
 			"At 8th level, the seal also suppresses shapeshifting within the area.",
 		higher_levels:
@@ -10548,10 +10552,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 19,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "The attacker pushes through and is unaffected for 1 round.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"The attack or harmful spell fails and the creature's action is wasted.",
 		},
 		atHigherLevels: "",
 		higher_levels: "",
@@ -10661,10 +10664,9 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Intelligence",
 			dc: 20,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
+			success: "Its circuit holds; it is immune to this spell for 1 year.",
 			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+				"The target's mana circuit is permanently sealed: it loses all spellcasting, powers, techniques, and Awakened abilities until reversed by an Absolute Edict.",
 		},
 		atHigherLevels: "",
 		higher_levels: "",
@@ -10829,10 +10831,8 @@ export const spells_supplemental: CompendiumSpell[] = [
 		saving_throw: {
 			ability: "Presence",
 			dc: 20,
-			success:
-				"Target takes half damage and resists the secondary effect on a successful save.",
-			failure:
-				"Target takes full damage and suffers the spell's primary effect on a failed save.",
+			success: "It withstands the finale; no effect.",
+			failure: "Incapacitated for the duration.",
 		},
 		atHigherLevels: "",
 		higher_levels: "",

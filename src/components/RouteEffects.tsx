@@ -40,6 +40,7 @@ const COMPENDIUM_LABELS: Record<EntryType, string> = {
 	deities: "Eternals",
 	pantheon: "Pantheon",
 	npcs: "NPCs",
+	vehicles: "Vehicles & Mounts",
 };
 
 const ASCENDANT_TOOL_LABELS: Record<string, string> = {

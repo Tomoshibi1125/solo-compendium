@@ -480,6 +480,72 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							);
 						})()}
 						{(() => {
+							const healing = (mechanics as CompendiumMechanics).healing;
+							if (!healing?.dice) return null;
+							return (
+								<div className="flex items-start gap-2">
+									<Sparkles className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading">Healing</p>
+										<p className="text-sm text-muted-foreground">
+											{formatRegentVernacular(
+												`Restores ${healing.dice}${
+													healing.type && healing.type !== "hp"
+														? ` ${healing.type}`
+														: ""
+												}`,
+											)}
+										</p>
+									</div>
+								</div>
+							);
+						})()}
+						{(() => {
+							const m = mechanics as CompendiumMechanics;
+							// Standalone damage line for save-for-half / weapon-rider
+							// spells where there is no attack block to carry the roll.
+							if (m.attack) return null;
+							const profile =
+								typeof m.damage_profile === "string" ? m.damage_profile : null;
+							if (!profile || !/\d+d\d+/i.test(profile)) return null;
+							return (
+								<div className="flex items-start gap-2">
+									<Swords className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading">Damage</p>
+										<p className="text-sm text-muted-foreground">
+											{formatRegentVernacular(profile)}
+										</p>
+									</div>
+								</div>
+							);
+						})()}
+						{(() => {
+							const utility = (
+								mechanics as CompendiumMechanics & {
+									utility?: { resolution?: unknown };
+								}
+							).utility;
+							const m = mechanics as CompendiumMechanics;
+							if (m.attack || m.saving_throw || m.healing) return null;
+							const resolution =
+								utility && typeof utility.resolution === "string"
+									? utility.resolution
+									: null;
+							if (!resolution) return null;
+							return (
+								<div className="flex items-start gap-2">
+									<Zap className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+									<div>
+										<p className="font-heading">Effect</p>
+										<p className="text-sm text-muted-foreground">
+											{formatRegentVernacular(resolution)}
+										</p>
+									</div>
+								</div>
+							);
+						})()}
+						{(() => {
 							const movement = (mechanics as CompendiumMechanics).movement;
 							if (!movement) return null;
 							const isObj = typeof movement === "object";

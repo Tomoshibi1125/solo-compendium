@@ -4,6 +4,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_0",
 		name: "Obsidian Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Field-issued combat gauntlets for Striker-class Ascendants and tactical brawlers.",
 		rarity: "uncommon",
@@ -147,6 +148,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_1",
 		name: "Abyssal Whip",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A finesse reach weapon — surprising on first contact, devastating with practice.",
 		rarity: "uncommon",
@@ -281,6 +283,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_2",
 		name: "Unstable Liquid Shadow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pocket-sized recovery potion. Standard kit for any Ascendant on assignment.",
 		rarity: "common",
@@ -419,6 +422,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_3",
 		name: "Mana-Infused Whip",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A control-class weapon for Ascendants who prefer winning fights without finishing them.",
 		rarity: "uncommon",
@@ -554,6 +558,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_4",
 		name: "Aetheric Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced gauntlet that turns unarmed strikes into solid kinetic blows.",
 		rarity: "uncommon",
@@ -689,6 +694,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_5",
 		name: "Starlight Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors.",
 		rarity: "uncommon",
@@ -824,6 +830,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_6",
 		name: "Purified Stamina Stim",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-stamped emergency injector. Last-resort kit.",
 		rarity: "common",
 		type: "consumable",
@@ -966,6 +973,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_7",
 		name: "Aegis Trench Coat",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A multi-layer combat coat woven from impact-resistant fabric.",
 		rarity: "uncommon",
@@ -1101,6 +1109,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_8",
 		name: "Shadow Combat Vest",
+		source_book: "Rift Ascendant Canon",
 		description: "A Stalker-class light armor sized for extended gate sweeps.",
 		rarity: "uncommon",
 		type: "armor",
@@ -1230,6 +1239,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_9",
 		name: "Guild-Standard Aetheric Antidote",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A purifier vial labeled with the Bureau's medical-clearance stamp.",
 		rarity: "common",
@@ -1368,6 +1378,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_10",
 		name: "Greater Mana Elixir",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A clear-glass restorative phial sealed with a Bureau quartermaster stamp.",
 		rarity: "common",
@@ -1497,6 +1508,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_11",
 		name: "Aegis Bracers",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A wrist-worn focus and protective plate combined into one piece.",
 		rarity: "uncommon",
@@ -1626,6 +1638,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_12",
 		name: "Phantom Tactical Helmet",
+		source_book: "Rift Ascendant Canon",
 		description: "A combat helm with optional Bureau communication insert.",
 		rarity: "uncommon",
 		type: "armor",
@@ -1762,6 +1775,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_13",
 		name: "Gate-Forged Tactical Helmet",
+		source_book: "Rift Ascendant Canon",
 		description: "Reinforced headgear with mana-treated impact lining.",
 		rarity: "uncommon",
 		type: "armor",
@@ -1889,6 +1903,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_14",
 		name: "Greater Health Potion",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-licensed restorative draught.",
 		rarity: "common",
 		type: "consumable",
@@ -2024,6 +2039,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_15",
 		name: "Crimson Gauntlets",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pair of impact gauntlets shaped for clinch fighting inside cramped gate corridors.",
 		rarity: "uncommon",
@@ -2159,6 +2175,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_16",
 		name: "Shattered Dagger",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision-balanced knife with a mana-treated edge.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -2290,6 +2307,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_17",
 		name: "Guild-Standard Beast Repellent",
+		source_book: "Rift Ascendant Canon",
 		description: "A field-issued potion. Bitter, fast-acting, reliable.",
 		rarity: "common",
 		type: "consumable",
@@ -2425,6 +2443,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_18",
 		name: "Aetheric Warhammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced sledge — for when an obstacle needs to stop being one.",
 		rarity: "uncommon",
@@ -2560,6 +2579,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_19",
 		name: "Aetheric Dagger",
+		source_book: "Rift Ascendant Canon",
 		description: "A precision-balanced knife with a mana-treated edge.",
 		rarity: "rare",
 		type: "weapon",
@@ -2721,6 +2741,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_20",
 		name: "Abyssal Whip",
+		source_book: "Rift Ascendant Canon",
 		description: "A weighted whip for trip, disarm, and grappling work.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -2856,6 +2877,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_21",
 		name: "Shadow Tactical Helmet",
+		source_book: "Rift Ascendant Canon",
 		description: "Reinforced headgear with mana-treated impact lining.",
 		rarity: "uncommon",
 		type: "armor",
@@ -2986,6 +3008,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_22",
 		name: "Crimson Sniper Rifle",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long-barrel rifle stamped to Bureau specifications. Designed for stand-off engagements at gate perimeters.",
 		rarity: "uncommon",
@@ -3122,6 +3145,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_23",
 		name: "Nano-Weave Spaulders",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Heavy Bureau-stamped plate. Designed to be hit. Designed to keep working when it is.",
 		rarity: "uncommon",
@@ -3251,6 +3275,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_24",
 		name: "Abyssal Whip",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced whip used by control-style Ascendants to disarm and entangle.",
 		rarity: "uncommon",
@@ -3387,6 +3412,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_25",
 		name: "Nano-Weave Combat Vest",
+		source_book: "Rift Ascendant Canon",
 		description: "A Stalker-class light armor sized for extended gate sweeps.",
 		rarity: "uncommon",
 		type: "armor",
@@ -3514,6 +3540,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_26",
 		name: "Vanguard Exo-Suit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact tactical layer designed for fast movers operating inside C-rank gates.",
 		rarity: "uncommon",
@@ -3641,6 +3668,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_27",
 		name: "Nano-Weave Breastplate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches.",
 		rarity: "uncommon",
@@ -3770,6 +3798,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_28",
 		name: "Shattered Longsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reliable mid-weight blade — the kind every Ascendant learns on, and many never replace.",
 		rarity: "uncommon",
@@ -3902,6 +3931,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_29",
 		name: "Lesser Health Potion",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A regulated alchemical compound. Restores hit points on consumption.",
 		rarity: "common",
@@ -4038,6 +4068,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_30",
 		name: "Aether-Plated Combat Vest",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Modern light armor laced with mana-reactive alloys for enhanced protection.",
 		rarity: "uncommon",
@@ -4169,6 +4200,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_31",
 		name: "Lesser Mana Elixir",
+		source_book: "Rift Ascendant Canon",
 		description: "A Bureau-licensed restorative draught.",
 		rarity: "common",
 		type: "consumable",
@@ -4296,6 +4328,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_32",
 		name: "Shattered Halberd",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced spear with a reinforced shaft and mana-conductive head.",
 		rarity: "uncommon",
@@ -4427,6 +4460,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_33",
 		name: "Nano-Weave Spaulders",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy armor system with sectional plating and a mana-conductive backing layer.",
 		rarity: "uncommon",
@@ -4556,6 +4590,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_34",
 		name: "Obsidian Dagger",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A short blade with a fluted spine, weighted for offhand throws.",
 		rarity: "rare",
@@ -4717,6 +4752,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_35",
 		name: "Nano-Weave Tactical Helmet",
+		source_book: "Rift Ascendant Canon",
 		description: "Bureau-issued head protection, lightweight and fitted.",
 		rarity: "rare",
 		type: "armor",
@@ -4863,6 +4899,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_36",
 		name: "Abyssal Spear",
+		source_book: "Rift Ascendant Canon",
 		description: "A reach weapon used by Bureau gate-line teams.",
 		rarity: "uncommon",
 		type: "weapon",
@@ -4997,6 +5034,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_37",
 		name: "Lattice-Scale Exo-Suit",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A flexible mana-weave layer that beads ichor and shrugs off minor concussive impacts.",
 		rarity: "uncommon",
@@ -5128,6 +5166,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_38",
 		name: "Unstable Beast Repellent",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-graded medicinal draught. Effective when applied promptly.",
 		rarity: "common",
@@ -5256,6 +5295,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_39",
 		name: "Phantom Breastplate",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A full-coverage heavy carapace built for vanguard tanks holding gate breaches.",
 		rarity: "uncommon",
@@ -5395,6 +5435,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_40",
 		name: "Ceramic Shin Guards",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A reinforced kevlar-and-mana-weave layer. Cheap, common, effective.",
 		rarity: "uncommon",
@@ -5522,6 +5563,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_41",
 		name: "Greater Stamina Stim",
+		source_book: "Rift Ascendant Canon",
 		description: "A pre-measured combat stim with Bureau-coded markings.",
 		rarity: "common",
 		type: "consumable",
@@ -5657,6 +5699,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_42",
 		name: "Lesser Liquid Shadow",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A regulated alchemical compound. Restores hit points on consumption.",
 		rarity: "common",
@@ -5793,6 +5836,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_43",
 		name: "Aetheric Warhammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A demolition-grade hammer with reinforced grip and a mana-stable striking surface.",
 		rarity: "uncommon",
@@ -5927,6 +5971,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_44",
 		name: "Aetheric Warhammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive impact weapon balanced for sweeping strikes and structural breaks.",
 		rarity: "uncommon",
@@ -6062,6 +6107,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_45",
 		name: "Starlight Warhammer",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive impact weapon balanced for sweeping strikes and structural breaks.",
 		rarity: "uncommon",
@@ -6204,6 +6250,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_46",
 		name: "Ascendant's Katana",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile blade — single-handed for speed, two-handed for finishing strokes.",
 		rarity: "uncommon",
@@ -6336,6 +6383,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_47",
 		name: "Shadow Bracers",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A Bureau-issued forearm guard for Ascendants operating melee-forward.",
 		rarity: "uncommon",
@@ -6460,6 +6508,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_48",
 		name: "Aegis Trench Coat",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact tactical layer designed for fast movers operating inside C-rank gates.",
 		rarity: "uncommon",
@@ -6587,6 +6636,7 @@ export const items_part5: Item[] = [
 	{
 		id: "item_p5_49",
 		name: "Starlight Longsword",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A balanced blade with a fuller groove that channels excess kinetic mana.",
 		rarity: "uncommon",

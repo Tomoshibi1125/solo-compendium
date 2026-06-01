@@ -4,10 +4,13 @@ import {
 	Layers,
 	MapPin,
 	RefreshCw,
+	ScrollText,
 	Sparkles,
+	Swords,
 	Target,
 	Zap,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +29,47 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 		data.rune_type === "defensive";
 	const _runeIsCaster =
 		data.rune_type === "caster" || data.rune_category === "Spell";
+
+	const toRecord = (value: unknown): Record<string, unknown> | null =>
+		value && typeof value === "object" && !Array.isArray(value)
+			? (value as Record<string, unknown>)
+			: null;
+	const limitations = toRecord(data.limitations);
+	const mechanics = toRecord(data.mechanics);
+	const loreRecord = toRecord(data.lore);
+	const usesText =
+		data.uses_per_rest ??
+		(limitations && typeof limitations.uses === "string"
+			? limitations.uses
+			: undefined);
+	const rechargeText =
+		data.recharge ??
+		(limitations && typeof limitations.recharge === "string"
+			? limitations.recharge
+			: undefined);
+	const damageProfile =
+		mechanics && typeof mechanics.damage_profile === "string"
+			? mechanics.damage_profile
+			: null;
+	const taughtDamage =
+		damageProfile && /\d+\s*d\s*\d+/i.test(damageProfile)
+			? damageProfile
+			: null;
+	const teaches = data.teaches;
+	const taughtHref = teaches
+		? `/compendium/${teaches.kind}s/${teaches.ref}`
+		: null;
+	const loreText =
+		typeof data.lore === "string"
+			? data.lore
+			: loreRecord
+				? [loreRecord.origin, loreRecord.history, loreRecord.current_owner]
+						.filter(
+							(value): value is string =>
+								typeof value === "string" && value.trim().length > 0,
+						)
+						.join(" ")
+				: "";
 
 	return (
 		<div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -68,13 +112,13 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							<div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
 								<RefreshCw className="w-4 h-4 text-primary" />
 								<span className="text-xs font-bold uppercase text-primary/80">
-									Recharge: {data.recharge || "N/A"}
+									Recharge: {rechargeText || "N/A"}
 								</span>
 							</div>
 							<div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
 								<Zap className="w-4 h-4 text-primary" />
 								<span className="text-xs font-bold uppercase text-primary/80">
-									Uses: {data.uses_per_rest || "At-Will"}
+									Uses: {usesText || "At-Will"}
 								</span>
 							</div>
 							{data.activation_action && (
@@ -108,6 +152,25 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 										Level: {data.rune_level}
 									</span>
 								</div>
+							)}
+							{taughtDamage && (
+								<div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-500/10 border border-rose-500/20">
+									<Swords className="w-4 h-4 text-rose-400" />
+									<span className="text-xs font-bold uppercase text-rose-400/90">
+										Damage: {taughtDamage}
+									</span>
+								</div>
+							)}
+							{taughtHref && (
+								<Link
+									to={taughtHref}
+									className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20 hover:bg-primary/20 transition-colors"
+								>
+									<BookOpen className="w-4 h-4 text-primary" />
+									<span className="text-xs font-bold uppercase text-primary/80">
+										View Taught Ability
+									</span>
+								</Link>
 							)}
 						</div>
 					</div>
@@ -151,7 +214,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 							<div className="flex justify-between">
 								<span>Usage Mode:</span>
 								<span className="text-primary capitalize">
-									{data.uses_per_rest || "Standard"}
+									{usesText || "Standard"}
 								</span>
 							</div>
 							<div className="flex justify-between">
@@ -230,6 +293,31 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 					</div>
 				</div>
 			</AscendantWindow>
+
+			{(loreText || data.discovery_lore) && (
+				<AscendantWindow title="LORE & PROVENANCE" className="bg-background/20">
+					<div className="space-y-4">
+						{loreText && (
+							<div className="flex items-start gap-3">
+								<ScrollText className="w-5 h-5 text-primary/70 flex-shrink-0 mt-1" />
+								<p className="text-sm text-muted-foreground leading-relaxed">
+									<AutoLinkText text={formatRegentVernacular(loreText)} />
+								</p>
+							</div>
+						)}
+						{data.discovery_lore && (
+							<div className="flex items-start gap-3">
+								<Sparkles className="w-5 h-5 text-primary/70 flex-shrink-0 mt-1" />
+								<p className="text-sm text-muted-foreground/80 italic leading-relaxed">
+									<AutoLinkText
+										text={formatRegentVernacular(data.discovery_lore)}
+									/>
+								</p>
+							</div>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
 		</div>
 	);
 };
