@@ -24,6 +24,7 @@ import type {
 	CompendiumRegent,
 	CompendiumRelic,
 	CompendiumRune,
+	CompendiumSigil,
 	CompendiumSkill,
 	CompendiumSovereign,
 	CompendiumSpell,
@@ -78,6 +79,7 @@ export type CompendiumEntity =
 	| CompendiumLocation
 	| CompendiumRelic
 	| CompendiumRune
+	| CompendiumSigil
 	| CompendiumSovereign
 	| CompendiumDeity
 	| CompendiumVehicle;
