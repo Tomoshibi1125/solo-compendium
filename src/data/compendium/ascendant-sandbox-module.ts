@@ -4,7 +4,7 @@ import {
 } from "@/data/compendium/sandbox-npcs";
 import type { VTTScene } from "@/types/vtt";
 
-// Sub-module imports - 39 chapters, 24 handouts, 14 VTT scenes
+// Sub-module imports - 39 chapters, 24 handouts, 20 VTT scenes
 import { riftAscendantWorldLoreChapter } from "./sandbox/rift-ascendant-world-lore";
 import { chaptersPart1 } from "./sandbox/sandbox-chapters-part1";
 import { chaptersPart2 } from "./sandbox/sandbox-chapters-part2";
@@ -52,7 +52,7 @@ import {
 // A Curse of Strahd scale S-Rank Gate Domain horror sandbox for Levels 1-10.
 // Automatically populates the Campaign Wiki, VTT Maps, and Handouts.
 //
-// 39 Chapters - 24 Handouts - 14 VTT Scenes - 42 NPCs - 5 Factions
+// 39 Chapters - 24 Handouts - 20 VTT Scenes - 42 NPCs - 5 Factions
 // ============================================================================
 
 interface SandboxModule {
@@ -111,14 +111,15 @@ export const sandboxVTTScenes: SandboxVTTScene[] = sandboxVTTScenesExpanded;
 
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
-	// v6: restores the full Gloamreach scale rewrite across chapters, quests,
+	// v7: restores the 20-scene Gloamreach VTT map list and updates NPC token routing.
+	// v6: restored the full Gloamreach scale rewrite across chapters, quests,
 	// factions, NPCs, encounters, timeline, Warden notes, and loot after revert.
 	// v5: reasserted Gloamreach-only canon and removed Subject Zero from module text.
 	// v4: full Gloamreach Gate Domain rewrite.
 	// v3: added the prior world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, NPCs, encounters,
 	// quests, factions, loot, timeline, VTT audio tracks, and pinned assets.
-	version: 6,
+	version: 7,
 	title: "The Shadow of the Regent",
 	description:
 		"A Curse of Strahd scale mature Gate Domain horror campaign for Levels 1-10, set inside the Gloamreach: a country-sized S-Rank Gate Domain beyond a sealed Rift. The campaign is built around a visible citadel, dangerous roads, starving settlements, tribute law, Bureau failure, Vermillion pragmatism, Awoko grief-cult corruption, Anchor Relics, forbidden Unseated Law bargains, and a tyrannical Regent who appears early, studies the party, sends invitations, punishes defiance, and rules the Domain as its living Anchor.",
