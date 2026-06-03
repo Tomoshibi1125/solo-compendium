@@ -57,6 +57,7 @@ export const sandboxQuests: SandboxQuest[] = [
 			"The clinic is collected or exposed, causing reputation loss.",
 		],
 		rewardNotes: "Bureau +1, Independent +1; safe shelter token at the clinic.",
+		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Quartermaster Lin Mei-hua",
 	},
 	{
@@ -77,6 +78,7 @@ export const sandboxQuests: SandboxQuest[] = [
 		],
 		rewardNotes: "Bureau +1; Catalog access; clue toward the Void Claim.",
 		linkedFactionId: "bureau-sentinels",
+		linkedNpcName: "The Catalog",
 	},
 	{
 		id: "q-d-02",
@@ -94,7 +96,8 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Files burned to prevent further growth.",
 		],
 		rewardNotes:
-			"Identity-erosion clue chain; Fungal Depths Claim hint; Mother Rust research leverage.",
+			"Regent-Marked clue chain; Fungal Depths Claim hint; Mother Rust research leverage.",
+		linkedNpcName: "Dr. Serin Hayashi",
 	},
 	{
 		id: "q-c-01",
@@ -132,7 +135,29 @@ export const sandboxQuests: SandboxQuest[] = [
 			"Relay detonates, empowering a Regent debt law.",
 		],
 		rewardNotes: "Bureau research unlock; debt-law contradiction; fire or blood Sigil.",
+		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Dr. Serin Hayashi",
+	},
+	{
+		id: "q-c-03",
+		title: "C-Rank: Blackwood's Quiet File",
+		rank: "C",
+		summary:
+			"Agent Kira Blackwood needs deniable help tracing pre-threshold Claim resonance. The file can expose Bureau command dishonesty without making Blackwood a villain.",
+		objectives: [
+			"Recover Blackwood's sealed evidence from the Annex or Ledgerfen",
+			"Identify which Claim manifested before the threshold stabilized",
+			"Decide whether to reveal, bury, or weaponize the Bureau's secret",
+		],
+		completionTriggers: [
+			"Blackwood confesses her real orders and backs the party.",
+			"The file is delivered to Park, Hayashi, Vermillion, or Central Command.",
+			"The evidence is destroyed to prevent institutional exploitation.",
+		],
+		rewardNotes:
+			"Blackwood recruitment path; Bureau trust shift; one Claim placement clue.",
+		linkedFactionId: "bureau-sentinels",
+		linkedNpcName: "Agent Kira Blackwood",
 	},
 	{
 		id: "q-b-01",
@@ -170,6 +195,47 @@ export const sandboxQuests: SandboxQuest[] = [
 		linkedNpcName: "Commander Without a Body",
 	},
 	{
+		id: "q-b-03",
+		title: "B-Rank: The Cult Defector",
+		rank: "B",
+		summary:
+			"Whisper, Sister Veil, or Acolyte Mara can prove the Hollow Mother intends to inherit the Gloamreach. Extracting a defector gives the party ritual leverage, but the Awoko want them alive.",
+		objectives: [
+			"Locate the defector in a grief-dense settlement, Sunken Tunnels shrine, or Awoko Sanctum wing",
+			"Protect them from cult retrieval",
+			"Secure proof of the Ritual of Inheritance",
+		],
+		completionTriggers: [
+			"A defector reaches safe shelter and confirms the Hollow Mother's plan.",
+			"The defector dies but leaves usable ritual evidence.",
+			"The cult recaptures the defector and accelerates the ritual clock.",
+		],
+		rewardNotes:
+			"Sister Veil, Whisper, Mara, or Hana recruitment path; Awoko ritual disruption option.",
+		linkedFactionId: "awoko-cult",
+		linkedNpcName: "Sister Veil",
+	},
+	{
+		id: "q-b-04",
+		title: "B-Rank: Professor Lun's Theory",
+		rank: "B",
+		summary:
+			"Professor Lun believes the Mana Vein Network can weaken the Regent's battlefield control. The sensors must be placed inside three nodes the Domain can feel.",
+		objectives: [
+			"Install a sensor in the Rusted Hull",
+			"Install a sensor in the Silent Depot",
+			"Install a sensor in the Glass Sub-Basement beneath the Ashen Counting-House",
+		],
+		completionTriggers: [
+			"All three nodes are mapped and Lun survives the final reading.",
+			"Two nodes are mapped for partial finale support.",
+			"The Regent learns who placed the sensors and prepares a counterclaim.",
+		],
+		rewardNotes:
+			"Regent loses or delays one Domain control option during the finale.",
+		linkedNpcName: "Professor Lun",
+	},
+	{
 		id: "q-a-01",
 		title: "A-Rank: The Mirror Climb",
 		rank: "A",
@@ -184,6 +250,27 @@ export const sandboxQuests: SandboxQuest[] = [
 		rewardNotes:
 			"A-Rank Relic or Sigil; Claim placement access; temptation consequence based on choices.",
 		linkedNpcName: "The Watcher",
+	},
+	{
+		id: "q-a-02",
+		title: "A-Rank: Civilian Convoy",
+		rank: "A",
+		summary:
+			"A tribute settlement asks the party to move civilians to safer shelter. The road demands names, the Bailiff challenges custody, and some civilians believe leaving voids their protection.",
+		objectives: [
+			"Gather the convoy without triggering panic",
+			"Cross the Road of Writs without surrendering civilians as legal payment",
+			"Reach Mother Rust's Outreach Post, the Annex, or a trusted settlement shelter",
+		],
+		completionTriggers: [
+			"Most civilians survive and reach safe shelter.",
+			"The convoy survives but pays a permanent cost.",
+			"The Bailiff collects someone and civilian trust collapses.",
+		],
+		rewardNotes:
+			"Major Independent Survivor reputation; Mama Chen, Doc Tanaka, or Jax support in Citadel Day.",
+		linkedFactionId: "independent",
+		linkedNpcName: "Mama Chen",
 	},
 	{
 		id: "q-s-01",
@@ -217,6 +304,7 @@ export const sandboxQuests: SandboxQuest[] = [
 		],
 		completionTriggers: ["Park's choice resolved during the final preparation window."],
 		rewardNotes: "Finale support, emotional payoff, and Bureau epilogue consequences.",
+		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Commander Park Jae-won",
 	},
 	{
@@ -235,7 +323,8 @@ export const sandboxQuests: SandboxQuest[] = [
 			"The Bailiff is destroyed after its writ is invalidated.",
 			"The Bailiff enters the finale empowered.",
 		],
-		rewardNotes: "Removes or alters a major final-act threat; may create a new Domain precedent.",
+		rewardNotes:
+			"Removes or alters a major final-act threat; may create a new Domain precedent.",
 		linkedNpcName: "The Regent's Bailiff",
 	},
 ];
