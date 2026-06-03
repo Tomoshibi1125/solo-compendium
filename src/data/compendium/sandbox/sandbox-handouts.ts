@@ -190,7 +190,7 @@ State whether the cost may be collected later.
 Silence will be interpreted as consent to delayed collection.`,
 	},
 	{
-		title: "Subject Zero Bargain Record",
+		title: "Unseated Law Bargain Record",
 		content: `# BARGAIN RECORD
 
 The offer worked.
@@ -199,7 +199,7 @@ That is the problem.
 
 Effect granted:
 
-Pressure marked:
+Precedent established:
 
 Visible consequence:
 
@@ -306,7 +306,7 @@ Settlements saved:
 
 Settlements lost:
 
-Subject Zero consequences:
+Unseated Law consequences:
 
 Bureau public report:
 
@@ -318,22 +318,20 @@ Truth known to the party:`,
 
 Show the Citadel every session.
 
-Make safety conditional.
+Every safe place has a cost.
 
-Let bargains work.
+Every Relic has a desire.
 
-Make Anomalies serve a Domain role.
+Every bargain establishes precedent.
 
-Track Red Phase pressure.
-
-Keep the Regent polite until violence matters.`,
+The Regent is not waiting at the end. He is watching from the beginning.`,
 	},
 ];
 
 export const sandboxHandoutsExpanded: SandboxHandout[] = rawSandboxHandouts.map(
 	(handout) => ({
 		...handout,
-		category: "gloamreach",
-		visibleToPlayers: true,
+		visibleToPlayers: !handout.title.startsWith("Warden"),
+		category: handout.title.startsWith("Warden") ? "lore" : "handout",
 	}),
 );
