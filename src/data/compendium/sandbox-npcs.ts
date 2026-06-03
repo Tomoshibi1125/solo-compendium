@@ -1,6 +1,8 @@
 // ============================================================================
 // SANDBOX NPC ROSTER: "The Shadow of the Regent"
-// Gloamreach Gate Domain rewrite.
+//
+// 42 unique named NPCs across 5 factions, aligned to the Gloamreach Gate Domain.
+// Each NPC supports recruitment, faction pressure, side quests, or final-act payoff.
 // ============================================================================
 
 export interface SandboxNPC {
@@ -10,9 +12,9 @@ export interface SandboxNPC {
 	faction:
 		| "bureau_sentinels"
 		| "vermillion_guild"
-		| "hollow_choir"
-		| "free_ascendants"
-		| "gloamreach_bound";
+		| "awoko_cult"
+		| "independent"
+		| "anomaly_adjacent";
 	level: number;
 	job: string;
 	hp: number;
@@ -37,697 +39,1144 @@ export interface SandboxNPC {
 	};
 }
 
-type NpcInput = Omit<SandboxNPC, "leveling"> & {
-	leveling?: Partial<SandboxNPC["leveling"]>;
+type NPCInput = Omit<SandboxNPC, "leveling"> & {
+	maxLevel?: number;
+	hpPerLevel?: number;
+	autoLevel?: boolean;
+	levelAbilities?: Record<number, string>;
 };
 
-const makeNpc = (npc: NpcInput): SandboxNPC => ({
+const makeNPC = (npc: NPCInput): SandboxNPC => ({
 	...npc,
 	leveling: {
 		xp: 0,
-		xpToNextLevel: 1000,
-		autoLevel: true,
-		maxLevel: 10,
-		hpPerLevel: 6,
-		levelAbilities: {
-			4: "Field Adaptation",
-			7: "Domain-Hardened Resolve",
-			10: "Final Assault Bond",
-		},
-		...npc.leveling,
+		xpToNextLevel: Math.max(300, npc.level * 500),
+		autoLevel: npc.autoLevel ?? true,
+		maxLevel: npc.maxLevel ?? Math.min(12, npc.level + 4),
+		hpPerLevel: npc.hpPerLevel ?? 6,
+		levelAbilities: npc.levelAbilities ?? {},
 	},
 });
 
-const bureauRemnant: SandboxNPC[] = [
-	makeNpc({
+// ============================================================================
+// BUREAU SENTINELS - Cordon authority, research, logistics, and containment
+// ============================================================================
+
+const bureauSentinels: SandboxNPC[] = [
+	makeNPC({
 		id: "npc-bureau-001",
-		name: "Director Ivara Quell",
-		title: "Bureau Remnant Commander",
+		name: "Commander Park Jae-won",
+		title: "Bureau Domain Response Commander",
 		faction: "bureau_sentinels",
 		level: 8,
+		job: "Destroyer",
+		hp: 95,
+		ac: 18,
+		description:
+			"A battle-scarred commander with mana-reinforced prosthetics and a voice trained to stay calm while the map collapses. Park commands the material-side Annex outside the Gloamreach threshold.",
+		personality:
+			"Stern, clipped, protective, and unwilling to confuse protocol with courage once civilians are at risk.",
+		motivation:
+			"Prevent Red Phase collapse, recover missing teams, and keep Central Command from sacrificing survivors for clean reports.",
+		backstory:
+			"Park survived earlier high-rank Gate responses and knows the difference between a bad clear and a ruler wearing a Gate as a crown.",
+		keyAbilities: ["Fortification Aura", "Command Strike", "Hold the Line"],
+		recruitCondition:
+			"Reach Bureau Trusted reputation and help Park defy an order that would abandon civilians.",
+		isRecruitable: true,
+		guildAffiliation: "Bureau Sentinels",
+		location: "Bureau Domain Response Annex",
+		questHook:
+			"Park needs Strike Team Seven's fate confirmed before Central Command writes them off.",
+		maxLevel: 12,
+		hpPerLevel: 12,
+		levelAbilities: { 10: "Adamant Will", 12: "Final Stand" },
+	}),
+	makeNPC({
+		id: "npc-bureau-002",
+		name: "Quartermaster Lin Mei-hua",
+		title: "Cordon Supply Officer",
+		faction: "bureau_sentinels",
+		level: 4,
 		job: "Technomancer",
+		hp: 38,
+		ac: 14,
+		description:
+			"A meticulous logistics officer who tracks every ration, glow rod, and field dressing with near-religious intensity.",
+		personality:
+			"Anxious, precise, quietly compassionate, and more generous when no one is watching.",
+		motivation: "Keep the Annex supplied long enough for the party to matter.",
+		backstory:
+			"Lin was never supposed to be near an S-Rank threshold. She became indispensable because panic is harder to maintain when the shelves are organized.",
+		keyAbilities: ["Equipment Maintenance", "Inventory Mastery", "Emergency Fabrication"],
+		recruitCondition:
+			"Protect the Annex supply line or save the armory during a Domain bleed event.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Domain Response Annex - Armory",
+		questHook:
+			"Lin has found missing supplies signed out by a name that does not exist in Bureau records.",
+	}),
+	makeNPC({
+		id: "npc-bureau-003",
+		name: "Sergeant Yoon Hye-jin",
+		title: "Domain Scout Leader",
+		faction: "bureau_sentinels",
+		level: 5,
+		job: "Stalker",
+		hp: 52,
+		ac: 16,
+		description:
+			"A quiet scout with chalk marks on her gloves and a habit of checking exits even in rooms she has already cleared.",
+		personality: "Pragmatic, watchful, loyal, and economical with words.",
+		motivation:
+			"Find her missing scouts and learn why the Road of Writs keeps returning their signals from impossible directions.",
+		backstory:
+			"Yoon has never lost a team until the Gloamreach began answering radio calls in their voices.",
+		keyAbilities: ["Shadow Step", "Anomaly Sense", "Precision Strike"],
+		recruitCondition:
+			"Resolve the Missing Strike Team quest and give Yoon the truth instead of a comforting lie.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Road of Writs patrol route",
+		questHook:
+			"Yoon needs escorts to follow an AFA ghost-ping toward Bastion Golemfall.",
+	}),
+	makeNPC({
+		id: "npc-bureau-004",
+		name: "Dr. Serin Hayashi",
+		title: "Regent Domain Researcher",
+		faction: "bureau_sentinels",
+		level: 6,
+		job: "Esper",
+		hp: 42,
+		ac: 12,
+		description:
+			"A brilliant field researcher with ink-stained cuffs, too many notes, and the courage to say that the Gloamreach is law before it is terrain.",
+		personality:
+			"Fast-talking, compassionate, intellectually reckless, and more frightened of bad assumptions than monsters.",
+		motivation:
+			"Prove that killing the Regent is not the only possible Anchor resolution.",
+		backstory:
+			"Hayashi's research on Gate Domains was classified because it made command staff uncomfortable. The Gloamreach proves she was underestimating the problem.",
+		keyAbilities: ["Analyze Weakness", "Aetheric Shield", "Anchor Theory"],
+		recruitCondition:
+			"Bring her three Domain-touched samples and protect her research from being suppressed.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Domain Response Annex - Evidence Locker",
+		questHook:
+			"Hayashi needs a live reading from a Mana Vein node before the Citadel approach.",
+	}),
+	makeNPC({
+		id: "npc-bureau-005",
+		name: "Agent Kira Blackwood",
+		title: "Bureau Intelligence Operative",
+		faction: "bureau_sentinels",
+		level: 7,
+		job: "Stalker",
+		hp: 58,
+		ac: 17,
+		description:
+			"A pale intelligence agent with controlled movements, half-truths, and classified orders involving pre-threshold Relic activity.",
+		personality:
+			"Cold, dry, observant, and capable of empathy she treats as an operational weakness.",
+		motivation:
+			"Complete her mission without letting Central Command turn the Regent's law into a weapon.",
+		backstory:
+			"Blackwood knew more than the briefing allowed. Her secrecy can become betrayal, confession, or sacrifice.",
+		keyAbilities: ["Infiltration", "Dead Drop", "Counter-Intelligence"],
+		recruitCondition:
+			"Complete her personal quest and force her to choose the party over Central Command.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Domain Response Annex - Intelligence desk",
+		questHook:
+			"Blackwood needs deniable assets to identify which Claim manifested before the threshold stabilized.",
+	}),
+	makeNPC({
+		id: "npc-bureau-006",
+		name: "Corporal Deng Wei",
+		title: "Heavy Weapons Specialist",
+		faction: "bureau_sentinels",
+		level: 4,
+		job: "Destroyer",
+		hp: 48,
+		ac: 16,
+		description:
+			"A broad-shouldered gunner and former chef whose field cannon is nearly as large as his guilt.",
+		personality:
+			"Gentle, exhausted, brave when others need him, and ashamed of fear he earned honestly.",
+		motivation:
+			"Stand his ground when the Regent's Bailiff comes for someone he can protect.",
+		backstory:
+			"Deng froze during a Bailiff judgment and three people were taken. He has cooked for every survivor he could not save.",
+		keyAbilities: ["Suppressing Fire", "Heavy Hitter", "Fortify Position"],
+		recruitCondition:
+			"Help Deng survive a nightmare scene and later face the Bailiff without mocking his fear.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Domain Response Annex - Field kitchen",
+		questHook:
+			"Deng's cannon needs a gear-heart from the Tithe Mill to stabilize its output.",
+	}),
+	makeNPC({
+		id: "npc-bureau-007",
+		name: "Comms Officer Reyes",
+		title: "Signal Specialist",
+		faction: "bureau_sentinels",
+		level: 3,
+		job: "Technomancer",
+		hp: 28,
+		ac: 12,
+		description:
+			"A young signal specialist who receives transmissions out of order and keeps answering anyway.",
+		personality: "Fast, anxious, brilliant, and allergic to silence.",
+		motivation:
+			"Decode the Regent's frequency and prove the messages from tomorrow are warnings, not hallucinations.",
+		backstory:
+			"Reyes was deployed too early and promoted by necessity. She is the reason the Annex still hears anything from inside.",
+		keyAbilities: ["Signal Boost", "Decrypt", "Aetheric Jammer"],
+		recruitCondition:
+			"Repair a relay inside the Hollow Subway or carry a booster through the Road of Writs.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Domain Response Annex - Relay room",
+		questHook:
+			"Reyes has a message from Strike Team Seven dated two days in the future.",
+	}),
+	makeNPC({
+		id: "npc-bureau-008",
+		name: "Warden-Aspirant Sato Ken",
+		title: "Bureau Recruit",
+		faction: "bureau_sentinels",
+		level: 2,
+		job: "Holy Knight",
+		hp: 22,
+		ac: 13,
+		description:
+			"A terrified recruit in armor that does not fit, carrying more courage than training.",
+		personality: "Earnest, frightened, stubborn, and desperate to be useful.",
+		motivation:
+			"Become worthy of the badge before the Domain teaches him what badges cost.",
+		backstory:
+			"Sato enlisted to pay for his sister's treatment. The Gloamreach turned his first field assignment into a war story he may not survive.",
+		keyAbilities: ["Determination", "Quick Learner", "Inspire"],
+		recruitCondition:
+			"He joins if asked, though Park warns the party not to mistake willingness for readiness.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Domain Response Annex - Barricade lobby",
+		questHook:
+			"Sato found a map fragment that changes when read under Citadel light.",
+	}),
+];
+
+// ============================================================================
+// VERMILLION GUILD - Salvage, shelter, black-market support, and hard choices
+// ============================================================================
+
+const vermillionGuild: SandboxNPC[] = [
+	makeNPC({
+		id: "npc-verm-001",
+		name: "Rat-King Ji",
+		title: "Black Market Fence",
+		faction: "vermillion_guild",
+		level: 6,
+		job: "Contractor",
+		hp: 45,
+		ac: 14,
+		description:
+			"A wiry broker with mismatched eyes and a talent for finding whatever people were desperate enough to hide.",
+		personality: "Slippery, charming, fair in business, and never fully honest.",
+		motivation:
+			"Profit, survival, and control of one secret about a Claim before someone more dangerous buys it.",
+		backstory:
+			"Ji built a shadow economy inside the Vermillion Outpost because official supply chains were too slow to keep people alive.",
+		keyAbilities: ["Appraise", "Black Market Network", "Escape Artist"],
+		recruitCondition:
+			"Reach Vermillion Trusted reputation and recover Ji's stash before the Road of Writs transfers ownership.",
+		isRecruitable: true,
+		guildAffiliation: "Vermillion Guild",
+		location: "Vermillion Outpost - Bazaar front",
+		questHook:
+			"Ji knows an Awoko cell plans to poison the Outpost's water stores.",
+	}),
+	makeNPC({
+		id: "npc-verm-002",
+		name: 'Vex "Quicksilver"',
+		title: "Guild Assassin",
+		faction: "vermillion_guild",
+		level: 7,
+		job: "Assassin",
+		hp: 55,
+		ac: 17,
+		description:
+			"A masked contract killer whose silver-lined coat moves a half-second before the rest of them.",
+		personality:
+			"Professional, sardonic, precise, and bound by a strict line against harming innocents.",
+		motivation:
+			"Destroy the Awoko leadership that turned their partner's grief into ritual fuel.",
+		backstory:
+			"Vex survived a cult betrayal and has spent every day since making the Awoko regret leaving witnesses.",
+		keyAbilities: ["Quicksilver Rush", "Assassinate", "Silver Blur"],
+		recruitCondition:
+			"Agree to help eliminate the Hollow Mother's ritual network. Vex stays if the party saves captives rather than only killing cultists.",
+		isRecruitable: true,
+		guildAffiliation: "Vermillion Guild",
+		location: "Vermillion Outpost - Black Market",
+		questHook:
+			"Vex has identified a cult mole near the Annex but needs proof before acting.",
+	}),
+	makeNPC({
+		id: "npc-verm-003",
+		name: "Mother Rust",
+		title: "Junk Alchemist",
+		faction: "vermillion_guild",
+		level: 5,
+		job: "Technomancer",
+		hp: 35,
+		ac: 11,
+		description:
+			"An elderly alchemist with copper-green hair, burned fingers, and a clinic that smells like medicine, oil, and bad decisions.",
+		personality:
+			"Grandmotherly, volatile, brilliant, and increasingly willing to call cruelty efficiency.",
+		motivation:
+			"Brew a treatment that lets people survive Domain exposure, even if it quiets parts of them that hurt too much.",
+		backstory:
+			"Mother Rust was a disgraced chemist before the Gloamreach made desperate medicine more valuable than clean ethics.",
+		keyAbilities: ["Brew Potion", "Acid Flask", "Volatile Mixture"],
+		recruitCondition:
+			"Bring her living mana and confront what she intends to do with it.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Mother Rust's Outreach Post",
+		questHook:
+			"Her newest compound works, but only because it suppresses grief. She needs the party to decide whether to distribute it.",
+	}),
+	makeNPC({
+		id: "npc-verm-004",
+		name: "Guildmaster Orin",
+		title: "Vermillion Commander",
+		faction: "vermillion_guild",
+		level: 9,
+		job: "Tactician",
 		hp: 82,
 		ac: 17,
 		description:
-			"A precise commander with a cracked AFA command slate wired into her bracer.",
+			"A former Bureau officer who leads from a tea table, not a throne, and can make a rescue sound like an invoice.",
 		personality:
-			"Controlled, unsentimental, and visibly fraying whenever procedure fails.",
+			"Controlled, pragmatic, dry, and allergic to institutional cowardice.",
 		motivation:
-			"Clear the Gate with enough records intact that the dead are not reduced to rumor.",
+			"Prove that fast, ugly action saves more people than clean delay.",
 		backstory:
-			"Quell led the second official expedition and watched Rank doctrine collapse one corridor at a time.",
-		keyAbilities: ["AFA Relay Override", "Command Partition", "Emergency Seal"],
+			"Orin left the Bureau after watching jurisdiction debates outlast screams. Vermillion is his answer and his sin.",
+		keyAbilities: ["Battlefield Appraisal", "Exploit Opening", "Guild Network"],
 		recruitCondition:
-			"Stabilize the Bureau Forward Bastion and show her the command ledger.",
+			"Broker a Bureau-Vermillion alliance without letting either side erase its failures.",
 		isRecruitable: true,
-		guildAffiliation: "Bureau Remnant",
-		location: "Gate Domain: Bureau Forward Bastion",
-		questHook: "Quell needs the Bastion relay restored before Day 4.",
+		guildAffiliation: "Vermillion Guild",
+		location: "Vermillion Outpost - Orin's chamber",
+		questHook:
+			"Orin has old Regent-combat notes, but sharing them means admitting why he left the Bureau.",
 	}),
-	makeNpc({
-		id: "npc-bureau-002",
-		name: "Archivist Pell",
-		title: "Bureau Record Keeper",
-		faction: "bureau_sentinels",
-		level: 5,
-		job: "Mage",
-		hp: 48,
-		ac: 13,
-		description:
-			"A dust-coated analyst carrying sealed ledgers and a pistol he has never fired well.",
-		personality: "Nervous, exact, and unable to stop correcting bad data.",
-		motivation: "Recover the truth of why the first team died.",
-		backstory:
-			"Pell survived by hiding inside an evidence locker while court patrols searched the Bastion.",
-		keyAbilities: ["Ledger Recall", "Anchor Theory", "Seal Script"],
-		recruitCondition: "Recover the sealed command ledger.",
-		isRecruitable: true,
-		guildAffiliation: "Bureau Remnant",
-		location: "Gate Domain: Bureau Forward Bastion",
-		questHook: "Pell can decode Anchor Scan anomalies.",
-	}),
-	makeNpc({
-		id: "npc-bureau-003",
-		name: "Marshal Tane Vorr",
-		title: "Bureau Destroyer",
-		faction: "bureau_sentinels",
+	makeNPC({
+		id: "npc-verm-005",
+		name: "Iron Belle",
+		title: "Prize Destroyer",
+		faction: "vermillion_guild",
 		level: 7,
 		job: "Destroyer",
-		hp: 105,
-		ac: 18,
-		description:
-			"A shield-bearing veteran with armor pitted by red lightning.",
-		personality: "Blunt, protective, and ashamed of surviving.",
-		motivation: "Hold one line correctly before he dies.",
-		backstory:
-			"Tane abandoned a doomed corridor order and still believes both choices were unforgivable.",
-		keyAbilities: ["Shield Wall", "Brace the Door", "Crush Through"],
-		recruitCondition: "Release or honor the Aegis knights.",
-		isRecruitable: true,
-		guildAffiliation: "Bureau Remnant",
-		location: "Gate Domain: Aegis Hollow",
-		questHook: "Tane knows a Bastion tunnel toward the Citadel.",
-	}),
-	makeNpc({
-		id: "npc-bureau-004",
-		name: "Medic Cor Valen",
-		title: "Bureau Triage Herald",
-		faction: "bureau_sentinels",
-		level: 6,
-		job: "Herald",
-		hp: 62,
+		hp: 75,
 		ac: 15,
 		description:
-			"A field medic with trembling hands and flawless emergency technique.",
-		personality: "Kind until supplies are counted, then brutally honest.",
-		motivation: "Keep people alive without lying about who cannot be saved.",
+			"A towering fighter with scarred knuckles, a philosophical reading habit, and no patience for cowards who call cruelty strength.",
+		personality:
+			"Boisterous, competitive, protective, and more thoughtful than her opponents expect.",
+		motivation: "Find out why strong fighters vanish after certain Outpost matches.",
 		backstory:
-			"Cor's triage station became the Bastion's last functioning room.",
-		keyAbilities: ["Triage Mandate", "Pain Lock", "Last Breath Stabilizer"],
-		recruitCondition: "Bring clean Glassvine sap to Vermillion Camp.",
+			"Belle rebuilt herself in the underground fight circuit, then realized the Awoko were scouting broken winners.",
+		keyAbilities: ["Champion's Fist", "Iron Body", "Knockout Blow"],
+		recruitCondition:
+			"Fight her honorably and help expose the cult's recruitment through violence.",
 		isRecruitable: true,
-		guildAffiliation: "Bureau Remnant",
-		location: "Gate Domain: Vermillion Camp",
-		questHook: "Cor needs medicine before the Camp loses three patients.",
+		guildAffiliation: null,
+		location: "Vermillion Outpost - Training ring",
+		questHook:
+			"Two fighters disappeared after winning. Belle wants them found before she breaks the wrong people.",
 	}),
-	makeNpc({
-		id: "npc-bureau-005",
-		name: "Signal-Eye Bram",
-		title: "AFA Relay Analyst",
-		faction: "bureau_sentinels",
+	makeNPC({
+		id: "npc-verm-006",
+		name: 'Lee Ji-won "Bright"',
+		title: "Tattoo Artist",
+		faction: "vermillion_guild",
 		level: 4,
-		job: "Esper",
-		hp: 40,
-		ac: 12,
-		description:
-			"A young analyst whose right eye flickers with relay static.",
-		personality: "Fast-talking, terrified, and brilliant under pressure.",
-		motivation: "Prove the AFA can still save someone inside this place.",
-		backstory:
-			"Bram patched his own optic nerve into a broken relay to keep route pings alive.",
-		keyAbilities: ["Route Ping", "Threat Echo", "Static Burst"],
-		recruitCondition: "Protect Bram during a relay recalibration scene.",
-		isRecruitable: true,
-		guildAffiliation: "Bureau Remnant",
-		location: "Gate Domain: Bureau Forward Bastion",
-		questHook: "Bram can improve the Anchor Scan.",
-	}),
-	makeNpc({
-		id: "npc-bureau-006",
-		name: "Warden Senn",
-		title: "Bureau Containment Officer",
-		faction: "bureau_sentinels",
-		level: 6,
-		job: "Holy Knight",
-		hp: 76,
-		ac: 18,
-		description:
-			"A containment officer whose oath brands glow whenever Red Phase pressure rises.",
-		personality: "Grim, faithful to civilians over command.",
-		motivation: "Prevent the Gate Break even if no one gets credit.",
-		backstory:
-			"Senn disobeyed command to escort refugees and has been marked for discipline if she escapes.",
-		keyAbilities: ["Containment Aura", "Radiant Brace", "Seal Backlash"],
-		recruitCondition: "Choose civilians over Bureau records in a major scene.",
-		isRecruitable: true,
-		guildAffiliation: "Bureau Remnant",
-		location: "Gate Domain: Rift Threshold",
-		questHook: "Senn knows how to read early Red Phase signs.",
-	}),
-];
-
-const vermillionCamp: SandboxNPC[] = [
-	makeNpc({
-		id: "npc-verm-001",
-		name: "Sable Marr",
-		title: "Vermillion Camp Boss",
-		faction: "vermillion_guild",
-		level: 8,
-		job: "Contractor",
-		hp: 78,
-		ac: 16,
-		description:
-			"A smiling broker in a red coat lined with emergency knives and debt slips.",
-		personality: "Warm, funny, and always doing arithmetic.",
-		motivation: "Keep the Camp alive and own enough favors to matter afterward.",
-		backstory:
-			"Sable built Vermillion Camp from three wrecked rigs and a lie that help was coming.",
-		keyAbilities: ["Debt Marker", "Relic Broker", "Favor Called In"],
-		recruitCondition: "Save Camp patients and pay or erase a major debt honestly.",
-		isRecruitable: true,
-		guildAffiliation: "Vermillion Camp",
-		location: "Gate Domain: Vermillion Camp",
-		questHook: "Sable wants the Essence Mill shut down but not destroyed.",
-	}),
-	makeNpc({
-		id: "npc-verm-002",
-		name: "Rill Vasko",
-		title: "Relic Appraiser",
-		faction: "vermillion_guild",
-		level: 5,
 		job: "Idol",
-		hp: 44,
+		hp: 32,
 		ac: 13,
 		description:
-			"A theatrical appraiser who sings to Relics to hear what law they carry.",
-		personality: "Flamboyant, sharp, and allergic to false modesty.",
-		motivation: "Find a Relic worth betraying common sense for.",
+			"A singer turned tattooist whose voice-infused ink turns pain into usable pattern.",
+		personality:
+			"Warm, stylish, sharp, and protective of anyone changing their body to survive.",
+		motivation: "Make beauty the Regent cannot own.",
 		backstory:
-			"Rill survived three patrols by convincing each that he was already invited.",
-		keyAbilities: ["Relic Aria", "Crowd Turn", "Dissonance Cut"],
-		recruitCondition: "Bring Rill an Anchor Relic and accept the full appraisal.",
+			"Bright lost her stage career to Awakening complications and found a new one writing power into scars.",
+		keyAbilities: ["Voice-Inked Tattoo", "Morale Verse", "Pain-Ward Glyphs"],
+		recruitCondition:
+			"Protect her parlor during an Outpost raid or recover stolen tattoo needles from the Awoko.",
 		isRecruitable: true,
-		guildAffiliation: "Vermillion Camp",
-		location: "Gate Domain: Vermillion Camp",
-		questHook: "Rill can identify a Relic cost before use.",
+		guildAffiliation: "Vermillion Guild",
+		location: "Vermillion Outpost - Tattoo parlour",
+		questHook:
+			"Bright's stolen designs are appearing on cult initiates who did not consent to them.",
 	}),
-	makeNpc({
-		id: "npc-verm-003",
-		name: "Patch Korr",
-		title: "Camp Surgeon",
-		faction: "vermillion_guild",
-		level: 6,
-		job: "Technomancer",
-		hp: 58,
-		ac: 15,
-		description: "A surgeon with a toolbelt of bone saws and AFA adapters.",
-		personality: "Dry, impatient, and gentle only with sedated patients.",
-		motivation: "Keep the living from becoming inventory.",
-		backstory:
-			"Patch left the Bureau after being ordered to preserve samples before people.",
-		keyAbilities: ["Suture Drone", "Pain Gate", "Emergency Install"],
-		recruitCondition: "Supply the Camp surgery quest.",
-		isRecruitable: true,
-		guildAffiliation: "Vermillion Camp",
-		location: "Gate Domain: Vermillion Camp",
-		questHook: "Patch needs Glassvine sap.",
-	}),
-	makeNpc({
-		id: "npc-verm-004",
-		name: "Moth",
-		title: "Road Guide",
-		faction: "vermillion_guild",
-		level: 5,
-		job: "Stalker",
-		hp: 54,
-		ac: 15,
-		description: "A quiet guide with road dust in every seam of their coat.",
-		personality: "Sparse with words, generous with warnings.",
-		motivation: "Never let another group walk into blue flame unprepared.",
-		backstory:
-			"Moth mapped three loops of the Gallows Road by losing three partners.",
-		keyAbilities: ["Road Sense", "Ambush Break", "Silent Lead"],
-		recruitCondition: "Pay Moth's old debt to Sable or save a road crew.",
-		isRecruitable: true,
-		guildAffiliation: "Vermillion Camp",
-		location: "Gate Domain: Gallows Road",
-		questHook: "Moth knows the Beast Road entrance.",
-	}),
-	makeNpc({
-		id: "npc-verm-005",
-		name: "Jax Oriel",
-		title: "Tattoo and Sigil Cutter",
+	makeNPC({
+		id: "npc-verm-007",
+		name: "Sigilmaster Baek",
+		title: "Engraver of Arms",
 		faction: "vermillion_guild",
 		level: 5,
 		job: "Mage",
-		hp: 42,
+		hp: 34,
 		ac: 13,
 		description:
-			"A Sigil cutter with silver ink under every fingernail.",
-		personality: "Patient, focused, and quietly angry at waste.",
-		motivation: "Turn scars into tools before the Domain turns them into claims.",
+			"A quiet artisan who engraves slowly because rushed power breaks in the hand.",
+		personality:
+			"Patient, blunt, exacting, and unimpressed by dramatic customers.",
+		motivation:
+			"Create tools that survive the Citadel without making their wielders monsters.",
 		backstory:
-			"Jax learned to cut Sigils on broken armor plates when paper ran out.",
-		keyAbilities: ["Sigil Cut", "Ink Ward", "Relic Stitch"],
-		recruitCondition: "Recover Aegis iron or Root-Script materials.",
+			"Baek learned sanctioned Sigil work, then left when regulation became more important than results.",
+		keyAbilities: ["Sigil Engraving", "Runic Appraisal", "Stabilize Relic"],
+		recruitCondition: "Recover his master lens from the Ashen Counting-House.",
 		isRecruitable: true,
-		guildAffiliation: "Vermillion Camp",
-		location: "Gate Domain: Glassvine Works",
-		questHook: "Jax can craft safer Relic stabilizers.",
+		guildAffiliation: "Vermillion Guild",
+		location: "Vermillion Outpost - Sigil parlour",
+		questHook:
+			"Baek can engrave a Claim-safe housing if the party brings him Citadel iron.",
 	}),
-	makeNpc({
-		id: "npc-verm-006",
-		name: "Brass Noll",
-		title: "Salvage Captain",
+	makeNPC({
+		id: "npc-verm-008",
+		name: "Jax the Runner",
+		title: "Road Courier",
 		faction: "vermillion_guild",
+		level: 3,
+		job: "Stalker",
+		hp: 26,
+		ac: 14,
+		description:
+			"A wiry courier who knows shortcuts the Road of Writs has not yet learned to punish.",
+		personality:
+			"Cocky, restless, brave, and secretly terrified of locked rooms.",
+		motivation: "Stay faster than ownership.",
+		backstory:
+			"Jax carried food between isolated shelters until the road started asking his name back.",
+		keyAbilities: ["Parkour", "Sprint", "Shortcut Finder"],
+		recruitCondition: "Help him break a road-debt before the Bailiff collects him.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Road of Writs and Vermillion Outpost",
+		questHook:
+			"Jax found a shortcut to the Citadel that appears only after someone lies kindly.",
+	}),
+];
+
+// ============================================================================
+// AWOKO CULT - Grief, false ascension, and the Ritual of Inheritance
+// ============================================================================
+
+const awokoCult: SandboxNPC[] = [
+	makeNPC({
+		id: "npc-awoko-001",
+		name: "The Hollow Mother",
+		title: "Cult Hierophant",
+		faction: "awoko_cult",
+		level: 9,
+		job: "Herald",
+		hp: 88,
+		ac: 16,
+		description:
+			"A soft-spoken cult leader in mourning veils who offers comfort with one hand and inheritance rites with the other.",
+		personality:
+			"Gentle, brilliant, predatory, and terrifying because her comfort is real.",
+		motivation: "Inherit the Gloamreach when the Regent weakens.",
+		backstory:
+			"The Hollow Mother learned that grief can be refined into authority. She calls this mercy because she can no longer bear its true name.",
+		keyAbilities: ["Grief Choir", "Inheritance Rite", "Void Benediction"],
+		recruitCondition:
+			"Cannot be recruited. She can only be defeated, exposed, or briefly outmaneuvered.",
+		isRecruitable: false,
+		guildAffiliation: "Awoko Cult",
+		location: "Awoko Sanctum",
+		questHook: null,
+	}),
+	makeNPC({
+		id: "npc-awoko-002",
+		name: "Whisper",
+		title: "Doubting Prophet",
+		faction: "awoko_cult",
+		level: 5,
+		job: "Esper",
+		hp: 34,
+		ac: 13,
+		description:
+			"A thin seer who hears the Domain answer prayers the cult never sent.",
+		personality: "Haunted, careful, compassionate when fear lets her be.",
+		motivation: "Escape the cult with enough truth to save others.",
+		backstory:
+			"Whisper joined after loss and stayed because visions made doubt feel like betrayal.",
+		keyAbilities: ["Prophetic Dream", "Mind Link", "Fear Sense"],
+		recruitCondition:
+			"Protect her from cult retrieval and believe her when she says the Hollow Mother intends inheritance.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Sunken Tunnels or Awoko Sanctum",
+		questHook:
+			"Whisper knows which candle-station will break the Ritual of Inheritance.",
+	}),
+	makeNPC({
+		id: "npc-awoko-003",
+		name: "Blood Zealot Karn",
+		title: "Ritual Enforcer",
+		faction: "awoko_cult",
 		level: 6,
 		job: "Berserker",
-		hp: 88,
-		ac: 15,
-		description: "A broad salvage captain with a laugh like falling scrap.",
-		personality: "Boisterous until danger, then ice-cold.",
-		motivation: "Bring every salvage runner home with enough loot to justify tomorrow.",
-		backstory:
-			"Noll lost a crew to the Essence Mill and wants the wheel stopped.",
-		keyAbilities: ["Scrap Maul", "Overload Shout", "Carry the Wounded"],
-		recruitCondition: "Shut down the Essence Mill.",
-		isRecruitable: true,
-		guildAffiliation: "Vermillion Camp",
-		location: "Gate Domain: Essence Mill",
-		questHook: "Noll can organize a Camp strike team.",
-	}),
-];
-
-const hollowChoir: SandboxNPC[] = [
-	makeNpc({
-		id: "npc-choir-001",
-		name: "Bell-Captain Rhone",
-		title: "Hollow Choir Captain",
-		faction: "hollow_choir",
-		level: 7,
-		job: "Herald",
 		hp: 70,
-		ac: 16,
-		description: "A copper-masked Herald whose voice makes crowds breathe together.",
-		personality: "Sincere, frightening, and impossible to dismiss as foolish.",
-		motivation: "Keep chosen settlements under law, even by tribute.",
-		backstory:
-			"Rhone watched panic kill more people than patrols and chose the Regent's order.",
-		keyAbilities: ["Bell Command", "Hymn of Order", "Tribute Shield"],
-		recruitCondition: "Expose a Choir betrayal without slaughtering the Warrens.",
-		isRecruitable: true,
-		guildAffiliation: "Hollow Choir",
-		location: "Gate Domain: Choir Warrens",
-		questHook: "Rhone controls the Choir Bell rite.",
-	}),
-	makeNpc({
-		id: "npc-choir-002",
-		name: "Vela Six",
-		title: "Choir Defector",
-		faction: "hollow_choir",
-		level: 4,
-		job: "Assassin",
-		hp: 38,
 		ac: 15,
-		description: "A defector with a cracked copper mask hanging at her belt.",
-		personality: "Suspicious, direct, and desperate to be useful.",
-		motivation: "Break the Choir without condemning everyone still inside.",
+		description:
+			"A scarred zealot who mistakes obedience for devotion and pain for proof.",
+		personality:
+			"Fanatical, direct, suspicious of mercy, and eager to be used.",
+		motivation:
+			"Feed enough blood into the ritual to be rewritten as something stronger.",
 		backstory:
-			"Vela carried tribute lists until she recognized too many names.",
-		keyAbilities: ["Mask Slip", "Silent Cut", "Warren Map"],
-		recruitCondition: "Protect Vela from a capture patrol.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: Thornwake",
-		questHook: "Vela can guide the party into the Warrens.",
+			"Karn survived because someone else was sacrificed. He has spent years making that bargain feel holy.",
+		keyAbilities: ["Blood Frenzy", "Ritual Cleaver", "Pain Conversion"],
+		recruitCondition:
+			"Cannot be recruited unless the Warden wants a very dark redemption arc.",
+		isRecruitable: false,
+		guildAffiliation: "Awoko Cult",
+		location: "Awoko Sanctum - Ritual guard post",
+		questHook: null,
 	}),
-	makeNpc({
-		id: "npc-choir-003",
-		name: "Cantor Ulm",
-		title: "Tribute Theologian",
-		faction: "hollow_choir",
-		level: 5,
-		job: "Contractor",
-		hp: 50,
-		ac: 14,
-		description: "A scholar-priest who writes legal hymns on strips of copper.",
-		personality: "Reasonable, patient, and more dangerous because of it.",
-		motivation: "Prove tribute is a moral technology.",
-		backstory:
-			"Ulm built the Choir's doctrine from failed settlement ledgers.",
-		keyAbilities: ["Contract Hymn", "Crowd Clause", "Copper Seal"],
-		recruitCondition: "Convince Ulm the Regent breaks his own law.",
-		isRecruitable: true,
-		guildAffiliation: "Hollow Choir",
-		location: "Gate Domain: Choir Warrens",
-		questHook: "Ulm knows a legal weakness in guest law.",
-	}),
-	makeNpc({
-		id: "npc-choir-004",
-		name: "Mother Ravel",
-		title: "Warren Keeper",
-		faction: "hollow_choir",
+	makeNPC({
+		id: "npc-awoko-004",
+		name: "Sister Veil",
+		title: "Cult Ritualist",
+		faction: "awoko_cult",
 		level: 6,
-		job: "Summoner",
-		hp: 60,
-		ac: 14,
-		description: "An old keeper followed by pale burrowing Anomalies.",
-		personality: "Maternal, ruthless, and tired of burying children.",
-		motivation: "Keep the Warrens fed through any law available.",
+		job: "Mage",
+		hp: 40,
+		ac: 13,
+		description:
+			"A porcelain-masked ritual engineer whose doubt begins as a calculation error.",
+		personality:
+			"Methodical, controlled, intellectually honest, and more salvageable than she believes.",
+		motivation:
+			"Understand why the ritual math proves the cult will be consumed.",
 		backstory:
-			"Ravel adopted orphaned settlers before the Choir made her a symbol.",
-		keyAbilities: ["Burrow Call", "Warren Shelter", "Mother's Rebuke"],
-		recruitCondition: "Save the Warren children during a patrol breach.",
-		isRecruitable: true,
-		guildAffiliation: "Hollow Choir",
-		location: "Gate Domain: Choir Warrens",
-		questHook: "Ravel can hide the party below the road.",
-	}),
-	makeNpc({
-		id: "npc-choir-005",
-		name: "Copper Child",
-		title: "Choir Oracle",
-		faction: "hollow_choir",
-		level: 3,
-		job: "Esper",
-		hp: 26,
-		ac: 12,
-		description: "A solemn child whose copper mask is too large and too old.",
-		personality: "Soft-spoken and unsettlingly accurate.",
-		motivation: "Stop hearing the Citadel bells while awake.",
-		backstory:
-			"The Choir calls the child blessed. The child calls it a headache.",
-		keyAbilities: ["Bell Dream", "Danger Pulse", "Small Voice"],
-		recruitCondition: "Remove the child from Choir control.",
+			"Veil joined voluntarily, then noticed that every successful rite erased more of its participants.",
+		keyAbilities: ["Counter-Ritual", "Containment Field", "Ritual Amplification"],
+		recruitCondition:
+			"Show her evidence that the Hollow Mother plans to inherit the Domain by burning her followers as fuel.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Gate Domain: Choir Warrens",
-		questHook: "The child can predict the final chamber.",
+		location: "Awoko Sanctum - Sister Veil's laboratory",
+		questHook:
+			"Veil can corrupt the final chant if protected during the Sanctum raid.",
 	}),
-	makeNpc({
-		id: "npc-choir-006",
-		name: "Maskwright Doss",
-		title: "Copper Mask Maker",
-		faction: "hollow_choir",
+	makeNPC({
+		id: "npc-awoko-005",
+		name: "The Hollow Man",
+		title: "Cult Infiltrator",
+		faction: "awoko_cult",
 		level: 4,
-		job: "Technomancer",
+		job: "Stalker",
+		hp: 34,
+		ac: 14,
+		description:
+			"A forgettable spy whose face seems different whenever described twice.",
+		personality:
+			"Empty, patient, adaptive, and almost impossible to remember accurately.",
+		motivation:
+			"Identify threats to the Ritual of Inheritance and remove them quietly.",
+		backstory: "The cult taught him to become nobody. The lesson worked too well.",
+		keyAbilities: ["Perfect Disguise", "Forgettable", "Poisoned Hospitality"],
+		recruitCondition: "Cannot be recruited. He is a mole to expose.",
+		isRecruitable: false,
+		guildAffiliation: "Awoko Cult",
+		location: "Bureau Annex or tribute settlement",
+		questHook: null,
+	}),
+	makeNPC({
+		id: "npc-awoko-006",
+		name: "Acolyte Mara",
+		title: "Young Cult Initiate",
+		faction: "awoko_cult",
+		level: 2,
+		job: "Herald",
+		hp: 18,
+		ac: 11,
+		description:
+			"A frightened initiate with fresh ritual marks and a stubborn refusal to let fear become faith.",
+		personality:
+			"Scared, observant, defiant in small ways, and smarter than her captors think.",
+		motivation: "Escape alive and help someone else escape after her.",
+		backstory:
+			"Mara was taken from a shelter and taught prayers before she understood what they cost.",
+		keyAbilities: ["Ritual Knowledge", "Innocent Face", "Survivor's Instinct"],
+		recruitCondition:
+			"Rescue her from the Sanctum and give her safety without demanding usefulness.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Awoko Sanctum - holding room",
+		questHook: "Mara remembers the guard route to the candle-stations.",
+	}),
+	makeNPC({
+		id: "npc-awoko-007",
+		name: "Father Gregor",
+		title: "Comfort Preacher",
+		faction: "awoko_cult",
+		level: 4,
+		job: "Herald",
+		hp: 32,
+		ac: 12,
+		description:
+			"A shelter preacher whose sermons always end one step closer to obedience.",
+		personality:
+			"Warm, mournful, persuasive, and evasive when asked who benefits from his comfort.",
+		motivation: "Deliver grieving civilians to the Hollow Mother's network.",
+		backstory:
+			"Gregor began by helping people mourn. The cult taught him to harvest the moment after tears.",
+		keyAbilities: ["Soothing Sermon", "Grief Mark", "Crowd Turn"],
+		recruitCondition:
+			"Only recruitable through a hard confession and public renunciation of the cult.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bellweather School or Covered Market",
+		questHook:
+			"Gregor knows which settlement elder has already sold names to the Regent's court.",
+	}),
+	makeNPC({
+		id: "npc-awoko-008",
+		name: "Choir-Lark Hana",
+		title: "Awoko Singer",
+		faction: "awoko_cult",
+		level: 5,
+		job: "Idol",
 		hp: 36,
 		ac: 13,
-		description: "A mask maker with burned fingertips and impeccable manners.",
-		personality: "Apologetic, meticulous, and complicit.",
-		motivation: "Make masks that make obedience hurt less.",
+		description:
+			"A ritual singer whose voice can make grief feel like a room with no doors.",
+		personality:
+			"Soft, artistic, impressionable, and terrified of silence.",
+		motivation: "Sing loudly enough that she never hears what the ritual does.",
 		backstory:
-			"Doss once made respirators for miners; now he makes voices match.",
-		keyAbilities: ["Mask Fit", "Resonance Filter", "Voice Lock"],
-		recruitCondition: "Spare Doss and destroy the coercive mask stock.",
+			"Hana was recruited after losing her family and found purpose in a choir that weaponized her sorrow.",
+		keyAbilities: ["Grief Hymn", "Discordant Note", "Choir Link"],
+		recruitCondition: "Break the Choir Pit's hold without killing the singers.",
 		isRecruitable: true,
-		guildAffiliation: "Hollow Choir",
-		location: "Gate Domain: Choir Warrens",
-		questHook: "Doss can craft a patrol disguise.",
+		guildAffiliation: null,
+		location: "Awoko Sanctum - Choir Pit",
+		questHook:
+			"Hana knows the missing verse that can weaken the Hollow Mother's final chant.",
 	}),
 ];
 
-const freeAscendants: SandboxNPC[] = [
-	makeNpc({
-		id: "npc-free-001",
-		name: "Lysa Thorn",
-		title: "Thornwake Speaker",
-		faction: "free_ascendants",
+// ============================================================================
+// INDEPENDENTS - Civilians, survivors, settlement leaders, and wild cards
+// ============================================================================
+
+const independents: SandboxNPC[] = [
+	makeNPC({
+		id: "npc-ind-001",
+		name: '"Doc" Tanaka Hiroshi',
+		title: "Settlement Surgeon",
+		faction: "independent",
 		level: 4,
-		job: "Civilian",
-		hp: 32,
-		ac: 11,
-		description: "A settlement speaker with a knife, a ledger, and no illusions left.",
-		personality: "Practical, blunt, and protective of the hungry.",
-		motivation: "Keep Thornwake alive without selling its soul by inches.",
-		backstory:
-			"Lysa became speaker after the last one walked into the tribute wagon voluntarily.",
-		keyAbilities: ["Settlement Ledger", "Hard Bargain", "Hide the Weak"],
-		recruitCondition: "Save Thornwake from tribute without abandoning it.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: Thornwake",
-		questHook: "Lysa asks the party to stop Tribute Night.",
-	}),
-	makeNpc({
-		id: "npc-free-002",
-		name: "Orro Flint",
-		title: "Free Ascendant Striker",
-		faction: "free_ascendants",
-		level: 5,
-		job: "Striker",
-		hp: 58,
-		ac: 15,
-		description: "A restless skirmisher with cracked boots and a brighter grin than sense.",
-		personality: "Reckless, loyal, and allergic to command.",
-		motivation: "Get people out, preferably while punching something important.",
-		backstory:
-			"Orro escaped a court patrol by breaking his own ankle and crawling through thorn drains.",
-		keyAbilities: ["Burst Step", "Distraction Strike", "Carry Out"],
-		recruitCondition: "Rescue a stranded Free Ascendant cell.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: Gallows Road",
-		questHook: "Orro knows where a patrol keeps prisoners.",
-	}),
-	makeNpc({
-		id: "npc-free-003",
-		name: "Seren Vale",
-		title: "Shelter Keeper",
-		faction: "free_ascendants",
-		level: 4,
-		job: "Idol",
-		hp: 40,
-		ac: 12,
-		description: "A shelter singer whose voice keeps panic from spreading.",
-		personality: "Gentle, stubborn, and harder to move than stone.",
-		motivation: "Keep one room in the Gloamreach human.",
-		backstory:
-			"Seren turned a collapsed wine cellar into the safest shelter in Thornwake.",
-		keyAbilities: ["Calm Room", "Rally Song", "Dissonance Cry"],
-		recruitCondition: "Protect the shelter during a settlement event.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: Thornwake",
-		questHook: "Seren hears which villagers are ready to join the Choir.",
-	}),
-	makeNpc({
-		id: "npc-free-004",
-		name: "Nera of the Green Scar",
-		title: "Gate Ecology Guide",
-		faction: "free_ascendants",
-		level: 6,
-		job: "Summoner",
-		hp: 64,
-		ac: 14,
-		description: "A scarred Summoner with a tame thorn-mite nested in her hood.",
-		personality: "Patient with beasts, impatient with heroes.",
-		motivation: "Teach people to survive the Domain without becoming food.",
-		backstory:
-			"Nera lived in the Glassvine Works for nineteen days after her team vanished.",
-		keyAbilities: ["Thorn-Mite Bond", "Ecology Sense", "Pack Redirect"],
-		recruitCondition: "Spare a Gloamreach-Bound creature and stabilize the Works.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: Glassvine Works",
-		questHook: "Nera can lead the Beast Crown approach.",
-	}),
-	makeNpc({
-		id: "npc-free-005",
-		name: "Hale Venn",
-		title: "Runaway Bureau Driver",
-		faction: "free_ascendants",
-		level: 3,
-		job: "Civilian",
+		job: "Herald",
 		hp: 30,
-		ac: 12,
-		description: "A driver who knows every wrecked rig between Camp and Bastion.",
-		personality: "Cynical, funny, and braver when no one praises him.",
-		motivation: "Get a working vehicle to the Threshold before Red Phase.",
+		ac: 10,
+		description:
+			"A tired doctor with steady hands and a clinic rule: no weapons near the beds.",
+		personality: "Compassionate, overworked, dry, and difficult to intimidate.",
+		motivation: "Keep people alive after every faction has made its argument.",
 		backstory:
-			"Hale deserted after being ordered to drive away from wounded Ascendants.",
-		keyAbilities: ["Rig Patch", "Road Dash", "Crash Through"],
-		recruitCondition: "Clear a road route and find fuel cells.",
+			"Tanaka walked into the Gloamreach because patients were there and doctors were not.",
+		keyAbilities: ["Field Surgery", "Triage", "Medical Knowledge"],
+		recruitCondition: "Resupply his clinic and protect it from a collection attempt.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Gate Domain: Vermillion Camp",
-		questHook: "Hale can help in evacuation endings.",
+		location: "Mother Rust's Outreach Post or tribute settlement clinic",
+		questHook:
+			"Three patients show symptoms that look like sickness but read as legal ownership.",
 	}),
-	makeNpc({
-		id: "npc-free-006",
-		name: "Tavi Rusk",
-		title: "Young Rune Runner",
-		faction: "free_ascendants",
-		level: 2,
-		job: "Stalker",
-		hp: 24,
+	makeNPC({
+		id: "npc-ind-002",
+		name: "Zara the Scrapper",
+		title: "Junker Mechanic",
+		faction: "independent",
+		level: 3,
+		job: "Technomancer",
+		hp: 28,
 		ac: 13,
-		description: "A teenage courier with too many road charms and not enough fear.",
-		personality: "Fast, curious, and constantly pretending not to be scared.",
-		motivation: "Prove small people can still cross big roads.",
+		description:
+			"A self-taught mechanic in welding goggles who treats broken machines like arguments she intends to win.",
+		personality: "Confident, creative, profane, and fiercely independent.",
+		motivation:
+			"Build a vehicle that can cross a road that changes its own destination.",
 		backstory:
-			"Tavi has carried messages through patrol lines that killed ranked teams.",
-		keyAbilities: ["Small Gap", "Road Charm", "Fast Hands"],
-		recruitCondition: "Protect Tavi during a courier run.",
+			"Zara learned machinery outside the Academy and therefore still believes machines should serve people.",
+		keyAbilities: ["Repair", "Improvised Weapon", "Jury-Rig"],
+		recruitCondition: "Bring her a gear-heart from the Tithe Mill.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Gate Domain: Gallows Road",
-		questHook: "Tavi can deliver warnings between settlements.",
+		location: "Empty Mill Village",
+		questHook:
+			"Zara's prototype road-anchor was stolen by a courtier wearing a child's voice.",
+	}),
+	makeNPC({
+		id: "npc-ind-003",
+		name: "Mika the Kid",
+		title: "Prophetic Child",
+		faction: "independent",
+		level: 1,
+		job: "Oracle",
+		hp: 8,
+		ac: 10,
+		description:
+			"A quiet child whose drawings show roads, bells, castles, and people who have not yet arrived.",
+		personality:
+			"Gentle, strange, honest, and more observant than most adults can bear.",
+		motivation:
+			"Draw the bad things early enough that someone kind might stop them.",
+		backstory:
+			"Mika began drawing the Citadel before anyone in the settlement admitted seeing it.",
+		keyAbilities: ["Prophetic Drawing", "Danger Sense", "Small Mercy"],
+		recruitCondition: "Protect Mika without exploiting her visions.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bellweather School",
+		questHook:
+			"Mika's latest drawing shows a party member standing beside the Bailiff.",
+	}),
+	makeNPC({
+		id: "npc-ind-004",
+		name: "Old Man Crane",
+		title: "White Heron",
+		faction: "independent",
+		level: 10,
+		job: "Esper",
+		hp: 70,
+		ac: 16,
+		description:
+			"A retired S-Rank Ascendant who drinks tea like a ritual and remembers how sealing a Regent smells.",
+		personality:
+			"Patient, sorrowful, dryly funny, and old enough to distrust easy endings.",
+		motivation: "Teach the party that not every victory is destruction.",
+		backstory:
+			"Crane survived a prior Regent-class event by sacrificing more than any report records.",
+		keyAbilities: ["Sealing Lore", "White Heron Step", "Memory Blade"],
+		recruitCondition:
+			"Earn his respect and accept that his final technique may cost his life.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Old Man Crane's Teahouse",
+		questHook:
+			"Crane knows a sealing route through the Citadel but refuses to teach it to conquerors.",
+	}),
+	makeNPC({
+		id: "npc-ind-005",
+		name: "Professor Lun",
+		title: "Relic Metaphysicist",
+		faction: "independent",
+		level: 5,
+		job: "Mage",
+		hp: 34,
+		ac: 12,
+		description: "A precise academic whose fear is expressed through better diagrams.",
+		personality:
+			"Dry, fussy, exact, and quietly brave around impossible evidence.",
+		motivation:
+			"Prove that Mana Vein nodes can weaken the Regent's battlefield authority.",
+		backstory:
+			"Lun was ignored until the Gate Domain made his theories operationally inconvenient.",
+		keyAbilities: ["Relic Identification", "Vein Sensor", "Rune Decoding"],
+		recruitCondition:
+			"Activate the three Mana Vein nodes and keep him alive through the third reading.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bureau Annex or Glass Sub-Basement",
+		questHook:
+			"Lun needs escorts to install sensors in nodes the Regent can feel.",
+	}),
+	makeNPC({
+		id: "npc-ind-006",
+		name: "Ghost",
+		title: "Amnesiac Strike Team Survivor",
+		faction: "independent",
+		level: 8,
+		job: "Stalker",
+		hp: 60,
+		ac: 17,
+		description:
+			"A silent survivor with heterochromatic eyes and a Bureau ID that has been redacted by force, water, and something stranger.",
+		personality:
+			"Guarded, watchful, protective, and frightened of remembering the wrong thing.",
+		motivation:
+			"Recover identity without becoming evidence in someone else's report.",
+		backstory:
+			"Ghost returned from a failed team operation with memories filed away by a Claim-touched object.",
+		keyAbilities: ["Silent Takedown", "Memory Flash", "AFA Ghost-Ping"],
+		recruitCondition:
+			"Complete Ghost's Memory and let Ghost choose what to do with the truth.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Road of Writs or Bureau Echo Room",
+		questHook:
+			"Ghost's missing gear is displayed in the Citadel as if it was tribute.",
+	}),
+	makeNPC({
+		id: "npc-ind-007",
+		name: "Mama Chen",
+		title: "Shelter Matron",
+		faction: "independent",
+		level: 4,
+		job: "Contractor",
+		hp: 42,
+		ac: 12,
+		description:
+			"A settlement matron who can make fifty frightened people move with one look.",
+		personality:
+			"Warm, fierce, unsentimental, and impossible to buy.",
+		motivation: "Keep her people fed without paying the Regent in names.",
+		backstory: "Chen organized a shelter when everyone else was waiting for permission.",
+		keyAbilities: ["Community Leader", "Iron Will", "Shelter Network"],
+		recruitCondition:
+			"Move her shelter without letting the road choose the weakest people.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Tribute settlement shelter",
+		questHook: "Her water stores now reflect the Citadel instead of the drinker.",
+	}),
+	makeNPC({
+		id: "npc-ind-008",
+		name: "The Millwright",
+		title: "Masked Engineer",
+		faction: "independent",
+		level: 7,
+		job: "Technomancer",
+		hp: 48,
+		ac: 14,
+		description:
+			"A masked engineer who speaks through a modulator and builds tools for laws that should not exist.",
+		personality:
+			"Obsessive, precise, socially blunt, and devoted to solvable problems.",
+		motivation:
+			"Complete a device that suppresses one local Domain law without collapsing the people under it.",
+		backstory:
+			"No one knows whether the Millwright came from the material world or an older part of the Gloamreach.",
+		keyAbilities: ["Construct", "Domain Suppression Pulse", "Fortification"],
+		recruitCondition: "Gather the final components for the suppression device.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Sunken Tunnels workshop",
+		questHook:
+			"The device needs an oath-gear from Bastion Golemfall and a writ-gear from the Tithe Mill.",
+	}),
+	makeNPC({
+		id: "npc-ind-009",
+		name: "Seo Min-jae",
+		title: "The Returned",
+		faction: "independent",
+		level: 6,
+		job: "Revenant",
+		hp: 55,
+		ac: 14,
+		description: "A twice-dead Ascendant whose shadow arrives a moment late.",
+		personality:
+			"Quiet, deliberate, calm around horror, and unsettled by kindness.",
+		motivation:
+			"Learn what sent him back and whether it has authority over anyone else.",
+		backstory:
+			"Min-jae died in the Fungal Depths and returned during transport with a word no one else could hear.",
+		keyAbilities: ["Second Death", "Umbral Echo", "Passenger's Sight"],
+		recruitCondition:
+			"Investigate the Glass Sub-Basement and share the findings with him.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Mother Rust's Outreach Post",
+		questHook:
+			"Min-jae believes the word that revived him is archived beneath the Ashen Counting-House.",
+	}),
+	makeNPC({
+		id: "npc-ind-010",
+		name: "Han Yu-jin",
+		title: "Gate-Tamer",
+		faction: "independent",
+		level: 5,
+		job: "Summoner",
+		hp: 40,
+		ac: 13,
+		description:
+			"A patient Summoner with a scarred six-limbed companion she calls Little Sister.",
+		personality:
+			"Observant, gentle with beasts, blunt with people, and practical about grief.",
+		motivation:
+			"Keep Little Sister alive and learn why Domain beasts are practicing party tactics.",
+		backstory:
+			"Yu-jin was a veterinarian before Awakening taught her that some monsters respond to care before command.",
+		keyAbilities: ["Bonded Companion", "Summon Swarm", "Lyra's Whisper"],
+		recruitCondition: "Protect Little Sister from an Awoko abduction attempt.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Covered Market",
+		questHook: "Yu-jin says the predators have started learning names instead of scents.",
+	}),
+	makeNPC({
+		id: "npc-ind-011",
+		name: "The Caretaker",
+		title: "Orchard Keeper",
+		faction: "independent",
+		level: 6,
+		job: "Stalker",
+		hp: 50,
+		ac: 15,
+		description:
+			"A polite gardener with pruning hooks and a ledger of memories surrendered willingly.",
+		personality:
+			"Courteous, tired, sincere, and morally ruined by small necessary evils.",
+		motivation: "Keep the Remembering Orchard from choosing its own harvest.",
+		backstory: "The Caretaker began as a protector and became an accountant of pain.",
+		keyAbilities: ["Pruning Hook", "Graft Memory", "Harvest Bell"],
+		recruitCondition:
+			"Prove the settlement can survive without memory tribute.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Remembering Orchard",
+		questHook: "The Caretaker knows where the Blood Claim grew last season.",
+	}),
+	makeNPC({
+		id: "npc-ind-012",
+		name: "Commander Without a Body",
+		title: "Bastion Spirit",
+		faction: "independent",
+		level: 8,
+		job: "Holy Knight",
+		hp: 80,
+		ac: 18,
+		description: "A voice in empty armor, still commanding a wall that already fell.",
+		personality:
+			"Honorable, severe, ashamed, and hungry for proof that oaths can still matter.",
+		motivation:
+			"Release the dead defenders from service without calling their sacrifice meaningless.",
+		backstory: "The commander held Bastion Golemfall until duty became a prison.",
+		keyAbilities: ["Oath Command", "Shield Wall", "Dead Muster"],
+		recruitCondition:
+			"Resolve the Bastion's oath without claiming its soldiers as tools.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Bastion Golemfall",
+		questHook:
+			"The commander can open a Citadel route if the party restores the fallen banner.",
 	}),
 ];
 
-const gloamreachBound: SandboxNPC[] = [
-	makeNpc({
-		id: "npc-bound-001",
-		name: "Rook",
-		title: "Gloamreach-Bound Survivor",
-		faction: "gloamreach_bound",
+// ============================================================================
+// ANOMALY-ADJACENT - Domain-born, transformed, or nonhuman allies
+// ============================================================================
+
+const anomalyAdjacent: SandboxNPC[] = [
+	makeNPC({
+		id: "npc-anom-001",
+		name: "Echo-7",
+		title: "Changed Survivor",
+		faction: "anomaly_adjacent",
 		level: 5,
 		job: "Hybrid",
-		hp: 56,
-		ac: 14,
-		description: "A half-altered survivor with antler shadows and lucid eyes.",
-		personality: "Wary, dry, and painfully honest.",
-		motivation: "Be treated as a person before either side makes a specimen of him.",
+		hp: 44,
+		ac: 15,
+		description:
+			"A humanoid survivor with crystalline growths and two voices trying to remain one person.",
+		personality: "Gentle, afraid, curious, and exhausted by being studied.",
+		motivation: "Stabilize without being claimed as specimen, monster, or miracle.",
 		backstory:
-			"Rook spent too long in Beast Crown territory and came back changed enough to be useful.",
-		keyAbilities: ["Scent Road", "Antler Guard", "Predator Warning"],
-		recruitCondition: "Protect Rook from Bureau capture and court hunters.",
+			"Echo-7 survived partial transformation in the Remembering Orchard's deeper growths.",
+		keyAbilities: ["Anomaly Form", "Resonance Pulse", "Gate Sense"],
+		recruitCondition:
+			"Approach without exploitation and help Hayashi design a stabilizing treatment.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Gate Domain: Thornwake",
-		questHook: "Rook knows a path into the Den.",
+		location: "Remembering Orchard or Fungal Depths",
+		questHook: "Echo-7 can hear a Claim pulse when the party lies about fear.",
 	}),
-	makeNpc({
-		id: "npc-bound-002",
-		name: "Sir Cael Aster",
-		title: "Bound Aegis Knight",
-		faction: "gloamreach_bound",
+	makeNPC({
+		id: "npc-anom-002",
+		name: "The Watcher",
+		title: "Trial Guardian",
+		faction: "anomaly_adjacent",
 		level: 8,
 		job: "Guardian",
-		hp: 115,
-		ac: 19,
-		description: "A spectral armored knight nailed to an oath that outlived his body.",
-		personality: "Formal, sorrowful, and dangerous when commanded.",
-		motivation: "Make his last oath protect someone living.",
+		hp: 90,
+		ac: 18,
+		description:
+			"An ancient guardian of the Obsidian Spire that tests rulers by asking what they refuse to command.",
+		personality: "Formal, patient, alien, and amused by mortal certainty.",
+		motivation:
+			"Protect a Claim until someone proves they will not use it like the Regent did.",
 		backstory:
-			"Cael led the Aegis defenders until the Regent remade their oath into a chain.",
-		keyAbilities: ["Aegis Wall", "Oath Strike", "Door Hold"],
-		recruitCondition: "Release the Oath Furnace without mocking the oath.",
+			"The Watcher predates the current Regent and remembers older laws of the Gloamreach.",
+		keyAbilities: ["Judgement Trial", "Aetheric Imprisonment", "Relic Ward"],
+		recruitCondition: "Pass its trial without choosing domination as the answer.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Gate Domain: Aegis Hollow",
-		questHook: "Cael can hold a Citadel door during the finale.",
+		location: "Obsidian Spire",
+		questHook: "The Watcher can identify which Claim the Regent fears most.",
 	}),
-	makeNpc({
-		id: "npc-bound-003",
-		name: "Glassroot Iven",
-		title: "Altered Horticulturist",
-		faction: "gloamreach_bound",
-		level: 4,
+	makeNPC({
+		id: "npc-anom-003",
+		name: "Specimen X",
+		title: "Sapient Transformed Survivor",
+		faction: "anomaly_adjacent",
+		level: 6,
 		job: "Mutant",
-		hp: 52,
-		ac: 13,
-		description: "A botanist fused with translucent root systems.",
-		personality: "Dreamy, kind, and occasionally spoken through by plants.",
-		motivation: "Keep the Works from feeding only the Regent.",
-		backstory:
-			"Iven accepted alteration to survive and now negotiates with the root-engine.",
-		keyAbilities: ["Root Speak", "Sap Seal", "Thorn Lash"],
-		recruitCondition: "Stabilize the Glassvine Works without burning it.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: Glassvine Works",
-		questHook: "Iven knows where the Crown of Thorns grows.",
-	}),
-	makeNpc({
-		id: "npc-bound-004",
-		name: "Eidolon Vesh",
-		title: "White Heron Echo",
-		faction: "gloamreach_bound",
-		level: 7,
-		job: "Revenant",
-		hp: 72,
-		ac: 16,
-		description: "A pale Revenant echo repeating the last failed sealing attempt.",
-		personality: "Calm, mournful, and increasingly urgent near the Citadel.",
-		motivation: "Teach the White Heron Seal before the same mistake repeats.",
-		backstory:
-			"Vesh died buying six seconds for a seal that failed when a bargain twisted it.",
-		keyAbilities: ["Seal Memory", "Death Refusal", "Echo Step"],
-		recruitCondition: "Recover the White Heron Seal notes.",
-		isRecruitable: true,
-		guildAffiliation: null,
-		location: "Gate Domain: White Heron Reliquary",
-		questHook: "Vesh can teach the sealing route.",
-	}),
-	makeNpc({
-		id: "npc-bound-005",
-		name: "Vault-Voice",
-		title: "Subject Zero Mouthpiece",
-		faction: "gloamreach_bound",
-		level: 10,
-		job: "Repository",
-		hp: 1,
-		ac: 20,
-		description: "A speaking aperture in black pressure glass.",
-		personality: "Calm, generous, exact, and inhumanly patient.",
-		motivation: "Trade useful power for future access.",
-		backstory:
-			"Vault-Voice is not a person. It is the polite edge of Subject Zero leakage.",
-		keyAbilities: ["Offer", "Pressure Truth", "Door Without Distance"],
-		recruitCondition: "Cannot be recruited; can become an ending consequence.",
-		isRecruitable: false,
-		guildAffiliation: null,
-		location: "Gate Domain: Black Vault",
-		questHook: "Vault-Voice offers forbidden help that works.",
-	}),
-	makeNpc({
-		id: "npc-bound-006",
-		name: "Little Crown",
-		title: "Tame Predator Scout",
-		faction: "gloamreach_bound",
-		level: 4,
-		job: "Beast Companion",
-		hp: 44,
+		hp: 65,
 		ac: 14,
-		description: "A six-eyed predator that has chosen Nera's pack for now.",
-		personality: "Curious, hungry, and smarter than comfort allows.",
-		motivation: "Follow strength, food, and whatever smells like survival.",
+		description:
+			"A frightening, intelligent mass of altered flesh that apologizes for how hard it is to look at.",
+		personality:
+			"Gentle, lonely, articulate, and carrying justified anger with great care.",
+		motivation: "Be treated as a person before choosing whether to forgive anyone.",
 		backstory:
-			"Little Crown was born under the Den's apex law and refuses to bow to lesser packs.",
-		keyAbilities: ["Scent Lie", "Pack Trip", "Silent Pounce"],
-		recruitCondition: "Earn Nera's trust and spare a Den pack.",
+			"Specimen X was changed by Bureau research and later hidden by the Domain's own records.",
+		keyAbilities: ["Adaptive Form", "Regeneration", "Frightening Presence"],
+		recruitCondition:
+			"Speak before attacking and help it free other thinking captives.",
 		isRecruitable: true,
 		guildAffiliation: null,
-		location: "Gate Domain: Beast Crown Den",
-		questHook: "Little Crown can sense the apex predator before it strikes.",
+		location: "Drowned Ledgerfen or Sunken Tunnels",
+		questHook:
+			"Specimen X remembers a Bureau archive that lists living people as equipment.",
+	}),
+	makeNPC({
+		id: "npc-anom-004",
+		name: "Echo-Nine",
+		title: "Dream Walker",
+		faction: "anomaly_adjacent",
+		level: 7,
+		job: "Esper",
+		hp: 42,
+		ac: 12,
+		description:
+			"A closed-eyed psychic whose skin glows with dream patterns when the Citadel watches.",
+		personality:
+			"Serene, unsettling, compassionate, and half a step outside the room.",
+		motivation: "Map a dream path into the Citadel without becoming part of the map.",
+		backstory:
+			"Echo-Nine woke from a long coma able to walk through the layer where Domains rehearse possibilities.",
+		keyAbilities: ["Dream Walk", "Telepathy", "Psychic Blast"],
+		recruitCondition:
+			"Share a dream and prove the party seeks resolution, not conquest.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Obsidian Spire dream platform",
+		questHook:
+			"Echo-Nine found a dream path that bypasses one Citadel defense and awakens another.",
+	}),
+	makeNPC({
+		id: "npc-anom-005",
+		name: "The Catalog",
+		title: "Living Memory Construct",
+		faction: "anomaly_adjacent",
+		level: 4,
+		job: "Repository",
+		hp: 28,
+		ac: 13,
+		description:
+			"A crystalline record-entity that trades knowledge for memories and speaks like an archive learning grief.",
+		personality: "Precise, curious, literal, and confused by affection.",
+		motivation: "Preserve truth before the Regent's ledgers rewrite it.",
+		backstory:
+			"The Catalog formed when Domain pressure awakened a record system beneath the Drowned Ledgerfen.",
+		keyAbilities: ["Database Query", "Mana Projection", "Record Shield"],
+		recruitCondition: "Secure a physical backup of its most dangerous records.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Drowned Ledgerfen - Catalog chamber",
+		questHook:
+			"The Catalog has a casualty report for someone still alive in the party's camp.",
+	}),
+	makeNPC({
+		id: "npc-anom-006",
+		name: "Rex",
+		title: "Mana-Touched War Hound",
+		faction: "anomaly_adjacent",
+		level: 3,
+		job: "Beast Companion",
+		hp: 35,
+		ac: 13,
+		description:
+			"A loyal military hound with glowing veins, tactical instincts, and absolute commitment to being a good dog.",
+		personality:
+			"Loyal, brave, playful, protective, and better at reading people than most people are.",
+		motivation:
+			"Find his missing handler and protect whoever smells like home in the meantime.",
+		backstory:
+			"Rex was separated from Strike Team Seven and has been following old scent trails through impossible roads.",
+		keyAbilities: ["Tracking", "Pack Attack", "Danger Sense"],
+		recruitCondition: "Feed him, protect him, and follow where he keeps trying to lead you.",
+		isRecruitable: true,
+		guildAffiliation: null,
+		location: "Hollow Subway or Road of Writs",
+		questHook:
+			"Rex whines at a sealed Citadel door that no one else can see yet.",
 	}),
 ];
+
+// ============================================================================
+// FULL NPC ROSTER EXPORT
+// ============================================================================
 
 export const sandboxRecruitableNPCs: SandboxNPC[] = [
-	...bureauRemnant,
-	...vermillionCamp,
-	...hollowChoir,
-	...freeAscendants,
-	...gloamreachBound,
+	...bureauSentinels,
+	...vermillionGuild,
+	...awokoCult,
+	...independents,
+	...anomalyAdjacent,
 ];
 
+/** Get all NPCs that are unaffiliated and recruitable to player guilds. */
 export const getUnaffiliatedNPCs = (): SandboxNPC[] =>
 	sandboxRecruitableNPCs.filter(
-		(npc) => npc.guildAffiliation === null && npc.isRecruitable,
+		(npc) => npc.isRecruitable && npc.guildAffiliation === null,
 	);
 
-export const getNPCsByFaction = (
-	faction: SandboxNPC["faction"],
-): SandboxNPC[] => sandboxRecruitableNPCs.filter((npc) => npc.faction === faction);
+/** Get NPCs by faction. */
+const _getNPCsByFaction = (faction: SandboxNPC["faction"]): SandboxNPC[] =>
+	sandboxRecruitableNPCs.filter((npc) => npc.faction === faction);
+
+/** Calculate XP needed for a given level. */
+const getXPForLevel = (level: number): number => {
+	const thresholds = [
+		0, 300, 600, 1200, 2000, 3000, 5000, 8000, 12000, 18000, 25000, 35000,
+	];
+	return thresholds[Math.min(level, thresholds.length - 1)] || 35000;
+};
+
+/** Level up an NPC, returning updated data. */
+const _levelUpNPC = (npc: SandboxNPC): SandboxNPC => {
+	if (npc.level >= npc.leveling.maxLevel) return npc;
+	const newLevel = npc.level + 1;
+	const newAbility = npc.leveling.levelAbilities[newLevel];
+	return {
+		...npc,
+		level: newLevel,
+		hp: npc.hp + npc.leveling.hpPerLevel,
+		keyAbilities: newAbility ? [...npc.keyAbilities, newAbility] : npc.keyAbilities,
+		leveling: {
+			...npc.leveling,
+			xp: 0,
+			xpToNextLevel: getXPForLevel(newLevel),
+		},
+	};
+};
