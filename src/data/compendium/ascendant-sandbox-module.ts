@@ -49,7 +49,7 @@ import {
 // RIFT ASCENDANT: SANDBOX CAMPAIGN MODULE
 // "The Shadow of the Regent"
 //
-// A non-linear S-Rank Gate Domain horror sandbox (Level 1-10).
+// A Curse of Strahd scale S-Rank Gate Domain horror sandbox for Levels 1-10.
 // Automatically populates the Campaign Wiki, VTT Maps, and Handouts.
 //
 // 40+ Chapters - 24 Handouts - 14 VTT Scenes - 30 NPCs - 5 Factions
@@ -70,20 +70,12 @@ interface SandboxModule {
 	scenes: (VTTScene & { audioTracks?: { url: string; name: string }[] })[];
 	handouts: SandboxHandout[];
 	npcs: SandboxNPC[];
-	// ── New collections auto-populated into their respective tabs ───────────
-	/** Seeded into `campaign_sessions` + `campaign_session_logs`. */
 	sessions: SandboxSession[];
-	/** Seeded into `campaign_notes` (Warden-only `is_shared=false`). */
 	wardenNotes: SandboxWardenNote[];
-	/** Seeded into `campaign_encounters` + `campaign_encounter_entries`. */
 	encounters: SandboxEncounter[];
-	/** Seeded as wiki articles with `category: "quest"`. */
 	quests: SandboxQuest[];
-	/** Seeded as wiki articles with `category: "faction"`. */
 	factions: SandboxFaction[];
-	/** Seeded as wiki articles with `category: "loot"`. */
 	loot: SandboxLootTable[];
-	/** Seeded as `campaign_session_logs` of `log_type: "event"`. */
 	timeline: SandboxTimelineEvent[];
 }
 
@@ -96,44 +88,39 @@ export interface SandboxHandout {
 
 export interface SandboxChapter {
 	title: string;
-	content: string; // The markdown for the wiki article
+	content: string;
 }
 
-// ── Combined chapter array (ordered for reading flow) ───────────────────────
-// Sourcebook lore opens the book, then Part4 leads the adventure with Chapter 0.
 const [chapterZero, ...chaptersPart4Remainder] = chaptersPart4;
 export const sandboxWikiChapters: SandboxChapter[] = [
 	riftAscendantWorldLoreChapter,
-	...(chapterZero ? [chapterZero] : []), // Chapter 0: table briefing and safety
-	...chaptersPart1, // Chapters 1-5: campaign frame, Gate Domain rules, entry, travel
-	...chaptersPart2, // Chapters 6-10: Threshold, Thornwake, road, weather, Vermillion
-	...chaptersPart3, // Chapters 11-15: Bastion, Mill, Hollow, Works, Black Vault
-	...chaptersPart4Remainder, // Chapters 16-20: Choir, Den, Reliquary, invitations, pressure
-	...chaptersPart5, // Chapters 21-25: Anchor Relics and Citadel
-	...chaptersPart6, // Chapters 26-30: factions, events, allies, endings
-	...chaptersPart7, // Chapters 31-35: quest web, loot, Anomalies, records, campaign rhythm
-	...chaptersPart8, // Chapters 36-40: scenes, tables, timeline, terms, quick start
+	...(chapterZero ? [chapterZero] : []),
+	...chaptersPart1,
+	...chaptersPart2,
+	...chaptersPart3,
+	...chaptersPart4Remainder,
+	...chaptersPart5,
+	...chaptersPart6,
+	...chaptersPart7,
+	...chaptersPart8,
 ];
 
-// ── Handouts ─────────────────────────────────────────────────────────────────
 export const sandboxHandouts: SandboxHandout[] = sandboxHandoutsExpanded;
 
-// ── VTT Scenes ───────────────────────────────────────────────────────────────
 export const sandboxVTTScenes: SandboxVTTScene[] = sandboxVTTScenesExpanded;
 
-// ── Final export: the complete module ────────────────────────────────────────
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
+	// v5: reasserts the Gloamreach-only canon, removes Subject Zero from the
+	// module description, and bumps import state so campaigns can re-populate.
 	// v4: full Gloamreach Gate Domain rewrite.
 	// v3: added the prior world lore sourcebook chapter.
-	// v2: expanded injector seeds sessions, warden notes, characters (NPCs as
-	// warden-claimed rows), encounters, quests, factions, loot, timeline, plus
-	// VTT audio tracks and pinned assets. Older campaigns imported on v1 will
-	// run the new sections on next auto-populate click.
-	version: 4,
+	// v2: expanded injector seeds sessions, warden notes, NPCs, encounters,
+	// quests, factions, loot, timeline, VTT audio tracks, and pinned assets.
+	version: 5,
 	title: "The Shadow of the Regent",
 	description:
-		"A full Rift Ascendant horror sandbox (Level 1-10) set inside the Gloamreach, a country-sized S-Rank Gate Domain beyond a sealed Rift. Features 40+ lore chapters, 30 NPCs across 5 factions, 14 VTT scenes, 24 handouts, 7 scaffolded sessions, 12 encounter decks, 12 quests, 6 Rank loot tables, a 14-day Blue Phase clock, Anchor Scan randomization, Anchor Relics, Subject Zero bargains, and a tyrannical Regent whose Citadel is visible from the first road.",
+		"A Curse of Strahd scale mature Gate Domain horror campaign for Levels 1-10, set inside the Gloamreach: a country-sized S-Rank Gate Domain beyond a sealed Rift. The campaign is built around a visible citadel, dangerous roads, starving settlements, tribute law, Bureau failure, Vermillion pragmatism, Hollow Choir corruption, Anchor Relics, forbidden Unseated Law bargains, and a tyrannical Regent who appears early, studies the party, sends invitations, punishes defiance, and rules the Domain as its living Anchor.",
 	chapters: sandboxWikiChapters,
 	scenes: sandboxVTTScenes,
 	handouts: sandboxHandouts,
