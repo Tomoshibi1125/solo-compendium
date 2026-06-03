@@ -1,9 +1,5 @@
 /**
- * SANDBOX QUESTS — "The Shadow of the Regent"
- *
- * Structured quest scaffolds grouped by gate rank. Seeded as wiki articles
- * with `category: "quest"` so they surface in a dedicated Wiki filter
- * alongside lore / npc / faction articles.
+ * SANDBOX QUESTS - The Shadow of the Regent
  */
 
 export type SandboxQuestRank = "E" | "D" | "C" | "B" | "A" | "S";
@@ -21,202 +17,124 @@ export interface SandboxQuest {
 }
 
 export const sandboxQuests: SandboxQuest[] = [
-	// ── E-Rank ──────────────────────────────────────────────────────────────
 	{
 		id: "q-e-01",
-		title: "E-Rank: Beacon of the Lost",
+		title: "E-Rank: The Sealed Road",
 		rank: "E",
-		summary:
-			"Squad Seven went dark in the Hollow Subway four days ago. Commander Park needs a team to retrieve their signal beacon — and answers, if any remain.",
-		objectives: [
-			"Infiltrate the Hollow Subway Gate",
-			"Locate Maintenance Tunnel 7-C",
-			"Recover the Squad Seven beacon",
-		],
-		completionTriggers: [
-			"Beacon delivered to Commander Park (Bureau HQ).",
-			"Beacon destroyed in the field (partial credit).",
-		],
-		rewardNotes:
-			"500 Gate Credits stipend; Rep +1 Bureau Sentinels; minor Relic roll.",
-		linkedFactionId: "bureau-sentinels",
-		linkedNpcName: "Commander Park Jae-won",
+		summary: "Find a route from the Rift Threshold to Thornwake before night patrols learn the party's scent.",
+		objectives: ["Recover a working AFA road ping", "Avoid or defeat the first tax hounds", "Reach Thornwake before the bell rings twice"],
+		completionTriggers: ["Party reaches Thornwake", "Party camps outside and suffers a night encounter"],
+		rewardNotes: "Thornwake access, 200 Credits equivalent in trade, first Anchor Scan clue.",
+		linkedFactionId: "free-ascendants",
 	},
 	{
 		id: "q-e-02",
-		title: "E-Rank: Supply Run Escort",
+		title: "E-Rank: Tribute Night",
 		rank: "E",
-		summary:
-			"Quartermaster Lin needs three crates of stabilizer serum moved from the Bureau HQ depot to the Outer Slums clinic. It is a short walk. Things in the Restricted Zone are rarely that simple.",
-		objectives: [
-			"Collect three serum crates",
-			"Escort them to the Slums clinic",
-			"Prevent Anomaly interference en route",
-		],
-		completionTriggers: [
-			"All three crates delivered intact (full reward).",
-			"Two delivered (partial reward).",
-			"Clinic sacked (reputation penalty).",
-		],
-		rewardNotes: "Rep +1 Bureau, +1 Independent; 250 Gate Credits flat.",
-		linkedNpcName: "Quartermaster Lin Mei-hua",
+		summary: "Thornwake must pay the Regent's tribute by midnight. The party chooses resistance, deception, payment, or evacuation.",
+		objectives: ["Inspect the Tribute Shed", "Confront the courier", "Decide who pays the cost"],
+		completionTriggers: ["Tribute wagon leaves, burns, or is redirected"],
+		rewardNotes: "Reputation shift with Thornwake factions; possible Regent invitation.",
+		linkedFactionId: "hollow-choir",
 	},
-
-	// ── D-Rank ──────────────────────────────────────────────────────────────
 	{
 		id: "q-d-01",
-		title: "D-Rank: Tides Over the Ward",
+		title: "D-Rank: Red Ledgers",
 		rank: "D",
-		summary:
-			"The Drowned Ward gate is destabilizing. A Bureau medical research team is trapped inside. Vermillion Guild bid to extract them first — the party has 48 in-game hours.",
-		objectives: [
-			"Enter the Drowned Ward",
-			"Locate the research team (Room 4-West)",
-			"Exit before the Vermillion team",
-		],
-		completionTriggers: [
-			"Team extracted ahead of Vermillion (Rep +2 Bureau).",
-			"Team extracted after Vermillion (Rep +1 both).",
-			"Team lost (Rep -2 Bureau).",
-		],
-		rewardNotes: "Surgical Sigil + 1,200 Gate Credits.",
-		linkedFactionId: "bureau-sentinels",
+		summary: "The Bureau Forward Bastion holds records proving why the first expedition failed.",
+		objectives: ["Enter the Bastion", "Restore the AFA relay", "Recover the sealed command ledger"],
+		completionTriggers: ["Ledger delivered to any faction leader", "Ledger destroyed"],
+		rewardNotes: "Bureau or Free Ascendant reputation; Bastion may become a safe rest.",
+		linkedFactionId: "bureau-remnant",
 	},
 	{
 		id: "q-d-02",
-		title: "D-Rank: Roots of the Diagnosed",
+		title: "D-Rank: Camp Surgery",
 		rank: "D",
-		summary:
-			"A sub-level of the Fungal Depths may contain Memory-Care Wing records. The Diagnosed's whispers point here. Retrieve whatever files survive.",
-		objectives: [
-			"Navigate the Fungal Depths",
-			"Disable the mycelium archive wards",
-			"Recover at least 3 recognizable patient files",
-		],
-		completionTriggers: [
-			"Files delivered to the party (reveals Secret 2 path).",
-		],
-		rewardNotes:
-			"Mycelium Tattoo + Identity-Erosion clue chain (unlocks a Session 3 beat).",
+		summary: "Vermillion needs clean Essence and Glassvine sap before its surgeons lose three patients.",
+		objectives: ["Gather clean Essence", "Secure Glassvine sap", "Return before the ash rain spoils the samples"],
+		completionTriggers: ["Supplies delivered", "Patients lost"],
+		rewardNotes: "Vermillion surgery favor and discounted Relic appraisal.",
+		linkedFactionId: "vermillion-camp",
 	},
-
-	// ── C-Rank ──────────────────────────────────────────────────────────────
 	{
 		id: "q-c-01",
-		title: "C-Rank: Faces in the Overgrowth",
+		title: "C-Rank: Stop the Wheel",
 		rank: "C",
-		summary:
-			"Awoko Cult graffiti has been spotted in the Verdant Overgrowth gate. Dr. Hayashi wants a sample — and answers.",
-		objectives: [
-			"Document 5 distinct Awoko sigils",
-			"Extract at least 1 cult operative alive",
-			"Report to Dr. Hayashi at Bureau HQ",
-		],
-		completionTriggers: ["At least 3 sigils + 1 operative delivered."],
-		rewardNotes:
-			"Awoko lore unlock (reveals Secret 3); Thornsteel Relic fragment.",
-		linkedNpcName: "Dr. Serin Hayashi",
+		summary: "The Essence Mill renders tribute into malformed cores. Shut it down or turn it against the Regent.",
+		objectives: ["Enter the Mill", "Defeat or bargain with the Millwarden", "Claim or destroy the Millstone Heart"],
+		completionTriggers: ["Millstone Heart obtained", "Mill destroyed", "Mill left running"],
+		rewardNotes: "Anchor Relic, Essence stores, Red Phase consequence if mishandled.",
+		linkedFactionId: "vermillion-camp",
 	},
 	{
 		id: "q-c-02",
-		title: "C-Rank: Ashes of a Colleague",
+		title: "C-Rank: The Thorn Crop",
 		rank: "C",
-		summary:
-			"A Bureau researcher — Dr. Hayashi's former partner — is chained inside the Ashen Vault, used as a living relay by the vault's furnace-Anomaly. Extract before the detonation timer fires.",
-		objectives: [
-			"Reach the furnace chamber within 6 rounds",
-			"Disable the furnace primary ignition",
-			"Extract the researcher alive",
-		],
-		completionTriggers: [
-			"Researcher alive + furnace disabled (full reward).",
-			"Furnace detonates (partial + Rep penalty).",
-		],
-		rewardNotes:
-			"Fireweave Runes; Bureau research side-quest chain unlocks; Rep +3 Bureau if clean.",
+		summary: "The Glassvine Works can feed settlements or poison them. Its root-engine is growing an Anchor Relic.",
+		objectives: ["Map the greenhouse-factory", "Stabilize or burn the crop", "Claim the Crown of Thorns"],
+		completionTriggers: ["Crop stabilized", "Works burned", "Relic taken"],
+		rewardNotes: "Anchor Relic, medicine access, settlement survival shift.",
+		linkedFactionId: "gloamreach-bound",
 	},
-
-	// ── B-Rank ──────────────────────────────────────────────────────────────
 	{
 		id: "q-b-01",
-		title: "B-Rank: Pressure at the Sunken Line",
+		title: "B-Rank: Oath Furnace",
 		rank: "B",
-		summary:
-			"A civilian commuter train was caught when the Sunken Tunnels flooded. Some fused into the Anomaly population. Most did not. This is a recovery-of-the-dead operation with legal implications.",
-		objectives: [
-			"Reach the main platform through rising water",
-			"Identify at least 10 commuter name tags",
-			"Decide the fate of the fused (mercy kill, extract, ignore)",
-		],
-		completionTriggers: ["10+ tags delivered; fate logged."],
-		rewardNotes:
-			"Pressure Sigil; reveals Secret 4 pathway; Rep shifts based on fate decision.",
+		summary: "Aegis Hollow's fallen defenders guard a Relic that can bind a Citadel law.",
+		objectives: ["Reach Banner Hall", "Face the bound Aegis knights", "Free, defeat, or recruit the oath"],
+		completionTriggers: ["Aegis Nail obtained", "Aegis knights released", "Order remains bound"],
+		rewardNotes: "Anchor Relic or final-assault ally.",
+		linkedFactionId: "free-ascendants",
 	},
 	{
 		id: "q-b-02",
-		title: "B-Rank: The Envoy at the Citadel",
+		title: "B-Rank: The Choir Bell",
 		rank: "B",
-		summary:
-			"An Awoko Herald is broadcasting from the peak of the Frozen Citadel. The Bureau wants them silenced. The Herald wants a conversation. Both options are valid — both have consequences.",
-		objectives: [
-			"Reach the Citadel peak",
-			"Engage the Herald (combat or Persuasion)",
-			"Report resolution",
-		],
-		completionTriggers: [
-			"Herald dead (Rep +3 Bureau, -4 Awoko).",
-			"Herald turned (Rep -2 Bureau, +4 Awoko, unlocks Infiltration route).",
-		],
-		rewardNotes: "Frostweave Relic fragment; factional pivot point.",
+		summary: "The Hollow Choir prepares a rite that will open a guarded road to the Citadel.",
+		objectives: ["Infiltrate the Warrens", "Find the Choir Bell", "Break, steal, or invert the rite"],
+		completionTriggers: ["Bell obtained", "Rite completed", "Choir leadership removed"],
+		rewardNotes: "Anchor Relic, Citadel route, major faction shift.",
+		linkedFactionId: "hollow-choir",
 	},
-
-	// ── A-Rank ──────────────────────────────────────────────────────────────
 	{
 		id: "q-a-01",
-		title: "A-Rank: The Mirror Climb",
+		title: "A-Rank: The Beast Crown",
 		rank: "A",
-		summary:
-			"The Obsidian Spire's ascent requires each PC to confront a reflection-version of themselves. It is not optional — the gate geometry enforces it.",
-		objectives: [
-			"Ascend each of the 6 mirror rooms",
-			"Resolve each PC's reflection (defeat or reconcile)",
-			"Reach the summit",
-		],
-		completionTriggers: ["All reflections resolved."],
-		rewardNotes:
-			"Obsidian Prism (legendary); Identity-Erosion pressure beat (see Warden Secret 1).",
+		summary: "The apex predator of the Den carries a Relic fang that can redirect the Regent's hunt.",
+		objectives: ["Enter Beast Crown territory", "Survive the predator trials", "Kill, tame, or release the Crownbeast"],
+		completionTriggers: ["Beast Crown Fang obtained", "Crownbeast released toward Citadel"],
+		rewardNotes: "Anchor Relic or predator ally.",
+		linkedFactionId: "gloamreach-bound",
 	},
-
-	// ── S-Rank ──────────────────────────────────────────────────────────────
+	{
+		id: "q-a-02",
+		title: "A-Rank: The Black Vault Offer",
+		rank: "A",
+		summary: "Subject Zero leakage offers a shortcut to power that works exactly as promised.",
+		objectives: ["Enter the Vault", "Hear the bargain", "Accept, refuse, or steal from the pressure wound"],
+		completionTriggers: ["Bargain resolved", "Vault sealed", "Vault opened wider"],
+		rewardNotes: "Forbidden advantage; Red Phase pressure if accepted.",
+		linkedFactionId: "gloamreach-bound",
+	},
 	{
 		id: "q-s-01",
-		title: "S-Rank: The Name at the Throne",
+		title: "S-Rank: Walk to the Citadel",
 		rank: "S",
-		summary:
-			"The Regent's Domain has opened to the District. The 14-day timeline is ended. Confront the Regent — or be confronted.",
-		objectives: [
-			"Breach the Throne Room (Phase 1)",
-			"Survive the Archive of His Self (Phase 2)",
-			"Resolve the Name (Phase 3 — combat or parley)",
-		],
-		completionTriggers: [
-			"The Regent falls (standard campaign end).",
-			"The Regent is named and freed (secret ending — requires Identity-Erosion total \u2264 4).",
-		],
-		rewardNotes:
-			"Regent Relic (grants Shadow Soldier pact); Memory-Care Wing shuttered; full campaign resolution.",
+		summary: "Use secured routes, allies, and Anchor Relics to survive the road to the Regent's Citadel.",
+		objectives: ["Choose an approach route", "Spend or preserve Anchor Relics", "Reach the final chamber from the Anchor Scan"],
+		completionTriggers: ["Party enters final chamber", "Party retreats from Citadel"],
+		rewardNotes: "Final confrontation access.",
+		linkedFactionId: "bureau-remnant",
 	},
 	{
 		id: "q-s-02",
-		title: "S-Rank (Optional): Park's Final Watch",
+		title: "S-Rank: Resolve the Anchor",
 		rank: "S",
-		summary:
-			"If the party uncovered Secret 2 (Park's signature on the Wing), Park can either sacrifice himself to collapse the Domain or defect to the Cult. This quest fires on the Day 14 climax regardless.",
-		objectives: [
-			"Convince Park to stand at the breach (Persuasion chain)",
-			"OR confront him as an Awoko operative",
-		],
-		completionTriggers: ["Park's choice resolved during the Session 5 finale."],
-		rewardNotes: "Emotional payoff; no mechanical reward beyond narrative.",
+		summary: "Destroy, seal, or transform the Regent before Red Phase turns the Gloamreach outward.",
+		objectives: ["Make the Regent vulnerable", "Choose a clear state", "Survive the Domain's answer"],
+		completionTriggers: ["Anchor destroyed", "Anchor sealed", "Anchor transformed", "Red Phase failure"],
+		rewardNotes: "Campaign ending.",
+		linkedFactionId: "free-ascendants",
 	},
 ];

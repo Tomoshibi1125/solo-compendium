@@ -2,6 +2,7 @@ import { AlertTriangle, Coins, Gem, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -490,6 +491,20 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 					))}
 				</div>
 			)}
+			<DetailMetaFooter
+				sourceBook={(data as { source_book?: string }).source_book}
+				extra={[
+					{
+						label: "Armor Class",
+						value: (data as { armor_class?: unknown }).armor_class,
+					},
+					{
+						label: "Damage Type",
+						value: (data as { damage_type?: unknown }).damage_type,
+					},
+					{ label: "Effects", value: (data as { effects?: unknown }).effects },
+				]}
+			/>
 		</div>
 	);
 };

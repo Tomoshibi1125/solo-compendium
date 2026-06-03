@@ -4643,6 +4643,7 @@ export const items_part9: Item[] = [
 		damage: "2d4",
 		damage_type: "force",
 		simple_properties: ["reach", "two-handed", "thrown"],
+		range: "Thrown (20/60)",
 		properties: {
 			weapon: {
 				damage: "2d4",
@@ -5314,6 +5315,7 @@ export const items_part9: Item[] = [
 		damage: "2d4",
 		damage_type: "piercing",
 		simple_properties: ["reach", "two-handed", "thrown"],
+		range: "Thrown (20/60)",
 		requires_attunement: true,
 		properties: {
 			weapon: {

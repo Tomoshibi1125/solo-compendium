@@ -61,7 +61,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I have a dangerous addiction to medical stimulants.",
 			"I am deeply cynical about 'heroic' Ascendants who cause collateral damage.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-32",
@@ -123,7 +123,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am easily intimidated by authority figures.",
 			"I complain constantly about the working conditions in the dungeon.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-33",
@@ -185,7 +185,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am reckless and ignore safety protocols if it slows me down.",
 			"I drink heavily to deal with the physical pain of my life.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-34",
@@ -247,7 +247,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I will betray a confidence if the story is big enough.",
 			"I am physically cowardly in actual combat.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-35",
@@ -309,7 +309,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am overly deferential to high-ranking Ascendants.",
 			"I judge people entirely by how much they tip.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-36",
@@ -371,7 +371,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I suffer from severe insomnia.",
 			"I harbor a deep resentment for people with actual authority.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-37",
@@ -433,7 +433,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am deeply cynical and expect everyone to stiff me.",
 			"I lack formal combat training and panic in drawn-out fights.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-38",
@@ -495,7 +495,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am easily overwhelmed by chaotic, unstructured environments.",
 			"I am deeply naive about the cruelty of the Ascendant world.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-39",
@@ -557,7 +557,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am deeply cynical and expect everything to break eventually.",
 			"I lack formal education and struggle with abstract magical theory.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-40",
@@ -619,7 +619,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am overly aggressive toward arsonists or fire-magic users.",
 			"I lack subtlety and solve problems by smashing them.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-41",
@@ -681,7 +681,7 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I harbor a deep, quiet rage against the wealthy.",
 			"I prioritize strangers over my own well-being.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-42",
@@ -743,6 +743,6 @@ export const expandedBackgrounds: StaticBackground[] = [
 			"I am an alcoholic.",
 			"I struggle to show emotion or vulnerability.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 ];

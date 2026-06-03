@@ -229,12 +229,32 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 			>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
+						{typeof data.level === "number" && (
+							<Badge variant="secondary">
+								{data.level === 0 ? "Cantrip" : `Level ${data.level}`}
+							</Badge>
+						)}
 						<Badge variant="secondary">
 							{formatRegentVernacular(data.school)}
 						</Badge>
+						{data.concentration && (
+							<Badge variant="outline" className="text-xs">
+								Concentration
+							</Badge>
+						)}
+						{data.ritual && (
+							<Badge variant="outline" className="text-xs">
+								Ritual
+							</Badge>
+						)}
 						{data.rank && (
 							<Badge variant="outline" className={rankStyle}>
 								Rank {data.rank}
+							</Badge>
+						)}
+						{(data as { rarity?: string }).rarity && (
+							<Badge variant="outline" className="text-xs capitalize">
+								{(data as { rarity?: string }).rarity}
 							</Badge>
 						)}
 						{data.source_book && (
@@ -617,26 +637,43 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 
 			{data.description && (
 				<AscendantWindow id="spell-description" title="DESCRIPTION">
+					{data.flavor && (
+						<p className="text-sm italic text-muted-foreground leading-relaxed mb-3">
+							<AutoLinkText text={data.flavor} />
+						</p>
+					)}
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
-					{data.lore && (
-						<div className="mt-6 pt-4 border-t border-cyan/10">
-							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
-								Historical Record
-							</h4>
-							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText
-									text={
-										typeof data.lore === "string"
-											? data.lore
-											: data.lore?.history || ""
-									}
-								/>
-							</p>
-						</div>
-					)}
+					{(() => {
+						const loreText =
+							(typeof data.lore === "string"
+								? data.lore
+								: data.lore?.history) ||
+							(data as { discovery_lore?: string }).discovery_lore ||
+							"";
+						return loreText ? (
+							<div className="mt-6 pt-4 border-t border-cyan/10">
+								<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+									Historical Record
+								</h4>
+								<p className="text-sm text-muted-foreground leading-relaxed">
+									<AutoLinkText text={loreText} />
+								</p>
+							</div>
+						) : null;
+					})()}
 				</AscendantWindow>
+			)}
+
+			{Array.isArray(data.tags) && data.tags.length > 0 && (
+				<div className="flex flex-wrap gap-2">
+					{data.tags.map((tag) => (
+						<Badge key={tag} variant="outline" className="text-[10px]">
+							{formatRegentVernacular(tag)}
+						</Badge>
+					))}
+				</div>
 			)}
 		</fieldset>
 	);

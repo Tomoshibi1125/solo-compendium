@@ -1,5 +1,6 @@
 import { Coins } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRaCurrencyAmount } from "@/lib/currency";
@@ -11,6 +12,26 @@ interface BackgroundData extends CompendiumBackground {}
 
 export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
+	// The provider surfaces the background feature as `background_features[]`
+	// (and `feature_name`/`feature_description`), not `features`. Read all shapes.
+	const d = data as BackgroundData & {
+		background_features?: Array<{ name: string; description: string }>;
+		feature_name?: string;
+		feature_description?: string;
+	};
+	const featureList: Array<{ name: string; description: string }> =
+		Array.isArray(d.background_features) && d.background_features.length > 0
+			? d.background_features
+			: d.feature_name
+				? [
+						{
+							name: d.feature_name,
+							description: d.feature_description ?? "",
+						},
+					]
+				: Array.isArray(data.features)
+					? (data.features as Array<{ name: string; description: string }>)
+					: [];
 
 	return (
 		<div className="space-y-6">
@@ -95,9 +116,9 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 			</div>
 
 			{/* Features */}
-			{data.features && data.features.length > 0 && (
+			{featureList.length > 0 && (
 				<div className="space-y-4">
-					{data.features.map((feature) => (
+					{featureList.map((feature) => (
 						<AscendantWindow
 							key={feature.name}
 							title={`FEATURE: ${formatRegentVernacular(feature.name).toUpperCase()}`}
@@ -181,6 +202,15 @@ export const BackgroundDetail = ({ data }: { data: BackgroundData }) => {
 					</Badge>
 				</div>
 			)}
+			<DetailMetaFooter
+				tags={(data as { tags?: string[] }).tags}
+				extra={[
+					{
+						label: "Languages",
+						value: (data as { languages?: unknown }).languages,
+					},
+				]}
+			/>
 		</div>
 	);
 };

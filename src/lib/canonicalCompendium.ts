@@ -38,6 +38,7 @@ export const staticCanonicalEntryTypes = [
 	"conditions",
 	"regents",
 	// Q4 of Round 3 — vehicles & mounts registry (44 entries).
+	"vehicles",
 	"feats",
 	"skills",
 	"equipment",
@@ -78,6 +79,7 @@ const providerMethodByType: Record<
 	backgrounds: "getBackgrounds",
 	conditions: "getConditions",
 	regents: "getRegents",
+	vehicles: "getVehicles",
 	feats: "getFeats",
 	skills: "getSkills",
 	equipment: "getItems",

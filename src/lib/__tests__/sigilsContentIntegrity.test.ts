@@ -1,23 +1,18 @@
 import { describe, expect, it } from "vitest";
 import { sigils } from "@/data/compendium/sigils";
-import type { CompendiumMechanics, CompendiumEffects } from "@/types/compendium";
+import type {
+	CompendiumEffects,
+	CompendiumMechanics,
+} from "@/types/compendium";
 
 const isCompendiumMechanics = (
 	value: unknown,
 ): value is CompendiumMechanics => {
-	return (
-		typeof value === "object" &&
-		value !== null &&
-		!Array.isArray(value)
-	);
+	return typeof value === "object" && value !== null && !Array.isArray(value);
 };
 
 const isCompendiumEffects = (value: unknown): value is CompendiumEffects => {
-	return (
-		typeof value === "object" &&
-		value !== null &&
-		!Array.isArray(value)
-	);
+	return typeof value === "object" && value !== null && !Array.isArray(value);
 };
 
 describe("sigils content integrity", () => {
@@ -79,8 +74,8 @@ describe("sigils content integrity", () => {
 				: [restrictions];
 
 			// Extract socket type from restrictions (e.g., "Socket type: weapon")
-			const socketTypeRestriction = restrictionsArray.find((r) =>
-				typeof r === "string" && r.toLowerCase().includes("socket type"),
+			const socketTypeRestriction = restrictionsArray.find(
+				(r) => typeof r === "string" && r.toLowerCase().includes("socket type"),
 			);
 
 			if (!socketTypeRestriction || typeof socketTypeRestriction !== "string") {
@@ -88,7 +83,8 @@ describe("sigils content integrity", () => {
 			}
 
 			// Extract the socket type value (e.g., "weapon" from "Socket type: weapon")
-			const socketTypeMatch = socketTypeRestriction.match(/socket type:\s*(.+)/i);
+			const socketTypeMatch =
+				socketTypeRestriction.match(/socket type:\s*(.+)/i);
 			if (!socketTypeMatch) {
 				continue;
 			}
@@ -132,10 +128,9 @@ describe("sigils content integrity", () => {
 			.filter(([, names]) => names.length > 1)
 			.map(([lore, names]) => `"${lore}" used by: ${names.join(", ")}`);
 
-		expect(
-			duplicates,
-			"Discovery lore should be unique across sigils",
-		).toEqual([]);
+		expect(duplicates, "Discovery lore should be unique across sigils").toEqual(
+			[],
+		);
 	});
 
 	it("actual damage formulas in damage_profile (no 'See active effect' placeholders)", () => {

@@ -18,6 +18,7 @@ export const artifacts: Item[] = [
 		damage: "3d6 + 5",
 		damage_type: "slashing",
 		simple_properties: ["light", "finesse", "thrown"],
+		range: "Thrown (20/60)",
 		requires_attunement: true,
 		effects: {
 			passive: [

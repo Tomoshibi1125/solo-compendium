@@ -139,6 +139,11 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 								<Badge variant="destructive">Concentration</Badge>
 							)}
 							{data.ritual && <Badge variant="outline">Ritual</Badge>}
+							{(data as { rarity?: string }).rarity && (
+								<Badge variant="outline" className="capitalize">
+									{(data as { rarity?: string }).rarity}
+								</Badge>
+							)}
 							{data.source_book && (
 								<Badge variant="outline">
 									{formatRegentVernacular(data.source_book)}
@@ -245,22 +250,22 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 				<p className="text-foreground whitespace-pre-wrap leading-relaxed text-base">
 					<AutoLinkText text={data.description || ""} />
 				</p>
-				{data.lore && (
-					<div className="mt-6 pt-4 border-t border-cyan/10">
-						<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
-							Historical Record
-						</h4>
-						<p className="text-sm text-muted-foreground leading-relaxed">
-							<AutoLinkText
-								text={
-									typeof data.lore === "string"
-										? data.lore
-										: data.lore?.history || ""
-								}
-							/>
-						</p>
-					</div>
-				)}
+				{(() => {
+					const loreText =
+						(typeof data.lore === "string" ? data.lore : data.lore?.history) ||
+						(data as { discovery_lore?: string }).discovery_lore ||
+						"";
+					return loreText ? (
+						<div className="mt-6 pt-4 border-t border-cyan/10">
+							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+								Historical Record
+							</h4>
+							<p className="text-sm text-muted-foreground leading-relaxed">
+								<AutoLinkText text={loreText} />
+							</p>
+						</div>
+					) : null;
+				})()}
 			</AscendantWindow>
 
 			{effectLines.length > 0 && (

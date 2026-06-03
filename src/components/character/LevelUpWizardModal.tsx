@@ -2097,16 +2097,9 @@ export const LevelUpWizardModal = ({
 														Rift Favor
 													</span>
 													<span className="font-resurge text-lg">
-														d{character.rift_favor_die} {"->"}{" "}
+														d{calculateRiftFavorDie(character.level)} {"->"}{" "}
 														<span className="text-red-400">
-															d
-															{newLevel <= 4
-																? 4
-																: newLevel <= 10
-																	? 6
-																	: newLevel <= 16
-																		? 8
-																		: 10}
+															d{calculateRiftFavorDie(newLevel)}
 														</span>
 													</span>
 												</div>
@@ -3125,16 +3118,9 @@ export const LevelUpWizardModal = ({
 													Rift Favor Die
 												</span>
 												<span className="font-resurge text-lg">
-													d{character.rift_favor_die} {"->"}{" "}
+													d{calculateRiftFavorDie(character.level)} {"->"}{" "}
 													<span className="text-resurge">
-														d
-														{newLevel <= 4
-															? 4
-															: newLevel <= 10
-																? 6
-																: newLevel <= 16
-																	? 8
-																	: 10}
+														d{calculateRiftFavorDie(newLevel)}
 													</span>
 												</span>
 											</div>

@@ -2,7 +2,7 @@ import type { Database } from "@/integrations/supabase/types";
 
 type Anomaly = Database["public"]["Tables"]["compendium_Anomalies"]["Row"];
 
-const DIFFICULTY_THRESHOLDS = {
+export const DIFFICULTY_THRESHOLDS = {
 	easy: {
 		1: 25,
 		2: 50,
@@ -93,7 +93,25 @@ const DIFFICULTY_THRESHOLDS = {
 	},
 } as const;
 
-type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
+export type EncounterDifficulty = "easy" | "medium" | "hard" | "deadly";
+
+/**
+ * The XP a single monster may be worth before a solo fight against a party of
+ * `partySize` characters at `level` exceeds the given difficulty. A single
+ * monster carries the ×1 encounter multiplier, so the budget is simply the
+ * per-character threshold × party size.
+ */
+export function singleMonsterXpBudget(
+	level: number,
+	difficulty: EncounterDifficulty,
+	partySize = 4,
+): number {
+	const perCharacter =
+		DIFFICULTY_THRESHOLDS[difficulty][
+			level as keyof (typeof DIFFICULTY_THRESHOLDS)[typeof difficulty]
+		] ?? 0;
+	return perCharacter * partySize;
+}
 
 export function calculateXP(Anomaly: Anomaly, quantity: number): number {
 	const xp = Anomaly.xp || 0;

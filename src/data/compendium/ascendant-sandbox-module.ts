@@ -4,7 +4,7 @@ import {
 } from "@/data/compendium/sandbox-npcs";
 import type { VTTScene } from "@/types/vtt";
 
-// Sub-module imports — 37 chapters, 24 handouts, 20 VTT scenes
+// Sub-module imports - 40+ chapters, 24 handouts, 14 VTT scenes
 import { riftAscendantWorldLoreChapter } from "./sandbox/rift-ascendant-world-lore";
 import { chaptersPart1 } from "./sandbox/sandbox-chapters-part1";
 import { chaptersPart2 } from "./sandbox/sandbox-chapters-part2";
@@ -49,10 +49,10 @@ import {
 // RIFT ASCENDANT: SANDBOX CAMPAIGN MODULE
 // "The Shadow of the Regent"
 //
-// A non-linear open-world sandbox (Level 1-10).
+// A non-linear S-Rank Gate Domain horror sandbox (Level 1-10).
 // Automatically populates the Campaign Wiki, VTT Maps, and Handouts.
 //
-// 37 Chapters • 24 Handouts • 20 VTT Scenes • 43 NPCs (all 14 canonical Jobs) • 5 Factions
+// 40+ Chapters - 24 Handouts - 14 VTT Scenes - 30 NPCs - 5 Factions
 // ============================================================================
 
 interface SandboxModule {
@@ -104,15 +104,15 @@ export interface SandboxChapter {
 const [chapterZero, ...chaptersPart4Remainder] = chaptersPart4;
 export const sandboxWikiChapters: SandboxChapter[] = [
 	riftAscendantWorldLoreChapter,
-	...(chapterZero ? [chapterZero] : []), // Chapter 0: Day Zero — The Memory-Care Wing (Intro Adventure)
-	...chaptersPart1, // Chapters 1-8: Briefing, Divination, City, Factions, Hubs, Downtime, E-Rank Gate
-	...chaptersPart2, // Chapters 9-16: D through S-Rank Gates + Final Boss
-	...chaptersPart3, // Chapters 17-23: Executioner, Side Quests, NPC Roster, Relics, Encounters, Treasure, Warden Guide
-	...chaptersPart4Remainder, // Chapters 24-26: Mana Reading, Ascendant Hooks, Stat Blocks Appendix
-	...chaptersPart5, // Chapters 27-28: Artifacts Cross-Reference, Regent's Domain 15-Room Megadungeon
-	...chaptersPart6, // Chapters 29-30: Bureau HQ Keyed Rooms, Vermillion Guild Hall Keyed Rooms
-	...chaptersPart7, // Chapters 31-33: Outer Slums, Mana Vein Network, Awoko Sanctum
-	...chaptersPart8, // Chapters 34-36: Runes Cross-Reference, Random Encounter Tables, 14-Day District Timeline
+	...(chapterZero ? [chapterZero] : []), // Chapter 0: table briefing and safety
+	...chaptersPart1, // Chapters 1-5: campaign frame, Gate Domain rules, entry, travel
+	...chaptersPart2, // Chapters 6-10: Threshold, Thornwake, road, weather, Vermillion
+	...chaptersPart3, // Chapters 11-15: Bastion, Mill, Hollow, Works, Black Vault
+	...chaptersPart4Remainder, // Chapters 16-20: Choir, Den, Reliquary, invitations, pressure
+	...chaptersPart5, // Chapters 21-25: Anchor Relics and Citadel
+	...chaptersPart6, // Chapters 26-30: factions, events, allies, endings
+	...chaptersPart7, // Chapters 31-35: quest web, loot, Anomalies, records, campaign rhythm
+	...chaptersPart8, // Chapters 36-40: scenes, tables, timeline, terms, quick start
 ];
 
 // ── Handouts ─────────────────────────────────────────────────────────────────
@@ -124,15 +124,16 @@ export const sandboxVTTScenes: SandboxVTTScene[] = sandboxVTTScenesExpanded;
 // ── Final export: the complete module ────────────────────────────────────────
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
-	// v3: adds the canon pre-Gate world lore sourcebook chapter.
+	// v4: full Gloamreach Gate Domain rewrite.
+	// v3: added the prior world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, characters (NPCs as
 	// warden-claimed rows), encounters, quests, factions, loot, timeline, plus
 	// VTT audio tracks and pinned assets. Older campaigns imported on v1 will
 	// run the new sections on next auto-populate click.
-	version: 3,
+	version: 4,
 	title: "The Shadow of the Regent",
 	description:
-		"A massive open-world sandbox campaign (Level 1-10) set in a modern city district overwhelmed by a Gate Surge. Features 37 lore-rich chapters, 43 unique NPCs spanning all 14 canonical Rift Ascendant Jobs across 5 factions, 20 VTT maps, 24 handouts including 5 Warden secrets, 6 pre-scaffolded sessions, 11 encounter decks, 15 quest objectives, 5 faction dossiers, 6 gate-rank loot tables, 14-day district timeline, a roaming S-Rank Anomaly, Regent Relic mechanics, and a non-linear story driven by player choice. Built to Curse of Strahd scale with gothic-horror body-horror tone. Inspired by Solo Leveling; 100% aligned to Rift Ascendant canon (pantheon of 12 Eternals, canonical Relics/Artifacts/Sigils/Tattoos/Shadow Soldiers/Anomalies all name-linked to source compendia).",
+		"A full Rift Ascendant horror sandbox (Level 1-10) set inside the Gloamreach, a country-sized S-Rank Gate Domain beyond a sealed Rift. Features 40+ lore chapters, 30 NPCs across 5 factions, 14 VTT scenes, 24 handouts, 7 scaffolded sessions, 12 encounter decks, 12 quests, 6 Rank loot tables, a 14-day Blue Phase clock, Anchor Scan randomization, Anchor Relics, Subject Zero bargains, and a tyrannical Regent whose Citadel is visible from the first road.",
 	chapters: sandboxWikiChapters,
 	scenes: sandboxVTTScenes,
 	handouts: sandboxHandouts,

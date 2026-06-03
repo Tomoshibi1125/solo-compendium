@@ -21,7 +21,7 @@ export class AuthPage {
 
 	/** Dismiss analytics consent banner via localStorage (matches existing E2E pattern). */
 	async dismissAnalytics() {
-		await this.page.addInitScript(() => {
+		await this.page.context().addInitScript(() => {
 			localStorage.setItem(
 				"solo-compendium-analytics-consent",
 				JSON.stringify({

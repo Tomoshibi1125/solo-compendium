@@ -29,7 +29,7 @@ export const techniques_core: CompendiumTechnique[] = [
 		flavor: "Take the hit so the line doesn't break.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Grants 4d6 temporary HP to the caster.",
 			secondary: "Lasts 1 minute or until the caster reaches 0 HP.",
@@ -92,7 +92,7 @@ export const techniques_core: CompendiumTechnique[] = [
 		flavor: "Here, then there. The wall was a suggestion.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary: "Creatures near the path save to retain their reactions.",
@@ -161,7 +161,7 @@ export const techniques_core: CompendiumTechnique[] = [
 		flavor: "She didn't dodge. She stepped in front.",
 		tags: ["awakened", "magic", "technique"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary:

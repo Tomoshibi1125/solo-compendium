@@ -12,7 +12,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Ignores the first 2 points of a target's damage reduction or physical resistance.",
 		tags: ["sigil", "weapon", "offensive", "physical"],
 		inscription_difficulty: 10,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Entered into the Bureau's dermal-inscription registry after initial trials.",
@@ -79,7 +79,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Whenever you score a critical hit, the force knocks the target prone if they are Large or smaller.",
 		tags: ["sigil", "weapon", "force"],
 		inscription_difficulty: 10,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Salvaged from crushed gravity-crystals found in the Ruins of the Old World.",
@@ -144,7 +144,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Slashing or piercing damage inflicted by this weapon causes the target to bleed, losing 1d4 HP at the start of their next turn.",
 		tags: ["sigil", "weapon", "necrotic"],
 		inscription_difficulty: 13,
-		source_book: "Shadow Legion Archives",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Outlawed in seventy-two countries due to its horrific lingering effects on unawakened tissue.",
@@ -215,7 +215,7 @@ export const sigils: CompendiumSigil[] = [
 			"Salamander's Strike: As a bonus action, imbue your next weapon attack with fire. Deals +2d6 fire damage. (1/short rest)",
 		effect_type: "active",
 		inscription_difficulty: 13,
-		source_book: "Academy of High Magic",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Refined from the ashes of a Fire-Class Anomaly's heart extracted during a massive raid in Johannesburg.",
@@ -259,7 +259,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {},
+		passive_bonuses: { traits: ["Bypasses standard fire resistance"] },
 		discovery_lore:
 			"Extracted from the crystallized heart of a Fire-Class Anomaly during the Johannesburg raid, refined by Academy pyromancers.",
 		effects: {
@@ -280,7 +280,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Hitting an enemy reduces their movement speed by 5 feet until the end of their next turn. Does not stack.",
 		tags: ["sigil", "weapon", "cold"],
 		inscription_difficulty: 13,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Engineered in the Siberian dead-zones where frost magic is key to survival.",
@@ -348,7 +348,7 @@ export const sigils: CompendiumSigil[] = [
 			"Thunder-Bird's Call: As a bonus action, your next attack deals +2d8 lightning damage and the target cannot take reactions until the start of their next turn. (1/short rest)",
 		effect_type: "active",
 		inscription_difficulty: 13,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "A traditional shamanic rune adapted by modern Guild enchanters.",
 			history:
@@ -394,7 +394,7 @@ export const sigils: CompendiumSigil[] = [
 			],
 			charges: 0,
 		},
-		passive_bonuses: {},
+		passive_bonuses: { damage_bonus: "1d8 lightning on second hit per turn" },
 		discovery_lore:
 			"Adapted from traditional shamanic runes by Guild enchanters studying storm-elemental anomalies in the Pacific Rim.",
 		effects: {
@@ -419,7 +419,7 @@ export const sigils: CompendiumSigil[] = [
 			"Radiant Burst: As an action, emit a 15ft radiant pulse dealing 3d8 radiant damage (CON save for half) to anomaly/anomaly. (1/long rest)",
 		effect_type: "hybrid",
 		inscription_difficulty: 13,
-		source_book: "Holylight Cathedral",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Sanctified by the High Priests of the Cathedral to purge the encroaching darkness of S-Rank gates.",
@@ -487,7 +487,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Your attacks with this weapon make no sound and give off no light. You do not break stealth when drawing it.",
 		tags: ["sigil", "weapon", "necrotic", "stealth"],
 		inscription_difficulty: 13,
-		source_book: "Shadow Legion Archives",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Carved from the obsidian bone shards of stealth-type assassins from the Shadow Domain.",
@@ -551,7 +551,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Reduces damage taken from ranged weapon attacks by 3.",
 		tags: ["sigil", "armor", "defensive"],
 		inscription_difficulty: 10,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Standard issue for Guild operatives facing Anomaly archers and magical artillery.",
@@ -617,7 +617,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: While below 50% max HP, you gain a +1 bonus to Armor Class.",
 		tags: ["sigil", "armor", "vitality"],
 		inscription_difficulty: 10,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Developed by healers attempting to keep critically wounded Ascendants alive long enough for Evacuation.",
@@ -681,7 +681,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description: "Passive: Reduces all Fire damage taken by 5.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 13,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Invented after a tragic eruption of a Red Gate composed of volcanic anomalies.",
@@ -743,7 +743,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description: "Passive: Reduces all Cold damage taken by 5.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 13,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Favored by ascendants operating in the Siberian outposts, where freezing to death is a greater threat than anomalies.",
@@ -805,7 +805,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description: "Passive: Reduces all Lightning damage taken by 5.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 13,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "Built by reverse-engineering the scales of the Storm anomaly.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
@@ -867,7 +867,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: You ignore difficult terrain penalties created by rubble or natural ground.",
 		tags: ["sigil", "armor", "utility"],
 		inscription_difficulty: 13,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "An agile enhancement favored by the Guild's scouting corps.",
 			history: "Archived in the Guild's secured inscription reference.",
@@ -931,7 +931,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: You have advantage on Intelligence (Investigation) checks to identify enemy weaknesses.",
 		tags: ["sigil", "accessory", "intelligence"],
 		inscription_difficulty: 13,
-		source_book: "Academy of High Magic",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Created by a mage attempting to decode the language of the Rifts.",
@@ -996,7 +996,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: You cannot be surprised by visible enemies, and your ranged weapon attacks ignore half cover.",
 		tags: ["sigil", "accessory", "sense"],
 		inscription_difficulty: 13,
-		source_book: "Academy of High Magic",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"An essential component for Stalker-class Ascendants defending the Safe Zones.",
@@ -1062,7 +1062,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: When you take the ready action, you can move up to 10 feet as part of the reaction.",
 		tags: ["sigil", "accessory", "agility"],
 		inscription_difficulty: 13,
-		source_book: "Academy of High Magic",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"A favorite among Assassin-class Ascendants looking for the perfect opening.",
@@ -1128,7 +1128,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: You count as one size category larger for the purposes of grappling, shoving, and carrying capacity.",
 		tags: ["sigil", "accessory", "strength"],
 		inscription_difficulty: 13,
-		source_book: "Academy of High Magic",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Used by Holy Knights to physically wrestle dungeon bosses to the ground.",
@@ -1193,7 +1193,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Hostile creatures must succeed on a DC 13 Sense check to target you if another ally is within 5 feet.",
 		tags: ["sigil", "accessory", "presence"],
 		inscription_difficulty: 13,
-		source_book: "Academy of High Magic",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Reserved for Guild Masters and those who lead raids into the Abyss.",
@@ -1261,7 +1261,7 @@ export const sigils: CompendiumSigil[] = [
 			"Mana Font Surge: As a bonus action, recover one expended spell slot of 3rd level or lower. (1/long rest)",
 		effect_type: "hybrid",
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Extremely rare; typically awarded only to National-Level Ascendants.",
@@ -1333,7 +1333,7 @@ export const sigils: CompendiumSigil[] = [
 			"Void Step: As a bonus action, teleport up to 30 feet to an unoccupied space you can see that is in dim light or darkness. (Proficiency/long rest)",
 		effect_type: "hybrid",
 		inscription_difficulty: 22,
-		source_book: "Shadow Legion Archives",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"A forbidden artifact; those who study its design too closely often lose their minds to the whispering dark.",
@@ -1404,7 +1404,7 @@ export const sigils: CompendiumSigil[] = [
 			"Undying Flame: When you drop to 0 HP, you instead drop to 1 HP and gain temporary HP equal to your level. (1/long rest)",
 		effect_type: "active",
 		inscription_difficulty: 22,
-		source_book: "Holylight Cathedral",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"The ultimate safeguard for Ascendants entering uncharted Red Gates.",
@@ -1475,7 +1475,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Fire damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"A necessity when traversing the deeper layers of Hell-Class gates.",
@@ -1543,7 +1543,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Cold damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Invented to survive encounters with Ice-type anomalies beyond the Northern Rifts.",
@@ -1610,7 +1610,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Lightning damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Carved into the shields of Holy Knights facing storm-elemental bosses.",
@@ -1679,7 +1679,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Acid damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Crucial for fighting the acid-spitting Arachnids of Sector D gates.",
@@ -1746,7 +1746,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Poison damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Derived from the antidote protocols used in the Amazon Rift Zone.",
@@ -1813,7 +1813,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Thunder damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Favored by operatives exploring pre-gate ruin-gates where sound triggers traps.",
@@ -1882,7 +1882,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Force damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"An absolute requirement to survive a high-tier Telekinetic anomaly's assault.",
@@ -1949,7 +1949,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Grants Resistance to Psychic damage. If you already have resistance, you gain Immunity.",
 		tags: ["sigil", "armor", "protection"],
 		inscription_difficulty: 16,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Constructed after an Illithid-variant gate resulted in hundreds of mind-controlled casualties.",
@@ -2019,7 +2019,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Attacks with this slashing weapon ignore slashing resistance and treat immunity as resistance.",
 		tags: ["sigil", "weapon", "mastery"],
 		inscription_difficulty: 19,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"The pinnacle of cutting augmentation, designed by an elite Guild Master who broke too many swords.",
@@ -2087,7 +2087,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Attacks with this bludgeoning weapon push targets 10 feet backward on a hit.",
 		tags: ["sigil", "weapon", "mastery"],
 		inscription_difficulty: 19,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Built for Holy Knights dealing with heavily armored stone golems.",
@@ -2150,7 +2150,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Your ranged attacks ignore half and three-quarters cover entirely.",
 		tags: ["sigil", "weapon", "mastery"],
 		inscription_difficulty: 19,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "Ensured a 100% kill rate for the Guild's elite archer division.",
 			history: "Documented in the Ascendant Bureau's archivist-access manual.",
@@ -2216,7 +2216,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Attacks made at a 10-foot reach or 20-foot range deal an additional 1d6 piercing damage.",
 		tags: ["sigil", "weapon", "mastery"],
 		inscription_difficulty: 19,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "Keeps the deadliest horrors exactly an arm's length away.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
@@ -2282,7 +2282,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Once per turn, you can declare a reckless attack. On hit, the target is stunned until their turn.",
 		tags: ["sigil", "weapon", "mastery"],
 		inscription_difficulty: 19,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"For when you absolutely must cleave the anomaly in two on the first swing.",
@@ -2350,7 +2350,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Spells requiring an attack roll score a critical hit on a 19 or 20.",
 		tags: ["sigil", "weapon", "mastery"],
 		inscription_difficulty: 19,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "The mage's ultimate catalyst.",
 			history: "Entered into the Bureau's controlled-inscription ledger.",
@@ -2413,7 +2413,7 @@ export const sigils: CompendiumSigil[] = [
 			"Passive: Increases Maximum HP by your Character Level x 2.",
 		tags: ["sigil", "armor", "vitality"],
 		inscription_difficulty: 22,
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Stolen from a regenerating Troll boss inside an A-Rank labyrinth.",
@@ -2476,7 +2476,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: Your base walking speed increases by 10 feet.",
 		tags: ["sigil", "armor", "agility"],
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "For when you need to outrun an angry S-Rank anomaly.",
 			history: "Documented in the Ascendant Bureau's archivist-access manual.",
@@ -2538,7 +2538,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: You are entirely immune to the Frightened condition.",
 		tags: ["sigil", "accessory", "presence"],
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "Anomalies feed on fear; this sigil starves them.",
 			history: "Tracked through the Bureau's restricted-inscription registry.",
@@ -2601,7 +2601,7 @@ export const sigils: CompendiumSigil[] = [
 		can_inscribe_on: ["armor"],
 		effect_description: "Passive: Grants a permanent +2 to Armor Class.",
 		tags: ["sigil", "armor", "defensive"],
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin:
 				"Favored by solo-tank specialists holding the front line of Rift breaks.",
@@ -2664,7 +2664,7 @@ export const sigils: CompendiumSigil[] = [
 		effect_description:
 			"Passive: You can perceive invisible creatures and illusions for what they truly are within 30 feet.",
 		tags: ["sigil", "accessory", "sense"],
-		source_book: "Ascendant Bureau Armory",
+		source_book: "Rift Ascendant Canon",
 		lore: {
 			origin: "Bypasses the cloaking mechanisms of Class-A stalker anomalies.",
 			history:

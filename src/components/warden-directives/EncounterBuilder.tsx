@@ -21,6 +21,7 @@ import { listCanonicalEntries } from "@/lib/canonicalCompendium";
 import { getRandomAnomaly } from "@/lib/compendiumAutopopulate";
 import { calculateDifficulty, calculateXP } from "@/lib/encounterMath";
 import { getCRXP } from "@/lib/experience";
+import { numericCrToLabel } from "@/lib/monster5eTable";
 import { cn } from "@/lib/utils";
 import { normalizeRegentSearch } from "@/lib/vernacular";
 import type { CompendiumAnomaly } from "@/types/compendium";
@@ -70,7 +71,7 @@ const mapStaticAnomaly = (Anomaly: CompendiumAnomaly): Anomaly => {
 	const abilities = Anomaly.stats?.ability_scores ?? {};
 	const crValue =
 		typeof Anomaly.stats?.challenge_rating === "number"
-			? String(Anomaly.stats.challenge_rating)
+			? numericCrToLabel(Anomaly.stats.challenge_rating)
 			: RANK_CR_MAP[Anomaly.rank || "D"] || "1";
 	const hitPoints = toNumber(
 		Anomaly.hp ??

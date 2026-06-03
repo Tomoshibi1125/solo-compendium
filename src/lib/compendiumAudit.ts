@@ -1,4 +1,13 @@
 import type { Json } from "@/integrations/supabase/types";
+import {
+	type ContractIssue,
+	validateArmor5e,
+	validateJob5e,
+	validateMonsterStatblock,
+	validatePath5e,
+	validateSpellComponents,
+	validateWeapon5e,
+} from "@/lib/compendium5eContract";
 
 // Keep aligned with `equipmentItemTypes` in @/lib/canonicalCompendium.
 const equipmentItemTypes = new Set([
@@ -41,22 +50,27 @@ export interface AuditEntry {
 
 type AuditProvider = {
 	getAnomalies: (search?: string) => Promise<AuditEntry[]>;
+	getArtifacts: (search?: string) => Promise<AuditEntry[]>;
 	getBackgrounds: (search?: string) => Promise<AuditEntry[]>;
 	getConditions: (search?: string) => Promise<AuditEntry[]>;
 	getFeats: (search?: string) => Promise<AuditEntry[]>;
+	getFightingStyles: (search?: string) => Promise<AuditEntry[]>;
 	getItems: (search?: string) => Promise<AuditEntry[]>;
 	getJobs: (search?: string) => Promise<AuditEntry[]>;
 	getLocations: (search?: string) => Promise<AuditEntry[]>;
+	getPantheon: (search?: string) => Promise<AuditEntry[]>;
 	getPaths: (search?: string) => Promise<AuditEntry[]>;
 	getPowers: (search?: string) => Promise<AuditEntry[]>;
 	getRegents: (search?: string) => Promise<AuditEntry[]>;
 	getRelics: (search?: string) => Promise<AuditEntry[]>;
 	getRunes: (search?: string) => Promise<AuditEntry[]>;
+	getShadowSoldiers: (search?: string) => Promise<AuditEntry[]>;
 	getSigils: (search?: string) => Promise<AuditEntry[]>;
 	getSkills: (search?: string) => Promise<AuditEntry[]>;
 	getSpells: (search?: string) => Promise<AuditEntry[]>;
 	getTattoos: (search?: string) => Promise<AuditEntry[]>;
 	getTechniques: (search?: string) => Promise<AuditEntry[]>;
+	getVehicles: (search?: string) => Promise<AuditEntry[]>;
 };
 
 export type CompendiumAuditSeverity = "error" | "warning";
@@ -292,61 +306,76 @@ async function loadAuditDatasets(
 ): Promise<Record<string, AuditEntry[]>> {
 	const [
 		anomalies,
+		artifacts,
 		backgrounds,
 		conditions,
 		feats,
+		fightingStyles,
 		items,
 		jobs,
 		locations,
+		pantheon,
 		paths,
 		powers,
 		regents,
 		relics,
 		runes,
+		shadowSoldiers,
 		sigils,
 		skills,
 		spells,
 		tattoos,
 		techniques,
+		vehicles,
 	] = await Promise.all([
 		provider.getAnomalies(""),
+		provider.getArtifacts(""),
 		provider.getBackgrounds(""),
 		provider.getConditions(""),
 		provider.getFeats(""),
+		provider.getFightingStyles(""),
 		provider.getItems(""),
 		provider.getJobs(""),
 		provider.getLocations(""),
+		provider.getPantheon(""),
 		provider.getPaths(""),
 		provider.getPowers(""),
 		provider.getRegents(""),
 		provider.getRelics(""),
 		provider.getRunes(""),
+		provider.getShadowSoldiers(""),
 		provider.getSigils(""),
 		provider.getSkills(""),
 		provider.getSpells(""),
 		provider.getTattoos(""),
 		provider.getTechniques(""),
+		provider.getVehicles(""),
 	]);
 
 	return {
 		anomalies,
+		artifacts,
 		backgrounds,
 		conditions,
 		equipment: items.filter((entry) => isEquipmentLikeEntry(entry as never)),
 		feats,
+		fighting_styles: fightingStyles,
 		items: items.filter((entry) => !isEquipmentLikeEntry(entry as never)),
 		jobs,
 		locations,
+		pantheon,
 		paths,
 		powers,
 		regents,
 		relics,
 		runes,
+		shadow_soldiers: shadowSoldiers,
 		sigils,
 		skills,
 		spells,
 		tattoos,
 		techniques,
+		vehicles,
 	};
 }
 
@@ -388,6 +417,8 @@ function auditDuplicates(
 	}
 }
 
+const RA_CANON_SOURCE_BOOK = "Rift Ascendant Canon";
+
 function auditRequiredFields(
 	dataset: string,
 	entry: AuditEntry,
@@ -399,6 +430,15 @@ function auditRequiredFields(
 			dataset,
 			code: "missing_source_book",
 			message: "Missing source_book.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	} else if (entry.source_book !== RA_CANON_SOURCE_BOOK) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "invalid_source_book",
+			message: `source_book must be exactly "${RA_CANON_SOURCE_BOOK}" (was "${entry.source_book}"). Merge content into RA Canon or remove the entry.`,
 			entryId: entry.id,
 			entryName: entry.name,
 		});
@@ -502,7 +542,12 @@ function auditCastableEntry(
 		getFormulaString(resolution?.formula) ??
 		getString(mechanics.damage_profile) ??
 		getString(mechanics.damage);
-	if (!formula) {
+	// A pure utility / save-or-suffer / control spell legitimately has no
+	// damage or healing formula — its resolution IS the saving throw + the
+	// failure prose. Only warn when there's also no save/utility/resolution
+	// block to carry the effect.
+	const hasNonFormulaResolution = Boolean(savingThrow || utility || resolution);
+	if (!formula && !hasNonFormulaResolution) {
 		addIssue(issues, {
 			severity: "warning",
 			dataset,
@@ -1057,6 +1102,528 @@ function auditItemPayloadUniqueness(
 	}
 }
 
+// ──────────────────────────────────────────────────────────────────────
+// Category-specific completeness audits (Pass 2).
+//
+// Each function asserts that an entry of a given dataset carries the
+// minimum fleshing-out the engine and UI expect. These run alongside the
+// generic dup/required-field checks and are wired into the dispatch loop
+// at the bottom of this file.
+// ──────────────────────────────────────────────────────────────────────
+
+const getNumber = (value: unknown): number | null =>
+	typeof value === "number" && Number.isFinite(value) ? value : null;
+
+const getArray = (value: unknown): unknown[] | null =>
+	Array.isArray(value) ? value : null;
+
+const hasMinArrayEntries = (value: unknown, min: number): boolean => {
+	const arr = getArray(value);
+	return !!arr && arr.length >= min;
+};
+
+const recordHasAnyKey = (value: unknown): boolean => {
+	if (!isRecord(value)) return false;
+	return Object.keys(value).length > 0;
+};
+
+function auditVehicleCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	const vehicleType = getString(e.vehicle_type);
+	const size = getString(e.size);
+	const speed = e.speed;
+	const ac = getNumber(e.armor_class);
+	const hp = e.hit_points;
+	const crew = e.crew_positions;
+
+	if (!vehicleType) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_vehicle_type",
+			message: "Vehicle missing vehicle_type.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (!size) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_size",
+			message: "Vehicle missing size.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (!recordHasAnyKey(speed)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_speed",
+			message: "Vehicle missing speed (need land/air/water/etc.).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (ac === null || ac <= 0) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_armor_class",
+			message: "Vehicle missing positive armor_class.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (
+		!isRecord(hp) ||
+		getNumber((hp as Record<string, unknown>).max) === null ||
+		(getNumber((hp as Record<string, unknown>).max) ?? 0) <= 0
+	) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_hit_points",
+			message: "Vehicle missing hit_points.max (> 0).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (!hasMinArrayEntries(crew, 1)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_crew_positions",
+			message: "Vehicle missing crew_positions (need ≥1 position).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditVehicleBondedReferences(
+	vehicles: AuditEntry[],
+	anomalies: AuditEntry[],
+	issues: CompendiumAuditIssue[],
+) {
+	// Vehicles that DECLARE an anomaly_id must resolve it in the anomalies
+	// dataset. `bonded: true` alone does NOT imply an anomaly link — it just
+	// flags character-bonding for stat-modifier rules. Net-new RA mounts may
+	// be bonded without overlaying an existing anomaly.
+	const anomalyIds = new Set(anomalies.map((a) => a.id));
+	for (const v of vehicles) {
+		const e = v as unknown as Record<string, unknown>;
+		const anomalyId = getString(e.anomaly_id);
+		if (!anomalyId) continue;
+		if (!anomalyIds.has(anomalyId)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset: "vehicles",
+				code: "unresolved_anomaly_id",
+				message: `Vehicle anomaly_id "${anomalyId}" does not resolve to any anomaly.`,
+				entryId: v.id,
+				entryName: v.name,
+			});
+		}
+	}
+}
+
+function auditDeityCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	const checks: Array<{ key: string; ok: boolean; code: string; msg: string }> =
+		[
+			{
+				key: "rank",
+				ok: !!getString(e.rank),
+				code: "missing_deity_rank",
+				msg: "Deity missing rank.",
+			},
+			{
+				key: "directive",
+				ok: !!getString(e.directive),
+				code: "missing_deity_directive",
+				msg: "Deity missing directive.",
+			},
+			{
+				key: "sigil",
+				ok: !!getString(e.sigil),
+				code: "missing_deity_sigil",
+				msg: "Deity missing sigil description.",
+			},
+			{
+				key: "manifestation",
+				ok: !!getString(e.manifestation),
+				code: "missing_deity_manifestation",
+				msg: "Deity missing manifestation.",
+			},
+			{
+				key: "home_realm",
+				ok: !!getString(e.home_realm),
+				code: "missing_deity_home_realm",
+				msg: "Deity missing home_realm.",
+			},
+			{
+				key: "portfolio",
+				ok: hasMinArrayEntries(e.portfolio, 1),
+				code: "missing_deity_portfolio",
+				msg: "Deity missing portfolio (need ≥1 entry).",
+			},
+			{
+				key: "specializations",
+				ok: hasMinArrayEntries(e.specializations, 1),
+				code: "missing_deity_specializations",
+				msg: "Deity missing specializations (need ≥1).",
+			},
+			{
+				key: "dogma",
+				ok: hasMinArrayEntries(e.dogma, 1),
+				code: "missing_deity_dogma",
+				msg: "Deity missing dogma (need ≥1 tenet).",
+			},
+		];
+	for (const c of checks) {
+		if (c.ok) continue;
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: c.code,
+			message: c.msg,
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditFeatCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	const hasEffects =
+		hasMinArrayEntries(e.effects, 1) ||
+		isRecord(e.effects) ||
+		hasMinArrayEntries(e.benefits, 1) ||
+		isRecord(e.mechanics);
+	if (!hasEffects) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_feat_effects",
+			message: "Feat missing effects/benefits/mechanics payload.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	// Prerequisites may legitimately be empty for general feats, so allow null
+	// but require the FIELD to be present (object or array) so omission is
+	// distinguishable from intentional emptiness.
+	const prereq = e.prerequisites;
+	if (
+		prereq !== null &&
+		prereq !== undefined &&
+		!isRecord(prereq) &&
+		!Array.isArray(prereq) &&
+		typeof prereq !== "string"
+	) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "malformed_feat_prerequisites",
+			message: "Feat prerequisites must be null, string, array, or object.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditBackgroundCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	if (!hasMinArrayEntries(e.skill_proficiencies, 1)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_skill_proficiencies",
+			message: "Background missing skill_proficiencies (need ≥1).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	const equipment = e.starting_equipment ?? e.equipment;
+	if (!getString(equipment) && !hasMinArrayEntries(equipment, 1)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_starting_equipment",
+			message: "Background missing starting_equipment.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	const featureName = getString(e.feature_name);
+	const featureDesc = getString(e.feature_description);
+	const features = e.background_features;
+	const hasInlineFeature = !!(featureName && featureDesc);
+	const hasStructuredFeature =
+		Array.isArray(features) &&
+		features.length > 0 &&
+		features.every(
+			(f) =>
+				isRecord(f) &&
+				!!getString((f as Record<string, unknown>).name) &&
+				!!getString((f as Record<string, unknown>).description),
+		);
+	if (!hasInlineFeature && !hasStructuredFeature) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_background_feature",
+			message:
+				"Background missing feature (need feature_name + feature_description, or background_features[] with name/description).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditConditionCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	const hasEffects =
+		hasMinArrayEntries(e.condition_effects, 1) ||
+		isRecord(e.effects) ||
+		isRecord(e.mechanics);
+	if (!hasEffects) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_condition_effects",
+			message:
+				"Condition missing mechanical effects (condition_effects[]/effects/mechanics).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditSkillCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	const ability = getString(e.ability) ?? getString(e.ability_score);
+	if (!ability) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_skill_ability",
+			message:
+				"Skill missing keying ability (need `ability` or `ability_score`).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditSigilOrTattooCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	// Sigils carry their bonus payload in `passive_bonuses`; tattoos express
+	// mechanical effect via `mechanics`/`effects` (the CompendiumTattoo type
+	// has no `passive_bonuses` field).
+	if (dataset === "sigils") {
+		if (!recordHasAnyKey(e.passive_bonuses)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_passive_bonuses",
+				message: "Sigil missing passive_bonuses (need ≥1 keyed bonus).",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+		if (!hasMinArrayEntries(e.can_inscribe_on, 1)) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_can_inscribe_on",
+				message: "Sigil missing can_inscribe_on (need ≥1 socket type).",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	} else {
+		// tattoos
+		const hasMechanicalPayload =
+			recordHasAnyKey(e.mechanics) || recordHasAnyKey(e.effects);
+		if (!hasMechanicalPayload) {
+			addIssue(issues, {
+				severity: "error",
+				dataset,
+				code: "missing_tattoo_mechanics",
+				message: "Tattoo missing mechanics/effects payload.",
+				entryId: entry.id,
+				entryName: entry.name,
+			});
+		}
+	}
+	if (!hasMinArrayEntries(e.tags, 1)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_tags",
+			message: `${dataset === "sigils" ? "Sigil" : "Tattoo"} missing tags (need ≥1).`,
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditFightingStyleCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	// Fighting styles always have a prose description (verified by
+	// auditRequiredFields). Beyond that, prerequisites being present (even
+	// empty) and the structured modifiers OR a prose description that mentions
+	// a numeric effect are what flag fleshing-out.
+	if (
+		e.prerequisites !== null &&
+		e.prerequisites !== undefined &&
+		!Array.isArray(e.prerequisites)
+	) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "malformed_fighting_style_prerequisites",
+			message: "Fighting style prerequisites must be null or string[].",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+function auditShadowSoldierCompleteness(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+) {
+	const e = entry as unknown as Record<string, unknown>;
+	if (!getString(e.rank) && !getString(e.gate_rank)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_shadow_rank",
+			message: "Shadow soldier missing rank.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (!getString(e.role)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_shadow_role",
+			message: "Shadow soldier missing role.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	// Tolerant of both raw (`hp`) and provider-shaped (`hit_points_average`).
+	const hp =
+		getNumber(e.hit_points_average) ??
+		getNumber(e.hit_points) ??
+		getNumber(e.hp);
+	if (hp === null || hp <= 0) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_shadow_hp",
+			message: "Shadow soldier missing positive hit points.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	const ac = getNumber(e.armor_class) ?? getNumber(e.ac);
+	if (ac === null || ac <= 0) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_shadow_ac",
+			message: "Shadow soldier missing positive armor_class.",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	const traits = e.Anomaly_traits ?? e.traits;
+	const actions = e.Anomaly_actions ?? e.actions;
+	if (!hasMinArrayEntries(traits, 1)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_shadow_traits",
+			message: "Shadow soldier missing traits (need ≥1).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+	if (!hasMinArrayEntries(actions, 1)) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: "missing_shadow_actions",
+			message: "Shadow soldier missing actions (need ≥1).",
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
+/**
+ * Run a 5e-contract validator (from compendium5eContract.ts) against an entry
+ * and fold its findings into the audit issue stream as errors.
+ */
+function runContract(
+	dataset: string,
+	entry: AuditEntry,
+	issues: CompendiumAuditIssue[],
+	validator: (e: Record<string, unknown>) => ContractIssue[],
+) {
+	const found = validator(entry as unknown as Record<string, unknown>);
+	for (const issue of found) {
+		addIssue(issues, {
+			severity: "error",
+			dataset,
+			code: issue.code,
+			message: issue.message,
+			entryId: entry.id,
+			entryName: entry.name,
+		});
+	}
+}
+
 export async function runCompendiumAudit(
 	provider: AuditProvider,
 ): Promise<CompendiumAuditSummary> {
@@ -1084,9 +1651,63 @@ export async function runCompendiumAudit(
 			if (itemRulePayloadDatasets.has(dataset)) {
 				auditItemRulesPayload(dataset, entry, issues);
 			}
+			if (dataset === "vehicles") {
+				auditVehicleCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "pantheon") {
+				auditDeityCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "feats") {
+				auditFeatCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "backgrounds") {
+				auditBackgroundCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "conditions") {
+				auditConditionCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "skills") {
+				auditSkillCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "sigils" || dataset === "tattoos") {
+				auditSigilOrTattooCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "fighting_styles") {
+				auditFightingStyleCompleteness(dataset, entry, issues);
+			}
+			if (dataset === "shadow_soldiers") {
+				auditShadowSoldierCompleteness(dataset, entry, issues);
+			}
+			// 5e completeness contract (compendium5eContract.ts).
+			if (dataset === "anomalies") {
+				runContract(dataset, entry, issues, validateMonsterStatblock);
+			}
+			if (dataset === "spells") {
+				runContract(dataset, entry, issues, validateSpellComponents);
+			}
+			if (dataset === "jobs") {
+				runContract(dataset, entry, issues, validateJob5e);
+			}
+			if (dataset === "paths") {
+				runContract(dataset, entry, issues, validatePath5e);
+			}
+			if (dataset === "equipment") {
+				const kind = getEquipmentKind(entry);
+				if (kind === "weapon") {
+					runContract(dataset, entry, issues, validateWeapon5e);
+				}
+				if (kind === "armor" || kind === "shield") {
+					runContract(dataset, entry, issues, validateArmor5e);
+				}
+			}
 		}
 	}
 	auditItemPayloadUniqueness(datasets, issues);
+	auditVehicleBondedReferences(
+		datasets.vehicles ?? [],
+		datasets.anomalies ?? [],
+		issues,
+	);
 
 	const errors = issues.filter((issue) => issue.severity === "error");
 	const warnings = issues.filter((issue) => issue.severity === "warning");

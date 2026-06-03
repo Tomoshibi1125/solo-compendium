@@ -18,10 +18,15 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { anomalies } from "../src/data/compendium/anomalies";
+import { artifacts } from "../src/data/compendium/artifacts";
+import { FIGHTING_STYLES } from "../src/data/compendium/fightingStyles";
 import { allItems } from "../src/data/compendium/items-index";
+import { PRIME_PANTHEON } from "../src/data/compendium/pantheon";
 import { powers } from "../src/data/compendium/powers";
 import { comprehensiveRelics } from "../src/data/compendium/relics-comprehensive";
 import { allRunes } from "../src/data/compendium/runes/index";
+import { shadowSoldiers } from "../src/data/compendium/shadow-soldiers";
 import { spells } from "../src/data/compendium/spells";
 import { techniques } from "../src/data/compendium/techniques";
 import { allVehicles } from "../src/data/compendium/vehicles";
@@ -42,23 +47,28 @@ const asEntries = (value: unknown): AuditEntry[] =>
 // audit engine can run unchanged.
 const empty = async () => [] as AuditEntry[];
 const rawProvider = {
-	getAnomalies: empty,
+	getAnomalies: async () => asEntries(anomalies),
+	getArtifacts: async () => asEntries(artifacts),
 	getBackgrounds: empty,
 	getConditions: empty,
 	getFeats: empty,
+	getFightingStyles: async () => asEntries(FIGHTING_STYLES),
 	getItems: async () => asEntries(allItems),
 	getJobs: empty,
 	getLocations: empty,
+	getPantheon: async () => asEntries(PRIME_PANTHEON),
 	getPaths: empty,
 	getPowers: async () => asEntries(powers),
 	getRegents: empty,
 	getRelics: async () => asEntries(comprehensiveRelics),
 	getRunes: async () => asEntries(allRunes),
+	getShadowSoldiers: async () => asEntries(shadowSoldiers),
 	getSigils: empty,
 	getSkills: empty,
 	getSpells: async () => asEntries(spells),
 	getTattoos: empty,
 	getTechniques: async () => asEntries(techniques),
+	getVehicles: async () => asEntries(allVehicles),
 };
 
 // ---------------------------------------------------------------------------

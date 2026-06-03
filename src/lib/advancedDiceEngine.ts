@@ -5,7 +5,7 @@
  * exploding dice, and advanced mechanics
  */
 
-import { getProficiencyBonus } from "@/lib/5eRulesEngine";
+import { getAbilityModifier, getProficiencyBonus } from "@/lib/5eRulesEngine";
 import { AppError } from "@/lib/appError";
 
 interface DiceRoll {
@@ -519,7 +519,7 @@ export function applyAbilityModifier(
 	_ability: string,
 	score: number,
 ): RollResult {
-	const abilityModifier = Math.floor((score - 10) / 2);
+	const abilityModifier = getAbilityModifier(score);
 	const newModifier = roll.modifier + abilityModifier;
 	const newTotal = roll.total + abilityModifier;
 

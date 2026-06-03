@@ -13,7 +13,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { calculateCharacterStats } from "@/lib/characterCalculations";
+import { useCampaignRegentUnlocks } from "@/hooks/useRegentUnlocks";
+import {
+	calculateCharacterStats,
+	getRiftFavorMax,
+} from "@/lib/characterCalculations";
+import { getEffectiveHpMax } from "@/lib/derivedStats";
+import { getRegentHpContributionForIds } from "@/lib/regentGestalt";
 import { calculateSkillModifier } from "@/lib/skills";
 import { cn } from "@/lib/utils";
 import {
@@ -56,9 +62,29 @@ interface DashboardMemberData {
 interface PartyDashboardPanelProps {
 	// Accept the raw members array from useCampaignMembers
 	rawMembers: DashboardMemberData[];
+	/** Campaign context — enables gestalt-true HP (regent overlay) for PCs. */
+	campaignId?: string;
 }
 
-export function PartyDashboardPanel({ rawMembers }: PartyDashboardPanelProps) {
+export function PartyDashboardPanel({
+	rawMembers,
+	campaignId,
+}: PartyDashboardPanelProps) {
+	// Batch-fetch regent unlocks for the whole campaign so each PC's HP reflects
+	// the additive gestalt Regent overlay (matching their sheet), not just the
+	// base hp_max column. One query for the roster.
+	const { campaignUnlocks: campaignRegentUnlocks = [] } =
+		useCampaignRegentUnlocks(campaignId ?? "");
+	const regentIdsByCharacter = useMemo(() => {
+		const map = new Map<string, string[]>();
+		for (const u of campaignRegentUnlocks) {
+			const list = map.get(u.character_id) ?? [];
+			list.push(u.regent_id);
+			map.set(u.character_id, list);
+		}
+		return map;
+	}, [campaignRegentUnlocks]);
+
 	const dashboardData = useMemo(() => {
 		const partyMembers: PartyMember[] = [];
 
@@ -102,14 +128,20 @@ export function PartyDashboardPanel({ rawMembers }: PartyDashboardPanelProps) {
 					return 10 + mod;
 				};
 
+				const memberLevel = character.level || 1;
+				const memberRegentIds = regentIdsByCharacter.get(character.id) ?? [];
 				partyMembers.push({
 					id: character.id,
 					name: character.name || "Unknown",
 					job: character.job || "Unknown",
-					level: character.level || 1,
+					level: memberLevel,
 					hitPoints: {
 						current: character.hp_current ?? 10,
-						max: character.hp_max ?? 10,
+						// Gestalt-true max (override-aware base + additive Regent HP).
+						max: getEffectiveHpMax(
+							character,
+							getRegentHpContributionForIds(memberRegentIds, memberLevel),
+						),
 						temp: character.hp_temp ?? 0,
 					},
 					armorClass: calculatedStats.armorClass,
@@ -121,7 +153,7 @@ export function PartyDashboardPanel({ rawMembers }: PartyDashboardPanelProps) {
 					exhaustionLevel: character.exhaustion_level || 0,
 					riftFavor: {
 						current: character.rift_favor_current ?? 0,
-						max: character.rift_favor_max ?? 3, // Assuming base 3
+						max: getRiftFavorMax(memberLevel),
 					},
 					deathSaves: character.death_saves || {
 						successes: 0,
@@ -134,7 +166,7 @@ export function PartyDashboardPanel({ rawMembers }: PartyDashboardPanelProps) {
 		}
 
 		return generateDashboard(partyMembers);
-	}, [rawMembers]);
+	}, [rawMembers, regentIdsByCharacter]);
 
 	if (dashboardData.members.length === 0) {
 		return (

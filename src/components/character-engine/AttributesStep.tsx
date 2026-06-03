@@ -6,7 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
+import {
+	ABILITY_NAMES,
+	type AbilityScore,
+	getAbilityModifier,
+} from "@/types/core-rules";
 
 interface AttributesStepProps {
 	abilityMethod: "standard" | "point-buy" | "manual";
@@ -169,9 +173,7 @@ export const AttributesStep: React.FC<AttributesStepProps> = ({
 
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 						{(Object.keys(ABILITY_NAMES) as AbilityScore[]).map((ability) => {
-							const modifier = Math.floor(
-								(effectiveAbilities[ability] - 10) / 2,
-							);
+							const modifier = getAbilityModifier(effectiveAbilities[ability]);
 
 							return (
 								<div

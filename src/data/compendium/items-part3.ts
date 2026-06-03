@@ -17,6 +17,7 @@ export const items_part3: Item[] = [
 		damage: "1d4",
 		damage_type: "radiant",
 		simple_properties: ["light", "finesse", "thrown"],
+		range: "Thrown (20/60)",
 		properties: {
 			weapon: {
 				damage: "1d4",

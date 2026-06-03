@@ -1,5 +1,6 @@
 import { Crown, Flame } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular, REGENT_LABEL } from "@/lib/vernacular";
@@ -395,6 +396,14 @@ export const RegentDetail = ({ data }: RegentDetailProps) => {
 					))}
 				</div>
 			)}
+			<DetailMetaFooter
+				sourceBook={(data as { source_book?: string }).source_book}
+				extra={[
+					{ label: "Rank", value: (data as { rank?: unknown }).rank },
+					{ label: "Rarity", value: (data as { rarity?: unknown }).rarity },
+					{ label: "Theme", value: (data as { theme?: unknown }).theme },
+				]}
+			/>
 		</div>
 	);
 };

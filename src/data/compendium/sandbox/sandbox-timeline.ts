@@ -1,12 +1,5 @@
 /**
- * SANDBOX TIMELINE — "The Shadow of the Regent"
- *
- * 14-day District timeline extracted from chapter-8 prose into structured
- * events. Seeded as `campaign_session_logs` of `log_type: "event"` anchored
- * to the Day Zero session so they surface in the Sessions tab timeline
- * view. Days are zero-indexed from campaign creation.
- *
- * The timeline FIRES regardless of party action — see Warden Secret 5.
+ * SANDBOX TIMELINE - Blue Phase pressure clock
  */
 
 export interface SandboxTimelineEvent {
@@ -21,83 +14,91 @@ export interface SandboxTimelineEvent {
 export const sandboxTimeline: SandboxTimelineEvent[] = [
 	{
 		day: 0,
-		title: "Day 0 — The Wing Opens",
+		title: "Day 0 - Rift Sealed",
 		description:
-			"Party wakes in the Memory-Care Wing. Campaign begins. Identity-Erosion clock starts at 0 for each PC.",
-		linkedSceneName: "Day Zero: Memory-Care Wing Exterior",
+			"The party enters the Gloamreach. The Gate seals behind them and the AFA begins a fourteen-day Blue Phase estimate.",
+		linkedSceneName: "Gate Domain: Rift Threshold",
 	},
 	{
-		day: 2,
-		title: "Day 2 — Bureau Assessment",
+		day: 1,
+		title: "Day 1 - Tribute Bell",
 		description:
-			"Commander Park formally assigns party a Bureau contract ID. Rep logged.",
-		factionImpact: "Bureau: +1 starting Rep.",
-		linkedNpcName: "Commander Park Jae-won",
+			"Thornwake's tribute comes due. If ignored, the Regent marks the settlement as unprotected.",
+		factionImpact: "Hollow Choir influence rises if tribute is paid.",
+		linkedSceneName: "Gate Domain: Thornwake",
 	},
 	{
 		day: 3,
-		title: "Day 3 — Supply Convoy Ambush",
+		title: "Day 3 - Camp Triage",
 		description:
-			"A Bureau supply run through Outer Slums is ambushed. If party was escorting, Rep flips +2 Bureau. If not, Rep -1 Bureau (they were supposed to be available).",
-		factionImpact: "Bureau Rep ±2 depending on party presence.",
-		linkedSceneName: "Outer Slums: Covered Market (Ch. 31 Location 2)",
+			"Vermillion Camp runs out of clean stabilizer. Without help, its surgeons start choosing who is worth saving.",
+		factionImpact: "Vermillion Camp reputation shifts by party aid.",
+		linkedSceneName: "Gate Domain: Vermillion Camp",
 	},
 	{
-		day: 5,
-		title: "Day 5 — The First Awoko Graffiti",
+		day: 4,
+		title: "Day 4 - Bastion Relay Fades",
 		description:
-			"Party starts seeing cult graffiti in alleys. If any PC is at Identity-Erosion 1+, they see graffiti others don't. (See Warden Secret 3.)",
+			"The Bureau Forward Bastion's relay drops to emergency pulse only. Route data becomes harder to trust.",
+		factionImpact: "Bureau Remnant loses leverage if not stabilized.",
+		linkedSceneName: "Gate Domain: Bureau Forward Bastion",
 	},
 	{
-		day: 7,
-		title: "Day 7 — Vermillion Exclusive Offer",
+		day: 6,
+		title: "Day 6 - Mill Output Doubles",
 		description:
-			"Guild Chair approaches with an exclusive contract: a C-Rank gate in exchange for Rep commitment. Refusing costs -2 Vermillion.",
-		factionImpact: "Vermillion Rep ±2.",
+			"The Essence Mill begins processing tribute at double pace. Malformed cores appear in patrols.",
+		linkedSceneName: "Gate Domain: Essence Mill",
+	},
+	{
+		day: 8,
+		title: "Day 8 - Glassvine Hunger",
+		description:
+			"The Glassvine Works mutates its crop. Medicine becomes addictive unless the root-engine is stabilized.",
+		linkedSceneName: "Gate Domain: Glassvine Works",
 	},
 	{
 		day: 9,
-		title: "Day 9 — Distant Scream",
+		title: "Day 9 - Aegis March",
 		description:
-			"The roaming S-Rank Anomaly is sighted at the District's western edge. Not engaged. Foreshadow only.",
-		linkedSceneName: "Gate: The Sunken Tunnels (B-Rank)",
+			"Bound Aegis knights leave Hollow and begin reinforcing the Citadel unless released or defeated.",
+		linkedSceneName: "Gate Domain: Aegis Hollow",
 	},
 	{
 		day: 10,
-		title: "Day 10 — Diagnosed Reaches Out",
+		title: "Day 10 - Choir Road Opens",
 		description:
-			"If the party has NOT returned to R5, the Diagnosed sends a mana-dream: all PCs share a nightmare of the Wing. One Identity-Erosion point for any PC who ignores it.",
-		factionImpact: "Anomaly-Adjacent Rep +1 if party responds.",
+			"The Hollow Choir opens a formal Citadel road through tribute rite. The party may exploit or disrupt it.",
+		factionImpact: "Hollow Choir gains power if unopposed.",
+		linkedSceneName: "Gate Domain: Choir Warrens",
 	},
 	{
 		day: 11,
-		title: "Day 11 — Bureau Redaction Incident",
+		title: "Day 11 - Black Vault Pressure",
 		description:
-			"A Bureau medic is publicly redacted — her name forcibly removed from all records. Independent faction up in arms. Opportunity for party to intervene.",
-		factionImpact:
-			"Independent Rep +2 if party stands with the medic, -3 if silent.",
+			"Subject Zero leakage becomes visible as black frost around sealed thresholds.",
+		linkedSceneName: "Gate Domain: Black Vault",
 	},
 	{
 		day: 12,
-		title: "Day 12 — Awoko Mass Recruitment",
+		title: "Day 12 - Crownbeast Hunt",
 		description:
-			"Cult holds a public recruitment rally in the outer slums. 30+ civilians join. If party doesn't attend or intervene, their next Awoko Rep roll auto-advances.",
-		factionImpact: "Awoko Rep +2 (ambient).",
-		linkedSceneName: "Awoko Sanctum: The Nave (Ch. 33 S-3)",
+			"The Crownbeast leaves the Den and tests every major road. Travel becomes dangerous without predator countermeasures.",
+		linkedSceneName: "Gate Domain: Beast Crown Den",
 	},
 	{
 		day: 13,
-		title: "Day 13 — Park's Redaction Crisis",
+		title: "Day 13 - Citadel Invitation",
 		description:
-			"Commander Park breaks down in HQ. His classified files are briefly readable by anyone with Investigation DC 18. (See Warden Secret 2 — this is the window.)",
-		linkedNpcName: "Commander Park Jae-won",
+			"The Regent offers safe conduct to the Citadel. It is sincere and still dangerous.",
+		linkedNpcName: "The Regent",
+		linkedSceneName: "Gate Domain: Regent's Citadel",
 	},
 	{
 		day: 14,
-		title: "Day 14 — S-Rank Breach (CAMPAIGN CLIMAX)",
+		title: "Day 14 - Red Phase",
 		description:
-			"The roaming S-Rank Anomaly breaches the District core. Regardless of party progress, the final encounter fires. If party has not reached the Regent's Domain voluntarily, the Domain comes to them — S-Rank crashes through Bureau HQ.",
-		factionImpact: "All faction reps frozen at start of this event.",
-		linkedSceneName: "Gate: The Regent's Domain (S-Rank)",
+			"Containment fails unless the Anchor has been resolved. Domain weather and Anomaly migration begin crossing the Gate.",
+		linkedSceneName: "Gate Domain: Citadel Anchor Heart",
 	},
 ];

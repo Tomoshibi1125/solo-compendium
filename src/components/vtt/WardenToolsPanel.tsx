@@ -872,7 +872,10 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 								</AscendantWindow>
 
 								<AscendantWindow title="PARTY STATUS" compact>
-									<PartyDashboardPanel rawMembers={members} />
+									<PartyDashboardPanel
+										rawMembers={members}
+										campaignId={campaignId}
+									/>
 									<div className="mt-4 pt-4 border-t border-border/50">
 										<Button
 											variant="secondary"

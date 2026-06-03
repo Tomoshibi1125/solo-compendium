@@ -210,15 +210,34 @@ function parseJobTraitEffects(trait, jobLevel): Effect[] {
 
 ---
 
-### 4. **Regent/Gemini System** (Advanced Subclass Fusion) ✅ IMPLEMENTED
+### 4. **Regent/Gemini System** (Gestalt Full-Class Overlay) ✅ IMPLEMENTED
 
-**What It Replaces:** Standard subclasses
+> **Canon lock (May 2026):** A Regent is **NOT a subclass**. It is a **full
+> class overlay with its own complete progression**, applied via the D&D
+> *gestalt* variant rule. Once unlocked, the character levels the base **Job
+> and the Regent simultaneously** at the character's level — gaining both
+> feature sets, combined hit dice, unioned proficiencies/saves, and merged
+> spellcasting. Inspired by Solo Leveling's Jinwoo gaining the Shadow Monarch
+> and leveling it alongside his base class. Earlier drafts of this doc called
+> regents "subclasses" — that is wrong and has been corrected. The gestalt
+> engine lives in `src/lib/regentGestalt.ts`; the canonical rich class data is
+> `src/data/compendium/regents.ts` (NOT the thin `nineRegents.ts`, which is for
+> Gemini-fusion theming only).
+
+**What It Is:** A second full class, gestalted onto the Job.
+
+**Locked gestalt rules:**
+- **Regent level = character level**, applied **retroactively** on unlock (the instant power spike). All `class_features` with `level <= character level` apply immediately, then advance simultaneously.
+- **HP: ADDITIVE.** Each level: `avg(Job die) + avg(Regent die) + VIT mod` (VIT once per level, not per die). Surfaced reactively on the sheet (`getRegentHpContribution`) so it is correct the instant a Regent is unlocked — no stored-HP migration, base `hp_max` stays Job-only.
+- **Proficiencies & saving throws:** UNION of Job + Regent, de-duped (`getGestaltProficiencies`, unioned in `calculateCharacterStats`).
+- **Spellcasting:** when both Job and Regent cast, their caster levels MERGE via the PHB p.164 method into one combined slot table (`getGestaltSpellSlots`, wired through `useSpellSlots`). This is the **only** multi-class construct in the system — there is no generalized multiclassing. A non-casting Regent leaves the Job's native slots unchanged.
+- **AC:** best available base option from either class (engine takes the max).
 
 **How It Works:**
-- **Regent** = Sovereign-level subclass unlocked via quest/Warden gate (NOT automatic at level 3)
-- **Gemini Protocol** = Fusion of TWO Regents for hybrid abilities (DBZ-style fusion)
-- **Stat-based** - Regent type determined by highest ability score
-- **Auto-integrated** - `characterEngine.ts` loads regent/gemini features when Warden unlocks
+- **Regent** = full class overlay unlocked via quest/Warden gate (persisted in `character_regent_unlocks`, canonical `regents.ts` ids).
+- **Gemini Protocol** = Fusion of TWO Regents for hybrid abilities (DBZ-style fusion).
+- **Stat-based** - Regent type determined by highest ability score.
+- **Auto-integrated** - the derived-stats path (`useCharacterDerivedStats` → `calculateCharacterStats`, plus `useSpellSlots`) resolves unlocked regents to rich class data and applies the gestalt overlay.
 
 **Regent Types:**
 ```typescript
@@ -255,8 +274,8 @@ enum RegentType {
 ```
 
 **Difference from 5e:**
-- 5e: Subclass chosen at level 3, automatic progression
-- SA: Regent is **earned**, not leveled into
+- 5e: Subclass chosen at level 3, automatic progression within the one class.
+- RA: Regent is an **earned second full class**, gestalted onto the Job and leveling simultaneously at the character's level (not a subclass tier).
 
 **Implementation in Engine:**
 ```typescript

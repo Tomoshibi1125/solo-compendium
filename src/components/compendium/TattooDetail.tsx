@@ -1,6 +1,7 @@
 import { Boxes, Shield, Sparkles, Zap } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import {
 	getEffectLines,
 	getLimitationLines,
@@ -201,6 +202,17 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 					)}
 				</AscendantWindow>
 			)}
+			<DetailMetaFooter
+				discoveryLore={(data as { discovery_lore?: string }).discovery_lore}
+				tags={(data as { tags?: string[] }).tags}
+				sourceBook={(data as { source_book?: string }).source_book}
+				extra={[
+					{
+						label: "Mechanics",
+						value: (data as { mechanics?: unknown }).mechanics,
+					},
+				]}
+			/>
 		</div>
 	);
 };

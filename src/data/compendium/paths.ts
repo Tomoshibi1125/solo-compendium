@@ -100,7 +100,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "destroyer--tactician",
@@ -164,7 +164,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "destroyer--spell-breaker",
@@ -234,7 +234,7 @@ export const paths: Path[] = [
 				intelligence: 2,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "destroyer--bulwark",
@@ -298,7 +298,7 @@ export const paths: Path[] = [
 				strength: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "destroyer--last-stand",
@@ -362,7 +362,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "destroyer--phantom-blade",
@@ -432,7 +432,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker--escalating-resonance",
@@ -490,7 +490,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker--gate-beast",
@@ -548,7 +548,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker--mana-scars",
@@ -606,7 +606,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker--rift-storm",
@@ -664,7 +664,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker--absolute-zealot",
@@ -728,7 +728,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker--aetheric-anomaly",
@@ -792,7 +792,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin--gate-runner",
@@ -856,7 +856,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin--terminus",
@@ -920,7 +920,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin--weave-infiltrator",
@@ -984,7 +984,7 @@ export const paths: Path[] = [
 				intelligence: 2,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin--shadow-herald",
@@ -1048,7 +1048,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin--blade-dancer",
@@ -1112,7 +1112,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin--vanguard-outrider",
@@ -1176,7 +1176,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker--kinetic-core",
@@ -1234,7 +1234,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker--phantom-step",
@@ -1292,7 +1292,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker--aetheric-channeler",
@@ -1350,7 +1350,7 @@ export const paths: Path[] = [
 				wisdom: 2,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker--entropic-flow",
@@ -1408,7 +1408,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker--blade-conductor",
@@ -1466,7 +1466,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker--harmonic-surgeon",
@@ -1535,7 +1535,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage--detonation-specialist",
@@ -1593,7 +1593,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage--shield-compiler",
@@ -1651,7 +1651,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage--probability-mandate",
@@ -1709,7 +1709,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage--phantasmist",
@@ -1767,7 +1767,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage--rift-caller",
@@ -1825,7 +1825,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage--matter-weaver",
@@ -1883,7 +1883,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper--draconic-lineage",
@@ -1947,7 +1947,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper--aetheric-cascade",
@@ -2011,7 +2011,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper--shadow-magic",
@@ -2075,7 +2075,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper--storm-sorcery",
@@ -2145,7 +2145,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper--absolute-spark",
@@ -2209,7 +2209,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper--aberrant-mind",
@@ -2279,7 +2279,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant--void-lord",
@@ -2342,7 +2342,7 @@ export const paths: Path[] = [
 				intelligence: 3,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant--entropy-drinker",
@@ -2406,7 +2406,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant--wither-guard",
@@ -2470,7 +2470,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant--entropy-blade",
@@ -2533,7 +2533,7 @@ export const paths: Path[] = [
 				intelligence: 3,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant--plague-weaver",
@@ -2597,7 +2597,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant--threshold-walker",
@@ -2661,7 +2661,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner--biome-architect",
@@ -2731,7 +2731,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner--apex-shifter",
@@ -2795,7 +2795,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner--dream-weaver",
@@ -2853,7 +2853,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner--pack-commander",
@@ -2916,7 +2916,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner--symbiotic-host",
@@ -2980,7 +2980,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner--cosmic-conduit",
@@ -3044,7 +3044,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald--restoration-mandate",
@@ -3113,7 +3113,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald--radiance-mandate",
@@ -3182,7 +3182,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald--combat-mandate",
@@ -3251,7 +3251,7 @@ export const paths: Path[] = [
 				strength: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald--knowledge-mandate",
@@ -3314,7 +3314,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald--storm-mandate",
@@ -3383,7 +3383,7 @@ export const paths: Path[] = [
 				strength: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald--triage-mandate",
@@ -3452,7 +3452,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor--glamour-weaver",
@@ -3510,7 +3510,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor--infernal-conduit",
@@ -3568,7 +3568,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor--void-whisperer",
@@ -3626,7 +3626,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor--radiant-vessel",
@@ -3689,7 +3689,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor--cursed-blade",
@@ -3753,7 +3753,7 @@ export const paths: Path[] = [
 				strength: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor--deep-dweller",
@@ -3822,7 +3822,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker--apex-hunter",
@@ -3880,7 +3880,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker--pack-leader",
@@ -3938,7 +3938,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker--umbral-hunter",
@@ -4002,7 +4002,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker--rift-strider",
@@ -4066,7 +4066,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker--apex-slayer",
@@ -4130,7 +4130,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker--hive-synchronist",
@@ -4194,7 +4194,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight--absolute-devotion",
@@ -4258,7 +4258,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight--retribution-mandate",
@@ -4322,7 +4322,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight--verdant-mandate",
@@ -4386,7 +4386,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight--dominance-mandate",
@@ -4450,7 +4450,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight--atonement-mandate",
@@ -4514,7 +4514,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight--exaltation-mandate",
@@ -4578,7 +4578,7 @@ export const paths: Path[] = [
 				charisma: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer--aether-chemist-design",
@@ -4647,7 +4647,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer--aether-vessel-design",
@@ -4717,7 +4717,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer--resonance-siege-design",
@@ -4787,7 +4787,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer--synchronist-binary-design",
@@ -4857,7 +4857,7 @@ export const paths: Path[] = [
 				constitution: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer--swarm-conduit-design",
@@ -4921,7 +4921,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer--aether-breacher-design",
@@ -4985,7 +4985,7 @@ export const paths: Path[] = [
 				wisdom: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol--lore-resonance",
@@ -5042,7 +5042,7 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol--dance-resonance",
@@ -5099,7 +5099,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol--hypnotic-resonance",
@@ -5157,7 +5157,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol--blade-resonance",
@@ -5220,7 +5220,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol--shadow-resonance",
@@ -5278,7 +5278,7 @@ export const paths: Path[] = [
 				dexterity: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol--genesis-resonance",
@@ -5336,6 +5336,6 @@ export const paths: Path[] = [
 				intelligence: 1,
 			},
 		},
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 ];

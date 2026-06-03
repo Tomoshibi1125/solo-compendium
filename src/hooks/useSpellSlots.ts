@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
+import type { CasterType } from "@/lib/characterCalculations";
 import {
 	getCasterType,
 	getSpellSlotsPerLevel,
@@ -16,9 +18,58 @@ import {
 	upsertLocalSpellSlot,
 } from "@/lib/guestStore";
 import {
+	type CasterFraction,
+	getGestaltSpellSlots,
+	getRegentCasterFraction,
+	resolveRegents,
+} from "@/lib/regentGestalt";
+import {
 	getRuneGrantedGeneralSpellSlotBonuses,
 	promoteRuneGrantedSpellSlotsForLevel,
 } from "@/lib/runeSlotPromotion";
+
+/** Map a Job caster type to its PHB p.164 caster-level fraction. */
+const casterTypeToFraction = (caster: CasterType): CasterFraction => {
+	switch (caster) {
+		case "full":
+		case "pact": // approximated as full for the gestalt merge table
+			return "full";
+		case "half":
+		case "artificer":
+			return "half";
+		case "third":
+			return "third";
+		default:
+			return "none";
+	}
+};
+
+/**
+ * Expected max spell slots for a character, accounting for the gestalt Regent
+ * overlay. A Regent is a full class overlay (not a subclass): when an unlocked
+ * Regent is itself a spellcaster, its caster level merges with the Job's via
+ * the PHB p.164 method (this system's only multi-class construct). When no
+ * unlocked regent casts, the Job's native progression is returned unchanged —
+ * preserving exact existing behavior for every non-gestalt character.
+ */
+export const getExpectedSlotsWithGestalt = (
+	job: JobReference,
+	characterLevel: number,
+	regentIds: readonly string[],
+): Record<number, number> => {
+	const casterType = getCasterType(job);
+	const castingRegents = resolveRegents(regentIds).filter(
+		(r) => getRegentCasterFraction(r) !== "none",
+	);
+	if (castingRegents.length === 0) {
+		return getSpellSlotsPerLevel(casterType, characterLevel);
+	}
+	return getGestaltSpellSlots(
+		casterTypeToFraction(casterType),
+		castingRegents,
+		characterLevel,
+	);
+};
 
 export interface SpellSlotData {
 	level: number;
@@ -73,13 +124,25 @@ export const useSpellSlots = (
 	job: JobReference,
 	characterLevel: number,
 ) => {
+	// Gestalt Regent overlay: fetch unlocked regents internally so every caller
+	// (sheet, PowersList, SpellsList, SpellSlotsDisplay) stays consistent with
+	// zero signature churn. When a casting Regent is unlocked its caster level
+	// merges with the Job's (PHB p.164). React Query dedupes by characterId.
+	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(characterId);
+	const regentIds = regentUnlocks.map((u) => u.regent_id);
+
 	return useQuery({
-		queryKey: ["spell-slots", characterId],
+		queryKey: ["spell-slots", characterId, [...regentIds].sort().join(",")],
 		queryFn: async (): Promise<SpellSlotData[]> => {
 			if (isLocalCharacterId(characterId)) {
-				// Local: ensure slots exist based on derived caster progression.
+				// Local: ensure slots exist based on derived caster progression
+				// (gestalt-merged when a casting Regent is unlocked).
 				const casterType = getCasterType(job);
-				const expectedSlots = getSpellSlotsPerLevel(casterType, characterLevel);
+				const expectedSlots = getExpectedSlotsWithGestalt(
+					job,
+					characterLevel,
+					regentIds,
+				);
 				const isPactCaster = casterType === "pact";
 				const runeSlotBonuses =
 					await getRuneGrantedGeneralSpellSlotBonuses(characterId);
@@ -160,9 +223,13 @@ export const useSpellSlots = (
 				throw error;
 			}
 
-			// Get expected slots based on caster type and level
-			const casterType = getCasterType(job);
-			const expectedSlots = getSpellSlotsPerLevel(casterType, characterLevel);
+			// Get expected slots based on caster type and level (gestalt-merged
+			// when a casting Regent is unlocked).
+			const expectedSlots = getExpectedSlotsWithGestalt(
+				job,
+				characterLevel,
+				regentIds,
+			);
 			const runeSlotBonuses =
 				await getRuneGrantedGeneralSpellSlotBonuses(characterId);
 

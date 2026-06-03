@@ -22,6 +22,7 @@ import {
 } from "@/lib/actionResolution";
 import { getAnomalyImageSrc } from "@/lib/anomalyImageResolver";
 import { getAbilityModifier } from "@/lib/characterCalculations";
+import { numericCrToLabel } from "@/lib/monster5eTable";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
 
@@ -89,14 +90,29 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 	const navigate = useNavigate();
 	const [actions, setActions] = useState<AnomalyAction[]>([]);
 	const [traits, setTraits] = useState<AnomalyTrait[]>([]);
-	const actionHash = useMemo(
-		() => JSON.stringify(data.actions || []),
-		[data.actions],
-	);
-	const traitHash = useMemo(
-		() => JSON.stringify(data.traits || []),
-		[data.traits],
-	);
+	// Tolerant of both the raw anomaly shape (`actions`/`traits`) and the
+	// provider shape (`Anomaly_actions`/`Anomaly_traits` + separate
+	// reactions/bonus_actions/lair_actions/legendary_actions arrays). All
+	// action-like arrays are merged and tagged so the per-section renders pick
+	// them up.
+	const actionHash = useMemo(() => {
+		const d = data as unknown as Record<string, unknown>;
+		const arr = (v: unknown) =>
+			Array.isArray(v) ? (v as Record<string, unknown>[]) : [];
+		const tag = (list: Record<string, unknown>[], action_type: string) =>
+			list.map((a) => ({ ...a, action_type: a.action_type ?? action_type }));
+		return JSON.stringify([
+			...tag(arr(d.Anomaly_actions ?? d.actions), "action"),
+			...tag(arr(d.bonus_actions), "bonus"),
+			...tag(arr(d.reactions), "reaction"),
+			...tag(arr(d.lair_actions), "lair"),
+			...tag(arr(d.legendary_actions), "legendary"),
+		]);
+	}, [data]);
+	const traitHash = useMemo(() => {
+		const d = data as unknown as Record<string, unknown>;
+		return JSON.stringify(d.Anomaly_traits ?? d.traits ?? []);
+	}, [data]);
 
 	const mapStaticAction = useCallback(
 		(a: Record<string, unknown>, idx: number): AnomalyAction => {
@@ -204,21 +220,77 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 		}
 	}, [actionHash, traitHash, mapStaticAction, mapStaticTrait]);
 
-	const speeds = data.speed ? `${data.speed} ft.` : "30 ft.";
+	// Normalized field reads — tolerant of raw (ac/hp/rank/stats) and provider
+	// (armor_class/hit_points_average/gate_rank/flattened abilities) shapes so a
+	// complete DDB-style stat block renders regardless of source.
+	const d = data as unknown as Record<string, unknown>;
+	const num = (v: unknown): number | undefined =>
+		typeof v === "number" ? v : undefined;
+	const rankVal = ((d.gate_rank as string) ?? (d.rank as string) ?? "") || "";
+	const speedWalk =
+		num(d.speed_walk) ??
+		num(d.speed) ??
+		num((d.stats as Record<string, unknown> | undefined)?.speed) ??
+		30;
+	const speeds = `${speedWalk} ft.`;
 
 	const regularActions = actions.filter((a) => a.action_type === "action");
 	const bonusActions = actions.filter((a) => a.action_type === "bonus");
 	const reactions = actions.filter((a) => a.action_type === "reaction");
 	const legendaryActions = actions.filter((a) => a.action_type === "legendary");
+	const lairActions = actions.filter((a) => a.action_type === "lair");
+	const regionalEffects = Array.isArray(d.regional_effects)
+		? (d.regional_effects as Array<{ name?: string; description?: string }>)
+		: [];
 
-	const gateStyle = data.rank ? gateRankColors[data.rank] : null;
+	const gateStyle = rankVal ? gateRankColors[rankVal] : null;
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const anomalySize = formatRegentVernacular(data.size || "Medium");
-	const anomalyType = formatRegentVernacular(data.type || "Unknown");
-	const armorClass = data.ac ?? 0;
-	const hitPointsAverage = data.hp ?? 0;
-	const hitPointsFormula = "";
-	const cr = data.stats?.challenge_rating?.toString() || data.cr || "—";
+	const anomalyType = formatRegentVernacular(
+		((d.creature_type as string) ?? data.type) || "Unknown",
+	);
+	const armorClass = num(d.armor_class) ?? num(d.ac) ?? 0;
+	const acSource =
+		((d.ac_source as string) ?? (d.armor_type as string) ?? "") || "";
+	const hitPointsAverage = num(d.hit_points_average) ?? num(d.hp) ?? 0;
+	const hitPointsFormula = (d.hit_points_formula as string) ?? "";
+	const abilityScores = ((d.stats as Record<string, unknown> | undefined)
+		?.ability_scores as Record<string, number> | undefined) ?? {
+		strength: num(d.str) ?? 10,
+		agility: num(d.agi) ?? 10,
+		vitality: num(d.vit) ?? 10,
+		intelligence: num(d.int) ?? 10,
+		sense: num(d.sense) ?? 10,
+		presence: num(d.pre) ?? 10,
+	};
+	const skills =
+		d.skills && typeof d.skills === "object" && !Array.isArray(d.skills)
+			? (d.skills as Record<string, number>)
+			: null;
+	const savingThrows =
+		d.saving_throws &&
+		typeof d.saving_throws === "object" &&
+		!Array.isArray(d.saving_throws)
+			? (d.saving_throws as Record<string, number>)
+			: null;
+	const sensesText =
+		typeof d.senses === "string"
+			? d.senses
+			: ((d.senses as { text?: string } | undefined)?.text ?? null);
+	const languagesText = Array.isArray(d.languages)
+		? (d.languages as string[]).join(", ")
+		: typeof d.languages === "string"
+			? (d.languages as string)
+			: null;
+	const fmtBonus = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
+	// CR can be a fraction (1/8, 1/4, 1/2) for low-rank anomalies — render the
+	// canonical 5e label rather than the raw decimal (0.125, etc.).
+	const rawCr = (d.stats as Record<string, unknown> | undefined)
+		?.challenge_rating;
+	const cr =
+		typeof rawCr === "number"
+			? numericCrToLabel(rawCr)
+			: (d.cr as string) || "—";
 	const isBoss = false; // logic for boss removed in favour of explicit rank properties.
 
 	// Resolve hero image: prefer explicit data.image, then data.image_url,
@@ -303,7 +375,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 							{anomalySize} {anomalyType}
 							{data.alignment && `, ${formatRegentVernacular(data.alignment)}`}
 						</span>
-						{data.rank && gateStyle && (
+						{rankVal && gateStyle && (
 							<Badge
 								className={cn(
 									gateStyle.bg,
@@ -312,7 +384,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 									gateStyle.glow,
 								)}
 							>
-								{data.rank}-Rank Rift
+								{rankVal}-Rank Rift
 							</Badge>
 						)}
 						{isBoss && (
@@ -378,6 +450,9 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 						<Shield className="w-5 h-5 text-blue-400" />
 						<span className="font-display text-2xl">{armorClass}</span>
 					</div>
+					{acSource && (
+						<span className="text-xs text-muted-foreground">({acSource})</span>
+					)}
 				</AscendantWindow>
 
 				<AscendantWindow title="HIT POINTS" compact>
@@ -385,11 +460,14 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 						<Heart className="w-5 h-5 text-red-400" />
 						<span className="font-display text-2xl">{hitPointsAverage}</span>
 					</div>
-					{hitPointsFormula.length > 0 && (
-						<span className="text-xs text-muted-foreground">
-							{hitPointsFormula}
-						</span>
-					)}
+					{(() => {
+						const hd = (data as { hit_dice?: string }).hit_dice;
+						const formula =
+							hitPointsFormula.length > 0 ? hitPointsFormula : (hd ?? "");
+						return formula ? (
+							<span className="text-xs text-muted-foreground">{formula}</span>
+						) : null;
+					})()}
 				</AscendantWindow>
 
 				<AscendantWindow title="SPEED" compact>
@@ -413,7 +491,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 					<div className="flex items-center gap-2">
 						<Swords className="w-5 h-5 text-orange-400" />
 						<span className="font-display text-2xl">
-							{(data.rank || "—").toUpperCase()}
+							{(rankVal || "—").toUpperCase()}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -423,20 +501,17 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 			<StatBlock
 				title="ABILITY SCORES"
 				copyable
-				copyContent={`${displayName} - Ability Scores: STR ${data.stats?.ability_scores?.strength ?? 10} (${getModifier(data.stats?.ability_scores?.strength ?? 10)}), AGI ${data.stats?.ability_scores?.agility ?? 10} (${getModifier(data.stats?.ability_scores?.agility ?? 10)}), VIT ${data.stats?.ability_scores?.vitality ?? 10} (${getModifier(data.stats?.ability_scores?.vitality ?? 10)}), INT ${data.stats?.ability_scores?.intelligence ?? 10} (${getModifier(data.stats?.ability_scores?.intelligence ?? 10)}), SENSE ${data.stats?.ability_scores?.sense ?? 10} (${getModifier(data.stats?.ability_scores?.sense ?? 10)}), PRE ${data.stats?.ability_scores?.presence ?? 10} (${getModifier(data.stats?.ability_scores?.presence ?? 10)})`}
+				copyContent={`${displayName} - Ability Scores: STR ${abilityScores.strength ?? 10} (${getModifier(abilityScores.strength ?? 10)}), AGI ${abilityScores.agility ?? 10} (${getModifier(abilityScores.agility ?? 10)}), VIT ${abilityScores.vitality ?? 10} (${getModifier(abilityScores.vitality ?? 10)}), INT ${abilityScores.intelligence ?? 10} (${getModifier(abilityScores.intelligence ?? 10)}), SENSE ${abilityScores.sense ?? 10} (${getModifier(abilityScores.sense ?? 10)}), PRE ${abilityScores.presence ?? 10} (${getModifier(abilityScores.presence ?? 10)})`}
 				id="anomaly-abilities"
 			>
 				<div className="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
 					{[
-						{ name: "STR", value: data.stats?.ability_scores?.strength ?? 10 },
-						{ name: "AGI", value: data.stats?.ability_scores?.agility ?? 10 },
-						{ name: "VIT", value: data.stats?.ability_scores?.vitality ?? 10 },
-						{
-							name: "INT",
-							value: data.stats?.ability_scores?.intelligence ?? 10,
-						},
-						{ name: "SENSE", value: data.stats?.ability_scores?.sense ?? 10 },
-						{ name: "PRE", value: data.stats?.ability_scores?.presence ?? 10 },
+						{ name: "STR", value: abilityScores.strength ?? 10 },
+						{ name: "AGI", value: abilityScores.agility ?? 10 },
+						{ name: "VIT", value: abilityScores.vitality ?? 10 },
+						{ name: "INT", value: abilityScores.intelligence ?? 10 },
+						{ name: "SENSE", value: abilityScores.sense ?? 10 },
+						{ name: "PRE", value: abilityScores.presence ?? 10 },
 					].map((stat) => (
 						<div key={stat.name} className="glass-card p-3">
 							<div className="font-display text-xs text-muted-foreground mb-1">
@@ -514,6 +589,48 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 					</AscendantWindow>
 				)}
 			</div>
+
+			{/* Proficiencies: Saving Throws, Skills, Senses, Languages */}
+			{(savingThrows || skills || sensesText || languagesText) && (
+				<AscendantWindow title="PROFICIENCIES & SENSES">
+					<div className="space-y-2 text-sm">
+						{savingThrows && Object.keys(savingThrows).length > 0 && (
+							<div>
+								<span className="font-heading text-primary">
+									Saving Throws:{" "}
+								</span>
+								<span className="text-muted-foreground">
+									{Object.entries(savingThrows)
+										.map(([k, v]) => `${k} ${fmtBonus(v)}`)
+										.join(", ")}
+								</span>
+							</div>
+						)}
+						{skills && Object.keys(skills).length > 0 && (
+							<div>
+								<span className="font-heading text-primary">Skills: </span>
+								<span className="text-muted-foreground">
+									{Object.entries(skills)
+										.map(([k, v]) => `${k} ${fmtBonus(v)}`)
+										.join(", ")}
+								</span>
+							</div>
+						)}
+						{sensesText && (
+							<div>
+								<span className="font-heading text-primary">Senses: </span>
+								<span className="text-muted-foreground">{sensesText}</span>
+							</div>
+						)}
+						{languagesText && (
+							<div>
+								<span className="font-heading text-primary">Languages: </span>
+								<span className="text-muted-foreground">{languagesText}</span>
+							</div>
+						)}
+					</div>
+				</AscendantWindow>
+			)}
 
 			{/* Traits */}
 			{traits.length > 0 && (
@@ -724,12 +841,137 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 				</StatBlock>
 			)}
 
+			{/* Lair Actions */}
+			{lairActions.length > 0 && (
+				<StatBlock
+					title="LAIR ACTIONS"
+					className="border-purple-500/30 border-2"
+					id="anomaly-lair"
+				>
+					<p className="text-sm text-foreground mb-4 font-medium leading-relaxed">
+						On initiative count 20 (losing initiative ties), the anomaly takes a
+						lair action to cause one of the following effects.
+					</p>
+					<StatSection title="">
+						{lairActions.map((action) => (
+							<div
+								key={action.id}
+								className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0"
+							>
+								<h4 className="font-heading font-semibold text-purple-300 mb-1 text-base">
+									{formatRegentVernacular(action.name)}
+								</h4>
+								<p className="text-sm text-foreground leading-relaxed">
+									<AutoLinkText text={action.description} />
+								</p>
+							</div>
+						))}
+					</StatSection>
+				</StatBlock>
+			)}
+
+			{/* Regional Effects */}
+			{regionalEffects.length > 0 && (
+				<StatBlock title="REGIONAL EFFECTS" id="anomaly-regional">
+					<StatSection title="">
+						{regionalEffects.map((effect) => (
+							<div
+								key={`${data.id}:regional:${effect.name || effect.description?.slice(0, 32) || "fx"}`}
+								className="mb-4 last:mb-0 pb-4 last:pb-0 border-b border-border/30 last:border-b-0"
+							>
+								{effect.name && (
+									<h4 className="font-heading font-semibold text-primary mb-1 text-base">
+										{formatRegentVernacular(effect.name)}
+									</h4>
+								)}
+								<p className="text-sm text-foreground leading-relaxed">
+									<AutoLinkText text={effect.description ?? ""} />
+								</p>
+							</div>
+						))}
+					</StatSection>
+				</StatBlock>
+			)}
+
 			{data.description && (
 				<StatBlock title="DESCRIPTION" id="anomaly-description">
 					<p className="text-foreground leading-relaxed text-base">
 						<AutoLinkText text={data.description} />
 					</p>
 				</StatBlock>
+			)}
+
+			{(() => {
+				const abilities = (data as { abilities?: unknown }).abilities;
+				const list = Array.isArray(abilities)
+					? abilities.filter(
+							(a): a is string => typeof a === "string" && a.trim().length > 0,
+						)
+					: [];
+				return list.length > 0 ? (
+					<StatBlock title="ABILITIES">
+						<div className="flex flex-wrap gap-2">
+							{list.map((a) => (
+								<Badge key={a} variant="secondary" className="text-xs">
+									{formatRegentVernacular(a)}
+								</Badge>
+							))}
+						</div>
+					</StatBlock>
+				) : null;
+			})()}
+
+			{(() => {
+				const weaknesses = (data as { weaknesses?: unknown }).weaknesses;
+				const list = Array.isArray(weaknesses)
+					? weaknesses.filter(
+							(w): w is string => typeof w === "string" && w.trim().length > 0,
+						)
+					: [];
+				return list.length > 0 ? (
+					<StatBlock title="WEAKNESSES">
+						<div className="flex flex-wrap gap-2">
+							{list.map((w) => (
+								<Badge key={w} variant="outline" className="text-xs">
+									{formatRegentVernacular(w)}
+								</Badge>
+							))}
+						</div>
+					</StatBlock>
+				) : null;
+			})()}
+
+			{(() => {
+				const pb = (data as { proficiency_bonus?: number }).proficiency_bonus;
+				const rarity = (data as { rarity?: string }).rarity;
+				return pb || rarity ? (
+					<div className="flex flex-wrap items-center gap-2 px-2">
+						{typeof pb === "number" && (
+							<Badge variant="outline" className="text-xs">
+								Proficiency Bonus +{pb}
+							</Badge>
+						)}
+						{rarity && (
+							<Badge variant="outline" className="text-xs capitalize">
+								{rarity}
+							</Badge>
+						)}
+					</div>
+				) : null;
+			})()}
+
+			{(data as { source_book?: string }).source_book && (
+				<div className="flex justify-end p-2">
+					<Badge
+						variant="outline"
+						className="text-[10px] opacity-50 uppercase tracking-tighter"
+					>
+						Source:{" "}
+						{formatRegentVernacular(
+							(data as { source_book?: string }).source_book ?? "",
+						)}
+					</Badge>
+				</div>
 			)}
 		</div>
 	);

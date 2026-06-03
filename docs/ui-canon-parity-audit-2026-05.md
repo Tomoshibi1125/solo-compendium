@@ -653,6 +653,29 @@ The `canonicalCompendium.test.ts:476 "only returns complete entries through lear
 
 ---
 
+## O. App-wide UI↔data parity — truth + completeness (May 2026, follow-up)
+
+Goal: the UI reflects ALL data, 100%, app-wide (D&D-Beyond-style) — both **truth** (computed values == engine) and **completeness** (every populated field rendered).
+
+### Truth (Part 1) — fixed
+- **HP inflation (data corruption):** the derived write-through persisted display HP (base+gestalt+custom) into `characters.hp_max`, which the engine re-read as the base → runaway inflation. Fixed: `persistDerivedStats` no longer writes `hp_max`; write-through drops it; added `getEffectiveHpMax(character, regentHpContribution)` (override-aware base + gestalt).
+- **Sheet HP:** `CharacterSheetV2` HP display + damage/heal/death-save clamps now use `effectiveHpMax` (= `stats.calculatedStats.hpMax`), not the raw cache — honors override + gestalt, no lag.
+- **Rift Favor:** sheet max/die from `getRiftFavorMax/Die(level)` (not stale columns).
+- **External readers:** `VTTCharacterPanel` + `PartyDashboardPanel` show gestalt-true HP via `getEffectiveHpMax` + (batched) regent unlocks; party Rift Favor max from level.
+- **SpellSlotsDisplay:** spell DC/attack via `calculateSpellSaveDC/AttackBonus` (barrel-exported).
+- **Level-up:** Rift die preview via `calculateRiftFavorDie(level/newLevel)`.
+
+### Completeness (Part 2) — fixed, DDB-style
+Every compendium detail view now surfaces every populated data field. Built `DetailMetaFooter` (shared flavor/lore/discovery_lore/tags/source + generic `extra` rows). Brought laggard views up to standard: SpellDetail (level/concentration/ritual/flavor/tags/rarity/discovery_lore), FeatDetail (effects/discovery_lore/rarity/repeatable/tags), TechniqueDetail, ItemDetail (attunement/armor props/tags/cost_credits), AnomalyDetail (abilities/weaknesses/hit_dice/source/proficiency_bonus/rarity), Regent/Background/Rune/Sigil/Relic/Condition/Skill/Tattoo (source/tags/flavor/lore + category-specific fields).
+
+### Guards (Part 3)
+- `src/lib/__tests__/detailFieldCoverage.test.ts` — for 14 categories, asserts every populated (provider-normalized) data key is referenced by its detail view, minus an allowlist of provider-injected cross-normalization aliases / internal keys (each with a reason). Fails if a new data field is silently dropped.
+- `src/lib/__tests__/uiTruthParity.test.ts` — HP/Rift-Favor/spell-DC truth + structural guards (persistDerivedStats omits `hp_max`; CharacterSheetV2 never reads raw `hp_max`/`rift_favor_*` for display).
+
+### Known pre-existing (not introduced; out of scope)
+- `SigilDetail` line ~31 `noStaticElementInteractions` lint error on a pre-existing `draggable` div.
+- `epic` vs `very-rare` rarity dual-vocabulary (logged earlier).
+
 ## Sources
 
 Web-confirmed 5e SRD baseline for inherited rules:
@@ -660,3 +683,54 @@ Web-confirmed 5e SRD baseline for inherited rules:
 - [Spell Save DC in D&D 5e](https://geektogeekmedia.com/geekery/tabletop-gaming/how-to-calculate-spell-save-dc-dnd-5e/)
 - [Multiclass spell slots — D&D 5e PHB p. 164](https://www.quora.com/How-do-I-determine-spell-slots-for-my-multiclass-character-in-5e-Page-164-of-the-PHB-makes-little-sense-My-character-is-a-Fighter1-Cleric2-who-is-adding-a-level-of-Ranger-So-my-spellcasting-level-is-2-1-3)
 - [D&D Beyond sheet sections](https://dndbeyond-support.wizards.com/hc/en-us/articles/7747193946388-Sheet-Sections)
+
+---
+
+## N. Gestalt Regent overlay + final remediation (May 2026, follow-up)
+
+A canon correction during finalization: **a Regent is a full class overlay
+(gestalt), not a subclass.** Once unlocked, the Job and Regent level
+simultaneously at the character's level. Investigation found the engine treated
+regents as a flat feature bag (`aggregateRegentFeatures` read the thin
+`nineRegents.ts` `features[]`, ignoring level, hit dice, proficiencies, saves,
+and spellcasting), while the live sheet's authoritative path
+(`useCharacterDerivedStats` → `calculateCharacterStats`, `useSpellSlots`) never
+applied a regent overlay at all.
+
+### Locked gestalt rules (user-confirmed)
+- **HP: ADDITIVE** — `avg(Job die) + avg(Regent die) + VIT (once/level)`. The Solo-Leveling power spike. Applied **reactively** so it is retroactive the instant a regent is unlocked (stored `hp_max` stays Job-only — no migration, no double count).
+- **Regent level = character level** (gestalt, retroactive on unlock).
+- **Spellcasting:** Job + Regent caster levels MERGE via PHB p.164 into one slot table (the system's only multi-class construct; no generalized multiclassing). Non-casting regent → Job slots unchanged.
+- **Proficiencies & saving throws:** union of Job + Regent, de-duped.
+- **AC:** best base option from either class.
+
+### What shipped
+| Area | Change | Files |
+|---|---|---|
+| Pure gestalt engine | New `regentGestalt.ts` — resolve canonical `regents.ts` by id, additive-HP contribution, prof/save union (display-name→code/id normalization), leveled features (caster `class_features` + martial `abilities[]`/`features[]`), PHB-p.164 slot merge | `src/lib/regentGestalt.ts` |
+| Reactive profs/saves | Union gestalt proficiencies into `calculateCharacterStats` | `5eCharacterCalculations.ts`, `useCharacterDerivedStats.ts` |
+| Reactive additive HP | `getRegentHpContribution` added to displayed HP max | `useCharacterDerivedStats.ts` |
+| Spell-slot merge | `useSpellSlots` fetches unlocked regents internally + gestalt-merges caster levels (casting regent only; non-caster jobs unchanged) | `useSpellSlots.ts` |
+| UI | `RegentFeaturesDisplay` gates features on **character level** (was hardcoded `regentLevel={1}`) + new "Gestalt Overlay" summary (additive hit die, added saves/skills, caster-merge note) | `RegentFeaturesDisplay.tsx`, `CharacterSheetV2.tsx` |
+| Doc | Rewrote `system-ascendant-mechanics.md` regent section with a "Canon lock" (gestalt full-class overlay, not subclass) | `docs/system-ascendant-mechanics.md` |
+| Tests | `regentGestalt.test.ts` (16) + `compendiumStructure.test.ts` (8: M11 paths, M12 regents, M13 gap-fill items) | `src/lib/__tests__/*` |
+
+### Group Z cleanups (closed)
+- **Inline `(score-10)/2` → `getAbilityModifier`** routed in `AttributesStep`, `AbilityScoreStrip`, `JobResourcePools` (missed), `useCharacterRoll` (missed), `unarmoredDefense`, `equipmentModifiers`, `advancedDiceEngine`. Canonical impls + test-locals left as-is.
+- **L1:** `core-rules.ts:getRiftFavorDie` kept with a sync comment (values identical; avoids a types→engine cycle, per the M3 precedent).
+- **M4:** already resolved between turns — `useCombatActions` spell branch uses the dedicated `resolveSpellActionFormula` (spellcasting ability), with a design-note comment.
+- **M7/L3 (anomalies):** the provider already normalizes raw lowercase `ability_scores` keys into canonical flat `str/agi/...` fields (locked by `compendiumCompleteness.test.ts`). No risky 243-entry rewrite — display is already canon-correct.
+- **M11/M12/M13:** new structural-coverage tests added; fixed one real M13 finding (see below).
+- Previously-applied items re-verified consistent: M1, M2, M3, M6, M10, most of L1.
+
+### New finding fixed this pass
+- **M13 — gap-fill rarity vocabulary:** flagged 202 `items_gap_fill` entries; confirmed `epic` is the canonical RA item tier per the `Item` type (`common/uncommon/rare/epic/legendary`), with dedicated UI color maps and use across powers/relics/techniques. The generator now documents that `epic` is intentional. **Cross-system note (documented follow-up, not changed):** items use `epic` while core-rules `Rarity` (relics) uses `very-rare` — a dual rarity vocabulary worth unifying under a single canon decision in a future pass (touches the `Item` type, ~33 data entries, and 3 UI rarity maps).
+
+### Final verification
+| Check | Result |
+|---|---|
+| `npx tsc -p tsconfig.json --noEmit` | ✅ PASS (exit 0) |
+| `npx vitest run --pool=vmThreads` (full suite) | ✅ 1589 tests pass / 28 skipped. The lone file flagged — `jobAwakeningFeatures.test.ts` — fails **only** under `vmThreads` (its `installIsolatedLocalStorage` helper can't reassign the read-only `globalThis.localStorage` in that pool); it passes 28/28 under the default pool. Not a regression. |
+| `npx @biomejs/biome check --write` (changed files) | ✅ clean |
+
+**Environment note:** Node v25.6.1 + Vitest 4 — the default worker pools hang on bulk runs (60 s spawn timeout), so the suite is run with `--pool=vmThreads`. That pool makes `globalThis.localStorage` read-only, which is the sole cause of the `jobAwakeningFeatures` flag. Recommended follow-up: pin a Node LTS or set the pool in `vitest.config.ts`, and make `installIsolatedLocalStorage` use `Object.defineProperty` so it works under both pools.

@@ -979,6 +979,10 @@ function generate() {
 				const rawItem = {
 					id,
 					name,
+					// RA items use a 6-tier rarity scheme (common/uncommon/rare/epic/
+					// legendary) per the Item type in src/data/compendium/items.ts —
+					// "epic" is canonical here (distinct from the core-rules Rarity
+					// union used by relics, which uses "very-rare").
 					rarity,
 					type: archetypeToType(archetype),
 					weight: weightFor(archetype),

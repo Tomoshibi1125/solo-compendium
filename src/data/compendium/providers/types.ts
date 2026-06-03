@@ -293,4 +293,5 @@ export interface StaticDataProvider {
 	getRollableTables: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }

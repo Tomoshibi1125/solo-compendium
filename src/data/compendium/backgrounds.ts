@@ -61,7 +61,7 @@ export const backgrounds: StaticBackground[] = [
 			"I have night terrors about the things I saw in the dark.",
 			"I secretly believe the Sovereigns are right and humanity is doomed.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-02",
@@ -122,7 +122,7 @@ export const backgrounds: StaticBackground[] = [
 			"I mistrust Authority and official Ascendant Bureau protocols.",
 			"I rely heavily on sedatives or alcohol to sleep.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-03",
@@ -183,7 +183,7 @@ export const backgrounds: StaticBackground[] = [
 			"I prioritize saving data and research over saving lives.",
 			"I have massive impostor syndrome despite my high grades.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-04",
@@ -244,7 +244,7 @@ export const backgrounds: StaticBackground[] = [
 			"I refuse to show weakness, even when mortally wounded.",
 			"I micromanage everything to a detrimental degree.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-05",
@@ -306,7 +306,7 @@ export const backgrounds: StaticBackground[] = [
 			"I sometimes intentionally misdirect rival guilds.",
 			"I am addicted to the adrenaline of near-misses.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-06",
@@ -367,7 +367,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am deeply superstitious.",
 			"I panic when I am in a 'dead zone' with no ambient mana.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-07",
@@ -428,7 +428,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am hunted by the Ascendant Bureau as a potential threat.",
 			"I occasionally lose control of my body to the entity.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-08",
@@ -489,7 +489,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am overly aggressive toward insubordination.",
 			"I drink heavily to forget the faces of the men I lost.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-09",
@@ -550,7 +550,7 @@ export const backgrounds: StaticBackground[] = [
 			"I become violently angry if my work is interrupted.",
 			"I am physically weak and rely entirely on my tech.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-10",
@@ -611,7 +611,7 @@ export const backgrounds: StaticBackground[] = [
 			"I secretly desire the power of the things I guard.",
 			"I suffer from extreme agoraphobia after years underground.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-11",
@@ -675,7 +675,7 @@ export const backgrounds: StaticBackground[] = [
 			"I struggle to show empathy or emotional support.",
 			"I will abandon the mission if the math says we can't win.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-12",
@@ -737,7 +737,7 @@ export const backgrounds: StaticBackground[] = [
 			"I will take foolish risks to get a lead.",
 			"I hold deep grudges against authority figures.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-13",
@@ -799,7 +799,7 @@ export const backgrounds: StaticBackground[] = [
 			"I have a gambling addiction that drains my hard-earned credits.",
 			"I hoard useless junk 'just in case it's valuable later.'",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-14",
@@ -861,7 +861,7 @@ export const backgrounds: StaticBackground[] = [
 			"I prioritize the Association's reputation over human lives.",
 			"I am a stickler for rules to a highly detrimental degree.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-15",
@@ -923,7 +923,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am a compulsive liar.",
 			"I hoard wealth but refuse to spend it on improving my life.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-16",
@@ -985,7 +985,7 @@ export const backgrounds: StaticBackground[] = [
 			"I hold onto grudges forever.",
 			"I lack formal education and struggle with complex technology or magic.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-17",
@@ -1047,7 +1047,7 @@ export const backgrounds: StaticBackground[] = [
 			"I will ruthlessly betray an ally if my contract demands it.",
 			"I rely heavily on combat stimulants.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-18",
@@ -1109,7 +1109,7 @@ export const backgrounds: StaticBackground[] = [
 			"I have a dangerous addiction to experimental mana-potions.",
 			"I will endanger the party to secure a rare specimen.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-19",
@@ -1171,7 +1171,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am prone to substance abuse.",
 			"I refuse to cooperate with police or investigators.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-20",
@@ -1233,7 +1233,7 @@ export const backgrounds: StaticBackground[] = [
 			"I push away anyone who tries to get close to me.",
 			"I hold deep-seated prejudices against high-ranking Ascendants.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 
 	{
@@ -1296,7 +1296,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am secretly a coward when my life is actually in danger.",
 			"I rely completely on my gear and connections, not my skills.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-22",
@@ -1358,7 +1358,7 @@ export const backgrounds: StaticBackground[] = [
 			"I enjoy the suffering of others.",
 			"I refuse to use modern medicine, relying only on mana.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-23",
@@ -1420,7 +1420,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am terrified of being 'canceled' or losing relevance.",
 			"I struggle to distinguish my online persona from my real self.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-24",
@@ -1482,7 +1482,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am secretly incredibly cruel and vindictive behind closed doors.",
 			"I panic if I lose my voice or damage my face.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-25",
@@ -1544,7 +1544,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am addicted to painkillers or alcohol.",
 			"I am terrified of aging or losing my looks.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-26",
@@ -1606,7 +1606,7 @@ export const backgrounds: StaticBackground[] = [
 			"I have a secret gambling debt.",
 			"I will ignore injuries to stay in the game, endangering myself.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-27",
@@ -1668,7 +1668,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am deeply paranoid about assassination attempts.",
 			"I view myself as fundamentally superior to the working class.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-28",
@@ -1730,7 +1730,7 @@ export const backgrounds: StaticBackground[] = [
 			"I am intensely paranoid and trust no one.",
 			"I view people as NPCs in my game.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-29",
@@ -1792,7 +1792,7 @@ export const backgrounds: StaticBackground[] = [
 			"I panic if I don't have internet access.",
 			"I am terrified of being irrelevant.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "b-30",
@@ -1854,6 +1854,6 @@ export const backgrounds: StaticBackground[] = [
 			"I will ignore the plan if I think I can make a 'big play'.",
 			"I am highly susceptible to bait and taunts.",
 		],
-		source: "Rift Compendium",
+		source: "Rift Ascendant Canon",
 	},
 ];

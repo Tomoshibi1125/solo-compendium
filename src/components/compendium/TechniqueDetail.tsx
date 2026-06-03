@@ -156,6 +156,11 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 								{formatRegentVernacular(data.style)}
 							</Badge>
 						)}
+						{(data as { rarity?: string }).rarity && (
+							<Badge variant="outline" className="capitalize">
+								{(data as { rarity?: string }).rarity}
+							</Badge>
+						)}
 						{data.source_book && (
 							<Badge variant="outline">
 								{formatRegentVernacular(data.source_book)}
@@ -495,24 +500,36 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 						<p className="text-foreground leading-relaxed">
 							<AutoLinkText text={data.description} />
 						</p>
-						{data.lore && (
-							<div className="mt-6 pt-4 border-t border-cyan/10">
-								<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
-									Historical Record
-								</h4>
-								<p className="text-sm text-muted-foreground leading-relaxed">
-									<AutoLinkText
-										text={
-											typeof data.lore === "string"
-												? data.lore
-												: data.lore.history
-										}
-									/>
-								</p>
-							</div>
-						)}
+						{(() => {
+							const loreText =
+								(typeof data.lore === "string"
+									? data.lore
+									: data.lore?.history) ||
+								(data as { discovery_lore?: string }).discovery_lore ||
+								"";
+							return loreText ? (
+								<div className="mt-6 pt-4 border-t border-cyan/10">
+									<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
+										Historical Record
+									</h4>
+									<p className="text-sm text-muted-foreground leading-relaxed">
+										<AutoLinkText text={loreText} />
+									</p>
+								</div>
+							) : null;
+						})()}
 					</div>
 				</AscendantWindow>
+			)}
+
+			{Array.isArray(data.tags) && data.tags.length > 0 && (
+				<div className="flex flex-wrap gap-2">
+					{data.tags.map((tag) => (
+						<Badge key={tag} variant="outline" className="text-[10px]">
+							{formatRegentVernacular(tag)}
+						</Badge>
+					))}
+				</div>
 			)}
 		</div>
 	);

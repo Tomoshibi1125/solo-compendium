@@ -6,6 +6,7 @@ export {
 export { calculateInitiativeBreakdown } from "./initiative";
 export {
 	type DerivedStatsSnapshot,
+	getEffectiveHpMax,
 	isDerivedCacheStale,
 	persistDerivedStats,
 	resolveHpMax,

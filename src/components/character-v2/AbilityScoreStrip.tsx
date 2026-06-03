@@ -5,6 +5,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getAbilityModifier } from "@/lib/5eRulesEngine";
 import { formatModifier } from "@/lib/characterCalculations";
 import { cn } from "@/lib/utils";
 import { ABILITY_NAMES, type AbilityScore } from "@/types/core-rules";
@@ -39,7 +40,7 @@ export function AbilityScoreStrip({
 					const score = abilities[ability];
 					const modifier = modifiers[ability];
 					const isProficient = savingThrowProficiencies.includes(ability);
-					const baseModifier = Math.floor((score - 10) / 2);
+					const baseModifier = getAbilityModifier(score);
 
 					return (
 						<Tooltip key={ability}>

@@ -3,7 +3,7 @@ import { AuthPage } from "./pages/AuthPage";
 import { SharedPage } from "./pages/SharedPage";
 
 /**
- * Headed smoketest: Session Zero setup via "The Shadow of the Regent" import.
+ * Headed smoketest: Gloamreach setup via "The Shadow of the Regent" import.
  *
  * Runs the full sandbox auto-populate path in guest DM mode and asserts on
  * EVERY populated campaign management surface (Overview / Wiki / Sessions /
@@ -154,32 +154,32 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	// Campaign Wiki lazy-loads; give it a moment.
 	await page.waitForTimeout(800);
 	// Confirm at least one chapter title from the sandbox is present somewhere
-	// on the wiki tab. The tab renders all articles; a "Day Zero" title proves
+	// on the wiki tab. The tab renders all articles; a Gloamreach title proves
 	// wiki injection worked.
 	await expect(
-		page.getByText(/Day Zero|The Memory-Care Wing|Gate Cascade/i).first(),
+		page.getByText(/Gloamreach|Gate Domain|Anchor Scan|Thornwake/i).first(),
 	).toBeVisible({ timeout: 15_000 });
 
 	// ── 6. Sessions tab: Session 0 + scaffolded recap templates ────────────
 	await page.getByRole("tab", { name: /^Sessions$/i }).click();
 	await expect(
-		page.getByText(/Session 0.*Day Zero|Day Zero.*Memory-Care/i).first(),
+		page.getByText(/Session 0.*Rift Seals|The Rift Seals|Gate Domain/i).first(),
 	).toBeVisible({ timeout: 15_000 });
 
 	// ── 7. Notes tab: Warden secrets seeded ────────────────────────────────
 	await page.getByRole("tab", { name: /^Notes$/i }).click();
 	await expect(
 		page
-			.getByText(/Warden|Identity-Erosion|The Regent Wears|Pressure Clock/i)
+			.getByText(/Warden|Anchor|Subject Zero|Pressure Clock|Gloamreach/i)
 			.first(),
 	).toBeVisible({ timeout: 15_000 });
 
 	// ── 8. Handouts tab: ≥ 24 entries from the original injector section ───
 	await page.getByRole("tab", { name: /^Handouts$/i }).click();
 	// Handouts list renders via CampaignHandouts; at least one entry must
-	// surface. The sandbox's "Blank Slate Journal" is a canonical handout.
+	// surface. The sandbox's Anchor Scan packet is a canonical handout.
 	await expect(
-		page.getByText(/Blank Slate|Bureau|Awoko|Warden/i).first(),
+		page.getByText(/Anchor Scan|Emergency Writ|Bureau|Warden/i).first(),
 	).toBeVisible({ timeout: 15_000 });
 
 	// ── 9. Characters tab: Warden NPC roster card present ──────────────────
@@ -188,7 +188,7 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	await expect(wardenRoster).toBeVisible({ timeout: 15_000 });
 	// At least a couple of well-known sandbox NPC names.
 	await expect(
-		wardenRoster.getByText(/Park|Lin|Yoon|Hayashi/i).first(),
+		wardenRoster.getByText(/Quell|Sable|Rhone|Lysa|Rook/i).first(),
 	).toBeVisible();
 
 	// ── 10. VTT: scenes list + Pixi bg + token size assertion ──────────────
@@ -213,14 +213,14 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	await expect(
 		page
 			.getByRole("menuitem", {
-				name: /Regent's Domain|Hollow Subway|Bureau District/i,
+				name: /Citadel Anchor Heart|Rift Threshold|Thornwake|Bureau Forward Bastion/i,
 			})
 			.first(),
 	).toBeVisible({ timeout: 10_000 });
-	// Pick any scene that loads cleanly — prefer the Bureau District hub
+	// Pick any scene that loads cleanly — prefer the Bureau Forward Bastion hub
 	// (no fog of war + known geometry, friendly for background assertions).
 	await page
-		.getByRole("menuitem", { name: /Bureau District Headquarters/i })
+		.getByRole("menuitem", { name: /Bureau Forward Bastion/i })
 		.first()
 		.click();
 

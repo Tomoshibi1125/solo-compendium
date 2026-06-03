@@ -297,9 +297,25 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 								{formatRegentVernacular(data.rarity)}
 							</Badge>
 						)}
-						{data.attunement && (
+						{(data.attunement ||
+							(data as { requires_attunement?: boolean })
+								.requires_attunement) && (
 							<Badge variant="destructive">Requires Attunement</Badge>
 						)}
+						{(data as { stealth_disadvantage?: boolean })
+							.stealth_disadvantage && (
+							<Badge variant="outline">Stealth Disadvantage</Badge>
+						)}
+						{(data as { strength_requirement?: number })
+							.strength_requirement ? (
+							<Badge variant="outline">
+								STR{" "}
+								{
+									(data as { strength_requirement?: number })
+										.strength_requirement
+								}
+							</Badge>
+						) : null}
 						{data.cursed && <Badge variant="destructive">Cursed</Badge>}
 						{data.source_book && (
 							<Badge variant="outline">
@@ -307,6 +323,16 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 							</Badge>
 						)}
 					</div>
+					{Array.isArray((data as { tags?: string[] }).tags) &&
+						((data as { tags?: string[] }).tags?.length ?? 0) > 0 && (
+							<div className="flex flex-wrap gap-2 mt-2">
+								{(data as { tags?: string[] }).tags?.map((tag) => (
+									<Badge key={tag} variant="outline" className="text-[10px]">
+										{formatRegentVernacular(tag)}
+									</Badge>
+								))}
+							</div>
+						)}
 
 					{weapon?.damage && (
 						<div className="flex flex-wrap gap-2">
@@ -343,14 +369,33 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 			</AscendantWindow>
 
 			<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-				{data.value !== null && data.value !== undefined && (
-					<AscendantWindow title="VALUE" compact>
-						<div className="flex items-center gap-2">
-							<Coins className="w-5 h-5 text-yellow-400" />
-							<span className="font-heading">{data.value}</span>
-						</div>
-					</AscendantWindow>
-				)}
+				{(() => {
+					const costCredits = (data as { cost_credits?: number }).cost_credits;
+					const value = data.value;
+					if (value === null || value === undefined) {
+						return typeof costCredits === "number" ? (
+							<AscendantWindow title="VALUE" compact>
+								<div className="flex items-center gap-2">
+									<Coins className="w-5 h-5 text-yellow-400" />
+									<span className="font-heading">{costCredits} cr</span>
+								</div>
+							</AscendantWindow>
+						) : null;
+					}
+					return (
+						<AscendantWindow title="VALUE" compact>
+							<div className="flex items-center gap-2">
+								<Coins className="w-5 h-5 text-yellow-400" />
+								<span className="font-heading">{value}</span>
+							</div>
+							{typeof costCredits === "number" && (
+								<span className="text-xs text-muted-foreground">
+									{costCredits} cr
+								</span>
+							)}
+						</AscendantWindow>
+					);
+				})()}
 				{data.weight !== null && data.weight !== undefined && (
 					<AscendantWindow title="WEIGHT" compact>
 						<div className="flex items-center gap-2">

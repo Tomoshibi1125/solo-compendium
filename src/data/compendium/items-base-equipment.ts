@@ -4,7 +4,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-padded",
 		name: "Padded Armor",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "Quilted layers of mana-threaded cloth. Light but noisy.",
 		rarity: "common",
 		type: "armor",
@@ -126,7 +126,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-leather",
 		name: "Leather Armor",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "Cured ascendant-grade leather breastpiece and shoulder pads.",
 		rarity: "common",
 		type: "armor",
@@ -241,7 +241,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-studded-leather",
 		name: "Studded Leather Armor",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "Tough leather reinforced with rivets of gate-forged steel.",
 		rarity: "common",
 		type: "armor",
@@ -357,7 +357,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-hide",
 		name: "Hide Armor",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Thick pelts from gate beasts stitched together for protection.",
 		rarity: "common",
@@ -473,7 +473,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-chain-shirt",
 		name: "Chain Shirt",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Interlocking rings of mana-tempered steel worn under clothing.",
 		rarity: "common",
@@ -596,7 +596,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-scale-mail",
 		name: "Scale Mail",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "Overlapping metal scales, favored by Bureau field agents.",
 		rarity: "common",
 		type: "armor",
@@ -718,7 +718,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-breastplate",
 		name: "Breastplate",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "Fitted metal chest plate with flexible leather underneath.",
 		rarity: "common",
 		type: "armor",
@@ -833,7 +833,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-half-plate",
 		name: "Half Plate",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Shaped metal plates covering most of the body. Noisy but effective.",
 		rarity: "common",
@@ -957,7 +957,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-ring-mail",
 		name: "Ring Mail",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "Leather armor sewn with heavy rings for extra deflection.",
 		rarity: "common",
 		type: "armor",
@@ -1073,7 +1073,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-chain-mail",
 		name: "Chain Mail",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Full suit of interlocking steel rings. Standard Ascendant Bureau field issue.",
 		rarity: "common",
@@ -1192,7 +1192,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-splint",
 		name: "Splint Armor",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Vertical strips of metal riveted to leather. Heavy-duty gate armor.",
 		rarity: "common",
@@ -1312,7 +1312,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-plate",
 		name: "Plate Armor",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Full articulated plate from head to toe. Top-tier Ascendant Bureau deployment gear.",
 		rarity: "common",
@@ -1432,7 +1432,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-armor-shield",
 		name: "Shield",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A wooden or metal shield strapped to the forearm. +2 AC.",
 		rarity: "common",
 		type: "armor",
@@ -1547,7 +1547,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-club",
 		name: "Club",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy stick. Even awakened ascendants sometimes start simple.",
 		rarity: "common",
@@ -1670,7 +1670,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-dagger",
 		name: "Dagger",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small blade favored by Assassins for its versatility and concealability.",
 		rarity: "common",
@@ -1797,7 +1797,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-greatclub",
 		name: "Greatclub",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive bludgeon. Berserkers wield these one-handed in Overload.",
 		rarity: "common",
@@ -1927,7 +1927,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-handaxe",
 		name: "Handaxe",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A one-handed axe equally useful in melee or thrown.",
 		rarity: "common",
 		type: "weapon",
@@ -2058,7 +2058,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-javelin",
 		name: "Javelin",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A lightweight throwing spear. Bureau trainees drill with these daily.",
 		rarity: "common",
@@ -2190,7 +2190,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-light-hammer",
 		name: "Light Hammer",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small throwing hammer. Popular with Technomancers as a multitool.",
 		rarity: "common",
@@ -2323,7 +2323,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-mace",
 		name: "Mace",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy flanged head on a stout handle. Herald standard-issue.",
 		rarity: "common",
@@ -2451,7 +2451,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-quarterstaff",
 		name: "Quarterstaff",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A long wooden staff. Mages and Summoners channel mana through the grain.",
 		rarity: "common",
@@ -2581,7 +2581,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-sickle",
 		name: "Sickle",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A curved blade on a short handle.",
 		rarity: "common",
 		type: "weapon",
@@ -2710,7 +2710,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-spear",
 		name: "Spear",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"The oldest weapon in the ascendant arsenal. Still deadly in the right hands.",
 		rarity: "common",
@@ -2842,7 +2842,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-light-crossbow",
 		name: "Light Crossbow",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact crossbow. Effective ranged option for non-martial ascendants.",
 		rarity: "common",
@@ -2975,7 +2975,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-dart",
 		name: "Dart",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A small thrown projectile. Strikers can hurl these with lethal precision.",
 		rarity: "common",
@@ -3107,7 +3107,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-shortbow",
 		name: "Shortbow",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A small bow suited for skirmishing at moderate range.",
 		rarity: "common",
 		type: "weapon",
@@ -3238,7 +3238,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-sling",
 		name: "Sling",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A leather strap for hurling stones at surprising velocity.",
 		rarity: "common",
 		type: "weapon",
@@ -3369,7 +3369,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-battleaxe",
 		name: "Battleaxe",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A broad-bladed axe. The weapon of choice for many Destroyers.",
 		rarity: "common",
@@ -3500,7 +3500,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-flail",
 		name: "Flail",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A spiked ball on a chain. Unpredictable and devastating.",
 		rarity: "common",
 		type: "weapon",
@@ -3627,7 +3627,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-glaive",
 		name: "Glaive",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A single-edged blade on a long pole. Reach weapon.",
 		rarity: "common",
 		type: "weapon",
@@ -3757,7 +3757,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-greataxe",
 		name: "Greataxe",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive axe wielded in both hands. Berserker signature weapon.",
 		rarity: "common",
@@ -3888,7 +3888,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-greatsword",
 		name: "Greatsword",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A large two-handed blade. Destroyers and Holy Knights favor these.",
 		rarity: "common",
@@ -4018,7 +4018,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-halberd",
 		name: "Halberd",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"An axe blade topped with a spike on a long shaft. Reach weapon.",
 		rarity: "common",
@@ -4149,7 +4149,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-lance",
 		name: "Lance",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A long jousting weapon. Disadvantage at 5 ft unless mounted.",
 		rarity: "common",
 		type: "weapon",
@@ -4278,7 +4278,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-longsword",
 		name: "Longsword",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A versatile straight blade. The most common ascendant weapon in circulation.",
 		rarity: "common",
@@ -4409,7 +4409,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-maul",
 		name: "Maul",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A massive two-handed hammer. Cracks gate crystals like eggshells.",
 		rarity: "common",
@@ -4539,7 +4539,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-morningstar",
 		name: "Morningstar",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A spiked mace. Punches through armored gate creatures.",
 		rarity: "common",
 		type: "weapon",
@@ -4668,7 +4668,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-pike",
 		name: "Pike",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "An extremely long spear. Reach weapon for formation combat.",
 		rarity: "common",
 		type: "weapon",
@@ -4798,7 +4798,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-rapier",
 		name: "Rapier",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A thin, sharp blade. Assassins and Idols favor its precision.",
 		rarity: "common",
@@ -4928,7 +4928,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-scimitar",
 		name: "Scimitar",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A curved blade optimized for slashing motions. Light and quick.",
 		rarity: "common",
@@ -5058,7 +5058,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-shortsword",
 		name: "Shortsword",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact blade for close-quarters combat. Standard dual-wield option.",
 		rarity: "common",
@@ -5189,7 +5189,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-trident",
 		name: "Trident",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A three-pronged spear. Can be thrown or used in melee.",
 		rarity: "common",
 		type: "weapon",
@@ -5321,7 +5321,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-war-pick",
 		name: "War Pick",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pointed hammer designed to punch through Heavy Carapace Armor.",
 		rarity: "common",
@@ -5449,7 +5449,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-warhammer",
 		name: "Warhammer",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A heavy one-handed hammer. Herald standard for those proficient.",
 		rarity: "common",
@@ -5580,7 +5580,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-whip",
 		name: "Whip",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A braided leather lash. Reach and finesse in one package.",
 		rarity: "common",
 		type: "weapon",
@@ -5711,7 +5711,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-blowgun",
 		name: "Blowgun",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A tube for launching darts silently. Assassin specialty.",
 		rarity: "common",
 		type: "weapon",
@@ -5843,7 +5843,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-hand-crossbow",
 		name: "Hand Crossbow",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A one-handed crossbow. Compact enough to dual-wield or use with a shield.",
 		rarity: "common",
@@ -5975,7 +5975,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-heavy-crossbow",
 		name: "Heavy Crossbow",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A powerful crossbow requiring both hands and time to reload.",
 		rarity: "common",
 		type: "weapon",
@@ -6106,7 +6106,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-weapon-longbow",
 		name: "Longbow",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A tall bow with exceptional range. Stalker weapon of choice.",
 		rarity: "common",
 		type: "weapon",
@@ -6238,7 +6238,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-ammo-arrows-20",
 		name: "Arrows (20)",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A quiver of 20 standard arrows.",
 		rarity: "common",
 		type: "wondrous",
@@ -6356,7 +6356,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-ammo-bolts-20",
 		name: "Crossbow Bolts (20)",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A case of 20 crossbow bolts.",
 		rarity: "common",
 		type: "wondrous",
@@ -6475,7 +6475,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-ammo-darts-10",
 		name: "Darts (10)",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A set of 10 throwing darts.",
 		rarity: "common",
 		type: "wondrous",
@@ -6594,7 +6594,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-explorers-pack",
 		name: "Explorer's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Backpack, bedroll, mess kit, tinderbox, 10 torches, 10 days rations, waterskin, 50 ft rope.",
 		rarity: "common",
@@ -6712,7 +6712,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-dungeoneers-pack",
 		name: "Dungeoneer's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Backpack, crowbar, hammer, 10 pitons, 10 torches, tinderbox, 10 days rations, waterskin, 50 ft rope.",
 		rarity: "common",
@@ -6830,7 +6830,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-priests-pack",
 		name: "Priest's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Backpack, blanket, 10 candles, tinderbox, alms box, 2 blocks of incense, censer, vestments, 2 days rations, waterskin.",
 		rarity: "common",
@@ -6947,7 +6947,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-scholars-pack",
 		name: "Scholar's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Backpack, book of lore, ink, ink pen, 10 sheets of parchment, little bag of sand, small knife.",
 		rarity: "common",
@@ -7064,7 +7064,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-burglars-pack",
 		name: "Burglar's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Backpack, bag of 1000 ball bearings, 10 ft string, bell, 5 candles, crowbar, hammer, 10 pitons, hooded lantern, 2 flasks of oil, 5 days rations, tinderbox, waterskin.",
 		rarity: "common",
@@ -7182,7 +7182,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-diplomats-pack",
 		name: "Diplomat's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Chest, 2 cases for maps/scrolls, fine clothes, ink, ink pen, lamp, 2 flasks of oil, 5 sheets of paper, vial of perfume, sealing wax, soap.",
 		rarity: "common",
@@ -7299,7 +7299,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-gear-entertainers-pack",
 		name: "Entertainer's Pack",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Backpack, bedroll, 2 costumes, 5 candles, 5 days rations, waterskin, disguise kit.",
 		rarity: "common",
@@ -7416,7 +7416,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-focus-arcane",
 		name: "Arcane Focus",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A crystal orb, wand, or staff used to channel arcane mana.",
 		rarity: "common",
 		type: "wondrous",
@@ -7533,7 +7533,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-focus-component-pouch",
 		name: "Component Pouch",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A small waterproof belt pouch containing spell components.",
 		rarity: "common",
 		type: "wondrous",
@@ -7650,7 +7650,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-focus-primal",
 		name: "Primal Focus",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A totem, staff, or sprig of mistletoe used by Summoners to channel nature mana.",
 		rarity: "common",
@@ -7767,7 +7767,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-focus-system",
 		name: "Order Focus",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A holy symbol or amulet that channels the Rift's healing protocols.",
 		rarity: "common",
@@ -7887,7 +7887,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-focus-grimoire",
 		name: "Grimoire",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A spellbook containing a Mage's inscribed spells. Essential for prepared casting.",
 		rarity: "common",
@@ -8005,7 +8005,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-thieves",
 		name: "Thieves' Tools",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Lockpicks, a small file, pliers, and a small mirror on a handle.",
 		rarity: "common",
@@ -8122,7 +8122,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-tinker",
 		name: "Tinker's Tools",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A variety of hand tools for crafting and repairing mechanical devices.",
 		rarity: "common",
@@ -8240,7 +8240,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-instrument",
 		name: "Musical Instrument",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A lute, drum, flute, or other instrument. Idol essential.",
 		rarity: "common",
 		type: "wondrous",
@@ -8357,7 +8357,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-streaming-laptop",
 		name: "High-End Streaming Laptop",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A modern high-performance laptop with camera, mic, and editing suite.",
 		rarity: "common",
@@ -8480,7 +8480,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-ring-light",
 		name: "Ring Light",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A portable LED ring light for clean, flattering illumination.",
 		rarity: "common",
@@ -8603,7 +8603,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-portable-camera",
 		name: "Portable Camera",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A compact camera for documentation, interviews, and evidence gathering.",
 		rarity: "common",
@@ -8724,7 +8724,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-wifi-hotspot",
 		name: "Portable Wi-Fi Hotspot",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A pocket hotspot that provides connectivity in the field when signals exist.",
 		rarity: "common",
@@ -8846,7 +8846,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-burner-phone",
 		name: "Burner Phone",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A disposable phone used for secure calls and avoiding traceability.",
 		rarity: "common",
@@ -8967,7 +8967,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-custom-laptop",
 		name: "Custom-Built Laptop",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A hardened laptop with encrypted drives and specialized tooling.",
 		rarity: "common",
@@ -9089,7 +9089,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-hacking-tools",
 		name: "Hacking Tools",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"Adapters, cables, lockout keys, and diagnostic hardware for systems intrusion.",
 		rarity: "common",
@@ -9212,7 +9212,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-usb-drives",
 		name: "USB Drive Collection",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description:
 			"A set of drives containing cached logs, maps, and encrypted data dumps.",
 		rarity: "common",
@@ -9333,7 +9333,7 @@ export const baseEquipment: Item[] = [
 	{
 		id: "base-tool-smartphone-camera",
 		name: "Smartphone (High-End Camera)",
-		source_book: "Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		description: "A modern smartphone with a high-end camera and editing apps.",
 		rarity: "common",
 		type: "wondrous",

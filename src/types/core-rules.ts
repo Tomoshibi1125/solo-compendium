@@ -359,6 +359,9 @@ export function getProficiencyBonus(level: number): number {
 	return Math.ceil(level / 4) + 1;
 }
 
+// NOTE: kept in sync with `src/lib/5eRulesEngine.ts:getRiftFavorDie` (the
+// canonical Rift Favor source). Values are identical (4/6/8/10 by tier); this
+// low-level copy avoids a types→engine import cycle. See audit finding L1.
 export function getRiftFavorDie(level: number): number {
 	if (level <= 4) return 4;
 	if (level <= 10) return 6;

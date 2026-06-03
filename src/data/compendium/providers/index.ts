@@ -9,6 +9,7 @@
 
 import type { RegentExtended } from "@/integrations/supabase/supabaseExtended";
 import type { Json } from "@/integrations/supabase/types";
+import { numericCrToLabel } from "@/lib/monster5eTable";
 import { getDefaultSigilSlotsBaseForEquipment } from "@/lib/sigilAutomation";
 import { deriveSpellResolution } from "@/lib/spellMechanicsDerivation";
 import { normalizeRegentSearch } from "@/lib/vernacular";
@@ -144,6 +145,7 @@ export interface StaticCompendiumEntry {
 	alignment?: string | null;
 	armor_class?: string | number | null;
 	armor_type?: string | null;
+	ac_source?: string | null;
 	hit_points_average?: number | null;
 	hit_points_formula?: string | null;
 	speed_walk?: number | null;
@@ -157,6 +159,7 @@ export interface StaticCompendiumEntry {
 	int?: number | null;
 	sense?: number | null;
 	pre?: number | null;
+	proficiency_bonus?: number | null;
 	saving_throws?: string[] | Record<string, number> | null;
 	skills?: Record<string, number> | Record<string, Json> | null;
 	damage_vulnerabilities?: string[] | null;
@@ -366,6 +369,9 @@ export interface StaticCompendiumEntry {
 	actions?: Record<string, Json>[] | null;
 	traits?: Record<string, Json>[] | null;
 	reactions?: Record<string, Json>[] | null;
+	bonus_actions?: Record<string, Json>[] | null;
+	lair_actions?: Record<string, Json>[] | null;
+	regional_effects?: Record<string, Json>[] | null;
 	legendary_actions?: Record<string, Json>[] | null;
 	saving_throw?: Record<string, Json> | null;
 	saving_throw_ability?: string | null;
@@ -405,6 +411,7 @@ interface StaticDataProvider {
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getFightingStyles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
 type StaticRollableTableSource = {
@@ -456,15 +463,28 @@ type StaticAnomaliesource = {
 	damageImmunities?: string[];
 	damageVulnerabilities?: string[];
 	conditionImmunities?: string[];
+	// snake_case statblock fields (the reconstructed canonical shape)
+	damage_resistances?: string[];
+	damage_immunities?: string[];
+	damage_vulnerabilities?: string[];
+	condition_immunities?: string[];
 	senses?: string | string[] | Record<string, string>;
 	languages?: string | string[];
 	traits?: Array<{ name: string; description: string }>;
 	actions?: Array<{ name: string; description: string }>;
 	legendary?: Array<{ name: string; description: string }>;
-	alignment?: string;
+	legendary_actions?: Array<{ name: string; description: string }>;
+	reactions?: Array<{ name: string; description: string }>;
+	bonus_actions?: Array<{ name: string; description: string }>;
+	lair_actions?: Array<{ name: string; description: string }>;
+	regional_effects?: Array<{ name: string; description: string }>;
 	source?: string;
+	source_book?: string;
+	alignment?: string;
 	xp?: number;
 	size?: string;
+	ac_source?: string;
+	hit_dice?: string;
 };
 
 type StaticItemSource = {
@@ -812,13 +832,21 @@ type StaticBackgroundSource = {
 	skills?: string[];
 	image?: string;
 	rank?: string;
-	// Full 5e template fields
+	// Full 5e template fields (camelCase + snake_case both accepted — the
+	// data files use either, and entries in either shape must transform
+	// correctly).
 	skillProficiencies?: string[];
+	skill_proficiencies?: string[];
 	toolProficiencies?: string[];
+	tool_proficiencies?: string[];
 	languages?: string[];
 	equipment?: string[];
+	starting_equipment?: string | string[];
+	feature_name?: string;
+	feature_description?: string;
 	features?: Array<{ name: string; description: string } | string>;
 	personalityTraits?: string[];
+	personality_traits?: string[];
 	ideals?: string[];
 	bonds?: string[];
 	flaws?: string[];
@@ -909,14 +937,21 @@ function transformAnomaly(
 			? ((statsObj?.speed || statsObj?.movement_speed) as number)
 			: null;
 	const crNumber =
+		typeof statsObj?.challenge_rating === "number" ||
 		typeof statsObj?.challengeRating === "number" ||
 		typeof statsObj?.cr === "number"
-			? ((statsObj?.challengeRating || statsObj?.cr) as number)
+			? ((statsObj?.challenge_rating ??
+					statsObj?.challengeRating ??
+					statsObj?.cr) as number)
 			: null;
+	// Convert a numeric CR to the canonical 5e label the monster table keys on.
+	const crLabel = numericCrToLabel;
 	const proficiencyBonus =
-		typeof statsObj?.proficiencyBonus === "number"
-			? (statsObj.proficiencyBonus as number)
-			: 2; // Default for Rank D entities
+		typeof statsObj?.proficiency_bonus === "number"
+			? (statsObj.proficiency_bonus as number)
+			: typeof statsObj?.proficiencyBonus === "number"
+				? (statsObj.proficiencyBonus as number)
+				: 2; // Default for Rank D entities
 	const savingThrows =
 		(statsObj?.savingThrows || statsObj?.saving_throws) &&
 		typeof (statsObj?.savingThrows || statsObj?.saving_throws) === "object"
@@ -948,16 +983,26 @@ function transformAnomaly(
 		? (Anomaly.actions as Record<string, Json>[])
 		: null;
 
-	const skillNames = Anomaly.skills
-		? Array.isArray(Anomaly.skills)
-			? normalizeStringArray(Anomaly.skills)
-			: normalizeStringArray(Object.keys(Anomaly.skills))
-		: null;
-	const skillMap = skillNames
-		? Object.fromEntries(
-				skillNames.map((name) => [name, proficiencyBonus ?? 0]),
-			)
-		: null;
+	// Preserve authored skill bonuses ("Skills Perception +4") when the source is
+	// an object of numbers; otherwise fall back to a proficiency-bonus map.
+	const skillMap =
+		Anomaly.skills && !Array.isArray(Anomaly.skills)
+			? (Object.fromEntries(
+					Object.entries(Anomaly.skills as Record<string, unknown>).map(
+						([name, value]) => [
+							name,
+							typeof value === "number" ? value : (proficiencyBonus ?? 0),
+						],
+					),
+				) as Record<string, number>)
+			: Anomaly.skills
+				? (Object.fromEntries(
+						(normalizeStringArray(Anomaly.skills) ?? []).map((name) => [
+							name,
+							proficiencyBonus ?? 0,
+						]),
+					) as Record<string, number>)
+				: null;
 
 	return {
 		id: Anomaly.id || Anomaly.name.toLowerCase().replace(/\s+/g, "-"),
@@ -968,10 +1013,13 @@ function transformAnomaly(
 			(Anomaly as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: [Anomaly.type, rank].filter(Boolean) as string[],
-		source_book: "Rift Ascendant Homebrew",
+		source_book:
+			(Anomaly as { source_book?: string }).source_book ??
+			"Rift Ascendant Canon",
 		image_url: Anomaly.image,
-		cr: crNumber !== null ? String(crNumber) : (rank ?? null),
+		cr: crNumber !== null ? crLabel(crNumber) : (rank ?? null),
 		gate_rank: rank ?? null,
+		proficiency_bonus: proficiencyBonus,
 		is_boss: rank === "S" || rank === "A",
 		rarity:
 			rank === "S"
@@ -988,8 +1036,10 @@ function transformAnomaly(
 		creature_type: Anomaly.type ?? null,
 		alignment: typeof Anomaly.alignment === "string" ? Anomaly.alignment : null,
 		armor_class: armorClass,
+		ac_source: typeof Anomaly.ac_source === "string" ? Anomaly.ac_source : null,
 		hit_points_average: hitPoints,
-		hit_points_formula: null,
+		hit_points_formula:
+			typeof Anomaly.hit_dice === "string" ? Anomaly.hit_dice : null,
 		speed_walk: speed,
 		str:
 			typeof abilityScores?.strength === "number"
@@ -1023,18 +1073,45 @@ function transformAnomaly(
 				) as Record<string, number>)
 			: null,
 		skills: skillMap,
-		damage_resistances: normalizeStringArray(Anomaly.damageResistances) ?? null,
-		damage_immunities: normalizeStringArray(Anomaly.damageImmunities) ?? null,
+		damage_resistances:
+			normalizeStringArray(
+				Anomaly.damage_resistances ?? Anomaly.damageResistances,
+			) ?? null,
+		damage_immunities:
+			normalizeStringArray(
+				Anomaly.damage_immunities ?? Anomaly.damageImmunities,
+			) ?? null,
 		damage_vulnerabilities:
-			normalizeStringArray(Anomaly.damageVulnerabilities) ?? null,
+			normalizeStringArray(
+				Anomaly.damage_vulnerabilities ?? Anomaly.damageVulnerabilities,
+			) ?? null,
 		condition_immunities:
-			normalizeStringArray(Anomaly.conditionImmunities) ?? null,
+			normalizeStringArray(
+				Anomaly.condition_immunities ?? Anomaly.conditionImmunities,
+			) ?? null,
 		senses:
 			typeof Anomaly.senses === "string" ? { text: Anomaly.senses } : null,
 		languages: normalizeStringArray(Anomaly.languages) ?? null,
 		xp: typeof Anomaly.xp === "number" ? Anomaly.xp : null,
 		Anomaly_traits: traits,
 		Anomaly_actions: actions,
+		legendary_actions: Array.isArray(Anomaly.legendary_actions)
+			? (Anomaly.legendary_actions as Record<string, Json>[])
+			: Array.isArray(Anomaly.legendary)
+				? (Anomaly.legendary as Record<string, Json>[])
+				: null,
+		reactions: Array.isArray(Anomaly.reactions)
+			? (Anomaly.reactions as Record<string, Json>[])
+			: null,
+		bonus_actions: Array.isArray(Anomaly.bonus_actions)
+			? (Anomaly.bonus_actions as Record<string, Json>[])
+			: null,
+		lair_actions: Array.isArray(Anomaly.lair_actions)
+			? (Anomaly.lair_actions as Record<string, Json>[])
+			: null,
+		regional_effects: Array.isArray(Anomaly.regional_effects)
+			? (Anomaly.regional_effects as Record<string, Json>[])
+			: null,
 	};
 }
 
@@ -1088,7 +1165,11 @@ function transformItem(item: StaticItemSource): StaticCompendiumEntry {
 			(item as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: [item.type, item.rarity].filter(Boolean) as string[],
-		source_book: "Rift Ascendant Homebrew",
+		// Pass the item's own source_book through (default to RA Canon when the
+		// source omits it) so the audit validates the real data instead of a
+		// hardcoded mask.
+		source_book:
+			(item as { source_book?: string }).source_book ?? "Rift Ascendant Canon",
 		image_url: item.image,
 		image: item.image,
 		equipment_type: itemType,
@@ -1442,7 +1523,7 @@ function transformSpell(spell: StaticSpellSource): StaticCompendiumEntry {
 			school,
 			...classes,
 		].filter(Boolean) as string[],
-		source_book: spell.source_book ?? "Rift Ascendant Homebrew",
+		source_book: spell.source_book ?? "Rift Ascendant Canon",
 		image_url: spell.image,
 		spell_type: spell.type,
 		power_type: "Spell",
@@ -1525,7 +1606,7 @@ function transformLocation(
 			(location as { created_at?: string }).created_at ||
 			"2024-01-01T00:00:00.000Z",
 		tags: [location.type, location.rank].filter(Boolean) as string[],
-		source_book: "Rift Ascendant Homebrew",
+		source_book: "Rift Ascendant Canon",
 		image_url: location.image,
 		location_type: location.type,
 		rank: location.rank,
@@ -1583,8 +1664,15 @@ function _transformRune(
 function transformBackground(
 	background: StaticBackgroundSource,
 ): StaticCompendiumEntry {
-	// Resolve skill proficiencies from either new or legacy field
-	const skillProfs = background.skillProficiencies || background.skills || [];
+	// Resolve skill proficiencies from snake_case, camelCase, or legacy field.
+	const skillProfs =
+		background.skill_proficiencies ||
+		background.skillProficiencies ||
+		background.skills ||
+		[];
+
+	const toolProfs =
+		background.tool_proficiencies || background.toolProficiencies || [];
 
 	// Resolve structured features into feature_name/feature_description (primary feature)
 	const structuredFeatures: Array<{ name: string; description: string }> = [];
@@ -1595,16 +1683,28 @@ function transformBackground(
 			}
 		}
 	}
+	if (background.feature_name && background.feature_description) {
+		structuredFeatures.unshift({
+			name: background.feature_name,
+			description: background.feature_description,
+		});
+	}
 	const primaryFeature = structuredFeatures[0] || null;
 
-	// Build equipment string from array
-	const equipmentStr =
-		Array.isArray(background.equipment) && background.equipment.length > 0
-			? background.equipment.join(", ")
+	// Build equipment string from array (supports both `equipment` and snake_case
+	// `starting_equipment` which is what most data files actually use).
+	const equipmentSource = background.equipment ?? background.starting_equipment;
+	const equipmentStr = Array.isArray(equipmentSource)
+		? equipmentSource.length > 0
+			? equipmentSource.join(", ")
+			: null
+		: typeof equipmentSource === "string" && equipmentSource.trim().length > 0
+			? equipmentSource
 			: null;
 
 	// Resolve personality traits from direct fields or suggestedCharacteristics
 	const personalityTraits =
+		background.personality_traits ||
 		background.personalityTraits ||
 		background.suggestedCharacteristics?.personality ||
 		[];
@@ -1630,10 +1730,7 @@ function transformBackground(
 		rank: background.rank || null,
 		// Background-specific fields for BackgroundDetail.tsx
 		skill_proficiencies: skillProfs.length > 0 ? skillProfs : null,
-		tool_proficiencies:
-			background.toolProficiencies && background.toolProficiencies.length > 0
-				? background.toolProficiencies
-				: null,
+		tool_proficiencies: toolProfs.length > 0 ? toolProfs : null,
 		language_count: background.languages ? background.languages.length : null,
 		languages: background.languages || null,
 		starting_equipment: equipmentStr,
@@ -2010,9 +2107,13 @@ export const staticDataProvider: StaticDataProvider = {
 				id: string;
 				name: string;
 				description: string;
-				benefits?: string;
+				benefits?: string | string[];
+				effects?: Record<string, Json>;
+				mechanics?: Record<string, Json>;
+				limitations?: Record<string, Json>;
 				prerequisites?: string | Record<string, Json>;
 				source?: string;
+				source_book?: string;
 			}>("comprehensiveFeats")) || [];
 		const filtered = filterBySearch(comprehensiveFeats, search, [
 			"name",
@@ -2034,7 +2135,7 @@ export const staticDataProvider: StaticDataProvider = {
 					? ((feat.prerequisites as Record<string, Json>).feats as string[])
 					: []),
 			].filter(Boolean) as string[],
-			source_book: feat.source || "Rift Ascendant Canon",
+			source_book: feat.source_book || feat.source || "Rift Ascendant Canon",
 			prerequisites: feat.prerequisites
 				? typeof feat.prerequisites === "string"
 					? feat.prerequisites
@@ -2043,10 +2144,13 @@ export const staticDataProvider: StaticDataProvider = {
 							.join(", ")
 				: undefined,
 			benefits: Array.isArray(feat.benefits)
-				? (feat.benefits as string[])
+				? feat.benefits
 				: feat.benefits
 					? [String(feat.benefits)]
 					: null,
+			effects: feat.effects ?? null,
+			mechanics: feat.mechanics ?? null,
+			limitations: feat.limitations ?? null,
 		}));
 	},
 
@@ -2600,6 +2704,28 @@ export const staticDataProvider: StaticDataProvider = {
 					abilities: v.abilities,
 					bonded: v.bonded,
 					anomaly_id: v.anomaly_id,
+				}) as unknown as StaticCompendiumEntry,
+		);
+	},
+	getFightingStyles: async (search?: string) => {
+		const { FIGHTING_STYLES } = await import(
+			"@/data/compendium/fightingStyles"
+		);
+		type FS = (typeof FIGHTING_STYLES)[number];
+		const filtered = filterBySearch<FS>(FIGHTING_STYLES, search, [
+			"name",
+			"description",
+		]);
+		return filtered.map(
+			(s: FS) =>
+				({
+					id: s.id,
+					name: s.name,
+					description: s.description,
+					created_at: new Date().toISOString(),
+					tags: ["fighting-style", s.source].filter(Boolean) as string[],
+					source_book: "Rift Ascendant Canon",
+					prerequisites: s.prerequisites,
 				}) as unknown as StaticCompendiumEntry,
 		);
 	},

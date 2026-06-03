@@ -23,22 +23,30 @@ import {
 // Using an in-memory impl fully isolates this suite.
 function installIsolatedLocalStorage() {
 	const store: Record<string, string> = {};
-	(globalThis as unknown as { localStorage: Storage }).localStorage = {
-		getItem: (k) => (k in store ? store[k] : null),
-		setItem: (k, v) => {
+	const impl = {
+		getItem: (k: string) => (k in store ? store[k] : null),
+		setItem: (k: string, v: string) => {
 			store[k] = String(v);
 		},
-		removeItem: (k) => {
+		removeItem: (k: string) => {
 			delete store[k];
 		},
 		clear: () => {
 			for (const k of Object.keys(store)) delete store[k];
 		},
-		key: (i) => Object.keys(store)[i] ?? null,
+		key: (i: number) => Object.keys(store)[i] ?? null,
 		get length() {
 			return Object.keys(store).length;
 		},
 	} as Storage;
+	// Use defineProperty (not assignment): under the vmThreads pool the global
+	// `localStorage` is a getter-only property, so a plain assignment throws
+	// ("only has a getter"). defineProperty redefines it under every pool.
+	Object.defineProperty(globalThis, "localStorage", {
+		value: impl,
+		configurable: true,
+		writable: true,
+	});
 }
 
 const ABILITY_KEYS = [

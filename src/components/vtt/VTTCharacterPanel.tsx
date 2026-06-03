@@ -32,10 +32,13 @@ import {
 import { OptimizedImage } from "@/components/ui/OptimizedImage";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useCharacterSheetEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useRegentUnlocks } from "@/hooks/useRegentUnlocks";
 import {
 	calculateCharacterStats,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
+import { getEffectiveHpMax } from "@/lib/derivedStats";
+import { getRegentHpContributionForIds } from "@/lib/regentGestalt";
 import {
 	getAffordableOptions,
 	getAvailableFavorOptions,
@@ -84,6 +87,7 @@ export function VTTCharacterPanel({
 	campaignId,
 }: VTTCharacterPanelProps) {
 	const { data: character, isLoading } = useCharacter(characterId);
+	const { unlocks: regentUnlocks = [] } = useRegentUnlocks(characterId);
 	const ddbEnhancements = useCharacterSheetEnhancements(characterId);
 	const hpBarRef = useRef<HTMLDivElement>(null);
 
@@ -207,7 +211,15 @@ export function VTTCharacterPanel({
 	);
 
 	const hpCurrent = character?.hp_current ?? 0;
-	const hpMax = character?.hp_max ?? 0;
+	// True HP max = override-aware base + additive gestalt Regent HP, so this
+	// Warden-facing panel matches the player's sheet (not the bare base column).
+	const regentIds = regentUnlocks.map((u) => u.regent_id);
+	const hpMax = character
+		? getEffectiveHpMax(
+				character,
+				getRegentHpContributionForIds(regentIds, character.level ?? 1),
+			)
+		: 0;
 	const hpPercent = hpMax > 0 ? (hpCurrent / hpMax) * 100 : 0;
 
 	useEffect(() => {

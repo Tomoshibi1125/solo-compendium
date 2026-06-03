@@ -141,7 +141,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: true,
+			material: "a shard of Gate crystal",
 			focus: "a shard of Gate crystal",
 		},
 		concentration: false,
@@ -238,7 +238,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: true,
+			material: "an Awakened's shed scale",
 			focus: "an Awakened's shed scale",
 		},
 		concentration: false,
@@ -334,7 +334,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: true,
+			material: "crushed mana stone (50 Gate Credits)",
 			focus: "crushed mana stone (50 Gate Credits)",
 		},
 		concentration: false,
@@ -532,7 +532,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: true,
+			material: "crushed mana stone (50 Gate Credits)",
 			focus: "crushed mana stone (50 Gate Credits)",
 		},
 		concentration: true,
@@ -716,7 +716,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: true,
+			material: "crushed mana stone (50 Gate Credits)",
 			focus: "crushed mana stone (50 Gate Credits)",
 		},
 		concentration: false,
@@ -890,7 +890,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: false,
-			material: true,
+			material: "a vial of anomaly blood",
 			focus: "a vial of anomaly blood",
 		},
 		concentration: false,
@@ -974,7 +974,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: false,
 			somatic: true,
-			material: true,
+			material: "ink made from void essence",
 			focus: "ink made from void essence",
 		},
 		concentration: true,
@@ -1345,7 +1345,7 @@ export const spells_d: CompendiumSpell[] = [
 		components: {
 			verbal: true,
 			somatic: true,
-			material: true,
+			material: "crushed mana stone (50 Gate Credits)",
 			focus: "crushed mana stone (50 Gate Credits)",
 		},
 		concentration: false,

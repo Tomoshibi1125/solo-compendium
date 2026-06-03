@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useSpellSlots, useUpdateSpellSlot } from "@/hooks/useSpellSlots";
 import {
+	calculateSpellAttackBonus,
+	calculateSpellSaveDC,
 	getCasterType,
 	getSpellcastingAbility,
 } from "@/lib/characterCalculations";
@@ -40,8 +42,23 @@ export function SpellSlotsDisplay({
 	const castingAbilityScore =
 		castingAbility && abilities ? (abilities[castingAbility] ?? 10) : 10;
 	const castingMod = getAbilityModifier(castingAbilityScore);
-	const spellSaveDC = 8 + profBonus + castingMod;
-	const spellAttackBonus = profBonus + castingMod;
+	// Canonical engine formulas (single source of truth) — not an inline copy.
+	// Fall back to the base formula only if the job resolves to a non-caster
+	// (helpers return null) so the card still renders a sensible value.
+	const abilityRecord = {
+		STR: abilities?.STR ?? 10,
+		AGI: abilities?.AGI ?? 10,
+		VIT: abilities?.VIT ?? 10,
+		INT: abilities?.INT ?? 10,
+		SENSE: abilities?.SENSE ?? 10,
+		PRE: abilities?.PRE ?? 10,
+	};
+	const spellSaveDC =
+		calculateSpellSaveDC(level, job, abilityRecord) ??
+		8 + profBonus + castingMod;
+	const spellAttackBonus =
+		calculateSpellAttackBonus(level, job, abilityRecord) ??
+		profBonus + castingMod;
 
 	if (isLoading) {
 		return (

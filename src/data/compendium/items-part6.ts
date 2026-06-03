@@ -1145,6 +1145,7 @@ export const items_part6: Item[] = [
 		damage: "1d4",
 		damage_type: "force",
 		simple_properties: ["light", "finesse", "thrown"],
+		range: "Thrown (20/60)",
 		requires_attunement: true,
 		properties: {
 			weapon: {

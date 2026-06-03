@@ -90,6 +90,8 @@ import type { Json } from "@/integrations/supabase/types";
 import {
 	getAbilityModifier,
 	getProficiencyBonus,
+	getRiftFavorDie,
+	getRiftFavorMax,
 } from "@/lib/characterCalculations";
 import { calculateTotalTempHP } from "@/lib/characterResources";
 import {
@@ -331,6 +333,12 @@ export default function CharacterSheetV2() {
 	if (!memoizedStats) return null;
 	const stats = memoizedStats;
 
+	// Single source of truth for displayed/clamped HP max: the engine output
+	// (override-aware base + gestalt Regent HP + custom modifiers). NEVER the
+	// raw `effectiveHpMax` cache column — that is the authoritative base only
+	// and omits gestalt/override/custom (see getEffectiveHpMax / audit D1-D2).
+	const effectiveHpMax = stats.calculatedStats.hpMax;
+
 	const onRollAbility = (ability: AbilityScore) =>
 		rollAndRecord({
 			title: `${ability} Check`,
@@ -403,7 +411,7 @@ export default function CharacterSheetV2() {
 		// damage button doesn't read it; UI parity with the existing flow.
 		const result = applyDamage({
 			hpCurrent: character.hp_current,
-			hpMax: character.hp_max,
+			hpMax: effectiveHpMax,
 			tempHp: 0,
 			damage: amount,
 		});
@@ -424,9 +432,9 @@ export default function CharacterSheetV2() {
 		//    overflow >= max HP (RAW massive-damage rule). Otherwise the
 		//    character is simply unconscious — no failure yet.
 		if (result.wasAtZero) {
-			deathSaves.takeDamageAtZero(amount, character.hp_max);
+			deathSaves.takeDamageAtZero(amount, effectiveHpMax);
 		} else if (result.massiveDamage) {
-			deathSaves.takeDamageAtZero(result.overflowDamage, character.hp_max);
+			deathSaves.takeDamageAtZero(result.overflowDamage, effectiveHpMax);
 		}
 
 		// Process concentration check (advantage/disadvantage applied by
@@ -458,7 +466,7 @@ export default function CharacterSheetV2() {
 
 		const result = applyHealing({
 			hpCurrent: character.hp_current,
-			hpMax: character.hp_max,
+			hpMax: effectiveHpMax,
 			heal: amount,
 		});
 
@@ -555,7 +563,9 @@ export default function CharacterSheetV2() {
 				characterId={character.id}
 				characterLevel={character.level || 1}
 				regentId={primaryRegent?.regent_id}
-				regentLevel={1}
+				// Gestalt: a Regent is a full class overlay leveling alongside the
+				// Job — regent level == character level (not a fixed subclass tier).
+				regentLevel={character.level || 1}
 				onSelectDetail={(detail) => onSelectDetail(detail, "Regent", Crown)}
 			/>
 			<RegentUnlocksPanel characterId={character.id} />
@@ -736,7 +746,7 @@ export default function CharacterSheetV2() {
 							isOpen={persistentModals.health}
 							onOpenChange={(open) => sheetController.setModal("health", open)}
 							hpCurrent={character.hp_current}
-							hpMax={character.hp_max}
+							hpMax={effectiveHpMax}
 							tempHp={calculateTotalTempHP(characterResources)}
 							onTakeDamage={handleTakeDamage}
 							onHeal={handleHeal}
@@ -747,7 +757,7 @@ export default function CharacterSheetV2() {
 							hitDieSize={character.hit_dice_size}
 							vitScore={stats.finalAbilities.VIT}
 							hpCurrent={character.hp_current}
-							hpMax={character.hp_max}
+							hpMax={effectiveHpMax}
 							onFinishRest={onShortRest}
 						/>
 						<Button
@@ -865,7 +875,7 @@ export default function CharacterSheetV2() {
 				name={character.name}
 				level={character.level}
 				portraitUrl={character.portrait_url}
-				hp={{ current: character.hp_current, max: character.hp_max }}
+				hp={{ current: character.hp_current, max: effectiveHpMax }}
 				tempHp={calculateTotalTempHP(characterResources)}
 				ac={stats.calculatedStats.armorClass}
 				initiative={stats.finalInitiative}
@@ -991,7 +1001,7 @@ export default function CharacterSheetV2() {
 						<StatusHeader
 							hp={{
 								current: character.hp_current,
-								max: character.hp_max,
+								max: effectiveHpMax,
 								temp: calculateTotalTempHP(characterResources),
 							}}
 							ac={stats.calculatedStats.armorClass}
@@ -1009,8 +1019,8 @@ export default function CharacterSheetV2() {
 							}}
 							riftFavor={{
 								current: character.rift_favor_current,
-								max: character.rift_favor_max,
-								die: character.rift_favor_die,
+								max: getRiftFavorMax(character.level || 1),
+								die: getRiftFavorDie(character.level || 1),
 								level: character.level || 1,
 							}}
 							campaignId={campaignId ?? undefined}
@@ -1111,7 +1121,7 @@ export default function CharacterSheetV2() {
 					<StatusHeader
 						hp={{
 							current: character.hp_current,
-							max: character.hp_max,
+							max: effectiveHpMax,
 							temp: calculateTotalTempHP(characterResources),
 						}}
 						ac={stats.calculatedStats.armorClass}
@@ -1126,8 +1136,8 @@ export default function CharacterSheetV2() {
 						}}
 						riftFavor={{
 							current: character.rift_favor_current,
-							max: character.rift_favor_max,
-							die: character.rift_favor_die,
+							max: getRiftFavorMax(character.level || 1),
+							die: getRiftFavorDie(character.level || 1),
 							level: character.level || 1,
 						}}
 						onRollInitiative={onRollInitiative}

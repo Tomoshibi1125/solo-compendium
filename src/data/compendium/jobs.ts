@@ -390,7 +390,7 @@ export const jobs: Job[] = [
 			presence: 8,
 		},
 		primary_abilities: ["Strength", "Vitality"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "berserker",
@@ -644,7 +644,7 @@ export const jobs: Job[] = [
 			presence: 10,
 		},
 		primary_abilities: ["Strength", "Vitality"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "assassin",
@@ -906,7 +906,7 @@ export const jobs: Job[] = [
 			presence: 8,
 		},
 		primary_abilities: ["Agility", "Intelligence"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "striker",
@@ -1169,7 +1169,7 @@ export const jobs: Job[] = [
 			presence: 8,
 		},
 		primary_abilities: ["Agility", "Sense"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "mage",
@@ -1394,7 +1394,7 @@ export const jobs: Job[] = [
 			presence: 10,
 		},
 		primary_abilities: ["Intelligence", "Sense"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "esper",
@@ -1647,7 +1647,7 @@ export const jobs: Job[] = [
 			presence: 15,
 		},
 		primary_abilities: ["Presence", "Vitality"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "revenant",
@@ -1870,7 +1870,7 @@ export const jobs: Job[] = [
 			presence: 10,
 		},
 		primary_abilities: ["Intelligence", "Vitality"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "summoner",
@@ -2114,7 +2114,7 @@ export const jobs: Job[] = [
 			presence: 12,
 		},
 		primary_abilities: ["Sense", "Intelligence"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "holy-knight",
@@ -2392,7 +2392,7 @@ export const jobs: Job[] = [
 			presence: 14,
 		},
 		primary_abilities: ["Strength", "Presence"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "technomancer",
@@ -2683,7 +2683,7 @@ export const jobs: Job[] = [
 			presence: 8,
 		},
 		primary_abilities: ["Intelligence", "Vitality"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "idol",
@@ -3016,7 +3016,7 @@ export const jobs: Job[] = [
 			presence: 15,
 		},
 		primary_abilities: ["Presence", "Agility"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "herald",
@@ -3289,7 +3289,7 @@ export const jobs: Job[] = [
 			presence: 15,
 		},
 		primary_abilities: ["Presence", "Sense"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "contractor",
@@ -3617,7 +3617,7 @@ export const jobs: Job[] = [
 			presence: 15,
 		},
 		primary_abilities: ["Presence", "Vitality"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stalker",
@@ -3918,6 +3918,6 @@ export const jobs: Job[] = [
 			presence: 8,
 		},
 		primary_abilities: ["Agility", "Sense"],
-		source: "Ascendant Compendium",
+		source: "Rift Ascendant Canon",
 	},
 ];

@@ -2,6 +2,8 @@
  * Equipment modifier parsing and application
  */
 
+import { getAbilityModifier } from "@/lib/5eRulesEngine";
+
 interface EquipmentModifiers {
 	ac?: number;
 	attack?: number;
@@ -19,10 +21,6 @@ interface EquipmentModifiers {
 	speed?: number;
 	savingThrows?: Record<string, number>;
 	skills?: Record<string, number>;
-}
-
-function getAbilityModifier(score: number): number {
-	return Math.floor((score - 10) / 2);
 }
 
 function getDexCapFromArmorType(armorType: string | undefined): number | null {

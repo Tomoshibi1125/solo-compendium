@@ -1,180 +1,339 @@
 import type { SandboxHandout } from "../ascendant-sandbox-module";
 
-// ============================================================================
-// THE SHADOW OF THE REGENT — HANDOUTS
-// Player-facing documents, lore pieces, and Warden-only secrets
-// ============================================================================
+/**
+ * SANDBOX HANDOUTS - The Shadow of the Regent
+ */
 
-export const sandboxHandoutsExpanded: SandboxHandout[] = [
-	// ── Player-Visible Handouts ──────────────────────────────────────────
+const rawSandboxHandouts = [
 	{
-		title: "Bureau Emergency Bulletin: Gate Surge",
-		content: `# BUREAU OF ASCENDANT AFFAIRS — EMERGENCY BULLETIN\\n\\n**CLASSIFICATION**: PUBLIC — ALL REGISTERED ASCENDANTS\\n**DATE**: [Current Date]\\n**RE**: Unprecedented Gate Surge — Yongsan District\\n\\n---\\n\\nATTENTION ALL AVAILABLE ASCENDANTS:\\n\\nNineteen (19) Gates of escalating Rank have manifested within a single 20-block district. The Bureau has declared the Yongsan District a RESTRICTED ZONE. Civilian evacuation is complete. Police cordon is active.\\n\\nAll registered Ascendants Rank E and above are hereby called to report to the Bureau District Headquarters (Yongsan Federal Building, 4th Floor) for emergency briefing and assignment.\\n\\n**Gate Breakdown**:\\n- E-Rank: 1\\n- D-Rank: 2\\n- C-Rank: 2\\n- B-Rank: 2\\n- A-Rank: 1\\n- S-Rank: 1 (CRITICAL — possible Regent-class entity detected)\\n\\n**Compensation**: Standard Gate-clear bounties apply, with hazard multiplier (×2 for B-Rank+). Anomaly core rights negotiable.\\n\\n**WARNING**: An uncontained S-Rank Anomaly (codename: THE EXECUTIONER) has been sighted within the Restricted Zone. Ascendants below Rank B are advised to RETREAT ON SIGHT.\\n\\n— Commander Park Jae-won, Bureau District Command`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Emergency Writ: S-Rank Gate Entry",
+		content: `# EMERGENCY WRIT
+
+You are cleared for entry into the Gloamreach Gate Domain under crisis authority.
+
+Return conditions: Anchor broken, Anchor sealed, Anchor transformed, or Red Phase evacuation.
+
+The Bureau accepts no liability for Domain law, Anomaly exposure, Essence contamination, Relic corruption, or failed extraction after threshold closure.`,
 	},
 	{
-		title: "Bounty: The Executioner",
-		content: `# B-RANK BOUNTY: ANOMALY-UNCLASSIFIED\\n\\n**Target Alias**: 'The Executioner'\\n**Threat Level**: S-Rank (Confirmed)\\n**Last Sighting**: Eastern perimeter of Restricted Zone\\n**Reward**: 5,000,000 Credits\\n\\n---\\n\\n**Physical Description**: Humanoid, approximately 3.6 meters tall. No discernible facial features. Arms terminate in blade-like appendages of compressed shadow, each approximately 2 meters in length. Moves silently despite its size.\\n\\n**Behavioral Pattern**: Roams the Restricted Zone on an unpredictable patrol route. Drawn to high concentrations of mana energy. Has been observed destroying Bureau patrols — zero survivors from three engagements.\\n\\n**WARNING**: This target escaped from a Gate Break prior to the current Surge. It is the only known Anomaly operating in the real world outside a Gate. Ascendants below Rank B are ordered to RETREAT ON SIGHT. Do not engage. Do not attempt to track. If you see it, run.\\n\\n— Bureau Threat Assessment Division`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "AFA Alert: Gate Domain Scale",
+		content: `# AFA ALERT
+
+Rift threshold stabilized.
+
+Interior mapping exceeds standard bounded Gate parameters.
+
+Domain estimate: country-scale interior realm.
+
+Anchor classification: sovereign intelligence.
+
+Recommendation: do not enter without S-Rank command approval.
+
+Override: emergency writ accepted.`,
 	},
 	{
-		title: "Vermillion Guild Manifesto",
-		content: `*A flyer nailed to a telephone pole near the commercial district...*\\n\\n---\\n\\n# THE VERMILLION GUILD\\n\\nThe Bureau wants you to think Gate Quotas are for your own good. They take the cores, they restrict the Runes, and they let the D-Ranks die clearing Gates that pay Executive salaries.\\n\\nThe Vermillion Guild offers a different path.\\n\\n✦ **Better Pay**: We buy Anomaly cores at 150% Bureau rates. No paperwork.\\n✦ **No Restrictions**: Runes the Bureau banned? We stock them. Your power is YOUR business.\\n✦ **Real Support**: Our Guild Hall has hot food, warm beds, and people who won't send you into a B-Rank Gate with D-Rank equipment.\\n\\nBring your cores to the Bazaar. Lower City commercial district. Ask for Ji.\\n\\n*Survive First. Obey Later.*`,
-		visibleToPlayers: true,
-		category: "note",
+		title: "Anchor Scan Sheet",
+		content: `# ANCHOR SCAN
+
+Relic One:
+
+Relic Two:
+
+Relic Three:
+
+Strongest Ally:
+
+Forbidden Bargain:
+
+Final Vulnerability:
+
+Citadel Chamber:
+
+The scan output is unstable. Re-run attempts may alert the Anchor.`,
 	},
 	{
-		title: "Prophecy Fragment: The Three Anchors",
-		content: `*A stone tablet recovered from a Gate-adjacent anomaly, covered in glowing script...*\\n\\n---\\n\\n*"The Regent of Shadow does not slumber. It waits.*\\n\\n*Three fragments of its dominion were scattered across the dimensional barriers — anchors that bind its full manifestation. They were not hidden to be found. They were hidden to HOLD.*\\n\\n*One devours light. One commands will. One drinks life.*\\n\\n*He who gathers all three shall either bind the Sovereign...*\\n\\n*...or be consumed by the throne."*\\n\\n---\\n\\n> **Bureau Note (stamped)**: Cross-reference with Dr. Hayashi's research on dimensional anchoring. The "anchors" may refer to the high-mana artifacts detected by long-range resonance scans. Classification: RESTRICTED.`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Map Fragment: Gallows Road",
+		content: `# GALLOWS ROAD FRAGMENT
+
+The road bends toward the Citadel no matter how it is drawn.
+
+Marked stops: Rift Threshold, Thornwake, Vermillion Camp, Forward Bastion, Essence Mill, Glassvine Works.
+
+Unmarked warning written in red pencil: "If the blue flame appears, answer politely."`,
 	},
 	{
-		title: "Dr. Hayashi — Research Brief: Regent Entities",
-		content: `# RESEARCH BRIEF — REGENT-CLASS ENTITIES\\n**Author**: Dr. Serin Hayashi, PhD Aetheric Biology\\n**Classification**: Bureau Eyes Only (shared with party at Trusted reputation)\\n\\n---\\n\\n## Definition\\nA Regent is a Gate entity of sufficient power to generate its own dimensional domain. While standard Anomalies are products of Gate environments, Regents CREATE Gate environments. They are, in essence, the dungeon itself given consciousness.\\n\\n## Known Regent Encounters (Historical)\\n- **Seoul, 2019**: Regent-class entity manifested during Gate Break. Casualties: 147 Ascendants, 2,300 civilians. Defeated by combined international strike team over 72 hours.\\n- **São Paulo, 2021**: Regent sealed (not destroyed) by a team led by the 'White Heron' (Old Man Crane). The Gate was permanently closed but the entity may still exist within.\\n- **Yongsan, Current**: Mana signature matches Regent classification. Estimated power: **exceeds both prior cases**.\\n\\n## Theoretical Weakness\\nMy research suggests Regents are not invulnerable — they are anchored to their domain by artifacts I call "Relics." These Relics are fragments of the Regent's own power, separated from the main entity. If recovered and present during confrontation, they should weaken the Regent significantly.\\n\\n## Open Questions\\n- Can a Regent be communicated with? (I believe yes.)\\n- Are the Relics scattered randomly or placed deliberately?\\n- If the Regent is destroyed, what happens to the Gates it created?\\n\\n— E. Hayashi`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Thornwake Tribute Notice",
+		content: `# NOTICE OF TRIBUTE
+
+By grace of the Regent, Thornwake remains sheltered under lawful weather and bounded hunger.
+
+Tribute is due by the second bell after dusk.
+
+Acceptable forms: Essence, labor, living service, Relic metal, or sworn betrayal.
+
+Failure voids shelter.`,
 	},
 	{
-		title: "The Ascendant Ranking System",
-		content: `# THE ASCENDANT RANKING SYSTEM\\n\\n*Official Bureau documentation — provided to all registered Ascendants*\\n\\n---\\n\\n## Overview\\nAll Awakened humans — now legally classified as **Ascendants** — are ranked by the Bureau of Ascendant Affairs based on their measured mana capacity, combat capability, and Gate-clear record.\\n\\n## Ranks\\n\\n| Rank | Mana Level | Approx. Population | Gate Access |\\n|------|-----------|-------------------|-------------|\\n| **E** | Awakened (minimal) | ~500,000 worldwide | E-Rank Gates only |\\n| **D** | Developing | ~100,000 worldwide | Up to D-Rank Gates |\\n| **C** | Competent | ~20,000 worldwide | Up to C-Rank Gates |\\n| **B** | Advanced | ~2,000 worldwide | Up to B-Rank Gates |\\n| **A** | Elite | ~200 worldwide | Up to A-Rank Gates |\\n| **S** | National-Level | ~20 worldwide | All Gates, including S-Rank |\\n\\n## Rank Assessment\\nRank assessments are conducted by Bureau-certified evaluators. Assessments measure:\\n1. Raw mana output\\n2. Sustained mana control\\n3. Combat proficiency (simulated Gate environment)\\n4. Gate-clear record (verified clears contribute to rank advancement)\\n\\n## Re-Awakening\\nIn extremely rare cases, an Ascendant may undergo a second Awakening — a surge of power that dramatically increases their mana capacity. This phenomenon has been documented fewer than 50 times worldwide. Bureau policy requires immediate reassessment and monitoring of any re-Awakened individual.\\n\\n— Bureau of Ascendant Affairs, Public Information Division`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Vermillion Camp Price Board",
+		content: `# VERMILLION CAMP PRICE BOARD
+
+Soup: 1 clean core shaving.
+
+Surgery: 3 clean Essence ampoules or future salvage share.
+
+AFA battery: market rate plus oath.
+
+Relic appraisal: free if we keep first refusal.
+
+Rescue party: negotiable. Not cheap. Never free.`,
 	},
 	{
-		title: "Mika's First Drawing",
-		content: `*A child's crayon drawing on a crumpled piece of paper...*\\n\\n---\\n\\nThe drawing shows a city skyline — simple rectangles for buildings, a yellow circle for the sun. But above the buildings, a massive purple circle dominates the sky. Inside the purple circle, two red dots glow like eyes.\\n\\nBelow the buildings, under the ground, hundreds of stick figures stand in perfect rows. They are all colored black. They are all facing up.\\n\\nIn the corner, written in a child's handwriting: *"They're waiting."*\\n\\n---\\n\\n> **Interpretation (DC 14 Arcana)**: The purple circle is the S-Rank Gate. The red dots are the Regent's eyes. The figures underground are the frozen Anomaly army beneath the Regent's throne room. Mika has seen the final battle before it happens.`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Bureau Bastion Last Order",
+		content: `# LAST ORDER
+
+All teams will hold assigned corridors until command updates the retreat route.
+
+Do not abandon sealed supply rooms.
+
+Do not negotiate with Domain natives.
+
+Do not deviate from Rank doctrine.
+
+Addendum, unsent: there is no retreat route.`,
 	},
 	{
-		title: "Final Transmission: Strike Team Seven",
-		content: `*Static-filled audio log recovered from a Bureau relay beacon...*\\n\\n---\\n\\n**[TIMESTAMP: 03:47:22]** — Sergeant Yoon, this is Strike Team Seven, responding.\\n\\n**[03:47:25]** — We've entered the B-Rank Gate on the rooftop. It's cold. Really cold. There's a bridge made of ice over... nothing. Can't see the bottom.\\n\\n**[03:52:08]** — Contact. Hostiles. Large armored constructs. Lee is down— *[weapon fire]*\\n\\n**[03:55:41]** — Fell back to a chamber. There are... thousands of them. Frozen. Anomalies, standing in formation, like an army on ice. They're not moving. They're waiting for something.\\n\\n**[03:58:12]** — Something new. Kim, my point, he just... stopped. Staring at nothing. Then he walked toward the frozen ones and wouldn't respond. We had to restrain him. His eyes were wrong. Wrong color.\\n\\n**[04:01:33]** — The Gate sealed behind us. No exit. We're moving deeper. If anyone gets this— tell Yoon. Tell her we didn't give up.\\n\\n**[04:05:09]** — *[Sustained weapons fire. Screaming. Deep rhythmic sound like breathing.]* Something is on the throne—\\n\\n**[SIGNAL LOST]**`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Bureau Casualty Tag",
+		content: `# CASUALTY TAG
+
+Name: unreadable due to ash damage.
+
+Rank: C provisional.
+
+Cause: court patrol.
+
+Notes: subject remained combat-effective after fatal wound for forty-seven seconds. Recommend commendation if remains recoverable.`,
 	},
 	{
-		title: "Awoko Cult Pamphlet — The Regent Offers Ascension",
-		content: `*A pamphlet printed on thick, dark paper with silver ink. Found tucked into a mailbox.*\\n\\n---\\n\\n# THE AWAKENING IS NEAR\\n\\nYou call it a Gate Surge. We call it a **Revelation**.\\n\\nThe Regent is not a threat. The Regent is the next step in human evolution. For too long, the Bureau has kept Ascendants leashed — ranked, controlled, measured like cattle. Your power has a ceiling because THEY put it there.\\n\\nThe Regent recognizes no Rank.\\nThe Regent imposes no limit.\\nThe Regent offers **true Ascension**.\\n\\nWhen the S-Rank Gate opens fully — and it WILL open — those who kneel will rise.\\nThose who resist will be left behind.\\n\\n*Come to us before the Gate breaks. We will prepare you.*\\n\\n*Ask for the blessing of The Hollow Mother.*\\n\\n— THE AWOKO\\n\\n*"To awaken is to remember what you always were."*`,
-		visibleToPlayers: true,
-		category: "note",
+		title: "Mill Work Token",
+		content: `# MILL TOKEN
+
+Bearer is permitted through the outer wheelhouse for one shift.
+
+No weapons beyond the red line.
+
+No questions in the rendering room.
+
+No refunds for partial processing.`,
 	},
 	{
-		title: "Old Man Crane's Gate Raid Journal",
-		content: `*A worn leather journal, pages yellowed with age. The handwriting is precise and elegant.*\\n\\n---\\n\\n**Entry 1 — Seoul, 2019**\\nThe first Regent I ever faced. Class-S entity manifested through a Gate Break during rush hour. 147 Ascendants died in the first wave. I lost Hana, Joon, and the kid — couldn't even remember his name afterward. The guilt stays. The nightmares stay longer.\\n\\n**Entry 7 — São Paulo, 2021**\\nSealed the second Regent with a technique I can't use anymore. My body paid the price. Worth it. The Gate closed. The entity is still inside, I think. Sleeping. Waiting. They always wait.\\n\\n**Entry 14 — Yongsan, Present Day**\\nI came here to die. That's the honest truth. When I heard the Gate Surge reports, I packed my tea set and walked in. An old man's prerogative. But now...\\n\\nThis Regent is different. Stronger than both of mine combined. But there's something else — a sadness in its mana signature. Like homesickness. The others were hungry. This one is... lost.\\n\\nI don't know if that matters when the city is at stake. But I wrote it down anyway.\\n\\n**Entry 15**\\nThe young ones remind me why I survived. Not for me. For them. One more fight, old bird. One more.`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Glassvine Harvest Instructions",
+		content: `# GLASSVINE HARVEST
+
+Cut only white-veined stems.
+
+Do not bleed near open flowers.
+
+If fruit speaks, destroy it.
+
+If fruit cries, leave the row immediately.
+
+If the greenhouse turns toward you, kneel until it loses interest.`,
 	},
 	{
-		title: "Ghost's Redacted Bureau ID",
-		content: `*A Bureau of Ascendant Affairs identification card, severely damaged. Most text has been scratched away or burned.*\\n\\n---\\n\\n**BUREAU OF ASCENDANT AFFAIRS**\\n**OFFICIAL IDENTIFICATION**\\n\\n**Name**: [REDACTED — scratched beyond recognition]\\n**Rank**: A *(confirmed — gold border intact)*\\n**Clearance Level**: [REDACTED]\\n**Assignment**: [REDACTED] — YONGSAN DISTRICT\\n**Date of Issue**: [REDACTED]\\n**Status**: ~~ACTIVE~~ ▸ MIA\\n\\n*The photo shows a person whose features are obscured by water damage. One detail is visible: the subject has heterochromatic eyes — one brown, one pale blue — matching Ghost's current appearance.*\\n\\n**Stamped on reverse**: CLASSIFIED — CENTRAL COMMAND EYES ONLY\\n\\n---\\n\\n> **If shown to Commander Park**: He goes very still. "Where did you find this?" He refuses to say more without Bureau Trusted reputation. At Trusted: "That clearance level... only twelve people in the Bureau have that. And three of them are on the Council. Who IS this person?"`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Aegis Oath Plate",
+		content: `# AEGIS OATH
+
+Hold the line.
+
+Hold the door.
+
+Hold the wounded.
+
+Hold when command fails.
+
+Hold when law becomes teeth.
+
+Hold until holding becomes the only part of you left.`,
 	},
 	{
-		title: "The Faded Family Photo",
-		content: `*A small framed photograph, recovered from the Hyeonsan Memory-Care Wing (Day Zero) or found among the personal effects in the Regent's throne room (Chapter 16). The glass is cold to the touch and refuses to fog.*\\n\\n---\\n\\n*A young woman in a white wedding dress stands in front of a Bureau chapel. Beside her, a young man in Bureau Ascendant dress uniform — his face is worn down to bare photograph paper, as if decades of thumbs have brushed against it. You can see where the creases of his shoulder-boards should be. You cannot see his jaw. You cannot see his eyes.*\\n\\n*The inscription below reads in fading ink:*\\n\\n**"Jeong-hye and ████████, June 1978"**\\n\\n*Behind the couple, a hand-lettered banner in Korean reads* **축하합니다** *(congratulations). A small dog sits at the bride's feet. In the corner of the frame, visible only to a very close look: the photographer's stamp — a Bureau photo division that has not existed for forty years.*\\n\\n---\\n\\n> **Interpretation (DC 16 Arcana, or automatic at Dr. Hayashi Trusted reputation)**: The erasure of the groom's face is not damage. It is *absence*. The man in the photograph has been removed from records so thoroughly that his face cannot be preserved on any surface. A mana-sensitive Ascendant holding the photograph can feel a faint pressure from the empty space where his face should be — like a pocket dimension the size of a coin, humming against the photograph's surface.\\n\\n> **Warden Use**: This is the canonical *faded photo of a family* described in the Regent Research Brief (Dr. Hayashi) and referenced in Warden Secret: The Regent's Origin. If the party recovers it in Day Zero, it is MISSING from the Regent's throne room in Chapter 16 — and the Regent will feel that absence. If the party presents it to the Regent during Phase 3, the Warden may grant advantage on the party's first saving throw against Remembrance, and the Regent loses its Legendary Resistance for one round. If Ms. Park survived Day Zero and is present at the cordon during Phase 3, this handout is what a Regent-Marked PC shows to her to trigger the Regent's pause.`,
-		visibleToPlayers: true,
-		category: "handout",
-	},
-	// ── Warden-Only Handouts ─────────────────────────────────────────────
-	{
-		title: "Warden Secret: The Hollow Mother's True Plan",
-		content: `# WARDEN EYES ONLY — The Hollow Mother's Plan\\n\\n---\\n\\nNyx doesn't actually serve the Regent. She intends to ABSORB it.\\n\\nHer cult rituals are designed to weaken the dimensional barriers between Gates — not to help the Regent manifest, but to fracture its power enough that she can steal its domain. The Hollow Mother is attempting to become a Regent herself.\\n\\nIf The Hollow Mother succeeds:\\n- The S-Rank Gate's entity is absorbed into The Hollow Mother\\n- The Hollow Mother becomes an S-Rank human-Regent hybrid (use Regent Phase 1 stats with The Hollow Mother's intelligence and tactical abilities)\\n- The Gates don't close — they fall under The Hollow Mother's control\\n- The campaign's final boss becomes The Hollow Mother instead of the Regent\\n\\nThis twist is optional. The Warden can play it straight (The Hollow Mother is a fanatic serving the Regent) or use this twist if the party has been ignoring the Cult plotline and needs a dramatic escalation.\\n\\n**Foreshadowing**: The Hollow Mother's dialogue never mentions "serving" the Regent. She says "inheriting." Her cult members say "serving." This discrepancy can be caught with a DC 18 Insight check.`,
-		visibleToPlayers: false,
-		category: "lore",
-	},
-	{
-		title: "Warden Secret: Agent Blackwood's Mission",
-		content: `# WARDEN EYES ONLY — Agent Kira Blackwood\\n\\n---\\n\\nBlackwood was planted in the district BEFORE the Gate Surge. She knew it was coming.\\n\\nBlackwood's real mission: The Bureau's Central Command believes a Regent Relic was already in the district before the Gates appeared — hidden in the Hana Financial Tower vault. Blackwood was sent to retrieve it quietly.\\n\\nThe Gate Surge started before she could complete her mission. Now she's trapped in the Restricted Zone with everyone else, unable to report her findings because the Bureau can't know that Central Command knew about the Relic and didn't warn the district.\\n\\n**If the party discovers this**:\\n- Blackwood can be confronted (she breaks down under pressure — she didn't know people would get hurt)\\n- The party can help her retrieve the Relic from the Ashen Vault Gate (it might be there if the divination table placed it)\\n- Commander Park is FURIOUS if he learns Central Command kept secrets. This can trigger a split within the Bureau faction.\\n\\n**Blackwood's Personal Quest**: She asks the party to help her access a Gate alone. What she really wants is to enter the Ashen Vault and reach the Financial Tower vault inside the Gate dimension.`,
-		visibleToPlayers: false,
-		category: "lore",
+		title: "Hollow Choir Hymn",
+		content: `# HYMN OF ORDER
+
+The road is cruel because roads must choose.
+
+The bell is kind because bells must answer.
+
+The crown is heavy because someone must carry law.
+
+Give tribute and be held.`,
 	},
 	{
-		title: "Warden Secret: Orin's Past",
-		content: `# WARDEN EYES ONLY — Guildmaster Orin\\n\\n---\\n\\nOrin was Bureau. Eighteen years. He was present at the Seoul Gate Breach of 2019 — the deadliest Gate Break in history (147 Ascendants, 2,300 civilians).\\n\\nOrin's squad was ordered to hold a perimeter while Bureau Command debated jurisdiction with the Korean Ascendant Bureau. Three hours of debate while people died meters from his position. Orin broke orders, led his squad into the breach, and saved forty-one civilians.\\n\\nThe Bureau court-martialed him for insubordination. He was stripped of his Rank and discharged. He founded the Vermillion Guild six months later.\\n\\nOrin doesn't hate the Bureau. He hates what it becomes in a crisis — slow, bureaucratic, risk-averse. He formed the Guild to be what the Bureau should be: fast, flexible, and willing to act.\\n\\n**If the party unites Bureau and Vermillion**: Orin and Park have a conversation that reveals they served together in Seoul. Park let Orin take the fall. This is the source of their animosity — and the foundation for their reconciliation.`,
-		visibleToPlayers: false,
-		category: "lore",
+		title: "Choir Defector's Mark",
+		content: `# DEFECTOR MARK
+
+A copper mask split down the mouth.
+
+Anyone wearing this inside the Warrens is marked for capture, not immediate execution.
+
+The Choir wants defectors to sing apology before they die.`,
 	},
 	{
-		title: "Warden Secret: The Regent's Origin",
-		content: `# WARDEN EYES ONLY — The Regent\\n\\n---\\n\\nThe Regent was once an S-Rank Ascendant.\\n\\nFifty years ago, before the Bureau existed, before Gates were understood, a human Awakened with power that exceeded all measurement. Instead of fighting Anomalies, this person — whose name has been erased from all records — chose to enter a Gate and STAY.\\n\\nOver decades inside a Gate dimension, absorbing mana without limit, this person transcended humanity. They became the Gate. The dimension reshaped itself around their will. They became a Regent — a being of pure mana that generates its own reality.\\n\\nThe Regent doesn't want to destroy the city. It wants to come HOME. The Gate Surge is not an attack — it is a homecoming. The Regent is trying to manifest in the real world, in the neighborhood where it once lived, before it Awakened and walked into a Gate fifty years ago.\\n\\n**Key Detail**: If the party enters the Regent's Domain, they find personal effects scattered across the throne room — a faded photo of a family, a child's toy, a university diploma. The Regent is monstrous, but it was once a person.\\n\\n**This changes nothing mechanically** — the Regent must be stopped or the city dies. But it adds emotional weight to the final confrontation.`,
-		visibleToPlayers: false,
-		category: "lore",
-	},
-	// ── Phase 3 Content Handouts (Ch. 27-36) ─────────────────────────────
-	{
-		title: "Dr. Hayashi's Autopsy Report on The Diagnosed",
-		content: `# CLASSIFIED — Bureau Evidence Locker\\n**Specimen**: Anomaly remains recovered from Hyeonsan Memory Lodge (Day Zero)\\n**Examining Officer**: Dr. Serin Hayashi\\n**Classification**: D-Rank (elite subtype)\\n\\n---\\n\\n## Summary\\n\\nThe specimen colloquially designated "The Diagnosed" appears to be a previously-undocumented Anomaly class I am provisionally labeling *accumulative-memory-phagic*. Its mana-signature matches Marthos-aspect canonical readings (see Pantheon Reference) but its anchor-pattern is personal rather than cosmic.\\n\\n## Observations\\n\\n1. The creature's "body" dissolved within minutes of death into a fine black dust. Sampled. Preserved.\\n2. The dust reads as partially composed of biological material from at least seventeen distinct human donors, none of whom are identifiable in our database.\\n3. The creature's face, per field report, was a composite of faces the subject (Ms. Park Jeong-hye) has forgotten. This is a literal statement. Memory is a physical substrate for these Anomalies.\\n4. The creature's final words, per field report, were *"Let me come home."* This is consistent with Regent-adjacent resonance in the Yongsan mana profile. The Regent's approach appears to be spawning these Anomalies as **pre-Surge tremors**.\\n\\n## Implications\\n\\n- Wherever unresolved grief is dense, an Anomaly of this class may spawn.\\n- The **Awoko Cult** targets bereaved individuals per canonical backstory. They may know this mechanism better than Bureau does.\\n- I recommend that any civilian shelter housing long-term grief cases be monitored for similar manifestations. The outreach staff at Mother Rust's clinic should be briefed.\\n\\n## Personal Note\\n\\nThe subject (Ms. Park) was not in combat. Whatever the party did or did not do in the Lodge determined her survival. The Bureau should not second-guess. Field decisions in Regent-adjacent pocket dimensions cannot be reviewed by people who were not there.\\n\\n— E. Hayashi`,
-		visibleToPlayers: true,
-		category: "lore",
-	},
-	{
-		title: "The Awoko Ritual Primer",
-		content: `*A leather-bound book recovered from the Awoko Sanctum's main nave. The cover is blank. The binding is human skin (DC 16 Investigation + Bureau Allied reputation to confirm). The handwriting is consistent throughout — Sister Veil's.*\\n\\n---\\n\\n# THE RITUAL OF FRACTURE\\n\\n**Purpose**: Weaken dimensional barriers between Gates by concentrating Marthos-aspect ritual energy into a fixed ritual sigil. Enables pre-selected Awoko operatives to cross between Gates without using mana-relay infrastructure.\\n\\n**Required Components**:\\n- A 60-foot diameter sigil carved into consecrated flooring (Awoko style, see Appendix A).\\n- Seven candles arranged at the sigil's vertices. Candles must be tallow rendered from grief-bereaved donors.\\n- A living sacrifice of a creature that has recently lost a bond (canonically: a bereaved human, pet-less dog, widowed bonded-Anomaly, etc.).\\n- A Choral Invocation by at least one Idol-class Awoko (see Appendix B — this invocation requires the Choral Mother or similar).\\n\\n**Cautions**:\\n- The Ritual of Fracture CANNOT be reversed once initiated.\\n- Prolonged exposure will turn any witnessing non-Awoko operative Regent-Marked within 1 minute.\\n- The Ritual's final-step diagram has been **intentionally corrupted** in this book. Sister Veil's margin note reads: *"If this ritual is ever completed, I was not here."*\\n\\n---\\n\\n> **Warden note**: this handout allows the party to **sabotage** the Ritual by understanding its components. DC 14 Investigation + Awoko Cult knowledge (Ch. 33 Sanctum explored) to identify which candle-position is the weak link. Destroying it disables Sister Veil's ritual for 24 hours.`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Black Vault Consent Form",
+		content: `# CONSENT FORM
+
+State the desired effect.
+
+State the acceptable cost.
+
+State whether the cost may be collected later.
+
+Silence will be interpreted as consent to delayed collection.`,
 	},
 	{
-		title: "The Hollow Mother's Sermon (Transcript)",
-		content: `*Audio transcript recovered from the Awoko Sanctum's confession chamber (S-2) recording device. The voice is confirmed to be The Hollow Mother (Dr. Sarah Kim). The audience is composed of twelve initiates, identities unconfirmed.*\\n\\n---\\n\\n**The Hollow Mother**: "Every one of you is here because someone you loved was taken. By a Gate. By a breach. By the Bureau's cowardice. By the slow poison of a city that could not save itself.\\n\\n"I do not ask you to forget them. I ask you to *carry* them.\\n\\n"The Regent is not a anomaly. The Regent is a door. The door was opened by a man who loved his wife enough to refuse to die in a Gate. He walked in. He stayed. He became the door.\\n\\n"When the Regent returns to this city, he will remember the people he has lost. And so will you. And so will I.\\n\\n"But the Bureau will tell you to kill him. Because the Bureau is afraid of what it is to love someone that much.\\n\\n"Do not let them.\\n\\n"Awaken. Remember. Do not forget what you always were.\\n\\n"To awaken is to remember what you always were."\\n\\n*[Pause. Twelve voices repeat the phrase in unison.]*\\n\\n*[End of recording.]*\\n\\n---\\n\\n> **Interpretation (DC 16 Sense)**: The Hollow Mother is *lying* to her initiates. Per the **Warden Secret: The Hollow Mother's True Plan**, she does not serve the Regent — she intends to **absorb** him. The sermon's language is carefully chosen to make the initiates believe they are serving love. They are not. They are tithing to her.`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Subject Zero Bargain Record",
+		content: `# BARGAIN RECORD
+
+The offer worked.
+
+That is the problem.
+
+Effect granted:
+
+Pressure marked:
+
+Visible consequence:
+
+Ending consequence:`,
 	},
 	{
-		title: "Sister Veil's Marginalia",
-		content: `*A second book recovered from Sister Veil's laboratory in the Awoko Sanctum (S-5). This is a working journal. The cover is plain leather. The entries are dated and signed. Some pages are torn out. Some are water-stained. One page has been reattached with ritual tape.*\\n\\n---\\n\\n**Entry 47, Day 19 of the Surge**:\\n*"The Hollow Mother reviewed my ritual-math today. She said the absorption coefficient is 'not relevant to the work.' This is the first time she has dismissed a numerical finding. I am not sure what to make of this."*\\n\\n**Entry 51, Day 23**:\\n*"Acolyte Mara was caught trying to leave. The Hollow Mother forgave her. I do not understand the forgiveness. Mara has not been returned to the Confession Chambers. She has been given a field promotion. This is not our practice."*\\n\\n**Entry 58, Day 26**:\\n*"I overheard The Hollow Mother speaking with Blood Zealot Karn. She used the word 'inherit,' not 'serve.' I heard it clearly. I wrote it down three times so I would not doubt my memory. INHERIT. INHERIT. INHERIT. She inherits what? The Regent? From whom?"*\\n\\n**Entry 61, Day 29**:\\n*"I believe she has lied to all of us."*\\n\\n**Entry 63, undated**:\\n*"If anyone reads this who is not Awoko: the ritual is designed to fracture a dimensional boundary so that one soul can cross into the Regent's domain and supplant him. That soul is The Hollow Mother's. It has always been hers. The rest of us are fuel. Even me. I am sorry."*\\n\\n---\\n\\n> **If shown to Sister Veil**: she reads the marginalia back to herself, and — with DC 12 Presence — defects on the spot. This is the canonical defection mechanic for Chapter 33 S-5.`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Beast Crown Trail Sign",
+		content: `# TRAIL SIGN
+
+Three cuts in black bark: pack road.
+
+Four cuts: breeding ground.
+
+Five cuts: turn back.
+
+Six cuts: you are already being tested.`,
 	},
 	{
-		title: "Commander Park's Unsent Letter",
-		content: `*A letter found in the bottom drawer of Commander Park's office (Ch. 29 Room 7). Never sent. Never opened. Dated the day after the Seoul Cascade.*\\n\\n---\\n\\nTo the families of Strike Team Alpha,\\n\\nI have written this letter fourteen times. I have thrown fourteen drafts away. I am writing it again because I do not know how else to mark this day.\\n\\nYour husbands, your wives, your children, your fathers and mothers and siblings and friends — they did not die doing something heroic. They did not die charging the enemy. They did not die saving the innocent.\\n\\nThey died **waiting**.\\n\\nI was their Commander. I told them to hold the perimeter. The Council was arguing with the Korean Ascendant Bureau about jurisdiction. Three hours. Your people were holding a perimeter against a Class-S Anomaly for three hours because two bureaucracies could not agree on a form.\\n\\nOrin was with us. Orin disobeyed orders. Orin went in. He saved forty-one civilians.\\n\\nI did not go in.\\n\\nI held my position.\\n\\nI do not know how to apologize for this. I do not believe an apology is owed to the dead. But I owe one to you — the living — and I have been unable to write it because no sentence I have constructed has felt true.\\n\\nSo: I am sorry. I do not forgive myself. I do not ask you to.\\n\\nCommander Park Jae-won\\nYongsan Bureau District\\n\\n---\\n\\n> **If the party finds this**: Commander Park is shown to be aware of his failure in Seoul 2019. If shown to Orin, it unlocks the **Alliance** epilogue canonically — Orin tells Park that he should have gone in too, and that he forgives him. This is the canonical Chapter 17 Side Quest "The Alliance" emotional climax.`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "White Heron Seal Notes",
+		content: `# WHITE HERON SEAL
+
+The Anchor does not need to die for the Gate to close.
+
+Requirements:
+
+- Anchor made vulnerable.
+- One Anchor Relic inverted.
+- A willing Ascendant to bear the seal backlash.
+- A declared law stronger than the Regent's claim.
+
+Failure feeds the Citadel.`,
 	},
 	{
-		title: "Warden Secret: The Bureau's Secret",
-		content: `# WARDEN EYES ONLY — What's Under the Hana Tower\\n\\n---\\n\\nThe **Hana Financial Tower sub-basement** (Chapter 32, SB-2) contains a working Bureau console that, when decrypted (DC 16 Investigation + Technomancer job bonus), reveals the following:\\n\\nThe Yongsan Mana Vein Network has been **Bureau Central Command's secret containment buffer** for a dormant S-Rank Anomaly for **thirty-four years**. This Anomaly is NOT the Regent. It is older. It is nameless in Bureau records — the files list it only as **Subject Zero**.\\n\\nSubject Zero has been held dormant by the combined resonance of the three Mana Veins. The Yongsan Gate Surge has weakened the containment to roughly 11% below normal tolerance.\\n\\n**If the party destroys the Regent AND installs all three Mana Vein sensors AND Professor Lun detonates them** (Ch. 24 Card 6 Option 10): Subject Zero is undisturbed.\\n\\n**If the party destroys the Regent WITHOUT stabilizing the Veins**: Subject Zero's containment continues to decay. This is the canonical **Awakening Ending** (Ch. 28 Room 15 handoff).\\n\\n**If Agent Blackwood's mission succeeds** (Warden Secret: Blackwood's Mission): Central Command acquires a specific Relic from the Hana Tower vault. This Relic is part of the original Bureau containment protocol on Subject Zero. Removing it is catastrophic.\\n\\n**This is a sequel-arc plot engine.** Do not resolve in this campaign. The party should *sense* something is wrong, but never get a clear answer.\\n\\n---\\n\\n> **Warden foreshadowing checklist**:\\n> - [ ] Seo Min-jae's "voice in the Gate's inner dark" refers to Subject Zero.\\n> - [ ] The Awoko Cult's *Marthos aspect* references an older entity; Marthos is only the substrate.\\n> - [ ] Every Gate the party clears weakens the containment by 0.1% per Blue Phase used.\\n> - [ ] If Dr. Hayashi survives the campaign and the party trusts her enough, she will raise this question herself in the epilogue.`,
-		visibleToPlayers: false,
-		category: "lore",
+		title: "Dinner Invitation",
+		content: `# INVITATION
+
+Honored Ascendants,
+
+You have crossed my road with admirable persistence.
+
+Come to the Citadel under guest law. Bring your weapons if they comfort you. Bring questions if they sharpen you. Bring manners if you wish to leave with both.
+
+- The Regent`,
 	},
 	{
-		title: "Professor Lun's Mana Vein Sensor Schematic",
-		content: `*A hand-drawn schematic on graph paper, signed "Lun, 2046" (date unclear — ink has faded). Folded four times; worn at the creases.*\\n\\n---\\n\\n# MANA VEIN RESONANCE SENSOR — Mark IV\\n\\n**Purpose**: Detect, measure, and — on command — **temporarily destabilize** an active Mana Vein's harmonic output.\\n\\n**Components**:\\n- Core: 1× C-Rank Anomaly core (mana battery)\\n- Housing: Bureau-issue tactical casing, modified\\n- Resonance Array: 6× prismatic mana-lens (calibrated individually)\\n- Trigger: remote-activated relay (paired with Lun's master detonator)\\n\\n**Installation Instructions**:\\n1. Place sensor directly over a Mana Vein node's primary pulse (the node's visible pillar, typically 2 stories tall).\\n2. Calibrate the prismatic array so all six lenses register the same harmonic frequency (DC 14 Intelligence — Mana Engineering).\\n3. Engage the relay. Sensor now transmits to Lun's master console 24/7.\\n4. On Lun's command, sensor detonates — releasing a concussive mana-pulse strong enough to briefly disrupt the node's containment function.\\n\\n**Canonical Tactical Use**:\\n- If **all three Mana Vein nodes** (Shipyard, Train Depot, Hana Financial Tower SB-3) are active AND Lun detonates them simultaneously: the Regent begins Chapter 16's fight with **−60 HP**.\\n- If only some are active: partial HP deduction (Ch. 32 table).\\n- **Warning**: Lun does not know what the Bureau is using the Veins to contain. Detonating all three weakens Subject Zero's containment by ~3%. See Warden Secret.\\n\\n---\\n\\n> **Use**: this handout is a puzzle key for Chapters 31 (Location 3), 32 (SB-3), and — arguably — foreshadowing the Awakening Ending.`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Court Patrol Pass",
+		content: `# COURT PASS
+
+The bearers may cross one patrol boundary without bloodshed.
+
+Invalid if copied, burned, mocked, blessed, folded into a weapon, or presented without eye contact.`,
 	},
 	{
-		title: "Bright's Tattoo Parlour Business Card",
-		content: `*A matte-black business card with silver embossed text. The back has a hand-drawn sparrow (Solara's Brightest Fragment) in silver ink. Slipped under a PC's door.*\\n\\n---\\n\\n## BRIGHT ✦ TATTOO\\n\\n**Canonical designs. Voice-amplified. Guaranteed to activate on the first flex.**\\n\\nVermillion Guild Hall, Room 4. Second floor. Neon sign says TATTOO — can't miss it.\\n\\nWalk-ins Tuesday–Saturday. Appointments preferred.\\n\\n- **Standard tattoo** (any from \`tattoos.ts\`): 2,500 Credits OR 1 B-Rank core\\n- **Premium voice-amplified** (advantage on first activation/long rest): 5,000 Credits + 1 A-Rank core\\n- **Tattoo Voucher redemption**: accepted for any design, any Job. No questions asked.\\n- **Curse removal**: 1 C-Rank core (Vermillion exclusive)\\n\\n*"Every line I draw is for someone who wasn't saved."*\\n\\n— Lee Ji-won "Bright"\\nVermillion Guild, Idol-class Ascendant`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Citadel Approach Sketch",
+		content: `# CITADEL APPROACHES
+
+Gallows Road: formal, watched, survivable.
+
+Beast Road: fast, hungry, not made for people.
+
+Glassvine Climb: living, useful, jealous.
+
+Bastion Tunnel: mapped, collapsed, full of old orders.
+
+Black Vault Door: immediate, never free.`,
 	},
 	{
-		title: "Seo Min-jae's Gate Return Statement",
-		content: `*A hand-written statement, folded inside a plain envelope. Delivered anonymously to Dr. Hayashi's workbench.*\\n\\n---\\n\\nI was pronounced dead at 04:17 on the 14th day of the Surge. I do not remember dying.\\n\\nI remember: a corridor that was not a corridor. I remember: my Bureau medic — Park, the younger, not the Commander — touching my wrist and shaking her head. I remember: the inside of an ambulance. I remember sitting up.\\n\\nBetween the medic shaking her head and my sitting up, I was somewhere. It was not dark. It was not cold. It was a voice speaking to me in a language I knew without knowing. The voice said: *"Not this one. Not yet."* The voice said: *"Carry it."*\\n\\nI asked the voice *carry what*.\\n\\nThe voice said: *"The thing you saw in the back of the Gate. The thing the Bureau is keeping asleep. Wake it. When you are ready. Wake it."*\\n\\nI have not known what to do with this information for three days.\\n\\nI am writing this statement to Dr. Hayashi because she is, to my knowledge, the only Bureau official who might read it without filing it in a drawer. I am also writing it because I intend to find the thing the voice described. I will not wake it — not yet, not unless I am convinced — but I will find it.\\n\\nI am told my class registration has changed. I was a D-Rank Warrior. I am now classified as "Revenant" per the canonical Job framework. I do not know what this means practically. I know what it means narratively: I have been given a second round.\\n\\nIf anyone reads this who knows what I saw, please — send word. I am at Mother Rust's outreach post. I drink tea in the afternoons. I am patient.\\n\\n— Seo Min-jae\\nThe Returned`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Regent Law Fragment",
+		content: `# LAW FRAGMENT
+
+No guest may be harmed before bread is broken.
+
+No tribute may refuse its own naming as tribute.
+
+No road may deny its lord.
+
+No beast may hunt the crowned hand.
+
+No oath may die before its bearer.`,
 	},
 	{
-		title: "The Choral Invocation (Lead Sheet)",
-		content: `*A sheet of music written in Awoko ritual notation. Recovered from the Awoko Sanctum's Choir Loft (Ch. 33 S-4). Sheet is stained — candle wax, not blood.*\\n\\n---\\n\\n# AWOKO INVOCATION №7 — "The Mother's Summons"\\n\\n**Voice**: Solo Idol (The Choral Mother, canonical, Ch. 33 S-4).\\n**Supporting chorus**: 4 Acolytes, low drone, A-minor.\\n**Tempo**: Adagio, 44 BPM. (This is the pulse of a grieving heart.)\\n\\n**Function (per Sister Veil's marginalia, DC 14 Arcana)**:\\nThe Invocation tears a pinhole in the dimensional barrier between the Awoko Sanctum and the nearest Regent-aspected pocket dimension. Through this pinhole, shadow-class Anomalies can be summoned. **Canonical shadow soldiers summoned**: 2× Umbral Scout (see \`shadow-soldiers.ts\`).\\n\\n**Tactical exploit**:\\n- If the Choral Mother is disrupted mid-invocation (DC 14 Presence or Counterspell), the summoning **reverses**. Any active Umbral shadow soldiers in 60 ft. are banished back through the pinhole. This is how the party can turn her invocation against her.\\n- If the Choral Mother defects (per Ch. 33 S-4 reconciliation path), she uses this invocation to cleanse existing shadow soldiers rather than summon new ones. This is a campaign-defining ally moment.\\n\\n---\\n\\n*"Through mothers we are bound.\\nThrough mothers we are torn.\\nThrough mothers the door is opened.\\nThrough mothers the key is drawn."*\\n\\n— Opening chorus, Invocation №7`,
-		visibleToPlayers: true,
-		category: "lore",
+		title: "Red Phase Warning",
+		content: `# RED PHASE WARNING
+
+Containment thinning.
+
+Domain weather detected at threshold.
+
+Anomaly migration probable.
+
+Anchor law crossing material boundary.
+
+Clear state required immediately.`,
 	},
 	{
-		title: "Old Man Crane's Sealing Technique — Private Notes",
-		content: `*A small notebook with a red silk cover, given to the party ONLY at Bureau Trusted reputation + explicit ask. Crane does not share this casually.*\\n\\n---\\n\\n# THE SÃO PAULO SEAL\\n**Technique class**: Herald S-tier, custom\\n**Author**: Ascendant "White Heron" (canonically: Old Man Crane)\\n**Date**: 2021\\n**Casualties in original use**: 1 (Crane himself — partial)\\n\\n---\\n\\n## What the Seal Does\\n\\nThe São Paulo Seal is a one-shot technique that CLOSES a Regent's Gate **without destroying the Regent**. The Gate becomes inaccessible from the real world. The Regent remains inside — sealed, effectively — indefinitely. This is the only known technique for a Regent-seal; every other documented Regent confrontation has ended in either Regent destruction (catastrophic) or Regent victory (city-ending).\\n\\n## How It's Cast\\n\\nThe caster must be:\\n- Herald class (Ascendant).\\n- Inside the Regent's Domain at the moment of sealing.\\n- Willing to accept permanent body damage — typically 1 level of permanent Exhaustion, sometimes worse.\\n\\nThe caster speaks a phrase the Regent has not yet heard. The phrase must be a specific kind of **statement of recognition** — naming a quality the Regent has forgotten about themselves. Canonical example (São Paulo): *"You were loved."*\\n\\nThe Regent freezes for exactly the duration of the phrase. The caster then closes the Gate from the outside, trapping the Regent inside.\\n\\n## Why Crane Cannot Cast It This Time\\n\\nHis body cannot survive another casting. The São Paulo Seal left him with partial mana-lattice damage that has not healed in five years. He can teach the technique but not perform it.\\n\\n**This means**: if the party wants the **Sealing Ending** (Ch. 28 Room 15 handoff), a Herald-class PC or recruitable Herald NPC must cast it. Crane's only contribution is the knowledge.\\n\\n---\\n\\n> **Mechanic**: a Herald-class PC with Crane's notes gains access to the canonical "São Paulo Seal" S-tier technique for use in Chapter 16 Phase 3. It can ONLY be used on a Regent at 10% HP or below, and ONLY by a Herald. Casting costs: 1 level of permanent Exhaustion. The Regent is sealed, not killed. Sealing Ending unlocks.`,
-		visibleToPlayers: false,
-		category: "lore",
+		title: "Ending Ledger",
+		content: `# ENDING LEDGER
+
+Anchor state:
+
+Survivors extracted:
+
+Settlements saved:
+
+Settlements lost:
+
+Subject Zero consequences:
+
+Bureau public report:
+
+Truth known to the party:`,
 	},
 	{
-		title: "Han Yu-jin's Bond Ledger",
-		content: `*A small notebook with a leather cover, soft from use. Han Yu-jin carries it at all times. She will show it to the party only at Friendly reputation or better.*\\n\\n---\\n\\n# THE BOND LEDGER\\n\\nA list of every Anomaly I have bonded with, in order.\\n\\n1. **Ssal** (Rice), 2031–2034. D-Rank Beast. She was the first. She died in a Gate Break protecting a child.\\n2. **Bom** (Spring), 2034–2035. D-Rank Beast. He did not survive his first mana-storm.\\n3. **Yeoreum** (Summer), 2035–2037. D-Rank Beast. He lived the longest. He died old.\\n4. **Gyeoul** (Winter), 2037. D-Rank Beast. She was with me three months. Gate Collapse in Busan.\\n5. **Soju**, 2037–2038. C-Rank Beast. He was the only one I never could fully gentle.\\n6. **Pung** (Wind), 2038–2040. D-Rank Beast. She chose to leave. She stayed near me for six more months.\\n7. **Hana**, 2040. C-Rank Beast. One week. An A-Rank Gate Break took her.\\n8. **Bul** (Fire), 2040–2042. B-Rank Beast. She was the fiercest. I loved her.\\n9. **Dol** (Stone), 2042. C-Rank Beast. He was gentle.\\n10. **Parang** (Blue), 2043. D-Rank Beast. She was brief.\\n11. **Little Sister**, 2043–present. D-Rank Beast. She is still here.\\n\\nI will add her to the list when the time comes.\\n\\n— Han Yu-jin\\n\\n---\\n\\n> **Narrative weight**: this ledger is Yu-jin's heart. Any PC shown it earns her trust permanently. If Little Sister is killed during the campaign, the Warden may mark #11 as "dead" in the ledger — the grief moment is Yu-jin's quest to bond with a new creature, who canonically becomes a D-Rank Anomaly Beast from the party's recent kill list.`,
-		visibleToPlayers: true,
-		category: "handout",
+		title: "Warden Quick Reference",
+		content: `# QUICK REFERENCE
+
+Show the Citadel every session.
+
+Make safety conditional.
+
+Let bargains work.
+
+Make Anomalies serve a Domain role.
+
+Track Red Phase pressure.
+
+Keep the Regent polite until violence matters.`,
 	},
 ];
+
+export const sandboxHandoutsExpanded: SandboxHandout[] = rawSandboxHandouts.map(
+	(handout) => ({
+		...handout,
+		category: "gloamreach",
+		visibleToPlayers: true,
+	}),
+);

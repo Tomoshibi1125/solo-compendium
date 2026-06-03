@@ -225,6 +225,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Range increases to 60 feet at 5th level, 120 feet at 11th, and 300 feet at 17th.",
 		area: { type: "radius", size: "30-foot", shape: "sphere" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Detect number and direction of creatures within 30 feet.",
+			},
 			duration: "Instantaneous",
 			range: "Self",
 			type: "Divination",
@@ -456,6 +460,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, also removes the poisoned condition. At 11th, grants 1d4 temp HP. At 17th, removes one disease.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Stabilize a dying creature or restore 1 HP.",
+			},
 			duration: "Instantaneous",
 			range: "Touch",
 			type: "Transmutation",
@@ -498,7 +506,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		casting_time: "1 action",
 		range: "30 feet",
 		duration: "Instantaneous",
-		components: { verbal: false, somatic: true, material: true },
+		components: {
+			verbal: false,
+			somatic: true,
+			material: "a coil of fine copper wire",
+		},
 		concentration: false,
 		ritual: false,
 		rank: "D",
@@ -573,6 +585,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Extra damage increases to 2d6 at 5th level, 3d6 at 11th, and 4d6 at 17th.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Next melee hit deals extra 1d6 radiant damage.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Evocation",
@@ -635,6 +651,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Range extends to 15 feet at 5th level, 20 feet at 11th, and 30 feet at 17th.",
 		area: { type: "radius", size: "10-foot", shape: "sphere" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Gain blindsight 10 feet until end of your next turn.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Divination",
@@ -762,6 +782,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Feedback damage increases to 2d4 at 5th level, 3d4 at 11th, and 4d4 at 17th.",
 		area: { type: "point", size: "self", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "+2 AC against the triggering attack.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Abjuration",
@@ -889,6 +913,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, range extends to 60 feet. At 11th level, you can also see through magical darkness within the range.",
 		area: { type: "radius", size: "30-foot", shape: "sphere" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "See mana signatures within 30 feet.",
+			},
 			duration: "10 minutes",
 			range: "Self",
 			type: "Divination",
@@ -987,6 +1015,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 3rd level, also grants advantage on the next Agility save.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"As a reaction when hit by an attack, raise a shimmering lattice of hardened mana.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Abjuration",
@@ -1032,6 +1065,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "Extra damage increases by 1d8 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Channel your oath into your weapon.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Evocation",
@@ -1083,6 +1120,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 3rd level, damage increases to 1d8 and you sense the target's emotional state.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Brand a creature you can see within range with a mana signature visible only to you.",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "90 feet",
 			type: "Divination",
@@ -1139,6 +1181,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 3rd level, duration becomes 8 hours. At 5th, 24 hours.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Place a pact-sealed curse on a creature within range.",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "90 feet",
 			type: "Enchantment",
@@ -1487,6 +1533,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "Temp HP increases by 5 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Bless a willing creature with a protective aura of the Absolute.",
+			},
 			duration: "8 hours",
 			range: "30 feet",
 			type: "Abjuration",
@@ -1607,6 +1658,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 3rd level, teleport range increases to 60 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Flicker through local mana-space, teleporting up to 30 feet to an unoccupied space you can see.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Illusion",
@@ -1730,6 +1786,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 3rd level, also grants resistance to one damage type of your choice for the duration.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Encase yourself in a translucent shell of hardened mana.",
+			},
 			duration: "8 hours",
 			range: "Self",
 			type: "Abjuration",
@@ -1778,6 +1838,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "Healing increases by 1d8 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: { type: "healing", dice: "1d8" },
 			duration: "Instantaneous",
 			range: "Touch",
 			type: "Evocation",
@@ -1894,6 +1955,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 3rd level, extra damage becomes 1d6 and you also gain resistance to cold.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Wreath yourself in a cloak of entropic mana.",
+			},
 			duration: "1 minute",
 			range: "Self",
 			type: "Necromancy",
@@ -2016,6 +2081,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "Reduction increases by 1d6 per level above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"As a reaction when you take damage, invoke your patron's protection.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Abjuration",
@@ -2133,6 +2203,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 3rd level, the flare also reveals invisible creatures within its bright light.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Launch a flare of radiant mana that hangs in the air at a point within range.",
+			},
 			duration: "1 hour",
 			range: "120 feet",
 			type: "Evocation",
@@ -2191,6 +2266,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 3rd level, entering bright light merely makes you translucent (heavily obscured) rather than ending the spell.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Dissolve your visual profile into ambient shadow.",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "Self",
 			type: "Illusion",
@@ -2296,6 +2375,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Healing increases to 1d6 at 2nd level, 1d8 at 3rd, and 1d10 at 4th.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: { type: "healing", dice: "1d4" },
 			duration: "Instantaneous",
 			range: "Self (30-foot radius)",
 			type: "Evocation",
@@ -2355,6 +2435,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, the seal sends a mana-pulse alert to you when tampered with.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Touch a closed entry point — a door, container, or minor gate fissure — and fuse it shut with crystallized mana.",
+			},
 			duration: "Until dispelled",
 			range: "Touch",
 			type: "Abjuration",
@@ -2468,6 +2553,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 4th level, you gain resistance to the routed damage.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Create a mana-oath tether between yourself and a willing creature.",
+			},
 			duration: "1 hour",
 			range: "Touch",
 			type: "Abjuration",
@@ -2528,6 +2618,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, you can bring one willing creature you touch along with you.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Dissolve into mana-mist and reform at an unoccupied space you can see within 60 feet.",
+			},
 			duration: "Instantaneous",
 			range: "Self",
 			type: "Conjuration",
@@ -2648,6 +2743,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 4th level, the bonus also applies to ability checks.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Broadcast an amplified harmonic field in a 30-foot radius.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (30-foot radius)",
 			type: "Transmutation",
@@ -2760,6 +2859,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, you also learn the target's current HP as a percentage.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Lock your senses onto a creature you can see.",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "90 feet",
 			type: "Divination",
@@ -2811,6 +2914,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, you can extend the barrier to one ally within 30 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"As a reaction to taking psychic damage or being targeted by a charm/fear effect, erect a psionic barrier around your consciousness.",
+			},
 			duration: "1 minute",
 			range: "Self",
 			type: "Abjuration",
@@ -3001,6 +3109,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, affects up to 5 creatures and the bonus becomes 1d8.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Weave a sustaining harmonic that links up to 3 willing creatures within range.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "60 feet",
 			type: "Enchantment",
@@ -3125,6 +3238,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, the area also grants advantage on saves against necrotic damage.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Consecrate a 15-foot radius centered on you with the Absolute's protective radiance.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (15-foot radius)",
 			type: "Abjuration",
@@ -3184,6 +3302,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, range increases to 120 feet and you can bring one willing creature.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Step into a shadow within 5 feet of you and emerge from a different shadow within 60 feet.",
+			},
 			duration: "Instantaneous",
 			range: "Self",
 			type: "Illusion",
@@ -3318,6 +3441,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, the link extends to 1 mile and the companion gains temporary HP equal to your level.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Form a mana-circuit bridge with a willing gate-creature companion you touch.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Touch",
 			type: "Divination",
@@ -3438,6 +3566,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, drone HP increases to 15 and gains 60 ft fly speed.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Deploy a Small mana-powered drone at a point within range.",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "30 feet",
 			type: "Conjuration",
@@ -3503,6 +3635,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, the hymn also grants immunity to being charmed.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Begin a stirring vocal performance that radiates courage.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self (30-foot radius)",
 			type: "Enchantment",
@@ -3820,6 +3956,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "Extra damage increases by 1d8 per level above 3rd.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Phase through mana-space to deliver a devastating strike.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Conjuration",
@@ -3879,6 +4019,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, the beacon also deals 2d6 radiant damage to anomaly entering the area.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Radiate the Absolute's protective light.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self (30-foot radius)",
 			type: "Evocation",
@@ -3936,6 +4080,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 5th level, backlash damage is reduced to 0.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Overcharge your mana circuit for one devastating release.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Transmutation",
@@ -3995,6 +4143,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, summon a CR 4 echo (AC 16, HP 50, 2d8+4 damage). At 7th, CR 6.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Tear a brief rift and pull a semi-autonomous gate echo into an unoccupied space within range.",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "60 feet",
 			type: "Conjuration",
@@ -4054,6 +4207,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, also grants an additional action on each turn (attack, Dash, Disengage, Hide, or Use Object only).",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Overclock a willing creature's mana circuit, boosting physical performance.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Touch",
 			type: "Transmutation",
@@ -4186,6 +4344,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, range extends to 10 miles and message length to 50 words.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Transmit a whispered message of 25 words or fewer to a creature within 1 mile that you are familiar with.",
+			},
 			duration: "10 minutes",
 			range: "1 mile",
 			type: "Divination",
@@ -4501,6 +4664,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 6th level, the aura also grants resistance to spell damage.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: { type: "utility", effect: "Radiate your oath's authority." },
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (30-foot radius)",
 			type: "Abjuration",
@@ -4555,6 +4719,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 6th level, create 5 duplicates.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Manifest three illusory copies of yourself that occupy your space and mirror your movements.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Illusion",
@@ -4616,6 +4785,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 6th level, the dome also blocks divination attempts targeting creatures inside.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Erect a translucent 20-foot radius dome at a point within range.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "60 feet",
 			type: "Abjuration",
@@ -5015,6 +5189,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 7th level, the time limit extends to 100 days.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Touch a creature that died within the last 10 days and restore it to life with 1 hit point.",
+			},
 			duration: "Instantaneous",
 			range: "Touch",
 			type: "Necromancy",
@@ -5333,6 +5512,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 7th level, targets also gain advantage on Strength saves.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Overclock up to 6 willing creatures' mana circuits simultaneously.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "30 feet",
 			type: "Transmutation",
@@ -5457,6 +5641,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "Healing increases by 1d8 per level above 5th.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: { type: "healing", dice: "3d8" },
 			duration: "Instantaneous",
 			range: "60 feet",
 			type: "Evocation",
@@ -5727,6 +5912,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 8th level, allies also gain resistance to all damage.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Perform an overwhelming symphonic broadcast that empowers every ally within 90 feet.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (90-foot radius)",
 			type: "Enchantment",
@@ -5792,6 +5982,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 8th level, allies also gain advantage on all saving throws.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Channel the full protective mandate of the Absolute.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (30-foot radius)",
 			type: "Abjuration",
@@ -5994,6 +6188,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 8th level, summon a Huge CR 10 behemoth.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Tear open a major rift and summon a Large gate behemoth (AC 17, HP 100, multiattack: 2 slams at +8 for 2d10+5 bludgeoning).",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "60 feet",
 			type: "Conjuration",
@@ -6053,6 +6252,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 8th level, you remain invisible after attacking if you end in darkness.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Vanish into the umbral layer of mana-space.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Illusion",
@@ -6184,6 +6387,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 9th level, the incapacitation is reduced to 'speed is 0' only.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Fracture your personal timeline, existing in two moments simultaneously.",
+			},
 			duration: "1 round",
 			range: "Self",
 			type: "Transmutation",
@@ -6249,6 +6457,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 9th level, you gain 8 uses.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"As a reaction when a creature within 60 feet dies, harvest its collapsing mana circuit into a stabilized echo-cage.",
+			},
 			duration: "8 hours",
 			range: "60 feet",
 			type: "Necromancy",
@@ -6308,6 +6521,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 9th level, avatar HP increases to 180 and gains legendary resistance (1/day).",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Summon a partial manifestation of your pact entity.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "60 feet",
 			type: "Conjuration",
@@ -6434,6 +6651,7 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 9th level, you can extend this to one willing creature you touch.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: { type: "utility", effect: "Become undetectable." },
 			duration: "Concentration, up to 1 hour",
 			range: "Self",
 			type: "Illusion",
@@ -6494,6 +6712,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 9th level, the leviathan gains 200 HP and legendary resistance (2/day).",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Tear open a massive rift and summon a Huge gate leviathan (AC 18, HP 160, multiattack: 3 at +11 for 2d12+7, swim/fly 60 ft, siege: double damage to objects/structures).",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "60 feet",
 			type: "Conjuration",
@@ -6553,6 +6776,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 9th level, also grants immunity to domination and telepathic intrusion.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Erect an impenetrable psionic barrier in a 30-foot radius.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (30-foot radius)",
 			type: "Abjuration",
@@ -6950,6 +7177,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Invoke the Absolute's primordial creative force.",
+			},
 			duration: "Instantaneous",
 			range: "300 feet",
 			type: "Conjuration",
@@ -7220,6 +7451,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Tear open the largest rift you've ever manifested and summon a Gargantuan gate colossus (AC 20, HP 300, multiattack: 4 slams at +14 for 4d10+8, siege, legendary actions: stomp/tail/roar).",
+			},
 			duration: "Concentration, up to 1 hour",
 			range: "120 feet",
 			type: "Conjuration",
@@ -7353,6 +7589,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Reset your mana circuit to its fully-charged state.",
+			},
 			duration: "Instantaneous",
 			range: "Self",
 			type: "Divination",
@@ -7481,6 +7721,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Overload your sensory channels with absolute analytical clarity.",
+			},
 			duration: "Instantaneous",
 			range: "Self (1 mile)",
 			type: "Divination",
@@ -7692,6 +7937,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 4th level, boost two ability scores simultaneously.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Touch a willing creature and force-awaken dormant capacity in their mana circuit.",
+			},
 			duration: "1 minute",
 			range: "Touch",
 			type: "Transmutation",
@@ -7743,6 +7993,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 4th level, range extends to 120 feet and reveals anomaly types.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Emit a low-frequency mana pulse that bounces off gate-dimensional boundaries.",
+			},
 			duration: "Instantaneous",
 			range: "Self (60-foot radius)",
 			type: "Divination",
@@ -7846,6 +8101,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 4th level, your patron grants you tremorsense 30 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Open a two-way sensory channel with your patron entity.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self",
 			type: "Divination",
@@ -7944,6 +8203,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 5th level, radius extends to 60 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Anchor the local mana-lattice to prevent dimensional manipulation.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (30-foot radius)",
 			type: "Abjuration",
@@ -8051,6 +8315,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 6th level, pocket expands to 8x8x8 feet and lasts 8 hours.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Open a stable extradimensional pocket anchored to your mana circuit.",
+			},
 			duration: "1 hour",
 			range: "Self",
 			type: "Conjuration",
@@ -8101,6 +8370,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 6th level, grants a slot up to 5th level.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Splice a temporary mana pathway into a willing creature's circuit, granting it one spell slot of 3rd level or lower.",
+			},
 			duration: "1 hour",
 			range: "Touch",
 			type: "Transmutation",
@@ -8207,6 +8481,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 7th level, you can make one attack during the shift without fully materializing.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Phase between the material plane and the adjacent gate-dimensional layer.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Conjuration",
@@ -8478,6 +8757,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Force your mana circuit past every safety limiter simultaneously.",
+			},
 			duration: "1 minute",
 			range: "Self",
 			type: "Transmutation",
@@ -8584,6 +8868,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 5th level, dome also blocks mana-projectiles fired by anomalies.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Project a shimmering dome of purified mana in a 20-foot radius.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "60 feet",
 			type: "Abjuration",
@@ -8690,6 +8979,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 5th level, link up to 5 creatures.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Create a sympathetic resonance between up to 3 willing creatures' mana circuits.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "30 feet",
 			type: "Transmutation",
@@ -8849,6 +9143,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 6th level, you can also suppress one ally's signature.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Completely suppress your mana-circuit's broadcast signature.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self",
 			type: "Illusion",
@@ -8899,6 +9197,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 7th level, bonus damage increases to +3d8.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Force-renegotiate the terms of your patron pact for 1 minute, drawing more power than originally agreed.",
+			},
 			duration: "1 minute",
 			range: "Self",
 			type: "Enchantment",
@@ -9003,6 +9306,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 8th level, radius extends to 60 feet.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Force the local gate-dimensional layer to overlap with the material plane.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self (30-foot radius)",
 			type: "Conjuration",
@@ -9052,6 +9360,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 8th level, the echo has full HP.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Split your mana-circuit output into two bodies: yourself and a perfect echo.",
+			},
 			duration: "Concentration, up to 1 minute",
 			range: "Self",
 			type: "Illusion",
@@ -9154,6 +9467,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 9th level, duration extends to 24 hours.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Rewrite a willing creature's mana-circuit at the fundamental level.",
+			},
 			duration: "1 hour",
 			range: "Touch",
 			type: "Transmutation",
@@ -9259,6 +9577,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Anchor the dimensional fabric within a 1-mile radius with overwhelming stabilizing force.",
+			},
 			duration: "24 hours",
 			range: "Self (1-mile radius)",
 			type: "Abjuration",
@@ -9308,6 +9631,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"The ultimate act of creation: force-awaken a latent mana circuit in a mundane creature.",
+			},
 			duration: "Instantaneous",
 			range: "Touch",
 			type: "Transmutation",
@@ -9416,6 +9744,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"Auto-block threshold increases by 1 level per 2 levels above 1st.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"As a reaction when a creature within 30 feet is targeted by a teleportation or banishment effect, anchor their mana circuit to the local lattice.",
+			},
 			duration: "Instantaneous",
 			range: "30 feet",
 			type: "Abjuration",
@@ -9857,6 +10190,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 5th level, sentry fires twice per round.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Deploy a Medium mana-powered sentry platform at a point within range.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "30 feet",
 			type: "Conjuration",
@@ -10132,6 +10470,10 @@ export const spells_supplemental: CompendiumSpell[] = [
 			"At 7th level, enemies in the area have disadvantage on all spell attacks.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect: "Project a psionic defense bastion of stabilized mana-thought.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (30-foot radius)",
 			type: "Abjuration",
@@ -10236,6 +10578,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "At 8th level, portals last for 1 minute.",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Tear two linked portals through the shadow-layer of the mana-lattice.",
+			},
 			duration: "1 round",
 			range: "60 feet",
 			type: "Conjuration",
@@ -10459,6 +10806,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Project a field of total mana-suppression calibrated to gate-frequency signatures.",
+			},
 			duration: "Concentration, up to 10 minutes",
 			range: "Self (120-foot radius)",
 			type: "Abjuration",
@@ -10509,6 +10861,11 @@ export const spells_supplemental: CompendiumSpell[] = [
 		higher_levels: "",
 		area: { type: "point", size: "single target", shape: "point" },
 		mechanics: {
+			resolution: {
+				type: "utility",
+				effect:
+					"Physically transplant mana-circuit capacity to another Awakened.",
+			},
 			duration: "1 hour",
 			range: "Touch",
 			type: "Transmutation",

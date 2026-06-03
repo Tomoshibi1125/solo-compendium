@@ -69,9 +69,9 @@ describe("sigils data quality — mechanics consistency", () => {
 			const specialAbilities = Array.isArray(
 				(mechanics as Record<string, unknown>).special_abilities,
 			)
-				? ((mechanics as Record<string, unknown>)
-						.special_abilities as string[]
-					).join(" ").toLowerCase()
+				? ((mechanics as Record<string, unknown>).special_abilities as string[])
+						.join(" ")
+						.toLowerCase()
 				: String(
 						(mechanics as Record<string, unknown>).special_abilities ?? "",
 					).toLowerCase();
@@ -154,9 +154,7 @@ describe("sigils data quality — mechanics consistency", () => {
 			const restrictions = Array.isArray(
 				(mechanics as Record<string, unknown>).restrictions,
 			)
-				? ((mechanics as Record<string, unknown>)
-						.restrictions as string[]
-					)
+				? ((mechanics as Record<string, unknown>).restrictions as string[])
 				: [];
 			const canInscribeOn = sigil.can_inscribe_on ?? [];
 
@@ -197,7 +195,10 @@ describe("sigils data quality — content uniqueness", () => {
 			const lore = sigil.discovery_lore?.trim().toLowerCase() ?? "";
 			if (lore.length > 0) {
 				const normalizedLore = lore.replace(/\s+/g, " ").trim();
-				loreMap.set(normalizedLore, [...(loreMap.get(normalizedLore) ?? []), sigil.name]);
+				loreMap.set(normalizedLore, [
+					...(loreMap.get(normalizedLore) ?? []),
+					sigil.name,
+				]);
 			}
 		}
 
@@ -232,9 +233,8 @@ describe("sigils data quality — damage profile validity", () => {
 			}
 
 			const damageProfile =
-				String(
-					(mechanics as Record<string, unknown>).damage_profile ?? "",
-				) ?? "";
+				String((mechanics as Record<string, unknown>).damage_profile ?? "") ??
+				"";
 
 			// Check for placeholder patterns
 			const hasPlaceholder = PLACEHOLDER_PATTERNS.some((pattern) =>

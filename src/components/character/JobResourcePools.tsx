@@ -21,6 +21,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useTrackedResources } from "@/hooks/useTrackedResources";
+import { getAbilityModifier } from "@/lib/5eRulesEngine";
 import {
 	createClassFeatureResource,
 	type TrackedResource,
@@ -46,7 +47,7 @@ interface JobResourceDef {
 }
 
 const mod = (score: number | null | undefined): number =>
-	Math.floor(((score ?? 10) - 10) / 2);
+	getAbilityModifier(score ?? 10);
 
 // Job-specific resource catalog. The formulas mirror what's described in the
 // job's class features prose; users can adjust max manually after creation.

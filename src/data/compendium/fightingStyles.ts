@@ -14,6 +14,8 @@ export interface FightingStyle {
 	name: string;
 	description: string;
 	source: FightingStyleSource;
+	/** Canonical source book — always RA Canon (the one true source). */
+	source_book?: string;
 	// Optional: job-proficiency prerequisites (e.g. shield proficiency for
 	// Protection). Satisfied if the chooser's job armorProficiencies contains
 	// the listed string, or if unspecified.
@@ -59,6 +61,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"While you are wearing armor, you gain a +1 bonus to AC. Applies to light, medium, and heavy armor — including RA's gate-forged carapace plating.",
 		source: "dnd-baseline",
+		source_book: "Rift Ascendant Canon",
 		modifiers: { acBonusInArmor: 1 },
 	},
 	{
@@ -67,6 +70,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"When you are wielding a melee weapon in one hand and no other weapon, you gain a +2 bonus to damage rolls with that weapon. Shields are allowed.",
 		source: "dnd-baseline",
+		source_book: "Rift Ascendant Canon",
 		modifiers: { oneHandedMeleeNoOffhandDamage: 2 },
 	},
 	{
@@ -75,6 +79,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll. The weapon must have the two-handed or versatile property.",
 		source: "dnd-baseline",
+		source_book: "Rift Ascendant Canon",
 		modifiers: { rerollLowOnTwoHanded: true },
 	},
 	{
@@ -83,6 +88,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.",
 		source: "dnd-baseline",
+		source_book: "Rift Ascendant Canon",
 		prerequisites: ["Shields"],
 		modifiers: { flags: ["protection-reaction"] },
 	},
@@ -92,6 +98,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
 		source: "dnd-baseline",
+		source_book: "Rift Ascendant Canon",
 		modifiers: { offhandAddsAbilityMod: true },
 	},
 
@@ -102,6 +109,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"You gain a +2 bonus to attack rolls made with firearms (weapons with the `firearm` property). You also ignore the magnum-frame `-1 within 5 ft.` close-range penalty on any firearm you wield.",
 		source: "ra-native",
+		source_book: "Rift Ascendant Canon",
 		modifiers: {
 			attackBonus: { value: 2, propertyTag: "firearm" },
 			flags: ["gunslinger-ignore-close-range-penalty"],
@@ -113,6 +121,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"When you miss with a firearm attack on your turn, the target has disadvantage on the first attack roll it makes before the start of your next turn. This fits naturally with `suppressed` and `silent` firearms — your volume of fire pins the target regardless of whether a round connects.",
 		source: "ra-native",
+		source_book: "Rift Ascendant Canon",
 		modifiers: { flags: ["suppressive-fire-on-miss"] },
 	},
 	{
@@ -121,6 +130,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"Once per turn, when you hit with an attack using a weapon that has the `burst-fire` property, you deal an extra 1d6 damage of the weapon's damage type. You do not expend additional ammunition for this bonus.",
 		source: "ra-native",
+		source_book: "Rift Ascendant Canon",
 		modifiers: {
 			flags: ["burst-fire-bonus-die"],
 			burstFireBonusDie: "1d6",
@@ -132,6 +142,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"You gain a +1 bonus to attack and damage rolls against creatures with the Anomaly tag. Per the Ascendant Bureau's canonical threat taxonomy, this covers gate-spawn, void-remnants, and dimension-bleed entities.",
 		source: "ra-native",
+		source_book: "Rift Ascendant Canon",
 		modifiers: {
 			perTurnDamageBonusVsTag: { tag: "Anomaly", value: 1 },
 			attackBonus: { value: 1, propertyTag: "__vs-anomaly__" },
@@ -143,6 +154,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"When you hit with a weapon whose damage type is force, radiant, necrotic, psychic, fire, cold, lightning, thunder, or void, you deal an extra 1 damage of the weapon's damage type. Works naturally with RA's elemental-typed gear — Mana-Infused Warhammers, Obsidian Daggers, Starlight Halberds, and similar.",
 		source: "ra-native",
+		source_book: "Rift Ascendant Canon",
 		modifiers: {
 			damageBonusByDamageType: {
 				types: [
@@ -166,6 +178,7 @@ export const FIGHTING_STYLES: FightingStyle[] = [
 		description:
 			"Your unarmed strikes use your Agility or Vitality modifier (your choice) for attack and damage rolls, and deal 1d4 bludgeoning damage (1d6 if you have no weapon or shield in any hand). Weapons with the `striker` property count as finesse for you. Works with Obsidian Gauntlets, Shattered Gauntlets, Starlight Gauntlets, and other Striker-property gear.",
 		source: "ra-native",
+		source_book: "Rift Ascendant Canon",
 		modifiers: {
 			flags: ["striker-stance"],
 			strikerStanceUnarmedDie: "1d4",

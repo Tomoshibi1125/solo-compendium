@@ -42,7 +42,7 @@ export const conditions: Condition[] = [
 			"The effect ends if the creature can see again",
 			"Lesser restoration spell",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "charmed",
@@ -59,7 +59,7 @@ export const conditions: Condition[] = [
 			"The charmer or creature ends the effect",
 			"The charmer harms the creature",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "deafened",
@@ -74,7 +74,7 @@ export const conditions: Condition[] = [
 			"The effect ends if the creature can hear again",
 			"Lesser restoration spell",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "exhaustion",
@@ -94,7 +94,7 @@ export const conditions: Condition[] = [
 			"Finishing a long rest reduces exhaustion level by 1",
 			"Greater restoration spell",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "frightened",
@@ -114,7 +114,7 @@ export const conditions: Condition[] = [
 			type: "Sense",
 			description: "Can repeat save at end of each turn",
 		},
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "grappled",
@@ -133,7 +133,7 @@ export const conditions: Condition[] = [
 			"Grappler becomes incapacitated",
 			"Effect removes grappled creature from grappler's reach",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "incapacitated",
@@ -141,7 +141,7 @@ export const conditions: Condition[] = [
 		type: "combat",
 		description: "An incapacitated creature can't take actions or reactions.",
 		effects: ["Can't take actions", "Can't take reactions"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "invisible",
@@ -160,7 +160,7 @@ export const conditions: Condition[] = [
 			"The creature casts a spell with verbal components",
 			"The creature grapples or interacts with an object",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "paralyzed",
@@ -176,7 +176,7 @@ export const conditions: Condition[] = [
 			"Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature",
 		],
 		removal: ["Lesser restoration spell", "Greater restoration spell"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "petrified",
@@ -191,7 +191,7 @@ export const conditions: Condition[] = [
 			"Automatically fails Strength and Agility saving throws",
 		],
 		removal: ["Greater restoration spell", "Wish spell"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "poisoned",
@@ -201,7 +201,7 @@ export const conditions: Condition[] = [
 			"A poisoned creature has disadvantage on attack rolls and ability checks.",
 		effects: ["Disadvantage on attack rolls", "Disadvantage on ability checks"],
 		removal: ["Lesser restoration spell", "Greater restoration spell"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "prone",
@@ -215,7 +215,7 @@ export const conditions: Condition[] = [
 			"The creature's attack rolls have disadvantage",
 		],
 		removal: ["Creature spends half of movement to stand up"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "restrained",
@@ -232,7 +232,7 @@ export const conditions: Condition[] = [
 			"Escape by succeeding on Strength (Athletics) or Agility (Acrobatics) check",
 			"Effect ends",
 		],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "stunned",
@@ -247,7 +247,7 @@ export const conditions: Condition[] = [
 			"Automatically fails Strength and Agility saving throws",
 		],
 		removal: ["End of stunned condition", "Lesser restoration spell"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 	{
 		id: "unconscious",
@@ -265,7 +265,7 @@ export const conditions: Condition[] = [
 			"Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature",
 		],
 		removal: ["Creature regains consciousness", "Healing magic"],
-		source: "SRD 5.1",
+		source: "Rift Ascendant Canon",
 	},
 
 	// RIFT ASCENDANT THEMED CONDITIONS

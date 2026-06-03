@@ -1,126 +1,113 @@
 /**
- * SANDBOX WARDEN NOTES — "The Shadow of the Regent"
+ * WARDEN NOTES - The Shadow of the Regent
  *
- * Seeded into the Notes tab on sandbox import with `is_shared=false` so
- * they are private to the Warden. Split between the 5 canonical Warden
- * secrets (foreshadowing beats referenced elsewhere in the module) and 5
- * new Warden-only plot levers (true identity, cult infiltration, optional
- * escape hatches).
- *
- * Schema maps 1:1 to the `campaign_notes` table.
+ * Campaign secrets for the Gloamreach rewrite. These notes keep the Regent
+ * horror focused on dominion, corruption, predation, and Gate-domain survival.
  */
 
 export interface SandboxWardenNote {
 	title: string;
+	category: "secret" | "timeline" | "faction" | "encounter" | "reward";
 	content: string;
-	category: "warden-secret" | "plot-beat" | "pressure-clock";
 }
 
 export const sandboxWardenNotes: SandboxWardenNote[] = [
-	// ── The 5 canonical Warden Secrets ──────────────────────────────────────
 	{
-		title: "Secret 1 — The Regent Wears the Party's Faces",
-		category: "warden-secret",
+		title: "Secret - The Regent Is the Anchor",
+		category: "secret",
 		content: [
-			"**Warden ONLY.** The Regent is a fused composite of the PCs' _un-awakened_ selves — the timelines in which they never escaped the Memory-Care Wing. Each PC, when they reach the Archive of His Self (Floor −2), will see their own reflection in a different mirror, aged and hollowed out.",
+			"The Gloamreach is one S-Rank Gate Domain. Its Anchor is not a crystal or throne; it is the Regent himself.",
 			"",
-			"**Mechanics:** When the Regent attacks a PC for the first time, that PC must make a WIS save (DC 16) or gain 1 level of Identity-Erosion (see Pressure Clock). The save is _automatic_ the second time.",
+			"He is ancient, predatory, charismatic, and bored. He treats Ascendants as rare prey because most intruders break too quickly to amuse him. He does not want escape. He wants proof that someone entering his realm can become worthy of remaining there.",
 			"",
-			"**Revelation beat:** Reveal this in the Archive of His Self room, not before. Players should feel dawning horror, not confusion.",
+			"Destroying him collapses the Domain violently. Sealing him stabilizes the Rift and traps him. Transforming the Anchor requires the party to turn one of his own Relic laws against him.",
 		].join("\n"),
 	},
 	{
-		title: "Secret 2 — Commander Park Knows About the Wing",
-		category: "warden-secret",
+		title: "Secret - Subject Zero Is the Black Vault's Hunger",
+		category: "secret",
 		content: [
-			"**Warden ONLY.** Park was _there_ when the Memory-Care Wing was commissioned. He signed off on the Diagnosed project. He does not remember this consciously — the Bureau used aetheric redaction on its own senior officers — but it is in his encrypted personal files.",
+			"Subject Zero is not the Regent and is not loyal to him. It is an older sealed S-Rank Anomaly whose pressure leaks into the Black Vault.",
 			"",
-			"**Trigger:** If the party reaches Rep Trusted with Bureau and passes a DC 18 Investigation on his office at Bureau HQ, they find the redacted files. Park breaks.",
+			"The Vault offers real power: extra Relic charges, restored resources, temporary Rank amplification, or a way to wound the Regent early. Every bargain advances the Red Phase clock and adds a Subject Zero consequence to the ending.",
 			"",
-			"**Payoff:** Park can either sacrifice himself to shut down the Wing permanently (Session 5 climax), or go Assassin and side with the Awoko Cult. Player choice via Park's next Rep threshold.",
+			"Never frame the bargain as a trick. The horror is that the offer works.",
 		].join("\n"),
 	},
 	{
-		title: "Secret 3 — The Awoko Cult Is Right (Partially)",
-		category: "warden-secret",
+		title: "Secret - The Citadel Is Reachable Early",
+		category: "secret",
 		content: [
-			"**Warden ONLY.** The cult's core thesis — that names are power and the Bureau is stripping them — is _factually correct_. Their solution (mass sacrifice to rebuild a collective identity) is catastrophically wrong.",
+			"The Regent's Citadel is visible from the Gallows Road at all times. The party can attempt the road before they are ready.",
 			"",
-			"If the party pushes back against the cult without engaging their diagnosis, Rep with the independent / anomaly-adjacent factions _drops_ because those factions see the cult as truthful.",
+			"If they go early, do not block them. Show the consequences: patrols that ignore normal tactics, locked Rank thresholds, doors that demand tribute, and invitation rooms where the Regent studies them.",
 			"",
-			"**Warden hook:** A PC who reaches Identity-Erosion level 2 will start seeing cult graffiti that _was not there before_. Use this as a soft foreshadow.",
+			"Early retreat should be possible, humiliating, and costly.",
 		].join("\n"),
 	},
 	{
-		title: "Secret 4 — Squad Seven Is Still Alive (Sort Of)",
-		category: "warden-secret",
+		title: "Secret - Anchor Scan Results Are Fate Pressure",
+		category: "reward",
 		content: [
-			"**Warden ONLY.** The Anomaly wearing Sgt. Min-ho's name tag in the Hollow Subway is Min-ho, fused at the cellular level with a tunnel-fungus colony. He is aware. He is in pain. He is still technically a Bureau operative.",
+			"The Anchor Scan replaces any card-reading style device. It is an AFA/Bureau resonance procedure corrupted by the Domain's own laws.",
 			"",
-			"**Warden choice:** If the party passes a DC 20 Medicine check + spends 8 hours, they can extract a coherent Min-ho mind into a jar-vessel (see Relic: Soul-Jar). This unlocks Yoon's full loyalty and a hidden Bureau endgame path.",
+			"Before play, assign three Anchor Relics, one strongest ally, one Black Vault bargain, one Regent vulnerability, and the Citadel chamber where the final confrontation begins.",
+			"",
+			"The Scan should feel clinical at first and ominous by the last result.",
 		].join("\n"),
 	},
 	{
-		title: "Secret 5 — The 14-Day Timeline Is Real",
-		category: "warden-secret",
+		title: "Pressure Clock - Blue Phase to Red Phase",
+		category: "timeline",
 		content: [
-			"**Warden ONLY.** The roaming S-Rank Anomaly (see sandbox-timeline) _will_ breach the District on Day 14 regardless of party action. The timeline is not a Warden bluff — it fires.",
+			"Blue Phase is the campaign window. Red Phase means the Gloamreach spills through the Rift and the material side begins dying by terrain overwrite, Anomaly migration, and Essence weather.",
 			"",
-			"If the party has not reached the Regent's Domain by then, the Domain comes to them: S-Rank crashes through the Bureau HQ roof. Adjust encounter accordingly — do not fudge the deadline.",
-		].join("\n"),
-	},
-
-	// ── New Warden-only plot beats ──────────────────────────────────────────────
-	{
-		title: "Plot Beat — The Diagnosed Wants to Be Forgotten",
-		category: "plot-beat",
-		content: [
-			"The figure in R5 is the party's _shared_ un-awakened self — the first attempt at the fusion that would become the Regent. It is not hostile.",
-			"",
-			"If the party returns to R5 after Session 3 and passes a DC 14 Persuasion (no pressure), the Diagnosed will grant them the **Un-Naming Protocol** — a consumable that negates one level of Identity-Erosion per PC.",
+			"Advance the clock when the party takes long rests in unsafe regions, accepts Subject Zero bargains, abandons settlements to tribute, or destroys an Anchor Relic without stabilizing its law.",
 		].join("\n"),
 	},
 	{
-		title: "Plot Beat — The Bureau Is Being Infiltrated",
-		category: "plot-beat",
+		title: "Faction Truth - The Bureau Failed First",
+		category: "faction",
 		content: [
-			"Two Bureau Sentinels are covert Awoko agents: a medic (name at Warden discretion) and Quartermaster Lin's assistant (ditto). They are not lethal enemies — they are sources.",
+			"The Bureau Forward Bastion did not fail because its Ascendants were weak. It failed because command tried to classify the Domain like a normal Gate and forced teams to obey surface-side doctrine.",
 			"",
-			"If the party unmasks one, Rep with Vermillion Guild jumps +2 (the Guild has been trying to prove this for years).",
+			"The dead command staff still have useful files, but every file is a record of someone prioritizing clean procedure over survival.",
 		].join("\n"),
 	},
 	{
-		title: "Plot Beat — The Awoko Sanctum Has a Hostage",
-		category: "plot-beat",
+		title: "Faction Truth - Vermillion Camp Is Not Noble",
+		category: "faction",
 		content: [
-			"The cult is holding Dr. Serin Hayashi's younger sister in the Sanctum Nave (Ch. 33 S-3). She is not a pre-generated rescue — she is _trying to join the cult voluntarily_ because she believes it will give her back her twin's name.",
+			"Vermillion salvagers keep people alive, but their camp is built on triage math. They trade food for cores, treatment for favors, and rescue for future shares.",
 			"",
-			"Rescue is possible but requires either combat or a Persuasion chain. Combat alienates Dr. Hayashi. Persuasion alienates Commander Park.",
+			"They can become the party's strongest practical ally if treated honestly. They become dangerous if the party moralizes without helping.",
 		].join("\n"),
 	},
 	{
-		title: "Pressure Clock — Identity-Erosion",
-		category: "pressure-clock",
+		title: "Faction Truth - The Hollow Choir Loves the Regent",
+		category: "faction",
 		content: [
-			"Each PC tracks an Identity-Erosion counter 0-3.",
-			"- **0:** Normal.",
-			"- **1:** Dreams of a life they didn't live. Disadvantage on INT saves against Charm effects by Awoko NPCs.",
-			"- **2:** Occasionally answer to the wrong name. Advantage on Insight vs. Bureau officers (you see the redaction).",
-			"- **3:** The Regent can see through your eyes on a DC 16 WIS save each short rest. If they fail twice, they are _his_ at Session 5.",
+			"The Hollow Choir does not worship absence, names, or lost records. They worship rule.",
 			"",
-			"Triggers: direct attack by the Regent (secret 1), failing the DC 18 save in the Archive of His Self, voluntarily drinking from the Fusion Font (Megadungeon Room 7).",
+			"Their doctrine is simple: life outside the Domain is chaos; life under the Regent has shape. Their sacrifices are tribute payments designed to buy safety for chosen settlements.",
 		].join("\n"),
 	},
 	{
-		title: "Pressure Clock — District Timeline (14 Days)",
-		category: "pressure-clock",
+		title: "Encounter Rule - Horror Should Change the Map",
+		category: "encounter",
 		content: [
-			"See `sandbox-timeline.ts` for structured events. Key beats:",
-			"- Day 3: First Bureau supply run is ambushed. Rep flips if party wasn't escorting.",
-			"- Day 7: Vermillion Guild offers exclusive contract — refusing costs Rep.",
-			"- Day 9: Roaming S-Rank sighted at District edge.",
-			"- Day 12: Awoko Cult mass-recruitment event.",
-			"- Day 14: S-Rank breach. Climax fires regardless.",
+			"Whenever a major Anomaly falls, alter the Domain. Roads re-route, weather changes, a settlement loses protection, or the Citadel opens one new approach.",
+			"",
+			"The Gloamreach is not a backdrop. It is a hostile country-sized body reacting to injury.",
+		].join("\n"),
+	},
+	{
+		title: "Reward Rule - Relics Are Compromises",
+		category: "reward",
+		content: [
+			"Anchor Relics should be powerful enough that players want them and corrupt enough that using them feels like accepting the Domain's logic.",
+			"",
+			"Each Relic grants a strong benefit, a visible physical or social cost, and one way to weaken the Regent when used in the correct Citadel chamber.",
 		].join("\n"),
 	},
 ];

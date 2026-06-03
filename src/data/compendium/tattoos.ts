@@ -13,7 +13,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Crimson Boss Ichor",
 		active_veins: ["Neck"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -125,7 +125,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "anomaly Bone Dust",
 		active_veins: ["Spine"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -230,7 +230,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Silvered Mercury",
 		active_veins: ["Temple"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -336,7 +336,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Earth Golem Core",
 		active_veins: ["Chest"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -444,7 +444,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Crushed Garnet",
 		active_veins: ["Left Forearm"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -551,7 +551,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Anomaly Eye Fluid",
 		active_veins: ["Around Eyes"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -656,7 +656,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Salamander Extract",
 		active_veins: ["Ribs"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -768,7 +768,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Griffon Feather Ink",
 		active_veins: ["Legs"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -877,7 +877,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Vampire Lord Dust",
 		active_veins: ["Heart"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -983,7 +983,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Ghoul Extract",
 		active_veins: ["Forehead"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -1088,7 +1088,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Blind Cave Crawler Core",
 		active_veins: ["Throat"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -1193,7 +1193,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Ooze Core",
 		active_veins: ["Palms"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -1301,7 +1301,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Hellhound Ash",
 		active_veins: ["Stomach"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -1409,7 +1409,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Wind Elemental Core",
 		active_veins: ["Feet"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -1517,7 +1517,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Doppelganger Tissue",
 		active_veins: ["Throat"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -1628,7 +1628,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Ogre Boss Blood",
 		active_veins: ["Biceps"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -1735,7 +1735,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Wraith Ectoplasm",
 		active_veins: ["Shoulders"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -1845,7 +1845,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Mimic Ichor",
 		active_veins: ["Full Back"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -1953,7 +1953,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Kraken Ink",
 		active_veins: ["Neck"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -2060,7 +2060,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Thunderbird Spark",
 		active_veins: ["Chest"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -2168,7 +2168,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Void Gate Dust",
 		active_veins: ["Feet"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -2276,7 +2276,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Harpy Queen Marrow",
 		active_veins: ["Collarbone"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -2382,7 +2382,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Blast-Jelly",
 		active_veins: ["Shoulders"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -2491,7 +2491,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Green anomaly Bile",
 		active_veins: ["Lungs"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -2603,7 +2603,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Time-Weaver Sand",
 		active_veins: ["Temple"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -2711,7 +2711,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Umbral Anomaly Essence",
 		active_veins: ["Heart"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -2817,7 +2817,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Mind-Eater Fluid",
 		active_veins: ["Forehead"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -2924,7 +2924,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Manticore Venom",
 		active_veins: ["Wrists"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -3031,7 +3031,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Beholder-Class Eye Dust",
 		active_veins: ["Palms"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -3139,7 +3139,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Troll Boss Blood",
 		active_veins: ["Chest"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -3245,7 +3245,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Frost-Giant Bone Marrow",
 		active_veins: ["Spine"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -3353,7 +3353,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Phoenix Ash",
 		active_veins: ["Full Torso"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -3461,7 +3461,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Vampire Lord Ash",
 		active_veins: ["Forearms"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -3566,7 +3566,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Poltergeist Essence",
 		active_veins: ["Knuckles"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -3674,7 +3674,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Shadow Lord Dust",
 		active_veins: ["Back"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -3786,7 +3786,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Gate-Weaver Thread",
 		active_veins: ["Thigh"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -3890,7 +3890,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Beholder-Class Central Eye",
 		active_veins: ["Chest"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -3996,7 +3996,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Displacer Beast Blood",
 		active_veins: ["Calves"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -4104,7 +4104,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Dungeon Iron",
 		active_veins: ["Full Body"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -4216,7 +4216,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Astral Dreadnought Scale",
 		active_veins: ["Palms"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -4322,7 +4322,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Reaper Scythe Dust",
 		active_veins: ["Right Arm"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -4430,7 +4430,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Ancient anomaly Blood",
 		active_veins: ["Shoulder Blades"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -4541,7 +4541,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Leviathan Scale",
 		active_veins: ["Chest"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -4648,7 +4648,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Tarrasque-Class Bone Dust",
 		active_veins: ["Legs"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -4754,7 +4754,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Angel-Class Anomaly Essence",
 		active_veins: ["Heart"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",
@@ -4860,7 +4860,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Balor Blood",
 		active_veins: ["Face"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -4967,7 +4967,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Lich King Dust",
 		active_veins: ["Forehead"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -5075,7 +5075,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Yggdrasil-Class Sap",
 		active_veins: ["Spine"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Applied under the Guild Association's dermal-weave protocol.",
@@ -5183,7 +5183,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Astral Diamond Dust",
 		active_veins: ["Third Eye"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin:
@@ -5291,7 +5291,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Primordial Chrono-dust",
 		active_veins: ["Chest"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -5396,7 +5396,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Regent Essence",
 		active_veins: ["Neck"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Formulated within the Guild's authorized dermal-mod program.",
@@ -5502,7 +5502,7 @@ export const tattoos: CompendiumTattoo[] = [
 		ink_type: "Oracle Thread",
 		active_veins: ["Right Arm"],
 		resonance_effect: "Synergizes with other physical bodily enchantments.",
-		source_book: "Modern Urban Fantasy Core",
+		source_book: "Rift Ascendant Canon",
 		tags: ["tattoo", "magic-weave", "hunter-augmentation"],
 		lore: {
 			origin: "Inked by Bureau-credentialed studio practitioners.",

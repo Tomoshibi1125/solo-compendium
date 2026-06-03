@@ -380,6 +380,7 @@ const VARIANT_POOLS = {
 			damage: "1d4",
 			damageType: "piercing",
 			props: ["light", "finesse", "thrown"],
+			range: "Thrown (20/60)",
 			note: "Off-hand attack on a hit deals +1 damage if you are wielding two weapons.",
 		},
 		{
@@ -452,6 +453,7 @@ const VARIANT_POOLS = {
 			damage: "2d4",
 			damageType: "piercing",
 			props: ["reach", "two-handed", "thrown"],
+			range: "Thrown (20/60)",
 			note: "Thrown reach (range 20/60). Returns to your hand at the start of your next turn.",
 		},
 	],
@@ -474,6 +476,7 @@ const VARIANT_POOLS = {
 			damage: "1d6",
 			damageType: "bludgeoning",
 			props: ["light", "thrown"],
+			range: "Thrown (20/60)",
 			note: "Thrown 20/60. Returns to your hand on a hit.",
 		},
 	],
@@ -576,6 +579,7 @@ const VARIANT_POOLS = {
 			damage: "1d6",
 			damageType: "slashing",
 			props: ["light", "thrown"],
+			range: "Thrown (20/60)",
 			note: "Thrown 20/60.",
 		},
 		{

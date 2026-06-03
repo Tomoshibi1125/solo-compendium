@@ -37,6 +37,10 @@ import {
 } from "@/lib/equipmentModifiers";
 import { computeAttacksPerAction } from "@/lib/featEffectParser";
 import {
+	computeGestaltSummary,
+	getRegentHpContribution,
+} from "@/lib/regentGestalt";
+import {
 	applySigilBonuses,
 	type SigilBonusResult,
 } from "@/lib/sigilAutomation";
@@ -163,6 +167,12 @@ export function useCharacterDerivedStats(
 	const memoized = useMemo(() => {
 		if (!character) return null;
 
+		// Gestalt Regent overlay: a Regent is a full class overlay (not a
+		// subclass). Resolve unlocked regent ids → rich class data and union
+		// their proficiencies/saves into the base computation. Regent level ==
+		// character level (gestalt), so features/profs reflect the full overlay.
+		const gestalt = computeGestaltSummary(regentIds, character.level);
+
 		const baseStats = calculateCharacterStats({
 			level: character.level,
 			abilities: character.abilities,
@@ -171,6 +181,8 @@ export function useCharacterDerivedStats(
 			skillExpertise: character.skill_expertise || [],
 			armorClass: character.armor_class,
 			speed: character.speed,
+			gestaltSavingThrowProficiencies: gestalt.proficiencies.savingThrows,
+			gestaltSkillProficiencies: gestalt.proficiencies.skills,
 		});
 
 		const getEquipmentProperties = (item: EquipmentRow): string[] => {
@@ -393,13 +405,28 @@ export function useCharacterDerivedStats(
 			character as { hp_max?: number | null; hp_max_override?: number | null },
 		);
 
+		// Gestalt Regent overlay HP: the Regent's hit die is ADDITIVE on top of
+		// the base Job HP (Solo-Leveling power spike), applied reactively so it
+		// is retroactive the instant a Regent is unlocked. The stored hp_max
+		// stays Job-only — no migration, no double count. hp_max_override (if
+		// set) is treated as an explicit final value and is NOT augmented.
+		const hasHpOverride =
+			typeof (character as { hp_max_override?: number | null })
+				.hp_max_override === "number";
+		const regentHpBonus = hasHpOverride
+			? 0
+			: getRegentHpContribution(
+					gestalt.regentHitDieContribution,
+					character.level,
+				);
+
 		const calculatedStats = {
 			...baseStats,
 			initiative: initiativeBreakdown.calculatedStatsInitiative,
 			savingThrows: finalSavingThrows,
 			armorClass: armorClassStack.displayedArmorClass,
 			speed: Math.max(0, finalSpeed + customSpeedBonus),
-			hpMax: Math.max(1, resolvedHpMax + customHpMaxBonus),
+			hpMax: Math.max(1, resolvedHpMax + customHpMaxBonus + regentHpBonus),
 			encumbrance,
 		};
 
@@ -833,25 +860,27 @@ export function useCharacterDerivedStats(
 	const cacheAC = memoized?.calculatedStats.armorClass ?? null;
 	const cacheSpeed = memoized?.finalSpeed ?? null;
 	const cacheInitiative = memoized?.finalInitiative ?? null;
-	const cacheHpMax = memoized?.calculatedStats.hpMax ?? null;
 
 	useEffect(() => {
 		if (
 			!characterId ||
 			cacheAC === null ||
 			cacheSpeed === null ||
-			cacheInitiative === null ||
-			cacheHpMax === null
+			cacheInitiative === null
 		) {
 			return;
 		}
+		// NOTE: hp_max is deliberately NOT cached here — it is authoritative-
+		// stored (rolled HP preserved, maintained additively by level-up) and is
+		// read back as the base by the engine. Persisting the display value
+		// (base + gestalt + custom) would re-feed those bonuses on refetch →
+		// runaway HP inflation. See persistDerivedStats / getEffectiveHpMax.
 		void persistDerivedStats(characterId, {
 			armorClass: cacheAC,
 			speed: cacheSpeed,
 			initiative: cacheInitiative,
-			hpMax: cacheHpMax,
 		});
-	}, [characterId, cacheAC, cacheSpeed, cacheInitiative, cacheHpMax]);
+	}, [characterId, cacheAC, cacheSpeed, cacheInitiative]);
 
 	return memoized;
 }

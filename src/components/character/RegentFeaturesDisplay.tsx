@@ -24,10 +24,14 @@ interface RegentFeaturesDisplayProps {
 export function RegentFeaturesDisplay({
 	characterLevel,
 	regentId,
-	regentLevel = 1,
+	// Gestalt: a Regent is a full class overlay; its level tracks the character's
+	// level (not a fixed subclass tier). Default to characterLevel so features
+	// unlock simultaneously even if a caller omits the prop.
+	regentLevel,
 	className,
 	onSelectDetail,
 }: RegentFeaturesDisplayProps) {
+	const effectiveRegentLevel = regentLevel ?? characterLevel;
 	const regentData = getStaticRegents().find((r) => r.id === regentId);
 
 	if (!regentId) {
@@ -82,7 +86,7 @@ export function RegentFeaturesDisplay({
 
 		const classFeatureEntries =
 			regentData.class_features
-				?.filter((f) => f.level <= regentLevel)
+				?.filter((f) => f.level <= effectiveRegentLevel)
 				.map((f) => ({
 					name: f.name,
 					description: f.description,
@@ -139,7 +143,7 @@ export function RegentFeaturesDisplay({
 					{regentData?.name} Features
 				</CardTitle>
 				<CardDescription>
-					Regent abilities at level {regentLevel} (Character Level{" "}
+					Gestalt overlay — Regent advances at your character level (
 					{characterLevel})
 				</CardDescription>
 			</CardHeader>
@@ -165,6 +169,54 @@ export function RegentFeaturesDisplay({
 						<AutoLinkText text={regentData?.description || ""} />
 					</div>
 				</button>
+
+				{/* Gestalt overlay summary — the full-class mechanics the Regent
+				    grants on top of the base Job (not a subclass). */}
+				{regentData && (
+					<div className="space-y-2 rounded-lg border border-primary/20 bg-primary/5 p-4">
+						<h4 className="font-medium flex items-center gap-2">
+							<Crown className="w-4 h-4 text-primary" />
+							Gestalt Overlay
+						</h4>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+							{regentData.hit_dice && (
+								<div>
+									<span className="text-muted-foreground">
+										Hit Die (additive):{" "}
+									</span>
+									<span className="font-mono">
+										+{regentData.hit_dice}/level
+									</span>
+								</div>
+							)}
+							{regentData.saving_throws &&
+								regentData.saving_throws.length > 0 && (
+									<div>
+										<span className="text-muted-foreground">Saves added: </span>
+										<span>{regentData.saving_throws.join(", ")}</span>
+									</div>
+								)}
+							{regentData.skill_proficiencies &&
+								regentData.skill_proficiencies.length > 0 && (
+									<div className="sm:col-span-2">
+										<span className="text-muted-foreground">
+											Skill proficiencies added:{" "}
+										</span>
+										<span>{regentData.skill_proficiencies.join(", ")}</span>
+									</div>
+								)}
+							{regentData.spellcasting && (
+								<div className="sm:col-span-2">
+									<span className="text-muted-foreground">Spellcasting: </span>
+									<span>
+										merges with your Job's slots (combined caster level, PHB
+										p.164)
+									</span>
+								</div>
+							)}
+						</div>
+					</div>
+				)}
 
 				{/* Regent Features */}
 				<div className="space-y-4">
@@ -231,7 +283,8 @@ export function RegentFeaturesDisplay({
 								if (!sc) return null;
 								const slotKey =
 									`${level}${level === 1 ? "st" : level === 2 ? "nd" : level === 3 ? "rd" : "th"}` as keyof typeof sc.spell_slots;
-								const slots = sc.spell_slots[slotKey]?.[regentLevel - 1] || 0;
+								const slots =
+									sc.spell_slots[slotKey]?.[effectiveRegentLevel - 1] || 0;
 								return (
 									<div key={level} className="p-2 border rounded">
 										<div className="text-xs font-medium">Lvl {level}</div>

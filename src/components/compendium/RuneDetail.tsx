@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -318,6 +319,19 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 					</div>
 				</AscendantWindow>
 			)}
+			<DetailMetaFooter
+				flavor={(data as { flavor?: string }).flavor}
+				tags={(data as { tags?: string[] }).tags}
+				sourceBook={(data as { source_book?: string }).source_book}
+				extra={[
+					{
+						label: "Activation",
+						value: (data as { activation?: unknown }).activation,
+					},
+					{ label: "Effects", value: (data as { effects?: unknown }).effects },
+					{ label: "Rank", value: (data as { rank?: unknown }).rank },
+				]}
+			/>
 		</div>
 	);
 };

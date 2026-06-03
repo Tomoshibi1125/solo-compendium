@@ -10,11 +10,43 @@ interface FeatData extends CompendiumFeat {}
 export const FeatDetail = ({ data }: { data: FeatData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 
+	// Feats carry richer fields than CompendiumFeat declares (effects summary,
+	// discovery_lore, rarity, mechanics). Surface them so the UI shows the full
+	// entry (DDB-style), not just description + prerequisites.
+	const ext = data as FeatData & {
+		effects?: { primary?: string; secondary?: string; tertiary?: string };
+		discovery_lore?: string;
+		rarity?: string;
+		mechanics?: { action_type?: string; duration?: string; range?: string };
+	};
+	const loreText =
+		(typeof data.lore === "string" ? data.lore : data.lore?.history) ||
+		ext.discovery_lore ||
+		"";
+	const effects = ext.effects;
+
 	return (
 		<div className="space-y-6">
 			{/* Header */}
 			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
+					<div className="flex flex-wrap items-center gap-2">
+						{ext.rarity && (
+							<Badge variant="secondary" className="text-xs capitalize">
+								{ext.rarity}
+							</Badge>
+						)}
+						{data.repeatable && (
+							<Badge variant="outline" className="text-xs">
+								Repeatable
+							</Badge>
+						)}
+						{ext.mechanics?.action_type && (
+							<Badge variant="outline" className="text-xs">
+								{ext.mechanics.action_type}
+							</Badge>
+						)}
+					</div>
 					{data.flavor && (
 						<p className="text-sm italic text-cyan/70 mb-4 border-l-2 border-cyan/30 pl-3 py-1 bg-cyan/5">
 							<AutoLinkText text={data.flavor} />
@@ -23,19 +55,30 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 					<p className="text-foreground leading-relaxed">
 						<AutoLinkText text={data.description || ""} />
 					</p>
-					{data.lore && (
+					{(effects?.primary || effects?.secondary || effects?.tertiary) && (
+						<div className="mt-4 space-y-1">
+							<h4 className="text-primary font-bold text-[10px] uppercase tracking-wider mb-1">
+								Effects
+							</h4>
+							{[effects?.primary, effects?.secondary, effects?.tertiary]
+								.filter((e): e is string => !!e)
+								.map((e) => (
+									<p
+										key={e}
+										className="text-sm text-muted-foreground leading-relaxed"
+									>
+										• <AutoLinkText text={e} />
+									</p>
+								))}
+						</div>
+					)}
+					{loreText && (
 						<div className="mt-6 pt-4 border-t border-cyan/10">
 							<h4 className="text-amethyst font-bold text-[10px] uppercase tracking-wider mb-2">
 								Historical Record
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed">
-								<AutoLinkText
-									text={
-										typeof data.lore === "string"
-											? data.lore
-											: data.lore?.history || ""
-									}
-								/>
+								<AutoLinkText text={loreText} />
 							</p>
 						</div>
 					)}
@@ -144,6 +187,17 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 						)}
 					</div>
 				</AscendantWindow>
+			)}
+
+			{/* Tags */}
+			{Array.isArray(data.tags) && data.tags.length > 0 && (
+				<div className="flex flex-wrap gap-2">
+					{data.tags.map((tag) => (
+						<Badge key={tag} variant="outline" className="text-[10px]">
+							{formatRegentVernacular(tag)}
+						</Badge>
+					))}
+				</div>
 			)}
 
 			{/* Source */}

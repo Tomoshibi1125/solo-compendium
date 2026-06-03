@@ -27,13 +27,46 @@ const typeLabels: Record<string, string> = {
 };
 
 export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
-	const item = data;
+	const item = data as EquipmentData & {
+		value?: number;
+		cost_credits?: number;
+		simple_properties?: string[];
+	};
+	const itemTypeLower = (item.item_type || "").toLowerCase();
+	const isArmor = itemTypeLower.includes("armor") || itemTypeLower === "shield";
+	// The provider surfaces a broad item_type ("weapon"/"armor"/"shield"); a
+	// weapon is anything with a weapon_type/damage or a weapon-ish type token.
 	const isWeapon =
-		(item.item_type || "").includes("melee") ||
-		(item.item_type || "").includes("ranged");
-	const isArmor =
-		(item.item_type || "").includes("armor") || item.item_type === "shield";
+		!isArmor &&
+		(itemTypeLower.includes("weapon") ||
+			itemTypeLower.includes("melee") ||
+			itemTypeLower.includes("ranged") ||
+			!!item.weapon_type ||
+			!!item.damage);
 	const displayName = formatRegentVernacular(item.display_name || item.name);
+	// Cost lives in `value`/`cost_credits` on the provider entry (legacy `cost`
+	// kept as a fallback).
+	const costValue = item.cost ?? item.value ?? item.cost_credits;
+	// 5e property tags (finesse/light/heavy/…) live in `simple_properties`; the
+	// `properties` object holds nested weapon/armor rule blocks (not for badges).
+	const propertyTags: string[] = Array.isArray(item.simple_properties)
+		? item.simple_properties
+		: Array.isArray(item.properties)
+			? (item.properties as string[])
+			: [];
+	const categoryLabel = item.weapon_type
+		? `${formatRegentVernacular(item.weapon_type)} Weapon`
+		: item.armor_type
+			? `${formatRegentVernacular(item.armor_type)} Armor`
+			: formatRegentVernacular(
+					(item.item_type && typeLabels[item.item_type]) ||
+						item.item_type ||
+						"Equipment",
+				);
+	const rangeText =
+		typeof item.range === "string" && item.range.trim().length > 0
+			? item.range
+			: null;
 
 	return (
 		<div className="space-y-6">
@@ -55,13 +88,13 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 			<AscendantWindow title={displayName.toUpperCase()}>
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
-						<Badge variant="secondary">
-							{formatRegentVernacular(
-								(item.item_type && typeLabels[item.item_type]) ||
-									item.item_type ||
-									"Equipment",
-							)}
-						</Badge>
+						<Badge variant="secondary">{categoryLabel}</Badge>
+						{item.rarity && (
+							<Badge variant="outline" className="capitalize">
+								{formatRegentVernacular(String(item.rarity))}
+							</Badge>
+						)}
+						{item.attunement && <Badge variant="outline">Attunement</Badge>}
 						{item.source_book && (
 							<Badge variant="outline">
 								{formatRegentVernacular(item.source_book)}
@@ -82,7 +115,7 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					<div className="flex items-center gap-2">
 						<Coins className="w-5 h-5 text-yellow-400" />
 						<span className="font-display text-xl">
-							{formatRaCurrencyAmount(item.cost)}
+							{formatRaCurrencyAmount(costValue)}
 						</span>
 					</div>
 					<span className="text-xs text-muted-foreground">Bureau value</span>
@@ -110,46 +143,59 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					</AscendantWindow>
 				)}
 
+				{isWeapon && rangeText && (
+					<AscendantWindow title="RANGE" compact>
+						<div className="flex items-center gap-2">
+							<Sword className="w-5 h-5 text-orange-400" />
+							<span className="font-display text-sm">{rangeText}</span>
+						</div>
+					</AscendantWindow>
+				)}
+
 				{isArmor && (
 					<AscendantWindow title="ARMOR CLASS" compact>
 						<div className="flex items-center gap-2">
 							<Shield className="w-5 h-5 text-blue-400" />
 							<span className="font-display text-xl">
-								{item.armor_class ? `+${item.armor_class}` : "—"}
+								{item.armor_class ?? "—"}
 							</span>
+						</div>
+					</AscendantWindow>
+				)}
+
+				{isArmor && item.strength_requirement && (
+					<AscendantWindow title="STRENGTH" compact>
+						<div className="flex items-center gap-2">
+							<Shield className="w-5 h-5 text-muted-foreground" />
+							<span className="font-display text-xl">
+								Str {item.strength_requirement}
+							</span>
+						</div>
+					</AscendantWindow>
+				)}
+
+				{isArmor && item.stealth_disadvantage && (
+					<AscendantWindow title="STEALTH" compact>
+						<div className="flex items-center gap-2">
+							<Shield className="w-5 h-5 text-red-400" />
+							<span className="font-display text-sm">Disadvantage</span>
 						</div>
 					</AscendantWindow>
 				)}
 			</div>
 
-			{/* Properties */}
-			{item.properties &&
-				(Array.isArray(item.properties)
-					? item.properties.length > 0
-					: Object.keys(item.properties).length > 0) && (
-					<AscendantWindow title="PROPERTIES">
-						<div className="flex flex-wrap gap-2">
-							{Array.isArray(item.properties)
-								? item.properties.map((prop: string) => (
-										<Badge key={prop} variant="outline" className="capitalize">
-											{formatRegentVernacular(prop)}
-										</Badge>
-									))
-								: Object.entries(item.properties || {}).map(([key, value]) => (
-										<Badge
-											key={key}
-											variant="outline"
-											className="capitalize flex items-center gap-1"
-										>
-											{formatRegentVernacular(key)}
-											<span className="opacity-70 text-[10px]">
-												({String(value)})
-											</span>
-										</Badge>
-									))}
-						</div>
-					</AscendantWindow>
-				)}
+			{/* Properties (5e weapon/armor property tags) */}
+			{propertyTags.length > 0 && (
+				<AscendantWindow title="PROPERTIES">
+					<div className="flex flex-wrap gap-2">
+						{propertyTags.map((prop) => (
+							<Badge key={prop} variant="outline" className="capitalize">
+								{formatRegentVernacular(prop)}
+							</Badge>
+						))}
+					</div>
+				</AscendantWindow>
+			)}
 		</div>
 	);
 };

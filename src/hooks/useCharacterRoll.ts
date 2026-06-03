@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useCampaignDice } from "@/hooks/useCampaignDice";
 import { useRecordRoll } from "@/hooks/useRollHistory";
 import { rollCheck } from "@/lib/rollEngine";
+import { getAbilityModifier as getAbilityModifierFromScore } from "@/types/core-rules";
 
 interface CharacterRollProps {
 	characterId: string;
@@ -29,7 +30,7 @@ export function useCharacterRoll({
 	const getAbilityModifier = useCallback(
 		(ability: string): number => {
 			const score = abilities[ability] || 10;
-			return Math.floor((score - 10) / 2);
+			return getAbilityModifierFromScore(score);
 		},
 		[abilities],
 	);

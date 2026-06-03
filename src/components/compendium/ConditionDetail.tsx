@@ -1,5 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumCondition } from "@/types/compendium";
@@ -137,6 +138,11 @@ export const ConditionDetail = ({ data }: { data: ConditionData }) => {
 					</p>
 				</div>
 			)}
+
+			<DetailMetaFooter
+				tags={(data as { tags?: string[] }).tags}
+				sourceBook={(data as { source_book?: string }).source_book}
+			/>
 		</div>
 	);
 };

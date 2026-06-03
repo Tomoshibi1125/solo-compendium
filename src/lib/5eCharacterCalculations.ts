@@ -28,6 +28,13 @@ export interface CharacterStats {
 	hasHalfProficiency?: boolean;
 	/** Override which ability drives a skill, e.g. { "intimidation": "STR" } */
 	skillAbilityOverrides?: Record<string, AbilityScore>;
+	/**
+	 * Gestalt Regent overlay proficiencies, unioned in before save/skill
+	 * computation. Saves are AbilityScore codes; skills are skill ids.
+	 * (See regentGestalt.getGestaltProficiencies.)
+	 */
+	gestaltSavingThrowProficiencies?: AbilityScore[];
+	gestaltSkillProficiencies?: string[];
 }
 
 export interface CalculatedStats {
@@ -50,13 +57,23 @@ export interface CalculatedStats {
 export function calculateCharacterStats(
 	stats: CharacterStats,
 ): CalculatedStats {
-	const {
-		level,
-		abilities,
-		savingThrowProficiencies,
-		skillProficiencies,
-		skillExpertise,
-	} = stats;
+	const { level, abilities, skillExpertise } = stats;
+
+	// Gestalt Regent overlay: union the Job's own proficiencies with the
+	// Regent's (a Regent is a full class overlay, not a subclass — its
+	// proficiencies are gained in full). De-duped via Set.
+	const savingThrowProficiencies: AbilityScore[] = Array.from(
+		new Set<AbilityScore>([
+			...stats.savingThrowProficiencies,
+			...(stats.gestaltSavingThrowProficiencies ?? []),
+		]),
+	);
+	const skillProficiencies: string[] = Array.from(
+		new Set<string>([
+			...stats.skillProficiencies,
+			...(stats.gestaltSkillProficiencies ?? []),
+		]),
+	);
 
 	const proficiencyBonus = getProficiencyBonus(level);
 	const riftFavorDie = getRiftFavorDie(level);

@@ -13,12 +13,12 @@ import { SharedPage } from "./pages/SharedPage";
  *     - Wait for auto-populate across all stores
  *     - Read Sessions tab, open Session 0
  *     - Skim Warden Notes (DM secrets)
- *     - Skim Wiki (Day Zero lore)
- *     - Skim Handouts (Blank Slate Journal)
+ *     - Skim Wiki (Gloamreach Gate Domain lore)
+ *     - Skim Handouts (Anchor Scan packet)
  *     - Skim Characters (Warden NPC roster)
  *
  *   Session 0 run phase:
- *     - Load the VTT, switch to a Day Zero / Memory-Care scene
+ *     - Load the VTT, switch to a Gloamreach Gate Domain scene
  *     - Exercise zoom (+ / - / 0 / PageUp / PageDown)
  *     - Exercise right-click-drag pan
  *     - Confirm ctrl+wheel does NOT browser-zoom
@@ -151,7 +151,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 	await test.step("Phase 5 — Sessions tab + verify Session 0 visible", async () => {
 		await page.getByRole("tab", { name: /^Sessions$/i }).click();
 		await expect(
-			page.getByText(/Session 0.*Day Zero|Day Zero.*Memory-Care/i).first(),
+			page.getByText(/Session 0.*Rift Seals|The Rift Seals|Gate Domain/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		// Also verify the recap log preview somewhere on the page — the
 		// sandbox seeds a player-facing recap with "woke in a place that
@@ -159,7 +159,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		// best-effort because the Sessions panel may collapse logs by
 		// default; we don't fail the phase if only the title is shown.
 		const previewVisible = await page
-			.getByText(/Day Zero|Memory-Care|awakening|Bureau/i)
+			.getByText(/Gloamreach|Rift|Gate Domain|Bureau/i)
 			.first()
 			.isVisible({ timeout: 3_000 })
 			.catch(() => false);
@@ -172,7 +172,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await expect(
 			page
 				.getByText(
-					/Warden|Identity-Erosion|The Regent Wears|Pressure Clock|Secret/i,
+					/Warden|Anchor|Subject Zero|Pressure Clock|Secret/i,
 				)
 				.first(),
 		).toBeVisible({ timeout: 15_000 });
@@ -182,7 +182,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 	await test.step("Phase 7 — Wiki tab (lore + faction + quest)", async () => {
 		await page.getByRole("tab", { name: /^Wiki$/i }).click();
 		await expect(
-			page.getByText(/Day Zero|Gate Cascade|Bureau|Vermillion|Awoko/i).first(),
+			page.getByText(/Gloamreach|Gate Domain|Bureau|Vermillion|Hollow Choir/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("wiki-lore");
 	});
@@ -190,7 +190,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 	await test.step("Phase 8 — Handouts tab", async () => {
 		await page.getByRole("tab", { name: /^Handouts$/i }).click();
 		await expect(
-			page.getByText(/Blank Slate|Bureau|Awoko|Warden/i).first(),
+			page.getByText(/Anchor Scan|Bureau|Emergency Writ|Warden/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		await shot("handouts");
 	});
@@ -201,7 +201,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await expect(roster).toBeVisible({ timeout: 15_000 });
 		// At least a handful of canonical NPC names should be visible.
 		await expect(
-			roster.getByText(/Park|Lin|Yoon|Hayashi/i).first(),
+			roster.getByText(/Quell|Sable|Rhone|Lysa|Rook/i).first(),
 		).toBeVisible();
 		const cardCount = await page.getByTestId("warden-npc-card").count();
 		console.log(`[playthrough] warden npc cards: ${cardCount}`);
@@ -209,7 +209,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await shot("characters-warden-npcs");
 	});
 
-	await test.step("Phase 10 — VTT load + Day Zero scene selection", async () => {
+	await test.step("Phase 10 — VTT load + Gloamreach scene selection", async () => {
 		await page.goto(`/campaigns/${campaignId}/vtt`);
 		await sharedPage.dismissAnalyticsBanner();
 		await expect(page.getByTestId("vtt-interface")).toBeAttached({
@@ -221,17 +221,17 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await expect(page.getByTestId("vtt-pixi-host")).toBeAttached();
 		await shot("vtt-initial-load");
 
-		// Try to select a Day Zero / Bureau District / Memory-Care scene via
+		// Try to select a known Gloamreach scene via
 		// the scene-title dropdown. Fall back to the first menuitem if the
 		// expected names aren't present.
 		await page.getByTestId("vtt-scene-title").click();
-		const dayZeroItem = page
+		const gateDomainItem = page
 			.getByRole("menuitem", {
-				name: /Day Zero.*Diagnosed|Memory-Care Wing Exterior|Bureau District/i,
+				name: /Rift Threshold|Thornwake|Bureau Forward Bastion|Citadel Anchor Heart/i,
 			})
 			.first();
-		if (await dayZeroItem.isVisible({ timeout: 5_000 }).catch(() => false)) {
-			await dayZeroItem.click();
+		if (await gateDomainItem.isVisible({ timeout: 5_000 }).catch(() => false)) {
+			await gateDomainItem.click();
 		} else {
 			await page.getByRole("menuitem").first().click();
 		}
@@ -366,7 +366,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 			await titleInput.fill("Session 0 — Prep Complete");
 			if (await contentInput.isVisible({ timeout: 2_000 }).catch(() => false)) {
 				await contentInput.fill(
-					"Warden playthrough smoketest: lore reviewed, NPCs loaded, map ready. Ascendants may now awaken in the Memory-Care Wing.",
+					"Warden playthrough smoketest: lore reviewed, NPCs loaded, map ready. Ascendants may now enter the Gloamreach Gate Domain.",
 				);
 			}
 			const addBtn = page

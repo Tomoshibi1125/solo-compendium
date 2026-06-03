@@ -14,6 +14,8 @@ export type {
 export {
 	calculateCharacterStats,
 	calculateHPMax,
+	calculateSpellAttackBonus,
+	calculateSpellSaveDC,
 	getCantripsKnownLimit,
 	getCasterType,
 	getRiftFavorDie,

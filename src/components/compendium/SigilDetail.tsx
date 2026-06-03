@@ -1,6 +1,7 @@
 import { BadgeCheck, Info, Shield, Zap } from "lucide-react";
 import type { DragEvent } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +15,7 @@ interface SigilDetailProps {
 export const SigilDetail = ({ data }: SigilDetailProps) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 
-	const handleSigilDragStart = (e: DragEvent<HTMLDivElement>) => {
+	const handleSigilDragStart = (e: DragEvent<HTMLFieldSetElement>) => {
 		const dragData = {
 			type: "sigil",
 			id: data.id,
@@ -27,8 +28,9 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 	};
 
 	return (
-		<div
+		<fieldset
 			className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700"
+			aria-label={`Draggable sigil details for ${displayName}`}
 			draggable
 			onDragStart={handleSigilDragStart}
 			data-testid="sigil-detail-draggable"
@@ -218,6 +220,20 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 					</AscendantWindow>
 				</div>
 			</div>
-		</div>
+			<DetailMetaFooter
+				flavor={(data as { flavor?: string }).flavor}
+				extra={[
+					{
+						label: "Active Feature",
+						value: (data as { active_feature?: unknown }).active_feature,
+					},
+					{ label: "Effects", value: (data as { effects?: unknown }).effects },
+					{
+						label: "Mechanics",
+						value: (data as { mechanics?: unknown }).mechanics,
+					},
+				]}
+			/>
+		</fieldset>
 	);
 };

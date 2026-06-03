@@ -20,7 +20,7 @@ export const powers_core: CompendiumPower[] = [
 		flavor: "A standardized Bureau-issued casting pattern.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Teleports the caster up to 60 feet to a visible point.",
 			secondary:
@@ -81,7 +81,7 @@ export const powers_core: CompendiumPower[] = [
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Restores hit points or grants temp HP.",
 			secondary: "No saving throw; self-targeted or willing ally only.",
@@ -146,7 +146,7 @@ export const powers_core: CompendiumPower[] = [
 			"Inverts the silence between heartbeats. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary: "On a success the concealed creature remains hidden.",
@@ -202,7 +202,7 @@ export const powers_core: CompendiumPower[] = [
 		flavor: "A Bureau-validated combat pattern.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary:
@@ -260,7 +260,7 @@ export const powers_core: CompendiumPower[] = [
 			"Commands the remnants of a dead world. The last thing many anomalies ever see.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Restores hit points or grants temp HP.",
 			secondary: "No saving throw; self-targeted or willing ally only.",
@@ -325,7 +325,7 @@ export const powers_core: CompendiumPower[] = [
 			"Shatters the illusion of safety. A beautiful catastrophe measured in milliseconds.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Restores hit points or grants temp HP.",
 			secondary: "No saving throw; self-targeted or willing ally only.",
@@ -386,7 +386,7 @@ export const powers_core: CompendiumPower[] = [
 		flavor: "The Bureau tried to ban this. They failed.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary:
@@ -445,7 +445,7 @@ export const powers_core: CompendiumPower[] = [
 			"Mirrors the flow of causality. The death of hesitation, made manifest.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary: "On a success the target resists and is immune for 24 hours.",
@@ -504,7 +504,7 @@ export const powers_core: CompendiumPower[] = [
 		flavor: "An efficient overflow of stored mana.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary: "On a success the target blocks the link.",
@@ -561,7 +561,7 @@ export const powers_core: CompendiumPower[] = [
 			"Dissolves the laws of physics. The reason S-Rank Gates are feared.",
 		tags: ["awakened", "magic", "power"],
 		rarity: "rare",
-		source_book: "Ascendant Core Rulebook",
+		source_book: "Rift Ascendant Canon",
 		effects: {
 			primary: "Inflicts a non-damage condition on a failed save.",
 			secondary:

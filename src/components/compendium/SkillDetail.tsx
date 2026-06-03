@@ -1,5 +1,6 @@
 import { BookOpen, Zap } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -102,6 +103,7 @@ export const SkillDetail = ({ data }: { data: SkillData }) => {
 					</Badge>
 				</div>
 			)}
+			<DetailMetaFooter tags={(data as { tags?: string[] }).tags} />
 		</div>
 	);
 };
