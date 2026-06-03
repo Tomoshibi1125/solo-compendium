@@ -55,6 +55,7 @@ const HUB_TOKEN_POSITIONS = [
 	{ x: 15, y: 15 },
 	{ x: 22, y: 20 },
 	{ x: 28, y: 15 },
+	{ x: 34, y: 22 },
 ];
 
 function createSandboxNpcToken(
@@ -77,85 +78,121 @@ function createSandboxNpcToken(
 
 const mapConfigs = [
 	{
-		name: "Gate Domain: Rift Threshold",
+		name: "Day Zero: Memory-Care Wing Exterior",
+		image: "bunker_map.png",
+		audio: "ambient_bunker.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Day Zero: The Diagnosed's Mirror (R5)",
+		image: "sewer_map.png",
+		audio: "ambient_subway.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Bureau Domain Response Annex",
+		image: "bunker_map.png",
+		audio: "ambient_bunker.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Gate Threshold",
 		image: "bunker_map.png",
 		audio: "ambient_bunker.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "Gate Domain: Thornwake",
+		name: "The Hollow Subway",
+		image: "sewer_map.png",
+		audio: "ambient_subway.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Road of Writs",
+		image: "downtown_map.png",
+		audio: "ambient_explore.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Writ-Bound Hamlet",
 		image: "slums_map.png",
 		audio: "ambient_explore.mp3",
 		type: "hub" as const,
 	},
 	{
-		name: "Gate Domain: Gallows Road",
-		image: "downtown_map.png",
-		audio: "ambient_explore.mp3",
-		type: "combat" as const,
-	},
-	{
-		name: "Gate Domain: Vermillion Camp",
+		name: "Vermillion Outpost",
 		image: "bazaar_map.png",
 		audio: "ambient_explore.mp3",
 		type: "hub" as const,
 	},
 	{
-		name: "Gate Domain: Bureau Forward Bastion",
-		image: "bunker_map.png",
-		audio: "ambient_bunker.mp3",
-		type: "hub" as const,
+		name: "Drowned Ledgerfen",
+		image: "sewer_map.png",
+		audio: "ambient_subway.mp3",
+		type: "combat" as const,
 	},
 	{
-		name: "Gate Domain: Essence Mill",
+		name: "Fungal Depths",
+		image: "overgrown_map.png",
+		audio: "ambient_explore.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Remembering Orchard",
+		image: "overgrown_map.png",
+		audio: "ambient_explore.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Ashen Counting-House",
 		image: "downtown_map.png",
 		audio: "ambient_combat.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "Gate Domain: Aegis Hollow",
-		image: "citadel_map.png",
-		audio: "ambient_combat.mp3",
-		type: "combat" as const,
-	},
-	{
-		name: "Gate Domain: Glassvine Works",
-		image: "overgrown_map.png",
-		audio: "ambient_explore.mp3",
-		type: "hub" as const,
-	},
-	{
-		name: "Gate Domain: Black Vault",
-		image: "throne_map.png",
-		audio: "ambient_boss.mp3",
-		type: "combat" as const,
-	},
-	{
-		name: "Gate Domain: Choir Warrens",
+		name: "Sunken Tunnels",
 		image: "sewer_map.png",
 		audio: "ambient_subway.mp3",
+		type: "combat" as const,
+	},
+	{
+		name: "Bastion Golemfall",
+		image: "citadel_map.png",
+		audio: "ambient_combat.mp3",
 		type: "hub" as const,
 	},
 	{
-		name: "Gate Domain: Beast Crown Den",
-		image: "overgrown_map.png",
+		name: "Awoko Sanctum",
+		image: "throne_map.png",
+		audio: "ambient_boss.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Obsidian Spire",
+		image: "citadel_map.png",
+		audio: "ambient_boss.mp3",
+		type: "hub" as const,
+	},
+	{
+		name: "Road of Final Writs",
+		image: "downtown_map.png",
 		audio: "ambient_combat.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "Gate Domain: White Heron Reliquary",
+		name: "The Regent's Citadel",
 		image: "citadel_map.png",
 		audio: "ambient_boss.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "Gate Domain: Regent's Citadel",
-		image: "citadel_map.png",
+		name: "Throne Court",
+		image: "throne_map.png",
 		audio: "ambient_boss.mp3",
-		type: "combat" as const,
+		type: "boss" as const,
 	},
 	{
-		name: "Gate Domain: Citadel Anchor Heart",
+		name: "Anchor-Undercroft",
 		image: "throne_map.png",
 		audio: "ambient_boss.mp3",
 		type: "boss" as const,
@@ -180,7 +217,7 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 					createToken(
 						`e-${index}-${i}`,
 						getRandomAnomalyId(),
-						"Gate Domain Anomaly",
+						"Gloamreach Domain Anomaly",
 						Math.floor(Math.random() * 50),
 						Math.floor(Math.random() * 50),
 						"medium",
@@ -191,9 +228,9 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 			for (let i = 0; i < 6; i++) {
 				tokens.push(
 					createToken(
-						`umbral-echo-${i}`,
+						`regent-courtier-${i}`,
 						getRandomAnomalyId(),
-						"Umbral Echo Guard",
+						"Regent Courtier",
 						10 + Math.floor(Math.random() * 40),
 						10 + i * 5,
 						"medium",
@@ -216,10 +253,11 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 					{
 						imageOverride: SHADOW_REGENT_TOKEN_IMAGE_URL,
 						portraitUrl: SHADOW_REGENT_TOKEN_IMAGE_URL,
+						tokenType: "npc",
 					},
 				),
 			);
-		} else {
+		} else if (isHub) {
 			getSandboxHubNpcIds(config.name).forEach((npcId, npcIndex) => {
 				const position =
 					HUB_TOKEN_POSITIONS[npcIndex] ||
