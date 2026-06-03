@@ -1,5 +1,8 @@
 /**
- * SANDBOX QUESTS - The Shadow of the Regent
+ * SANDBOX QUESTS — "The Shadow of the Regent"
+ *
+ * Structured quest scaffolds grouped by threat rank. Seeded as wiki articles
+ * with `category: "quest"` so they surface in a dedicated Wiki filter.
  */
 
 export type SandboxQuestRank = "E" | "D" | "C" | "B" | "A" | "S";
@@ -19,122 +22,220 @@ export interface SandboxQuest {
 export const sandboxQuests: SandboxQuest[] = [
 	{
 		id: "q-e-01",
-		title: "E-Rank: The Sealed Road",
+		title: "E-Rank: Beacon of the Lost",
 		rank: "E",
-		summary: "Find a route from the Rift Threshold to Thornwake before night patrols learn the party's scent.",
-		objectives: ["Recover a working AFA road ping", "Avoid or defeat the first tax hounds", "Reach Thornwake before the bell rings twice"],
-		completionTriggers: ["Party reaches Thornwake", "Party camps outside and suffers a night encounter"],
-		rewardNotes: "Thornwake access, 200 Credits equivalent in trade, first Anchor Scan clue.",
-		linkedFactionId: "free-ascendants",
+		summary:
+			"Strike Team Seven's AFA beacon pings from the Hollow Subway near the Gate Threshold, then from farther down the Road of Writs. Commander Park needs answers before Central Command marks them expendable.",
+		objectives: [
+			"Enter the Hollow Subway",
+			"Track the AFA ghost-ping without giving the road a true name",
+			"Recover the beacon or identify why it is broadcasting from multiple places",
+		],
+		completionTriggers: [
+			"Beacon delivered to Commander Park at the Annex.",
+			"Beacon destroyed to prevent a Regent trace, with proof recovered.",
+		],
+		rewardNotes:
+			"Bureau reputation +1; minor Relic clue; access to Yoon's missing-team route.",
+		linkedFactionId: "bureau-sentinels",
+		linkedNpcName: "Commander Park Jae-won",
 	},
 	{
 		id: "q-e-02",
-		title: "E-Rank: Tribute Night",
+		title: "E-Rank: The Serum Road",
 		rank: "E",
-		summary: "Thornwake must pay the Regent's tribute by midnight. The party chooses resistance, deception, payment, or evacuation.",
-		objectives: ["Inspect the Tribute Shed", "Confront the courier", "Decide who pays the cost"],
-		completionTriggers: ["Tribute wagon leaves, burns, or is redirected"],
-		rewardNotes: "Reputation shift with Thornwake factions; possible Regent invitation.",
-		linkedFactionId: "hollow-choir",
+		summary:
+			"Quartermaster Lin needs stabilizer serum delivered from the Annex to Mother Rust's Outreach Post. The path is short, but the Road of Writs has begun charging for passage.",
+		objectives: [
+			"Collect three serum crates from the Annex armory",
+			"Deliver them to Mother Rust's Outreach Post",
+			"Avoid paying the road with names, memories, or civilians",
+		],
+		completionTriggers: [
+			"All crates delivered intact.",
+			"Two crates delivered for partial success.",
+			"The clinic is collected or exposed, causing reputation loss.",
+		],
+		rewardNotes: "Bureau +1, Independent +1; safe shelter token at the clinic.",
+		linkedNpcName: "Quartermaster Lin Mei-hua",
 	},
 	{
 		id: "q-d-01",
-		title: "D-Rank: Red Ledgers",
+		title: "D-Rank: Tides Over the Ledgerfen",
 		rank: "D",
-		summary: "The Bureau Forward Bastion holds records proving why the first expedition failed.",
-		objectives: ["Enter the Bastion", "Restore the AFA relay", "Recover the sealed command ledger"],
-		completionTriggers: ["Ledger delivered to any faction leader", "Ledger destroyed"],
-		rewardNotes: "Bureau or Free Ascendant reputation; Bastion may become a safe rest.",
-		linkedFactionId: "bureau-remnant",
+		summary:
+			"The Drowned Ledgerfen has classified several missing survivors as deceased even though their AFA tags still show life. Recover them before the record becomes true.",
+		objectives: [
+			"Enter the Drowned Ledgerfen",
+			"Find the active casualty ledger",
+			"Extract the survivors or legally contradict their death entries",
+		],
+		completionTriggers: [
+			"Survivors extracted and records corrected.",
+			"Records destroyed but survivors lost.",
+			"Ledger entries become final.",
+		],
+		rewardNotes: "Bureau +1; Catalog access; clue toward the Void Claim.",
+		linkedFactionId: "bureau-sentinels",
 	},
 	{
 		id: "q-d-02",
-		title: "D-Rank: Camp Surgery",
+		title: "D-Rank: Roots of the Diagnosed",
 		rank: "D",
-		summary: "Vermillion needs clean Essence and Glassvine sap before its surgeons lose three patients.",
-		objectives: ["Gather clean Essence", "Secure Glassvine sap", "Return before the ash rain spoils the samples"],
-		completionTriggers: ["Supplies delivered", "Patients lost"],
-		rewardNotes: "Vermillion surgery favor and discounted Relic appraisal.",
-		linkedFactionId: "vermillion-camp",
+		summary:
+			"The Fungal Depths contain memory-growths from the Memory-Care Wing. The party can recover patient files, but every file has started growing a body.",
+		objectives: [
+			"Navigate the Fungal Depths",
+			"Disable the mycelium archive wards",
+			"Recover at least three recognizable patient files",
+		],
+		completionTriggers: [
+			"Files recovered and delivered to Hayashi or the families.",
+			"Files burned to prevent further growth.",
+		],
+		rewardNotes:
+			"Identity-erosion clue chain; Fungal Depths Claim hint; Mother Rust research leverage.",
 	},
 	{
 		id: "q-c-01",
-		title: "C-Rank: Stop the Wheel",
+		title: "C-Rank: Fruit of the Forgotten",
 		rank: "C",
-		summary: "The Essence Mill renders tribute into malformed cores. Shut it down or turn it against the Regent.",
-		objectives: ["Enter the Mill", "Defeat or bargain with the Millwarden", "Claim or destroy the Millstone Heart"],
-		completionTriggers: ["Millstone Heart obtained", "Mill destroyed", "Mill left running"],
-		rewardNotes: "Anchor Relic, Essence stores, Red Phase consequence if mishandled.",
-		linkedFactionId: "vermillion-camp",
+		summary:
+			"The Remembering Orchard is taking more than pain. Villagers who paid tribute no longer remember people they loved. The Caretaker insists this is mercy.",
+		objectives: [
+			"Interview villagers without breaking local guest-right",
+			"Locate the harvested memory rows",
+			"Choose whether to restore, destroy, or bargain for the stolen memories",
+		],
+		completionTriggers: [
+			"Memories restored to the settlement.",
+			"Orchard law contradicted with a Claim or legal proof.",
+			"The Caretaker defeated or recruited.",
+		],
+		rewardNotes: "Civilian trust +2; Blood Claim clue; memory fruit boon.",
+		linkedNpcName: "The Caretaker",
 	},
 	{
 		id: "q-c-02",
-		title: "C-Rank: The Thorn Crop",
+		title: "C-Rank: Ashes of a Colleague",
 		rank: "C",
-		summary: "The Glassvine Works can feed settlements or poison them. Its root-engine is growing an Anchor Relic.",
-		objectives: ["Map the greenhouse-factory", "Stabilize or burn the crop", "Claim the Crown of Thorns"],
-		completionTriggers: ["Crop stabilized", "Works burned", "Relic taken"],
-		rewardNotes: "Anchor Relic, medicine access, settlement survival shift.",
-		linkedFactionId: "gloamreach-bound",
+		summary:
+			"A Bureau researcher is trapped in the Ashen Counting-House, used as a living relay for debt calculations. Extracting them may erase evidence Central Command wants hidden.",
+		objectives: [
+			"Reach the Audit Floor",
+			"Disable the furnace-ledger relay",
+			"Extract the researcher or preserve their testimony",
+		],
+		completionTriggers: [
+			"Researcher alive and relay disabled.",
+			"Evidence preserved but researcher lost.",
+			"Relay detonates, empowering a Regent debt law.",
+		],
+		rewardNotes: "Bureau research unlock; debt-law contradiction; fire or blood Sigil.",
+		linkedNpcName: "Dr. Serin Hayashi",
 	},
 	{
 		id: "q-b-01",
-		title: "B-Rank: Oath Furnace",
+		title: "B-Rank: Pressure at the Sunken Line",
 		rank: "B",
-		summary: "Aegis Hollow's fallen defenders guard a Relic that can bind a Citadel law.",
-		objectives: ["Reach Banner Hall", "Face the bound Aegis knights", "Free, defeat, or recruit the oath"],
-		completionTriggers: ["Aegis Nail obtained", "Aegis knights released", "Order remains bound"],
-		rewardNotes: "Anchor Relic or final-assault ally.",
-		linkedFactionId: "free-ascendants",
+		summary:
+			"The Sunken Tunnels hold drowned commuters, Bureau dead, and fused survivors whose names are still being charged for passage.",
+		objectives: [
+			"Reach the main flooded platform",
+			"Identify at least ten name tags",
+			"Decide the fate of the fused survivors",
+		],
+		completionTriggers: [
+			"Names returned to the living or memorialized properly.",
+			"Fused survivors extracted, released, or slain by mercy decision.",
+		],
+		rewardNotes: "Civilian trust shift; water/cold Sigil; Blood Claim clue.",
 	},
 	{
 		id: "q-b-02",
-		title: "B-Rank: The Choir Bell",
+		title: "B-Rank: Oath at Golemfall",
 		rank: "B",
-		summary: "The Hollow Choir prepares a rite that will open a guarded road to the Citadel.",
-		objectives: ["Infiltrate the Warrens", "Find the Choir Bell", "Break, steal, or invert the rite"],
-		completionTriggers: ["Bell obtained", "Rite completed", "Choir leadership removed"],
-		rewardNotes: "Anchor Relic, Citadel route, major faction shift.",
-		linkedFactionId: "hollow-choir",
+		summary:
+			"Bastion Golemfall's dead defenders still hold a wall that failed years ago. Their commander can aid the finale, but only if the party resolves the oath without turning the dead into tools.",
+		objectives: [
+			"Enter Bastion Golemfall",
+			"Recover the fallen banner",
+			"Convince the Commander Without a Body to release or redirect the oath",
+		],
+		completionTriggers: [
+			"The oath is released honorably.",
+			"The dead are drafted by force, creating a dark consequence.",
+		],
+		rewardNotes: "Finale ally support; armor or shield Sigil; Abyss Claim clue.",
+		linkedNpcName: "Commander Without a Body",
 	},
 	{
 		id: "q-a-01",
-		title: "A-Rank: The Beast Crown",
+		title: "A-Rank: The Mirror Climb",
 		rank: "A",
-		summary: "The apex predator of the Den carries a Relic fang that can redirect the Regent's hunt.",
-		objectives: ["Enter Beast Crown territory", "Survive the predator trials", "Kill, tame, or release the Crownbeast"],
-		completionTriggers: ["Beast Crown Fang obtained", "Crownbeast released toward Citadel"],
-		rewardNotes: "Anchor Relic or predator ally.",
-		linkedFactionId: "gloamreach-bound",
-	},
-	{
-		id: "q-a-02",
-		title: "A-Rank: The Black Vault Offer",
-		rank: "A",
-		summary: "Subject Zero leakage offers a shortcut to power that works exactly as promised.",
-		objectives: ["Enter the Vault", "Hear the bargain", "Accept, refuse, or steal from the pressure wound"],
-		completionTriggers: ["Bargain resolved", "Vault sealed", "Vault opened wider"],
-		rewardNotes: "Forbidden advantage; Red Phase pressure if accepted.",
-		linkedFactionId: "gloamreach-bound",
+		summary:
+			"The Obsidian Spire forces each Ascendant to confront the version of themselves that would accept the throne for the right reason.",
+		objectives: [
+			"Ascend the Spire's trial floors",
+			"Resolve each reflection by defeat, confession, refusal, or reconciliation",
+			"Reach the Watcher's Gallery",
+		],
+		completionTriggers: ["All reflections resolved and the Watcher's trial answered."],
+		rewardNotes:
+			"A-Rank Relic or Sigil; Claim placement access; temptation consequence based on choices.",
+		linkedNpcName: "The Watcher",
 	},
 	{
 		id: "q-s-01",
-		title: "S-Rank: Walk to the Citadel",
+		title: "S-Rank: The Name at the Throne",
 		rank: "S",
-		summary: "Use secured routes, allies, and Anchor Relics to survive the road to the Regent's Citadel.",
-		objectives: ["Choose an approach route", "Spend or preserve Anchor Relics", "Reach the final chamber from the Anchor Scan"],
-		completionTriggers: ["Party enters final chamber", "Party retreats from Citadel"],
-		rewardNotes: "Final confrontation access.",
-		linkedFactionId: "bureau-remnant",
+		summary:
+			"The Regent's Citadel opens. The party must confront the Anchor not as a monster in a room, but as a sovereign law that believes it owns the Gloamreach and everyone inside it.",
+		objectives: [
+			"Reach the Citadel through the Road of Final Writs",
+			"Survive the Throne Court",
+			"Resolve the Anchor in the Undercroft",
+		],
+		completionTriggers: [
+			"The Anchor is broken.",
+			"The Anchor is sealed.",
+			"The Anchor is transformed or inherited.",
+		],
+		rewardNotes:
+			"Campaign resolution; ending-based artifact slate; Gloamreach fate determined.",
 	},
 	{
 		id: "q-s-02",
-		title: "S-Rank: Resolve the Anchor",
+		title: "S-Rank: Park's Final Watch",
 		rank: "S",
-		summary: "Destroy, seal, or transform the Regent before Red Phase turns the Gloamreach outward.",
-		objectives: ["Make the Regent vulnerable", "Choose a clear state", "Survive the Domain's answer"],
-		completionTriggers: ["Anchor destroyed", "Anchor sealed", "Anchor transformed", "Red Phase failure"],
-		rewardNotes: "Campaign ending.",
-		linkedFactionId: "free-ascendants",
+		summary:
+			"If the party exposes Central Command's failure or recovers Strike Team Seven's truth, Park must decide whether to obey orders, defy them, or stand personally at the breach.",
+		objectives: [
+			"Confront Park with the truth",
+			"Resolve his choice before Citadel Day",
+			"Use or lose Bureau final-operation support",
+		],
+		completionTriggers: ["Park's choice resolved during the final preparation window."],
+		rewardNotes: "Finale support, emotional payoff, and Bureau epilogue consequences.",
+		linkedNpcName: "Commander Park Jae-won",
+	},
+	{
+		id: "q-s-03",
+		title: "S-Rank: The Bailiff's Last Writ",
+		rank: "S",
+		summary:
+			"The Regent's Bailiff prepares a final writ naming the party as stolen property of the Citadel. If answered properly, the party can enter the finale unchained. If ignored, the Bailiff arrives during the Throne Court.",
+		objectives: [
+			"Recover the final writ from the Bailiff's Stair or a toll-house",
+			"Contradict the charge with a Claim, older precedent, or proven guest-right",
+			"Decide whether to destroy the Bailiff, dismiss it, or bind it to a new law",
+		],
+		completionTriggers: [
+			"The Bailiff is legally dismissed.",
+			"The Bailiff is destroyed after its writ is invalidated.",
+			"The Bailiff enters the finale empowered.",
+		],
+		rewardNotes: "Removes or alters a major final-act threat; may create a new Domain precedent.",
+		linkedNpcName: "The Regent's Bailiff",
 	},
 ];
