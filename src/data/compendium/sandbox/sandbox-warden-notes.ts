@@ -1,113 +1,128 @@
 /**
- * WARDEN NOTES - The Shadow of the Regent
+ * SANDBOX WARDEN NOTES — "The Shadow of the Regent"
  *
- * Campaign secrets for the Gloamreach rewrite. These notes keep the Regent
- * horror focused on dominion, corruption, predation, and Gate-domain survival.
+ * Seeded into the Notes tab on sandbox import with `is_shared=false` so they
+ * are private to the Warden. These notes define the Gloamreach's core secrets,
+ * pressure clocks, and optional horror levers.
  */
 
 export interface SandboxWardenNote {
 	title: string;
-	category: "secret" | "timeline" | "faction" | "encounter" | "reward";
 	content: string;
+	category: "warden-secret" | "plot-beat" | "pressure-clock";
 }
 
 export const sandboxWardenNotes: SandboxWardenNote[] = [
 	{
-		title: "Secret - The Regent Is the Anchor",
-		category: "secret",
+		title: "Secret 1 — The Regent Was Once Human",
+		category: "warden-secret",
 		content: [
-			"The Gloamreach is one S-Rank Gate Domain. Its Anchor is not a crystal or throne; it is the Regent himself.",
+			"**Warden ONLY.** The Regent was once a human Ascendant who stayed behind during an early high-rank Gate event to prevent collapse. The Domain wrote itself around his grief, duty, hunger, and refusal to die. Over time, the Anchor became a ruler.",
 			"",
-			"He is ancient, predatory, charismatic, and bored. He treats Ascendants as rare prey because most intruders break too quickly to amuse him. He does not want escape. He wants proof that someone entering his realm can become worthy of remaining there.",
+			"This does not excuse him. It makes the final confrontation hurt. He has had countless chances to stop treating people as property and chose the throne every time.",
 			"",
-			"Destroying him collapses the Domain violently. Sealing him stabilizes the Rift and traps him. Transforming the Anchor requires the party to turn one of his own Relic laws against him.",
+			"**Reveal tools:** The Faded Family Photo, Ms. Park's Wedding Ring, the Unopened Commendation, the Bureau Room in the Citadel, Old Man Crane's testimony, or a Claim contradiction in the Throne Court.",
 		].join("\n"),
 	},
 	{
-		title: "Secret - Subject Zero Is the Black Vault's Hunger",
-		category: "secret",
+		title: "Secret 2 — The Three Claims Are Legal Contradictions",
+		category: "warden-secret",
 		content: [
-			"Subject Zero is not the Regent and is not loyal to him. It is an older sealed S-Rank Anomaly whose pressure leaks into the Black Vault.",
+			"**Warden ONLY.** The Three Claims are not ordinary boss keys. Each one proves that the Regent's ownership of the Gloamreach is incomplete.",
 			"",
-			"The Vault offers real power: extra Relic charges, restored resources, temporary Rank amplification, or a way to wound the Regent early. Every bargain advances the Red Phase clock and adds a Subject Zero consequence to the ending.",
+			"The Void Claim contradicts secrecy, erasure, hidden roads, and false darkness.",
+			"The Abyss Claim contradicts command, invitation, compelled movement, and throne authority.",
+			"The Blood Claim contradicts ownership of bodies, tribute, inheritance, and sacrifice.",
 			"",
-			"Never frame the bargain as a trick. The horror is that the offer works.",
+			"In the finale, the party does not only weaken the Regent. They force the Anchor-throne to answer a legal/metaphysical question: who actually owns this Domain?",
 		].join("\n"),
 	},
 	{
-		title: "Secret - The Citadel Is Reachable Early",
-		category: "secret",
+		title: "Secret 3 — The Hollow Mother Intends to Inherit",
+		category: "warden-secret",
 		content: [
-			"The Regent's Citadel is visible from the Gallows Road at all times. The party can attempt the road before they are ready.",
+			"**Warden ONLY.** The Awoko Cult does not simply worship the Regent. The Hollow Mother intends to inherit the Gloamreach when the Regent weakens.",
 			"",
-			"If they go early, do not block them. Show the consequences: patrols that ignore normal tactics, locked Rank thresholds, doors that demand tribute, and invitation rooms where the Regent studies them.",
+			"Her followers often say they serve, free, or remember. She almost never uses those words. Her true verb is inherit.",
 			"",
-			"Early retreat should be possible, humiliating, and costly.",
+			"If the party weakens the Regent but fails to disrupt the Ritual of Inheritance, the Hollow Mother can become an endgame complication, not by replacing the Regent as main villain, but by trying to claim the Anchor at the worst possible moment.",
 		].join("\n"),
 	},
 	{
-		title: "Secret - Anchor Scan Results Are Fate Pressure",
-		category: "reward",
+		title: "Secret 4 — The Bailiff Is Limited by Law",
+		category: "warden-secret",
 		content: [
-			"The Anchor Scan replaces any card-reading style device. It is an AFA/Bureau resonance procedure corrupted by the Domain's own laws.",
+			"**Warden ONLY.** The Regent's Bailiff is terrifying because it is often correct. It is also limited because it must operate through charges, writs, debts, custody, invitation, and tribute.",
 			"",
-			"Before play, assign three Anchor Relics, one strongest ally, one Black Vault bargain, one Regent vulnerability, and the Citadel chamber where the final confrontation begins.",
+			"The party can stop or delay the Bailiff without killing it by proving the writ false, paying or redirecting the debt, invoking valid guest-right, using a Claim, presenting older precedent from the Unseated Law, or forcing a jurisdiction conflict.",
 			"",
-			"The Scan should feel clinical at first and ominous by the last result.",
+			"This is the campaign's clearest lesson that understanding Domain law can matter more than raw damage.",
 		].join("\n"),
 	},
 	{
-		title: "Pressure Clock - Blue Phase to Red Phase",
-		category: "timeline",
+		title: "Secret 5 — The Timeline Is Pressure, Not Railroad",
+		category: "warden-secret",
 		content: [
-			"Blue Phase is the campaign window. Red Phase means the Gloamreach spills through the Rift and the material side begins dying by terrain overwrite, Anomaly migration, and Essence weather.",
+			"**Warden ONLY.** The 14-day Gloamreach timeline is real pressure, but it should not override decisive party action. If the party acts early, bend the clock. If they delay, escalate consequences.",
 			"",
-			"Advance the clock when the party takes long rests in unsafe regions, accepts Subject Zero bargains, abandons settlements to tribute, or destroys an Anchor Relic without stabilizing its law.",
+			"Day 14 is Citadel Day by default. If the party has not reached the Citadel, do not simply force a final boss through the roof. Instead escalate Red Phase pressure, settlement annexation, Bailiff authority, Awoko inheritance leverage, or Claim countermeasures.",
+			"",
+			"The clock should make the Domain feel alive. It should not steal agency.",
 		].join("\n"),
 	},
 	{
-		title: "Faction Truth - The Bureau Failed First",
-		category: "faction",
+		title: "Plot Beat — The Faded Family Photo",
+		category: "plot-beat",
 		content: [
-			"The Bureau Forward Bastion did not fail because its Ascendants were weak. It failed because command tried to classify the Domain like a normal Gate and forced teams to obey surface-side doctrine.",
+			"The Faded Family Photo is the strongest emotional prop in the campaign. It should be recoverable in Day Zero, the Drowned Ledgerfen, or the Citadel's Bureau Room.",
 			"",
-			"The dead command staff still have useful files, but every file is a record of someone prioritizing clean procedure over survival.",
+			"If the party brings it to the Throne Court or Anchor-Undercroft, the Regent recognizes what is missing before he recognizes himself. This can trigger the Human Remnant phase, create hesitation, or make his rage colder and more personal.",
 		].join("\n"),
 	},
 	{
-		title: "Faction Truth - Vermillion Camp Is Not Noble",
-		category: "faction",
+		title: "Plot Beat — Blackwood's Classified Mission",
+		category: "plot-beat",
 		content: [
-			"Vermillion salvagers keep people alive, but their camp is built on triage math. They trade food for cores, treatment for favors, and rescue for future shares.",
+			"Agent Kira Blackwood was sent to investigate pre-threshold Claim resonance before the Bureau publicly admitted the Gloamreach was a Regent Domain.",
 			"",
-			"They can become the party's strongest practical ally if treated honestly. They become dangerous if the party moralizes without helping.",
+			"She is not secretly working for the Regent. Her danger is institutional loyalty under pressure. She may hide evidence, misdirect the party, or confess depending on how they handle Bureau trust.",
+			"",
+			"Use Blackwood to show that the Bureau can be brave in the field and dishonest at command level at the same time.",
 		].join("\n"),
 	},
 	{
-		title: "Faction Truth - The Hollow Choir Loves the Regent",
-		category: "faction",
+		title: "Plot Beat — Sister Veil Can Break the Chant",
+		category: "plot-beat",
 		content: [
-			"The Hollow Choir does not worship absence, names, or lost records. They worship rule.",
+			"Sister Veil knows the Ritual of Inheritance math is wrong. She does not begin as a hero. She begins as someone honest enough to admit the numbers prove her faith will consume its own followers.",
 			"",
-			"Their doctrine is simple: life outside the Domain is chaos; life under the Regent has shape. Their sacrifices are tribute payments designed to buy safety for chosen settlements.",
+			"If the party gives her evidence and protects her during the Sanctum raid, she can corrupt the final chant and prevent the Hollow Mother from claiming the Anchor during the finale.",
 		].join("\n"),
 	},
 	{
-		title: "Encounter Rule - Horror Should Change the Map",
-		category: "encounter",
+		title: "Pressure Clock — Regent-Marked",
+		category: "pressure-clock",
 		content: [
-			"Whenever a major Anomaly falls, alter the Domain. Roads re-route, weather changes, a settlement loses protection, or the Citadel opens one new approach.",
+			"Track whether each character becomes Regent-Marked. This is legal visibility inside the Gloamreach.",
 			"",
-			"The Gloamreach is not a backdrop. It is a hostile country-sized body reacting to injury.",
+			"A marked character is easier for Regent-aligned entities to recognize, target with invitations, and name in writs. They may also receive dreams, messages through reflective surfaces, or written summons.",
+			"",
+			"Common triggers: signing a ledger, accepting dangerous hospitality, being struck by the Diagnosed's gaze, carrying a Claim openly, refusing the same invitation twice, or giving a true name to a Domain officer.",
+			"",
+			"Removal: the Regent releases the mark, a major Claim contradiction breaks it, or the Anchor is resolved.",
 		].join("\n"),
 	},
 	{
-		title: "Reward Rule - Relics Are Compromises",
-		category: "reward",
+		title: "Pressure Clock — Gloamreach Timeline",
+		category: "pressure-clock",
 		content: [
-			"Anchor Relics should be powerful enough that players want them and corrupt enough that using them feels like accepting the Domain's logic.",
-			"",
-			"Each Relic grants a strong benefit, a visible physical or social cost, and one way to weaken the Regent when used in the correct Citadel chamber.",
+			"See `sandbox-timeline.ts` for structured events. Key beats:",
+			"- Day 1: Threshold Day. The Gate becomes unreliable behind the party.",
+			"- Day 2: First Tribute. The party sees how settlements lease safety.",
+			"- Day 5: The Bailiff's first public judgment.",
+			"- Day 10: The Claim Race begins in earnest.",
+			"- Day 12: Ritual of Inheritance reaches full strength if not disrupted.",
+			"- Day 14: Citadel Day or Red Phase pressure escalation.",
 		].join("\n"),
 	},
 ];
