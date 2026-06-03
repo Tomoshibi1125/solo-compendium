@@ -1,13 +1,17 @@
 /**
- * SANDBOX FACTIONS - The Shadow of the Regent
+ * SANDBOX FACTIONS — "The Shadow of the Regent"
+ *
+ * 5 faction records with reputation thresholds, joining benefits, and enmities.
+ * Seeded as wiki articles with `category: "faction"` so the Wiki tab
+ * surfaces a dedicated Factions filter.
  */
 
 export type FactionId =
-	| "bureau-remnant"
-	| "vermillion-camp"
-	| "hollow-choir"
-	| "free-ascendants"
-	| "gloamreach-bound";
+	| "bureau-sentinels"
+	| "vermillion-guild"
+	| "awoko-cult"
+	| "independent"
+	| "anomaly-adjacent";
 
 export interface SandboxFactionReputationThreshold {
 	threshold: number;
@@ -27,127 +31,149 @@ export interface SandboxFaction {
 	enmities: FactionId[];
 }
 
-const thresholds = (
-	kin: string,
-	trusted: string,
-): SandboxFactionReputationThreshold[] => [
-	{ threshold: -5, tier: "hostile", unlocks: "Faction acts openly against the party." },
-	{ threshold: -2, tier: "unfriendly", unlocks: "Faction denies shelter and information." },
-	{ threshold: 0, tier: "neutral", unlocks: "Faction will trade if paid." },
-	{ threshold: 3, tier: "friendly", unlocks: "Faction offers one useful lead or safe contact." },
-	{ threshold: 6, tier: "trusted", unlocks: trusted },
-	{ threshold: 10, tier: "kin", unlocks: kin },
-];
-
 export const sandboxFactions: SandboxFaction[] = [
 	{
-		id: "bureau-remnant",
-		name: "Bureau Remnant",
-		tagline: "Procedure after the wall has fallen.",
-		emblem: "A cracked silver shield over a blue Gate arc.",
+		id: "bureau-sentinels",
+		name: "Bureau Sentinels",
+		tagline: "Order, at cost.",
+		emblem: "Silver crescent crossed by a black rifle over a sealed Gate.",
 		description: [
-			"The Bureau Remnant is what remains of the official expedition inside the Gloamreach. They have Rank charts, sealed supply rooms, damaged AFA relays, and a terrifying amount of paperwork explaining why people died.",
+			"The official government response to the Gloamreach threshold: military-grade Ascendants, field researchers, logistics teams, and cordon officers trying to contain an S-Rank Gate Domain that behaves like a sovereign state.",
 			"",
-			"They want the Gate cleared, the Anchor classified, and the final report to look controlled.",
+			"**Leadership:** Commander Park Jae-won, Bureau Domain Response Annex.",
+			"",
+			"**Alignment:** Lawful. Protect civilians. Report everything. Follow the chain until the chain starts feeding people to the Regent's court.",
+			"",
+			"The Bureau is useful, brave, underinformed, and politically constrained. It is not useless. It is insufficient.",
 		].join("\n"),
 		startingReputation: 1,
-		reputationThresholds: thresholds(
-			"Bureau command codes unlock one Citadel route.",
-			"Forward Bastion becomes a safe rest and AFA routing site.",
-		),
-		joiningBenefits: [
-			"AFA repairs and route pings.",
-			"Access to sealed medical stores.",
-			"Rank clearance cover for risky operations.",
+		reputationThresholds: [
+			{ threshold: -5, tier: "hostile", unlocks: "Detainment order. Annex closed to party." },
+			{ threshold: -2, tier: "unfriendly", unlocks: "No contracts. Quartermaster access restricted." },
+			{ threshold: 0, tier: "neutral", unlocks: "Standard emergency contract access." },
+			{ threshold: 3, tier: "friendly", unlocks: "Preferred contracts. Park and Hayashi speak plainly." },
+			{ threshold: 6, tier: "trusted", unlocks: "Classified Domain files, Relic analysis, and Park recruitment path." },
+			{ threshold: 10, tier: "kin", unlocks: "Final-operation support, rare requisition, and Bureau cordon leverage." },
 		],
-		enmities: ["hollow-choir", "gloamreach-bound"],
+		joiningBenefits: [
+			"Safe rest and medical care at the Annex while it remains functional.",
+			"Discounted supplies from Quartermaster Lin.",
+			"Hayashi and Lun can identify Claims, Runes, and Anchor-law anomalies.",
+		],
+		enmities: ["vermillion-guild", "awoko-cult"],
 	},
 	{
-		id: "vermillion-camp",
-		name: "Vermillion Camp",
-		tagline: "Everyone eats. Nobody eats free.",
-		emblem: "A red hook over a black Essence core.",
+		id: "vermillion-guild",
+		name: "Vermillion Guild",
+		tagline: "Survive first. Obey later.",
+		emblem: "Red six-pointed star stamped over a broken Bureau seal.",
 		description: [
-			"Vermillion Camp is a stranded salvage market built from wrecked expedition rigs and Anomaly shell. Its people are practical, brave, predatory, and tired.",
+			"A merchant-Ascendant salvage network operating from the Vermillion Outpost inside the Gloamreach. They specialize in cores, Sigils, tattoos, contraband Runes, rescue-for-profit, and things the Bureau will need two committees to approve.",
 			"",
-			"They save lives every day and keep a ledger for every one of them.",
+			"**Leadership:** Guildmaster Orin, with Rat-King Ji controlling most Outpost trade.",
+			"",
+			"**Alignment:** Pragmatic. Fast. Morally flexible. Often right for the wrong reasons.",
+			"",
+			"Vermillion saves people the Bureau abandons, then charges them for the favor. Both parts are true.",
 		].join("\n"),
 		startingReputation: 0,
-		reputationThresholds: thresholds(
-			"Vermillion opens its private vault and joins the final assault.",
-			"Camp surgeons can turn one fatal wound into a lasting injury.",
-		),
-		joiningBenefits: [
-			"Relic appraisal and salvage contacts.",
-			"Black-market Runes, Sigils, and Tattoos.",
-			"Emergency surgery paid in Essence or favors.",
+		reputationThresholds: [
+			{ threshold: -5, tier: "hostile", unlocks: "Blacklist. Outpost doors close and bounty hunters get paid." },
+			{ threshold: -2, tier: "unfriendly", unlocks: "Prices double. Information becomes deliberately incomplete." },
+			{ threshold: 0, tier: "neutral", unlocks: "Standard Outpost market access." },
+			{ threshold: 3, tier: "friendly", unlocks: "Exclusive bounties, better salvage prices, limited shelter." },
+			{ threshold: 6, tier: "trusted", unlocks: "Black-market services, rare tattoos, restricted Sigils." },
+			{ threshold: 10, tier: "kin", unlocks: "Orin's direct support, private vault access, Outpost defenders in the finale." },
 		],
-		enmities: ["bureau-remnant", "hollow-choir"],
+		joiningBenefits: [
+			"Exclusive loot, Sigil, tattoo, and salvage access.",
+			"Outpost safe rooms and contraband services.",
+			"Shortcut intelligence through the Road of Writs, though every shortcut has a bill.",
+		],
+		enmities: ["bureau-sentinels", "awoko-cult"],
 	},
 	{
-		id: "hollow-choir",
-		name: "Hollow Choir",
-		tagline: "Order is mercy. Tribute is law.",
-		emblem: "A copper mask beneath a black bell.",
+		id: "awoko-cult",
+		name: "Awoko Cult",
+		tagline: "To awaken is to remember what you always were.",
+		emblem: "Seven-rayed eye with a tear-shaped pupil and script woven through the iris.",
 		description: [
-			"The Hollow Choir serves the Regent because it believes rule is kinder than panic. Its members buy safety for chosen settlements through tribute rites, obedience, and ritualized betrayal.",
+			"A grief cult that preaches the Regent as proof humanity can transcend Rank, death, and Bureau ownership. Their comfort is real. Their rituals are predatory. Their leader, the Hollow Mother, does not want to serve the Regent. She wants to inherit the Gloamreach.",
 			"",
-			"They are wrong in ways that still make sense to starving people.",
+			"**Leadership:** The Hollow Mother, supported by Sister Veil, the Choir, and hidden comfort-workers in settlements.",
+			"",
+			"**Alignment:** Catastrophic tenderness. Some members are zealots. Many are grieving civilians who were offered the first gentle voice after disaster.",
 		].join("\n"),
 		startingReputation: -1,
-		reputationThresholds: thresholds(
-			"The Choir Bell can be inverted in the Citadel without a fight.",
-			"A Choir defector teaches the party how to break a tribute rite.",
-		),
-		joiningBenefits: [
-			"Access to Warrens routes.",
-			"Ritual knowledge of tribute law.",
-			"Temporary protection from some court patrols.",
+		reputationThresholds: [
+			{ threshold: -5, tier: "hostile", unlocks: "Cult assassins and ritual hunters actively pursue the party." },
+			{ threshold: -2, tier: "unfriendly", unlocks: "Ambushes near shrines, clinics, and grief-dense settlements." },
+			{ threshold: 0, tier: "neutral", unlocks: "Mid-rank cultists will speak before violence." },
+			{ threshold: 3, tier: "friendly", unlocks: "Sanctum approach, cult theology, and defectors become available." },
+			{ threshold: 6, tier: "trusted", unlocks: "Hollow Mother audience; Bureau reputation penalty likely." },
+			{ threshold: 10, tier: "kin", unlocks: "Dark path: participation in the Ritual of Inheritance." },
 		],
-		enmities: ["bureau-remnant", "vermillion-camp", "free-ascendants"],
+		joiningBenefits: [
+			"Access to Awoko comfort networks and hidden sanctum routes.",
+			"Grief-based ritual knowledge that can disrupt or empower the finale.",
+			"Potential access to dangerous inheritance rites. This should never be consequence-free.",
+		],
+		enmities: ["bureau-sentinels", "vermillion-guild"],
 	},
 	{
-		id: "free-ascendants",
-		name: "Free Ascendants",
-		tagline: "No crown. No leash. No one left behind.",
-		emblem: "A broken Rank tag tied with white cord.",
+		id: "independent",
+		name: "Independent Survivors",
+		tagline: "No masters, no contracts.",
+		emblem: "A chalk star on a doorframe, erased every morning.",
 		description: [
-			"Free Ascendants are stranded operators, deserters, refugees, and unlicensed survivors who refuse all formal control inside the Gate Domain.",
+			"Civilians, free Ascendants, shelter leaders, settlement doctors, road couriers, and mutual-aid networks trying to survive the Gloamreach without becoming property of the Regent, the Bureau, Vermillion, or the Awoko.",
 			"",
-			"They are under-equipped, overextended, and often the only people doing the right thing without a contract.",
+			"**Leadership:** None. Influence shifts between Mama Chen, Doc Tanaka, Old Man Crane, Mika's protectors, and whoever kept people alive most recently.",
+			"",
+			"**Alignment:** Pragmatic good, fearful neutrality, and survival-first compromise.",
 		].join("\n"),
 		startingReputation: 0,
-		reputationThresholds: thresholds(
-			"Free Ascendant cells coordinate an evacuation route for an ending.",
-			"Hidden shelters allow safe rests on two dangerous travel legs.",
-		),
-		joiningBenefits: [
-			"Mutual-aid shelters.",
-			"Guides through off-road routes.",
-			"Information from survivors the Bureau missed.",
+		reputationThresholds: [
+			{ threshold: -5, tier: "hostile", unlocks: "Shelters hide from the party. Civilian witnesses help the Regent's court." },
+			{ threshold: -2, tier: "unfriendly", unlocks: "Cold doors, no rumors, no food." },
+			{ threshold: 0, tier: "neutral", unlocks: "Basic settlement access." },
+			{ threshold: 3, tier: "friendly", unlocks: "Free clinic care and honest rumors." },
+			{ threshold: 6, tier: "trusted", unlocks: "Safehouse network and settlement guides." },
+			{ threshold: 10, tier: "kin", unlocks: "Civilian resistance and shelter support during Citadel Day." },
 		],
-		enmities: ["hollow-choir"],
+		joiningBenefits: [
+			"Clinic healing and safer long rests in protected settlements.",
+			"Local rumors about tribute laws, hidden roads, and Claim clues.",
+			"Final-act civilian support if the party protected people without exploiting them.",
+		],
+		enmities: [],
 	},
 	{
-		id: "gloamreach-bound",
-		name: "Gloamreach-Bound",
-		tagline: "Changed is not the same as lost.",
-		emblem: "A green eye inside a thorn ring.",
+		id: "anomaly-adjacent",
+		name: "Domain-Touched",
+		tagline: "We are still here.",
+		emblem: "A cracked handprint over a half-open eye.",
 		description: [
-			"The Gloamreach-Bound are people and Anomalies altered by long exposure to the Domain. Some are monstrous. Some are peaceful. Some remember being Ascendants. Some never were.",
+			"Survivors, changed Ascendants, memory constructs, intelligent Anomaly fragments, and Domain-born entities who have been altered by the Gloamreach without becoming servants of the Regent.",
 			"",
-			"They know the Domain's instincts better than anyone, and they fear being dragged back to the material side as specimens.",
+			"**Leadership:** None. The Catalog, Echo-7, Echo-Nine, Specimen X, and other changed beings speak only for themselves.",
+			"",
+			"**Alignment:** Fearful, alien, wounded, curious, and often more honest than human factions.",
 		].join("\n"),
-		startingReputation: -1,
-		reputationThresholds: thresholds(
-			"The Bound turn one Domain ecology against the Citadel.",
-			"A Bound guide can lead the party through Beast Crown territory.",
-		),
-		joiningBenefits: [
-			"Predator warnings.",
-			"Lyra-signature survival knowledge.",
-			"Safe passage through one altered ecology.",
+		startingReputation: 0,
+		reputationThresholds: [
+			{ threshold: -5, tier: "hostile", unlocks: "They hide, flee, or lead the party into danger." },
+			{ threshold: -2, tier: "unfriendly", unlocks: "Warnings become vague. Doors close early." },
+			{ threshold: 0, tier: "neutral", unlocks: "Will answer direct questions." },
+			{ threshold: 3, tier: "friendly", unlocks: "Memory fragments, Domain instincts, and safe approach cues." },
+			{ threshold: 6, tier: "trusted", unlocks: "Access to altered perception, dream paths, and nonhuman Claim insights." },
+			{ threshold: 10, tier: "kin", unlocks: "A Domain-touched ally can create one final contradiction in the Throne Court." },
 		],
-		enmities: ["bureau-remnant"],
+		joiningBenefits: [
+			"Domain instincts that warn of false shelter and legal traps.",
+			"Memory-fragment lore unavailable through Bureau files.",
+			"Finale parley or contradiction option if the party treated changed beings as people.",
+		],
+		enmities: [],
 	},
 ];
