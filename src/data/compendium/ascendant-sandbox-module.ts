@@ -111,6 +111,8 @@ export const sandboxVTTScenes: SandboxVTTScene[] = sandboxVTTScenesExpanded;
 
 export const massiveSandboxModule: SandboxModule = {
 	id: "sandbox-shadow-regent",
+	// v8: restores player handouts to the Gloamreach naming scheme so imports
+	// no longer surface Thornwake, Hollow Choir, Gallows Road, or old camp labels.
 	// v7: restores the 20-scene Gloamreach VTT map list and updates NPC token routing.
 	// v6: restored the full Gloamreach scale rewrite across chapters, quests,
 	// factions, NPCs, encounters, timeline, Warden notes, and loot after revert.
@@ -119,7 +121,7 @@ export const massiveSandboxModule: SandboxModule = {
 	// v3: added the prior world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, NPCs, encounters,
 	// quests, factions, loot, timeline, VTT audio tracks, and pinned assets.
-	version: 7,
+	version: 8,
 	title: "The Shadow of the Regent",
 	description:
 		"A Curse of Strahd scale mature Gate Domain horror campaign for Levels 1-10, set inside the Gloamreach: a country-sized S-Rank Gate Domain beyond a sealed Rift. The campaign is built around a visible citadel, dangerous roads, starving settlements, tribute law, Bureau failure, Vermillion pragmatism, Awoko grief-cult corruption, Anchor Relics, forbidden Unseated Law bargains, and a tyrannical Regent who appears early, studies the party, sends invitations, punishes defiance, and rules the Domain as its living Anchor.",
