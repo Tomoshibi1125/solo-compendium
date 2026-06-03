@@ -32,50 +32,46 @@ Recommendation: do not enter without S-Rank command approval.
 Override: emergency writ accepted.`,
 	},
 	{
-		title: "Anchor Scan Sheet",
-		content: `# ANCHOR SCAN
+		title: "Oracle Scan Sheet: The Fortune of the Domain",
+		content: `# ORACLE SCAN
 
-Relic One:
+The Spark:
 
-Relic Two:
+The Chain:
 
-Relic Three:
+The Crown:
 
-Strongest Ally:
+The Pulse:
 
-Forbidden Bargain:
-
-Final Vulnerability:
-
-Citadel Chamber:
+The Oathbreaker:
 
 The scan output is unstable. Re-run attempts may alert the Anchor.`,
 	},
 	{
-		title: "Map Fragment: Gallows Road",
-		content: `# GALLOWS ROAD FRAGMENT
+		title: "Map Fragment: Road of Writs",
+		content: `# ROAD OF WRITS FRAGMENT
 
 The road bends toward the Citadel no matter how it is drawn.
 
-Marked stops: Rift Threshold, Thornwake, Vermillion Camp, Forward Bastion, Essence Mill, Glassvine Works.
+Marked stops: Gate Threshold, Writ-Bound Hamlet, Vermillion Outpost, Drowned Ledgerfen, Remembering Orchard, Bastion Golemfall, Obsidian Spire.
 
-Unmarked warning written in red pencil: "If the blue flame appears, answer politely."`,
+Unmarked warning written in red pencil: "If the Bailiff reads your name, do not answer until you know the charge."`,
 	},
 	{
-		title: "Thornwake Tribute Notice",
+		title: "Writ-Bound Hamlet Tribute Notice",
 		content: `# NOTICE OF TRIBUTE
 
-By grace of the Regent, Thornwake remains sheltered under lawful weather and bounded hunger.
+By grace of the Regent, this settlement remains sheltered under lawful weather and bounded hunger.
 
 Tribute is due by the second bell after dusk.
 
-Acceptable forms: Essence, labor, living service, Relic metal, or sworn betrayal.
+Acceptable forms: Essence, labor, living service, Relic metal, memory, or sworn betrayal.
 
 Failure voids shelter.`,
 	},
 	{
-		title: "Vermillion Camp Price Board",
-		content: `# VERMILLION CAMP PRICE BOARD
+		title: "Vermillion Outpost Price Board",
+		content: `# VERMILLION OUTPOST PRICE BOARD
 
 Soup: 1 clean core shaving.
 
@@ -88,14 +84,14 @@ Relic appraisal: free if we keep first refusal.
 Rescue party: negotiable. Not cheap. Never free.`,
 	},
 	{
-		title: "Bureau Bastion Last Order",
+		title: "Bureau Annex Last Order",
 		content: `# LAST ORDER
 
 All teams will hold assigned corridors until command updates the retreat route.
 
 Do not abandon sealed supply rooms.
 
-Do not negotiate with Domain natives.
+Do not negotiate with Domain officers.
 
 Do not deviate from Rank doctrine.
 
@@ -114,8 +110,8 @@ Cause: court patrol.
 Notes: subject remained combat-effective after fatal wound for forty-seven seconds. Recommend commendation if remains recoverable.`,
 	},
 	{
-		title: "Mill Work Token",
-		content: `# MILL TOKEN
+		title: "Tithe Mill Work Token",
+		content: `# TITHE MILL TOKEN
 
 Bearer is permitted through the outer wheelhouse for one shift.
 
@@ -126,10 +122,10 @@ No questions in the rendering room.
 No refunds for partial processing.`,
 	},
 	{
-		title: "Glassvine Harvest Instructions",
-		content: `# GLASSVINE HARVEST
+		title: "Remembering Orchard Harvest Instructions",
+		content: `# REMEMBERING ORCHARD HARVEST
 
-Cut only white-veined stems.
+Cut only white-veined fruit.
 
 Do not bleed near open flowers.
 
@@ -137,7 +133,7 @@ If fruit speaks, destroy it.
 
 If fruit cries, leave the row immediately.
 
-If the greenhouse turns toward you, kneel until it loses interest.`,
+If the orchard turns toward you, kneel until it loses interest.`,
 	},
 	{
 		title: "Aegis Oath Plate",
@@ -156,8 +152,8 @@ Hold when law becomes teeth.
 Hold until holding becomes the only part of you left.`,
 	},
 	{
-		title: "Hollow Choir Hymn",
-		content: `# HYMN OF ORDER
+		title: "Awoko Inheritance Hymn",
+		content: `# HYMN OF INHERITANCE
 
 The road is cruel because roads must choose.
 
@@ -165,20 +161,24 @@ The bell is kind because bells must answer.
 
 The crown is heavy because someone must carry law.
 
-Give tribute and be held.`,
+Give grief and be held.
+
+Give blood and be named.
+
+Give all and awaken.`,
 	},
 	{
-		title: "Choir Defector's Mark",
+		title: "Awoko Defector's Mark",
 		content: `# DEFECTOR MARK
 
 A copper mask split down the mouth.
 
-Anyone wearing this inside the Warrens is marked for capture, not immediate execution.
+Anyone wearing this inside the Sanctum is marked for capture, not immediate execution.
 
-The Choir wants defectors to sing apology before they die.`,
+The Hollow Mother wants defectors to sing apology before they die.`,
 	},
 	{
-		title: "Black Vault Consent Form",
+		title: "Unseated Law Consent Form",
 		content: `# CONSENT FORM
 
 State the desired effect.
@@ -206,7 +206,7 @@ Visible consequence:
 Ending consequence:`,
 	},
 	{
-		title: "Beast Crown Trail Sign",
+		title: "Predator Woods Trail Sign",
 		content: `# TRAIL SIGN
 
 Three cuts in black bark: pack road.
@@ -233,7 +233,7 @@ Requirements:
 Failure feeds the Citadel.`,
 	},
 	{
-		title: "Dinner Invitation",
+		title: "Dinner Invitation from the Regent",
 		content: `# INVITATION
 
 Honored Ascendants,
@@ -256,15 +256,15 @@ Invalid if copied, burned, mocked, blessed, folded into a weapon, or presented w
 		title: "Citadel Approach Sketch",
 		content: `# CITADEL APPROACHES
 
-Gallows Road: formal, watched, survivable.
-
-Beast Road: fast, hungry, not made for people.
-
-Glassvine Climb: living, useful, jealous.
+Road of Final Writs: formal, watched, survivable.
 
 Bastion Tunnel: mapped, collapsed, full of old orders.
 
-Black Vault Door: immediate, never free.`,
+Awoko Breach: hidden, grief-choked, unstable.
+
+Obsidian Spire Route: high, reflective, costly.
+
+Forbidden Descent: immediate, never free.`,
 	},
 	{
 		title: "Regent Law Fragment",
