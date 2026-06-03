@@ -1,5 +1,8 @@
 /**
- * SANDBOX SESSIONS - The Shadow of the Regent
+ * SANDBOX SESSIONS — "The Shadow of the Regent"
+ *
+ * Scaffolded campaign sessions seeded into the Sessions tab on sandbox import.
+ * Each entry is a Warden-editable starting point, not a fixed railroad.
  */
 
 export type SandboxSessionStatus =
@@ -19,6 +22,7 @@ export interface SandboxSessionLog {
 	logType: SandboxSessionLogType;
 	title: string;
 	content: string;
+	/** Visible to players at table. Session 0 recap = yes; warden prep = no. */
 	isPlayerVisible: boolean;
 }
 
@@ -26,184 +30,212 @@ export interface SandboxSession {
 	title: string;
 	description: string;
 	status: SandboxSessionStatus;
+	/** Ordering index used to derive stable `scheduled_for` offsets. */
 	order: number;
+	/** Recommended party level heading into the session. */
 	recommendedLevel: number;
+	/** Names of canonical sandbox scenes this session centers on. */
 	sceneRefs: string[];
+	/** Names of canonical sandbox NPCs expected to appear. */
 	npcRefs: string[];
+	/** Prewritten Warden notes / recap templates — one per log type. */
 	logs: SandboxSessionLog[];
 }
 
-const prep = (title: string, lines: string[]): SandboxSessionLog => ({
-	logType: "session",
-	title,
-	content: lines.join("\n"),
-	isPlayerVisible: false,
-});
-
-const recap = (title: string, lines: string[]): SandboxSessionLog => ({
-	logType: "recap",
-	title,
-	content: lines.join("\n"),
-	isPlayerVisible: true,
-});
-
 export const sandboxSessions: SandboxSession[] = [
 	{
-		title: "Session 0 - The Rift Seals",
+		title: "Session 0 — Day Zero: The Memory-Care Wing",
 		description:
-			"Opening briefing, S-Rank entry, Rift Threshold, first road encounter, and arrival at Thornwake.",
+			"Material-side horror prelude. The party responds to a welfare check at a shuttered hospital wing inside the Bureau cordon. A pocket breach from the Gloamreach has reached through a bathroom mirror, feeding on memory and introducing the Regent's first mark. Level 1.",
 		status: "planned",
 		order: 0,
 		recommendedLevel: 1,
-		sceneRefs: ["Gate Domain: Rift Threshold", "Gate Domain: Thornwake"],
-		npcRefs: ["Director Ivara Quell", "Lysa Thorn"],
+		sceneRefs: [
+			"Day Zero: Memory-Care Wing Exterior",
+			"Day Zero: The Diagnosed's Mirror (R5)",
+		],
+		npcRefs: ["Dr. Serin Hayashi"],
 		logs: [
-			prep("Warden Prep - Entry Beats", [
-				"## Briefing",
-				"Give emergency writ, AFA alert, and Anchor Scan handouts.",
-				"",
-				"## Threshold",
-				"Seal the Gate behind the party. Make the Citadel visible immediately.",
-				"",
-				"## Road",
-				"Run tax hounds or a court courier. The party learns that the Domain has laws.",
-				"",
-				"## Thornwake",
-				"End with tribute due tonight.",
-			]),
-			recap("Session 0 Recap", [
-				"You entered the S-Rank Gate.",
-				"The Rift sealed behind you.",
-				"The road led to Thornwake, where hunger has a schedule and tribute comes at dusk.",
-			]),
+			{
+				logType: "session",
+				title: "Warden Prep — Day Zero Beats",
+				content: [
+					"## Opening Beat — Welfare Check",
+					"Begin outside the cordoned hospital wing. The Bureau has larger teams staging for the S-Rank threshold, so the party gets the ugly small job: twenty-three elderly residents, six staff, no response.",
+					"",
+					"## Beat 1 — The Visitors' Log",
+					"The log is already beginning to write a party member's name. Let the players learn that names and records are dangerous before they enter the Gloamreach.",
+					"",
+					"## Beat 2 — Ms. Park Jeong-hye",
+					"She repeats: 'He was supposed to come home for lunch.' She remembers a husband, a uniform, and pride. She cannot remember his name.",
+					"",
+					"## Beat 3 — The Diagnosed",
+					"The mirror opens. The Diagnosed is not a random monster. It is a symptom of the Domain reaching through the threshold.",
+					"",
+					"## Closing Choice",
+					"Destroy the mirror and give Ms. Park clarity at the cost of lives, or seal it and leave the haunting dormant. Either choice should echo in the Citadel.",
+				].join("\n"),
+				isPlayerVisible: false,
+			},
+			{
+				logType: "recap",
+				title: "Session 0 Recap (Player-Facing Template)",
+				content: [
+					"You entered a hospital wing that was trying very hard to stay ordinary.",
+					"",
+					"The visitors' log knew too much. The hallway stretched when you chased the wrong answer. Ms. Park remembered love but not the name attached to it. Then the mirror opened, and something made of forgotten faces tried to climb through.",
+					"",
+					"The Bureau called it a pocket breach. Hayashi looked at the cracked glass and called it a warning.",
+					"",
+					"_Fill in table-specific details after play._",
+				].join("\n"),
+				isPlayerVisible: true,
+			},
 		],
 	},
 	{
-		title: "Session 1 - Tribute and the Gallows Road",
+		title: "Session 1 — The Gate Threshold and Hollow Subway",
 		description:
-			"Thornwake's tribute crisis, first faction choices, Gallows Road travel, and the Regent's first invitation.",
+			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Gate is only the door. The Hollow Subway teaches that modern spaces inside the Gloamreach are masks worn by Domain law. Level 1-2.",
 		status: "planned",
 		order: 1,
-		recommendedLevel: 2,
-		sceneRefs: ["Gate Domain: Thornwake", "Gate Domain: Gallows Road"],
-		npcRefs: ["Lysa Thorn", "Bell-Captain Rhone", "The Regent"],
+		recommendedLevel: 1,
+		sceneRefs: ["Gate Threshold", "The Hollow Subway"],
+		npcRefs: ["Commander Park Jae-won", "Sergeant Yoon Hye-jin", "Rex"],
 		logs: [
-			prep("Warden Prep - Tribute Night", [
-				"Make the party choose who pays the cost.",
-				"Introduce the Hollow Choir as frightening but understandable.",
-				"End with a dinner invitation or a patrol consequence.",
-			]),
-			recap("Session 1 Recap", [
-				"Thornwake showed you what survival costs inside the Gloamreach.",
-				"The Gallows Road answered your choices with weather, teeth, and courtesy.",
-			]),
+			{
+				logType: "session",
+				title: "Warden Prep — First Crossing",
+				content: [
+					"## Briefing",
+					"Commander Park gives the mission cleanly: recover Strike Team Seven's beacon, confirm survivors, and return. Hayashi quietly warns that the topology does not behave like a normal Gate.",
+					"",
+					"## Threshold Beat",
+					"The Gate vanishes behind the party after they cross. Do not trap them by fiat; show that the exit has become unreliable and farther away than it should be.",
+					"",
+					"## Hollow Subway",
+					"The subway requires fare. Money works poorly. Names work too well. Give the party a way to escape by refusing identity as payment.",
+					"",
+					"## Discovery",
+					"Squad Seven's beacon is broadcasting from a place that should not be reachable yet. Rex can appear here, trying to lead the party to a sealed door.",
+				].join("\n"),
+				isPlayerVisible: false,
+			},
 		],
 	},
 	{
-		title: "Session 2 - Camp and Bastion",
+		title: "Session 2 — Road of Writs and the First Tribute",
 		description:
-			"Vermillion Camp, Bureau Forward Bastion, failed expedition records, and the first stable safe rest.",
+			"The party leaves the threshold and meets the Road of Writs. A settlement's tribute reveals the core campaign horror: safety inside the Gloamreach is leased, never free. Level 2-3.",
 		status: "planned",
 		order: 2,
-		recommendedLevel: 3,
-		sceneRefs: ["Gate Domain: Vermillion Camp", "Gate Domain: Bureau Forward Bastion"],
-		npcRefs: ["Sable Marr", "Director Ivara Quell", "Medic Cor Valen"],
+		recommendedLevel: 2,
+		sceneRefs: ["Road of Writs", "Writ-Bound Hamlet", "Drowned Ledgerfen"],
+		npcRefs: ["Quartermaster Lin Mei-hua", "Mika the Kid", "The Catalog"],
 		logs: [
-			prep("Warden Prep - Practical Allies", [
-				"Make Vermillion useful before making them ugly.",
-				"Make the Bureau records precise and damning.",
-				"Offer the party one safe rest if they stabilize the Bastion.",
-			]),
-			recap("Session 2 Recap", [
-				"Vermillion traded in favors and clean Essence.",
-				"The Bureau Bastion proved that procedure can fail more cleanly than courage.",
-			]),
+			{
+				logType: "session",
+				title: "Warden Prep — First Tribute",
+				content: [
+					"Introduce a settlement that survives by never refusing written invitations. Let the party see ordinary people treating horror as routine.",
+					"",
+					"The Drowned Ledgerfen can serve as the first major Domain site if the party follows survivor records, dead-team logs, or a Claim clue.",
+					"",
+					"End with either a saved civilian, a corrected record, or the first hint that a record can become true if not contradicted.",
+				].join("\n"),
+				isPlayerVisible: false,
+			},
 		],
 	},
 	{
-		title: "Session 3 - Mill and Glassvine",
+		title: "Session 3 — Vermillion, the Orchard, and the Awoko Seed",
 		description:
-			"The Essence Mill, Glassvine Works, first Anchor Relics, and settlement supply consequences.",
+			"The party reaches the Vermillion Outpost and then a settlement or Domain site where grief is being recruited. The Awoko become more than villains: they offer real comfort with predatory intent. Level 3-5.",
 		status: "planned",
 		order: 3,
-		recommendedLevel: 5,
-		sceneRefs: ["Gate Domain: Essence Mill", "Gate Domain: Glassvine Works"],
-		npcRefs: ["Sable Marr", "Nera of the Green Scar"],
+		recommendedLevel: 3,
+		sceneRefs: ["Vermillion Outpost", "Remembering Orchard", "Awoko Sanctum approach"],
+		npcRefs: ["Guildmaster Orin", "Rat-King Ji", "The Hollow Mother", "Sister Veil"],
 		logs: [
-			prep("Warden Prep - Production Horror", [
-				"Show what the Domain uses tribute for.",
-				"Let the Millstone Heart and Crown of Thorns be tempting immediately.",
-				"After either site changes, update Thornwake and Vermillion Camp.",
-			]),
-			recap("Session 3 Recap", [
-				"The Gloamreach does not merely kill. It processes, grows, and spends the living.",
-			]),
+			{
+				logType: "session",
+				title: "Warden Prep — Comfort as Threat",
+				content: [
+					"Vermillion should be useful immediately: hot food, salvage, rumors, and a bill.",
+					"",
+					"In the Remembering Orchard, make tribute emotionally ugly rather than mechanically abstract. People are not only losing memories. They are losing reasons to resist.",
+					"",
+					"Seed the Hollow Mother's language carefully. Her followers say serve. She says inherit.",
+				].join("\n"),
+				isPlayerVisible: false,
+			},
 		],
 	},
 	{
-		title: "Session 4 - Oaths and Choirs",
+		title: "Session 4 — Bailiff Judgment and Bastion Golemfall",
 		description:
-			"Aegis Hollow, Choir Warrens, the White Heron Seal, and the moral cost of law.",
+			"The Regent's Bailiff appears publicly to enforce a charge. The party then confronts Bastion Golemfall or the Sunken Tunnels, learning that oaths and debts can survive death. Level 5-7.",
 		status: "planned",
 		order: 4,
-		recommendedLevel: 6,
-		sceneRefs: [
-			"Gate Domain: Aegis Hollow",
-			"Gate Domain: Choir Warrens",
-			"Gate Domain: White Heron Reliquary",
-		],
-		npcRefs: ["Sir Cael Aster", "Bell-Captain Rhone", "Eidolon Vesh"],
+		recommendedLevel: 5,
+		sceneRefs: ["Road of Writs", "Bastion Golemfall", "Sunken Tunnels"],
+		npcRefs: ["The Regent's Bailiff", "Commander Without a Body", "Old Man Crane"],
 		logs: [
-			prep("Warden Prep - Oath Pressure", [
-				"Contrast failed protection with willing obedience.",
-				"Let the party learn a sealing route without making it easy.",
-			]),
-			recap("Session 4 Recap", [
-				"Aegis Hollow asked what protection becomes when it cannot stop.",
-				"The Choir asked whether order is still evil when panic is worse.",
-			]),
+			{
+				logType: "event",
+				title: "Public Judgment — The Regent's Bailiff",
+				content:
+					"The Bailiff announces charges before violence. Make the charge specific and partly justified. The party can fight, flee, pay, redirect, or contradict the writ. This scene teaches that law is a monster here.",
+				isPlayerVisible: false,
+			},
 		],
 	},
 	{
-		title: "Session 5 - Vault and Crown",
+		title: "Session 5 — The Obsidian Spire and the Claim Race",
 		description:
-			"Subject Zero bargain, Beast Crown Den, final Anchor Scan confirmations, and Citadel approach selection.",
+			"The campaign enters late midgame. The party climbs the Obsidian Spire, faces reflected temptations of authority, and races factions for one or more Claims. Level 7-9.",
 		status: "planned",
 		order: 5,
-		recommendedLevel: 8,
-		sceneRefs: ["Gate Domain: Black Vault", "Gate Domain: Beast Crown Den"],
-		npcRefs: ["Vault-Voice", "Nera of the Green Scar", "Rook"],
+		recommendedLevel: 7,
+		sceneRefs: ["Obsidian Spire", "Forbidden Vault", "Mana Vein Network"],
+		npcRefs: ["The Watcher", "Professor Lun", "The Hollow Mother"],
 		logs: [
-			prep("Warden Prep - Forbidden Help", [
-				"Make the Black Vault offer work.",
-				"Make the Beast Crown Den test instinct over plans.",
-				"End by asking which Citadel route the party chooses.",
-			]),
-			recap("Session 5 Recap", [
-				"The forbidden offer did not lie.",
-				"The Den proved that Rank is not the same as survival.",
-			]),
+			{
+				logType: "session",
+				title: "Warden Prep — Temptation Without Cheap Traps",
+				content: [
+					"The Spire should offer genuinely useful power. The danger is not that every bargain is fake. The danger is that the price is exact.",
+					"",
+					"If the party enters the Forbidden Vault, run the Unseated Law as precedent, trial, or contradiction, not as a creature.",
+					"",
+					"By the end of this session, the party should know which route to the Citadel is possible and what it will cost.",
+				].join("\n"),
+				isPlayerVisible: false,
+			},
 		],
 	},
 	{
-		title: "Session 6 - The Regent's Citadel",
+		title: "Session 6 — Citadel Day",
 		description:
-			"Final route, Citadel lower rings, Anchor Relic inversions, and the Regent confrontation.",
+			"Final castle-scale confrontation. The party enters the Regent's Citadel, faces the Throne Court, and resolves the Anchor through breaking, sealing, transforming, or inheriting. Level 10.",
 		status: "planned",
 		order: 6,
 		recommendedLevel: 10,
-		sceneRefs: ["Gate Domain: Regent's Citadel", "Gate Domain: Citadel Anchor Heart"],
-		npcRefs: ["The Regent"],
+		sceneRefs: ["The Regent's Citadel", "Throne Court", "Anchor-Undercroft"],
+		npcRefs: ["The Regent", "Dr. Serin Hayashi", "Commander Park Jae-won", "Old Man Crane"],
 		logs: [
-			prep("Warden Prep - Final Lair", [
-				"Spend the party's prior choices as advantages or consequences.",
-				"Make the Regent polite until a Relic breaks his law.",
-				"Resolve the Anchor: destroy, seal, transform, or fail.",
-			]),
-			recap("Final Recap Template", [
-				"The Gloamreach answered the party's final choice.",
-				"Record who escaped, who remained, what crossed the Gate, and what the Bureau claims happened.",
-			]),
+			{
+				logType: "session",
+				title: "Warden Prep — The Final Question",
+				content: [
+					"Start with words. The Regent receives the party as guests, criminals, claimants, or witnesses depending on the campaign.",
+					"",
+					"Bring back choices: meals accepted, names written, people saved, people abandoned, debts paid, guest-right honored or broken.",
+					"",
+					"The final question is not only whether the party can kill the Regent. It is what victory costs when the land itself believes it belongs to him.",
+				].join("\n"),
+				isPlayerVisible: false,
+			},
 		],
 	},
 ];
