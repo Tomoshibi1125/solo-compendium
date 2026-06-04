@@ -5,6 +5,7 @@ import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumSigil } from "@/types/compendium";
 
@@ -63,7 +64,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 									variant="outline"
 									className="bg-primary/5 border-primary/20 text-primary uppercase tracking-widest text-[10px] font-bold px-3 py-1"
 								>
-									{data.rarity} Sigil
+									{formatRarityLabel(data.rarity)} Sigil
 								</Badge>
 								{data.source_book && (
 									<Badge variant="outline">

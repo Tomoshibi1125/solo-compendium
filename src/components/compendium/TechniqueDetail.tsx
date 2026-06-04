@@ -22,6 +22,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { formatRarityLabel, getRarityBadgeClass } from "@/lib/labels";
 import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type {
@@ -157,8 +158,13 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 							</Badge>
 						)}
 						{(data as { rarity?: string }).rarity && (
-							<Badge variant="outline" className="capitalize">
-								{(data as { rarity?: string }).rarity}
+							<Badge
+								variant="outline"
+								className={getRarityBadgeClass(
+									(data as { rarity?: string }).rarity,
+								)}
+							>
+								{formatRarityLabel((data as { rarity?: string }).rarity)}
 							</Badge>
 						)}
 						{data.source_book && (

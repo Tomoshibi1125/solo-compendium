@@ -11,6 +11,7 @@ import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { setPendingResolution } from "@/lib/actionResolution";
+import { formatRarityLabel, getRarityBadgeClass } from "@/lib/labels";
 import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
@@ -140,8 +141,13 @@ export const PowerDetail = ({ data }: { data: PowerData }) => {
 							)}
 							{data.ritual && <Badge variant="outline">Ritual</Badge>}
 							{(data as { rarity?: string }).rarity && (
-								<Badge variant="outline" className="capitalize">
-									{(data as { rarity?: string }).rarity}
+								<Badge
+									variant="outline"
+									className={getRarityBadgeClass(
+										(data as { rarity?: string }).rarity,
+									)}
+								>
+									{formatRarityLabel((data as { rarity?: string }).rarity)}
 								</Badge>
 							)}
 							{data.source_book && (

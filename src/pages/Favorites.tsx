@@ -16,6 +16,7 @@ import {
 	isValidEntryType,
 	resolveRefs,
 } from "@/lib/compendiumResolver";
+import { formatRarityLabel } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 import {
 	formatRegentVernacular,
@@ -304,7 +305,7 @@ const Favorites = () => {
 													</Badge>
 													{item.rarity && (
 														<Badge variant="secondary" className="text-xs">
-															{formatRegentVernacular(item.rarity)}
+															{formatRarityLabel(item.rarity)}
 														</Badge>
 													)}
 												</div>

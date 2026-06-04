@@ -15,6 +15,7 @@ import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumRune } from "@/types/compendium";
 
@@ -85,7 +86,7 @@ export const RuneDetail = ({ data }: RuneDetailProps) => {
 									variant="outline"
 									className="bg-primary/5 border-primary/20 text-primary uppercase tracking-widest text-[10px] font-bold px-3 py-1"
 								>
-									{data.rarity} Rune Token
+									{formatRarityLabel(data.rarity)} Rune Token
 								</Badge>
 								<Badge
 									variant="outline"

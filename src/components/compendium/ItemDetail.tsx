@@ -97,8 +97,14 @@ const rarityStyles: Record<string, string> = {
 	common: "text-muted-foreground border-border bg-card",
 	uncommon: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10",
 	rare: "text-blue-400 border-blue-500/40 bg-blue-500/10",
+	// Data carries very-rare in both hyphen and underscore form — key on both
+	// so sigils/runes (underscore) and sandbox loot (hyphen) both style.
+	"very-rare": "text-violet-400 border-violet-500/40 bg-violet-500/10",
+	very_rare: "text-violet-400 border-violet-500/40 bg-violet-500/10",
 	epic: "text-purple-400 border-purple-500/40 bg-purple-500/10",
 	legendary: "text-amber-400 border-amber-500/40 bg-amber-500/10",
+	mythic: "text-pink-400 border-pink-500/40 bg-pink-500/10",
+	artifact: "text-rose-400 border-rose-500/40 bg-rose-500/10",
 };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { items_gap_fill } from "@/data/compendium/items-gap-fill";
 import { jobs } from "@/data/compendium/jobs";
 import { paths } from "@/data/compendium/paths";
+import { staticDataProvider } from "@/data/compendium/providers";
 import { regents } from "@/data/compendium/regents";
 
 /**
@@ -99,17 +100,20 @@ describe("content structure — regents (M12)", () => {
 });
 
 describe("content structure — gap-fill items (M13)", () => {
-	// RA items use a 6-tier rarity scheme per the `Item` type
-	// (src/data/compendium/items.ts): common/uncommon/rare/epic/legendary.
-	// (Distinct from the core-rules `Rarity` union — common/uncommon/rare/
-	// very-rare/legendary — used by relics. The epic-vs-very-rare dual
-	// vocabulary is a documented cross-system follow-up, not a defect here.)
+	// RA uses a single canonical 8-tier rarity ladder (ascending), shared by
+	// the `Item` type (src/data/compendium/items.ts) and the core-rules
+	// `Rarity` union (src/types/core-rules.ts): epic is a distinct tier ABOVE
+	// very-rare, mythic sits above legendary (top-end relics), and artifact
+	// caps the ladder.
 	const VALID_RARITIES = new Set([
 		"common",
 		"uncommon",
 		"rare",
+		"very-rare",
 		"epic",
 		"legendary",
+		"mythic",
+		"artifact",
 	]);
 
 	it("every gap-fill item has an id, name, valid rarity, and a type", () => {
@@ -140,5 +144,58 @@ describe("content structure — gap-fill items (M13)", () => {
 			dupes,
 			`duplicate gap-fill ids: ${dupes.slice(0, 10).join(", ")}`,
 		).toEqual([]);
+	});
+});
+
+describe("classes carry no rarity (jobs & paths are not items)", () => {
+	// The provider must NOT fabricate a rarity from rank/tier for jobs/paths —
+	// they are classes, not items. Verifies the normalized provider output, not
+	// the raw data (raw data never had rarity; the bug was provider-injected).
+	it("provider-normalized jobs expose no rarity", async () => {
+		const entries = await staticDataProvider.getJobs();
+		const withRarity = entries
+			.filter((e) => e.rarity != null)
+			.map((e) => `${e.name}: ${e.rarity}`);
+		expect(withRarity, `jobs with rarity: ${withRarity.join(", ")}`).toEqual(
+			[],
+		);
+	});
+
+	it("provider-normalized paths expose no rarity", async () => {
+		const entries = await staticDataProvider.getPaths();
+		const withRarity = entries
+			.filter((e) => e.rarity != null)
+			.map((e) => `${e.name}: ${e.rarity}`);
+		expect(withRarity, `paths with rarity: ${withRarity.join(", ")}`).toEqual(
+			[],
+		);
+	});
+});
+
+describe("job skill-choice count is the canonical CHOOSE count (not the pool size)", () => {
+	// The "Choose N skills" number must be the canonical per-job count, never the
+	// size of the skill-options pool. Idol's pool is 18 but it chooses 4.
+	const EXPECTED: Record<string, number> = { Idol: 4, Assassin: 4, Stalker: 3 };
+
+	it("every job's skill_choice_count is in [1, pool] and matches canon", async () => {
+		const entries = (await staticDataProvider.getJobs()) as Array<{
+			name: string;
+			skill_choice_count?: number | null;
+			skill_choices?: string[] | null;
+		}>;
+		const bad: string[] = [];
+		for (const j of entries) {
+			const count = j.skill_choice_count;
+			const pool = Array.isArray(j.skill_choices) ? j.skill_choices.length : 0;
+			if (typeof count !== "number" || count < 1) {
+				bad.push(`${j.name}: missing/invalid count=${count}`);
+			} else if (pool > 0 && count > pool) {
+				bad.push(`${j.name}: count ${count} > pool ${pool}`);
+			}
+			if (EXPECTED[j.name] !== undefined && count !== EXPECTED[j.name]) {
+				bad.push(`${j.name}: count ${count} ≠ canon ${EXPECTED[j.name]}`);
+			}
+		}
+		expect(bad, `skill_choice_count issues: ${bad.join("; ")}`).toEqual([]);
 	});
 });

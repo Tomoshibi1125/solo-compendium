@@ -31,8 +31,10 @@ const RARITY_OPTIONS = [
 	["common", "Common"],
 	["uncommon", "Uncommon"],
 	["rare", "Rare"],
-	["very_rare", "Very Rare"],
+	["very-rare", "Very Rare"],
+	["epic", "Epic"],
 	["legendary", "Legendary"],
+	["artifact", "Artifact"],
 ] as const;
 
 export function WardenInlineHomebrewItemForm({

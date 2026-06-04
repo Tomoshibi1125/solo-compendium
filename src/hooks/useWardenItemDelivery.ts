@@ -377,13 +377,19 @@ function normalizeInventoryType(type?: string | null): string {
 }
 
 function normalizeRarityForDb(rarity?: string | null): Rarity | null {
+	// The DB `rarity` enum (underscore form) now carries the full 8-tier ladder
+	// (extended in 20260604000000): hyphen/space variants of very-rare collapse
+	// to very_rare, and epic/mythic/artifact pass through to the storable enum.
 	const normalized = rarity?.toLowerCase().replace(/[\s-]/g, "_");
 	if (
 		normalized === "common" ||
 		normalized === "uncommon" ||
 		normalized === "rare" ||
 		normalized === "very_rare" ||
-		normalized === "legendary"
+		normalized === "epic" ||
+		normalized === "legendary" ||
+		normalized === "mythic" ||
+		normalized === "artifact"
 	) {
 		return normalized as Rarity;
 	}

@@ -83,10 +83,6 @@ describe("sigils data quality — mechanics consistency", () => {
 			// Check for obvious mismatches: if both have keywords but no overlap at all,
 			// that indicates a problem (like fire resistance on a wind sigil)
 			if (effectKeywords.length > 0 && mechanicsKeywords.length > 0) {
-				const hasOverlap = mechanicsKeywords.some((kw) =>
-					effectKeywords.some((ek) => ek.includes(kw) || kw.includes(ek)),
-				);
-
 				// Only fail if there's a clear mismatch - if effect mentions damage types
 				// but mechanics mentions completely different ones
 				const effectDamageTypes = effectKeywords.filter((k) =>

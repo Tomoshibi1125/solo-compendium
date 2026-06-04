@@ -1228,16 +1228,13 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 	const hitDieNumber = rawHitDie
 		? parseInt(rawHitDie.replace(/\D/g, "").slice(-2) || "0", 10)
 		: null;
-	// Skill choice count: 5e standard is 2 for most jobs, 4 for Assassin
-	const skillChoicesVal = legacyJob.skill_choices;
-	const rawSkillChoices =
-		job.skillChoices ||
-		(typeof skillChoicesVal === "number" ? skillChoicesVal : undefined);
-	const skillChoiceCount = rawSkillChoices
-		? job.name === "Assassin"
-			? 4
-			: 2
-		: null;
+	// Number of skills chosen at creation from the skillChoices options pool.
+	// The canonical per-job count lives in jobs.ts (`skillChoiceCount`); baseline
+	// 2 (Stalker 3, Assassin/Idol 4). NOT the pool size.
+	const skillChoiceCount =
+		typeof legacyJob.skillChoiceCount === "number"
+			? legacyJob.skillChoiceCount
+			: 2;
 
 	return {
 		id: job.id || job.name.toLowerCase().replace(/\s+/g, "-"),
@@ -1250,16 +1247,8 @@ function transformJob(job: StaticJobSource): StaticCompendiumEntry {
 		source_book: job.source || "Rift Ascendant Canon",
 		image_url: job.image,
 		rank: job.rank || null,
-		rarity:
-			job.rank === "S"
-				? "legendary"
-				: job.rank === "A"
-					? "epic"
-					: job.rank === "B"
-						? "rare"
-						: job.rank === "C"
-							? "uncommon"
-							: "common",
+		// Jobs are classes, not items — they carry no rarity. Their canonical
+		// classifier is `rank` (surfaced above), not a fabricated rarity tier.
 		// Job-specific fields for JobDetail.tsx
 		hit_die: hitDieNumber,
 		primary_abilities:
@@ -1916,8 +1905,8 @@ export const staticDataProvider: StaticDataProvider = {
 				(path.abilities as unknown as Array<Record<string, Json>>) || [],
 			stats: path.stats as unknown as Record<string, Json>,
 			prerequisites: path.requirements.prerequisites?.join(", "),
-			rarity:
-				path.tier === 3 ? "legendary" : path.tier === 2 ? "very_rare" : "rare",
+			// Paths are class progressions, not items — no rarity. Their
+			// classifier is tier/level (surfaced above), not a rarity tier.
 			jobId: path.jobId,
 			jobName: path.jobName,
 			tier: path.tier,

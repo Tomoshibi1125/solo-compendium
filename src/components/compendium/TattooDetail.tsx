@@ -9,6 +9,7 @@ import {
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumTattoo } from "@/types/compendium";
 
@@ -63,7 +64,7 @@ export const TattooDetail = ({ data }: TattooDetailProps) => {
 						</Badge>
 						{data.rarity && (
 							<Badge variant="outline" className={rarityStyle}>
-								{formatRegentVernacular(data.rarity)}
+								{formatRarityLabel(data.rarity)}
 							</Badge>
 						)}
 						{data.attunement && (

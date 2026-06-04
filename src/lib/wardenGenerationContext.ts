@@ -183,8 +183,9 @@ export function rankToTreasureRarities(rank: string): string[] {
 		case "B":
 			return ["uncommon", "rare", "very-rare"];
 		case "A":
+			return ["very-rare", "epic", "legendary"];
 		case "S":
-			return ["rare", "very-rare", "legendary"];
+			return ["epic", "legendary", "mythic", "artifact"];
 		default:
 			return ["common", "uncommon", "rare"];
 	}

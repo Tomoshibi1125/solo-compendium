@@ -9110,7 +9110,15 @@ export type Database = {
 		};
 		Enums: {
 			ability_score: "STR" | "AGI" | "VIT" | "INT" | "SENSE" | "PRE";
-			rarity: "common" | "uncommon" | "rare" | "very_rare" | "legendary";
+			rarity:
+				| "common"
+				| "uncommon"
+				| "rare"
+				| "very_rare"
+				| "epic"
+				| "legendary"
+				| "mythic"
+				| "artifact";
 			relic_tier: "dormant" | "awakened" | "resonant";
 		};
 		CompositeTypes: {
@@ -9246,7 +9254,16 @@ export const Constants = {
 	public: {
 		Enums: {
 			ability_score: ["STR", "AGI", "VIT", "INT", "SENSE", "PRE"],
-			rarity: ["common", "uncommon", "rare", "very_rare", "legendary"],
+			rarity: [
+				"common",
+				"uncommon",
+				"rare",
+				"very_rare",
+				"epic",
+				"legendary",
+				"mythic",
+				"artifact",
+			],
 			relic_tier: ["dormant", "awakened", "resonant"],
 		},
 	},

@@ -163,15 +163,44 @@ export const DC_LADDER = [
 	},
 ];
 
-// Rarity levels
-export type Rarity = "common" | "uncommon" | "rare" | "very-rare" | "legendary";
+// Rarity levels — canonical Rift Ascendant ladder (low → high).
+// Epic is a distinct tier ABOVE very-rare; mythic sits above legendary (used by
+// the top-end relic catalogue); artifact is the reserved apex. Keep this in
+// sync with `src/lib/5eRulesEngine.ts:Rarity` and the item/treasure rarity
+// unions. NOTE: the persisted DB `rarity` enum is a narrower 5-value set
+// (common/uncommon/rare/very_rare/legendary, underscore form) — higher tiers
+// are display-only on enum-backed columns and preserved via item metadata.
+export type Rarity =
+	| "common"
+	| "uncommon"
+	| "rare"
+	| "very-rare"
+	| "epic"
+	| "legendary"
+	| "mythic"
+	| "artifact";
+
+/** Canonical rarity order (ascending). Index = tier rank. */
+export const RARITY_ORDER: readonly Rarity[] = [
+	"common",
+	"uncommon",
+	"rare",
+	"very-rare",
+	"epic",
+	"legendary",
+	"mythic",
+	"artifact",
+];
 
 export const RARITY_LABELS: Record<Rarity, string> = {
 	common: "Common",
 	uncommon: "Uncommon",
 	rare: "Rare",
 	"very-rare": "Very Rare",
+	epic: "Epic",
 	legendary: "Legendary",
+	mythic: "Mythic",
+	artifact: "Artifact",
 };
 
 // Job (class) definition

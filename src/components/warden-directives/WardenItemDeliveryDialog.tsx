@@ -48,6 +48,7 @@ import {
 	type WardenDeliveryMode,
 } from "@/hooks/useWardenItemDelivery";
 import { mapHomebrewItemForRuntime } from "@/lib/homebrewRuntime";
+import { formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { loadWardenGenerationContext } from "@/lib/wardenGenerationContext";
 import {
@@ -713,7 +714,9 @@ export function WardenItemDeliveryDialog({
 										<Badge variant="outline">{selectedItem.type}</Badge>
 									)}
 									{selectedItem.rarity && (
-										<Badge variant="secondary">{selectedItem.rarity}</Badge>
+										<Badge variant="secondary">
+											{formatRarityLabel(selectedItem.rarity)}
+										</Badge>
 									)}
 								</div>
 								{selectedItem.description && (
@@ -795,7 +798,7 @@ function ItemResultButton({
 					)}
 					{item.rarity && (
 						<span className="text-[10px] text-muted-foreground">
-							{item.rarity}
+							{formatRarityLabel(item.rarity)}
 						</span>
 					)}
 				</div>

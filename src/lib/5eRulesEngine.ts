@@ -183,14 +183,27 @@ export const DC_LADDER = [
 ];
 
 // Standard 5e rarity levels
-export type Rarity = "common" | "uncommon" | "rare" | "very-rare" | "legendary";
+// Canonical RA rarity ladder (kept in sync with `src/types/core-rules.ts`):
+// common < uncommon < rare < very-rare < epic < legendary < mythic < artifact.
+export type Rarity =
+	| "common"
+	| "uncommon"
+	| "rare"
+	| "very-rare"
+	| "epic"
+	| "legendary"
+	| "mythic"
+	| "artifact";
 
 export const RARITY_LABELS: Record<Rarity, string> = {
 	common: "Common",
 	uncommon: "Uncommon",
 	rare: "Rare",
 	"very-rare": "Very Rare",
+	epic: "Epic",
 	legendary: "Legendary",
+	mythic: "Mythic",
+	artifact: "Artifact",
 };
 
 // 5e-standard Job (Class) definition with Rift Ascendant flavor

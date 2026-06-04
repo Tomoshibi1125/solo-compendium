@@ -104,6 +104,11 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 						<Badge variant="outline">
 							{formatRegentVernacular(sizeLabels[data.size] || data.size)}
 						</Badge>
+						{(data as { rank?: string | null }).rank && (
+							<Badge variant="outline">
+								Rank {(data as { rank?: string | null }).rank}
+							</Badge>
+						)}
 						{data.source_book && (
 							<Badge variant="outline">
 								{formatRegentVernacular(data.source_book)}
@@ -118,6 +123,16 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 							</Badge>
 						)}
 					</div>
+					{Array.isArray((data as { tags?: string[] | null }).tags) &&
+						(data as { tags: string[] }).tags.length > 0 && (
+							<div className="flex flex-wrap gap-2">
+								{(data as { tags: string[] }).tags.map((t) => (
+									<Badge key={t} variant="outline" className="text-[10px]">
+										{formatRegentVernacular(t)}
+									</Badge>
+								))}
+							</div>
+						)}
 					{data.description && (
 						<p className="text-muted-foreground leading-relaxed text-base">
 							<AutoLinkText text={data.description} />

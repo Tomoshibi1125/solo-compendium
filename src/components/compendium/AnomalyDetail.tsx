@@ -22,6 +22,7 @@ import {
 } from "@/lib/actionResolution";
 import { getAnomalyImageSrc } from "@/lib/anomalyImageResolver";
 import { getAbilityModifier } from "@/lib/characterCalculations";
+import { formatRecharge } from "@/lib/labels";
 import { numericCrToLabel } from "@/lib/monster5eTable";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular, MONARCH_LABEL } from "@/lib/vernacular";
@@ -665,7 +666,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 									</h4>
 									{action.recharge && (
 										<Badge variant="secondary" className="text-xs">
-											{action.recharge}
+											{formatRecharge(action.recharge)}
 										</Badge>
 									)}
 								</div>
@@ -732,7 +733,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 									</h4>
 									{action.recharge && (
 										<Badge variant="secondary" className="text-xs">
-											{action.recharge}
+											{formatRecharge(action.recharge)}
 										</Badge>
 									)}
 								</div>
@@ -776,7 +777,7 @@ export const AnomalyDetail = ({ data }: { data: AnomalyData }) => {
 									</h4>
 									{action.recharge && (
 										<Badge variant="secondary" className="text-xs">
-											{action.recharge}
+											{formatRecharge(action.recharge)}
 										</Badge>
 									)}
 								</div>

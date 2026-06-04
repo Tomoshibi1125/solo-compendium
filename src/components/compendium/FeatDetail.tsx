@@ -2,6 +2,7 @@ import { AlertCircle, CheckCircle } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatActionType, formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumFeat } from "@/types/compendium";
 
@@ -32,8 +33,8 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center gap-2">
 						{ext.rarity && (
-							<Badge variant="secondary" className="text-xs capitalize">
-								{ext.rarity}
+							<Badge variant="secondary" className="text-xs">
+								{formatRarityLabel(ext.rarity)}
 							</Badge>
 						)}
 						{data.repeatable && (
@@ -43,7 +44,7 @@ export const FeatDetail = ({ data }: { data: FeatData }) => {
 						)}
 						{ext.mechanics?.action_type && (
 							<Badge variant="outline" className="text-xs">
-								{ext.mechanics.action_type}
+								{formatActionType(ext.mechanics.action_type)}
 							</Badge>
 						)}
 					</div>

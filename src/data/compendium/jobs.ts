@@ -18,6 +18,12 @@ export interface Job extends AuthoritativeStaticJob {
 	saving_throws: string[];
 	savingThrows?: string[];
 	skillChoices: string[];
+	// Number of skills the player CHOOSES at creation from skillChoices (the
+	// options pool) — NOT the pool size. Canonical per-job count (lore-first →
+	// 5e archetype): baseline 2; set explicitly only for the exceptions —
+	// Stalker 3 (Ranger), Assassin 4 (Rogue), Idol 4 (Bard, lore). The provider
+	// (transformJob) defaults a missing value to 2.
+	skillChoiceCount?: number;
 	armorProficiencies: string[];
 	weaponProficiencies: string[];
 	// DDB-style "choose one" weapon groups, derived from this job's canon
@@ -649,6 +655,7 @@ export const jobs: Job[] = [
 	{
 		id: "assassin",
 		name: "Assassin",
+		skillChoiceCount: 4, // Rogue archetype
 		type: "Job",
 		rank: "B",
 		description:
@@ -2688,6 +2695,7 @@ export const jobs: Job[] = [
 	{
 		id: "idol",
 		name: "Idol",
+		skillChoiceCount: 4, // Bard archetype; lore-confirmed 4 (not the 5e Bard 3)
 		type: "Job",
 		rank: "B",
 		description:
@@ -3622,6 +3630,7 @@ export const jobs: Job[] = [
 	{
 		id: "stalker",
 		name: "Stalker",
+		skillChoiceCount: 3, // Ranger archetype
 		type: "Job",
 		rank: "B",
 		description:

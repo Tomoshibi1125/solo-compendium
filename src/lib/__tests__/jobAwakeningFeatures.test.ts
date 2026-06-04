@@ -7,7 +7,7 @@
  * matrix so no job can regress silently.
  */
 
-import { beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { jobs } from "@/data/compendium/jobs";
 import { applyJobAwakeningTraitsToCharacter } from "@/lib/characterCreation";
 import {
@@ -42,11 +42,20 @@ function installIsolatedLocalStorage() {
 	// Use defineProperty (not assignment): under the vmThreads pool the global
 	// `localStorage` is a getter-only property, so a plain assignment throws
 	// ("only has a getter"). defineProperty redefines it under every pool.
+	// Capture the prior descriptor so we can restore it (vmThreads shares one
+	// global context across sibling test files — leaving the override in place
+	// would leak this in-memory store into other suites).
+	const prior = Object.getOwnPropertyDescriptor(globalThis, "localStorage");
 	Object.defineProperty(globalThis, "localStorage", {
 		value: impl,
 		configurable: true,
 		writable: true,
 	});
+	return () => {
+		if (prior) Object.defineProperty(globalThis, "localStorage", prior);
+		else
+			delete (globalThis as unknown as { localStorage?: unknown }).localStorage;
+	};
 }
 
 const ABILITY_KEYS = [
@@ -81,8 +90,12 @@ const ABILITY_TO_SAVE_CODE: Record<string, string> = {
 };
 
 describe("Parametric: ASI + awakening features applied at creation (all jobs)", () => {
+	let restoreLocalStorage: (() => void) | undefined;
 	beforeAll(() => {
-		installIsolatedLocalStorage();
+		restoreLocalStorage = installIsolatedLocalStorage();
+	});
+	afterAll(() => {
+		restoreLocalStorage?.();
 	});
 
 	for (const job of jobs) {

@@ -39,14 +39,24 @@ type ChargeSource = {
 };
 
 export function getRarityBonus(rarity: string | null | undefined): number {
+	// Full canonical ladder. Accept hyphen/underscore/space variants of
+	// very-rare (previously only `very_rare`/`very rare` matched, so hyphenated
+	// `very-rare` silently scored 0).
 	switch ((rarity || "uncommon").toLowerCase()) {
 		case "rare":
 			return 1;
+		case "very-rare":
 		case "very_rare":
 		case "very rare":
 			return 2;
-		case "legendary":
+		case "epic":
 			return 3;
+		case "legendary":
+			return 4;
+		case "mythic":
+			return 5;
+		case "artifact":
+			return 6;
 		default:
 			return 0;
 	}

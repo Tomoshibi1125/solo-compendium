@@ -91,7 +91,20 @@ const RelicSchema = z.object({
 	name: z.string().min(1),
 	display_name: z.string().optional(),
 	aliases: z.array(z.string()).optional(),
-	rarity: z.enum(["common", "uncommon", "rare", "very_rare", "legendary"]),
+	// Full RA rarity ladder. Relic data uses underscore very_rare plus the
+	// higher epic/mythic tiers; accept both very-rare spellings + artifact so
+	// validation never rejects canonical catalogue entries.
+	rarity: z.enum([
+		"common",
+		"uncommon",
+		"rare",
+		"very_rare",
+		"very-rare",
+		"epic",
+		"legendary",
+		"mythic",
+		"artifact",
+	]),
 	relic_tier: z.enum(["E", "D", "C", "B", "A", "S", "SS"]).optional(),
 	item_type: z.string().min(1),
 	requires_attunement: z.boolean().default(false),

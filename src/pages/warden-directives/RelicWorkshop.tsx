@@ -47,6 +47,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAIEnhance } from "@/hooks/useAIEnhance";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useUserToolState } from "@/hooks/useToolState";
+import { formatRarityLabel } from "@/lib/labels";
 import { MONARCH_LABEL } from "@/lib/vernacular";
 import { loadWardenGenerationContext } from "@/lib/wardenGenerationContext";
 
@@ -206,7 +207,7 @@ STATS:
 • Rarity: ${currentRelic.rarity}
 • Attunement: ${currentRelic.attunement ? `Required by character of ${currentRelic.rank} Rank or higher` : "None required"}
 • Weight: [Standard for ${currentRelic.type} type]
-• Value: [${currentRelic.rarity === "legendary" ? "10,000+" : currentRelic.rarity === "very-rare" ? "5,000+" : currentRelic.rarity === "rare" ? "2,000+" : currentRelic.rarity === "uncommon" ? "500+" : "100+"} Gate Credits]
+• Value: [${currentRelic.rarity === "artifact" ? "25,000+" : currentRelic.rarity === "legendary" ? "10,000+" : currentRelic.rarity === "epic" ? "7,500+" : currentRelic.rarity === "very-rare" ? "5,000+" : currentRelic.rarity === "rare" ? "2,000+" : currentRelic.rarity === "uncommon" ? "500+" : "100+"} Gate Credits]
 
 PROPERTIES:
 ${
@@ -238,7 +239,9 @@ ABILITY 2: [Secondary ability name]
 ${
 	currentRelic.rarity === "rare" ||
 	currentRelic.rarity === "very-rare" ||
-	currentRelic.rarity === "legendary"
+	currentRelic.rarity === "epic" ||
+	currentRelic.rarity === "legendary" ||
+	currentRelic.rarity === "artifact"
 		? `ABILITY 3: [Advanced ability]
 • Description: [High-level function]
 • Activation: [Complex requirements]
@@ -248,7 +251,10 @@ ${
 }
 
 ${
-	currentRelic.rarity === "very-rare" || currentRelic.rarity === "legendary"
+	currentRelic.rarity === "very-rare" ||
+	currentRelic.rarity === "epic" ||
+	currentRelic.rarity === "legendary" ||
+	currentRelic.rarity === "artifact"
 		? `ABILITY 4: [Ultimate ability]
 • Description: [Maximum power effect]
 • Activation: [Special conditions]
@@ -261,7 +267,9 @@ CURSE/BLESSING:
 ${
 	currentRelic.rarity === "rare" ||
 	currentRelic.rarity === "very-rare" ||
-	currentRelic.rarity === "legendary"
+	currentRelic.rarity === "epic" ||
+	currentRelic.rarity === "legendary" ||
+	currentRelic.rarity === "artifact"
 		? `• Curse: [Negative effect and removal conditions]
 • Blessing: [Positive effect and activation]`
 		: "• None"
@@ -315,10 +323,16 @@ READ-ALOUD DISCOVERY:
 		const sigil = context.pickOne("sigils", { theme: inspiration.name });
 		const rune = context.pickOne("runes", { theme: inspiration.name });
 		const regent = context.pickOne("regents", { theme: inspiration.name });
+		// Catalogue relics store very-rare in underscore form (very_rare); the
+		// rarity ladder is canonical hyphen form. Normalize before matching so
+		// a seeded inspiration keeps its true tier (incl. mythic) instead of
+		// silently falling back to the current draft's rarity.
+		const inspirationRarity = inspiration.rarity
+			? (inspiration.rarity.toLowerCase().replace(/_/g, "-") as RelicRarity)
+			: null;
 		const rarity =
-			inspiration.rarity &&
-			RELIC_RARITY_LEVELS.includes(inspiration.rarity as RelicRarity)
-				? (inspiration.rarity as RelicRarity)
+			inspirationRarity && RELIC_RARITY_LEVELS.includes(inspirationRarity)
+				? inspirationRarity
 				: currentRelic.rarity;
 		const type = resolveRelicType(inspiration.entry.item_type);
 		const seededProperties: RelicProperty[] = [
@@ -394,8 +408,10 @@ READ-ALOUD DISCOVERY:
 			common: "text-gray-400 border-gray-400/30 bg-gray-400/10",
 			uncommon: "text-green-400 border-green-400/30 bg-green-400/10",
 			rare: "text-blue-400 border-blue-400/30 bg-blue-400/10",
-			"very-rare": "text-purple-400 border-purple-400/30 bg-purple-400/10",
+			"very-rare": "text-violet-400 border-violet-400/30 bg-violet-400/10",
+			epic: "text-purple-400 border-purple-400/30 bg-purple-400/10",
 			legendary: "text-amber-400 border-amber-400/30 bg-amber-400/10",
+			artifact: "text-rose-400 border-rose-400/30 bg-rose-400/10",
 		};
 		return colors[rarity] || colors.common;
 	};
@@ -705,7 +721,7 @@ READ-ALOUD DISCOVERY:
 										</h3>
 									</div>
 									<Badge className={getRarityColor(currentRelic.rarity)}>
-										{currentRelic.rarity}
+										{formatRarityLabel(currentRelic.rarity)}
 									</Badge>
 								</div>
 								<div className="text-xs text-muted-foreground">

@@ -44,6 +44,7 @@ import {
 	generateSovereign,
 	generateSovereignWithAI,
 } from "@/lib/geminiProtocol";
+import { formatActionType, formatRecharge } from "@/lib/labels";
 import {
 	formatRegentVernacular,
 	REGENT_LABEL,
@@ -930,12 +931,12 @@ export function GeminiProtocolGenerator() {
 													<Badge variant="outline">Level {ability.level}</Badge>
 													{ability.action_type && (
 														<Badge variant="secondary" className="text-xs">
-															{ability.action_type}
+															{formatActionType(ability.action_type)}
 														</Badge>
 													)}
 													{ability.recharge && (
 														<Badge variant="secondary" className="text-xs">
-															{ability.recharge}
+															{formatRecharge(ability.recharge)}
 														</Badge>
 													)}
 												</div>

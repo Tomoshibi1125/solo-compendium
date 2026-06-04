@@ -1,8 +1,10 @@
 import { Gem, MapPin, Skull } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
+import { formatEnumLabel, formatRarityLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumLocation } from "@/types/compendium";
@@ -96,6 +98,23 @@ export const LocationDetail = ({ data }: { data: CompendiumLocation }) => {
 					</ul>
 				</AscendantWindow>
 			)}
+			<DetailMetaFooter
+				tags={(data as { tags?: string[] | null }).tags}
+				extra={[
+					{
+						label: "Location Type",
+						value: formatEnumLabel(
+							(data as { location_type?: string | null }).location_type,
+						),
+					},
+					{
+						label: "Rarity",
+						value: formatRarityLabel(
+							(data as { rarity?: string | null }).rarity,
+						),
+					},
+				]}
+			/>
 		</div>
 	);
 };

@@ -133,7 +133,7 @@ describe("resolveRuneAbsorption — locked formula", () => {
 		expect(result.isNativeViaJob).toBe(true);
 	});
 
-	it("legendary_rune_cross_class → +3 rarity bonus applied", () => {
+	it("legendary_rune_cross_class → +4 rarity bonus applied", () => {
 		const result = resolveRuneAbsorption({
 			abilityKind: "spell",
 			characterJob: "Striker",
@@ -143,8 +143,8 @@ describe("resolveRuneAbsorption — locked formula", () => {
 			runeRarity: "legendary",
 			unlockedRegents: [],
 		});
-		// max(1, 3 + 2 + 3) = 8
-		expect(result.usesMax).toBe(8);
+		// max(1, 3 + 2 + 4) = 9
+		expect(result.usesMax).toBe(9);
 	});
 
 	it("min_one_use_clamp → result floor of 1", () => {
@@ -208,10 +208,18 @@ describe("resolveRuneAbsorption — helpers", () => {
 	});
 
 	it("getRuneRarityBonus follows the locked ladder", () => {
+		// Canonical 8-tier ladder (ascending): epic sits ABOVE very-rare,
+		// mythic above legendary, artifact caps it. Hyphen + underscore forms
+		// of very-rare both score 2.
+		expect(getRuneRarityBonus("common")).toBe(0);
 		expect(getRuneRarityBonus("uncommon")).toBe(0);
 		expect(getRuneRarityBonus("rare")).toBe(1);
+		expect(getRuneRarityBonus("very-rare")).toBe(2);
 		expect(getRuneRarityBonus("very_rare")).toBe(2);
-		expect(getRuneRarityBonus("legendary")).toBe(3);
+		expect(getRuneRarityBonus("epic")).toBe(3);
+		expect(getRuneRarityBonus("legendary")).toBe(4);
+		expect(getRuneRarityBonus("mythic")).toBe(5);
+		expect(getRuneRarityBonus("artifact")).toBe(6);
 	});
 
 	it("inferRuneAbilityKind prefers explicit teaches over rank/tag heuristics", () => {

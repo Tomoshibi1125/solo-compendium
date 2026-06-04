@@ -672,9 +672,17 @@ Every compendium detail view now surfaces every populated data field. Built `Det
 - `src/lib/__tests__/detailFieldCoverage.test.ts` — for 14 categories, asserts every populated (provider-normalized) data key is referenced by its detail view, minus an allowlist of provider-injected cross-normalization aliases / internal keys (each with a reason). Fails if a new data field is silently dropped.
 - `src/lib/__tests__/uiTruthParity.test.ts` — HP/Rift-Favor/spell-DC truth + structural guards (persistDerivedStats omits `hp_max`; CharacterSheetV2 never reads raw `hp_max`/`rift_favor_*` for display).
 
-### Known pre-existing (not introduced; out of scope)
-- `SigilDetail` line ~31 `noStaticElementInteractions` lint error on a pre-existing `draggable` div.
-- `epic` vs `very-rare` rarity dual-vocabulary (logged earlier).
+### Pre-existing issues — fixed
+- **`SigilDetail` `noStaticElementInteractions`** (lint error): the draggable wrapper `<div>` is now a `<fieldset>` with `aria-label` (matches `SpellDetail`'s pattern); handler typed `DragEvent<HTMLFieldSetElement>`.
+- **`AnomalyDetail` `noArrayIndexKey`** (warning): regional-effects list now keyed by content (`effect.name`/description) instead of the array index.
+- **`jobAwakeningFeatures.test.ts`** failed under the `vmThreads` pool because it reassigned the getter-only global `localStorage`. Now uses `Object.defineProperty` and restores the prior descriptor in `afterAll` (no cross-file leak under shared-context pools).
+- **Vitest worker hang on Node ≥22/25**: `vitest.config.ts` now sets `pool: "vmThreads"` (the default fork/thread pools time out on worker spawn with the `--localstorage-file` execArgv). `npm run test:run` now runs the full suite cleanly with no manual flag.
+- **Two `FIXABLE` lint warnings** in sigils tests: removed a dead variable (`noUnusedVariables`) and a non-null assertion (`noNonNullAssertion`).
+- Repo-wide lint (formatting excluded) is now **0 errors, 0 warnings**. The remaining ~120 biome "format" findings are CRLF line endings — a local Windows/git-autocrlf artifact (CI on Linux sees LF); not changed to avoid a whole-tree whitespace churn.
+
+### Known remaining (logged, out of scope)
+- `epic` vs `very-rare` rarity dual-vocabulary — intentional RA item-tier scheme vs core-rules `Rarity`; a canon-unification decision, not a bug (data is correct).
+- "Vite server won't exit" teardown warning — a pre-existing unclosed async handle in the test harness; tests pass (exit 0), harmless.
 
 ## Sources
 
@@ -734,3 +742,56 @@ applied a regent overlay at all.
 | `npx @biomejs/biome check --write` (changed files) | ✅ clean |
 
 **Environment note:** Node v25.6.1 + Vitest 4 — the default worker pools hang on bulk runs (60 s spawn timeout), so the suite is run with `--pool=vmThreads`. That pool makes `globalThis.localStorage` read-only, which is the sole cause of the `jobAwakeningFeatures` flag. Recommended follow-up: pin a Node LTS or set the pool in `vitest.config.ts`, and make `installIsolatedLocalStorage` use `Object.defineProperty` so it works under both pools.
+
+---
+
+## Rarity-ladder unification (2026-06)
+
+**Resolves the M13 "documented follow-up"** above (dual rarity vocabulary). A deep data census established the **single canonical 8-tier ladder** (ascending):
+
+`common < uncommon < rare < very-rare < epic < legendary < mythic < artifact`
+
+`epic` is a distinct tier above `very-rare`; `mythic` is the live top-end **relic** tier (above legendary); `artifact` is the reserved apex. `mythic` was discovered in the data (4 relic entries) and was unhandled by several surfaces — the central defect this pass fixes. `very-rare` exists in the data in **both** spellings: hyphen `very-rare` (sandbox loot) and underscore `very_rare` (relics, sigils, tattoos, shadow soldiers); every lookup map now keys on both.
+
+### Census (actual `rarity:` values across `src/data/`)
+| value | count | notes |
+|---|---|---|
+| common | 1321 | |
+| uncommon | 1206 | |
+| rare | 835 | |
+| epic | 259 | items-gap-fill, relics, powers/spells/techniques |
+| legendary | 193 | |
+| very_rare | 33 | underscore |
+| very-rare | 9 | hyphen (sandbox loot only) |
+| mythic | 4 | relics-comprehensive only |
+| _artifact_ | 0 | item **type**, not a data rarity — kept as the reserved apex |
+
+### Latent bugs fixed
+- **`very-rare` (hyphen) scored 0** in `getRarityBonus`/`getRuneRarityBonus` (only underscore/space matched) → cross-class rune uses understated. Now all three spellings score 2.
+- **`epic` missing from sigil socket ladders** — `getMaxSocketsForRarity` (and `getSigilSlotBonusForRarity`) fell through to the **common** default, so epic equipment (exists in `items-gap-fill.ts`) was capped like a common item.
+- **`RelicDetail` had no `epic`/`mythic` colors** → 8 live relic entries rendered unstyled.
+- **Treasure mis-normalized `mythic`** → mythic relics could surface as low-rank (E/D) loot instead of S-rank.
+- **`contentValidator` RelicSchema** rejected the 4 `epic` + 4 `mythic` relics (enum was 5-value).
+
+### What shipped
+| Area | Change | Files |
+|---|---|---|
+| Canonical type ladder | `Rarity` union + `RARITY_ORDER` + `RARITY_LABELS` → 8 tiers (added `mythic`) | `src/types/core-rules.ts`, `src/lib/5eRulesEngine.ts` |
+| Rune/cross-class bonus | `getRarityBonus`/`getRuneRarityBonus` → full ladder, `mythic`=5, `artifact`=6 | `src/lib/perRestCharges.ts`, `src/lib/runeAutomation.ts` |
+| Compendium browse | `rarityColors` + `rarityOrder` → both `very-rare` spellings, `mythic`, `artifact` | `src/pages/Compendium.tsx` |
+| Detail views | `ItemDetail` + `RelicDetail` rarity maps completed (both spellings, epic/mythic) | `src/components/compendium/*Detail.tsx` |
+| Relic workshop | `RELIC_RARITY_LEVELS` + `RELIC_BALANCE_GUIDELINES` + value/ability/curse gating + spelling-normalized inspiration seeding | `src/data/compendium/wardenToolConfig.ts`, `src/pages/warden-directives/RelicWorkshop.tsx` |
+| Treasure generation | `TreasureRarity` + drop weights (re-summed to 1.0) + S-rank arrays + `normalizeTreasureRarity` + `rankToTreasureRarities` | `wardenToolConfig.ts`, `treasureGenerator.ts`, `wardenGenerationContext.ts` |
+| Sigil sockets | `mythic` added to `RARITY_STEP`, `getMaxSocketsForRarity`, `getSigilSlotBonusForRarity`, `SigilRarity` (locked test anchors preserved) | `src/lib/sigilAutomation.ts` |
+| Content validation | RelicSchema rarity enum → accepts full ladder + both spellings | `src/lib/contentValidator.ts` |
+| Tests | Locked-ladder + cross-class assertions updated for the corrected values; `VALID_RARITIES` → 8 tiers | `perRestCharges.test.ts`, `runeAbsorption.test.ts`, `compendiumStructure.test.ts` |
+
+### Known constraint (follow-up)
+The persisted DB `rarity` enum (`src/integrations/supabase/types.ts`, codegen) is a narrower **5-value** set: `common | uncommon | rare | very_rare | legendary` (underscore). Columns typed by that enum cannot store `epic`/`mythic`/`artifact`; `normalizeRarityForDb` maps to the storable set and the **true** rarity is preserved in the row's item metadata (`useWardenItemDelivery.ts`). Fully persisting the higher tiers on enum-backed columns needs a Postgres enum migration (out of band — no DB access this pass).
+
+### Final verification
+| Check | Result |
+|---|---|
+| `npx tsc -p tsconfig.json --noEmit` | ✅ PASS (0 errors) |
+| `npx vitest run` (full suite, vmThreads) | ✅ **166 files / 1687 tests pass** |
+| `npx @biomejs/biome check ./src` | ✅ clean (980 files, 0 fixes) |

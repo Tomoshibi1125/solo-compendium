@@ -2,6 +2,7 @@ import { Crown, Shield, Sparkles, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -448,6 +449,7 @@ export const ArtifactDetail = ({ data }: { data: ArtifactData }) => {
 					</div>
 				</AscendantWindow>
 			)}
+			<DetailMetaFooter tags={(data as { tags?: string[] | null }).tags} />
 		</div>
 	);
 };

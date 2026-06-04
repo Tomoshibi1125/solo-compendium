@@ -165,14 +165,22 @@ export function getRunePrimaryStatModifier(
 }
 
 export function getRuneRarityBonus(rarity: string | null | undefined): number {
+	// Full canonical ladder; accept hyphen/underscore/space very-rare variants.
 	switch ((rarity || "uncommon").toLowerCase()) {
 		case "rare":
 			return 1;
+		case "very-rare":
 		case "very_rare":
 		case "very rare":
 			return 2;
-		case "legendary":
+		case "epic":
 			return 3;
+		case "legendary":
+			return 4;
+		case "mythic":
+			return 5;
+		case "artifact":
+			return 6;
 		default:
 			return 0;
 	}

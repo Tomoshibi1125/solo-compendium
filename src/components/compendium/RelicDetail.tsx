@@ -23,8 +23,13 @@ const rarityColors: Record<string, string> = {
 	common: "bg-gray-500",
 	uncommon: "bg-green-500",
 	rare: "bg-blue-500",
+	// Relic data uses underscore very_rare; keep the hyphen alias for parity
+	// with the canonical ladder. epic + mythic are live relic tiers.
 	very_rare: "bg-purple-500",
+	"very-rare": "bg-purple-500",
+	epic: "bg-fuchsia-500",
 	legendary: "bg-amber-500",
+	mythic: "bg-rose-500",
 };
 
 const tierColors: Record<string, string> = {

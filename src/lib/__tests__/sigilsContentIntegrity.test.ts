@@ -118,10 +118,9 @@ describe("sigils content integrity", () => {
 			}
 
 			const loreLower = lore.toLowerCase().trim();
-			if (!discoveryLores.has(loreLower)) {
-				discoveryLores.set(loreLower, []);
-			}
-			discoveryLores.get(loreLower)!.push(sigil.name);
+			const bucket = discoveryLores.get(loreLower) ?? [];
+			bucket.push(sigil.name);
+			discoveryLores.set(loreLower, bucket);
 		}
 
 		const duplicates = [...discoveryLores.entries()]

@@ -1,9 +1,11 @@
 import { Eye, Heart, Shield, Skull, Sword, Target, Zap } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getAbilityModifier } from "@/lib/characterCalculations";
+import { formatEnumLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 
 import type { CompendiumShadowSoldier } from "@/types/compendium";
@@ -568,6 +570,24 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 					Source: {formatRegentVernacular(entry.source_book)}
 				</div>
 			)}
+			<DetailMetaFooter
+				extra={[
+					{
+						label: "Gate Rank",
+						value: (data as { gate_rank?: string | null }).gate_rank,
+					},
+					{
+						label: "Hit Points",
+						value: (data as { hit_points?: number | null }).hit_points,
+					},
+					{
+						label: "Shadow Type",
+						value: formatEnumLabel(
+							(data as { shadow_type?: string | null }).shadow_type,
+						),
+					},
+				]}
+			/>
 		</div>
 	);
 };

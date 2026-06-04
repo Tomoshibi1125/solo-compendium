@@ -67,6 +67,7 @@ import { useFilterPersistence } from "@/hooks/useFilterPersistence";
 import { useSearchHistory } from "@/hooks/useSearchHistory";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
 import { isSupabaseConfigured } from "@/integrations/supabase/client";
+import { formatRarityLabel } from "@/lib/labels";
 import { logger } from "@/lib/logger";
 import { parseSearchQuery } from "@/lib/searchOperators";
 import { isSetupRouteEnabled } from "@/lib/setupAccess";
@@ -124,10 +125,17 @@ const rarityColors: Record<string, string> = {
 	common: "text-muted-foreground border-muted",
 	uncommon: "text-accent border-accent/40",
 	rare: "text-shadow-blue border-shadow-blue/40",
+	// very-rare appears in both hyphen (sandbox loot) and underscore (relics,
+	// sigils, tattoos, shadow soldiers) form across the data — key on both.
+	"very-rare": "text-shadow-purple border-shadow-purple/40",
 	very_rare: "text-shadow-purple border-shadow-purple/40",
 	epic: "text-shadow-purple border-shadow-purple/40 shadow-[0_0_6px_hsl(var(--shadow-purple)/0.3)]",
 	legendary:
 		"text-solar-glow border-solar-glow/40 shadow-[0_0_8px_hsl(var(--solar-glow)/0.3)]",
+	mythic:
+		"text-crimson-knight border-crimson-knight/40 shadow-[0_0_10px_hsl(var(--crimson-knight)/0.4)]",
+	artifact:
+		"text-crimson-knight border-crimson-knight/50 shadow-[0_0_12px_hsl(var(--crimson-knight)/0.6)]",
 };
 
 // Enhanced gate rank colors with Rift Ascendant theme
@@ -145,9 +153,12 @@ const rarityOrder: Record<string, number> = {
 	common: 1,
 	uncommon: 2,
 	rare: 3,
+	"very-rare": 4,
 	very_rare: 4,
 	epic: 5,
 	legendary: 6,
+	mythic: 7,
+	artifact: 8,
 };
 
 const gateRanks = ["E", "D", "C", "B", "A", "S", "SS"];
@@ -368,7 +379,10 @@ const Compendium = () => {
 									name: item.display_name || item.name,
 									type: displayType as CompendiumEntry["type"],
 									description: item.description || "No description available",
-									rarity: item.rarity || "common",
+									// Preserve absent rarity (jobs, paths, and other non-item
+									// entries) instead of fabricating "common" — only entries
+									// that actually have a rarity should show/filter by one.
+									rarity: item.rarity ?? undefined,
 									tags: item.tags || [],
 									level: item.level ?? undefined,
 									created_at: item.created_at,
@@ -758,7 +772,7 @@ const Compendium = () => {
 			chips.push({
 				id: `rarity-${rarity}`,
 				label: "Rarity",
-				value: rarity.replace("_", " "),
+				value: formatRarityLabel(rarity),
 				onRemove: () =>
 					setFilters((prev) => ({
 						...prev,
@@ -878,7 +892,7 @@ const Compendium = () => {
 			return entry.level === 0 ? "Cantrip" : `Tier ${entry.level}`;
 		}
 		if (entry.rarity) {
-			return entry.rarity.replace("_", " ");
+			return formatRarityLabel(entry.rarity);
 		}
 		return entry.type;
 	};

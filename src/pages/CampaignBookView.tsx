@@ -30,6 +30,7 @@ import {
 import { useCampaign, useHasWardenAccess } from "@/hooks/useCampaigns";
 import { useCampaignWiki } from "@/hooks/useCampaignWiki";
 import { useCampaignToolState } from "@/hooks/useToolState";
+import { formatRarityLabel } from "@/lib/labels";
 import type { VTTScene } from "@/types/vtt";
 import "@/styles/source-book.css";
 import ReactMarkdown from "react-markdown";
@@ -290,7 +291,7 @@ const CampaignBookView = () => {
 						"### Drop Table",
 						...table.entries.map(
 							(entry) =>
-								`- **${entry.name}** (${entry.rarity}, w${entry.weight}): ${entry.description}`,
+								`- **${entry.name}** (${formatRarityLabel(entry.rarity)}, w${entry.weight}): ${entry.description}`,
 						),
 					].join("\n"),
 					type: "loot" as const,

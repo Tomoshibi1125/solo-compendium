@@ -23,7 +23,7 @@ describe("per-rest charge helpers", () => {
 				primaryStatModifier: 4,
 				rarity: "legendary",
 			}),
-		).toBe(10);
+		).toBe(11); // PB 3 + stat 4 + legendary 4
 		expect(
 			computeCrossClassUses({
 				proficiencyBonus: 2,
@@ -34,12 +34,20 @@ describe("per-rest charge helpers", () => {
 	});
 
 	it("locks rarity bonus ladder", () => {
+		// Canonical 8-tier ladder (ascending): epic is a distinct tier ABOVE
+		// very-rare, mythic sits above legendary, artifact caps the ladder.
+		// very-rare matches in hyphen, underscore, and space forms (the
+		// hyphenated form previously scored 0).
 		expect(getRarityBonus("common")).toBe(0);
 		expect(getRarityBonus("uncommon")).toBe(0);
 		expect(getRarityBonus("rare")).toBe(1);
+		expect(getRarityBonus("very-rare")).toBe(2);
 		expect(getRarityBonus("very_rare")).toBe(2);
 		expect(getRarityBonus("very rare")).toBe(2);
-		expect(getRarityBonus("legendary")).toBe(3);
+		expect(getRarityBonus("epic")).toBe(3);
+		expect(getRarityBonus("legendary")).toBe(4);
+		expect(getRarityBonus("mythic")).toBe(5);
+		expect(getRarityBonus("artifact")).toBe(6);
 	});
 
 	it("normalizes per-rest cadence strings", () => {

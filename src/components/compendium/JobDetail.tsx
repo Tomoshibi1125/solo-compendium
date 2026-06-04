@@ -11,14 +11,20 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
+import { formatActionType, formatEnumLabel } from "@/lib/labels";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import type { CompendiumJob } from "@/types/compendium";
 import { DetailHeader } from "./DetailHeader";
 
-interface JobData extends CompendiumJob {}
+interface JobData extends CompendiumJob {
+	// Canonical # of skills chosen at creation (provider-normalized; NOT the
+	// skill_choices pool length). See transformJob / jobs.ts skillChoiceCount.
+	skill_choice_count?: number | null;
+}
 
 export interface JobFeature {
 	id: string;
@@ -232,7 +238,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					<div className="flex items-center gap-2">
 						<Swords className="w-5 h-5 text-green-400" />
 						<span className="font-heading">
-							Choose {data.skill_choices?.length || 2}
+							Choose {data.skill_choice_count ?? 2}
 						</span>
 					</div>
 				</AscendantWindow>
@@ -604,7 +610,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 										{formatRegentVernacular(nw.name)}
 									</h4>
 									<span className="font-display text-sm text-amber-400">
-										{nw.damage} {nw.damage_type}
+										{nw.damage} {formatEnumLabel(nw.damage_type)}
 									</span>
 								</div>
 								{nw.description && (
@@ -647,7 +653,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 							</h4>
 							<span className="font-display text-sm text-amber-400">
 								{data.resonance_breath.damage_die}{" "}
-								{data.resonance_breath.damage_type}
+								{formatEnumLabel(data.resonance_breath.damage_type)}
 							</span>
 						</div>
 						<p className="text-sm text-foreground/80">
@@ -888,7 +894,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 									</Badge>
 									{feature.action_type && (
 										<Badge variant="secondary" className="text-xs">
-											{feature.action_type}
+											{formatActionType(feature.action_type)}
 										</Badge>
 									)}
 								</div>
@@ -955,6 +961,36 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						</div>
 					</AscendantWindow>
 				)}
+			<DetailMetaFooter
+				extra={[
+					{ label: "Hit Die", value: (data as { hit_die?: unknown }).hit_die },
+					{
+						label: "HP at 1st Level",
+						value: (data as { hit_points_at_first_level?: unknown })
+							.hit_points_at_first_level,
+					},
+					{
+						label: "HP at Higher Levels",
+						value: (data as { hit_points_at_higher_levels?: unknown })
+							.hit_points_at_higher_levels,
+					},
+					{
+						label: "Saving Throw Proficiencies",
+						value: (data as { saving_throw_proficiencies?: unknown })
+							.saving_throw_proficiencies,
+					},
+					{
+						label: "Spellcasting Ability",
+						value: (data as { spellcasting_ability?: unknown })
+							.spellcasting_ability,
+					},
+					{
+						label: "Spellcasting Focus",
+						value: (data as { spellcasting_focus?: unknown })
+							.spellcasting_focus,
+					},
+				]}
+			/>
 		</div>
 	);
 };

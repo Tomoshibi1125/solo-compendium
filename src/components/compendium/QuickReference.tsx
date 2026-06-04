@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { useCharacters } from "@/hooks/useCharacters";
 import { usePreferredCampaignSelection } from "@/hooks/usePreferredCampaignSelection";
 import type { CompendiumEntry } from "@/hooks/useStartupData";
+import { formatRarityLabel } from "@/lib/labels";
 import { cn } from "@/lib/utils";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { NotesManager } from "./NotesManager";
@@ -137,7 +138,7 @@ export function QuickReference({
 							</span>
 							<div className="mt-1">
 								<Badge variant="secondary" className="text-xs">
-									{entry.gate_rank || entry.rarity}
+									{entry.gate_rank || formatRarityLabel(entry.rarity)}
 								</Badge>
 							</div>
 						</div>

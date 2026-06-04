@@ -21,7 +21,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useCharacter } from "@/hooks/useCharacters";
 import { useTrackedResources } from "@/hooks/useTrackedResources";
-import { getAbilityModifier } from "@/lib/5eRulesEngine";
+import { getAbilityModifier, getProficiencyBonus } from "@/lib/5eRulesEngine";
 import {
 	createClassFeatureResource,
 	type TrackedResource,
@@ -91,7 +91,7 @@ const JOB_RESOURCES: JobResourceDef[] = [
 		icon: Skull,
 		maxFromCharacter: (c) => {
 			const lvl = c.level ?? 1;
-			const prof = 2 + Math.floor((lvl - 1) / 4);
+			const prof = getProficiencyBonus(lvl);
 			return Math.max(1, mod(c.intelligence) + prof);
 		},
 		recovery: "long-rest",

@@ -61,7 +61,10 @@ function normalizeTreasureRarity(rarity?: string | null): TreasureRarity {
 		normalized === "uncommon" ||
 		normalized === "rare" ||
 		normalized === "very-rare" ||
-		normalized === "legendary"
+		normalized === "epic" ||
+		normalized === "legendary" ||
+		normalized === "mythic" ||
+		normalized === "artifact"
 	) {
 		return normalized;
 	}

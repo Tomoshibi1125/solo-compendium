@@ -11,6 +11,7 @@ import {
 	Zap,
 } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { ManaFlowText, RiftHeading } from "@/components/ui/AscendantText";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
@@ -249,6 +250,10 @@ export const DeityDetail = ({ data }: DeityDetailProps) => {
 					</div>
 				</div>
 			</div>
+			<DetailMetaFooter
+				tags={(data as { tags?: string[] | null }).tags}
+				sourceBook={(data as { source_book?: string | null }).source_book}
+			/>
 		</div>
 	);
 };

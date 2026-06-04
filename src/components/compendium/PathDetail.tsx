@@ -1,6 +1,7 @@
 import { GitBranch, Shield, Star, Swords, Zap } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { listCanonicalEntries } from "@/lib/canonicalCompendium";
@@ -350,6 +351,19 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 					Source: {formatRegentVernacular(data.source_book)}
 				</div>
 			)}
+			<DetailMetaFooter
+				extra={[
+					{
+						label: "Job",
+						value: (data as { job_name?: string | null }).job_name,
+					},
+					{
+						label: "Unlocks at Level",
+						value: (data as { path_level?: number | null }).path_level,
+					},
+					{ label: "Tier", value: (data as { tier?: number | null }).tier },
+				]}
+			/>
 		</div>
 	);
 };

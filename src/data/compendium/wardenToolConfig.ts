@@ -1,19 +1,30 @@
 export const GATE_RANKS = ["E", "D", "C", "B", "A", "S"] as const;
 
 export type GateRank = (typeof GATE_RANKS)[number];
+// Full canonical rarity ladder (see src/types/core-rules.ts): epic is a
+// distinct tier above very-rare; mythic sits above legendary (used by the
+// top-end relic catalogue); artifact is the apex.
 export type TreasureRarity =
 	| "common"
 	| "uncommon"
 	| "rare"
 	| "very-rare"
-	| "legendary";
+	| "epic"
+	| "legendary"
+	| "mythic"
+	| "artifact";
 
+// Drop weights across the full ladder (sums to 1.0). Mythic, epic, and artifact
+// are rare end-game drops so the top-tier relics are actually loot-eligible.
 export const TREASURE_RARITY_CHANCES: Record<TreasureRarity, number> = {
-	common: 0.6,
-	uncommon: 0.25,
+	common: 0.576,
+	uncommon: 0.24,
 	rare: 0.1,
-	"very-rare": 0.04,
-	legendary: 0.01,
+	"very-rare": 0.05,
+	epic: 0.02,
+	legendary: 0.008,
+	mythic: 0.004,
+	artifact: 0.002,
 };
 
 export interface TreasureTableConfig {
@@ -98,8 +109,8 @@ export const TREASURE_ITEM_RARITIES: Record<
 	D: ["common", "uncommon"],
 	C: ["uncommon", "rare"],
 	B: ["rare", "very-rare"],
-	A: ["very-rare", "legendary"],
-	S: ["legendary", "very-rare"],
+	A: ["very-rare", "epic", "legendary"],
+	S: ["epic", "legendary", "mythic", "artifact"],
 };
 
 export const TREASURE_RELIC_RARITIES: Record<
@@ -110,8 +121,8 @@ export const TREASURE_RELIC_RARITIES: Record<
 	D: ["uncommon", "common"],
 	C: ["rare", "uncommon"],
 	B: ["rare", "very-rare"],
-	A: ["very-rare", "legendary"],
-	S: ["legendary", "very-rare"],
+	A: ["very-rare", "epic", "legendary"],
+	S: ["epic", "legendary", "mythic", "artifact"],
 };
 
 export const TREASURE_MATERIALS: Record<GateRank, readonly string[]> = {
@@ -163,7 +174,10 @@ export const RELIC_RARITY_LEVELS = [
 	"uncommon",
 	"rare",
 	"very-rare",
+	"epic",
 	"legendary",
+	"mythic",
+	"artifact",
 ] as const;
 export type RelicRarity = (typeof RELIC_RARITY_LEVELS)[number];
 
@@ -204,10 +218,28 @@ export const RELIC_BALANCE_GUIDELINES: Record<
 		description:
 			"Exceptional relics. +3 bonuses, powerful active abilities, multiple effects.",
 	},
-	legendary: {
+	epic: {
 		properties: [4, 5],
 		maxBonus: 5,
 		description:
-			"Artifact-level relics. +4 or higher bonuses, game-changing abilities.",
+			"Epic relics. +4 to +5 bonuses, multiple powerful active abilities, reality-bending effects just shy of legend.",
+	},
+	legendary: {
+		properties: [5, 6],
+		maxBonus: 6,
+		description:
+			"Legendary relics. +5 or higher bonuses, game-changing signature abilities famed across an era.",
+	},
+	mythic: {
+		properties: [6, 7],
+		maxBonus: 7,
+		description:
+			"Mythic relics. Named legends of the Rift — multiple signature abilities and world-tier bonuses.",
+	},
+	artifact: {
+		properties: [7, 8],
+		maxBonus: 8,
+		description:
+			"Artifact-tier relics. Unique world-shaping items of mythic power with multiple legendary abilities.",
 	},
 };

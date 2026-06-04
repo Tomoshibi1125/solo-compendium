@@ -1,6 +1,7 @@
 import { Coins, Shield, Sword, Weight } from "lucide-react";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
+import { DetailMetaFooter } from "@/components/compendium/DetailMetaFooter";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
 import { Badge } from "@/components/ui/badge";
 import { formatRaCurrencyAmount } from "@/lib/currency";
@@ -196,6 +197,30 @@ export const EquipmentDetail = ({ data }: { data: EquipmentData }) => {
 					</div>
 				</AscendantWindow>
 			)}
+			<DetailMetaFooter
+				flavor={(item as { flavor?: string | null }).flavor}
+				lore={(item as { lore?: string | null }).lore}
+				discoveryLore={
+					(item as { discovery_lore?: string | null }).discovery_lore
+				}
+				tags={(item as { tags?: string[] | null }).tags}
+				extra={[
+					{
+						label: "Activation",
+						value: (item as { activation?: unknown }).activation,
+					},
+					{ label: "Effects", value: (item as { effects?: unknown }).effects },
+					{
+						label: "Limitations",
+						value: (item as { limitations?: unknown }).limitations,
+					},
+					{
+						label: "Mechanics",
+						value: (item as { mechanics?: unknown }).mechanics,
+					},
+					{ label: "Cursed", value: (item as { cursed?: unknown }).cursed },
+				]}
+			/>
 		</div>
 	);
 };

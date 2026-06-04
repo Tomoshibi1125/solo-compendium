@@ -1,0 +1,44 @@
+# Normalize line endings to LF for all text/code files, regardless of a
+# contributor's local core.autocrlf setting. This keeps the working tree LF
+# (matching Biome's formatter default), so `npm run lint` is stable on Windows
+# and Linux alike. Binary assets are marked so git never touches their bytes.
+
+* text=auto eol=lf
+
+# Source / config / docs — always LF
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.js   text eol=lf
+*.mjs  text eol=lf
+*.cjs  text eol=lf
+*.jsx  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.css  text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.sql  text eol=lf
+*.sh   text eol=lf
+
+# Binary assets — never normalize
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.svg  binary
+*.woff binary
+*.woff2 binary
+*.ttf  binary
+*.otf  binary
+*.eot  binary
+*.mp3  binary
+*.wav  binary
+*.ogg  binary
+*.mp4  binary
+*.webm binary
+*.pdf  binary
+*.wasm binary

@@ -31,9 +31,11 @@ export type SigilRarity =
 	| "common"
 	| "uncommon"
 	| "rare"
+	| "very_rare"
 	| "epic"
 	| "legendary"
-	| "very_rare";
+	| "mythic"
+	| "artifact";
 
 export function getSigilSlotBonusForRarity(
 	rarity: string | null | undefined,
@@ -46,7 +48,11 @@ export function getSigilSlotBonusForRarity(
 		case "very_rare":
 		case "very rare":
 			return 3;
+		case "epic":
+			return 3;
 		case "legendary":
+			return 4;
+		case "mythic":
 			return 4;
 		case "artifact":
 			return 5;
@@ -319,6 +325,7 @@ const RARITY_STEP: Record<string, number> = {
 	"very rare": 3,
 	epic: 4,
 	legendary: 5,
+	mythic: 5,
 	artifact: 6,
 };
 
@@ -356,7 +363,11 @@ export function getMaxSocketsForRarity(
 		case "very_rare":
 		case "very rare":
 			return 4;
+		case "epic":
+			return 4;
 		case "legendary":
+			return 5;
+		case "mythic":
 			return 5;
 		case "artifact":
 			return 6;

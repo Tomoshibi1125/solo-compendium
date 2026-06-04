@@ -26,6 +26,7 @@ import {
 	type ActionResolutionPayload,
 	setPendingResolution,
 } from "@/lib/actionResolution";
+import { formatRarityLabel, getRarityBadgeClass } from "@/lib/labels";
 import { buildAttackRollFormula } from "@/lib/powerActionFormulas";
 import { formatRegentVernacular } from "@/lib/vernacular";
 import { buildSpellTemplateDragData, VTT_SPELL_TEMPLATE_MIME } from "@/lib/vtt";
@@ -253,8 +254,13 @@ export const SpellDetail = ({ data }: { data: SpellData }) => {
 							</Badge>
 						)}
 						{(data as { rarity?: string }).rarity && (
-							<Badge variant="outline" className="text-xs capitalize">
-								{(data as { rarity?: string }).rarity}
+							<Badge
+								variant="outline"
+								className={`text-xs ${getRarityBadgeClass(
+									(data as { rarity?: string }).rarity,
+								)}`}
+							>
+								{formatRarityLabel((data as { rarity?: string }).rarity)}
 							</Badge>
 						)}
 						{data.source_book && (

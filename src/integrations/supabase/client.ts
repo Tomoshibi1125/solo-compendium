@@ -55,6 +55,13 @@ const guardedFetch: typeof fetch = async (input, init) => {
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
+// Under the test runner, disable the auth auto-refresh timer and session
+// persistence: GoTrueClient's `autoRefreshToken` starts a `setInterval` that
+// keeps the event loop alive, which prevents Vitest/Vite from exiting cleanly
+// ("something prevents Vite server from exiting"). Tests never need a live
+// session, so turn these off in MODE=test.
+const isTestEnv = import.meta.env.MODE === "test";
+
 export const supabase = createClient<Database>(
 	isSupabaseConfigured ? (SUPABASE_URL as string) : SUPABASE_URL_FALLBACK,
 	isSupabaseConfigured
@@ -66,8 +73,8 @@ export const supabase = createClient<Database>(
 		},
 		auth: {
 			storage: typeof window !== "undefined" ? localStorage : undefined,
-			persistSession: true,
-			autoRefreshToken: true,
+			persistSession: !isTestEnv,
+			autoRefreshToken: !isTestEnv,
 		},
 		realtime: {
 			params: {

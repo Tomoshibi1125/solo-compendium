@@ -24,8 +24,16 @@ export interface Item {
 	strength_requirement?: number; // For certain armor/weapons
 	protocol_bonus?: number; // +1, +2, +3 for protocol-enhanced items
 
-	// Rift Ascendant compatibility (legacy)
-	rarity: "common" | "uncommon" | "rare" | "epic" | "legendary";
+	// Canonical RA rarity ladder: common < uncommon < rare < very-rare < epic
+	// < legendary < artifact (epic is a distinct tier above very-rare).
+	rarity:
+		| "common"
+		| "uncommon"
+		| "rare"
+		| "very-rare"
+		| "epic"
+		| "legendary"
+		| "artifact";
 	type:
 		| "weapon"
 		| "armor"

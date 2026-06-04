@@ -57,7 +57,7 @@ const GLOBAL_ALLOW = new Set<string>([
 interface Category {
 	name: string;
 	component: string;
-	load: () => Promise<Array<Record<string, unknown>>>;
+	load: () => Promise<readonly unknown[]>;
 	allow?: string[];
 }
 
@@ -202,6 +202,57 @@ const categories: Category[] = [
 		load: () => p.getSkills(""),
 		allow: [],
 	},
+	{
+		name: "jobs",
+		component: "JobDetail.tsx",
+		load: () => p.getJobs(""),
+		allow: [],
+	},
+	{
+		name: "paths",
+		component: "PathDetail.tsx",
+		load: () => p.getPaths(""),
+		allow: ["jobId"], // internal parent-job id; job_name is the displayed value
+	},
+	{
+		name: "artifacts",
+		component: "ArtifactDetail.tsx",
+		load: () => p.getArtifacts(""),
+		// power_level/school/theme/title are castable-normalization aliases the
+		// provider injects on artifacts; not real artifact content.
+		allow: [...CASTABLE_NORMALIZATION],
+	},
+	{
+		// Equipment renders item data (CompendiumItem) via EquipmentDetail.
+		name: "equipment",
+		component: "EquipmentDetail.tsx",
+		load: () => p.getItems(""),
+		allow: [...ITEM_NORMALIZATION],
+	},
+	{
+		name: "vehicles",
+		component: "VehicleDetail.tsx",
+		load: () => p.getVehicles(""),
+		allow: ["anomaly_id"], // internal link id (mount→source anomaly)
+	},
+	{
+		name: "pantheon",
+		component: "DeityDetail.tsx",
+		load: () => p.getPantheon(""),
+		allow: [],
+	},
+	{
+		name: "locations",
+		component: "LocationDetail.tsx",
+		load: () => p.getLocations(""),
+		allow: [],
+	},
+	{
+		name: "shadow-soldiers",
+		component: "ShadowSoldierDetail.tsx",
+		load: () => p.getShadowSoldiers(""),
+		allow: [],
+	},
 ];
 
 const isPopulated = (v: unknown): boolean => {
@@ -222,7 +273,7 @@ describe("detail-view field completeness (DDB-style)", () => {
 		it(`${cat.name}: detail view renders every populated data field`, async () => {
 			const source = compSource(cat.component);
 			const allow = new Set([...GLOBAL_ALLOW, ...(cat.allow ?? [])]);
-			const entries = await cat.load();
+			const entries = (await cat.load()) as Array<Record<string, unknown>>;
 
 			const populated = new Set<string>();
 			for (const entry of entries) {
