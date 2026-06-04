@@ -47,11 +47,6 @@ const isBackgroundFeature = (feature: unknown): feature is BackgroundFeature =>
 		feature.description == null ||
 		typeof feature.description === "string");
 
-// ---------------------------------------------------------------------------
-// Structured-description mechanic parser
-// ---------------------------------------------------------------------------
-
-/** Keywords that indicate structured mechanic phrases within descriptions */
 const MECHANIC_KEYWORD_PATTERNS: { label: string; pattern: RegExp }[] = [
 	{ label: "Advantage", pattern: /\badvantage on\b/i },
 	{ label: "Proficiency", pattern: /\bproficiency\b/i },
@@ -100,7 +95,6 @@ function parseStructuredMechanics(
 		}
 	}
 
-	// Parse structured mechanics JSON if present
 	if (mechanics && typeof mechanics === "object" && !Array.isArray(mechanics)) {
 		const mech = mechanics as Record<string, unknown>;
 
@@ -122,10 +116,6 @@ function parseStructuredMechanics(
 	return result;
 }
 
-// ---------------------------------------------------------------------------
-// UI Components
-// ---------------------------------------------------------------------------
-
 function BackgroundChipGroup({
 	label,
 	values,
@@ -136,16 +126,13 @@ function BackgroundChipGroup({
 	label: string;
 	values: string[];
 	variant?: "default" | "secondary" | "outline";
-	/** F8 of May 2026 remediation plan — values already granted by an
-	 * earlier wizard step (e.g. Job → Background dup detection). Chips
-	 * that match (case-insensitive) get a yellow border + tooltip. */
 	alreadyGranted?: string[];
 	alreadyGrantedSource?: string;
 }) {
 	if (values.length === 0) return null;
 
 	const grantedLookup = new Set(
-		(alreadyGranted ?? []).map((v) => v.trim().toLowerCase()),
+		(alreadyGranted ?? []).map((value) => value.trim().toLowerCase()),
 	);
 
 	return (
@@ -167,12 +154,12 @@ function BackgroundChipGroup({
 							}
 							title={
 								isDup
-									? `Already granted by ${alreadyGrantedSource ?? "another step"} — will be de-duplicated on create.`
+									? `Already granted by ${alreadyGrantedSource ?? "another step"}; will be de-duplicated on create.`
 									: undefined
 							}
 							aria-label={
 								isDup
-									? `${value} — duplicate of ${alreadyGrantedSource ?? "earlier"} grant`
+									? `${value}; duplicate of ${alreadyGrantedSource ?? "earlier"} grant`
 									: undefined
 							}
 							data-already-granted={isDup ? "true" : undefined}
@@ -212,7 +199,6 @@ function BackgroundFeatureCard({
 				</AscendantText>
 			)}
 
-			{/* Structured Mechanics Blocks */}
 			{hasStructuredMechanics && (
 				<div className="mt-2 space-y-2">
 					{mechanics.keywords.length > 0 && (
@@ -232,7 +218,7 @@ function BackgroundFeatureCard({
 					{mechanics.proficiencies.length > 0 && (
 						<div className="text-[10px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
-								Grants:{" "}
+								Grants: {" "}
 							</span>
 							<span className="text-primary/80">
 								{mechanics.proficiencies.map(formatRegentVernacular).join(", ")}
@@ -243,7 +229,7 @@ function BackgroundFeatureCard({
 					{mechanics.equipmentBundle.length > 0 && (
 						<div className="text-[10px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
-								Equipment:{" "}
+								Equipment: {" "}
 							</span>
 							<span className="text-primary/80">
 								{mechanics.equipmentBundle
@@ -256,7 +242,7 @@ function BackgroundFeatureCard({
 					{mechanics.downtimeHooks.length > 0 && (
 						<div className="text-[10px]">
 							<span className="text-muted-foreground font-medium uppercase tracking-wider">
-								Downtime:{" "}
+								Downtime: {" "}
 							</span>
 							<span className="text-primary/80">
 								{mechanics.downtimeHooks.map(formatRegentVernacular).join(", ")}
@@ -273,8 +259,6 @@ interface BackgroundStepProps {
 	selectedBackground: string;
 	onBackgroundChange: (backgroundId: string) => void;
 	allBackgrounds: (Background & { _homebrew?: boolean })[];
-	/** F8 of May 2026 remediation plan — proficiencies already granted by
-	 * the Job step, used to flag duplicates inline. */
 	jobGrantedSkills?: string[];
 	jobGrantedTools?: string[];
 	jobName?: string;
@@ -289,7 +273,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 	jobName,
 }) => {
 	const selectedBackgroundData = allBackgrounds.find(
-		(b) => b.id === selectedBackground,
+		(background) => background.id === selectedBackground,
 	);
 	const backgroundLanguages: string[] = Array.isArray(
 		selectedBackgroundData?.languages,
@@ -305,7 +289,7 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 		: [];
 	const backgroundInventory = collectStringValues(
 		selectedBackgroundData?.starting_equipment ??
-			(selectedBackgroundData as { equipment?: unknown }).equipment,
+			(selectedBackgroundData as { equipment?: unknown } | undefined)?.equipment,
 	);
 	const singularFeature =
 		selectedBackgroundData?.feature_name &&
@@ -337,10 +321,12 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 								<SelectValue placeholder="Choose a background protocol..." />
 							</SelectTrigger>
 							<SelectContent>
-								{allBackgrounds.map((bg) => (
-									<SelectItem key={bg.id} value={bg.id}>
-										{formatRegentVernacular(bg.display_name || bg.name)}
-										{bg._homebrew && (
+								{allBackgrounds.map((background) => (
+									<SelectItem key={background.id} value={background.id}>
+										{formatRegentVernacular(
+											background.display_name || background.name,
+										)}
+										{background._homebrew && (
 											<Badge
 												variant="outline"
 												className="ml-2 text-[8px] uppercase h-4"
@@ -397,7 +383,6 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 									values={backgroundLanguages}
 								/>
 
-								{/* Starting Wealth / Credits */}
 								{selectedBackgroundData.starting_credits != null && (
 									<div className="space-y-1">
 										<Label className="text-[9px] uppercase tracking-tighter text-muted-foreground">
@@ -411,7 +396,6 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 									</div>
 								)}
 
-								{/* Starting Equipment */}
 								<div className="md:col-span-2">
 									<BackgroundChipGroup
 										label="Starting Inventory Pack"
@@ -420,7 +404,6 @@ export const BackgroundStep: React.FC<BackgroundStepProps> = ({
 									/>
 								</div>
 
-								{/* Background Features (Support both array and singular) */}
 								<div className="md:col-span-2 space-y-3 pt-2">
 									{displayFeatures.length > 0 && (
 										<div className="space-y-3">
