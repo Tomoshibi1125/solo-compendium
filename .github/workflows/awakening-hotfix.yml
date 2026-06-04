@@ -1,0 +1,75 @@
+name: Apply awakening hotfix
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply-awakening-hotfix:
+    if: contains(github.event.head_commit.message, 'run-awakening-hotfix')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Patch character awakening creation flow
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: Path, old: str, new: str) -> bool:
+              text = path.read_text()
+              if old not in text:
+                  raise SystemExit(f"Expected patch target not found in {path}: {old[:120]!r}")
+              path.write_text(text.replace(old, new, 1))
+              return True
+
+          character_new = Path("src/pages/CharacterNew.tsx")
+          replace_once(
+              character_new,
+              "\t\tsetLoading(true);\n\t\ttry {",
+              "\t\tsetLoading(true);\n\t\tlet createdCharacterId: string | null = null;\n\t\ttry {",
+          )
+          replace_once(
+              character_new,
+              "\t\t\t});\n\t\t\tconst creationAbilityContext: CharacterAbilityAccessContext = {",
+              "\t\t\t});\n\t\t\tcreatedCharacterId = character.id;\n\t\t\tconst creationAbilityContext: CharacterAbilityAccessContext = {",
+          )
+          replace_once(
+              character_new,
+              '''\t\t} catch (error) {\n\t\t\tconsole.error("Initialization failed:", error);\n\t\t\ttoast({ title: "Initialization Failed", variant: "destructive" });\n\t\t} finally {''',
+              '''\t\t} catch (error) {\n\t\t\tconsole.error("Initialization failed:", error);\n\t\t\tconst message =\n\t\t\t\terror instanceof Error\n\t\t\t\t\t? error.message\n\t\t\t\t\t: "Review console logs for details.";\n\t\t\tif (createdCharacterId) {\n\t\t\t\ttoast({\n\t\t\t\t\ttitle: "Awakening partially initialized",\n\t\t\t\t\tdescription: `${name} was created, but one post-creation setup step failed: ${message}`,\n\t\t\t\t\tvariant: "destructive",\n\t\t\t\t});\n\t\t\t\tnavigate(safeNext ?? `/characters/${createdCharacterId}`);\n\t\t\t} else {\n\t\t\t\ttoast({\n\t\t\t\t\ttitle: "Initialization Failed",\n\t\t\t\t\tdescription: message,\n\t\t\t\t\tvariant: "destructive",\n\t\t\t\t});\n\t\t\t}\n\t\t} finally {''',
+          )
+
+          creation = Path("src/lib/characterCreation.ts")
+          replace_once(
+              creation,
+              '''\t// Path benefits\n\tconst { data: character } = await supabase\n\t\t.from("characters")\n\t\t.select("path")\n\t\t.eq("id", characterId)\n\t\t.single();\n\tif (character?.path) {\n\t\tconst staticPaths = getStaticPaths();\n\t\tconst pathData = staticPaths.find((p) => p.name === character.path);''',
+              '''\t// Path benefits. Guest/local character ids are not UUIDs, so do not\n\t// query Supabase for them during creation.\n\tconst characterPath = isLocalCharacterId(characterId)\n\t\t? ((getLocalCharacterWithAbilities(characterId) as { path?: string | null } | null)\n\t\t\t\t?.path ?? null)\n\t\t: (\n\t\t\t\tawait supabase\n\t\t\t\t\t.from("characters")\n\t\t\t\t\t.select("path")\n\t\t\t\t\t.eq("id", characterId)\n\t\t\t\t\t.maybeSingle()\n\t\t\t).data?.path ?? null;\n\tif (characterPath) {\n\t\tconst staticPaths = getStaticPaths();\n\t\tconst pathData = staticPaths.find((p) => p.name === characterPath);''',
+          )
+          replace_once(
+              creation,
+              '''\t// Regent benefits\n\tconst { data: regentChoices } = await supabase\n\t\t.from("character_regents")\n\t\t.select("regent_id")\n\t\t.eq("character_id", characterId);\n\tif (regentChoices && regentChoices.length > 0) {''',
+              '''\t// Regent benefits. Guest/local characters do not have Supabase regent rows.\n\tconst { data: regentChoices } = isLocalCharacterId(characterId)\n\t\t? { data: [] as Array<{ regent_id: string }> }\n\t\t: await supabase\n\t\t\t\t.from("character_regents")\n\t\t\t\t.select("regent_id")\n\t\t\t\t.eq("character_id", characterId);\n\tif (regentChoices && regentChoices.length > 0) {''',
+          )
+
+          print("Awakening hotfix applied")
+          PY
+
+      - name: Commit patched files
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/pages/CharacterNew.tsx src/lib/characterCreation.ts
+          git commit -m "Guard character awakening initialization"
+          git push
