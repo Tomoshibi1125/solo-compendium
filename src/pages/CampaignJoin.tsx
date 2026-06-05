@@ -91,6 +91,7 @@ const CampaignJoin = () => {
 		? isCampaignInviteJoinable(inviteStatus)
 		: false;
 	const isJoining = joinCampaign.isPending || redeemInvite.isPending;
+	const creationCampaignId = campaign?.id ?? invite?.campaign_id ?? "";
 
 	const handleJoin = async () => {
 		try {
@@ -408,7 +409,11 @@ const CampaignJoin = () => {
 							</AscendantText>
 							<Button variant="outline" className="w-full" asChild>
 								<Link
-									to={`/characters/new?next=${encodeURIComponent(resumePath)}`}
+									to={
+										creationCampaignId
+											? `/characters/new?campaignId=${encodeURIComponent(creationCampaignId)}`
+											: "/characters/new"
+									}
 								>
 									Create Ascendant First
 								</Link>
