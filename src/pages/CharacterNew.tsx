@@ -1592,7 +1592,14 @@ const CharacterNew = () => {
 			navigate(safeNext ?? `/characters/${character.id}`);
 		} catch (error) {
 			console.error("Initialization failed:", error);
-			toast({ title: "Initialization Failed", variant: "destructive" });
+			toast({
+				title: "Initialization Failed",
+				description:
+					error instanceof Error
+						? error.message
+						: "An unknown error occurred during awakening.",
+				variant: "destructive",
+			});
 		} finally {
 			setLoading(false);
 		}

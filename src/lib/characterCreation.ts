@@ -19,6 +19,7 @@ import {
 	addLocalFeature,
 	addLocalPower,
 	addLocalSpell,
+	getLocalCharacterState,
 	getLocalCharacterWithAbilities,
 	isLocalCharacterId,
 	listLocalFeatures,
@@ -3368,14 +3369,27 @@ export async function addJobAwakeningBenefitsForLevel(
 	}
 
 	// Path benefits
-	const { data: character } = await supabase
-		.from("characters")
-		.select("path")
-		.eq("id", characterId)
-		.single();
-	if (character?.path) {
+	let characterPath: string | null = null;
+	if (isLocalCharacterId(characterId)) {
+		const localChar = getLocalCharacterState(characterId);
+		characterPath = localChar?.character?.path ?? null;
+	} else {
+		const { data: character, error: pathReadErr } = await supabase
+			.from("characters")
+			.select("path")
+			.eq("id", characterId)
+			.maybeSingle();
+		if (pathReadErr) {
+			console.warn(
+				"addJobAwakeningBenefitsForLevel: failed to read character path",
+				pathReadErr,
+			);
+		}
+		characterPath = character?.path ?? null;
+	}
+	if (characterPath) {
 		const staticPaths = getStaticPaths();
-		const pathData = staticPaths.find((p) => p.name === character.path);
+		const pathData = staticPaths.find((p) => p.name === characterPath);
 		const pathUnlockLevel = pathData
 			? getStaticPathUnlockLevel(pathData)
 			: null;
@@ -3403,11 +3417,21 @@ export async function addJobAwakeningBenefitsForLevel(
 		}
 	}
 
-	// Regent benefits
-	const { data: regentChoices } = await supabase
-		.from("character_regents")
-		.select("regent_id")
-		.eq("character_id", characterId);
+	// Regent benefits (guest/local characters don't have regent_choices in Supabase)
+	let regentChoices: Array<{ regent_id: string }> | null = null;
+	if (!isLocalCharacterId(characterId)) {
+		const { data: regentData, error: regentReadErr } = await supabase
+			.from("character_regents")
+			.select("regent_id")
+			.eq("character_id", characterId);
+		if (regentReadErr) {
+			console.warn(
+				"addJobAwakeningBenefitsForLevel: failed to read regent choices",
+				regentReadErr,
+			);
+		}
+		regentChoices = regentData as Array<{ regent_id: string }> | null;
+	}
 	if (regentChoices && regentChoices.length > 0) {
 		const { regents: staticRegents } = await import(
 			"@/data/compendium/regents"
@@ -3678,11 +3702,11 @@ export async function addInnateChannelingForLevel(
 export async function addLevel1Features(
 	characterId: string,
 	job: JobReference,
-	background: StaticBackground | null | undefined,
+	_background?: StaticBackground | null | undefined,
 ): Promise<void> {
 	const jobName = typeof job === "string" ? job : job?.name;
-	if (!jobName || !background) {
-		console.warn("Cannot add level 1 features: job or background missing");
+	if (!jobName) {
+		console.warn("Cannot add level 1 features: job missing");
 		return;
 	}
 
