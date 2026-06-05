@@ -91,10 +91,15 @@ test("warden AoE pin lifecycle: pin a measurement, confirm scene drawing, clear 
 	await expect(pinButton).toBeHidden({ timeout: 5_000 });
 
 	// ── 4. Confirm the AoE drawing is in the scene ──────────────────────
-	// Pinned drawings are rendered with a `data-aoe-id` attribute.
-	await expect(page.locator("[data-aoe-id]")).toHaveCount(1, {
-		timeout: 5_000,
-	});
+	// The default measure shape is "line" (VTTEnhanced.tsx:936): a pinned line
+	// renders as `.vtt-drawing-line`, while cone/circle/cube pins carry
+	// `data-aoe-id`. Accept either so the check is shape-agnostic — the
+	// shape-independent "Clear AoE Templates (1)" assertion below is the real
+	// proof the pin produced a counted, persistent AoE template.
+	await expect(page.locator("[data-aoe-id], .vtt-drawing-line")).toHaveCount(
+		1,
+		{ timeout: 5_000 },
+	);
 
 	// ── 5. Open the Toolbox Measure sub-panel ───────────────────────────
 	await page.getByTestId("vtt-rail-left-toolbox").click();

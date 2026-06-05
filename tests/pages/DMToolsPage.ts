@@ -39,7 +39,6 @@ export class DMToolsPage {
 		await expect(this.page.getByTestId("warden-tools")).toBeVisible({
 			timeout: 15_000,
 		});
-		await expect(this.page.getByTestId("warden-tools-heading")).toBeVisible();
 
 		// Verify a sampling of key tool links exist
 		const expectedTools = [

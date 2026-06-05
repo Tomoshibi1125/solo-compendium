@@ -14,14 +14,16 @@ export interface SandboxWardenNote {
 
 export const sandboxWardenNotes: SandboxWardenNote[] = [
 	{
-		title: "Secret 1 — The Regent Was Once Human",
+		title: "Secret 1 — The Regent Was Never Human",
 		category: "warden-secret",
 		content: [
-			"**Warden ONLY.** The Regent was once a human Ascendant who stayed behind during an early high-rank Gate event to prevent collapse. The Domain wrote itself around his grief, duty, hunger, and refusal to die. Over time, the Anchor became a ruler.",
+			"**Warden ONLY.** The Regent is not, and was never, a person. He is the Gloamreach's Anchor — domain authority with will, an Anomaly-class entity carrying the Kael Voss signature: umbral command, extracted echoes, and a sovereignty that refuses to collapse. He did not lose his humanity. He never had any to lose.",
 			"",
-			"This does not excuse him. It makes the final confrontation hurt. He has had countless chances to stop treating people as property and chose the throne every time.",
+			"Everything the party finds will say otherwise. The Domain curates a human past for him — a Bureau Room, the Faded Family Photo, an Unopened Commendation, Ms. Park's Wedding Ring — assembled from the relics and extracted echoes of the people it has already claimed. This is the Gloamreach's deepest Lie and its cruelest bait: an impossible archive (Xylo) dressed in comfort (Elara), built to make the party believe there is a soul to save so that their mercy becomes a lever the Regent can pull.",
 			"",
-			"**Reveal tools:** The Faded Family Photo, Ms. Park's Wedding Ring, the Unopened Commendation, the Bureau Room in the Citadel, Old Man Crane's testimony, or a Claim contradiction in the Throne Court.",
+			"The grief is real — those keepsakes belonged to real claimed victims of the Domain — but they were never *his*. Play the reveal so it lands: the party may spend the campaign trying to redeem a lost human, and learn at the throne that the human remnant was a costume worn by ownership itself.",
+			"",
+			"**Reveal tools:** The Faded Family Photo, Ms. Park's Wedding Ring, the Unopened Commendation, the fabricated Bureau Room in the Citadel, Old Man Crane's testimony, or a Claim contradiction in the Throne Court — each reads two ways until the finale forces the truth.",
 		].join("\n"),
 	},
 	{
@@ -63,9 +65,9 @@ export const sandboxWardenNotes: SandboxWardenNote[] = [
 		title: "Secret 5 — The Timeline Is Pressure, Not Railroad",
 		category: "warden-secret",
 		content: [
-			"**Warden ONLY.** The 14-day Gloamreach timeline is real pressure, but it should not override decisive party action. If the party acts early, bend the clock. If they delay, escalate consequences.",
+			"**Warden ONLY.** The Gloamreach Gate Break track is a ~12-week, three-act pressure clock — real pressure, but it should not override decisive party action. If the party acts early, bend the clock. If they delay, escalate consequences.",
 			"",
-			"Day 14 is Citadel Day by default. If the party has not reached the Citadel, do not simply force a final boss through the roof. Instead escalate Red Phase pressure, settlement annexation, Bailiff authority, Awoko inheritance leverage, or Claim countermeasures.",
+			"The final Break Stage (around Day 84) is Citadel Day by default. If the party has not reached the Citadel, do not simply force a final boss through the roof. Instead escalate Red Phase pressure, settlement annexation, Bailiff authority, Awoko inheritance leverage, or Claim countermeasures.",
 			"",
 			"The clock should make the Domain feel alive. It should not steal agency.",
 		].join("\n"),
@@ -76,18 +78,18 @@ export const sandboxWardenNotes: SandboxWardenNote[] = [
 		content: [
 			"The Faded Family Photo is the strongest emotional prop in the campaign. It should be recoverable in Day Zero, the Drowned Ledgerfen, or the Citadel's Bureau Room.",
 			"",
-			"If the party brings it to the Throne Court or Anchor-Undercroft, the Regent recognizes what is missing before he recognizes himself. This can trigger the Human Remnant phase, create hesitation, or make his rage colder and more personal.",
+			"If the party brings it to the Throne Court or Anchor-Undercroft, the Regent studies it the way a collector studies a specimen — and for one breath the curated mask flickers, as if something is *supposed* to be remembered here. Play it ambiguously: a genuine fracture in the Domain's costume, or a predator performing exactly the hesitation the party most wants to see. Either reading can buy a beat of doubt, colder rage, or a fragile opening.",
 		].join("\n"),
 	},
 	{
 		title: "Plot Beat — Blackwood's Classified Mission",
 		category: "plot-beat",
 		content: [
-			"Agent Kira Blackwood was sent to investigate pre-threshold Claim resonance before the Bureau publicly admitted the Gloamreach was a Regent Domain.",
+			"Agent Kira Blackwood was sent to read pre-threshold Claim resonance before the Bureau had confirmed the Gloamreach was a Regent Domain. Her findings are classified above the party's clearance.",
 			"",
-			"She is not secretly working for the Regent. Her danger is institutional loyalty under pressure. She may hide evidence, misdirect the party, or confess depending on how they handle Bureau trust.",
+			"She is not working for the Regent. Her danger is institutional loyalty under pressure: she may withhold classified data, default to protocol when instinct says otherwise, or level with the party — depending on how they handle Bureau trust.",
 			"",
-			"Use Blackwood to show that the Bureau can be brave in the field and dishonest at command level at the same time.",
+			"Use Blackwood to show that the Bureau can be brave in the field and bound by caution at command level at the same time — overwhelmed and rule-bound, never dishonest.",
 		].join("\n"),
 	},
 	{
@@ -116,13 +118,13 @@ export const sandboxWardenNotes: SandboxWardenNote[] = [
 		title: "Pressure Clock — Gloamreach Timeline",
 		category: "pressure-clock",
 		content: [
-			"See `sandbox-timeline.ts` for structured events. Key beats:",
-			"- Day 1: Threshold Day. The Gate becomes unreliable behind the party.",
-			"- Day 2: First Tribute. The party sees how settlements lease safety.",
-			"- Day 5: The Bailiff's first public judgment.",
-			"- Day 10: The Claim Race begins in earnest.",
-			"- Day 12: Ritual of Inheritance reaches full strength if not disrupted.",
-			"- Day 14: Citadel Day or Red Phase pressure escalation.",
+			"See `sandbox-timeline.ts` for the full Gate Break track — a ~12-week, three-act pressure clock (not a 14-day countdown). Key beats:",
+			"- Act I (L1-5) · Day 1: Threshold Day. The Gate becomes unreliable behind the party.",
+			"- Act I · Day 4: First Tribute. The party sees how settlements lease safety.",
+			"- Act II (L6-10) · Day 20: The Bailiff's first public judgment.",
+			"- Act III (L11-15) · Day 58: The Claim Race begins in earnest.",
+			"- Act III · Day 74: Ritual of Inheritance reaches full strength if not disrupted.",
+			"- Act III · Day 84: Citadel Day and the Gate Break threshold.",
 		].join("\n"),
 	},
 ];

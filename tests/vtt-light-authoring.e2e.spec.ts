@@ -109,7 +109,12 @@ test("warden light authoring: place, edit, and delete a configurable light", asy
 	// ── 4. Verify the light appears in the toolbox list ──────────────────
 	await openToolboxDrawer();
 	const lightPanel = page.getByTestId("warden-tools-light-panel");
-	await expect(lightPanel.getByText("Sconce A").first()).toBeVisible({
+	// Match the visible name <span> exactly — a non-exact match also hits the
+	// hidden SVG <title> "Sconce A color" (VTTEnhanced.tsx:5705), whose
+	// .first() is not visible.
+	await expect(
+		lightPanel.getByText("Sconce A", { exact: true }).first(),
+	).toBeVisible({
 		timeout: 5_000,
 	});
 
@@ -138,7 +143,9 @@ test("warden light authoring: place, edit, and delete a configurable light", asy
 	if (!(await lightPanel.isVisible().catch(() => false))) {
 		await openToolboxDrawer();
 	}
-	await expect(lightPanel.getByText(/Sconce A \(renamed\)/i)).toBeVisible({
+	await expect(
+		lightPanel.getByText("Sconce A (renamed)", { exact: true }),
+	).toBeVisible({
 		timeout: 5_000,
 	});
 

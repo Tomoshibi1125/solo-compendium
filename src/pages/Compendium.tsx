@@ -23,7 +23,6 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { CompendiumSidebar } from "@/components/compendium/CompendiumSidebar";
 import { EmptyState } from "@/components/compendium/EmptyState";
@@ -966,12 +965,16 @@ const Compendium = () => {
 	};
 
 	// Highlight search terms in text (sanitized)
+	// Card title/description rendering. The whole card is already a <Link>, so we
+	// must NOT emit AutoLinkText (which renders inner <a> cross-reference links):
+	// nested anchors are invalid HTML and break keyboard / screen-reader nav.
+	// Detail pages still use AutoLinkText where it is not nested inside a card link.
 	const highlightText = (text: string, query: string) => {
+		const displayText = formatRegentVernacular(text);
 		if (!query.trim()) {
-			return <AutoLinkText text={text} />;
+			return <>{displayText}</>;
 		}
 
-		const displayText = formatRegentVernacular(text);
 		const displayQuery = formatRegentVernacular(query);
 		const escapedQuery = displayQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 		const parts = displayText.split(new RegExp(`(${escapedQuery})`, "gi"));
@@ -986,7 +989,7 @@ const Compendium = () => {
 					{part}
 				</mark>
 			) : (
-				<AutoLinkText key={uniqueKey} text={part} />
+				<span key={uniqueKey}>{part}</span>
 			);
 		});
 	};

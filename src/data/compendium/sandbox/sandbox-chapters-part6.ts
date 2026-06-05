@@ -82,7 +82,7 @@ Hayashi can provide the party with the **Research Brief: Regent Domains** handou
 
 Twelve drawers. Too many occupied. Behind an unmarked door, the Echo Room preserves fragments of last memories in mana-saline.
 
-Use this room to show the cost of failed clears. It can reveal a dead team's final words, confirm Regent-Marked symptoms, or foreshadow that the Regent was once human.
+Use this room to show the cost of the Domain's appetite. It can surface final words the Gloamreach has kept from those it claimed, confirm Regent-Marked symptoms, or plant the Domain's bait — the first curated hint that the Regent was "once human" (he was not).
 
 ## Room 7 - Commander Park's Office
 

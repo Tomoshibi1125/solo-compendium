@@ -158,7 +158,6 @@ import {
 	useCampaignRole,
 } from "@/hooks/useCampaigns";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useWardenToolsEnhancements } from "@/hooks/useGlobalDDBeyondIntegration";
 import { useLiveKitToken } from "@/hooks/useLiveKitToken";
 import {
 	type TargetedApplyResult,
@@ -837,7 +836,6 @@ const VTTEnhanced = () => {
 		3: true,
 	});
 
-	const { saveVTTScene } = useWardenToolsEnhancements(campaignId);
 	const [selectedTool, setSelectedTool] = useState<
 		| "select"
 		| "fog"
@@ -1877,14 +1875,6 @@ const VTTEnhanced = () => {
 			savedAt: new Date().toISOString(),
 		};
 		void saveNow(state);
-
-		if (campaignId && currentScene) {
-			void saveVTTScene(campaignId, {
-				name: currentScene.name,
-				backgroundImage: currentScene.backgroundImage,
-				tokens: currentScene.tokens,
-			});
-		}
 
 		toast({
 			title: "Saved!",

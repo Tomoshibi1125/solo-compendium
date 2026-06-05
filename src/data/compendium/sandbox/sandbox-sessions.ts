@@ -96,7 +96,7 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 1 — The Gate Threshold and Hollow Subway",
 		description:
-			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Gate is only the door. The Hollow Subway teaches that modern spaces inside the Gloamreach are masks worn by Domain law. Level 1-2.",
+			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Gate is only the door. The Hollow Subway teaches that modern spaces inside the Gloamreach are masks worn by Domain law. Level 1-3.",
 		status: "planned",
 		order: 1,
 		recommendedLevel: 1,
@@ -126,10 +126,10 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 2 — Road of Writs and the First Tribute",
 		description:
-			"The party leaves the threshold and meets the Road of Writs. A settlement's tribute reveals the core campaign horror: safety inside the Gloamreach is leased, never free. Level 2-3.",
+			"The party leaves the threshold and meets the Road of Writs. A settlement's tribute reveals the core campaign horror: safety inside the Gloamreach is leased, never free. Level 3-5.",
 		status: "planned",
 		order: 2,
-		recommendedLevel: 2,
+		recommendedLevel: 3,
 		sceneRefs: ["Road of Writs", "Writ-Bound Hamlet", "Drowned Ledgerfen"],
 		npcRefs: ["Quartermaster Lin Mei-hua", "Mika the Kid", "The Catalog"],
 		logs: [
@@ -150,10 +150,10 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 3 — Vermillion, the Orchard, and the Awoko Seed",
 		description:
-			"The party reaches the Vermillion Outpost and then a settlement or Domain site where grief is being recruited. The Awoko become more than villains: they offer real comfort with predatory intent. Level 3-5.",
+			"The party reaches the Vermillion Outpost and then a settlement or Domain site where grief is being recruited. The Awoko become more than villains: they offer real comfort with predatory intent. Level 5-7.",
 		status: "planned",
 		order: 3,
-		recommendedLevel: 3,
+		recommendedLevel: 5,
 		sceneRefs: ["Vermillion Outpost", "Remembering Orchard", "Awoko Sanctum approach"],
 		npcRefs: ["Guildmaster Orin", "Rat-King Ji", "The Hollow Mother", "Sister Veil"],
 		logs: [
@@ -174,10 +174,10 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 4 — Bailiff Judgment and Bastion Golemfall",
 		description:
-			"The Regent's Bailiff appears publicly to enforce a charge. The party then confronts Bastion Golemfall or the Sunken Tunnels, learning that oaths and debts can survive death. Level 5-7.",
+			"The Regent's Bailiff appears publicly to enforce a charge. The party then confronts Bastion Golemfall or the Sunken Tunnels, learning that oaths and debts can survive death. Level 7-10.",
 		status: "planned",
 		order: 4,
-		recommendedLevel: 5,
+		recommendedLevel: 7,
 		sceneRefs: ["Road of Writs", "Bastion Golemfall", "Sunken Tunnels"],
 		npcRefs: ["The Regent's Bailiff", "Commander Without a Body", "Old Man Crane"],
 		logs: [
@@ -193,10 +193,10 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 5 — The Obsidian Spire and the Claim Race",
 		description:
-			"The campaign enters late midgame. The party climbs the Obsidian Spire, faces reflected temptations of authority, and races factions for one or more Claims. Level 7-9.",
+			"The campaign enters late midgame. The party climbs the Obsidian Spire, faces reflected temptations of authority, and races factions for one or more Claims. Level 10-13.",
 		status: "planned",
 		order: 5,
-		recommendedLevel: 7,
+		recommendedLevel: 10,
 		sceneRefs: ["Obsidian Spire", "Forbidden Vault", "Mana Vein Network"],
 		npcRefs: ["The Watcher", "Professor Lun", "The Hollow Mother"],
 		logs: [
@@ -217,10 +217,10 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 6 — Citadel Day",
 		description:
-			"Final castle-scale confrontation. The party enters the Regent's Citadel, faces the Throne Court, and resolves the Anchor through breaking, sealing, transforming, or inheriting. Level 10.",
+			"Final castle-scale confrontation. The party enters the Regent's Citadel, faces the Throne Court, and resolves the Anchor through breaking, sealing, transforming, or inheriting. Level 13-15.",
 		status: "planned",
 		order: 6,
-		recommendedLevel: 10,
+		recommendedLevel: 13,
 		sceneRefs: ["The Regent's Citadel", "Throne Court", "Anchor-Undercroft"],
 		npcRefs: ["The Regent", "Dr. Serin Hayashi", "Commander Park Jae-won", "Old Man Crane"],
 		logs: [

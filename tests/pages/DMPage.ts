@@ -42,8 +42,13 @@ export class DMPage {
 	async createCampaign(name: string, description?: string): Promise<string> {
 		await this.page.goto("/campaigns");
 
-		// Open "Create Guild" dialog
-		await this.page.getByRole("button", { name: /Create Guild/i }).click();
+		// Open the create-campaign dialog (button was "Create Guild" pre-rename)
+		await this.page
+			.getByRole("button", {
+				name: /^(Create Campaign|Establish Your Campaign)$/i,
+			})
+			.first()
+			.click();
 
 		// Fill form
 		await this.page.fill("#campaign-name", name);
@@ -52,7 +57,9 @@ export class DMPage {
 		}
 
 		// Submit
-		await this.page.getByRole("button", { name: /Establish Guild/i }).click();
+		await this.page
+			.getByRole("button", { name: /^Establish Campaign$/i })
+			.click();
 
 		// Wait for navigation to /campaigns/:id
 		await this.page.waitForURL(/\/campaigns\/[a-z0-9-]+/i, { timeout: 20_000 });
@@ -98,8 +105,13 @@ export class DMPage {
 	}): Promise<string> {
 		await this.page.goto("/campaigns");
 
-		// Open "Create Guild" dialog
-		await this.page.getByRole("button", { name: /Create Guild/i }).click();
+		// Open the create-campaign dialog (button was "Create Guild" pre-rename)
+		await this.page
+			.getByRole("button", {
+				name: /^(Create Campaign|Establish Your Campaign)$/i,
+			})
+			.first()
+			.click();
 
 		// Fill basic info
 		await this.page.fill("#campaign-name", opts.name);
@@ -176,7 +188,7 @@ export class DMPage {
 
 		// Submit
 		await this.page
-			.getByRole("button", { name: /Establish Guild|Create Campaign/i })
+			.getByRole("button", { name: /^Establish Campaign$/i })
 			.click();
 
 		// Wait for navigation to /campaigns/:id

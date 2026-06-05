@@ -96,9 +96,10 @@ export function useCampaignAnalytics() {
 				const { data: characterProgression } = await supabase
 					.from("campaign_member_characters")
 					.select(`
-          campaign_member_characters.*,
+          character_id,
           user_characters!left(
-            name as character_name
+            name,
+            level
           )
         `)
 					.eq("campaign_id", campaignId);
@@ -140,18 +141,21 @@ export function useCampaignAnalytics() {
 					JSON.stringify(characterProgression),
 				) as Array<{
 					character_id: string;
-					user_characters: { character_name: string } | null;
+					user_characters: { name: string | null; level: number | null } | null;
 				}>;
 
 				const levelProgression =
 					rawProgressions?.map((char) => {
-						// This would need to be enhanced with actual level tracking
-						// For now, we'll provide basic structure
+						// current_level is read live from the embedded user_characters
+						// row. starting_level / levels_gained remain placeholders: the
+						// schema has no level-history/snapshot table to source a true
+						// starting level from, so levels gained cannot be derived yet.
+						const currentLevel = char.user_characters?.level ?? 1;
 						return {
 							character_id: char.character_id,
-							character_name: char.user_characters?.character_name || "Unknown",
+							character_name: char.user_characters?.name || "Unknown",
 							starting_level: 1,
-							current_level: 1,
+							current_level: currentLevel,
 							levels_gained: 0,
 						};
 					}) || [];

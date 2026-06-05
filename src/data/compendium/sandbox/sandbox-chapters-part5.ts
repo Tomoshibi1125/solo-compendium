@@ -165,7 +165,7 @@ Maps show every route the party took, including choices they hid from allies. Th
 
 ### 7. The Bureau Room
 
-A modern office preserved inside the Citadel. It contains the Unopened Commendation, fragments of old Bureau history, and evidence that the Regent was once human.
+A modern office preserved — impossibly — inside the Citadel (a Xylo archive that should not exist). It contains the Unopened Commendation, fragments of Bureau history the Domain has no honest way of possessing, and curated "evidence" that the Regent was once human. None of it is true; all of it is bait, assembled from the echoes of the claimed.
 
 ### 8. The Orchard Room
 

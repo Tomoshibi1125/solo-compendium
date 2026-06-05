@@ -143,14 +143,14 @@ export const sandboxQuests: SandboxQuest[] = [
 		title: "C-Rank: Blackwood's Quiet File",
 		rank: "C",
 		summary:
-			"Agent Kira Blackwood needs deniable help tracing pre-threshold Claim resonance. The file can expose Bureau command dishonesty without making Blackwood a villain.",
+			"Agent Kira Blackwood needs deniable help tracing pre-threshold Claim resonance. The file can surface classified findings command had sealed for caution — embarrassing, not dishonest — without making Blackwood a villain.",
 		objectives: [
 			"Recover Blackwood's sealed evidence from the Annex or Ledgerfen",
 			"Identify which Claim manifested before the threshold stabilized",
-			"Decide whether to reveal, bury, or weaponize the Bureau's secret",
+			"Decide whether to reveal, bury, or weaponize the sealed findings",
 		],
 		completionTriggers: [
-			"Blackwood confesses her real orders and backs the party.",
+			"Blackwood discloses her classified orders and backs the party.",
 			"The file is delivered to Park, Hayashi, Vermillion, or Central Command.",
 			"The evidence is destroyed to prevent institutional exploitation.",
 		],

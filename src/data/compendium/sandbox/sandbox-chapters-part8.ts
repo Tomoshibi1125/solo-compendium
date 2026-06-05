@@ -163,71 +163,71 @@ Roll once per long rest outside protected shelter.
 `,
 	},
 	{
-		title: "Chapter 36: The 14-Day Domain Pressure Timeline",
-		content: `# The 14-Day Domain Pressure Timeline
+		title: "Chapter 36: The Gloamreach Gate Break Track",
+		content: `# The Gloamreach Gate Break Track
 
 > *Clocks measure time. The Gloamreach measures consent.*
 > - Dr. Serin Hayashi
 
 ## Overview
 
-The Gloamreach has a 14-day Blue Phase failure window before Red Phase collapse becomes likely. This is not a district countdown. It is the Domain pressing its law toward the material world.
+The Gloamreach's Blue Phase fails in stages across the whole campaign — a Gate Break track spanning roughly twelve in-world weeks (Levels 1-15), grouped into three acts (I: L1-5, II: L6-10, III: L11-15). It is not a 14-day countdown and not a district clock. It is the Domain pressing its law toward the material world one provoked stage at a time, until Red Phase collapse becomes likely near the level-15 finale.
 
 Use this timeline as a pacing instrument. It should never override player agency. It advances pressure when the party delays, rests, travels, or ignores major threats.
 
-## Day 1 - Threshold Day
+## Day 1 · Act I — Threshold Day
 
 The party enters the Gloamreach. The Gate behind them becomes unreliable. The Road of Writs appears for the first time. The Oracle Reading should happen before the end of this day or as soon as the party reaches a safe reader.
 
-## Day 2 - First Tribute
+## Day 4 · Act I — First Tribute
 
 A nearby settlement pays tribute. The party may witness it, interrupt it, or only hear the bells afterward. The Drowned Ledgerfen becomes active.
 
-## Day 3 - The Road Learns
+## Day 8 · Act I — The Road Learns
 
 The Road of Writs begins responding to party choices. Anyone who signed a ledger, accepted hospitality, or gave a true name feels watched.
 
-## Day 4 - Hayashi's Warning
+## Day 13 · Act I — Hayashi's Warning
 
 A delayed Bureau transmission reaches the party. Dr. Hayashi confirms the Gloamreach is a Regent Domain, not a normal Gate. She warns them that killing creatures is not enough if the Anchor law survives.
 
-## Day 5 - The Bailiff's First Public Judgment
+## Day 20 · Act II — The Bailiff's First Public Judgment
 
 The Regent's Bailiff collects someone from a settlement or road camp. This should be visible, memorable, and legally framed. It announces charges before violence.
 
-## Day 6 - The Cult Moves
+## Day 27 · Act II — The Cult Moves
 
 Awoko agents begin open recruitment in grief-dense places. The Hollow Mother sends a message, sermon, or dream. She does not say she serves the Regent.
 
-## Day 7 - The Domain Tightens
+## Day 34 · Act II — The Domain Tightens
 
 Travel grows harder. Safe rests require tribute, guest-right, or faction shelter. The Sunken Tunnels and Bastion Golemfall become more active.
 
-## Day 8 - Crane's Memory
+## Day 41 · Act II — Crane's Memory
 
 Old Man Crane offers sealing lore or warns the party that some Regents can be contained only by sacrifice. If ignored, he goes alone toward the Citadel road.
 
-## Day 9 - The Hollow Mother Declares
+## Day 49 · Act II — The Hollow Mother Declares
 
 Awoko pamphlets, songs, or sermons spread through settlements. Civilian unrest rises. The cult claims the Regent offers ascension beyond Rank.
 
-## Day 10 - The Claim Race
+## Day 58 · Act III — The Claim Race
 
 If the party has recovered any Claim, enemies attempt to steal, corrupt, or legally invalidate it. If they have recovered none, the Regent sends an invitation that includes one precise clue.
 
-## Day 11 - Bureau Crisis
+## Day 66 · Act III — Bureau Crisis
 
 Central Command orders the Annex to prioritize Relic extraction over survivor recovery. Commander Park either obeys, delays, or defies this order depending on party reputation.
 
-## Day 12 - Ritual of Inheritance
+## Day 74 · Act III — Ritual of Inheritance
 
 The Awoko Sanctum reaches full ritual strength. If not disrupted, the Hollow Mother gains leverage over the final act and may attempt to inherit the Domain if the Regent weakens.
 
-## Day 13 - Final Preparations
+## Day 80 · Act III — Final Preparations
 
 All major factions understand that the Citadel approach is imminent. Allies must be chosen. Debts come due. The Road of Writs offers the shortest path and the worst terms.
 
-## Day 14 - Citadel Day
+## Day 84 · Act III — Citadel Day & the Break Threshold
 
 The party enters the Regent's Citadel or the Domain begins forcing Red Phase pressure onto the material world. Bureau floodlights outside the Gate dim. Inside the Gloamreach, every bell rings once.
 

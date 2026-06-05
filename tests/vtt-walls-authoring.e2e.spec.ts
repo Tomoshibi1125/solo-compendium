@@ -96,9 +96,11 @@ test("warden wall authoring: place, change type, and delete wall segments", asyn
 
 	// Empty state + default radio selection
 	await expect(wallPanel.getByText(/no walls placed/i)).toBeVisible();
-	await expect(page.getByTestId("warden-tools-wall-type-wall")).toHaveAttribute(
-		"aria-checked",
-		"true",
+	// The wall-type control is a styled <label> wrapping an sr-only radio
+	// input; the selected option is indicated by the `border-primary` class
+	// (there is no aria-checked on the label). See VTTEnhanced.tsx:5509.
+	await expect(page.getByTestId("warden-tools-wall-type-wall")).toHaveClass(
+		/border-primary/,
 	);
 
 	// Close the drawer so its overlay doesn't intercept drag events.
@@ -114,9 +116,8 @@ test("warden wall authoring: place, change type, and delete wall segments", asyn
 
 	// ── 3. Switch to Door + draw a second wall ──────────────────────────
 	await page.getByTestId("warden-tools-wall-type-door").click();
-	await expect(page.getByTestId("warden-tools-wall-type-door")).toHaveAttribute(
-		"aria-checked",
-		"true",
+	await expect(page.getByTestId("warden-tools-wall-type-door")).toHaveClass(
+		/border-primary/,
 	);
 	await closeTransientOverlays();
 

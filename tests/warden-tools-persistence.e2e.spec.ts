@@ -26,14 +26,14 @@ test.describe
 		test("rollable tables: tab + last roll persist after reload", async () => {
 			await dmPage.goto("/warden-directives/rollable-tables");
 			await expect(
-				dmPage.getByText("PROTOCOL WARDEN TABLES", { exact: false }).first(),
+				dmPage.getByRole("heading", { name: /Warden Tables/i }).first(),
 			).toBeVisible({ timeout: 15_000 });
 
 			// Wait for initial tool-state hydration to settle so immediate saves are not skipped.
 			await expect
 				.poll(async () => {
 					return await dmPage.evaluate(() =>
-						localStorage.getItem("solo-compendium.dm-tools.rollable-tables.v1"),
+						localStorage.getItem("solo-compendium.Warden-tools.rollable-tables.v1"),
 					);
 				})
 				.not.toBeNull();
@@ -55,7 +55,7 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
 						const raw = localStorage.getItem(
-							"solo-compendium.dm-tools.rollable-tables.v1",
+							"solo-compendium.Warden-tools.rollable-tables.v1",
 						);
 						if (!raw) return null;
 						try {
@@ -74,14 +74,14 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
 						const raw = localStorage.getItem(
-							"solo-compendium.dm-tools.rollable-tables.v1",
+							"solo-compendium.Warden-tools.rollable-tables.v1",
 						);
 						if (!raw) return "";
 						try {
 							const parsed = JSON.parse(raw) as {
 								results?: Record<string, string>;
 							};
-							return parsed.results?.reward ?? "";
+							return parsed.results?.["rift-rewards"] ?? "";
 						} catch {
 							return "";
 						}
@@ -94,7 +94,7 @@ test.describe
 			await dmPage.reload();
 
 			await expect(
-				dmPage.getByText("PROTOCOL WARDEN TABLES", { exact: false }).first(),
+				dmPage.getByRole("heading", { name: /Warden Tables/i }).first(),
 			).toBeVisible({ timeout: 15_000 });
 
 			// Rewards tab should still be active (Roll Reward button visible without re-clicking the tab).
@@ -111,14 +111,16 @@ test.describe
 		test("rift generator: selected rank + last rift persist after reload", async () => {
 			await dmPage.goto("/warden-directives/gate-generator");
 			await expect(
-				dmPage.getByText("RIFT GENERATOR", { exact: false }).first(),
+				dmPage
+					.getByRole("heading", { name: /Dimensional Rift Synthesis/i })
+					.first(),
 			).toBeVisible({ timeout: 15_000 });
 
 			// Wait for initial tool-state hydration to settle.
 			await expect
 				.poll(async () => {
 					return await dmPage.evaluate(() =>
-						localStorage.getItem("solo-compendium.dm-tools.gate-generator.v1"),
+						localStorage.getItem("solo-compendium.warden-directives.gate-generator.v2"),
 					);
 				})
 				.not.toBeNull();
@@ -139,7 +141,7 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
 						const raw = localStorage.getItem(
-							"solo-compendium.dm-tools.gate-generator.v1",
+							"solo-compendium.warden-directives.gate-generator.v2",
 						);
 						if (!raw) return null;
 						try {
@@ -158,7 +160,7 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
 						const raw = localStorage.getItem(
-							"solo-compendium.dm-tools.gate-generator.v1",
+							"solo-compendium.warden-directives.gate-generator.v2",
 						);
 						if (!raw) return false;
 						try {
@@ -175,7 +177,9 @@ test.describe
 
 			await dmPage.reload();
 			await expect(
-				dmPage.getByText("RIFT GENERATOR", { exact: false }).first(),
+				dmPage
+					.getByRole("heading", { name: /Dimensional Rift Synthesis/i })
+					.first(),
 			).toBeVisible({ timeout: 15_000 });
 
 			// UI should show the generated details.
@@ -195,7 +199,7 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() =>
 						localStorage.getItem(
-							"solo-compendium.dm-tools.treasure-generator.v1",
+							"solo-compendium.Warden-tools.treasure-generator.v1",
 						),
 					);
 				})
@@ -228,7 +232,7 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
 						const raw = localStorage.getItem(
-							"solo-compendium.dm-tools.treasure-generator.v1",
+							"solo-compendium.Warden-tools.treasure-generator.v1",
 						);
 						if (!raw) return null;
 						try {
@@ -247,7 +251,7 @@ test.describe
 				.poll(async () => {
 					return await dmPage.evaluate(() => {
 						const raw = localStorage.getItem(
-							"solo-compendium.dm-tools.treasure-generator.v1",
+							"solo-compendium.Warden-tools.treasure-generator.v1",
 						);
 						if (!raw) return false;
 						try {

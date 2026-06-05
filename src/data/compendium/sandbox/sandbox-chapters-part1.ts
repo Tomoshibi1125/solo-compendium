@@ -12,7 +12,7 @@ export const chaptersPart1: SandboxChapter[] = [
 
 ## Campaign Overview
 
-**The Shadow of the Regent** is a non-linear horror sandbox for 3-6 Ascendants, taking characters from Level 1 to Level 10. It is set inside **the Gloamreach**, an S-Rank Gate Domain behind one stabilized threshold.
+**The Shadow of the Regent** is a non-linear horror sandbox for 3-6 Ascendants, taking characters from Level 1 to Level 15. It is set inside **the Gloamreach**, an S-Rank Gate Domain behind one stabilized threshold.
 
 This is not a city-district crisis and not a cluster of unrelated Gates. The material world is the staging ground. The campaign space is the Domain.
 
@@ -20,9 +20,9 @@ The Gloamreach contains roads, settlements, predator woods, tithe sites, drowned
 
 ## Opening Situation
 
-The Bureau initially misclassifies the event as a high-density clear. Within hours, the truth becomes undeniable: the Gate opens into a coherent interior realm large enough to lose teams, distort distance, and produce settlements under foreign law.
+No Ascendant or Bureau team has gone inside yet, so the Bureau can only rate the Gate from its threshold instruments — a provisional low/E classification that reads like a routine high-density clear. The reading is honest and wrong. Once the party is deep enough inside, the truth becomes undeniable: the Gate opens into a coherent interior realm large enough to swallow teams, distort distance, and produce settlements under foreign law. As containment slips toward Red Phase, the threshold turns unreliable behind them.
 
-The party enters as one of the few available Ascendant teams. Their mission is to identify the Anchor, recover the Three Claims, prevent Red Phase collapse, and survive long enough to decide what kind of ending the Gloamreach deserves.
+The party enters as the first available Ascendant team. Their mission is to identify the Anchor, recover the Three Claims, prevent Red Phase collapse, and survive long enough to decide what kind of ending the Gloamreach deserves.
 
 ## Running This Module
 
@@ -52,7 +52,7 @@ This campaign is built at Curse of Strahd scale:
 | Guild Raider | Your Guild sees salvage, cores, Relics, and leverage. |
 | Missing Team | Someone you know vanished during the first response wave. |
 | Name in the Ledger | Your name appears in a recovered Regent writ. |
-| Researcher | You need to prove how Regent Domains work before the Bureau lies about this one. |
+| Researcher | You need to prove how Regent Domains work before the Bureau's caution seals what is really inside this one. |
 | Grief-Bound | The Gloamreach contains a voice, face, or memory you thought was gone. |
 
 ## Milestone Leveling Guide
@@ -63,11 +63,12 @@ This campaign is built at Curse of Strahd scale:
 | Survive the first Domain road crisis | 3 |
 | Earn a faction's trust or save a settlement | 4 |
 | Clear the first major Domain site | 5 |
-| Survive or legally repel the Regent's Bailiff | 6 |
-| Resolve the first settlement's tribute crisis | 7 |
-| Obtain a Claim or Regent Relic | 8 |
-| Reach the Forbidden Vault or fallen bastion | 9 |
-| Enter the Regent's Citadel | 10 |
+| Survive or legally repel the Regent's Bailiff | 7 |
+| Resolve the first settlement's tribute crisis | 8 |
+| Obtain a Claim or Regent Relic | 10 |
+| Reach the Forbidden Vault or fallen bastion | 12 |
+| Enter the Regent's Citadel | 13 |
+| Resolve the Anchor (campaign climax) | 15 |
 `,
 	},
 	{

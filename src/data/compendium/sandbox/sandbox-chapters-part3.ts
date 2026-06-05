@@ -382,9 +382,9 @@ The Bureau is not useless. It is insufficient. Let the party feel the gap betwee
 
 Settlements survive by doing things they cannot emotionally survive doing forever.
 
-### The Human Remnant
+### The Human Remnant (the Domain's Costume)
 
-The Regent was once human. Do not use that to excuse him. Use it to make the final confrontation hurt.
+The Regent was never human — but the Domain curates "evidence" that he was and offers it to the party as bait. Do not use that to excuse him. Use the lie to make the final confrontation hurt: the mercy the party reaches for was manufactured to be reached for.
 
 ## Pacing Advice
 

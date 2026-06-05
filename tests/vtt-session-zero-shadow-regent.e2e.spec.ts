@@ -163,7 +163,7 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	// ── 6. Sessions tab: Session 0 + scaffolded recap templates ────────────
 	await page.getByRole("tab", { name: /^Sessions$/i }).click();
 	await expect(
-		page.getByText(/Session 0.*Rift Seals|The Rift Seals|Gate Domain/i).first(),
+		page.getByText(/Day Zero|Memory-Care Wing/i).first(),
 	).toBeVisible({ timeout: 15_000 });
 
 	// ── 7. Notes tab: Warden secrets seeded ────────────────────────────────
@@ -188,7 +188,11 @@ test("session zero — import The Shadow of the Regent and populate every tab", 
 	await expect(wardenRoster).toBeVisible({ timeout: 15_000 });
 	// At least a couple of well-known sandbox NPC names.
 	await expect(
-		wardenRoster.getByText(/Quell|Sable|Rhone|Lysa|Rook/i).first(),
+		wardenRoster
+			.getByText(
+				/Park Jae-won|Serin Hayashi|Kira Blackwood|Mother Rust|Guildmaster Orin/i,
+			)
+			.first(),
 	).toBeVisible();
 
 	// ── 10. VTT: scenes list + Pixi bg + token size assertion ──────────────

@@ -94,15 +94,18 @@ test("campaign VTT smoke: token selection delete scene clear and player view", a
 
 	await expect(activeTokenHeading).toBeVisible({ timeout: 10_000 });
 
+	await closeTransientOverlays();
 	await page.getByTestId("vtt-new-scene").click();
 	await expect(activeTokenHeading).toHaveCount(0, { timeout: 10_000 });
 
-	const backToPlayerTools = page.getByRole("button", {
-		name: /Back to Ascendant Tools/i,
-	});
 	await expect(playerViewToggle).toHaveText(/^Player View$/i);
 	await playerViewToggle.click();
-	await expect(backToPlayerTools).toBeVisible({ timeout: 10_000 });
+	// Entering player view swaps to the embedded player layout, which hides
+	// warden-only chrome: the player-view toggle itself unmounts and the
+	// New Scene control disappears. The toggle's absence is the robust
+	// cross-route signal (isWarden = isActualWarden && !simulatePlayerView,
+	// VTTEnhanced.tsx:1045).
+	await expect(playerViewToggle).toHaveCount(0, { timeout: 10_000 });
 	await expect(page.getByTestId("vtt-new-scene")).toHaveCount(0);
 	await expect(page).toHaveURL(new RegExp(`/campaigns/${campaignId}/vtt`, "i"));
 

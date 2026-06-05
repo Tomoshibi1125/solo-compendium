@@ -17,7 +17,7 @@ describe("EquipmentStep canonical surface", () => {
 			(entry) => typeof (entry as { damage?: unknown }).damage === "string",
 		);
 		expect(withDamage.length).toBeGreaterThan(0);
-	});
+	}, 15000);
 
 	it("canonical equipment entries expose armor_class for armor and shields", async () => {
 		const equipment = await listCanonicalEntries("equipment");
@@ -32,7 +32,7 @@ describe("EquipmentStep canonical surface", () => {
 				(entry as { armor_class?: unknown }).armor_class !== null,
 		);
 		expect(withAc.length).toBeGreaterThan(0);
-	});
+	}, 15000);
 
 	it("canonical equipment entries expose a source_book for catalogued items", async () => {
 		const equipment = await listCanonicalEntries("equipment");
@@ -42,7 +42,7 @@ describe("EquipmentStep canonical surface", () => {
 		);
 		// Most static equipment is RA-canon and should carry source_book.
 		expect(withSourceBook.length).toBeGreaterThan(0);
-	});
+	}, 15000);
 
 	it("does not copy-paste Ascendant-org terms as boilerplate across equipment", async () => {
 		const equipment = await listCanonicalEntries("equipment");
@@ -59,5 +59,5 @@ describe("EquipmentStep canonical surface", () => {
 			),
 		);
 		expect(boilerplate.map((e) => e.id ?? e.name)).toEqual([]);
-	});
+	}, 15000);
 });

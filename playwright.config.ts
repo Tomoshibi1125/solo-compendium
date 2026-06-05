@@ -10,7 +10,12 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
 	testDir: ".",
 	testMatch: ["tests/**/*.spec.ts", "*.spec.ts"],
-	testIgnore: ["**/node_modules/**", "**/dist/**"],
+	// Exclude src/** so Playwright never loads Vitest specs (e.g.
+	// src/lib/__tests__/creation-to-level20.spec.ts). Importing @vitest/expect
+	// into the Playwright process collides with Playwright's own expect
+	// ("Cannot redefine property: Symbol($$jest-matchers-object)") and aborts
+	// the entire run at load time.
+	testIgnore: ["**/node_modules/**", "**/dist/**", "**/src/**"],
 	timeout: 60_000, // Reduced from 120s for faster failure detection
 	expect: { timeout: 8_000 }, // Slightly reduced
 	/* Run tests in files in parallel */

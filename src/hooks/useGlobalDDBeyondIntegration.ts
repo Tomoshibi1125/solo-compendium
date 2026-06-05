@@ -12,7 +12,6 @@ import type { Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { logger } from "@/lib/logger";
 import { rollCheck } from "@/lib/rollEngine";
-import type { VTTScene } from "@/types/vtt";
 
 export interface CharacterSheetEnhancements {
 	rollAbilityCheck: (ability: string) => Promise<unknown>;
@@ -53,11 +52,6 @@ export interface WardenToolsEnhancements {
 	exportAnalytics: (campaignId: string) => Promise<Blob | null>;
 	pauseCombatSession: (sessionId: string) => Promise<boolean>;
 	resumeCombatSession: (sessionId: string) => Promise<boolean>;
-	saveVTTScene: (
-		campaignId: string,
-		scene: Partial<VTTScene>,
-	) => Promise<unknown>;
-	loadVTTScene: (campaignId: string, sceneId?: string) => Promise<unknown>;
 	uploadVTTAsset: (
 		campaignId: string,
 		file: File,
@@ -219,8 +213,6 @@ export function useWardenToolsEnhancements(
 	const { generateCampaignReport, getCampaignAnalytics, exportAnalyticsData } =
 		useCampaignAnalytics();
 	const {
-		saveVTTScene,
-		loadVTTScene,
 		uploadVTTAsset,
 		appendToken,
 		updateToken,
@@ -268,12 +260,6 @@ export function useWardenToolsEnhancements(
 		resumeCombatSession: async (sessionId: string) => {
 			const result = await resumeCombatSession(sessionId);
 			return result.success;
-		},
-		saveVTTScene: async (vttCampaignId: string, scene: Partial<VTTScene>) => {
-			return await saveVTTScene(vttCampaignId, scene);
-		},
-		loadVTTScene: async (vttCampaignId: string, sceneId?: string) => {
-			return await loadVTTScene(vttCampaignId, sceneId);
 		},
 		uploadVTTAsset: async (vttCampaignId: string, file: File, type: string) => {
 			return await uploadVTTAsset(vttCampaignId, file, type as "map" | "token");

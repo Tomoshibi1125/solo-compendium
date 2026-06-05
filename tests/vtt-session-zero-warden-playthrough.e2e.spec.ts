@@ -151,7 +151,7 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 	await test.step("Phase 5 — Sessions tab + verify Session 0 visible", async () => {
 		await page.getByRole("tab", { name: /^Sessions$/i }).click();
 		await expect(
-			page.getByText(/Session 0.*Rift Seals|The Rift Seals|Gate Domain/i).first(),
+			page.getByText(/Day Zero|Memory-Care Wing/i).first(),
 		).toBeVisible({ timeout: 15_000 });
 		// Also verify the recap log preview somewhere on the page — the
 		// sandbox seeds a player-facing recap with "woke in a place that
@@ -201,7 +201,11 @@ test("warden session zero playthrough — prep + run Session 0 end-to-end", asyn
 		await expect(roster).toBeVisible({ timeout: 15_000 });
 		// At least a handful of canonical NPC names should be visible.
 		await expect(
-			roster.getByText(/Quell|Sable|Rhone|Lysa|Rook/i).first(),
+			roster
+				.getByText(
+					/Park Jae-won|Serin Hayashi|Kira Blackwood|Mother Rust|Guildmaster Orin/i,
+				)
+				.first(),
 		).toBeVisible();
 		const cardCount = await page.getByTestId("warden-npc-card").count();
 		console.log(`[playthrough] warden npc cards: ${cardCount}`);
