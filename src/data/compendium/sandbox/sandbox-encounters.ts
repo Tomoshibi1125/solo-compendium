@@ -275,13 +275,13 @@ export const sandboxEncounters: SandboxEncounter[] = [
 	{
 		name: "Regent's Citadel — Throne Confrontation",
 		description:
-			"S-Rank finale. The Regent receives the party in court, fights as the sovereign Anchor, and may be forced into the Human Remnant phase by truth, Claim contradiction, or emotional proof.",
+			"S-Rank finale. The Regent receives the party in court, fights as the sovereign Anchor, and may be forced into the Human Remnant phase — the Domain's curated costume flickering, never a real soul — by truth, Claim contradiction, or emotional proof.",
 		difficulty: "legendary",
 		sceneRef: "The Regent's Citadel",
 		hazards: [
 			"Phase 1 — Courtly Predator: accusations, invitations, legal pressure, and witness testimony.",
 			"Phase 2 — Sovereign Anchor: lair effects from roads, ledgers, weather, guest-right, and shadows.",
-			"Phase 3 — Human Remnant: triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or major sacrifice.",
+			"Phase 3 — Human Remnant: the Domain's costume flickers (no soul beneath; he was never human) — triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or major sacrifice.",
 		],
 		rewards: [
 			"Ending-based artifact slate.",

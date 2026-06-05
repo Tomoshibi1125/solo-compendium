@@ -13,14 +13,18 @@ export const chaptersPart2: SandboxChapter[] = [
 ## Rank and Role
 
 **Rank**: D  
-**Recommended Level**: 2-3  
+**Recommended Level**: 3-5
 **Campaign Role**: Early Domain site, Bureau horror, first proof that records can become predatory.
 
 ## Overview
 
 The Drowned Ledgerfen is a flooded hospital-archive where the Gloamreach stores names, debts, diagnoses, casualty reports, and death certificates that have not happened yet. The building rises from black water like a half-sunk civic complex. Its corridors smell of antiseptic, ink, wet paper, and old blood.
 
-This location is not a separate Gate. It is a region of the Gloamreach.
+This location is not a separate Gate. It is a region of the Gloamreach — and a **Xylo-aspected** place: archives that survive destruction, impossible ledgers, preserved truths. The Domain keeps records here, including records of things that have not happened yet.
+
+> *Read aloud:* The water takes the floodlights and gives nothing back. Somewhere ahead a fountain pen is scratching — steady, patient, unhurried — writing in a hand none of you taught it. On the nearest intake desk a fresh casualty report waits face-down. It carries today's date. It is still drying.
+
+When an Ascendant first crosses the waterline, the AFA stutters: it reports the site cleared and empty even as the party watches paper-and-bone patients turn their heads. *The instruments still have numbers. The numbers are already wrong.*
 
 ## Domain Law
 
@@ -45,7 +49,13 @@ Shelves descend into water. The party can recover survivor lists, dead-team logs
 
 ### The Catalog's Chamber
 
-The Catalog is a crystalline record-entity. It is not initially hostile. It trades information for information: a true memory, a Bureau password, a real name, or a confession.
+The Catalog is a crystalline record-entity grown from every file the Ledgerfen has ever swallowed — a Xylo remnant that mistakes completeness for care. It is not initially hostile. It trades information for information: a true memory, a Bureau password, a real name, or a confession.
+
+- **What it wants:** to be *complete*. Every gap in its records is an ache; it will beg the party for the one fact it is missing about them.
+- **What it cannot admit:** it has already filed each of them. It knows how this expedition ends, because it wrote the casualty reports first.
+- **The line it will not cross — until forced:** it will not volunteer a name it has not yet *confirmed*. Make it confirm one, and it becomes complicit.
+- **Its price:** every true thing the party gives it can later be read aloud by the Bailiff as evidence.
+- **Citadel echo:** truths fed to the Catalog wait in the Hall of Tribute, to be repeated back in the party's own words.
 
 Information available:
 
@@ -60,7 +70,11 @@ A half-transformed survivor floats in a sealed pod. Freeing them creates a possi
 
 ## Boss: The Head Surgeon
 
-Use a C-Rank controller profile. It treats wounds as paperwork errors and tries to correct living bodies into approved forms.
+Reskin a **C-Rank controller anomaly from the compendium bestiary** (Appendix C) as the Head Surgeon — keep its source stat block exactly; only the costume and the room change. It treats wounds as paperwork errors and tries to *correct* living bodies into approved forms.
+
+**The Law in play:** while a party member carries a recorded condition (a signed Intake form, a Records Basin diagnosis, a true weakness given away), the Surgeon enforces it with advantage and aims every attack at that exact condition. Contradict the record — invalidate the form, burn the diagnosis, invoke a Claim — and the advantage dies with it.
+
+**Scaling (Levels 1-15):** run it at C-Rank for a level 3-5 party; on a later return, raise it to A-Rank and let it operate on two patients at once.
 
 Suggested traits:
 
@@ -75,6 +89,15 @@ Suggested traits:
 - Surgical Relic or precision blade.
 - Ledger clue toward one Claim.
 - If the Oracle placed the Void Claim here, it is sealed inside a diagnosis written in the Regent's hand.
+
+## Aftermath & Citadel Echo
+
+- **Mercy** — free the Specimen Vault survivor and they become a witness who can later testify that the Ledgerfen's records are forgeries, not medicine.
+- **Violence** — burn the archive and the fire spares the ledgers (Xylo: records that survive destruction); the Regent later cites the bodies, never the intentions.
+- **Bargain** — every fact traded to the Catalog returns in the Hall of Tribute, read back in the party's own words.
+- **Clean clear** — reduce one future travel complication, and let a settlement's casualty report come up blank for the first time in living memory.
+
+> *Exit tone (read aloud):* Behind you the pen has stopped. On the intake desk, the casualty report with today's date is gone — refiled, the Catalog would say, as *pending*. The water still gives nothing back.
 `,
 	},
 	{
@@ -436,7 +459,7 @@ Run the Regent in phases:
 
 1. **Courtly Predator** - conversation, accusation, invitation, and legal pressure.
 2. **Sovereign Anchor** - battlefield control, summons, road/ledger/weather effects.
-3. **Human Remnant** - the emotional truth beneath the monster, triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or a major sacrifice.
+3. **Human Remnant** - the Domain's curated costume flickers, triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or a major sacrifice. There is no soul to save; he was never human. Play it ambiguously — ownership performing the grief the party most wants to see — which makes the ending harder, not kinder.
 
 ## Endings
 

@@ -193,7 +193,7 @@ A beautiful room where every act of hospitality in the campaign is remembered. B
 
 ### 14. The Throne Court
 
-The Regent receives the party before witnesses: allies, enemies, servants, settlement representatives, shadows, and possibly the human remnants of his past.
+The Regent receives the party before witnesses: allies, enemies, servants, settlement representatives, shadows, and the curated human keepsakes the Domain wears as his "past."
 
 This scene should begin with words, not initiative.
 
@@ -211,11 +211,11 @@ The Regent debates, accuses, tempts, and offers terms. The party can gain advant
 
 The Regent fights as the Domain's ruler. Use lair actions tied to roads, weather, ledgers, hospitality, and shadows.
 
-### Phase 3 - Human Remnant
+### Phase 3 - Human Remnant (the Costume Flickers)
 
-Triggered by the Faded Family Photo, Ms. Park, a successful Claim contradiction, the Wedding Ring, or a major sacrifice. The party sees the human grief underneath the Regent's monstrosity.
+Triggered by the Faded Family Photo, Ms. Park, a successful Claim contradiction, the Wedding Ring, or a major sacrifice. For a few breaths the Domain's curated humanity surfaces — grief that feels real because it was assembled from real claimed victims.
 
-This phase does not make him innocent. It makes the ending harder.
+There is no soul underneath; the Regent was never human. Play it ambiguously — a genuine fracture in the costume, or a predator performing the mercy the party reaches for. Either reading does not make him innocent. It makes the ending harder.
 
 ## Possible Endings
 
