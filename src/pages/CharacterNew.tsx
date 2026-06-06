@@ -266,6 +266,16 @@ const toggleLimitedSelection = (
 	return appendUnique(current, value);
 };
 
+const isRequiredChoiceBucketReady = (
+	selected: number,
+	required: number,
+	available: number,
+	loading: boolean,
+) => {
+	if (required <= 0) return true;
+	return !loading && available >= required && selected === required;
+};
+
 const insertHomebrewRuntimeFeatures = async (
 	characterId: string,
 	features: HomebrewRuntimeFeature[],
@@ -816,7 +826,9 @@ const CharacterNew = () => {
 			})
 		: 0;
 
-	const { data: availablePowers = [] } = useQuery<CanonicalCastableEntry[]>({
+	const { data: availablePowers = [], isLoading: powersLoading } = useQuery<
+		CanonicalCastableEntry[]
+	>({
 		queryKey: [
 			"creation-powers",
 			selectedJob,
@@ -836,7 +848,8 @@ const CharacterNew = () => {
 		enabled: !!jobData?.name && requiredPowerChoices > 0,
 	});
 
-	const { data: availableTechniques = [] } = useQuery<StaticCompendiumEntry[]>({
+	const { data: availableTechniques = [], isLoading: techniquesLoading } =
+		useQuery<StaticCompendiumEntry[]>({
 		queryKey: [
 			"creation-techniques",
 			selectedJob,
@@ -857,7 +870,9 @@ const CharacterNew = () => {
 		enabled: !!jobData?.name && requiredTechniqueChoices > 0,
 	});
 
-	const { data: availableCantrips = [] } = useQuery<CanonicalCastableEntry[]>({
+	const { data: availableCantrips = [], isLoading: cantripsLoading } = useQuery<
+		CanonicalCastableEntry[]
+	>({
 		queryKey: [
 			"creation-cantrips",
 			selectedJob,
@@ -888,7 +903,9 @@ const CharacterNew = () => {
 		enabled: !!jobData?.name && requiredCantripChoices > 0,
 	});
 
-	const { data: availableSpells = [] } = useQuery<CanonicalCastableEntry[]>({
+	const { data: availableSpells = [], isLoading: spellsLoading } = useQuery<
+		CanonicalCastableEntry[]
+	>({
 		queryKey: [
 			"creation-spells",
 			selectedJob,
@@ -919,9 +936,10 @@ const CharacterNew = () => {
 		enabled: !!jobData?.name && requiredSpellChoices > 0,
 	});
 
-	const { data: availableSpellbookSpells = [] } = useQuery<
-		CanonicalCastableEntry[]
-	>({
+	const {
+		data: availableSpellbookSpells = [],
+		isLoading: spellbookLoading,
+	} = useQuery<CanonicalCastableEntry[]>({
 		queryKey: [
 			"creation-spellbook",
 			selectedJob,
@@ -1114,6 +1132,7 @@ const CharacterNew = () => {
 	};
 
 	const handleCreate = async () => {
+		if (loading) return;
 		if (!name.trim()) {
 			toast({ title: "Name required", variant: "destructive" });
 			return;
@@ -1188,6 +1207,7 @@ const CharacterNew = () => {
 		}
 
 		setLoading(true);
+		let createdCharacterId: string | null = null;
 		try {
 			const dbJob = allJobs.find((j) => j.id === selectedJob);
 			const dbBg = backgrounds.find((b) => b.id === selectedBackground);
@@ -1307,6 +1327,7 @@ const CharacterNew = () => {
 				armor_proficiencies: armorsResult.unique,
 				speed: jobSpeed,
 			});
+			createdCharacterId = character.id;
 			const creationAbilityContext: CharacterAbilityAccessContext = {
 				campaignId: homebrewCampaignId,
 				accessContext: { campaignId: homebrewCampaignId },
@@ -1592,6 +1613,17 @@ const CharacterNew = () => {
 			navigate(safeNext ?? `/characters/${character.id}`);
 		} catch (error) {
 			console.error("Initialization failed:", error);
+			if (createdCharacterId) {
+				toast({
+					title: "Unit Awakened with setup warnings",
+					description:
+						error instanceof Error
+							? error.message
+							: "Some initialization details can be repaired from the character sheet.",
+				});
+				navigate(safeNext ?? `/characters/${createdCharacterId}`);
+				return;
+			}
 			toast({
 				title: "Initialization Failed",
 				description:
@@ -1621,17 +1653,7 @@ const CharacterNew = () => {
 			case "background":
 				return selectedBackground.length > 0;
 			case "imprints":
-				return (
-					selectedPowerIds.length === requiredPowerChoices &&
-					selectedTechniqueIds.length === requiredTechniqueChoices &&
-					selectedCantripIds.length === requiredCantripChoices &&
-					selectedSpellIds.length === requiredSpellChoices &&
-					selectedSpellbookIds.length === requiredSpellbookInscriptions &&
-					selectedFightingStyleIds.length === requiredFightingStyleChoices &&
-					selectedSpecialistTraining.length ===
-						requiredSpecialistTrainingChoices &&
-					selectedFavoredTerrains.length === requiredFavoredTerrainChoices
-				);
+				return imprintsComplete;
 			default:
 				return true;
 		}
@@ -1642,51 +1664,94 @@ const CharacterNew = () => {
 		name: s.name,
 	}));
 
-	const imprintProgressItems = useMemo(
+	type ImprintProgressItem = {
+		label: string;
+		selected: number;
+		required: number;
+		available: number;
+		loading: boolean;
+		ready: boolean;
+	};
+
+	const imprintProgressItems = useMemo<ImprintProgressItem[]>(
 		() =>
 			[
 				{
 					label: "Cantrips",
 					selected: selectedCantripIds.length,
 					required: requiredCantripChoices,
+					available: availableCantrips.length,
+					loading: cantripsLoading,
 				},
 				{
 					label: "Spells",
 					selected: selectedSpellIds.length,
 					required: requiredSpellChoices,
+					available: availableSpells.length,
+					loading: spellsLoading,
 				},
 				{
 					label: `${staticJobLedgerData?.spellbook?.label ?? "Spellbook"} Inscriptions`,
 					selected: selectedSpellbookIds.length,
 					required: requiredSpellbookInscriptions,
+					available: availableSpellbookSpells.length,
+					loading: spellbookLoading,
 				},
 				{
 					label: "Powers",
 					selected: selectedPowerIds.length,
 					required: requiredPowerChoices,
+					available: availablePowers.length,
+					loading: powersLoading,
 				},
 				{
 					label: "Techniques",
 					selected: selectedTechniqueIds.length,
 					required: requiredTechniqueChoices,
+					available: availableTechniques.length,
+					loading: techniquesLoading,
 				},
 				{
 					label: "Fighting Styles",
 					selected: selectedFightingStyleIds.length,
 					required: requiredFightingStyleChoices,
+					available: availableFightingStyles.length,
+					loading: false,
 				},
 				{
 					label: "Specialist Training",
 					selected: selectedSpecialistTraining.length,
 					required: requiredSpecialistTrainingChoices,
+					available: specialistTrainingOptions.length,
+					loading: false,
 				},
 				{
 					label: "Favored Terrain",
 					selected: selectedFavoredTerrains.length,
 					required: requiredFavoredTerrainChoices,
+					available: STALKER_FAVORED_TERRAINS.length,
+					loading: false,
 				},
-			].filter((item) => item.required > 0),
+			]
+				.filter((item) => item.required > 0)
+				.map((item) => ({
+					...item,
+					ready: isRequiredChoiceBucketReady(
+						item.selected,
+						item.required,
+						item.available,
+						item.loading,
+					),
+				})),
 		[
+			availableCantrips.length,
+			availableFightingStyles.length,
+			availablePowers.length,
+			availableSpellbookSpells.length,
+			availableSpells.length,
+			availableTechniques.length,
+			cantripsLoading,
+			powersLoading,
 			requiredCantripChoices,
 			requiredFavoredTerrainChoices,
 			requiredFightingStyleChoices,
@@ -1703,12 +1768,15 @@ const CharacterNew = () => {
 			selectedSpellIds.length,
 			selectedSpellbookIds.length,
 			selectedTechniqueIds.length,
+			specialistTrainingOptions.length,
+			spellbookLoading,
+			spellsLoading,
 			staticJobLedgerData?.spellbook?.label,
+			techniquesLoading,
 		],
 	);
-	const imprintsComplete = imprintProgressItems.every(
-		(item) => item.selected === item.required,
-	);
+	const imprintsComplete = imprintProgressItems.every((item) => item.ready);
+	const imprintsLoading = imprintProgressItems.some((item) => item.loading);
 
 	const reviewImprintSelections = useMemo(() => {
 		const powerNames = availablePowers
@@ -2233,22 +2301,28 @@ const CharacterNew = () => {
 												variant={imprintsComplete ? "secondary" : "outline"}
 												className="text-xs"
 											>
-												{imprintsComplete ? "Ready" : "Choices Required"}
+												{imprintsComplete
+													? "Ready"
+													: imprintsLoading
+														? "Loading Choices"
+														: "Choices Required"}
 											</Badge>
 										</div>
 										<div className="flex flex-wrap gap-2">
 											{imprintProgressItems.map((item) => {
-												const isComplete = item.selected === item.required;
+												const status = item.loading
+													? "loading"
+													: item.available < item.required
+														? "unavailable"
+														: `${item.selected}/${item.required}`;
 												return (
 													<Badge
 														key={item.label}
-														variant={isComplete ? "secondary" : "outline"}
+														variant={item.ready ? "secondary" : "outline"}
 														className="justify-between gap-2 px-2 py-1 text-xs"
 													>
 														<span>{item.label}</span>
-														<span>
-															{item.selected}/{item.required}
-														</span>
+														<span>{status}</span>
 													</Badge>
 												);
 											})}
@@ -2262,7 +2336,11 @@ const CharacterNew = () => {
 											Cantrips ({selectedCantripIds.length}/
 											{requiredCantripChoices})
 										</Label>
-										{availableCantrips.length === 0 ? (
+										{cantripsLoading ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												Loading cantrip choices...
+											</div>
+										) : availableCantrips.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
 												No lore-matched cantrips are available for this job.
 											</div>
@@ -2309,7 +2387,11 @@ const CharacterNew = () => {
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
 											Spells ({selectedSpellIds.length}/{requiredSpellChoices})
 										</Label>
-										{availableSpells.length === 0 ? (
+										{spellsLoading ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												Loading spell choices...
+											</div>
+										) : availableSpells.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
 												No lore-matched spells are available for this job.
 											</div>
@@ -2367,7 +2449,11 @@ const CharacterNew = () => {
 											Inscriptions ({selectedSpellbookIds.length}/
 											{requiredSpellbookInscriptions})
 										</Label>
-										{availableSpellbookSpells.length === 0 ? (
+										{spellbookLoading ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												Loading spellbook inscriptions...
+											</div>
+										) : availableSpellbookSpells.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
 												No lore-matched spellbook inscriptions are available for
 												this job.
@@ -2425,7 +2511,11 @@ const CharacterNew = () => {
 										<Label className="text-[10px] uppercase tracking-widest text-primary/70">
 											Powers ({selectedPowerIds.length}/{requiredPowerChoices})
 										</Label>
-										{availablePowers.length === 0 ? (
+										{powersLoading ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												Loading power choices...
+											</div>
+										) : availablePowers.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
 												No lore-matched powers are available for this job.
 											</div>
@@ -2482,7 +2572,11 @@ const CharacterNew = () => {
 											Techniques ({selectedTechniqueIds.length}/
 											{requiredTechniqueChoices})
 										</Label>
-										{availableTechniques.length === 0 ? (
+										{techniquesLoading ? (
+											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
+												Loading technique choices...
+											</div>
+										) : availableTechniques.length === 0 ? (
 											<div className="p-4 rounded-lg border border-primary/10 bg-background/40 text-sm text-muted-foreground">
 												No lore-matched techniques are available for this job.
 											</div>

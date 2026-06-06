@@ -1,7 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useBackgroundSync } from "@/hooks/useBackgroundSync";
-import { supabase } from "@/integrations/supabase/client";
+import {
+	isSupabaseConfigured,
+	supabase,
+} from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { AppError } from "@/lib/appError";
 import { resolveCharacterCanonicalIds } from "@/lib/canonicalCompendium";
@@ -75,6 +78,18 @@ export type CharacterListScope = "personal" | "all";
 type UseCharactersOptions = {
 	scope?: CharacterListScope;
 };
+
+const guestEnabled = import.meta.env.VITE_GUEST_ENABLED !== "false";
+
+function hasStoredSupabaseSession(): boolean {
+	if (typeof window === "undefined" || !window.localStorage) return false;
+	return Object.keys(window.localStorage).some((key) => {
+		if (key.includes("supabase.auth.token")) return true;
+		if (key.includes("sb-") && key.endsWith("-auth-token")) return true;
+		if (key.includes("auth-token")) return true;
+		return false;
+	});
+}
 
 // Fetch all characters for current user
 export const useCharacters = (options: UseCharactersOptions = {}) => {
@@ -230,12 +245,16 @@ export const useCreateCharacter = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async (data: Omit<CharacterInsert, "user_id">) => {
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
 			const dataWithCanonicalIds = await normalizeCharacterOverlayFields(
 				await resolveCharacterCanonicalIds(data),
 			);
+			if (!isSupabaseConfigured || (guestEnabled && !hasStoredSupabaseSession())) {
+				return createLocalCharacter(dataWithCanonicalIds);
+			}
+
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
 			if (!user) {
 				return createLocalCharacter(dataWithCanonicalIds);
 			}

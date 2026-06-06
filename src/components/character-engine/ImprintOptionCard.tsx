@@ -37,6 +37,8 @@ export function ImprintOptionCard({
 		<button
 			type="button"
 			data-testid={testId}
+			data-selected={selected ? "true" : "false"}
+			aria-pressed={selected}
 			onClick={onClick}
 			disabled={disabled}
 			className={cn(

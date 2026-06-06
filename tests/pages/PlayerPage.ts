@@ -431,30 +431,65 @@ export class PlayerPage {
 				await satisfyCheckboxRequirements();
 				await clickNext(20_000);
 			} else if (step === "imprints") {
-				const imprintOptions = this.page
-					.getByTestId("creation-power-imprint-option")
-					.or(this.page.getByTestId("creation-technique-imprint-option"))
-					.or(this.page.getByTestId("creation-cantrip-imprint-option"))
-					.or(this.page.getByTestId("creation-spell-imprint-option"))
-					.or(this.page.getByTestId("creation-spellbook-imprint-option"))
-					.or(this.page.getByTestId("creation-fighting-style-option"))
-					.or(this.page.getByTestId("creation-specialist-training-option"))
-					.or(this.page.getByTestId("creation-favored-terrain-option"));
-				const count = await imprintOptions.count();
-				for (let i = 0; i < count; i += 1) {
+				const imprintOptions = () =>
+					this.page
+						.getByTestId("creation-power-imprint-option")
+						.or(this.page.getByTestId("creation-technique-imprint-option"))
+						.or(this.page.getByTestId("creation-cantrip-imprint-option"))
+						.or(this.page.getByTestId("creation-spell-imprint-option"))
+						.or(this.page.getByTestId("creation-spellbook-imprint-option"))
+						.or(this.page.getByTestId("creation-fighting-style-option"))
+						.or(this.page.getByTestId("creation-specialist-training-option"))
+						.or(this.page.getByTestId("creation-favored-terrain-option"));
+
+				for (let attempt = 0; attempt < 80; attempt += 1) {
 					if (
 						await nextButton()
 							.isEnabled({ timeout: 300 })
 							.catch(() => false)
-					)
+					) {
 						break;
-					const option = imprintOptions.nth(i);
-					if (!(await option.isEnabled({ timeout: 300 }).catch(() => false)))
-						continue;
-					await option.click();
-					await this.page.waitForTimeout(150);
+					}
+
+					const options = imprintOptions();
+					const count = await options.count();
+					let clicked = false;
+
+					for (let i = 0; i < count; i += 1) {
+						if (
+							await nextButton()
+								.isEnabled({ timeout: 300 })
+								.catch(() => false)
+						) {
+							break;
+						}
+						const option = options.nth(i);
+						const visible = await option
+							.isVisible({ timeout: 300 })
+							.catch(() => false);
+						if (!visible) continue;
+						const selected = await option
+							.getAttribute("data-selected")
+							.catch(() => null);
+						if (selected === "true") continue;
+						if (!(await option.isEnabled({ timeout: 300 }).catch(() => false)))
+							continue;
+						await option.scrollIntoViewIfNeeded().catch(() => {});
+						await option.click();
+						await this.page.waitForTimeout(150);
+						clicked = true;
+					}
+
+					if (
+						await nextButton()
+							.isEnabled({ timeout: 300 })
+							.catch(() => false)
+					) {
+						break;
+					}
+					await this.page.waitForTimeout(clicked ? 250 : 750);
 				}
-				await clickNext(20_000);
+				await clickNext(30_000);
 			} else if (step === "review") {
 				break;
 			}
