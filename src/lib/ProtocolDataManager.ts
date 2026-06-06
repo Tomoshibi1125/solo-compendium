@@ -177,12 +177,21 @@ export async function initializeProtocolData(): Promise<void> {
  * WARNING: Throws if registry not initialized.
  */
 export function getStaticJobs(): CompendiumJob[] {
+	if (!registry.initialized) {
+		console.warn("getStaticJobs called before ProtocolDataManager initialized");
+	}
 	return registry.jobs;
 }
 export function getStaticItems(): CompendiumItem[] {
+	if (!registry.initialized) {
+		console.warn("getStaticItems called before ProtocolDataManager initialized");
+	}
 	return registry.items;
 }
 export function getStaticBackgrounds(): CompendiumBackground[] {
+	if (!registry.initialized) {
+		console.warn("getStaticBackgrounds called before ProtocolDataManager initialized");
+	}
 	return registry.backgrounds;
 }
 export function getStaticAnomalies(): CompendiumAnomaly[] {
@@ -225,6 +234,9 @@ export function getStaticPaths(): CompendiumPath[] {
 	return registry.paths;
 }
 export function getStaticBackgroundsAll(): CompendiumBackground[] {
+	if (!registry.initialized) {
+		console.warn("getStaticBackgroundsAll called before ProtocolDataManager initialized");
+	}
 	return registry.backgroundsAll;
 }
 export function getStaticItemsAll(): CompendiumItem[] {

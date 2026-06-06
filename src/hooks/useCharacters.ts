@@ -245,9 +245,15 @@ export const useCreateCharacter = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async (data: Omit<CharacterInsert, "user_id">) => {
-			const dataWithCanonicalIds = await normalizeCharacterOverlayFields(
-				await resolveCharacterCanonicalIds(data),
-			);
+			let dataWithCanonicalIds: typeof data;
+			try {
+				dataWithCanonicalIds = await normalizeCharacterOverlayFields(
+					await resolveCharacterCanonicalIds(data),
+				);
+			} catch (enrichErr) {
+				console.warn("Canonical ID enrichment failed, using raw data:", enrichErr);
+				dataWithCanonicalIds = data;
+			}
 			if (!isSupabaseConfigured || (guestEnabled && !hasStoredSupabaseSession())) {
 				return createLocalCharacter(dataWithCanonicalIds);
 			}

@@ -43,14 +43,14 @@ import {
 } from "@/lib/canonicalActionDisplay";
 import {
 	type CanonicalCastableEntry,
+	isCanonicalPowerLearnable,
+	isCanonicalSpellLearnable,
+	isCanonicalTechniqueLearnable,
 	listLearnablePowers,
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
 import {
-	assertCanonicalPowerLearnable,
-	assertCanonicalSpellLearnable,
-	assertCanonicalTechniqueLearnable,
 	type CharacterAbilityAccessContext,
 } from "@/lib/characterAbilityAccess";
 import {
@@ -1209,6 +1209,9 @@ const CharacterNew = () => {
 		setLoading(true);
 		let createdCharacterId: string | null = null;
 		try {
+			// Ensure static compendium data is loaded before creation.
+			await initializeProtocolData();
+
 			const dbJob = allJobs.find((j) => j.id === selectedJob);
 			const dbBg = backgrounds.find((b) => b.id === selectedBackground);
 			if (!dbJob || !dbBg) throw new Error("Job or Background missing");
@@ -1222,9 +1225,15 @@ const CharacterNew = () => {
 			const job =
 				selectedHomebrewJob ??
 				staticJobSource.find((j: StaticJob) => j.name === dbJob.name);
-			const bgData = (
+			let bgData = (
 				getStaticBackgroundsAll() as unknown as StaticBackground[]
 			).find((b: StaticBackground) => b.name === dbBg.name);
+			if (!bgData) {
+				const { allBackgrounds } = await import("@/data/compendium/backgrounds-index");
+				bgData = (allBackgrounds as unknown as StaticBackground[]).find(
+					(b: StaticBackground) => b.name === dbBg.name,
+				);
+			}
 
 			if (!job || !bgData) throw new Error("Enhanced data missing");
 
@@ -1352,41 +1361,46 @@ const CharacterNew = () => {
 
 			const finalAbilities = { ...creationAbilities };
 
-			if (isLocalCharacterId(character.id)) {
-				setLocalAbilities(
-					character.id,
-					finalAbilities as Record<DbAbilityScore, number>,
-				);
-				await insertCharacterFeature(character.id, {
-					name: `Racial ASI: ${dbJob.name}`,
-					source: `Racial ASI: ${dbJob.name}`,
-					level_acquired: 1,
-					description:
-						"Job ability score improvements represented in creation ability scores.",
-					is_active: false,
-				});
-			} else {
-				const updates = Object.entries(finalAbilities).map(
-					([ability, score]) => ({
+			try {
+				if (isLocalCharacterId(character.id)) {
+					setLocalAbilities(
+						character.id,
+						finalAbilities as Record<DbAbilityScore, number>,
+					);
+					await insertCharacterFeature(character.id, {
+						name: `Racial ASI: ${dbJob.name}`,
+						source: `Racial ASI: ${dbJob.name}`,
+						level_acquired: 1,
+						description:
+							"Job ability score improvements represented in creation ability scores.",
+						is_active: false,
+					});
+				} else {
+					const updates = Object.entries(finalAbilities).map(
+						([ability, score]) => ({
+							character_id: character.id,
+							ability: ability as AbilityScore,
+							score: score,
+						}),
+					);
+					await supabase
+						.from("character_abilities")
+						.upsert(updates, { onConflict: "character_id,ability" });
+					await supabase.from("character_features").insert({
 						character_id: character.id,
-						ability: ability as AbilityScore,
-						score: score,
-					}),
-				);
-				await supabase
-					.from("character_abilities")
-					.upsert(updates, { onConflict: "character_id,ability" });
-				await supabase.from("character_features").insert({
-					character_id: character.id,
-					name: `Racial ASI: ${dbJob.name}`,
-					source: `Racial ASI: ${dbJob.name}`,
-					level_acquired: 1,
-					description:
-						"Job ability score improvements represented in creation ability scores.",
-					is_active: false,
-				});
+						name: `Racial ASI: ${dbJob.name}`,
+						source: `Racial ASI: ${dbJob.name}`,
+						level_acquired: 1,
+						description:
+							"Job ability score improvements represented in creation ability scores.",
+						is_active: false,
+					});
+				}
+			} catch (abilityErr) {
+				console.warn("Creation: ability setup failed", abilityErr);
 			}
 
+			try {
 			if (selectedHomebrewJob) {
 				await insertHomebrewRuntimeFeatures(
 					character.id,
@@ -1426,12 +1440,20 @@ const CharacterNew = () => {
 				bgData,
 				selectedSkills,
 				equipmentChoices,
+				null,
 			);
+			} catch (automationErr) {
+				console.warn("Creation: level 1 features/equipment failed", automationErr);
+			}
+			try {
 			const selectedPowerEntries = availablePowers.filter((power) =>
 				selectedPowerIds.includes(power.id),
 			);
 			for (const power of selectedPowerEntries) {
-				assertCanonicalPowerLearnable(power, creationAbilityContext);
+				if (!isCanonicalPowerLearnable(power, creationAbilityContext)) {
+					console.warn(`Creation: skipping power "${power.name}" — not learnable for this job/path`);
+					continue;
+				}
 				const payload = {
 					power_id: power.id,
 					name: power.name,
@@ -1460,7 +1482,10 @@ const CharacterNew = () => {
 				selectedTechniqueIds.includes(technique.id),
 			);
 			for (const technique of selectedTechniqueEntries) {
-				assertCanonicalTechniqueLearnable(technique, creationAbilityContext);
+				if (!isCanonicalTechniqueLearnable(technique, creationAbilityContext)) {
+					console.warn(`Creation: skipping technique "${technique.id}" — not learnable for this job/path`);
+					continue;
+				}
 				if (isLocalCharacterId(character.id)) {
 					addLocalTechnique(character.id, {
 						technique_id: technique.id,
@@ -1511,12 +1536,14 @@ const CharacterNew = () => {
 							selectedPathName,
 						)
 					) {
-						throw new Error(
-							"This homebrew spell is not available to this character's job or path.",
-						);
+						console.warn(`Creation: skipping homebrew spell "${spell.entry.name}" — not available for this job/path`);
+						continue;
 					}
 				} else {
-					assertCanonicalSpellLearnable(spell.entry, creationAbilityContext);
+					if (!isCanonicalSpellLearnable(spell.entry, creationAbilityContext)) {
+						console.warn(`Creation: skipping spell "${spell.entry.name}" — not learnable for this job/path`);
+						continue;
+					}
 				}
 				const payload = {
 					spell_id: isHomebrewSpell ? null : spell.entry.id,
@@ -1543,6 +1570,9 @@ const CharacterNew = () => {
 					});
 				}
 			}
+			} catch (imprintErr) {
+				console.warn("Creation: imprint inscription failed", imprintErr);
+			}
 
 			const selectedFightingStyles = availableFightingStyles.filter((style) =>
 				selectedFightingStyleIds.includes(style.id),
@@ -1568,6 +1598,7 @@ const CharacterNew = () => {
 				});
 			}
 
+			try {
 			for (const terrain of selectedFavoredTerrains) {
 				await insertCharacterFeature(character.id, {
 					name: `Favored Terrain: ${terrain}`,
@@ -1577,7 +1608,7 @@ const CharacterNew = () => {
 					is_active: true,
 				});
 			}
-			await addJobAwakeningBenefitsForLevel(character.id, job, 1);
+			await addJobAwakeningBenefitsForLevel(character.id, job, 1, new Set<string>());
 			// Rift Ascendant: Jobs serve as both race and class, so their innate senses,
 			// resistances, and immunities must flow onto the character row at creation.
 			await applyJobAwakeningTraitsToCharacter(
@@ -1585,6 +1616,9 @@ const CharacterNew = () => {
 				job,
 				selectedLanguages,
 			);
+			} catch (awakeningErr) {
+				console.warn("Creation: awakening benefits failed", awakeningErr);
+			}
 
 			// D&D Beyond parity (#11): eagerly seed spell slot rows at creation
 			// so the spells panel doesn't need to lazy-create them on first

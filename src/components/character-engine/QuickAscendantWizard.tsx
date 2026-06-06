@@ -53,9 +53,11 @@ import {
 	addJobAwakeningBenefitsForLevel,
 	addLevel1Features,
 	addStartingEquipment,
+	applyJobAwakeningTraitsToCharacter,
 } from "@/lib/characterCreation";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
 import { logger } from "@/lib/logger";
+import { initializeProtocolData } from "@/lib/ProtocolDataManager";
 import {
 	dedupeProficiencies,
 	formatDuplicatesSummary,
@@ -188,6 +190,8 @@ export function QuickAscendantWizard({
 
 		setCreating(true);
 		try {
+			await initializeProtocolData();
+
 			// Primary ability resolution (engine map).
 			const primary =
 				(job.primary_ability as AbilityScore | undefined) ??
@@ -268,37 +272,51 @@ export function QuickAscendantWizard({
 			});
 
 			// Persist ability scores into per-character storage.
-			if (isLocalCharacterId(character.id)) {
-				setLocalAbilities(character.id, abilities as Record<string, number>);
-			} else {
-				const updates = ALL_ABILITIES.map((ability) => ({
-					character_id: character.id,
-					ability,
-					score: abilities[ability],
-				}));
-				await supabase
-					.from("character_abilities")
-					.upsert(updates, { onConflict: "character_id,ability" });
+			try {
+				if (isLocalCharacterId(character.id)) {
+					setLocalAbilities(character.id, abilities as Record<string, number>);
+				} else {
+					const updates = ALL_ABILITIES.map((ability) => ({
+						character_id: character.id,
+						ability,
+						score: abilities[ability],
+					}));
+					await supabase
+						.from("character_abilities")
+						.upsert(updates, { onConflict: "character_id,ability" });
+				}
+			} catch (abilityErr) {
+				logger.warn("Quick Ascendant: ability setup failed", abilityErr);
 			}
 
 			// Apply level 1 + awakening + starting gear via existing automation.
-			await addLevel1Features(
-				character.id,
-				job as unknown as Parameters<typeof addLevel1Features>[1],
-				bg as unknown as Parameters<typeof addLevel1Features>[2],
-			);
-			await addStartingEquipment(
-				character.id,
-				job as unknown as Parameters<typeof addStartingEquipment>[1],
-				bg as unknown as Parameters<typeof addStartingEquipment>[2],
-				[],
-				{},
-			);
-			await addJobAwakeningBenefitsForLevel(
-				character.id,
-				job as unknown as Parameters<typeof addJobAwakeningBenefitsForLevel>[1],
-				1,
-			);
+			try {
+				await addLevel1Features(
+					character.id,
+					job as unknown as Parameters<typeof addLevel1Features>[1],
+					bg as unknown as Parameters<typeof addLevel1Features>[2],
+				);
+				await addStartingEquipment(
+					character.id,
+					job as unknown as Parameters<typeof addStartingEquipment>[1],
+					bg as unknown as Parameters<typeof addStartingEquipment>[2],
+					[],
+					{},
+					null,
+				);
+				await addJobAwakeningBenefitsForLevel(
+					character.id,
+					job as unknown as Parameters<typeof addJobAwakeningBenefitsForLevel>[1],
+					1,
+					new Set<string>(),
+				);
+				await applyJobAwakeningTraitsToCharacter(
+					character.id,
+					job as unknown as Parameters<typeof applyJobAwakeningTraitsToCharacter>[1],
+				);
+			} catch (automationErr) {
+				logger.warn("Quick Ascendant: automation setup failed", automationErr);
+			}
 
 			// Initialize spell slots if this Job is a caster (no-op for martial).
 			try {
