@@ -372,6 +372,7 @@ const CharacterNew = () => {
 
 	const [currentStep, setCurrentStep] = useState<Step>("concept");
 	const [loading, setLoading] = useState(false);
+	const [, setCreatedCharacterId] = useState<string | null>(null);
 	const [quickAscendantOpen, setQuickAscendantOpen] = useState(false);
 
 	// Character data state
@@ -1131,6 +1132,17 @@ const CharacterNew = () => {
 		}
 	};
 
+	const runPostCreationSetup = async (
+		characterId: string,
+		setup: () => Promise<void>,
+	) => {
+		try {
+			await setup();
+		} catch (setupErr) {
+			console.warn("Creation: post-creation setup failed", setupErr);
+		}
+	};
+
 	const handleCreate = async () => {
 		if (loading) return;
 		if (!name.trim()) {
@@ -1207,7 +1219,6 @@ const CharacterNew = () => {
 		}
 
 		setLoading(true);
-		let createdCharacterId: string | null = null;
 		try {
 			// Ensure static compendium data is loaded before creation.
 			await initializeProtocolData();
@@ -1336,7 +1347,8 @@ const CharacterNew = () => {
 				armor_proficiencies: armorsResult.unique,
 				speed: jobSpeed,
 			});
-			createdCharacterId = character.id;
+			setCreatedCharacterId(character.id);
+			const postCreationSetup = async () => {
 			const creationAbilityContext: CharacterAbilityAccessContext = {
 				campaignId: homebrewCampaignId,
 				accessContext: { campaignId: homebrewCampaignId },
@@ -1574,28 +1586,32 @@ const CharacterNew = () => {
 				console.warn("Creation: imprint inscription failed", imprintErr);
 			}
 
-			const selectedFightingStyles = availableFightingStyles.filter((style) =>
-				selectedFightingStyleIds.includes(style.id),
-			);
-			for (const style of selectedFightingStyles) {
-				await insertCharacterFeature(character.id, {
-					name: `Fighting Style: ${style.name}`,
-					source: "Creation Fighting Style",
-					level_acquired: 1,
-					description: style.description,
-					is_active: true,
-					modifiers: style.modifiers ? (style.modifiers as Json) : null,
-				});
-			}
+			try {
+				const selectedFightingStyles = availableFightingStyles.filter((style) =>
+					selectedFightingStyleIds.includes(style.id),
+				);
+				for (const style of selectedFightingStyles) {
+					await insertCharacterFeature(character.id, {
+						name: `Fighting Style: ${style.name}`,
+						source: "Creation Fighting Style",
+						level_acquired: 1,
+						description: style.description,
+						is_active: true,
+						modifiers: style.modifiers ? (style.modifiers as Json) : null,
+					});
+				}
 
-			for (const selection of selectedSpecialistTraining) {
-				await insertCharacterFeature(character.id, {
-					name: `Specialist Training: ${selection}`,
-					source: "Creation Specialist Training",
-					level_acquired: 1,
-					description: `Doubled proficiency for ${selection}.`,
-					is_active: true,
-				});
+				for (const selection of selectedSpecialistTraining) {
+					await insertCharacterFeature(character.id, {
+						name: `Specialist Training: ${selection}`,
+						source: "Creation Specialist Training",
+						level_acquired: 1,
+						description: `Doubled proficiency for ${selection}.`,
+						is_active: true,
+					});
+				}
+			} catch (trainingErr) {
+				console.warn("Creation: fighting style/training setup failed", trainingErr);
 			}
 
 			try {
@@ -1633,31 +1649,24 @@ const CharacterNew = () => {
 				console.error("Failed to seed spell slots at creation:", slotError);
 			}
 
-			ascendantTools
-				.trackCustomFeatureUsage(
+			try {
+				await ascendantTools.trackCustomFeatureUsage(
 					character.id,
 					"Initialization",
 					"Unit Awakening Complete",
 					"SA",
 					{ skipBroadcast: true },
-				)
-				.catch(console.error);
+				);
+			} catch (trackingErr) {
+				console.warn("Creation: tracking failed", trackingErr);
+			}
+			};
 
 			toast({ title: "Unit Awakened!", description: `${name} initialized.` });
 			navigate(safeNext ?? `/characters/${character.id}`);
+			void runPostCreationSetup(character.id, postCreationSetup);
 		} catch (error) {
 			console.error("Initialization failed:", error);
-			if (createdCharacterId) {
-				toast({
-					title: "Unit Awakened with setup warnings",
-					description:
-						error instanceof Error
-							? error.message
-							: "Some initialization details can be repaired from the character sheet.",
-				});
-				navigate(safeNext ?? `/characters/${createdCharacterId}`);
-				return;
-			}
 			toast({
 				title: "Initialization Failed",
 				description:
