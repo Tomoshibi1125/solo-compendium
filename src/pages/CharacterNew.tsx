@@ -34,7 +34,7 @@ import { usePublishedHomebrew } from "@/hooks/useHomebrewContent";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { useStaticJobs } from "@/hooks/useStaticJobs";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database, Json } from "@/integrations/supabase/types";
+import type { Json } from "@/integrations/supabase/types";
 import { isSafeNextPath } from "@/lib/campaignInviteUtils";
 import {
 	formatAttackLine,
@@ -50,9 +50,7 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
-import {
-	type CharacterAbilityAccessContext,
-} from "@/lib/characterAbilityAccess";
+import type { CharacterAbilityAccessContext } from "@/lib/characterAbilityAccess";
 import {
 	calculateCharacterStats,
 	calculateHPMax,
@@ -72,12 +70,12 @@ import {
 	calculateTotalChoices,
 	type LedgerChoice,
 } from "@/lib/choiceCalculations";
+import { logErrorWithContext } from "@/lib/errorHandling";
 import {
 	addLocalPower,
 	addLocalSpell,
 	addLocalTechnique,
 	isLocalCharacterId,
-	setLocalAbilities,
 } from "@/lib/guestStore";
 import {
 	filterPublishedHomebrewRecords,
@@ -113,8 +111,6 @@ import type {
 	StaticJob,
 } from "@/types/character";
 import { type AbilityScore, SKILLS } from "@/types/core-rules";
-
-type DbAbilityScore = Database["public"]["Enums"]["ability_score"];
 
 type StaticPathSource = {
 	id: string;
@@ -1252,7 +1248,16 @@ const CharacterNew = () => {
 					? job.speed
 					: 30;
 			const hpMax = calculateHPMax(level, hitDieSize, vitModifier);
-			const creationAbilities = { ...effectiveAbilities };
+			// Racial ASI authority: for canon (static) jobs we persist the BASE
+			// ability scores and let the idempotent applyJobAwakeningTraitsToCharacter
+			// apply the racial ASI exactly once — it updates the characters row AND
+			// character_abilities and writes a marker feature, and is safe to re-run
+			// (see racialAsiRegression). Homebrew runtime jobs don't expose ASI fields
+			// to that helper (getRawJobASI finds none, so it applies/markers nothing),
+			// so we bake any name-resolved ASI into the stored row here instead.
+			const creationAbilities = selectedHomebrewJob
+				? { ...effectiveAbilities }
+				: { ...abilities };
 
 			// D&D Beyond Quickbuilder parity (#11): detect duplicate proficiency
 			// grants between Job and Background and de-dupe before persisting.
@@ -1359,46 +1364,11 @@ const CharacterNew = () => {
 				maxTechniqueLevel: 1,
 			};
 
-			const finalAbilities = { ...creationAbilities };
-
-			try {
-				if (isLocalCharacterId(character.id)) {
-					setLocalAbilities(
-						character.id,
-						finalAbilities as Record<DbAbilityScore, number>,
-					);
-					await insertCharacterFeature(character.id, {
-						name: `Racial ASI: ${dbJob.name}`,
-						source: `Racial ASI: ${dbJob.name}`,
-						level_acquired: 1,
-						description:
-							"Job ability score improvements represented in creation ability scores.",
-						is_active: false,
-					});
-				} else {
-					const updates = Object.entries(finalAbilities).map(
-						([ability, score]) => ({
-							character_id: character.id,
-							ability: ability as AbilityScore,
-							score: score,
-						}),
-					);
-					await supabase
-						.from("character_abilities")
-						.upsert(updates, { onConflict: "character_id,ability" });
-					await supabase.from("character_features").insert({
-						character_id: character.id,
-						name: `Racial ASI: ${dbJob.name}`,
-						source: `Racial ASI: ${dbJob.name}`,
-						level_acquired: 1,
-						description:
-							"Job ability score improvements represented in creation ability scores.",
-						is_active: false,
-					});
-				}
-			} catch (abilityErr) {
-				console.warn("Creation: ability setup failed", abilityErr);
-			}
+			// Ability scores are already persisted by the create mutation
+			// (useCreateCharacter / createLocalCharacter seed character_abilities and
+			// the guest abilities map from the row). Racial ASI + the marker feature
+			// are applied for canon jobs by applyJobAwakeningTraitsToCharacter below
+			// (idempotent, single authority). Homebrew jobs bake ASI into the row above.
 
 			try {
 			if (selectedHomebrewJob) {
@@ -1443,7 +1413,7 @@ const CharacterNew = () => {
 				null,
 			);
 			} catch (automationErr) {
-				console.warn("Creation: level 1 features/equipment failed", automationErr);
+				logErrorWithContext(automationErr, "CharacterNew: level-1 features/equipment");
 			}
 			try {
 			const selectedPowerEntries = availablePowers.filter((power) =>
@@ -1571,7 +1541,7 @@ const CharacterNew = () => {
 				}
 			}
 			} catch (imprintErr) {
-				console.warn("Creation: imprint inscription failed", imprintErr);
+				logErrorWithContext(imprintErr, "CharacterNew: imprint inscription");
 			}
 
 			const selectedFightingStyles = availableFightingStyles.filter((style) =>
@@ -1599,6 +1569,18 @@ const CharacterNew = () => {
 			}
 
 			try {
+			// Apply racial ASI + innate senses/resistances/saves FIRST so a canon
+			// character's core stats land even if a later (idempotent) awakening step
+			// throws. For canon jobs this is the single racial-ASI authority — it
+			// updates the row + character_abilities and writes the marker, and is safe
+			// to re-run. Rift Ascendant jobs are race+class fused, so these innate
+			// traits must flow onto the character row at creation.
+			await applyJobAwakeningTraitsToCharacter(
+				character.id,
+				job,
+				selectedLanguages,
+			);
+			await addJobAwakeningBenefitsForLevel(character.id, job, 1, new Set<string>());
 			for (const terrain of selectedFavoredTerrains) {
 				await insertCharacterFeature(character.id, {
 					name: `Favored Terrain: ${terrain}`,
@@ -1608,16 +1590,8 @@ const CharacterNew = () => {
 					is_active: true,
 				});
 			}
-			await addJobAwakeningBenefitsForLevel(character.id, job, 1, new Set<string>());
-			// Rift Ascendant: Jobs serve as both race and class, so their innate senses,
-			// resistances, and immunities must flow onto the character row at creation.
-			await applyJobAwakeningTraitsToCharacter(
-				character.id,
-				job,
-				selectedLanguages,
-			);
 			} catch (awakeningErr) {
-				console.warn("Creation: awakening benefits failed", awakeningErr);
+				logErrorWithContext(awakeningErr, "CharacterNew: awakening benefits");
 			}
 
 			// D&D Beyond parity (#11): eagerly seed spell slot rows at creation
@@ -1630,7 +1604,7 @@ const CharacterNew = () => {
 					level: 1,
 				});
 			} catch (slotError) {
-				console.error("Failed to seed spell slots at creation:", slotError);
+				logErrorWithContext(slotError, "CharacterNew: spell slot seeding");
 			}
 
 			ascendantTools
@@ -1641,12 +1615,14 @@ const CharacterNew = () => {
 					"SA",
 					{ skipBroadcast: true },
 				)
-				.catch(console.error);
+				.catch((trackErr) =>
+					logErrorWithContext(trackErr, "CharacterNew: track awakening usage"),
+				);
 
 			toast({ title: "Unit Awakened!", description: `${name} initialized.` });
 			navigate(safeNext ?? `/characters/${character.id}`);
 		} catch (error) {
-			console.error("Initialization failed:", error);
+			logErrorWithContext(error, "CharacterNew: initialization failed");
 			if (createdCharacterId) {
 				toast({
 					title: "Unit Awakened with setup warnings",

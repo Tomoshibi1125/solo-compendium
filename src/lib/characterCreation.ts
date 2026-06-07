@@ -22,6 +22,7 @@ import {
 	getLocalCharacterState,
 	getLocalCharacterWithAbilities,
 	isLocalCharacterId,
+	listLocalEquipment,
 	listLocalFeatures,
 	listLocalSpells,
 	setLocalAbilities,
@@ -3739,10 +3740,15 @@ export async function addLevel1Features(
 		return;
 	}
 
+	// Idempotency guard: skip features the character already has so this is safe
+	// to re-run (e.g. creation retry / reconcile) without duplicating rows.
+	const existingNames = await getExistingFeatureNames(characterId);
+
 	// Canonical static classFeatures at level 1.
 	if (isStaticJob(job) && job.classFeatures) {
 		const level1Features = job.classFeatures.filter((cf) => cf.level === 1);
 		for (const cf of level1Features) {
+			if (existingNames.has(cf.name)) continue;
 			if (isLocalCharacterId(characterId)) {
 				addLocalFeature(characterId, {
 					name: cf.name,
@@ -3783,6 +3789,10 @@ export async function addBackgroundFeatures(
 ): Promise<void> {
 	// Add background feature if any
 	if (background.feature_name) {
+		// Idempotency guard: don't re-add a background feature the character
+		// already has (safe to re-run on creation retry / reconcile).
+		const existingNames = await getExistingFeatureNames(characterId);
+		if (existingNames.has(background.feature_name)) return;
 		if (isLocalCharacterId(characterId)) {
 			addLocalFeature(characterId, {
 				name: background.feature_name,
@@ -3859,6 +3869,24 @@ export async function addStartingEquipment(
 		? knownCampaignId
 		: await getCharacterCampaignId(characterId);
 
+	// Snapshot the equipment the character already had BEFORE this pass, so the
+	// function is safe to re-run (creation retry / reconcile) without duplicating
+	// gear. We only compare against this pre-existing set, so any legitimate
+	// duplicate items granted within a single first-run pass are still added.
+	const preexistingEquipmentNames = new Set<string>(
+		(isLocalCharacterId(characterId)
+			? listLocalEquipment(characterId).map((e) => e.name)
+			: (
+					(
+						await supabase
+							.from("character_equipment")
+							.select("name")
+							.eq("character_id", characterId)
+					).data ?? []
+				).map((row) => row.name)
+		).filter((name): name is string => typeof name === "string"),
+	);
+
 	// Add job starting equipment from static data
 	if (isStaticJob(job) && job.startingEquipment) {
 		for (
@@ -3911,6 +3939,7 @@ export async function addStartingEquipment(
 						sigil_slots_base: 0,
 					};
 
+			if (preexistingEquipmentNames.has(equipData.name)) continue;
 			if (isLocalCharacterId(characterId)) {
 				addLocalEquipment(characterId, equipData);
 			} else {
@@ -3942,6 +3971,7 @@ export async function addStartingEquipment(
 			}
 
 			const normalizedItem = normalizeToStaticItem(item);
+			if (preexistingEquipmentNames.has(normalizedItem.name)) continue;
 			const itemProps = buildItemProperties(normalizedItem);
 			const itemType = deriveItemType(normalizedItem);
 			const weightValue =

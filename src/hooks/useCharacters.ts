@@ -276,24 +276,39 @@ export const useCreateCharacter = () => {
 				throw error;
 			}
 
-			// Create default ability scores
-			const defaultAbilities: AbilityScore[] = [
-				"STR",
-				"AGI",
-				"VIT",
-				"INT",
-				"SENSE",
-				"PRE",
-			];
-			const abilityInserts = defaultAbilities.map((ability) => ({
-				character_id: character.id,
-				ability,
-				score: 10,
-			}));
+			// Seed the per-ability rows from the values we just persisted on the
+			// character row (str/agi/...). The character_abilities table is the
+			// source of truth the sheet reads from, so seeding it with the real
+			// scores keeps it consistent with the row immediately — previously it
+			// was hardcoded to 10 and relied on a later, best-effort upsert to
+			// correct it, which left sheets showing all-10s if that upsert was
+			// skipped. Upsert (not insert) so this is safe to re-run.
+			const abilityColumnByScore: Record<
+				AbilityScore,
+				"str" | "agi" | "vit" | "int" | "sense" | "pre"
+			> = {
+				STR: "str",
+				AGI: "agi",
+				VIT: "vit",
+				INT: "int",
+				SENSE: "sense",
+				PRE: "pre",
+			};
+			const abilityInserts = (
+				Object.keys(abilityColumnByScore) as AbilityScore[]
+			).map((ability) => {
+				const column = abilityColumnByScore[ability];
+				const persisted = (character as Record<string, unknown>)[column];
+				const score =
+					typeof persisted === "number" && Number.isFinite(persisted)
+						? persisted
+						: 10;
+				return { character_id: character.id, ability, score };
+			});
 
 			const { error: abilitiesError } = await supabase
 				.from("character_abilities")
-				.insert(abilityInserts);
+				.upsert(abilityInserts, { onConflict: "character_id,ability" });
 
 			if (abilitiesError) {
 				logErrorWithContext(abilitiesError, "useCreateCharacter (abilities)");

@@ -343,7 +343,18 @@ export function createLocalCharacter(
 		languages: ((data as Record<string, unknown>).languages as string[]) ?? [],
 	};
 
-	upsertLocalCharacter(character);
+	// Seed the abilities map from the character row's scores rather than the
+	// all-10s default, so a freshly created guest character reads back its real
+	// ability scores immediately (the sheet derives from this map). Mirrors the
+	// authed-path fix in useCreateCharacter.
+	upsertLocalCharacter(character, {
+		STR: character.str ?? 10,
+		AGI: character.agi ?? 10,
+		VIT: character.vit ?? 10,
+		INT: character.int ?? 10,
+		SENSE: character.sense ?? 10,
+		PRE: character.pre ?? 10,
+	});
 	return character;
 }
 
