@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useCreateCharacter } from "@/hooks/useCharacters";
+import { toAbilityScoreCodes } from "@/lib/abilityScoreCodes";
 import { useDialogSwipeClose } from "@/hooks/useDialogSwipeClose";
 import { useInitializeSpellSlots } from "@/hooks/useSpellSlots";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,6 +56,7 @@ import {
 	addStartingEquipment,
 	applyJobAwakeningTraitsToCharacter,
 } from "@/lib/characterCreation";
+import { getErrorInfo, getErrorMessage } from "@/lib/errorHandling";
 import { isLocalCharacterId, setLocalAbilities } from "@/lib/guestStore";
 import { logger } from "@/lib/logger";
 import { initializeProtocolData } from "@/lib/ProtocolDataManager";
@@ -262,10 +264,11 @@ export function QuickAscendantWizard({
 				skill_proficiencies: skills.unique,
 				skill_expertise: [],
 				tool_proficiencies: tools.unique,
-				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
-					job.saving_throws ||
-					job.savingThrows ||
-					[]) as AbilityScore[],
+				saving_throw_proficiencies: toAbilityScoreCodes(
+					job.saving_throw_proficiencies,
+					job.saving_throws,
+					job.savingThrows,
+				),
 				weapon_proficiencies: weapons.unique,
 				armor_proficiencies: armors.unique,
 				speed,
@@ -338,12 +341,13 @@ export function QuickAscendantWizard({
 			navigate(`/characters/${character.id}`);
 		} catch (err) {
 			logger.error("Quick Ascendant create failed", err);
+			const info = getErrorInfo(err);
+			const base =
+				getErrorMessage(err) ||
+				"Could not create Ascendant. Try again or use the full wizard.";
 			toast({
 				title: "Awakening failed",
-				description:
-					err instanceof Error
-						? err.message
-						: "Could not create Ascendant. Try again or use the full wizard.",
+				description: info.code ? `${base} (code ${info.code})` : base,
 				variant: "destructive",
 			});
 		} finally {

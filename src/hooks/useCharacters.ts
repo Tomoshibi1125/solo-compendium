@@ -265,6 +265,30 @@ export const useCreateCharacter = () => {
 				return createLocalCharacter(dataWithCanonicalIds);
 			}
 
+			// `characters.user_id` has a FK to `public.profiles(id)`. Accounts
+			// created before the `handle_new_user()` trigger/backfill existed can
+			// be missing their `profiles` row, which makes the insert below fail
+			// with FK violation 23503 ("violates foreign key constraint
+			// characters_user_id_fkey"). The profiles INSERT RLS policy allows a
+			// signed-in user to self-insert (`auth.uid() = id`), so idempotently
+			// ensure the row exists first. `profiles.email` is NOT NULL, so only
+			// attempt this when we have an email; the server-side backfill covers
+			// the rare email-less case. Best-effort: a failure here must not mask
+			// the real insert error surfaced below.
+			if (user.email) {
+				try {
+					await supabase.from("profiles").upsert(
+						{ id: user.id, email: user.email },
+						{ onConflict: "id", ignoreDuplicates: true },
+					);
+				} catch (profileErr) {
+					logErrorWithContext(
+						profileErr,
+						"useCreateCharacter: ensure profile",
+					);
+				}
+			}
+
 			const { data: character, error } = await supabase
 				.from("characters")
 				.insert({ ...dataWithCanonicalIds, user_id: user.id })

@@ -68,4 +68,51 @@ export class AuthPage {
 				: /\/(ascendant|player)-tools/;
 		await this.page.waitForURL(expectedUrl, { timeout: 15_000 });
 	}
+
+	/**
+	 * Sign in with an existing Supabase email/password account.
+	 *
+	 * Mirrors {@link continueAsGuest}'s role selection, then fills the email
+	 * form (`email-input` / `password-input`) and submits ("Enter the Rift").
+	 * Returns `true` once the post-login redirect lands away from `/login`,
+	 * or `false` if the login form surfaced an error / did not navigate
+	 * (e.g. bad credentials, backend not configured) so the caller can
+	 * decide how to handle the failure rather than throwing.
+	 */
+	async signIn(
+		email: string,
+		password: string,
+		role: Role = "ascendant",
+	): Promise<boolean> {
+		const canonical = normalizeRole(role);
+		await this.dismissAnalytics();
+		await this.goto();
+
+		if (canonical === "warden") {
+			await this.page
+				.getByRole("button", { name: /Select Warden role/i })
+				.click();
+		} else {
+			await this.page
+				.getByRole("button", { name: /Select Ascendant role/i })
+				.click();
+		}
+
+		await this.page.getByTestId("email-input").fill(email);
+		await this.page.getByTestId("password-input").fill(password);
+
+		await this.page
+			.getByRole("button", { name: /Enter the Rift/i })
+			.click();
+
+		try {
+			await this.page.waitForURL(
+				(url) => !url.pathname.startsWith("/login"),
+				{ timeout: 30_000 },
+			);
+			return true;
+		} catch {
+			return false;
+		}
+	}
 }

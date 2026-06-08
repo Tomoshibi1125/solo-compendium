@@ -50,6 +50,7 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "@/lib/canonicalCompendium";
+import { toAbilityScoreCodes } from "@/lib/abilityScoreCodes";
 import type { CharacterAbilityAccessContext } from "@/lib/characterAbilityAccess";
 import {
 	calculateCharacterStats,
@@ -70,7 +71,11 @@ import {
 	calculateTotalChoices,
 	type LedgerChoice,
 } from "@/lib/choiceCalculations";
-import { logErrorWithContext } from "@/lib/errorHandling";
+import {
+	getErrorInfo,
+	getErrorMessage,
+	logErrorWithContext,
+} from "@/lib/errorHandling";
 import {
 	addLocalPower,
 	addLocalSpell,
@@ -465,10 +470,11 @@ const CharacterNew = () => {
 				hit_die: Number.parseInt(job.hitDie?.replace("1d", "") || "8", 10),
 				primary_abilities: (job.primary_abilities ||
 					(job.primaryAbility ? [job.primaryAbility] : [])) as AbilityScore[],
-				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
-					job.saving_throws ||
-					job.savingThrows ||
-					[]) as AbilityScore[],
+				saving_throw_proficiencies: toAbilityScoreCodes(
+					job.saving_throw_proficiencies,
+					job.saving_throws,
+					job.savingThrows,
+				),
 				armor_proficiencies: (job.armor_proficiencies ||
 					job.armorProficiencies ||
 					[]) as string[],
@@ -1333,10 +1339,11 @@ const CharacterNew = () => {
 				skill_proficiencies: skillsResult.unique,
 				skill_expertise: skillExpertiseResult.unique,
 				tool_proficiencies: toolsResult.unique,
-				saving_throw_proficiencies: (job.saving_throw_proficiencies ||
-					job.saving_throws ||
-					job.savingThrows ||
-					[]) as AbilityScore[],
+				saving_throw_proficiencies: toAbilityScoreCodes(
+					job.saving_throw_proficiencies,
+					job.saving_throws,
+					job.savingThrows,
+				),
 				weapon_proficiencies: weaponsResult.unique,
 				armor_proficiencies: armorsResult.unique,
 				speed: jobSpeed,
@@ -1623,23 +1630,26 @@ const CharacterNew = () => {
 			navigate(safeNext ?? `/characters/${character.id}`);
 		} catch (error) {
 			logErrorWithContext(error, "CharacterNew: initialization failed");
+			const errorInfo = getErrorInfo(error);
+			const describeError = (fallback: string) => {
+				const base = getErrorMessage(error) || fallback;
+				return errorInfo.code ? `${base} (code ${errorInfo.code})` : base;
+			};
 			if (createdCharacterId) {
 				toast({
 					title: "Unit Awakened with setup warnings",
-					description:
-						error instanceof Error
-							? error.message
-							: "Some initialization details can be repaired from the character sheet.",
+					description: describeError(
+						"Some initialization details can be repaired from the character sheet.",
+					),
 				});
 				navigate(safeNext ?? `/characters/${createdCharacterId}`);
 				return;
 			}
 			toast({
 				title: "Initialization Failed",
-				description:
-					error instanceof Error
-						? error.message
-						: "An unknown error occurred during awakening.",
+				description: describeError(
+					"An unknown error occurred during awakening.",
+				),
 				variant: "destructive",
 			});
 		} finally {
