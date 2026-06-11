@@ -12,21 +12,21 @@ export const chaptersPart3: SandboxChapter[] = [
 
 ## Overview
 
-The Regent's Bailiff is not an escaped Anomaly and not a random roaming boss. It is a Domain officer created by the Regent's law. It enforces debt, invitation, tribute, custody, and judgment.
+The Regent's Bailiff is not an escaped Anomaly and not a random roaming boss. It is a piece of the Regent's will given shape and sent walking — the thing the Domain sends to collect what it has marked. It does not hurry, because it does not need to. It does not negotiate, because it was not made to. It is simply, always, on its way.
 
-The Bailiff should feel like law enforcement from a nightmare: formal, patient, nearly unstoppable when its claim is valid, and strangely limited when the party understands the law it serves.
+The Bailiff should feel like being hunted in a nightmare: patient, certain, impossible to reason with, impossible to outlast — and only ever turned aside, never truly stopped, by someone who understands what the Gloamreach is.
 
 ## First Sighting
 
 Read aloud:
 
-*You hear chains before you see the figure. Not dragged. Counted. Link by link, as if someone is measuring the road. A tall armored shape comes through the mist carrying a scroll in one hand and a hooked blade in the other. It stops at the milestone, unrolls the writ, and reads your names with perfect pronunciation.*
+*You hear chains before you see the figure. Not dragged. Counted. Link by link, slow and even, as if something is measuring the distance between you and it. A tall armored shape comes through the mist, a hooked blade hanging easy in one hand. It stops. It reads from nothing. It simply speaks your names — all of them, in order, in the voices of people who used to say them — and then it starts walking again.*
 
 ## Use at the Table
 
-Before Level 8, the Bailiff is primarily a survival, negotiation, or contradiction encounter. The party can flee, hide, satisfy the charge, invalidate the charge, or force the Bailiff to withdraw by proving it lacks jurisdiction.
+Before Level 8, the Bailiff is primarily a survival, evasion, or warding encounter. The party can flee, hide their names and their scent, give it what it came to collect, or drive it off for a night by supernatural means — a threshold it cannot cross, a Claim, an older power. It cannot be killed and stay dead until the thing that sent it is dealt with.
 
-At higher levels, the party can fight it, but combat alone should not permanently solve the problem unless the law that summoned it has been broken or satisfied.
+At higher levels the party can fight it, but combat alone should not permanently solve the problem unless the Regent's hold that sustains it has been broken.
 
 ## Suggested Stat Profile
 
@@ -34,37 +34,37 @@ Use an S-Rank Domain officer profile.
 
 - High AC and HP.
 - Immunity to fear, charm, poison, and mundane restraint.
-- Resistance to damage while its legal charge is valid.
-- Advantage when attacking a named target listed in its writ.
-- Reduced defenses if the party proves the writ is false, paid, misnamed, or contradicted by a Claim.
+- Resistance to damage while the one it hunts is still marked.
+- Advantage when attacking the marked target it has come for.
+- Reduced defenses when the party breaks the mark, hides the name, or turns a Claim or older power against it.
 
-## Bailiff Charges
+## Why It Has Come
 
-| d8 | Charge |
+| d8 | Why the Bailiff walks toward you |
 |---|---|
-| 1 | Refused invitation twice. |
-| 2 | Withheld tribute. |
-| 3 | Sheltered a condemned subject. |
-| 4 | Traveled under a false name. |
-| 5 | Stole property of the Regent's court. |
-| 6 | Broke guest-right. |
-| 7 | Interfered with lawful collection. |
-| 8 | Carried a Claim without answering the throne. |
+| 1 | A summons of the road, refused twice. |
+| 2 | A tithe the Domain is owed and has not been given. |
+| 3 | You sheltered someone the Regent had already claimed. |
+| 4 | You travel under a name that is not yours. |
+| 5 | You carried something out of the Regent's reach. |
+| 6 | You broke a guest-right, and the Gloamreach remembers. |
+| 7 | You stepped between the Domain and something it was collecting. |
+| 8 | You carry a Claim, and have not yet answered the throne for it. |
 
-## Escape and Contradiction
+## Holding It Off
 
-The party may end a Bailiff scene without killing it by:
+The party may end a Bailiff scene without destroying it by:
 
-1. Paying or redirecting the debt.
-2. Proving the writ names the wrong person.
-3. Invoking guest-right.
-4. Using a Claim to contradict the charge.
-5. Forcing the Bailiff to read an older law from the Unseated Law.
-6. Entering a sanctuary where the local law supersedes the Regent's writ for one scene.
+1. Giving it — or redirecting it toward — the thing it came to collect.
+2. Hiding the marked one: a true name unspoken, a face unseen, a scent lost in running water.
+3. Crossing a threshold its master's hold does not reach — a sanctuary, hallowed native ground, a place the Regent has not yet swallowed.
+4. Turning a Claim against it.
+5. Waking an older power — the Unseated — that the Gloamreach feared before it ever feared the Regent.
+6. Simply outrunning it for now, knowing it has not stopped, and never will, until the Anchor is dealt with.
 
 ## Warden Guidance
 
-The Bailiff is most frightening when it is correct. Let the party learn that survival depends on understanding the Domain, not only hitting harder.
+The Bailiff is most frightening when it cannot be bargained with — when the players realize the only question left is *how long can we stay ahead of it.* Let them learn that surviving the Gloamreach means understanding what it is, not only hitting harder.
 `,
 	},
 	{
@@ -82,7 +82,7 @@ These quests replace old district errands with Domain-scale obligations. Each qu
 
 Steps:
 
-1. Recover their first broken transmission near the Gate Threshold.
+1. Recover their first broken transmission near the Rift Threshold.
 2. Follow AFA ghost-pings through the Road of Writs.
 3. Find remains or survivors in Bastion Golemfall, the Sunken Tunnels, or the Citadel approach.
 4. Decide whether to return the truth to the Bureau or hide what the team became.
@@ -94,7 +94,7 @@ Rewards: Bureau reputation, Ghost as a possible ally, and intelligence on the Re
 **Giver**: Mother Rust  
 **Objective**: Recover living mana from the Fungal Depths or Remembering Orchard.
 
-Mother Rust can use it to treat Gate-Rot and Domain exposure, but the same compound can also suppress emotion and make people easier to move through grief-heavy terrain.
+Mother Rust can use it to treat Rift-Rot and Domain exposure, but the same compound can also suppress emotion and make people easier to move through grief-heavy terrain.
 
 Rewards: Vermillion reputation, advanced healing, and possible Mother Rust alliance or corruption arc.
 
@@ -135,7 +135,7 @@ Reward: one-use suppression of a local Domain law for one scene.
 **Giver**: Mika the Kid  
 **Objective**: Protect Mika and interpret her drawings.
 
-Each drawing foreshadows a Claim, betrayal, Bailiff charge, settlement tribute, or Citadel chamber.
+Each drawing foreshadows a Claim, a betrayal, the Bailiff's coming, a settlement's tithe, or a Citadel chamber.
 
 Reward: prophetic hints and final-act emotional leverage if Mika survives.
 
@@ -156,7 +156,7 @@ Reward: Vermillion reputation, training, and Iron Belle's respect.
 Complications:
 
 - The road demands names.
-- The Bailiff may challenge custody.
+- The Bailiff may come to collect someone.
 - Some civilians believe leaving voids the settlement's protection.
 
 Rewards: civilian trust, Bureau or Vermillion reputation, and settlement support in the finale.
@@ -187,7 +187,7 @@ Reward: weakened Regent Domain control during the finale.
 ## Quest 12: Rat-King Ji's Stash
 
 **Giver**: Rat-King Ji  
-**Objective**: Recover a hidden stash before the Road of Writs legally transfers it to someone else.
+**Objective**: Recover a hidden stash before the Road of Writs carries it off to someone else.
 
 Reward: contraband, Claim clue, or a dangerous shortcut.
 
@@ -208,7 +208,7 @@ Use these encounters when the Gloamreach needs to push back without derailing th
 
 ### Legal Pressure
 
-A writ, toll, invitation, accusation, or custody claim appears. This pressure teaches players that law is a monster here.
+A summons, a toll, an invitation, a debt of hospitality, or a claim on someone in their care appears. This pressure teaches players that in the Gloamreach, even courtesy has teeth.
 
 ### Environmental Pressure
 
@@ -306,7 +306,7 @@ Pulls one hidden name from a document. The document then learns one name from th
 When the party recovers a Claim, choose one pressure response:
 
 1. The Regent sends a polite invitation.
-2. The Bailiff receives a new charge.
+2. The Bailiff is sent after someone new.
 3. A settlement's tribute changes.
 4. The Awoko attempt theft or corruption.
 5. The Road of Writs shortens, but only toward danger.
@@ -328,7 +328,7 @@ Still valuable to Bureau and Vermillion. Use cores for gear, research, medicine,
 
 ### Relics
 
-Tie Relics to Domain laws. Even minor Relics should imply ownership, debt, hospitality, memory, or survival.
+Tie Relics to the Domain's nature. Even minor Relics should carry a hint of the Gloamreach — something owned, owed, remembered, or survived.
 
 ### Sigils and Runes
 
@@ -340,7 +340,7 @@ A safe long rest can be more valuable than money. Make shelter a reward, not an 
 
 ### Names and Truths
 
-The right name, charge, confession, or precedent may defeat something combat cannot.
+The right name, truth, confession, or memory may defeat something combat cannot.
 
 ## Final Rewards
 
@@ -358,7 +358,7 @@ After the campaign, rewards depend on the ending.
 
 ## Intended Rating
 
-**Mature Dark Fantasy Gate Horror**.
+**Mature Dark Fantasy Rift Horror**.
 
 Use oppressive dread, psychological horror, body horror, starvation, tribute, institutional abandonment, corpse imagery, cursed hospitality, predatory nobility, forced moral compromise, transformation horror, and Domain-law violation.
 
@@ -368,7 +368,7 @@ Do not use sexual violence, eroticized harm, real-world hate ideology, cruelty t
 
 ### Ownership
 
-The Regent's horror is ownership. The land, roads, ledgers, invitations, servants, and even safe rooms suggest the party is already claimed.
+The Regent's horror is possession. The land, the roads, the dead, the invitations, the servants, and even the safe rooms all whisper that the party is already his.
 
 ### Hospitality
 

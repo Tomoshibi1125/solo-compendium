@@ -1,15 +1,15 @@
 /**
  * SANDBOX TIMELINE — "The Shadow of the Regent"
  *
- * The Gloamreach Gate Break track: a campaign-length Red Phase pressure clock
+ * The Gloamreach Rift Break track: a campaign-length Rift Break pressure clock
  * spanning roughly twelve in-world weeks (Levels 1-15), grouped into three acts
  * (I: L1-5, II: L6-10, III: L11-15). Seeded as `campaign_session_logs` of
  * `log_type: "event"`.
  *
  * The `day` value is the in-world day each beat TENDS to land on, but these are
  * milestone beats, not a hard countdown: the Warden advances them as the party
- * progresses and bends them around decisive action. Catastrophic Gate Break
- * (Red Phase overwriting the material side) becomes likely only AFTER the final
+ * progresses and bends them around decisive action. Catastrophic Rift Break
+ * (Rift Break overwriting the material side) becomes likely only AFTER the final
  * beat, near the level-15 finale — never before. Earlier drafts compressed this
  * into a flat 14-day window; it is now a multi-stage track sized for 1-15 play.
  */
@@ -35,16 +35,16 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		day: 1,
 		title: "Day 1 · Act I — Threshold Day",
 		description:
-			"The party crosses the Gate as the first team in, and discovers the Gate is only the door. The exit becomes unreliable, the Road of Writs appears, and the Regent's Citadel is visible on the horizon before any map can explain it.",
+			"The party crosses the Rift as the first team in, and discovers the Rift is only the door. The exit becomes unreliable, the Road of Writs appears, and the Regent's Citadel is visible on the horizon before any map can explain it.",
 		factionImpact: "Bureau +1 if the party reports the truth instead of sanitizing it.",
 		linkedNpcName: "Commander Park Jae-won",
-		linkedSceneName: "Gate Threshold",
+		linkedSceneName: "Rift Threshold",
 	},
 	{
 		day: 4,
 		title: "Day 4 · Act I — First Tribute",
 		description:
-			"A nearby settlement pays tribute. The party may witness it, interrupt it, or hear the bells after the fact. The Drowned Ledgerfen activates and begins making records legally dangerous.",
+			"A nearby settlement pays tribute. The party may witness it, interrupt it, or hear the bells after the fact. The Drowned Ledgerfen wakes and begins making the dead, and the not-yet-dead, dangerously real.",
 		factionImpact: "Independent Survivors +2 if the party protects civilians without exploiting them.",
 		linkedSceneName: "Writ-Bound Hamlet",
 	},
@@ -52,14 +52,14 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		day: 8,
 		title: "Day 8 · Act I — The Road Learns",
 		description:
-			"The Road of Writs begins responding to party choices. Anyone who signed a ledger, accepted guest-right, gave a true name, or carried a Claim clue feels watched.",
+			"The Road of Writs begins responding to party choices. Anyone who gave a true name, accepted guest-right, made a promise on the road, or carried a Claim clue feels watched.",
 		linkedSceneName: "Road of Writs",
 	},
 	{
 		day: 13,
 		title: "Day 13 · Act I — Hayashi's Warning",
 		description:
-			"A delayed Bureau transmission reaches the party. Dr. Hayashi confirms the Gloamreach is a Regent Domain, not a normal clear site. Killing creatures will not resolve the Anchor if the law survives.",
+			"A delayed Bureau transmission reaches the party. Dr. Hayashi confirms the Gloamreach is a Regent Domain, not a normal clear site. Killing creatures will not resolve the Anchor if its hold on the Gloamreach survives.",
 		factionImpact: "Bureau Trusted path opens if the party shares field evidence.",
 		linkedNpcName: "Dr. Serin Hayashi",
 	},
@@ -67,7 +67,7 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		day: 20,
 		title: "Day 20 · Act II — The Bailiff's First Public Judgment",
 		description:
-			"The Regent's Bailiff collects someone from a settlement, road camp, or faction shelter. It announces charges before violence. The party can fight, flee, satisfy, redirect, or contradict the writ.",
+			"The Regent's Bailiff collects someone from a settlement, road camp, or faction shelter. It speaks their names before any violence. The party can fight, flee, give it what it came for, redirect it, or break the mark.",
 		factionImpact:
 			"Civilian trust shifts sharply based on whether the party protects the accused or lets collection happen.",
 		linkedNpcName: "The Regent's Bailiff",
@@ -143,7 +143,7 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		day: 84,
 		title: "Day 84 · Act III — Citadel Day & the Break Threshold",
 		description:
-			"The final Break Stage. The party enters the Regent's Citadel, or the Domain begins forcing Red Phase pressure onto the material world. Bureau floodlights dim outside the Gate; inside the Gloamreach, every bell rings once. This is the Gate Break threshold — if the party has not reached the Anchor, escalate Red Phase pressure rather than forcing a final boss by fiat.",
+			"The final Break Stage. The party enters the Regent's Citadel, or the Domain begins forcing Rift Break pressure onto the material world. Bureau floodlights dim outside the Rift; inside the Gloamreach, every bell rings once. This is the Rift Break threshold — if the party has not reached the Anchor, escalate Rift Break pressure rather than forcing a final boss by fiat.",
 		factionImpact: "All faction reputations convert into final-operation support, betrayal, neutrality, or obstruction.",
 		linkedSceneName: "The Regent's Citadel",
 	},

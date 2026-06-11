@@ -36,9 +36,9 @@ export const sandboxFactions: SandboxFaction[] = [
 		id: "bureau-sentinels",
 		name: "Bureau Sentinels",
 		tagline: "Order, at cost.",
-		emblem: "Silver crescent crossed by a black rifle over a sealed Gate.",
+		emblem: "Silver crescent crossed by a black rifle over a sealed Rift.",
 		description: [
-			"The official government response to the Gloamreach threshold: military-grade Ascendants, field researchers, logistics teams, and cordon officers trying to contain an S-Rank Gate Domain that behaves like a sovereign state.",
+			"The official government response to the Gloamreach threshold: military-grade Ascendants, field researchers, logistics teams, and cordon officers trying to contain an S-Rank Rift Interior that behaves like a sovereign state.",
 			"",
 			"**Leadership:** Commander Park Jae-won, Bureau Domain Response Annex.",
 			"",
@@ -66,15 +66,15 @@ export const sandboxFactions: SandboxFaction[] = [
 		id: "vermillion-guild",
 		name: "Vermillion Guild",
 		tagline: "Survive first. Obey later.",
-		emblem: "Red six-pointed star stamped over a broken Bureau seal.",
+		emblem: "A red six-pointed star scratched into salvaged Relic-plate.",
 		description: [
-			"A merchant-Ascendant salvage network operating from the Vermillion Outpost inside the Gloamreach. They specialize in cores, Sigils, tattoos, contraband Runes, rescue-for-profit, and things the Bureau will need two committees to approve.",
+			"Not a Bureau guild, and not from the material world — **the Vermillion are native to the Gloamreach.** The Rift's door is new, but the world beyond it is not, and the Vermillion are its people: a salvage cartel of natives who survive under the Regent's law by stripping cores, Sigils, and Relics from the places that kill everyone else, and by trading in the gaps the Domain leaves. Their specialty is salvage, contraband Runes, rescue-for-profit, and knowing exactly which of the Gloamreach's snares can be slipped and which one will collect you. To them the party are the outsiders — strangers who walked in through a door that should not exist.",
 			"",
 			"**Leadership:** Guildmaster Orin, with Rat-King Ji controlling most Outpost trade.",
 			"",
 			"**Alignment:** Pragmatic. Fast. Morally flexible. Often right for the wrong reasons.",
 			"",
-			"Vermillion saves people the Bureau abandons, then charges them for the favor. Both parts are true.",
+			"The Vermillion save people the Regent's law abandons, then charge them for the favor — both parts are true. They distrust the newly-arrived Bureau as much as they distrust the court; outsiders never have to live here afterward.",
 		].join("\n"),
 		startingReputation: 0,
 		reputationThresholds: [
@@ -126,7 +126,7 @@ export const sandboxFactions: SandboxFaction[] = [
 		tagline: "No masters, no contracts.",
 		emblem: "A chalk star on a doorframe, erased every morning.",
 		description: [
-			"Civilians, free Ascendants, shelter leaders, settlement doctors, road couriers, and mutual-aid networks trying to survive the Gloamreach without becoming property of the Regent, the Bureau, Vermillion, or the Awoko.",
+			"Native civilians, free folk, shelter leaders, settlement doctors, road couriers, and mutual-aid networks trying to survive the Gloamreach without becoming property of the Regent, the Bureau, the Vermillion, or the Awoko.",
 			"",
 			"**Leadership:** None. Influence shifts between Mama Chen, Doc Tanaka, Old Man Crane, Mika's protectors, and whoever kept people alive most recently.",
 			"",
@@ -154,7 +154,7 @@ export const sandboxFactions: SandboxFaction[] = [
 		tagline: "We are still here.",
 		emblem: "A cracked handprint over a half-open eye.",
 		description: [
-			"Survivors, changed Ascendants, memory constructs, intelligent Anomaly fragments, and Domain-born entities who have been altered by the Gloamreach without becoming servants of the Regent.",
+			"Native survivors, changed natives, memory constructs, intelligent Anomaly fragments, and Domain-born entities altered by the Gloamreach — the free, who keep their own counsel, and (grouped here but never recruitable) the Regent's bound Court, who do not.",
 			"",
 			"**Leadership:** None. The Catalog, Echo-7, Echo-Nine, Specimen X, and other changed beings speak only for themselves.",
 			"",

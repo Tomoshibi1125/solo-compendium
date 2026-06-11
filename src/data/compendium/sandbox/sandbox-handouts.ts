@@ -6,22 +6,22 @@ import type { SandboxHandout } from "../ascendant-sandbox-module";
 
 const rawSandboxHandouts = [
 	{
-		title: "Emergency Writ: S-Rank Gate Entry",
+		title: "Emergency Writ: S-Rank Rift Entry",
 		content: `# EMERGENCY WRIT
 
-You are cleared for entry into the Gloamreach Gate Domain under crisis authority.
+You are cleared for entry into the Gloamreach Rift Interior under crisis authority.
 
-Return conditions: Anchor broken, Anchor sealed, Anchor transformed, or Red Phase evacuation.
+Return conditions: Anchor broken, Anchor sealed, Anchor transformed, or Rift Break evacuation.
 
 The Bureau accepts no liability for Domain law, Anomaly exposure, Essence contamination, Relic corruption, or failed extraction after threshold closure.`,
 	},
 	{
-		title: "AFA Alert: Gate Domain Scale",
+		title: "AFA Alert: Rift Interior Scale",
 		content: `# AFA ALERT
 
 Rift threshold stabilized.
 
-Interior mapping exceeds standard bounded Gate parameters.
+Interior mapping exceeds standard bounded Rift parameters.
 
 Domain estimate: country-scale interior realm.
 
@@ -29,7 +29,7 @@ Anchor classification: sovereign intelligence.
 
 Recommendation: do not enter without S-Rank command approval.
 
-Override: emergency writ accepted.`,
+Override: emergency entry authorized.`,
 	},
 	{
 		title: "Oracle Scan Sheet: The Fortune of the Domain",
@@ -53,7 +53,7 @@ The scan output is unstable. Re-run attempts may alert the Anchor.`,
 
 The road bends toward the Citadel no matter how it is drawn.
 
-Marked stops: Gate Threshold, Writ-Bound Hamlet, Vermillion Outpost, Drowned Ledgerfen, Remembering Orchard, Bastion Golemfall, Obsidian Spire.
+Marked stops: Rift Threshold, Writ-Bound Hamlet, Vermillion Outpost, Drowned Ledgerfen, Remembering Orchard, Bastion Golemfall, Obsidian Spire.
 
 Unmarked warning written in red pencil: "If the Bailiff reads your name, do not answer until you know the charge."`,
 	},
@@ -221,7 +221,7 @@ Six cuts: you are already being tested.`,
 		title: "White Heron Seal Notes",
 		content: `# WHITE HERON SEAL
 
-The Anchor does not need to die for the Gate to close.
+The Anchor does not need to die for the Rift to close.
 
 Requirements:
 
@@ -281,8 +281,8 @@ No beast may hunt the crowned hand.
 No oath may die before its bearer.`,
 	},
 	{
-		title: "Red Phase Warning",
-		content: `# RED PHASE WARNING
+		title: "Rift Break Warning",
+		content: `# RIFT BREAK WARNING
 
 Containment thinning.
 
@@ -322,7 +322,7 @@ Every safe place has a cost.
 
 Every Relic has a desire.
 
-Every bargain establishes precedent.
+Every bargain leaves its mark.
 
 The Regent is not waiting at the end. He is watching from the beginning.`,
 	},

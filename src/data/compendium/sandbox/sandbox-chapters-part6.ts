@@ -15,18 +15,20 @@ export const chaptersPart6: SandboxChapter[] = [
 
 ## Overview
 
-The **Bureau Domain Response Annex** is the material-side operations base outside the S-Rank Gate. It is not the center of the campaign. It is the last clean line before the Gloamreach.
+The **Bureau Domain Response Annex** is the material-side operations base outside the S-Rank Rift. It is not the center of the campaign. It is the last clean line before the Gloamreach.
 
 Use the Annex as a briefing hub, medical station, research site, faction-pressure point, and reminder that the modern world still exists beyond the threshold. The Annex should feel professional, exhausted, underinformed, and one bad report away from panic.
 
-## Room 1 - Barricade Lobby and Solara Shrine
+> *Read aloud:* Floodlights, generators, the smell of coffee and antiseptic and ozone. It is loud with the ordinary — radios, boots, a medic arguing for more plasma — and every face turns, just slightly, toward the Rift, the way people stand near a fire they are not sure is contained. This is the last place your AFA tells the simple truth. Past the threshold, it only tells you what the Gloamreach wants you to read.
+
+## Room 1 - Barricade Lobby and Sparrow Shrine
 
 Floodlights, concrete barriers, scanners, and a line of wounded civilians waiting behind plastic sheeting. In one corner, someone has placed a small sun-bronze sparrow under a cracked glass dome.
 
 Services:
 
 - Ascendant clearance check-in.
-- Updated Gate Domain warnings.
+- Updated Rift Interior warnings.
 - Bureau Emergency Bulletin handout.
 - One small shrine blessing per campaign: a character who leaves a sincere token may reroll one failed save against a Regent-aligned effect.
 
@@ -86,7 +88,7 @@ Use this room to show the cost of the Domain's appetite. It can surface final wo
 
 ## Room 7 - Commander Park's Office
 
-A quiet glass-walled office facing the Gate floodlights. Park keeps old team photos, unsent letters, and political orders he does not intend to obey if civilians are at stake.
+A quiet glass-walled office facing the Rift floodlights. Park keeps old team photos, unsent letters, and political orders he does not intend to obey if civilians are at stake.
 
 Services:
 
@@ -113,7 +115,7 @@ Services:
 
 ## Room 10 - Roof Heliport and Drone Pad
 
-The roof carries drones, VTOL craft, storm tarps, and the constant vibration of the S-Rank Gate. It is used for rapid cordon movement, emergency extraction near the threshold, and the final material-side relay before the party enters the Citadel approach.
+The roof carries drones, VTOL craft, storm tarps, and the constant vibration of the S-Rank Rift. It is used for rapid cordon movement, emergency extraction near the threshold, and the final material-side relay before the party enters the Citadel approach.
 
 ## Bureau Reputation Milestones
 
@@ -126,7 +128,7 @@ The roof carries drones, VTOL craft, storm tarps, and the constant vibration of 
 
 ## Warden Guidance
 
-The Annex is safety with a countdown. Keep it useful, but never let it feel permanent. Every return from the Gloamreach should show more strain: more wounded, worse maps, fewer drones, quieter staff, and a Gate that looks a little more like a mouth.
+The Annex is safety with a countdown. Keep it useful, but never let it feel permanent. Every return from the Gloamreach should show more strain: more wounded, worse maps, fewer drones, quieter staff, and a Rift that looks a little more like a mouth.
 `,
 	},
 	{
@@ -171,7 +173,7 @@ Services:
 - Gray-market gear.
 - Restricted Runes.
 - Identity laundering.
-- False travel papers for settlements that check writs.
+- False travel papers for settlements that turn away strangers.
 
 ## Room 4 - Tattoo Parlour
 
@@ -217,7 +219,7 @@ Bounties include missing teams, dangerous roads, toll-house sabotage, Domain bea
 
 ## Room 9 - Smuggler Gate
 
-A hidden exit that does not always open to the same place. Vermillion uses it to move goods around Regent patrols. Each use risks debt to the road.
+A hidden exit that does not always open to the same place. Vermillion uses it to move goods around Regent patrols. Each use risks the road taking its toll.
 
 ## Room 10 - The Quiet Room
 

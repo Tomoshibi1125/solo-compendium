@@ -31,7 +31,7 @@ Canonical sources:
 
 | Tier | Domain Source | Canonical Source |
 |---|---|---|
-| D | The Hollow Subway, Drowned Ledgerfen, early road encounters | \`runes/spell-rank-d.ts\` |
+| D | The Hollow Way, Drowned Ledgerfen, early road encounters | \`runes/spell-rank-d.ts\` |
 | C | Fungal Depths, Remembering Orchard, Ashen Counting-House | \`runes/spell-rank-c.ts\` |
 | B | Sunken Tunnels, Bastion Golemfall, Mana Vein Node rewards | \`runes/spell-rank-b.ts\` |
 | A | Obsidian Spire, Forbidden Vault, Citadel approach, Hayashi research trade | \`runes/spell-rank-a.ts\` |
@@ -55,7 +55,7 @@ The Awoko collect runes as grief-tithes. A Sanctum raid should yield at least on
 
 ### The Unseated Law
 
-The Unseated Law can produce power-runes through bargain, precedent, or contradiction. These should be strong but costly. No bargain should feel random.
+The Unseated Law can produce power-runes through bargain, sacrifice, or a truth the Regent buried. These should be strong but costly. No bargain should feel random.
 
 ## Forbidden Runes
 
@@ -77,14 +77,14 @@ If the Anchor is broken, sealed, or transformed, the Regent's Anchor-throne may 
 
 Roll when the party travels between major Gloamreach regions, refuses an invitation, carries a Claim openly, rests in unsafe territory, or spends too long debating in the road.
 
-These encounters should not feel random in-world. The Regent's Domain notices motion, debt, fear, and trespass.
+These encounters should not feel random in-world. The Regent's Domain notices motion, fear, broken promises, and trespass.
 
 ## Table A - Road of Writs
 
 | d20 | Encounter |
 |---|---|
 | 1-2 | The road lengthens. Lose time, food, or daylight. |
-| 3-4 | A toll-house appears with the party's names half-written in the ledger. |
+| 3-4 | A toll-house appears, the party's names already half-written above the door in a hand none of them used. |
 | 5 | A messenger delivers an invitation sealed in black wax. |
 | 6 | A settlement bell rings in the distance. Someone is being collected. |
 | 7 | The party finds a broken Bureau marker from a team that has not entered yet. |
@@ -99,7 +99,7 @@ These encounters should not feel random in-world. The Regent's Domain notices mo
 | 16 | Old Man Crane is sitting at a tea table in the road. He does not explain how. |
 | 17 | Regent whisper. DC 14 Sense save or psychic strain and a personal taunt. |
 | 18 | Bailiff sign. Chains dragged across the road, fresh ink on the stones. |
-| 19 | A safe-looking shelter with a ledger by the door. |
+| 19 | A safe-looking shelter with a guest-book by the door that already knows their names. |
 | 20 | The Regent's Bailiff appears to announce charges. Combat is optional. Consequence is not. |
 
 ## Table B - Tribute Settlements
@@ -115,12 +115,12 @@ These encounters should not feel random in-world. The Regent's Domain notices mo
 | 9 | Bureau survivor begs extraction from the Domain. |
 | 10 | The settlement's tribute is revealed. It is worse than rumored. |
 | 11 | Regent courtier arrives for inspection. |
-| 12 | A shrine has been defaced with Marthos-aspected rot. |
+| 12 | A shrine has been defaced with creeping rot. |
 | 13 | Someone recognizes a Regent-Marked PC. They are terrified. |
 | 14 | A feast begins. Refusing is rude. Accepting is dangerous. |
 | 15 | Missing person returns with no shadow. |
 | 16 | Local law contradicts Bureau law. The party must choose which to violate. |
-| 17 | Claim clue hidden in a folk song, prayer, or ledger entry. |
+| 17 | Claim clue hidden in a folk song, a prayer, or a name carved where it should not be. |
 | 18 | A settlement asks the party to kill someone who volunteered for tribute. |
 | 19 | Hollow Mother sermon overheard. She says inherit, not serve. |
 | 20 | The Bailiff comes for the village, not the party. |
@@ -163,21 +163,21 @@ Roll once per long rest outside protected shelter.
 `,
 	},
 	{
-		title: "Chapter 36: The Gloamreach Gate Break Track",
-		content: `# The Gloamreach Gate Break Track
+		title: "Chapter 36: The Gloamreach Rift Break Track",
+		content: `# The Gloamreach Rift Break Track
 
 > *Clocks measure time. The Gloamreach measures consent.*
 > - Dr. Serin Hayashi
 
 ## Overview
 
-The Gloamreach's Blue Phase fails in stages across the whole campaign — a Gate Break track spanning roughly twelve in-world weeks (Levels 1-15), grouped into three acts (I: L1-5, II: L6-10, III: L11-15). It is not a 14-day countdown and not a district clock. It is the Domain pressing its law toward the material world one provoked stage at a time, until Red Phase collapse becomes likely near the level-15 finale.
+The Gloamreach's containment fails in stages across the whole campaign — a Rift Break track spanning roughly twelve in-world weeks (Levels 1-15), grouped into three acts (I: L1-5, II: L6-10, III: L11-15). It is not a 14-day countdown and not a district clock. It is the Domain pressing its law toward the material world one provoked stage at a time, until a Rift Break becomes likely near the level-15 finale.
 
 Use this timeline as a pacing instrument. It should never override player agency. It advances pressure when the party delays, rests, travels, or ignores major threats.
 
 ## Day 1 · Act I — Threshold Day
 
-The party enters the Gloamreach. The Gate behind them becomes unreliable. The Road of Writs appears for the first time. The Oracle Reading should happen before the end of this day or as soon as the party reaches a safe reader.
+The party enters the Gloamreach. The Rift behind them becomes unreliable. The Road of Writs appears for the first time. The Oracle Reading should happen before the end of this day or as soon as the party reaches a safe reader.
 
 ## Day 4 · Act I — First Tribute
 
@@ -185,15 +185,15 @@ A nearby settlement pays tribute. The party may witness it, interrupt it, or onl
 
 ## Day 8 · Act I — The Road Learns
 
-The Road of Writs begins responding to party choices. Anyone who signed a ledger, accepted hospitality, or gave a true name feels watched.
+The Road of Writs begins responding to party choices. Anyone who gave a true name, accepted hospitality, or made a promise on the road feels watched.
 
 ## Day 13 · Act I — Hayashi's Warning
 
-A delayed Bureau transmission reaches the party. Dr. Hayashi confirms the Gloamreach is a Regent Domain, not a normal Gate. She warns them that killing creatures is not enough if the Anchor law survives.
+A delayed Bureau transmission reaches the party. Dr. Hayashi confirms the Gloamreach is a Regent Domain, not a normal Rift. She warns them that killing creatures is not enough if the Anchor law survives.
 
 ## Day 20 · Act II — The Bailiff's First Public Judgment
 
-The Regent's Bailiff collects someone from a settlement or road camp. This should be visible, memorable, and legally framed. It announces charges before violence.
+The Regent's Bailiff collects someone from a settlement or road camp. This should be visible, memorable, and dreadful. It speaks their names before any violence.
 
 ## Day 27 · Act II — The Cult Moves
 
@@ -213,7 +213,7 @@ Awoko pamphlets, songs, or sermons spread through settlements. Civilian unrest r
 
 ## Day 58 · Act III — The Claim Race
 
-If the party has recovered any Claim, enemies attempt to steal, corrupt, or legally invalidate it. If they have recovered none, the Regent sends an invitation that includes one precise clue.
+If the party has recovered any Claim, enemies attempt to steal, corrupt, or unmake it. If they have recovered none, the Regent sends an invitation that includes one precise clue.
 
 ## Day 66 · Act III — Bureau Crisis
 
@@ -229,7 +229,7 @@ All major factions understand that the Citadel approach is imminent. Allies must
 
 ## Day 84 · Act III — Citadel Day & the Break Threshold
 
-The party enters the Regent's Citadel or the Domain begins forcing Red Phase pressure onto the material world. Bureau floodlights outside the Gate dim. Inside the Gloamreach, every bell rings once.
+The party enters the Regent's Citadel or the Domain begins forcing Rift Break pressure onto the material world. Bureau floodlights outside the Rift dim. Inside the Gloamreach, every bell rings once.
 
 ## If the Timeline Expires
 
@@ -237,7 +237,7 @@ Do not end the campaign automatically. Escalate.
 
 Choose two consequences:
 
-1. The material-side cordon suffers a partial Red Phase bleed.
+1. The material-side cordon suffers a partial Rift Break bleed.
 2. One settlement is annexed directly into the Regent's court.
 3. The Bailiff gains authority to pursue the party into protected shelters.
 4. The Hollow Mother completes part of her inheritance ritual.

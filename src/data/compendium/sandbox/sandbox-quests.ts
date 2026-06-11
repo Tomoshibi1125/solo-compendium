@@ -25,9 +25,9 @@ export const sandboxQuests: SandboxQuest[] = [
 		title: "E-Rank: Beacon of the Lost",
 		rank: "E",
 		summary:
-			"Strike Team Seven's AFA beacon pings from the Hollow Subway near the Gate Threshold, then from farther down the Road of Writs. Commander Park needs answers before Central Command marks them expendable.",
+			"Strike Team Seven's AFA beacon pings from the Hollow Way near the Rift Threshold, then from farther down the Road of Writs. Commander Park needs answers before Central Command marks them expendable.",
 		objectives: [
-			"Enter the Hollow Subway",
+			"Enter the Hollow Way",
 			"Track the AFA ghost-ping without giving the road a true name",
 			"Recover the beacon or identify why it is broadcasting from multiple places",
 		],
@@ -68,8 +68,8 @@ export const sandboxQuests: SandboxQuest[] = [
 			"The Drowned Ledgerfen has classified several missing survivors as deceased even though their AFA tags still show life. Recover them before the record becomes true.",
 		objectives: [
 			"Enter the Drowned Ledgerfen",
-			"Find the active casualty ledger",
-			"Extract the survivors or legally contradict their death entries",
+			"Find where the fen records its dead",
+			"Extract the survivors or drown the records that name them dead",
 		],
 		completionTriggers: [
 			"Survivors extracted and records corrected.",
@@ -123,18 +123,18 @@ export const sandboxQuests: SandboxQuest[] = [
 		title: "C-Rank: Ashes of a Colleague",
 		rank: "C",
 		summary:
-			"A Bureau researcher is trapped in the Ashen Counting-House, used as a living relay for debt calculations. Extracting them may erase evidence Central Command wants hidden.",
+			"A Bureau researcher is trapped in the Ashen Counting-House, kept half-alive and feeding the hall's endless fire. Extracting them may erase evidence Central Command wants buried.",
 		objectives: [
-			"Reach the Audit Floor",
-			"Disable the furnace-ledger relay",
+			"Reach the Asking-Floor",
+			"Put out the furnace at the hall's heart",
 			"Extract the researcher or preserve their testimony",
 		],
 		completionTriggers: [
-			"Researcher alive and relay disabled.",
+			"Researcher alive and the hall's hold on them broken.",
 			"Evidence preserved but researcher lost.",
-			"Relay detonates, empowering a Regent debt law.",
+			"The fire takes the researcher, and the hall burns hotter for it.",
 		],
-		rewardNotes: "Bureau research unlock; debt-law contradiction; fire or blood Sigil.",
+		rewardNotes: "Bureau research unlock; a truth the burning hall cannot deny; fire or blood Sigil.",
 		linkedFactionId: "bureau-sentinels",
 		linkedNpcName: "Dr. Serin Hayashi",
 	},
@@ -309,22 +309,22 @@ export const sandboxQuests: SandboxQuest[] = [
 	},
 	{
 		id: "q-s-03",
-		title: "S-Rank: The Bailiff's Last Writ",
+		title: "S-Rank: The Bailiff's Last Hunt",
 		rank: "S",
 		summary:
-			"The Regent's Bailiff prepares a final writ naming the party as stolen property of the Citadel. If answered properly, the party can enter the finale unchained. If ignored, the Bailiff arrives during the Throne Court.",
+			"The Regent's Bailiff is sent after the party one last time, marked as things the Citadel means to keep. If dealt with, the party can enter the finale unhunted. If ignored, the Bailiff arrives during the Throne Court.",
 		objectives: [
-			"Recover the final writ from the Bailiff's Stair or a toll-house",
-			"Contradict the charge with a Claim, older precedent, or proven guest-right",
-			"Decide whether to destroy the Bailiff, dismiss it, or bind it to a new law",
+			"Recover the Bailiff's mark from the Bailiff's Stair or a toll-house",
+			"Break the mark with a Claim, the older power of the Unseated, or hallowed guest-right",
+			"Decide whether to destroy the Bailiff, turn it aside, or bind it to an older power",
 		],
 		completionTriggers: [
-			"The Bailiff is legally dismissed.",
-			"The Bailiff is destroyed after its writ is invalidated.",
+			"The Bailiff is turned aside.",
+			"The Bailiff is destroyed after the mark it carries is broken.",
 			"The Bailiff enters the finale empowered.",
 		],
 		rewardNotes:
-			"Removes or alters a major final-act threat; may create a new Domain precedent.",
+			"Removes or alters a major final-act threat; may change how the Domain itself behaves.",
 		linkedNpcName: "The Regent's Bailiff",
 	},
 ];

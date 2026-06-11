@@ -49,10 +49,10 @@ import {
 // RIFT ASCENDANT: SANDBOX CAMPAIGN MODULE
 // "The Shadow of the Regent"
 //
-// A Curse of Strahd scale S-Rank Gate Domain horror sandbox for Levels 1-15.
+// A full hardcover-scale S-Rank Rift Interior horror sandbox for Levels 1-15.
 // Automatically populates the Campaign Wiki, VTT Maps, and Handouts.
 //
-// 39 Chapters - 24 Handouts - 20 VTT Scenes - 42 NPCs - 5 Factions
+// 40 Chapters - 24 Handouts - 20 VTT Scenes - 72 NPCs - 5 Factions
 // ============================================================================
 
 interface SandboxModule {
@@ -114,21 +114,21 @@ export const massiveSandboxModule: SandboxModule = {
 	// v9: RA-accuracy pass — Regent is non-human (Kael Voss Anchor, the "once
 	// human" past reframed as the Domain's curated bait), Bureau is honest-but-
 	// overwhelmed (not a liar), first-entry provisional-rank onset, Levels 1-15,
-	// and the flat 14-day clock rescaled to a multi-stage Gate Break track.
+	// and the flat 14-day clock rescaled to a multi-stage Rift Break track.
 	// v8: restores player handouts to the Gloamreach naming scheme so imports
 	// no longer surface Thornwake, Hollow Choir, Gallows Road, or old camp labels.
 	// v7: restores the 20-scene Gloamreach VTT map list and updates NPC token routing.
 	// v6: restored the full Gloamreach scale rewrite across chapters, quests,
 	// factions, NPCs, encounters, timeline, Warden notes, and loot after revert.
 	// v5: reasserted Gloamreach-only canon and removed Subject Zero from module text.
-	// v4: full Gloamreach Gate Domain rewrite.
+	// v4: full Gloamreach Rift Interior rewrite.
 	// v3: added the prior world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, NPCs, encounters,
 	// quests, factions, loot, timeline, VTT audio tracks, and pinned assets.
 	version: 9,
 	title: "The Shadow of the Regent",
 	description:
-		"A Curse of Strahd scale mature Gate Domain horror campaign for Levels 1-15, set inside the Gloamreach: a country-sized S-Rank Gate Domain beyond a sealed Rift. The campaign is built around a visible citadel, dangerous roads, starving settlements, tribute law, Bureau failure, Vermillion pragmatism, Awoko grief-cult corruption, Anchor Relics, forbidden Unseated Law bargains, and a tyrannical Regent who appears early, studies the party, sends invitations, punishes defiance, and rules the Domain as its living Anchor.",
+		"A full-length, hardcover-scale mature Rift Interior horror campaign for Levels 1-15, set inside the Gloamreach: a country-sized S-Rank Rift Interior beyond a sealed Rift. The campaign is built around a visible citadel, dangerous roads, starving settlements, tribute law, Bureau failure, Vermillion pragmatism, Awoko grief-cult corruption, Anchor Relics, forbidden Unseated Law bargains, and a tyrannical Regent who appears early, studies the party, sends invitations, punishes defiance, and rules the Domain as its living Anchor.",
 	chapters: sandboxWikiChapters,
 	scenes: sandboxVTTScenes,
 	handouts: sandboxHandouts,

@@ -20,15 +20,17 @@ export const GameRulesChapter = () => {
 				<article className="bg-glass/20 border border-emerald-900/40 p-8 rounded-xl shadow-xl hover:border-emerald-500/40 transition-colors">
 					<h2 className="text-2xl font-display font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-3">
 						<AlertTriangle className="w-6 h-6 text-emerald-500" />
-						Gate Eruptions
+						Rift Eruptions
 					</h2>
 					<p className="text-sm text-slate-300 leading-relaxed min-h-[100px]">
-						Gates form when ambient dimensional pressure reaches critical mass.
-						A Gate remains dormant for 7 days (the "Blue Phase"). If not cleared
-						by an Ascendant strike team within this window, a Gate Break occurs
-						(the "Red Phase"), unleashing its anomalies directly into the modern
-						world. Mechanics for clearing require eliminating the Dungeon Boss
-						before the timer expires.
+						Rifts form when ambient dimensional pressure reaches critical mass.
+						A new Rift can be held for a time under Bureau cordon — its
+						Threshold measured, its Rank estimated. If it is not cleared by an
+						Ascendant strike team within that window, a Rift Break occurs: the
+						Interior's conditions and Anomalies spill directly into the modern
+						world. Clearing a Rift means neutralizing its dominant Anomaly and,
+						for a persistent Interior, resolving its Anchor before containment
+						fails.
 					</p>
 				</article>
 

@@ -4,6 +4,22 @@
  * One encounter deck per major combat, horror, or pressure scene in the
  * Gloamreach sandbox. Each encounter declares the enemy roster, hazards,
  * and reward notes the Warden should surface.
+ *
+ * BESTIARY SOURCING (the module's "Appendix C"): every enemy stat block below
+ * is a rank-appropriate reskin of a canonical RA compendium Anomaly from the
+ * bestiary in `src/data/compendium/anomalies/rank-{d,c,b,a,s}.ts`
+ * (source_book: "Rift Ascendant Canon"). The costume and encounter alias may
+ * change; the source mechanics (HP/AC/CR/abilities) do not. The bestiary holds
+ * 243 canonical Anomalies. Rank → level band → party-of-4 budget (verified CR
+ * bands; HP/AC here are pre-tuned to it):
+ *   - D-rank → Levels 1-5   (CR 1/8-1,  48 Anomalies; e.g. anomaly-0006)  early sites, Hollow Way, road encounters
+ *   - C-rank → Levels 3-7   (CR 2-5,    48 Anomalies; e.g. anomaly-0002)  Drowned Ledgerfen, Fungal Depths, Orchard, Counting-House
+ *   - B-rank → Levels 6-10  (CR 6-8,    48 Anomalies; e.g. anomaly-0003)  Sunken Tunnels, Bastion Golemfall, Awoko Sanctum
+ *   - A-rank → Levels 8-13  (CR 9-12,   48 Anomalies; e.g. anomaly-0004)  Obsidian Spire, Citadel approach
+ *   - S-rank → Levels 13-15 (CR 13-21,  51 Anomalies; e.g. anomaly-0005)  the Regent and his Anchor-throne
+ * An encounter's `difficulty` + the level band of its `sceneRef` choose the
+ * rank; the Warden (or the site's "Boss" notes) pulls the matching Anomaly by
+ * `id` from that rank file and reskins it without altering the source numbers.
  */
 
 export type SandboxEncounterDifficulty =
@@ -76,15 +92,15 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		],
 	},
 	{
-		name: "Hollow Subway — Beacon Retrieval",
+		name: "Hollow Way — Beacon Retrieval",
 		description:
-			"The party hunts Strike Team Seven's AFA beacon through a transit station folded into Domain law. The turnstiles demand fare. Money works poorly. Names work too well.",
+			"The party hunts Strike Team Seven's beacon down the Hollow Way — the Domain's Essence-lit intake-throat — toward its source. The Name-Gate counts passage in names, not coin: money works poorly, names work too well. The beacon is a lure; there are no survivors at its end.",
 		difficulty: "medium",
-		sceneRef: "The Hollow Subway",
+		sceneRef: "The Hollow Way",
 		hazards: [
-			"Third rail remains live: 2d6 lightning if knocked prone on the track bed.",
-			"Ticket gates demand fare; giving a true name grants easy passage but risks Regent-Marked.",
-			"Announcements call passengers who have not entered yet.",
+			"Exposed Essence-vein in the stone: 2d6 lightning to anyone forced into contact with a live conduit.",
+			"The Name-Gate demands fare; giving a true name grants easy passage but risks Regent-Marked.",
+			"The Way speaks names into the dark — including names of those who have not entered yet.",
 		],
 		rewards: [
 			"Squad Seven beacon.",
@@ -107,13 +123,13 @@ export const sandboxEncounters: SandboxEncounter[] = [
 	{
 		name: "Drowned Ledgerfen — Triage Ambush",
 		description:
-			"Waterlogged archive ward where records try to make diagnoses, deaths, and debts legally true.",
+			"Waterlogged archive ward where the black water tries to make its diagnoses, deaths, and dooms come true.",
 		difficulty: "medium",
 		sceneRef: "Drowned Ledgerfen",
 		hazards: [
 			"Half the floor is 2 ft. deep: difficult terrain.",
 			"Mana-tainted water: Vitality save DC 12 or poisoned for 1 minute.",
-			"Casualty ledgers update each round unless destroyed, corrected, or contradicted.",
+			"Death-records surface and update each round unless destroyed, drowned, or contradicted by a Claim.",
 		],
 		rewards: ["D-Rank loot table roll.", "Catalog access.", "Void Claim clue."],
 		monsters: [
@@ -160,7 +176,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		sceneRef: "Remembering Orchard",
 		hazards: [
 			"Memory fruit grants clues but risks personality bleed if eaten carelessly.",
-			"Harvest Bell summons orchard thralls unless silenced or legally challenged.",
+			"Harvest Bell summons orchard thralls unless silenced or its claim on a stolen memory is broken.",
 			"Attacking the Caretaker before learning the tribute law turns villagers hostile or terrified.",
 		],
 		rewards: ["Memory fruit clue.", "Blood Claim clue.", "Civilian trust if tribute is broken safely."],
@@ -185,18 +201,18 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		hazards: [
 			"Ambient heat: Vitality save DC 13 each round or exhaustion pressure.",
 			"Furnace detonation on round 6 if not disabled: 8d6 fire in 20 ft. radius.",
-			"Audit writs can restrain characters who lie about what they owe.",
+			"Chains of molten memory can bind characters to a fresh grief or loss.",
 		],
-		rewards: ["C-Rank loot table roll.", "Debt-law contradiction.", "Abyss Claim clue."],
+		rewards: ["C-Rank loot table roll.", "A truth the burning hall cannot deny.", "Abyss Claim clue."],
 		monsters: [
-			{ name: "Cinder Clerk", quantity: 8, hp: 38, ac: 13, initiative: 3 },
+			{ name: "Cinder-Wraith", quantity: 8, hp: 38, ac: 13, initiative: 3 },
 			{
-				name: "Auditor of Embers",
+				name: "Warden of Embers",
 				quantity: 1,
 				hp: 110,
 				ac: 16,
 				initiative: 2,
-				notes: "Attacks with burning writs and debt chains.",
+				notes: "Attacks with grasping fire and chains of molten memory.",
 			},
 		],
 	},
@@ -279,8 +295,8 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		difficulty: "legendary",
 		sceneRef: "The Regent's Citadel",
 		hazards: [
-			"Phase 1 — Courtly Predator: accusations, invitations, legal pressure, and witness testimony.",
-			"Phase 2 — Sovereign Anchor: lair effects from roads, ledgers, weather, guest-right, and shadows.",
+			"Phase 1 — The Wearer of Faces: he greets them wearing the dead, with soft offers, convincing grief, and temptation.",
+			"Phase 2 — The All-Seeing Domain: lair effects from roads, the dark, weather, the claimed dead, and the horror of being seen everywhere at once.",
 			"Phase 3 — Human Remnant: the Domain's costume flickers (no soul beneath; he was never human) — triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or major sacrifice.",
 		],
 		rewards: [
@@ -303,7 +319,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 	{
 		name: "Gloamreach Road Pressure",
 		description:
-			"Generic travel pressure encounter for the Road of Writs, tribute settlements, and wild Domain routes. Use when the party delays, travels under debt, carries a Claim openly, or ignores a local law.",
+			"Generic travel pressure encounter for the Road of Writs, tribute settlements, and wild Domain routes. Use when the party delays, travels while marked, carries a Claim openly, or breaks a settlement's rule.",
 		difficulty: "easy",
 		sceneRef: "Road of Writs",
 		hazards: [

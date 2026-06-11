@@ -94,13 +94,13 @@ export const sandboxSessions: SandboxSession[] = [
 		],
 	},
 	{
-		title: "Session 1 — The Gate Threshold and Hollow Subway",
+		title: "Session 1 — The Rift Threshold and Hollow Way",
 		description:
-			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Gate is only the door. The Hollow Subway teaches that modern spaces inside the Gloamreach are masks worn by Domain law. Level 1-3.",
+			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Rift is only the door. The Hollow Way teaches that the Domain records you on arrival and carries you inward the way it carries tribute — and that leaving is harder than entering. Level 1-3.",
 		status: "planned",
 		order: 1,
 		recommendedLevel: 1,
-		sceneRefs: ["Gate Threshold", "The Hollow Subway"],
+		sceneRefs: ["Rift Threshold", "The Hollow Way"],
 		npcRefs: ["Commander Park Jae-won", "Sergeant Yoon Hye-jin", "Rex"],
 		logs: [
 			{
@@ -108,13 +108,13 @@ export const sandboxSessions: SandboxSession[] = [
 				title: "Warden Prep — First Crossing",
 				content: [
 					"## Briefing",
-					"Commander Park gives the mission cleanly: recover Strike Team Seven's beacon, confirm survivors, and return. Hayashi quietly warns that the topology does not behave like a normal Gate.",
+					"Commander Park gives the mission cleanly: recover Strike Team Seven's beacon, confirm survivors, and return. Hayashi quietly warns that the topology does not behave like a normal Rift.",
 					"",
 					"## Threshold Beat",
-					"The Gate vanishes behind the party after they cross. Do not trap them by fiat; show that the exit has become unreliable and farther away than it should be.",
+					"The Rift vanishes behind the party after they cross. Do not trap them by fiat; show that the exit has become unreliable and farther away than it should be.",
 					"",
-					"## Hollow Subway",
-					"The subway requires fare. Money works poorly. Names work too well. Give the party a way to escape by refusing identity as payment.",
+					"## Hollow Way",
+					"The Hollow Way counts passage in names, not coin: money works poorly, names work too well. Give the party a way through that does not pay with identity — a false name, a shared one, or breaking the Name-Gate's counting-script.",
 					"",
 					"## Discovery",
 					"Squad Seven's beacon is broadcasting from a place that should not be reachable yet. Rex can appear here, trying to lead the party to a sealed door.",
@@ -185,7 +185,7 @@ export const sandboxSessions: SandboxSession[] = [
 				logType: "event",
 				title: "Public Judgment — The Regent's Bailiff",
 				content:
-					"The Bailiff announces charges before violence. Make the charge specific and partly justified. The party can fight, flee, pay, redirect, or contradict the writ. This scene teaches that law is a monster here.",
+					"The Bailiff speaks their names before any violence. Make the reason it has come specific and partly deserved. The party can fight, flee, give it what it came for, redirect it, or break the mark. This scene teaches that some things here cannot be fought, only escaped.",
 				isPlayerVisible: false,
 			},
 		],
@@ -206,7 +206,7 @@ export const sandboxSessions: SandboxSession[] = [
 				content: [
 					"The Spire should offer genuinely useful power. The danger is not that every bargain is fake. The danger is that the price is exact.",
 					"",
-					"If the party enters the Forbidden Vault, run the Unseated Law as precedent, trial, or contradiction, not as a creature.",
+					"If the party enters the Forbidden Vault, run the Unseated Law as a trial, a bargain, or a buried truth, not as a creature.",
 					"",
 					"By the end of this session, the party should know which route to the Citadel is possible and what it will cost.",
 				].join("\n"),

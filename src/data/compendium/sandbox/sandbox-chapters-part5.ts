@@ -23,7 +23,7 @@ The Three Claims are the campaign's primary Relic structure. They are legal cont
 
 | Claim | Function | Typical Placement |
 |---|---|---|
-| Void Claim | Contradicts secrecy, erasure, false darkness, and hidden roads. | Hollow Subway, Drowned Ledgerfen, Fungal Depths, Obsidian Spire. |
+| Void Claim | Contradicts secrecy, erasure, false darkness, and hidden roads. | Hollow Way, Drowned Ledgerfen, Fungal Depths, Obsidian Spire. |
 | Abyss Claim | Contradicts command, invitation, forced movement, and road authority. | Ashen Counting-House, Bastion Golemfall, Forbidden Vault, Citadel. |
 | Blood Claim | Contradicts ownership of bodies, tribute, inheritance, and sacrifice. | Remembering Orchard, Sunken Tunnels, Tithe Mill, Awoko Sanctum. |
 
@@ -61,11 +61,11 @@ Recommended reward: authority, not loot. The character gains power and becomes r
 
 | Domain Site | Sigil Guidance |
 |---|---|
-| Hollow Subway | Aegis, Grounded Soul, or mobility Sigil. |
+| Hollow Way | Aegis, Grounded Soul, or mobility Sigil. |
 | Drowned Ledgerfen | Frost-Ward, Iron Mind, or truth/diagnosis-themed protection. |
 | Fungal Depths | Cleansed Blood or poison/rot resistance. |
 | Remembering Orchard | Zephyr's Tread, Silent Guardian, or Sense/memory support. |
-| Ashen Counting-House | Crimson Weeping, Hearth-Fire, or debt/blood Sigil. |
+| Ashen Counting-House | Crimson Weeping, Hearth-Fire, or grief/blood Sigil. |
 | Sunken Tunnels | Winter Court, Hearth-Fire, or underwater survival support. |
 | Bastion Golemfall | Unmoving Stone, Dragon's Scale, or shield/armor Sigil. |
 | Obsidian Spire | Void-Walker, Shadow Regent, Grandmaster's Edge. |
@@ -91,7 +91,7 @@ Optional if Ms. Park survived. It can create a final moment of hesitation, recog
 
 ### The Visitors' Log
 
-A local object from the Memory-Care Wing. Names written in it foreshadow how dangerous ledgers become inside the Gloamreach.
+A local object from the Memory-Care Wing. Names written in it foreshadow how dangerous a written name becomes inside the Gloamreach.
 
 ### The Unopened Commendation
 
@@ -149,13 +149,13 @@ Banners from conquered settlements hang in rainless wind. Each saved settlement 
 
 ### 4. The Hall of Tribute
 
-Names, teeth, bells, harvest ledgers, uniforms, children's drawings, unopened letters, and empty chairs are displayed as tribute.
+Names, teeth, bells, funeral wreaths, uniforms, children's drawings, unopened letters, and empty chairs are displayed as tribute.
 
 A character who studies the hall may learn one truth about a settlement's tribute. Doing so risks psychic strain.
 
 ### 5. Guest Wing
 
-The Regent offers food, rest, baths, medical care, and conversation. The recovery is real. So is the debt.
+The Regent offers food, rest, baths, medical care, and conversation. The recovery is real. So is the price.
 
 If the party rests here, they regain resources, but each character must answer one question truthfully or accept one hospitality mark.
 
@@ -165,7 +165,7 @@ Maps show every route the party took, including choices they hid from allies. Th
 
 ### 7. The Bureau Room
 
-A modern office preserved — impossibly — inside the Citadel (a Xylo archive that should not exist). It contains the Unopened Commendation, fragments of Bureau history the Domain has no honest way of possessing, and curated "evidence" that the Regent was once human. None of it is true; all of it is bait, assembled from the echoes of the claimed.
+A modern office preserved — impossibly — inside the Citadel, a place that has no business existing. It contains the Unopened Commendation, fragments of Bureau history the Domain has no honest way of possessing, and curated "evidence" that the Regent was once human. None of it is true; all of it is bait, assembled from the echoes of the claimed.
 
 ### 8. The Orchard Room
 
@@ -177,7 +177,7 @@ Armor, uniforms, crowns, badges, and nameplates wait for owners. This room tempt
 
 ### 10. The Bailiff's Stair
 
-A spiral stair lined with hooks and scrolls. If the Bailiff still has active authority, it confronts the party here. If legally defeated earlier, its armor hangs empty.
+A spiral stair lined with hooks and empty armor. If the Bailiff is still hunting, it confronts the party here. If it was turned aside or undone earlier, its armor hangs empty.
 
 ### 11. The Awoko Breach
 
@@ -199,17 +199,17 @@ This scene should begin with words, not initiative.
 
 ### 15. The Anchor-Undercroft
 
-The final chamber beneath the throne. The Anchor is not a crystal to smash. It is a legal/metaphysical structure of ownership, memory, grief, tribute, and will.
+The final chamber beneath the throne. The Anchor is not a crystal to smash. It is the knot that ties the whole Gloamreach to the Regent's will — woven of memory, grief, the claimed dead, and a hold over this country so old the land has forgotten it was ever free.
 
 ## Final Confrontation Phases
 
-### Phase 1 - Courtly Predator
+### Phase 1 - The Wearer of Faces
 
-The Regent debates, accuses, tempts, and offers terms. The party can gain advantages by using truths, Claims, allies, and contradictions.
+The Regent receives them not as intruders but as long-expected guests, wearing the faces and speaking in the voices of their own dead. He tempts, he offers, he grieves convincingly, and he gives them every reason to lower their weapons. The party can gain advantages by holding to what is true — Claims, living allies, and the things he cannot make himself say.
 
-### Phase 2 - Sovereign Anchor
+### Phase 2 - The All-Seeing Domain
 
-The Regent fights as the Domain's ruler. Use lair actions tied to roads, weather, ledgers, hospitality, and shadows.
+When courtesy fails, the Gloamreach itself turns on them. The Regent stops being a figure across the room and becomes the whole place at once — every shadow, every reflection, every still pool an eye. Use lair actions tied to the roads, the dark, the claimed dead, and the plain horror of being seen everywhere at once, with nowhere in his country left unwatched.
 
 ### Phase 3 - Human Remnant (the Costume Flickers)
 
@@ -225,7 +225,7 @@ Destroy the Anchor and escape the collapsing Domain.
 
 ### Seal
 
-Contain the Regent and close the Gate without destroying everything inside.
+Contain the Regent and close the Rift without destroying everything inside.
 
 ### Transform
 

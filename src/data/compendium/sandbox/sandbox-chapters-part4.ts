@@ -10,12 +10,12 @@ export const chaptersPart4: SandboxChapter[] = [
 		title: "Chapter 0: Day Zero - The Memory-Care Wing",
 		content: `# Day Zero - The Memory-Care Wing
 
-> *A Gate that feeds on memory is not merely an opening. It is the first time a place learns your name.*
+> *A Rift that feeds on memory is not merely an opening. It is the first time a place learns your name.*
 > - Dr. Serin Hayashi, private margin note
 
 ## Purpose
 
-Run this one-to-two session gothic-horror prelude before the party enters the Gloamreach. The characters are still on the material side, inside the Bureau cordon surrounding the S-Rank Gate. The Memory-Care Wing is a small pocket breach created by pressure leaking from the Gloamreach. It introduces the campaign's real themes: memory, ownership, hospitality, civilian cost, and the terror of a Domain that reaches through the door before anyone steps inside.
+Run this one-to-two session gothic-horror prelude before the party enters the Gloamreach. The characters are still on the material side, inside the Bureau cordon surrounding the S-Rank Rift. The Memory-Care Wing is a small pocket breach created by pressure leaking from the Gloamreach. It introduces the campaign's real themes: memory, ownership, hospitality, civilian cost, and the terror of a Domain that reaches through the door before anyone steps inside.
 
 The party begins at Level 1 and reaches Level 2 at the end of this chapter.
 
@@ -99,7 +99,7 @@ The mark is removed only if the Regent releases it, the Anchor is resolved, or a
 
 ## Design Notes
 
-This chapter is horror first and combat second. Let silence work. The residents are civilians, not props. The point is not whether the party can win a fight. The point is what kind of people they are when a Gate asks them to choose between mercy and certainty.
+This chapter is horror first and combat second. Let silence work. The residents are civilians, not props. The point is not whether the party can win a fight. The point is what kind of people they are when a Rift asks them to choose between mercy and certainty.
 `,
 	},
 	{
@@ -116,39 +116,41 @@ Perform the reading once per campaign. The results are permanent.
 
 ## The Reader
 
-The reading may be performed by Sister Constance, a retired Oracle living near the Bureau cordon, or by a broken oracle engine recovered just inside the Gate Threshold. Either version should feel unreliable, exhausted, and frightened of accuracy.
+The reading may be performed by Sister Constance, a retired Oracle living near the Bureau cordon, or by a broken oracle engine recovered just inside the Rift Threshold. Either version should feel unreliable, exhausted, and frightened of accuracy.
 
 Read aloud:
 
-*Five cards lie on the table. They are black glass, warm at the edges, cold in the center. The reader does not ask your question. She looks at the Gate beyond the window and says, "It already knows what you came to ask."*
+*There are no cards. The oracle-engine wakes, and across its cracked glass five visions surface unbidden — dim, certain, already happening somewhere ahead of you. The reader does not ask your question. She watches the images bloom and fade and says, quietly, "The Gloamreach already knows how this ends. I only see what it sees."*
 
-## The Five Card Spread
+## The Five Readings
 
-### Card 1 - The Spark
+These are not drawn cards. They are five things the Gloamreach has already seen of the party — surfaced one at a time off the oracle-engine's glass (or spoken by a frightened reader). The placements are permanent: what the Domain has foreseen, it does not unsee.
 
-This card reveals where one Ascendant can undergo a second Awakening. The location should be inside the Gloamreach or just at the threshold. The gift always has a cost: a memory, a favor, a wound, a name, a promise, or a debt to a faction.
+### Reading 1 - The Spark
 
-### Card 2 - The Chain
+This reading reveals where one Ascendant can undergo a second Awakening. The location should be inside the Gloamreach or just at the threshold. The gift always has a cost: a memory, a favor, a wound, a name, a promise, or a debt to a faction.
 
-This card reveals the location of the first Claim, traditionally tied to the Relic of the Void. It weakens the Regent's ability to hide truth, erase routes, or smother light.
+### Reading 2 - The Chain
 
-### Card 3 - The Crown
+This reading reveals the location of the first Claim, traditionally tied to the Relic of the Void. It weakens the Regent's ability to hide truth, erase routes, or smother light.
 
-This card reveals the location of the second Claim, traditionally tied to the Relic of the Abyss. It weakens the Regent's command over roads, invitations, and forced obedience.
+### Reading 3 - The Crown
 
-### Card 4 - The Pulse
+This reading reveals the location of the second Claim, traditionally tied to the Relic of the Abyss. It weakens the Regent's command over roads, invitations, and forced obedience.
 
-This card reveals the location of the third Claim, traditionally tied to the Relic of Blood. It weakens the Regent's ability to make the Domain treat people as property.
+### Reading 4 - The Pulse
 
-### Card 5 - The Oathbreaker
+This reading reveals the location of the third Claim, traditionally tied to the Relic of Blood. It weakens the Regent's hold over flesh, the grave, and the claimed dead.
 
-This card identifies the ally, faction agent, or settlement leader most likely to betray the party in the final act. The betrayal should not be random. It should be caused by fear, tribute, blackmail, hunger, grief, or a bargain with the Regent's court.
+### Reading 5 - The Oathbreaker
+
+This reading identifies the ally, faction agent, or settlement leader most likely to betray the party in the final act. The betrayal should not be random. It should be caused by fear, tribute, blackmail, hunger, grief, or a bargain with the Regent's court.
 
 ## Domain Location Table
 
 Use these locations as the default result set:
 
-1. The Gate Threshold.
+1. The Rift Threshold.
 2. The Road of Writs.
 3. The Tithe Mill.
 4. The Predator Woods.
@@ -161,7 +163,7 @@ Use these locations as the default result set:
 
 ## Warden Guidance
 
-This reading is the campaign's structural spine. It should create the same practical function as a classic gothic artifact reading: the party receives direction without losing sandbox freedom. The reading should make the Domain feel fated, but not scripted.
+This reading is the campaign's structural spine: a fate-reading that hands the party direction without taking away sandbox freedom. The Domain should feel *fated* — as though it has already looked down every road they might take and seen where each one ends — but never scripted. The party choose their own roads; the Oracle only names what waits at the end of each one.
 `,
 	},
 	{
@@ -184,19 +186,19 @@ Someone the character knows entered during the first response wave. Their AFA ta
 
 ### The Name in the Ledger
 
-The character's name appears in a Regent ledger recovered before the campaign begins. No one knows who wrote it.
+The character's name appears in something recovered from the Regent's reach before the campaign begins, written in a hand no one recognizes. No one knows how it got there.
 
 ### The Survivor's Debt
 
-The character survived a previous Gate because someone else stayed behind. The Gloamreach contains that person's voice, echo, body, or unpaid sentence.
+The character survived a previous Rift because someone else stayed behind. The Gloamreach contains that person's voice, echo, body, or unpaid sentence.
 
 ### The Relic Claim
 
-A Relic bonded to the character reacts violently when the Gate opens. It is not calling them to power. It is recognizing jurisdiction.
+A Relic bonded to the character reacts violently when the Rift opens. It is not calling them to power. It knows the Gloamreach, and the Gloamreach knows it.
 
 ### The Veteran of a Failed Clear
 
-The character has seen a Gate stop behaving like a place and start behaving like a ruler. They know the Bureau briefing is too clean.
+The character has seen a Rift stop behaving like a place and start behaving like a ruler. They know the Bureau briefing is too clean.
 
 ## Group Hooks
 
@@ -204,7 +206,7 @@ The character has seen a Gate stop behaving like a place and start behaving like
 2. Vermillion offers illegal support if the party agrees to recover salvage and survivors.
 3. A settlement inside the Domain sends a written invitation that appears in the material world.
 4. A dead Ascendant's AFA broadcasts from the Regent's Citadel every night at the same time.
-5. The Gate enters a Red Phase countdown, forcing immediate entry.
+5. The Rift enters a Rift Break countdown, forcing immediate entry.
 
 ## Warden Guidance
 
@@ -239,7 +241,7 @@ The Bailiff should be difficult to kill permanently unless the party breaks the 
 
 ## The Unseated Law
 
-The Unseated Law has no normal stat block. If the party confronts it, run the scene as a trial, bargain, memory excavation, or legal contradiction. Combat should occur only through guardians, precedent-echoes, or failed petitioners.
+The Unseated Law has no normal stat block. If the party confronts it, run the scene as a trial, a bargain, or a memory dragged up from before the Regent. Combat should occur only through its guardians, the echoes of those who bargained before it, or the ruined things that once begged it and were refused.
 
 ## Horror Encounter Rules
 

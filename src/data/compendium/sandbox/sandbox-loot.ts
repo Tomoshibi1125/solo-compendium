@@ -4,6 +4,19 @@
  * One loot table per threat rank (E through S). Entries are weighted; the
  * Warden rolls on the encounter's loot context to produce a specific drop.
  * Seeded as wiki articles with `category: "loot"`.
+ *
+ * SOURCING: all loot is drawn from the canonical RA compendium — base gear and
+ * weapons (`items-base-equipment.ts`), items/consumables (`items.ts`,
+ * `items-part1-9.ts`), Sigils (`sigils.ts`), Runes (`runes/`), Relics and
+ * Artifacts (`relics-comprehensive.ts`, `artifacts.ts`), tattoos (`tattoos.ts`),
+ * and mounts/vehicles (`vehicles.ts`). The named entries below are evocative
+ * stand-ins; match each to a real compendium item of the right rank/rarity.
+ *
+ * PROVENANCE is OPTIONAL flavour, not a rule. Some goods are honest native
+ * craft, salvage, or manufacture; some carry a debt — a name, an owner, an
+ * unpaid account — and those make the sharpest rewards. Use provenance when it
+ * lands; do not make every item someone's death. The S-rank Regent-Relics are
+ * the exception that is always bound — to the Three Claims and the Anchor's end.
  */
 
 export type SandboxLootRank = "E" | "D" | "C" | "B" | "A" | "S";
@@ -29,7 +42,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 		rank: "E",
 		title: "E-Rank Loot Table — Threshold Roads",
 		description:
-			"Low-tier drops from the Gate Threshold, Hollow Subway, and early Road of Writs encounters. These rewards should feel practical, fragile, and newly stained by Domain law.",
+			"Low-tier drops from the Rift Threshold, Hollow Way, and early Road of Writs encounters. These rewards should feel practical, fragile, and newly stained by the Gloamreach.",
 		entries: [
 			{
 				name: "Bureau Field Kit",
@@ -43,7 +56,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "common",
 				weight: 25,
 				description:
-					"Six cold-light rods. They flicker near ledgers, toll-houses, and Regent invitations.",
+					"Six cold-light rods. They flicker near toll-houses, claimed ground, and Regent invitations.",
 			},
 			{
 				name: "Minor Anomaly Core",
@@ -60,20 +73,20 @@ export const sandboxLootTables: SandboxLootTable[] = [
 					"Single-use patch that grants advantage on one save against fear, charm, or Regent-Marked dream pressure.",
 			},
 			{
-				name: "Ticket Stub Relic",
+				name: "Torn Summons-Corner",
 				rarity: "uncommon",
 				weight: 10,
 				description:
-					"A transit ticket that refuses to tear. Once, it lets the bearer pass a minor toll without paying a name.",
+					"A torn corner of one of the road's summons, still faintly warm. Once, it lets the bearer pass a minor toll or Name-Gate without paying a name.",
 			},
 		],
 	},
 	{
 		id: "loot-d",
 		rank: "D",
-		title: "D-Rank Loot Table — Ledger and Growth",
+		title: "D-Rank Loot Table — Rot and Remembrance",
 		description:
-			"Drops from the Drowned Ledgerfen, Fungal Depths, and low-rank Domain sites where records, illness, and secrets begin to grow teeth.",
+			"Drops from the Drowned Ledgerfen, Fungal Depths, and low-rank Domain sites where memory, illness, and secrets begin to grow teeth.",
 		entries: [
 			{
 				name: "Surgical Sigil",
@@ -94,7 +107,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "rare",
 				weight: 10,
 				description:
-					"A Bureau file legally proving someone marked dead is still alive. Can contradict one minor Ledgerfen effect or open a Bureau trust scene.",
+					"A Bureau file proving someone the Domain marked dead is still alive. Can contradict one minor Ledgerfen effect or open a Bureau trust scene.",
 			},
 			{
 				name: "Brine Salve",

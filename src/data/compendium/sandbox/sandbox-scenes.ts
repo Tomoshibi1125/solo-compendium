@@ -96,13 +96,13 @@ const mapConfigs = [
 		type: "hub" as const,
 	},
 	{
-		name: "Gate Threshold",
+		name: "Rift Threshold",
 		image: "bunker_map.png",
 		audio: "ambient_bunker.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "The Hollow Subway",
+		name: "The Hollow Way",
 		image: "sewer_map.png",
 		audio: "ambient_subway.mp3",
 		type: "combat" as const,

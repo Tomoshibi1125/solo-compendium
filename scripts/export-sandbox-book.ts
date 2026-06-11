@@ -40,7 +40,7 @@ import { sandboxRecruitableNPCs } from "../src/data/compendium/sandbox-npcs";
 const MODULE_TITLE = "The Shadow of the Regent";
 const MODULE_VERSION = 9;
 const MODULE_SUBTITLE =
-	"A mature S-Rank Gate Domain horror campaign for Levels 1-15, set inside the Gloamreach.";
+	"A mature paranormal-horror campaign for Levels 1-15, set inside the Gloamreach — a country-sized S-Rank Rift Interior ruled by its Anchor, the Regent.";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, "..");
@@ -55,7 +55,7 @@ const worldLoreMd = readFileSync(
 	"utf8",
 );
 const worldLoreChapter: Chapter = {
-	title: "Rift Ascendant Lore: Gate Domains and the Gloamreach",
+	title: "Rift Ascendant Lore: The Rift Age and the Gloamreach",
 	content: worldLoreMd,
 };
 
