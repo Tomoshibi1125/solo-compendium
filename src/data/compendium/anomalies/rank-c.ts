@@ -5259,4 +5259,75 @@ export const anomalies_c = [
 			},
 		],
 	},
+	{
+		id: "anomaly-0702",
+		name: "The Caller",
+		type: "Lure (Worn Dead)",
+		rank: "C",
+		source_book: "Rift Ascendant Canon",
+		size: "Medium",
+		alignment: "neutral evil",
+		hp: 123,
+		hit_dice: "123 (13d8 + 65)",
+		ac: 14,
+		ac_source: "natural armor",
+		skills: { Stealth: 6, Deception: 6 },
+		description:
+			"A worn dead the Quiet sets at the edge of safe places. It stands just past the wardline and calls in the voices of the lost — patient, tireless — until someone breaks the rules and goes to it. The Caller rarely fights; it splits the party and feeds the strays to the dark.",
+		abilities: ["Voice of the Lost", "Patient"],
+		weaknesses: ["Fire", "A true name spoken aloud"],
+		senses: "blindsight 60 ft., passive Perception 12",
+		languages: "every lost voice it has collected",
+		damage_vulnerabilities: [],
+		damage_resistances: ["necrotic", "psychic"],
+		damage_immunities: ["poison"],
+		condition_immunities: ["charmed", "frightened", "poisoned"],
+		xp: 1100,
+		stats: {
+			ability_scores: { strength: 13, agility: 14, vitality: 16, intelligence: 9, sense: 16, presence: 17 },
+			speed: 30,
+			challenge_rating: 4,
+			proficiency_bonus: 2,
+			saving_throws: { Sense: 5 },
+		},
+		traits: [
+			{
+				name: "Voice of the Lost",
+				description:
+					"The Caller perfectly mimics any voice it has heard a creature grieve. Checks to recognize it as false are made with disadvantage.",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "It Will Wait",
+				description:
+					"The Caller takes no aggressive action against a target who stays behind a native ward. It simply calls, and lets the rules do its work.",
+				action: "passive",
+				frequency: "at-will",
+			},
+		],
+		actions: [
+			{
+				name: "Come Here",
+				description:
+					"The Caller calls in a voice a creature has lost. Each creature within 120 feet that can hear it must succeed on a DC 14 Sense saving throw or move its full speed toward the Caller by the most direct safe-seeming path. A creature that takes damage may repeat the save at the end of its turn.",
+				type: "special",
+				save: "Sense",
+				dc: 14,
+				range: 120,
+				usage: "at-will",
+			},
+			{
+				name: "Open Throat",
+				description:
+					"Melee Weapon Attack: +5 to hit, reach 5 ft., one target it has lured adjacent. Hit: 27 (6d6 + 6) necrotic damage.",
+				type: "melee",
+				attack_bonus: 5,
+				damage: "6d6",
+				damage_type: "necrotic",
+				range: 5,
+				usage: "at-will",
+			},
+		],
+	},
 ];

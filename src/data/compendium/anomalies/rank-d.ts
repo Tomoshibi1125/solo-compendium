@@ -5259,4 +5259,75 @@ export const anomalies_d = [
 			},
 		],
 	},
+	{
+		id: "anomaly-0701",
+		name: "The Worn",
+		type: "Lure (Worn Dead)",
+		rank: "D",
+		source_book: "Rift Ascendant Canon",
+		size: "Medium",
+		alignment: "neutral evil",
+		hp: 78,
+		hit_dice: "78 (12d8 + 24)",
+		ac: 13,
+		ac_source: "a dead thing that does not flinch",
+		skills: { Stealth: 5, Deception: 4 },
+		description:
+			"A corpse the Quiet wears like a coat and leaves walking — the still figure at the roadside, the neighbour who went into the dark and came back wrong. The Worn lure the living with half-remembered faces and broken voices, then ambush whoever comes close. Killing one is easy and means nothing; there is always another face.",
+		abilities: ["Borrowed Face", "Ambush"],
+		weaknesses: ["Fire", "A true name spoken aloud"],
+		senses: "blindsight 30 ft., passive Perception 10",
+		languages: "the last words its body knew, repeated wrong",
+		damage_vulnerabilities: [],
+		damage_resistances: ["necrotic"],
+		damage_immunities: ["poison"],
+		condition_immunities: ["charmed", "frightened", "poisoned"],
+		xp: 200,
+		stats: {
+			ability_scores: { strength: 14, agility: 12, vitality: 14, intelligence: 6, sense: 11, presence: 13 },
+			speed: 30,
+			challenge_rating: 1,
+			proficiency_bonus: 2,
+			saving_throws: {},
+		},
+		traits: [
+			{
+				name: "Borrowed Face",
+				description:
+					"At a distance and in poor light, the Worn appears as someone a viewer has lost. A creature that approaches within 30 feet may make a DC 12 Sense check to catch the one detail that is wrong before the Worn strikes.",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "Still Until It Isn't",
+				description:
+					"While motionless the Worn is indistinguishable from a corpse or a frightened survivor. Its first attack against a creature that has not noticed it is made with advantage and is a surprise strike.",
+				action: "passive",
+				frequency: "at-will",
+			},
+		],
+		actions: [
+			{
+				name: "Grasp and Pull",
+				description:
+					"Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 11 (2d8 + 2) necrotic damage, and the target is grappled (escape DC 12) as the Worn drags it toward the dark.",
+				type: "melee",
+				attack_bonus: 3,
+				damage: "2d8",
+				damage_type: "necrotic",
+				range: 5,
+				usage: "at-will",
+			},
+			{
+				name: "Call a Name",
+				description:
+					"Recharge 6. The Worn speaks a name one creature has lost. That creature must succeed on a DC 12 Sense saving throw or move toward the Worn by the safest-seeming route on its next turn.",
+				type: "special",
+				save: "Sense",
+				dc: 12,
+				recharge: "6",
+				usage: "recharge",
+			},
+		],
+	},
 ];

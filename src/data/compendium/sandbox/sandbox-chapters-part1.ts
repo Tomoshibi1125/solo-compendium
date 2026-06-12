@@ -8,173 +8,232 @@ import type { SandboxChapter } from "../ascendant-sandbox-module";
 export const chaptersPart1: SandboxChapter[] = [
 	{
 		title: "Chapter 1: Warden's Briefing - Entering the Gloamreach",
-		content: `# The Shadow of the Regent
+		content: `# Run Silent
 
 ## Campaign Overview
 
-**The Shadow of the Regent** is a non-linear horror sandbox for 3-6 Ascendants, taking characters from Level 1 to Level 15. It is set inside **the Gloamreach**, an S-Rank Rift Interior behind one stabilized threshold.
+**Run Silent** is a survival and psychological horror campaign for 3-6 Ascendants, taking characters from Level 1 to Level 10. It is set inside **the Gloamreach**, an S-Rank Rift Interior behind one stabilized threshold — and it is not a clear op. It is a hunt, and the party are the prey.
 
-This is not a city-district crisis and not a cluster of unrelated Gates. The material world is the staging ground. The campaign space is the Domain.
+The material world is only the staging ground. The whole campaign happens *inside*, in the dark, where something has hunted since long before the door existed.
 
-The Gloamreach contains roads, settlements, predator woods, tithe sites, drowned archives, ruined bastions, black-market shelters, forbidden vaults, and a citadel visible from almost everywhere. The Regent is the Anchor. His rule is expressed through the weather, the roads, the claimed dead, his servants, his Relics, and the simple fact that nowhere in his country goes unseen.
+## The Truth the Bureau Doesn't Have
+
+No Ascendant or Bureau team has ever gone inside. The Bureau can only rate the Rift from its threshold instruments — a provisional low/E reading that looks like a routine high-density clear. The reading is honest and wrong. The Gloamreach is a coherent interior country, old and inhabited, and its apex predator — **the Quiet** — cannot be cleared, only survived or fled. The Bureau's entire model assumes a threat you can neutralize. Discovering that some Interiors are *not clearable*, while trapped inside one, is the campaign's horror.
 
 ## Opening Situation
 
-No Ascendant or Bureau team has gone inside yet, so the Bureau can only rate the Rift from its threshold instruments — a provisional low/E classification that reads like a routine high-density clear. The reading is honest and wrong. Once the party is deep enough inside, the truth becomes undeniable: the Rift opens into a coherent interior realm large enough to swallow teams, distort distance, and produce settlements under foreign law. As containment slips toward Rift Break, the threshold turns unreliable behind them.
+The party crosses as the first-ever team into the Gloamreach, on what everyone believes is a routine clear. Within the first hours: the **threshold seals behind them**, the **AFA degrades** into lies, **comms die**, and far off in the dark something that has been listening since the door opened begins, patiently, to come. There is no extraction. There is no backup. There is only the Interior, the dark, the natives who have always lived here behind their rules — and the Quiet.
 
-The party enters as the first available Ascendant team. Their mission is to identify the Anchor, recover the Three Claims, prevent a Rift Break, and survive long enough to decide what kind of ending the Gloamreach deserves.
+## The Goal
 
-## Running This Module
+There is no lord to dethrone and no boss room to reach. The party's goal is brutally simple and genuinely hard: **survive, learn how this place is survived, and get out** — reopen or re-seal the threshold and escape with as many of themselves as they can keep alive.
 
-This campaign is built at full hardcover scale:
+Because this is a D&D-style campaign, **killing the Quiet is always *technically* possible** — but it is near-suicidal until the party reach the top of their tier **and** assemble the means to do it (a truth about its nature, a Relic that can actually hold it, a native who knows the one way). That is the optional, earned, end-game gamble — and the one *clean* way out: the Quiet is what holds the threshold shut, so with it dead the seal fails and the party can simply leave, the country open behind them. Escape is the surer victory; the kill is the rarer, harder one. (See *The Quiet* and the Threshold chapter.)
 
-1. The Domain is the adventure location.
-2. The Regent recurs throughout the campaign.
-3. Travel is dangerous and meaningful.
-4. Settlements are unsafe compromises, not rest stops.
-5. Key Relics are placed through oracle logic.
-6. Faction choices matter.
-7. The finale is a citadel and Anchor-throne confrontation.
+## Running This Horror
+
+This is a horror campaign first. Run it accordingly:
+
+1. **The Hunt Clock.** The Quiet is drawn by **noise, light, and Essence use.** Track its approach on the Hunt Clock (see *Running This Horror*). Living loud advances it; when it fills, it strikes — and it takes a **character**, not the party.
+2. **Essence is bait.** An Ascendant's powers are the loudest thing in the Gloamreach. The core tension — felt by the *players*, every time they reach for an ability — is *can we afford to be strong right now.*
+3. **Dread.** Fear, the uncanny, and the failing of trust grind the party down (the Dread track): hallucinations, mistrust, "is that still your teammate," a steady psychological wear.
+4. **Safe and exposed.** The campaign breathes between **warded native safe-holds** (tense normalcy, community) and the **exposed dark** (the Quiet's time). Safety is always conditional and always temporary.
+5. **Learn the rules or die.** The natives survive by wards, curfews, and rules the party do not know. Knowledge of those rules is the real resource. Breaking one — even in ignorance — brings the Quiet.
+6. **Show the monster rarely.** The Quiet is almost never seen. Build dread from what is *missing* — the silence, the wrong shape, the open door — not from a creature on display.
 
 ## Session 0 Checklist
 
-- Establish mature horror expectations.
-- Confirm hard limits and safety tools.
-- Tie every Ascendant to a reason to enter the Gloamreach.
-- Explain that some threats are meant to be survived, bargained with, escaped, or outwitted rather than killed.
-- Establish that the Regent is not merely a monster. He is Domain authority.
+- Establish **mature survival-horror** expectations: characters can and will die; not every fight is winnable; running and hiding are correct play.
+- Confirm hard limits and safety tools (X-card, lines and veils).
+- Give every Ascendant a concrete reason to be on a first-entry team (below).
+- Make clear up front that **their power is a liability**, that **the Quiet cannot be out-fought early**, and that **the natives' rules are real and lethal to ignore.**
 
 ## Ascendant Creation Hooks
 
 | Hook | Description |
 |---|---|
-| Bureau Deployed | You were ordered into the Domain under emergency clearance. |
-| Guild Raider | Your Guild sees salvage, cores, Relics, and leverage. |
-| Missing Team | Someone you know vanished during the first response wave. |
-| Marked Before You Came | Your name surfaces, in the Regent's own hand, in something carried out of the Gloamreach. |
-| Researcher | You need to prove how Regent Domains work before the Bureau's caution seals what is really inside this one. |
-| Grief-Bound | The Gloamreach contains a voice, face, or memory you thought was gone. |
+| Bureau Deployed | You were ordered onto the first-entry team under emergency clearance. You did not get a choice. |
+| Guild Raider | Your Guild bought first-clear rights, sight unseen, and sent you to collect. |
+| The Eager | You wanted to be first through a virgin S-Rank threshold. You got your wish. |
+| Something Owed | You took this op to pay a debt, clear a record, or prove a point. It will not be worth it. |
+| Researcher | You needed to see an uncleared Interior with your own eyes before the Bureau sealed it. Now you cannot leave. |
+| Grief-Bound | You heard a voice you had lost on the threshold instruments. You came to be sure. You should not have. |
 
 ## Milestone Leveling Guide
 
 | Milestone | Level |
 |---|---|
-| Complete Day Zero or first threshold clear | 2 |
-| Survive the first Domain road crisis | 3 |
-| Earn a faction's trust or save a settlement | 4 |
-| Clear the first major Domain site | 5 |
-| Survive or drive off the Regent's Bailiff | 7 |
-| Resolve the first settlement's tribute crisis | 8 |
-| Obtain a Claim or Regent Relic | 10 |
-| Reach the Forbidden Vault or fallen bastion | 12 |
-| Enter the Regent's Citadel | 13 |
-| Resolve the Anchor (campaign climax) | 15 |
+| Survive first contact and reach the first safe-hold | 2 |
+| Learn your first native ward — and why it matters | 3 |
+| Earn a native community's trust, or be cast out of one | 4 |
+| Cross your first stretch of open hunting ground and live | 5 |
+| Survive the Quiet taking someone — and keep moving | 6 |
+| Learn a true thing about what the Quiet is | 7 |
+| Reach the deep Gloamreach and the failing places | 8 |
+| Assemble the means that could end it | 9 |
+| Escape — or make the one stand to kill the Quiet and walk out free | 10 |
 `,
 	},
 	{
-		title: "The Regent: The Thing That Rules the Gloamreach",
-		content: `# The Regent
+		title: "Running This Horror: The Hunt Clock, Dread, and the Rules",
+		content: `# Running This Horror
 
-> *You will not find him. He found you at the threshold, and he has not looked away since.*
+This chapter is the engine. *Run Silent* lives or dies on four systems: the **Hunt Clock**, **Dread**, **Essence-as-bait**, and the **rhythm of safe and exposed**. Learn these and the campaign runs itself.
 
-## What He Is
+## The Golden Rule
 
-The Regent is the apex Anomaly of the Gloamreach and its **Anchor** — the thing whose existence holds this drowned country together and bends it to a single will. He is not a man, was never a man, and has no kinship with the distant powers of the pantheon; whatever he is, he is **his own**: old, vast, and hungry in a way that has nothing to do with food. He does not so much rule from a throne as the throne, the roads, the weather, and the dead are all *him*, turned outward.
+The Quiet is not a fight to be won; it is a pressure to be survived. The players should feel, constantly, that **being loud, bright, or powerful is dangerous** — and that the only reliable safety is silence, darkness, restraint, and the natives' rules. When in doubt, make the *quiet* choice the smart one and the *strong* choice the loud one.
 
-He is meant to be primally frightening. Run him as a **presence**, not a person — something the party feels before they ever meet him, and never quite stop feeling.
+## The Hunt Clock
+
+Track the Quiet's approach on a **6-segment clock** — draw the circle where the players can see it, and fill wedges in front of them.
+
+**Fill one segment whenever the party:**
+
+- Makes a loud noise — gunfire, a shout, a fight, a slammed door, a scream.
+- Shows open light in the dark — a torch, a flare, a flame, a bright screen.
+- **Uses Essence** — any technique, Sigil, Awakened ability, or Relic's active power. *(This is the big one. Fill **two** for a large or sustained use.)*
+- Breaks a native ward or rule (see *Learn the Rules*).
+- Lingers too long in exposed ground, or rests somewhere unwarded.
+
+**Empty one segment** by reaching a **warded safe-hold**, or by a whole scene of silence, darkness, and stillness — no Essence, no light, no noise. The clock never resets on its own.
+
+**When all six fill, the Quiet strikes.** This is not a fight against its full stat block — it is a *persecution beat*. Choose: it **takes a character** (the most exposed, the loudest, the one who burned the most Essence), or it forces a desperate **hide-or-flee set-piece** with a life on the line. Then reset the clock to **2** — because it is closer now, and it knows where they are.
+
+> The Hunt Clock is the heartbeat of every scene. Fill it slowly, visibly. The dread is in watching it fill.
+
+## Dread (the Unraveling)
+
+Each character has a **Dread track (0–6)**, rising from witnessing the Quiet's work, the uncanny, betrayed trust, losing someone, and certain attacks.
+
+| Dread | Effect |
+|---|---|
+| 1–2 | Unsettled. No mechanical effect — describe the fraying. |
+| 3 | **Shaken** — disadvantage on the first save each scene against fear or the uncanny. |
+| 4 | **Fraying** — once per scene the Warden may have the character briefly mis-see an ally as the Quiet, or hear a lure in a trusted voice. |
+| 5 | **Breaking** — disadvantage on checks while any familiar face is present; the character may act on a hallucination once. |
+| 6 | **Unmade** — at the worst moment the character does the thing that gets someone taken. The player keeps agency; the Warden gains one hard complication to spend. |
+
+Dread drops by 1 per full rest in a true safe-hold, or by a real moment of human connection, comfort, or native kindness.
+
+## Essence Is Bait
+
+The campaign's signature tension. **Every use of Essence advances the Hunt Clock**, and deep in the Gloamreach it draws the worn dead. Make the players *feel* the choice each time they reach for a power: the technique that wins the fight is the bell that rings the Quiet to the door. The natives do not use Essence at all if they can help it — and they are furious at outsiders who do.
+
+The point is not to forbid powers; it is to make using them a **real, costly decision.** A party that learns to win by wits, silence, and the dark — and spends Essence only when the cost is worth a life — is playing correctly.
+
+## Safe and Exposed
+
+The campaign breathes between two modes. Hold the contrast hard.
+
+- **Safe-holds** (warded native places): the only true rest. Tense normalcy — fires, food, people living their lives behind the rules. The clock can empty here; Dread can drop. But safety is conditional: every safe-hold has rules, and the rules are absolute.
+- **Exposed** (the open hunting ground): the Quiet's country. The clock fills; the dark is cover and threat both; the worn dead lure and hunt. The party crosses exposed ground to reach somewhere — and the goal is always *get behind a wardline before the clock fills.*
+
+## Learn the Rules or Die
+
+The natives survive by **wards and rules**, and the party does not know them. This is a core survival loop:
+
+- Each safe-hold and region has its rules — a curfew, a thing you must never do, a ward you must keep lit *or* keep dark, an offering, a silence. Breaking one fills the Hunt Clock and may bring the Quiet at once.
+- The party **learns the rules** by earning the natives' trust, by warning, or by watching someone break one and die. Knowledge of the rules is the most valuable thing in the Gloamreach — worth more than any Relic.
+- The natives fear and resent rule-ignorant outsiders, who endanger everyone. Trust is earned slowly and lost in an instant.
+
+## How the Quiet "Takes" Someone
+
+When the Quiet strikes it rarely kills outright — it **takes.** The character is dragged into the dark. Across the campaign, use all three of: **gone** for good (a real loss); **recoverable** if the party goes after them fast (a desperate rescue in the worst conditions); or **returned later, worn** — walking, talking, almost right, and not theirs anymore. A taking should always cost, always be survivable for the rest of the party, and never be a TPK.
+`,
+	},
+	{
+		title: "The Quiet: The Thing That Hunts the Gloamreach",
+		content: `# The Quiet
+
+> *You will not see it. It saw you the moment the door closed, and it has been listening ever since.*
+
+## What It Is
+
+The Quiet is the apex Anomaly of the Gloamreach — the reason this Rift Interior has never been cleared, and never will be by force. It is not a person, was never a person, and answers to nothing; it is old, vast, and patient in the way only a thing that has never gone hungry can be. The natives do not say its name. They call it *the Quiet* — because it is drawn to every sound the living make, and because of the silence it leaves where a person used to be.
+
+It is meant to be primally frightening. Run it as a **presence**, not a monster — something the party feels long before they ever glimpse it, and never quite stop feeling. **A stand-up fight with the Quiet is not a fight; it is the last mistake a party makes** — until, late and well-earned, it isn't (see *Can It Be Killed?*).
+
+## What Draws It
+
+The Quiet hunts by what the living cannot help doing. It is pulled, hard, toward three things:
+
+- **Noise.** Footfalls, raised voices, gunfire, a dropped pack, a scream. The louder the party lives, the faster it comes.
+- **Light.** Open flame, a torch, a flare, the glow of a screen in the dark. Light is a beacon; the dark is the only cover the Gloamreach offers.
+- **Essence.** Worst of all, the Quiet feels an Ascendant *use their power*. Every technique, every Sigil, every Awakened ability rings through the Interior like a struck bell. **The party's greatest strength is the thing most likely to get them killed** — and learning that, the hard way, is the campaign's first real lesson.
+
+The natives have built their entire way of life around denying it these three. The party arrive knowing none of it.
 
 ## Four Truths, All At Once
 
-**1 — He sees everything.** Within his domain the Regent is an unblinking eye over the whole land. There is nowhere in the Gloamreach he does not watch from: the dark, still water, every reflection, the windows of houses that should be empty, the eyes of the claimed dead. Every road the party takes, every shelter they choose, every plan whispered in the cold — he knows it the moment it happens. The horror is not the chase. It is being **seen**, always, unable to act unobserved, with the slow certainty that he is *letting* you run.
+**1 — It is always near.** The Quiet does not arrive and leave; it is simply *out there* — in the dark past the wardline, in the walls, under the floor of the world. Whatever the party does, the sense of it draws closer: a cold, a pressure, a held breath at the back of every scene. It cannot be reasoned with, bribed, or outrun. It can only be **avoided, blinded, delayed, and survived** — and every delay costs.
 
-**2 — He wears the dead.** He comes to the party as the people they have lost: a dead teammate at the fire, a parent's voice from the next room, a child who should not be here, smiling. He gets the small things right — a laugh, a turn of phrase, an old scar — and one thing, always, deliberately wrong. After the first time, the party can never again fully trust a familiar face in the Gloamreach, and that is exactly what he wants.
+**2 — It wears the dead.** It comes to the party as the people they have lost, and as the natives' lost: a dead teammate at the fire, a voice from the next room, a child who should not be here, smiling. It gets the small things right — a laugh, a turn of phrase, an old scar — and one thing, always, deliberately wrong. After the first time, no familiar face in the Gloamreach can be fully trusted. That is exactly the point.
 
-**3 — He is always, slowly coming.** He never hurries, because hurry is for things that can lose. Whatever the party does, the sense of him draws nearer — a cold, a pressure, a held breath at the back of every scene. He cannot be reasoned with, bribed, or outrun. He can only be **delayed**, and every delay costs.
+**3 — It is almost never seen.** The horror is not the monster in full light; it is the shape at the edge of the lamplight, the thing the eye never quite resolves. Describe its approach through everything *but* the thing itself — the silence where insects should be, the breath on the back of the neck, the door that is open now. Show it fully only when it strikes, and then only for a heartbeat.
 
-**4 — To be truly seen by him unmakes you.** When the Regent turns his *full attention* on someone — not the watching, the attention — the world stutters. Distances forget themselves. People remember things that never happened. To be his focus is to feel, briefly and completely, how small and provisional you are, and to come away with something missing you cannot name.
+**4 — To be truly fixed by it unmakes you.** When the Quiet turns its *full attention* on a person — not the listening, the attention — the world stutters. Distances forget themselves. People remember things that never happened. To be its focus is to feel, briefly and completely, how small and provisional you are, and to come away with something missing you cannot name.
 
-## His Court — the Host of the Claimed
+## The Shapes It Wears
 
-The Regent does not rule alone. The Gloamreach's dead do not rest; they are **his** — raised and reshaped into servants, courtiers, and soldiers: the silent figures at the roadside, the shapes in the citadel halls, the **hunter** that comes for those he has marked. They wear what they were in life like ill-fitting clothes. To free or truly name one of them is among the few things that genuinely costs him.
+The Quiet keeps no court — it has no servants and rules nothing. But the Gloamreach's dead do not rest, and it **wears them**: the still figure at the roadside, the thing in a lost teammate's coat, the lure that calls a name in a familiar voice from somewhere you should not go. These are not soldiers; they are bait and gloves. Putting one down is easy and means nothing — there is always another face. (Stat these as its lesser hunters and lures; see the Bestiary.)
 
-## How He Acts
+## How to Run It
 
-He works through **dread and the long game**, never haste or force:
+Run the Quiet through **dread and restraint**, never spectacle:
 
-- He **shows himself early** — a figure on a ridgeline, gone when you look twice; a voice in a dream; his shape behind a rain-streaked window — and then lets the party carry the knowledge that he is aware of them.
-- He **offers**, in the shape of the dead and the things you want most: rest, a lost face, an answer, a way out. The offer is real. So is the cost.
-- He **takes his time**, because he has already watched how this ends, and is curious only about how the party will get there.
+- **Make it the players' problem, not the characters'.** The tension is *can we stay quiet, dark, and powerless long enough to live* — a question the players feel every time they reach for a power.
+- **Reward silence; punish noise.** Track the **Hunt Clock** (see *Running This Horror*). Noise, light, and Essence advance it; when it peaks, the Quiet strikes — and it takes a *character*, not the party.
+- **Show it early and rarely.** A wrong shape on a ridgeline, gone when you look twice. A voice in a dream. Then let the party carry the knowledge that it knows they are here.
+- **Let it offer.** In the shape of the dead and the things they want most — rest, a lost face, a way out. The offer can be real. The cost always is.
 
-## Why He Is Not Strahd (hold these lines)
+## Why This Isn't a Domain-Lord (hold these lines)
 
-- **Not a romantic.** No obsession, no lost love, no fixation on any one character.
-- **Not a man who fell.** There is no tragic humanity to redeem — the "human remnant" the party may find is the Domain's bait (see Secret 1). He never had a face of his own to lose.
-- **Not a schemer lurking in a castle.** He is the whole land, watching. The castle is only where he is most *concentrated*.
+- **It does not rule.** No throne, no court, no tribute, no kingdom. It is a predator in its territory, not a king in his castle. The natives keep *rules to survive it* — rules it never handed down.
+- **It cannot be bargained into a plot.** No romance, no fixation, no tragic past to redeem. It is hunger with patience.
+- **It is not waiting in a final room.** It is the whole dark, listening. There is no castle to storm — only a country to cross without being heard.
 
-## His One Weakness
+## Can It Be Killed?
 
-He is the Anchor, so he cannot be put down like a beast, and his sight, his patience, and his hold over the dead make him feel total. But an Anchor is a **knot**, and a knot can be cut. His grip depends on the Gloamreach answering to him and him alone; a party carrying the **Three Claims** — three true things the Domain cannot deny — can force the land itself to stop being his long enough to end, seal, or change him (see the Three Claims and the Endings). Until then: he watches, he wears your dead, and he is coming.
-
-## At the Throne
-
-For the staged finale, see the Citadel chapter. Whatever the phase, keep the register — calm because he is certain, vast because he is the place, and *wrong* in a way the eye keeps trying to correct. He does not fight to survive. He is only, genuinely, curious why the party believes they can take back what the Gloamreach swallowed long ago.
+Yes — but not by being fought, and not until the party is ready. For most of the campaign the Quiet is unkillable in practice: ordinary force barely marks it, and it withdraws into the dark to come again. Putting it down for good requires **two things together, late**: the party at the **right level** (high tier), *and* the **means** assembled in play — a truth about what it is, a Relic or weapon that can actually hold it, an ally or native who knows the one way. None of that is a mandatory fetch-quest; it is discovered, optional, and hard. **Escape is always the surer victory.** Killing the Quiet is the thing a party *can* attempt, once — and only once they could survive being wrong.
 `,
 	},
 	{
-		title: "Chapter 2: The Three Claims",
-		content: `# The Three Claims
+		title: "Chapter 2: The Means to End It",
+		content: `# The Means to End It
 
-## Overview
+## There Is No Win Condition to Collect
 
-The Three Claims are not keycards and not loot. Each is a **true thing the Gloamreach cannot deny** — an object, a memory, a truth so real that the Domain's hold on the world flinches around it. They are the few things here the Regent does not, and cannot, swallow.
+The party does not gather keys to beat a boss. Their goal is to **survive and escape** (see Chapter 1). But because this is a D&D-style campaign, the Quiet *can* be killed — and a party willing to pay for it should be able to try. This chapter is the Warden's toolkit for that **gated kill**: what it takes, where the pieces come from, and how to keep it from ever becoming a fetch-quest.
 
-This matters because the Regent is not beaten by damage; he is the Anchor, the knot that ties the whole Domain to his will, and any wound the party deals the land simply heals around. Each Claim is a truth that knot cannot absorb. Brought together at the throne, the three force the Gloamreach — for a few impossible breaths — to stop being *his*, and that is the only window in which he can be ended, sealed, or changed.
+## The Two Locks
 
-Each Claim is also dangerous to carry. It makes its bearer impossible for the Regent to overlook: his full attention turns toward it, and toward them — and being truly seen by him is its own slow harm.
+The Quiet's stat block (see *The Quiet*) cannot be reduced below 1 hit point — it simply withdraws into the dark — until **both** of these are true:
 
-## The Claims
+1. **Tier.** The party is **9th level or higher.** Below that, no means matters; the Quiet is beyond them, and any attempt is a way to die.
+2. **The Means.** The party has assembled what it takes to make the Quiet *killable* — drawn together in play, never handed over. The Means is built from three kinds of thing, and the party needs enough that the Warden is satisfied they have *earned* it:
+   - **A truth** about what the Quiet is — learned from the deep places, the oldest natives, or the things it has worn.
+   - **A way to hold it still** — a real Relic, weapon, or working (from the compendium) that can pin a thing never fully there: light and silence forced together, a true name, a ward turned inward. Place this as a hard-won treasure, never a giveaway.
+   - **A way to make it stay dead** — a place, a moment, or a sacrifice where the kill can land: the threshold itself, a ward-circle the natives will only build once, a dawn in a country that has none.
 
-### The Void Claim — *against the hidden*
+## How to Run It (so it never becomes a checklist)
 
-A sphere of absolute darkness that devours light, sound, and every false seeming; held close it is cold and utterly silent, and lies spoken near it die in the mouth. It breaks the Regent's hold over **secrecy, the dark, and the roads that move when no one is looking** — all the ways the Gloamreach hides itself.
+- **Never list the Means as objectives.** The party discovers, in play, that the Quiet might be killable and what that would take. Let them assemble it because they chose to, between survival crises.
+- **Escape is always the surer victory.** Make clear — through the natives and the cost — that going for the kill is the *harder* ending. Most parties should be tempted to just get out.
+- **The attempt is one scene, and it is brutal.** When the locks are met and the party commits, run the Quiet in the place they've chosen. The Means is what makes the fight winnable: spent fully, it drags the Quiet down to something a level-10 party can kill — forced into a silence and dark it cannot slip, stripped of its lair actions and its power to simply *take* a character, pinned where the kill can land. It still fights to the last and still tries to take someone with it. (See the Threshold chapter.)
+- **Killing it is the way out.** The Quiet is what holds the threshold shut. Put it down for good and the seal fails: the party can walk out freely, and what becomes of the Gloamreach and its people is left open, for another day and another telling. (See the Threshold chapter.)
 
-### The Abyss Claim — *against his command*
+## What the Quiet Cannot Abide
 
-A crown, a chain, or a band of black iron that whispers promises of authority to whoever carries it (and means none of them). It breaks the Regent's hold over **summons, compulsion, and obedience** — the silent strings by which everything in the Gloamreach moves when he wills it.
+Three things genuinely hurt or hinder the Quiet; clever parties will find them long before they could kill it. Use them to make *survival* possible, and to seed the Means:
 
-### The Blood Claim — *against his hold on the dead*
-
-A blade, a vessel, or a still-beating seal that remembers the Gloamreach as it was before the Regent, and every face he has taken since. It breaks his hold over **flesh, the grave, and the claimed dead** — his power to keep what this country has swallowed.
-
-## Placement
-
-Use Chapter 24's Oracle Reading to place the Claims. Each Claim should be in a different major Domain region unless the Warden intentionally wants a compressed or brutal campaign.
-
-Default possible locations:
-
-1. The Rift Threshold.
-2. The Road of Writs.
-3. The Tithe Mill.
-4. The Predator Woods.
-5. The Drowned Ledgerfen.
-6. The Remembering Orchard.
-7. Bastion Golemfall.
-8. The Vermillion Outpost.
-9. The Forbidden Vault of the Unseated Law.
-10. The Regent's Citadel.
-
-## Final Confrontation Effects
-
-| Claims Held | Effect |
-|---|---|
-| 0 | The Regent's Anchor law is complete. He regenerates, ignores most contradiction, and controls the battlefield freely. |
-| 1 | One Domain law can be suspended for one round during the finale. |
-| 2 | Two major Regent abilities are weakened or delayed. |
-| 3 | The party can force the Anchor-throne to answer: break, seal, transform, or inherit. |
+- **Silence and the dark, together.** It hunts by noise, light, and Essence; a party that gives it none of these is, briefly, safe — and a place where *absolute* silence and dark can be forced on it is where a kill could land.
+- **A true name, truly spoken.** The dead it wears had names. Naming what it has taken — or what it *is* — can make it flinch, break a lure, or hold it for a heartbeat.
+- **The natives' deepest wards.** The wards that keep it out of the safe-holds can, rarely and at terrible cost, be turned *inward* to keep it *in.*
 
 ## Warden Guidance
 
-Do not present the Claims as mandatory keycards. Present them as dangerous evidence. Each one should help the party, but also teach the Regent more about them.
+Treat all of this as **optional, dangerous evidence**, not a quest line. Every piece the party finds should first help them *survive*, and only later add up — if they choose — to a way to end the thing that hunts them.
 `,
 	},
 	{
@@ -183,9 +242,9 @@ Do not present the Claims as mandatory keycards. Present them as dangerous evide
 
 ## Overview
 
-The Gloamreach is a country-sized interior realm behind one S-Rank Rift — a whole world with its own people, weather, and law, and one road that ties all of it back to the throne. It is large enough for travel to matter, for settlements to differ, and for the Regent's citadel to dominate the horizon without ever being immediately reachable.
+The Gloamreach is a country-sized interior realm behind one S-Rank Rift — a whole world with its own people, weather, and unwritten law, old and inhabited long before the door opened. It is large enough for travel to matter, for one warded community to know nothing of the next, and for the dark between them to be the most dangerous country a team will ever cross.
 
-> *Read aloud:* There is no sun here — only a low, sourceless grey light, and a sky the colour of a held breath. And there, on the horizon, exactly as far as it stood yesterday: the Citadel. Wherever the road turns, it is still there, patient, watching you arrive.
+> *Read aloud:* There is no sun here — only a low, sourceless grey light, and a sky the colour of a held breath. The land goes on further than it should: grey moors, drowned fields, dead industry, and the lit windows of people who have learned to live very quietly. Underneath all of it, always, is the sense of something vast and patient that heard you arrive and has not stopped listening since.
 
 ## Core Regions
 
@@ -193,21 +252,21 @@ The Gloamreach is a country-sized interior realm behind one S-Rank Rift — a wh
 
 Where the party enters. Bureau instruments briefly function here, then begin reporting impossible distances, duplicate life signs, and old team telemetry.
 
-### The Road of Writs
+### The Old Roads
 
-The main road through the Domain. It changes distance based on who has marked you, what you carry, and which names you have given away. The road is not neutral terrain. It is awake, and it is hungry.
+The Gloamreach is threaded with old native roads, raised causeways, and rail-cuts that link the warded communities. They are the fastest way to travel and the most exposed: open ground, far from any wardline, where every footfall carries and the dark has room to move. The natives walk them only by grey daylight, in silence, and never alone — and they are right to.
 
-### Tribute Settlements
+### The Warded Communities
 
-Each settlement survives through a lie. One claims tribute is voluntary. One claims the missing are honored. One survives by forgetting names. None are safe for free.
+The native settlements survive behind wards, curfews, and rules paid for in generations of the dead. Each keeps its own customs and its own price for shelter — one bars every door at dusk, one never speaks a sleeper's name aloud, one buries its grief where outsiders must not dig. None are safe for free, and none owe a stranger anything. (See the keyed communities.)
 
 ### The Predator Woods
 
 An adaptive hunting ground. It remembers tactics, blood, campfire smoke, and fear.
 
-### The Tithe Mill
+### The Mills and Rendering-Yards
 
-A mill, workhouse, or counting-yard where tribute is processed and sent toward the citadel.
+Native industry still runs by grey light — mills, workhouses, and rendering-yards where the communities process what little the Gloamreach gives them. Honest labour, a ward over every door, and a hard silence about what the night shift is really for.
 
 ### Bastion Golemfall
 
@@ -215,36 +274,36 @@ A fallen defensive fortress. This is the campaign's ruin of failed protection, l
 
 ### The Vermillion Outpost
 
-A black-market shelter inside the Domain. Vermillion saves people and exploits them. Both facts are true.
+A black-market shelter deep inside the Gloamreach. Vermillion saves people and exploits them. Both facts are true.
 
-### The Forbidden Vault
+### The Deep Places
 
-The seat of the Unseated Law, the sealed residue of the Domain's prior Anchor. This is the campaign's forbidden bargain location.
+Beneath the inhabited country lie older things — sealed vaults, drowned undercrofts, and the ruins of whatever stood here first. The oldest natives say that if there is a truth about the Quiet to be found — what it is, and whether it was always here — it waits down there, and it is never given up cheaply. This is the campaign's forbidden-bargain country.
 
-### The Regent's Citadel
+### The Threshold and the Deep Dark
 
-The final castle-scale dungeon and the visible symbol of the Regent's ownership.
+There is no castle to storm and no throne to reach. The campaign's end is the long way back: the deepest, darkest crossing of the Gloamreach to the sealed Threshold, where the party either reopens the way out — or, late and well-earned, makes the one stand that could put the Quiet down for good. (See the Threshold chapter.)
 
-### The Hollow Way & the Deeper Sites
+### The Hollow Way and the Deeper Sites
 
-Beyond the road's surface, the Gloamreach holds far more than a map shows — each keyed in its own chapter. The **Hollow Way** is the Domain's intake-throat just past the Threshold (Ch8). The deeper sites: the **Drowned Ledgerfen** (predatory archive, Ch9), the **Fungal Depths** (adaptive body-horror, Ch10), the **Remembering Orchard** (memory-bloom, Ch11), the **Ashen Counting-House** (the burning hall of the dead, Ch12), the **Sunken Tunnels** (drowned warrens, Ch13), the **Obsidian Spire** (trial of rule, Ch15), and the **Awoko Sanctum** (grief-cult, Ch33). The Oracle Reading scatters the Three Claims and key allies across them, so no two campaigns map the Gloamreach the same way.
+Beyond the roads, the Gloamreach holds far more than any map shows — each keyed in its own chapter. The **Hollow Way** is the throat just past the Threshold and the party's first contact with the Quiet (Ch8). The deeper sites: the **Drowned Ledgerfen** (predatory archive, Ch9), the **Fungal Depths** (adaptive body-horror, Ch10), the **Remembering Orchard** (memory-bloom, Ch11), the **Ashen Counting-House** (the burning hall of the dead, Ch12), the **Sunken Tunnels** (drowned warrens, Ch13), the **Obsidian Spire** (the old high place, Ch15), and the **Awoko Sanctum** (grief-cult, Ch33). The Warden seeds the pieces of the Means and the key native allies across these places by hand (see *What the Natives Know*), so no two campaigns uncover the Gloamreach in the same order.
 
 ## Travel Rules
 
-Roll once for every major journey or whenever the party refuses an invitation, travels without tribute, or carries a Claim openly.
+Roll once for every major journey across exposed ground, or whenever the party travels loud, lit, or late. On any result that draws attention, fill the Hunt Clock.
 
 | d6 | Road Event |
 |---|---|
-| 1 | The road lengthens. Lose time and supplies. |
-| 2 | A toll-house appears where none stood before. |
-| 3 | A messenger delivers an invitation from the Regent. |
-| 4 | A settlement bell rings in the distance. Someone is being collected. |
-| 5 | The Regent's Bailiff crosses the road ahead. |
-| 6 | The party finds a safe-looking shelter. A guest-book by the door already has their names in it. |
+| 1 | The way goes on longer than it should. Lose time and supplies, and the dark gets a turn. |
+| 2 | A still figure stands at the roadside, facing away. It is gone if you look twice — or it isn't. |
+| 3 | A voice from off the road calls a name someone in the party has lost. |
+| 4 | A community bell tolls once, far off, then nothing. Someone behind a wardline did not make it. |
+| 5 | Fresh sign of something large that crossed here ahead of you, unhurried. Fill the Hunt Clock. |
+| 6 | A safe-looking shelter, its door already open. Nothing inside is wrong, which is the worst part. |
 
-## Mana Exposure
+## Resting in the Open
 
-Long rests outside protected settlements require a DC 10 Vitality save. On a failure, the character dreams of the citadel and wakes with disadvantage on the first Sense check of the day.
+Long rests outside a warded community require a DC 10 Vitality save. On a failure, the character's sleep is found — they dream of the dark drawing patiently closer, and wake with disadvantage on the first Sense check of the day. A party that rests unwarded should always wonder what the rest cost them.
 `,
 	},
 	{
@@ -253,7 +312,7 @@ Long rests outside protected settlements require a DC 10 Vitality save. On a fai
 
 ## Overview
 
-The Gloamreach is shaped by factions trying to survive, profit, rule, worship, or escape. Reputation affects supplies, shelter, intelligence, betrayal, and final-act support.
+The Gloamreach is shaped by factions trying to survive, profit, worship, or escape — and by the native communities who have done all four for longer than anyone can remember. Reputation affects supplies, shelter, intelligence, betrayal, and final-act support.
 
 ## Reputation Tiers
 
@@ -283,19 +342,19 @@ Vermillion moves fast and does not wait for permission. Their help is real. Thei
 
 ## The Awoko Cult
 
-**Leader**: The Hollow Mother  
-**Base**: Hidden sanctum, moving through grief-dense sites  
-**Goal**: Use the Regent's law to force an ascension beyond Rank, then inherit the Domain.
+**Leader**: The Hollow Mother
+**Base**: Hidden sanctum, moving through grief-dense sites
+**Goal**: Commune with the Quiet instead of hiding from it — feed it the community's grief and dead, and be spared, or remade, in return.
 
-The Awoko preach remembrance, but their rituals turn grief into fuel.
+The Awoko preach remembrance, but their rituals turn grief into fuel and their mercy into bait. They believe survival-by-silence is only slow surrender, and that the way through is to give the dark what it wants.
 
-## The Regent's Court
+## The Warded Communities
 
-**Leader**: The Regent  
-**Base**: The Citadel  
-**Goal**: Preserve ownership, collect tribute, test intruders, and make the Domain's claim permanent.
+**Leader**: No single voice — a loose web of ward-keepers, elders, and curfew-wardens
+**Base**: The warded native settlements across the Gloamreach
+**Goal**: Survive another night. Keep the wards as they must be kept, the rules unbroken, and the outsiders from getting everyone killed.
 
-The Court is not a normal faction, but reputation still matters. Courtesy, defiance, betrayal, guest-right, and broken promises are all tracked.
+The natives are less a faction than a whole civilization, but reputation still matters and is tracked per community. They are the keepers of every rule that holds the Quiet off — the most valuable knowledge in the Gloamreach — and they share it slowly, with people who have proven they will not bring the dark down on a roof full of children. Endanger a community and word travels ahead of the party; earn one's trust and you earn a wardline to sleep behind.
 `,
 	},
 	{
@@ -318,7 +377,7 @@ Basic gear, mana rations, glow rods, smoke grenades, medkits, and Bureau tactica
 
 ### Medical Bay
 
-Dr. Serin Hayashi treats survivors and studies Domain-touched tissue. She is one of the first Bureau researchers willing to say the quiet part aloud: killing the Regent may not be the only possible Anchor resolution.
+Dr. Serin Hayashi treats survivors and studies Rift-touched tissue. She is one of the first Bureau researchers willing to say the unsayable: some Interiors cannot be cleared at all — and the thing inside this one may not be something you kill, only survive or flee.
 
 ### Communications Room
 
@@ -336,7 +395,7 @@ Controls equipment access. Practical, dry, and more generous when no one is watc
 
 ### Dr. Serin Hayashi
 
-Researcher, physician, and dangerous thinker. Believes Regent Domains are legal/metaphysical structures, not just monster lairs.
+Researcher, physician, and dangerous thinker. Believes some Rift Interiors are coherent, inhabited countries with their own apex predators — not monster-nests to be cleared, and lethal to treat as one.
 
 ### Agent Kira Blackwood
 
@@ -349,11 +408,11 @@ Intelligence operative with classified orders involving pre-threshold Relic acti
 
 ## Overview
 
-The Vermillion Outpost is the salvage cartel's stronghold and the closest thing to a free market the Gloamreach allows — a fortified warren of stalls, bunks, and back rooms grown into the bones of some older native structure the Domain never finished reclaiming. The Vermillion are **native** to the Gloamreach; they did not arrive, they *endured*, and the Outpost exists because they have spent lifetimes learning exactly how far the Regent's law can be bent before it bites.
+The Vermillion Outpost is the salvage cartel's stronghold and the closest thing to a free market the Gloamreach allows — a fortified warren of stalls, bunks, and back rooms grown into the bones of some older native structure the Gloamreach never finished reclaiming. The Vermillion are **native** to the Gloamreach; they did not arrive, they *endured*, and the Outpost exists because they have spent lifetimes learning exactly how much noise the Gloamreach will forgive before it bites.
 
 > *Read aloud:* After the road, the noise alone is almost too much — haggling, a cookfire, someone retuning a salvaged Relic until it stops screaming. Red lamps, red banners, a hand-painted star over every doorway. A runner no older than twelve sizes up your gear, your wounds, and your desperation in a single glance and grins. "First time in? You'll want to talk to Orin. Everything else here, you'll want to *not* talk about."
 
-The Outpost has hot food, heat, contraband Runes, wounded the Domain wrote off, salvage stalls, charged Essence-cells, and more edged-and-Relic arms than the Regent would ever allow, if Vermillion were in the habit of asking.
+The Outpost has hot food, heat, contraband Runes, wounded the Gloamreach wrote off, salvage stalls, charged Essence-cells, and more edged-and-Relic arms than any cautious native would ever carry — Vermillion have always believed firepower beats silence, and the Gloamreach is full of the graves of people who agreed.
 
 ## Areas
 
@@ -363,7 +422,7 @@ Buy and sell Anomaly cores at better rates than Bureau standard. Vermillion asks
 
 ### Rune Stall
 
-Contraband Runes and Sigils. Expensive, useful, and sometimes cursed by local Domain law.
+Contraband Runes and Sigils. Expensive, useful, and sometimes cursed by whatever the Gloamreach's deep places did to them before Vermillion dug them up.
 
 ### Field Kitchen
 
@@ -371,7 +430,7 @@ A hot meal grants 1d4 temporary HP for one hour, but food is scarce. If the part
 
 ### Bounty Board
 
-Bounties include missing teams, dangerous roads, unpaid toll-houses, Domain beasts, and rumors of Claim locations.
+Bounties include missing teams, dangerous crossings, predators of the wilds, safe-route intel, and rumors of where a piece of the Means might be found.
 
 ### Orin's Office
 
@@ -382,23 +441,23 @@ Guildmaster Orin keeps maps on the walls. Every map disagrees. He trusts none of
 		title: "Chapter 7: Downtime in a Hostile Domain",
 		content: `# Downtime in a Hostile Domain
 
-Downtime inside the Gloamreach is never fully safe. It is time bought from hunger, tribute, weather, and the Regent's attention.
+Downtime inside the Gloamreach is never fully safe. It is time bought from hunger, the dark, weather, and the Quiet's attention.
 
 ## Downtime Actions
 
-### Rest Under Guest-Right
+### Rest Behind a Wardline
 
-Requires a settlement, outpost, or protected camp. Safe unless the party has violated local law.
+Requires a warded community, outpost, or a camp the party has learned to ward. Safe unless they have broken a local rule or let the wards fail.
 
 ### Gather Rumors
 
-Learn one clue about a Claim, settlement crisis, road law, or the Regent's next invitation.
+Learn one clue about a ward, a safe route, the lost, a deep place, or a piece of the Means (see *What the Natives Know*).
 
 ### Repair and Refit
 
 Restore damaged gear, reload consumables, and prepare for travel.
 
-### Study How the Domain Works
+### Study How the Gloamreach Works
 
 Make an Intelligence or Sense check. On success, learn one way the Gloamreach can be tricked, warded, or slipped past.
 
@@ -410,51 +469,53 @@ A character may clear one minor fear, hallucination, or memory distortion if ano
 
 | d6 | Complication |
 |---|---|
-| 1 | A messenger arrives with an invitation. |
-| 2 | A settlement demands tribute for shelter. |
-| 3 | Food spoils overnight. |
-| 4 | Someone dreams of the Citadel and wakes speaking the Regent's words. |
+| 1 | A still figure is standing at the treeline, just past the firelight, when someone looks up. |
+| 2 | A community demands a hard price — a rule kept, a debt worked off — for continued shelter. |
+| 3 | Food spoils overnight, or supplies are quietly gone. |
+| 4 | Someone dreams of the dark drawing closer and wakes with the Hunt Clock one segment higher. |
 | 5 | Vermillion calls in a favor. |
-| 6 | The road outside has moved. |
+| 6 | The safe route the party meant to take is exposed now — washed out, watched, or simply wrong. |
 `,
 	},
 	{
-		title: "Chapter 8: First Domain Site - The Hollow Way",
-		content: `# First Domain Site - The Hollow Way
+		title: "Chapter 8: The Hollow Way - First Contact",
+		content: `# The Hollow Way — First Contact
 
 > *Read aloud:* The Threshold lets you in like a held breath letting go, and the road forward sinks at once into the dark — a vast throat of old stone, ribbed with veins of cold Essence-light that pulse the way something swallows. Far down in the black, a voice you know is calling your team's call-sign, patient and glad you came. None of you said it aloud. The walls are already carved with your names, the cuts still pale, as though finished moments before you arrived.
 
 ## Overview
 
-The Hollow Way is the first thing past the Rift Threshold: a low-rank descending conduit the Gloamreach uses to draw everything that enters — tribute, the dead, and now the party — down toward the deeper Domain. It is not a building and not a road. It is the Domain's **intake**: a sloped, Essence-lit underway of processional stone that *moves* when you stop watching it, carrying you further in while letting you believe you are walking out.
+The Hollow Way is the first thing past the Rift Threshold and the party's first hour in the Gloamreach: a long, descending throat of processional stone, Essence-lit and sloping always down. Behind them, the **Threshold seals** — quietly, completely, the way a held breath stops. Ahead, in the dark, something has already learned their names and is calling them deeper in a voice they know.
 
-This is the party's first proof that the Gloamreach already knows them. It read their names off them at the door.
+This is **first contact** with the Quiet, though the party will not understand that yet. The Way is its intro lesson: a self-contained survival zone that teaches, before anyone explains it, what the rest of the campaign is. Run it slow and quiet. Nothing should be safe, and almost nothing should be *seen.*
 
-## Purpose
+## What This Zone Teaches (the three rules, learned the hard way)
 
-This site teaches the party three truths:
-
-1. The Domain records you on arrival — names, fears, and the shape of what you came to find.
-2. It will wear a familiar voice to draw you deeper. Here that voice is the lost beacon of **Strike Team Seven**, taken at the Threshold during the breach and replayed as bait. There are no survivors down the Way — only the lure.
-3. Leaving is harder than entering. The Way decides where you arrive.
+1. **It knows your name, and your name is a leash.** The walls are carved with the party's names. Speaking a true name aloud here — or worse, giving one to the dark when it asks — lets the Quiet find you anywhere afterward. (Fill the Hunt Clock when a true name is spoken.)
+2. **It wears a voice you trust.** Down the Way, the Quiet calls in a voice each character has lost. Answering it, or going toward it, is how it takes you. There is nothing down there but the lure.
+3. **Light, noise, and power draw it.** The Essence-veins tempt the party to use power to see or to fight. Every torch, shout, and technique brings the voice closer. The party either learn to go dark and silent, or the Way teaches them.
 
 ## Key Areas
 
-### The Descending Throat
+### A1 — The Descending Throat
 
-The main conduit. Side-openings breathe past as the Way carries you: a carved courtroom, a flooded warren, a tribute-bier, the same stretch of stair ten years older. Step through the wrong one and the Way continues without you.
+The main conduit, always sloping down, that *moves* when no one watches — carrying the party deeper while letting them believe they are climbing out. Side-openings breathe past: a flooded warren, a stair ten years older than the last, a still room full of the carved names of people who came before and never left. Stepping through the wrong opening, or splitting up, is how the Way separates the party for the voice.
 
-### The Name-Gate
+### A2 — The Carved Names
 
-A toll-arch ribbed with crawling script, where passage is counted in names. The Way does not want coin. It wants a **name** — yours, or one you carry. Give a true name and the gate opens easily, and the Gloamreach has your scent for good. Refuse, and the party must find another fare: a false name, a shared one, a name the Domain has no claim to, or breaking the counting-script outright.
+A stretch where the walls are dense with names — the party's among them, fresh-cut. A character who reads their own name aloud (or has it read to them) is **marked**: the Quiet can find them, and the next scene's Hunt Clock starts one segment higher. A DC 13 Sense check notices the air go wrong *before* anyone speaks — the first warning that names matter here.
 
-### The Reliquary-Bier
+### A3 — The Voice
 
-The head of the procession, where the Way sets down what it values. A minor Relic, a Claim clue, or the source of the false beacon waits here. If the Oracle placed the **Void Claim** in this site, it lies in a sealed bier-niche the dark refuses to light, behind a name no one in the party is willing to read aloud.
+The deepest point the party should reach, where the lost voice is loudest and a familiar shape waits just past the lamplight — a dead teammate, a parent, a child, almost right. This is the Quiet wearing the dead, its first appearance. If it comes to violence, stat it as **The Worn** (anomaly-0701) — but it would far rather be *answered* than fought. Going to it, or answering it, triggers the first **taking**. Refusing it — staying silent, dark, and together — is how the party learn they can survive.
+
+### A4 — The Way Up
+
+There is no reliquary and no prize here; the only thing to win is *out.* The Way will not simply let them climb back — they must stop feeding it (no names, no light, no Essence, no answering the voice) until the dark loses interest, and then find the seam of true cold air that leads up. A native may be waiting at the top — the first person to tell them there are *rules* here.
 
 ## Exit Condition
 
-The party leaves when they understand what the Way is asking for and refuse to pay it with their identity. Clever alternatives: a false or shared name, a name belonging to no one present, destroying the counting-script of the Name-Gate, or invoking the one older law the Domain still must honor with a successful Presence or Intelligence check. However they go, the Way lets them believe leaving was their own idea.
+The party leave the Hollow Way when they stop giving the dark what it wants — their names, their light, their voices answered — and climb toward the cold air and the first wardline. However they go, they should leave changed: quieter, warier, and certain that something down there knew them, and is not finished. (This hands off into Act I proper — see The Hunt Escalates.)
 `,
 	},
 ];

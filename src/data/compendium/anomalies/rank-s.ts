@@ -7433,4 +7433,186 @@ export const anomalies_s = [
 			},
 		],
 	},
+	{
+		id: "anomaly-0700",
+		name: "The Quiet",
+		type: "Apex Anomaly",
+		rank: "S",
+		source_book: "Rift Ascendant Canon",
+		size: "Large",
+		alignment: "neutral evil",
+		hp: 444,
+		hit_dice: "444 (36d10 + 246)",
+		ac: 19,
+		ac_source: "it is never fully seen",
+		skills: {
+			Stealth: 20,
+			Perception: 15,
+		},
+		description:
+			"The apex predator of the Gloamreach, and the reason the Interior cannot be cleared. The Quiet is almost never seen; it is felt — a cold, a pressure, a silence where insect-sound should be. It hunts by noise, light, and the use of Essence, wears the faces and voices of the dead to lure prey into the dark, and cannot be put down by ordinary force. A stand-up fight with it is a party's last mistake — until, at high tier and with the right means assembled, it finally isn't. Use this block for the gated endgame attempt and for the rare moment the party must survive it directly; most of the campaign, the Quiet takes a character when the Hunt Clock peaks rather than rolling initiative.",
+		abilities: ["Wears the Dead", "Drawn to Noise, Light, and Essence", "Almost Never Seen"],
+		weaknesses: [
+			"Only truly killable once the party is 13th level or higher and has assembled the means to end it (see the Run Silent module)",
+		],
+		senses:
+			"blindsight 60 ft., tremorsense 120 ft. (it hunts by sound and the use of power, not sight), passive Perception 25",
+		languages:
+			"understands every tongue the dead it has worn once spoke; answers only in stolen voices",
+		damage_vulnerabilities: [],
+		damage_resistances: [
+			"bludgeoning, piercing, and slashing from nonmagical attacks",
+		],
+		damage_immunities: ["necrotic", "poison"],
+		condition_immunities: [
+			"blinded",
+			"charmed",
+			"exhaustion",
+			"frightened",
+			"poisoned",
+		],
+		xp: 33000,
+		stats: {
+			ability_scores: {
+				strength: 24,
+				agility: 22,
+				vitality: 24,
+				intelligence: 19,
+				sense: 26,
+				presence: 22,
+			},
+			speed: 40,
+			extra_speeds: {
+				climb: 40,
+			},
+			challenge_rating: 21,
+			proficiency_bonus: 7,
+			saving_throws: {
+				Agility: 13,
+				Vitality: 14,
+				Sense: 15,
+			},
+		},
+		traits: [
+			{
+				name: "Drawn to the Living",
+				description:
+					"The Quiet always knows the direction and rough distance of the loudest source of noise, light, or Essence use within the Interior, and moves toward it. Whenever a creature within one mile makes a loud noise, lights a flame, or uses an Awakened ability, Sigil, or technique, the Warden advances the Hunt Clock (see Running This Horror).",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "Nothing Ordinary Can End It",
+				description:
+					"Until the party has assembled the means to end the Quiet (a Warden-tracked campaign condition) AND is 13th level or higher, the Quiet cannot be reduced below 1 hit point. At the end of any turn on which it took damage, it withdraws into the dark and is gone, returning when the Hunt Clock next peaks. Once both conditions are met this trait ends, and the Quiet can be killed normally — though it fights to the last and takes someone with it if it can.",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "Wears the Dead",
+				description:
+					"The Quiet can perfectly mimic the appearance and voice of any dead creature it has touched. Any check or effect to discern its true nature is made with disadvantage. It always gets one small detail deliberately wrong; a creature with cause to be suspicious may make a DC 20 Sense check to catch it.",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "Legendary Resistance (3/Day)",
+				description:
+					"If the Quiet fails a saving throw, it can choose to succeed instead.",
+				action: "passive",
+				frequency: "3/day",
+			},
+			{
+				name: "It Is Already Here",
+				description:
+					"The Quiet cannot be surprised, ignores difficult terrain, and is not slowed by closed doors, walls, or darkness. It cannot cross a native wardline it has not been let past — but the living rarely keep perfect silence behind one.",
+				action: "passive",
+				frequency: "at-will",
+			},
+		],
+		actions: [
+			{
+				name: "Multiattack",
+				description: "The Quiet makes two Take attacks.",
+				type: "special",
+				usage: "at-will",
+			},
+			{
+				name: "Take",
+				description:
+					"Melee Weapon Attack: +11 to hit, reach 10 ft., one target. Hit: 39 (6d10 + 6) necrotic damage, and the target's hit point maximum is reduced by an amount equal to the damage taken until it finishes a long rest. A creature reduced to 0 hit points by this attack is taken — gone into the dark, to be worn later.",
+				type: "melee",
+				attack_bonus: 11,
+				damage: "6d10",
+				damage_type: "necrotic",
+				range: 10,
+				usage: "at-will",
+			},
+			{
+				name: "The Silence",
+				description:
+					"Recharge 5–6. A 30-foot-radius sphere of absolute dark and silence centered on the Quiet. Each creature in the area must make a DC 20 Sense saving throw, taking 55 (10d10) psychic damage and becoming frightened of the Quiet until the end of its next turn on a failure, or half as much damage on a success. No sound or light can exist inside the sphere until the start of the Quiet's next turn.",
+				type: "special",
+				damage: "10d10",
+				damage_type: "psychic",
+				range: 30,
+				save: "Sense",
+				dc: 20,
+				recharge: "5-6",
+				usage: "recharge",
+			},
+			{
+				name: "Wear a Face",
+				description:
+					"The Quiet takes the shape and voice of a dead creature one target loved or lost. That target must succeed on a DC 20 Sense saving throw or be unable to attack the Quiet, and unable to move away from it, until the end of its next turn.",
+				type: "special",
+				save: "Sense",
+				dc: 20,
+				usage: "at-will",
+			},
+		],
+		reactions: [
+			{
+				name: "Never Quite There",
+				description:
+					"When the Quiet is hit by an attack while Nothing Ordinary Can End It is active, it halves the damage and may immediately move up to half its speed without provoking opportunity attacks.",
+			},
+		],
+		lair_actions: [
+			{
+				name: "The Lights Die",
+				description:
+					"On initiative count 20 (losing ties), all nonmagical light within 120 feet of the Quiet gutters to darkness, and magical light of 3rd level or lower is suppressed until the next round.",
+			},
+			{
+				name: "It Heard That",
+				description:
+					"A creature that made noise or used Essence since the last lair action has disadvantage on the next saving throw it makes against the Quiet, and the Hunt Clock advances by one.",
+			},
+			{
+				name: "Borrowed Voice",
+				description:
+					"A voice one creature has lost calls from somewhere in the dark. That creature must succeed on a DC 18 Sense saving throw or move its speed toward the voice by the most direct route, taking the path that seems safest into the worst danger.",
+			},
+		],
+		legendary_actions: [
+			{
+				name: "Drift",
+				description:
+					"The Quiet moves up to its speed without a sound and without provoking opportunity attacks.",
+				frequency: "at-will",
+			},
+			{
+				name: "Listen",
+				description:
+					"The Quiet learns the exact location of every creature that made noise or used Essence since the start of its last turn.",
+				frequency: "at-will",
+			},
+			{
+				name: "Take (Costs 2 Actions)",
+				description: "The Quiet makes one Take attack.",
+				frequency: "1/round",
+			},
+		],
+	},
 ];

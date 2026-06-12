@@ -1,7 +1,7 @@
 import type { SandboxChapter } from "../ascendant-sandbox-module";
 
 // ============================================================================
-// THE SHADOW OF THE REGENT - CHAPTERS 29-30
+// RUN SILENT - CHAPTERS 29-30
 // Part VI: Bureau Cordon Annex and Vermillion Outpost keyed locations
 // ============================================================================
 
@@ -30,7 +30,7 @@ Services:
 - Ascendant clearance check-in.
 - Updated Rift Interior warnings.
 - Bureau Emergency Bulletin handout.
-- One small shrine blessing per campaign: a character who leaves a sincere token may reroll one failed save against a Regent-aligned effect.
+- One small shrine blessing per campaign: a character who leaves a sincere token may reroll one failed save against a Gloamreach-touched effect.
 
 ## Room 2 - Relay and Dispatch
 
@@ -42,7 +42,7 @@ Services:
 - Review missing-team telemetry.
 - Reconstruct broken transmissions from Strike Team Seven.
 
-Investigation: DC 15 Investigation reveals that at least one response team reported seeing the Regent's Citadel before any official map confirmed it existed.
+Investigation: DC 15 Investigation reveals that at least one response team reported hearing a voice call their team's call-sign from inside the Gloamreach — before anyone had broadcast it.
 
 ## Room 3 - Briefing Hall
 
@@ -65,7 +65,7 @@ Services:
 - Standard weapons and tactical armor.
 - One rare-or-lower requisition at Allied reputation.
 
-Blackwood Hook: a locked footlocker may contain pre-threshold Relic evidence if the Oracle Reading placed one Claim near the material side.
+Blackwood Hook: a locked footlocker may contain pre-threshold Relic evidence — a piece of the Means that surfaced on the material side before anyone ever went in.
 
 ## Room 5 - Evidence Locker and Anomaly Vault
 
@@ -75,16 +75,16 @@ Services:
 
 - Core appraisal.
 - Relic analysis.
-- Regent Domain research.
-- Autopsy reports from Domain-touched creatures.
+- Gloamreach research.
+- Autopsy reports from Gloamreach-touched creatures.
 
-Hayashi can provide the party with the **Research Brief: Regent Domains** handout at Trusted reputation.
+Hayashi can provide the party with the **Research Brief: The Unclearable Interior** handout at Trusted reputation.
 
 ## Room 6 - Morgue and Echo Room
 
 Twelve drawers. Too many occupied. Behind an unmarked door, the Echo Room preserves fragments of last memories in mana-saline.
 
-Use this room to show the cost of the Domain's appetite. It can surface final words the Gloamreach has kept from those it claimed, confirm Regent-Marked symptoms, or plant the Domain's bait — the first curated hint that the Regent was "once human" (he was not).
+Use this room to show the cost of the Gloamreach's appetite. It can surface final words the dark has kept from those it took, confirm Quiet-Marked symptoms, or plant the Quiet's bait — the first hint of how perfectly it wears the dead.
 
 ## Room 7 - Commander Park's Office
 
@@ -104,18 +104,18 @@ Use this room to complicate the party's morality. A prisoner may be dangerous, i
 
 ## Room 9 - Relic Exam Room
 
-Professor Lun studies Relics, Sigils, and Claim-resonance here. He is not a god, prophet, or secret villain. He is an expert who knows enough to be afraid.
+Professor Lun studies Relics, Sigils, and the resonance of deep-Gloamreach things here. He is not a god, prophet, or secret villain. He is an expert who knows enough to be afraid.
 
 Services:
 
 - Relic identification.
 - Sigil appraisal.
 - Rune decoding.
-- Claim resonance testing.
+- Means-resonance testing.
 
 ## Room 10 - Roof Heliport and Drone Pad
 
-The roof carries drones, VTOL craft, storm tarps, and the constant vibration of the S-Rank Rift. It is used for rapid cordon movement, emergency extraction near the threshold, and the final material-side relay before the party enters the Citadel approach.
+The roof carries drones, VTOL craft, storm tarps, and the constant vibration of the S-Rank Rift. It is used for rapid cordon movement, emergency extraction near the threshold, and the last material-side relay before the party cross into the Gloamreach.
 
 ## Bureau Reputation Milestones
 
@@ -152,7 +152,7 @@ Services:
 
 - Buy and sell Anomaly cores.
 - Purchase illegal consumables.
-- Trade rumors about roads, settlements, and Claim locations.
+- Trade rumors about roads, settlements, and where the Means might be found.
 
 ## Room 2 - Orin's Chamber
 
@@ -162,7 +162,7 @@ Services:
 
 - Guild induction.
 - Faction arbitration.
-- Regent combat notes at Trusted reputation.
+- Hard-won notes on the worn dead and how the Quiet hunts, at Trusted reputation.
 
 ## Room 3 - Black Market
 
@@ -177,7 +177,7 @@ Services:
 
 ## Room 4 - Tattoo Parlour
 
-Bright's ink parlor turns scars, songs, and mana into functional tattoos. The work is beautiful because beauty is one of the few things the Regent does not get to own for free.
+Bright's ink parlor turns scars, songs, and mana into functional tattoos. The work is beautiful because beauty is one of the few things the Gloamreach does not get to take for free.
 
 Services:
 
@@ -215,11 +215,11 @@ Services:
 
 ## Room 8 - Bounty Board
 
-Bounties include missing teams, dangerous roads, toll-house sabotage, Domain beasts, settlement relief, Claim clues, and Awoko ritual sites.
+Bounties include missing teams, dangerous crossings, predators of the wilds, settlement relief, Means clues, and Awoko ritual sites.
 
 ## Room 9 - Smuggler Gate
 
-A hidden exit that does not always open to the same place. Vermillion uses it to move goods around Regent patrols. Each use risks the road taking its toll.
+A hidden exit that does not always open to the same place. Vermillion uses it to move goods around the worn dead and the open ground. Each use risks the dark noticing.
 
 ## Room 10 - The Quiet Room
 
@@ -234,7 +234,7 @@ Use this room for character scenes, grief, confession, and hard choices.
 | Neutral | Basic trade. |
 | Friendly | Better prices, rumor access, limited shelter. |
 | Trusted | Black-market services, tattoos, special bounties. |
-| Allied | Orin's direct support, outpost defenders in the finale, deep Claim intelligence. |
+| Allied | Orin's direct support, outpost defenders in the finale, deep intelligence on the Means and the Quiet. |
 
 ## Warden Guidance
 

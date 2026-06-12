@@ -5595,4 +5595,99 @@ export const anomalies_a = [
 			},
 		],
 	},
+	{
+		id: "anomaly-0704",
+		name: "The Hollowed",
+		type: "Apex Fragment (Worn Dead)",
+		rank: "A",
+		source_book: "Rift Ascendant Canon",
+		size: "Large",
+		alignment: "neutral evil",
+		hp: 228,
+		hit_dice: "228 (24d10 + 96)",
+		ac: 17,
+		ac_source: "the dark clings to it",
+		skills: { Stealth: 12, Perception: 9 },
+		description:
+			"Deep in the Gloamreach, where the Quiet's attention pools, the worn dead stop being lures and become something closer to the thing that wears them — a hollowed apex-fragment that hunts like the Quiet in miniature. The Hollowed is the hardest thing the party can actually kill, and the surest sign they are nearing where the means to end the Quiet might be found.",
+		abilities: ["Echo of the Quiet", "Drawn to Power"],
+		weaknesses: ["Massed light and silence together", "A true thing it cannot abide"],
+		senses: "blindsight 90 ft., tremorsense 60 ft., passive Perception 19",
+		languages: "the stolen voices of many dead",
+		damage_vulnerabilities: [],
+		damage_resistances: ["necrotic", "psychic", "bludgeoning, piercing, and slashing from nonmagical attacks"],
+		damage_immunities: ["poison"],
+		condition_immunities: ["blinded", "charmed", "exhaustion", "frightened", "poisoned"],
+		xp: 7200,
+		stats: {
+			ability_scores: { strength: 20, agility: 18, vitality: 18, intelligence: 13, sense: 20, presence: 18 },
+			speed: 40,
+			extra_speeds: { climb: 30 },
+			challenge_rating: 11,
+			proficiency_bonus: 4,
+			saving_throws: { Agility: 8, Vitality: 8, Sense: 9 },
+		},
+		traits: [
+			{
+				name: "Echo of the Quiet",
+				description:
+					"The Hollowed is almost never seen until it strikes; it has advantage on Stealth and cannot be tracked by sound. The first time it appears in a scene, each creature that can sense it must succeed on a DC 16 Sense saving throw or gain a point of Dread.",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "Drawn to Power",
+				description:
+					"The Hollowed has advantage on attacks against any creature that used an Awakened ability, Sigil, or technique since the Hollowed's last turn. Using Essence near it is, as ever, a mistake.",
+				action: "passive",
+				frequency: "at-will",
+			},
+			{
+				name: "Legendary Resistance (1/Day)",
+				description:
+					"If the Hollowed fails a saving throw, it can choose to succeed instead.",
+				action: "passive",
+				frequency: "1/day",
+			},
+		],
+		actions: [
+			{
+				name: "Multiattack",
+				description: "The Hollowed makes two Claim attacks.",
+				type: "special",
+				usage: "at-will",
+			},
+			{
+				name: "Claim",
+				description:
+					"Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 27 (4d10 + 5) necrotic damage, and the target cannot regain hit points until the start of its next turn.",
+				type: "melee",
+				attack_bonus: 8,
+				damage: "4d10",
+				damage_type: "necrotic",
+				range: 10,
+				usage: "at-will",
+			},
+			{
+				name: "Into the Dark",
+				description:
+					"Recharge 5-6. The light gutters out in a 20-foot radius around the Hollowed. Each creature in it must make a DC 17 Sense saving throw, taking 36 (8d8) psychic damage and being unable to see beyond 5 feet until the end of its next turn on a failure, or half as much damage on a success.",
+				type: "special",
+				damage: "8d8",
+				damage_type: "psychic",
+				range: 20,
+				save: "Sense",
+				dc: 17,
+				recharge: "5-6",
+				usage: "recharge",
+			},
+		],
+		reactions: [
+			{
+				name: "Slip the Light",
+				description:
+					"When a creature the Hollowed can see ends its turn in bright light, the Hollowed may move up to its speed toward the nearest darkness without provoking opportunity attacks.",
+			},
+		],
+	},
 ];

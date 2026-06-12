@@ -1,5 +1,5 @@
 /**
- * SANDBOX ENCOUNTERS — "The Shadow of the Regent"
+ * SANDBOX ENCOUNTERS — "Run Silent"
  *
  * One encounter deck per major combat, horror, or pressure scene in the
  * Gloamreach sandbox. Each encounter declares the enemy roster, hazards,
@@ -15,8 +15,11 @@
  *   - D-rank → Levels 1-5   (CR 1/8-1,  48 Anomalies; e.g. anomaly-0006)  early sites, Hollow Way, road encounters
  *   - C-rank → Levels 3-7   (CR 2-5,    48 Anomalies; e.g. anomaly-0002)  Drowned Ledgerfen, Fungal Depths, Orchard, Counting-House
  *   - B-rank → Levels 6-10  (CR 6-8,    48 Anomalies; e.g. anomaly-0003)  Sunken Tunnels, Bastion Golemfall, Awoko Sanctum
- *   - A-rank → Levels 8-13  (CR 9-12,   48 Anomalies; e.g. anomaly-0004)  Obsidian Spire, Citadel approach
- *   - S-rank → Levels 13-15 (CR 13-21,  51 Anomalies; e.g. anomaly-0005)  the Regent and his Anchor-throne
+ *   - A-rank → Levels 8-10  (CR 9-12,   48 Anomalies; e.g. anomaly-0004)  Obsidian Spire, the final crossing
+ *   - S-rank → Levels 9-10 (CR 13-21,  52 Anomalies; e.g. anomaly-0700 "The Quiet")  the gated kill
+ * The Quiet and its worn dead are bespoke canon creatures referenced directly by
+ * id (no reskin needed): anomaly-0700 The Quiet, 0701 The Worn, 0702 The Caller,
+ * 0703 The Wrong Shape, 0704 The Hollowed — use them for persecution and the hunt.
  * An encounter's `difficulty` + the level band of its `sceneRef` choose the
  * rank; the Warden (or the site's "Boss" notes) pulls the matching Anomaly by
  * `id` from that rank file and reskins it without altering the source numbers.
@@ -58,7 +61,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 	{
 		name: "Day Zero — The Diagnosed",
 		description:
-			"Introductory pocket-breach horror. The Diagnosed is a Gloamreach symptom reaching through a mirror, not a normal monster. Use this fight to introduce memory loss, names, and Regent-Marked consequences.",
+			"Introductory pocket-breach horror. The Diagnosed is a Gloamreach symptom reaching through a mirror, not a normal monster. Use this fight to introduce memory loss, names, and Quiet-Marked consequences.",
 		difficulty: "easy",
 		sceneRef: "Day Zero: The Diagnosed's Mirror (R5)",
 		hazards: [
@@ -69,7 +72,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		rewards: [
 			"The Faded Family Photo, if recovered.",
 			"Bureau trust if the party reports the breach honestly.",
-			"A Regent-Marked clue, not an Identity-Erosion point.",
+			"A Quiet-Marked clue, not an Identity-Erosion point.",
 		],
 		monsters: [
 			{
@@ -79,7 +82,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 				ac: 13,
 				initiative: 3,
 				notes:
-					"D-Rank elite. Mirror Retreat once per fight. Forgetting Gaze may apply Regent-Marked instead of raw damage pressure.",
+					"D-Rank elite. Mirror Retreat once per fight. Forgetting Gaze may apply Quiet-Marked instead of raw damage pressure.",
 			},
 			{
 				name: "Forgetting Swarm",
@@ -99,7 +102,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		sceneRef: "The Hollow Way",
 		hazards: [
 			"Exposed Essence-vein in the stone: 2d6 lightning to anyone forced into contact with a live conduit.",
-			"The Name-Gate demands fare; giving a true name grants easy passage but risks Regent-Marked.",
+			"The Name-Gate demands fare; giving a true name grants easy passage but risks Quiet-Marked.",
 			"The Way speaks names into the dark — including names of those who have not entered yet.",
 		],
 		rewards: [
@@ -129,9 +132,9 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		hazards: [
 			"Half the floor is 2 ft. deep: difficult terrain.",
 			"Mana-tainted water: Vitality save DC 12 or poisoned for 1 minute.",
-			"Death-records surface and update each round unless destroyed, drowned, or contradicted by a Claim.",
+			"Death-records surface and update each round unless destroyed, drowned, or contradicted by a spoken ward.",
 		],
-		rewards: ["D-Rank loot table roll.", "Catalog access.", "Void Claim clue."],
+		rewards: ["D-Rank loot table roll.", "Catalog access.", "A Means clue."],
 		monsters: [
 			{ name: "Drowned Record", quantity: 10, hp: 28, ac: 13, initiative: 2 },
 			{
@@ -171,15 +174,15 @@ export const sandboxEncounters: SandboxEncounter[] = [
 	{
 		name: "Remembering Orchard — Harvest Bell",
 		description:
-			"A beautiful orchard where tribute memories hang like fruit and the Caretaker prunes pain until people forget why they wanted freedom.",
+			"A beautiful orchard where given memories hang like fruit and the Caretaker prunes pain until people forget why they wanted freedom.",
 		difficulty: "hard",
 		sceneRef: "Remembering Orchard",
 		hazards: [
 			"Memory fruit grants clues but risks personality bleed if eaten carelessly.",
 			"Harvest Bell summons orchard thralls unless silenced or its claim on a stolen memory is broken.",
-			"Attacking the Caretaker before learning the tribute law turns villagers hostile or terrified.",
+			"Attacking the Caretaker before learning the orchard's custom turns villagers hostile or terrified.",
 		],
-		rewards: ["Memory fruit clue.", "Blood Claim clue.", "Civilian trust if tribute is broken safely."],
+		rewards: ["Memory fruit clue.", "A Means clue.", "Civilian trust if the custom is broken safely."],
 		monsters: [
 			{ name: "Orchard Thrall", quantity: 6, hp: 45, ac: 14, initiative: 3 },
 			{
@@ -203,7 +206,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Furnace detonation on round 6 if not disabled: 8d6 fire in 20 ft. radius.",
 			"Chains of molten memory can bind characters to a fresh grief or loss.",
 		],
-		rewards: ["C-Rank loot table roll.", "A truth the burning hall cannot deny.", "Abyss Claim clue."],
+		rewards: ["C-Rank loot table roll.", "A truth the burning hall cannot deny.", "A Means clue."],
 		monsters: [
 			{ name: "Cinder-Wraith", quantity: 8, hp: 38, ac: 13, initiative: 3 },
 			{
@@ -227,7 +230,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Pressure pops: Vitality save DC 15 or 1d6 thunder damage on round 5.",
 			"Speaking a drowned name aloud may summon or soothe a fused commuter.",
 		],
-		rewards: ["B-Rank loot table.", "Pressure Sigil.", "Blood Claim clue."],
+		rewards: ["B-Rank loot table.", "Pressure Sigil.", "A Means clue."],
 		monsters: [
 			{ name: "Fused Commuter", quantity: 6, hp: 55, ac: 14, initiative: 3 },
 			{
@@ -251,7 +254,7 @@ export const sandboxEncounters: SandboxEncounter[] = [
 			"Unresolved oaths regenerate construct defenders each round.",
 			"A character who swears to defend another gains advantage here, but the oath follows them.",
 		],
-		rewards: ["B-Rank loot table.", "Armor or shield Sigil.", "Abyss Claim clue."],
+		rewards: ["B-Rank loot table.", "Armor or shield Sigil.", "A Means clue."],
 		monsters: [
 			{ name: "Oathbound Armor", quantity: 5, hp: 60, ac: 16, initiative: 2 },
 			{
@@ -267,15 +270,15 @@ export const sandboxEncounters: SandboxEncounter[] = [
 	{
 		name: "Obsidian Spire — Mirror Gauntlet",
 		description:
-			"The Spire tests whether the party seeks resolution or a cleaner-looking throne. Reflections tempt, accuse, and offer genuinely useful power.",
+			"The Spire tests whether the party seek a way home or the power to stop being prey. Reflections tempt, accuse, and offer genuinely useful power.",
 		difficulty: "deadly",
 		sceneRef: "Obsidian Spire",
 		hazards: [
 			"Each trial mirrors one character's desire for authority, safety, revenge, or control.",
-			"Unresolved reflections grant the Regent insight into that character during the finale.",
+			"Unresolved reflections give the Quiet a lure shaped for that character during the finale.",
 			"Accepting a Spire bargain grants power and establishes a visible cost.",
 		],
-		rewards: ["A-Rank loot table.", "Obsidian Prism.", "Claim placement access or Watcher alliance."],
+		rewards: ["A-Rank loot table.", "Obsidian Prism.", "A truth about the Quiet, or Watcher alliance."],
 		monsters: [
 			{
 				name: "Mirror-Self",
@@ -289,46 +292,64 @@ export const sandboxEncounters: SandboxEncounter[] = [
 		],
 	},
 	{
-		name: "Regent's Citadel — Throne Confrontation",
+		name: "The Threshold — Escape or the Gated Kill",
 		description:
-			"S-Rank finale. The Regent receives the party in court, fights as the sovereign Anchor, and may be forced into the Human Remnant phase — the Domain's curated costume flickering, never a real soul — by truth, Claim contradiction, or emotional proof.",
+			"The climax of Run Silent. There is no throne and no court. Either the party are running for the threshold to escape the Gloamreach, or — at Level 9+, with the Means assembled (see The Means to End It) — they have chosen the one place they can try to put the Quiet down for good. Run the Quiet at its full stat block, with the Hunt Clock and everything it can do. It is not a boss waiting in a room; it is the dark closing in while the party do the one thing they came to do.",
 		difficulty: "legendary",
-		sceneRef: "The Regent's Citadel",
+		sceneRef: "The Threshold",
 		hazards: [
-			"Phase 1 — The Wearer of Faces: he greets them wearing the dead, with soft offers, convincing grief, and temptation.",
-			"Phase 2 — The All-Seeing Domain: lair effects from roads, the dark, weather, the claimed dead, and the horror of being seen everywhere at once.",
-			"Phase 3 — Human Remnant: the Domain's costume flickers (no soul beneath; he was never human) — triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or major sacrifice.",
+			"It hunts by noise, light, and Essence: every loud action and every power used fills the Hunt Clock and brings it faster.",
+			"It wears the dead: it comes first as someone the party loves or lost, and the natives who helped them cannot follow them out.",
+			"Nothing Ordinary Can End It: unless the party are Level 9+ and hold the Means, the Quiet cannot be reduced below 1 HP and simply withdraws — escape is the only victory then.",
 		],
 		rewards: [
-			"Ending-based artifact slate.",
-			"Anchor resolved: broken, sealed, transformed, or inherited.",
-			"Gloamreach fate determined.",
+			"Escape: the party, and whoever they kept alive, get out; the Gloamreach keeps everyone else.",
+			"The gated kill: the Quiet is ended, at a cost it always takes.",
+			"Either way, who lived and who was taken is the campaign's real ending.",
 		],
 		monsters: [
-			{ name: "Regent Courtier", quantity: 6, hp: 75, ac: 15, initiative: 4 },
 			{
-				name: "The Regent",
+				name: "The Worn",
+				quantity: 4,
+				hp: 78,
+				ac: 13,
+				initiative: 2,
+				notes: "anomaly-0701. The dead it sends ahead, wearing faces the party knows.",
+			},
+			{
+				name: "The Quiet",
 				quantity: 1,
-				hp: 400,
-				ac: 20,
-				initiative: 6,
-				notes: "Legendary actions x3 per round. See Chapter 16 and Chapter 28 framing.",
+				hp: 444,
+				ac: 19,
+				initiative: 8,
+				notes: "anomaly-0700. Legendary + lair actions. Unkillable unless the party are Level 9+ and hold the Means (see The Means to End It). It takes someone if it can.",
 			},
 		],
 	},
 	{
-		name: "Gloamreach Road Pressure",
+		name: "The Hunt — Persecution in the Open",
 		description:
-			"Generic travel pressure encounter for the Road of Writs, tribute settlements, and wild Domain routes. Use when the party delays, travels while marked, carries a Claim openly, or breaks a settlement's rule.",
-		difficulty: "easy",
-		sceneRef: "Road of Writs",
+			"The default persecution beat for any stretch of exposed hunting ground. Use it when the party live loud, linger, burn Essence, or break a native rule and the Hunt Clock fills. The Quiet rarely comes itself this early — it sends the worn dead ahead. The goal is not to win the fight; it is to reach a wardline, or the dark and silence, before more come.",
+		difficulty: "medium",
+		sceneRef: "The Hunting Ground",
 		hazards: [
-			"Civilian bystanders, settlement witnesses, or a visible toll marker make collateral damage socially costly.",
-			"A local law is active; reveal it before punishing the party for violating it.",
+			"This is a stalk-hide-flee scene, not a brawl: standing and fighting fills the Hunt Clock and draws worse.",
+			"Light and noise made here bring the next wave faster; a single Essence use can bring the Quiet itself.",
+			"Reaching a native safe-hold (and keeping its rules) ends the scene; running water and hard thresholds buy moments.",
 		],
-		rewards: ["Small reputation shift toward whoever the party protected.", "One road-law clue."],
+		rewards: [
+			"Distance, and the lesson that silence and the dark are the only reliable safety.",
+			"Scavenged survival gear (light, warding, quiet); a native's trust if the party protected one.",
+		],
 		monsters: [
-			{ name: "Wandering Domain Beast", quantity: 3, hp: 30, ac: 12, initiative: 1 },
+			{
+				name: "The Worn",
+				quantity: 3,
+				hp: 78,
+				ac: 13,
+				initiative: 2,
+				notes: "anomaly-0701 (scale up by tier to The Caller 0702, The Wrong Shape 0703, The Hollowed 0704). Lures and ambushers wearing the dead.",
+			},
 		],
 	},
 ];

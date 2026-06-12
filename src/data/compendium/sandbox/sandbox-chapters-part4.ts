@@ -2,7 +2,7 @@ import type { SandboxChapter } from "../ascendant-sandbox-module";
 
 // ============================================================================
 // THE SHADOW OF THE REGENT - CHAPTERS 0, 24-26
-// Part IV: Intro Adventure, Oracle Reading, Ascendant Hooks, Stat Blocks Appendix
+// Part IV: Intro Adventure, What the Natives Know, Ascendant Hooks, Stat Blocks Appendix
 // ============================================================================
 
 export const chaptersPart4: SandboxChapter[] = [
@@ -15,7 +15,7 @@ export const chaptersPart4: SandboxChapter[] = [
 
 ## Purpose
 
-Run this one-to-two session gothic-horror prelude before the party enters the Gloamreach. The characters are still on the material side, inside the Bureau cordon surrounding the S-Rank Rift. The Memory-Care Wing is a small pocket breach created by pressure leaking from the Gloamreach. It introduces the campaign's real themes: memory, ownership, hospitality, civilian cost, and the terror of a Domain that reaches through the door before anyone steps inside.
+Run this one-to-two session horror prelude before the party enters the Gloamreach. The characters are still on the material side, inside the Bureau cordon surrounding the S-Rank Rift. The Memory-Care Wing is a small pocket breach created by pressure leaking from the Gloamreach. It introduces the campaign's real themes: memory, names, the dead the dark keeps and wears, civilian cost, and the terror of something that reaches through the door before anyone steps inside.
 
 The party begins at Level 1 and reaches Level 2 at the end of this chapter.
 
@@ -41,7 +41,7 @@ The reception desk is clean. A potted orchid has been freshly watered. A visitor
 
 Every entry is written in the same hand. Different names. Same ink. Same arrival time. Same departure time. The next blank line already has the first stroke of a party member's name.
 
-Clue: the handwriting matches Ms. Park Jeong-hye in R4. Writing a name in the log grants advantage on the next Sense save in the Wing, but the Regent's agents can recognize that character by name later.
+Clue: the handwriting matches Ms. Park Jeong-hye in R4. Writing a name in the log grants advantage on the next Sense save in the Wing, but the Gloamreach has that name now — and the dark there can recognize that character by it later.
 
 ### R2. Dayroom - The Wrong Afternoon
 
@@ -49,7 +49,7 @@ Five residents sit watching a news broadcast from years ago. Sunlight fills the 
 
 Hidden under a folded blanket is the Faded Family Photo: a young woman in a wedding dress beside a man in Bureau dress uniform. The man's face has been worn down to blank paper. The inscription reads: Jeong-hye and [name erased], June 1978.
 
-This photograph is the campaign's first major emotional relic. If the party carries it into the Gloamreach, the Regent notices the absence immediately.
+This photograph is the campaign's first major emotional relic — the first lost face the party hold in their hands, and a lesson, when they understand it later, in how the Quiet wears the dead. If the party carries it into the Gloamreach, something there knows that face, and may one day wear it back at them.
 
 ### R3. The Hallway That Lengthens
 
@@ -77,7 +77,7 @@ Actions:
 
 1. Forgetting Touch. Melee +5 to hit, 1d6+2 cold. On hit, DC 13 Sense save or the target loses reactions until the end of their next turn.
 2. Mirror Retreat, once per fight. The Diagnosed enters the mirror and returns at the end of its next turn beside a reflective surface.
-3. Forgetting Gaze, recharge 5-6. 15 ft. cone. DC 13 Sense save. On failure, the target takes 2d6 psychic damage and gains the Regent-Marked condition.
+3. Forgetting Gaze, recharge 5-6. 15 ft. cone. DC 13 Sense save. On failure, the target takes 2d6 psychic damage and gains the Quiet-Marked condition.
 
 When The Diagnosed falls, the mirror cracks and the pocket breach begins to collapse.
 
@@ -89,13 +89,13 @@ Destroy the mirror. The breach ends completely. Ms. Park dies with perfect clari
 
 Seal the mirror. Ms. Park and several residents survive. The haunting remains dormant. The party gains Vermillion or civilian reputation. A grief-cult scout notices the party's mercy and reports it to the Awoko.
 
-This choice should echo in the Gloamreach. If Ms. Park dies, the Regent's human-form reveal is colder and more incomplete. If she survives, she can appear at the Bureau cordon during the finale and create one round of hesitation when the Regent remembers who waited.
+This choice should echo all the way to the end. If Ms. Park dies here, the party cross into the Gloamreach having already lost someone to the dark — and the first time the Quiet wears a familiar face, they will remember this one. If she survives, she waits at the Bureau cordon: a face on the material side, a living reason to fight back to the Threshold and out.
 
-## Regent-Marked Condition
+## Quiet-Marked Condition
 
-A character marked here becomes visible to the Regent's law. The Regent and his servants can recognize the character's presence inside the Gloamreach. The character has disadvantage on Stealth checks against Regent-aligned entities, and the Regent may communicate through dreams, reflective surfaces, or written invitations.
+A character marked here has been *noticed*. The Quiet has their name now, the way it has the names carved into the walls of the Hollow Way (Ch8), and it can find them more easily in the dark. The character has disadvantage on Stealth checks against the Quiet and the dead it wears, the worn dead are drawn to them first, and the dark may reach them through dreams and reflective surfaces.
 
-The mark is removed only if the Regent releases it, the Anchor is resolved, or a major divine or Relic-tier intervention breaks the claim.
+The mark fades only when the Quiet is ended, when the character makes it back across the Threshold, or through a major divine or Relic-tier intervention that takes a name back from the dark.
 
 ## Design Notes
 
@@ -103,67 +103,41 @@ This chapter is horror first and combat second. Let silence work. The residents 
 `,
 	},
 	{
-		title: "Chapter 24: Oracle Reading - The Fortune of the Domain",
-		content: `# Oracle Reading - The Fortune of the Domain
+		title: "Chapter 24: What the Natives Know",
+		content: `# What the Natives Know
 
-> *A Domain does not hide its secrets. It files them under your name and waits for you to sign.*
+> *There is no fortune to read here. The only map of the Gloamreach is in the heads of the people who have survived it, and they do not give it to strangers.*
 
-## Purpose
+## The Real Map Is in People's Heads
 
-This chapter replaces older fortune systems tied to city districts or unrelated Gates. The Oracle Reading determines where the Three Claims are hidden, who can become the party's strongest ally, who becomes a final-act betrayer, and where the Regent's authority can be contradicted.
+There is no oracle and no fortune. What the party can know about the Gloamreach — where the safe-holds are, which rules keep the Quiet out, where the deep places lie, and the first hints that it might even be *killable* — lives in the heads of the people who have lived here their whole lives. Intel is earned: by trust, by trade, by listening, by being useful — and sometimes by watching someone die for breaking a rule the party did not know.
 
-Perform the reading once per campaign. The results are permanent.
+This chapter replaces any fortune or oracle system. Use it to hand the party direction without a deck and without a railroad: the natives tell them what they need, when they have earned it.
 
-## The Reader
+## How Intel Works
 
-The reading may be performed by Sister Constance, a retired Oracle living near the Bureau cordon, or by a broken oracle engine recovered just inside the Rift Threshold. Either version should feel unreliable, exhausted, and frightened of accuracy.
+- **Gated on trust, not dice.** A native who fears or resents the outsiders tells them nothing useful (and may lie to protect their own). One who trusts them shares a rule, a route, a name. Track trust per community (see Factions and the native communities).
+- **Partial and contradictory.** No one knows the whole Gloamreach. Different communities keep different rules and different rumors; some are wrong, some are old. The truth assembles slowly.
+- **The most valuable thing here.** A single rule, learned in time, saves a life. Treat earned intel as the campaign's real treasure.
 
-Read aloud:
+## What There Is to Learn (seed across the campaign)
 
-*There are no cards. The oracle-engine wakes, and across its cracked glass five visions surface unbidden — dim, certain, already happening somewhere ahead of you. The reader does not ask your question. She watches the images bloom and fade and says, quietly, "The Gloamreach already knows how this ends. I only see what it sees."*
+Spread these among the communities and the deep places, in whatever order play takes the party:
 
-## The Five Readings
+- **The rules and wards** — how each safe-hold keeps the Quiet out, and what must never be done. *(The immediate survival layer.)*
+- **The routes** — which stretches of exposed ground can be crossed, when, and how to cross them quiet and dark. *(Travel.)*
+- **The lost** — who the Quiet has taken, and whose face it might be wearing now. *(The uncanny; foreshadows the worn dead.)*
+- **The deep places** — where the Gloamreach fails, where the worn dead thicken, and where the oldest natives say the truth about the Quiet might be found. *(Mid/late direction.)*
+- **The Means** — the first hints that the Quiet could, in theory, be ended, and what that would cost. *(Late; see Chapter 2. Never a checklist.)*
+- **The way out** — what the natives believe about the threshold, and why they cannot leave even if the party can. *(The escape ending, and the quiet tragedy in it.)*
 
-These are not drawn cards. They are five things the Gloamreach has already seen of the party — surfaced one at a time off the oracle-engine's glass (or spoken by a frightened reader). The placements are permanent: what the Domain has foreseen, it does not unsee.
+## The Keepers of Knowledge
 
-### Reading 1 - The Spark
-
-This reading reveals where one Ascendant can undergo a second Awakening. The location should be inside the Gloamreach or just at the threshold. The gift always has a cost: a memory, a favor, a wound, a name, a promise, or a debt to a faction.
-
-### Reading 2 - The Chain
-
-This reading reveals the location of the first Claim, traditionally tied to the Relic of the Void. It weakens the Regent's ability to hide truth, erase routes, or smother light.
-
-### Reading 3 - The Crown
-
-This reading reveals the location of the second Claim, traditionally tied to the Relic of the Abyss. It weakens the Regent's command over roads, invitations, and forced obedience.
-
-### Reading 4 - The Pulse
-
-This reading reveals the location of the third Claim, traditionally tied to the Relic of Blood. It weakens the Regent's hold over flesh, the grave, and the claimed dead.
-
-### Reading 5 - The Oathbreaker
-
-This reading identifies the ally, faction agent, or settlement leader most likely to betray the party in the final act. The betrayal should not be random. It should be caused by fear, tribute, blackmail, hunger, grief, or a bargain with the Regent's court.
-
-## Domain Location Table
-
-Use these locations as the default result set:
-
-1. The Rift Threshold.
-2. The Road of Writs.
-3. The Tithe Mill.
-4. The Predator Woods.
-5. The Drowned Ledgerfen.
-6. The Remembering Orchard.
-7. Bastion Golemfall.
-8. The Vermillion Outpost.
-9. The Forbidden Vault of the Unseated Law.
-10. The Regent's Citadel.
+Some natives hold more than others — an old ward-keeper, a child who sees true, someone who went into the dark and came back *almost* themselves. These are the campaign's intel anchors: protect them and the party gains direction; lose them and the party goes blind. (See the native communities and the cast.)
 
 ## Warden Guidance
 
-This reading is the campaign's structural spine: a fate-reading that hands the party direction without taking away sandbox freedom. The Domain should feel *fated* — as though it has already looked down every road they might take and seen where each one ends — but never scripted. The party choose their own roads; the Oracle only names what waits at the end of each one.
+Never dump the map. Let the party earn it a piece at a time, always one rule behind safety. The dread is in not knowing the rule until the clock is filling — and the relief, when a native finally tells them, should feel like the only warmth in the Gloamreach.
 `,
 	},
 	{
@@ -186,13 +160,13 @@ Someone the character knows entered during the first response wave. Their AFA ta
 
 ### The Name in the Ledger
 
-The character's name appears in something recovered from the Regent's reach before the campaign begins, written in a hand no one recognizes. No one knows how it got there.
+The character's name appears in something recovered from inside the Gloamreach before the campaign begins, written in a hand no one recognizes. No one knows how it got there.
 
 ### The Survivor's Debt
 
 The character survived a previous Rift because someone else stayed behind. The Gloamreach contains that person's voice, echo, body, or unpaid sentence.
 
-### The Relic Claim
+### The Bonded Relic
 
 A Relic bonded to the character reacts violently when the Rift opens. It is not calling them to power. It knows the Gloamreach, and the Gloamreach knows it.
 
@@ -205,54 +179,52 @@ The character has seen a Rift stop behaving like a place and start behaving like
 1. The Bureau hires the party because higher-rank teams vanished inside.
 2. Vermillion offers illegal support if the party agrees to recover salvage and survivors.
 3. A settlement inside the Domain sends a written invitation that appears in the material world.
-4. A dead Ascendant's AFA broadcasts from the Regent's Citadel every night at the same time.
+4. A dead Ascendant's AFA broadcasts from somewhere deep inside the Gloamreach every night at the same time.
 5. The Rift enters a Rift Break countdown, forcing immediate entry.
 
 ## Warden Guidance
 
-The best hook is not glory. It is obligation. The Gloamreach should feel like a place the party enters because no better option exists, then survives because leaving would abandon too many people to the Regent's law.
+The best hook is not glory. It is obligation. The Gloamreach should feel like a place the party enters because no better option exists, then survives because leaving would abandon too many people to the dark.
 `,
 	},
 	{
 		title: "Chapter 26: Stat Blocks Appendix - Domain Use Notes",
-		content: `# Stat Blocks Appendix - Domain Use Notes
+		content: `# Stat Blocks Appendix - Using Creatures in the Gloamreach
 
 ## Purpose
 
-This appendix gives Warden-facing guidance for using stat blocks inside the Gloamreach. Full stat blocks should remain in their source compendium files where possible. This chapter explains how to frame them in the Domain.
+This appendix is Warden-facing guidance for running the Gloamreach's creatures. Full stat blocks live in the source compendium files (the bestiary, ranks D-S); the finale-critical blocks — the Quiet and the dead it wears — are printed in the bestiary appendix at the back of this book. This chapter explains how the country's threats fit together.
 
-## Regent-Aligned Creatures
+## The Quiet Is the Apex, Not the Only Enemy
 
-A Regent-aligned creature should feel like an extension of law, not a random encounter. Give each one a purpose.
+The Gloamreach is a whole country, and it must play like one. The Quiet is the apex predator and the campaign's final, optional fight — not the monster in every room. Most of what the party fights is the country's own ecology:
 
-Examples:
+- **Each site has its own signature threat** — a local horror reskinned from the bestiary (the Drowned Ledgerfen's Head Surgeon, the Fungal Depths' adaptive growth, and so on). These are real, killable fights.
+- **Factions and hostile natives** are threats too — the Awoko grief-cult, Vermillion rivals, wary communities, and the predators of the open wilds.
+- **The worn dead** are the apex's reach into a scene, not the standard encounter. Putting one down is easy and means nothing; there is always another face.
 
-1. Tax collectors recover unpaid tribute.
-2. Road wardens punish trespass.
-3. Hounds follow names, not scent.
-4. Mirror-things deliver invitations.
-5. Bailiff-servants enforce judgments.
+## The Layers Interlock
 
-## The Regent's Bailiff
+This is the engine that makes an ordinary fight frightening: every combat means noise, light, and Essence, and all three fill the Hunt Clock. Win too loud and the Quiet comes for someone before the party can catch their breath. The country's lesser threats are dangerous mostly because of what fighting them *calls*.
 
-Use the Regent's Bailiff as a recurring Domain officer. It does not need to be fought every time it appears. It can announce charges, deliver summons, take custody of NPCs, demand tribute, or mark a settlement for punishment.
+## The Worn Dead as Recurring Hunters
 
-The Bailiff should be difficult to kill permanently unless the party breaks the law that summoned it.
+When the campaign needs a recurring, escalating menace, use the worn dead, not a fixed officer. They appear by act — the Worn early, then the Caller and the Wrong Shape, then the Hollowed late (see the Quiet dossier and the bestiary). They lure, mimic, herd, and wait far more than they brawl, and they are hard to be rid of for good: there is always another.
 
-## The Unseated Law
+## The Old Power Below
 
-The Unseated Law has no normal stat block. If the party confronts it, run the scene as a trial, a bargain, or a memory dragged up from before the Regent. Combat should occur only through its guardians, the echoes of those who bargained before it, or the ruined things that once begged it and were refused.
+Some deep places hold something older than the worn dead and not of the Quiet at all — the remnant of whatever stood here before, bound under the oldest wards. It has no ordinary stat block. If the party confronts it, run the scene as a trial, a bargain, or a memory dragged up from before living memory, and let it be one of the places where the truth about the Quiet's age can surface. Combat, if it comes, is through its guardians and the ruined things that once begged it and were refused.
 
 ## Horror Encounter Rules
 
-1. Every combat should reveal something about the Domain.
-2. Every victory should cost time, supplies, reputation, safety, or certainty.
-3. Intelligent enemies should know the local law better than the party.
-4. Monsters should not merely attack. They should enforce, collect, witness, punish, or invite.
+1. Every combat should reveal something about the Gloamreach or the people who live in it.
+2. Every victory should cost time, supplies, reputation, safety, certainty — or noise.
+3. Intelligent enemies should know the local rules and wards better than the party.
+4. Monsters should not merely attack. They lure, mimic, herd, witness, or wait.
 
 ## Scaling
 
-For low-level parties, reduce damage but preserve consequences. For high-level parties, increase legal pressure before increasing hit points. The Gloamreach is frightening because it changes what victory means.
+For low-level parties, reduce damage but preserve consequences. For high-level parties, raise the *hunt* — the Hunt Clock, the worn dead, the cost of every loud win — before raising hit points. The Gloamreach is frightening because it changes what victory means.
 `,
 	},
 ];

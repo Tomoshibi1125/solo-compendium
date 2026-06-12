@@ -1,8 +1,8 @@
 import type { SandboxChapter } from "../ascendant-sandbox-module";
 
 // ============================================================================
-// THE SHADOW OF THE REGENT - CHAPTERS 9-16
-// Part II: Domain Sites, Regional Horrors, and the Regent's Citadel
+// RUN SILENT - CHAPTERS 9-16
+// Part II: Domain Sites, Regional Horrors, and the Threshold Approach
 // ============================================================================
 
 export const chaptersPart2: SandboxChapter[] = [
@@ -45,7 +45,7 @@ Abandoned beds sit in rows. Some have patients made of wet paper and bone. They 
 
 ### Records Basin
 
-Shelves descend into water. The party can recover survivor lists, dead-team logs, or a Claim clue. Each search requires a DC 13 Investigation check. On a failure, the searcher finds their own name on a future casualty report.
+Shelves descend into water. The party can recover survivor lists, dead-team logs, or a clue toward the Means. Each search requires a DC 13 Investigation check. On a failure, the searcher finds their own name on a future casualty report.
 
 ### The Catalog's Chamber
 
@@ -55,14 +55,14 @@ The Catalog is a crystalline memory-thing grown from everything the Ledgerfen ha
 - **What it cannot admit:** it already remembers each of them among the drowned. It knows how this expedition ends, because to the Catalog their deaths are simply something that has already happened.
 - **The line it will not cross — until forced:** it will not speak a name it has not yet *confirmed*. Make it confirm one, and it becomes complicit.
 - **Its price:** every true thing the party gives it, the Gloamreach can later wear back at them, in their own words.
-- **Citadel echo:** truths fed to the Catalog wait in the dark beneath the Citadel, to be repeated back in the party's own voices.
+- **The dark remembers:** every truth fed to the Catalog sinks into the deep Gloamreach, to be repeated back later in the party's own voices — from the dark, in the worn mouths of the dead.
 
 Information available:
 
-1. The Regent's Citadel draws closer to anyone who accepts what the Gloamreach offers.
-2. The road cannot keep its grip on someone the Void Claim has hidden from it.
-3. One of the Three Claims is held where the Domain gathers what it has taken.
-4. The Regent's Bailiff can be slowed — never stopped — by the touch of a Claim, or by a true name it cannot make itself speak.
+1. The Quiet comes faster to anyone who takes what the Gloamreach offers; every gift is a sound it can hear.
+2. The dark loses the trail of someone gone fully silent, dark, and unremembered — there are old wards that hide a person even from the Quiet.
+3. One of the things that could help end the Quiet — a truth, or a way to hold it — lies where the Gloamreach gathers what it has taken.
+4. The worn dead can be made to flinch, never stopped, by a true name truly spoken, or by the touch of an old ward they cannot cross.
 
 ### The Specimen Vault
 
@@ -72,7 +72,7 @@ A half-transformed survivor floats in a sealed pod. Freeing them creates a possi
 
 Reskin a **C-Rank controller anomaly from the compendium bestiary** (Appendix C) as the Head Surgeon — keep its source stat block exactly; only the costume and the room change. It treats wounds as paperwork errors and tries to *correct* living bodies into approved forms.
 
-**The wound it knows:** while a party member carries a hurt the Ledgerfen has named (a fear confessed at the Intake Causeway, a diagnosis read in the Records Basin, a true weakness given to the Catalog), the Surgeon strikes it with advantage and aims every blow at that exact hurt. Take the name back — drown the form, burn the diagnosis, invoke a Claim — and the advantage dies with it.
+**The wound it knows:** while a party member carries a hurt the Ledgerfen has named (a fear confessed at the Intake Causeway, a diagnosis read in the Records Basin, a true weakness given to the Catalog), the Surgeon strikes it with advantage and aims every blow at that exact hurt. Take the name back — drown the form, burn the diagnosis, speak a ward over it — and the advantage dies with it.
 
 **Scaling (Levels 1-15):** run it at C-Rank for a level 3-5 party; on a later return, raise it to A-Rank and let it operate on two patients at once.
 
@@ -87,14 +87,14 @@ Suggested traits:
 
 - D-Rank and C-Rank cores.
 - Surgical Relic or precision blade.
-- A drowned clue toward one Claim.
-- If the Oracle placed the Void Claim here, it is sealed inside a diagnosis written in the Regent's hand.
+- A drowned clue toward a piece of the Means.
+- If the Warden has seeded a piece of the Means here, it is sealed inside a diagnosis the fen wrote in a hand no one taught it — a truth about the Quiet, kept where only the drowned could hold it.
 
-## Aftermath & Citadel Echo
+## Aftermath & What the Dark Remembers
 
 - **Mercy** — free the Specimen Vault survivor and they become a witness who can later swear that the Ledgerfen's dead were never truly dead, only kept.
-- **Violence** — burn the place and the black water only rises to swallow the ash; whatever you killed here the fen remembers, and the Regent later wears it back at you, never the reason.
-- **Bargain** — every truth traded to the Catalog returns at the Citadel, spoken back in the party's own voices.
+- **Violence** — burn the place and the black water only rises to swallow the ash; whatever you killed here the fen remembers, and the Quiet later wears it back at you, never the reason.
+- **Bargain** — every truth traded to the Catalog returns from the dark later, spoken back in the party's own voices, in the worn mouths of the dead.
 - **Clean clear** — reduce one future travel complication, and let a settlement's casualty report come up blank for the first time in living memory.
 
 > *Exit tone (read aloud):* Behind you the pen has stopped. On the intake desk, the casualty report with today's date is gone — taken back, the Catalog would say, as *pending*. The water still gives nothing back.
@@ -155,10 +155,10 @@ Reskin a **C-Rank brute/controller Anomaly from the compendium bestiary** (Appen
 
 - Spore-sac Relic.
 - Purified mycelium crystal.
-- Claim clue hidden inside a pod that has grown around a Vermillion salvage-tag — a native diver the Depths cultivated long before the party arrived.
-- If the Void Claim is here, it is encased in white mycelium that refuses light.
+- A Means clue hidden inside a pod that has grown around a Vermillion salvage-tag — a native diver the Depths cultivated long before the party arrived.
+- If the Warden seeded a piece of the Means here, it is encased in white mycelium that refuses light.
 
-## Aftermath & Citadel Echo
+## Aftermath & What the Dark Remembers
 
 - **Burn it back** — torch the Nursery and the settlements above lose their quiet disposal-ground; their grief has to go *somewhere* now, and nowhere kind is left.
 - **Let it grow** — leave the pods and at least one buried secret walks home to the wrong door, wearing a body the Depths built for it.
@@ -185,7 +185,7 @@ It is an ecology that *learns*. The longer the party lingers, the more the orcha
 
 > *Read aloud:* Mana-frost crunches underfoot. The stalks hum — not wind, a chord, a thousand small voices holding one low note. Light moves inside the fruit like a slow heartbeat. Your AFA flags the nearest cluster as **civilian biosignatures**, then corrects itself, then flags it again.
 
-The Gloamreach's **native inhabitants** — whole settlements of them, born to a country that has only ever known the Regent's law — tithe one memory-core per household here, and the court leaves their shelters un-collected for one more cycle. Refuse, and the orchard chooses its own harvest.
+The Gloamreach's **native inhabitants** — whole settlements of them, born to a country that has only ever known the dark — leave one memory at the orchard's edge per household, a ward-offering as old as the bloom, and the harvest passes their shelters by for one more season. Refuse the custom, or take more than you give, and the orchard chooses its own harvest.
 
 ## What This Place Does
 
@@ -198,7 +198,7 @@ The Gloamreach's **native inhabitants** — whole settlements of them, born to a
 
 ### The Harvest Gate
 
-A frame of fused resonance-stalk hung with ration-tags instead of name tags. Hang a tag bearing a true name and the orchard takes you for one of its tithers: safe passage, but a step closer to Regent-Marked. Hang a blank tag and the harvester-things treat you as *unknown* — safer for now, but the orchard begins to study you to learn the name you withheld.
+A frame of fused resonance-stalk hung with ration-tags instead of name tags. Hang a tag bearing a true name and the orchard takes you for one who keeps the old custom: safe passage, but the place has your name now, and you are a step closer to Quiet-Marked. Hang a blank tag and the harvester-things treat you as *unknown* — safer for now, but the orchard begins to study you to learn the name you withheld.
 
 ### The Sweet Rows
 
@@ -206,7 +206,7 @@ Memory-cores here hold pleasant things — first snow, a win, a warm room. Absor
 
 ### The Rot Rows
 
-Cores gone necrotic where the rot creeps in from the bloom's dead edge. They whisper accusations in the voices of the betrayed. A DC 14 search recovers the true name of a claimed NPC, a Blood Claim clue, or the location of a core the Regent does not want found — but each search quietly costs the searcher one of their own warm memories, and the orchard never tells them which.
+Cores gone necrotic where the rot creeps in from the bloom's dead edge. They whisper accusations in the voices of the betrayed. A DC 14 search recovers the true name of someone the Gloamreach has taken, a clue toward the Means, or the location of a memory the dark would rather stayed buried — but each search quietly costs the searcher one of their own warm memories, and the orchard never tells them which.
 
 ### The Caretaker's Shed
 
@@ -230,12 +230,12 @@ Reskin a **C-Rank controller/stalker Anomaly from the compendium bestiary** (App
 
 - Memory fruit that can answer one question truthfully.
 - Orchard knife Relic.
-- If the Blood Claim is here, it hangs from a stalk that fruits only names instead of memory-cores.
+- If the Warden seeded a piece of the Means here, it hangs from a stalk that fruits only names instead of memory-cores.
 
-## Aftermath & Citadel Echo
+## Aftermath & What the Dark Remembers
 
-- **Mercy** — leave the bloom un-harvested and a claimed household keeps one more cycle of itself; that survivor can later swear at the Citadel that the Regent's "tithe" was always theft.
-- **Greed** — eat the wrong core and the Regent greets the party in the Throne Court using a memory they took here, in the voice it belonged to.
+- **Mercy** — leave the bloom un-harvested and one marked household keeps another season of itself; that survivor can later testify that the orchard's "custom" was always theft, and that nothing the Gloamreach asks of you is ever truly a bargain.
+- **Greed** — eat the wrong core and, somewhere down the line, the Quiet calls to the party using a memory they swallowed here, in the voice it belonged to.
 - **The tempting fruit** — at least once, let the bloom grow a core holding a memory the party genuinely *lost*. It is real. It is theirs. Taking it back means taking it from whoever the Domain has been copying it onto.
 
 > *Exit tone (read aloud):* The chord follows you to the tree line and stops all at once, like a held breath. Behind you a new stalk is already budding — pale, small, and shaped, if you look at it too long, like the back of your own head.
@@ -253,7 +253,7 @@ Reskin a **C-Rank controller/stalker Anomaly from the compendium bestiary** (App
 
 ## Overview
 
-The Ashen Counting-House is the Gloamreach's great hall of the burning dead — a tiered hall of black wood and brass that has been on fire, gently and without end, since before anyone now living was born. The flame does not consume. It *keeps*. Every soul the Domain has gathered here still moves through the fire, unburned and unfreed, going through the motions of the lives the Regent took from them — tending the hall, keeping its warmth, waiting a very long time for someone new to come in out of the cold.
+The Ashen Counting-House is the Gloamreach's great hall of the burning dead — a tiered hall of black wood and brass that has been on fire, gently and without end, since before anyone now living was born. The flame does not consume. It *keeps*. Every soul the Gloamreach has gathered here still moves through the fire, unburned and unfreed, going through the motions of the lives the dark took from them — tending the hall, keeping its warmth, waiting a very long time for someone new to come in out of the cold.
 
 > *Read aloud:* Heat meets you at the threshold like a held hand, and the air tastes of hot brass and ash. Figures move through the flames unhurried, robed in fire that does not blacken them, going about old and pointless errands — and as you enter, every one of them looks up at once and *smiles*, the way the long-lonely smile at a familiar face. One of them says your name. You have never met. It says your name again, warmer this time, and steps toward you out of the fire.
 
@@ -286,20 +286,20 @@ Behind the deepest fire, native civilians hang suspended in amber heat — not d
 
 Reskin a **C-Rank (A-Rank for later returns) controller Anomaly from the compendium bestiary** (Appendix C) as the Warden of Embers — the oldest soul in the hall, the first the fire ever kept, now mostly flame and longing. Keep its source stat block; change only the costume. It attacks with grasping fire, chains of molten memory that bind a target to a grief or a loss, and the lesser burning dead it calls up out of the floor.
 
-**What keeps it burning:** the Warden cannot be put down while the hall still burns, and the hall burns on grief — it has advantage against anyone here carrying a fresh loss, and reaches straight for it. To end the Warden the party must *put out the hall*: free the Vault of Stolen Years, give the oldest dead the name it has forgotten, or carry the Blood Claim into the fire's heart, where the burning is anchored. Strike down its body alone and it rises again from the next soul the fire holds.
+**What keeps it burning:** the Warden cannot be put down while the hall still burns, and the hall burns on grief — it has advantage against anyone here carrying a fresh loss, and reaches straight for it. To end the Warden the party must *put out the hall*: free the Vault of Stolen Years, give the oldest dead the name it has forgotten, or carry a piece of the Means into the fire's heart, where the burning is rooted. Strike down its body alone and it rises again from the next soul the fire holds.
 
 **Scaling (Levels 1-15):** C-Rank for a level 4-6 party; on a later return, raise it to A-Rank and let it call up every grief and loss the party carries at once.
 
 ## Loot and Clues
 
 - Fire-aspected Relic.
-- A keepsake the fire saved, and with it the name of someone the Domain still has by the throat — a native faction figure, or a Bureau officer the Gloamreach has been quietly wearing down.
-- If the Abyss Claim is here, it is sealed in a keeping-box that opens only for someone who names aloud, and truly, what they have lost.
+- A keepsake the fire saved, and with it the name of someone the Gloamreach still has by the throat — a native faction figure, or a Bureau officer the dark has been quietly wearing down.
+- If the Warden seeded a piece of the Means here, it is sealed in a keeping-box that opens only for someone who names aloud, and truly, what they have lost.
 
-## Aftermath & Citadel Echo
+## Aftermath & What the Dark Remembers
 
-- **Free them gently** — give the burning dead the names they have forgotten and they go out like candles, one by one, finally still; but the hall remembers *who* set them free, and the Regent now knows the party's faces by firelight.
-- **Smother the heart** — put out the anchor at the fire's center and a whole stratum of the Domain's hold goes cold; the Regent feels it, and so does the Bailiff, whose hunt suddenly has one fewer thread to follow.
+- **Free them gently** — give the burning dead the names they have forgotten and they go out like candles, one by one, finally still; but the hall remembers *who* set them free, and the dark now knows the party's faces by firelight.
+- **Smother the heart** — put out the root at the fire's center and a whole stratum of the Gloamreach's hold goes cold; the Quiet feels it go out, and the worn dead that haunt this stretch of country lose one of the threads they followed.
 - **The Vault of Stolen Years** — free the suspended and their drawn-out years crash back onto the settlements they came from, all at once. Mercy here arrives with a weight.
 
 > *Exit tone (read aloud):* The doors let you out into cool air, and for a moment it feels like escape — until you notice the faint warmth against your chest, where something has tucked itself among your things: a single ember, dimmed but not dead, patient as a held breath. It knows the way back. It is in no hurry.
@@ -317,7 +317,7 @@ Reskin a **C-Rank (A-Rank for later returns) controller Anomaly from the compend
 
 ## Overview
 
-The Sunken Tunnels are a drowned under-road beneath the Gloamreach — flooded native warrens, tithe-conduits, and burial galleries the rising black has claimed. The water is cold and full of voices, and every passage slopes downward no matter which way you believe you are going.
+The Sunken Tunnels are a drowned under-road beneath the Gloamreach — flooded native warrens, old water-conduits, and burial galleries the rising black has swallowed. The water is cold and full of voices, and every passage slopes downward no matter which way you believe you are going.
 
 ## What This Place Does
 
@@ -352,7 +352,7 @@ Use a B-Rank aquatic solo. It grapples, drags, and separates. It should feel les
 
 - Cold or water-aspected Relic.
 - Awoko ritual evidence.
-- If the Blood Claim is here, it is inside the Leviathan's ribcage, still beating.
+- If the Warden seeded a piece of the Means here, it is inside the Leviathan's ribcage, still beating.
 `,
 	},
 	{
@@ -367,11 +367,11 @@ Use a B-Rank aquatic solo. It grapples, drags, and separates. It should feel les
 
 ## Overview
 
-Bastion Golemfall is the Gloamreach's own last stand — a native fortress raised in the years the Domain's people still believed the Regent's law could be *walled out*. They forged **Golems** to hold the line: Essence-core constructs tall as gatehouses, sworn into the stone itself — walls given will, the refusal of a line to fall. The Golems fell when the wall did. The defenders never got to stop.
+Bastion Golemfall is the Gloamreach's own last stand — a native fortress raised in the years its people still believed the dark could be *walled out*. They forged **Golems** to hold the line: Essence-core constructs tall as gatehouses, sworn into the stone itself — walls given will, the refusal of a line to fall. The Golems fell when the wall did. The defenders never got to stop.
 
 > *Read aloud:* The wall is a broken jaw against the sky. Armor still stands at every post — upright, weapon ready, empty. As you cross the threshold a siege-bell rings, slow and certain, though no hand is near the rope, and your AFA logs forty-one friendly contacts holding position. None of them have a heartbeat. None of them have moved in a very long time.
 
-Here the Regent's cruelest law is plain: *a line once sworn must be held* — forever, and death is not discharge.
+Here the Gloamreach's cruelest trick is plain: *a line once sworn must be held* — forever, and death is not discharge. Whatever the defenders swore themselves to, the dark has held them to it ever since.
 
 ## What This Place Does
 
@@ -396,7 +396,7 @@ The breach itself — a battlefield that never finished. Fight here and you figh
 
 ### Commander Without a Body
 
-The native commander who gave the wall its oath — now only a voice in the cold and a shape moving through the bells. She can become an ally, but only if convinced the party means to *break* the Regent's ownership of her people, not merely take the Bastion and leave her garrison drafted forever. She remembers every name on the roster. She would like to stop.
+The native commander who gave the wall its oath — now only a voice in the cold and a shape moving through the bells. She can become an ally, but only if convinced the party means to *break* the hold the Gloamreach has on her people, not merely take the Bastion and leave her garrison bound to the wall forever. She remembers every name on the roster. She would like to stop.
 
 ## Boss: The Oath-Forge Colossus
 
@@ -410,13 +410,13 @@ Reskin a **B-Rank construct Anomaly from the compendium bestiary** (Appendix C) 
 
 - Shield or armor Relic.
 - A banner that grants advantage against fear effects once.
-- If the Abyss Claim is here, it is welded into the Commander's empty helm — she has been guarding it without knowing what it is.
+- If the Warden seeded a piece of the Means here, it is welded into the Commander's empty helm — she has been guarding it without knowing what it is.
 
-## Aftermath & Citadel Echo
+## Aftermath & What the Dark Remembers
 
 - **Discharge** — release the garrison and the empty armor finally *falls*, all at once, forty-one suits hitting the stone like a single breath let go. That sound carries. Other claimed places hear it.
-- **Conquest** — take the Bastion without freeing the oath and the party simply becomes its new relief column; the Regent later thanks them, sincerely, for holding his line.
-- **The Commander** — if freed, she can testify at the Citadel that the Regent's "service" is conscription of the dead, or stand with the party for the finale as the one soldier his law cannot draft twice.
+- **Conquest** — take the Bastion without freeing the oath and the party simply becomes its new garrison; the wall does not care who holds it, only that it is held, and the dark is content to let them hold it forever.
+- **The Commander** — if freed, she can bear witness that the Gloamreach's "service" is only conscription of the dead, or stand with the party at the end as the one soldier the dark cannot draft twice.
 
 > *Exit tone (read aloud):* The bell does not ring as you leave. After so long, the silence is the loudest thing on the wall.
 `,
@@ -429,13 +429,13 @@ Reskin a **B-Rank construct Anomaly from the compendium bestiary** (Appendix C) 
 
 **Rank**: A  
 **Recommended Level**: 8-9  
-**Campaign Role**: Vertical trial; the temptation to rule; the Domain auditioning the party for a throne it wants filled.
+**Campaign Role**: Vertical trial; the temptation to stop being prey; the Gloamreach offering the party the one thing that would end their fear — at the cost of what they are.
 
 ## Overview
 
-The Obsidian Spire rises from a field of glass-black stone — a single shard of the Domain's own substance driven up through the Gloamreach like a tooth. Each floor tests an aspect of authority — command, obedience, sacrifice, ambition, mercy, memory — and the higher the party climbs, the more openly the Spire addresses them not as intruders but as *candidates*. The Regent's is not the only throne in the Gloamreach that stands waiting to be filled.
+The Obsidian Spire rises from a field of glass-black stone — a single shard of something older than the Gloamreach's surface, driven up through it like a tooth. Each floor tests an aspect of survival pushed past its limit — what you would do, what you would sacrifice, how far you would go, who you would stop being — and the higher the party climbs, the more openly the Spire addresses them not as prey but as *candidates*. It has one question for everyone who reaches the top: why be hunted, when you could hunt? It is not the first thing to climb the Spire, and whatever answered last is still out there in the dark.
 
-> *Read aloud:* The obsidian takes your reflection and gives it back a beat too late, standing taller than you stand. Essence-light runs in the stone like veins under skin. At the foot of the first stair a voice with no source says — warmly, as if continuing a conversation you began long ago — "You've done well to come this far. Most of them are kneeling by now."
+> *Read aloud:* The obsidian takes your reflection and gives it back a beat too late, standing taller than you stand. Essence-light runs in the stone like veins under skin. At the foot of the first stair a voice with no source says — warmly, as if continuing a conversation you began long ago — "You've done well to come this far. Most of them are still down in the dark, being hunted. You don't have to be."
 
 The Spire's danger is not that its power is fake. It is that the power is real, the price is exact, and it is always offered to the worst possible version of whoever reaches for it.
 
@@ -444,21 +444,21 @@ The Spire's danger is not that its power is fake. It is that the power is real, 
 **Dread**: The Spire shows you who you would be if you stopped holding back — and it is patient, and persuasive, and the version it shows you is *winning*.
 **The Lure**: Power, plainly offered. Climb, and at every landing it hands you the strength you always wished you had — no trial named, no price spoken aloud.
 **The Cost**: It takes a confession first — your fear, your weakness, the line you swore never to cross — and forges the gift out of exactly that.
-**If You Linger**: The Spire crowns the worst possible version of you, and that version does not climb back down.
+**If You Linger**: The Spire remakes you into the worst, strongest version of yourself, and that version does not climb back down — it goes hunting.
 
 ## Key Areas
 
 ### Floor of Kneeling Statues
 
-Every statue has a party member's face. Some kneel. Some rule. Some are broken.
+Every statue has a party member's face. Some cower. Some have become something that hunts. Some are broken.
 
 ### The Watcher's Gallery
 
 The Watcher offers bargains. None should be pure traps. The best temptations are genuinely useful.
 
-### Trial of Command
+### Trial of the Herd
 
-The party must lead unwilling spectral soldiers without treating them as disposable.
+The party must keep a group of panicking, doomed natives alive across exposed ground without spending any of them as bait to save themselves.
 
 ### Trial of Mercy
 
@@ -466,100 +466,95 @@ A defeated enemy asks for the kind of mercy they denied others.
 
 ## Boss: The Spire Guardian
 
-Reskin an **A-Rank tactical Anomaly from the compendium bestiary** (Appendix C) as the Spire Guardian — the Domain's examiner, wearing whichever of the party it judges strongest. Keep its source stat block; change only the costume. It studies, then **copies the party's best tactic after seeing it once**, and turns it back on them.
+Reskin an **A-Rank tactical Anomaly from the compendium bestiary** (see the bestiary appendix) as the Spire Guardian — the Spire's examiner, wearing whichever of the party it judges strongest. Keep its source stat block; change only the costume. It studies, then **copies the party's best tactic after seeing it once**, and turns it back on them.
 
-**What feeds it:** *power calls to power.* The Guardian grows stronger against anyone who has accepted a Spire bargain or seized authority in the trials — the more the party reached for rule, the more of a grip it has on *them*. Refusing the Spire's gifts is the surest way to leave it nothing to copy.
+**What feeds it:** *power calls to power.* The Guardian grows stronger against anyone who has accepted a Spire bargain or reached for the predator's power in the trials — the more of their humanity the party traded for strength, the more of a grip it has on *them*. Refusing the Spire's gifts is the surest way to leave it nothing to copy.
 
 **Scaling (Levels 1-15):** A-Rank for a level 8-10 party; for a late return, S-Rank, fielding copies of the party's own defeated tactics in sequence.
 
 ## Loot and Clues
 
 - A-Rank Relic or Sigil.
-- Prophecy fragment about the Citadel.
-- If any Claim is here, it is offered by the Watcher as a bargain with a visible cost.
+- A true thing about the Quiet — perhaps the oldest there is: a hint of what it may have been before it was only hunger.
+- If the Warden seeded a piece of the Means here, the Watcher offers it as a bargain with a visible cost.
 
-## Aftermath & Citadel Echo
+## Aftermath & What the Dark Remembers
 
-- **Refused the throne** — climb the Spire and take nothing, and the party reaches the Citadel as the one thing the Regent never prepared for: candidates who do not want the seat. He has no leverage built for that.
-- **Took the power** — accept a Spire gift and the Regent greets the party at the throne as colleagues, and means it; the **Inherit** ending opens, and so does its price.
-- **The Watcher** — treated as a person rather than a vending machine, it can name, at the Citadel, exactly which bargain the Regent himself once took. (It was watching then, too.)
+- **Refused the gift** — climb the Spire and take nothing, and the party leave as the one thing the dark has no easy hold on: people who were offered the way out of being prey and said no. The Quiet has no lure built for someone who already refused the only thing it could offer.
+- **Took the power** — accept a Spire gift and a part of the party stops being prey. The campaign's darkest ending opens: a character who climbs high enough and takes enough can *become* a hunter of the Gloamreach — and its price is everyone who ever loved the person they used to be.
+- **The Watcher** — treated as a person rather than a vending machine, it can tell the party, later and at a price, exactly what climbed the Spire once before and what it agreed to become. (It was watching then, too.) Whether that thing is the Quiet, it will not say.
 
-> *Exit tone (read aloud):* From the Spire's height the whole Gloamreach lies open below — roads, settlements, the Citadel — and for one breath it looks less like a country than a board, with pieces, and an empty chair at the center that fits you exactly. Then the stair carries you back down, and the fit is the thing you cannot stop feeling.
+> *Exit tone (read aloud):* From the Spire's height the whole Gloamreach lies open below — roads, settlements, the lightless deep — and for one breath it looks less like a country than a hunting-ground, with prey in it, and a place at the top of it all shaped exactly like you. Then the stair carries you back down into the dark, and the fit is the thing you cannot stop feeling.
 `,
 	},
 	{
-		title: "Chapter 16: The Regent's Citadel",
-		content: `# The Regent's Citadel
+		title: "Chapter 16: The Long Dark and the Threshold",
+		content: `# The Long Dark and the Threshold
 
 ## Rank and Role
 
 **Rank**: S  
-**Recommended Level**: 13-15
-**Campaign Role**: The finale — the Anchor made architecture, and the confrontation that decides who owns the Gloamreach.
+**Recommended Level**: 9-10
+**Campaign Role**: The finale — the last, deepest crossing of the Gloamreach to the sealed Threshold, where the party gets out, or makes the one stand that ends the hunt for good.
 
 ## Overview
 
-The Citadel has been visible from almost every road since Day One — and it has never once grown closer until the Domain decided it should. It is not merely the final dungeon. It **is** the Anchor given walls: the Regent's hold over this country translated into stairs, courts, and corridors that rearrange to make their point. The architecture is his alone — umbral, sovereign, refusing to collapse — kept by the host of the claimed: the Gloamreach's own dead natives, raised to keep a house that has only ever been a snare.
+There is no castle at the end of the road and no throne to reach. The finale is the way *back*: the longest, darkest crossing of the Gloamreach, from the deep places to the sealed Threshold the party came through on Day One — the door that shut behind them and has not opened since. The Quiet hunts hardest here, because it knows what they mean to do. Everything the campaign taught about silence, light, Essence, and the wards now has to hold under the worst pressure it ever will.
 
-> *Read aloud:* The road simply ends at the doors, as though it had meant to all along. Your AFA shows full signal, a clean map, every reading green — and then every value freezes at once, the last honest numbers the instruments will give you in this place. Far inside, a bell is rung for your arrival. It is a welcome. It is also the sound of a door closing behind you.
+The party come to the Threshold with one of two intentions, and may not decide which until they arrive: **get the door open and run**, or — if they are 9th level or higher and carry the Means — **turn and make the one stand that kills the Quiet.** Killing it is the harder road and the cleaner one: the Quiet is what holds the Threshold shut, so with it dead the seal simply fails.
 
-Approach only when the party has the allies, Claims, evidence, or sheer desperation to survive what is less a siege than a sentencing.
+> *Read aloud:* You know this place. You stood here on the first day, when the door was a door and the dark was just dark. The Threshold is exactly as you left it — sealed, patient, the seam of it cold under your hands — and behind you the Gloamreach has gone completely silent for the first time since you arrived. Not the safe kind. The kind a held breath makes, right before. It is done waiting. So are you.
 
-## Citadel Structure
+## The Long Dark (the approach)
 
-### Outer Court
+Run the approach as the campaign's hardest survival sequence, not a dungeon crawl. Hold these beats in whatever order the crossing takes them.
 
-Invitations are checked. False names may work once. Broken promises become hostile witnesses.
+### The Gathered Dead
 
-### Hall of Tribute
+Everything the Quiet has ever worn is here at once: every lost teammate, every native it took, every familiar face the party learned to distrust, between them and the door. They do not rush. They line the dark and call, in every voice the party has grieved — all of it true, all of it bait. This is the Quiet spending everything it has collected.
 
-Every settlement's payment is displayed: names, teeth, bells, years, uniforms, children's drawings, unopened letters, funeral wreaths, and empty chairs.
+### The Failing Wards
 
-### Guest Wing
+The last native wardlines fail one by one as the party pass, the safe-holds that sheltered them all campaign going dark behind them. A community that trusts the party may hold its wardline open one extra hour to let them reach the Threshold; a community they wronged shutters early, and the dark gets the gap.
 
-The Regent offers rest, food, baths, and conversation. Accepting his hospitality grants real recovery — and binds you a little more tightly to him, the way the dead in his hall were each, once, bound.
+### The Deaf Place
 
-### Gallery of Roads
+If the party charted the Mana Veins (Ch32), the silence they earned lives here: one stretch the Quiet cannot hear, or the dead-silent heart where a kill could land. Without it, the whole crossing is loud, and the Hunt Clock barely stops.
 
-Maps show every path the party took, including the ones they never told anyone about.
+### The Threshold
 
-### Throne Court
+The sealed door itself. Reopening it is not a lockpick check — it is the campaign's last hard choice (see **The Endings**). The Quiet arrives as they work, because of course it does.
 
-The Regent receives the party before witnesses — allies, enemies, servants, defectors, the Bailiff, and the curated keepsakes the Domain wears as his "past" — present or absent depending on campaign choices. Begin with words, not initiative; the Regent would rather the party kneel than make him fight. Every Claim they carry is a truth he cannot abide, dragged into the light here, in front of everyone the Gloamreach has ever taken.
+## The Quiet at the End
 
-### Anchor-Undercroft
+This is the one time the party see the Quiet fully, and the only time a stand-up fight with it is anything but suicide. Run it in two faces:
 
-Beneath the throne, where the Citadel stops pretending to be a building. The Anchor is **not a crystal to smash** — it is the knot that ties the whole Gloamreach to the Regent's will, woven of memory, grief, the claimed dead, and a hold over this country so old it has forgotten it was ever free, with the Regent at its center like a spider at the heart of a web. The room replays the party's whole campaign back at them: every memory-core eaten in the Orchard, every name given away, every native abandoned, every promise kept. Here, and only here, the **Three Claims** become keys — and the party decides what the Anchor is forced to become (see **Endings**).
+1. **The Lure.** Before violence, it offers — in the shape of the dead, the way out, the rest they are owed, the people they lost made whole. The offer can even be real. Holding to what is true (living allies, a true name, the Means) is what gets them through; answering the lure is how it takes the last of them.
+2. **The Hunt, Unleashed.** When the lure fails, it comes — fast, total, everywhere in the dark at once. If the party mean only to escape, this is a desperate hold-the-door scene: survive long enough to get the Threshold open, losing what they must. If they mean to kill it, see below.
 
-## The Regent
+## Killing the Quiet (the gated stand)
 
-Run the Regent in phases:
+The kill is possible only at **9th level or higher** and only with the **Means** assembled — a truth about what it is, a way to hold it still, and a way to make it stay dead (see *The Means to End It* and *The Means Cross-Reference*). When the party commit, the Means is what makes the fight survivable: spent fully, it drags the Quiet down out of its invulnerability into something a level-10 party can kill — forced into a silence and dark it cannot slip, stripped of its power to simply *take* a character, pinned in the deaf place or at the Threshold where the kill can land. It still fights to the last breath, and still tries to take someone into the dark with it. Make the cost real: the kill should plausibly take one of them. A party that pays it has done the rarest thing in the Gloamreach.
 
-1. **The Wearer of Faces** - he greets them wearing the dead and speaking in lost voices; temptation, soft offers, and convincing grief.
-2. **The All-Seeing Domain** - the Gloamreach itself turns on them; battlefield control, the host of the claimed, road/shadow/weather effects, and the horror of being seen everywhere at once.
-3. **Human Remnant** - the Domain's curated costume flickers, triggered by the Faded Family Photo, Ms. Park, a Claim contradiction, or a major sacrifice. There is no soul to save; he was never human. Play it ambiguously — the Domain performing the grief the party most wants to see — which makes the ending harder, not kinder.
+## The Endings
 
-## Endings
+The campaign is open-ended by design — these are doorways to what comes next, not a full stop. A closed Rift, in *Rift Ascendant*, is only a story that can be reopened.
 
-### Break the Anchor — *(the Blood Claim leads)*
+### Escape — *(the surer victory)*
 
-The party destroys the Anchor outright: the Regent collapses, and with him the law that held the Gloamreach's reality together. The **Rift Break** the campaign feared now happens on the party's terms — the Domain begins to unmake itself, and the threshold becomes the only way out. The cruelty of this victory is its cost to the *natives*: their whole world is dying with its tyrant, and the party can carry out only as many of them as they earned the trust to lead. Everyone left behind goes into the dark with the only home they ever had. The cleanest ending in the campaign, and the coldest.
+The party get the Threshold open and go, carrying out as many of themselves, and as many natives, as they earned the trust to lead. The Quiet lives. The Gloamreach stays hunted, its people still behind their wards — and the party leave knowing it, carrying their marks, their losses, and the certainty that the door can open again. **Open thread:** the Rift remains; another team, another season, and the ones they left behind.
 
-### Seal the Anchor — *(the Void Claim leads)*
+### Kill — *(the clean way out)*
 
-The party does not destroy the Regent; they **close the question**. The Rift is sealed or made unreachable, the Domain frozen with its Anchor intact behind it. The Gloamreach survives — and so does the Regent, and so do its people, *together*, on the wrong side of a door no one can open again. This spares the most lives and damns them to the most time. Somewhere in there, the bells still ring.
+The party put the Quiet down for good. The thing that held the Threshold shut is gone, and the seal fails on its own — the door opens, and they can simply leave. What becomes of the Gloamreach now is the campaign's biggest open question: a country that has never known a dark without a hunter in it, suddenly without one. Do the natives finally leave? Does the country heal — or does something rise to fill the silence the Quiet left? **Open thread:** an unhunted Gloamreach, free for the first time in living memory, and whatever moves to fill an empty place at the top.
 
-### Transform the Anchor — *(all three Claims; the hardest path)*
+### Become — *(the dark road; the Spire's price)*
 
-The party forces the Anchor-throne to answer its own contradiction and **rewrites the Domain's law** instead of ending it — a Regent who cannot own, a tribute that cannot be collected, a country that belongs, at last, to the people who live in it. This is the only ending that frees the natives *as themselves, in place.* It is also the most fragile: a new law is only as strong as whoever now guards it, and the Gloamreach has taught everyone in it exactly how ownership works.
-
-### Inherit the Anchor — *(the Spire's temptation; a dark ending)*
-
-A character or faction takes the throne and becomes the Gloamreach's new Anchor. The Domain does not end; it changes hands, and the new owner inherits a country of people and the law that makes them property. Treat this as a **dark ending** unless earned through extraordinary sacrifice and restraint — and even then, the first command the new Anchor gives is a test the campaign has been quietly preparing since the Obsidian Spire. The Hollow Mother wanted this. So, in the end, did the Spire. So, once, did he.
+If a character took the Obsidian Spire's gift and climbed high enough, the finale can end not with the Quiet dead but with a *second* apex in the dark: one of the party, no longer prey, and no longer entirely theirs. They might open the Threshold for the others and stay; they might walk out, changed, carrying the dark with them. Treat it as the hardest ending to live with. **Open thread:** a new hunter, in the Gloamreach or beyond it, and everyone who still remembers who they used to be.
 
 ## Warden Guidance
 
-The finale should not ask only, "Can the party kill him?" It should ask, "What does victory cost when the land itself believes it belongs to him?"
+The finale should not ask only, "Can the party get out?" It should ask, "What did they keep alive — others, and themselves — and what did it cost?" However it ends, leave a door ajar. Nothing in the Gloamreach is ever quite finished, least of all the dark.
 `,
 	},
 ];

@@ -47,12 +47,13 @@ import {
 
 // ============================================================================
 // RIFT ASCENDANT: SANDBOX CAMPAIGN MODULE
-// "The Shadow of the Regent"
+// "Run Silent"
 //
-// A full hardcover-scale S-Rank Rift Interior horror sandbox for Levels 1-15.
+// A full-length S-Rank Rift Interior survival / psychological horror campaign for
+// Levels 1-15: a first-entry Ascendant team, trapped behind a sealed threshold,
+// hunted by an unseen apex predator (the Quiet) it cannot fight — only survive,
+// learn the natives' rules and wards, and escape (or, gated and late, kill).
 // Automatically populates the Campaign Wiki, VTT Maps, and Handouts.
-//
-// 40 Chapters - 24 Handouts - 20 VTT Scenes - 72 NPCs - 5 Factions
 // ============================================================================
 
 interface SandboxModule {
@@ -125,10 +126,15 @@ export const massiveSandboxModule: SandboxModule = {
 	// v3: added the prior world lore sourcebook chapter.
 	// v2: expanded injector seeds sessions, warden notes, NPCs, encounters,
 	// quests, factions, loot, timeline, VTT audio tracks, and pinned assets.
-	version: 9,
-	title: "The Shadow of the Regent",
+	// v10: spine rework — "Run Silent." The gothic domain-lord campaign is recast
+	// as survival/psychological horror. The party are the first-entry team; the
+	// threshold seals; an unseen apex predator (the Quiet) hunts them by noise,
+	// light, and Essence. No throne/court/citadel-rule, no Oracle reading, no
+	// collect-the-Claims; survive, learn the natives' wards, escape (gated kill).
+	version: 10,
+	title: "Run Silent",
 	description:
-		"A full-length, hardcover-scale mature Rift Interior horror campaign for Levels 1-15, set inside the Gloamreach: a country-sized S-Rank Rift Interior beyond a sealed Rift. The campaign is built around a visible citadel, dangerous roads, starving settlements, tribute law, Bureau failure, Vermillion pragmatism, Awoko grief-cult corruption, Anchor Relics, forbidden Unseated Law bargains, and a tyrannical Regent who appears early, studies the party, sends invitations, punishes defiance, and rules the Domain as its living Anchor.",
+		"A full-length S-Rank Rift Interior survival and psychological horror campaign for Levels 1-10, set inside the Gloamreach: a country-sized Rift Interior, old and inhabited, behind a threshold that seals the moment the first-ever Ascendant team crosses it. There is no lord to dethrone — there is the Quiet, an unseen apex predator that hunts by noise, light, and the use of Essence, wears the dead to lure prey, and cannot be cleared, only survived or fled. The party must learn how the natives live behind their wards and rules, keep each other alive and sane against a rising Hunt and Dread, and find the way out — or, late and well-earned, take the one chance to put the Quiet down for good.",
 	chapters: sandboxWikiChapters,
 	scenes: sandboxVTTScenes,
 	handouts: sandboxHandouts,

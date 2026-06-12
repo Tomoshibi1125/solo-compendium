@@ -1,70 +1,78 @@
 import type { SandboxChapter } from "../ascendant-sandbox-module";
 
 // ============================================================================
-// THE SHADOW OF THE REGENT - CHAPTERS 17-23
-// Part III: Domain officers, side quests, Relics, encounters, treasure, Warden guide
+// RUN SILENT - CHAPTERS 17-23
+// Part III: The hunt, side quests, Relics, encounters, treasure, Warden guide
 // ============================================================================
 
 export const chaptersPart3: SandboxChapter[] = [
 	{
-		title: "Chapter 17: The Regent's Bailiff",
-		content: `# The Regent's Bailiff
+		title: "Chapter 17: How the Quiet Hunts",
+		content: `# How the Quiet Hunts
 
 ## Overview
 
-The Regent's Bailiff is not an escaped Anomaly and not a random roaming boss. It is a piece of the Regent's will given shape and sent walking — the thing the Domain sends to collect what it has marked. It does not hurry, because it does not need to. It does not negotiate, because it was not made to. It is simply, always, on its way.
+The Quiet does not chase. It *converges.* It does not hurry, because it does not need to; it does not negotiate, because it was not made to. It is simply, always, on its way — and the closer it comes, the more of the Gloamreach belongs to it. Most of the time it hunts not in its own shape but through the **worn dead** it sends ahead (the Worn, the Caller, the Wrong Shape, the Hollowed — see the Bestiary), keeping its own terrible attention in reserve until the Hunt Clock fills.
 
-The Bailiff should feel like being hunted in a nightmare: patient, certain, impossible to reason with, impossible to outlast — and only ever turned aside, never truly stopped, by someone who understands what the Gloamreach is.
+This chapter is the mechanics of being hunted: how the pursuit feels, what holds it off, and what happens when it arrives.
 
 ## First Sighting
 
 Read aloud:
 
-*You hear chains before you see the figure. Not dragged. Counted. Link by link, slow and even, as if something is measuring the distance between you and it. A tall armored shape comes through the mist, a hooked blade hanging easy in one hand. It stops. It reads from nothing. It simply speaks your names — all of them, in order, in the voices of people who used to say them — and then it starts walking again.*
+*You hear it before you see anything — or rather, you stop hearing. The insects, the wind, the small sounds of the dark all go out like a held breath. Then, far off, a voice you know. It calls your name, or a name you lost, in exactly the right voice, from exactly the wrong place. It is patient. It can wait all night. It only needs you to answer once.*
 
 ## Use at the Table
 
-Before Level 8, the Bailiff is primarily a survival, evasion, or warding encounter. The party can flee, hide their names and their scent, give it what it came to collect, or drive it off for a night by supernatural means — a threshold it cannot cross, a Claim, an older power. It cannot be killed and stay dead until the thing that sent it is dealt with.
+The Quiet's hunt is a **survival, evasion, and warding** problem, never a stand-up fight. The party can:
 
-At higher levels the party can fight it, but combat alone should not permanently solve the problem unless the Regent's hold that sustains it has been broken.
+- run silent and dark, giving the Hunt Clock nothing to fill on;
+- reach a native wardline before the clock fills;
+- give it what it came for — a terrible choice;
+- or, at worst, fight off a **worn-dead hunter**, which buys time and means nothing, because there is always another face.
 
-## Suggested Stat Profile
+The Quiet itself cannot be killed and stay dead until the party are high tier and hold the Means (see The Means to End It). Until then, surviving its hunt means understanding what it is — not hitting harder.
 
-Use an S-Rank Domain officer profile.
+## What It Sends (by act)
 
-- High AC and HP.
-- Immunity to fear, charm, poison, and mundane restraint.
-- Resistance to damage while the one it hunts is still marked.
-- Advantage when attacking the marked target it has come for.
-- Reduced defenses when the party breaks the mark, hides the name, or turns a Claim or older power against it.
+Run the hunt through the worn dead, scaling with the party. Full stat blocks are in the Bestiary.
 
-## Why It Has Come
-
-| d8 | Why the Bailiff walks toward you |
+| Act / Tier | The Quiet usually hunts through… |
 |---|---|
-| 1 | A summons of the road, refused twice. |
-| 2 | A tithe the Domain is owed and has not been given. |
-| 3 | You sheltered someone the Regent had already claimed. |
-| 4 | You travel under a name that is not yours. |
-| 5 | You carried something out of the Regent's reach. |
-| 6 | You broke a guest-right, and the Gloamreach remembers. |
-| 7 | You stepped between the Domain and something it was collecting. |
-| 8 | You carry a Claim, and have not yet answered the throne for it. |
+| First Contact (L1-3) | **The Worn** (anomaly-0701) — corpses worn as lures and ambushers. |
+| The Hunt (L4-6) | **The Caller** (anomaly-0702) and **The Wrong Shape** (anomaly-0703) — a lure that splits the party, and a trusted face that turns wrong. |
+| The Long Dark (L7-9) | **The Hollowed** (anomaly-0704) — apex-fragments that hunt like the Quiet in miniature. |
+| Threshold (L9-10) | **The Quiet** itself (anomaly-0700) — only when the Hunt Clock fills, or at the gated kill. |
+
+## What Draws the Hunt
+
+The Quiet and its worn dead converge on **noise, light, and Essence** (see Running This Horror). Fill the Hunt Clock for any of these. The natives' wards starve the hunt of all three — which is why the party must learn the rules.
+
+| d8 | What just rang the bell |
+|---|---|
+| 1 | Gunfire, a shout, or a fight in the open. |
+| 2 | An Ascendant used a technique, Sigil, or Awakened power. |
+| 3 | An open flame or bright light in the dark. |
+| 4 | A native rule or ward, broken. |
+| 5 | The party answered a voice they should not have. |
+| 6 | They sheltered, or refused to give up, someone the Quiet had marked. |
+| 7 | They lingered too long in exposed ground. |
+| 8 | They used the dead's own names carelessly, and something heard. |
 
 ## Holding It Off
 
-The party may end a Bailiff scene without destroying it by:
+The party can end a hunt scene without destroying the Quiet by:
 
-1. Giving it — or redirecting it toward — the thing it came to collect.
-2. Hiding the marked one: a true name unspoken, a face unseen, a scent lost in running water.
-3. Crossing a threshold its master's hold does not reach — a sanctuary, hallowed native ground, a place the Regent has not yet swallowed.
-4. Turning a Claim against it.
-5. Waking an older power — the Unseated — that the Gloamreach feared before it ever feared the Regent.
-6. Simply outrunning it for now, knowing it has not stopped, and never will, until the Anchor is dealt with.
+1. **Silence and dark.** Give it nothing to converge on — no noise, no light, no Essence — and slip away.
+2. **The wardline.** Reach a native safe-hold; its wards keep the Quiet, and usually its worn dead, out — so long as the party keep the rules.
+3. **A true name.** Naming a worn-dead lure for what it is can break it; naming the Quiet's nature can make it flinch (see The Means to End It).
+4. **Running water, a hard threshold, hallowed native ground** — places its hold thins.
+5. **Giving it what it came for** — the worst mercy, and sometimes the only one.
+6. **Simply outrunning it for now** — knowing it has not stopped, and never will, until the party are out or it is dead.
 
 ## Warden Guidance
 
-The Bailiff is most frightening when it cannot be bargained with — when the players realize the only question left is *how long can we stay ahead of it.* Let them learn that surviving the Gloamreach means understanding what it is, not only hitting harder.
+The hunt is most frightening when the party realize the only question left is *how long can we stay ahead of it.* Never let combat be the answer; let silence, the dark, the rules, and the wardline be the answer. The night they finally have to choose who to give up is the night this campaign becomes unforgettable.
 `,
 	},
 	{
@@ -73,7 +81,7 @@ The Bailiff is most frightening when it cannot be bargained with — when the pl
 
 ## Overview
 
-These quests replace old district errands with Domain-scale obligations. Each quest should reveal something about the Regent's law, the cost of survival, or the factions trying to control the outcome.
+These quests are the country-scale obligations of survival. Each should reveal something about how the Gloamreach is survived, the cost of it, or the factions trying to control the outcome.
 
 ## Quest 1: The Missing Strike Team
 
@@ -83,18 +91,18 @@ These quests replace old district errands with Domain-scale obligations. Each qu
 Steps:
 
 1. Recover their first broken transmission near the Rift Threshold.
-2. Follow AFA ghost-pings through the Road of Writs.
-3. Find remains or survivors in Bastion Golemfall, the Sunken Tunnels, or the Citadel approach.
+2. Follow AFA ghost-pings along the old roads, deeper in.
+3. Find remains or survivors in Bastion Golemfall, the Sunken Tunnels, or the deep Gloamreach.
 4. Decide whether to return the truth to the Bureau or hide what the team became.
 
-Rewards: Bureau reputation, Ghost as a possible ally, and intelligence on the Regent's court.
+Rewards: Bureau reputation, Ghost as a possible ally, and hard intelligence about the Quiet's hunting grounds.
 
 ## Quest 2: Mother Rust's Breakthrough
 
 **Giver**: Mother Rust  
 **Objective**: Recover living mana from the Fungal Depths or Remembering Orchard.
 
-Mother Rust can use it to treat Rift-Rot and Domain exposure, but the same compound can also suppress emotion and make people easier to move through grief-heavy terrain.
+Mother Rust can use it to treat Rift-Rot and Gloamreach exposure, but the same compound can also suppress emotion and make people easier to move through grief-heavy terrain.
 
 Rewards: Vermillion reputation, advanced healing, and possible Mother Rust alliance or corruption arc.
 
@@ -103,9 +111,9 @@ Rewards: Vermillion reputation, advanced healing, and possible Mother Rust allia
 **Giver**: Whisper, Sister Veil, or Acolyte Mara  
 **Objective**: Extract a defecting Awoko member from the Sanctum.
 
-The defector knows the Hollow Mother intends to inherit the Domain, not liberate it. The cult will try to recover them alive because their grief has already been measured for ritual use.
+The defector knows the Hollow Mother intends to feed the flock to the Quiet to be remade, not to save anyone. The cult will try to recover them alive because their grief has already been measured for ritual use.
 
-Rewards: Awoko ritual intelligence, Bureau/Vermillion reputation, and a way to disrupt the Ritual of Inheritance.
+Rewards: Awoko ritual intelligence, Bureau/Vermillion reputation, and a way to disrupt the Ritual of Becoming.
 
 ## Quest 4: Torch's Letter
 
@@ -119,23 +127,23 @@ Rewards: Torch as an ally, Vermillion reputation, and proof the party still care
 ## Quest 5: The Millwright's Device
 
 **Giver**: The Millwright  
-**Objective**: Build a one-use Domain suppression device.
+**Objective**: Build a one-use device that forces a pocket of silence.
 
 Components:
 
 1. One B-Rank core.
 2. A schematic from Hayashi or Lun.
-3. A gear-heart from the Tithe Mill.
+3. A gear-heart from the mills.
 4. A field test at a Mana Vein node.
 
-Reward: one-use suppression of a local Domain law for one scene.
+Reward: one-use silence — a pocket the Quiet cannot hear, for one scene (a Means component; see Ch32).
 
 ## Quest 6: Mika's Prophecy
 
 **Giver**: Mika the Kid  
 **Objective**: Protect Mika and interpret her drawings.
 
-Each drawing foreshadows a Claim, a betrayal, the Bailiff's coming, a settlement's tithe, or a Citadel chamber.
+Each drawing foreshadows a piece of the Means, a betrayal, the worn dead coming, a community's hard bargain, or the deep dark.
 
 Reward: prophetic hints and final-act emotional leverage if Mika survives.
 
@@ -151,13 +159,13 @@ Reward: Vermillion reputation, training, and Iron Belle's respect.
 ## Quest 8: The Civilian Convoy
 
 **Giver**: A settlement elder, Mother Rust, or Commander Park  
-**Objective**: Escort civilians from a tribute settlement to safer shelter.
+**Objective**: Escort civilians from a failing safe-hold to a stronger one.
 
 Complications:
 
-- The road demands names.
-- The Bailiff may come to collect someone.
-- Some civilians believe leaving voids the settlement's protection.
+- The open road is loud, and the dark is listening.
+- The worn dead may come for someone on the way.
+- Some civilians believe leaving voids their community's wards.
 
 Rewards: civilian trust, Bureau or Vermillion reputation, and settlement support in the finale.
 
@@ -173,27 +181,27 @@ Reward: Mara and Sister Veil as allies, ritual disruption, and proof that cultis
 **Giver**: Ghost  
 **Objective**: Restore Ghost's identity without handing them back to Bureau custody as evidence.
 
-Ghost's memories are hidden across dead-team markers, the Drowned Ledgerfen, and a Claim-touched item.
+Ghost's memories are hidden across dead-team markers, the Drowned Ledgerfen, and a Means-touched relic.
 
-Reward: Ghost restored as a high-rank ally and classified intelligence about the Regent.
+Reward: Ghost restored as a high-rank ally and classified intelligence about the Quiet.
 
 ## Quest 11: Professor Lun's Theory
 
 **Giver**: Professor Lun  
 **Objective**: Place sensors at three Mana Vein nodes.
 
-Reward: weakened Regent Domain control during the finale.
+Reward: a charted deaf place — silence to use in the final crossing (see Ch32).
 
 ## Quest 12: Rat-King Ji's Stash
 
 **Giver**: Rat-King Ji  
-**Objective**: Recover a hidden stash before the Road of Writs carries it off to someone else.
+**Objective**: Recover a hidden stash before the dark carries it off to someone else.
 
-Reward: contraband, Claim clue, or a dangerous shortcut.
+Reward: contraband, a Means clue, or a dangerous shortcut.
 
 ## Warden Guidance
 
-Every side quest should sharpen the central question: what does survival cost when the land itself has laws?
+Every side quest should sharpen the central question: what does survival cost when the land itself is hunting you?
 `,
 	},
 	{
@@ -206,9 +214,9 @@ Use these encounters when the Gloamreach needs to push back without derailing th
 
 ## Pressure Types
 
-### Legal Pressure
+### Rule and Ward Pressure
 
-A summons, a toll, an invitation, a debt of hospitality, or a claim on someone in their care appears. This pressure teaches players that in the Gloamreach, even courtesy has teeth.
+A native rule the party did not know, a ward they must keep lit or keep dark, a price for shelter, or a custom they have already broken. This pressure teaches players that the rules are the only thing keeping the dark out — and the party do not know them all.
 
 ### Environmental Pressure
 
@@ -220,16 +228,16 @@ A faction demands a decision. Civilians ask for help. Vermillion calls in a favo
 
 ### Predatory Pressure
 
-A hunter, Bailiff servant, umbral scout, adaptive beast, or cult cell tracks the party.
+A worn-dead hunter, an umbral scout, an adaptive beast, or a cult cell tracks the party.
 
 ## Encounter Rule
 
 Every pressure encounter should reveal at least one of the following:
 
-1. A Domain law.
-2. A settlement lie.
+1. A native rule or ward.
+2. A community's hard bargain to survive.
 3. A faction cost.
-4. A Claim clue.
+4. A Means clue.
 5. A future consequence.
 `,
 	},
@@ -259,57 +267,57 @@ Vulnerable but narratively powerful. They create stakes, rumors, shelter, and em
 
 Dangerous because they know the cult's rituals and have already been shaped by grief. Saving them should matter.
 
-### Domain-Born Allies
+### Gloamreach-Born Allies
 
-Rare and unstable. A spirit commander, changed survivor, or oathbound guardian may help if the party proves they do not intend to become new tyrants.
+Rare and unstable. A spirit commander, a changed survivor, or an oathbound guardian may help if the party proves they do not intend to become hunters themselves.
 
 ## Final-Act Use
 
-Allies should affect the Citadel by opening paths, blocking reinforcements, delaying the Bailiff, protecting civilians, revealing a law, or creating a human moment with the Regent.
+Allies should affect the final crossing by opening paths, holding a wardline open, drawing off the worn dead, protecting civilians, revealing a rule, or building the once-only ward-circle the Means needs.
 `,
 	},
 	{
-		title: "Chapter 21: Regent Relics and Claim Consequences",
-		content: `# Regent Relics and Claim Consequences
+		title: "Chapter 21: Relics and the Means",
+		content: `# Relics and the Means
 
 ## Overview
 
-The Three Claims are the primary campaign Relics, but lesser Regent-touched items may appear throughout the Gloamreach.
+The Means is the campaign's one structure of Relics that truly matter (see *The Means to End It*), but lesser Gloamreach-touched items appear throughout the country.
 
 ## Relic Principles
 
-1. A Regent Relic is never only powerful. It is legal evidence.
-2. Using one should attract attention.
-3. Carrying one may change road behavior.
-4. Relics can contradict Domain law, but they can also teach the Regent how the party thinks.
+1. A deep-Gloamreach Relic is never only powerful. It is a truth, a cost, or a piece of the Means.
+2. Using one should attract attention — the dark notices power.
+3. Carrying one may change how the roads and the worn dead behave around you.
+4. A Relic can hold or hurt the Quiet for a heartbeat — but using one loudly also teaches the dark how the party fights.
 
 ## Lesser Relic Examples
 
-### Writ-Knife
+### The Hush-Blade
 
-Cuts written contracts. Cannot cut flesh unless the target has broken an oath.
+A knife that makes no sound — no ring of steel, no cry from what it cuts. A kill with it does not fill the Hunt Clock, once per scene. The silence has to come from somewhere; it takes it from the wielder's own voice for an hour after.
 
-### Guest-Ring
+### The Ward-Stone
 
-Grants safe shelter once, but creates a debt of hospitality.
+Held overnight, it keeps the worn dead off one unwarded rest. It cracks a little more each time, and when it finally breaks, whatever it kept out has been waiting.
 
-### Toll Lantern
+### The Name-Glass
 
-Reveals the true length of a road. Each use ages the flame-bearer's shadow.
+Look through it at a familiar face and see whether it is truly itself or something worn. Using it, the looker feels the dark look back — fill the Hunt Clock.
 
-### Ledger Hook
+### The Quiet-Lamp
 
-Pulls one hidden name from a document. The document then learns one name from the wielder.
+Sheds a light only the bearer can see — a small mercy in the dark that draws nothing. Its oil is the rendered grief of the taken, and it knows whose.
 
-## Claim Consequences
+## What the Dark Does When You Find the Means
 
-When the party recovers a Claim, choose one pressure response:
+When the party recover a piece of the Means, the Quiet feels it. Choose one pressure response:
 
-1. The Regent sends a polite invitation.
-2. The Bailiff is sent after someone new.
-3. A settlement's tribute changes.
-4. The Awoko attempt theft or corruption.
-5. The Road of Writs shortens, but only toward danger.
+1. The hunt sharpens — the Hunt Clock fills faster for a stretch.
+2. The worn dead come for whoever carries it.
+3. A community that helped pays for it, and the party hear about it.
+4. The Awoko try to take it, to feed their own becoming.
+5. The way deeper opens — but only toward worse.
 `,
 	},
 	{
@@ -328,7 +336,7 @@ Still valuable to Bureau and Vermillion. Use cores for gear, research, medicine,
 
 ### Relics
 
-Tie Relics to the Domain's nature. Even minor Relics should carry a hint of the Gloamreach — something owned, owed, remembered, or survived.
+Tie Relics to the Gloamreach's nature. Even minor Relics should carry a hint of the dark — something lost, owed, remembered, or survived.
 
 ### Sigils and Runes
 
@@ -346,10 +354,9 @@ The right name, truth, confession, or memory may defeat something combat cannot.
 
 After the campaign, rewards depend on the ending.
 
-- Break the Anchor: powerful fragments, unstable Domain collapse, urgent escape.
-- Seal the Anchor: fewer material rewards, greater moral victory, possible future return.
-- Transform the Anchor: altered Domain, new laws, uncertain consequences.
-- Inherit the Anchor: great power, dark cost, sequel hook.
+- Escape: their lives, a few haunted Relics from the deep, and the marks the Gloamreach left.
+- Kill: a fragment of what the Quiet was, a Relic forged in the kill, or the spent Means itself — and an open future.
+- Become: no loot, only consequence; a character who is now something that hunts.
 `,
 	},
 	{
@@ -360,19 +367,19 @@ After the campaign, rewards depend on the ending.
 
 **Mature Dark Fantasy Rift Horror**.
 
-Use oppressive dread, psychological horror, body horror, starvation, tribute, institutional abandonment, corpse imagery, cursed hospitality, predatory nobility, forced moral compromise, transformation horror, and Domain-law violation.
+Use oppressive dread, psychological horror, body horror, starvation, isolation, institutional abandonment, corpse imagery, false safety, the uncanny, forced moral compromise, transformation horror, and the terror of being hunted by something you cannot see.
 
 Do not use sexual violence, eroticized harm, real-world hate ideology, cruelty to children as spectacle, or torture-porn framing.
 
 ## Horror Pillars
 
-### Ownership
+### Being Prey
 
-The Regent's horror is possession. The land, the roads, the dead, the invitations, the servants, and even the safe rooms all whisper that the party is already his.
+The Quiet's horror is being hunted. The dark, the roads, the worn dead, the open ground, and even the safe-holds all whisper the same thing: it already knows you are here, and it can wait.
 
-### Hospitality
+### False Safety
 
-Meals, beds, guest-right, and courtesy should feel comforting and dangerous at the same time.
+Fires, beds, warded walls, and kind natives should feel comforting and provisional at once — every safety in the Gloamreach is borrowed, and the dark is patient.
 
 ### Bureau Failure
 
@@ -382,9 +389,9 @@ The Bureau is not useless. It is insufficient. Let the party feel the gap betwee
 
 Settlements survive by doing things they cannot emotionally survive doing forever.
 
-### The Human Remnant (the Domain's Costume)
+### Wearing the Dead
 
-The Regent was never human — but the Domain curates "evidence" that he was and offers it to the party as bait. Do not use that to excuse him. Use the lie to make the final confrontation hurt: the mercy the party reaches for was manufactured to be reached for.
+The Quiet was never a person and has no past to redeem — but it wears the party's dead perfectly, and offers their faces, their voices, and the comfort of them as bait. Do not use that to make it sympathetic. Use it to make every reunion hurt: the mercy the party reach for was assembled, out of people they loved, to be reached for.
 
 ## Pacing Advice
 
@@ -394,10 +401,10 @@ Alternate pressure and breath. Horror needs contrast. A hot meal before a terrib
 
 Before every major scene, answer four questions:
 
-1. What law is operating here?
-2. What lie makes it survivable?
-3. What tribute keeps it stable?
-4. What happens if the party refuses?
+1. What rule or ward keeps this place alive?
+2. What does breaking it cost?
+3. What is the Quiet drawn to here — and how loud are the party being?
+4. What happens if they get loud anyway?
 `,
 	},
 ];

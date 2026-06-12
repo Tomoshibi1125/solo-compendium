@@ -37,10 +37,10 @@ import { sandboxRecruitableNPCs } from "../src/data/compendium/sandbox-npcs";
 // Module metadata (mirrors ascendant-sandbox-module.ts — kept in sync by hand
 // because the aggregator itself is not Node-importable).
 // ---------------------------------------------------------------------------
-const MODULE_TITLE = "The Shadow of the Regent";
-const MODULE_VERSION = 9;
+const MODULE_TITLE = "Run Silent";
+const MODULE_VERSION = 10;
 const MODULE_SUBTITLE =
-	"A mature paranormal-horror campaign for Levels 1-15, set inside the Gloamreach — a country-sized S-Rank Rift Interior ruled by its Anchor, the Regent.";
+	"A mature survival and psychological horror campaign for Levels 1-10, set inside the Gloamreach — a country-sized S-Rank Rift Interior, old and inhabited, hunted by an unseen apex predator the natives call the Quiet.";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, "..");
