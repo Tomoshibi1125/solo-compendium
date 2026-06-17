@@ -15,7 +15,7 @@ import {
 	Wand2,
 	Zap,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ConcentrationBanner } from "@/components/CharacterSheet/ConcentrationBanner";
 import { ConditionBadgeBar } from "@/components/CharacterSheet/ConditionBadgeBar";
 import { DefensesModal } from "@/components/CharacterSheet/DefensesModal";
@@ -46,10 +46,7 @@ import { RegentUnlocksPanel } from "@/components/character/RegentUnlocksPanel";
 import { RollHistoryPanel } from "@/components/character/RollHistoryPanel";
 import { RunesList } from "@/components/character/RunesList";
 import { ShadowSoldiersPanel } from "@/components/character/ShadowSoldiersPanel";
-import {
-	SheetThemeDialog,
-	type SheetThemePreview,
-} from "@/components/character/SheetThemeDialog";
+import { SheetThemeDialog } from "@/components/character/SheetThemeDialog";
 import { SpellSlotsDisplay } from "@/components/character/SpellSlotsDisplay";
 import { TattoosList } from "@/components/character/TattoosList";
 import { ToolProficienciesPanel } from "@/components/character/ToolProficienciesPanel";
@@ -102,6 +99,7 @@ import {
 import { applyDamage, applyHealing } from "@/lib/hpAdjustments";
 import { cn } from "@/lib/utils";
 import { QuestLog } from "@/pages/ascendant-tools/QuestLog";
+import { useCharacterSheetUiStore } from "@/stores/characterSheetUiStore";
 import type { DetailData } from "@/types/character";
 import type { AbilityScore } from "@/types/core-rules";
 import { AbilityScoreStrip } from "./AbilityScoreStrip";
@@ -151,7 +149,12 @@ export default function CharacterSheetV2() {
 		ui: { modals: persistentModals },
 	} = sheetController.state;
 
-	const [internalMobileTab, setInternalMobileTab] = useState("actions");
+	const internalMobileTab = useCharacterSheetUiStore(
+		(s) => s.internalMobileTab,
+	);
+	const setInternalMobileTab = useCharacterSheetUiStore(
+		(s) => s.setInternalMobileTab,
+	);
 	const activeMobileTab = activeTab || internalMobileTab;
 	const setActiveMobileTab = setActiveTab || setInternalMobileTab;
 
@@ -160,19 +163,25 @@ export default function CharacterSheetV2() {
 	const primaryRegent =
 		regentUnlocks.find((u: RegentUnlock) => u.is_primary) || regentUnlocks[0];
 
-	// Detail Drawer State
-	const [selectedDetail, setSelectedDetail] = useState<
-		(DetailData & { icon?: LucideIcon; type: string }) | null
-	>(null);
+	// Detail Drawer State (ephemeral UI store)
+	const selectedDetail = useCharacterSheetUiStore((s) => s.selectedDetail);
+	const setSelectedDetail = useCharacterSheetUiStore(
+		(s) => s.setSelectedDetail,
+	);
 
-	// Scroll Header Visibility State
-	const [showScrollHeader, setShowScrollHeader] = useState(false);
-	const [themeDialogOpen, setThemeDialogOpen] = useState(false);
+	// Scroll Header Visibility State (ephemeral UI store)
+	const showScrollHeader = useCharacterSheetUiStore((s) => s.showScrollHeader);
+	const setShowScrollHeader = useCharacterSheetUiStore(
+		(s) => s.setShowScrollHeader,
+	);
+	const themeDialogOpen = useCharacterSheetUiStore((s) => s.themeDialogOpen);
+	const setThemeDialogOpen = useCharacterSheetUiStore(
+		(s) => s.setThemeDialogOpen,
+	);
 	// Q1 of Round 3 — live theme preview. Overrides the persisted
 	// character theme values while the SheetThemeDialog is open.
-	const [themePreview, setThemePreview] = useState<SheetThemePreview | null>(
-		null,
-	);
+	const themePreview = useCharacterSheetUiStore((s) => s.themePreview);
+	const setThemePreview = useCharacterSheetUiStore((s) => s.setThemePreview);
 
 	// R2 of Round 2 — auto-push character snapshots so Undo/Redo has a
 	// trail. We push on every `character` ref change (post update success).
@@ -224,7 +233,7 @@ export default function CharacterSheetV2() {
 		};
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+	}, [setShowScrollHeader]);
 
 	const onSelectDetail = (
 		detail: DetailData,

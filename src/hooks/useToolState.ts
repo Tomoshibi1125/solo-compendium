@@ -1,37 +1,26 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+	buildToolStorageKey,
+	type RemoteAdapter,
+	type ToolStateOptions,
+	type ToolStateResult,
+	usePersistedToolState,
+} from "@/hooks/createPersistedToolState";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import type { Database, Json } from "@/integrations/supabase/types";
 import { useAuth } from "@/lib/auth/authContext";
 import { warn as logWarn } from "@/lib/logger";
 
-const DEFAULT_STORAGE_PREFIX = "solo-compendium.tool";
-
-const buildToolStorageKey = (toolKey: string) =>
-	`${DEFAULT_STORAGE_PREFIX}.${toolKey}`;
-
-export const readLocalToolState = <T>(storageKey: string): T | null => {
-	if (typeof window === "undefined") return null;
-	try {
-		const raw = localStorage.getItem(storageKey);
-		if (!raw) return null;
-		return JSON.parse(raw) as T;
-	} catch (error) {
-		logWarn(
-			`Failed to read tool state from localStorage: ${storageKey}`,
-			error,
-		);
-		return null;
-	}
-};
-
-export const writeLocalToolState = <T>(storageKey: string, state: T): void => {
-	if (typeof window === "undefined") return;
-	try {
-		localStorage.setItem(storageKey, JSON.stringify(state));
-	} catch (error) {
-		logWarn(`Failed to write tool state to localStorage: ${storageKey}`, error);
-	}
-};
+export type {
+	ToolStateOptions,
+	ToolStateResult,
+} from "@/hooks/createPersistedToolState";
+// Re-exported for backward compatibility — these now live in the factory so the
+// generic persistence layer has no Supabase dependency.
+export {
+	readLocalToolState,
+	writeLocalToolState,
+} from "@/hooks/createPersistedToolState";
 
 const loadUserToolState = async <T>(
 	userId: string,
@@ -111,90 +100,34 @@ export const saveCampaignToolState = async <T>(
 	}
 };
 
-type ToolStateOptions<T> = {
-	storageKey?: string;
-	initialState: T;
-	enabled?: boolean;
-};
-
-type ToolStateResult<T> = {
-	state: T;
-	setState: React.Dispatch<React.SetStateAction<T>>;
-	isLoading: boolean;
-	saveNow: (nextState?: T) => Promise<void>;
-	isAuthed: boolean;
-};
-
 export const useUserToolState = <T>(
 	toolKey: string,
 	options: ToolStateOptions<T>,
 ): ToolStateResult<T> => {
 	const { user, loading } = useAuth();
-	const [state, setState] = useState<T>(options.initialState);
-	const isEnabled = options.enabled !== false;
-	const [isLoading, setIsLoading] = useState(isEnabled);
-	const isAuthed = isSupabaseConfigured && !!user?.id;
+	const userId = user?.id;
+	const isAuthed = isSupabaseConfigured && !!userId;
 	const storageKey = options.storageKey ?? buildToolStorageKey(toolKey);
-	const allowLocalFallback = true;
 
-	useEffect(() => {
-		if (!isEnabled) {
-			setIsLoading(false);
-			return;
-		}
-		if (loading) return;
-		let active = true;
-		const loadState = async () => {
-			setIsLoading(true);
-			const fallback = allowLocalFallback
-				? readLocalToolState<T>(storageKey)
-				: null;
-			if (!isAuthed || !user?.id) {
-				if (active && fallback !== null) setState(fallback);
-				setIsLoading(false);
-				return;
-			}
-
-			const remote = await loadUserToolState<T>(user.id, toolKey);
-			if (!active) return;
-			if (remote !== null) {
-				setState(remote);
-				if (allowLocalFallback) {
-					writeLocalToolState(storageKey, remote);
-				}
-			} else if (fallback !== null) {
-				setState(fallback);
-			}
-			setIsLoading(false);
-		};
-		void loadState();
-		return () => {
-			active = false;
-		};
-	}, [isAuthed, isEnabled, loading, storageKey, toolKey, user?.id]);
-
-	const saveNow = useCallback(
-		async (nextState?: T) => {
-			if (!isEnabled) return;
-			const payload = nextState ?? state;
-			if (allowLocalFallback) {
-				writeLocalToolState(storageKey, payload);
-			}
-			if (!isAuthed || !user?.id) {
-				return;
-			}
-			await saveUserToolState(user.id, toolKey, payload);
-		},
-		[isAuthed, isEnabled, state, storageKey, toolKey, user?.id],
+	const adapter = useMemo<RemoteAdapter<T>>(
+		() => ({
+			canUseRemote: isAuthed,
+			scopeReady: true,
+			load: () =>
+				isAuthed && userId ? loadUserToolState<T>(userId, toolKey) : null,
+			save: (state) =>
+				userId ? saveUserToolState(userId, toolKey, state) : Promise.resolve(),
+		}),
+		[isAuthed, userId, toolKey],
 	);
 
-	return {
-		state,
-		setState,
-		isLoading: isEnabled ? isLoading : false,
-		saveNow,
-		isAuthed,
-	};
+	return usePersistedToolState<T>({
+		storageKey,
+		initialState: options.initialState,
+		enabled: options.enabled !== false,
+		authLoading: loading,
+		adapter,
+	});
 };
 
 export const useCampaignToolState = <T>(
@@ -203,86 +136,35 @@ export const useCampaignToolState = <T>(
 	options: ToolStateOptions<T>,
 ): ToolStateResult<T> => {
 	const { user, loading } = useAuth();
-	const [state, setState] = useState<T>(options.initialState);
-	const isEnabled = options.enabled !== false;
-	const [isLoading, setIsLoading] = useState(isEnabled);
-	const isAuthed = isSupabaseConfigured && !!user?.id;
+	const userId = user?.id ?? null;
+	const isAuthed = isSupabaseConfigured && !!userId;
 	const storageKey =
 		options.storageKey ??
 		buildToolStorageKey(`${toolKey}.${campaignId || "unknown"}`);
-	const allowLocalFallback = true;
 
-	useEffect(() => {
-		if (!isEnabled) {
-			setIsLoading(false);
-			return;
-		}
-		if (loading) return;
-		let active = true;
-		const loadState = async () => {
-			const fallback = allowLocalFallback
-				? readLocalToolState<T>(storageKey)
-				: null;
-
-			if (!campaignId) {
-				if (active && fallback !== null) setState(fallback);
-				setIsLoading(false);
-				return;
-			}
-
-			setIsLoading(true);
-			if (!isAuthed) {
-				if (active && fallback !== null) setState(fallback);
-				setIsLoading(false);
-				return;
-			}
-
-			const remote = await loadCampaignToolState<T>(campaignId, toolKey);
-			if (!active) return;
-			if (remote !== null) {
-				setState(remote);
-				if (allowLocalFallback) {
-					writeLocalToolState(storageKey, remote);
-				}
-			} else if (fallback !== null) {
-				setState(fallback);
-			}
-			setIsLoading(false);
-		};
-		void loadState();
-		return () => {
-			active = false;
-		};
-	}, [campaignId, isAuthed, isEnabled, loading, storageKey, toolKey]);
-
-	const saveNow = useCallback(
-		async (nextState?: T) => {
-			if (!isEnabled) return;
-			const payload = nextState ?? state;
-			if (allowLocalFallback) {
-				writeLocalToolState(storageKey, payload);
-			}
-			if (!campaignId) return;
-			if (!isAuthed) {
-				return;
-			}
-			await saveCampaignToolState(
-				campaignId,
-				user?.id ?? null,
-				toolKey,
-				payload,
-			);
-		},
-		[campaignId, isAuthed, isEnabled, state, storageKey, toolKey, user?.id],
+	const adapter = useMemo<RemoteAdapter<T>>(
+		() => ({
+			canUseRemote: isAuthed,
+			scopeReady: !!campaignId,
+			load: () =>
+				campaignId && isAuthed
+					? loadCampaignToolState<T>(campaignId, toolKey)
+					: null,
+			save: (state) =>
+				campaignId
+					? saveCampaignToolState(campaignId, userId, toolKey, state)
+					: Promise.resolve(),
+		}),
+		[isAuthed, campaignId, toolKey, userId],
 	);
 
-	return {
-		state,
-		setState,
-		isLoading: isEnabled ? isLoading : false,
-		saveNow,
-		isAuthed,
-	};
+	return usePersistedToolState<T>({
+		storageKey,
+		initialState: options.initialState,
+		enabled: options.enabled !== false,
+		authLoading: loading,
+		adapter,
+	});
 };
 
 export const useUserLocalState = <T>(

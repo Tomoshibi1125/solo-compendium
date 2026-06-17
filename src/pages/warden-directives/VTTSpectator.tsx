@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { DynamicStyle } from "@/components/ui/DynamicStyle";
 import { VTTTopBar } from "@/components/vtt/VTTTopBar";
 import { VTTZoomHud } from "@/components/vtt/VTTZoomHud";
+import { VttDomFallbackSurface } from "@/components/vtt/VttDomFallbackSurface";
 import { VttPixiStage } from "@/components/vtt/VttPixiStage";
 import { useVTTRealtime } from "@/hooks/useVTTRealtime";
 import { useVTTSettings } from "@/hooks/useVTTSettings";
@@ -30,6 +31,10 @@ const VTTSpectator = () => {
 
 	const mapRef = useRef<HTMLDivElement>(null);
 	const [zoom, setZoom] = useState(1);
+	const [pixiInitFailed, setPixiInitFailed] = useState(false);
+	const [pixiRetryKey, setPixiRetryKey] = useState(0);
+	const pixiAutoRetryCountRef = useRef(0);
+	const pixiRetryTimerRef = useRef<number | null>(null);
 
 	const vttRealtime = useVTTRealtime({
 		campaignId: campaignId || "",
@@ -71,6 +76,51 @@ const VTTSpectator = () => {
 	}, [currentScene?.tokens]);
 
 	const gridSize = currentScene?.gridSize ?? 50;
+
+	const onPixiInitError = useCallback((err: unknown) => {
+		console.error("[VTT Spectator] Pixi init error:", err);
+		setPixiInitFailed(true);
+		// Limited silent auto-retry — a spectator/projector view must never show
+		// toasts, but should recover on its own if the failure was transient.
+		if (pixiAutoRetryCountRef.current < 2) {
+			pixiAutoRetryCountRef.current += 1;
+			const delay = pixiAutoRetryCountRef.current === 1 ? 900 : 2200;
+			if (pixiRetryTimerRef.current !== null) {
+				window.clearTimeout(pixiRetryTimerRef.current);
+			}
+			pixiRetryTimerRef.current = window.setTimeout(() => {
+				pixiRetryTimerRef.current = null;
+				setPixiInitFailed(false);
+				setPixiRetryKey((key) => key + 1);
+			}, delay);
+		}
+	}, []);
+
+	// Reset the renderer fallback whenever the live scene changes.
+	const lastSceneIdRef = useRef<string | null>(null);
+	useEffect(() => {
+		const sceneId = currentScene?.id ?? null;
+		if (lastSceneIdRef.current === sceneId) return;
+		lastSceneIdRef.current = sceneId;
+		setPixiInitFailed(false);
+		setPixiRetryKey((key) => key + 1);
+		pixiAutoRetryCountRef.current = 0;
+		if (pixiRetryTimerRef.current !== null) {
+			window.clearTimeout(pixiRetryTimerRef.current);
+			pixiRetryTimerRef.current = null;
+		}
+	}, [currentScene?.id]);
+
+	useEffect(
+		() => () => {
+			if (pixiRetryTimerRef.current !== null) {
+				window.clearTimeout(pixiRetryTimerRef.current);
+				pixiRetryTimerRef.current = null;
+			}
+		},
+		[],
+	);
+
 	const handleRequestZoom = useCallback((next: number) => {
 		setZoom(Math.max(0.5, Math.min(2, next)));
 	}, []);
@@ -166,37 +216,54 @@ const VTTSpectator = () => {
 								className="h-full w-full overflow-auto relative bg-background"
 							>
 								<DynamicStyle
-									className="vtt-map-container vtt-map-scene"
+									className="vtt-map-container vtt-map-scene relative"
 									vars={{
 										width: `${currentScene.width * gridSize * zoom}px`,
 										height: `${currentScene.height * gridSize * zoom}px`,
 									}}
 								>
-									<VttPixiStage
-										containerRef={mapRef}
-										scene={currentScene}
-										tokens={visibleTokens}
-										gridSize={gridSize}
-										zoom={zoom}
-										showGrid
-										isWarden={false}
-										effectiveVisibleLayers={{
-											0: true,
-											1: true,
-											2: true,
-											3: false, // never render Warden layer to spectators
-										}}
-										activeTokenId={null}
-										setActiveTokenId={() => undefined}
-										updateToken={() => undefined}
-										walls={currentScene.walls ?? []}
-										lightSources={currentScene.lights ?? []}
-										gridConfig={{
-											type: currentScene.gridType,
-											size: gridSize,
-										}}
-										onRequestZoom={handleRequestZoom}
-									/>
+									{pixiInitFailed ? (
+										<VttDomFallbackSurface
+											scene={currentScene}
+											tokens={visibleTokens}
+											gridSize={gridSize}
+											zoom={zoom}
+											showGrid
+											activeTokenId={null}
+											activeInitiativeTokenId={null}
+											setActiveTokenId={() => undefined}
+											isWarden={false}
+										/>
+									) : (
+										<VttPixiStage
+											key={`spectator-pixi-${currentScene.id}-${pixiRetryKey}`}
+											containerRef={mapRef}
+											scene={currentScene}
+											tokens={visibleTokens}
+											gridSize={gridSize}
+											zoom={zoom}
+											showGrid
+											isWarden={false}
+											effectiveVisibleLayers={{
+												0: true,
+												1: true,
+												2: true,
+												3: false, // never render Warden layer to spectators
+											}}
+											activeTokenId={null}
+											setActiveTokenId={() => undefined}
+											updateToken={() => undefined}
+											walls={currentScene.walls ?? []}
+											lightSources={currentScene.lights ?? []}
+											gridConfig={{
+												type: currentScene.gridType,
+												size: gridSize,
+											}}
+											onRequestZoom={handleRequestZoom}
+											onInitError={onPixiInitError}
+											weather={currentScene.weather}
+										/>
+									)}
 								</DynamicStyle>
 							</div>
 						)}

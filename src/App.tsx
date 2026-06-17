@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { ThemeProvider } from "next-themes";
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
 	BrowserRouter,
 	Navigate,
@@ -30,6 +30,7 @@ import { ServiceWorkerUpdatePrompt } from "@/components/ui/ServiceWorkerUpdatePr
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useAppStore } from "@/hooks/useAppStore";
 import { useBackgroundSync } from "@/hooks/useBackgroundSync";
 import { useDomainEventQuerySync } from "@/hooks/useDomainEventQuerySync";
 import { useGlobalShortcuts } from "@/hooks/useGlobalShortcuts";
@@ -42,7 +43,6 @@ import { AuthProvider, useAuth } from "@/lib/auth/authContext";
 import { migrateLegacyConditions } from "@/lib/conditionSystem";
 import { validateEnv } from "@/lib/envValidation";
 import { useFeatureFlags } from "@/lib/featureFlags";
-import { setCommandPaletteOpener } from "@/lib/globalShortcuts";
 import { warn as logWarn } from "@/lib/logger";
 import { runProficiencyPatch } from "@/lib/maintenance/ProficiencyPatch";
 import { PerformanceProvider } from "@/lib/performanceProfile";
@@ -233,7 +233,8 @@ const PageLoader = () => (
 
 // Inner component that uses router hooks - must be inside BrowserRouter
 const AppContent = () => {
-	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+	const commandPaletteOpen = useAppStore((s) => s.commandPaletteOpen);
+	const setCommandPaletteOpen = useAppStore((s) => s.setCommandPaletteOpen);
 	const isE2E = import.meta.env.VITE_E2E === "true";
 	const setupRouteEnabled = isSetupRouteEnabled();
 	const { user } = useAuth();
@@ -257,11 +258,6 @@ const AppContent = () => {
 
 	// Load feature flags from environment (used by components to gate features)
 	const _featureFlags = useFeatureFlags();
-
-	// Register command palette opener
-	useEffect(() => {
-		setCommandPaletteOpener(() => setCommandPaletteOpen(true));
-	}, []);
 
 	// Prompt for push notifications when user logs in
 	useEffect(() => {

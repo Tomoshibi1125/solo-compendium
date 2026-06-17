@@ -257,3 +257,123 @@ test("warden can move tokens via arrow keys and canvas drag", async ({
 	await expect(rendererFallback).toBeHidden();
 	expect(pageErrors, pageErrors.join("\n")).toEqual([]);
 });
+
+test("warden can drag a token to a new cell and pan the map", async ({
+	page,
+}) => {
+	test.setTimeout(120_000);
+
+	const authPage = new AuthPage(page);
+	const sharedPage = new SharedPage(page);
+	const pageErrors: string[] = [];
+	page.on("pageerror", (error) => pageErrors.push(error.message));
+
+	await authPage.continueAsGuest("dm");
+	const campaignId = await sharedPage.createCampaign(
+		`VTT Drag ${Date.now()}`,
+		"Token drag + viewport pan parity",
+	);
+	await page.goto(`/campaigns/${campaignId}/vtt`);
+	await sharedPage.dismissAnalyticsBanner();
+
+	await expect(page.getByTestId("vtt-interface")).toBeAttached({
+		timeout: 20_000,
+	});
+	const map = page.getByTestId("vtt-map");
+	const canvas = map.locator("canvas").first();
+	const pixiHost = page.getByTestId("vtt-pixi-host");
+	const tokenPanel = page.getByTestId("vtt-active-token-panel");
+	const tokenSearch = page.getByPlaceholder("Search tokens...");
+	const radixOverlay = page.locator('[data-state="open"][aria-hidden="true"]');
+
+	await expect(canvas).toBeVisible({ timeout: 20_000 });
+	await expect(pixiHost).toHaveAttribute("data-renderer-status", "ready", {
+		timeout: 20_000,
+	});
+
+	const closeTransientOverlays = async () => {
+		for (let i = 0; i < 3; i++) {
+			if ((await radixOverlay.count()) === 0) return;
+			await page.keyboard.press("Escape");
+			await page.waitForTimeout(150);
+		}
+		await expect(radixOverlay).toHaveCount(0, { timeout: 5_000 });
+	};
+	const readTokenPos = async (): Promise<{ x: number; y: number }> => {
+		await page.getByRole("button", { name: /^Selected Token$/i }).click();
+		await expect(tokenPanel).toBeVisible({ timeout: 10_000 });
+		const pos = await tokenPanel.getAttribute("data-active-token-pos");
+		expect(pos).toBeTruthy();
+		const [x, y] = pos!.split(",").map(Number);
+		const closeBtn = page
+			.getByRole("dialog", { name: /Selected Token/i })
+			.getByRole("button", { name: /Close/i });
+		if (await closeBtn.isVisible().catch(() => false)) {
+			await closeBtn.click();
+		}
+		await page.evaluate(() => {
+			(document.activeElement as HTMLElement | null)?.blur();
+		});
+		return { x, y };
+	};
+
+	// Place a token near the top-left of the viewport.
+	await page.getByRole("button", { name: /^Toolbox$/i }).click();
+	await page
+		.getByRole("dialog", { name: /^Toolbox$/i })
+		.getByRole("tab", { name: /^Tokens$/i })
+		.click();
+	await page.getByTestId("vtt-tokens-tab-library").click();
+	await tokenSearch.fill("Ascendant (E-Rank)");
+	await page
+		.getByRole("button", { name: /Ascendant \(E-Rank\)/i })
+		.first()
+		.click();
+	await closeTransientOverlays();
+	await canvas.click({ position: { x: 150, y: 150 } });
+
+	const start = await readTokenPos();
+
+	// ── Smooth drag: press on the token, drag right, release. The commit is a
+	// single snapped grid position (no per-frame cell churn). ──────────────
+	const box = await canvas.boundingBox();
+	if (!box) throw new Error("canvas bounding box not available");
+	await page.mouse.move(box.x + 150, box.y + 150);
+	await page.mouse.down();
+	await page.mouse.move(box.x + 250, box.y + 150, { steps: 8 });
+	await page.mouse.move(box.x + 400, box.y + 150, { steps: 8 });
+	await page.mouse.up();
+	await page.waitForTimeout(300);
+
+	const afterDrag = await readTokenPos();
+	expect(afterDrag.x).toBeGreaterThan(start.x); // dragged to the right
+	expect(Number.isInteger(afterDrag.x)).toBe(true); // snapped to a cell
+	expect(Number.isInteger(afterDrag.y)).toBe(true);
+
+	// ── Pan: zoom to max so the scene overflows, then middle-mouse drag and
+	// confirm the viewport scrolled. ───────────────────────────────────────
+	await map.hover();
+	for (let i = 0; i < 8; i++) {
+		await page.keyboard.press("Equal");
+	}
+	await page.waitForTimeout(300);
+	const scrollBefore = await map.evaluate((el) => ({
+		x: el.scrollLeft,
+		y: el.scrollTop,
+	}));
+	await page.mouse.move(box.x + 300, box.y + 200);
+	await page.mouse.down({ button: "middle" });
+	await page.mouse.move(box.x + 120, box.y + 80, { steps: 10 });
+	await page.mouse.up({ button: "middle" });
+	await page.waitForTimeout(300);
+	const scrollAfter = await map.evaluate((el) => ({
+		x: el.scrollLeft,
+		y: el.scrollTop,
+	}));
+	expect(
+		scrollAfter.x !== scrollBefore.x || scrollAfter.y !== scrollBefore.y,
+	).toBeTruthy();
+
+	await expect(page.getByText("Renderer fallback active")).toBeHidden();
+	expect(pageErrors, pageErrors.join("\n")).toEqual([]);
+});

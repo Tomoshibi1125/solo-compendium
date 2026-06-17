@@ -35,21 +35,28 @@ const JOB_PORTRAIT_URL_BY_JOB: Record<string, string> = {
 };
 
 const SPECIAL_SANDBOX_NPC_IMAGE_URLS: Record<string, string> = {
-	"npc-bureau-001": "/generated/compendium/jobs/tank.webp",
-	"npc-bureau-004": "/generated/compendium/jobs/warrior.webp",
+	"npc-bureau-001":
+		"/generated/compendium/sandbox_npcs/commander-park-jae-won.webp",
+	"npc-bureau-003":
+		"/generated/compendium/sandbox_npcs/sergeant-yoon-hye-jin.webp",
+	"npc-bureau-004": "/generated/compendium/sandbox_npcs/dr-serin-hayashi.webp",
 	"npc-bureau-005": "/generated/compendium/jobs/Stalker.webp",
-	"npc-verm-004": "/generated/compendium/backgrounds/guild-master.webp",
-	"npc-awoko-001": "/generated/compendium/backgrounds/shadow-realm-exile.webp",
-	"npc-awoko-004": "/generated/compendium/jobs/mage.webp",
-	"npc-ind-003": "/generated/compendium/backgrounds/time-walker.webp",
-	"npc-ind-004": "/generated/compendium/jobs/warrior.webp",
-	"npc-ind-012": "/generated/compendium/anomalies/companion-spectral-knight.webp",
+	"npc-verm-001": "/generated/compendium/sandbox_npcs/rat-king-ji.webp",
+	"npc-verm-004": "/generated/compendium/sandbox_npcs/guildmaster-orin.webp",
+	"npc-awoko-001": "/generated/compendium/sandbox_npcs/the-hollow-mother.webp",
+	"npc-awoko-004": "/generated/compendium/sandbox_npcs/sister-veil.webp",
+	"npc-ind-003": "/generated/compendium/sandbox_npcs/mika-the-kid.webp",
+	"npc-ind-004": "/generated/compendium/sandbox_npcs/old-man-crane.webp",
+	"npc-ind-005": "/generated/compendium/sandbox_npcs/professor-lun.webp",
+	"npc-ind-012":
+		"/generated/compendium/anomalies/companion-spectral-knight.webp",
 	"npc-anom-001": "/generated/compendium/backgrounds/void-touched.webp",
-	"npc-anom-002": "/generated/compendium/anomalies/companion-spectral-knight.webp",
+	"npc-anom-002": "/generated/compendium/sandbox_npcs/the-watcher.webp",
 	"npc-anom-003": "/generated/compendium/anomalies/companion-void-walker.webp",
 	"npc-anom-004": "/generated/compendium/backgrounds/time-walker.webp",
-	"npc-anom-005": "/generated/compendium/jobs/artificer.webp",
-	"npc-anom-006": "/generated/compendium/anomalies/companion-chronal-hound.webp",
+	"npc-anom-005": "/generated/compendium/sandbox_npcs/the-catalog.webp",
+	"npc-anom-006":
+		"/generated/compendium/anomalies/companion-chronal-hound.webp",
 };
 
 const FACTION_FALLBACK_IMAGE_URLS: Record<string, string> = {
@@ -92,7 +99,10 @@ export function getSandboxHubNpcIds(sceneName: string): string[] {
 		return ["npc-verm-004", "npc-verm-001", "npc-verm-003"];
 	}
 
-	if (normalizedSceneName.includes("writ-bound") || normalizedSceneName.includes("tribute")) {
+	if (
+		normalizedSceneName.includes("writ-bound") ||
+		normalizedSceneName.includes("tribute")
+	) {
 		return ["npc-ind-007", "npc-ind-001", "npc-ind-003"];
 	}
 

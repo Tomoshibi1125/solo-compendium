@@ -11,16 +11,16 @@ import {
 	useCallback,
 	useContext,
 	useEffect,
-	useState,
 } from "react";
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { AppError } from "@/lib/appError";
 import { buildAuthCallbackUrl } from "@/lib/authRedirect";
 import { error as logError } from "@/lib/logger";
+import { useAuthStore } from "@/stores/authStore";
 
 export type UserRole = "warden" | "ascendant";
 
-interface AuthUser {
+export interface AuthUser {
 	id: string;
 	email: string;
 	role: UserRole;
@@ -175,9 +175,9 @@ const withTimeout = async <T,>(
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-	const [user, setUser] = useState<AuthUser | null>(null);
-	const [session, setSession] = useState<Session | null>(null);
-	const [loading, setLoading] = useState(true);
+	const user = useAuthStore((s) => s.user);
+	const session = useAuthStore((s) => s.session);
+	const loading = useAuthStore((s) => s.loading);
 
 	// Role-based permissions
 	const permissions: Record<string, string[]> = {
@@ -218,7 +218,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 			if (error) {
 				logError("Error fetching user profile:", error);
-				setUser(fallbackUser);
+				useAuthStore.getState().setUser(fallbackUser);
 				return;
 			}
 
@@ -228,7 +228,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 						? authUser.user_metadata.role
 						: undefined;
 				const resolvedRole = normalizeRole(metadataRole ?? data.role);
-				setUser({
+				useAuthStore.getState().setUser({
 					id: data.id,
 					email: authUser.email ?? "",
 					role: resolvedRole,
@@ -237,13 +237,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					createdAt: data.created_at,
 				});
 			} else {
-				setUser(fallbackUser);
+				useAuthStore.getState().setUser(fallbackUser);
 			}
 		} catch (error) {
 			logError("Error fetching user profile:", error);
-			setUser(fallbackUser);
+			useAuthStore.getState().setUser(fallbackUser);
 		} finally {
-			setLoading(false);
+			useAuthStore.getState().setLoading(false);
 		}
 	}, []);
 
@@ -251,27 +251,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		// Get initial session
 		withTimeout(supabase.auth.getSession(), 8000, "Load session")
 			.then(({ data: { session } }) => {
-				setSession(session);
+				useAuthStore.getState().setSession(session);
 				if (session?.user) {
 					fetchUserProfile(session.user);
 				} else {
-					setLoading(false);
+					useAuthStore.getState().setLoading(false);
 				}
 			})
 			.catch((error) => {
 				logError("Error loading session:", error);
-				setSession(null);
-				setUser(null);
-				setLoading(false);
+				useAuthStore.getState().setSession(null);
+				useAuthStore.getState().setUser(null);
+				useAuthStore.getState().setLoading(false);
 			});
 
 		// Listen for auth changes
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange(async (_event, session) => {
-			setSession(session);
+			useAuthStore.getState().setSession(session);
 			if (session?.user) {
-				setLoading(true);
+				useAuthStore.getState().setLoading(true);
 				try {
 					await withTimeout(
 						fetchUserProfile(session.user),
@@ -280,11 +280,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 					);
 				} catch (error) {
 					logError("Error syncing user profile:", error);
-					setLoading(false);
+					useAuthStore.getState().setLoading(false);
 				}
 			} else {
-				setUser(null);
-				setLoading(false);
+				useAuthStore.getState().setUser(null);
+				useAuthStore.getState().setLoading(false);
 			}
 		});
 
@@ -293,8 +293,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	useEffect(() => {
 		if (!session?.user || user) return;
-		setUser(buildFallbackUser(session.user));
-		setLoading(false);
+		useAuthStore.getState().setUser(buildFallbackUser(session.user));
+		useAuthStore.getState().setLoading(false);
 	}, [session, user]);
 
 	const signIn = async (email: string, password: string, role: UserRole) => {
@@ -430,8 +430,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	const signOut = async () => {
 		await supabase.auth.signOut();
-		setUser(null);
-		setSession(null);
+		useAuthStore.getState().setUser(null);
+		useAuthStore.getState().setSession(null);
 	};
 
 	const updateProfile = async (updates: Partial<AuthUser>) => {
@@ -470,7 +470,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 			}
 
 			// Update local state
-			setUser((prev) => (prev ? { ...prev, ...updates } : null));
+			useAuthStore.getState().patchUser(updates);
 			return { success: true };
 		} catch {
 			return { error: "An unexpected error occurred" };

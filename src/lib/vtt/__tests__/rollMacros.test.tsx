@@ -14,6 +14,7 @@ vi.mock("@/integrations/supabase/client", () => ({
 	},
 }));
 
+import { __clearToolStateRegistry } from "@/hooks/createPersistedToolState";
 import { useAuth } from "@/lib/auth/authContext";
 import {
 	MACRO_STORAGE_KEY,
@@ -101,6 +102,7 @@ const Probe = ({
 
 describe("useMacros", () => {
 	beforeEach(() => {
+		__clearToolStateRegistry();
 		vi.stubGlobal("localStorage", createMemoryStorage());
 		useAuthMock.mockReturnValue({
 			user: null,

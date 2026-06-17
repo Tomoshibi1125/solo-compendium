@@ -207,7 +207,9 @@ export function useCharacterPageModel() {
 	const updateCharacter = useUpdateCharacter();
 	const recordRoll = useRecordRoll();
 	const generateShareToken = useGenerateShareToken();
-	const sheetController = useCharacterSheetState(character?.id || "");
+	const sheetController = useCharacterSheetState(character?.id || "", {
+		manageUiStore: true,
+	});
 	const { state: sheetState } = sheetController;
 	const { data: charFeatures = [] } = useCharacterFeatures(character?.id || "");
 	const { data: characterActiveSpells = [] } = useCharacterActiveSpells(

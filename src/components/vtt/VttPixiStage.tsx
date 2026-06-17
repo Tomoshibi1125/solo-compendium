@@ -1,4 +1,3 @@
-import { Emitter, upgradeConfig } from "@pixi/particle-emitter";
 import {
 	Application,
 	Assets,
@@ -23,6 +22,21 @@ import {
 	isVttTokenVisibleThroughFog,
 	VTT_WARDEN_HIDDEN_FOG_OPACITY,
 } from "@/lib/vtt/fogRects";
+import {
+	gridDistanceFeet,
+	snapWorldToCell,
+} from "@/lib/vtt/interactionGeometry";
+import { parsePixiColor } from "@/lib/vtt/pixiColor";
+import {
+	createEffect,
+	type EffectInstance,
+	type EffectPreset,
+} from "@/lib/vtt/pixiEffects";
+import {
+	createWeatherEmitter,
+	type WeatherEmitter,
+	type WeatherType,
+} from "@/lib/vtt/pixiWeather";
 import { getTokenFootprintPx, type TokenSize } from "@/lib/vtt/tokenSizing";
 import type { VTTTokenBar } from "@/types/vtt";
 
@@ -133,7 +147,7 @@ type VttPixiStageProps = {
 	onTokenDragEnd?: (tokenId: string) => void;
 	drawMode?: "none" | "ruler" | "cone" | "sphere" | "cube" | "wall";
 	onWallCreated?: (x1: number, y1: number, x2: number, y2: number) => void;
-	weather?: "none" | "rain" | "snow" | "embers" | "gas";
+	weather?: WeatherType | "none";
 	/** Called when the PixiJS stage is ready, exposing the app and effects container for particle effects */
 	onStageReady?: (app: Application, effectsContainer: Container) => void;
 	/** Called when Pixi fails to initialize after all retry attempts */
@@ -148,11 +162,8 @@ type VttPixiStageProps = {
 
 const blendModeToPixi = (mode?: TokenBlendMode) => mode ?? "normal";
 
-const hexToPixiColor = (color: string, fallback = 0x22c55e) => {
-	const normalized = color.trim().replace(/^#/, "");
-	if (!/^[0-9a-f]{6}$/i.test(normalized)) return fallback;
-	return Number.parseInt(normalized, 16);
-};
+const hexToPixiColor = (color: string, fallback = 0x22c55e) =>
+	parsePixiColor(color, fallback);
 
 const isAdditivePointerSelection = (event: {
 	shiftKey?: boolean;
@@ -164,11 +175,18 @@ type PixiRendererStatus =
 	| "waiting-for-layout"
 	| "initializing"
 	| "ready"
-	| "failed";
+	| "failed"
+	| "layout-timeout"
+	| "context-lost"
+	| "render-error";
 
 const VTT_MAX_RENDER_RESOLUTION = 1.5;
 const VTT_INIT_STABLE_FRAME_COUNT = 2;
 const VTT_INIT_MAX_LAYOUT_FRAMES = 12;
+// Wall-clock budget before a never-sized map container surfaces a diagnostic
+// and hands off to the DOM fallback. Normal layouts report a usable size within
+// a frame or two, so this only fires for genuinely collapsed/hidden layouts.
+const VTT_LAYOUT_TIMEOUT_MS = 4000;
 
 const formatPixiError = (err: unknown) =>
 	err instanceof Error
@@ -187,8 +205,14 @@ const measureViewport = (container: HTMLElement | null) => ({
 	height: Math.max(0, Math.floor(container?.clientHeight ?? 0)),
 });
 
-/** Query the GPU's max texture size via a throwaway WebGL context. */
-const getMaxTextureSize = (): number => {
+/**
+ * Probe a throwaway WebGL context once to learn (a) whether WebGL is available
+ * at all and (b) the GPU's max texture size. Cached per page load so we never
+ * create throwaway contexts repeatedly. When WebGL is unavailable the init
+ * routine short-circuits its retry ladder and hands off to the DOM fallback
+ * immediately instead of thrashing the GPU five times.
+ */
+const probeWebGL = (): { available: boolean; maxTextureSize: number } => {
 	try {
 		const c = document.createElement("canvas");
 		const gl = c.getContext("webgl2") ?? c.getContext("webgl");
@@ -196,16 +220,19 @@ const getMaxTextureSize = (): number => {
 			const max = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
 			// Lose the context immediately so we don't hog a GPU slot.
 			gl.getExtension("WEBGL_lose_context")?.loseContext();
-			return max;
+			return {
+				available: true,
+				maxTextureSize: typeof max === "number" && max > 0 ? max : 4096,
+			};
 		}
 	} catch {
 		// Swallow — fall through to safe default.
 	}
-	return 4096;
+	return { available: false, maxTextureSize: 4096 };
 };
 
-// Cache once per page load so we don't create throwaway contexts repeatedly.
-const GPU_MAX_TEXTURE = getMaxTextureSize();
+const GPU_PROBE = probeWebGL();
+const GPU_MAX_TEXTURE = GPU_PROBE.maxTextureSize;
 
 const scaleWallsForPixiVisibility = (
 	walls: import("@/lib/vtt").WallSegment[],
@@ -328,9 +355,61 @@ export function VttPixiStage({
 		worldSizeRef.current = worldSize;
 	}, [worldSize]);
 
-	const dragStateRef = useRef<{ tokenId: string; pointerId: number } | null>(
-		null,
-	);
+	useEffect(() => {
+		activeTokenIdsRef.current = activeTokenIds;
+	}, [activeTokenIds]);
+
+	// Token drag state. We move the dragged sprite(s) in pixel space during the
+	// gesture and commit a single snapped grid position per token on drop (DDB/
+	// Roll20 feel) instead of mutating scene state on every pointermove.
+	const dragStateRef = useRef<{
+		pointerId: number;
+		primaryTokenId: string;
+		originGX: number;
+		originGY: number;
+		memberIds: string[];
+		startPointerX: number | null;
+		startPointerY: number | null;
+		memberStart: Map<string, { x: number; y: number }> | null;
+	} | null>(null);
+	// Live map of tokenId → its Pixi container, repopulated on every token
+	// render so the drag handlers can move/snap the right sprites across
+	// rebuilds (e.g. the selection rebuild that fires at drag start).
+	const tokenContainersRef = useRef<Map<string, Container>>(new Map());
+	// Reconciliation cache: tokenId → its persistent container + nameplate +
+	// a signature of every visual input. Unchanged tokens are skipped entirely;
+	// changed tokens are rebuilt in place (container/nameplate reused) so a
+	// single move/selection no longer rebuilds the whole token layer.
+	const tokenRenderCacheRef = useRef<
+		Map<
+			string,
+			{ container: Container; nameplate: Text | null; signature: string }
+		>
+	>(new Map());
+	// Current token data by id, read by the once-attached pointer handlers so
+	// they always act on live position/lock state across reconciles.
+	const tokensByIdRef = useRef<Map<string, PlacedToken>>(new Map());
+	// Latest token interaction callbacks, read by the once-attached pointer
+	// handlers so reused containers never call a stale closure.
+	const tokenInteractionRef = useRef({
+		onTokenPointerSelect,
+		setActiveTokenId,
+		onTokenDragStart,
+		updateToken,
+		isWarden,
+		currentUserId,
+	});
+	// Latest multi-selection, read by the (stable) pointer handlers via a ref so
+	// they don't need to re-bind whenever the selection changes.
+	const activeTokenIdsRef = useRef<string[]>(activeTokenIds);
+	// Per-light visibility-polygon memo (keyed on walls + light + step) so static
+	// re-renders that don't touch walls/lights skip the expensive recompute.
+	const lightPolygonCacheRef = useRef<
+		Map<
+			string,
+			{ key: string; polygon: ReturnType<typeof computeVisibilityPolygon> }
+		>
+	>(new Map());
 	const scrollDragRef = useRef<{
 		pointerId: number;
 		startX: number;
@@ -359,8 +438,14 @@ export function VttPixiStage({
 	const drawingGraphicsRef = useRef<Graphics | null>(null);
 
 	// Weather state
-	const weatherEmitterRef = useRef<Emitter | null>(null);
+	const weatherEmitterRef = useRef<WeatherEmitter | null>(null);
+	// Active one-shot FX bursts + a shared particle texture, driven by the ticker.
+	const activeEffectsRef = useRef<EffectInstance[]>([]);
+	const effectTextureRef = useRef<Texture | null>(null);
 	const worldContainerRef = useRef<Container | null>(null);
+	// Cleanup for the WebGL context-loss listener attached after a successful
+	// init. Held in a ref so the init effect's cleanup closure can detach it.
+	const contextLossCleanupRef = useRef<(() => void) | null>(null);
 	// Snap-to-grid ghost overlay shown while dragging a token. Populated by
 	// the stage-init effect and consumed by pointer handlers in a separate
 	// effect, so we share it via a ref rather than nested closure scope.
@@ -507,46 +592,67 @@ export function VttPixiStage({
 					? Math.max(0.5, Math.floor((GPU_MAX_TEXTURE / maxDim) * 100) / 100)
 					: desiredRes;
 
-			// Attempt init with progressively lower settings on failure.
+			// Attempt init with progressively safer settings on failure. We vary
+			// powerPreference across attempts because some GPUs/drivers refuse a
+			// "high-performance" context but grant "low-power" (hybrid-GPU
+			// laptops, remote desktop, certain driver configs) — the previous
+			// ladder only varied resolution, so it could never recover from that.
+			// Pixi's GpuPowerPreference is "high-performance" | "low-power".
 			const attempts: Array<{
 				resolution: number;
 				width: number;
 				height: number;
 				antialias: boolean;
+				powerPreference: "high-performance" | "low-power";
 			}> = [
 				{
 					resolution: safeResolution,
 					width: canvasW,
 					height: canvasH,
 					antialias: false,
+					powerPreference: "high-performance",
 				},
 				{
 					resolution: safeResolution,
 					width: canvasW,
 					height: canvasH,
-					antialias: true,
-				},
-				{ resolution: 1, width: canvasW, height: canvasH, antialias: false },
-				{
-					resolution: 0.75,
-					width: canvasW,
-					height: canvasH,
 					antialias: false,
+					powerPreference: "low-power",
 				},
 				{
 					resolution: 1,
+					width: canvasW,
+					height: canvasH,
+					antialias: false,
+					powerPreference: "high-performance",
+				},
+				{
+					resolution: 1,
+					width: canvasW,
+					height: canvasH,
+					antialias: false,
+					powerPreference: "low-power",
+				},
+				{
+					resolution: 0.75,
 					width: Math.ceil(canvasW / 2),
 					height: Math.ceil(canvasH / 2),
 					antialias: false,
+					powerPreference: "low-power",
 				},
 			];
+			// When the preflight probe reports no WebGL, try once then fall back
+			// fast rather than thrashing the GPU through all five attempts.
+			const initAttempts = GPU_PROBE.available
+				? attempts
+				: attempts.slice(0, 1);
 
 			let app: Application | null = null;
 			let lastError: unknown = null;
 
-			for (let i = 0; i < attempts.length; i++) {
+			for (let i = 0; i < initAttempts.length; i++) {
 				if (destroyed) return;
-				const cfg = attempts[i];
+				const cfg = initAttempts[i];
 				const candidate = new Application();
 				try {
 					await candidate.init({
@@ -557,19 +663,19 @@ export function VttPixiStage({
 						width: cfg.width,
 						height: cfg.height,
 						preference: "webgl",
-						powerPreference: "high-performance",
+						powerPreference: cfg.powerPreference,
 					});
 					app = candidate;
 					if (i > 0) {
 						console.warn(
-							`[VTT Pixi] Initialized on attempt ${i + 1} with resolution=${cfg.resolution}, size=${cfg.width}×${cfg.height}`,
+							`[VTT Pixi] Initialized on attempt ${i + 1} (resolution=${cfg.resolution}, size=${cfg.width}×${cfg.height}, power=${cfg.powerPreference})`,
 						);
 					}
 					break;
 				} catch (err) {
 					lastError = err;
 					console.error(
-						`[VTT Pixi] Init attempt ${i + 1}/${attempts.length} failed:`,
+						`[VTT Pixi] Init attempt ${i + 1}/${initAttempts.length} failed:`,
 						err,
 						{ ...cfg },
 					);
@@ -582,11 +688,16 @@ export function VttPixiStage({
 			}
 
 			if (!app) {
-				const message = `Pixi init failed after all retries: ${formatPixiError(lastError)}`;
+				const webglNote = GPU_PROBE.available
+					? ""
+					: " (WebGL unavailable in this browser/GPU)";
+				const message = `Pixi init failed after all retries${webglNote}: ${formatPixiError(lastError)}`;
 				setRendererStatus("failed");
 				setRendererError(message);
 				console.error(
-					"[VTT Pixi] All init attempts failed. GPU_MAX_TEXTURE =",
+					"[VTT Pixi] All init attempts failed. webglAvailable =",
+					GPU_PROBE.available,
+					"GPU_MAX_TEXTURE =",
 					GPU_MAX_TEXTURE,
 					"viewport =",
 					canvasW,
@@ -619,6 +730,30 @@ export function VttPixiStage({
 			app.canvas.style.height = "100%";
 			app.canvas.style.touchAction = "none";
 
+			// Surface a lost WebGL context (driver reset, GPU eviction, too many
+			// live contexts) as a diagnostic and hand off to the DOM fallback;
+			// the consumer's retry remounts a fresh Application.
+			const readyApp = app;
+			const handleContextLost = (event: Event) => {
+				event.preventDefault();
+				if (destroyed) return;
+				console.warn("[VTT Pixi] WebGL context lost.");
+				setRendererStatus("context-lost");
+				setRendererError("WebGL context lost — switching to fallback.");
+				onInitError?.(new Error("context-lost: WebGL context was lost."));
+			};
+			readyApp.canvas.addEventListener(
+				"webglcontextlost",
+				handleContextLost as EventListener,
+				false,
+			);
+			contextLossCleanupRef.current = () => {
+				readyApp.canvas.removeEventListener(
+					"webglcontextlost",
+					handleContextLost as EventListener,
+				);
+			};
+
 			canvasHostRef.current?.appendChild(app.canvas);
 			if (canvasHostRef.current) {
 				canvasHostRef.current.dataset.rendererWidth = String(canvasW);
@@ -635,6 +770,8 @@ export function VttPixiStage({
 
 		return () => {
 			destroyed = true;
+			contextLossCleanupRef.current?.();
+			contextLossCleanupRef.current = null;
 			if (appRef.current) {
 				try {
 					appRef.current.destroy(true);
@@ -647,6 +784,31 @@ export function VttPixiStage({
 			setRendererStatus("waiting-for-layout");
 		};
 	}, [containerRef, dpr[1], onInitError, viewportReady]);
+
+	// Layout-timeout watchdog: a never-sized map container would otherwise leave
+	// the renderer stuck on "waiting-for-layout" forever (blank map, no
+	// fallback, no diagnostic). Normal layouts flip viewportReady within a frame
+	// or two, which clears this before it can fire.
+	useEffect(() => {
+		if (viewportReady || appReady) return;
+		if (rendererStatus === "failed" || rendererStatus === "layout-timeout") {
+			return;
+		}
+		const timer = window.setTimeout(() => {
+			// Re-measure to avoid acting on stale state (e.g. layout that landed
+			// in the same tick the timer fired).
+			const measured = measureViewport(containerRef.current);
+			if (appRef.current || (measured.width > 0 && measured.height > 0)) {
+				return;
+			}
+			const message =
+				"Map area never reported a usable size; switched to the DOM fallback.";
+			setRendererStatus("layout-timeout");
+			setRendererError(message);
+			onInitError?.(new Error(`layout-timeout: ${message}`));
+		}, VTT_LAYOUT_TIMEOUT_MS);
+		return () => window.clearTimeout(timer);
+	}, [appReady, containerRef, onInitError, rendererStatus, viewportReady]);
 
 	useEffect(() => {
 		const app = appRef.current;
@@ -733,8 +895,30 @@ export function VttPixiStage({
 
 		const ticker = new Ticker();
 		ticker.add((tick) => {
-			if (weatherEmitterRef.current) {
-				weatherEmitterRef.current.update(tick.deltaMS * 0.001);
+			const emitter = weatherEmitterRef.current;
+			if (emitter) {
+				try {
+					emitter.update(tick.deltaMS);
+				} catch (err) {
+					// Never let a per-frame weather glitch break the ticker/app.
+					console.error("[VTT Pixi] Weather update failed; disabling.", err);
+					emitter.destroy();
+					weatherEmitterRef.current = null;
+				}
+			}
+			// Advance + retire one-shot effects.
+			const effects = activeEffectsRef.current;
+			for (let i = effects.length - 1; i >= 0; i--) {
+				let alive = false;
+				try {
+					alive = effects[i].update(tick.deltaMS);
+				} catch (err) {
+					console.error("[VTT Pixi] Effect update failed; removing.", err);
+				}
+				if (!alive) {
+					effects[i].destroy();
+					effects.splice(i, 1);
+				}
 			}
 		});
 		ticker.start();
@@ -750,11 +934,21 @@ export function VttPixiStage({
 				weatherEmitterRef.current.destroy();
 				weatherEmitterRef.current = null;
 			}
+			for (const effect of activeEffectsRef.current) effect.destroy();
+			activeEffectsRef.current = [];
+			effectTextureRef.current?.destroy(true);
+			effectTextureRef.current = null;
 			drawOverlay.clear();
 			stage.removeChildren();
 			stageLayersRef.current = null;
 			worldContainerRef.current = null;
 			snapGhostLayerRef.current = null;
+			// The layers (and their token containers/nameplates) were just torn
+			// down — drop the reconciliation cache so a re-init rebuilds cleanly.
+			tokenRenderCacheRef.current.clear();
+			tokenContainersRef.current.clear();
+			tokensByIdRef.current.clear();
+			lightPolygonCacheRef.current.clear();
 		};
 	}, [appReady, onStageReady, syncWorldTransform]);
 
@@ -769,8 +963,6 @@ export function VttPixiStage({
 			lightingLayer,
 			gridLayer: grid,
 			wallsLayer,
-			tokenLayer,
-			nameplateLayer,
 			fogLayer: fog,
 		} = layers;
 
@@ -905,201 +1097,26 @@ export function VttPixiStage({
 			}
 			weatherLayer.removeChildren();
 
-			if (!weather || weather === "none") return;
+			if (!weather || weather === "none" || weather === "clear") return;
+			if (!app.renderer) return;
 
 			const width = (scene?.width || 100) * gridSize * zoom;
 			const height = (scene?.height || 100) * gridSize * zoom;
 
-			// Base texture for simple shapes (circle/square equivalent)
+			// Shared 8px white circle texture; the emitter tints it per particle.
 			const particleGraphic = new Graphics();
 			particleGraphic.circle(0, 0, 4);
 			particleGraphic.fill(0xffffff);
 			const texture = app.renderer.generateTexture(particleGraphic);
+			particleGraphic.destroy();
 
-			let config: unknown = null;
-
-			if (weather === "rain") {
-				config = {
-					alpha: {
-						list: [
-							{ value: 0.5, time: 0 },
-							{ value: 0.1, time: 1 },
-						],
-						isStepped: false,
-					},
-					scale: {
-						list: [
-							{ value: 0.1, time: 0 },
-							{ value: 0.8, time: 1 },
-						],
-						isStepped: false,
-					},
-					color: {
-						list: [
-							{ value: "ffffff", time: 0 },
-							{ value: "aaaaaa", time: 1 },
-						],
-						isStepped: false,
-					},
-					speed: {
-						list: [
-							{ value: 800, time: 0 },
-							{ value: 900, time: 1 },
-						],
-						isStepped: false,
-					},
-					startRotation: { min: 65, max: 75 },
-					rotationSpeed: { min: 0, max: 0 },
-					lifetime: { min: 0.8, max: 1.5 },
-					frequency: 0.004,
-					spawnChance: 1,
-					particlesPerWave: 1,
-					emitterLifetime: -1,
-					maxParticles: Math.min(1000, fx.particleCount * 30),
-					pos: { x: 0, y: 0 },
-					addAtBack: false,
-					spawnType: "rect",
-					spawnRect: { x: 0, y: -200, w: width, h: 20 },
-				};
-			} else if (weather === "snow") {
-				config = {
-					alpha: {
-						list: [
-							{ value: 0.8, time: 0 },
-							{ value: 0, time: 1 },
-						],
-						isStepped: false,
-					},
-					scale: {
-						list: [
-							{ value: 0.5, time: 0 },
-							{ value: 0.2, time: 1 },
-						],
-						isStepped: false,
-					},
-					color: {
-						list: [
-							{ value: "ffffff", time: 0 },
-							{ value: "ffffff", time: 1 },
-						],
-						isStepped: false,
-					},
-					speed: {
-						list: [
-							{ value: 50, time: 0 },
-							{ value: 100, time: 1 },
-						],
-						isStepped: false,
-					},
-					startRotation: { min: 70, max: 110 },
-					rotationSpeed: { min: -50, max: 50 },
-					lifetime: { min: 3, max: 5 },
-					frequency: 0.02,
-					spawnChance: 1,
-					particlesPerWave: 1,
-					emitterLifetime: -1,
-					maxParticles: Math.min(500, fx.particleCount * 20),
-					pos: { x: 0, y: 0 },
-					addAtBack: false,
-					spawnType: "rect",
-					spawnRect: { x: 0, y: -200, w: width, h: height },
-				};
-			} else if (weather === "embers") {
-				config = {
-					alpha: {
-						list: [
-							{ value: 1, time: 0 },
-							{ value: 0, time: 1 },
-						],
-						isStepped: false,
-					},
-					scale: {
-						list: [
-							{ value: 0.5, time: 0 },
-							{ value: 0.1, time: 1 },
-						],
-						isStepped: false,
-					},
-					color: {
-						list: [
-							{ value: "ff6600", time: 0 },
-							{ value: "ff0000", time: 1 },
-						],
-						isStepped: false,
-					},
-					speed: {
-						list: [
-							{ value: 100, time: 0 },
-							{ value: 50, time: 1 },
-						],
-						isStepped: false,
-					},
-					startRotation: { min: 250, max: 290 }, // float upwards
-					rotationSpeed: { min: -100, max: 100 },
-					lifetime: { min: 1.5, max: 3 },
-					frequency: 0.05,
-					spawnChance: 1,
-					particlesPerWave: 1,
-					emitterLifetime: -1,
-					maxParticles: Math.min(300, fx.particleCount * 12),
-					pos: { x: 0, y: 0 },
-					addAtBack: false,
-					spawnType: "rect",
-					spawnRect: { x: 0, y: height, w: width, h: 50 },
-				};
-			} else if (weather === "gas") {
-				config = {
-					alpha: {
-						list: [
-							{ value: 0, time: 0 },
-							{ value: 0.4, time: 0.5 },
-							{ value: 0, time: 1 },
-						],
-						isStepped: false,
-					},
-					scale: {
-						list: [
-							{ value: 2, time: 0 },
-							{ value: 4, time: 1 },
-						],
-						isStepped: false,
-					},
-					color: {
-						list: [
-							{ value: "66aa66", time: 0 },
-							{ value: "226622", time: 1 },
-						],
-						isStepped: false,
-					},
-					speed: {
-						list: [
-							{ value: 20, time: 0 },
-							{ value: 5, time: 1 },
-						],
-						isStepped: false,
-					},
-					startRotation: { min: 0, max: 360 },
-					rotationSpeed: { min: -10, max: 10 },
-					lifetime: { min: 4, max: 8 },
-					frequency: 0.2,
-					spawnChance: 1,
-					particlesPerWave: 1,
-					emitterLifetime: -1,
-					maxParticles: Math.min(150, fx.particleCount * 6),
-					pos: { x: 0, y: 0 },
-					addAtBack: false,
-					spawnType: "rect",
-					spawnRect: { x: 0, y: 0, w: width, h: height },
-				};
-			}
-
-			if (config) {
-				weatherEmitterRef.current = new Emitter(
-					weatherLayer as never,
-					upgradeConfig(config as never, [texture]),
-				);
-				weatherEmitterRef.current.emit = true;
-			}
+			weatherEmitterRef.current = createWeatherEmitter(weatherLayer, {
+				type: weather,
+				width,
+				height,
+				texture,
+				particleCount: fx.particleCount,
+			});
 		};
 
 		const renderGrid = () => {
@@ -1220,18 +1237,22 @@ export function VttPixiStage({
 				visibleCells: isWarden ? null : fogVisibleCells,
 				showExploredMemory: !isWarden,
 			});
-			for (const rect of fogRects) {
+			if (fogRects.length > 0) {
+				// Batch every fog cell into one Graphics (one draw object instead
+				// of N) — each fill applies to the rect declared just before it.
 				const fg = new Graphics();
-				fg.rect(
-					rect.rx * step,
-					rect.ry * step,
-					rect.width * step,
-					rect.height * step,
-				);
-				fg.fill({
-					color: rect.state === "hidden" ? 0x000000 : 0x1a1510,
-					alpha: isWarden ? VTT_WARDEN_HIDDEN_FOG_OPACITY : rect.opacity,
-				});
+				for (const rect of fogRects) {
+					fg.rect(
+						rect.rx * step,
+						rect.ry * step,
+						rect.width * step,
+						rect.height * step,
+					);
+					fg.fill({
+						color: rect.state === "hidden" ? 0x000000 : 0x1a1510,
+						alpha: isWarden ? VTT_WARDEN_HIDDEN_FOG_OPACITY : rect.opacity,
+					});
+				}
 				fog.addChild(fg);
 			}
 		};
@@ -1243,6 +1264,9 @@ export function VttPixiStage({
 			lightLayer.blendMode = "add";
 			const step = gridSize * zoom;
 			const visibilityWalls = scaleWallsForPixiVisibility(walls, step);
+			// Memo key shared by all lights this pass — walls + step define the
+			// visibility geometry; per-light position/radius is appended below.
+			const wallsKey = `${step}|${JSON.stringify(walls)}`;
 
 			// Misty Pearl A2 — per-stratum gating for lights.
 			const levels = (
@@ -1274,25 +1298,31 @@ export function VttPixiStage({
 					darkvisionRange: 0,
 					blindsightRange: 0,
 				};
-				const polygon = computeVisibilityPolygon(
-					vision,
-					visibilityWalls,
-					step,
-					72,
-				);
+				const polyKey = `${wallsKey}|${light.x},${light.y},${light.brightRadius},${light.dimRadius}`;
+				const cachedPoly = lightPolygonCacheRef.current.get(light.id);
+				let polygon: ReturnType<typeof computeVisibilityPolygon>;
+				if (cachedPoly && cachedPoly.key === polyKey) {
+					polygon = cachedPoly.polygon;
+				} else {
+					polygon = computeVisibilityPolygon(vision, visibilityWalls, step, 72);
+					lightPolygonCacheRef.current.set(light.id, {
+						key: polyKey,
+						polygon,
+					});
+				}
 
 				const lightG = new Graphics();
 				// Draw dim light
 				lightG.circle(cx, cy, rDim);
 				lightG.fill({
-					color: Number(light.color.replace("#", "0x")),
+					color: parsePixiColor(light.color, 0xffffff),
 					alpha: light.intensity * 0.3 * stratumAlpha,
 				});
 
 				// Draw bright light
 				lightG.circle(cx, cy, rBright);
 				lightG.fill({
-					color: Number(light.color.replace("#", "0x")),
+					color: parsePixiColor(light.color, 0xffffff),
 					alpha: light.intensity * 0.7 * stratumAlpha,
 				});
 
@@ -1319,9 +1349,207 @@ export function VttPixiStage({
 		// we share the layer via snapGhostLayerRef because the pointer handlers
 		// run in a separate effect closure and need access to it.
 
+		// A render-phase throw must never bubble out of this effect (the
+		// route-level ErrorBoundary would replace the whole VTT) nor silently
+		// blank the scene. Report it as a non-fatal diagnostic and hand off to
+		// the DOM fallback, which renders the same scene from React state.
+		const reportRenderError = (label: string, err: unknown) => {
+			if (!renderActive) return;
+			console.error(`[VTT Pixi] Render phase '${label}' failed:`, err);
+			setRendererStatus("render-error");
+			setRendererError(`Render failed (${label}): ${formatPixiError(err)}`);
+			onInitError?.(
+				new Error(`render-error: ${label}: ${formatPixiError(err)}`),
+			);
+		};
+
+		try {
+			renderWeather();
+			renderGrid();
+			renderWalls();
+			renderFog();
+		} catch (err) {
+			reportRenderError("layers", err);
+		}
+		void renderBackground().catch((err) =>
+			reportRenderError("background", err),
+		);
+		void renderAnimatedTiles().catch((err) =>
+			reportRenderError("animated-tiles", err),
+		);
+		void renderLighting().catch((err) => reportRenderError("lighting", err));
+
+		return () => {
+			renderActive = false;
+		};
+	}, [
+		appReady,
+		effectiveVisibleLayers,
+		fogVisibleCells,
+		gridSize,
+		isWarden,
+		onInitError,
+		scene,
+		showGrid,
+		walls,
+		lightSources,
+		weather,
+		gridConfig?.type,
+		zoom,
+		fx.particleCount,
+		activeStratumId,
+	]);
+
+	useEffect(() => {
+		const app = appRef.current;
+		const layers = stageLayersRef.current;
+		if (!app || !appReady || !layers) return;
+
+		const { tokenLayer, nameplateLayer } = layers;
+
+		let renderActive = true;
+
+		const reportRenderError = (label: string, err: unknown) => {
+			if (!renderActive) return;
+			console.error(`[VTT Pixi] Render phase '${label}' failed:`, err);
+			setRendererStatus("render-error");
+			setRendererError(`Render failed (${label}): ${formatPixiError(err)}`);
+			onInitError?.(
+				new Error(`render-error: ${label}: ${formatPixiError(err)}`),
+			);
+		};
+
+		const buildTokenSignature = (
+			token: PlacedToken,
+			ctx: {
+				footprintW: number;
+				footprintH: number;
+				isOverlayToken: boolean;
+				isSelected: boolean;
+				isTargeted: boolean;
+				isActiveInit: boolean;
+				dimStratum: boolean;
+			},
+		) =>
+			JSON.stringify([
+				token.x,
+				token.y,
+				token.rotation,
+				token.layer,
+				token.size,
+				token.gridWidth,
+				token.gridHeight,
+				token.color,
+				token.borderColor,
+				token.imageUrl,
+				token.imageScale,
+				token.emoji,
+				token.name,
+				token.render?.mode,
+				token.render?.opacity,
+				token.render?.blendMode,
+				token.hp,
+				token.hp_current,
+				token.maxHp,
+				token.hp_max,
+				token.ac,
+				token.armor_class,
+				token.bars,
+				token.conditions,
+				token.barVisibility,
+				token.ownerId,
+				token.locked,
+				ctx.footprintW,
+				ctx.footprintH,
+				ctx.isOverlayToken,
+				ctx.isSelected,
+				ctx.isTargeted,
+				ctx.isActiveInit,
+				ctx.dimStratum,
+				isWarden,
+				currentUserId,
+			]);
+
+		// Attached exactly once per container. Reads live token data + callbacks
+		// via refs so reused containers never act on stale closures.
+		const attachTokenPointerHandlers = (
+			container: Container,
+			tokenId: string,
+		) => {
+			container.on("pointerdown", (e) => {
+				const token = tokensByIdRef.current.get(tokenId);
+				if (!token) return;
+				if (e.pointerType === "mouse" && e.button !== 0) return;
+				e.stopPropagation();
+				const additive = isAdditivePointerSelection(e);
+				const handlers = tokenInteractionRef.current;
+				if (handlers.onTokenPointerSelect) {
+					handlers.onTokenPointerSelect(token.id, additive);
+				} else {
+					handlers.setActiveTokenId(token.id);
+				}
+				window.dispatchEvent(
+					new CustomEvent("vtt:token-pointerdown", {
+						detail: {
+							tokenId: token.id,
+							pointerType: e.pointerType,
+							additive,
+						},
+					}),
+				);
+				if (token.locked || additive) return;
+				// Players may select any token but only move/rotate their own
+				// (DDB/Roll20 ownership parity). The Warden controls everything.
+				if (
+					!handlers.isWarden &&
+					token.ownerId &&
+					token.ownerId !== handlers.currentUserId
+				) {
+					return;
+				}
+
+				if (e.pointerType === "touch") {
+					if (longPressRef.current) {
+						window.clearTimeout(longPressRef.current.timer);
+						longPressRef.current = null;
+					}
+					const timer = window.setTimeout(() => {
+						handlers.updateToken(token.id, {
+							rotation: (token.rotation + 90) % 360,
+						});
+						longPressRef.current = null;
+					}, 550);
+					longPressRef.current = {
+						tokenId: token.id,
+						timer,
+						pointerId: e.pointerId,
+					};
+				}
+
+				// Drag the whole multi-selection together when the grabbed token
+				// is part of it; otherwise just this token.
+				const selection = activeTokenIdsRef.current;
+				const memberIds =
+					selection.length > 1 && selection.includes(token.id)
+						? [...selection]
+						: [token.id];
+				dragStateRef.current = {
+					pointerId: e.pointerId,
+					primaryTokenId: token.id,
+					originGX: token.x,
+					originGY: token.y,
+					memberIds,
+					startPointerX: null,
+					startPointerY: null,
+					memberStart: null,
+				};
+				handlers.onTokenDragStart?.(token.id);
+			});
+		};
+
 		const renderTokens = async () => {
-			tokenLayer.removeChildren();
-			nameplateLayer.removeChildren();
+			const cache = tokenRenderCacheRef.current;
+			tokensByIdRef.current.clear();
 
 			const visible = tokens.filter((token) => {
 				if (!effectiveVisibleLayers[token.layer]) return false;
@@ -1341,22 +1569,21 @@ export function VttPixiStage({
 					fogVisibleCells,
 				);
 			});
+			for (const token of visible) {
+				tokensByIdRef.current.set(token.id, token);
+			}
+
+			const seen = new Set<string>();
 
 			for (const token of visible) {
 				if (!renderActive) return;
-				// Grid-unit footprint (industry standard: Roll20/Foundry/DDB).
-				// Medium = 1×1 cells, Large = 2×2, Huge = 3×3, Gargantuan = 4×4,
-				// Tiny = 0.5×0.5. Previous code used fixed pixel constants
-				// (48/64/96) which made tokens look tiny on scenes with larger
-				// grid sizes (e.g. sandbox scenes use gridSize=70).
+				// Grid-unit footprint (Roll20/Foundry/DDB parity).
 				const { width: footprintW, height: footprintH } = getTokenFootprintPx(
 					token.size,
 					gridSize,
 					zoom,
 					{ gridWidth: token.gridWidth, gridHeight: token.gridHeight },
 				);
-				// Circle/bar geometry stays square — use the larger dimension so
-				// non-square tokens are fully circumscribed.
 				const size = Math.max(footprintW, footprintH);
 				const imageScale = token.imageScale ?? 1;
 				const isOverlayToken =
@@ -1369,38 +1596,62 @@ export function VttPixiStage({
 				const isSelected =
 					activeTokenId === token.id || activeTokenIds.includes(token.id);
 				const isTargeted = targetedTokenIds.includes(token.id);
+				const isActiveInit = activeInitiativeTokenId === token.id;
+				const dimStratum = !!(
+					activeStratumId &&
+					token.level &&
+					token.level !== activeStratumId
+				);
 
-				const container = new Container();
+				seen.add(token.id);
+				const signature = buildTokenSignature(token, {
+					footprintW,
+					footprintH,
+					isOverlayToken,
+					isSelected,
+					isTargeted,
+					isActiveInit,
+					dimStratum,
+				});
+				const existing = cache.get(token.id);
+				// Unchanged token — skip all work (the win for large scenes).
+				if (existing && existing.signature === signature) continue;
+
+				// (Re)build just this token. Reuse the container (keeps the
+				// once-attached pointer handler + drag continuity); free old
+				// child GPU resources before redrawing.
+				let container = existing?.container;
+				if (container) {
+					for (const child of container.removeChildren()) child.destroy();
+				} else {
+					container = new Container();
+					container.eventMode = "static";
+					attachTokenPointerHandlers(container, token.id);
+					tokenLayer.addChild(container);
+				}
+				tokenContainersRef.current.set(token.id, container);
+
 				container.x = token.x * gridSize * zoom;
 				container.y = token.y * gridSize * zoom;
 				container.width = footprintW;
 				container.height = footprintH;
 				container.rotation = (token.rotation * Math.PI) / 180;
 				container.zIndex = token.layer * 10 + 10;
-				container.eventMode = "static";
 				container.cursor = token.locked ? "default" : "pointer";
-				// Misty Pearl A2 — Strata gating. Tokens on inactive strata
-				// render dimmed so the Warden can focus on one floor. Null
-				// activeStratumId or tokens without a level fall through.
-				if (activeStratumId && token.level && token.level !== activeStratumId) {
-					container.alpha = 0.25;
-				}
+				// Misty Pearl A2 — strata gating dims off-floor tokens.
+				container.alpha = dimStratum ? 0.25 : 1;
 
 				const tokenBg = new Graphics();
 				if (!isOverlayToken) {
-					// DDB-style explicit border override wins over owner/default color.
+					// DDB-style explicit border override wins over owner/default.
 					const overrideBorderHex = token.borderColor
-						? Number(token.borderColor.replace("#", "0x"))
+						? parsePixiColor(token.borderColor, 0x3b82f6)
 						: null;
-					const ownerBorderHex = token.color
-						? Number(token.color.replace("#", "0x"))
-						: 0x3b82f6;
+					const ownerBorderHex = parsePixiColor(token.color, 0x3b82f6);
 					const borderColor = overrideBorderHex ?? ownerBorderHex;
 					tokenBg.circle(size / 2, size / 2, size / 2);
 					tokenBg.fill({
-						color: token.color
-							? Number(token.color.replace("#", "0x"))
-							: 0x000000,
+						color: parsePixiColor(token.color, 0x000000),
 						alpha: token.color ? 0.25 : 0.12,
 					});
 					tokenBg.stroke({
@@ -1408,9 +1659,8 @@ export function VttPixiStage({
 						color: borderColor,
 						alpha: 0.9,
 					});
-					if (activeInitiativeTokenId === token.id) {
+					if (isActiveInit) {
 						tokenBg.stroke({ width: 4, color: 0x10b981, alpha: 1 });
-						// Add a subtle glow for the active initiative token
 						const glow = new Graphics();
 						glow.circle(size / 2, size / 2, size / 2 + 4);
 						glow.fill({ color: 0x10b981, alpha: 0.3 });
@@ -1437,15 +1687,10 @@ export function VttPixiStage({
 						const texture = await Assets.load(token.imageUrl);
 						if (!renderActive) return;
 						const sprite = Sprite.from(texture as never);
-						// Foundry parity: imageScale multiplies sprite size but
-						// never the grid footprint/token.
 						sprite.width = footprintW * imageScale;
 						sprite.height = footprintH * imageScale;
-						// Re-center after scale so oversized art stays centered.
-						const offsetX = (footprintW - sprite.width) / 2;
-						const offsetY = (footprintH - sprite.height) / 2;
-						sprite.x = offsetX;
-						sprite.y = offsetY;
+						sprite.x = (footprintW - sprite.width) / 2;
+						sprite.y = (footprintH - sprite.height) / 2;
 						sprite.anchor.set(0);
 						sprite.alpha = token.render?.opacity ?? 1;
 						sprite.blendMode = blendModeToPixi(
@@ -1454,10 +1699,6 @@ export function VttPixiStage({
 						if (!isOverlayToken) {
 							sprite.mask = tokenBg;
 						}
-						// NOTE: don't call sprite.scale.set(1) here — sprite.width/height
-						// internally update scale to match our target footprint, and
-						// resetting to 1 would collapse the sprite back to texture size.
-						tokenLayer.addChild(container);
 						container.addChild(sprite);
 					} catch {
 						const text = new Text({
@@ -1468,7 +1709,6 @@ export function VttPixiStage({
 						text.y = size / 2;
 						text.anchor.set(0.5);
 						container.addChild(text);
-						tokenLayer.addChild(container);
 					}
 				} else {
 					const text = new Text({
@@ -1479,16 +1719,11 @@ export function VttPixiStage({
 					text.y = size / 2;
 					text.anchor.set(0.5);
 					container.addChild(text);
-					tokenLayer.addChild(container);
 				}
 
-				// Draw Status Bars (HP, AC, etc)
+				// Status bars (HP/AC/custom) — config-driven visibility.
 				if (!isOverlayToken) {
-					const showSelectedBars =
-						isSelected || activeInitiativeTokenId === token.id;
-					// D2: bar visibility is config-driven — "always" shows for
-					// everyone, "owner" shows to the token's owner, Warden always
-					// sees bars, and otherwise bars appear on selection/active turn.
+					const showSelectedBars = isSelected || isActiveInit;
 					const globalBarVisible =
 						isWarden ||
 						token.barVisibility === "always" ||
@@ -1507,7 +1742,6 @@ export function VttPixiStage({
 							const barHeight = 4;
 							const percent =
 								max > 0 ? Math.max(0, Math.min(1, current / max)) : 0;
-
 							const bg = new Graphics();
 							bg.rect(
 								size / 2 - barWidth / 2,
@@ -1516,7 +1750,6 @@ export function VttPixiStage({
 								barHeight,
 							);
 							bg.fill({ color: 0x000000, alpha: 0.7 });
-
 							const fill = new Graphics();
 							fill.rect(
 								size / 2 - barWidth / 2,
@@ -1525,7 +1758,6 @@ export function VttPixiStage({
 								barHeight,
 							);
 							fill.fill({ color });
-
 							container.addChild(bg);
 							container.addChild(fill);
 							barOffset += barHeight + 2;
@@ -1543,7 +1775,6 @@ export function VttPixiStage({
 								drawBar(bar.current, bar.max, hexToPixiColor(bar.color));
 							}
 						} else {
-							// HP Bar
 							const hp = token.hp ?? token.hp_current;
 							const maxHp = token.maxHp ?? token.hp_max;
 							if (
@@ -1560,152 +1791,121 @@ export function VttPixiStage({
 											: 0xef4444;
 								drawBar(hp, maxHp, barColor);
 							}
-
-							// AC Bar (using arbitrary max of 30 for visualization)
 							const ac = token.ac ?? token.armor_class;
 							if (typeof ac === "number") {
-								drawBar(ac, 30, 0x3b82f6); // Blue AC bar
+								drawBar(ac, 30, 0x3b82f6);
 							}
 						}
 					}
 				}
 
-				// Draw Conditions if they exist
+				// Condition dots (top-right).
 				if (
 					!isOverlayToken &&
 					token.conditions &&
 					token.conditions.length > 0
 				) {
-					// Draw small colored dots for conditions at the top right
 					const dotRadius = 4;
 					let dotOffsetX = size - dotRadius;
-
 					for (const _condition of token.conditions) {
 						const dot = new Graphics();
 						dot.circle(dotOffsetX, dotRadius, dotRadius);
-						dot.fill({ color: 0xeab308 }); // Amber for conditions
+						dot.fill({ color: 0xeab308 });
 						dot.stroke({ color: 0x000000, width: 1 });
 						container.addChild(dot);
 						dotOffsetX -= dotRadius * 2 + 2;
 					}
 				}
 
-				// ── Nameplate (always-visible token label, Foundry parity) ──────────────
+				// Nameplate — reused across reconciles (Text builds are costly).
+				let nameplate = existing?.nameplate ?? null;
 				if (!isOverlayToken) {
-					const label = new Text({
-						text: token.name,
-						style: {
-							fill: 0xf0e6ff,
-							fontSize: Math.max(10, Math.round(size * 0.22)),
-							fontWeight: "bold",
-							stroke: { color: 0x000000, width: 3 },
-							dropShadow: {
-								color: 0x000000,
-								blur: 4,
-								alpha: 0.8,
-								distance: 1,
+					if (!nameplate) {
+						nameplate = new Text({
+							text: token.name,
+							style: {
+								fill: 0xf0e6ff,
+								fontSize: Math.max(10, Math.round(size * 0.22)),
+								fontWeight: "bold",
+								stroke: { color: 0x000000, width: 3 },
+								dropShadow: {
+									color: 0x000000,
+									blur: 4,
+									alpha: 0.8,
+									distance: 1,
+								},
 							},
-						},
-					});
-					label.anchor.set(0.5, 0);
-					// Position nameplate below the token. Horizontal center is half
-					// the footprint width; vertical anchor uses full footprint
-					// height so non-square tokens still get a well-placed label.
-					label.x = token.x * gridSize * zoom + footprintW / 2;
-					label.y = token.y * gridSize * zoom + footprintH + 2;
-					label.zIndex = token.layer * 10 + 11;
-					// Highlight nameplate if token is active initiative token
-					if (activeInitiativeTokenId === token.id) {
-						label.style.fill = 0x10b981;
-					} else if (isSelected) {
-						label.style.fill = 0xfbbf24;
+						});
+						nameplate.anchor.set(0.5, 0);
+						nameplateLayer.addChild(nameplate);
+					} else {
+						nameplate.text = token.name;
+						nameplate.style.fontSize = Math.max(10, Math.round(size * 0.22));
 					}
-					nameplateLayer.addChild(label);
+					nameplate.x = token.x * gridSize * zoom + footprintW / 2;
+					nameplate.y = token.y * gridSize * zoom + footprintH + 2;
+					nameplate.zIndex = token.layer * 10 + 11;
+					nameplate.style.fill = isActiveInit
+						? 0x10b981
+						: isSelected
+							? 0xfbbf24
+							: 0xf0e6ff;
+				} else if (nameplate) {
+					nameplate.destroy();
+					nameplate = null;
 				}
 
-				container.on("pointerdown", (e) => {
-					if (e.pointerType === "mouse" && e.button !== 0) {
-						return;
-					}
-					e.stopPropagation();
-					const additive = isAdditivePointerSelection(e);
-					if (onTokenPointerSelect) {
-						onTokenPointerSelect(token.id, additive);
-					} else {
-						setActiveTokenId(token.id);
-					}
-					window.dispatchEvent(
-						new CustomEvent("vtt:token-pointerdown", {
-							detail: {
-								tokenId: token.id,
-								pointerType: e.pointerType,
-								additive,
-							},
-						}),
-					);
-					if (token.locked || additive) return;
+				cache.set(token.id, { container, nameplate, signature });
+			}
 
-					if (e.pointerType === "touch") {
-						if (longPressRef.current) {
-							window.clearTimeout(longPressRef.current.timer);
-							longPressRef.current = null;
-						}
-						const timer = window.setTimeout(() => {
-							updateToken(token.id, { rotation: (token.rotation + 90) % 360 });
-							longPressRef.current = null;
-						}, 550);
-						longPressRef.current = {
-							tokenId: token.id,
-							timer,
-							pointerId: e.pointerId,
-						};
-					}
-
-					dragStateRef.current = { tokenId: token.id, pointerId: e.pointerId };
-					onTokenDragStart?.(token.id);
-				});
+			// Retire tokens no longer visible/present.
+			for (const [id, entry] of cache) {
+				if (seen.has(id)) continue;
+				entry.container.destroy({ children: true });
+				entry.nameplate?.destroy();
+				cache.delete(id);
+				tokenContainersRef.current.delete(id);
 			}
 
 			tokenLayer.sortableChildren = true;
+			nameplateLayer.sortableChildren = true;
 		};
 
-		void renderBackground();
-		void renderAnimatedTiles();
-		renderWeather();
-		renderGrid();
-		renderWalls();
-		renderFog();
-		void renderLighting();
-		void renderTokens();
+		// Keep the once-attached pointer handlers pointed at the latest callbacks.
+		tokenInteractionRef.current = {
+			onTokenPointerSelect,
+			setActiveTokenId,
+			onTokenDragStart,
+			updateToken,
+			isWarden,
+			currentUserId,
+		};
+
+		void renderTokens().catch((err) => reportRenderError("tokens", err));
 
 		return () => {
 			renderActive = false;
 		};
 	}, [
+		appReady,
+		tokens,
 		activeTokenId,
 		activeTokenIds,
 		targetedTokenIds,
 		activeInitiativeTokenId,
-		appReady,
-		currentUserId,
 		effectiveVisibleLayers,
 		fogVisibleCells,
-		gridSize,
+		currentUserId,
 		isWarden,
-		onTokenPointerSelect,
+		gridSize,
+		zoom,
 		scene,
+		activeStratumId,
+		onTokenPointerSelect,
 		setActiveTokenId,
-		showGrid,
-		tokens,
-		walls,
-		lightSources,
-		weather,
-		gridConfig?.type,
 		onTokenDragStart,
 		updateToken,
-		zoom,
-		fx.particleCount,
-		activeStratumId,
+		onInitError,
 	]);
 
 	useEffect(() => {
@@ -1855,22 +2055,70 @@ export function VttPixiStage({
 				) {
 					scrollDragRef.current = null;
 				}
-				const { x: px, y: py } = getWorldPointerPosition(e.clientX, e.clientY);
-				const gx = Math.floor(px / (gridSize * zoom));
-				const gy = Math.floor(py / (gridSize * zoom));
-				// Show snap-to-grid ghost cell via the shared layer ref so both
-				// the stage-init effect and these pointer handlers agree on target.
+				const world = getWorldPointerPosition(e.clientX, e.clientY);
+				const step = gridSize * zoom;
+				// Capture the grab origin + each member's start position on the
+				// first move — after any selection-triggered token rebuild — so
+				// the sprites track the cursor smoothly without jumping.
+				if (dragState.startPointerX === null) {
+					dragState.startPointerX = world.x;
+					dragState.startPointerY = world.y;
+					dragState.memberStart = new Map();
+					for (const id of dragState.memberIds) {
+						const c = tokenContainersRef.current.get(id);
+						if (c) {
+							dragState.memberStart.set(id, {
+								x: c.position.x,
+								y: c.position.y,
+							});
+						}
+					}
+				}
+				const deltaX = world.x - (dragState.startPointerX ?? world.x);
+				const deltaY = world.y - (dragState.startPointerY ?? world.y);
+				// Move the dragged sprite(s) in pixel space — no scene mutation,
+				// so the render effect does not re-run mid-drag.
+				for (const id of dragState.memberIds) {
+					const c = tokenContainersRef.current.get(id);
+					const start = dragState.memberStart?.get(id);
+					if (c && start) c.position.set(start.x + deltaX, start.y + deltaY);
+				}
+				// Snapped ghost + live distance label for the primary token.
 				const ghostLayer = snapGhostLayerRef.current;
-				if (ghostLayer) {
+				const primary = tokenContainersRef.current.get(
+					dragState.primaryTokenId,
+				);
+				if (ghostLayer && primary) {
 					ghostLayer.removeChildren();
-					const step = gridSize * zoom;
+					const snapped = snapWorldToCell(
+						primary.position.x,
+						primary.position.y,
+						step,
+					);
 					const ghost = new Graphics();
-					ghost.rect(gx * step, gy * step, step, step);
+					ghost.rect(snapped.gridX * step, snapped.gridY * step, step, step);
 					ghost.fill({ color: 0xfbbf24, alpha: 0.18 });
 					ghost.stroke({ width: 2, color: 0xfbbf24, alpha: 0.7 });
 					ghostLayer.addChild(ghost);
+					const feet = gridDistanceFeet(
+						snapped.gridX - dragState.originGX,
+						snapped.gridY - dragState.originGY,
+					);
+					if (feet > 0) {
+						const label = new Text({
+							text: `${feet} ft`,
+							style: {
+								fill: 0xffffff,
+								fontSize: 14,
+								fontWeight: "bold",
+								stroke: { color: 0x000000, width: 3 },
+							},
+						});
+						label.x = snapped.gridX * step + step + 4;
+						label.y = snapped.gridY * step;
+						ghostLayer.addChild(label);
+					}
 				}
-				updateToken(dragState.tokenId, { x: gx, y: gy });
 				return;
 			}
 
@@ -1919,7 +2167,31 @@ export function VttPixiStage({
 			if (dragState && dragState.pointerId === e.pointerId) {
 				dragStateRef.current = null;
 				snapGhostLayerRef.current?.removeChildren();
-				onTokenDragEnd?.(dragState.tokenId);
+				// Only commit if the token actually moved (a plain click already
+				// handled selection on pointerdown). Snap each dragged token to a
+				// grid cell with a single state update apiece.
+				if (dragState.startPointerX !== null) {
+					const step = gridSize * zoom;
+					// Hold Alt to drop at a free (fractional) position; otherwise
+					// snap to the nearest grid cell (DDB/Foundry parity).
+					const freePlace = e.altKey;
+					for (const id of dragState.memberIds) {
+						const c = tokenContainersRef.current.get(id);
+						if (!c) continue;
+						if (freePlace && step > 0) {
+							updateToken(id, {
+								x: Math.round((c.position.x / step) * 100) / 100,
+								y: Math.round((c.position.y / step) * 100) / 100,
+							});
+						} else {
+							const snapped = snapWorldToCell(c.position.x, c.position.y, step);
+							updateToken(id, { x: snapped.gridX, y: snapped.gridY });
+						}
+					}
+					for (const id of dragState.memberIds) {
+						onTokenDragEnd?.(id);
+					}
+				}
 			}
 
 			if (
@@ -1948,7 +2220,7 @@ export function VttPixiStage({
 				enableViewportPan &&
 				containerRef.current &&
 				e.pointerType === "mouse" &&
-				e.button === 2
+				(e.button === 2 || e.button === 1)
 			) {
 				e.preventDefault();
 				scrollDragRef.current = {
@@ -2076,6 +2348,59 @@ export function VttPixiStage({
 			host.removeEventListener("contextmenu", handleContextMenu);
 		};
 	}, []);
+
+	// One-shot FX: anything can dispatch `vtt:play-effect` with a preset + grid
+	// cell to spawn a GPU effect burst on the effects layer (combat/spell FX).
+	useEffect(() => {
+		const handlePlayEffect = (event: Event) => {
+			const app = appRef.current;
+			const layers = stageLayersRef.current;
+			if (!app?.renderer || !layers) return;
+			const detail = (event as CustomEvent).detail as {
+				preset?: EffectPreset;
+				gridX?: number;
+				gridY?: number;
+			} | null;
+			if (
+				!detail ||
+				typeof detail.gridX !== "number" ||
+				typeof detail.gridY !== "number"
+			) {
+				return;
+			}
+			// Lazily build a shared circle texture for effect particles.
+			if (!effectTextureRef.current) {
+				const g = new Graphics();
+				g.circle(0, 0, 4);
+				g.fill(0xffffff);
+				effectTextureRef.current = app.renderer.generateTexture(g);
+				g.destroy();
+			}
+			const cell = gridSize * zoom;
+			try {
+				const effect = createEffect(layers.effectsLayer, {
+					preset: detail.preset ?? "impact",
+					cx: (detail.gridX + 0.5) * cell,
+					cy: (detail.gridY + 0.5) * cell,
+					cell,
+					texture: effectTextureRef.current,
+					particleCount: fx.particleCount,
+				});
+				activeEffectsRef.current.push(effect);
+			} catch (err) {
+				console.error("[VTT Pixi] Failed to play effect:", err);
+			}
+		};
+		window.addEventListener(
+			"vtt:play-effect",
+			handlePlayEffect as EventListener,
+		);
+		return () =>
+			window.removeEventListener(
+				"vtt:play-effect",
+				handlePlayEffect as EventListener,
+			);
+	}, [gridSize, zoom, fx.particleCount]);
 
 	return (
 		<DynamicStyle

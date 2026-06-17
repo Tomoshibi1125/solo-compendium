@@ -3,6 +3,8 @@
  * Provides comprehensive keyboard navigation and quick actions
  */
 
+import { useAppStore } from "@/hooks/useAppStore";
+
 interface GlobalShortcut {
 	key: string;
 	ctrl?: boolean;
@@ -13,13 +15,6 @@ interface GlobalShortcut {
 	description: string;
 	category: "navigation" | "character" | "compendium" | "tools" | "general";
 	global?: boolean; // If true, works everywhere; if false, context-specific
-}
-
-// Command palette state - will be set by App component
-let openCommandPalette: (() => void) | null = null;
-
-export function setCommandPaletteOpener(opener: () => void) {
-	openCommandPalette = opener;
 }
 
 const findButtonByText = (text: string) => {
@@ -35,19 +30,7 @@ export const GLOBAL_SHORTCUTS: GlobalShortcut[] = [
 		key: "k",
 		ctrl: true,
 		action: () => {
-			// Try to open command palette first
-			if (openCommandPalette) {
-				openCommandPalette();
-				return;
-			}
-			// Fallback to focusing search input
-			const searchInput = document.querySelector(
-				'input[type="search"], input[placeholder*="Search"]',
-			) as HTMLInputElement;
-			if (searchInput) {
-				searchInput.focus();
-				searchInput.select();
-			}
+			useAppStore.getState().openCommandPalette();
 		},
 		description: "Open command palette",
 		category: "navigation",

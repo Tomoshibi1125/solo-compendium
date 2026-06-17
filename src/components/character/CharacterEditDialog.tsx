@@ -1,5 +1,8 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Save, Wand2, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -27,6 +30,15 @@ interface CharacterEditDialogProps {
 	onStateChange?: (state: CharacterWithAbilities) => void;
 }
 
+const characterEditSchema = z.object({
+	name: z.string().trim().min(1, "Character name cannot be empty."),
+	appearance: z.string().trim(),
+	backstory: z.string().trim(),
+	notes: z.string().trim(),
+});
+
+type CharacterEditValues = z.infer<typeof characterEditSchema>;
+
 export function CharacterEditDialog({
 	character,
 	open,
@@ -35,21 +47,27 @@ export function CharacterEditDialog({
 }: CharacterEditDialogProps) {
 	const { toast } = useToast();
 	const updateCharacter = useUpdateCharacter();
-	const [name, setName] = useState("");
-	const [appearance, setAppearance] = useState("");
-	const [backstory, setBackstory] = useState("");
-	const [notes, setNotes] = useState("");
 	const ascendantTools = useAscendantTools();
 
-	// Update form when character changes
+	const form = useForm<CharacterEditValues>({
+		resolver: zodResolver(characterEditSchema),
+		defaultValues: { name: "", appearance: "", backstory: "", notes: "" },
+		mode: "onSubmit",
+	});
+
+	// Sync form values when the character changes.
 	useEffect(() => {
 		if (character) {
-			setName(character.name || "");
-			setAppearance(character.appearance || "");
-			setBackstory(character.backstory || "");
-			setNotes(character.notes || "");
+			form.reset({
+				name: character.name || "",
+				appearance: character.appearance || "",
+				backstory: character.backstory || "",
+				notes: character.notes || "",
+			});
 		}
-	}, [character]);
+	}, [character, form]);
+
+	const nameValue = form.watch("name");
 
 	const [isGeneratingApp, setIsGeneratingApp] = useState(false);
 	const [isGeneratingBack, setIsGeneratingBack] = useState(false);
@@ -57,7 +75,6 @@ export function CharacterEditDialog({
 	const handleGenerateAI = async (field: "appearance" | "backstory") => {
 		if (!character) return;
 		const isApp = field === "appearance";
-		const setter = isApp ? setAppearance : setBackstory;
 		const loader = isApp ? setIsGeneratingApp : setIsGeneratingBack;
 
 		loader(true);
@@ -95,7 +112,7 @@ export function CharacterEditDialog({
 			}
 
 			if (text) {
-				setter(text);
+				form.setValue(field, text, { shouldDirty: true });
 				toast({
 					title: `${isApp ? "Appearance" : "Backstory"} Generated`,
 					description: "Feel free to modify the result.",
@@ -114,62 +131,64 @@ export function CharacterEditDialog({
 		}
 	};
 
-	const handleSave = async () => {
-		if (!character) return;
+	const onSubmit = form.handleSubmit(
+		async (values) => {
+			if (!character) return;
+			try {
+				const updatedCharacter = await updateCharacter.mutateAsync({
+					id: character.id,
+					data: {
+						name: values.name,
+						appearance: values.appearance || null,
+						backstory: values.backstory || null,
+						notes: values.notes || null,
+					},
+				});
 
-		if (!name.trim()) {
+				// Notify parent of state change for undo/redo
+				if (onStateChange && updatedCharacter) {
+					onStateChange({
+						...character,
+						...updatedCharacter,
+					} as CharacterWithAbilities);
+				}
+
+				toast({
+					title: "Character updated",
+					description: "Your changes have been saved.",
+				});
+
+				ascendantTools
+					.trackCustomFeatureUsage(
+						character.id,
+						"Character Details Updated",
+						"Appearance, backstory, or notes changed",
+						"SA",
+					)
+					.catch(console.error);
+
+				onOpenChange(false);
+			} catch (error) {
+				logger.error("Failed to update character:", error);
+				toast({
+					title: "Failed to update character",
+					description:
+						error instanceof Error
+							? error.message
+							: "An unknown error occurred",
+					variant: "destructive",
+				});
+			}
+		},
+		(errors) => {
 			toast({
 				title: "Name required",
-				description: "Character name cannot be empty.",
-				variant: "destructive",
-			});
-			return;
-		}
-
-		try {
-			const updatedCharacter = await updateCharacter.mutateAsync({
-				id: character.id,
-				data: {
-					name: name.trim(),
-					appearance: appearance.trim() || null,
-					backstory: backstory.trim() || null,
-					notes: notes.trim() || null,
-				},
-			});
-
-			// Notify parent of state change for undo/redo
-			if (onStateChange && updatedCharacter) {
-				onStateChange({
-					...character,
-					...updatedCharacter,
-				} as CharacterWithAbilities);
-			}
-
-			toast({
-				title: "Character updated",
-				description: "Your changes have been saved.",
-			});
-
-			ascendantTools
-				.trackCustomFeatureUsage(
-					character.id,
-					"Character Details Updated",
-					"Appearance, backstory, or notes changed",
-					"SA",
-				)
-				.catch(console.error);
-
-			onOpenChange(false);
-		} catch (error) {
-			logger.error("Failed to update character:", error);
-			toast({
-				title: "Failed to update character",
 				description:
-					error instanceof Error ? error.message : "An unknown error occurred",
+					errors.name?.message ?? "Please fix the highlighted fields.",
 				variant: "destructive",
 			});
-		}
-	};
+		},
+	);
 
 	if (!character) return null;
 
@@ -201,11 +220,15 @@ export function CharacterEditDialog({
 						<Label htmlFor="character-name">Name</Label>
 						<Input
 							id="character-name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
+							{...form.register("name")}
 							className="mt-1"
 							placeholder="Enter character name"
 						/>
+						{form.formState.errors.name && (
+							<p className="mt-1 text-sm text-destructive">
+								{form.formState.errors.name.message}
+							</p>
+						)}
 					</div>
 
 					<div>
@@ -216,7 +239,7 @@ export function CharacterEditDialog({
 								size="sm"
 								className="h-6 text-xs text-muted-foreground hover:text-primary px-2"
 								onClick={() => handleGenerateAI("appearance")}
-								disabled={isGeneratingApp || !name}
+								disabled={isGeneratingApp || !nameValue}
 							>
 								{isGeneratingApp ? (
 									<Loader2 className="w-3 h-3 mr-1 animate-spin" />
@@ -228,8 +251,7 @@ export function CharacterEditDialog({
 						</div>
 						<Textarea
 							id="character-appearance"
-							value={appearance}
-							onChange={(e) => setAppearance(e.target.value)}
+							{...form.register("appearance")}
 							className="mt-1"
 							rows={3}
 							placeholder="Physical description, notable features, etc."
@@ -244,7 +266,7 @@ export function CharacterEditDialog({
 								size="sm"
 								className="h-6 text-xs text-muted-foreground hover:text-primary px-2"
 								onClick={() => handleGenerateAI("backstory")}
-								disabled={isGeneratingBack || !name}
+								disabled={isGeneratingBack || !nameValue}
 							>
 								{isGeneratingBack ? (
 									<Loader2 className="w-3 h-3 mr-1 animate-spin" />
@@ -256,8 +278,7 @@ export function CharacterEditDialog({
 						</div>
 						<Textarea
 							id="character-backstory"
-							value={backstory}
-							onChange={(e) => setBackstory(e.target.value)}
+							{...form.register("backstory")}
 							className="mt-1"
 							rows={5}
 							placeholder="Character background, history, motivations, etc."
@@ -268,8 +289,7 @@ export function CharacterEditDialog({
 						<Label htmlFor="character-notes">Notes</Label>
 						<Textarea
 							id="character-notes"
-							value={notes}
-							onChange={(e) => setNotes(e.target.value)}
+							{...form.register("notes")}
 							className="mt-1"
 							rows={4}
 							placeholder="Session notes, reminders, character development, etc."
@@ -282,7 +302,7 @@ export function CharacterEditDialog({
 						<X className="w-4 h-4 mr-2" />
 						Cancel
 					</Button>
-					<Button onClick={handleSave} disabled={updateCharacter.isPending}>
+					<Button onClick={onSubmit} disabled={updateCharacter.isPending}>
 						{updateCharacter.isPending ? (
 							<>
 								<Save className="w-4 h-4 mr-2 animate-spin" />

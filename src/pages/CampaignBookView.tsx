@@ -19,6 +19,8 @@ import { Layout } from "@/components/layout/Layout";
 import { RiftHeading } from "@/components/ui/AscendantText";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getSandboxNpcPortraitUrl } from "@/data/compendium/sandbox/sandbox-asset-resolver";
+import { sandboxRecruitableNPCs } from "@/data/compendium/sandbox-npcs";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaignEncounters } from "@/hooks/useCampaignEncounters";
 import { useCampaignHandouts } from "@/hooks/useCampaignHandouts";
@@ -81,6 +83,10 @@ const getDownloadSlug = (value: string) =>
 		.replace(/[^a-z0-9]+/g, "-")
 		.replace(/^-+|-+$/g, "")
 		.slice(0, 80) || "campaign-book-section";
+
+const SANDBOX_NPC_BY_NAME = new Map(
+	sandboxRecruitableNPCs.map((npc) => [npc.name, npc] as const),
+);
 
 const CampaignBookView = () => {
 	const { id } = useParams<{ id: string }>();
@@ -925,33 +931,63 @@ const CampaignBookView = () => {
 								Click to expand.
 							</p>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{npcArticles.map((npc) => (
-									<details
-										key={npc.id}
-										className="bg-emerald-950/20 border border-emerald-500/20 rounded-lg overflow-hidden group"
-									>
-										<summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-emerald-500/5 transition-colors list-none">
-											<div className="flex items-center gap-3">
-												<Users className="w-4 h-4 text-emerald-400 shrink-0" />
-												<div>
-													<div className="font-display text-sm text-white uppercase tracking-wider">
-														{npc.title}
+								{npcArticles.map((npc) => {
+									const sandboxNpc = SANDBOX_NPC_BY_NAME.get(npc.title);
+									const portraitUrl = sandboxNpc
+										? getSandboxNpcPortraitUrl(sandboxNpc)
+										: null;
+
+									return (
+										<details
+											key={npc.id}
+											className="bg-emerald-950/20 border border-emerald-500/20 rounded-lg overflow-hidden group"
+										>
+											<summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-emerald-500/5 transition-colors list-none">
+												<div className="flex items-center gap-3">
+													{portraitUrl ? (
+														<img
+															src={portraitUrl}
+															alt=""
+															className="h-14 w-14 rounded-md border border-emerald-400/20 object-cover object-top bg-black/40 shrink-0"
+														/>
+													) : (
+														<Users className="w-4 h-4 text-emerald-400 shrink-0" />
+													)}
+													<div>
+														<div className="font-display text-sm text-white uppercase tracking-wider">
+															{npc.title}
+														</div>
+														<div className="text-[10px] text-emerald-400/60 mt-0.5">
+															{npc.category.toUpperCase()}
+														</div>
 													</div>
-													<div className="text-[10px] text-emerald-400/60 mt-0.5">
-														{npc.category.toUpperCase()}
+												</div>
+											</summary>
+											<div className="p-4 pt-0 border-t border-emerald-500/10">
+												<div
+													className={
+														portraitUrl
+															? "grid gap-4 pt-4 sm:grid-cols-[10rem_1fr]"
+															: "pt-4"
+													}
+												>
+													{portraitUrl && (
+														<img
+															src={portraitUrl}
+															alt={`${npc.title} portrait`}
+															className="aspect-square w-full rounded-md border border-emerald-400/20 object-cover object-top bg-black/40"
+														/>
+													)}
+													<div className="font-serif text-sm leading-relaxed text-slate-400 prose prose-invert prose-sm max-w-none">
+														<ReactMarkdown>
+															{npc.content || "*No details available.*"}
+														</ReactMarkdown>
 													</div>
 												</div>
 											</div>
-										</summary>
-										<div className="p-4 pt-0 border-t border-emerald-500/10">
-											<div className="font-serif text-sm leading-relaxed text-slate-400 prose prose-invert prose-sm max-w-none">
-												<ReactMarkdown>
-													{npc.content || "*No details available.*"}
-												</ReactMarkdown>
-											</div>
-										</div>
-									</details>
-								))}
+										</details>
+									);
+								})}
 							</div>
 						</div>
 					)}

@@ -8,6 +8,7 @@ import { useCallback, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { useUpdateCharacter } from "@/hooks/useCharacters";
 import type { useAscendantTools } from "@/hooks/useGlobalDDBeyondIntegration";
+import { useSheetUiPersistence } from "@/hooks/useSheetUiPersistence";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 import { normalizeCharacterResources } from "@/lib/characterResources";
@@ -23,6 +24,7 @@ import {
 	isLocalCharacterId,
 	setLocalCharacterSheetState,
 } from "@/lib/guestStore";
+import { useCharacterSheetUiStore } from "@/stores/characterSheetUiStore";
 
 type SheetStateRow =
 	Database["public"]["Tables"]["character_sheet_state"]["Row"];
@@ -72,7 +74,11 @@ const writeCachedSheetState = (key: string, state: CharacterSheetState) => {
 	}
 };
 
-export function useCharacterSheetState(characterId: string) {
+export function useCharacterSheetState(
+	characterId: string,
+	options?: { manageUiStore?: boolean },
+) {
+	const manageUiStore = options?.manageUiStore ?? false;
 	const queryClient = useQueryClient();
 	const { toast } = useToast();
 
@@ -189,10 +195,16 @@ export function useCharacterSheetState(characterId: string) {
 					characterId,
 				]) || defaultState;
 
+			// The UI store is the source of truth for the `ui` slice once hydrated,
+			// so every save (including mechanical-resource saves) carries the live
+			// UI prefs and never clobbers them in the shared JSON column.
+			const uiStore = useCharacterSheetUiStore.getState();
 			const next: CharacterSheetState = {
 				resources: updates.resources ?? current.resources,
 				customModifiers: updates.customModifiers ?? current.customModifiers,
-				ui: updates.ui ?? current.ui,
+				ui:
+					updates.ui ??
+					(uiStore.hydrated ? uiStore.getPersistedUi() : current.ui),
 			};
 			queryClient.setQueryData(["character-sheet-state", characterId], next);
 			return updateSheetState.mutateAsync(next);
@@ -200,50 +212,26 @@ export function useCharacterSheetState(characterId: string) {
 		[characterId, queryClient, updateSheetState],
 	);
 
+	// The UI store owns these persisted preferences; edits flow through it and
+	// are written back to Supabase by useSheetUiPersistence (debounced), so a
+	// tab click no longer fires a mutation every time.
 	const setModal = useCallback(
 		(modalId: keyof CharacterSheetState["ui"]["modals"], isOpen: boolean) => {
-			const current = (query.data as CharacterSheetState) || defaultState;
-			const nextUi = {
-				...current.ui,
-				modals: {
-					...current.ui.modals,
-					[modalId]: isOpen,
-				},
-			};
-			void saveSheetState({ ui: nextUi });
+			useCharacterSheetUiStore.getState().setModal(modalId, isOpen);
 		},
-		[query.data, saveSheetState],
+		[],
 	);
 
-	const setActiveTab = useCallback(
-		(tab: string) => {
-			const current = (query.data as CharacterSheetState) || defaultState;
-			const nextUi = {
-				...current.ui,
-				activeTab: tab,
-			};
-			void saveSheetState({ ui: nextUi });
-		},
-		[query.data, saveSheetState],
-	);
+	const setActiveTab = useCallback((tab: string) => {
+		useCharacterSheetUiStore.getState().setActiveTab(tab);
+	}, []);
 
-	// F3 of May 2026 remediation plan: per-section inline notes (DDB
-	// parity). Persists inside the existing `resources.ui` JSON blob
-	// so no schema change is needed.
+	// F3 of May 2026 remediation plan: per-section inline notes (DDB parity).
 	const setSectionNote = useCallback(
 		(section: SheetNoteSection, value: string) => {
-			const current = (query.data as CharacterSheetState) || defaultState;
-			const nextNotes = {
-				...(current.ui.sectionNotes || {}),
-				[section]: value,
-			};
-			const nextUi = {
-				...current.ui,
-				sectionNotes: nextNotes,
-			};
-			void saveSheetState({ ui: nextUi });
+			useCharacterSheetUiStore.getState().setSectionNote(section, value);
 		},
-		[query.data, saveSheetState],
+		[],
 	);
 
 	const onAddCondition = useCallback(
@@ -447,9 +435,57 @@ export function useCharacterSheetState(characterId: string) {
 		[],
 	);
 
+	// Subscribe to the UI store only when this instance manages it (the editable
+	// sheet). Non-managing instances select `null`/`false` so store changes never
+	// re-render them, and they keep reading the server `ui` from React Query.
+	const storeModals = useCharacterSheetUiStore((s) =>
+		manageUiStore ? s.modals : null,
+	);
+	const storeActiveTab = useCharacterSheetUiStore((s) =>
+		manageUiStore ? s.activeTab : null,
+	);
+	const storeSectionNotes = useCharacterSheetUiStore((s) =>
+		manageUiStore ? s.sectionNotes : null,
+	);
+	const storeHydrated = useCharacterSheetUiStore((s) =>
+		manageUiStore ? s.hydrated : false,
+	);
+
+	const serverState = (query.data as CharacterSheetState) || defaultState;
+
+	useSheetUiPersistence(
+		characterId,
+		(query.data as CharacterSheetState | undefined)?.ui,
+		saveSheetState,
+		manageUiStore,
+	);
+
+	const state = useMemo<CharacterSheetState>(
+		() =>
+			manageUiStore && storeHydrated && storeModals
+				? {
+						resources: serverState.resources,
+						customModifiers: serverState.customModifiers,
+						ui: {
+							modals: storeModals,
+							activeTab: storeActiveTab ?? "actions",
+							sectionNotes: storeSectionNotes ?? {},
+						},
+					}
+				: serverState,
+		[
+			manageUiStore,
+			serverState,
+			storeHydrated,
+			storeModals,
+			storeActiveTab,
+			storeSectionNotes,
+		],
+	);
+
 	return useMemo(
 		() => ({
-			state: (query.data as CharacterSheetState) || defaultState,
+			state,
 			isLoading: query.isLoading,
 			isSaving: updateSheetState.isPending,
 			saveSheetState,
@@ -464,7 +500,7 @@ export function useCharacterSheetState(characterId: string) {
 			handleLongRest,
 		}),
 		[
-			query.data,
+			state,
 			query.isLoading,
 			updateSheetState.isPending,
 			saveSheetState,

@@ -15,6 +15,7 @@ import {
 	Eye,
 	EyeOff,
 	FileText,
+	Hand,
 	Hexagon,
 	Image as ImageIcon,
 	Layers,
@@ -226,6 +227,8 @@ import {
 	type VttCalibrationPoint,
 	type VttGridVisibilityPreset,
 } from "@/lib/vtt/backgroundTransform";
+import { cellDistance, cellDistanceFeet } from "@/lib/vtt/interactionGeometry";
+import { EFFECT_PRESETS } from "@/lib/vtt/pixiEffects";
 import { syncSceneMusicEngine } from "@/lib/vtt/sceneAudio";
 import {
 	addLightToScene,
@@ -678,9 +681,16 @@ const VTTEnhanced = () => {
 	const musicEngineRef = useRef<VttMusicEngine | null>(null);
 	const lastFogCellRef = useRef<string | null>(null);
 	const lastMeasureCellRef = useRef<string | null>(null);
+	// Press-drag ruler state (Roll20/DDB parity): set on mousedown, finalized on
+	// mouseup so a drag — not two clicks — measures distance.
+	const measureDraggingRef = useRef(false);
+	const measureDragStartRef = useRef<{ x: number; y: number } | null>(null);
 	const lastCursorCellRef = useRef<string | null>(null);
 	const viewportPanActiveRef = useRef(false);
 	const suppressViewportPanClickRef = useRef(false);
+	// Hold-Space-to-pan (DDB/Figma parity). Tracked globally; consulted on
+	// left-mousedown over the map to start a pan instead of a select/marquee.
+	const spaceHeldRef = useRef(false);
 	/**
 	 * Tracks a right-mouse-button drag in progress so we can (a) suppress the
 	 * browser context menu when the user actually dragged, and (b) start the
@@ -703,6 +713,13 @@ const VTTEnhanced = () => {
 	const [pixiRetryKey, setPixiRetryKey] = useState(0);
 	const pixiAutoRetryCountRef = useRef(0);
 	const pixiRetryTimerRef = useRef<number | null>(null);
+	// One-shot guard so we surface at most one destructive toast per failure
+	// episode — auto-retries must not spam the user.
+	const pixiFallbackToastShownRef = useRef(false);
+	// Human-readable reason for the active fallback, shown in the banner.
+	const [pixiFailureReason, setPixiFailureReason] = useState<string | null>(
+		null,
+	);
 	const [isBackgroundCalibrating, setIsBackgroundCalibrating] = useState(false);
 	const [backgroundCalibrationPoints, setBackgroundCalibrationPoints] =
 		useState<VttCalibrationPoint[]>([]);
@@ -825,9 +842,6 @@ const VTTEnhanced = () => {
 	}, [selectionMarquee]);
 
 	const [scenes, setScenes] = useState<VTTScene[]>([]);
-	const [draggedToken, setDraggedToken] = useState<VTTTokenInstance | null>(
-		null,
-	);
 	const [currentLayer, setCurrentLayer] = useState(1);
 	const [visibleLayers, setVisibleLayers] = useState<Record<number, boolean>>({
 		0: true,
@@ -847,6 +861,7 @@ const VTTEnhanced = () => {
 		| "light"
 		| "wall"
 		| "region"
+		| "pan"
 	>("select");
 	// Misty Pearl A3 — Rift Region authoring state.
 	const [regionDialogOpen, setRegionDialogOpen] = useState(false);
@@ -946,6 +961,7 @@ const VTTEnhanced = () => {
 	);
 	const [isMobile, setIsMobile] = useState(false);
 	const [isViewportPanning, setIsViewportPanning] = useState(false);
+	const [isSpacePanReady, setIsSpacePanReady] = useState(false);
 	const touchRef = useRef<{ startDist: number; startZoom: number } | null>(
 		null,
 	);
@@ -968,6 +984,7 @@ const VTTEnhanced = () => {
 	}, []);
 	const clearViewportPan = useCallback(() => {
 		viewportPanActiveRef.current = false;
+		rightClickDragRef.current = null;
 		setIsViewportPanning(false);
 		if (!suppressViewportPanClickRef.current) return;
 		if (typeof window === "undefined") {
@@ -1017,6 +1034,35 @@ const VTTEnhanced = () => {
 			window.removeEventListener("blur", handleWindowBlur);
 		};
 	}, [clearViewportPan]);
+
+	// Hold-Space-to-pan: arm a pan gesture while Space is held (DDB/Figma
+	// parity). Ignored while typing so Space still works in inputs.
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const onKeyDown = (e: KeyboardEvent) => {
+			if (e.code !== "Space" || e.repeat) return;
+			if (isVttShortcutTarget(e.target)) return;
+			spaceHeldRef.current = true;
+			setIsSpacePanReady(true);
+		};
+		const onKeyUp = (e: KeyboardEvent) => {
+			if (e.code !== "Space") return;
+			spaceHeldRef.current = false;
+			setIsSpacePanReady(false);
+		};
+		const onBlur = () => {
+			spaceHeldRef.current = false;
+			setIsSpacePanReady(false);
+		};
+		window.addEventListener("keydown", onKeyDown);
+		window.addEventListener("keyup", onKeyUp);
+		window.addEventListener("blur", onBlur);
+		return () => {
+			window.removeEventListener("keydown", onKeyDown);
+			window.removeEventListener("keyup", onKeyUp);
+			window.removeEventListener("blur", onBlur);
+		};
+	}, []);
 	const [isHydrated, setIsHydrated] = useState(false);
 	const toolKey = sessionId ? `vtt_scenes:${sessionId}` : "vtt_scenes";
 	const assetsToolKey = sessionId ? `vtt_assets:${sessionId}` : "vtt_assets";
@@ -1204,6 +1250,8 @@ const VTTEnhanced = () => {
 		setPixiInitFailed(false);
 		setPixiRetryKey((key) => key + 1);
 		pixiAutoRetryCountRef.current = 0;
+		pixiFallbackToastShownRef.current = false;
+		setPixiFailureReason(null);
 		if (pixiRetryTimerRef.current !== null) {
 			window.clearTimeout(pixiRetryTimerRef.current);
 			pixiRetryTimerRef.current = null;
@@ -1216,7 +1264,21 @@ const VTTEnhanced = () => {
 		(err: unknown) => {
 			console.error("[VTT] Pixi init error surfaced:", err);
 			setPixiInitFailed(true);
-			if (pixiAutoRetryCountRef.current < 2) {
+
+			const raw = err instanceof Error ? err.message : String(err);
+			const reason = /layout-timeout/i.test(raw)
+				? "The map area never reported a usable size"
+				: /context-lost/i.test(raw)
+					? "The GPU/WebGL context was lost"
+					: /render-error/i.test(raw)
+						? "A renderer error occurred while drawing the scene"
+						: /webgl/i.test(raw)
+							? "WebGL is unavailable in this browser"
+							: "The map renderer failed to initialize";
+			setPixiFailureReason(reason);
+
+			const willRetry = pixiAutoRetryCountRef.current < 2;
+			if (willRetry) {
 				pixiAutoRetryCountRef.current += 1;
 				const delay = pixiAutoRetryCountRef.current === 1 ? 900 : 2200;
 				if (pixiRetryTimerRef.current !== null) {
@@ -1228,12 +1290,23 @@ const VTTEnhanced = () => {
 					setPixiRetryKey((key) => key + 1);
 				}, delay);
 			}
-			toast({
-				title: "Map Renderer Error",
-				description:
-					"The Pixi renderer failed to initialize, so the Warden view switched to a DOM fallback while an automatic retry is prepared.",
-				variant: "destructive",
-			});
+
+			// Surface at most one toast per failure episode: a gentle notice on
+			// the first failure (auto-retry underway), then a single destructive
+			// notice only once retries are exhausted — never a toast per retry.
+			if (pixiAutoRetryCountRef.current === 1 && willRetry) {
+				toast({
+					title: "Map renderer fallback",
+					description: `${reason}. Switched to the DOM map while retrying…`,
+				});
+			} else if (!willRetry && !pixiFallbackToastShownRef.current) {
+				pixiFallbackToastShownRef.current = true;
+				toast({
+					title: "Map renderer unavailable",
+					description: `${reason}. Using the DOM fallback map — use “Retry Pixi” to try again.`,
+					variant: "destructive",
+				});
+			}
 		},
 		[toast],
 	);
@@ -2324,9 +2397,7 @@ const VTTEnhanced = () => {
 				nextTokens[tokenIndex] = { ...currentToken, ...updates };
 				const isTokenPositionUpdate =
 					typeof updates.x === "number" || typeof updates.y === "number";
-				const isDraggingToken =
-					(draggedToken && draggedToken.id === tokenId) ||
-					pixiDraggingTokenIdRef.current === tokenId;
+				const isDraggingToken = pixiDraggingTokenIdRef.current === tokenId;
 				const autoExploreResult =
 					isTokenPositionUpdate && !isDraggingToken
 						? applyAutoExploreFogForToken(
@@ -2349,7 +2420,7 @@ const VTTEnhanced = () => {
 				return next;
 			});
 		},
-		[applyAutoExploreFogForToken, draggedToken, persistSceneState, vttRealtime],
+		[applyAutoExploreFogForToken, persistSceneState, vttRealtime],
 	);
 
 	const updateTokenBar = useCallback(
@@ -2456,6 +2527,14 @@ const VTTEnhanced = () => {
 			if (pixiDraggingTokenIdRef.current === tokenId) {
 				pixiDraggingTokenIdRef.current = null;
 			}
+			// Re-arm the map-action suppressor so the trailing DOM mouseup that
+			// follows a token drop does not fire a grid action (place/deselect)
+			// at the drop point. The pointerdown-armed window can expire during a
+			// slow drag, so we refresh it here for a brief settle period.
+			suppressNextMapActionRef.current = true;
+			window.setTimeout(() => {
+				suppressNextMapActionRef.current = false;
+			}, 60);
 			const scene = currentSceneRef.current;
 			if (!scene) return;
 			const token = scene.tokens.find((t) => t.id === tokenId);
@@ -2593,6 +2672,69 @@ const VTTEnhanced = () => {
 			}
 		}
 	}, [activeTokenIds, updateToken, vttRealtime]);
+
+	// Token clipboard — copy/paste/duplicate (DDB/Roll20/Foundry parity).
+	const tokenClipboardRef = useRef<VTTTokenInstance[]>([]);
+	const pasteTokensFrom = useCallback(
+		(source: VTTTokenInstance[]) => {
+			if (source.length === 0) return;
+			const makeId = () =>
+				typeof crypto !== "undefined" && typeof crypto.randomUUID === "function"
+					? `vtt-token-${crypto.randomUUID()}`
+					: `vtt-token-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+			const pastedIds: string[] = [];
+			for (const token of source) {
+				const placed: VTTTokenInstance = {
+					...token,
+					id: makeId(),
+					// Offset one cell so the copy is visible, not stacked.
+					x: token.x + 1,
+					y: token.y + 1,
+					groupId: undefined,
+				};
+				appendToken(placed);
+				pastedIds.push(placed.id);
+			}
+			setActiveTokenIds(pastedIds);
+		},
+		[appendToken],
+	);
+	const copySelectedTokens = useCallback(() => {
+		if (activeTokenIds.length === 0) return;
+		const tokens = currentSceneRef.current?.tokens ?? [];
+		tokenClipboardRef.current = tokens
+			.filter((t) => activeTokenIds.includes(t.id))
+			.map((t) => ({ ...t }));
+	}, [activeTokenIds]);
+	const pasteClipboardTokens = useCallback(() => {
+		pasteTokensFrom(tokenClipboardRef.current);
+	}, [pasteTokensFrom]);
+	const duplicateSelectedTokens = useCallback(() => {
+		if (activeTokenIds.length === 0) return;
+		const tokens = currentSceneRef.current?.tokens ?? [];
+		pasteTokensFrom(
+			tokens
+				.filter((t) => activeTokenIds.includes(t.id))
+				.map((t) => ({ ...t })),
+		);
+	}, [activeTokenIds, pasteTokensFrom]);
+	const rotateSelectedTokens = useCallback(
+		(deltaDeg: number) => {
+			if (activeTokenIds.length === 0) return;
+			const tokensById = new Map(
+				(currentSceneRef.current?.tokens ?? []).map((t) => [t.id, t]),
+			);
+			for (const id of activeTokenIds) {
+				const token = tokensById.get(id);
+				if (!token || token.locked) continue;
+				const rotation =
+					((((token.rotation ?? 0) + deltaDeg) % 360) + 360) % 360;
+				updateToken(id, { rotation });
+				vttRealtime.broadcastTokenUpdate(id, { rotation });
+			}
+		},
+		[activeTokenIds, updateToken, vttRealtime],
+	);
 
 	const selectTokensInMarquee = useCallback(
 		(marquee: SelectionMarquee) => {
@@ -3203,26 +3345,6 @@ const VTTEnhanced = () => {
 				return;
 			}
 
-			if (selectedTool === "measure") {
-				if (!measurementStart) {
-					lastMeasureCellRef.current = `${grid.gridX},${grid.gridY}`;
-					setMeasurementStart({ x: grid.gridX, y: grid.gridY });
-					setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
-				} else {
-					const dx = Math.abs(grid.gridX - measurementStart.x);
-					const dy = Math.abs(grid.gridY - measurementStart.y);
-					const distance = Math.max(dx, dy) + Math.min(dx, dy) * 0.5;
-					toast({
-						title: "Distance",
-						description: `${distance.toFixed(1)} grid units (${(distance * 5).toFixed(0)} ft)`,
-					});
-					lastMeasureCellRef.current = null;
-					setMeasurementStart(null);
-					setMeasurementEnd(null);
-				}
-				return;
-			}
-
 			if (selectedTool !== "select") return;
 
 			if (selectedCharacterId && resolvedCharacters) {
@@ -3310,7 +3432,6 @@ const VTTEnhanced = () => {
 			isBackgroundCalibrating,
 			isWarden,
 			libraryTokens,
-			measurementStart,
 			noteText,
 			resolvedCharacters,
 			selectedCharacterId,
@@ -3464,6 +3585,29 @@ const VTTEnhanced = () => {
 			e.stopPropagation();
 			return;
 		}
+		// Unified pan: middle-mouse, Space+left-drag, or the Pan tool + left-drag
+		// all start an immediate viewport pan (DDB/Roll20/Foundry parity).
+		// Right-drag pan is handled below with a movement threshold so a plain
+		// right-click can still open the context menu.
+		if (
+			e.button === 1 ||
+			(e.button === 0 && (selectedTool === "pan" || spaceHeldRef.current))
+		) {
+			const map = mapRef.current;
+			if (!map) return;
+			e.preventDefault();
+			rightClickDragRef.current = {
+				startX: e.clientX,
+				startY: e.clientY,
+				startLeft: map.scrollLeft,
+				startTop: map.scrollTop,
+				moved: true,
+			};
+			suppressViewportPanClickRef.current = true;
+			viewportPanActiveRef.current = true;
+			setIsViewportPanning(true);
+			return;
+		}
 		if (e.button === 2) {
 			// Right-click: record the press so we can distinguish a simple
 			// right-click (open context menu) from a right-click-drag (pan
@@ -3551,6 +3695,16 @@ const VTTEnhanced = () => {
 				y2: anchor.gridY,
 			});
 		}
+
+		if (selectedTool === "measure") {
+			// Press-drag ruler (Roll20/DDB parity): anchor on press, track the
+			// end while dragging (handleMapMouseMove), finalize on release.
+			measureDraggingRef.current = true;
+			measureDragStartRef.current = { x: grid.gridX, y: grid.gridY };
+			lastMeasureCellRef.current = `${grid.gridX},${grid.gridY}`;
+			setMeasurementStart({ x: grid.gridX, y: grid.gridY });
+			setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
+		}
 	};
 
 	const handleMapKeyDown = useCallback(
@@ -3588,6 +3742,40 @@ const VTTEnhanced = () => {
 				nudgeSelectedTokens(dx, dy);
 				return;
 			}
+			// Ctrl/Cmd token clipboard — copy / paste / duplicate (Warden).
+			if ((e.ctrlKey || e.metaKey) && !e.altKey && isWarden) {
+				const key = e.key.toLowerCase();
+				if (key === "c" && activeTokenIds.length > 0) {
+					e.preventDefault();
+					copySelectedTokens();
+					return;
+				}
+				if (key === "v") {
+					e.preventDefault();
+					pasteClipboardTokens();
+					return;
+				}
+				if (key === "d" && activeTokenIds.length > 0) {
+					e.preventDefault();
+					duplicateSelectedTokens();
+					return;
+				}
+			}
+			// Rotate selected tokens (Warden): "," = −, "." = + ; Shift = 90°.
+			// (Bracket keys are taken by the layer quick-cycle below.)
+			if (
+				(e.key === "," || e.key === ".") &&
+				!e.ctrlKey &&
+				!e.metaKey &&
+				!e.altKey &&
+				activeTokenIds.length > 0 &&
+				isWarden
+			) {
+				e.preventDefault();
+				const dir = e.key === "." ? 1 : -1;
+				rotateSelectedTokens(dir * (e.shiftKey ? 90 : 15));
+				return;
+			}
 			// Shift+H / Shift+L / Shift+G — DDB token hotkeys
 			if (e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey) {
 				const key = e.key.toLowerCase();
@@ -3622,7 +3810,15 @@ const VTTEnhanced = () => {
 					x: "pointer", // DDB "Point & Ping" parity
 				};
 				const tool = toolKeys[e.key.toLowerCase()];
-				if (tool && isWarden) {
+				// Players may use navigation + measure/ping tools; authoring tools
+				// (fog/draw/wall/light/note/effect/region) stay Warden-only.
+				const playerAccessibleTools = new Set<typeof selectedTool>([
+					"select",
+					"pan",
+					"measure",
+					"pointer",
+				]);
+				if (tool && (isWarden || playerAccessibleTools.has(tool))) {
 					e.preventDefault();
 					setSelectedTool(tool);
 					return;
@@ -3706,6 +3902,10 @@ const VTTEnhanced = () => {
 			removeSelectedTokens,
 			setActiveTokenId,
 			toggleSelectedTokenPatch,
+			copySelectedTokens,
+			pasteClipboardTokens,
+			duplicateSelectedTokens,
+			rotateSelectedTokens,
 		],
 	);
 
@@ -3787,13 +3987,6 @@ const VTTEnhanced = () => {
 				return;
 			}
 
-			if (
-				draggedToken &&
-				(draggedToken.x !== grid.gridX || draggedToken.y !== grid.gridY)
-			) {
-				updateToken(draggedToken.id, { x: grid.gridX, y: grid.gridY });
-			}
-
 			if (selectedTool === "fog" && isFogPainting && fogOfWar && isWarden) {
 				const fogCellKey = `${grid.gridX},${grid.gridY}`;
 				if (lastFogCellRef.current !== fogCellKey) {
@@ -3802,7 +3995,7 @@ const VTTEnhanced = () => {
 				}
 			}
 
-			if (selectedTool === "measure" && measurementStart) {
+			if (selectedTool === "measure" && measureDraggingRef.current) {
 				const measureCellKey = `${grid.gridX},${grid.gridY}`;
 				if (lastMeasureCellRef.current !== measureCellKey) {
 					lastMeasureCellRef.current = measureCellKey;
@@ -3862,17 +4055,14 @@ const VTTEnhanced = () => {
 		[
 			activeDrawing,
 			applyFogAt,
-			draggedToken,
 			fogOfWar,
 			getGridPosition,
 			gridSize,
 			isFogPainting,
 			isWarden,
-			measurementStart,
 			scheduleDrawingPoint,
 			selectionMarquee,
 			selectedTool,
-			updateToken,
 			vttRealtime,
 			zoom,
 		],
@@ -3891,7 +4081,6 @@ const VTTEnhanced = () => {
 
 	const handleMapMouseUp = useCallback(
 		(e?: React.MouseEvent<HTMLDivElement>) => {
-			const wasDraggingToken = draggedToken != null;
 			const wasFogPainting = isFogPainting;
 			const hadActiveDrawing = activeDrawing != null;
 			// Clean up any in-flight right-click-drag state. If the user
@@ -3904,6 +4093,38 @@ const VTTEnhanced = () => {
 			}
 			if (viewportPanActiveRef.current) {
 				clearViewportPan();
+				return;
+			}
+			if (selectedTool === "measure" && measureDraggingRef.current) {
+				measureDraggingRef.current = false;
+				const start = measureDragStartRef.current;
+				measureDragStartRef.current = null;
+				lastMeasureCellRef.current = null;
+				let end = start;
+				if (e) {
+					const grid = getGridPosition(e);
+					if (grid) end = { x: grid.gridX, y: grid.gridY };
+				}
+				if (start && end && (end.x !== start.x || end.y !== start.y)) {
+					const gridType = currentScene?.gridType ?? "square";
+					const cells = cellDistance(start.x, start.y, end.x, end.y, gridType);
+					const feet = cellDistanceFeet(
+						start.x,
+						start.y,
+						end.x,
+						end.y,
+						gridType,
+					);
+					toast({
+						title: "Distance",
+						description: `${cells.toFixed(1)} grid units (${feet.toFixed(0)} ft)`,
+					});
+					// Leave the ruler/AoE template on screen so the Warden can
+					// Pin it; a new press starts a fresh measurement.
+				} else {
+					setMeasurementStart(null);
+					setMeasurementEnd(null);
+				}
 				return;
 			}
 			if (selectionMarquee && selectedTool === "select") {
@@ -3936,9 +4157,6 @@ const VTTEnhanced = () => {
 				pendingDrawingPointRef.current,
 			);
 			pendingDrawingPointRef.current = null;
-			if (draggedToken) {
-				setDraggedToken(null);
-			}
 			if (isFogPainting) {
 				setIsFogPainting(false);
 				lastFogCellRef.current = null;
@@ -4002,7 +4220,6 @@ const VTTEnhanced = () => {
 				e.button === 0 &&
 				!suppressNextMapActionRef.current &&
 				!suppressViewportPanClickRef.current &&
-				!wasDraggingToken &&
 				!wasFogPainting &&
 				!hadActiveDrawing
 			) {
@@ -4016,7 +4233,6 @@ const VTTEnhanced = () => {
 			applyPendingPointToDrawing,
 			clearViewportPan,
 			currentScene,
-			draggedToken,
 			getGridPosition,
 			gridSize,
 			handleAddWallToScene,
@@ -4027,6 +4243,7 @@ const VTTEnhanced = () => {
 			selectTokensInMarquee,
 			selectionMarquee,
 			selectedTool,
+			toast,
 			updateScene,
 			wallDirection,
 			wallDoorState,
@@ -5022,6 +5239,7 @@ const VTTEnhanced = () => {
 															label: "Select",
 															Icon: MousePointer2,
 														},
+														{ key: "pan", label: "Pan", Icon: Hand },
 														{ key: "fog", label: "Fog", Icon: Cloud },
 														{ key: "draw", label: "Draw", Icon: Pencil },
 														{
@@ -6494,11 +6712,16 @@ const VTTEnhanced = () => {
 									}}
 									className={cn(
 										"flex-1 relative border-2 border-border rounded-lg bg-background overflow-auto min-h-0",
-										selectedTool !== "select" && "cursor-crosshair",
+										selectedTool !== "select" &&
+											selectedTool !== "pan" &&
+											"cursor-crosshair",
 										selectedTool === "select" &&
 											(selectedCharacterId || selectedLibraryTokenId) &&
 											"cursor-crosshair",
 										isViewportPanning && "cursor-grabbing select-none",
+										!isViewportPanning &&
+											(selectedTool === "pan" || isSpacePanReady) &&
+											"cursor-grab",
 										selectedTool === "select" &&
 											!isViewportPanning &&
 											"cursor-grab",
@@ -6587,6 +6810,7 @@ const VTTEnhanced = () => {
 												onTokenDragEnd={handlePixiTokenDragEnd}
 												onInitError={onPixiInitError}
 												activeStratumId={activeStratumId}
+												weather={currentScene?.weather}
 											/>
 										)}
 										{/* Misty Pearl B3 — Scene transition overlay */}
@@ -6618,8 +6842,9 @@ const VTTEnhanced = () => {
 													Renderer fallback active
 												</div>
 												<div className="mt-1 text-[11px] text-foreground/70">
-													Pixi failed to initialize, so this scene is using the
-													DOM fallback.
+													{pixiFailureReason
+														? `${pixiFailureReason}. This scene is using the DOM fallback.`
+														: "Pixi failed to initialize, so this scene is using the DOM fallback."}
 												</div>
 												<Button
 													variant="outline"
@@ -6631,6 +6856,8 @@ const VTTEnhanced = () => {
 															pixiRetryTimerRef.current = null;
 														}
 														pixiAutoRetryCountRef.current = 0;
+														pixiFallbackToastShownRef.current = false;
+														setPixiFailureReason(null);
 														setPixiInitFailed(false);
 														setPixiRetryKey((key) => key + 1);
 													}}
@@ -6950,8 +7177,10 @@ const VTTEnhanced = () => {
 											</div>
 										)}
 
-										{/* Weather overlay */}
-										{currentScene?.weather &&
+										{/* Weather overlay — DOM fallback only; the Pixi
+											stage renders weather on the GPU when active. */}
+										{pixiInitFailed &&
+											currentScene?.weather &&
 											weatherPreset &&
 											weatherParticles.length > 0 && (
 												<div
@@ -9185,6 +9414,7 @@ const VTTEnhanced = () => {
 								{(
 									[
 										{ key: "select", label: "Select", Icon: MousePointer2 },
+										{ key: "pan", label: "Pan", Icon: Hand },
 										{ key: "fog", label: "Fog", Icon: Cloud },
 										{ key: "draw", label: "Draw", Icon: Pencil },
 										{ key: "measure", label: "Measure", Icon: Ruler },
@@ -9651,6 +9881,29 @@ const VTTEnhanced = () => {
 										Open Sheet
 									</button>
 								)}
+								<div className="ctx-separator" />
+								{EFFECT_PRESETS.map((preset) => (
+									<button
+										key={`fx-${preset}`}
+										type="button"
+										onClick={() => {
+											// GPU one-shot FX at the token's cell (Pixi stage
+											// listens for vtt:play-effect; no-op in DOM fallback).
+											window.dispatchEvent(
+												new CustomEvent("vtt:play-effect", {
+													detail: {
+														preset,
+														gridX: token.x,
+														gridY: token.y,
+													},
+												}),
+											);
+											setContextMenu(null);
+										}}
+									>
+										FX: {preset}
+									</button>
+								))}
 								<div className="ctx-separator" />
 								{isWarden && (
 									<button
