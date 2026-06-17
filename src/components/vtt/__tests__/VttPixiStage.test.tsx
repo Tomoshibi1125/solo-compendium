@@ -16,6 +16,7 @@ vi.mock("pixi.js", () => {
 	class Base {
 		children: unknown[] = [];
 		position = { set: () => {} };
+		pivot = { set: () => {} };
 		scale = { set: () => {} };
 		anchor = { set: () => {} };
 		zIndex = 0;
@@ -63,7 +64,9 @@ vi.mock("pixi.js", () => {
 		}
 		clear = () => this;
 		circle = () => this;
+		ellipse = () => this;
 		rect = () => this;
+		poly = () => this;
 		moveTo = () => this;
 		lineTo = () => this;
 		arc = () => this;
@@ -400,6 +403,238 @@ describe("VttPixiStage token reconciliation", () => {
 		stage.render([makeToken("a")]); // remove "b"
 		await flush(200);
 		expect(h.destroyed.containers).toBeGreaterThan(before);
+		stage.unmount();
+	});
+
+	it("shows a rotate handle for a single selected movable token", async () => {
+		const stage = mountTokens();
+		stage.render([makeToken("a"), makeToken("b")], null);
+		await flush(500);
+		const base = { ...h.counts };
+		stage.render([makeToken("a"), makeToken("b")], "a");
+		await flush(200);
+		// Selecting reuses token containers, so the extra Container is the handle.
+		expect(h.counts.container).toBeGreaterThan(base.container);
+		stage.unmount();
+	});
+
+	it("shows no rotate handle for a locked selected token", async () => {
+		const stage = mountTokens();
+		stage.render([makeToken("a")], null);
+		await flush(500);
+		const base = { ...h.counts };
+		stage.render([makeToken("a", { locked: true })], "a");
+		await flush(200);
+		expect(h.counts.container).toBe(base.container);
+		stage.unmount();
+	});
+});
+
+describe("VttPixiStage annotations (drawings + measure + wall preview)", () => {
+	beforeEach(() => {
+		vi.useFakeTimers();
+		h.initImpl.fn = () => Promise.resolve();
+		h.flags.strokeThrows = false;
+		h.counts = { text: 0, graphics: 0, container: 0 };
+		h.destroyed = { containers: 0 };
+		vi.spyOn(console, "error").mockImplementation(() => {});
+		vi.spyOn(console, "warn").mockImplementation(() => {});
+	});
+	afterEach(() => {
+		vi.useRealTimers();
+		vi.restoreAllMocks();
+	});
+
+	type Props = React.ComponentProps<typeof VttPixiStage>;
+	type DrawingsArg = NonNullable<Props["drawings"]>;
+
+	/** Stable scene/tokens/layers so re-renders only re-run the annotations
+	 * effect, keeping object counters attributable to annotations. */
+	function mountAnnotations(isWarden = true) {
+		const containerEl = document.createElement("div");
+		Object.defineProperty(containerEl, "clientWidth", {
+			value: 1280,
+			configurable: true,
+		});
+		Object.defineProperty(containerEl, "clientHeight", {
+			value: 800,
+			configurable: true,
+		});
+		document.body.appendChild(containerEl);
+		const containerRef = createRef<HTMLDivElement>();
+		(containerRef as { current: HTMLDivElement }).current = containerEl;
+		const scene = makeScene();
+		const layers = { 0: true, 1: true, 2: true, 3: true };
+		const tokens = [] as Props["tokens"];
+		const root = createRoot(containerEl);
+		const render = (
+			drawings?: DrawingsArg,
+			measurement?: Props["measurement"],
+			wallPreview?: Props["wallPreview"],
+		) => {
+			act(() => {
+				root.render(
+					<VttPixiStage
+						containerRef={containerRef}
+						scene={scene}
+						tokens={tokens}
+						gridSize={50}
+						zoom={1}
+						showGrid={false}
+						isWarden={isWarden}
+						effectiveVisibleLayers={layers}
+						activeTokenId={null}
+						setActiveTokenId={() => undefined}
+						updateToken={() => undefined}
+						onRequestZoom={() => undefined}
+						drawings={drawings}
+						measurement={measurement}
+						wallPreview={wallPreview}
+					/>,
+				);
+			});
+		};
+		const host = () =>
+			containerEl.querySelector<HTMLElement>('[data-testid="vtt-pixi-host"]');
+		return {
+			render,
+			status: () => host()?.getAttribute("data-renderer-status") ?? null,
+			unmount: () => {
+				act(() => root.unmount());
+				containerEl.remove();
+			},
+		};
+	}
+
+	const sampleDrawings: DrawingsArg = [
+		{
+			id: "f",
+			type: "freehand",
+			points: [
+				{ x: 0, y: 0 },
+				{ x: 1, y: 1 },
+				{ x: 2, y: 1 },
+			],
+			color: "#38bdf8",
+			strokeWidth: 3,
+			layer: "drawing",
+		},
+		{
+			id: "l",
+			type: "line",
+			points: [
+				{ x: 0, y: 0 },
+				{ x: 3, y: 2 },
+			],
+			color: "#f87171",
+			strokeWidth: 2,
+			layer: "drawing",
+		},
+		{
+			id: "r",
+			type: "rectangle",
+			points: [
+				{ x: 1, y: 1 },
+				{ x: 4, y: 3 },
+			],
+			color: "#34d399",
+			strokeWidth: 2,
+			fillColor: "#34d399",
+			fillOpacity: 0.2,
+			layer: "drawing",
+		},
+		{
+			id: "c",
+			type: "circle",
+			points: [
+				{ x: 2, y: 2 },
+				{ x: 5, y: 4 },
+			],
+			color: "#a78bfa",
+			strokeWidth: 2,
+			layer: "drawing",
+		},
+		{
+			id: "k",
+			type: "cone",
+			points: [
+				{ x: 1, y: 1 },
+				{ x: 4, y: 4 },
+			],
+			color: "#fbbf24",
+			strokeWidth: 2,
+			fillColor: "#fbbf24",
+			fillOpacity: 0.22,
+			layer: "drawing",
+		},
+	];
+
+	it("draws every drawing type + the ruler label + wall preview without crashing", async () => {
+		const stage = mountAnnotations();
+		stage.render(); // baseline, no annotations
+		await flush(500);
+		expect(stage.status()).toBe("ready");
+		const base = { ...h.counts };
+
+		stage.render(
+			sampleDrawings,
+			{ start: { x: 0, y: 0 }, end: { x: 3, y: 1 }, shape: "line", radius: 4 },
+			{ x1: 0, y1: 0, x2: 5, y2: 5 },
+		);
+		await flush(200);
+
+		// 5 drawings + 1 wall preview + 1 measurement shape = 7 Graphics; the
+		// line ruler adds 1 label Text.
+		expect(h.counts.graphics - base.graphics).toBeGreaterThanOrEqual(7);
+		expect(h.counts.text - base.text).toBeGreaterThanOrEqual(1);
+		expect(stage.status()).toBe("ready");
+		stage.unmount();
+	});
+
+	it("hides Warden-layer drawings from non-wardens", async () => {
+		const stage = mountAnnotations(false);
+		stage.render(); // baseline
+		await flush(500);
+		const base = { ...h.counts };
+		stage.render([
+			{
+				id: "secret",
+				type: "line",
+				points: [
+					{ x: 0, y: 0 },
+					{ x: 1, y: 1 },
+				],
+				color: "#fff",
+				strokeWidth: 2,
+				layer: "Warden",
+			},
+			{
+				id: "shared",
+				type: "line",
+				points: [
+					{ x: 2, y: 2 },
+					{ x: 3, y: 3 },
+				],
+				color: "#fff",
+				strokeWidth: 2,
+				layer: "drawing",
+			},
+		]);
+		await flush(200);
+		// Only the shared (non-Warden) drawing renders → exactly 1 new Graphics.
+		expect(h.counts.graphics - base.graphics).toBe(1);
+		stage.unmount();
+	});
+
+	it("frees prior annotations when the props clear", async () => {
+		const stage = mountAnnotations();
+		stage.render(sampleDrawings);
+		await flush(500);
+		const drawn = h.counts.graphics;
+		stage.render(); // clear → removeChildren()+destroy, no new objects
+		await flush(200);
+		expect(h.counts.graphics).toBe(drawn);
+		expect(stage.status()).toBe("ready");
 		stage.unmount();
 	});
 });

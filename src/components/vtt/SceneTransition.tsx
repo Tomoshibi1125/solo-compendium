@@ -130,5 +130,3 @@ export function SceneTransition({
 		</AnimatePresence>
 	);
 }
-
-export default SceneTransition;

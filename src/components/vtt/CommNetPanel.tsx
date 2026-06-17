@@ -318,5 +318,3 @@ function CommNetPeerTile({
 		</div>
 	);
 }
-
-export default CommNetPanel;

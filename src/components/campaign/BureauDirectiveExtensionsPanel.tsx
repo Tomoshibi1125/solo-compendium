@@ -306,5 +306,3 @@ export function BureauDirectiveExtensionsPanel({
 		</AscendantWindow>
 	);
 }
-
-export default BureauDirectiveExtensionsPanel;

@@ -562,5 +562,3 @@ export function useCommNet(options: UseCommNetOptions): UseCommNetResult {
 		leave,
 	};
 }
-
-export default useCommNet;

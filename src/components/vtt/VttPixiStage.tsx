@@ -120,6 +120,30 @@ type SceneLike = {
 	levels?: Array<{ id: string; wallIds: string[]; lightIds: string[] }>;
 };
 
+/** Committed scene drawing (annotations) rendered on the Pixi annotations layer. */
+type StageDrawing = {
+	id: string;
+	type: "freehand" | "line" | "rectangle" | "circle" | "cone" | "text";
+	points: Array<{ x: number; y: number }>;
+	color: string;
+	strokeWidth: number;
+	fillColor?: string;
+	fillOpacity?: number;
+	layer?: string | number;
+	kind?: string;
+};
+/** Live measurement ruler / AoE template (grid coords). */
+type StageMeasurement = {
+	start: { x: number; y: number };
+	end: { x: number; y: number };
+	shape: "line" | "circle" | "cone" | "cube";
+	radius: number;
+	/** Committed ruler vertices before the active segment (line shape only). */
+	waypoints?: Array<{ x: number; y: number }>;
+};
+/** Live wall-authoring drag preview (grid coords). */
+type StageWallPreview = { x1: number; y1: number; x2: number; y2: number };
+
 type VttPixiStageProps = {
 	containerRef: React.RefObject<HTMLDivElement | null>;
 	scene: SceneLike | null;
@@ -148,6 +172,12 @@ type VttPixiStageProps = {
 	drawMode?: "none" | "ruler" | "cone" | "sphere" | "cube" | "wall";
 	onWallCreated?: (x1: number, y1: number, x2: number, y2: number) => void;
 	weather?: WeatherType | "none";
+	/** Committed annotations (drawings), GPU-rendered; DOM is the fallback. */
+	drawings?: StageDrawing[];
+	/** Live measurement ruler / AoE template; null when not measuring. */
+	measurement?: StageMeasurement | null;
+	/** Live wall-authoring preview; null when not drawing a wall. */
+	wallPreview?: StageWallPreview | null;
 	/** Called when the PixiJS stage is ready, exposing the app and effects container for particle effects */
 	onStageReady?: (app: Application, effectsContainer: Container) => void;
 	/** Called when Pixi fails to initialize after all retry attempts */
@@ -256,7 +286,9 @@ type StageLayers = {
 	wallsLayer: Container;
 	tokenLayer: Container;
 	nameplateLayer: Container;
+	annotationsLayer: Container;
 	snapGhostLayer: Container;
+	handleLayer: Container;
 	fogLayer: Container;
 };
 
@@ -288,6 +320,9 @@ export function VttPixiStage({
 	drawMode = "none",
 	onWallCreated,
 	weather = "none",
+	drawings,
+	measurement,
+	wallPreview,
 	onStageReady,
 	onInitError,
 	activeStratumId = null,
@@ -372,6 +407,15 @@ export function VttPixiStage({
 		startPointerY: number | null;
 		memberStart: Map<string, { x: number; y: number }> | null;
 	} | null>(null);
+	// Token rotate-handle gesture: drag the knob above a single selected token to
+	// spin it; commit one updateToken({rotation}) on release (Shift snaps to 15°).
+	const rotateStateRef = useRef<{
+		pointerId: number;
+		tokenId: string;
+		centerX: number;
+		centerY: number;
+		group: Container;
+	} | null>(null);
 	// Live map of tokenId → its Pixi container, repopulated on every token
 	// render so the drag handlers can move/snap the right sprites across
 	// rebuilds (e.g. the selection rebuild that fires at drag start).
@@ -450,6 +494,7 @@ export function VttPixiStage({
 	// the stage-init effect and consumed by pointer handlers in a separate
 	// effect, so we share it via a ref rather than nested closure scope.
 	const snapGhostLayerRef = useRef<Container | null>(null);
+	const handleLayerRef = useRef<Container | null>(null);
 	const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
 
 	const syncWorldTransform = useCallback(() => {
@@ -852,7 +897,9 @@ export function VttPixiStage({
 		const wallsLayer = new Container();
 		const tokenLayer = new Container();
 		const nameplateLayer = new Container();
+		const annotationsLayer = new Container();
 		const snapGhostLayer = new Container();
+		const handleLayer = new Container();
 		const fogLayer = new Container();
 		if (!drawingGraphicsRef.current) {
 			drawingGraphicsRef.current = new Graphics();
@@ -863,6 +910,7 @@ export function VttPixiStage({
 
 		worldContainerRef.current = world;
 		snapGhostLayerRef.current = snapGhostLayer;
+		handleLayerRef.current = handleLayer;
 		stageLayersRef.current = {
 			world,
 			bg,
@@ -873,7 +921,9 @@ export function VttPixiStage({
 			wallsLayer,
 			tokenLayer,
 			nameplateLayer,
+			annotationsLayer,
 			snapGhostLayer,
+			handleLayer,
 			fogLayer,
 		};
 
@@ -886,8 +936,10 @@ export function VttPixiStage({
 		world.addChild(wallsLayer);
 		world.addChild(tokenLayer);
 		world.addChild(snapGhostLayer);
+		world.addChild(handleLayer);
 		world.addChild(nameplateLayer);
 		world.addChild(fogLayer);
+		world.addChild(annotationsLayer);
 		world.addChild(drawOverlay);
 		syncWorldTransform();
 
@@ -1533,6 +1585,9 @@ export function VttPixiStage({
 					selection.length > 1 && selection.includes(token.id)
 						? [...selection]
 						: [token.id];
+				// Hide the rotate handle while dragging the token body.
+				for (const ch of handleLayerRef.current?.removeChildren() ?? [])
+					ch.destroy();
 				dragStateRef.current = {
 					pointerId: e.pointerId,
 					primaryTokenId: token.id,
@@ -1631,8 +1686,12 @@ export function VttPixiStage({
 				}
 				tokenContainersRef.current.set(token.id, container);
 
-				container.x = token.x * gridSize * zoom;
-				container.y = token.y * gridSize * zoom;
+				// Pivot at the footprint centre so rotation spins in place (DDB/
+				// Foundry) instead of swinging around the cell corner. Position is the
+				// centre; drag/snap convert back to the top-left cell via half-footprint.
+				container.pivot.set(footprintW / 2, footprintH / 2);
+				container.x = token.x * gridSize * zoom + footprintW / 2;
+				container.y = token.y * gridSize * zoom + footprintH / 2;
 				container.width = footprintW;
 				container.height = footprintH;
 				container.rotation = (token.rotation * Math.PI) / 180;
@@ -1908,6 +1967,306 @@ export function VttPixiStage({
 		onInitError,
 	]);
 
+	// Annotations on GPU (committed drawings + live measurement/AoE template +
+	// wall preview). DOM equivalents in VTTEnhanced render only on Pixi failure.
+	useEffect(() => {
+		const app = appRef.current;
+		const layers = stageLayersRef.current;
+		if (!app || !appReady || !layers) return;
+		const layer = layers.annotationsLayer;
+		// Free the previous frame's Graphics/Text (measurement redraws on every
+		// mouse-move) — removeChildren only detaches; destroy frees GPU buffers.
+		for (const child of layer.removeChildren()) child.destroy();
+		const step = gridSize * zoom;
+		try {
+			for (const drawing of drawings ?? []) {
+				if (drawing.layer === "Warden" && !isWarden) continue;
+				// Text drawings render as DOM annotations/notes (left intact); the
+				// GPU annotations layer only draws geometric primitives.
+				if (drawing.type === "text") continue;
+				const g = new Graphics();
+				const stroke = parsePixiColor(drawing.color, 0xffffff);
+				const opacity = drawing.fillOpacity ?? 1;
+				const width = Math.max(1, drawing.strokeWidth);
+				const pts = drawing.points ?? [];
+				if (drawing.type === "freehand") {
+					if (pts.length > 0) {
+						g.moveTo((pts[0].x + 0.5) * step, (pts[0].y + 0.5) * step);
+						for (let i = 1; i < pts.length; i++) {
+							g.lineTo((pts[i].x + 0.5) * step, (pts[i].y + 0.5) * step);
+						}
+						g.stroke({
+							width,
+							color: stroke,
+							alpha: opacity,
+							cap: "round",
+							join: "round",
+						});
+					}
+				} else if (drawing.type === "line") {
+					const p1 = pts[0];
+					const p2 = pts[1] ?? p1;
+					if (p1) {
+						g.moveTo((p1.x + 0.5) * step, (p1.y + 0.5) * step);
+						g.lineTo((p2.x + 0.5) * step, (p2.y + 0.5) * step);
+						g.stroke({ width, color: stroke, alpha: opacity, cap: "round" });
+					}
+				} else if (drawing.type === "cone") {
+					const apex = pts[0];
+					const far = pts[1] ?? apex;
+					if (apex) {
+						const ax = (apex.x + 0.5) * step;
+						const ay = (apex.y + 0.5) * step;
+						const fx2 = (far.x + 0.5) * step;
+						const fy2 = (far.y + 0.5) * step;
+						const r = Math.hypot(fx2 - ax, fy2 - ay);
+						const ang = Math.atan2(fy2 - ay, fx2 - ax);
+						const ha = Math.PI / 6;
+						g.poly([
+							ax,
+							ay,
+							ax + r * Math.cos(ang - ha),
+							ay + r * Math.sin(ang - ha),
+							ax + r * Math.cos(ang + ha),
+							ay + r * Math.sin(ang + ha),
+						]);
+						g.fill({
+							color: parsePixiColor(drawing.fillColor ?? drawing.color, stroke),
+							alpha: drawing.fillOpacity ?? 0.22,
+						});
+					}
+				} else {
+					// rectangle / circle — bbox + 1 cell of padding (matches DOM).
+					const p1 = pts[0];
+					const p2 = pts[1] ?? p1;
+					if (p1) {
+						const x1 = Math.min(p1.x, p2.x) * step;
+						const y1 = Math.min(p1.y, p2.y) * step;
+						const x2 = Math.max(p1.x, p2.x) * step;
+						const y2 = Math.max(p1.y, p2.y) * step;
+						const w = Math.max(1, x2 - x1) + step;
+						const hgt = Math.max(1, y2 - y1) + step;
+						if (drawing.type === "circle") {
+							g.ellipse(x1 + w / 2, y1 + hgt / 2, w / 2, hgt / 2);
+						} else {
+							g.rect(x1, y1, w, hgt);
+						}
+						if (drawing.fillColor) {
+							g.fill({
+								color: parsePixiColor(drawing.fillColor, stroke),
+								alpha: drawing.fillOpacity ?? 0.18,
+							});
+						}
+						g.stroke({ width, color: stroke, alpha: 0.9 });
+					}
+				}
+				layer.addChild(g);
+			}
+
+			if (wallPreview) {
+				const g = new Graphics();
+				g.moveTo(wallPreview.x1 * step, wallPreview.y1 * step);
+				g.lineTo(wallPreview.x2 * step, wallPreview.y2 * step);
+				g.stroke({ width: 3, color: 0xf59e0b, alpha: 0.85, cap: "round" });
+				layer.addChild(g);
+			}
+
+			if (measurement) {
+				const { start, end, shape, radius } = measurement;
+				const sx = (start.x + 0.5) * step;
+				const sy = (start.y + 0.5) * step;
+				const ex = (end.x + 0.5) * step;
+				const ey = (end.y + 0.5) * step;
+				const tint = 0x22d3ee;
+				const g = new Graphics();
+				let labelText: string;
+				let labelX = ex;
+				let labelY = ey;
+				if (shape === "line") {
+					const wpts = measurement.waypoints ?? [];
+					const path = wpts.length > 0 ? [...wpts, start, end] : [start, end];
+					g.moveTo((path[0].x + 0.5) * step, (path[0].y + 0.5) * step);
+					for (let i = 1; i < path.length; i++) {
+						g.lineTo((path[i].x + 0.5) * step, (path[i].y + 0.5) * step);
+					}
+					g.stroke({
+						width: 3,
+						color: tint,
+						alpha: 0.95,
+						cap: "round",
+						join: "round",
+					});
+					// Sum the 5e-diagonal distance per leg; label multi-leg rulers
+					// per-segment with a vertex dot, single-segment at the midpoint.
+					let total = 0;
+					for (let i = 1; i < path.length; i++) {
+						const a = path[i - 1];
+						const b = path[i];
+						const dx = Math.abs(b.x - a.x);
+						const dy = Math.abs(b.y - a.y);
+						total += Math.max(dx, dy) + Math.min(dx, dy) * 0.5;
+					}
+					if (wpts.length > 0) {
+						for (let i = 1; i < path.length; i++) {
+							const a = path[i - 1];
+							const b = path[i];
+							const dx = Math.abs(b.x - a.x);
+							const dy = Math.abs(b.y - a.y);
+							const seg = Math.max(dx, dy) + Math.min(dx, dy) * 0.5;
+							const segLabel = new Text({
+								text: `${seg.toFixed(1)}u`,
+								style: {
+									fill: 0xffffff,
+									fontSize: 11,
+									stroke: { color: 0x000000, width: 3 },
+								},
+							});
+							segLabel.anchor.set(0.5);
+							segLabel.x = ((a.x + b.x) / 2 + 0.5) * step;
+							segLabel.y = ((a.y + b.y) / 2 + 0.5) * step - 9;
+							layer.addChild(segLabel);
+						}
+						for (const p of path) {
+							const dot = new Graphics();
+							dot.circle((p.x + 0.5) * step, (p.y + 0.5) * step, 3);
+							dot.fill({ color: tint, alpha: 0.95 });
+							layer.addChild(dot);
+						}
+					}
+					labelText = `${total.toFixed(1)}u (${(total * 5).toFixed(0)} ft)`;
+					labelX = wpts.length > 0 ? ex : (sx + ex) / 2;
+					labelY = wpts.length > 0 ? ey : (sy + ey) / 2;
+				} else if (shape === "circle") {
+					g.circle(ex, ey, radius * step);
+					g.fill({ color: tint, alpha: 0.15 });
+					g.stroke({ width: 2, color: tint, alpha: 0.9 });
+					labelText = `circle ${radius * 5}ft`;
+				} else if (shape === "cone") {
+					const r = radius * step;
+					const ang = Math.atan2(ey - sy, ex - sx);
+					const ha = Math.PI / 6;
+					g.poly([
+						sx,
+						sy,
+						sx + r * Math.cos(ang - ha),
+						sy + r * Math.sin(ang - ha),
+						sx + r * Math.cos(ang + ha),
+						sy + r * Math.sin(ang + ha),
+					]);
+					g.fill({ color: tint, alpha: 0.18 });
+					g.stroke({ width: 2, color: tint, alpha: 0.9 });
+					labelText = `cone ${radius * 5}ft`;
+					labelX = (sx + ex) / 2;
+					labelY = (sy + ey) / 2;
+				} else {
+					const side = radius * step;
+					g.rect(ex - side / 2, ey - side / 2, side, side);
+					g.fill({ color: tint, alpha: 0.15 });
+					g.stroke({ width: 2, color: tint, alpha: 0.9 });
+					labelText = `cube ${radius * 5}ft`;
+				}
+				layer.addChild(g);
+				const label = new Text({
+					text: labelText,
+					style: {
+						fill: 0xffffff,
+						fontSize: 13,
+						fontWeight: "bold",
+						stroke: { color: 0x000000, width: 3 },
+					},
+				});
+				label.anchor.set(0.5);
+				label.x = labelX;
+				label.y = labelY - 12;
+				layer.addChild(label);
+			}
+		} catch (err) {
+			// Annotations are non-critical — never let a bad drawing crash the VTT.
+			console.error("[VTT Pixi] Annotation render failed:", err);
+		}
+	}, [drawings, measurement, wallPreview, gridSize, zoom, isWarden, appReady]);
+
+	// Drag-rotate handle (DDB/Roll20/Foundry): a knob above the single selected,
+	// movable token. Dragging the knob spins the token (pointer-up commits one
+	// updateToken); re-renders whenever the selection or that token changes.
+	useEffect(() => {
+		const app = appRef.current;
+		const layers = stageLayersRef.current;
+		if (!app || !appReady || !layers) return;
+		const layer = layers.handleLayer;
+		for (const child of layer.removeChildren()) child.destroy();
+		const ids =
+			activeTokenIds.length > 0
+				? activeTokenIds
+				: activeTokenId
+					? [activeTokenId]
+					: [];
+		if (ids.length !== 1) return;
+		const token = tokens.find((t) => t.id === ids[0]);
+		if (!token || token.locked) return;
+		// Ownership: Warden or the token's owner may rotate (player parity).
+		if (!isWarden && token.ownerId && token.ownerId !== currentUserId) return;
+		const { width: fpW, height: fpH } = getTokenFootprintPx(
+			token.size,
+			gridSize,
+			zoom,
+			{ gridWidth: token.gridWidth, gridHeight: token.gridHeight },
+		);
+		const step = gridSize * zoom;
+		const centerX = token.x * step + fpW / 2;
+		const centerY = token.y * step + fpH / 2;
+		const reach = fpH / 2 + Math.max(18, step * 0.45);
+
+		const group = new Container();
+		group.position.set(centerX, centerY);
+		group.rotation = (token.rotation * Math.PI) / 180;
+		const stalk = new Graphics();
+		stalk.moveTo(0, -(fpH / 2));
+		stalk.lineTo(0, -reach);
+		stalk.stroke({ width: 2, color: 0xfbbf24, alpha: 0.85 });
+		group.addChild(stalk);
+		const knob = new Graphics();
+		knob.circle(0, -reach, 7);
+		knob.fill({ color: 0xfbbf24, alpha: 0.95 });
+		knob.stroke({ width: 2, color: 0x000000, alpha: 0.6 });
+		// Larger, near-invisible grab area so the knob is easy to hit.
+		knob.circle(0, -reach, 15);
+		knob.fill({ color: 0xfbbf24, alpha: 0.001 });
+		knob.eventMode = "static";
+		knob.cursor = "grab";
+		knob.on("pointerdown", (e) => {
+			if (e.pointerType === "mouse" && e.button !== 0) return;
+			e.stopPropagation();
+			window.dispatchEvent(
+				new CustomEvent("vtt:token-pointerdown", {
+					detail: {
+						tokenId: token.id,
+						pointerType: e.pointerType,
+						rotate: true,
+					},
+				}),
+			);
+			rotateStateRef.current = {
+				pointerId: e.pointerId,
+				tokenId: token.id,
+				centerX,
+				centerY,
+				group,
+			};
+		});
+		group.addChild(knob);
+		layer.addChild(group);
+	}, [
+		activeTokenId,
+		activeTokenIds,
+		tokens,
+		gridSize,
+		zoom,
+		isWarden,
+		currentUserId,
+		appReady,
+	]);
+
 	useEffect(() => {
 		const host = canvasHostRef.current;
 		const app = appRef.current;
@@ -1918,6 +2277,20 @@ export function VttPixiStage({
 			return {
 				x: clientX - rect.left + (containerRef.current?.scrollLeft ?? 0),
 				y: clientY - rect.top + (containerRef.current?.scrollTop ?? 0),
+			};
+		};
+
+		// Token containers are centre-pivoted; the grid snap math wants the
+		// top-left cell, so convert centre → top-left via the token's footprint.
+		const tokenTopLeft = (id: string, c: Container) => {
+			const tk = tokensByIdRef.current.get(id);
+			const fp = getTokenFootprintPx(tk?.size ?? "medium", gridSize, zoom, {
+				gridWidth: tk?.gridWidth,
+				gridHeight: tk?.gridHeight,
+			});
+			return {
+				x: c.position.x - fp.width / 2,
+				y: c.position.y - fp.height / 2,
 			};
 		};
 
@@ -2040,6 +2413,20 @@ export function VttPixiStage({
 				return;
 			}
 
+			const rotateState = rotateStateRef.current;
+			if (rotateState && rotateState.pointerId === e.pointerId) {
+				let deg =
+					(Math.atan2(y - rotateState.centerY, x - rotateState.centerX) * 180) /
+						Math.PI +
+					90;
+				if (e.shiftKey) deg = Math.round(deg / 15) * 15;
+				const rad = (deg * Math.PI) / 180;
+				rotateState.group.rotation = rad;
+				const rc = tokenContainersRef.current.get(rotateState.tokenId);
+				if (rc) rc.rotation = rad;
+				return;
+			}
+
 			const dragState = dragStateRef.current;
 			if (dragState && dragState.pointerId === e.pointerId) {
 				if (
@@ -2090,11 +2477,8 @@ export function VttPixiStage({
 				);
 				if (ghostLayer && primary) {
 					ghostLayer.removeChildren();
-					const snapped = snapWorldToCell(
-						primary.position.x,
-						primary.position.y,
-						step,
-					);
+					const tl = tokenTopLeft(dragState.primaryTokenId, primary);
+					const snapped = snapWorldToCell(tl.x, tl.y, step);
 					const ghost = new Graphics();
 					ghost.rect(snapped.gridX * step, snapped.gridY * step, step, step);
 					ghost.fill({ color: 0xfbbf24, alpha: 0.18 });
@@ -2163,6 +2547,27 @@ export function VttPixiStage({
 				return;
 			}
 
+			const rotateState = rotateStateRef.current;
+			if (rotateState && rotateState.pointerId === e.pointerId) {
+				rotateStateRef.current = null;
+				const rc = tokenContainersRef.current.get(rotateState.tokenId);
+				const deg = rc ? Math.round((rc.rotation * 180) / Math.PI) : 0;
+				updateToken(rotateState.tokenId, {
+					rotation: ((deg % 360) + 360) % 360,
+				});
+				// Re-arm the map-action suppressor so the release doesn't fire a stray
+				// grid action (mirrors the token drag-end behaviour).
+				window.dispatchEvent(
+					new CustomEvent("vtt:token-pointerdown", {
+						detail: {
+							tokenId: rotateState.tokenId,
+							pointerType: e.pointerType,
+							rotate: true,
+						},
+					}),
+				);
+			}
+
 			const dragState = dragStateRef.current;
 			if (dragState && dragState.pointerId === e.pointerId) {
 				dragStateRef.current = null;
@@ -2178,13 +2583,14 @@ export function VttPixiStage({
 					for (const id of dragState.memberIds) {
 						const c = tokenContainersRef.current.get(id);
 						if (!c) continue;
+						const tl = tokenTopLeft(id, c);
 						if (freePlace && step > 0) {
 							updateToken(id, {
-								x: Math.round((c.position.x / step) * 100) / 100,
-								y: Math.round((c.position.y / step) * 100) / 100,
+								x: Math.round((tl.x / step) * 100) / 100,
+								y: Math.round((tl.y / step) * 100) / 100,
 							});
 						} else {
-							const snapped = snapWorldToCell(c.position.x, c.position.y, step);
+							const snapped = snapWorldToCell(tl.x, tl.y, step);
 							updateToken(id, { x: snapped.gridX, y: snapped.gridY });
 						}
 					}

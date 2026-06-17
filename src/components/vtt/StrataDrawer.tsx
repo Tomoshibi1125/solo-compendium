@@ -188,5 +188,3 @@ export function StrataDrawer({ scene, onSceneChange }: StrataDrawerProps) {
 		</AscendantWindow>
 	);
 }
-
-export default StrataDrawer;

@@ -248,5 +248,3 @@ export function RegionPolygonEditor({
 		</section>
 	);
 }
-
-export default RegionPolygonEditor;

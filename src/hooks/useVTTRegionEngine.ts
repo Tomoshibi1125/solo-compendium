@@ -71,5 +71,3 @@ export function useVTTRegionEngine(options: UseVTTRegionEngineOptions) {
 		return dispose;
 	}, [enabled]);
 }
-
-export default useVTTRegionEngine;

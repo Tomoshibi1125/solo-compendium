@@ -64,5 +64,3 @@ export function StrataSelector({
 		</div>
 	);
 }
-
-export default StrataSelector;

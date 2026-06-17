@@ -533,9 +533,6 @@ import {
 	createMacro,
 	generateCharacterMacros,
 	getMacroByHotkey,
-	getParticlePreset,
-	listParticleCategories,
-	listParticlePresets,
 	loadMacrosFromLocal,
 	saveMacrosToLocal,
 } from "@/lib/vtt";
@@ -543,16 +540,6 @@ import type {
 	AmbientSoundState as AmbientSoundStateLib,
 	AmbientSoundZone as AmbientSoundZoneLib,
 } from "@/lib/vtt/ambientSoundZone";
-import {
-	alpha,
-	burstSpawn,
-	color,
-	pointSpawn,
-	rectSpawn,
-	ringSpawn,
-	scale,
-	speed,
-} from "@/lib/vtt/particlePresets";
 import {
 	CATEGORY_COLORS,
 	CATEGORY_ICONS,
@@ -871,11 +858,6 @@ export const WardenWiringSeal = {
 	},
 	chunk2: {
 		vtt: {
-			particles: {
-				get: getParticlePreset,
-				categories: listParticleCategories,
-				presets: listParticlePresets,
-			},
 			macros: {
 				createDefault: createDefaultMacroBar,
 				create: createMacro,
@@ -1111,16 +1093,6 @@ export const WardenWiringSeal = {
 			validateAsset,
 			assetManifest,
 			createAssetManifest,
-		},
-		particles: {
-			alpha,
-			scale,
-			speed,
-			color,
-			pointSpawn,
-			burstSpawn,
-			ringSpawn,
-			rectSpawn,
 		},
 		rollWrappers: {
 			wrapAbilityModifier,

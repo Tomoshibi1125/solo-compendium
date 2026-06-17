@@ -74,5 +74,3 @@ export function ChatOverlay({
 		</div>
 	);
 }
-
-export default ChatOverlay;

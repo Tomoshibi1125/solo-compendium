@@ -46,5 +46,3 @@ export function PopOutButton({
 		</Button>
 	);
 }
-
-export default PopOutButton;

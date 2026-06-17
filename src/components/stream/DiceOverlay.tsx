@@ -87,5 +87,3 @@ export function DiceOverlay({ campaignId }: DiceOverlayProps) {
 		</div>
 	);
 }
-
-export default DiceOverlay;

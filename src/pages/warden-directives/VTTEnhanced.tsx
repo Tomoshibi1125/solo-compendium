@@ -4,7 +4,6 @@ import {
 	ArrowRight,
 	BookOpen,
 	Bot,
-	Box,
 	BrickWall,
 	ChevronDown,
 	Circle,
@@ -211,6 +210,7 @@ import {
 	isPointInTerrainZone,
 	type LightSource,
 	type MusicMood,
+	measurePath,
 	SFX_ASSET_MAP,
 	snapToHexCenter,
 	type TerrainZone,
@@ -274,15 +274,6 @@ import "./VTTEnhanced.css";
 const WardenDirectiveMatrix = React.lazy(() =>
 	import("@/components/warden-directives/WardenDirectiveMatrix").then((m) => ({
 		default: m.WardenDirectiveMatrix,
-	})),
-);
-
-// Misty Pearl C1 — lazy-load the 3D Spatial Strata Viewer so the
-// three.js + R3F bundle only enters the critical path when a Warden
-// flips into Labs / 3D mode.
-const LazyVttThreeStage = React.lazy(() =>
-	import("@/components/vtt/VttThreeStage").then((m) => ({
-		default: m.VttThreeStage,
 	})),
 );
 
@@ -871,8 +862,6 @@ const VTTEnhanced = () => {
 	// Misty Pearl A2 — Currently-focused Stratum id. Null falls back to the
 	// scene's default stratum.
 	const [activeStratumId, setActiveStratumId] = useState<string | null>(null);
-	// Misty Pearl C1 — Labs / Spatial Strata Viewer toggle.
-	const [viewMode, setViewMode] = useState<"2d" | "3d">("2d");
 	// Light authoring dialog state. When `lightDialogTargetId` is null we're
 	// creating a new light at `lightDialogSeed`; otherwise we're editing the
 	// scene light with that id.
@@ -946,6 +935,11 @@ const VTTEnhanced = () => {
 		x: number;
 		y: number;
 	} | null>(null);
+	// Committed ruler vertices (Foundry-style Shift-click waypoints) before the
+	// active segment; line ruler only.
+	const [measurementWaypoints, setMeasurementWaypoints] = useState<
+		Array<{ x: number; y: number }>
+	>([]);
 	const [measureShape, setMeasureShape] = useState<
 		"line" | "circle" | "cone" | "cube"
 	>("line");
@@ -2296,6 +2290,7 @@ const VTTEnhanced = () => {
 		// Reset the measure HUD so the user can start a fresh measurement.
 		setMeasurementStart(null);
 		setMeasurementEnd(null);
+		setMeasurementWaypoints([]);
 		lastMeasureCellRef.current = null;
 		toast({
 			title: "AoE Pinned",
@@ -3699,11 +3694,30 @@ const VTTEnhanced = () => {
 		if (selectedTool === "measure") {
 			// Press-drag ruler (Roll20/DDB parity): anchor on press, track the
 			// end while dragging (handleMapMouseMove), finalize on release.
-			measureDraggingRef.current = true;
-			measureDragStartRef.current = { x: grid.gridX, y: grid.gridY };
-			lastMeasureCellRef.current = `${grid.gridX},${grid.gridY}`;
-			setMeasurementStart({ x: grid.gridX, y: grid.gridY });
-			setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
+			// Shift+press chains a new leg (Foundry-style waypoints): lock the
+			// current segment's start, then continue from its end.
+			if (
+				e.shiftKey &&
+				measureShape === "line" &&
+				measurementStart &&
+				measurementEnd
+			) {
+				const prevStart = measurementStart;
+				const prevEnd = measurementEnd;
+				setMeasurementWaypoints((prev) => [...prev, prevStart]);
+				measureDraggingRef.current = true;
+				measureDragStartRef.current = { x: prevEnd.x, y: prevEnd.y };
+				lastMeasureCellRef.current = `${grid.gridX},${grid.gridY}`;
+				setMeasurementStart({ x: prevEnd.x, y: prevEnd.y });
+				setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
+			} else {
+				measureDraggingRef.current = true;
+				measureDragStartRef.current = { x: grid.gridX, y: grid.gridY };
+				lastMeasureCellRef.current = `${grid.gridX},${grid.gridY}`;
+				setMeasurementWaypoints([]);
+				setMeasurementStart({ x: grid.gridX, y: grid.gridY });
+				setMeasurementEnd({ x: grid.gridX, y: grid.gridY });
+			}
 		}
 	};
 
@@ -4107,23 +4121,44 @@ const VTTEnhanced = () => {
 				}
 				if (start && end && (end.x !== start.x || end.y !== start.y)) {
 					const gridType = currentScene?.gridType ?? "square";
-					const cells = cellDistance(start.x, start.y, end.x, end.y, gridType);
-					const feet = cellDistanceFeet(
-						start.x,
-						start.y,
-						end.x,
-						end.y,
-						gridType,
-					);
-					toast({
-						title: "Distance",
-						description: `${cells.toFixed(1)} grid units (${feet.toFixed(0)} ft)`,
-					});
+					if (measureShape === "line" && measurementWaypoints.length > 0) {
+						// Multi-leg ruler: sum every segment (5e diagonal). Cell coords,
+						// so gridSize=1; matches the on-map per-leg labels.
+						const result = measurePath(
+							[...measurementWaypoints, start, end],
+							1,
+							5,
+						);
+						toast({
+							title: "Distance",
+							description: `${result.distanceSquares.toFixed(1)} grid units (${result.distanceFt} ft) over ${measurementWaypoints.length + 1} legs`,
+						});
+					} else {
+						const cells = cellDistance(
+							start.x,
+							start.y,
+							end.x,
+							end.y,
+							gridType,
+						);
+						const feet = cellDistanceFeet(
+							start.x,
+							start.y,
+							end.x,
+							end.y,
+							gridType,
+						);
+						toast({
+							title: "Distance",
+							description: `${cells.toFixed(1)} grid units (${feet.toFixed(0)} ft)`,
+						});
+					}
 					// Leave the ruler/AoE template on screen so the Warden can
 					// Pin it; a new press starts a fresh measurement.
 				} else {
 					setMeasurementStart(null);
 					setMeasurementEnd(null);
+					setMeasurementWaypoints([]);
 				}
 				return;
 			}
@@ -4240,6 +4275,8 @@ const VTTEnhanced = () => {
 			isFogPainting,
 			isWarden,
 			finalizeFogStroke,
+			measureShape,
+			measurementWaypoints,
 			selectTokensInMarquee,
 			selectionMarquee,
 			selectedTool,
@@ -4422,6 +4459,54 @@ const VTTEnhanced = () => {
 		() => currentScene?.annotations ?? [],
 		[currentScene?.annotations],
 	);
+	// Live measurement ruler / AoE template, shaped for the Pixi stage. Null
+	// unless actively measuring; the GPU renderer draws it (DOM is the fallback).
+	const stageMeasurement = useMemo(() => {
+		if (selectedTool !== "measure" || !measurementStart || !measurementEnd)
+			return null;
+		return {
+			start: measurementStart,
+			end: measurementEnd,
+			shape: measureShape,
+			radius: measureRadius,
+			waypoints: measurementWaypoints,
+		};
+	}, [
+		selectedTool,
+		measurementStart,
+		measurementEnd,
+		measureShape,
+		measureRadius,
+		measurementWaypoints,
+	]);
+	// DOM-fallback ruler geometry (line shape). The GPU stage renders waypoints
+	// itself; this only feeds the rare pixiInitFailed overlay.
+	const fallbackRuler = useMemo(() => {
+		if (
+			selectedTool !== "measure" ||
+			measureShape !== "line" ||
+			!measurementStart ||
+			!measurementEnd
+		)
+			return null;
+		const pts =
+			measurementWaypoints.length > 0
+				? [...measurementWaypoints, measurementStart, measurementEnd]
+				: [measurementStart, measurementEnd];
+		let total = 0;
+		for (let i = 1; i < pts.length; i++) {
+			const ax = Math.abs(pts[i].x - pts[i - 1].x);
+			const ay = Math.abs(pts[i].y - pts[i - 1].y);
+			total += Math.max(ax, ay) + Math.min(ax, ay) * 0.5;
+		}
+		return { pts, total, multi: measurementWaypoints.length > 0 };
+	}, [
+		selectedTool,
+		measureShape,
+		measurementStart,
+		measurementEnd,
+		measurementWaypoints,
+	]);
 	const weatherPreset = useMemo(() => {
 		const weather = currentScene?.weather;
 		if (!weather || weather === "clear") return null;
@@ -4762,32 +4847,6 @@ const VTTEnhanced = () => {
 						}
 						right={
 							<>
-								{/* Misty Pearl C1 — Labs / Spatial Mode toggle */}
-								{isActualWarden && (
-									<Button
-										data-testid="vtt-spatial-mode-toggle"
-										variant="outline"
-										size="sm"
-										onClick={() => setViewMode(viewMode === "3d" ? "2d" : "3d")}
-										className={cn(
-											"h-8 text-[11px] px-2",
-											viewMode === "3d"
-												? "border-primary text-primary"
-												: "text-foreground/70",
-										)}
-										title={
-											viewMode === "3d"
-												? "Exit Spatial Mode (Labs)"
-												: "Enter Spatial Strata Viewer (Labs)"
-										}
-										aria-label="Toggle Spatial Strata Viewer"
-									>
-										<Box className="w-3.5 h-3.5" aria-hidden />
-										<span className="hidden md:inline ml-1.5">
-											{viewMode === "3d" ? "2D" : "3D Labs"}
-										</span>
-									</Button>
-								)}
 								{isActualWarden && (
 									<Button
 										data-testid="vtt-player-view-toggle"
@@ -6567,28 +6626,32 @@ const VTTEnhanced = () => {
 								gridSize={gridSize}
 								zoom={zoom}
 							/>
-							{/* P1-2 wall authoring: live drag-preview ghost line. */}
-							{selectedTool === "wall" && isWarden && wallPreview && (
-								<svg
-									data-testid="vtt-wall-preview"
-									className="absolute top-0 left-0 pointer-events-none"
-									width={(currentScene?.width ?? 20) * gridSize * zoom}
-									height={(currentScene?.height ?? 20) * gridSize * zoom}
-								>
-									<title>Wall drag preview</title>
-									<line
-										x1={wallPreview.x1 * gridSize * zoom}
-										y1={wallPreview.y1 * gridSize * zoom}
-										x2={wallPreview.x2 * gridSize * zoom}
-										y2={wallPreview.y2 * gridSize * zoom}
-										stroke="#f59e0b"
-										strokeWidth={3}
-										strokeDasharray="6 4"
-										strokeLinecap="round"
-										opacity={0.85}
-									/>
-								</svg>
-							)}
+							{/* P1-2 wall authoring: live drag-preview ghost line (DOM fallback;
+								Pixi draws it on the annotations layer when active). */}
+							{pixiInitFailed &&
+								selectedTool === "wall" &&
+								isWarden &&
+								wallPreview && (
+									<svg
+										data-testid="vtt-wall-preview"
+										className="absolute top-0 left-0 pointer-events-none"
+										width={(currentScene?.width ?? 20) * gridSize * zoom}
+										height={(currentScene?.height ?? 20) * gridSize * zoom}
+									>
+										<title>Wall drag preview</title>
+										<line
+											x1={wallPreview.x1 * gridSize * zoom}
+											y1={wallPreview.y1 * gridSize * zoom}
+											x2={wallPreview.x2 * gridSize * zoom}
+											y2={wallPreview.y2 * gridSize * zoom}
+											stroke="#f59e0b"
+											strokeWidth={3}
+											strokeDasharray="6 4"
+											strokeLinecap="round"
+											opacity={0.85}
+										/>
+									</svg>
+								)}
 							{/* Floating token action bar when a token is selected. */}
 							{activeToken && currentScene && (
 								<TokenActionBar
@@ -6747,23 +6810,6 @@ const VTTEnhanced = () => {
 													projection.
 												</AscendantText>
 											</div>
-										) : viewMode === "3d" && isWarden ? (
-											// Misty Pearl C1 — Spatial Strata Viewer (Labs).
-											<React.Suspense
-												fallback={
-													<div
-														className="absolute inset-0 flex items-center justify-center text-xs text-foreground/60"
-														data-testid="vtt-spatial-loading"
-													>
-														Bureau Cartography — booting Spatial Mode…
-													</div>
-												}
-											>
-												<LazyVttThreeStage
-													scene={currentScene}
-													isWarden={isWarden}
-												/>
-											</React.Suspense>
 										) : pixiInitFailed ? (
 											<VttDomFallbackSurface
 												scene={currentScene}
@@ -6811,6 +6857,9 @@ const VTTEnhanced = () => {
 												onInitError={onPixiInitError}
 												activeStratumId={activeStratumId}
 												weather={currentScene?.weather}
+												drawings={drawingsToRender}
+												measurement={stageMeasurement}
+												wallPreview={wallPreview}
 											/>
 										)}
 										{/* Misty Pearl B3 — Scene transition overlay */}
@@ -6989,7 +7038,7 @@ const VTTEnhanced = () => {
 												</div>
 											)}
 
-										{drawingsToRender.length > 0 && (
+										{pixiInitFailed && drawingsToRender.length > 0 && (
 											<div className="absolute inset-0 pointer-events-none">
 												{drawingsToRender.map((drawing) => {
 													if (drawing.layer === "Warden" && !isWarden)
@@ -7113,33 +7162,62 @@ const VTTEnhanced = () => {
 														: measureRadius;
 												return (
 													<div className="vtt-measurement">
-														{measureShape === "line" && (
-															<div
-																className={cn(
-																	"vtt-measurement-line",
-																	"vtt-measurement-line-active",
+														{/* Visual shapes + label are GPU-drawn; DOM is the
+															fallback. The warden Pin control stays live in
+															both modes. */}
+														{pixiInitFailed && (
+															<>
+																{measureShape === "line" &&
+																	(fallbackRuler?.multi ? (
+																		<svg
+																			className="absolute inset-0 w-full h-full overflow-visible pointer-events-none"
+																			role="img"
+																			aria-label="Measurement ruler"
+																		>
+																			<title>Measurement ruler</title>
+																			<polyline
+																				points={fallbackRuler.pts
+																					.map(
+																						(p) =>
+																							`${(p.x + 0.5) * gridSize * zoom},${(p.y + 0.5) * gridSize * zoom}`,
+																					)
+																					.join(" ")}
+																				fill="none"
+																				stroke="#22d3ee"
+																				strokeWidth={3}
+																				strokeLinecap="round"
+																				strokeLinejoin="round"
+																			/>
+																		</svg>
+																	) : (
+																		<div
+																			className={cn(
+																				"vtt-measurement-line",
+																				"vtt-measurement-line-active",
+																			)}
+																		/>
+																	))}
+																{measureShape === "circle" && (
+																	<div className="vtt-aoe-circle" />
 																)}
-															/>
+																{measureShape === "cone" && (
+																	<div className="vtt-aoe-cone" />
+																)}
+																{measureShape === "cube" && (
+																	<div className="vtt-aoe-cube" />
+																)}
+																<div
+																	className={cn(
+																		"vtt-measurement-label",
+																		"vtt-measurement-label-active",
+																	)}
+																>
+																	{measureShape === "line"
+																		? `${(fallbackRuler?.total ?? distance).toFixed(1)}u (${((fallbackRuler?.total ?? distance) * 5).toFixed(0)} ft)`
+																		: `${measureShape} ${measureRadius * 5}ft`}
+																</div>
+															</>
 														)}
-														{measureShape === "circle" && (
-															<div className="vtt-aoe-circle" />
-														)}
-														{measureShape === "cone" && (
-															<div className="vtt-aoe-cone" />
-														)}
-														{measureShape === "cube" && (
-															<div className="vtt-aoe-cube" />
-														)}
-														<div
-															className={cn(
-																"vtt-measurement-label",
-																"vtt-measurement-label-active",
-															)}
-														>
-															{measureShape === "line"
-																? `${distance.toFixed(1)}u (${(distance * 5).toFixed(0)} ft)`
-																: `${measureShape} ${measureRadius * 5}ft`}
-														</div>
 														{isWarden && (
 															<button
 																type="button"

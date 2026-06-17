@@ -75,5 +75,3 @@ export function usePopOut(options: UsePopOutOptions) {
 
 	return { open } as const;
 }
-
-export default usePopOut;

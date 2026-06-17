@@ -127,5 +127,3 @@ export function CampaignCalendarPanel({
 		</AscendantWindow>
 	);
 }
-
-export default CampaignCalendarPanel;

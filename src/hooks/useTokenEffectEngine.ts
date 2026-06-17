@@ -99,5 +99,3 @@ export function useTokenEffectEngine(options: UseTokenEffectEngineOptions) {
 		};
 	}, [enabled]);
 }
-
-export default useTokenEffectEngine;

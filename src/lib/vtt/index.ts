@@ -149,15 +149,6 @@ export {
 	PIN_ICON_EMOJIS,
 	PIN_SIZE_PX,
 } from "./mapPins";
-// Particle effects library (102+ presets)
-export {
-	getPreset as getParticlePreset,
-	listCategories as listParticleCategories,
-	listPresets as listParticlePresets,
-	PARTICLE_PRESETS,
-	type ParticleCategory,
-	type ParticlePreset,
-} from "./particlePresets";
 // Party dashboard
 export {
 	calculatePartySummary,

@@ -10,8 +10,8 @@
  * detected here and surfaced to the UI / action resolver.
  *
  * All functions in this module are pure — callers pass data in, get
- * results back, no side effects. Persistence is handled by
- * `src/hooks/useTamedAnomalies.ts` calling Supabase RPCs.
+ * results back, no side effects. Persistence (when wired) is handled by
+ * the calling layer via Supabase RPCs.
  */
 import type { AbilityScore } from "@/types/core-rules";
 

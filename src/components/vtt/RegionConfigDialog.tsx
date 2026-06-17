@@ -331,5 +331,3 @@ export function RegionConfigDialog({
 		</Dialog>
 	);
 }
-
-export default RegionConfigDialog;

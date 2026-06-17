@@ -186,8 +186,6 @@ import type {
 	MeasurementResult,
 	MeasurementTemplate,
 	ParsedChatMessage,
-	ParticleCategory,
-	ParticlePreset,
 	PingConfig,
 	RollMacro,
 	TerrainType,
@@ -231,14 +229,12 @@ export type ProtocolWiringLattice = {
 		points: DrawingPoint;
 		cells: HexCell;
 		vision: VisibilityPolygon;
-		particles: ParticlePreset;
 		orientation: HexOrientation;
 		chat: ChatSegment;
 		roll: InlineRollResult;
 		msg: ParsedChatMessage;
 		token: TokenVision;
 		ping: PingConfig;
-		cat: ParticleCategory;
 		macros: { bar: MacroBar; main: RollMacro; cat: MacroCategory };
 		terrain: TerrainType;
 		weather: WeatherEffect;

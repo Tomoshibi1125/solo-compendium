@@ -46,5 +46,3 @@ export function RosterOverlay({ campaignId }: RosterOverlayProps) {
 		</div>
 	);
 }
-
-export default RosterOverlay;

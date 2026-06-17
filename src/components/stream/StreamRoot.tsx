@@ -75,5 +75,3 @@ export function CampaignStreamRoot({
 		</div>
 	);
 }
-
-export default CampaignStreamRoot;

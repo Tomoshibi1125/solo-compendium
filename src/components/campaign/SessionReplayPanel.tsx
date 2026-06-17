@@ -186,5 +186,3 @@ export function SessionReplayPanel({
 		</AscendantWindow>
 	);
 }
-
-export default SessionReplayPanel;

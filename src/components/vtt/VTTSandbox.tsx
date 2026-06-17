@@ -11,7 +11,6 @@ import {
 	getAssetSummary,
 	getHexGridSVGPaths,
 	getMapsForTier,
-	getParticlePreset,
 	getPingAnimationCSS,
 	hexDistance,
 	hexesInRadius,
@@ -19,11 +18,8 @@ import {
 	hexToPixel,
 	isCellVisible,
 	isOnCooldown,
-	listParticleCategories,
-	listParticlePresets,
 	MAP_ASSETS,
 	MUSIC_ASSETS,
-	PARTICLE_PRESETS,
 	PROP_ASSETS,
 	pixelToHex,
 	pointsToSVGPath,
@@ -79,8 +75,6 @@ export function VTTSandbox() {
 			pingConfig: DEFAULT_PING_CONFIG.defaultDurationMs,
 			pingCSS: getPingAnimationCSS(),
 			cooldown: isOnCooldown([], "test-user"),
-			particleRoot: listParticleCategories().length,
-			presets: listParticlePresets(undefined).length,
 			assetSummary: Object.values(getAssetSummary()).reduce((a, b) => a + b, 0),
 			mapCount: getMapsForTier("A").length,
 			AnomalyCount: getAnomalyTokensForTier("A").length,
@@ -101,7 +95,6 @@ export function VTTSandbox() {
 
 		setDiag(JSON.stringify(results, null, 2));
 		console.log("VTT Interface Protocol Seal active.", {
-			presets: PARTICLE_PRESETS,
 			manifest: {
 				ALL_ASSETS,
 				AUDIO_ASSETS,
@@ -111,7 +104,6 @@ export function VTTSandbox() {
 				PROP_ASSETS,
 				TOKEN_ASSETS,
 			},
-			specificPreset: getParticlePreset("magic-circle"),
 		});
 
 		// Clean up pings as side effect

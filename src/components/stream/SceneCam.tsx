@@ -41,5 +41,3 @@ export function SceneCam({ campaignId }: SceneCamProps) {
 		</div>
 	);
 }
-
-export default SceneCam;

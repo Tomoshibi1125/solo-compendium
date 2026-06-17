@@ -260,5 +260,3 @@ export function AnimatedTilesPanel({
 		</AscendantWindow>
 	);
 }
-
-export default AnimatedTilesPanel;

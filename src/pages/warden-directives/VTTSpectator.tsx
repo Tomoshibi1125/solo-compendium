@@ -262,6 +262,7 @@ const VTTSpectator = () => {
 											onRequestZoom={handleRequestZoom}
 											onInitError={onPixiInitError}
 											weather={currentScene.weather}
+											drawings={currentScene.drawings ?? []}
 										/>
 									)}
 								</DynamicStyle>
