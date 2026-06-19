@@ -22,6 +22,8 @@ const ROOT = resolve(__dirname, "..");
 const PUBLIC_DIR = join(ROOT, "public");
 const DATA_DIR = join(ROOT, "src", "data", "compendium");
 const AUDIT_DIR = join(ROOT, "audit");
+const BASELINE_FILE = join(AUDIT_DIR, "asset-baseline.json");
+const UPDATE_BASELINE = process.argv.includes("--update-baseline");
 
 /** Categories that track a case-insensitive / casing-insensitive disk match. */
 const CASE_INSENSITIVE_FS = process.platform === "win32";
@@ -47,9 +49,11 @@ function readAllDataSources() {
 /** Extract every `/generated/...` or `/audio/...` path from a source blob. */
 function extractPaths(source) {
 	const paths = new Set();
-	// Matches "/generated/..." and "/audio/..." inside double-quoted strings
+	// Matches "/generated/...", "/audio/..." and "/images/..." in quoted strings.
+	// `/images/` covers static, always-present assets (e.g. the placeholder
+	// fallback) — a miss there is a hard regression, never deferred art debt.
 	const re =
-		/"(\/(?:generated|audio)\/[^"\\]+\.(?:webp|png|jpg|jpeg|svg|mp3|ogg|wav|m4a))"/gi;
+		/"(\/(?:generated|audio|images)\/[^"\\]+\.(?:webp|png|jpg|jpeg|svg|mp3|ogg|wav|m4a))"/gi;
 	let m;
 	while ((m = re.exec(source)) !== null) {
 		paths.add(m[1]);
@@ -86,6 +90,7 @@ function fileExists(relPath) {
 
 /** Categorise each asset path for the report. */
 function categorise(p) {
+	if (p.startsWith("/images/")) return "image-static";
 	if (p.startsWith("/audio/sfx/")) return "audio-sfx";
 	if (p.startsWith("/audio/ambient/")) return "audio-ambient";
 	if (p.startsWith("/audio/music/")) return "audio-music";
@@ -288,6 +293,49 @@ async function main() {
 	console.log("");
 	console.log(
 		`[audit] DONE. Totals: missing=${summary.totals.missing}, casingMismatch=${summary.totals.casingMismatch}, placeholder=${summary.totals.placeholderAnomalies}`,
+	);
+
+	// --- Regression gate ----------------------------------------------------
+	// The repo carries known-pending art (entries/VTT assets whose bespoke
+	// `/generated/...` files await the deferred AI-art pass). Those are recorded
+	// in asset-baseline.json and tolerated. Any missing path NOT in the baseline
+	// — especially a static `/images/...` asset — is a real regression and fails.
+	const missingPaths = missing.map((m) => m.path).sort();
+
+	if (UPDATE_BASELINE) {
+		await writeFile(
+			BASELINE_FILE,
+			`${JSON.stringify(missingPaths, null, 2)}\n`,
+			"utf8",
+		);
+		console.log(
+			`[audit] Baseline updated: ${missingPaths.length} known-pending art paths recorded.`,
+		);
+		return;
+	}
+
+	const baseline = existsSync(BASELINE_FILE)
+		? JSON.parse(readFileSync(BASELINE_FILE, "utf8"))
+		: [];
+	const baselineSet = new Set(baseline);
+	const blocking = missingPaths.filter((p) => !baselineSet.has(p));
+	const resolved = baseline.filter((p) => !missingPaths.includes(p));
+
+	if (resolved.length > 0) {
+		console.log(
+			`[audit] ${resolved.length} baseline path(s) now present — run with --update-baseline to tighten.`,
+		);
+	}
+	if (blocking.length > 0) {
+		console.error(
+			`\n[audit] REGRESSION: ${blocking.length} newly-missing asset(s) not in baseline:`,
+		);
+		for (const p of blocking.slice(0, 50)) console.error(`  - ${p}`);
+		process.exitCode = 1;
+		return;
+	}
+	console.log(
+		`[audit] OK: no asset regressions (${baseline.length} known-pending art refs tracked).`,
 	);
 }
 

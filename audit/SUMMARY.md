@@ -1,9 +1,9 @@
 # Asset Audit Summary
 
-Generated: 2026-04-24T22:00:16.257Z
+Generated: 2026-06-19T10:41:48.880Z
 
-- **Unique asset paths referenced**: 759
-- **Missing files on disk**: 114
+- **Unique asset paths referenced**: 1566
+- **Missing files on disk**: 139
 - **Casing mismatches (bad on Linux)**: 0
 - **Anomaly placeholder pool references**: 243
 - **Regent folder on disk**: 0 files
@@ -12,18 +12,20 @@ Generated: 2026-04-24T22:00:16.257Z
 
 | Category | Total | Missing | Casing | Placeholder |
 |----------|-------|---------|--------|-------------|
+| audio-ambient | 12 | 0 | 0 | 0 |
 | audio-music | 8 | 0 | 0 | 0 |
 | audio-sfx | 1 | 0 | 0 | 0 |
-| image-anomaly | 243 | 3 | 0 | 243 |
-| image-background | 1 | 1 | 0 | 0 |
+| image-anomaly | 252 | 12 | 0 | 243 |
+| image-background | 8 | 1 | 0 | 0 |
 | image-condition | 6 | 0 | 0 | 0 |
 | image-effect | 21 | 0 | 0 | 0 |
-| image-job | 14 | 0 | 0 | 0 |
+| image-item | 777 | 22 | 0 | 0 |
+| image-job | 14 | 6 | 0 | 0 |
 | image-location | 244 | 0 | 0 | 0 |
 | image-map | 62 | 0 | 0 | 0 |
-| image-other-compendium | 15 | 0 | 0 | 0 |
+| image-other-compendium | 28 | 0 | 0 | 0 |
 | image-prop | 20 | 0 | 0 | 0 |
-| image-regent-BADCASE | 12 | 12 | 0 | 0 |
+| image-static | 1 | 0 | 0 | 0 |
 | image-token | 14 | 6 | 0 | 0 |
 | other | 98 | 92 | 0 | 0 |
 
@@ -48,35 +50,35 @@ Generated: 2026-04-24T22:00:16.257Z
 - `/generated/compendium/anomalies/anomaly-0601.webp` (image-anomaly, 1 refs)
 - `/generated/compendium/anomalies/anomaly-0602.webp` (image-anomaly, 1 refs)
 - `/generated/compendium/anomalies/anomaly-0603.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-blood-boar.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-chronal-hound.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-frost-wyrmling.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-plague-hound.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-spectral-knight.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-spirit-guardian.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-thorn-beast.webp` (image-anomaly, 1 refs)
+- `/generated/compendium/anomalies/companion-void-walker.webp` (image-anomaly, 2 refs)
+- `/generated/compendium/anomalies/mount-dire-shadow-wolf.webp` (image-anomaly, 2 refs)
 - `/generated/compendium/backgrounds/paramedic.webp` (image-background, 1 refs)
-- `/generated/compendium/Regents/beast-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/blood-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/destruction-Regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/frost-Regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/gravity-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/mimic-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/plague-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/shadow-command-Regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/spatial-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/steel-flesh-Regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/umbral-regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/compendium/Regents/white-flame-Regent.webp` (image-regent-BADCASE, 1 refs)
-- `/generated/cosmic/comet-tail.webp` (other, 1 refs)
-- `/generated/cosmic/full-moon.webp` (other, 1 refs)
-- `/generated/cosmic/purple-nebula.webp` (other, 1 refs)
-- `/generated/cosmic/ringed-planet.webp` (other, 1 refs)
-- `/generated/cosmic/rising-sun.webp` (other, 1 refs)
-- `/generated/cosmic/star-cluster.webp` (other, 1 refs)
-- `/generated/creatures/brown-bear.webp` (other, 1 refs)
-- `/generated/creatures/fire-phoenix.webp` (other, 1 refs)
-- `/generated/creatures/golden-eagle.webp` (other, 1 refs)
-- `/generated/creatures/grey-wolf.webp` (other, 1 refs)
-- `/generated/creatures/male-lion.webp` (other, 1 refs)
-- `/generated/creatures/red-dragon.webp` (other, 1 refs)
-- `/generated/creatures/siberian-tiger.webp` (other, 1 refs)
-- `/generated/creatures/war-horse.webp` (other, 1 refs)
-- `/generated/divine/cherub.webp` (other, 1 refs)
-- `/generated/divine/golden-halo.webp` (other, 1 refs)
-- `/generated/divine/light-beam.webp` (other, 1 refs)
-- `/generated/divine/silver-cross.webp` (other, 1 refs)
-- *...and 64 more*
+- `/generated/compendium/items/item-1001.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1003.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1006.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1007.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1008.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1009.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1011.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1014.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1016.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1017.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1019.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1020.webp` (image-item, 2 refs)
+- `/generated/compendium/items/item-1021.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1022.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1024.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1025.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1026.webp` (image-item, 2 refs)
+- `/generated/compendium/items/item-1027.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1028.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1029.webp` (image-item, 1 refs)
+- `/generated/compendium/items/item-1031.webp` (image-item, 1 refs)
+- *...and 89 more*

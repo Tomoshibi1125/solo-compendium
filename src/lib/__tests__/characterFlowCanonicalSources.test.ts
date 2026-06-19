@@ -152,5 +152,8 @@ describe("Character flow canonical sources", () => {
 			violations.map((v) => `${v.file}:${v.line}  ${v.text}`),
 			"Character-flow sources must read canonical static data, not raw compendium_* tables",
 		).toEqual([]);
-	});
+		// Synchronous file walk over large character-flow sources (CharacterNew.tsx
+		// ~90KB + character/ + character-v2/). Disk I/O can exceed the default 5s
+		// ceiling on slower/synced filesystems, so allow extra headroom.
+	}, 30000);
 });

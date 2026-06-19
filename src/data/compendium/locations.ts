@@ -11,7 +11,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0001.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0001.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -127,7 +127,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0002.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0002.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -243,7 +243,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0003.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0003.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -364,7 +364,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0004.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0004.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -490,7 +490,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0005.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0005.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -606,7 +606,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0006.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0006.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -727,7 +727,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0007.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0007.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -843,7 +843,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0008.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0008.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -959,7 +959,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0009.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0009.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1080,7 +1080,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0010.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0010.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1201,7 +1201,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0011.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0011.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1322,7 +1322,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0012.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0012.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1443,7 +1443,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0013.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0013.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1559,7 +1559,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0014.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0014.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1680,7 +1680,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0015.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0015.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1806,7 +1806,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0016.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0016.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -1927,7 +1927,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0017.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0017.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2048,7 +2048,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0018.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0018.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2169,7 +2169,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0019.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0019.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2285,7 +2285,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0020.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0020.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2411,7 +2411,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0021.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0021.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2532,7 +2532,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0022.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0022.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2648,7 +2648,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0023.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0023.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2764,7 +2764,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0024.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0024.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -2885,7 +2885,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0025.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0025.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3011,7 +3011,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0026.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0026.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3132,7 +3132,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0027.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0027.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3253,7 +3253,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0028.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0028.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3374,7 +3374,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0029.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0029.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3495,7 +3495,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0030.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0030.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3616,7 +3616,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0031.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0031.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3737,7 +3737,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0032.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0032.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3858,7 +3858,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0033.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0033.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -3984,7 +3984,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0034.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0034.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4100,7 +4100,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0035.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0035.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4216,7 +4216,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0036.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0036.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4332,7 +4332,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0037.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0037.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4453,7 +4453,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0038.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0038.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4574,7 +4574,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0039.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0039.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4690,7 +4690,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0040.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0040.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4816,7 +4816,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0041.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0041.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -4942,7 +4942,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0042.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0042.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5058,7 +5058,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0043.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0043.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5179,7 +5179,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0044.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0044.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5295,7 +5295,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0045.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0045.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5411,7 +5411,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0046.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0046.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5527,7 +5527,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0047.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0047.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5648,7 +5648,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0048.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0048.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5769,7 +5769,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0049.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0049.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -5890,7 +5890,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0050.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0050.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6011,7 +6011,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0051.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0051.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6132,7 +6132,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0052.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0052.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6248,7 +6248,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0053.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0053.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6364,7 +6364,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0054.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0054.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6480,7 +6480,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0055.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0055.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6601,7 +6601,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0056.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0056.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6717,7 +6717,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0057.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0057.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6838,7 +6838,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0058.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0058.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -6954,7 +6954,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0059.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0059.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7075,7 +7075,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0060.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0060.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7196,7 +7196,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0061.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0061.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7322,7 +7322,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0062.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0062.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7438,7 +7438,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0063.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0063.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7554,7 +7554,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0064.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0064.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7670,7 +7670,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0065.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0065.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7796,7 +7796,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0066.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0066.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -7912,7 +7912,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0067.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0067.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8033,7 +8033,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0068.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0068.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8149,7 +8149,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0069.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0069.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8265,7 +8265,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0070.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0070.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8381,7 +8381,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0071.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0071.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8497,7 +8497,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0072.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0072.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8618,7 +8618,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0073.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0073.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8739,7 +8739,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0074.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0074.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8855,7 +8855,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0075.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0075.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -8976,7 +8976,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0076.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0076.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9092,7 +9092,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0077.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0077.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9213,7 +9213,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0078.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0078.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9334,7 +9334,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0079.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0079.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9450,7 +9450,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0080.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0080.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9566,7 +9566,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0081.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0081.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9682,7 +9682,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0082.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0082.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9798,7 +9798,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0083.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0083.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -9914,7 +9914,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0084.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0084.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10035,7 +10035,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0085.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0085.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10151,7 +10151,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0086.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0086.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10267,7 +10267,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0087.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0087.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10393,7 +10393,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0088.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0088.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10514,7 +10514,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0089.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0089.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10630,7 +10630,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0090.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0090.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10746,7 +10746,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0091.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0091.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10862,7 +10862,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0092.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0092.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -10983,7 +10983,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0093.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0093.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11104,7 +11104,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0094.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0094.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11225,7 +11225,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0095.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0095.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11346,7 +11346,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0096.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0096.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11467,7 +11467,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0097.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0097.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11588,7 +11588,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0098.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0098.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11704,7 +11704,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0099.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0099.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11825,7 +11825,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0100.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0100.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -11946,7 +11946,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0101.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0101.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12062,7 +12062,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0102.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0102.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12178,7 +12178,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0103.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0103.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12294,7 +12294,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0104.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0104.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12410,7 +12410,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0105.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0105.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12531,7 +12531,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0106.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0106.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12647,7 +12647,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0107.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0107.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12763,7 +12763,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0108.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0108.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -12884,7 +12884,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0109.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0109.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13005,7 +13005,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0110.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0110.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13126,7 +13126,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0111.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0111.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13242,7 +13242,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0112.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0112.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13363,7 +13363,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0113.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0113.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13479,7 +13479,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0114.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0114.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13600,7 +13600,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0115.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0115.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13721,7 +13721,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0116.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0116.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13837,7 +13837,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0117.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0117.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -13953,7 +13953,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0118.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0118.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14079,7 +14079,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0119.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0119.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14200,7 +14200,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0120.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0120.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14321,7 +14321,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0121.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0121.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14447,7 +14447,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0122.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0122.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14563,7 +14563,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0123.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0123.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14684,7 +14684,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0124.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0124.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14800,7 +14800,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0125.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0125.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -14916,7 +14916,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0126.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0126.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15037,7 +15037,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0127.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0127.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15163,7 +15163,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0128.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0128.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15284,7 +15284,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0129.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0129.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15400,7 +15400,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0130.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0130.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15521,7 +15521,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0131.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0131.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15647,7 +15647,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0132.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0132.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15763,7 +15763,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0133.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0133.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15879,7 +15879,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0134.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0134.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -15995,7 +15995,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0135.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0135.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16111,7 +16111,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0136.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0136.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16232,7 +16232,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0137.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0137.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16348,7 +16348,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0138.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0138.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16464,7 +16464,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0139.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0139.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16585,7 +16585,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0140.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0140.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16706,7 +16706,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0141.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0141.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16822,7 +16822,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0142.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0142.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -16943,7 +16943,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0143.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0143.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17064,7 +17064,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0144.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0144.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17180,7 +17180,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0145.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0145.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17301,7 +17301,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0146.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0146.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17422,7 +17422,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0147.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0147.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17538,7 +17538,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0148.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0148.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17654,7 +17654,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0149.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0149.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17775,7 +17775,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0150.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0150.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -17891,7 +17891,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0151.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0151.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18007,7 +18007,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0152.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0152.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18123,7 +18123,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0153.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0153.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18244,7 +18244,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0154.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0154.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18360,7 +18360,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0155.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0155.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18476,7 +18476,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0156.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0156.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18597,7 +18597,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0157.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0157.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18718,7 +18718,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0158.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0158.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18844,7 +18844,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0159.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0159.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -18960,7 +18960,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0160.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0160.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19081,7 +19081,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0161.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0161.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19202,7 +19202,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0162.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0162.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19323,7 +19323,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0163.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0163.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19439,7 +19439,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0164.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0164.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19560,7 +19560,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0165.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0165.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19676,7 +19676,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0166.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0166.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19792,7 +19792,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0167.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0167.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -19913,7 +19913,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0168.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0168.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20029,7 +20029,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0169.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0169.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20150,7 +20150,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0170.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0170.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20271,7 +20271,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0171.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0171.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20387,7 +20387,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0172.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0172.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20503,7 +20503,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0173.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0173.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20624,7 +20624,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0174.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0174.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20740,7 +20740,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0175.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0175.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20861,7 +20861,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0176.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0176.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -20987,7 +20987,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0177.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0177.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21108,7 +21108,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0178.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0178.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21229,7 +21229,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0179.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0179.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21345,7 +21345,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0180.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0180.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21461,7 +21461,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0181.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0181.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21582,7 +21582,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0182.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0182.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21698,7 +21698,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0183.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0183.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21814,7 +21814,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0184.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0184.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -21935,7 +21935,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0185.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0185.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22051,7 +22051,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0186.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0186.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22172,7 +22172,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0187.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0187.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22298,7 +22298,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0188.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0188.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22419,7 +22419,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0189.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0189.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22540,7 +22540,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0190.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0190.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22656,7 +22656,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0191.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0191.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22772,7 +22772,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0192.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0192.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -22898,7 +22898,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0193.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0193.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23014,7 +23014,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0194.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0194.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23130,7 +23130,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0195.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0195.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23251,7 +23251,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0196.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0196.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23372,7 +23372,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0197.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0197.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23493,7 +23493,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0198.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0198.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23614,7 +23614,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0199.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0199.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23730,7 +23730,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0200.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0200.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23856,7 +23856,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0201.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0201.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -23972,7 +23972,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0202.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0202.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24093,7 +24093,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0203.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0203.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24214,7 +24214,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0204.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0204.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24335,7 +24335,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0205.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0205.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24451,7 +24451,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0206.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0206.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24572,7 +24572,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0207.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0207.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24693,7 +24693,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0208.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0208.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24809,7 +24809,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0209.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0209.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -24925,7 +24925,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0210.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0210.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25046,7 +25046,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0211.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0211.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25172,7 +25172,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0212.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0212.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25293,7 +25293,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0213.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0213.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25409,7 +25409,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0214.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0214.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25530,7 +25530,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0215.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0215.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25651,7 +25651,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0216.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0216.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25777,7 +25777,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0217.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0217.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -25898,7 +25898,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0218.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0218.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26019,7 +26019,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0219.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0219.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26140,7 +26140,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0220.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0220.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26261,7 +26261,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0221.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0221.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26382,7 +26382,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0222.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0222.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26503,7 +26503,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0223.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0223.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26619,7 +26619,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0224.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0224.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26735,7 +26735,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0225.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0225.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26856,7 +26856,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0226.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0226.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -26972,7 +26972,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0227.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0227.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27088,7 +27088,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0228.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0228.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27204,7 +27204,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0229.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0229.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27320,7 +27320,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0230.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0230.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27441,7 +27441,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0231.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0231.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27567,7 +27567,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0232.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0232.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27693,7 +27693,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0233.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0233.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27809,7 +27809,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0234.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0234.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -27925,7 +27925,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0235.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0235.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28046,7 +28046,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0236.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0236.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28167,7 +28167,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0237.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0237.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28288,7 +28288,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0238.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0238.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28409,7 +28409,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0239.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0239.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28525,7 +28525,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0240.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0240.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28646,7 +28646,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0243.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0243.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28762,7 +28762,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0401.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0401.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -28889,7 +28889,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0402.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0402.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
@@ -29016,7 +29016,7 @@ export const locations: CompendiumLocation[] = [
 		discovery_lore: "Unearthed from the archives.",
 		concentration: false,
 		image: "/generated/compendium/locations/location-0403.webp",
-		image_url: "/images/compendium/placeholder.webp",
+		image_url: "/generated/compendium/locations/location-0403.webp",
 		license_note: "Restricted",
 		flavor: "A cold, absolute lattice pulse emanates from this object.",
 		lore: {
