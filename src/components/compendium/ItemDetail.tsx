@@ -332,7 +332,7 @@ export const ItemDetail = ({ data }: { data: ItemData }) => {
 					{Array.isArray((data as { tags?: string[] }).tags) &&
 						((data as { tags?: string[] }).tags?.length ?? 0) > 0 && (
 							<div className="flex flex-wrap gap-2 mt-2">
-								{(data as { tags?: string[] }).tags?.map((tag) => (
+								{[...new Set((data as { tags?: string[] }).tags ?? [])].map((tag) => (
 									<Badge key={tag} variant="outline" className="text-[10px]">
 										{formatRegentVernacular(tag)}
 									</Badge>

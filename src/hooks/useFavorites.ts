@@ -10,9 +10,13 @@ const STORAGE_KEY = "favorites";
 export const useFavorites = () => {
 	const queryClient = useQueryClient();
 	const { user, session, loading } = useAuth();
+	// Stored as a plain array, NOT a Set: a Set does not survive JSON
+	// serialization (JSON.stringify(new Set(...)) === "{}"), which previously
+	// both lost guest favorites and produced a non-Set on reload — crashing
+	// every `favorites.has(...)` consumer (e.g. CompendiumDetail).
 	const { state: localFavorites, setState: setLocalFavorites } =
-		useUserLocalState<Set<string>>(STORAGE_KEY, {
-			initialState: new Set<string>(),
+		useUserLocalState<string[]>(STORAGE_KEY, {
+			initialState: [],
 		});
 	const sessionUserId = session?.user?.id;
 	const authedUserId = user?.id || sessionUserId;
@@ -60,7 +64,9 @@ export const useFavorites = () => {
 				);
 			}
 
-			return localFavorites;
+			// Guard against legacy/corrupt values (old code stored a Set, which
+			// serialized to "{}"). Anything non-array collapses to an empty Set.
+			return new Set(Array.isArray(localFavorites) ? localFavorites : []);
 		},
 		staleTime: 30000,
 		enabled: !loading || !!sessionUserId,
@@ -119,7 +125,8 @@ export const useFavorites = () => {
 				currentFavorites.add(key);
 			}
 
-			setLocalFavorites(currentFavorites);
+			// Persist as an array so it round-trips through JSON correctly.
+			setLocalFavorites([...currentFavorites]);
 			pushDebug({ stage: "localstorage-write", size: currentFavorites.size });
 			return currentFavorites;
 		},

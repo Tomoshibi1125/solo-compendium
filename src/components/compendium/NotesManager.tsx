@@ -377,7 +377,7 @@ export function NotesManager({
 												<p className="text-sm">{note.content}</p>
 												{note.tags.length > 0 && (
 													<div className="flex flex-wrap gap-1 mt-2">
-														{note.tags.map((tag, _index) => (
+														{[...new Set(note.tags ?? [])].map((tag, _index) => (
 															<Badge
 																key={tag}
 																variant="secondary"

@@ -8,6 +8,7 @@ import {
 	Wind,
 } from "lucide-react";
 import type { DragEvent } from "react";
+import { Link } from "react-router-dom";
 import { AutoLinkText } from "@/components/compendium/AutoLinkText";
 import { CompendiumImage } from "@/components/compendium/CompendiumImage";
 import { ShareToVTTButton } from "@/components/compendium/ShareToVTTButton";
@@ -35,6 +36,9 @@ const sizeLabels: Record<string, string> = {
 	gargantuan: "Gargantuan",
 };
 
+const humanizeActionToken = (token: string): string =>
+	token.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
 export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 	const imageSrc = data.image_url || data.image || undefined;
@@ -48,6 +52,8 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 	const carryCapacity = data.carry_capacity_lbs;
 	const cargoCapacity = data.cargo_capacity_lbs;
 	const bonded = data.bonded;
+	const anomalyId = data.anomaly_id;
+	const bondedFromName = data.bonded_from_name;
 
 	const formatSpeed = (speedValue: number | undefined): string => {
 		if (!speedValue) return "—";
@@ -126,7 +132,7 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 					{Array.isArray((data as { tags?: string[] | null }).tags) &&
 						(data as { tags: string[] }).tags.length > 0 && (
 							<div className="flex flex-wrap gap-2">
-								{(data as { tags: string[] }).tags.map((t) => (
+								{[...new Set((data as { tags: string[] }).tags ?? [])].map((t) => (
 									<Badge key={t} variant="outline" className="text-[10px]">
 										{formatRegentVernacular(t)}
 									</Badge>
@@ -136,6 +142,19 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 					{data.description && (
 						<p className="text-muted-foreground leading-relaxed text-base">
 							<AutoLinkText text={data.description} />
+						</p>
+					)}
+					{isMount && bonded && anomalyId && (
+						<p className="text-sm">
+							<span className="text-muted-foreground">Bonded From: </span>
+							<Link
+								to={`/compendium/anomalies/${anomalyId}`}
+								className="text-primary hover:underline"
+							>
+								{bondedFromName
+									? formatRegentVernacular(bondedFromName)
+									: "View source anomaly"}
+							</Link>
 						</p>
 					)}
 					<div className="flex items-center gap-2 pt-2">
@@ -232,7 +251,8 @@ export const VehicleDetail = ({ data }: { data: VehicleData }) => {
 									)}
 									{seat.grants_actions && seat.grants_actions.length > 0 && (
 										<div className="text-xs text-muted-foreground mt-1">
-											Grants: {seat.grants_actions.join(", ")}
+											Grants:{" "}
+											{seat.grants_actions.map(humanizeActionToken).join(", ")}
 										</div>
 									)}
 								</div>

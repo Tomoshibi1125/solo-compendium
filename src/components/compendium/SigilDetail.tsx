@@ -71,7 +71,7 @@ export const SigilDetail = ({ data }: SigilDetailProps) => {
 										{formatRegentVernacular(data.source_book)}
 									</Badge>
 								)}
-								{data.tags?.map((tag) => (
+								{[...new Set(data.tags ?? [])].map((tag) => (
 									<Badge
 										key={tag}
 										variant="secondary"

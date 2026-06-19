@@ -336,7 +336,7 @@ export const PathDetail = ({ data }: { data: PathData }) => {
 				<div>
 					<h3 className="text-lg font-semibold mb-3 font-heading">Tags</h3>
 					<div className="flex flex-wrap gap-2">
-						{data.tags.map((tag, _index) => (
+						{[...new Set(data.tags ?? [])].map((tag, _index) => (
 							<Badge key={tag} variant="secondary" className="capitalize">
 								{formatRegentVernacular(tag.replace("-", " "))}
 							</Badge>

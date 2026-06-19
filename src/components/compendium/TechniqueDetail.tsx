@@ -530,7 +530,7 @@ export const TechniqueDetail = ({ data }: { data: TechniqueData }) => {
 
 			{Array.isArray(data.tags) && data.tags.length > 0 && (
 				<div className="flex flex-wrap gap-2">
-					{data.tags.map((tag) => (
+					{[...new Set(data.tags ?? [])].map((tag) => (
 						<Badge key={tag} variant="outline" className="text-[10px]">
 							{formatRegentVernacular(tag)}
 						</Badge>

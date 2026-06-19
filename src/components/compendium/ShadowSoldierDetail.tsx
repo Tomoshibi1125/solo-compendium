@@ -551,7 +551,7 @@ export const ShadowSoldierDetail = ({ data }: ShadowSoldierDetailProps) => {
 			{entry.tags && entry.tags.length > 0 && (
 				<div id="soldier-tags" className="scroll-mt-4">
 					<div className="flex flex-wrap gap-2">
-						{entry.tags.map((tag) => (
+						{[...new Set(entry.tags ?? [])].map((tag) => (
 							<Badge
 								key={tag}
 								variant="secondary"

@@ -404,7 +404,7 @@ export const SovereignDetail = ({ data }: { data: SovereignData }) => {
 			{/* Tags */}
 			{data.tags && data.tags.length > 0 && (
 				<div className="flex flex-wrap gap-2">
-					{data.tags.map((tag) => (
+					{[...new Set(data.tags ?? [])].map((tag) => (
 						<Badge key={tag} variant="outline" className="text-xs capitalize">
 							{formatRegentVernacular(tag.replace(/-/g, " "))}
 						</Badge>

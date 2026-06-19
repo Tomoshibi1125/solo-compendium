@@ -489,7 +489,7 @@ export const RelicDetail = ({ data }: { data: RelicData }) => {
 			{/* Tags */}
 			{data.tags && data.tags.length > 0 && (
 				<div className="flex flex-wrap gap-2">
-					{data.tags.map((tag) => (
+					{[...new Set(data.tags ?? [])].map((tag) => (
 						<Badge key={tag} variant="outline" className="text-xs">
 							{formatRegentVernacular(tag)}
 						</Badge>

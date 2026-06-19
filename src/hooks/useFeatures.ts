@@ -79,6 +79,11 @@ export const useFeatures = (characterId: string) => {
 
 	const { data: features = [], isLoading } = useQuery({
 		queryKey: ["features", characterId],
+		// Guard: dialogs (e.g. SendToInventoryDialog) mount with an empty
+		// target id before a character is chosen. Without this, the hook fires
+		// a character_features query for an empty id and logs RLS errors on
+		// every compendium detail page.
+		enabled: Boolean(characterId),
 		queryFn: async () => {
 			if (isLocalCharacterId(characterId)) {
 				return listLocalFeatures(characterId) as Feature[];

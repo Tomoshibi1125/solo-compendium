@@ -194,7 +194,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 								Rank {String(data.rank)}
 							</Badge>
 						)}
-						{data.tags?.map((tag) => (
+						{[...new Set(data.tags ?? [])].map((tag) => (
 							<Badge key={tag} variant="secondary">
 								{formatRegentVernacular(tag)}
 							</Badge>
