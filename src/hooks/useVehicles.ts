@@ -26,22 +26,7 @@ export interface CharacterVehicleRow {
 	updated_at: string;
 }
 
-export interface CampaignVehicleRow {
-	id: string;
-	campaign_id: string;
-	vehicle_id: string;
-	nickname: string | null;
-	current_hp: number;
-	max_hp_override: number | null;
-	conditions: Array<{ id: string; name: string; source?: string }>;
-	notes: string | null;
-	crew_assignments: Record<string, string | null>;
-	created_at: string;
-	updated_at: string;
-}
-
 const CHAR_KEY = (id: string) => ["character-vehicles", id] as const;
-const CAMP_KEY = (id: string) => ["campaign-vehicles", id] as const;
 
 export function useCharacterVehicles(characterId: string | undefined) {
 	return useQuery({
@@ -59,25 +44,6 @@ export function useCharacterVehicles(characterId: string | undefined) {
 			return (data as unknown as CharacterVehicleRow[]) || [];
 		},
 		enabled: !!characterId,
-	});
-}
-
-export function useCampaignVehicles(campaignId: string | undefined) {
-	return useQuery({
-		queryKey: campaignId
-			? CAMP_KEY(campaignId)
-			: ["campaign-vehicles", "_none"],
-		queryFn: async () => {
-			if (!campaignId || !isSupabaseConfigured)
-				return [] as CampaignVehicleRow[];
-			const { data, error } = await supabase
-				.from("campaign_vehicles" as never)
-				.select("*")
-				.eq("campaign_id", campaignId);
-			if (error) throw error;
-			return (data as unknown as CampaignVehicleRow[]) || [];
-		},
-		enabled: !!campaignId,
 	});
 }
 

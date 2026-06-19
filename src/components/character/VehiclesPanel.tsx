@@ -3,7 +3,7 @@
  * Mounts and constructed vehicles share the same data shape; visual
  * differentiation comes from the canonical `vehicle_type` field.
  */
-import { Plus, Trash2, Truck } from "lucide-react";
+import { Minus, Plus, Trash2, Truck } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { AddVehicleDialog } from "@/components/character/AddVehicleDialog";
 import { AscendantWindow } from "@/components/ui/AscendantWindow";
@@ -15,6 +15,7 @@ import {
 	type CharacterVehicleRow,
 	useCharacterVehicles,
 	useDeleteCharacterVehicle,
+	useUpdateCharacterVehicleHP,
 } from "@/hooks/useVehicles";
 import { cn } from "@/lib/utils";
 import type { CompendiumVehicle } from "@/types/compendium";
@@ -27,6 +28,7 @@ interface VehiclesPanelProps {
 export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 	const { data: vehicles = [] } = useCharacterVehicles(characterId);
 	const deleteVehicle = useDeleteCharacterVehicle();
+	const updateHp = useUpdateCharacterVehicleHP();
 	const { toast } = useToast();
 	const [addOpen, setAddOpen] = useState(false);
 	const [catalog, setCatalog] = useState<CompendiumVehicle[]>([]);
@@ -54,6 +56,12 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 			vehicleLinkId: row.id,
 		});
 		toast({ title: "Vehicle removed" });
+	};
+
+	const adjustHp = (row: CharacterVehicleRow, delta: number, maxHp: number) => {
+		const next = Math.min(maxHp, Math.max(0, row.current_hp + delta));
+		if (next === row.current_hp) return;
+		updateHp.mutate({ characterId, vehicleLinkId: row.id, currentHp: next });
 	};
 
 	return (
@@ -132,6 +140,32 @@ export function VehiclesPanel({ characterId, readOnly }: VehiclesPanelProps) {
 															: "bg-emerald-900",
 												)}
 											/>
+											{!readOnly && (
+												<div className="mt-2 flex items-center gap-1">
+													<Button
+														size="sm"
+														variant="outline"
+														className="h-6 w-6 p-0"
+														onClick={() => adjustHp(row, -1, maxHp)}
+														disabled={row.current_hp <= 0}
+														aria-label={`Damage ${catalogEntry.name}`}
+														data-testid={`vehicle-hp-minus-${row.id}`}
+													>
+														<Minus className="w-3 h-3" />
+													</Button>
+													<Button
+														size="sm"
+														variant="outline"
+														className="h-6 w-6 p-0"
+														onClick={() => adjustHp(row, 1, maxHp)}
+														disabled={row.current_hp >= maxHp}
+														aria-label={`Repair ${catalogEntry.name}`}
+														data-testid={`vehicle-hp-plus-${row.id}`}
+													>
+														<Plus className="w-3 h-3" />
+													</Button>
+												</div>
+											)}
 										</div>
 										{!readOnly && (
 											<Button
