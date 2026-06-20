@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "armor-armor-shadow-sigil-bracer-1q660d",
+  "sourceAssetPath": "/generated/compendium/items/item-0450.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-shadow-sigil-bracer-1q660d-v1-3531216201.png",
+  "prompt": "Rift Ascendant inventory icon, detached single forearm bracer prop only, one hollow wrist cuff with protective plate, tabletop inventory object, no human arm, no sleeve, no glove, no torso, no full suit, one single complete Shadow Sigil Bracer equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Shadow Sigil Bracer. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Cheap, ubiquitous, and sometimes the only thing between you and a black bag. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo",
+  "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, human arm, sleeve, glove, torso armor, shirt, coat, chestplate, combat vest, full suit, helmet, boots, whole body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 3531216201,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T23:15:56.254Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-shadow-sigil-bracer-1q660d.webp",
+  "priority": "medium",
+  "subject": "Shadow Sigil Bracer",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-gear-bracer-rare-0"
+  ],
+  "sourceRecordIds": [
+    "gap-gear-bracer-rare-0"
+  ],
+  "sourceRecordNames": [
+    "Shadow Sigil Bracer"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 28575,
+      "field": "image",
+      "subject": "Shadow Sigil Bracer",
+      "recordId": "gap-gear-bracer-rare-0",
+      "recordName": "Shadow Sigil Bracer",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-bracer-rare-0",
+      "context": "As a bonus action, your next ranged attack before the end of your turn ignores cover and gains advantage. Cheap, ubiquitous, and sometimes the only thing between you and a black bag. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}
