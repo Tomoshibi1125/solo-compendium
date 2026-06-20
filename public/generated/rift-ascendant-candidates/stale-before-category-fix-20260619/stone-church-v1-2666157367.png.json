@@ -1,0 +1,36 @@
+{
+  "sourceAssetPath": "/generated/buildings/stone-church.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/stone-church-v1-2666157367.png",
+  "prompt": "Rift Ascendant app asset, Stone Church, Stone Church. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, cinematic environment concept art, strong readable composition, safe negative space for UI overlay, atmospheric depth, rift energy, Essence glow, coherent architecture, polished game background, no text, no logo",
+  "negativePrompt": "generic fantasy tavern, generic castle unless lore requires it, spaceship, unrelated cyberpunk city, empty stock landscape, tourist photo, too cluttered for UI, unreadable composition, blurry, low resolution, text, watermark, logo, signature",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 40,
+  "cfgScale": 7.5,
+  "seed": 2666157367,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-19T14:01:59.120Z",
+  "applyTargetPath": "/generated/buildings/stone-church.webp",
+  "priority": "high",
+  "subject": "Stone Church",
+  "assetType": "location",
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\vttAssetLibrary.ts",
+      "line": 1482,
+      "field": "imageUrl",
+      "subject": "Stone Church",
+      "context": ""
+    }
+  ],
+  "updateReferencesOnApply": false
+}

@@ -10,13 +10,23 @@ import {
 	listLearnableSpells,
 	listLearnableTechniques,
 } from "../canonicalCompendium";
+import {
+	getSignatureSpellOwners,
+	normalizeJobAccessToken,
+} from "../jobAbilityAccess";
 import { PATH_ABILITY_GRANTS } from "../pathAbilityAccess";
+import { resolveRuneGrant } from "../runeAutomation";
 
 // Entries that exist in the catalog but are intentionally not learnable by any
 // job naturally and are not granted by any path. They remain in the catalog so
 // they stay rune-target-able (see runeAutomation / useAbsorbRune).
 const RUNE_ONLY_POWER_IDS = new Set<string>([
 	"power-sup-6-89-idol-s-magnum-opus",
+	// Idol (spell-caster) signature powers with no path grant — Idol cannot
+	// natively learn powers, so these are reachable only via the Rune system.
+	"power-sup-2-23-tempo-shift",
+	"power-sup-2-70-harmonic-ward",
+	"power-sup-2-107-resonance-counter",
 ]);
 const RUNE_ONLY_TECHNIQUE_IDS = new Set<string>([
 	"tech-sup-3-31-dance-of-blades",
@@ -42,10 +52,11 @@ const ALL_JOBS = [
 // Pool floors (Part A target): comprehensive shared catalogs.
 const POOL_POWER_FLOOR = 200;
 const POOL_TECHNIQUE_FLOOR = 200;
-// Each martial-capable job sees the shared pool minus its own path-exclusive
-// grants, so it never equals the raw pool but stays a large majority.
-const MARTIAL_POWER_FLOOR = 150;
-const MARTIAL_TECHNIQUE_FLOOR = 150;
+// Owner model: each martial-capable job sees the shared archetype pool plus the
+// signatures it OWNS (its `classes`/tags), not the whole catalog. The per-job
+// total is therefore the generic pool + its own kit, well below the raw catalog.
+const MARTIAL_POWER_FLOOR = 80;
+const MARTIAL_TECHNIQUE_FLOOR = 95;
 
 // School-union spell floors per caster (Mage = all schools).
 const SPELL_FLOORS: Record<string, number> = {
@@ -221,11 +232,24 @@ describe("Job ability coverage — archetype contract", () => {
 		expect(new Set(counts).size).toBeGreaterThan(1);
 	});
 
-	it("keeps Mage as the broadest caster (sees every school)", async () => {
+	it("keeps Mage as the broadest caster (every school, minus other jobs' signature spells)", async () => {
 		const mage = await listLearnableSpells({ jobName: "Mage" });
 		const allSpells = await listCanonicalSpells();
-		// Mage is the arcane generalist: it reaches the large majority of spells.
-		expect(mage.length).toBeGreaterThanOrEqual(allSpells.length - 5);
+		// Mage is the arcane generalist: it reaches every spell EXCEPT job-
+		// signature spells owned by another job (pact / Idol's / Revenant's …),
+		// which are owner + Rune only.
+		const reachableByMage = allSpells.filter((spell) => {
+			const owners = getSignatureSpellOwners(spell);
+			return (
+				owners.length === 0 || owners.includes(normalizeJobAccessToken("Mage"))
+			);
+		});
+		expect(mage.length).toBeGreaterThanOrEqual(reachableByMage.length - 5);
+		// And it is still strictly the broadest caster.
+		for (const job of ["Esper", "Summoner", "Idol", "Herald", "Contractor"]) {
+			const other = await listLearnableSpells({ jobName: job });
+			expect(mage.length, `Mage vs ${job}`).toBeGreaterThan(other.length);
+		}
 	});
 
 	it("enforces archetype separation (casters get no martial pool, martials get no spells)", async () => {
@@ -365,5 +389,88 @@ describe("Job ability access — hybrid path grant coverage", () => {
 				`Cursed Blade missing technique "${name}"`,
 			).toBe(true);
 		}
+	});
+});
+
+describe("Job ability owner-gate — signatures are owner + Rune only", () => {
+	const MARTIAL_CAPABLE_JOBS = [
+		"Destroyer",
+		"Berserker",
+		"Assassin",
+		"Striker",
+		"Holy Knight",
+		"Stalker",
+		"Technomancer",
+		"Revenant",
+	];
+
+	it("hides the Contractor signature 'Pact Blade' from every other job's base list", async () => {
+		for (const job of MARTIAL_CAPABLE_JOBS) {
+			const techs = await listLearnableTechniques({
+				jobName: job,
+				characterLevel: 20,
+			});
+			expect(
+				techs.some((t) => t.name === "Pact Blade"),
+				`${job} must not see Pact Blade in its base list`,
+			).toBe(false);
+		}
+	});
+
+	it("keeps the martial signature 'Berserker's Fury' off every non-owner's base list", async () => {
+		// Owned by Berserker; also granted via Berserker's Path of the Escalating
+		// Resonance, so it is path-gated even for Berserker's base list. No other
+		// martial job may natively learn it — they use the Rune system.
+		for (const job of MARTIAL_CAPABLE_JOBS) {
+			const powersList = await listLearnablePowers({
+				jobName: job,
+				characterLevel: 20,
+			});
+			expect(
+				powersList.some((p) => p.name === "Berserker's Fury"),
+				`${job} must not natively learn Berserker's Fury without its path`,
+			).toBe(false);
+		}
+		// Berserker earns it by selecting the granting path.
+		const viaPath = await listLearnablePowers({
+			jobName: "Berserker",
+			pathName: "Path of the Escalating Resonance",
+			characterLevel: 20,
+		});
+		expect(viaPath.some((p) => p.name === "Berserker's Fury")).toBe(true);
+	});
+
+	it("restricts the signature spell 'Pact Shield' to Contractor among casters", async () => {
+		for (const job of [
+			"Mage",
+			"Herald",
+			"Holy Knight",
+			"Technomancer",
+			"Revenant",
+		]) {
+			const spells = await listLearnableSpells({
+				jobName: job,
+				characterLevel: 20,
+			});
+			expect(
+				spells.some((s) => s.name === "Pact Shield"),
+				`${job} must not see the Contractor spell Pact Shield`,
+			).toBe(false);
+		}
+		const contractor = await listLearnableSpells({
+			jobName: "Contractor",
+			characterLevel: 20,
+		});
+		expect(contractor.some((s) => s.name === "Pact Shield")).toBe(true);
+	});
+
+	it("still lets any job acquire a signature via the Rune system (cross-class)", async () => {
+		const grant = await resolveRuneGrant(
+			{ kind: "technique", ref: "Pact Blade" },
+			{ jobName: "Destroyer", characterLevel: 20 },
+		);
+		expect(grant?.abilityEntry?.name).toBe("Pact Blade");
+		// Destroyer is not an owner, so the rune-taught ability is cross-class.
+		expect(grant?.isNative).toBe(false);
 	});
 });

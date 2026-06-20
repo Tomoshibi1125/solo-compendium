@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "armor-armor-hand-crossbow-138d59",
+  "sourceAssetPath": "/generated/compendium/items/item-0319.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-hand-crossbow-138d59-v1-2869370335.png",
+  "prompt": "Rift Ascendant inventory icon, single empty wearable armor object only, not worn by anyone, no full-body suit sheet, one single complete Hand Crossbow equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Hand Crossbow. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A one-handed crossbow. Compact enough to dual-wield or use with a shield. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo",
+  "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-base-equipment.ts",
+    "src\\data\\compendium\\items-part4.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 2869370335,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T22:05:10.355Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-hand-crossbow-138d59.webp",
+  "priority": "medium",
+  "subject": "Hand Crossbow",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-base-equipment.ts#base-weapon-hand-crossbow"
+  ],
+  "sourceRecordIds": [
+    "base-weapon-hand-crossbow"
+  ],
+  "sourceRecordNames": [
+    "Hand Crossbow"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-base-equipment.ts",
+      "line": 5851,
+      "field": "image",
+      "subject": "Hand Crossbow",
+      "recordId": "base-weapon-hand-crossbow",
+      "recordName": "Hand Crossbow",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-base-equipment.ts#base-weapon-hand-crossbow",
+      "context": "A one-handed crossbow. Compact enough to dual-wield or use with a shield. Power lies not in the object, but the will of its master. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

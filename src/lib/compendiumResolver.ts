@@ -20,6 +20,7 @@ import type {
 	CompendiumItem,
 	CompendiumJob,
 	CompendiumLocation,
+	CompendiumNPC,
 	CompendiumPath,
 	CompendiumRegent,
 	CompendiumRelic,
@@ -82,7 +83,8 @@ export type CompendiumEntity =
 	| CompendiumSigil
 	| CompendiumSovereign
 	| CompendiumDeity
-	| CompendiumVehicle;
+	| CompendiumVehicle
+	| CompendiumNPC;
 
 export type { StaticDataProvider };
 

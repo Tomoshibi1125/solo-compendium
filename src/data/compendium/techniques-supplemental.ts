@@ -8,15 +8,7 @@ import type { CompendiumTechnique } from "../../types/compendium";
 export const techniques_supplemental: CompendiumTechnique[] = [
 	{
 		id: "tech-sup-1-1-shield-bash",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Shield Bash",
 		display_name: "Shield Bash",
 		description:
@@ -82,15 +74,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-2-iron-curtain",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Iron Curtain",
 		display_name: "Iron Curtain",
 		description:
@@ -156,15 +140,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-3-anchor-slam",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Anchor Slam",
 		display_name: "Anchor Slam",
 		description:
@@ -230,15 +206,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-4-unyielding-fortress",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Unyielding Fortress",
 		display_name: "Unyielding Fortress",
 		description:
@@ -304,15 +272,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-5-world-anchor",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "World Anchor",
 		display_name: "World Anchor",
 		description:
@@ -378,15 +338,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-6-reckless-cleave",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker"],
 		name: "Reckless Cleave",
 		display_name: "Reckless Cleave",
 		description:
@@ -452,15 +404,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-7-savage-charge",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker"],
 		name: "Savage Charge",
 		display_name: "Savage Charge",
 		description:
@@ -526,15 +470,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-8-carnage-wave",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker"],
 		name: "Carnage Wave",
 		display_name: "Carnage Wave",
 		description:
@@ -600,15 +536,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-9-unstoppable-rampage",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker"],
 		name: "Unstoppable Rampage",
 		display_name: "Unstoppable Rampage",
 		description:
@@ -674,15 +602,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-10-extinction-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker"],
 		name: "Extinction Strike",
 		display_name: "Extinction Strike",
 		description:
@@ -748,15 +668,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-11-vital-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Vital Strike",
 		display_name: "Vital Strike",
 		description:
@@ -823,15 +735,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-12-arterial-cut",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Arterial Cut",
 		display_name: "Arterial Cut",
 		description:
@@ -898,15 +802,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-13-organ-failure",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Organ Failure",
 		display_name: "Organ Failure",
 		description:
@@ -973,15 +869,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-14-deathmark-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Deathmark Strike",
 		display_name: "Deathmark Strike",
 		description:
@@ -1048,15 +936,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-15-assassination-protocol",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Assassination Protocol",
 		display_name: "Assassination Protocol",
 		description:
@@ -1123,7 +1003,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-16-nerve-disruption",
-		classes: ["Destroyer", "Striker"],
+		classes: ["Striker"],
 		name: "Nerve Disruption",
 		display_name: "Nerve Disruption",
 		description:
@@ -1189,15 +1069,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-17-meridian-cascade",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Meridian Cascade",
 		display_name: "Meridian Cascade",
 		description:
@@ -1263,7 +1135,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-18-gate-breaker-fist",
-		classes: ["Technomancer"],
+		classes: ["Striker"],
 		name: "Gate Breaker Fist",
 		display_name: "Gate Breaker Fist",
 		description:
@@ -1329,15 +1201,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-19-one-inch-impact",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "One-Inch Impact",
 		display_name: "One-Inch Impact",
 		description:
@@ -1403,15 +1267,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-20-final-form",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Final Form",
 		display_name: "Final Form",
 		description:
@@ -1676,15 +1532,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-24-taser-fist",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Taser Fist",
 		display_name: "Taser Fist",
 		description:
@@ -1824,15 +1672,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-26-railgun-shot",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Railgun Shot",
 		display_name: "Railgun Shot",
 		description:
@@ -1902,7 +1742,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-27-hamstring",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Stalker"],
 		name: "Hamstring",
 		display_name: "Hamstring",
 		description:
@@ -1968,7 +1808,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-28-entangle-shot",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Stalker"],
 		name: "Entangle Shot",
 		display_name: "Entangle Shot",
 		description:
@@ -2034,7 +1874,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-29-predator-s-leap",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Stalker"],
 		name: "Predator's Leap",
 		display_name: "Predator's Leap",
 		description:
@@ -2100,15 +1940,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-30-rhythmic-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Rhythmic Strike",
 		display_name: "Rhythmic Strike",
 		description:
@@ -2309,7 +2141,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-33-sacred-weapon",
-		classes: ["Holy Knight"],
+		classes: [],
 		name: "Sacred Weapon",
 		display_name: "Sacred Weapon",
 		description:
@@ -2375,15 +2207,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-34-spiritual-hammer",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Spiritual Hammer",
 		display_name: "Spiritual Hammer",
 		description:
@@ -2449,7 +2273,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-35-war-god-s-blessing",
-		classes: ["Holy Knight"],
+		classes: [],
 		name: "War God's Blessing",
 		display_name: "War God's Blessing",
 		description:
@@ -2713,7 +2537,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-39-withering-blade",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Revenant"],
 		name: "Withering Blade",
 		display_name: "Withering Blade",
 		description:
@@ -2779,15 +2603,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-40-death-s-reach",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Revenant"],
 		name: "Death's Reach",
 		display_name: "Death's Reach",
 		description:
@@ -2853,15 +2669,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-41-entropy-surge",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Revenant"],
 		name: "Entropy Surge",
 		display_name: "Entropy Surge",
 		description:
@@ -2927,7 +2735,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-42-gate-breaker-chop",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Berserker"],
 		name: "Gate Breaker Chop",
 		display_name: "Gate Breaker Chop",
 		description:
@@ -3001,7 +2809,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-43-mana-circuit-rush",
-		classes: ["Technomancer"],
+		classes: ["Berserker", "Striker"],
 		name: "Mana Circuit Rush",
 		display_name: "Mana Circuit Rush",
 		description:
@@ -3075,15 +2883,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-44-precision-disarm",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Precision Disarm",
 		display_name: "Precision Disarm",
 		description:
@@ -3157,7 +2957,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-45-riposte-lattice",
-		classes: ["Technomancer"],
+		classes: ["Destroyer", "Holy Knight"],
 		name: "Riposte Lattice",
 		display_name: "Riposte Lattice",
 		description:
@@ -3231,7 +3031,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-46-sonic-throw",
-		classes: [],
+		classes: ["Technomancer"],
 		name: "Sonic Throw",
 		display_name: "Sonic Throw",
 		description:
@@ -3305,15 +3105,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-47-anchor-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Holy Knight"],
 		name: "Anchor Strike",
 		display_name: "Anchor Strike",
 		description:
@@ -3387,15 +3179,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-48-mana-overrun",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker", "Striker"],
 		name: "Mana Overrun",
 		display_name: "Mana Overrun",
 		description:
@@ -3469,15 +3253,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-49-vital-point-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Striker"],
 		name: "Vital Point Strike",
 		display_name: "Vital Point Strike",
 		description:
@@ -3551,15 +3327,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-50-resonance-slash",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Resonance Slash",
 		display_name: "Resonance Slash",
 		description:
@@ -3626,15 +3394,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-51-thermal-coating",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Thermal Coating",
 		display_name: "Thermal Coating",
 		description:
@@ -3710,7 +3470,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-52-gate-cutter",
-		classes: ["Technomancer"],
+		classes: ["Destroyer"],
 		name: "Gate Cutter",
 		display_name: "Gate Cutter",
 		description:
@@ -3777,15 +3537,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-53-skull-splitter",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker"],
 		name: "Skull Splitter",
 		display_name: "Skull Splitter",
 		description:
@@ -3852,7 +3604,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-54-shadow-execution",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Assassin"],
 		name: "Shadow Execution",
 		display_name: "Shadow Execution",
 		description:
@@ -3919,15 +3671,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-55-iron-pillar-stance",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Holy Knight"],
 		name: "Iron Pillar Stance",
 		display_name: "Iron Pillar Stance",
 		description:
@@ -4002,15 +3746,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-56-cascade-combo",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Cascade Combo",
 		display_name: "Cascade Combo",
 		description:
@@ -4077,7 +3813,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-57-quarry-brand",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Stalker"],
 		name: "Quarry Brand",
 		display_name: "Quarry Brand",
 		description:
@@ -4211,15 +3947,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-59-voltaic-chain-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Voltaic Chain Strike",
 		display_name: "Voltaic Chain Strike",
 		description:
@@ -4289,15 +4017,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-60-entropic-rend",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Revenant"],
 		name: "Entropic Rend",
 		display_name: "Entropic Rend",
 		description:
@@ -4434,15 +4154,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-62-meteor-fist",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Meteor Fist",
 		display_name: "Meteor Fist",
 		description:
@@ -4509,15 +4221,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-63-demolition-wave",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Demolition Wave",
 		display_name: "Demolition Wave",
 		description:
@@ -4584,15 +4288,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-64-mark-of-the-absolute",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Mark of the Absolute",
 		display_name: "Mark of the Absolute",
 		description:
@@ -4735,15 +4431,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-66-graviton-slam",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Striker"],
 		name: "Graviton Slam",
 		display_name: "Graviton Slam",
 		description:
@@ -4817,15 +4505,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-67-eternal-slash",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Eternal Slash",
 		display_name: "Eternal Slash",
 		description:
@@ -4960,7 +4640,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-69-gate-breaker-barrage",
-		classes: ["Technomancer"],
+		classes: ["Berserker"],
 		name: "Gate Breaker Barrage",
 		display_name: "Gate Breaker Barrage",
 		description:
@@ -5027,15 +4707,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-70-dimensional-blade",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Dimensional Blade",
 		display_name: "Dimensional Blade",
 		description:
@@ -5110,15 +4782,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-71-mountain-crusher",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Berserker"],
 		name: "Mountain Crusher",
 		display_name: "Mountain Crusher",
 		description:
@@ -5193,15 +4857,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-72-infinite-combo",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Infinite Combo",
 		display_name: "Infinite Combo",
 		description:
@@ -5268,7 +4924,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-73-absolute-execution",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Assassin"],
 		name: "Absolute Execution",
 		display_name: "Absolute Execution",
 		description:
@@ -5335,15 +4991,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-74-world-splitter",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "World Splitter",
 		display_name: "World Splitter",
 		description:
@@ -5410,15 +5058,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-75-fist-of-the-infinite",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Fist of the Infinite",
 		display_name: "Fist of the Infinite",
 		description:
@@ -5486,15 +5126,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-76-final-hunt",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Final Hunt",
 		display_name: "Final Hunt",
 		description:
@@ -5570,15 +5202,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-77-resonance-apocalypse",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Resonance Apocalypse",
 		display_name: "Resonance Apocalypse",
 		description:
@@ -5647,15 +5271,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-78-mana-laced-headbutt",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker", "Striker"],
 		name: "Mana-Laced Headbutt",
 		display_name: "Mana-Laced Headbutt",
 		description:
@@ -5729,15 +5345,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-1-79-serpent-lash",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Serpent Lash",
 		display_name: "Serpent Lash",
 		description:
@@ -5811,15 +5419,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-80-counter-surge",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker", "Holy Knight"],
 		name: "Counter Surge",
 		display_name: "Counter Surge",
 		description:
@@ -5893,15 +5493,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-81-lacerate",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Berserker", "Assassin"],
 		name: "Lacerate",
 		display_name: "Lacerate",
 		description:
@@ -5975,15 +5567,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-2-82-mana-hookshot",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Stalker", "Technomancer"],
 		name: "Mana Hookshot",
 		display_name: "Mana Hookshot",
 		description:
@@ -6134,15 +5718,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-84-flickering-blade",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Flickering Blade",
 		display_name: "Flickering Blade",
 		description:
@@ -6216,7 +5792,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-85-kinetic-deflection-field",
-		classes: ["Destroyer", "Striker"],
+		classes: ["Technomancer"],
 		name: "Kinetic Deflection Field",
 		display_name: "Kinetic Deflection Field",
 		description:
@@ -6293,15 +5869,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-3-86-crushing-grapple",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Berserker"],
 		name: "Crushing Grapple",
 		display_name: "Crushing Grapple",
 		description:
@@ -6375,15 +5943,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-87-mana-blade-ricochet",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Mana-Blade Ricochet",
 		display_name: "Mana-Blade Ricochet",
 		description:
@@ -6460,15 +6020,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-88-void-step",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin"],
 		name: "Rift Cut",
 		display_name: "Rift Cut",
 		description:
@@ -6535,15 +6087,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-4-89-earthquake-stomp",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Earthquake Stomp",
 		display_name: "Earthquake Stomp",
 		description:
@@ -6677,7 +6221,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-91-circuit-breaker-slash",
-		classes: ["Technomancer"],
+		classes: ["Assassin", "Technomancer"],
 		name: "Circuit Breaker Slash",
 		display_name: "Circuit Breaker Slash",
 		description:
@@ -6751,15 +6295,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-92-juggernaut-charge",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Berserker"],
 		name: "Juggernaut Charge",
 		display_name: "Juggernaut Charge",
 		description:
@@ -6833,15 +6369,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-93-harmonic-counter",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Harmonic Counter",
 		display_name: "Harmonic Counter",
 		description:
@@ -6908,7 +6436,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-5-94-shadow-harvest",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Assassin", "Revenant"],
 		name: "Shadow Harvest",
 		display_name: "Shadow Harvest",
 		description:
@@ -6982,15 +6510,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-95-gravity-hammer",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Gravity Hammer",
 		display_name: "Gravity Hammer",
 		description:
@@ -7057,15 +6577,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-96-chronostrike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "Chronostrike",
 		display_name: "Chronostrike",
 		description:
@@ -7139,15 +6651,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-6-97-summoner-s-bond-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Summoner's Bond Strike",
 		display_name: "Summoner's Bond Strike",
 		description:
@@ -7214,15 +6718,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-98-entropy-blade",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Revenant"],
 		name: "Entropy Blade",
 		display_name: "Entropy Blade",
 		description:
@@ -7289,15 +6785,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-99-absolute-cleave",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer", "Holy Knight"],
 		name: "Absolute Cleave",
 		display_name: "Absolute Cleave",
 		description:
@@ -7371,15 +6859,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-7-100-contingency-strike",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Assassin", "Stalker"],
 		name: "Contingency Strike",
 		display_name: "Contingency Strike",
 		description:
@@ -7453,15 +6933,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-101-mana-engine-overdrive",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Technomancer"],
 		name: "Mana Engine Overdrive",
 		display_name: "Mana Engine Overdrive",
 		description:
@@ -7533,15 +7005,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-8-102-one-thousand-blows",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Striker"],
 		name: "One Thousand Blows",
 		display_name: "One Thousand Blows",
 		description:
@@ -7608,7 +7072,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-103-berserker-s-requiem",
-		classes: ["Berserker", "Destroyer"],
+		classes: ["Berserker"],
 		name: "Berserker's Requiem",
 		display_name: "Berserker's Requiem",
 		description:
@@ -7675,15 +7139,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-104-destroyer-s-ruin",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Destroyer"],
 		name: "Destroyer's Ruin",
 		display_name: "Destroyer's Ruin",
 		description:
@@ -7751,15 +7207,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-105-summoner-s-convergence",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Summoner's Convergence",
 		display_name: "Summoner's Convergence",
 		description:
@@ -7826,15 +7274,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-106-holy-knight-s-sacrifice",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Holy Knight"],
 		name: "Holy Knight's Sacrifice",
 		display_name: "Holy Knight's Sacrifice",
 		description:
@@ -7903,15 +7343,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-107-esper-singularity",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: [],
 		name: "Esper Singularity",
 		display_name: "Esper Singularity",
 		description:
@@ -7978,15 +7410,7 @@ export const techniques_supplemental: CompendiumTechnique[] = [
 	},
 	{
 		id: "tech-sup-9-108-revenant-s-final-entropy",
-		classes: [
-			"Destroyer",
-			"Berserker",
-			"Assassin",
-			"Striker",
-			"Holy Knight",
-			"Stalker",
-			"Technomancer",
-		],
+		classes: ["Revenant"],
 		name: "Revenant's Final Entropy",
 		display_name: "Revenant's Final Entropy",
 		description:

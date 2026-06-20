@@ -8,6 +8,7 @@
  * indistinguishable in play.
  */
 import { describe, expect, it } from "vitest";
+import { staticDataProvider } from "@/data/compendium/providers";
 import { allVehicles } from "@/data/compendium/vehicles";
 
 const stableStringify = (value: unknown): string => {
@@ -69,5 +70,30 @@ describe("vehicles & mounts data normalization", () => {
 			.filter((v) => v.anomaly_id && !anomalyIds.has(v.anomaly_id))
 			.map((v) => `${v.name} → ${v.anomaly_id}`);
 		expect(orphans).toEqual([]);
+	});
+
+	it("every bonded-anomaly mount has at least one ability", () => {
+		const emptyBonded = allVehicles
+			.filter(
+				(v) => v.bonded && v.anomaly_id && (v.abilities?.length ?? 0) === 0,
+			)
+			.map((v) => v.name);
+		expect(emptyBonded).toEqual([]);
+	});
+
+	it("getVehicles resolves bonded_from_name for anomaly-bonded mounts", async () => {
+		const entries = await staticDataProvider.getVehicles();
+		expect(entries.length).toBe(allVehicles.length);
+		const expected = allVehicles.filter((v) => v.bonded && v.anomaly_id).length;
+		const resolved = (
+			entries as unknown as Array<Record<string, unknown>>
+		).filter(
+			(e) =>
+				e.bonded &&
+				e.anomaly_id &&
+				typeof e.bonded_from_name === "string" &&
+				(e.bonded_from_name as string).length > 0,
+		);
+		expect(resolved.length).toBe(expected);
 	});
 });

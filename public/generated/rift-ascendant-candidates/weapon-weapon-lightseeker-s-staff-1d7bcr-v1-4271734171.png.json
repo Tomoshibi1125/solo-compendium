@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "weapon-weapon-lightseeker-s-staff-1d7bcr",
+  "sourceAssetPath": "/generated/compendium/items/item-0382.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-lightseeker-s-staff-1d7bcr-v1-4271734171.png",
+  "prompt": "Rift Ascendant inventory icon, single full-length pole weapon, one shaft with one connected head, entire weapon visible, no extra spearheads, exactly one single complete Staff weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Staff. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. What survives a Ascendant's tour usually outlives the Ascendant. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, extra spearheads, spearhead collection, broken weapon parts, multiple polearms, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 4271734171,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T22:44:39.403Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-lightseeker-s-staff-1d7bcr.webp",
+  "priority": "medium",
+  "subject": "Lightseeker's Staff",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-melee-staff-rare-2"
+  ],
+  "sourceRecordIds": [
+    "gap-melee-staff-rare-2"
+  ],
+  "sourceRecordNames": [
+    "Lightseeker's Staff"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 90520,
+      "field": "image",
+      "subject": "Lightseeker's Staff",
+      "recordId": "gap-melee-staff-rare-2",
+      "recordName": "Lightseeker's Staff",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-melee-staff-rare-2",
+      "context": "As a bonus action, your next attack with this weapon before the end of your turn deals an additional 2d6 damage. What survives a Ascendant's tour usually outlives the Ascendant. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

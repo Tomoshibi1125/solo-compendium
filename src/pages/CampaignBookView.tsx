@@ -7,6 +7,7 @@ import {
 	Loader2,
 	Lock,
 	Map as MapIcon,
+	Search,
 	Send,
 	ShieldAlert,
 	ShieldX,
@@ -35,7 +36,8 @@ import { useCampaignToolState } from "@/hooks/useToolState";
 import { formatRarityLabel } from "@/lib/labels";
 import type { VTTScene } from "@/types/vtt";
 import "@/styles/source-book.css";
-import ReactMarkdown from "react-markdown";
+import { BookMarkdown } from "@/components/campaign/BookMarkdown";
+import { RunSilentTrackers } from "@/components/campaign/RunSilentTrackers";
 
 type SectionType = {
 	id: string;
@@ -126,6 +128,7 @@ const CampaignBookView = () => {
 		useCampaignSandboxInjector(id || null);
 
 	const [activeSectionId, setActiveSectionId] = useState<string>("intro");
+	const [searchQuery, setSearchQuery] = useState<string>("");
 
 	// Derive NPC articles from wiki — must be before early returns per rules-of-hooks
 	const npcArticles = useMemo(
@@ -361,6 +364,15 @@ const CampaignBookView = () => {
 		...audioSections,
 	];
 
+	const searchTerm = searchQuery.trim().toLowerCase();
+	const searchResults = searchTerm
+		? sections.filter((section) =>
+				`${section.title} ${section.content ?? ""}`
+					.toLowerCase()
+					.includes(searchTerm),
+			)
+		: [];
+
 	const handleAutoPopulate = async () => {
 		await injectSandbox();
 	};
@@ -438,142 +450,190 @@ const CampaignBookView = () => {
 				</div>
 
 				<nav className="flex-1 p-4 space-y-6 overflow-y-auto">
-					{/* Lore Chapters */}
-					<div className="space-y-2">
-						<h3 className="px-2 text-[10px] font-bold text-fuchsia-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-							<BookOpen className="w-3 h-3" />
-							Lore Chapters (
-							{
-								sections.filter((s) => s.type === "static" || s.type === "wiki")
-									.length
-							}
-							)
-						</h3>
-						<div className="space-y-1">
-							{sections
-								.filter((s) => s.type === "static" || s.type === "wiki")
-								.map((section) => (
-									<button
-										key={section.id}
-										type="button"
-										onClick={() => setActiveSectionId(section.id)}
-										className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
-											activeSectionId === section.id
-												? "bg-fuchsia-500/10 border-l-2 border-fuchsia-500 text-white shadow-inner"
-												: "text-slate-500 hover:bg-fuchsia-500/5 hover:text-fuchsia-300"
-										}`}
-									>
-										{section.title}
-									</button>
-								))}
-						</div>
+					{/* Full-text search across the book */}
+					<div className="relative">
+						<Search className="pointer-events-none absolute left-2.5 top-2.5 h-3.5 w-3.5 text-fuchsia-400/50" />
+						<input
+							type="search"
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+							placeholder="Search the book…"
+							className="w-full rounded border border-fuchsia-500/20 bg-black/40 py-2 pl-8 pr-2 text-xs text-slate-200 placeholder:text-slate-600 focus:border-fuchsia-500/50 focus:outline-none"
+						/>
 					</div>
 
-					{managementSections.length > 0 && (
-						<div className="space-y-2">
-							<h3 className="px-2 text-[10px] font-bold text-violet-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-								<ShieldAlert className="w-3 h-3" />
-								Campaign Management ({managementSections.length})
+					{searchTerm ? (
+						<div className="space-y-1">
+							<h3 className="px-2 font-display text-[10px] font-bold uppercase tracking-[0.2em] text-fuchsia-400/60">
+								Search Results ({searchResults.length})
 							</h3>
-							<div className="space-y-1">
-								{managementSections.map((section) => (
+							{searchResults.length === 0 ? (
+								<p className="px-2 py-2 text-[10px] text-slate-600">
+									Nothing matches that search.
+								</p>
+							) : (
+								searchResults.map((section) => (
 									<button
 										key={section.id}
 										type="button"
 										onClick={() => setActiveSectionId(section.id)}
-										className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
+										className={`w-full rounded p-2 pl-3 text-left transition-all ${
 											activeSectionId === section.id
-												? "bg-violet-500/10 border-l-2 border-violet-500 text-white shadow-inner"
-												: "text-slate-500 hover:bg-violet-500/5 hover:text-violet-300"
+												? "border-l-2 border-fuchsia-500 bg-fuchsia-500/10 text-white"
+												: "text-slate-400 hover:bg-fuchsia-500/5 hover:text-fuchsia-300"
 										}`}
 									>
-										<span className="truncate">{section.title}</span>
-									</button>
-								))}
-							</div>
-						</div>
-					)}
-
-					{/* Handouts */}
-					{handoutEntries.length > 0 && (
-						<div className="space-y-2">
-							<h3 className="px-2 text-[10px] font-bold text-cyan-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-								<FileText className="w-3 h-3" />
-								Handouts & Documents ({handoutEntries.length})
-							</h3>
-							<div className="space-y-1">
-								{sections
-									.filter((s) => s.type === "handout")
-									.map((section) => (
-										<button
-											key={section.id}
-											type="button"
-											onClick={() => setActiveSectionId(section.id)}
-											className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest flex items-center gap-1.5 ${
-												activeSectionId === section.id
-													? "bg-cyan-500/10 border-l-2 border-cyan-500 text-white shadow-inner"
-													: "text-slate-500 hover:bg-cyan-500/5 hover:text-cyan-300"
-											}`}
-										>
-											{!section.meta?.visibleToPlayers && (
-												<Lock className="w-2.5 h-2.5 text-amber-400/60 shrink-0" />
-											)}
-											<span className="truncate">{section.title}</span>
-										</button>
-									))}
-							</div>
-						</div>
-					)}
-
-					{/* NPC Roster */}
-					{npcArticles.length > 0 && (
-						<div className="space-y-2">
-							<h3 className="px-2 text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-								<Users className="w-3 h-3" />
-								NPC Roster ({npcArticles.length})
-							</h3>
-							<div className="space-y-1">
-								<button
-									type="button"
-									onClick={() => setActiveSectionId("npc-roster")}
-									className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
-										activeSectionId === "npc-roster"
-											? "bg-emerald-500/10 border-l-2 border-emerald-500 text-white shadow-inner"
-											: "text-slate-500 hover:bg-emerald-500/5 hover:text-emerald-300"
-									}`}
-								>
-									View All NPCs ({npcArticles.length})
-								</button>
-							</div>
-						</div>
-					)}
-
-					{/* VTT Maps */}
-					{vttScenes.length > 0 && (
-						<div className="space-y-2">
-							<h3 className="px-2 text-[10px] font-bold text-amber-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
-								<MapIcon className="w-3 h-3" />
-								VTT Maps ({vttScenes.length})
-							</h3>
-							<div className="space-y-1">
-								{sections
-									.filter((s) => s.type === "scene")
-									.map((section) => (
-										<button
-											key={section.id}
-											type="button"
-											onClick={() => setActiveSectionId(section.id)}
-											className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
-												activeSectionId === section.id
-													? "bg-amber-500/10 border-l-2 border-amber-500 text-white shadow-inner"
-													: "text-slate-500 hover:bg-amber-500/5 hover:text-amber-300"
-											}`}
-										>
+										<span className="block truncate text-[11px]">
 											{section.title}
-										</button>
-									))}
-							</div>
+										</span>
+										<span className="block text-[9px] uppercase tracking-wider text-slate-600">
+											{section.type}
+										</span>
+									</button>
+								))
+							)}
 						</div>
+					) : (
+						<>
+							{/* Lore Chapters */}
+							<div className="space-y-2">
+								<h3 className="px-2 text-[10px] font-bold text-fuchsia-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+									<BookOpen className="w-3 h-3" />
+									Lore Chapters (
+									{
+										sections.filter(
+											(s) => s.type === "static" || s.type === "wiki",
+										).length
+									}
+									)
+								</h3>
+								<div className="space-y-1">
+									{sections
+										.filter((s) => s.type === "static" || s.type === "wiki")
+										.map((section) => (
+											<button
+												key={section.id}
+												type="button"
+												onClick={() => setActiveSectionId(section.id)}
+												className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
+													activeSectionId === section.id
+														? "bg-fuchsia-500/10 border-l-2 border-fuchsia-500 text-white shadow-inner"
+														: "text-slate-500 hover:bg-fuchsia-500/5 hover:text-fuchsia-300"
+												}`}
+											>
+												{section.title}
+											</button>
+										))}
+								</div>
+							</div>
+
+							{managementSections.length > 0 && (
+								<div className="space-y-2">
+									<h3 className="px-2 text-[10px] font-bold text-violet-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+										<ShieldAlert className="w-3 h-3" />
+										Campaign Management ({managementSections.length})
+									</h3>
+									<div className="space-y-1">
+										{managementSections.map((section) => (
+											<button
+												key={section.id}
+												type="button"
+												onClick={() => setActiveSectionId(section.id)}
+												className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
+													activeSectionId === section.id
+														? "bg-violet-500/10 border-l-2 border-violet-500 text-white shadow-inner"
+														: "text-slate-500 hover:bg-violet-500/5 hover:text-violet-300"
+												}`}
+											>
+												<span className="truncate">{section.title}</span>
+											</button>
+										))}
+									</div>
+								</div>
+							)}
+
+							{/* Handouts */}
+							{handoutEntries.length > 0 && (
+								<div className="space-y-2">
+									<h3 className="px-2 text-[10px] font-bold text-cyan-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+										<FileText className="w-3 h-3" />
+										Handouts & Documents ({handoutEntries.length})
+									</h3>
+									<div className="space-y-1">
+										{sections
+											.filter((s) => s.type === "handout")
+											.map((section) => (
+												<button
+													key={section.id}
+													type="button"
+													onClick={() => setActiveSectionId(section.id)}
+													className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest flex items-center gap-1.5 ${
+														activeSectionId === section.id
+															? "bg-cyan-500/10 border-l-2 border-cyan-500 text-white shadow-inner"
+															: "text-slate-500 hover:bg-cyan-500/5 hover:text-cyan-300"
+													}`}
+												>
+													{!section.meta?.visibleToPlayers && (
+														<Lock className="w-2.5 h-2.5 text-amber-400/60 shrink-0" />
+													)}
+													<span className="truncate">{section.title}</span>
+												</button>
+											))}
+									</div>
+								</div>
+							)}
+
+							{/* NPC Roster */}
+							{npcArticles.length > 0 && (
+								<div className="space-y-2">
+									<h3 className="px-2 text-[10px] font-bold text-emerald-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+										<Users className="w-3 h-3" />
+										NPC Roster ({npcArticles.length})
+									</h3>
+									<div className="space-y-1">
+										<button
+											type="button"
+											onClick={() => setActiveSectionId("npc-roster")}
+											className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
+												activeSectionId === "npc-roster"
+													? "bg-emerald-500/10 border-l-2 border-emerald-500 text-white shadow-inner"
+													: "text-slate-500 hover:bg-emerald-500/5 hover:text-emerald-300"
+											}`}
+										>
+											View All NPCs ({npcArticles.length})
+										</button>
+									</div>
+								</div>
+							)}
+
+							{/* VTT Maps */}
+							{vttScenes.length > 0 && (
+								<div className="space-y-2">
+									<h3 className="px-2 text-[10px] font-bold text-amber-400/60 uppercase tracking-[0.2em] mb-3 font-display flex items-center gap-1.5">
+										<MapIcon className="w-3 h-3" />
+										VTT Maps ({vttScenes.length})
+									</h3>
+									<div className="space-y-1">
+										{sections
+											.filter((s) => s.type === "scene")
+											.map((section) => (
+												<button
+													key={section.id}
+													type="button"
+													onClick={() => setActiveSectionId(section.id)}
+													className={`w-full text-left p-2 pl-3 rounded transition-all font-display uppercase text-[10px] tracking-widest ${
+														activeSectionId === section.id
+															? "bg-amber-500/10 border-l-2 border-amber-500 text-white shadow-inner"
+															: "text-slate-500 hover:bg-amber-500/5 hover:text-amber-300"
+													}`}
+												>
+													{section.title}
+												</button>
+											))}
+									</div>
+								</div>
+							)}
+						</>
 					)}
 
 					{/* Module Generation Actions */}
@@ -772,9 +832,9 @@ const CampaignBookView = () => {
 								</Button>
 							</div>
 							<div className="font-serif text-lg leading-loose">
-								<ReactMarkdown>
+								<BookMarkdown>
 									{activeSection.content || "*No content recorded.*"}
-								</ReactMarkdown>
+								</BookMarkdown>
 							</div>
 						</div>
 					)}
@@ -817,9 +877,9 @@ const CampaignBookView = () => {
 									</Button>
 								</div>
 								<div className="font-serif text-lg leading-loose">
-									<ReactMarkdown>
+									<BookMarkdown>
 										{activeSection.content || "*No content recorded.*"}
-									</ReactMarkdown>
+									</BookMarkdown>
 								</div>
 							</div>
 						)}
@@ -859,9 +919,9 @@ const CampaignBookView = () => {
 								)}
 							</div>
 							<div className="font-serif text-lg leading-loose">
-								<ReactMarkdown>
+								<BookMarkdown>
 									{activeSection.content || "*No content recorded.*"}
-								</ReactMarkdown>
+								</BookMarkdown>
 							</div>
 						</div>
 					)}
@@ -927,8 +987,8 @@ const CampaignBookView = () => {
 								NPC Roster ({npcArticles.length})
 							</h1>
 							<p className="text-sm text-slate-400 mb-6">
-								All named NPCs imported from "The Shadow of the Regent" module.
-								Click to expand.
+								All named NPCs imported from the "Run Silent" module. Click to
+								expand.
 							</p>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{npcArticles.map((npc) => {
@@ -979,9 +1039,9 @@ const CampaignBookView = () => {
 														/>
 													)}
 													<div className="font-serif text-sm leading-relaxed text-slate-400 prose prose-invert prose-sm max-w-none">
-														<ReactMarkdown>
+														<BookMarkdown>
 															{npc.content || "*No details available.*"}
-														</ReactMarkdown>
+														</BookMarkdown>
 													</div>
 												</div>
 											</div>
@@ -993,6 +1053,7 @@ const CampaignBookView = () => {
 					)}
 				</article>
 			</main>
+			{id && <RunSilentTrackers campaignId={id} />}
 		</div>
 	);
 };

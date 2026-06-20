@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "anomaly-anomaly-eternal-demonic-knight-k4mxgm",
+  "sourceAssetPath": "/generated/compendium/anomalies/anomaly-0004.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/anomaly-anomaly-eternal-demonic-knight-k4mxgm-v1-1320314047.png",
+  "prompt": "Rift Ascendant app asset, Eternal Demonic Knight, single centered full-body creature or entity from a Rift Interior, not a landscape, not a location, inhuman Rift anomaly body unless lore explicitly says it wears a person, the entity itself is the subject, avoid ordinary human adventurer design, Eternal Demonic Knight. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Rift Interiors can become impossible dark fantasy horror with hostile laws, Anomalies, Essence glow, Relics, and unreliable maps. When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage., high-detail tabletop fantasy RPG key art, Korean action webtoon-inspired dark fantasy rendering, dynamic composition, crisp ink-like edges, painterly realism, cinematic contrast, dramatic rim lighting, polished game illustration, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, uncanny biology, Essence-touched form, dangerous but readable silhouette, modern dark fantasy horror, cinematic lighting, polished monster concept art, dark atmosphere, rift glow accents, simple background, no text, no logo",
+  "negativePrompt": "landscape-only image, empty environment, generic dragon, generic zombie, unrelated sci-fi alien, rubber monster suit, joke creature, cute mascot, chibi, stock monster, muddy silhouette, too many limbs unless lore requires it, bad anatomy, blurry, low resolution, text, watermark, logo, cropped body, overexposed, ordinary human, human warrior, armored hunter, heroic adventurer, fashion portrait, human face focus, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\anomalies\\rank-a.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 30,
+  "cfgScale": 7,
+  "seed": 1320314047,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-19T20:24:31.670Z",
+  "applyTargetPath": "/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-knight-k4mxgm.webp",
+  "priority": "high",
+  "subject": "Eternal Demonic Knight",
+  "assetType": "anomaly",
+  "category": "image-anomaly",
+  "sourceCategory": [
+    "anomaly"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\anomalies\\rank-a.ts#anomaly-0004"
+  ],
+  "sourceRecordIds": [
+    "anomaly-0004"
+  ],
+  "sourceRecordNames": [
+    "Eternal Demonic Knight"
+  ],
+  "recommendedReplacement": "yes",
+  "confidence": "high",
+  "notes": "Approved for apply by explicit user instruction to run the Rift asset workflow start to finish.",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\anomalies\\rank-a.ts",
+      "line": 22,
+      "field": "image",
+      "subject": "Eternal Demonic Knight",
+      "recordId": "anomaly-0004",
+      "recordName": "Eternal Demonic Knight",
+      "sourceCategory": "anomaly",
+      "sourceRecordKey": "src\\data\\compendium\\anomalies\\rank-a.ts#anomaly-0004",
+      "context": "When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage."
+    }
+  ],
+  "updateReferencesOnApply": true,
+  "approvedAt": "2026-06-20T11:43:27.308Z"
+}

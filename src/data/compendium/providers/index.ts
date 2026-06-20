@@ -411,6 +411,7 @@ interface StaticDataProvider {
 	getPantheon: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getShadowSoldiers: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getVehicles: (search?: string) => Promise<StaticCompendiumEntry[]>;
+	getNpcs: (search?: string) => Promise<StaticCompendiumEntry[]>;
 	getFightingStyles: (search?: string) => Promise<StaticCompendiumEntry[]>;
 }
 
@@ -2666,6 +2667,15 @@ export const staticDataProvider: StaticDataProvider = {
 	getVehicles: async (search?: string) => {
 		const { allVehicles } = await import("@/data/compendium/vehicles");
 		type V = (typeof allVehicles)[number];
+		// Resolve bonded mounts' linked-anomaly names so the detail view can show
+		// a "Bonded From: <Anomaly>" link to the source anomaly.
+		const anomalies = await loadData<{ id?: string; name: string }>(
+			"anomalies",
+		);
+		const anomalyNameById = new Map<string, string>();
+		for (const a of anomalies) {
+			if (a.id) anomalyNameById.set(a.id, a.name);
+		}
 		const filtered = filterBySearch<V>(allVehicles, search, [
 			"name",
 			"display_name",
@@ -2693,8 +2703,67 @@ export const staticDataProvider: StaticDataProvider = {
 					abilities: v.abilities,
 					bonded: v.bonded,
 					anomaly_id: v.anomaly_id,
+					bonded_from_name: v.anomaly_id
+						? (anomalyNameById.get(v.anomaly_id) ?? null)
+						: null,
 				}) as unknown as StaticCompendiumEntry,
 		);
+	},
+	// Sandbox roster — recruitable companions & story NPCs. Cast to the wide
+	// StaticCompendiumEntry bag; NpcDetail re-narrows to CompendiumNPC.
+	getNpcs: async (search?: string) => {
+		const { sandboxRecruitableNPCs } = await import("../sandbox-npcs");
+		type N = (typeof sandboxRecruitableNPCs)[number];
+		const factionLabels: Record<N["faction"], string> = {
+			bureau_sentinels: "Bureau Sentinels",
+			vermillion_guild: "Vermillion Guild",
+			awoko_cult: "Awoko Cult",
+			independent: "Independent",
+			anomaly_adjacent: "Anomaly-Adjacent",
+		};
+		const filtered = filterBySearch<N>(sandboxRecruitableNPCs, search, [
+			"name",
+			"title",
+			"description",
+		]);
+		return filtered.map((npc: N) => {
+			const factionLabel = factionLabels[npc.faction] ?? npc.faction;
+			return {
+				id: npc.id,
+				name: npc.name,
+				display_name: npc.name,
+				description: npc.description,
+				created_at: new Date().toISOString(),
+				source_book: "Rift Ascendant Canon",
+				tags: [
+					factionLabel,
+					npc.job,
+					`Level ${npc.level}`,
+					npc.isRecruitable ? "Recruitable" : "Story NPC",
+				].filter(Boolean) as string[],
+				title: npc.title,
+				faction: factionLabel,
+				job: npc.job,
+				level: npc.level,
+				hp: npc.hp,
+				ac: npc.ac,
+				// Stat-block aliases the detail view reads.
+				hit_points: npc.hp,
+				hit_points_average: npc.hp,
+				armor_class: npc.ac,
+				key_abilities: npc.keyAbilities,
+				personality: npc.personality,
+				motivation: npc.motivation,
+				backstory: npc.backstory,
+				recruit_condition: npc.recruitCondition,
+				is_recruitable: npc.isRecruitable,
+				guild_affiliation: npc.guildAffiliation,
+				npc_location: npc.location,
+				quest_hook: npc.questHook,
+				leveling: npc.leveling,
+				rarity: npc.isRecruitable ? "uncommon" : "rare",
+			} as unknown as StaticCompendiumEntry;
+		});
 	},
 	getFightingStyles: async (search?: string) => {
 		const { FIGHTING_STYLES } = await import(

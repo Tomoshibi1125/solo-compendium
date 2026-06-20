@@ -14,7 +14,7 @@ import {
 	Users,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { BookMarkdown } from "@/components/campaign/BookMarkdown";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -297,8 +297,8 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
                                 prose-headings:font-display prose-headings:text-primary 
                                 prose-a:text-accent prose-a:no-underline"
 								>
-									<ReactMarkdown
-										components={{
+									<BookMarkdown
+										extraComponents={{
 											a: ({ node, href, children, ...props }) => {
 												if (href?.startsWith("wiki://")) {
 													const title = decodeURIComponent(
@@ -348,7 +348,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 										}}
 									>
 										{processWikiLinks(selectedArticle.content)}
-									</ReactMarkdown>
+									</BookMarkdown>
 								</div>
 							</div>
 						</ScrollArea>
@@ -388,7 +388,7 @@ export function CampaignWiki({ campaignId }: { campaignId: string }) {
 										)}
 										{isInjecting
 											? "Syncing archives..."
-											: "Import 'The Shadow of the Regent'"}
+											: "Import 'Run Silent'"}
 									</Button>
 								</div>
 							)}

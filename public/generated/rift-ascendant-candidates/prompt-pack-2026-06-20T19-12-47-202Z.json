@@ -1,0 +1,76 @@
+{
+  "generatedAt": "2026-06-20T19:12:47.203Z",
+  "dryRun": true,
+  "backend": "dry-run",
+  "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+  "count": 1,
+  "prompts": [
+    {
+      "promptRecordId": "armor-armor-adept-s-patrol-bracer-ttscqv",
+      "assetPath": "/generated/compendium/items/item-0011.webp",
+      "outputBaseName": "armor-armor-adept-s-patrol-bracer-ttscqv",
+      "type": "armor",
+      "category": "image-item",
+      "sourceCategory": [
+        "item"
+      ],
+      "sourceRecordKeys": [
+        "src\\data\\compendium\\items-gap-fill.ts#gap-gear-bracer-uncommon-3"
+      ],
+      "sourceRecordIds": [
+        "gap-gear-bracer-uncommon-3"
+      ],
+      "sourceRecordNames": [
+        "Adept's Patrol Bracer"
+      ],
+      "subject": "Adept's Patrol Bracer",
+      "loreSummary": "Adept's Patrol Bracer. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A wrist-worn focus and protective plate combined into one piece. Designed by people who survived. Issued to people who hope to. standard",
+      "positivePrompt": "Rift Ascendant inventory icon, one single wrist bracer or forearm guard only, compact cuff-like protective plate, no torso armor, no full suit, no pair of arms, one single complete Patrol Bracer armor or protective gear object only, isolated empty wearable object render on a simple dark neutral background, no person, no body, no model, no mannequin, no multiple variants, not a design sheet, lore-accurate armor or protective gear asset, Patrol Bracer. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A wrist-worn focus and protective plate combined into one piece. Designed by people who survived. Issued to people who hope to. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game armor art, no full character portrait, no text, no logo",
+      "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, torso armor, chestplate, combat vest, full suit, helmet, boots, whole body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+      "width": 1024,
+      "height": 1024,
+      "seed": 742710419,
+      "steps": 24,
+      "cfgScale": 8,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/compendium/armor/armor-armor-adept-s-patrol-bracer-ttscqv.webp",
+      "priority": "medium",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\compendium\\items-gap-fill.ts",
+          "line": 27968,
+          "field": "image",
+          "subject": "Adept's Patrol Bracer",
+          "recordId": "gap-gear-bracer-uncommon-3",
+          "recordName": "Adept's Patrol Bracer",
+          "sourceCategory": "item",
+          "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-bracer-uncommon-3",
+          "context": "A wrist-worn focus and protective plate combined into one piece. Designed by people who survived. Issued to people who hope to. standard"
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md",
+        "src\\data\\compendium\\items-gap-fill.ts"
+      ],
+      "updateReferencesOnApply": true
+    }
+  ]
+}

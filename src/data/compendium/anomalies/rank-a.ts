@@ -19,7 +19,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0004.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-knight-k4mxgm.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -133,7 +133,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0009.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-overlord-id5lq5.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -254,7 +254,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0014.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-warlord-nj9i8j.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -374,7 +374,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0019.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-eternal-demonic-berserker-1l08ti.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -481,7 +481,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0024.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-knight-1fo8ys.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -601,7 +601,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0029.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-overlord-1pdpdy.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -718,7 +718,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0034.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-warlord-ilr6wx.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -832,7 +832,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0039.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-corrupted-demonic-berserker-bddr7m.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -953,7 +953,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0044.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-knight-dk88a2.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1073,7 +1073,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0049.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-overlord-i0to55.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1180,7 +1180,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0054.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-warlord-1j4hqp.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1300,7 +1300,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0059.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-blessed-demonic-berserker-1cpofx.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1417,7 +1417,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0064.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-knight-f5185s.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1531,7 +1531,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0069.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-overlord-hp1d2f.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -1652,7 +1652,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0074.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-warlord-x79uv9.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1772,7 +1772,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0079.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-cursed-demonic-berserker-16f9lh.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -1879,7 +1879,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0084.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-knight-15wi5s.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -1999,7 +1999,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0089.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-overlord-1lubt5.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -2116,7 +2116,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0094.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-warlord-35zli3.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -2230,7 +2230,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0099.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-ancient-demonic-berserker-144805.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2351,7 +2351,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0104.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-knight-19eoc8.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -2471,7 +2471,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0109.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-overlord-1w90vo.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -2578,7 +2578,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0114.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-warlord-dzvm30.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2698,7 +2698,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0119.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-primordial-demonic-berserker-1zncx7.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -2815,7 +2815,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0124.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-knight-1l7lv0.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -2929,7 +2929,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0129.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-overlord-ahlzo.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3050,7 +3050,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0134.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-warlord-1lwxtq.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3170,7 +3170,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0139.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-supreme-demonic-berserker-g2uval.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3277,7 +3277,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0144.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-knight-ydudmd.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3397,7 +3397,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0149.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-overlord-19zce0.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -3514,7 +3514,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0154.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-warlord-guv9q8.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -3628,7 +3628,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0159.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-legendary-demonic-berserker-1cdmi1.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3749,7 +3749,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0164.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-knight-1w3to5.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3869,7 +3869,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0169.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-overlord-50gxb4.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -3976,7 +3976,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0174.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-warlord-1ru85y.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4096,7 +4096,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0179.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-mythic-demonic-berserker-rbkgvd.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4213,7 +4213,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0184.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-knight-l30jeh.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],
@@ -4327,7 +4327,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0189.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-overlord-92l3my.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -4448,7 +4448,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0194.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-warlord-1j166q.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4568,7 +4568,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0199.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-divine-demonic-berserker-14x6ds.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4675,7 +4675,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0204.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-knight-tia39g.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4795,7 +4795,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0209.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-overlord-7js8qb.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -4912,7 +4912,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0214.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-warlord-1yv9nx.webp",
 		description:
 			"A fearsome Anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5026,7 +5026,7 @@ export const anomalies_a = [
 			Perception: 6,
 			Deception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0219.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-infernal-demonic-berserker-10ctb1.webp",
 		description:
 			"A fearsome Humanoid that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5147,7 +5147,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Stealth: 9,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0224.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-knight-b1u3xq.webp",
 		description:
 			"A fearsome Beast that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5267,7 +5267,7 @@ export const anomalies_a = [
 		skills: {
 			Perception: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0229.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-overlord-1yhg5i.webp",
 		description:
 			"A fearsome anomaly that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar", "Demonic Rage"],
@@ -5374,7 +5374,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Arcana: 5,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0234.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-warlord-cy3zy3.webp",
 		description:
 			"A fearsome Elemental that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast", "Abyssal Roar"],
@@ -5494,7 +5494,7 @@ export const anomalies_a = [
 			Perception: 5,
 			Intimidation: 6,
 		},
-		image: "/generated/compendium/anomalies/anomaly-0239.webp",
+		image: "/generated/compendium/anomalies/anomaly-anomaly-celestial-demonic-berserker-1icrgf.webp",
 		description:
 			"A fearsome Dragon that serves the shadow armies. This A rank anomaly possesses immense power and is a formidable opponent for even the most experienced ascendants.",
 		abilities: ["Shadow Strike", "Void Blast"],

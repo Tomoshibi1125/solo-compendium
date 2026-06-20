@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "armor-armor-inspector-s-patrol-bracer-1caax2",
+  "sourceAssetPath": "/generated/compendium/items/item-0412.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-inspector-s-patrol-bracer-1caax2-v1-2933749934.png",
+  "prompt": "Rift Ascendant inventory icon, detached single forearm bracer prop only, one hollow wrist cuff with protective plate, tabletop inventory object, no human arm, no sleeve, no glove, no torso, no full suit, one single complete Patrol Bracer equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Patrol Bracer. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A reinforced bracer with mild armor weave on the inner face. Small enough to forget. Big enough to matter when it counts. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo",
+  "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, human arm, sleeve, glove, torso armor, shirt, coat, chestplate, combat vest, full suit, helmet, boots, whole body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 2933749934,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T22:57:15.443Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-inspector-s-patrol-bracer-1caax2.webp",
+  "priority": "medium",
+  "subject": "Inspector's Patrol Bracer",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-gear-bracer-common-1"
+  ],
+  "sourceRecordIds": [
+    "gap-gear-bracer-common-1"
+  ],
+  "sourceRecordNames": [
+    "Inspector's Patrol Bracer"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 27252,
+      "field": "image",
+      "subject": "Inspector's Patrol Bracer",
+      "recordId": "gap-gear-bracer-common-1",
+      "recordName": "Inspector's Patrol Bracer",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-bracer-common-1",
+      "context": "A reinforced bracer with mild armor weave on the inner face. Small enough to forget. Big enough to matter when it counts. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

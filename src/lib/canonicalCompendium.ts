@@ -6,11 +6,13 @@ import type { Json } from "@/integrations/supabase/types";
 import { getMaxAbilityLevelForJobAtLevel } from "@/lib/abilityProgression";
 import {
 	entryHasAccessToken,
+	getSignatureSpellOwners,
 	getSpellAccessTokens,
 	getTechniqueAccessTokens,
 	jobCanLearnPowers,
 	jobCanLearnSpells,
 	jobCanLearnTechniques,
+	jobOwnsAbility,
 	normalizeJobAccessToken,
 	spellSchoolMatchesJob,
 } from "@/lib/jobAbilityAccess";
@@ -53,6 +55,7 @@ export const staticCanonicalEntryTypes = [
 	"rollable-tables",
 	"deities",
 	"pantheon",
+	"npcs",
 ] as const;
 
 export type StaticCanonicalEntryType =
@@ -94,6 +97,7 @@ const providerMethodByType: Record<
 	"rollable-tables": "getRollableTables",
 	deities: "getPantheon",
 	pantheon: "getPantheon",
+	npcs: "getNpcs",
 };
 
 let staticProviderPromise: Promise<StaticDataProvider> | null = null;
@@ -1422,16 +1426,23 @@ export function isCanonicalSpellLearnable(
 	);
 	if (pathGrantAllowed) return true;
 	if (!isWithinBaseCastableLevelCap(entry, options, "spell")) return false;
-	// Entries that are exclusively path-granted for this job must not appear
-	// in the base/natural learnable list — selecting the path is the only way.
+	// Path-only entries are earned by selecting the path — never in the base list.
 	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "spell")) {
 		return false;
 	}
-	// Archetype model: a caster's base spell list is gated by SCHOOL, not by a
-	// job-name token. Path/regent grants remain an additive layer (handled
-	// above). With no job context we surface everything.
+	// With no job context we surface everything.
 	if (!options.jobName) return true;
 	if (!jobCanLearnSpells(options.jobName)) return false;
+	// Job-signature spells are owned by a specific job; only the owner learns
+	// them natively (others via the Rune system), overriding generic school
+	// access — even when the signature's school is outside the owner's usual
+	// school set (e.g. a Contractor's Abjuration pact spell).
+	const signatureOwners = getSignatureSpellOwners(entry);
+	if (signatureOwners.length > 0) {
+		return signatureOwners.includes(normalizeJobAccessToken(options.jobName));
+	}
+	// Otherwise a caster's base spell list is gated by SCHOOL. Path/regent
+	// grants remain an additive layer (handled above).
 	const spellSchool = getNonEmptyString((entry as { school?: unknown }).school);
 	return spellSchoolMatchesJob(spellSchool, options.jobName);
 }
@@ -1461,15 +1472,16 @@ export function isCanonicalPowerLearnable(
 	);
 	if (pathGrantAllowed) return true;
 	if (!isWithinBaseCastableLevelCap(entry, options, "power")) return false;
-	// Entries that are exclusively path-granted for this job must not appear
-	// in the base/natural learnable list — selecting the path is the only way.
+	// Path-only entries (named in this job's path grants) are earned by selecting
+	// the path — never in the base/natural list.
 	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "power")) {
 		return false;
 	}
-	// Archetype model: any martial-capable job sees the ENTIRE shared martial
-	// power pool. Path/regent grants are additive (handled above); per-job tag
-	// matching is retired for base eligibility.
-	return jobCanLearnPowers(options.jobName);
+	// Owner model: a job natively learns a power only if it is an owner (named in
+	// the entry's `classes` list). Non-owners acquire it via the Rune system;
+	// paths and regents are the owner-side additive layer (handled above).
+	if (!jobCanLearnPowers(options.jobName)) return false;
+	return jobOwnsAbility(options.jobName, entry);
 }
 
 export async function findCanonicalCastableByName(
@@ -1773,8 +1785,7 @@ export function isCanonicalTechniqueLearnable(
 		pathGrantMatchesTechniqueEntry(entry, grant, options.characterLevel),
 	);
 	if (pathGrantAllowed) return true;
-	// Entries that are exclusively path-granted for this job must not appear
-	// in the base/natural learnable list — selecting the path is the only way.
+	// Path-only entries are earned by selecting the path — never in the base list.
 	if (isEntryPathExclusiveForJob(entry.name, options.jobName, "technique")) {
 		return false;
 	}
@@ -1789,9 +1800,11 @@ export function isCanonicalTechniqueLearnable(
 		);
 		return accessTokens.includes(normalizeEligibilityToken(classRequirement));
 	}
-	// Archetype model: any martial-capable job sees the ENTIRE shared technique
-	// pool. Path/regent grants are additive (handled above).
-	return jobCanLearnTechniques(options.jobName);
+	// Owner model: a job natively learns a technique only if it is an owner
+	// (named in the entry's `classes` list). Non-owners acquire it via the Rune
+	// system; paths and regents are the owner-side additive layer (above).
+	if (!jobCanLearnTechniques(options.jobName)) return false;
+	return jobOwnsAbility(options.jobName, entry);
 }
 
 export async function listLearnableTechniques(

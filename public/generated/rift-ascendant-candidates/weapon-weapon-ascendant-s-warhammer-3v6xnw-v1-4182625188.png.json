@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "weapon-weapon-ascendant-s-warhammer-3v6xnw",
+  "sourceAssetPath": "/generated/compendium/items/item-0443.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-ascendant-s-warhammer-3v6xnw-v1-4182625188.png",
+  "prompt": "Rift Ascendant inventory icon, single heavy melee weapon, one handle with one striking head, entire weapon visible, no alternate heads, exactly one single complete Warhammer weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Warhammer. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. It will only ever be as deadly as the hand that holds it. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-part2.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 4182625188,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T23:08:53.156Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-ascendant-s-warhammer-3v6xnw.webp",
+  "priority": "medium",
+  "subject": "Ascendant's Warhammer",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part2.ts#item-p2-27"
+  ],
+  "sourceRecordIds": [
+    "item-p2-27"
+  ],
+  "sourceRecordNames": [
+    "Ascendant's Warhammer"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part2.ts",
+      "line": 3697,
+      "field": "image",
+      "subject": "Ascendant's Warhammer",
+      "recordId": "item-p2-27",
+      "recordName": "Ascendant's Warhammer",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part2.ts#item-p2-27",
+      "context": "As a bonus action, regain 1 spell slot of 2nd level or lower. It will only ever be as deadly as the hand that holds it. aetheric"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

@@ -1,5 +1,5 @@
 /**
- * SANDBOX LOOT TABLES — "The Shadow of the Regent"
+ * SANDBOX LOOT TABLES — "Run Silent"
  *
  * One loot table per threat rank (E through S). Entries are weighted; the
  * Warden rolls on the encounter's loot context to produce a specific drop.
@@ -15,8 +15,8 @@
  * PROVENANCE is OPTIONAL flavour, not a rule. Some goods are honest native
  * craft, salvage, or manufacture; some carry a debt — a name, an owner, an
  * unpaid account — and those make the sharpest rewards. Use provenance when it
- * lands; do not make every item someone's death. The S-rank Regent-Relics are
- * the exception that is always bound — to the Three Claims and the Anchor's end.
+ * lands; do not make every item someone's death. The S-rank apex-Relics are
+ * the exception that is always bound — to the Means and the Quiet's end.
  */
 
 export type SandboxLootRank = "E" | "D" | "C" | "B" | "A" | "S";
@@ -42,7 +42,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 		rank: "E",
 		title: "E-Rank Loot Table — Threshold Roads",
 		description:
-			"Low-tier drops from the Rift Threshold, Hollow Way, and early Road of Writs encounters. These rewards should feel practical, fragile, and newly stained by the Gloamreach.",
+			"Low-tier drops from the Rift Threshold, Hollow Way, and early road encounters. These rewards should feel practical, fragile, and newly stained by the Gloamreach.",
 		entries: [
 			{
 				name: "Bureau Field Kit",
@@ -56,7 +56,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "common",
 				weight: 25,
 				description:
-					"Six cold-light rods. They flicker near toll-houses, claimed ground, and Regent invitations.",
+					"Six cold-light rods. They flicker near the worn dead, exposed ground, and the lures of the dark.",
 			},
 			{
 				name: "Minor Anomaly Core",
@@ -70,14 +70,14 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "uncommon",
 				weight: 15,
 				description:
-					"Single-use patch that grants advantage on one save against fear, charm, or Regent-Marked dream pressure.",
+					"Single-use patch that grants advantage on one save against fear, charm, or Quiet-Marked dream pressure.",
 			},
 			{
-				name: "Torn Summons-Corner",
+				name: "Torn Ward-Scrap",
 				rarity: "uncommon",
 				weight: 10,
 				description:
-					"A torn corner of one of the road's summons, still faintly warm. Once, it lets the bearer pass a minor toll or Name-Gate without paying a name.",
+					"A scrap of an old wardline, still faintly warm. Once, it lets the bearer slip past a worn-dead lure or a Name-Gate without giving a name.",
 			},
 		],
 	},
@@ -86,14 +86,14 @@ export const sandboxLootTables: SandboxLootTable[] = [
 		rank: "D",
 		title: "D-Rank Loot Table — Rot and Remembrance",
 		description:
-			"Drops from the Drowned Ledgerfen, Fungal Depths, and low-rank Domain sites where memory, illness, and secrets begin to grow teeth.",
+			"Drops from the Drowned Ledgerfen, Fungal Depths, and low-rank Gloamreach sites where memory, illness, and secrets begin to grow teeth.",
 		entries: [
 			{
 				name: "Surgical Sigil",
 				rarity: "uncommon",
 				weight: 25,
 				description:
-					"A clean white Sigil that restores a burst of health or stabilizes a Domain-touched injury. It smells faintly of ink.",
+					"A clean white Sigil that restores a burst of health or stabilizes a Gloamreach-touched injury. It smells faintly of ink.",
 			},
 			{
 				name: "Mycelium Reagent",
@@ -107,7 +107,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "rare",
 				weight: 10,
 				description:
-					"A Bureau file proving someone the Domain marked dead is still alive. Can contradict one minor Ledgerfen effect or open a Bureau trust scene.",
+					"A Bureau file proving someone the Gloamreach marked dead is still alive. Can contradict one minor Ledgerfen effect or open a Bureau trust scene.",
 			},
 			{
 				name: "Brine Salve",
@@ -121,7 +121,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "common",
 				weight: 15,
 				description:
-					"A grief-soaked pamphlet offering help in language that is almost kind. Foreshadows the Hollow Mother's inheritance theology.",
+					"A grief-soaked pamphlet offering help in language that is almost kind. Foreshadows the Hollow Mother's becoming theology.",
 			},
 		],
 	},
@@ -130,14 +130,14 @@ export const sandboxLootTables: SandboxLootTable[] = [
 		rank: "C",
 		title: "C-Rank Loot Table — Orchard and Ash",
 		description:
-			"Mid-tier rewards from the Remembering Orchard, Ashen Counting-House, and settlement tribute sites. First rare story-facing drops appear here.",
+			"Mid-tier rewards from the Remembering Orchard, Ashen Counting-House, and the warded communities. First rare story-facing drops appear here.",
 		entries: [
 			{
 				name: "Memory Fruit",
 				rarity: "rare",
 				weight: 15,
 				description:
-					"Answers one question about a person, Claim, or settlement truth when eaten. The eater also receives a memory that was not theirs.",
+					"Answers one question about a person, the Means, or a community's truth when eaten. The eater also receives a memory that was not theirs.",
 			},
 			{
 				name: "Fireweave Rune",
@@ -165,7 +165,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "very-rare",
 				weight: 5,
 				description:
-					"Can hold one testimony, ghost-echo, or dying confession without distortion. Useful in the Throne Court.",
+					"Can hold one testimony, ghost-echo, or dying confession without distortion. Useful when the dead speak.",
 			},
 			{
 				name: "Rare Anomaly Core",
@@ -175,11 +175,11 @@ export const sandboxLootTables: SandboxLootTable[] = [
 					"Valuable to both Bureau researchers and Vermillion brokers. Spending it says something about the party's priorities.",
 			},
 			{
-				name: "Cultist Diary of Inheritance",
+				name: "Cultist Diary of Becoming",
 				rarity: "rare",
 				weight: 10,
 				description:
-					"Reveals that at least one Awoko ritualist understands the Hollow Mother intends to inherit the Domain rather than serve the Regent.",
+					"Reveals that at least one Awoko ritualist understands the Hollow Mother intends to be remade by the Quiet rather than hide from it.",
 			},
 		],
 	},
@@ -209,14 +209,14 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "rare",
 				weight: 10,
 				description:
-					"A letter proving the cult knows the word inherit. Opens the Sister Veil defection path or weakens the Hollow Mother's public claim.",
+					"A letter proving the cult knows the word become. Opens the Sister Veil defection path or weakens the Hollow Mother's public claim.",
 			},
 			{
-				name: "Writ-Knife",
+				name: "Oath-Knife",
 				rarity: "very-rare",
 				weight: 5,
 				description:
-					"Cuts written contracts and false charges. It cannot cut flesh unless the target has broken an oath.",
+					"Cuts lies and broken promises clean. It cannot cut flesh unless the target has broken an oath.",
 			},
 			{
 				name: "Bureau Signet Ring",
@@ -246,14 +246,14 @@ export const sandboxLootTables: SandboxLootTable[] = [
 		rank: "A",
 		title: "A-Rank Loot Table — Spire and Precedent",
 		description:
-			"High-tier rewards from the Obsidian Spire, Forbidden Vault, and late-campaign Claim race. Legendary drops become possible, but costs should become explicit.",
+			"High-tier rewards from the Obsidian Spire, the Deep Places, and the deep dark. Legendary drops become possible, but costs should become explicit.",
 		entries: [
 			{
 				name: "Obsidian Prism",
 				rarity: "legendary",
 				weight: 5,
 				description:
-					"Requires the Spire's trial to be resolved without choosing domination. Grants a reflection-based defensive reaction or reveals one false authority.",
+					"Requires the Spire's trial to be resolved without taking the predator's road. Grants a reflection-based defensive reaction or reveals one false authority.",
 			},
 			{
 				name: "Mirror-Self Shard",
@@ -263,18 +263,18 @@ export const sandboxLootTables: SandboxLootTable[] = [
 					"Once per long rest, answer an attack or accusation with the version of yourself that almost made the opposite choice.",
 			},
 			{
-				name: "Citadel Iron Plate",
+				name: "Deep Iron Plate",
 				rarity: "very-rare",
 				weight: 10,
 				description:
-					"A material component for Claim-safe housings, defensive Sigils, or armor that resists Regent court pressure.",
+					"A material component for Means-safe housings, defensive Sigils, or armor that holds against the dark's attention.",
 			},
 			{
 				name: "Unopened Commendation",
 				rarity: "rare",
 				weight: 15,
 				description:
-					"Addressed to a name reality struggles to preserve. Can trigger the Regent's Human Remnant phase if paired with other proof.",
+					"Addressed to a name reality struggles to preserve. Can deepen the truth of what the Quiet is, if paired with other proof.",
 			},
 			{
 				name: "Awoko Grief-Tattoo",
@@ -288,7 +288,7 @@ export const sandboxLootTables: SandboxLootTable[] = [
 				rarity: "rare",
 				weight: 25,
 				description:
-					"Combines three compatible fragments into a complete Relic or stabilizes one Claim for safer use.",
+					"Combines three compatible fragments into a complete Relic or stabilizes one piece of the Means for safer use.",
 			},
 			{
 				name: "Bureau Prosthesis Blueprint",
@@ -302,58 +302,58 @@ export const sandboxLootTables: SandboxLootTable[] = [
 	{
 		id: "loot-s",
 		rank: "S",
-		title: "S-Rank Loot Table — Anchor Resolution",
+		title: "S-Rank Loot Table — The Quiet's End",
 		description:
-			"Campaign-ending rewards. Choose results according to whether the party breaks, seals, transforms, or inherits the Anchor. The ending matters more than random weight.",
+			"Campaign-ending rewards. Choose results according to whether the party escape, kill the Quiet, or one of them becomes a hunter. The ending matters more than random weight.",
 		entries: [
 			{
-				name: "Regent's Edge",
+				name: "Quiet's Edge",
 				rarity: "legendary",
 				weight: 20,
 				description:
-					"A weaponized shard of the broken Anchor. Best suited to a Break ending. Powerful, unstable, and remembered by every road.",
+					"A shard from the place the Quiet fell. Best suited to a Kill ending. Powerful, unstable, and remembered by every road.",
 			},
 			{
-				name: "Sovereign Aegis",
+				name: "Threshold Aegis",
 				rarity: "legendary",
 				weight: 20,
 				description:
-					"A protective Relic formed by sealing, not destroying, the Anchor. It carries restraint as part of its power.",
+					"A protective Relic forged at the Threshold by those who chose to close the way out behind them and live. It carries restraint as part of its power.",
 			},
 			{
 				name: "Origin Reliquary",
 				rarity: "legendary",
 				weight: 15,
 				description:
-					"A transformed Anchor vessel that preserves one old law and rewrites another. Campaign-defining and sequel-facing.",
+					"A vessel that holds a truth about the Quiet's origin — what it was before it was only hunger. Campaign-defining and sequel-facing.",
 			},
 			{
-				name: "Shadow Regent's Mantle",
+				name: "The Hunter's Mantle",
 				rarity: "legendary",
 				weight: 15,
 				description:
-					"A dark authority mantle from an Inherit ending. Treat as dangerous power, not clean reward.",
+					"A mantle for a character who took the predator's road — a Become ending. Treat as dangerous power, not clean reward.",
 			},
 			{
 				name: "Archive Mirror Shard",
 				rarity: "very-rare",
 				weight: 15,
 				description:
-					"Preserves one true memory, testimony, or name from being altered by Domain law.",
+					"Preserves one true memory, testimony, or name from being altered by the dark.",
 			},
 			{
-				name: "The Regent's Circlet",
+				name: "The Crown of Silence",
 				rarity: "very-rare",
 				weight: 10,
 				description:
-					"A crown-fragment that grants authority at the cost of attention. Requires the bearer to answer one question of ownership before attunement.",
+					"A fragment that grants power at the cost of being heard. Requires the bearer to answer, truly, what they are willing to become before attunement.",
 			},
 			{
-				name: "Anchor Fragment",
+				name: "Shard of the Deep",
 				rarity: "very-rare",
 				weight: 5,
 				description:
-					"Raw Anchor material. Ten fragments can craft one Regent-tier Relic, but every crafting attempt creates a legal echo.",
+					"Raw matter from the deepest dark. Ten shards can craft one apex-tier Relic, but the dark hears every attempt.",
 			},
 		],
 	},

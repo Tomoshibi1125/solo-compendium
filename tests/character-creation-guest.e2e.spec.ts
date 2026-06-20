@@ -2,6 +2,9 @@ import { expect, test } from "@playwright/test";
 import { PlayerPage } from "./pages/PlayerPage";
 
 test.beforeEach(async ({ page }) => {
+	// The guest creation wizard is a long multi-step flow; give it headroom
+	// over the default 60s so a slow (but working) run doesn't false-fail.
+	test.setTimeout(120_000);
 	await page.addInitScript(() => {
 		localStorage.setItem("solo-compendium.guest.role", "ascendant");
 		localStorage.setItem(

@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "weapon-weapon-sanguine-twin-sickles-8nor7q",
+  "sourceAssetPath": "/generated/compendium/items/item-0105.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-sanguine-twin-sickles-8nor7q-v1-3712750298.png",
+  "prompt": "Rift Ascendant inventory icon, single complete weapon object only, one continuous connected weapon, no alternate variants, exactly one single complete Sanguine Twin Sickles weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Sanguine Twin Sickles. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. It owes nothing to luck. It is what it costs. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 3712750298,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T20:27:04.949Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-sanguine-twin-sickles-8nor7q.webp",
+  "priority": "medium",
+  "subject": "Sanguine Twin Sickles",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-melee-sickle-rare-0"
+  ],
+  "sourceRecordIds": [
+    "gap-melee-sickle-rare-0"
+  ],
+  "sourceRecordNames": [
+    "Sanguine Twin Sickles"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 92125,
+      "field": "image",
+      "subject": "Sanguine Twin Sickles",
+      "recordId": "gap-melee-sickle-rare-0",
+      "recordName": "Sanguine Twin Sickles",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-melee-sickle-rare-0",
+      "context": "As a bonus action, your next ranged attack before the end of your turn ignores cover and gains advantage. It owes nothing to luck. It is what it costs. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

@@ -100,10 +100,11 @@ describe("techniques data normalization", () => {
 	});
 
 	it("no technique classes[] contains a full-caster or pact-caster job that has techniques:false", () => {
+		// Revenant is a hybrid half-caster (techniques: true) after the drain-tank
+		// rework — it owns techniques, so it is intentionally NOT in this list.
 		const CASTER_JOBS_WITHOUT_TECHNIQUES = [
 			"Mage",
 			"Esper",
-			"Revenant",
 			"Summoner",
 			"Idol",
 			"Herald",

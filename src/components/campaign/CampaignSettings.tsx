@@ -595,7 +595,7 @@ export function CampaignSettings({ campaignId }: CampaignSettingsProps) {
 						<div>
 							<p className="font-heading font-semibold text-primary flex items-center gap-2">
 								<Sparkles className="w-4 h-4" />
-								The Shadow of the Regent
+								Run Silent
 							</p>
 							<p className="text-xs text-muted-foreground mt-1">
 								Import or re-import the sandbox module into this campaign.

@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "weapon-weapon-shattered-sniper-rifle-7yrpco",
+  "sourceAssetPath": "/generated/compendium/items/item-0263.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-shattered-sniper-rifle-7yrpco-v1-1491689814.png",
+  "prompt": "Rift Ascendant inventory icon, single firearm side-view render, exactly one complete gun only, one barrel, one grip, one trigger, no duplicate views, no second gun, exactly one single complete Shattered Sniper Rifle weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Shattered Sniper Rifle. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. to an unoccupied space you can see. Heavy in the hand. Heavier in consequence. void, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-part4.ts",
+    "src\\data\\compendium\\items-part6.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 1491689814,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T21:37:21.735Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-shattered-sniper-rifle-7yrpco.webp",
+  "priority": "medium",
+  "subject": "Shattered Sniper Rifle",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part6.ts#item-p6-23"
+  ],
+  "sourceRecordIds": [
+    "item-p6-23"
+  ],
+  "sourceRecordNames": [
+    "Shattered Sniper Rifle"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part6.ts",
+      "line": 3212,
+      "field": "image",
+      "subject": "Shattered Sniper Rifle",
+      "recordId": "item-p6-23",
+      "recordName": "Shattered Sniper Rifle",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part6.ts#item-p6-23",
+      "context": "As a bonus action, teleport up to 30 ft. to an unoccupied space you can see. Heavy in the hand. Heavier in consequence. void"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

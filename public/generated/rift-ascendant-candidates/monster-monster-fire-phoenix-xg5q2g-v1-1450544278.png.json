@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "monster-monster-fire-phoenix-xg5q2g",
+  "sourceAssetPath": "/generated/creatures/fire-phoenix.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/monster-monster-fire-phoenix-xg5q2g-v1-1450544278.png",
+  "prompt": "Rift Ascendant app asset, Fire Phoenix, lore-accurate creature or monster asset, main subject is the creature, not a landscape, creature anatomy driven by the subject and source tags, main creature silhouette dominates the frame, Fire Phoenix. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., high-detail tabletop fantasy RPG key art, Korean action webtoon-inspired dark fantasy rendering, dynamic composition, crisp ink-like edges, painterly realism, cinematic contrast, dramatic rim lighting, polished game illustration, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy encounter art, readable full-body silhouette, cinematic dark atmosphere, polished tabletop RPG monster concept art, simple background, no text, no logo",
+  "negativePrompt": "landscape-only image, empty environment, unrelated sci-fi alien, rubber monster suit, joke creature, cute mascot, chibi, muddy silhouette, bad anatomy, blurry, low resolution, text, watermark, logo, cropped body, overexposed, empty environment, item-only image, abstract symbol only, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 30,
+  "cfgScale": 7,
+  "seed": 1450544278,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T14:04:44.073Z",
+  "applyTargetPath": "/generated/creatures/fire-phoenix.webp",
+  "priority": "high",
+  "subject": "Fire Phoenix",
+  "assetType": "monster",
+  "category": "image-monster",
+  "sourceCategory": [
+    "vtt-library"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\vttAssetLibrary.ts#creature-phoenix-fire"
+  ],
+  "sourceRecordIds": [
+    "creature-phoenix-fire"
+  ],
+  "sourceRecordNames": [
+    "Fire Phoenix"
+  ],
+  "recommendedReplacement": "yes",
+  "confidence": "high",
+  "notes": "Approved for apply by explicit user instruction to run the Rift asset workflow start to finish.",
+  "references": [
+    {
+      "file": "src\\data\\vttAssetLibrary.ts",
+      "line": 1397,
+      "field": "imageUrl",
+      "subject": "Fire Phoenix",
+      "recordId": "creature-phoenix-fire",
+      "recordName": "Fire Phoenix",
+      "sourceCategory": "vtt-library",
+      "sourceRecordKey": "src\\data\\vttAssetLibrary.ts#creature-phoenix-fire",
+      "context": ""
+    }
+  ],
+  "updateReferencesOnApply": false,
+  "approvedAt": "2026-06-20T14:25:46.255Z"
+}

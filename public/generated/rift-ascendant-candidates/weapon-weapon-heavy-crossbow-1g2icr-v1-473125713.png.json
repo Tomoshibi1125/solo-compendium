@@ -1,0 +1,57 @@
+{
+  "promptRecordId": "weapon-weapon-heavy-crossbow-1g2icr",
+  "sourceAssetPath": "/generated/compendium/items/item-0181.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-heavy-crossbow-1g2icr-v1-473125713.png",
+  "prompt": "Rift Ascendant inventory icon, single bow or crossbow weapon only, one complete ranged weapon, no arrow bundle, no second view, exactly one single complete Heavy Crossbow weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Heavy Crossbow. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A powerful crossbow requiring both hands and time to reload. Reforged from the ashes of a fallen Regent. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-base-equipment.ts",
+    "src\\data\\compendium\\items-part3.ts",
+    "src\\data\\compendium\\items-part5.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 473125713,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T20:59:55.453Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-heavy-crossbow-1g2icr.webp",
+  "priority": "medium",
+  "subject": "Heavy Crossbow",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-base-equipment.ts#base-weapon-heavy-crossbow"
+  ],
+  "sourceRecordIds": [
+    "base-weapon-heavy-crossbow"
+  ],
+  "sourceRecordNames": [
+    "Heavy Crossbow"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-base-equipment.ts",
+      "line": 5982,
+      "field": "image",
+      "subject": "Heavy Crossbow",
+      "recordId": "base-weapon-heavy-crossbow",
+      "recordName": "Heavy Crossbow",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-base-equipment.ts#base-weapon-heavy-crossbow",
+      "context": "A powerful crossbow requiring both hands and time to reload. Reforged from the ashes of a fallen Regent. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

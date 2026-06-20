@@ -1637,7 +1637,7 @@ export function useCampaignSandboxInjector(campaignId: string | null) {
 						? ` ${failedInserts} insert(s) failed — check console.`
 						: "";
 				toast({
-					title: "Module Import Complete ✦ The Shadow of the Regent",
+					title: "Module Import Complete ✦ Run Silent",
 					description: `${summary}. All content is now available in the Wiki, Handouts, and VTT tabs.${failSuffix}`,
 					variant: failedInserts > 0 ? "destructive" : undefined,
 				});

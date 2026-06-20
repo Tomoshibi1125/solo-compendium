@@ -32,7 +32,9 @@ export interface CompendiumEntry {
 		| "sigils"
 		| "tattoos"
 		| "pantheon"
-		| "sovereigns";
+		| "sovereigns"
+		| "vehicles"
+		| "npcs";
 	rarity?:
 		| "common"
 		| "uncommon"

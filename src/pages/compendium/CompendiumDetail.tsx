@@ -17,6 +17,7 @@ import { FeatDetail } from "@/components/compendium/FeatDetail";
 import { type ItemData, ItemDetail } from "@/components/compendium/ItemDetail";
 import { JobDetail } from "@/components/compendium/JobDetail";
 import { LocationDetail } from "@/components/compendium/LocationDetail";
+import { NpcDetail } from "@/components/compendium/NpcDetail";
 import { PathDetail } from "@/components/compendium/PathDetail";
 import { PowerDetail } from "@/components/compendium/PowerDetail";
 import { QuickReference } from "@/components/compendium/QuickReference";
@@ -59,6 +60,7 @@ import type {
 	CompendiumItem,
 	CompendiumJob,
 	CompendiumLocation,
+	CompendiumNPC,
 	CompendiumPath,
 	CompendiumPower,
 	CompendiumRegent,
@@ -285,6 +287,14 @@ const CompendiumDetail = () => {
 				{ id: "vehicle-abilities", title: "Abilities", level: 2 },
 				{ id: "vehicle-lore", title: "Lore", level: 2 },
 			);
+		} else if (type === "npcs") {
+			items.push(
+				{ id: "npc-stats", title: "Core Stats", level: 2 },
+				{ id: "npc-abilities", title: "Key Abilities", level: 2 },
+				{ id: "npc-recruitment", title: "Recruitment", level: 2 },
+				{ id: "npc-progression", title: "Progression", level: 2 },
+				{ id: "npc-profile", title: "Profile", level: 2 },
+			);
 		}
 
 		return items;
@@ -388,6 +398,10 @@ const CompendiumDetail = () => {
 			case "vehicles": {
 				const e = entry as CompendiumVehicle;
 				return <VehicleDetail data={e} />;
+			}
+			case "npcs": {
+				const e = entry as CompendiumNPC;
+				return <NpcDetail data={e} />;
 			}
 			default:
 				return (
@@ -521,6 +535,7 @@ const CompendiumDetail = () => {
 		tattoos: "Magical Tattoos",
 		pantheon: "Pantheon",
 		deities: "Pantheon",
+		npcs: "NPCs",
 	};
 
 	return (

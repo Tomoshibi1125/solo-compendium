@@ -883,7 +883,7 @@ export const WardenToolsPanel: React.FC<WardenToolsPanelProps> = ({
 												"w-full h-10 gap-2 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500/10",
 												compactTextButtonClassName,
 											)}
-											aria-label="Open the Regent's Shadow module book"
+											aria-label="Open the Run Silent module book"
 											onClick={() => navigate("/source-book/module")}
 										>
 											<BookOpen className="w-4 h-4" />

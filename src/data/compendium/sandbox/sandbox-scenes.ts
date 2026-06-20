@@ -108,13 +108,13 @@ const mapConfigs = [
 		type: "combat" as const,
 	},
 	{
-		name: "Road of Writs",
+		name: "The Old Roads",
 		image: "downtown_map.png",
 		audio: "ambient_explore.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "Writ-Bound Hamlet",
+		name: "Warded Hamlet",
 		image: "slums_map.png",
 		audio: "ambient_explore.mp3",
 		type: "hub" as const,
@@ -174,25 +174,25 @@ const mapConfigs = [
 		type: "hub" as const,
 	},
 	{
-		name: "Road of Final Writs",
+		name: "The Last Road",
 		image: "downtown_map.png",
 		audio: "ambient_combat.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "The Regent's Citadel",
+		name: "The Threshold",
 		image: "citadel_map.png",
 		audio: "ambient_boss.mp3",
 		type: "combat" as const,
 	},
 	{
-		name: "Throne Court",
+		name: "The Gathered Dead",
 		image: "throne_map.png",
 		audio: "ambient_boss.mp3",
 		type: "boss" as const,
 	},
 	{
-		name: "Anchor-Undercroft",
+		name: "The Deep Undercroft",
 		image: "throne_map.png",
 		audio: "ambient_boss.mp3",
 		type: "boss" as const,
@@ -217,7 +217,7 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 					createToken(
 						`e-${index}-${i}`,
 						getRandomAnomalyId(),
-						"Gloamreach Domain Anomaly",
+						"Gloamreach Anomaly",
 						Math.floor(Math.random() * 50),
 						Math.floor(Math.random() * 50),
 						"medium",
@@ -230,7 +230,7 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 					createToken(
 						`regent-courtier-${i}`,
 						getRandomAnomalyId(),
-						"Regent Courtier",
+						"Worn Mimic",
 						10 + Math.floor(Math.random() * 40),
 						10 + i * 5,
 						"medium",
@@ -246,7 +246,7 @@ export const sandboxVTTScenesExpanded: SandboxVTTScene[] = mapConfigs.map(
 				createToken(
 					"the-regent",
 					getRandomAnomalyId(),
-					"The Regent",
+					"The Quiet",
 					30,
 					30,
 					"huge",

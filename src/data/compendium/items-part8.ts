@@ -4734,7 +4734,7 @@ export const items_part8: Item[] = [
 			"A wrist-worn focus and protective plate combined into one piece.",
 		rarity: "uncommon",
 		type: "wondrous",
-		image: "/generated/compendium/items/item-1006.webp",
+		image: "/generated/compendium/armor/armor-armor-titanium-bracers-1da3am.webp",
 		weight: 3,
 		value: 463,
 		item_type: "tool",

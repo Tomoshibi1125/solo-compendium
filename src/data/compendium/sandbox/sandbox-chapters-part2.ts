@@ -74,7 +74,7 @@ Reskin a **C-Rank controller anomaly from the compendium bestiary** (Appendix C)
 
 **The wound it knows:** while a party member carries a hurt the Ledgerfen has named (a fear confessed at the Intake Causeway, a diagnosis read in the Records Basin, a true weakness given to the Catalog), the Surgeon strikes it with advantage and aims every blow at that exact hurt. Take the name back — drown the form, burn the diagnosis, speak a ward over it — and the advantage dies with it.
 
-**Scaling (Levels 1-15):** run it at C-Rank for a level 3-5 party; on a later return, raise it to A-Rank and let it operate on two patients at once.
+**Scaling (Levels 1-10):** run it at C-Rank for a level 3-5 party; on a later return, raise it to A-Rank and let it operate on two patients at once.
 
 Suggested traits:
 
@@ -149,7 +149,7 @@ Reskin a **C-Rank brute/controller Anomaly from the compendium bestiary** (Appen
 
 **The Law in play:** *anything that remains long enough is cultivated.* Anyone who has lingered, eaten, slept, or bled in the Depths is partly *hers* — advantage to grapple or compel them. Fire severs her from the network for one round; so does forcing her off every surface at once.
 
-**Scaling (Levels 1-15):** C-Rank for a level 2-4 party; on a later return, raise her to A-Rank and let her field the bodies from the Nursery as they finish growing.
+**Scaling (Levels 1-10):** C-Rank for a level 2-4 party; on a later return, raise her to A-Rank and let her field the bodies from the Nursery as they finish growing.
 
 ## Loot and Clues
 
@@ -224,7 +224,7 @@ Reskin a **C-Rank controller/stalker Anomaly from the compendium bestiary** (App
 
 **What it holds onto:** what you willingly forget here, the Orchard keeps for its own. The Caretaker has advantage against anyone who has eaten a core or hung a true-name tag. A party that takes nothing and gives nothing is hard for it to grip.
 
-**Scaling (Levels 1-15):** C-Rank for a level 5-7 party; on a later return, raise it to A-Rank and let it field-harvest a whole settlement's cores in a single Harvest Bell.
+**Scaling (Levels 1-10):** C-Rank for a level 5-7 party; on a later return, raise it to A-Rank and let it field-harvest a whole settlement's cores in a single Harvest Bell.
 
 ## Loot and Clues
 
@@ -288,7 +288,7 @@ Reskin a **C-Rank (A-Rank for later returns) controller Anomaly from the compend
 
 **What keeps it burning:** the Warden cannot be put down while the hall still burns, and the hall burns on grief — it has advantage against anyone here carrying a fresh loss, and reaches straight for it. To end the Warden the party must *put out the hall*: free the Vault of Stolen Years, give the oldest dead the name it has forgotten, or carry a piece of the Means into the fire's heart, where the burning is rooted. Strike down its body alone and it rises again from the next soul the fire holds.
 
-**Scaling (Levels 1-15):** C-Rank for a level 4-6 party; on a later return, raise it to A-Rank and let it call up every grief and loss the party carries at once.
+**Scaling (Levels 1-10):** C-Rank for a level 4-6 party; on a later return, raise it to A-Rank and let it call up every grief and loss the party carries at once.
 
 ## Loot and Clues
 
@@ -404,7 +404,7 @@ Reskin a **B-Rank construct Anomaly from the compendium bestiary** (Appendix C) 
 
 **The Law in play:** *a line once sworn must be held.* The Colossus **cannot be permanently destroyed while any oath in the Bastion is still unresolved** — drop it and it reforms from the next echo's vow. To end it, the party must *discharge the garrison*: complete, contradict, or release the defenders' oath (free the Commander, prove the relief was never coming, or take the wall's duty onto themselves for one true round).
 
-**Scaling (Levels 1-15):** B-Rank for a level 7-9 party; on a later return, raise it to A-Rank and let it field a line of lesser Golems that share its unkillable condition.
+**Scaling (Levels 1-10):** B-Rank for a level 7-9 party; on a later return, raise it to A-Rank and let it field a line of lesser Golems that share its unkillable condition.
 
 ## Loot and Clues
 
@@ -470,7 +470,7 @@ Reskin an **A-Rank tactical Anomaly from the compendium bestiary** (see the best
 
 **What feeds it:** *power calls to power.* The Guardian grows stronger against anyone who has accepted a Spire bargain or reached for the predator's power in the trials — the more of their humanity the party traded for strength, the more of a grip it has on *them*. Refusing the Spire's gifts is the surest way to leave it nothing to copy.
 
-**Scaling (Levels 1-15):** A-Rank for a level 8-10 party; for a late return, S-Rank, fielding copies of the party's own defeated tactics in sequence.
+**Scaling (Levels 1-10):** A-Rank for a level 8-10 party; for a late return, S-Rank, fielding copies of the party's own defeated tactics in sequence.
 
 ## Loot and Clues
 

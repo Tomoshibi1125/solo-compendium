@@ -3,7 +3,7 @@ import type { CompendiumPower } from "../../types/compendium";
 export const powers_core: CompendiumPower[] = [
 	{
 		id: "shadow-step",
-		classes: ["Assassin", "Stalker"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Shadow Step",
 		display_name: "Shadow Step",
 		description:
@@ -59,7 +59,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "regeneration",
-		classes: ["Destroyer", "Striker", "Berserker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Regeneration",
 		display_name: "Regeneration",
 		description:
@@ -125,7 +125,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "true-sight",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "True Sight",
 		display_name: "True Sight",
 		description:
@@ -185,7 +185,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "arcane-charm",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Arcane Charm",
 		display_name: "Arcane Charm",
 		description:
@@ -242,7 +242,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "bulwark-resilience",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Bulwark Resilience",
 		display_name: "Bulwark Resilience",
 		description:
@@ -304,7 +304,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "arcane-recovery",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Arcane Recovery",
 		display_name: "Arcane Recovery",
 		description:
@@ -369,7 +369,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "lycanthropy",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Lycanthropy",
 		display_name: "Lycanthropy",
 		description:
@@ -427,7 +427,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "gaze-of-petrification",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Gaze of Petrification",
 		display_name: "Gaze of Petrification",
 		description:
@@ -484,7 +484,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "telepathy",
-		classes: ["Destroyer", "Striker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Telepathy",
 		display_name: "Telepathy",
 		description:
@@ -543,7 +543,7 @@ export const powers_core: CompendiumPower[] = [
 	},
 	{
 		id: "invisibility",
-		classes: ["Destroyer", "Striker", "Assassin", "Stalker", "Technomancer"],
+		classes: ["Destroyer", "Berserker", "Assassin", "Striker", "Holy Knight", "Stalker", "Technomancer", "Revenant"],
 		name: "Invisibility",
 		display_name: "Invisibility",
 		description:

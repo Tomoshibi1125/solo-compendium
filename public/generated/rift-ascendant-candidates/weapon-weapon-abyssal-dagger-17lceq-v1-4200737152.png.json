@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "weapon-weapon-abyssal-dagger-17lceq",
+  "sourceAssetPath": "/generated/compendium/items/item-0005.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-abyssal-dagger-17lceq-v1-4200737152.png",
+  "prompt": "Rift Ascendant inventory asset, exactly one single complete Abyssal Dagger weapon only, one continuous weapon object with handle shaft and blade/head connected, full weapon visible, one large weapon fills most of the frame, centered diagonal composition from lower left to upper right on a simple dark neutral background, no person, no hands, no secondary weapons, no extra spearheads, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Abyssal Dagger. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Reliable. Honest. Mean when it has to be. void, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, centered inventory composition, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, secondary weapons, many variants, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts",
+    "src\\data\\compendium\\items-part7.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 4200737152,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T19:03:13.482Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-abyssal-dagger-17lceq.webp",
+  "priority": "medium",
+  "subject": "Abyssal Dagger",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part7.ts#item-p7-1"
+  ],
+  "sourceRecordIds": [
+    "item-p7-1"
+  ],
+  "sourceRecordNames": [
+    "Abyssal Dagger"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part7.ts",
+      "line": 149,
+      "field": "image",
+      "subject": "Abyssal Dagger",
+      "recordId": "item-p7-1",
+      "recordName": "Abyssal Dagger",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part7.ts#item-p7-1",
+      "context": "As an action, make a weapon attack and immediately move up to your speed without provoking opportunity attacks. Reliable. Honest. Mean when it has to be. void"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

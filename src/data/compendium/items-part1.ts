@@ -9,7 +9,7 @@ export const items_part1: Item[] = [
 			"A fire-resistant, high-visibility uniform worn by emergency medical technicians. Features reflective strips, reinforced elbows, and multiple utility pockets. Surprisingly durable against minor aetheric burns.",
 		rarity: "common",
 		type: "wondrous",
-		image: "/generated/compendium/backgrounds/paramedic.webp",
+		image: "/generated/compendium/backgrounds/paramedic-generated-n8asxs.webp",
 		weight: 4,
 		value: 15,
 		item_type: "misc",

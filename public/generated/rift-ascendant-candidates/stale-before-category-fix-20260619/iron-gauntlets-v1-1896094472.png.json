@@ -1,0 +1,36 @@
+{
+  "sourceAssetPath": "/generated/armor/iron-gauntlets.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/iron-gauntlets-v1-1896094472.png",
+  "prompt": "Rift Ascendant app asset, Iron Gauntlets, Iron Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+  "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 7,
+  "seed": 1896094472,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-19T13:50:55.868Z",
+  "applyTargetPath": "/generated/armor/iron-gauntlets.webp",
+  "priority": "high",
+  "subject": "Iron Gauntlets",
+  "assetType": "item",
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\vttAssetLibrary.ts",
+      "line": 1323,
+      "field": "imageUrl",
+      "subject": "Iron Gauntlets",
+      "context": ""
+    }
+  ],
+  "updateReferencesOnApply": false
+}

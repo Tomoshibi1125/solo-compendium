@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "weapon-weapon-guild-issue-revolver-1tx6mx",
+  "sourceAssetPath": "/generated/compendium/items/item-0270.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-guild-issue-revolver-1tx6mx-v1-452091775.png",
+  "prompt": "Rift Ascendant inventory icon, single compact revolver side-view render, exactly one complete handgun only, visible rotating cylinder, short barrel, one grip, one trigger, no duplicate views, no second gun, not a cannon, exactly one single complete Guild Issue Revolver weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Guild Issue Revolver. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A short-barrel handgun tuned for fast draw and reliable function inside cramped gate corridors. Sized for the wielder who finishes fights, not the one who starts them. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, multiple guns, duplicate firearms, weapon comparison sheet, three-view gun render, cannon, oversized barrel, shotgun body, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-part5.ts",
+    "src\\data\\compendium\\items-part9.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 452091775,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T21:40:28.979Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-guild-issue-revolver-1tx6mx.webp",
+  "priority": "medium",
+  "subject": "Guild Issue Revolver",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part9.ts#item-p9-26"
+  ],
+  "sourceRecordIds": [
+    "item-p9-26"
+  ],
+  "sourceRecordNames": [
+    "Guild Issue Revolver"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part9.ts",
+      "line": 3564,
+      "field": "image",
+      "subject": "Guild Issue Revolver",
+      "recordId": "item-p9-26",
+      "recordName": "Guild Issue Revolver",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part9.ts#item-p9-26",
+      "context": "A short-barrel handgun tuned for fast draw and reliable function inside cramped gate corridors. Sized for the wielder who finishes fights, not the one who starts them. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

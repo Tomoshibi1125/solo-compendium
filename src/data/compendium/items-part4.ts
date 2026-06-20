@@ -4965,7 +4965,7 @@ export const items_part4: Item[] = [
 			"A heavy armor system with sectional plating and a mana-conductive backing layer.",
 		rarity: "uncommon",
 		type: "armor",
-		image: "/generated/compendium/items/item-1032.webp",
+		image: "/generated/compendium/armor/armor-armor-lattice-scale-breastplate-1p3rkp.webp",
 		weight: 2,
 		value: 28,
 		item_type: "armor",

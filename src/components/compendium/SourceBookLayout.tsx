@@ -52,7 +52,7 @@ const BOOKS = [
 			},
 			{
 				id: "module",
-				label: "The Shadow of the Regent",
+				label: "Run Silent",
 				path: "/source-book/module",
 			},
 		],

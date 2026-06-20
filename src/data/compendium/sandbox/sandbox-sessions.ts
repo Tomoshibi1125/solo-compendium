@@ -1,5 +1,5 @@
 /**
- * SANDBOX SESSIONS — "The Shadow of the Regent"
+ * SANDBOX SESSIONS — "Run Silent"
  *
  * Scaffolded campaign sessions seeded into the Sessions tab on sandbox import.
  * Each entry is a Warden-editable starting point, not a fixed railroad.
@@ -46,7 +46,7 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 0 — Day Zero: The Memory-Care Wing",
 		description:
-			"Material-side horror prelude. The party responds to a welfare check at a shuttered hospital wing inside the Bureau cordon. A pocket breach from the Gloamreach has reached through a bathroom mirror, feeding on memory and introducing the Regent's first mark. Level 1.",
+			"Material-side horror prelude. The party responds to a welfare check at a shuttered hospital wing inside the Bureau cordon. A pocket breach from the Gloamreach has reached through a bathroom mirror, feeding on memory and introducing the Quiet's first mark. Level 1.",
 		status: "planned",
 		order: 0,
 		recommendedLevel: 1,
@@ -70,10 +70,10 @@ export const sandboxSessions: SandboxSession[] = [
 					"She repeats: 'He was supposed to come home for lunch.' She remembers a husband, a uniform, and pride. She cannot remember his name.",
 					"",
 					"## Beat 3 — The Diagnosed",
-					"The mirror opens. The Diagnosed is not a random monster. It is a symptom of the Domain reaching through the threshold.",
+					"The mirror opens. The Diagnosed is not a random monster. It is the Gloamreach reaching through the threshold.",
 					"",
 					"## Closing Choice",
-					"Destroy the mirror and give Ms. Park clarity at the cost of lives, or seal it and leave the haunting dormant. Either choice should echo in the Citadel.",
+					"Destroy the mirror and give Ms. Park clarity at the cost of lives, or seal it and leave the haunting dormant. Either choice should echo all the way to the Threshold.",
 				].join("\n"),
 				isPlayerVisible: false,
 			},
@@ -96,7 +96,7 @@ export const sandboxSessions: SandboxSession[] = [
 	{
 		title: "Session 1 — The Rift Threshold and Hollow Way",
 		description:
-			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Rift is only the door. The Hollow Way teaches that the Domain records you on arrival and carries you inward the way it carries tribute — and that leaving is harder than entering. Level 1-3.",
+			"The party receives formal Bureau clearance, crosses the S-Rank threshold, and learns the Rift is only the door. The Hollow Way teaches that the Gloamreach learns your name on arrival and carries you inward whether you will it or not — and that leaving is harder than entering. Level 1-3.",
 		status: "planned",
 		order: 1,
 		recommendedLevel: 1,
@@ -124,22 +124,22 @@ export const sandboxSessions: SandboxSession[] = [
 		],
 	},
 	{
-		title: "Session 2 — Road of Writs and the First Tribute",
+		title: "Session 2 — The Old Roads and the First Loss",
 		description:
-			"The party leaves the threshold and meets the Road of Writs. A settlement's tribute reveals the core campaign horror: safety inside the Gloamreach is leased, never free. Level 3-5.",
+			"The party leaves the threshold and meets the old roads. A warded community reveals the core campaign horror: safety inside the Gloamreach is borrowed, never free. Level 3-5.",
 		status: "planned",
 		order: 2,
 		recommendedLevel: 3,
-		sceneRefs: ["Road of Writs", "Writ-Bound Hamlet", "Drowned Ledgerfen"],
+		sceneRefs: ["The Old Roads", "Warded Hamlet", "Drowned Ledgerfen"],
 		npcRefs: ["Quartermaster Lin Mei-hua", "Mika the Kid", "The Catalog"],
 		logs: [
 			{
 				logType: "session",
 				title: "Warden Prep — First Tribute",
 				content: [
-					"Introduce a settlement that survives by never refusing written invitations. Let the party see ordinary people treating horror as routine.",
+					"Introduce a community that survives by never saying 'no' aloud after dark. Let the party see ordinary people treating horror as routine.",
 					"",
-					"The Drowned Ledgerfen can serve as the first major Domain site if the party follows survivor records, dead-team logs, or a Claim clue.",
+					"The Drowned Ledgerfen can serve as the first major Gloamreach site if the party follows survivor records, dead-team logs, or a Means clue.",
 					"",
 					"End with either a saved civilian, a corrected record, or the first hint that a record can become true if not contradicted.",
 				].join("\n"),
@@ -163,41 +163,41 @@ export const sandboxSessions: SandboxSession[] = [
 				content: [
 					"Vermillion should be useful immediately: hot food, salvage, rumors, and a bill.",
 					"",
-					"In the Remembering Orchard, make tribute emotionally ugly rather than mechanically abstract. People are not only losing memories. They are losing reasons to resist.",
+					"In the Remembering Orchard, make the orchard's price emotionally ugly rather than mechanically abstract. People are not only losing memories. They are losing reasons to resist.",
 					"",
-					"Seed the Hollow Mother's language carefully. Her followers say serve. She says inherit.",
+					"Seed the Hollow Mother's language carefully. Her followers say serve. She says become.",
 				].join("\n"),
 				isPlayerVisible: false,
 			},
 		],
 	},
 	{
-		title: "Session 4 — Bailiff Judgment and Bastion Golemfall",
+		title: "Session 4 — The First Taking and Bastion Golemfall",
 		description:
-			"The Regent's Bailiff appears publicly to enforce a charge. The party then confronts Bastion Golemfall or the Sunken Tunnels, learning that oaths and debts can survive death. Level 7-10.",
+			"The Quiet takes someone in the open, through the worn dead, and the party can only watch or run. They then confront Bastion Golemfall or the Sunken Tunnels, learning that oaths and debts can survive death. Level 7-9.",
 		status: "planned",
 		order: 4,
 		recommendedLevel: 7,
-		sceneRefs: ["Road of Writs", "Bastion Golemfall", "Sunken Tunnels"],
-		npcRefs: ["The Regent's Bailiff", "Commander Without a Body", "Old Man Crane"],
+		sceneRefs: ["The Old Roads", "Bastion Golemfall", "Sunken Tunnels"],
+		npcRefs: ["The Worn", "Commander Without a Body", "Old Man Crane"],
 		logs: [
 			{
 				logType: "event",
-				title: "Public Judgment — The Regent's Bailiff",
+				title: "The First Taking — The Worn Dead",
 				content:
-					"The Bailiff speaks their names before any violence. Make the reason it has come specific and partly deserved. The party can fight, flee, give it what it came for, redirect it, or break the mark. This scene teaches that some things here cannot be fought, only escaped.",
+					"The worn dead speak names before they take. Make the one they have come for specific, and the loss land. The party can flee, hide, give the dark what it came for, or fight uselessly. This scene teaches that some things here cannot be fought, only escaped.",
 				isPlayerVisible: false,
 			},
 		],
 	},
 	{
-		title: "Session 5 — The Obsidian Spire and the Claim Race",
+		title: "Session 5 — The Obsidian Spire and the Deep Places",
 		description:
-			"The campaign enters late midgame. The party climbs the Obsidian Spire, faces reflected temptations of authority, and races factions for one or more Claims. Level 10-13.",
+			"The campaign enters late midgame. The party climbs the Obsidian Spire, faces reflected temptations to stop being prey, and gathers the first pieces of the Means. Level 8-9.",
 		status: "planned",
 		order: 5,
 		recommendedLevel: 10,
-		sceneRefs: ["Obsidian Spire", "Forbidden Vault", "Mana Vein Network"],
+		sceneRefs: ["Obsidian Spire", "The Deep Places", "Mana Vein Network"],
 		npcRefs: ["The Watcher", "Professor Lun", "The Hollow Mother"],
 		logs: [
 			{
@@ -206,33 +206,33 @@ export const sandboxSessions: SandboxSession[] = [
 				content: [
 					"The Spire should offer genuinely useful power. The danger is not that every bargain is fake. The danger is that the price is exact.",
 					"",
-					"If the party enters the Forbidden Vault, run the Unseated Law as a trial, a bargain, or a buried truth, not as a creature.",
+					"If the party enters the Deep Places, run the Old Power Below as a trial, a bargain, or a buried truth, not as a creature.",
 					"",
-					"By the end of this session, the party should know which route to the Citadel is possible and what it will cost.",
+					"By the end of this session, the party should know which route to the Threshold is possible and what it will cost.",
 				].join("\n"),
 				isPlayerVisible: false,
 			},
 		],
 	},
 	{
-		title: "Session 6 — Citadel Day",
+		title: "Session 6 — The Long Dark and the Threshold",
 		description:
-			"Final castle-scale confrontation. The party enters the Regent's Citadel, faces the Throne Court, and resolves the Anchor through breaking, sealing, transforming, or inheriting. Level 13-15.",
+			"The final crossing. The party make the deep-dark journey to the sealed Threshold, face the gathered worn dead and the Quiet's lure, and either escape or make the one gated-kill stand. Level 9-10.",
 		status: "planned",
 		order: 6,
 		recommendedLevel: 13,
-		sceneRefs: ["The Regent's Citadel", "Throne Court", "Anchor-Undercroft"],
-		npcRefs: ["The Regent", "Dr. Serin Hayashi", "Commander Park Jae-won", "Old Man Crane"],
+		sceneRefs: ["The Threshold", "The Gathered Dead", "The Deep Undercroft"],
+		npcRefs: ["The Quiet", "Dr. Serin Hayashi", "Commander Park Jae-won", "Old Man Crane"],
 		logs: [
 			{
 				logType: "session",
 				title: "Warden Prep — The Final Question",
 				content: [
-					"Start with words. The Regent receives the party as guests, criminals, claimants, or witnesses depending on the campaign.",
+					"Start with dread, not initiative. The Quiet meets the party wearing the dead — every face they lost, offering rest, the way out, each other made whole.",
 					"",
-					"Bring back choices: meals accepted, names written, people saved, people abandoned, debts paid, guest-right honored or broken.",
+					"Bring back choices: who they saved, who they abandoned, which wards they kept, which names they gave away, which of their dead the Quiet now wears.",
 					"",
-					"The final question is not only whether the party can kill the Regent. It is what victory costs when the land itself believes it belongs to him.",
+					"The final question is not only whether the party can kill the Quiet. It is what they kept alive — others, and themselves — and what it cost.",
 				].join("\n"),
 				isPlayerVisible: false,
 			},

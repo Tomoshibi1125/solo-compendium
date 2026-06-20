@@ -6110,7 +6110,7 @@ export const baseEquipment: Item[] = [
 		description: "A tall bow with exceptional range. Stalker weapon of choice.",
 		rarity: "common",
 		type: "weapon",
-		image: "/generated/compendium/items/item-1021.webp",
+		image: "/generated/compendium/weapons/weapon-weapon-longbow-1gq90s.webp",
 		weight: 2,
 		value: 50,
 		item_type: "weapon",

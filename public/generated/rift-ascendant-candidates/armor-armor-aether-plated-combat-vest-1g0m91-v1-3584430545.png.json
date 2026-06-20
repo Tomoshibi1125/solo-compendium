@@ -1,0 +1,57 @@
+{
+  "promptRecordId": "armor-armor-aether-plated-combat-vest-1g0m91",
+  "sourceAssetPath": "/generated/compendium/items/item-0007.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-aether-plated-combat-vest-1g0m91-v1-3584430545.png",
+  "prompt": "Rift Ascendant inventory asset, one single complete Aether Plated Combat Vest armor or protective gear object only, isolated object render on a simple dark neutral background, no person, no model face, no multiple variants, not a design sheet, lore-accurate armor or protective gear asset, Aether Plated Combat Vest. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Modern light armor laced with mana-reactive alloys for enhanced protection. Worn down at the seams. That's how you know it works. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game armor art, no full character portrait, no text, no logo",
+  "negativePrompt": "weapon-only image, multiple armor variants, product sheet, design sheet, generic fantasy armor, medieval-only costume, full character portrait, mannequin face focus, human model face, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts",
+    "src\\data\\compendium\\items-part5.ts",
+    "src\\data\\compendium\\items-part9.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 3584430545,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T19:05:02.338Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-aether-plated-combat-vest-1g0m91.webp",
+  "priority": "medium",
+  "subject": "Aether Plated Combat Vest",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part5.ts#item-p5-30"
+  ],
+  "sourceRecordIds": [
+    "item-p5-30"
+  ],
+  "sourceRecordNames": [
+    "Aether Plated Combat Vest"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part5.ts",
+      "line": 4076,
+      "field": "image",
+      "subject": "Aether Plated Combat Vest",
+      "recordId": "item-p5-30",
+      "recordName": "Aether Plated Combat Vest",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part5.ts#item-p5-30",
+      "context": "Modern light armor laced with mana-reactive alloys for enhanced protection. Worn down at the seams. That's how you know it works. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

@@ -280,7 +280,18 @@ function P(
 	};
 }
 
-const ALL = ["Destroyer", "Berserker", "Assassin", "Striker"];
+// Archetype-shared pool owners = every martial-capable job (4 pure martials +
+// 4 hybrids). These generic arts carry no job signature, so all of them own it.
+const ALL = [
+	"Destroyer",
+	"Berserker",
+	"Assassin",
+	"Striker",
+	"Holy Knight",
+	"Stalker",
+	"Technomancer",
+	"Revenant",
+];
 
 export const powers_archetype: CompendiumPower[] = [
 	// ── Guard / vanguard (defensive bulwark options) ───────────────────────

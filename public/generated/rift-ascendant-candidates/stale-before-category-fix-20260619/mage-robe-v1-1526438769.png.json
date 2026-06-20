@@ -1,0 +1,36 @@
+{
+  "sourceAssetPath": "/generated/armor/mage-robe.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/mage-robe-v1-1526438769.png",
+  "prompt": "Rift Ascendant app asset, Mage Robe, Mage Robe. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+  "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 7,
+  "seed": 1526438769,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-19T13:52:15.975Z",
+  "applyTargetPath": "/generated/armor/mage-robe.webp",
+  "priority": "high",
+  "subject": "Mage Robe",
+  "assetType": "item",
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\vttAssetLibrary.ts",
+      "line": 1337,
+      "field": "imageUrl",
+      "subject": "Mage Robe",
+      "context": ""
+    }
+  ],
+  "updateReferencesOnApply": false
+}

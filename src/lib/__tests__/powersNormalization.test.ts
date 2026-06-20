@@ -119,10 +119,11 @@ describe("Power catalog — coverage", () => {
 	});
 
 	it("no power classes[] contains a full-caster or pact-caster job that has powers:false", () => {
+		// Revenant is a hybrid half-caster (powers: true) after the drain-tank
+		// rework — it owns powers, so it is intentionally NOT in this list.
 		const CASTER_JOBS_WITHOUT_POWERS = [
 			"Mage",
 			"Esper",
-			"Revenant",
 			"Summoner",
 			"Idol",
 			"Herald",

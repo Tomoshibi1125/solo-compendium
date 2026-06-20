@@ -3697,7 +3697,7 @@ export const items_part9: Item[] = [
 			"A compact firearm machined to standard Ascendant Bureau tolerances. Fits any standard-issue holster.",
 		rarity: "uncommon",
 		type: "weapon",
-		image: "/generated/compendium/items/item-0007.webp",
+		image: "/generated/compendium/weapons/weapon-weapon-obsidian-revolver-1o1uen.webp",
 		weight: 5,
 		value: 464,
 		item_type: "weapon",

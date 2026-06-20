@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "weapon-weapon-field-issue-light-crossbow-18gt0d",
+  "sourceAssetPath": "/generated/compendium/items/item-0012.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-field-issue-light-crossbow-18gt0d-v1-744868886.png",
+  "prompt": "Rift Ascendant inventory asset, exactly one single complete Field Issue Light Crossbow weapon only, one continuous weapon object with handle shaft and blade/head connected, full weapon visible, one large weapon fills most of the frame, centered diagonal composition from lower left to upper right on a simple dark neutral background, no person, no hands, no secondary weapons, no extra spearheads, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Field Issue Light Crossbow. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A heavy crossbow with reinforced limbs. Long reload, high impact. It rewards the steady, punishes the loud. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, centered inventory composition, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, secondary weapons, many variants, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 744868886,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T19:06:27.028Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-field-issue-light-crossbow-18gt0d.webp",
+  "priority": "medium",
+  "subject": "Field Issue Light Crossbow",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-ranged-crossbow-common-2"
+  ],
+  "sourceRecordIds": [
+    "gap-ranged-crossbow-common-2"
+  ],
+  "sourceRecordNames": [
+    "Field Issue Light Crossbow"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 73189,
+      "field": "image",
+      "subject": "Field Issue Light Crossbow",
+      "recordId": "gap-ranged-crossbow-common-2",
+      "recordName": "Field Issue Light Crossbow",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-ranged-crossbow-common-2",
+      "context": "A heavy crossbow with reinforced limbs. Long reload, high impact. It rewards the steady, punishes the loud. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

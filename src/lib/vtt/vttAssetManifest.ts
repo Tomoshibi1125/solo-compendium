@@ -316,7 +316,7 @@ export const MAP_ASSETS: VTTAsset[] = [
 		format: "webp",
 	},
 
-	// ── Shadow of the Regent Campaign Maps (AI Generated) ──
+	// ── Run Silent Campaign Maps (AI Generated) ──
 	{
 		id: "map-sandbox-hub",
 		name: "Bureau District Headquarters",
@@ -614,7 +614,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-shadow-follower",
 		name: "Shadow Soldier",
 		category: "token",
-		path: "/generated/tokens/Anomalies/shadow-follower.svg",
+		path: "/generated/tokens/Anomalies/shadow-follower.webp",
 		tags: ["shadow", "undead", "soldier", "minion"],
 		tier: "E",
 		format: "svg",
@@ -624,7 +624,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-magic-beast",
 		name: "Magic Beast",
 		category: "token",
-		path: "/generated/tokens/Anomalies/magic-beast.svg",
+		path: "/generated/tokens/Anomalies/magic-beast.webp",
 		tags: ["beast", "wolf", "magic", "animal"],
 		tier: "D",
 		format: "svg",
@@ -634,7 +634,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-goblin",
 		name: "Goblin",
 		category: "token",
-		path: "/generated/tokens/Anomalies/goblin.svg",
+		path: "/generated/tokens/Anomalies/goblin.webp",
 		tags: ["goblin", "humanoid", "minion"],
 		tier: "E",
 		format: "svg",
@@ -644,7 +644,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-orc-warrior",
 		name: "Orc Warrior",
 		category: "token",
-		path: "/generated/tokens/Anomalies/orc-warrior.svg",
+		path: "/generated/tokens/Anomalies/orc-warrior.webp",
 		tags: ["orc", "humanoid", "warrior"],
 		tier: "D",
 		format: "svg",
@@ -654,7 +654,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-fire-elemental",
 		name: "Fire Elemental",
 		category: "token",
-		path: "/generated/tokens/Anomalies/fire-elemental.svg",
+		path: "/generated/tokens/Anomalies/fire-elemental.webp",
 		tags: ["elemental", "fire", "magic"],
 		tier: "C",
 		format: "svg",
@@ -664,7 +664,7 @@ export const TOKEN_ASSETS: VTTAsset[] = [
 		id: "token-demon-lord",
 		name: "Demon / Gate Boss",
 		category: "token",
-		path: "/generated/tokens/Anomalies/demon-lord.svg",
+		path: "/generated/tokens/Anomalies/demon-lord.webp",
 		tags: ["demon", "boss", "gate", "final"],
 		tier: "S",
 		format: "svg",
@@ -1318,7 +1318,7 @@ export const MUSIC_ASSETS: VTTAsset[] = [
 		attribution: "CC0",
 	},
 
-	// ── Shadow of the Regent Campaign Audio (CC0 / SoundHelix) ──
+	// ── Run Silent Campaign Audio (CC0 / SoundHelix) ──
 	{
 		id: "music-sandbox-bunker",
 		name: "Bunker Ambience (Sandbox)",

@@ -364,3 +364,85 @@ export function spellSchoolMatchesJob(
 	if (!normalized) return false;
 	return schools.includes(normalized);
 }
+
+// ─────────────────────────────────────────────────────────────────────────
+// Owner model — a power/technique is owned by the job(s) named in its
+// `classes` list (RA has jobs, not classes). A job may learn an ability
+// natively only if it is an owner; every other job acquires it through the
+// Rune system. Path/regent grants remain the owner-side additive layer.
+// ─────────────────────────────────────────────────────────────────────────
+
+/** Normalized owner-job tokens declared on an entry's `classes` list. */
+export function getAbilityOwnerJobs(
+	entry: { classes?: string[] | null } | null | undefined,
+): string[] {
+	const classes = entry?.classes;
+	if (!Array.isArray(classes)) return [];
+	return classes
+		.map((value) => normalizeJobAccessToken(value))
+		.filter((value) => value.length > 0);
+}
+
+/**
+ * True iff `jobName` is an owner of the ability (its `classes` list names it).
+ * An empty/absent owner list means no job owns it natively — access is
+ * path-grant + Rune only.
+ */
+export function jobOwnsAbility(
+	jobName: string | null | undefined,
+	entry: { classes?: string[] | null } | null | undefined,
+): boolean {
+	const owners = getAbilityOwnerJobs(entry);
+	if (owners.length === 0) return false;
+	return owners.includes(normalizeJobAccessToken(jobName));
+}
+
+// ─────────────────────────────────────────────────────────────────────────
+// Job-signature SPELLS. Generic spells are gated by magic SCHOOL, but a few
+// spells are the signature magic of a single job (e.g. a Contractor's pact
+// magic). Their stored `classes`/`school` are generic/school-derived and do
+// not encode that ownership, so this curated map is the authoritative owner:
+// only the owner job learns them natively; any other job acquires them via the
+// Rune system. Keyed by apostrophe-stripped lowercase spell name.
+// ─────────────────────────────────────────────────────────────────────────
+const SIGNATURE_SPELL_OWNERS: Record<string, string[]> = {
+	// Contractor — pact / patron magic
+	"pact spark": ["Contractor"],
+	"pact shield": ["Contractor"],
+	"pact chains": ["Contractor"],
+	"pact hunger": ["Contractor"],
+	"pact gate": ["Contractor"],
+	"pact dominion": ["Contractor"],
+	"pact renegotiation": ["Contractor"],
+	"pact brand": ["Contractor"],
+	"nightmare pact": ["Contractor"],
+	"patrons avatar": ["Contractor"],
+	"patrons witness": ["Contractor"],
+	"patrons judgment": ["Contractor"],
+	// Revenant — entropy/undeath signatures
+	"revenants embrace": ["Revenant"],
+	"revenants domain": ["Revenant"],
+	// Idol — performance signatures
+	"idols crescendo": ["Idol"],
+	"idols entrance": ["Idol"],
+	"idols grand finale": ["Idol"],
+};
+
+function normalizeSignatureSpellKey(value: string | null | undefined): string {
+	return (value ?? "").trim().toLowerCase().replace(/['’]/g, "");
+}
+
+/**
+ * Normalized owner-job tokens for a job-signature spell, or [] if the spell is
+ * not a signature (in which case it falls back to generic school gating).
+ */
+export function getSignatureSpellOwners(
+	entry:
+		| { name?: string | null; display_name?: string | null }
+		| null
+		| undefined,
+): string[] {
+	const key = normalizeSignatureSpellKey(entry?.name ?? entry?.display_name);
+	const owners = SIGNATURE_SPELL_OWNERS[key];
+	return owners ? owners.map((owner) => normalizeJobAccessToken(owner)) : [];
+}

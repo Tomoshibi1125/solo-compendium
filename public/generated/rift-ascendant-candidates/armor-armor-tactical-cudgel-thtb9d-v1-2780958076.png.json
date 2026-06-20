@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "armor-armor-tactical-cudgel-thtb9d",
+  "sourceAssetPath": "/generated/compendium/items/item-0373.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-tactical-cudgel-thtb9d-v1-2780958076.png",
+  "prompt": "Rift Ascendant inventory icon, single empty wearable armor object only, not worn by anyone, no full-body suit sheet, one single complete Tactical Cudgel equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Tactical Cudgel. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A flanged mace built for piercing through medium armor and carapace plate. Sized for the wielder who finishes fights, not the one who starts them. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo",
+  "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts",
+    "src\\data\\compendium\\items-part8.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 2780958076,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T22:37:30.637Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-tactical-cudgel-thtb9d.webp",
+  "priority": "medium",
+  "subject": "Tactical Cudgel",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-melee-bludgeon-common-0"
+  ],
+  "sourceRecordIds": [
+    "gap-melee-bludgeon-common-0"
+  ],
+  "sourceRecordNames": [
+    "Tactical Cudgel"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 84918,
+      "field": "image",
+      "subject": "Tactical Cudgel",
+      "recordId": "gap-melee-bludgeon-common-0",
+      "recordName": "Tactical Cudgel",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-melee-bludgeon-common-0",
+      "context": "A flanged mace built for piercing through medium armor and carapace plate. Sized for the wielder who finishes fights, not the one who starts them. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

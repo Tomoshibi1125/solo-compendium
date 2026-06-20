@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "item-item-operative-s-caster-s-bead-1ug3fp",
+  "sourceAssetPath": "/generated/compendium/items/item-0352.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/item-item-operative-s-caster-s-bead-1ug3fp-v1-1935621719.png",
+  "prompt": "Rift Ascendant inventory asset, one single centered complete Bead object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Bead. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly. Designed by people who survived. Issued to people who hope to. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo",
+  "negativePrompt": "person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-base-equipment.ts",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 1935621719,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T22:26:13.500Z",
+  "applyTargetPath": "/generated/compendium/items/item-item-operative-s-caster-s-bead-1ug3fp.webp",
+  "priority": "medium",
+  "subject": "Operative's Caster's Bead",
+  "assetType": "item",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-focus-caster-uncommon-2"
+  ],
+  "sourceRecordIds": [
+    "gap-focus-caster-uncommon-2"
+  ],
+  "sourceRecordNames": [
+    "Operative's Caster's Bead"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 62287,
+      "field": "image",
+      "subject": "Operative's Caster's Bead",
+      "recordId": "gap-focus-caster-uncommon-2",
+      "recordName": "Operative's Caster's Bead",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-focus-caster-uncommon-2",
+      "context": "A spellcasting focus shaped to channel a Ascendant's mana lattice cleanly. Designed by people who survived. Issued to people who hope to. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

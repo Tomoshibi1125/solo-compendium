@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "item-item-sworn-band-sqgtx4",
+  "sourceAssetPath": "/generated/compendium/items/item-1016.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/item-item-sworn-band-sqgtx4-v1-1860048760.png",
+  "prompt": "Rift Ascendant app asset, Sworn Band, one single centered complete object-only inventory asset, no creature, no character, no landscape, no multiple views, no parts sheet, one closed compact black tactical hard-shell equipment case, three-quarter view, one rugged rectangular case only, blank surface, faint violet rift seal glow, no visible contents, no loose tools, Sworn Band. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A signet ring used to identify the bearer to certain detectors. Standard kit for those who plan to come back. aetheric, high-detail tabletop fantasy RPG key art, Korean action webtoon-inspired dark fantasy rendering, dynamic composition, crisp ink-like edges, painterly realism, cinematic contrast, dramatic rim lighting, polished game illustration, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+  "negativePrompt": "open case, visible contents, loose tools, accessories, person, humanoid, warrior, armor, helmet, character portrait, human face, fire sword, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 7,
+  "seed": 1860048760,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T13:49:16.222Z",
+  "applyTargetPath": "/generated/compendium/items/item-item-sworn-band-sqgtx4.webp",
+  "priority": "high",
+  "subject": "Sworn Band",
+  "assetType": "item",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-gear-ring-uncommon-1"
+  ],
+  "sourceRecordIds": [
+    "gap-gear-ring-uncommon-1"
+  ],
+  "sourceRecordNames": [
+    "Sworn Band"
+  ],
+  "recommendedReplacement": "yes",
+  "confidence": "high",
+  "notes": "Approved for apply by explicit user instruction to run the Rift asset workflow start to finish.",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 7592,
+      "field": "image",
+      "subject": "Sworn Band",
+      "recordId": "gap-gear-ring-uncommon-1",
+      "recordName": "Sworn Band",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-ring-uncommon-1",
+      "context": "A signet ring used to identify the bearer to certain detectors. Standard kit for those who plan to come back. aetheric"
+    }
+  ],
+  "updateReferencesOnApply": true,
+  "approvedAt": "2026-06-20T14:01:50.294Z"
+}

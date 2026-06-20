@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "item-item-lesser-liquid-shadow-13e7bz",
+  "sourceAssetPath": "/generated/compendium/items/item-0242.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/item-item-lesser-liquid-shadow-13e7bz-v1-3747603482.png",
+  "prompt": "Rift Ascendant inventory asset, one single centered complete Lesser Liquid Shadow object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one complete object only, the object itself is the only subject, no living figure, no creature body, not a product sheet, Lesser Liquid Shadow. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Restores mana on consumption. Shelf life is a guideline. Trust the cap, not the date. shadow, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo",
+  "negativePrompt": "person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts",
+    "src\\data\\compendium\\items-part4.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 3747603482,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T21:28:58.756Z",
+  "applyTargetPath": "/generated/compendium/items/item-item-lesser-liquid-shadow-13e7bz.webp",
+  "priority": "medium",
+  "subject": "Lesser Liquid Shadow",
+  "assetType": "item",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part4.ts#item-p4-40"
+  ],
+  "sourceRecordIds": [
+    "item-p4-40"
+  ],
+  "sourceRecordNames": [
+    "Lesser Liquid Shadow"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part4.ts",
+      "line": 5368,
+      "field": "image",
+      "subject": "Lesser Liquid Shadow",
+      "recordId": "item-p4-40",
+      "recordName": "Lesser Liquid Shadow",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part4.ts#item-p4-40",
+      "context": "Action. Restores mana on consumption. Shelf life is a guideline. Trust the cap, not the date. shadow"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

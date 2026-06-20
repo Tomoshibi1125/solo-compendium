@@ -250,7 +250,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 45 },
 		carry_capacity_lbs: 600,
 		crew_positions: [{ id: "rider", name: "Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Beast Instinct",
+				description:
+					"The bonded Void Beast shares its predatory senses: the rider has advantage on Survival checks to track a creature the mount has seen, and cannot be surprised while mounted.",
+				action_type: "passive",
+			},
+			{
+				name: "Pursuit Lunge",
+				description:
+					"Once per short rest, the mount may take the Dash action as a bonus action toward a creature it is hunting.",
+				action_type: "bonus-action",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0002",
 		rank: "C",
@@ -269,7 +282,14 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 38 },
 		carry_capacity_lbs: 540,
 		crew_positions: [{ id: "rider", name: "Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Umbral Prowl",
+				description:
+					"While mounted, the rider has advantage on Stealth checks and leaves no tracks. The mount can take the Hide action even when only lightly obscured or in dim light.",
+				action_type: "passive",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0012",
 		rank: "C",
@@ -288,7 +308,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 30 },
 		carry_capacity_lbs: 180,
 		crew_positions: [{ id: "rider", name: "Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Phase Drift",
+				description:
+					"The wraith-mount is partly incorporeal: it can move through other creatures and, at half speed, through thin barriers, and has resistance to nonmagical bludgeoning, piercing, and slashing damage. It cannot end its movement inside solid matter.",
+				action_type: "passive",
+			},
+			{
+				name: "Spectral Hover",
+				description:
+					"Hovers and ignores difficult terrain, but sustained flight is short-haul only: after 1 minute aloft it must touch down for a round.",
+				action_type: "passive",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0007",
 		rank: "C",
@@ -307,7 +340,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 42 },
 		carry_capacity_lbs: 600,
 		crew_positions: [{ id: "rider", name: "Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Amphibious",
+				description:
+					"The serpent-mount breathes air and water and moves at full speed through both, ignoring the swimming penalty for its rider.",
+				action_type: "passive",
+			},
+			{
+				name: "Devouring Lunge",
+				description:
+					"The mount bites a creature within 10 ft; on a hit the target is grappled (escape DC 14) as the juvenile Devourer coils around it.",
+				action_type: "action",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0017",
 		rank: "C",
@@ -326,7 +372,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 52 },
 		carry_capacity_lbs: 540,
 		crew_positions: [{ id: "rider", name: "Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Fledgling Flight",
+				description:
+					"At bond level 5 or higher the hatchling unlocks its 60 ft fly speed; below that it is grounded to its 30 ft land speed and can only glide short distances.",
+				action_type: "passive",
+			},
+			{
+				name: "Ember Breath",
+				description:
+					"Recharge 5-6. The hatchling exhales fire in a 15 ft cone; each creature in the area makes a DC 13 AGI save, taking 3d6 fire damage on a failure or half as much on a success.",
+				action_type: "action",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0006",
 		rank: "B",
@@ -345,7 +404,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 47 },
 		carry_capacity_lbs: 540,
 		crew_positions: [{ id: "rider", name: "Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Undying Steed",
+				description:
+					"The lich-steed does not tire and is immune to poison and disease; it never needs to feed, breathe, or rest.",
+				action_type: "passive",
+			},
+			{
+				name: "Borrowed Void Blast",
+				description:
+					"Once per long rest the rider channels the steed's necrotic core, spending 10 of their own hit points to loose a Void Blast: a creature within 60 ft makes a DC 15 VIT save, taking 4d8 necrotic damage on a failure or half as much on a success.",
+				action_type: "action",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0016",
 		rank: "B",
@@ -367,7 +439,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 			{ id: "rider", name: "Bonded Rider" },
 			{ id: "passenger", name: "Passenger" },
 		],
-		abilities: [],
+		abilities: [
+			{
+				name: "Titanic Frame",
+				description:
+					"The whelp's doubled carry capacity lets it haul riders, gear, and salvage that would break a lesser mount, but it cannot enter spaces or gates sized smaller than Large.",
+				action_type: "passive",
+			},
+			{
+				name: "Crushing Charge",
+				description:
+					"On a turn it Dashes at least 20 ft in a straight line, the whelp may slam a Large or smaller creature: DC 14 STR save or be knocked prone and take 2d8 bludgeoning damage.",
+				action_type: "action",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0011",
 		rank: "B",
@@ -386,7 +471,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 36 },
 		carry_capacity_lbs: 360,
 		crew_positions: [{ id: "rider", name: "Umbral-Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Shadow Meld",
+				description:
+					"In dim light or darkness the mount and rider gain advantage on Stealth checks and resistance to necrotic damage.",
+				action_type: "passive",
+			},
+			{
+				name: "Shared Shadow Strike",
+				description:
+					"The rider borrows the anomaly's signature attack: a melee strike with reach 10 ft that deals an extra 2d6 necrotic damage and pulls the target 5 ft toward the mount on a hit.",
+				action_type: "action",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0021",
 		rank: "C",
@@ -409,7 +507,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 			{ id: "passenger", name: "Passenger" },
 			{ id: "passenger2", name: "Passenger" },
 		],
-		abilities: [],
+		abilities: [
+			{
+				name: "Abyssal Dread",
+				description:
+					"A hostile creature that starts its turn within 10 ft of the horror-mount makes a DC 14 PRE save or is frightened of it until the end of that turn.",
+				action_type: "passive",
+			},
+			{
+				name: "Volatile Bond",
+				description:
+					"Below bond level 5 the horror is unstable: on a failed control check it thrashes and the rider loses their next action. S-clearance bonding suppresses this once bond level 5 is reached.",
+				action_type: "passive",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0003",
 		rank: "A",
@@ -428,7 +539,20 @@ const mountsBondedAnomalies: CompendiumVehicle[] = [
 		hit_points: { max: 62 },
 		carry_capacity_lbs: 600,
 		crew_positions: [{ id: "rider", name: "Umbral-Bonded Rider" }],
-		abilities: [],
+		abilities: [
+			{
+				name: "Ethereal Stride",
+				description:
+					"In dim light or darkness the shadow-lurker can move through other creatures and nonmagical barriers as if ethereal, emerging on the far side.",
+				action_type: "passive",
+			},
+			{
+				name: "Ambush Predator",
+				description:
+					"If the mount and rider begin combat unseen, the rider's first attack of the encounter is made with advantage.",
+				action_type: "passive",
+			},
+		],
 		bonded: true,
 		anomaly_id: "anomaly-0008",
 		rank: "A",

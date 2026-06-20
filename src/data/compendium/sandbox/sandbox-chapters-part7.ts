@@ -336,7 +336,7 @@ When the Sanctum turns hostile, the fight is the Choir, the ritual, and the Holl
 
 **The Law in play:** *grief may be converted into authority.* Every loss the party has carried into the Domain — a named dead, a memory-core eaten in the Orchard, an oath broken at the Bastion — is fuel the Sanctum can spend against them; a party that has grieved openly here arms the room. Starve the engine by denying the cult the party's grief: refuse the comfort, withhold true names, or empty the Confession Chamber before the Choir can draw on it.
 
-**Scaling (Levels 1-15):** B-Rank for a level 7-10 party; if the Ritual of Inheritance is near completion, raise it to A-Rank and let the Hollow Mother spend the Sanctum's stored grief as legendary actions.
+**Scaling (Levels 1-10):** B-Rank for a level 7-9 party; if the Ritual of Becoming is near completion, raise it to A-Rank and let the Hollow Mother spend the Sanctum's stored grief as legendary actions.
 
 > *Exit tone (read aloud):* Outside again, the song does not follow — but for the rest of the campaign, the first kind voice in any safe room will sound, for just a moment, like hers, and the party will have to decide, every time, whether to let it comfort them.
 

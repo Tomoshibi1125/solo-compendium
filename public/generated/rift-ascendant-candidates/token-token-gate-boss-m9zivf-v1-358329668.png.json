@@ -1,0 +1,54 @@
+{
+  "promptRecordId": "token-token-gate-boss-m9zivf",
+  "sourceAssetPath": "/generated/tokens/Anomalies/demon-lord.svg",
+  "candidatePath": "/generated/rift-ascendant-candidates/token-token-gate-boss-m9zivf-v1-358329668.png",
+  "prompt": "Rift Ascendant VTT token asset, Gate Boss, lore-accurate token subject, Gate Boss. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., high-detail tabletop fantasy RPG key art, Korean action webtoon-inspired dark fantasy rendering, dynamic composition, crisp ink-like edges, painterly realism, cinematic contrast, dramatic rim lighting, polished game illustration, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, centered full-body or bust token composition as appropriate to the subject, strong readable silhouette at small size, simple transparent-friendly or dark neutral background, Rift energy accents only where supported by lore, no baked-in text, no logo",
+  "negativePrompt": "landscape-only image, empty map, UI icon only, cropped face, tiny distant subject, muddy silhouette, unreadable token, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 7,
+  "seed": 358329668,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-19T15:04:32.261Z",
+  "applyTargetPath": "/generated/tokens/Anomalies/demon-lord.webp",
+  "priority": "high",
+  "subject": "Gate Boss",
+  "assetType": "token",
+  "category": "image-token",
+  "sourceCategory": [
+    "vtt-manifest"
+  ],
+  "sourceRecordKeys": [
+    "src\\lib\\vtt\\vttAssetManifest.ts#token-demon-lord"
+  ],
+  "sourceRecordIds": [
+    "token-demon-lord"
+  ],
+  "sourceRecordNames": [
+    "Gate Boss"
+  ],
+  "recommendedReplacement": "yes",
+  "confidence": "high",
+  "notes": "Approved for apply by explicit user instruction on 2026-06-19 after category smoke validation.",
+  "references": [
+    {
+      "file": "src\\lib\\vtt\\vttAssetManifest.ts",
+      "line": 667,
+      "field": "path",
+      "subject": "Gate Boss",
+      "recordId": "token-demon-lord",
+      "recordName": "Gate Boss",
+      "sourceCategory": "vtt-manifest",
+      "sourceRecordKey": "src\\lib\\vtt\\vttAssetManifest.ts#token-demon-lord",
+      "context": ""
+    }
+  ],
+  "updateReferencesOnApply": true
+}

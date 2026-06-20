@@ -1,0 +1,489 @@
+{
+  "generatedAt": "2026-06-19T11:39:39.627Z",
+  "dryRun": true,
+  "backend": "dry-run",
+  "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+  "count": 10,
+  "prompts": [
+    {
+      "assetPath": "/generated/armor/iron-chestplate.webp",
+      "outputBaseName": "iron-chestplate",
+      "type": "item",
+      "subject": "Iron Chestplate",
+      "loreSummary": "Iron Chestplate. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Iron Chestplate, Iron Chestplate. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 512577598,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/iron-chestplate.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1295,
+          "field": "imageUrl",
+          "subject": "Iron Chestplate",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/iron-gauntlets.webp",
+      "outputBaseName": "iron-gauntlets",
+      "type": "item",
+      "subject": "Iron Gauntlets",
+      "loreSummary": "Iron Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Iron Gauntlets, Iron Gauntlets. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 1896094472,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/iron-gauntlets.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1323,
+          "field": "imageUrl",
+          "subject": "Iron Gauntlets",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/leather-boots.webp",
+      "outputBaseName": "leather-boots",
+      "type": "item",
+      "subject": "Leather Boots",
+      "loreSummary": "Leather Boots. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Leather Boots, Leather Boots. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 3693204451,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/leather-boots.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1316,
+          "field": "imageUrl",
+          "subject": "Leather Boots",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/leather-cloak.webp",
+      "outputBaseName": "leather-cloak",
+      "type": "item",
+      "subject": "Leather Cloak",
+      "loreSummary": "Leather Cloak. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Leather Cloak, Leather Cloak. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 3006640260,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/leather-cloak.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1330,
+          "field": "imageUrl",
+          "subject": "Leather Cloak",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/mage-robe.webp",
+      "outputBaseName": "mage-robe",
+      "type": "item",
+      "subject": "Mage Robe",
+      "loreSummary": "Mage Robe. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Mage Robe, Mage Robe. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 1526438769,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/mage-robe.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1337,
+          "field": "imageUrl",
+          "subject": "Mage Robe",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/steel-helmet.webp",
+      "outputBaseName": "steel-helmet",
+      "type": "item",
+      "subject": "Steel Helmet",
+      "loreSummary": "Steel Helmet. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Steel Helmet, Steel Helmet. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 2551894901,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/steel-helmet.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1288,
+          "field": "imageUrl",
+          "subject": "Steel Helmet",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/steel-shield.webp",
+      "outputBaseName": "steel-shield",
+      "type": "item",
+      "subject": "Steel Shield",
+      "loreSummary": "Steel Shield. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Steel Shield, Steel Shield. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 2164181493,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/steel-shield.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1309,
+          "field": "imageUrl",
+          "subject": "Steel Shield",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/armor/wooden-shield.webp",
+      "outputBaseName": "wooden-shield",
+      "type": "item",
+      "subject": "Wooden Shield",
+      "loreSummary": "Wooden Shield. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Wooden Shield, Wooden Shield. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear silhouette, centered composition, simple readable background, polished inventory art, no text, no logo",
+      "negativePrompt": "generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo",
+      "width": 1024,
+      "height": 1024,
+      "seed": 1740629788,
+      "steps": 24,
+      "cfgScale": 7,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/armor/wooden-shield.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1302,
+          "field": "imageUrl",
+          "subject": "Wooden Shield",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/buildings/castle-ruins.webp",
+      "outputBaseName": "castle-ruins",
+      "type": "location",
+      "subject": "Castle Ruins",
+      "loreSummary": "Castle Ruins. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Castle Ruins, Castle Ruins. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, cinematic environment concept art, strong readable composition, safe negative space for UI overlay, atmospheric depth, rift energy, Essence glow, coherent architecture, polished game background, no text, no logo",
+      "negativePrompt": "generic fantasy tavern, generic castle unless lore requires it, spaceship, unrelated cyberpunk city, empty stock landscape, tourist photo, too cluttered for UI, unreadable composition, blurry, low resolution, text, watermark, logo, signature",
+      "width": 1024,
+      "height": 1024,
+      "seed": 2490948196,
+      "steps": 40,
+      "cfgScale": 7.5,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/buildings/castle-ruins.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1510,
+          "field": "imageUrl",
+          "subject": "Castle Ruins",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    },
+    {
+      "assetPath": "/generated/buildings/coastal-lighthouse.webp",
+      "outputBaseName": "coastal-lighthouse",
+      "type": "location",
+      "subject": "Coastal Lighthouse",
+      "loreSummary": "Coastal Lighthouse. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware.",
+      "positivePrompt": "Rift Ascendant app asset, Coastal Lighthouse, Coastal Lighthouse. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, cinematic environment concept art, strong readable composition, safe negative space for UI overlay, atmospheric depth, rift energy, Essence glow, coherent architecture, polished game background, no text, no logo",
+      "negativePrompt": "generic fantasy tavern, generic castle unless lore requires it, spaceship, unrelated cyberpunk city, empty stock landscape, tourist photo, too cluttered for UI, unreadable composition, blurry, low resolution, text, watermark, logo, signature",
+      "width": 1024,
+      "height": 1024,
+      "seed": 3386828628,
+      "steps": 40,
+      "cfgScale": 7.5,
+      "sampler": "DPM++ 2M Karras",
+      "scheduler": "Karras",
+      "checkpoint": "stabilityai/stable-diffusion-xl-base-1.0",
+      "optionalRefiner": "stabilityai/stable-diffusion-xl-refiner-1.0",
+      "backendHints": {
+        "a1111": {
+          "endpoint": "/sdapi/v1/txt2img",
+          "override_settings": {
+            "sd_model_checkpoint": "stabilityai/stable-diffusion-xl-base-1.0"
+          }
+        },
+        "comfy": {
+          "workflowPath": "config/comfy-rift-sdxl-workflow-api.json",
+          "exampleWorkflowPath": "config/comfy-rift-sdxl-workflow-api.example.json"
+        }
+      },
+      "applyTargetPath": "/generated/buildings/coastal-lighthouse.webp",
+      "priority": "high",
+      "recommendedGenerationMode": "txt2img",
+      "recommendedReplacement": "pending",
+      "confidence": "pending",
+      "references": [
+        {
+          "file": "src\\data\\vttAssetLibrary.ts",
+          "line": 1517,
+          "field": "imageUrl",
+          "subject": "Coastal Lighthouse",
+          "context": ""
+        }
+      ],
+      "loreSourceFiles": [
+        "docs/rift-ascendant-world-lore.md"
+      ],
+      "updateReferencesOnApply": false
+    }
+  ]
+}

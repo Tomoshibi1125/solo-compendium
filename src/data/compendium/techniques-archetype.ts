@@ -287,6 +287,8 @@ function T(
 	};
 }
 
+// Archetype-shared pool owners = every martial-capable job (4 pure martials +
+// 4 hybrids, incl. Revenant after the drain-tank rework).
 const ALL = [
 	"Destroyer",
 	"Berserker",
@@ -295,6 +297,7 @@ const ALL = [
 	"Holy Knight",
 	"Stalker",
 	"Technomancer",
+	"Revenant",
 ];
 
 export const techniques_archetype: CompendiumTechnique[] = [

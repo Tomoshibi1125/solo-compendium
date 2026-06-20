@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "item-item-field-issue-spyglass-1rx42t",
+  "sourceAssetPath": "/generated/compendium/items/item-0438.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/item-item-field-issue-spyglass-1rx42t-v1-2318346852.png",
+  "prompt": "Rift Ascendant inventory asset, one single centered complete Field Issue Spyglass object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, one handheld optical monocular telescope only, short brass-and-black metal tube with glass lens, compact spyglass silhouette, no stock, no trigger, not a gun, not a rifle, no person looking through it, Field Issue Spyglass. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A miscellaneous item from the Bureau-supplied Ascendant kit. Logged on the requisition manifest. Trusted on the line. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo",
+  "negativePrompt": "person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, rifle, pistol, gun stock, trigger, camera body, person looking through lens, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts",
+    "src\\data\\compendium\\items-part8.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 2318346852,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T23:06:56.547Z",
+  "applyTargetPath": "/generated/compendium/items/item-item-field-issue-spyglass-1rx42t.webp",
+  "priority": "medium",
+  "subject": "Field Issue Spyglass",
+  "assetType": "item",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-gear-utility-common-0"
+  ],
+  "sourceRecordIds": [
+    "gap-gear-utility-common-0"
+  ],
+  "sourceRecordNames": [
+    "Field Issue Spyglass"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 37715,
+      "field": "image",
+      "subject": "Field Issue Spyglass",
+      "recordId": "gap-gear-utility-common-0",
+      "recordName": "Field Issue Spyglass",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-utility-common-0",
+      "context": "A miscellaneous item from the Bureau-supplied Ascendant kit. Logged on the requisition manifest. Trusted on the line. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

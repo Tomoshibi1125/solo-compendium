@@ -431,64 +431,49 @@ export class PlayerPage {
 				await satisfyCheckboxRequirements();
 				await clickNext(20_000);
 			} else if (step === "imprints") {
-				const imprintOptions = () =>
-					this.page
-						.getByTestId("creation-power-imprint-option")
-						.or(this.page.getByTestId("creation-technique-imprint-option"))
-						.or(this.page.getByTestId("creation-cantrip-imprint-option"))
-						.or(this.page.getByTestId("creation-spell-imprint-option"))
-						.or(this.page.getByTestId("creation-spellbook-imprint-option"))
-						.or(this.page.getByTestId("creation-fighting-style-option"))
-						.or(this.page.getByTestId("creation-specialist-training-option"))
-						.or(this.page.getByTestId("creation-favored-terrain-option"));
-
-				for (let attempt = 0; attempt < 80; attempt += 1) {
-					if (
-						await nextButton()
-							.isEnabled({ timeout: 300 })
-							.catch(() => false)
-					) {
-						break;
-					}
-
-					const options = imprintOptions();
-					const count = await options.count();
-					let clicked = false;
-
-					for (let i = 0; i < count; i += 1) {
-						if (
-							await nextButton()
-								.isEnabled({ timeout: 300 })
-								.catch(() => false)
-						) {
-							break;
+				// Every imprint option card renders data-testid="creation-…" plus a
+					// data-selected flag and a disabled flag. Selectable options are the
+					// ones that are unselected and enabled — match them with one robust
+					// CSS selector (avoids brittle .or()/.and() locator composition).
+					// Drive the imprint multi-select INSIDE the browser, waiting for each
+					// click to COMMIT (the selectable-option count drops) before clicking
+					// again. Doing this in-page — rather than across the Playwright
+					// process boundary — lets React re-render between selections, which
+					// prevents double-toggling the same option and reliably fills every
+					// required category (cantrips, spells, spellbook, powers, styles…).
+					await this.page.evaluate(async () => {
+						const sel =
+							'button[data-testid^="creation-"][data-selected="false"]:not([disabled])';
+						const sleep = (ms: number) =>
+							new Promise((r) => setTimeout(r, ms));
+						const advanceEnabled = () => {
+							const adv = Array.from(document.querySelectorAll("button")).find(
+								(b) => /Advance Protocol|^Next$/i.test(b.textContent || ""),
+							);
+							return !!adv && !(adv as HTMLButtonElement).disabled;
+						};
+						for (let guard = 0; guard < 400 && !advanceEnabled(); guard += 1) {
+							const before = document.querySelectorAll(sel).length;
+							if (before === 0) {
+								await sleep(80);
+								continue;
+							}
+							(document.querySelector(sel) as HTMLElement | null)?.click();
+							// Wait for the click to register (count changes) before the next.
+							for (
+								let waited = 0;
+								waited < 25 &&
+								document.querySelectorAll(sel).length === before &&
+								!advanceEnabled();
+								waited += 1
+							) {
+								await sleep(20);
+							}
 						}
-						const option = options.nth(i);
-						const visible = await option
-							.isVisible({ timeout: 300 })
-							.catch(() => false);
-						if (!visible) continue;
-						const selected = await option
-							.getAttribute("data-selected")
-							.catch(() => null);
-						if (selected === "true") continue;
-						if (!(await option.isEnabled({ timeout: 300 }).catch(() => false)))
-							continue;
-						await option.scrollIntoViewIfNeeded().catch(() => {});
-						await option.click();
-						await this.page.waitForTimeout(150);
-						clicked = true;
+					});
+					if (!(await nextButton().isEnabled({ timeout: 1500 }).catch(() => false))) {
+						console.warn("[PlayerPage] char-wizard: imprints unsatisfied after loop");
 					}
-
-					if (
-						await nextButton()
-							.isEnabled({ timeout: 300 })
-							.catch(() => false)
-					) {
-						break;
-					}
-					await this.page.waitForTimeout(clicked ? 250 : 750);
-				}
 				await clickNext(30_000);
 			} else if (step === "review") {
 				break;

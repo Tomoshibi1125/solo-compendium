@@ -1,0 +1,37 @@
+{
+  "sourceAssetPath": "/generated/compendium/anomalies/anomaly-0003.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/eternal-abyssal-horror-v1-382398759.png",
+  "prompt": "Rift Ascendant app asset, Eternal Abyssal Horror, creature or entity from a Rift Interior, Eternal Abyssal Horror. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Rift Interiors can become impossible dark fantasy horror with hostile laws, Anomalies, Essence glow, Relics, and unreliable maps. When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage., uncanny biology, Essence-touched form, dangerous but readable silhouette, modern dark fantasy horror, cinematic lighting, polished monster concept art, app-card readability, dark atmosphere, rift glow accents, no text, no logo",
+  "negativePrompt": "generic dragon, generic zombie, unrelated sci-fi alien, rubber monster suit, joke creature, cute mascot, chibi, stock monster, muddy silhouette, too many limbs unless lore requires it, bad anatomy, blurry, low resolution, text, watermark, logo, cropped body, overexposed",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\anomalies\\rank-b.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 30,
+  "cfgScale": 7,
+  "seed": 382398759,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-19T14:05:28.954Z",
+  "applyTargetPath": "/generated/compendium/anomalies/anomaly-0003.webp",
+  "priority": "high",
+  "subject": "Eternal Abyssal Horror",
+  "assetType": "anomaly",
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\anomalies\\rank-b.ts",
+      "line": 22,
+      "field": "image",
+      "subject": "Eternal Abyssal Horror",
+      "context": "When reduced below half hit points, it enters a surge state until the end of its next turn: its movement increases by 10 feet and its first strike deals extra damage."
+    }
+  ],
+  "updateReferencesOnApply": false
+}

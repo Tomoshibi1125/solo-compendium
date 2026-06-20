@@ -173,7 +173,7 @@ const Campaigns = () => {
 				toast({
 					title: "Campaign Established",
 					description:
-						'Importing "The Shadow of the Regent" sandbox module in the background...',
+						'Importing "Run Silent" sandbox module in the background...',
 				});
 			}
 

@@ -1166,7 +1166,7 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/jobs/Striker.webp",
+		image: "/generated/compendium/jobs/Striker-generated-sxicfg.webp",
 		stats: {
 			strength: 13,
 			agility: 15,
@@ -1867,7 +1867,7 @@ export const jobs: Job[] = [
 			},
 		],
 		spellbook: { atCreation: 6, perLevel: 2, label: "Reaper's Ledger" },
-		image: "/generated/compendium/jobs/Revenant.webp",
+		image: "/generated/compendium/jobs/Revenant-generated-106m11v.webp",
 		stats: {
 			strength: 8,
 			agility: 14,
@@ -2389,7 +2389,7 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/jobs/Holy Knight.webp",
+		image: "/generated/compendium/characters/character-character-holy-knight-14ln86.webp",
 		stats: {
 			strength: 15,
 			agility: 10,
@@ -3014,7 +3014,7 @@ export const jobs: Job[] = [
 				filter: { restrictTo: "any-list" },
 			},
 		],
-		image: "/generated/compendium/jobs/Idol.webp",
+		image: "/generated/compendium/jobs/Idol-generated-3qxkaa.webp",
 		stats: {
 			strength: 8,
 			agility: 14,
@@ -3615,7 +3615,7 @@ export const jobs: Job[] = [
 				source: "Contract Invocations",
 			},
 		],
-		image: "/generated/compendium/jobs/Contractor.webp",
+		image: "/generated/compendium/jobs/Contractor-generated-kth97v.webp",
 		stats: {
 			strength: 8,
 			agility: 12,
@@ -3917,7 +3917,7 @@ export const jobs: Job[] = [
 		techniquesKnown: [
 			2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
 		],
-		image: "/generated/compendium/jobs/Stalker.webp",
+		image: "/generated/compendium/jobs/Stalker-generated-1kbwpn2.webp",
 		stats: {
 			strength: 12,
 			agility: 15,

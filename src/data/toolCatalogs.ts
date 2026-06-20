@@ -141,9 +141,9 @@ export const WARDEN_TOOLS: ToolCatalogItem[] = [
 	},
 	{
 		id: "sandbox-module",
-		name: "Regent's Shadow",
+		name: "Run Silent",
 		description:
-			"The official Shadow of the Regent sandbox module. Comprehensive guide to the district, anomalies, and plot.",
+			"The official Run Silent sandbox module — a country-sized survival-horror Rift Interior, its warded native communities, its ecology of threats, and the unseen apex predator that hunts it.",
 		icon: BookOpen,
 		status: "available",
 		color:

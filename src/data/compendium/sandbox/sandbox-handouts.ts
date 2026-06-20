@@ -1,19 +1,19 @@
 import type { SandboxHandout } from "../ascendant-sandbox-module";
 
 /**
- * SANDBOX HANDOUTS - The Shadow of the Regent
+ * SANDBOX HANDOUTS - Run Silent
  */
 
 const rawSandboxHandouts = [
 	{
-		title: "Emergency Writ: S-Rank Rift Entry",
-		content: `# EMERGENCY WRIT
+		title: "Emergency Clearance: S-Rank Rift Entry",
+		content: `# EMERGENCY CLEARANCE
 
 You are cleared for entry into the Gloamreach Rift Interior under crisis authority.
 
-Return conditions: Anchor broken, Anchor sealed, Anchor transformed, or Rift Break evacuation.
+Return conditions: hostile neutralized, threshold re-secured, or emergency evacuation. (The interior may permit none of these.)
 
-The Bureau accepts no liability for Domain law, Anomaly exposure, Essence contamination, Relic corruption, or failed extraction after threshold closure.`,
+The Bureau accepts no liability for Anomaly exposure, Essence contamination, Relic corruption, psychological casualty, or failed extraction after threshold closure.`,
 	},
 	{
 		title: "AFA Alert: Rift Interior Scale",
@@ -23,51 +23,51 @@ Rift threshold stabilized.
 
 Interior mapping exceeds standard bounded Rift parameters.
 
-Domain estimate: country-scale interior realm.
+Interior estimate: country-scale realm, old and inhabited.
 
-Anchor classification: sovereign intelligence.
+Apex classification: a single intelligence that owns the dark; uncleared, likely unclearable.
 
 Recommendation: do not enter without S-Rank command approval.
 
 Override: emergency entry authorized.`,
 	},
 	{
-		title: "Oracle Scan Sheet: The Fortune of the Domain",
-		content: `# ORACLE SCAN
+		title: "Native Survival Card",
+		content: `# WHAT THE NATIVES TELL YOU
 
-The Spark:
+Stay quiet. Stay dark. Never use the power if you can help it.
 
-The Chain:
+Do not answer a voice you know after dark.
 
-The Crown:
+Do not speak your true name where the walls can hear.
 
-The Pulse:
+Be behind a wardline before the grey light fails.
 
-The Oathbreaker:
-
-The scan output is unstable. Re-run attempts may alert the Anchor.`,
+If it offers you something, it has already decided to take you.`,
 	},
 	{
-		title: "Map Fragment: Road of Writs",
-		content: `# ROAD OF WRITS FRAGMENT
+		title: "Map Fragment: The Old Roads",
+		content: `# OLD ROADS FRAGMENT
 
-The road bends toward the Citadel no matter how it is drawn.
+The roads are the fast way and the exposed way. Walk them by grey light, in silence, never alone.
 
-Marked stops: Rift Threshold, Writ-Bound Hamlet, Vermillion Outpost, Drowned Ledgerfen, Remembering Orchard, Bastion Golemfall, Obsidian Spire.
+Marked safe-holds: Rift Threshold, Warded Hamlet, Vermillion Outpost, Drowned Ledgerfen, Remembering Orchard, Bastion Golemfall, Obsidian Spire.
 
-Unmarked warning written in red pencil: "If the Bailiff reads your name, do not answer until you know the charge."`,
+Warning written in red pencil: "If you hear your name from off the road, do not answer. Do not even look."`,
 	},
 	{
-		title: "Writ-Bound Hamlet Tribute Notice",
-		content: `# NOTICE OF TRIBUTE
+		title: "Warded Hamlet House Rules",
+		content: `# HOUSE RULES
 
-By grace of the Regent, this settlement remains sheltered under lawful weather and bounded hunger.
+This community keeps the dark out by keeping these rules. Guests keep them too, or leave before dusk.
 
-Tribute is due by the second bell after dusk.
+Bar every door at the second bell after dusk.
 
-Acceptable forms: Essence, labor, living service, Relic metal, memory, or sworn betrayal.
+Burn no open light the dark can see. Use no Essence within the wards.
 
-Failure voids shelter.`,
+Speak no sleeper's name aloud after dark.
+
+Break a rule and the wards will not protect you — and may not protect the rest of us either.`,
 	},
 	{
 		title: "Vermillion Outpost Price Board",
@@ -91,7 +91,7 @@ All teams will hold assigned corridors until command updates the retreat route.
 
 Do not abandon sealed supply rooms.
 
-Do not negotiate with Domain officers.
+Do not answer anything that wears a face you know.
 
 Do not deviate from Rank doctrine.
 
@@ -105,13 +105,13 @@ Name: unreadable due to ash damage.
 
 Rank: C provisional.
 
-Cause: court patrol.
+Cause: taken, then recovered by chance.
 
 Notes: subject remained combat-effective after fatal wound for forty-seven seconds. Recommend commendation if remains recoverable.`,
 	},
 	{
-		title: "Tithe Mill Work Token",
-		content: `# TITHE MILL TOKEN
+		title: "Mill Work Token",
+		content: `# MILL TOKEN
 
 Bearer is permitted through the outer wheelhouse for one shift.
 
@@ -152,20 +152,20 @@ Hold when law becomes teeth.
 Hold until holding becomes the only part of you left.`,
 	},
 	{
-		title: "Awoko Inheritance Hymn",
-		content: `# HYMN OF INHERITANCE
+		title: "Awoko Becoming Hymn",
+		content: `# HYMN OF BECOMING
 
-The road is cruel because roads must choose.
+The prey runs because prey must run.
 
-The bell is kind because bells must answer.
+The hunter waits because hunters can.
 
-The crown is heavy because someone must carry law.
+Why stay the hunted, the Mother asks, when the dark has shown the way?
 
-Give grief and be held.
+Give grief and be spared.
 
-Give blood and be named.
+Give blood and be remade.
 
-Give all and awaken.`,
+Give all, and become.`,
 	},
 	{
 		title: "Awoko Defector's Mark",
@@ -178,7 +178,7 @@ Anyone wearing this inside the Sanctum is marked for capture, not immediate exec
 The Hollow Mother wants defectors to sing apology before they die.`,
 	},
 	{
-		title: "Unseated Law Consent Form",
+		title: "The Old Power — Consent Form",
 		content: `# CONSENT FORM
 
 State the desired effect.
@@ -190,7 +190,7 @@ State whether the cost may be collected later.
 Silence will be interpreted as consent to delayed collection.`,
 	},
 	{
-		title: "Unseated Law Bargain Record",
+		title: "The Old Power — Bargain Record",
 		content: `# BARGAIN RECORD
 
 The offer worked.
@@ -221,64 +221,64 @@ Six cuts: you are already being tested.`,
 		title: "White Heron Seal Notes",
 		content: `# WHITE HERON SEAL
 
-The Anchor does not need to die for the Rift to close.
+The Quiet does not need to die for the way out to open — but it must be held.
 
 Requirements:
 
-- Anchor made vulnerable.
-- One Anchor Relic inverted.
-- A willing Ascendant to bear the seal backlash.
-- A declared law stronger than the Regent's claim.
+- The Quiet forced into a silence and dark it cannot slip.
+- The Means assembled: a truth, a way to hold it, a way to make it stay.
+- A willing Ascendant to bear the backlash at the Threshold.
+- A native ward-circle, built once, that the dark cannot cross.
 
-Failure feeds the Citadel.`,
+Failure feeds the dark, and the door stays shut.`,
 	},
 	{
-		title: "Dinner Invitation from the Regent",
-		content: `# INVITATION
+		title: "A Note in a Familiar Hand",
+		content: `# A NOTE, IN A HAND YOU KNOW
 
-Honored Ascendants,
+I have been waiting for you. It has been so long.
 
-You have crossed my road with admirable persistence.
+The way is just a little further in. Come and rest — you are so tired, and I have kept everything exactly the way you remember it.
 
-Come to the Citadel under guest law. Bring your weapons if they comfort you. Bring questions if they sharpen you. Bring manners if you wish to leave with both.
+Bring the others. But come.
 
-- The Regent`,
+(There is no signature. There does not need to be. You know the handwriting.)`,
 	},
 	{
-		title: "Court Patrol Pass",
-		content: `# COURT PASS
+		title: "Safe-Passage Token",
+		content: `# SAFE-PASSAGE TOKEN
 
-The bearers may cross one patrol boundary without bloodshed.
+A native ward-token. The bearers may pass one community's wardline once, in peace, by its keepers' leave.
 
-Invalid if copied, burned, mocked, blessed, folded into a weapon, or presented without eye contact.`,
+Invalid if copied, burned, mocked, bloodied, folded into a weapon, or shown without the keeper's name.`,
 	},
 	{
-		title: "Citadel Approach Sketch",
-		content: `# CITADEL APPROACHES
+		title: "The Final Crossing — Routes",
+		content: `# THE FINAL CROSSING — ROUTES
 
-Road of Final Writs: formal, watched, survivable.
+The Last Road: open, watched by the worn dead, survivable if silent.
 
-Bastion Tunnel: mapped, collapsed, full of old orders.
+Bastion Tunnel: mapped, collapsed, full of old oaths.
 
 Awoko Breach: hidden, grief-choked, unstable.
 
 Obsidian Spire Route: high, reflective, costly.
 
-Forbidden Descent: immediate, never free.`,
+The Old Power Below: immediate, never free.`,
 	},
 	{
-		title: "Regent Law Fragment",
-		content: `# LAW FRAGMENT
+		title: "The Old Wards Fragment",
+		content: `# THE OLD WARDS (a native fragment)
 
-No guest may be harmed before bread is broken.
+What is loud is found. What is bright is found. What is strong is loudest of all.
 
-No tribute may refuse its own naming as tribute.
+A name spoken is a name given.
 
-No road may deny its lord.
+A door left open after dark is an invitation, whether you meant it or not.
 
-No beast may hunt the crowned hand.
+The dead do not knock. They are simply, suddenly, inside.
 
-No oath may die before its bearer.`,
+A ward kept is a life kept. A ward broken is everyone's.`,
 	},
 	{
 		title: "Rift Break Warning",
@@ -286,11 +286,11 @@ No oath may die before its bearer.`,
 
 Containment thinning.
 
-Domain weather detected at threshold.
+Interior conditions detected at the threshold.
 
 Anomaly migration probable.
 
-Anchor law crossing material boundary.
+Something inside is pressing on the boundary from the dark side.
 
 Clear state required immediately.`,
 	},
@@ -298,15 +298,15 @@ Clear state required immediately.`,
 		title: "Ending Ledger",
 		content: `# ENDING LEDGER
 
-Anchor state:
+The Quiet's fate (escaped / killed / a new hunter rose):
 
 Survivors extracted:
 
-Settlements saved:
+Communities saved:
 
-Settlements lost:
+Communities lost:
 
-Unseated Law consequences:
+What the Old Power Below was owed:
 
 Bureau public report:
 
@@ -316,15 +316,15 @@ Truth known to the party:`,
 		title: "Warden Quick Reference",
 		content: `# QUICK REFERENCE
 
-Show the Citadel every session.
+Fill the Hunt Clock, visibly, every time they live loud.
 
-Every safe place has a cost.
+Every safe place has a cost and a rule.
 
 Every Relic has a desire.
 
 Every bargain leaves its mark.
 
-The Regent is not waiting at the end. He is watching from the beginning.`,
+The Quiet is not waiting at the end. It has been listening since the door closed.`,
 	},
 ];
 

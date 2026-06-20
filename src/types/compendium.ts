@@ -340,6 +340,8 @@ export interface CompendiumVehicle extends BaseCompendiumItem {
 	 * CompendiumAnomaly. Only meaningful when `vehicle_type === "mount"`.
 	 */
 	anomaly_id?: string;
+	/** Resolved display name of the linked anomaly (provider-enriched). */
+	bonded_from_name?: string | null;
 	rank?: string;
 	source_book?: string;
 }
@@ -819,6 +821,44 @@ export interface CompendiumShadowSoldier extends BaseCompendiumItem {
 	role: string;
 }
 
+/** Per-level progression track for a recruitable NPC companion. */
+export interface CompendiumNpcLeveling {
+	xp: number;
+	xpToNextLevel: number;
+	autoLevel: boolean;
+	maxLevel: number;
+	hpPerLevel: number;
+	/** Map of level → ability unlocked at that level. */
+	levelAbilities: Record<number, string>;
+}
+
+/**
+ * A named adventure NPC (sandbox roster). Recruitable companions and story
+ * characters with a light stat block, recruitment rules, and a leveling track.
+ */
+export interface CompendiumNPC extends BaseCompendiumItem {
+	title?: string | null;
+	faction?: string | null;
+	job?: string | null;
+	level?: number | null;
+	hp?: number | null;
+	ac?: number | null;
+	// Stat-block aliases surfaced by the static provider for detail views.
+	hit_points?: number | null;
+	hit_points_average?: number | null;
+	armor_class?: number | string | null;
+	key_abilities?: string[] | null;
+	motivation?: string | null;
+	personality?: string | null;
+	backstory?: string | null;
+	recruit_condition?: string | null;
+	is_recruitable?: boolean | null;
+	guild_affiliation?: string | null;
+	npc_location?: string | null;
+	quest_hook?: string | null;
+	leveling?: CompendiumNpcLeveling | Json | null;
+}
+
 export type CompendiumEntity =
 	| CompendiumJob
 	| CompendiumPath
@@ -838,4 +878,5 @@ export type CompendiumEntity =
 	| CompendiumTattoo
 	| CompendiumDeity
 	| CompendiumSigil
-	| CompendiumShadowSoldier;
+	| CompendiumShadowSoldier
+	| CompendiumNPC;

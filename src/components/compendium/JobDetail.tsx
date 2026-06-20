@@ -55,6 +55,14 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 			power_level: number;
 		}>
 	>([]);
+	const [relatedTechniques, setRelatedTechniques] = useState<
+		Array<{
+			id: string;
+			name: string;
+			display_name?: string | null;
+			level_requirement: number;
+		}>
+	>([]);
 
 	const displayName = formatRegentVernacular(data.display_name || data.name);
 
@@ -99,7 +107,7 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					path_level: p.path_level ?? p.level ?? 3,
 				}));
 
-			// Canonical static powers/spells tagged with this job name.
+			// Canonical static powers tagged with this job name (its signatures).
 			const powers = await listCanonicalEntries("powers");
 			const matchedPowers = powers
 				.filter((power) => {
@@ -114,9 +122,29 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 					power_level: power.power_level ?? power.level ?? 0,
 				}));
 
+			// Canonical static techniques tagged with this job name.
+			const techniques = await listCanonicalEntries("techniques");
+			const matchedTechniques = techniques
+				.filter((technique) => {
+					const tags = (technique.tags || []).map((t) => t.toLowerCase());
+					return tags.includes(jobKey);
+				})
+				.slice(0, 10)
+				.map((technique) => ({
+					id: technique.id,
+					name: technique.name,
+					display_name: technique.display_name ?? null,
+					level_requirement:
+						(technique as { level_requirement?: number | null })
+							.level_requirement ??
+						technique.level ??
+						0,
+				}));
+
 			setFeatures(staticFeatures);
 			setPaths(matchedPaths);
 			setRelatedPowers(matchedPowers);
+			setRelatedTechniques(matchedTechniques);
 		};
 
 		fetchRelatedData();
@@ -778,6 +806,41 @@ export const JobDetail = ({ data }: { data: JobData }) => {
 						className="block mt-4 text-sm text-primary hover:underline text-center"
 					>
 						View all powers for {displayName} →
+					</Link>
+				</AscendantWindow>
+			)}
+
+			{/* Related Techniques (signature techniques tagged to this job) */}
+			{relatedTechniques.length > 0 && (
+				<AscendantWindow title="RELATED TECHNIQUES">
+					<div className="grid md:grid-cols-2 gap-3">
+						{relatedTechniques.map((technique) => (
+							<Link
+								key={technique.id}
+								to={`/compendium/techniques/${technique.id}`}
+								className="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-primary/30 transition-colors group"
+							>
+								<Swords className="w-5 h-5 text-primary flex-shrink-0" />
+								<div className="flex-1 min-w-0">
+									<h4 className="font-heading font-semibold group-hover:text-primary transition-colors truncate">
+										{formatRegentVernacular(
+											technique.display_name || technique.name,
+										)}
+									</h4>
+									<p className="text-xs text-muted-foreground">
+										{technique.level_requirement > 0
+											? `Level ${technique.level_requirement}`
+											: "Any level"}
+									</p>
+								</div>
+							</Link>
+						))}
+					</div>
+					<Link
+						to={`/compendium?category=techniques&search=${encodeURIComponent(data.name)}`}
+						className="block mt-4 text-sm text-primary hover:underline text-center"
+					>
+						View all techniques for {displayName} →
 					</Link>
 				</AscendantWindow>
 			)}

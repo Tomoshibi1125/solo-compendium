@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "weapon-weapon-quartermaster-s-wakizashi-1tmgzo",
+  "sourceAssetPath": "/generated/compendium/items/item-0421.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-quartermaster-s-wakizashi-1tmgzo-v1-109971063.png",
+  "prompt": "Rift Ascendant inventory icon, single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants, exactly one single complete Wakizashi weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Wakizashi. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A Bureau-grade longsword with a mana-conductive crossguard. It does the job. That's all the Bureau asks of it. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-base-equipment.ts",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 109971063,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T23:02:26.842Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-quartermaster-s-wakizashi-1tmgzo.webp",
+  "priority": "medium",
+  "subject": "Quartermaster's Wakizashi",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-melee-blade-versatile-common-0"
+  ],
+  "sourceRecordIds": [
+    "gap-melee-blade-versatile-common-0"
+  ],
+  "sourceRecordNames": [
+    "Quartermaster's Wakizashi"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 79873,
+      "field": "image",
+      "subject": "Quartermaster's Wakizashi",
+      "recordId": "gap-melee-blade-versatile-common-0",
+      "recordName": "Quartermaster's Wakizashi",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-melee-blade-versatile-common-0",
+      "context": "A Bureau-grade longsword with a mana-conductive crossguard. It does the job. That's all the Bureau asks of it. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

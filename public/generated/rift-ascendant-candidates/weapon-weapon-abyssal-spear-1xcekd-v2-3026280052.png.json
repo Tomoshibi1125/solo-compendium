@@ -1,0 +1,57 @@
+{
+  "promptRecordId": "weapon-weapon-abyssal-spear-1xcekd",
+  "sourceAssetPath": "/generated/compendium/items/item-0003.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-abyssal-spear-1xcekd-v2-3026280052.png",
+  "prompt": "Rift Ascendant inventory asset, exactly one single complete Abyssal Spear weapon only, one continuous weapon object with handle shaft and blade/head connected, full weapon visible, one large weapon fills most of the frame, centered diagonal composition from lower left to upper right on a simple dark neutral background, no person, no hands, no secondary weapons, no extra spearheads, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Abyssal Spear. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Not pretty. Not elegant. Effective. aetheric, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, centered inventory composition, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, secondary weapons, many variants, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts",
+    "src\\data\\compendium\\items-part7.ts",
+    "src\\data\\compendium\\items-part9.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 3026280052,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T18:58:06.396Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-abyssal-spear-1xcekd.webp",
+  "priority": "medium",
+  "subject": "Abyssal Spear",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-part7.ts#item-p7-3"
+  ],
+  "sourceRecordIds": [
+    "item-p7-3"
+  ],
+  "sourceRecordNames": [
+    "Abyssal Spear"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-part7.ts",
+      "line": 442,
+      "field": "image",
+      "subject": "Abyssal Spear",
+      "recordId": "item-p7-3",
+      "recordName": "Abyssal Spear",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-part7.ts#item-p7-3",
+      "context": "As an action, force all creatures within a 15-ft. cone to make a DC 13 Agility save or take 2d6 damage of this weapon's type. Not pretty. Not elegant. Effective. aetheric"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

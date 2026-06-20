@@ -117,6 +117,7 @@ const categories = [
 	{ id: "locations", name: "Locations", icon: MapPin },
 	{ id: "conditions", name: "Conditions", icon: AlertTriangle },
 	{ id: "shadow-soldiers", name: "Umbral Legion", icon: Users },
+	{ id: "npcs", name: "NPCs", icon: Users },
 ];
 
 // Enhanced rarity colors with Rift Ascendant theme
@@ -272,6 +273,8 @@ const Compendium = () => {
 				"sigils",
 				"tattoos",
 				"pantheon",
+				"vehicles",
+				"npcs",
 			] as const;
 
 			for (const category of categories) {
@@ -349,6 +352,12 @@ const Compendium = () => {
 								break;
 							case "pantheon":
 								data = await staticDataProvider.getPantheon(parsedQuery.text);
+								break;
+							case "vehicles":
+								data = await staticDataProvider.getVehicles(parsedQuery.text);
+								break;
+							case "npcs":
+								data = await staticDataProvider.getNpcs(parsedQuery.text);
 								break;
 						}
 

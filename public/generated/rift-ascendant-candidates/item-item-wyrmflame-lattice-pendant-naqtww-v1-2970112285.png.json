@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "item-item-wyrmflame-lattice-pendant-naqtww",
+  "sourceAssetPath": "/generated/compendium/items/item-0176.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/item-item-wyrmflame-lattice-pendant-naqtww-v1-2970112285.png",
+  "prompt": "Rift Ascendant inventory asset, one single centered complete Wyrmflame Lattice Pendant object only, isolated object render on a simple dark neutral background, no person, no hands, no creature, no character, no landscape, no multiple views, no parts sheet, single jewelry object, centered relic-like accessory, readable small silhouette, Wyrmflame Lattice Pendant. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Bureau-issue. Inventoried. Forgotten. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, powerful object recovered from or shaped by Rift forces, Essence-infused materials, modern dark fantasy item design, clear object silhouette, centered composition, polished inventory art, no text, no logo",
+  "negativePrompt": "person, people, humanoid, owner, adventurer, warrior, hands, person holding object, gun, rifle, firearm, weapon, armor, helmet, character portrait, human face, open case, visible contents, loose tools, accessories, baked letters, caption, multiple objects, many variants, product sheet, parts sheet, exploded view, multiple camera angles, living creature, animal, monster, bird wings, tree, plant, roots, landscape-only image, generic sword, generic potion, random jewelry, stock icon, cluttered background, unreadable small details, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-base-equipment.ts",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 2970112285,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T20:57:41.328Z",
+  "applyTargetPath": "/generated/compendium/items/item-item-wyrmflame-lattice-pendant-naqtww.webp",
+  "priority": "medium",
+  "subject": "Wyrmflame Lattice Pendant",
+  "assetType": "item",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-gear-amulet-epic-4"
+  ],
+  "sourceRecordIds": [
+    "gap-gear-amulet-epic-4"
+  ],
+  "sourceRecordNames": [
+    "Wyrmflame Lattice Pendant"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 5342,
+      "field": "image",
+      "subject": "Wyrmflame Lattice Pendant",
+      "recordId": "gap-gear-amulet-epic-4",
+      "recordName": "Wyrmflame Lattice Pendant",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-amulet-epic-4",
+      "context": "As an action, target one Anomaly within 30 ft. It must make a DC 14 Sense save or be Restrained for 1 minute (saves at end of each of its turns). Bureau-issue. Inventoried. Forgotten. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

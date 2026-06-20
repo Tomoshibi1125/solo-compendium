@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "armor-armor-lunar-footwraps-1sarlr",
+  "sourceAssetPath": "/generated/compendium/items/item-0189.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-lunar-footwraps-1sarlr-v1-825588087.png",
+  "prompt": "Rift Ascendant inventory icon, one matched pair of protective boots or greaves only, empty wearable gear, no full character, one single complete Lunar Footwraps equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Lunar Footwraps. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. Cheap, ubiquitous, and sometimes the only thing between you and a black bag. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo",
+  "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 825588087,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T21:03:26.383Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-lunar-footwraps-1sarlr.webp",
+  "priority": "medium",
+  "subject": "Lunar Footwraps",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-gear-boots-rare-5"
+  ],
+  "sourceRecordIds": [
+    "gap-gear-boots-rare-5"
+  ],
+  "sourceRecordNames": [
+    "Lunar Footwraps"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 21064,
+      "field": "image",
+      "subject": "Lunar Footwraps",
+      "recordId": "gap-gear-boots-rare-5",
+      "recordName": "Lunar Footwraps",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-gear-boots-rare-5",
+      "context": "As an action, make a weapon attack and immediately move up to your speed without provoking opportunity attacks. Cheap, ubiquitous, and sometimes the only thing between you and a black bag. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

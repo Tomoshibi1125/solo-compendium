@@ -46,7 +46,7 @@ export const sandboxTimeline: SandboxTimelineEvent[] = [
 		description:
 			"A nearby community loses someone to the dark — or the party watch it pay the hard price that keeps its wards lit. The Drowned Ledgerfen wakes and begins making the dead, and the not-yet-dead, dangerously real.",
 		factionImpact: "Independent Survivors +2 if the party protects civilians without exploiting them.",
-		linkedSceneName: "Writ-Bound Hamlet",
+		linkedSceneName: "Warded Hamlet",
 	},
 	{
 		day: 8,

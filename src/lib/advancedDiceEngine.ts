@@ -152,11 +152,12 @@ export function rollWithAdvantage(
  * existing RollResult and produces a new one with the dice rolled again
  * (additional set of dice rolls of the same size and count).
  *
- * Hook points for future expansion:
- *  - Brutal Critical (Barbarian/Berserker): extra die per crit level.
- *  - Savage Attacks (Half-Orc/RA equivalent): reroll lowest die.
- *  These are intentionally not implemented yet; surface via the
- *  `extraDice` parameter when needed.
+ * Extra-dice hooks (live — wired through the `extraDice` parameter below):
+ *  - Brutal Critical (Berserker/Destroyer): extra weapon dice per crit, scaled
+ *    by level, are threaded in via `src/lib/actionResolution.ts` and
+ *    `src/hooks/useCombatActions.ts`.
+ *  - Savage Attacks and similar reroll-/extra-dice-on-crit features build on the
+ *    same `extraDice` hook.
  */
 export function applyCritical(
 	roll: RollResult,

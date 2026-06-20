@@ -1,7 +1,7 @@
 /**
  * export-sandbox-book.ts
  *
- * Regenerates "The Shadow of the Regent" campaign book as a PDF, rendered
+ * Regenerates the "Run Silent" campaign book as a PDF, rendered
  * directly from the live in-app module data so the book can never drift from
  * the module. Run with:  npm run export:book
  *
@@ -32,13 +32,14 @@ import { sandboxQuests } from "../src/data/compendium/sandbox/sandbox-quests";
 import { sandboxTimeline } from "../src/data/compendium/sandbox/sandbox-timeline";
 import { sandboxWardenNotes } from "../src/data/compendium/sandbox/sandbox-warden-notes";
 import { sandboxRecruitableNPCs } from "../src/data/compendium/sandbox-npcs";
+import { anomalies } from "../src/data/compendium/anomalies";
 
 // ---------------------------------------------------------------------------
 // Module metadata (mirrors ascendant-sandbox-module.ts — kept in sync by hand
 // because the aggregator itself is not Node-importable).
 // ---------------------------------------------------------------------------
 const MODULE_TITLE = "Run Silent";
-const MODULE_VERSION = 10;
+const MODULE_VERSION = 11;
 const MODULE_SUBTITLE =
 	"A mature survival and psychological horror campaign for Levels 1-10, set inside the Gloamreach — a country-sized S-Rank Rift Interior, old and inhabited, hunted by an unseen apex predator the natives call the Quiet.";
 
@@ -329,6 +330,165 @@ function renderWardenNotes(): string {
 		.join("\n");
 }
 
+function renderBestiary(): string {
+	// The Quiet family — the worn dead (0701-0704), then the apex itself (0700) —
+	// rendered as table-ready stat blocks so the book is runnable without flipping
+	// to the compendium. Ordered by escalating threat, climaxing on the Quiet.
+	const order = [
+		"anomaly-0701",
+		"anomaly-0702",
+		"anomaly-0703",
+		"anomaly-0704",
+		"anomaly-0700",
+	];
+	const byId = new Map((anomalies as any[]).map((a) => [a.id, a]));
+	const mod = (score: any) => {
+		const n = Number(score);
+		if (!Number.isFinite(n)) return "";
+		const m = Math.floor((n - 10) / 2);
+		return ` (${m >= 0 ? "+" : ""}${m})`;
+	};
+	const abilityRow = (s: any) => {
+		if (!s) return "";
+		const cols: [string, string][] = [
+			["STR", "strength"],
+			["AGI", "agility"],
+			["VIT", "vitality"],
+			["INT", "intelligence"],
+			["SEN", "sense"],
+			["PRE", "presence"],
+		];
+		return `<div class="abilities">${cols
+			.map(
+				([label, key]) =>
+					`<div><div class="ab">${label}</div><div class="sc">${esc(String(s[key] ?? "—"))}${mod(s[key])}</div></div>`,
+			)
+			.join("")}</div>`;
+	};
+	const kv = (obj: any) =>
+		obj && typeof obj === "object"
+			? Object.entries(obj)
+					.map(([k, v]) => `${k} +${v}`)
+					.join(", ")
+			: "";
+	const block = (label: string, arr: any) =>
+		Array.isArray(arr) && arr.length
+			? `<div class="block-head">${label}</div>${arr
+					.map(
+						(t: any) =>
+							`<p class="entry"><strong>${esc(String(t.name ?? ""))}.</strong> ${inlineMd(String(t.description ?? ""))}</p>`,
+					)
+					.join("")}`
+			: "";
+	const dmg = (arr: any, label: string) =>
+		Array.isArray(arr) && arr.length
+			? `<p class="line"><strong>${label}</strong> ${esc(arr.join(", "))}</p>`
+			: "";
+
+	const blocks = order
+		.map((id) => {
+			const a = byId.get(id) as any;
+			if (!a) return "";
+			const st = a.stats ?? {};
+			const saves = kv(st.saving_throws);
+			const skills = kv(a.skills);
+			const speeds = [
+				st.speed ? `${st.speed} ft.` : "",
+				st.extra_speeds
+					? Object.entries(st.extra_speeds)
+							.map(([k, v]) => `${k} ${v} ft.`)
+							.join(", ")
+					: "",
+			]
+				.filter(Boolean)
+				.join(", ");
+			const subtitle = [a.size, a.type, a.rank ? `Rank ${a.rank}` : ""]
+				.filter(Boolean)
+				.join(" · ");
+			return `<div class="statblock">
+        <h2>${esc(String(a.name ?? id))}</h2>
+        <p class="type">${esc(subtitle)}${a.alignment ? `, ${esc(String(a.alignment))}` : ""}</p>
+        <hr class="rule"/>
+        <p class="line"><strong>Armor Class</strong> ${esc(String(a.ac ?? "—"))}${a.ac_source ? ` (${esc(String(a.ac_source))})` : ""}</p>
+        <p class="line"><strong>Hit Points</strong> ${esc(String(a.hit_dice ?? a.hp ?? "—"))}</p>
+        ${speeds ? `<p class="line"><strong>Speed</strong> ${esc(speeds)}</p>` : ""}
+        ${abilityRow(st.ability_scores)}
+        ${saves ? `<p class="line"><strong>Saving Throws</strong> ${esc(saves)}</p>` : ""}
+        ${skills ? `<p class="line"><strong>Skills</strong> ${esc(skills)}</p>` : ""}
+        ${dmg(a.damage_vulnerabilities, "Damage Vulnerabilities")}
+        ${dmg(a.damage_resistances, "Damage Resistances")}
+        ${dmg(a.damage_immunities, "Damage Immunities")}
+        ${dmg(a.condition_immunities, "Condition Immunities")}
+        ${a.senses ? `<p class="line"><strong>Senses</strong> ${esc(String(a.senses))}</p>` : ""}
+        ${a.languages ? `<p class="line"><strong>Languages</strong> ${esc(String(a.languages))}</p>` : ""}
+        <p class="line"><strong>Challenge</strong> ${esc(String(st.challenge_rating ?? "—"))}${a.xp ? ` (${Number(a.xp).toLocaleString()} XP)` : ""}${st.proficiency_bonus ? ` &middot; <strong>Proficiency Bonus</strong> +${esc(String(st.proficiency_bonus))}` : ""}</p>
+        <hr class="rule"/>
+        ${a.description ? `<p class="entry"><em>${inlineMd(String(a.description))}</em></p>` : ""}
+        ${Array.isArray(a.weaknesses) && a.weaknesses.length ? `<p class="entry"><strong>Vulnerable to.</strong> ${esc(a.weaknesses.join("; "))}</p>` : ""}
+        ${block("Traits", a.traits)}
+        ${block("Actions", a.actions)}
+        ${block("Reactions", a.reactions)}
+        ${block("Lair Actions", a.lair_actions)}
+        ${block("Legendary Actions", a.legendary_actions)}
+      </div>`;
+		})
+		.join("\n");
+
+	const intro =
+		`<p class="muted">The Quiet is never a stand-up fight until the very end. These blocks cover the worn dead it sends ahead — the lures and hunters that can intrude on any zone — and, last, the apex itself, for the gated endgame. For most of the campaign the Quiet takes a character when the Hunt Clock peaks rather than rolling initiative; see "Running This Horror." Remember that ordinary combat means noise, light, and Essence, and every one of those fills the Hunt Clock — so even these lesser hunts draw the apex closer.</p>`;
+	return `${intro}\n${blocks}`;
+}
+
+function renderQuickReference(): string {
+	// A one-page Warden's screen condensed from the frozen "Running This Horror"
+	// engine — kept in sync with that chapter by hand. Numbers (6-segment Hunt
+	// Clock, reset-to-2, Dread 0-6, the two locks, L9+) mirror the canon there.
+	const dreadRows = [
+		["1–2", "<strong>Unsettled.</strong> No mechanical effect — describe the fraying."],
+		["3", "<strong>Shaken</strong> — disadvantage on the first save each scene against fear or the uncanny."],
+		["4", "<strong>Fraying</strong> — once per scene the Warden may have the character mis-see an ally as the Quiet, or hear a lure in a trusted voice."],
+		["5", "<strong>Breaking</strong> — disadvantage on checks while any familiar face is present; may act on a hallucination once."],
+		["6", "<strong>Unmade</strong> — at the worst moment the character does the thing that gets someone taken. Player keeps agency; Warden gains one hard complication."],
+	]
+		.map(([d, e]) => `<tr><td style="text-align:center;width:42px"><strong>${d}</strong></td><td>${e}</td></tr>`)
+		.join("");
+
+	return `<div class="refcard">
+  <p class="ref-golden"><strong>The Golden Rule.</strong> The Quiet is not a fight to win; it is a pressure to survive. Loud, bright, and powerful are dangerous. Silence, dark, restraint, and the natives' rules are the only safety. Make the quiet choice the smart one and the strong choice the loud one.</p>
+  <div class="ref-grid">
+    <div class="ref-panel">
+      <h3>The Hunt Clock — 6 segments</h3>
+      <p><strong>Fill +1:</strong> a loud noise · open light in the dark · breaking a native ward or rule · lingering or resting in exposed ground. <strong>Using Essence fills +1 (+2 for a large or sustained use)</strong> — this is the big one.</p>
+      <p><strong>Empty −1:</strong> reach a warded safe-hold, or spend a whole scene in silence, dark, and stillness. It never resets on its own.</p>
+      <p><strong>At 6 — it strikes.</strong> Not the full stat block; a persecution beat. It <strong>takes a character</strong> (the most exposed, the loudest, the one who burned the most Essence), or forces a desperate hide-or-flee set-piece with a life on the line. Then reset the clock to <strong>2</strong> — it is closer now, and it knows where they are.</p>
+    </div>
+    <div class="ref-panel">
+      <h3>Drawn to Three Things</h3>
+      <p><strong>Noise</strong> — footfalls, voices, gunfire, a dropped pack, a scream.<br/><strong>Light</strong> — open flame, a torch, a flare, the glow of a screen.<br/><strong>Essence</strong> — every technique, Sigil, or Awakened ability rings through the Interior like a struck bell. Their greatest strength is the thing most likely to get them killed.</p>
+      <h3>Essence Is Bait</h3>
+      <p>Every use advances the Hunt Clock and, deep in the Gloamreach, draws the worn dead. Make spending power a real, costly choice. The natives never use it if they can help it — and resent outsiders who do.</p>
+    </div>
+  </div>
+  <h3>Dread — each character, 0–6</h3>
+  <table><thead><tr><th style="width:42px">Dread</th><th>Effect</th></tr></thead><tbody>${dreadRows}</tbody></table>
+  <p class="muted">Drops by 1 per full rest in a true safe-hold, or by a real moment of human connection, comfort, or native kindness.</p>
+  <div class="ref-grid">
+    <div class="ref-panel">
+      <h3>The Gated Kill — both locks, late</h3>
+      <p><strong>Lock 1 · Tier:</strong> the party is <strong>9th level or higher.</strong> Below that no means matters; any attempt is a way to die.</p>
+      <p><strong>Lock 2 · The Means</strong> (assembled in play, never handed over, never a checklist): <strong>a truth</strong> about what it is · <strong>a way to hold it still</strong> (a real Relic, weapon, or working) · <strong>a way to make it stay dead</strong> (the threshold, a one-time native ward-circle, a dawn). Spent fully, the Means drags the Quiet down to something a level-10 party can kill — no lair actions, cannot simply <em>take</em> a character, pinned where the kill lands.</p>
+      <p><strong>Kill = the way out.</strong> The Quiet holds the threshold shut; put it down for good and the seal fails — the party walk out free, the country's fate left open. <strong>Escape is always the surer victory.</strong></p>
+    </div>
+    <div class="ref-panel">
+      <h3>When It Takes Someone</h3>
+      <p>It rarely kills — it <strong>takes</strong>, dragging into the dark. Across the campaign use all three: <strong>gone</strong> for good (a real loss) · <strong>recoverable</strong> by a fast, desperate rescue · <strong>returned later, worn</strong> — walking, talking, almost right, and not theirs. Always a cost, always survivable for the rest, never a TPK.</p>
+      <h3>Three Endings</h3>
+      <p><strong>Escape</strong> — flee; the Quiet lives and the country stays hunted. <strong>Kill</strong> — end it; the seal breaks, the party leave free, the future open. <strong>Become</strong> — a character takes the predator's path and is remade as a new apex of the Gloamreach.</p>
+    </div>
+  </div>
+</div>`;
+}
+
 // ---------------------------------------------------------------------------
 // Assemble the book HTML.
 // ---------------------------------------------------------------------------
@@ -350,6 +510,29 @@ const chaptersHtml = chapters
 const appendix = (id: string, title: string, body: string) =>
 	`<section class="chapter appendix" id="${id}"><h1 class="chapter-title">${esc(title)}</h1>${body}</section>`;
 
+// One source of truth for the appendices, so the Table of Contents and the
+// rendered sections can never drift apart.
+const appendixSections: { id: string; title: string; body: string }[] = [
+	{ id: "appendix-allies", title: "Appendix A — Recruitable Allies", body: renderNpcs() },
+	{ id: "appendix-factions", title: "Appendix B — Factions of the Gloamreach", body: renderFactions() },
+	{ id: "appendix-encounters", title: "Appendix C — Encounters of the Gloamreach", body: renderEncounters() },
+	{ id: "appendix-quests", title: "Appendix D — Side Quests", body: renderQuests() },
+	{ id: "appendix-loot", title: "Appendix E — Treasure & Relics", body: renderLoot() },
+	{ id: "appendix-timeline", title: "Appendix F — The Gate Break Track", body: renderTimeline() },
+	{ id: "appendix-handouts", title: "Appendix G — Handouts", body: renderHandouts() },
+	{ id: "appendix-warden", title: "Appendix H — Warden's Secrets", body: renderWardenNotes() },
+	{ id: "appendix-bestiary", title: "Appendix I — The Quiet and Its Worn Dead", body: renderBestiary() },
+	{ id: "appendix-quickref", title: "Appendix J — Warden's Quick Reference", body: renderQuickReference() },
+];
+
+const appendicesHtml = appendixSections
+	.map((a) => appendix(a.id, a.title, a.body))
+	.join("\n");
+
+const appendixToc = appendixSections
+	.map((a) => `<li><a href="#${a.id}">${esc(a.title)}</a></li>`)
+	.join("\n");
+
 const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"/>
 <style>
@@ -367,6 +550,8 @@ h1,h2,h3,h4 { font-family: "Trebuchet MS", "Segoe UI", Helvetica, sans-serif; co
 .toc h1 { border-bottom: 2px solid var(--accent); padding-bottom: 6px; }
 .toc ol { columns: 2; column-gap: 14mm; }
 .toc a { color: var(--ink); text-decoration: none; }
+.toc h2 { border: none; margin: 14px 0 4px; padding: 0; }
+.toc ul.appx { columns: 2; column-gap: 14mm; list-style: none; margin: 4px 0 0; padding: 0; }
 .chapter { page-break-before: always; }
 .chapter-title { font-size: 22pt; border-bottom: 2px solid var(--accent); padding-bottom: 6px; margin-bottom: 10px; }
 h2 { font-size: 14pt; margin-top: 16px; border-bottom: 1px solid var(--rule); padding-bottom: 3px; }
@@ -386,24 +571,35 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 14px 0; }
 .muted { color: var(--muted); }
 .stat { font-size: 9.6pt; margin: 4px 0; }
 .tag { font-family: "Trebuchet MS", sans-serif; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .08em; background: var(--accent); color: #fff; padding: 1px 6px; border-radius: 9px; vertical-align: middle; }
+.statblock { border: 1px solid var(--accent); border-top: 4px solid var(--accent); border-radius: 5px; padding: 9px 13px; margin: 14px 0; break-inside: avoid; background: #fbf7f0; }
+.statblock h2 { color: var(--accent); border: none; margin: 0; font-size: 15pt; }
+.statblock .type { font-style: italic; color: var(--muted); margin: 0 0 4px; font-size: 9.4pt; }
+.statblock .rule { border: none; border-top: 2px solid var(--accent); margin: 6px 0; }
+.statblock .line { margin: 2px 0; font-size: 9.6pt; }
+.statblock .line strong { color: var(--accent); }
+.statblock .abilities { display: flex; text-align: center; margin: 7px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 4px 0; }
+.statblock .abilities > div { flex: 1; }
+.statblock .abilities .ab { font-family: "Trebuchet MS", sans-serif; font-size: 8pt; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+.statblock .abilities .sc { font-size: 9.8pt; }
+.statblock .block-head { font-family: "Trebuchet MS", sans-serif; color: var(--accent); font-size: 11pt; margin: 9px 0 2px; border-bottom: 1px solid var(--accent); }
+.statblock .entry { margin: 3px 0; font-size: 9.6pt; }
+.refcard { border: 1px solid var(--accent); border-radius: 5px; padding: 4px 14px 12px; margin: 12px 0; }
+.refcard h3 { color: var(--accent); border-bottom: 1px solid var(--rule); padding-bottom: 2px; margin: 12px 0 4px; font-size: 11pt; }
+.refcard p { font-size: 9.4pt; margin: 4px 0; }
+.ref-golden { border-left: 3px solid var(--accent); padding: 5px 10px; background: #faf6ef; font-size: 9.8pt; }
+.ref-grid { display: flex; gap: 16px; }
+.ref-grid .ref-panel { flex: 1; }
 </style></head>
 <body>
 <div class="cover">
   <div class="kicker">Rift Ascendant · Warden's Edition</div>
   <h1>${esc(MODULE_TITLE)}</h1>
   <div class="sub">${esc(MODULE_SUBTITLE)}</div>
-  <div class="meta">Generated from the live compendium module · v${MODULE_VERSION} · ${new Date().toISOString().slice(0, 10)}<br/>${chapters.length} chapters · ${(sandboxRecruitableNPCs as any[]).length} allies · ${(sandboxHandoutsExpanded as any[]).length} handouts</div>
+  <div class="meta">Generated from the live compendium module · v${MODULE_VERSION} · ${new Date().toISOString().slice(0, 10)}<br/>${chapters.length} chapters · ${appendixSections.length} appendices · ${(sandboxRecruitableNPCs as any[]).length} allies · ${(sandboxHandoutsExpanded as any[]).length} handouts</div>
 </div>
-<nav class="toc"><h1>Contents</h1><ol>${tocItems}</ol></nav>
+<nav class="toc"><h1>Contents</h1><ol>${tocItems}</ol><h2>Appendices</h2><ul class="appx">${appendixToc}</ul></nav>
 ${chaptersHtml}
-${appendix("appendix-allies", "Appendix A — Recruitable Allies", renderNpcs())}
-${appendix("appendix-factions", "Appendix B — Factions of the Gloamreach", renderFactions())}
-${appendix("appendix-encounters", "Appendix C — Domain Encounters", renderEncounters())}
-${appendix("appendix-quests", "Appendix D — Side Quests", renderQuests())}
-${appendix("appendix-loot", "Appendix E — Treasure & Relics", renderLoot())}
-${appendix("appendix-timeline", "Appendix F — The Gate Break Track", renderTimeline())}
-${appendix("appendix-handouts", "Appendix G — Handouts", renderHandouts())}
-${appendix("appendix-warden", "Appendix H — Warden's Secrets", renderWardenNotes())}
+${appendicesHtml}
 </body></html>`;
 
 // ---------------------------------------------------------------------------
@@ -412,8 +608,8 @@ ${appendix("appendix-warden", "Appendix H — Warden's Secrets", renderWardenNot
 async function main() {
 	const outDir = resolve(repoRoot, "exports");
 	mkdirSync(outDir, { recursive: true });
-	const htmlPath = resolve(outDir, "the-shadow-of-the-regent.html");
-	const pdfPath = resolve(outDir, "the-shadow-of-the-regent.pdf");
+	const htmlPath = resolve(outDir, "run-silent.html");
+	const pdfPath = resolve(outDir, "run-silent.pdf");
 	writeFileSync(htmlPath, html, "utf8");
 	console.log(`HTML written: ${htmlPath} (${chapters.length} chapters)`);
 
@@ -436,7 +632,7 @@ async function main() {
 		displayHeaderFooter: true,
 		headerTemplate: "<span></span>",
 		footerTemplate:
-			'<div style="width:100%;font-size:8px;color:#999;font-family:Trebuchet MS,sans-serif;text-align:center;">The Shadow of the Regent · <span class="pageNumber"></span> / <span class="totalPages"></span></div>',
+			'<div style="width:100%;font-size:8px;color:#999;font-family:Trebuchet MS,sans-serif;text-align:center;">Run Silent · <span class="pageNumber"></span> / <span class="totalPages"></span></div>',
 	});
 	await browser.close();
 

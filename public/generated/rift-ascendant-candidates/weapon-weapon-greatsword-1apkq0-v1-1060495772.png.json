@@ -1,0 +1,56 @@
+{
+  "promptRecordId": "weapon-weapon-greatsword-1apkq0",
+  "sourceAssetPath": "/generated/compendium/items/item-0405.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/weapon-weapon-greatsword-1apkq0-v1-1060495772.png",
+  "prompt": "Rift Ascendant inventory icon, single bladed weapon, one handle and one blade, entire weapon visible, no duplicate blade variants, exactly one single complete Greatsword weapon only, one continuous connected object, full weapon visible, one large weapon fills most of the frame, centered composition on a simple dark neutral background, no person, no hands, no secondary weapons, no duplicates, no multiple variants, not a design sheet, not a parchment page, lore-accurate weapon asset, Greatsword. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. A large two-handed blade. Destroyers and Holy Knights favor these. Not pretty. Not elegant. Effective. standard, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age material design, Essence-infused details, clear complete weapon silhouette, polished game weapon art, no character holding it, no text, no logo",
+  "negativePrompt": "multiple weapons, duplicate weapon, secondary weapons, many variants, multiple guns, duplicate gun, three guns, multiple spearheads, spearhead collection, weapon head collection, product sheet, design sheet, parts sheet, exploded view, orthographic views, multiple camera angles, comparison sheet, collage, parchment page, diagram, labels, text block, circular emblems, side icons, unrelated orbs, generic sword unless the subject is a sword, generic gun unless the subject is a firearm, random jewelry, character holding the weapon, hands, full character portrait, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-base-equipment.ts",
+    "src\\data\\compendium\\items-part3.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 1060495772,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T22:53:14.982Z",
+  "applyTargetPath": "/generated/compendium/weapons/weapon-weapon-greatsword-1apkq0.webp",
+  "priority": "medium",
+  "subject": "Greatsword",
+  "assetType": "weapon",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-base-equipment.ts#base-weapon-greatsword"
+  ],
+  "sourceRecordIds": [
+    "base-weapon-greatsword"
+  ],
+  "sourceRecordNames": [
+    "Greatsword"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-base-equipment.ts",
+      "line": 3896,
+      "field": "image",
+      "subject": "Greatsword",
+      "recordId": "base-weapon-greatsword",
+      "recordName": "Greatsword",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-base-equipment.ts#base-weapon-greatsword",
+      "context": "A large two-handed blade. Destroyers and Holy Knights favor these. Not pretty. Not elegant. Effective. standard"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "armor-armor-cataclysmic-kite-shield-uhv9l1",
+  "sourceAssetPath": "/generated/compendium/items/item-0253.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/armor-armor-cataclysmic-kite-shield-uhv9l1-v1-860539419.png",
+  "prompt": "Rift Ascendant inventory icon, one shield object only, front three-quarter view, readable shield silhouette, no sword, no warrior, one single complete Cataclysmic Kite Shield equipment object only, isolated detached gear render on a simple dark neutral background, no person, no body, no model, no mannequin, no wearer, no multiple variants, not a design sheet, lore-accurate protective gear asset, Cataclysmic Kite Shield. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware. The cost of standing the line is right here, on your shoulders. cursed, polished tabletop RPG inventory art, Korean action webtoon-inspired dark fantasy rendering, painterly realism, crisp ink-like edges, cinematic rim lighting, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy equipment, Rift Age tactical material design, Essence-threaded or anomaly-touched details, clear wearable silhouette, centered inventory composition, polished game gear art, no full character portrait, no text, no logo",
+  "negativePrompt": "person wearing armor, humanoid body, full character portrait, human model, mannequin, mannequin face focus, human model face, multiple armor variants, product sheet, design sheet, orthographic views, front side back views, comparison sheet, full costume sheet, generic fantasy armor, medieval-only costume, weapon-only image, random jewelry, cluttered background, unreadable silhouette, bad perspective, blurry, low resolution, text, watermark, logo, sword, spear, warrior, full knight, heraldic text, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md",
+    "src\\data\\compendium\\items-gap-fill.ts"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 24,
+  "cfgScale": 8,
+  "seed": 860539419,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T21:32:01.590Z",
+  "applyTargetPath": "/generated/compendium/armor/armor-armor-cataclysmic-kite-shield-uhv9l1.webp",
+  "priority": "medium",
+  "subject": "Cataclysmic Kite Shield",
+  "assetType": "armor",
+  "category": "image-item",
+  "sourceCategory": [
+    "item"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\compendium\\items-gap-fill.ts#gap-armor-shield-epic-2"
+  ],
+  "sourceRecordIds": [
+    "gap-armor-shield-epic-2"
+  ],
+  "sourceRecordNames": [
+    "Cataclysmic Kite Shield"
+  ],
+  "recommendedReplacement": "pending",
+  "confidence": "pending",
+  "notes": "",
+  "references": [
+    {
+      "file": "src\\data\\compendium\\items-gap-fill.ts",
+      "line": 106214,
+      "field": "image",
+      "subject": "Cataclysmic Kite Shield",
+      "recordId": "gap-armor-shield-epic-2",
+      "recordName": "Cataclysmic Kite Shield",
+      "sourceCategory": "item",
+      "sourceRecordKey": "src\\data\\compendium\\items-gap-fill.ts#gap-armor-shield-epic-2",
+      "context": "As a reaction to being hit by an attack, halve the damage taken; the attacker takes the halved amount as force damage. The cost of standing the line is right here, on your shoulders. cursed"
+    }
+  ],
+  "updateReferencesOnApply": true
+}

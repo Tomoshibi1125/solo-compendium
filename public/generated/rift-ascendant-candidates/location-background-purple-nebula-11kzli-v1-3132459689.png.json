@@ -1,0 +1,55 @@
+{
+  "promptRecordId": "location-background-purple-nebula-11kzli",
+  "sourceAssetPath": "/generated/cosmic/purple-nebula.webp",
+  "candidatePath": "/generated/rift-ascendant-candidates/location-background-purple-nebula-11kzli-v1-3132459689.png",
+  "prompt": "Rift Ascendant app asset, Purple Nebula, Purple Nebula. Rift Ascendant is modern supernatural urban fantasy in the early normalized Rift Age; the material world is functional, commercial, Bureau-regulated, and media-aware., high-detail tabletop fantasy RPG key art, Korean action webtoon-inspired dark fantasy rendering, dynamic composition, crisp ink-like edges, painterly realism, cinematic contrast, dramatic rim lighting, polished game illustration, black deep blue violet silver palette with rift-white highlights, original design, high readability for app card UI, modern supernatural urban fantasy or Rift Interior dark fantasy depending on context, cinematic environment concept art, strong readable composition, safe negative space for UI overlay, atmospheric depth, rift energy, Essence glow, coherent architecture, polished game background, no text, no logo",
+  "negativePrompt": "generic fantasy tavern, generic castle unless lore requires it, spaceship, unrelated cyberpunk city, empty stock landscape, tourist photo, too cluttered for UI, unreadable composition, blurry, low resolution, text, watermark, logo, signature, direct imitation of a named franchise, copyrighted character, official logo, trademarked symbol, celebrity likeness",
+  "loreSourceFiles": [
+    "docs/rift-ascendant-world-lore.md"
+  ],
+  "checkpoint": "sd_xl_base_1.0.safetensors",
+  "backend": "comfy",
+  "sampler": "DPM++ 2M Karras",
+  "scheduler": "Karras",
+  "steps": 40,
+  "cfgScale": 7,
+  "seed": 3132459689,
+  "width": 1024,
+  "height": 1024,
+  "generatedAt": "2026-06-20T14:00:41.670Z",
+  "applyTargetPath": "/generated/cosmic/purple-nebula.webp",
+  "priority": "high",
+  "subject": "Purple Nebula",
+  "assetType": "background",
+  "category": "image-background",
+  "sourceCategory": [
+    "vtt-library"
+  ],
+  "sourceRecordKeys": [
+    "src\\data\\vttAssetLibrary.ts#cosmic-nebula-purple"
+  ],
+  "sourceRecordIds": [
+    "cosmic-nebula-purple"
+  ],
+  "sourceRecordNames": [
+    "Purple Nebula"
+  ],
+  "recommendedReplacement": "yes",
+  "confidence": "high",
+  "notes": "Approved for apply by explicit user instruction to run the Rift asset workflow start to finish.",
+  "references": [
+    {
+      "file": "src\\data\\vttAssetLibrary.ts",
+      "line": 1726,
+      "field": "imageUrl",
+      "subject": "Purple Nebula",
+      "recordId": "cosmic-nebula-purple",
+      "recordName": "Purple Nebula",
+      "sourceCategory": "vtt-library",
+      "sourceRecordKey": "src\\data\\vttAssetLibrary.ts#cosmic-nebula-purple",
+      "context": ""
+    }
+  ],
+  "updateReferencesOnApply": false,
+  "approvedAt": "2026-06-20T14:01:50.298Z"
+}
