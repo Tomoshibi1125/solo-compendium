@@ -431,50 +431,44 @@ export class PlayerPage {
 				await satisfyCheckboxRequirements();
 				await clickNext(20_000);
 			} else if (step === "imprints") {
-				// Every imprint option card renders data-testid="creation-…" plus a
-					// data-selected flag and a disabled flag. Selectable options are the
-					// ones that are unselected and enabled — match them with one robust
-					// CSS selector (avoids brittle .or()/.and() locator composition).
-					// Drive the imprint multi-select INSIDE the browser, waiting for each
-					// click to COMMIT (the selectable-option count drops) before clicking
-					// again. Doing this in-page — rather than across the Playwright
-					// process boundary — lets React re-render between selections, which
-					// prevents double-toggling the same option and reliably fills every
-					// required category (cantrips, spells, spellbook, powers, styles…).
-					await this.page.evaluate(async () => {
-						const sel =
-							'button[data-testid^="creation-"][data-selected="false"]:not([disabled])';
-						const sleep = (ms: number) =>
-							new Promise((r) => setTimeout(r, ms));
-						const advanceEnabled = () => {
-							const adv = Array.from(document.querySelectorAll("button")).find(
-								(b) => /Advance Protocol|^Next$/i.test(b.textContent || ""),
-							);
-							return !!adv && !(adv as HTMLButtonElement).disabled;
-						};
-						for (let guard = 0; guard < 400 && !advanceEnabled(); guard += 1) {
-							const before = document.querySelectorAll(sel).length;
-							if (before === 0) {
-								await sleep(80);
-								continue;
-							}
-							(document.querySelector(sel) as HTMLElement | null)?.click();
-							// Wait for the click to register (count changes) before the next.
-							for (
-								let waited = 0;
-								waited < 25 &&
-								document.querySelectorAll(sel).length === before &&
-								!advanceEnabled();
-								waited += 1
-							) {
-								await sleep(20);
-							}
+					// Select required imprints. Options live in buckets that re-render
+					// on each pick (counter/metadata update) and the spellbook bucket
+					// loads async. Click the LAST selectable option (stable, away from
+					// the churn near the selected items) with a forced, scrolled-to-
+					// centre click (the sticky status header otherwise intercepts top-of-
+					// list clicks), verify the selection actually committed, and keep
+					// going patiently until Advance enables.
+					const imprintSelector =
+						'button[data-testid^="creation-"][data-selected="false"]:not([disabled])';
+					for (let attempt = 0; attempt < 200; attempt += 1) {
+						if (await nextButton().isEnabled({ timeout: 300 }).catch(() => false)) {
+							break;
 						}
-					});
-					if (!(await nextButton().isEnabled({ timeout: 1500 }).catch(() => false))) {
-						console.warn("[PlayerPage] char-wizard: imprints unsatisfied after loop");
+						const selectable = this.page.locator(imprintSelector);
+						const before = await selectable.count();
+						if (before === 0) {
+							await this.page.waitForTimeout(400);
+							continue;
+						}
+						const candidate = selectable.last();
+						await candidate
+							.evaluate((el) => el.scrollIntoView({ block: "center" }))
+							.catch(() => {});
+						await candidate
+							.click({ force: true, timeout: 4000 })
+							.catch(() => {});
+						// Wait for the pick to register (selectable count drops) so a
+						// click lost to a re-render is retried next pass.
+						await this.page
+							.waitForFunction(
+								({ s, prev }) =>
+									document.querySelectorAll(s).length !== prev,
+								{ s: imprintSelector, prev: before },
+								{ timeout: 2000 },
+							)
+							.catch(() => {});
 					}
-				await clickNext(30_000);
+					await clickNext(30_000);
 			} else if (step === "review") {
 				break;
 			}
